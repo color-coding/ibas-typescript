@@ -1,0 +1,11 @@
+# log file
+*_log_*.txt
+
+# release folder
+/release/
+/.vs/
+/.metadata/
+/.recommenders/
+/RemoteSystemsTempFiles/
+/Servers/
+/out/
