@@ -1,12 +1,12 @@
+
 /**
  * 可监听的对象
  */
 export abstract class BindableBase {
-    
-    constructor() {
 
+    constructor() {
     }
-    
+
     /**
      * 通知属性改变
      */

@@ -3,9 +3,15 @@
 
 # release folder
 /release/
+/out/
+
+# ide files & folder
+ibas-typescript
+*.js
+*.sln
+Web.config
 /.vs/
 /.metadata/
 /.recommenders/
 /RemoteSystemsTempFiles/
 /Servers/
-/out/
