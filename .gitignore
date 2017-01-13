@@ -9,9 +9,13 @@
 ibas-typescript
 *.js
 *.sln
+*.map
 Web.config
 /.vs/
 /.metadata/
 /.recommenders/
 /RemoteSystemsTempFiles/
 /Servers/
+
+# exceptions
+!src/3rdparty/*

@@ -1,9 +1,10 @@
-import {TrackableBase} from './TrackableBase';
+import { TrackableBase } from './TrackableBase';
+import { IBusinessObject } from './IBusinessObject';
 
 /**
  * 业务对象基础
  */
-export abstract class BusinessObjectBase<T> extends TrackableBase {
+export abstract class BusinessObjectBase<T extends IBusinessObject> extends TrackableBase implements IBusinessObject {
 
     constructor() {
         super();
@@ -12,14 +13,14 @@ export abstract class BusinessObjectBase<T> extends TrackableBase {
     /**
      * 获取属性值
      */
-    static getProperty<P>(property: string): P {
+    getProperty<P>(property: string): P {
         return undefined;
     }
     
     /**
      * 设置属性值
      */
-    static setProperty<P>(property: string, value: P) {
+    setProperty<P>(property: string, value: P) {
         
     }
 }

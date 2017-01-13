@@ -1,10 +1,11 @@
-import {BindableBase} from './BindableBase';
+import { ITrackable } from './ITrackable';
+import { BindableBase } from './BindableBase';
 
  /**
  * 状态跟踪对象
  */
-export abstract class TrackableBase extends BindableBase {
-    
+export abstract class TrackableBase extends BindableBase implements ITrackable {
+
     constructor() {
         super();
         this.isNew = true;
@@ -21,11 +22,9 @@ export abstract class TrackableBase extends BindableBase {
     get isNew(): boolean {
         return this.new;
     }
-    /**
-     * 设置新建
-     */
     set isNew(value: boolean) {
         this.new = value;
+        this.firePropertyChanged("isNew");
     }
 
     private dirty: boolean;
@@ -35,13 +34,11 @@ export abstract class TrackableBase extends BindableBase {
     get isDirty(): boolean {
         return this.dirty;
     }
-    /**
-     * 设置修改
-     */
     set isDirty(value: boolean) {
         this.dirty = value;
+        this.firePropertyChanged("isDirty");
     }
-    
+
     private deleted: boolean;
     /**
      * 是否刪除
@@ -49,13 +46,11 @@ export abstract class TrackableBase extends BindableBase {
     get isDeleted(): boolean {
         return this.deleted;
     }
-    /**
-     * 设置刪除
-     */
     set isDeleted(value: boolean) {
         this.deleted = value;
+        this.firePropertyChanged("isDeleted");
     }
-    
+
     private loading: boolean;
     /**
      * 是否加载
@@ -63,13 +58,11 @@ export abstract class TrackableBase extends BindableBase {
     get isLoading(): boolean {
         return this.loading;
     }
-    /**
-     * 设置加载
-     */
     set isLoading(value: boolean) {
         this.loading = value;
+        this.firePropertyChanged("isLoading");
     }
-    
+
     private savable: boolean;
     /**
      * 是否有效
@@ -77,12 +70,21 @@ export abstract class TrackableBase extends BindableBase {
     get isSavable(): boolean {
         return this.savable;
     }
-    /**
-     * 设置有效
-     */
     set isSavable(value: boolean) {
         this.savable = value;
+        this.firePropertyChanged("isSavable");
     }
-    
-    
+
+    private vaild: boolean;
+    /**
+     * 是否有效
+     */
+    get isVaild(): boolean {
+        return this.vaild;
+    }
+    set isVaild(value: boolean) {
+        this.vaild = value;
+        this.firePropertyChanged("isVaild");
+    }
+
 }

@@ -1,6 +1,9 @@
-import * as core from '../../../src/bobas/bobas';
+﻿import * as bobas from '../../../src/bobas/bobas';
 
-class SalesOrderItem extends core.BusinessObjectBase<SalesOrderItem> {
+/**
+* 销售订单行对象
+*/
+export class SalesOrderItem extends bobas.BusinessObject<SalesOrderItem> {
 
     private docEntry: number;
 
@@ -58,18 +61,25 @@ class SalesOrderItem extends core.BusinessObjectBase<SalesOrderItem> {
         this.lineTotal = value;
     }
 }
+/**
+* 销售订单行对象集合
+*/
+export class SalesOrderItems extends bobas.BusinessObjects<SalesOrderItem>{
 
-class SalesOrderItems extends core.BusinessObjectListBase<SalesOrderItem>{
-
+    /**
+     * 创建并添加子项
+     */
     create(): SalesOrderItem {
-        var item = new SalesOrderItem();
-        this.push(item);
+        let item = new SalesOrderItem();
+        this.add(item);
         return item;
     }
 
 }
-
-class SalesOrder extends core.BusinessObjectBase<SalesOrder> {
+/**
+* 销售订单对象
+*/
+export class SalesOrder extends bobas.BusinessObject<SalesOrder> {
 
     private docEntry: number;
 
@@ -94,6 +104,9 @@ class SalesOrder extends core.BusinessObjectBase<SalesOrder> {
     private items: SalesOrderItems;
 
     get Items(): SalesOrderItems {
+        if (this.items == null) {
+            this.items = new SalesOrderItems();
+        }
         return this.items;
     }
 
@@ -101,16 +114,3 @@ class SalesOrder extends core.BusinessObjectBase<SalesOrder> {
         this.items = value;
     }
 }
-
-var order = new SalesOrder();
-order.Customer = "C00001";
-var item = order.Items.create();
-item.ItemCode = "A00001";
-item.Price = 1.99;
-item.Quantity = 2;
-item.LineTotal = item.Price * item.Quantity;
-item = order.Items.create();
-item.ItemCode = "A00002";
-item.Price = 0.99;
-item.Quantity = 20;
-item.LineTotal = item.Price * item.Quantity;
