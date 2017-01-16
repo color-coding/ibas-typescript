@@ -1,7 +1,9 @@
-﻿/**
+﻿import { ITrackable } from './ITrackable'
+
+/**
 * 业务对象
 */
-export interface IBusinessObject {
+export interface IBusinessObject extends ITrackable {
     /**
      * 获取属性的值
      * @param property 属性名称

@@ -87,4 +87,48 @@ export abstract class TrackableBase extends BindableBase implements ITrackable {
         this.firePropertyChanged("isVaild");
     }
 
+    /**
+     * 标记为未修改
+     */
+    markOld(recursive: boolean): void {
+        this.isNew = false;
+        this.isDirty = false;
+        this.isDeleted = false;
+    }
+
+    /**
+     * 标记为新
+     */
+    markNew(recursive: boolean): void {
+        this.isNew = true;
+        this.isDirty = true;
+        this.isDeleted = false;
+    }
+
+    /**
+     * 标记为删除
+     */
+    markDeleted(recursive: boolean): void {
+        this.isNew = false;
+        this.isDirty = true;
+        this.isDeleted = true;
+    }
+
+    /**
+     * 对象置为脏
+     */
+    markDirty(recursive: boolean): void {
+        this.isNew = false;
+        this.isDirty = true;
+    }
+
+    /**
+     * 清除删除标记
+     *
+     * @param recursive 递归
+     */
+    clearDeleted(recursive: boolean): void {
+        this.isDirty = true;
+        this.isDeleted = false;
+    }
 }

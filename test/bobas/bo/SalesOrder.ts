@@ -1,64 +1,79 @@
 ﻿import * as bobas from '../../../src/bobas/bobas';
 
+import { User } from './User';
+
 /**
 * 销售订单行对象
 */
 export class SalesOrderItem extends bobas.BusinessObject<SalesOrderItem> {
 
-    private docEntry: number;
+    private _docEntry: number;
 
-    get DocEntry(): number {
-        return this.docEntry;
+    get docEntry(): number {
+        return this._docEntry;
     }
 
-    set DocEntry(value: number) {
-        this.docEntry = value;
+    set docEntry(value: number) {
+        this._docEntry = value;
     }
 
-    private lineId: number;
+    private _lineId: number;
 
-    get LineId(): number {
-        return this.lineId;
+    get lineId(): number {
+        return this._lineId;
     }
 
-    set LineId(value: number) {
-        this.lineId = value;
+    set lineId(value: number) {
+        this._lineId = value;
     }
-    private itemCode: string;
+    private _itemCode: string;
 
-    get ItemCode(): string {
-        return this.itemCode;
-    }
-
-    set ItemCode(value: string) {
-        this.itemCode = value;
-    }
-    private price: number;
-
-    get Price(): number {
-        return this.price;
+    get itemCode(): string {
+        return this._itemCode;
     }
 
-    set Price(value: number) {
-        this.price = value;
+    set itemCode(value: string) {
+        this._itemCode = value;
     }
-    private quantity: number;
+    private _price: number;
 
-    get Quantity(): number {
-        return this.quantity;
-    }
-
-    set Quantity(value: number) {
-        this.quantity = value;
-    }
-    private lineTotal: number;
-
-    get LineTotal(): number {
-        return this.lineTotal;
+    get price(): number {
+        return this._price;
     }
 
-    set LineTotal(value: number) {
-        this.lineTotal = value;
+    set price(value: number) {
+        this._price = value;
+    }
+    private _quantity: number;
+
+    get quantity(): number {
+        return this._quantity;
+    }
+
+    set quantity(value: number) {
+        this._quantity = value;
+    }
+    private _lineTotal: number;
+
+    get lineTotal(): number {
+        return this._lineTotal;
+    }
+
+    set lineTotal(value: number) {
+        this._lineTotal = value;
+    }
+
+    private _user: User;
+
+    get user(): User {
+        if (this._user == null) {
+            this._user = new User();
+        }
+        return this._user;
+    }
+
+    set user(value: User) {
+        this._user = value;
     }
 }
 /**
@@ -81,36 +96,50 @@ export class SalesOrderItems extends bobas.BusinessObjects<SalesOrderItem>{
 */
 export class SalesOrder extends bobas.BusinessObject<SalesOrder> {
 
-    private docEntry: number;
+    private _docEntry: number;
 
-    get DocEntry(): number {
-        return this.docEntry;
+    get docEntry(): number {
+        return this._docEntry;
     }
 
-    set DocEntry(value: number) {
-        this.docEntry = value;
+    set docEntry(value: number) {
+        this._docEntry = value;
     }
 
-    private customer: string;
+    private _customer: string;
 
-    get Customer(): string {
-        return this.customer;
+    get customer(): string {
+        return this._customer;
     }
 
-    set Customer(value: string) {
-        this.customer = value;
+    set customer(value: string) {
+        this._customer = value;
     }
 
-    private items: SalesOrderItems;
+    private _items: SalesOrderItems;
 
-    get Items(): SalesOrderItems {
-        if (this.items == null) {
-            this.items = new SalesOrderItems();
+    get items(): SalesOrderItems {
+        if (this._items == null) {
+            this._items = new SalesOrderItems();
         }
-        return this.items;
+        return this._items;
     }
 
-    set Items(value: SalesOrderItems) {
-        this.items = value;
+    set items(value: SalesOrderItems) {
+        this._items = value;
     }
+
+    private _user: User;
+
+    get user(): User {
+        if (this._user == null) {
+            this._user = new User();
+        }
+        return this._user;
+    }
+
+    set user(value: User) {
+        this._user = value;
+    }
+
 }

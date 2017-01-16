@@ -15,10 +15,6 @@ export interface ITrackable {
     */
     readonly isDeleted: boolean;
     /**
-    * 是否加载数据中
-    */
-    readonly isLoading: boolean;
-    /**
     * 是否能够保存
     */
     readonly isSavable: boolean;
@@ -26,4 +22,43 @@ export interface ITrackable {
     * 是否有效
     */
     readonly isVaild: boolean;
+    /**
+    * 是否加载数据中
+    */
+    isLoading: boolean;
+
+    /**
+     * 标记为未修改
+     * 
+     * @param recursive 递归
+     */
+    markOld(recursive: boolean): void;
+
+    /**
+     * 标记为新
+     * 
+     * @param recursive 递归
+     */
+    markNew(recursive: boolean): void;
+
+    /**
+     * 标记为删除
+     * 
+     * @param recursive 递归
+     */
+    markDeleted(recursive: boolean): void;
+
+    /**
+     * 对象置为脏
+     * 
+     * @param recursive 递归
+     */
+    markDirty(recursive: boolean): void;
+
+    /**
+     * 清除删除标记
+     *
+     * @param recursive 递归
+     */
+    clearDeleted(recursive: boolean): void;
 }
