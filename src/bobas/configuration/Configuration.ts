@@ -1,11 +1,8 @@
-/// <reference path="../../3rdparty/jquery.d.ts" />
 /**
  * 模块索引文件，此文件集中导出类
  */
+/// <reference path="../../3rdparty/jquery.d.ts" />
 import { string } from '../data/Data';
-import { logger } from '../messages/Messages';
-import { emMessageLevel } from '../messages/Messages';
-import { i18n } from '../i18n/I18N';
 
 /**
  * 配置
@@ -15,13 +12,24 @@ export class Configuration {
     /**
     * 配置文件地址
     */
-    static CONFIG_FILE_URL: string = "config.json";
-    static ROOT_FILE_NAME: string = "/bobas.js";
+    private static CONFIG_FILE_URL: string = "config.json";
+    private static ROOT_FILE_NAME: string = "/bobas.js";
+
+    constructor() {
+        // 加载配置
+        this.load();
+    }
+    /**
+    * 根路径标记
+    */
+    ROOT_URL_SIGN: string = ".../";
+
+    CONFIG_ITEM_DEBUG_MODE: string = "debug";
 
     /**
      * 获取当前库路径
      */
-    static rootUrl = function () {
+    rootUrl(): string {
         let root = window.document.location.origin;
         var docScripts = window.document.getElementsByTagName('script');
         for (var i = 0; i < docScripts.length; i++) {
@@ -34,8 +42,8 @@ export class Configuration {
                 let count = string.count(tmp, "../");
                 let tmps = window.document.location.pathname.split("/");
                 for (let j = 0; j < tmps.length; j++) {
-                    if (tmps[j] == undefined || tmps[j] == null) { continue; }
-                    if (tmps[j].length == 0) { continue; }
+                    if (tmps[j] === undefined || tmps[j] === null) { continue; }
+                    if (tmps[j].length === 0) { continue; }
                     if (j >= tmps.length - 1 - count) { break; }// 超过路径则退出
                     root = root + "/" + tmps[j];
                 }
@@ -48,13 +56,7 @@ export class Configuration {
             }
         }
         return root;
-    }();
-
-    constructor() {
-        // 加载配置
-        this.load();
     }
-
 
     private items: Map<string, string> = new Map<string, string>();
 
@@ -63,7 +65,7 @@ export class Configuration {
      */
     load(): void {
         let that = this;
-        let address = string.format("{0}/{1}", Configuration.rootUrl, Configuration.CONFIG_FILE_URL);
+        let address = string.format("{0}/{1}", this.rootUrl(), Configuration.CONFIG_FILE_URL);
         var JQryAjxSetting: JQueryAjaxSettings = {
             url: address,
             type: "GET",
@@ -72,10 +74,10 @@ export class Configuration {
             async: false,
             cache: false,
             error: function (xhr, status, error) {
-                logger.log(emMessageLevel.FATAL, i18n.prop("msg_load_config_file_faild", status, error));
+                console.error(string.format("config: get file faild [{0} - {1}].", status, error));
             },
             success: function (data) {
-                logger.log(emMessageLevel.DEBUG, i18n.prop("msg_load_config_file_successful"));
+                console.log("config: get file successful.");
                 if (data !== undefined && data !== null) {
                     if (data.appSettings !== undefined && data.appSettings !== null) {
                         let setting = data.appSettings;
@@ -89,10 +91,25 @@ export class Configuration {
         };
         jQuery.ajax(JQryAjxSetting);
     }
+
+    /**
+     * 获取配置
+     * @param key 项
+     * @param defalut 默认值（未配置则使用此值）
+     */
+    get(key: string, defalut: any): any {
+        if (this.items.has(key)) {
+            return this.items.get(key);
+        }
+        if (defalut !== undefined) {
+            // 不存在配置内容，默认值替代
+            return defalut;
+        }
+        let config = this.items.has
+    }
 }
 
 /**
  * 发布的配置实例
  */
 export const config: Configuration = new Configuration();
-

@@ -10,6 +10,8 @@ ibas-typescript
 *.js
 *.sln
 *.map
+*.tmp
+*.publishproj
 Web.config
 /.vs/
 /.metadata/

@@ -1,5 +1,6 @@
 {
   "appSettings": {
-    "debug": true
+    "debug": true,
+    "language": "zh_CN"
   }
 }

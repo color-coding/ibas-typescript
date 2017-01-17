@@ -21,11 +21,11 @@ export module assert {
      */
     export function equals(...pars: any[]): void {
         let message: string, unexpected: any, actual: any
-        if (pars.length == 2) {
+        if (pars.length === 2) {
             message = "assertion failure: not equals.";
             unexpected = pars[0];
             actual = pars[1];
-        } else if (pars.length == 3) {
+        } else if (pars.length === 3) {
             message = pars[0];
             unexpected = pars[1];
             actual = pars[2];

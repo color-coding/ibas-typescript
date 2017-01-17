@@ -1,3 +1,4 @@
+import { object } from '../data/Data';
 import { ArrayList } from '../data/ArrayList';
 
 /**
@@ -24,7 +25,7 @@ export abstract class BindableBase {
      * @param listener 监听者
      */
     registerListener(listener: PropertyChangedListener) {
-        if (this.listeners == null) {
+        if (object.isNull(this.listeners)) {
             this.listeners = new ArrayList<PropertyChangedListener>();
         }
         this.listeners.push(listener);
@@ -35,11 +36,11 @@ export abstract class BindableBase {
      * @param listener 监听者
      */
     removeListener(listener: PropertyChangedListener) {
-        if (this.listeners == null) {
+        if (object.isNull(this.listeners)) {
             return;
         }
         for (let item of this.listeners) {
-            if (item == listener) {
+            if (item === listener) {
                 this.listeners.remove(item);
             }
         }
@@ -48,8 +49,8 @@ export abstract class BindableBase {
     /**
      * 通知属性改变
      */
-    protected firePropertyChanged(property: string){
-        if (this.listeners == null) {
+    protected firePropertyChanged(property: string) {
+        if (object.isNull(this.listeners)) {
             return;
         }
         for (let item of this.listeners) {

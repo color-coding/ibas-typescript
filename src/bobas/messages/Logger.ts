@@ -43,13 +43,13 @@ export class Logger {
         if (msgPars[0] instanceof msg.Message) {
             message = msgPars[0];
             useCount++;
-        } else if (typeof (msgPars[0]) == "number") {
+        } else if (typeof (msgPars[0]) === "number") {
             message = new msg.Message();
             message.level = msgPars[0];
             useCount++;
             message.content = msgPars[1];
             useCount++;
-        } else if (typeof (msgPars[0]) == "string") {
+        } else if (typeof (msgPars[0]) === "string") {
             message = new msg.Message();
             message.content = msgPars[0];
             useCount++;
@@ -62,13 +62,13 @@ export class Logger {
         }
         // 根据消息级别，定义使用的输出方法
         let putter: any;
-        if (message.level == msg.emMessageLevel.ERROR) {
+        if (message.level === msg.emMessageLevel.ERROR) {
             putter = console.error;
-        } else if (message.level == msg.emMessageLevel.FATAL) {
+        } else if (message.level === msg.emMessageLevel.FATAL) {
             putter = console.error;
-        } else if (message.level == msg.emMessageLevel.WARN) {
+        } else if (message.level === msg.emMessageLevel.WARN) {
             putter = console.warn;
-        } else if (message.level == msg.emMessageLevel.DEBUG) {
+        } else if (message.level === msg.emMessageLevel.DEBUG) {
             putter = console.debug;
         } else {
             putter = console.log;

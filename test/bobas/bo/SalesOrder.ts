@@ -66,7 +66,7 @@ export class SalesOrderItem extends bobas.BusinessObject<SalesOrderItem> {
     private _user: User;
 
     get user(): User {
-        if (this._user == null) {
+        if (bobas.object.isNull(this._user)) {
             this._user = new User();
         }
         return this._user;
@@ -119,7 +119,7 @@ export class SalesOrder extends bobas.BusinessObject<SalesOrder> {
     private _items: SalesOrderItems;
 
     get items(): SalesOrderItems {
-        if (this._items == null) {
+        if (bobas.object.isNull(this._items)) {
             this._items = new SalesOrderItems();
         }
         return this._items;
@@ -132,7 +132,7 @@ export class SalesOrder extends bobas.BusinessObject<SalesOrder> {
     private _user: User;
 
     get user(): User {
-        if (this._user == null) {
+        if (bobas.object.isNull(this._user)) {
             this._user = new User();
         }
         return this._user;

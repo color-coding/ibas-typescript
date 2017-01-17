@@ -31,7 +31,7 @@ export class ArrayList<T> extends Array<T> implements List<T> {
      */
     add(item: T) {
         // 无效值不做处理
-        if (item == null || item == undefined) {
+        if (item === null || item === undefined) {
             return;
         }
         this.push(item);
@@ -52,12 +52,12 @@ export class ArrayList<T> extends Array<T> implements List<T> {
      */
     remove(item: T) {
         // 无效值不做处理
-        if (item == null || item == undefined) {
+        if (item === null || item === undefined) {
             return;
         }
         let keeps = new Array();// 临时数组
         for (let tmp of this) {
-            if (item == tmp) {
+            if (item === tmp) {
                 // 被移出的数组，不保留
                 break;
             }
