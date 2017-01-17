@@ -58,11 +58,7 @@ export class Logger {
         }
         // 如果参数未用完，则认为是模板输出的字符串
         if (msgPars.length > useCount) {
-            let pars = [];
-            for (let item of msgPars) {
-                pars.push(item);
-            }
-            message.content = string.format(message.content, pars);
+            message.content = string.format(message.content, msgPars.slice(useCount, msgPars.length));
         }
         // 根据消息级别，定义使用的输出方法
         let putter: any;
