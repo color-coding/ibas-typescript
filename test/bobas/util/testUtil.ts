@@ -27,3 +27,19 @@ bobas.assert.equals("string.count faild.", bobas.string.count("I'm niuren.zhu.",
 bobas.assert.equals("string.count faild.", bobas.string.count("I'm niuren.zhu.", "."), 2);
 // 测试配置项
 console.log(bobas.string.format("debug enabled is {0}", bobas.config.get(bobas.config.CONFIG_ITEM_DEBUG_MODE, false)));
+// 测试jquery
+var JQryAjxSetting: JQueryAjaxSettings = {
+    url: "http://localhost:8080/demo/services/jersey/hello",
+    type: "GET",
+    contentType: "application/json; charset=utf-8",
+    //dataType: "json",
+    async: true,
+    error: function (xhr, status, error) {
+        console.log(error);
+    },
+    success: function () {
+        console.log("success");
+    },
+};
+jQuery.ajax(JQryAjxSetting);
+
