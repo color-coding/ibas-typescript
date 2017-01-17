@@ -20,6 +20,8 @@ console.log(bobas.string.format("I'm {0} and good at {1}.", "niuren.zhu", "codin
 console.log(bobas.string.format("I'm {0} and good at {1}.", "niuren.zhu", "coding", "some one"));
 console.log(bobas.string.format("I'm {0}.", "niuren.zhu", "coding", "some one"));
 console.log(bobas.string.format("I'm {2}.", "niuren.zhu", "coding", "some one"));
+bobas.assert.equals("string.count faild.",bobas.string.count("I'm niuren.zhu.", "zhu"),1);
+bobas.assert.equals("string.count faild.",bobas.string.count("I'm niuren.zhu.", "."),2);
 // 测试jquery
 var JQryAjxSetting: JQueryAjaxSettings = {
     //url: "http://localhost:8080/demo/services/jersey/hello",

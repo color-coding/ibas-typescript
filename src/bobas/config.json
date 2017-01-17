@@ -1,4 +1,5 @@
-// ibas配置文件
 {
-  "debug": true
+  "appSettings": {
+    "debug": true
+  }
 }

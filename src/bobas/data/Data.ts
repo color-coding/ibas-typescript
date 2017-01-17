@@ -1,7 +1,7 @@
 /**
  * 模块索引文件，此文件集中导出类
  */
-
+import { i18n } from '../i18n/I18N';
 export * from './ArrayList';
 
 /**
@@ -38,5 +38,38 @@ export module string {
         }
         return result;
     }
+    /**
+     * 存在多少个字符
+     * @param content 待分析字符
+     * @param value 查询的字符
+     */
+    export function count(content: string, value: string): number {
+        let count = 0;
+        if (content == undefined || content == null) { return count; }
+        if (value == undefined || value == null) { return count; }
+        let pos = content.indexOf(value, 0);
+        while (pos >= 0) {
+            count++;
+            pos = content.indexOf(value, pos + 1);
+        }
+        return count;
+    }
+    /**
+     * 替换字符，全部
+     * @param content 待分析字符
+     * @param search 查询的字符
+     * @param replace 替换的字符
+     */
+    export function replace(content: string, search: string, replace: string): string {
+        if (content == undefined || content == null) { throw new Error(i18n.prop("msg_invalid_parameter", "content")); }
+        if (search == undefined || search == null) { throw new Error(i18n.prop("msg_invalid_parameter", "search")); }
+        if (replace == undefined || replace == null) { throw new Error(i18n.prop("msg_invalid_parameter", "replace")); }
 
+        let pos = content.indexOf(search);
+        while (pos >= 0) {
+            content = content.replace(search, replace);
+            pos = content.indexOf(search);
+        }
+        return content;
+    }
 }

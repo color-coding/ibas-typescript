@@ -31,6 +31,19 @@ export class Configuration {
             }
             if (atr.value.endsWith(Configuration.ROOT_FILE_NAME)) {
                 let tmp = atr.value.slice(0, atr.value.lastIndexOf(Configuration.ROOT_FILE_NAME));
+                let count = string.count(tmp, "../");
+                let tmps = window.document.location.pathname.split("/");
+                for (let j = 0; j < tmps.length; j++) {
+                    if (tmps[j] == undefined || tmps[j] == null) { continue; }
+                    if (tmps[j].length == 0) { continue; }
+                    if (j >= tmps.length - 1 - count) { break; }// 超过路径则退出
+                    root = root + "/" + tmps[j];
+                }
+                if (count > 0) {
+                    tmp = string.replace(tmp, "../", "");
+                    tmp = string.replace(tmp, "./", "");
+                    root = root + "/" + tmp;
+                }
                 break;
             }
         }
@@ -49,6 +62,7 @@ export class Configuration {
      * 加载配置文件
      */
     load(): void {
+        let that = this;
         let address = string.format("{0}/{1}", Configuration.rootUrl, Configuration.CONFIG_FILE_URL);
         var JQryAjxSetting: JQueryAjaxSettings = {
             url: address,
@@ -56,12 +70,21 @@ export class Configuration {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             async: false,
+            cache: false,
             error: function (xhr, status, error) {
                 logger.log(emMessageLevel.FATAL, i18n.prop("msg_load_config_file_faild", status, error));
             },
             success: function (data) {
                 logger.log(emMessageLevel.DEBUG, i18n.prop("msg_load_config_file_successful"));
-
+                if (data !== undefined && data !== null) {
+                    if (data.appSettings !== undefined && data.appSettings !== null) {
+                        let setting = data.appSettings;
+                        let names = Object.getOwnPropertyNames(setting);
+                        for (let name of names) {
+                            that.items.set(name, setting[name]);
+                        }
+                    }
+                }
             },
         };
         jQuery.ajax(JQryAjxSetting);
