@@ -1,5 +1,197 @@
-import { TrackableBase } from './TrackableBase';
-import { IBusinessObject } from './IBusinessObject';
+﻿/**
+ * @license
+ * Copyright color-coding studio. All Rights Reserved.
+ *
+ * Use of this source code is governed by an Apache License, Version 2.0
+ * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
+ */
+
+/// <reference path="./BusinessObjectCore.d.ts" />
+
+import { IBindable, PropertyChangedListener, ITrackable, IBusinessObject, IBusinessObjectList } from './BusinessObjectCore.d';
+import { object } from '../data/Data';
+import { ArrayList } from '../data/Common';
+
+/**
+ * 可监听的对象
+ */
+export abstract class Bindable implements IBindable {
+
+    constructor() {
+    }
+
+    private listeners: ArrayList<PropertyChangedListener>;
+    /**
+     * 注册监听事件
+     * @param listener 监听者
+     */
+    registerListener(listener: PropertyChangedListener) {
+        if (object.isNull(this.listeners)) {
+            this.listeners = new ArrayList<PropertyChangedListener>();
+        }
+        this.listeners.push(listener);
+    }
+
+    /**
+     * 移出监听事件
+     * @param listener 监听者
+     */
+    removeListener(listener: PropertyChangedListener) {
+        if (object.isNull(this.listeners)) {
+            return;
+        }
+        for (let item of this.listeners) {
+            if (item === listener) {
+                this.listeners.remove(item);
+            }
+        }
+    }
+
+    /**
+     * 通知属性改变
+     */
+    protected firePropertyChanged(property: string) {
+        if (object.isNull(this.listeners)) {
+            return;
+        }
+        for (let item of this.listeners) {
+            item.propertyChanged(property);
+        }
+    }
+}
+
+/**
+* 状态跟踪对象
+*/
+export abstract class TrackableBase extends Bindable implements ITrackable {
+
+    constructor() {
+        super();
+        this.isNew = true;
+        this.isDirty = true;
+        this.isDeleted = false;
+        this.isLoading = false;
+        this.isSavable = true;
+    }
+
+    private new: boolean;
+    /**
+     * 是否新建
+     */
+    get isNew(): boolean {
+        return this.new;
+    }
+    set isNew(value: boolean) {
+        this.new = value;
+        this.firePropertyChanged("isNew");
+    }
+
+    private dirty: boolean;
+    /**
+     * 是否修改
+     */
+    get isDirty(): boolean {
+        return this.dirty;
+    }
+    set isDirty(value: boolean) {
+        this.dirty = value;
+        this.firePropertyChanged("isDirty");
+    }
+
+    private deleted: boolean;
+    /**
+     * 是否刪除
+     */
+    get isDeleted(): boolean {
+        return this.deleted;
+    }
+    set isDeleted(value: boolean) {
+        this.deleted = value;
+        this.firePropertyChanged("isDeleted");
+    }
+
+    private loading: boolean;
+    /**
+     * 是否加载
+     */
+    get isLoading(): boolean {
+        return this.loading;
+    }
+    set isLoading(value: boolean) {
+        this.loading = value;
+        this.firePropertyChanged("isLoading");
+    }
+
+    private savable: boolean;
+    /**
+     * 是否有效
+     */
+    get isSavable(): boolean {
+        return this.savable;
+    }
+    set isSavable(value: boolean) {
+        this.savable = value;
+        this.firePropertyChanged("isSavable");
+    }
+
+    private vaild: boolean;
+    /**
+     * 是否有效
+     */
+    get isVaild(): boolean {
+        return this.vaild;
+    }
+    set isVaild(value: boolean) {
+        this.vaild = value;
+        this.firePropertyChanged("isVaild");
+    }
+
+    /**
+     * 标记为未修改
+     */
+    markOld(recursive: boolean): void {
+        this.isNew = false;
+        this.isDirty = false;
+        this.isDeleted = false;
+    }
+
+    /**
+     * 标记为新
+     */
+    markNew(recursive: boolean): void {
+        this.isNew = true;
+        this.isDirty = true;
+        this.isDeleted = false;
+    }
+
+    /**
+     * 标记为删除
+     */
+    markDeleted(recursive: boolean): void {
+        this.isNew = false;
+        this.isDirty = true;
+        this.isDeleted = true;
+    }
+
+    /**
+     * 对象置为脏
+     */
+    markDirty(recursive: boolean): void {
+        this.isNew = false;
+        this.isDirty = true;
+    }
+
+    /**
+     * 清除删除标记
+     *
+     * @param recursive 递归
+     */
+    clearDeleted(recursive: boolean): void {
+        this.isDirty = true;
+        this.isDeleted = false;
+    }
+}
+
 
 /**
  * 业务对象基础
@@ -154,4 +346,21 @@ export abstract class BusinessObjectBase<T extends IBusinessObject> extends Trac
             }
         }
     }
+}
+
+/**
+ * 业务对象集合基础
+ */
+export abstract class BusinessObjectListBase<T extends IBusinessObject> extends ArrayList<T> implements IBusinessObjectList<T> {
+
+    constructor() {
+        super();
+    }
+
+    /**
+     * 创建子项
+     */
+    abstract create(): T;
+
+
 }

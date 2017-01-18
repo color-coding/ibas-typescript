@@ -1,5 +1,20 @@
-﻿import * as msg from './Message';
+﻿/**
+ * @license
+ * Copyright color-coding studio. All Rights Reserved.
+ *
+ * Use of this source code is governed by an Apache License, Version 2.0
+ * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
+ */
+
+/// <reference path="./Logger.d.ts" />
+/// <reference path="./Message.d.ts" />
+
 import { string } from '../data/Data';
+import { emMessageLevel } from '../data/Enums';
+import { IMessage } from './Message.d';
+import { Message } from './Message';
+import { ILogger } from './Logger.d';
+
 /**
 * 运行消息记录
 */
@@ -8,20 +23,20 @@ export class Logger {
      * 记录消息
      * @param message
      */
-    log(message: msg.IMessage);
+    log(message: IMessage);
     /**
      * 记录消息
      * @param level 消息级别
      * @param message 内容
      */
-    log(level: msg.emMessageLevel, message: string);
+    log(level: emMessageLevel, message: string);
     /**
      * 记录消息
      * @param level 消息级别
      * @param format 消息格式
      * @param pars 格式内容
      */
-    log(level: msg.emMessageLevel, format: string, ...pars: any[]);
+    log(level: emMessageLevel, format: string, ...pars: any[]);
     /**
      * 记录消息
      * @param message 内容
@@ -38,19 +53,19 @@ export class Logger {
      * @param msgPars 消息参数
      */
     log(...msgPars: any[]) {
-        let message: msg.Message;
+        let message: Message;
         let useCount: number = 0;// 使用的参数
-        if (msgPars[0] instanceof msg.Message) {
+        if (msgPars[0] instanceof Message) {
             message = msgPars[0];
             useCount++;
         } else if (typeof (msgPars[0]) === "number") {
-            message = new msg.Message();
+            message = new Message();
             message.level = msgPars[0];
             useCount++;
             message.content = msgPars[1];
             useCount++;
         } else if (typeof (msgPars[0]) === "string") {
-            message = new msg.Message();
+            message = new Message();
             message.content = msgPars[0];
             useCount++;
         } else {
@@ -62,13 +77,13 @@ export class Logger {
         }
         // 根据消息级别，定义使用的输出方法
         let putter: any;
-        if (message.level === msg.emMessageLevel.ERROR) {
+        if (message.level === emMessageLevel.ERROR) {
             putter = console.error;
-        } else if (message.level === msg.emMessageLevel.FATAL) {
+        } else if (message.level === emMessageLevel.FATAL) {
             putter = console.error;
-        } else if (message.level === msg.emMessageLevel.WARN) {
+        } else if (message.level === emMessageLevel.WARN) {
             putter = console.warn;
-        } else if (message.level === msg.emMessageLevel.DEBUG) {
+        } else if (message.level === emMessageLevel.DEBUG) {
             putter = console.debug;
         } else {
             putter = console.log;

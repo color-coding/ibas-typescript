@@ -1,12 +1,19 @@
 /**
+ * @license
+ * Copyright color-coding studio. All Rights Reserved.
+ *
+ * Use of this source code is governed by an Apache License, Version 2.0
+ * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
+ */
+
+/**
  * 模块索引文件，此文件集中导出类
  */
-///<reference path="../data/Data.ts" />
 import { object } from '../data/Data';
 import { string } from '../data/Data';
+import { emMessageLevel } from '../data/Enums';
 import { config } from '../configuration/Configuration';
 import { logger } from '../messages/Messages';
-import { emMessageLevel } from '../messages/Messages';
 
 /**
  * 配置

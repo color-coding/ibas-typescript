@@ -1,11 +1,19 @@
-﻿import * as bobas from '../../../src/bobas/bobas';
+﻿/**
+ * @license
+ * Copyright color-coding studio. All Rights Reserved.
+ *
+ * Use of this source code is governed by an Apache License, Version 2.0
+ * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
+ */
+
+import * as bobas from '../../../src/bobas/bobas';
 
 import { User } from './User';
 
 /**
 * 销售订单行对象
 */
-export class SalesOrderItem extends bobas.BusinessObject<SalesOrderItem> {
+export class SalesOrderItem extends bobas.BusinessObject<SalesOrderItem> implements bobas.IBODocumentLine {
 
     private _docEntry: number;
 
@@ -79,7 +87,7 @@ export class SalesOrderItem extends bobas.BusinessObject<SalesOrderItem> {
 /**
 * 销售订单行对象集合
 */
-export class SalesOrderItems extends bobas.BusinessObjects<SalesOrderItem>{
+export class SalesOrderItems extends bobas.BusinessObjects<SalesOrderItem> implements bobas.IBODocumentLines<SalesOrderItem>{
 
     /**
      * 创建并添加子项
@@ -94,7 +102,7 @@ export class SalesOrderItems extends bobas.BusinessObjects<SalesOrderItem>{
 /**
 * 销售订单对象
 */
-export class SalesOrder extends bobas.BusinessObject<SalesOrder> {
+export class SalesOrder extends bobas.BusinessObject<SalesOrder> implements bobas.IBODocument {
 
     private _docEntry: number;
 
