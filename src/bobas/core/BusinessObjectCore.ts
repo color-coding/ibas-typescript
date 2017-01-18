@@ -362,5 +362,45 @@ export abstract class BusinessObjectListBase<T extends IBusinessObject> extends 
      */
     abstract create(): T;
 
+        /**
+     * 添加项目
+     * @param item 项目
+     */
+    add(item: T) {
+        // 无效值不做处理
+        if (item === null || item === undefined) {
+            return;
+        }
+        super.add(item);
+        this.afterAdd(item);
+    }
 
+    /**
+     * 添加项目后
+     * @param item 项目
+     */
+    protected afterAdd(item: T) {
+
+    }
+
+    /**
+     * 移出项目
+     * @param item 项目
+     */
+    remove(item: T) {
+        // 无效值不做处理
+        if (item === null || item === undefined) {
+            return;
+        }
+        super.remove(item);
+        this.afterRemove(item);
+    }
+
+    /**
+     * 移出项目后
+     * @param item 项目
+     */
+    protected afterRemove(item: T) {
+
+    }
 }

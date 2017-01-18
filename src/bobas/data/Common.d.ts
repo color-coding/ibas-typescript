@@ -26,7 +26,8 @@ export interface List<T> extends Array<T> {
      * 移出项目
      * @param index 项目索引
     */
-    removeAt(index: number)
+    removeAt(index: number);
+
 }
 
 

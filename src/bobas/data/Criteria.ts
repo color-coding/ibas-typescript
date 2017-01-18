@@ -159,6 +159,11 @@ export class Criteria implements ICriteria {
 */
 export class Condition implements ICondition {
 
+    constructor() {
+        this.operation = emConditionOperation.EQUAL;
+        this.relationship = emConditionRelationship.AND;
+    }
+
     /**
     * 获取-条件字段（属性）名
     */
@@ -273,6 +278,10 @@ export class Conditions extends ArrayList<ICondition> implements IConditions {
 * 排序
 */
 export class Sort implements ISort {
+
+    constructor() {
+        this.sortType = emSortType.ASCENDING;
+    }
 
     /**
     * 排序的字段（属性）名

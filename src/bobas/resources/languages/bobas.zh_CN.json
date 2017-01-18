@@ -3,5 +3,8 @@
   "msg_load_config_file_faild": "读取配置文件失败[{0} - {1}]",
   "msg_load_config_file_successful": "读取配置文件成功",
   "msg_load_language_file_faild": "读取语言文件[{2}]失败[{0} - {1}]",
-  "msg_load_language_file_successful": "读取语言文件[{0}]成功"
+  "msg_load_language_file_successful": "读取语言文件[{0}]成功",
+  "msg_invalid_data_converter": "无效的数据转换者",
+  "msg_data_converter_parsing_faild": "数据转换者的解析失败",
+  "msg_unrecognized_data": "不能识别的数据"
 }

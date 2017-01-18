@@ -25,15 +25,6 @@ export class ArrayList<T> extends Array<T> implements List<T> {
             return;
         }
         this.push(item);
-        this.afterAdd(item);
-    }
-
-    /**
-     * 添加项目后
-     * @param item 项目
-     */
-    protected afterAdd(item: T) {
-
     }
 
     /**
@@ -57,15 +48,6 @@ export class ArrayList<T> extends Array<T> implements List<T> {
         for (let tmp of keeps) {
             this.push(tmp);
         }
-        this.afterRemove(item);
-    }
-
-    /**
-     * 移出项目后
-     * @param item 项目
-     */
-    protected afterRemove(item: T) {
-
     }
 
     /**

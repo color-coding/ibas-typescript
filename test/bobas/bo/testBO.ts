@@ -7,9 +7,10 @@
  */
 
 import * as bobas from '../../../src/bobas/bobas';
-import * as test from './SalesOrder';
+import { SalesOrder } from './SalesOrder';
+import { BORepositoryTest } from './BORepository';
 
-let order = new test.SalesOrder();
+let order = new SalesOrder();
 order.customer = "C00001";
 let item = order.items.create();
 item.itemCode = "A00001";
@@ -23,12 +24,12 @@ item.price = 0.99;
 item.quantity = 20;
 item.lineTotal = item.price * item.quantity;
 item.user.userCode = "ccc";
-bobas.logger.log(bobas.emMessageLevel.DEBUG, "test: {0}","order", order.toString());
+bobas.logger.log(bobas.emMessageLevel.DEBUG, "test: {0}", "order", order.toString());
 order.user.userCode = "aaa";
 // 遍历属性名称，包括子项
-bobas.logger.log(bobas.emMessageLevel.INFO, "test: {1}","order", order.getProperties(true).size);
+bobas.logger.log(bobas.emMessageLevel.INFO, "test: {1}", "order", order.getProperties(true).size);
 // 遍历属性名称，不包括子项
-bobas.logger.log(bobas.emMessageLevel.INFO, "test: {0} {1}","order", order.getProperties(true).size);
+bobas.logger.log(bobas.emMessageLevel.INFO, "test: {0} {1}", "order", order.getProperties(true).size);
 console.warn(order.getProperties(false).size);
 bobas.assert.equals("bo status isNew", order.isNew, true);
 bobas.assert.equals("bo status isDirty", order.isDirty, true);
@@ -42,3 +43,26 @@ for (let item of order.items) {
     bobas.assert.equals("bo status isDirty", item.isDirty, false);
     bobas.assert.equals("bo status isDeleted", item.isDeleted, false);
 }
+// 远程调用业务仓库
+let criteria = new bobas.Criteria();
+criteria.result = 100;
+let condition = criteria.conditions.create();
+condition.alias = "docEntry";
+condition.operation = bobas.emConditionOperation.GRATER_EQUAL;
+condition.condVal = "1";
+condition.alias = "docEntry";
+condition.operation = bobas.emConditionOperation.LESS_THAN;
+condition.condVal = "100000";
+let sort = criteria.sorts.create();
+sort.alias = "docEntry";
+sort.sortType = bobas.emSortType.DESCENDING;
+
+//http://localhost:8080/demo/services/jersey/fetchSalesOrder?token=hahaha
+let boRepository = new BORepositoryTest();
+boRepository.token = "hahaha";
+boRepository.address = "http://localhost:8080/demo/services/jersey/";
+boRepository.conect();
+boRepository.fetchSalesOrder(criteria);
+boRepository.saveSalesOrder(order);
+
+

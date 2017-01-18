@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @license
  * Copyright color-coding studio. All Rights Reserved.
  *
@@ -6,9 +6,8 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-/**
- * 模块索引文件，此文件集中导出类
- */
-export * from './BORepository.d';
-export * from './BORepository';
+import { IBusinessObject, IBusinessObjectList } from '../core/Core';
+import { object } from '../data/Data';
+import { ArrayList } from '../data/Common';
+
 

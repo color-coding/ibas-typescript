@@ -10,6 +10,7 @@
 
 import { IBusinessObject, IBusinessObjectList } from '../core/BusinessObjectCore.d';
 import { emDocumentStatus, emBOStatus, emYesNo, emApprovalStatus } from '../data/Enums';
+import { ICriteria } from '../data/Criteria.d';
 
 /**
 * 业务对象集合
@@ -252,3 +253,47 @@ export interface IBOTagDeleted extends IBOReferenced {
      */
     deleted: emYesNo;
 }
+
+/**
+ * 审批的数据
+ */
+export interface IApprovalData extends IBusinessObject {
+    /**
+     * 数据类型
+     */
+    objectCode: string;
+    /**
+     * 数据所有人
+     */
+    dataOwner: number;
+    /**
+     * 审批状态
+     */
+    approvalStatus: emApprovalStatus;
+    /**
+     * 识别码
+     */
+    identifiers: string;
+    /**
+     * 数据查询条件
+     */
+    getCriteria(): ICriteria;
+}
+/**
+ * 数据所有权
+ */
+export interface IDataOwnership {
+    /**
+     * 数据类型
+     */
+    objectCode: string;
+    /**
+     * 数据所有者
+     */
+    dataOwner: number;
+    /**
+     * 数据所属组织
+     */
+    organization: string;
+}
+

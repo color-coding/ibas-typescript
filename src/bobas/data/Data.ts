@@ -8,6 +8,10 @@
 
 export * from './Common.d';
 export * from './Common';
+export * from './Criteria.d';
+export * from './Criteria';
+export * from './OperationResult.d';
+export * from './OperationResult';
 export * from './Enums';
 
 /**

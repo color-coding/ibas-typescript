@@ -103,6 +103,9 @@ export class OperationMessages implements IOperationMessages {
     private _time: Date;
 
     get time(): Date {
+        if (object.isNull(this._time)) {
+            this._time = new Date();
+        }
         return this._time;
     }
 
@@ -149,7 +152,7 @@ export class OperationResult<P> extends OperationMessages implements IOperationR
      * 
      */
     private _informations: List<IOperationInformation>;
-    
+
     get informations(): List<IOperationInformation> {
         if (object.isNull(this._informations)) {
             this._informations = new ArrayList<IOperationInformation>();
