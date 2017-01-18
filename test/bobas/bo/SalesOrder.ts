@@ -13,7 +13,7 @@ import { User } from './User';
 /**
 * 销售订单行对象
 */
-export class SalesOrderItem extends bobas.BusinessObject<SalesOrderItem> implements bobas.IBODocumentLine {
+export class SalesOrderItem extends bobas.BusinessObject<SalesOrderItem> {
 
     private _docEntry: number;
 
@@ -87,7 +87,7 @@ export class SalesOrderItem extends bobas.BusinessObject<SalesOrderItem> impleme
 /**
 * 销售订单行对象集合
 */
-export class SalesOrderItems extends bobas.BusinessObjects<SalesOrderItem> implements bobas.IBODocumentLines<SalesOrderItem>{
+export class SalesOrderItems extends bobas.BusinessObjects<SalesOrderItem, SalesOrder> {
 
     /**
      * 创建并添加子项
@@ -102,7 +102,7 @@ export class SalesOrderItems extends bobas.BusinessObjects<SalesOrderItem> imple
 /**
 * 销售订单对象
 */
-export class SalesOrder extends bobas.BusinessObject<SalesOrder> implements bobas.IBODocument {
+export class SalesOrder extends bobas.BusinessObject<SalesOrder> {
 
     private _docEntry: number;
 
@@ -128,7 +128,7 @@ export class SalesOrder extends bobas.BusinessObject<SalesOrder> implements boba
 
     get items(): SalesOrderItems {
         if (bobas.object.isNull(this._items)) {
-            this._items = new SalesOrderItems();
+            this._items = new SalesOrderItems(this);
         }
         return this._items;
     }

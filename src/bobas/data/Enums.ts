@@ -31,55 +31,135 @@ export enum emMessageLevel {
      */
     DEBUG,
 }
-
 /**
  * 比较方式
  */
 export enum emConditionOperation {
     /** 无 */
-    co_NONE,
+    NONE,
     /** 等于(=) */
-    co_EQUAL,
+    EQUAL,
     /** 大于(>) */
-    co_GRATER_THAN,
+    GRATER_THAN,
     /** 小于(<) */
-    co_LESS_THAN,
+    LESS_THAN,
     /** 大于等于(>=) */
-    co_GRATER_EQUAL,
+    GRATER_EQUAL,
     /** 小于等于(<=) */
-    co_LESS_EQUAL,
+    LESS_EQUAL,
     /** 不等于(<>) */
-    co_NOT_EQUAL,
+    NOT_EQUAL,
     /** 包含Like (%) */
-    co_CONTAIN,
+    CONTAIN,
     /** 不包含Not like (%) */
-    co_NOT_CONTAIN,
+    NOT_CONTAIN,
     /** 开始为(...%) */
-    co_START,
+    START,
     /** 结束为(%...) */
-    co_END,
+    END,
     /** 是空 */
-    co_IS_NULL,
+    IS_NULL,
     /** 非空 */
-    co_NOT_NULL
+    NOT_NULL
 }
 /**
  * 条件之间关系
  */
 export enum emConditionRelationship {
     /** 没关系 */
-    cr_NONE,
+    NONE,
     /** 且 */
-    cr_AND,
+    AND,
     /** 或 */
-    cr_OR
+    OR
 }
 /**
  * 排序方式
  */
 export enum emSortType {
     /** 降序 */
-    st_Descending,
+    DESCENDING,
     /** 升序 */
-    st_Ascending
+    ASCENDING
+}
+/**
+ * 是否
+*/
+export enum emYesNo {
+    /** 否 */
+    NO,
+    /** 是 */
+    YES
+}
+/**
+ * 单据状态
+ */
+export enum emDocumentStatus {
+    /** 计划 */
+    PLANNED,
+    /** 下达 */
+    RELEASED,
+    /** 完成 */
+    FINISHED,
+    /** 结算 */
+    CLOSED
+}
+/**
+ * 业务对象状态
+ */
+export enum emBOStatus {
+    /** 未清 */
+    OPEN,
+    /** 已清 */
+    CLOSED
+}
+/**
+ * 审批步骤状态
+ */
+export enum emApprovalStepStatus {
+    /** 挂起的 */
+    PENDING,
+    /** 审批中 */
+    PROCESSING,
+    /** 已批准 */
+    APPROVED,
+    /** 已拒绝 */
+    REJECTED,
+    /** 已跳过 */
+    SKIPPED
+}
+/**
+ * 审批状态
+ */
+export enum emApprovalStatus {
+    /**不影响 */
+    UNAFFECTED,
+    /** 审批中 */
+    PROCESSING,
+    /** 已批准 */
+    APPROVED,
+    /** 已拒绝 */
+    REJECTED,
+    /** 已取消 */
+    CANCELLED
+}
+/**
+ * 审批结果
+ */
+export enum emApprovalResult {
+    /** 已批准 */
+    APPROVED,
+    /** 拒绝的 */
+    REJECTED,
+    /** 重置为进行中 */
+    PROCESSING
+}
+/**
+ * 方向
+ */
+export enum emDirection {
+    /** 入 */
+    IN,
+    /** 出 */
+    OUT
 }

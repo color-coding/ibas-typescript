@@ -82,10 +82,10 @@ export class Configuration {
             async: false,
             cache: false,
             error: function (xhr, status, error) {
-                console.error(string.format("config: get file faild [{0} - {1}].", status, error));
+                console.error(string.format("config: get file [{2}] faild [{0} - {1}].", status, error, address));
             },
             success: function (data) {
-                console.log("config: get file successful.");
+                console.debug(string.format("config: get file [{0}] successful.", address));
                 if (data !== undefined && data !== null) {
                     if (data.appSettings !== undefined && data.appSettings !== null) {
                         let setting = data.appSettings;
