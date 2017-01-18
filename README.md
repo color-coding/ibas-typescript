@@ -17,6 +17,13 @@
 * test\bobas      业务对象相关测试。
 * test\bsbas      业务系统相关测试。
 
+~~~
+注意：
+  1） .d.ts用于声明，此类型文件不会编译为js文件。
+  2） .ts用于具体实现，会被编译为js文件。
+  3） src/bobas/data/Enums.ts用于定义库内所有的枚举类型。
+  4） src/bobas/data/Common.ts用于定义库内通用的数据类型。
+~~~
 
 ## 说明 | Instructions
 
