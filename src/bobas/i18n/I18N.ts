@@ -85,8 +85,7 @@ export class I18N {
                 logger.log(emMessageLevel.DEBUG, "i18n: get language file [{0}] sucessful.", address);
                 if (data !== undefined && data !== null) {
                     if (object.isNull(that.items)) { that.items = new Map<string, string>(); }
-                    let names = Object.getOwnPropertyNames(data);
-                    for (let name of names) {
+                    for (let name in data) {
                         that.items.set(name, data[name]);
                     }
                 }

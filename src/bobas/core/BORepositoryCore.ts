@@ -49,20 +49,44 @@ export abstract class BORemoteRepository implements IBORemoteRepository {
 
     /**
     * 查询数据
-    * @param method 方法名称
+    * @param boName 业务对象名称
     * @param criteria 查询
+    * @param callBack 完成后回调方法
     */
-    fetch<P>(method: string, criteria: ICriteria) {
-
+    fetch<P>(boName: string, criteria: ICriteria, callBack: Function) {
+        let method: string = "fetch" + boName;
+        let listener: RemoteListener = {
+            onCompleted(opRslt: IOperationResult<any>) {
+                console.debug(opRslt.resultCode + " - " + opRslt.message);
+            }
+        };
+        let converter = this.createDataConverter();
+        if (object.isNull(converter)) {
+            throw new Error(i18n.prop("msg_invalid_data_converter"));
+        }
+        let data = converter.convert(criteria);
+        this.callRemoteMethod(method, data, listener);
     }
 
     /**
     * 保存数据
-    * @param method 方法名称
+    * @param boName 业务对象名称
     * @param bo 业务对象
+    * @param callBack 完成后回调方法
     */
-    save<P>(method: string, bo: IBusinessObject) {
-
+    save<P>(boName: string, bo: IBusinessObject, callBack: Function) {
+        let method: string = "save" + boName;
+        let listener: RemoteListener = {
+            onCompleted(opRslt: IOperationResult<any>) {
+                console.debug(opRslt.resultCode + " - " + opRslt.message);
+            }
+        };
+        let converter = this.createDataConverter();
+        if (object.isNull(converter)) {
+            throw new Error(i18n.prop("msg_invalid_data_converter"));
+        }
+        let data = converter.convert(bo);
+        this.callRemoteMethod(method, data, listener);
     }
 
     /**
@@ -87,7 +111,7 @@ export abstract class BORemoteRepositoryJQuery extends BORemoteRepository {
      * @param data 数据
      * @param listener 方法监听
      */
-    callRemoteMethod(method: string, data: any, listener: RemoteListener) {
+    callRemoteMethod(method: string, data: string, listener: RemoteListener) {
         let that = this;
         let ajxSetting = this.createAjaxSettings(method, data);
         // 补充发生错误的事件
@@ -121,18 +145,22 @@ export abstract class BORemoteRepositoryJQuery extends BORemoteRepository {
      * @param method 方法名称
      * @param data 调用数据
      */
-    protected createAjaxSettings(method: string, data: any): JQueryAjaxSettings {
+    protected createAjaxSettings(method: string, data: string): JQueryAjaxSettings {
         let methodUrl = this.address;
         if (!methodUrl.endsWith("/")) {
             methodUrl = methodUrl + "/";
         }
         methodUrl = methodUrl + method;
+        if (!object.isNull(this.token)) {
+            methodUrl = methodUrl + string.format("?token={0}", this.token);
+        }
         let ajxSetting: JQueryAjaxSettings = {
             url: methodUrl,
             type: "POST",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             async: true,
+            data: data
         }
         return ajxSetting;
     }

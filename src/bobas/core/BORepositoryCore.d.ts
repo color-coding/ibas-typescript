@@ -19,16 +19,18 @@ export interface IBORepository {
     token: string;
     /**
     * 查询数据
-    * @param method 方法名称
+    * @param boName 业务对象名称
     * @param criteria 查询
+    * @param callBack 完成后回调方法
     */
-    fetch<P>(method: string, criteria: ICriteria);
+    fetch<P>(boName: string, criteria: ICriteria, callBack: Function);
     /**
     * 保存数据
-    * @param method 方法名称
+    * @param boName 业务对象名称
     * @param bo 业务对象
+    * @param callBack 完成后回调方法
     */
-    save<P>(method: string, bo: IBusinessObject);
+    save<P>(boName: string, bo: IBusinessObject, callBack: Function);
 }
 
 /**
@@ -63,10 +65,30 @@ export interface IRemoteRepository {
 export interface IBORemoteRepository extends IBORepository, IRemoteRepository {
 
 }
+
 /**
 * 数据转换者
 */
 export interface IDataConverter {
+    /**
+    * 转换数据
+    * @param data 当前类型数据
+    * @returns 转换的数据
+    */
+    convert(data: any): string;
+
+    /**
+    * 解析数据
+    * @param data 原始数据
+    * @returns 当前类型数据
+    */
+    parsing(data: any): any;
+}
+
+/**
+* 远程数据转换者
+*/
+export interface IRemoteDataConverter extends IDataConverter {
     /**
     * 转换查询为远程数据
     * @param criteria 查询
@@ -81,8 +103,8 @@ export interface IDataConverter {
     convert(bo: IBusinessObject): string;
     /**
     * 解析远程数据
-    * @param datas 远程数据
+    * @param data 远程数据
     * @returns 操作结果数据
     */
-    parsing(...datas: any[]): IOperationResult<any>;
+    parsing(data: any): IOperationResult<any>;
 }

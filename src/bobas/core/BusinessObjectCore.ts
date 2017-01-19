@@ -224,7 +224,7 @@ export abstract class BusinessObjectBase<T extends IBusinessObject> extends Trac
     getProperties(recursive: boolean): Map<string, any> {
         let properties = new Map();
         // 遍历属性名称
-        for (let item of Object.getOwnPropertyNames(this)) {
+        for (let item in this) {
             let name: string = item;
             let value = this[name];
             properties.set(name, value);

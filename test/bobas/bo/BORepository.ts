@@ -34,12 +34,12 @@ export class BORepositoryTest extends bobas.BORepositoryApplication {
         return ajxSetting;
     }
 
-    fetchSalesOrder(criteria: bobas.ICriteria) {
-        super.fetch("fetchSalesOrder", criteria);
+    fetchSalesOrder(criteria: bobas.ICriteria, callBack: Function) {
+        super.fetch("SalesOrder", criteria, callBack);
     }
 
-    saveSalesOrder(bo: SalesOrder) {
-        super.save("saveSalesOrder", bo);
+    saveSalesOrder(bo: SalesOrder, callBack: Function) {
+        super.save("SalesOrder", bo, callBack);
     }
 }
 

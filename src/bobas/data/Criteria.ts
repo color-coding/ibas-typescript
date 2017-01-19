@@ -46,14 +46,14 @@ export class Criteria implements ICriteria {
     /**
      * 不加载子项
      */
-    private _noChild: boolean;
+    private _noChilds: boolean;
 
-    get noChild(): boolean {
-        return this._noChild;
+    get noChilds(): boolean {
+        return this._noChilds;
     }
 
-    set noChild(value: boolean) {
-        this._noChild = value;
+    set noChilds(value: boolean) {
+        this._noChilds = value;
     }
 
     /**
@@ -99,6 +99,22 @@ export class Criteria implements ICriteria {
 
     set sorts(value: ISorts) {
         this._sorts = value;
+    }
+    
+    /**
+     * 子查询集合
+     */
+    private _childCriterias: IChildCriterias;
+
+    get childCriterias(): IChildCriterias {
+        if (object.isNull(this._childCriterias)) {
+            this._childCriterias = new ChildCriterias();
+        }
+        return this._childCriterias;
+    }
+
+    set childCriterias(value: IChildCriterias) {
+        this._childCriterias = value;
     }
 
     /**
@@ -317,6 +333,51 @@ export class Sorts extends ArrayList<Sort> implements ISorts {
     */
     create(): ISort {
         let item = new Sort();
+        this.add(item);
+        return item;
+    }
+}
+
+/**
+* 子项查询
+*/
+export class ChildCriteria extends Criteria implements IChildCriteria {
+    /**
+ * 获取-属性路径
+ */
+    private _propertyPath: string;
+
+    get propertyPath(): string {
+        return this._propertyPath;
+    }
+
+    set propertyPath(value: string) {
+        this._propertyPath = value;
+    }
+
+    /**
+     * 仅返回存在子项的
+     */
+    private _onlyHasChilds: boolean;
+
+    get onlyHasChilds(): boolean {
+        return this._onlyHasChilds;
+    }
+
+    set onlyHasChilds(value: boolean) {
+        this._onlyHasChilds = value;
+    }
+}
+
+/**
+* 子项查询集合
+*/
+export class ChildCriterias extends ArrayList<ChildCriteria> implements IChildCriterias {
+    /**
+     * 创建并返回子项查询
+    */
+    create(): IChildCriteria {
+        let item = new ChildCriteria();
         this.add(item);
         return item;
     }

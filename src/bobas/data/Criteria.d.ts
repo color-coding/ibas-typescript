@@ -28,7 +28,7 @@ export interface ICriteria {
     /**
      * 不加载子项
      */
-    noChild: boolean;
+    noChilds: boolean;
 
     /**
      * 备注
@@ -44,6 +44,11 @@ export interface ICriteria {
      * 排序字段集合
      */
     sorts: ISorts;
+
+    /**
+     * 子查询集合
+     */
+    childCriterias: IChildCriterias;
 
     /**
      * 克隆
@@ -170,9 +175,9 @@ export interface IChildCriteria extends ICriteria {
     propertyPath: string;
 
     /**
-     * 是否父要求结果。如果子项没有结果，则父项也不返回结果
+     * 仅返回存在子项的
      */
-    hasChild: boolean;
+    onlyHasChilds: boolean;
 }
 
 /**

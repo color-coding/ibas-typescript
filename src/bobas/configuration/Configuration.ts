@@ -89,8 +89,7 @@ export class Configuration {
                 if (data !== undefined && data !== null) {
                     if (data.appSettings !== undefined && data.appSettings !== null) {
                         let setting = data.appSettings;
-                        let names = Object.getOwnPropertyNames(setting);
-                        for (let name of names) {
+                        for (let name in setting) {
                             that.items.set(name, setting[name]);
                         }
                     }

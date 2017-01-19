@@ -23,6 +23,8 @@ let message = new bobas.Message();
 message.level = bobas.emMessageLevel.WARN;
 message.content = "a object message";
 bobas.logger.log(message);
+// 枚举值操作
+console.log(bobas.string.format("Enum string {0}.", bobas.emMessageLevel[bobas.emMessageLevel.DEBUG]));
 // 测试字符串操作
 console.log(bobas.string.format("I'm {0}.", 100));
 console.log(bobas.string.format("I'm {0}.", { "name": "jack" }));

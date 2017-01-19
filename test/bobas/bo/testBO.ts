@@ -11,8 +11,10 @@ import { SalesOrder } from './SalesOrder';
 import { BORepositoryTest } from './BORepository';
 
 let order = new SalesOrder();
+bobas.logger.log(bobas.emMessageLevel.DEBUG, "test: type of {0}", typeof (order));
 order.customer = "C00001";
 let item = order.items.create();
+bobas.logger.log(bobas.emMessageLevel.DEBUG, "test: type of {0}", typeof (item));
 item.itemCode = "A00001";
 item.price = 1.99;
 item.quantity = 2;
@@ -29,8 +31,8 @@ order.user.userCode = "aaa";
 // 遍历属性名称，包括子项
 bobas.logger.log(bobas.emMessageLevel.INFO, "test: {1}", "order", order.getProperties(true).size);
 // 遍历属性名称，不包括子项
-bobas.logger.log(bobas.emMessageLevel.INFO, "test: {0} {1}", "order", order.getProperties(true).size);
-console.warn(order.getProperties(false).size);
+bobas.logger.log(bobas.emMessageLevel.INFO, "test: {0} {1}", "order", order.getProperties(false).size);
+// 测试状态
 bobas.assert.equals("bo status isNew", order.isNew, true);
 bobas.assert.equals("bo status isDirty", order.isDirty, true);
 bobas.assert.equals("bo status isDeleted", order.isDeleted, false);
@@ -45,8 +47,10 @@ for (let item of order.items) {
 }
 // 远程调用业务仓库
 let criteria = new bobas.Criteria();
+bobas.logger.log(bobas.emMessageLevel.DEBUG, "test: type of {0}", typeof (criteria));
 criteria.result = 100;
 let condition = criteria.conditions.create();
+bobas.logger.log(bobas.emMessageLevel.DEBUG, "test: type of {0}", typeof (condition));
 condition.alias = "docEntry";
 condition.operation = bobas.emConditionOperation.GRATER_EQUAL;
 condition.condVal = "1";
@@ -54,6 +58,7 @@ condition.alias = "docEntry";
 condition.operation = bobas.emConditionOperation.LESS_THAN;
 condition.condVal = "100000";
 let sort = criteria.sorts.create();
+bobas.logger.log(bobas.emMessageLevel.DEBUG, "test: type of {0}", typeof (sort));
 sort.alias = "docEntry";
 sort.sortType = bobas.emSortType.DESCENDING;
 
@@ -62,7 +67,11 @@ let boRepository = new BORepositoryTest();
 boRepository.token = "hahaha";
 boRepository.address = "http://localhost:8080/demo/services/jersey/";
 boRepository.conect();
-boRepository.fetchSalesOrder(criteria);
-boRepository.saveSalesOrder(order);
+boRepository.fetchSalesOrder(criteria, function (opRslt: bobas.IOperationResult<SalesOrder>) {
+    bobas.logger.log(bobas.string.format("op code {0} and objects size {1}.", opRslt.resultCode, opRslt.resultObjects.length));
+});
+boRepository.saveSalesOrder(order, function (opRslt: bobas.IOperationResult<SalesOrder>) {
+    bobas.logger.log(bobas.string.format("op code {0} and objects size {1}.", opRslt.resultCode, opRslt.resultObjects.length));
+});
 
 
