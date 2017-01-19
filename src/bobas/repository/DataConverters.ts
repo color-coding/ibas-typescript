@@ -109,13 +109,13 @@ class CriteriaConverter {
 
     convertCondition(data: ICondition): any {
         let newData = {
-            "Alias": "ItemCode",
+            "Alias": "",
             "BracketCloseNum": 0,
             "BracketOpenNum": 0,
             "ComparedAlias": "",
-            "CondVal": "T000",
-            "Operation": "co_CONTAIN",
-            "Relationship": "cr_AND",
+            "CondVal": "",
+            "Operation": "",
+            "Relationship": "",
             "Remarks": ""
         };
         newData.Alias = data.alias;
@@ -148,27 +148,20 @@ class OperationResultConverter {
         let opRslt = new OperationResult();
         if (data.type !== undefined && data.type === "OperationResult") {
             // 可识别的类型
-            for (let sName in data) {
-                // 遍历当前属性
-                let value = data[sName]; // 属性值
-                if (value === null || value === undefined) {
-                    // 无效的值，不做处理
-                    continue;
-                }
-                sName = sName.toLowerCase(); // 名称转小写，便于比较
-                let names = Object.getOwnPropertySymbols(opRslt);
-                for (let tName in names) {
-                    if (sName === tName.toLowerCase()) {
-                        // 属性相同时
-                        opRslt[tName] = value;
-                        value = null;// 值置为null，表示被使用
-                        break;
-                    }
-                }
-                if (value !== null) {
-                    // 没有找到对应的属性
-                    logger.log(emMessageLevel.WARN, "converter: [{0}] no match property in [OperationResult].", sName);
-                }
+            opRslt.signID = data.SignID;
+            opRslt.time = data.Time;
+            opRslt.userSign = data.UserSign;
+            opRslt.resultCode = data.ResultCode;
+            opRslt.message = data.Message;
+            for (let item of data.ResultObjects) {
+                opRslt.resultObjects.add(item);
+            }
+            for (let item of data.Informations) {
+                let info = new OperationInformation();
+                info.name = item.Name;
+                info.tag = item.Tag;
+                info.contents = item.Contents;
+                opRslt.informations.add(info);
             }
         } else {
             // 不可识别的类型，直接返回
