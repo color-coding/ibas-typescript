@@ -10,7 +10,7 @@
 
 import {
     object, string, emMessageLevel,
-    ArrayList, IOperationResult,  ICriteria
+    ArrayList, IOperationResult, ICriteria
 } from '../data/Data';
 import { IBusinessObject, IBusinessObjectList } from './BusinessObjectCore.d';
 import { IBORemoteRepository, RemoteListener, IDataConverter } from './BORepositoryCore.d';
@@ -56,6 +56,8 @@ export abstract class BORemoteRepository implements IBORemoteRepository {
     fetch<P>(boName: string, criteria: ICriteria, callBack: Function) {
         let method: string = "fetch" + boName;
         let listener: RemoteListener = {
+            boName: boName,
+            method: method,
             onCompleted(opRslt: IOperationResult<any>) {
                 if (!object.isNull(callBack)) {
                     callBack.call(callBack, opRslt);
@@ -79,6 +81,8 @@ export abstract class BORemoteRepository implements IBORemoteRepository {
     save<P>(boName: string, bo: IBusinessObject, callBack: Function) {
         let method: string = "save" + boName;
         let listener: RemoteListener = {
+            boName: boName,
+            method: method,
             onCompleted(opRslt: IOperationResult<any>) {
                 if (!object.isNull(callBack)) {
                     callBack.call(callBack, opRslt);

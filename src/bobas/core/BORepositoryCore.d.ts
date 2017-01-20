@@ -38,6 +38,14 @@ export interface IBORepository {
 */
 export interface RemoteListener {
     /**
+    * 业务对象名称
+    */
+    boName?: string;
+    /**
+    * 方法名称
+    */
+    method?: string;
+    /**
     * 调用完成
     * @param opRslt 结果
     */

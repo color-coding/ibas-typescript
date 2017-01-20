@@ -42,7 +42,7 @@ bobas.assert.equals("converter parsingDate faild.", dValue, new Date(2017, 3, 14
 dValue = converter.parsingDate("2017-3-14");
 bobas.assert.equals("converter parsingDate faild.", dValue, new Date(2017, 3, 14));
 let sValue = converter.convertDate(new Date(2017, 3, 14, 23, 59, 59));
-bobas.assert.equals("converter parsingDate faild.", sValue, "2017-3-14T23:59:59");
+bobas.assert.equals("converter convertDate faild.", sValue, "2017-3-14T23:59:59");
 dValue = converter.parsingDate("2017/3/14T23:59:59");
 bobas.assert.equals("converter parsingDate faild.", dValue, new Date(2017, 3, 14, 23, 59, 59))
 // 测试字符串操作
