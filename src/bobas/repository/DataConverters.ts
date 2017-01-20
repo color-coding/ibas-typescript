@@ -67,7 +67,11 @@ export class Converter {
      * @returns 日期
      */
     parsingDate(value: string): Date {
-        let tmps = value.split("'T'");
+        let spTime = "T";
+        if (value.indexOf("'T'") > 0) {
+            spTime = "'T'";
+        }
+        let tmps = value.split(spTime);
         let date = tmps[0];
         let time = tmps[1];
         let year: number = 0, month: number = 0, day: number = 0, hour: number = 0, minute: number = 0, second: number = 0;
@@ -115,7 +119,7 @@ export class Converter {
             hour: number = value.getHours(),
             minute: number = value.getMinutes(),
             second: number = value.getSeconds();
-        return year + "-" + month + "-" + day + "'T'" + hour + ":" + minute + ":" + second;
+        return year + "-" + month + "-" + day + "T" + hour + ":" + minute + ":" + second;
     }
 }
 
@@ -401,7 +405,7 @@ class OperationResultConverter extends DataConverter {
             // 可识别的类型
             var converter = this.boConverter;
             opRslt.signID = data.SignID;
-            opRslt.time = data.Time;
+            opRslt.time = this.parsingDate(data.Time);
             opRslt.userSign = data.UserSign;
             opRslt.resultCode = data.ResultCode;
             opRslt.message = data.Message;
