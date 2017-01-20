@@ -7,11 +7,23 @@
  */
 
 import * as bobas from '../../../src/bobas/bobas';
+import { DataConverter4Test } from './DataConverters';
 import { SalesOrder } from './SalesOrder';
 /**
  * 业务仓库应用
  */
 export class BORepositoryTest extends bobas.BORepositoryApplication {
+
+    private converter: DataConverter4Test;
+    /**
+     * 创建此模块的后端与前端数据的转换者
+     */
+    protected createDataConverter(): bobas.IDataConverter {
+        if (bobas.object.isNull(this.converter)) {
+            this.converter = new DataConverter4Test();
+        }
+        return this.converter;
+    }
 
     conect() {
         let listener: bobas.RemoteListener = {

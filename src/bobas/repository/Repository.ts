@@ -11,4 +11,5 @@
  */
 export * from './BORepository.d';
 export * from './BORepository';
+export * from './DataConverters';
 

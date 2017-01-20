@@ -25,6 +25,24 @@ message.content = "a object message";
 bobas.logger.log(message);
 // 枚举值操作
 console.log(bobas.string.format("Enum string {0}.", bobas.emMessageLevel[bobas.emMessageLevel.DEBUG]));
+let converter = new bobas.Converter();
+let eValue = converter.parsingEnums(bobas.emYesNo, "yes");
+bobas.assert.equals("converter parsingEnums faild.", bobas.emYesNo.YES, eValue);
+eValue = converter.parsingEnums(bobas.emConditionOperation, "co_NOT_EQUAL");
+bobas.assert.equals("converter parsingEnums faild.", bobas.emConditionOperation.NOT_EQUAL, eValue);
+eValue = converter.parsingEnums(bobas.emConditionOperation, "NOT_EQUAL");
+bobas.assert.equals("converter parsingEnums faild.", bobas.emConditionOperation.NOT_EQUAL, eValue);
+// 测试日期类型
+let dValue = converter.parsingDate("2017-03-14'T'23:59:59");
+bobas.assert.equals("converter parsingDate faild.", dValue, new Date(2017, 3, 14, 23, 59, 59));
+dValue = converter.parsingDate("2017/3/14'T'23:59:59");
+bobas.assert.equals("converter parsingDate faild.", dValue, new Date(2017, 3, 14, 23, 59, 59));
+dValue = converter.parsingDate("2017/3/14");
+bobas.assert.equals("converter parsingDate faild.", dValue, new Date(2017, 3, 14));
+dValue = converter.parsingDate("2017-3-14");
+bobas.assert.equals("converter parsingDate faild.", dValue, new Date(2017, 3, 14));
+let sValue = converter.convertDate(new Date(2017, 3, 14, 23, 59, 59));
+bobas.assert.equals("converter parsingDate faild.", sValue, "2017-3-14'T'23:59:59");
 // 测试字符串操作
 console.log(bobas.string.format("I'm {0}.", 100));
 console.log(bobas.string.format("I'm {0}.", { "name": "jack" }));

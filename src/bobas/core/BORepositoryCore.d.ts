@@ -86,6 +86,25 @@ export interface IDataConverter {
 }
 
 /**
+* 数据转换者
+*/
+export interface IBOConverter {
+    /**
+    * 转换业务对象数据
+    * @param data 当前类型数据
+    * @returns 转换的数据
+    */
+    convert(data: IBusinessObject): Object;
+
+    /**
+    * 解析业务对象数据
+    * @param data 原始数据
+    * @returns 当前类型数据
+    */
+    parsing(data: any): IBusinessObject;
+}
+
+/**
 * 远程数据转换者
 */
 export interface IRemoteDataConverter extends IDataConverter {

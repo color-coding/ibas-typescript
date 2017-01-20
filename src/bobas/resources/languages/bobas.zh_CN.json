@@ -6,5 +6,6 @@
   "msg_load_language_file_successful": "读取语言文件[{0}]成功",
   "msg_invalid_data_converter": "无效的数据转换者",
   "msg_data_converter_parsing_faild": "数据转换者的解析失败",
-  "msg_unrecognized_data": "不能识别的数据"
+  "msg_unrecognized_data": "不能识别的数据",
+  "msg_cannot_converted_to_type": "不能把[{1}]转换到类型[{0}]"
 }

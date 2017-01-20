@@ -40,8 +40,21 @@ export module assert {
         } else {
             throw new Error("assert equals invalid parameters.");
         }
+        if (unexpected instanceof Date && actual instanceof Date) {
+            if (isEqualsDate(unexpected, actual)) {
+                return;
+            }
+        }
         if (unexpected !== actual) {
             throw new Error(message);
         }
+    }
+    /**
+     * 是否为相等的日期
+     * @param unexpected 判断的
+     * @param actual 实际的
+     */
+    function isEqualsDate(unexpected: Date, actual: Date): boolean {
+        return unexpected.getTime() === actual.getTime();
     }
 }
