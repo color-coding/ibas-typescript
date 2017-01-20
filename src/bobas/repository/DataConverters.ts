@@ -149,6 +149,23 @@ export abstract class DataConverter extends Converter implements IDataConverter 
  */
 export abstract class BOConverter extends Converter implements IBOConverter {
 
+    private _mapping: Map<string, any>;
+    /**
+    * 业务对象映射<名称，类型>
+    */
+    get mapping(): Map<string, any> {
+        if (object.isNull(this._mapping)) {
+            this._mapping = new Map<string, any>();
+        }
+        return this._mapping;
+    }
+    /**
+     * 自定义解析
+     * @param data 远程数据
+     * @returns 本地数据
+     */
+    protected abstract customParsing(data: any): IBusinessObject;
+
     /**
     * 转换数据
     * @param data 当前类型数据
@@ -161,7 +178,70 @@ export abstract class BOConverter extends Converter implements IBOConverter {
     * @param datas 远程数据
     * @returns 操作结果数据
     */
-    abstract parsing(data: any): IBusinessObject;
+    parsing(data: any): IBusinessObject {
+        let dType: string = data.type;
+        if (dType !== undefined) {
+            if (this.mapping.has(dType)) {
+                // 注册了匹配的映射类型
+                let tType = this.mapping.get(dType);//对象的类型
+                if (object.isNull(tType)) {
+                    throw new Error(i18n.prop("msg_invaild_mapping_type", dType));
+                }
+                let newData: any = new tType;
+                if (object.isNull(newData)) {
+                    throw new Error(i18n.prop("msg_cannot_create_mapping_type_instance", dType));
+                }
+                logger.log(emMessageLevel.DEBUG, "converter: {0} mapped {1}.", dType, tType.name);
+                this.parsingProperties(data, newData);
+                return newData;
+            }
+        } else {
+            dType = "unknown";
+        }
+        // 没有匹配的映射类型
+        logger.log(emMessageLevel.DEBUG, "converter: {0} using custom parsing.", dType);
+        let newData = this.customParsing(data);
+        if (!object.isNull(newData)) {
+            return newData;
+        }
+        // 没处理，直接返回
+        logger.log(emMessageLevel.WARN, i18n.prop("msg_not_parsed_data", dType));
+        return data;
+    }
+
+    /**
+     * 解析属性
+     * @param source 源数据（远程类型）
+     * @param target 目标数据（本地类型）
+     */
+    protected parsingProperties(source: any, target: any) {
+        for (let sName in source) {
+            // 首字母改为小写
+            let value = source[sName];
+            let name = sName[0].toLowerCase() + sName.substring(1);
+            if (Array.isArray(value)) {
+                // 此属性是数组
+
+                continue;
+            } else if (value instanceof Object) {
+                // 此属性是对象
+
+
+                continue;
+            } else if (value instanceof String) {
+                // 此属性是字符
+
+                continue;
+            }
+            //Object.apply(target, name, value);
+            let tmp = Object.prototype.propertyIsEnumerable(name);
+            for (let sName in target) {
+                if (typeof target[sName] == "function") { // Is it a function?
+
+                }
+            }
+        }
+    }
 }
 
 /**
@@ -410,7 +490,7 @@ class OperationResultConverter extends DataConverter {
             opRslt.resultCode = data.ResultCode;
             opRslt.message = data.Message;
             for (let item of data.ResultObjects) {
-                opRslt.resultObjects.add(item);
+                opRslt.resultObjects.add(converter.parsing(item));
             }
             for (let item of data.Informations) {
                 let info = new OperationInformation();

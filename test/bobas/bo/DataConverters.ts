@@ -8,6 +8,7 @@
 
 
 import { BOConverter, DataConverter4ibas, IBusinessObject } from '../../../src/bobas/bobas';
+import { SalesOrder } from './SalesOrder';
 
 /**
  * Test 模块的数据转换者
@@ -26,6 +27,12 @@ export class DataConverter4Test extends DataConverter4ibas {
  * Test 模块的业务对象转换者
  */
 class TestBOConverter extends BOConverter {
+
+    constructor() {
+        super();
+        this.mapping.set("SalesOrder", SalesOrder);
+    }
+
     /**
     * 转换数据
     * @param data 当前类型数据
@@ -36,11 +43,11 @@ class TestBOConverter extends BOConverter {
     }
 
     /**
-    * 解析远程数据
-    * @param datas 远程数据
-    * @returns 操作结果数据
-    */
-    parsing(data: any): IBusinessObject {
+     * 自定义解析
+     * @param data 远程数据
+     * @returns 本地数据
+     */
+    protected customParsing(data: any): IBusinessObject {
         return data;
     }
 }

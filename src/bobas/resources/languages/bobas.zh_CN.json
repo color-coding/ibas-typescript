@@ -7,5 +7,8 @@
   "msg_invalid_data_converter": "无效的数据转换者",
   "msg_data_converter_parsing_faild": "数据转换者的解析失败",
   "msg_unrecognized_data": "不能识别的数据",
-  "msg_cannot_converted_to_type": "不能把[{1}]转换到类型[{0}]"
+  "msg_cannot_converted_to_type": "不能把[{1}]转换到类型[{0}]",
+  "msg_not_parsed_data": "没有解析的数据{0}",
+  "msg_invaild_mapping_type": "{0}的映射对象类型无效",
+  "msg_cannot_create_mapping_type_instance": "无法创建映射类型实例"
 }
