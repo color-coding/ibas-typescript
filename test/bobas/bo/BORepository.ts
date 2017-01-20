@@ -36,14 +36,24 @@ export class BORepositoryTest extends bobas.BORepositoryApplication {
 
     protected createAjaxSettings(method: string, data: any): JQueryAjaxSettings {
         // 重写ajax设置
-        if (method !== "hello") {
-            return super.createAjaxSettings(method, data);
-        }
-        // 特殊方法的处理
-        let ajxSetting = super.createAjaxSettings(method, data);
-        ajxSetting.type = "GET";
-        ajxSetting.dataType = undefined;
-        return ajxSetting;
+        if (method === "hello") {
+            // 特殊方法的处理
+            let ajxSetting = super.createAjaxSettings(method, data);
+            ajxSetting.type = "GET";
+            ajxSetting.dataType = undefined;
+            return ajxSetting;
+        } else
+            if (method === "saveSalesOrder") {
+                // 特殊方法的处理
+                let ajxSetting = super.createAjaxSettings(method, data);
+                ajxSetting.type = "POST";
+                ajxSetting.contentType = "application/json; charset=utf-8";// 发送值类型
+                ajxSetting.dataType = "text";// 返回值类型
+                // ajxSetting.contentType = undefined;
+                // ajxSetting.dataType = undefined;
+                return ajxSetting;
+            }
+        return super.createAjaxSettings(method, data);
     }
 
     fetchSalesOrder(criteria: bobas.ICriteria, callBack: Function) {

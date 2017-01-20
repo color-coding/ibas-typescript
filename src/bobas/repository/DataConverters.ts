@@ -168,10 +168,57 @@ export abstract class BOConverter extends Converter implements IBOConverter {
 
     /**
     * 转换数据
+    * 默认原则是：属性去“_”并首字母改大写
     * @param data 当前类型数据
     * @returns 转换的数据
     */
-    abstract convert(data: IBusinessObject): Object;
+    convert(data: IBusinessObject): Object {
+        let newData = {};
+        this.convertProperties(data, newData);
+        return newData;
+    }
+
+    /**
+     * 转换属性
+     * @param source 源数据（本地类型）
+     * @param target 目标数据（远程类型）
+     */
+    protected convertProperties(source: any, target: any) {
+        let sType = source.constructor.name;
+        target.type = sType;
+        for (let sName in source) {
+            // 首字母改为小写
+            let value = source[sName];
+            let name = sName;
+            if (name.startsWith("_")) {
+                // 去除“_”前缀
+                name = name.substring(1);
+            }
+            name = name[0].toUpperCase() + name.substring(1);
+            if (Array.isArray(value)) {
+                // 此属性是数组
+                let newValue = [];
+                for (let item of value) {
+                    let tmpValue = {};
+                    this.convertProperties(item, tmpValue);
+                    newValue.push(tmpValue);
+                }
+                value = newValue;
+            } else if (value instanceof Date) {
+                // 此属性是字符
+                value = this.convertDate(value);
+            } else if (typeof value === "boolean") {
+                // 此属性是字符
+                name = "is" + name;
+            } else if (value instanceof Object) {
+                // 此属性是对象
+                let newValue = {};
+                this.convertProperties(value, newValue);
+                value = newValue;
+            }
+            target[name] = value;
+        }
+    }
 
     /**
     * 解析远程数据
@@ -215,6 +262,10 @@ export abstract class BOConverter extends Converter implements IBOConverter {
      * @param target 目标数据（本地类型）
      */
     protected parsingProperties(source: any, target: any) {
+        if (target.isLoading !== undefined) {
+            // 置为赋值状态
+            target.isLoading = true;
+        }
         for (let sName in source) {
             // 首字母改为小写
             let value = source[sName];
@@ -222,24 +273,22 @@ export abstract class BOConverter extends Converter implements IBOConverter {
             if (Array.isArray(value)) {
                 // 此属性是数组
 
-                continue;
             } else if (value instanceof Object) {
                 // 此属性是对象
 
 
-                continue;
-            } else if (value instanceof String) {
+            } else if (typeof value === "string") {
                 // 此属性是字符
-
-                continue;
-            }
-            //Object.apply(target, name, value);
-            let tmp = Object.prototype.propertyIsEnumerable(name);
-            for (let sName in target) {
-                if (typeof target[sName] == "function") { // Is it a function?
-
+                if (value.indexOf("T") > 0 && value.indexOf("-") > 0 && value.indexOf(":") > 0) {
+                    // 字符格式为日期，yyyy-MM-ddThh:mm:ss
+                    value = this.parsingDate(value);
                 }
             }
+            target["_" + name] = value;
+        }
+        if (target.isLoading !== undefined) {
+            // 取消赋值状态
+            target.isLoading = false;
         }
     }
 }
@@ -256,10 +305,11 @@ export abstract class DataConverter4ibas extends DataConverter {
     convert(data: any): string {
         let remote: any = null;
         if (data instanceof Criteria) {
-            let converter: CriteriaConverter = new CriteriaConverter();
+            let converter = new CriteriaConverter();
             remote = converter.convert(data);
         } else {
-            remote = data;
+            let converter = this.createBOConverter();
+            remote = converter.convert(data);
         }
         return JSON.stringify(remote);
     }

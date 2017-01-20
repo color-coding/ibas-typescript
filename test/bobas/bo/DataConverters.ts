@@ -33,14 +33,6 @@ class TestBOConverter extends BOConverter {
         this.mapping.set("SalesOrder", SalesOrder);
     }
 
-    /**
-    * 转换数据
-    * @param data 当前类型数据
-    * @returns 转换的数据
-    */
-    convert(data: IBusinessObject): Object {
-        return data;
-    }
 
     /**
      * 自定义解析
