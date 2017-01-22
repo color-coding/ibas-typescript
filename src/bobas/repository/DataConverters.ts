@@ -179,45 +179,63 @@ export abstract class BOConverter extends Converter implements IBOConverter {
     }
 
     /**
+     * 获取属性的映射名称
+     * @param name 源名称
+     * @param value 值
+     * @returns 映射的名称；null时表示没有映射。
+     */
+    protected mappingProperty(name: string, value: any): string {
+        if (!name.startsWith("_")) {
+            // 非“_”开始属性名称，表示不映射属性
+            return null;
+        }
+        // 去除“_”并后面字母改大写
+        let newName = name[1].toUpperCase() + name.substring(2);
+        if (typeof value === "boolean") {
+            // 布尔类型，映射规则是，替换“_”为“is”
+            newName = "is" + newName;
+        }
+        return newName;
+    }
+
+    /**
      * 转换属性
      * @param source 源数据（本地类型）
      * @param target 目标数据（远程类型）
+     * @returns 目标数据
      */
-    protected convertProperties(source: any, target: any) {
+    protected convertProperties(source: any, target: any): any {
         let sType = source.constructor.name;
         target.type = sType;
         for (let sName in source) {
             // 首字母改为小写
             let value = source[sName];
-            let name = sName;
-            if (name.startsWith("_")) {
-                // 去除“_”前缀
-                name = name.substring(1);
+            let name = this.mappingProperty(sName, value);
+            if (object.isNull(name)) {
+                // 没有解析出映射关系，继续下一个属性
+                continue;
             }
-            name = name[0].toUpperCase() + name.substring(1);
             if (Array.isArray(value)) {
                 // 此属性是数组
                 let newValue = [];
                 for (let item of value) {
-                    let tmpValue = {};
-                    this.convertProperties(item, tmpValue);
-                    newValue.push(tmpValue);
+                    newValue.push(this.convertProperties(item, {}));
                 }
                 value = newValue;
             } else if (value instanceof Date) {
                 // 此属性是字符
                 value = this.convertDate(value);
-            } else if (typeof value === "boolean") {
-                // 此属性是字符
-                name = "is" + name;
             } else if (value instanceof Object) {
                 // 此属性是对象
-                let newValue = {};
-                this.convertProperties(value, newValue);
-                value = newValue;
+                value = this.convertProperties(value, {});
+            }
+            if (object.isNull(value)) {
+                // 无效的值，则不添加此属性
+                continue;
             }
             target[name] = value;
         }
+        return target;
     }
 
     /**

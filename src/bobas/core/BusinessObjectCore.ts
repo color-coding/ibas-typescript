@@ -74,75 +74,75 @@ export abstract class TrackableBase extends Bindable implements ITrackable {
         this.isSavable = true;
     }
 
-    private new: boolean;
+    private _new: boolean;
     /**
      * 是否新建
      */
     get isNew(): boolean {
-        return this.new;
+        return this._new;
     }
     set isNew(value: boolean) {
-        this.new = value;
+        this._new = value;
         this.firePropertyChanged("isNew");
     }
 
-    private dirty: boolean;
+    private _dirty: boolean;
     /**
      * 是否修改
      */
     get isDirty(): boolean {
-        return this.dirty;
+        return this._dirty;
     }
     set isDirty(value: boolean) {
-        this.dirty = value;
+        this._dirty = value;
         this.firePropertyChanged("isDirty");
     }
 
-    private deleted: boolean;
+    private _deleted: boolean;
     /**
      * 是否刪除
      */
     get isDeleted(): boolean {
-        return this.deleted;
+        return this._deleted;
     }
     set isDeleted(value: boolean) {
-        this.deleted = value;
+        this._deleted = value;
         this.firePropertyChanged("isDeleted");
     }
 
-    private loading: boolean;
+    private _loading: boolean;
     /**
      * 是否加载
      */
     get isLoading(): boolean {
-        return this.loading;
+        return this._loading;
     }
     set isLoading(value: boolean) {
-        this.loading = value;
+        this._loading = value;
         this.firePropertyChanged("isLoading");
     }
 
-    private savable: boolean;
+    private _savable: boolean;
     /**
      * 是否有效
      */
     get isSavable(): boolean {
-        return this.savable;
+        return this._savable;
     }
     set isSavable(value: boolean) {
-        this.savable = value;
+        this._savable = value;
         this.firePropertyChanged("isSavable");
     }
 
-    private vaild: boolean;
+    private _vaild: boolean;
     /**
      * 是否有效
      */
     get isVaild(): boolean {
-        return this.vaild;
+        return this._vaild;
     }
     set isVaild(value: boolean) {
-        this.vaild = value;
+        this._vaild = value;
         this.firePropertyChanged("isVaild");
     }
 

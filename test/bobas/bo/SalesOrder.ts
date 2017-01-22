@@ -11,6 +11,148 @@ import * as bobas from '../../../src/bobas/bobas';
 import { User } from './User';
 
 /**
+* 约束：
+*    1. 本地对象（如下，SalesOrder）的属性用set、get定义，便于扩展方法。
+*    2. 本地对象与远程对象，通过私有属性的名称构建关联关系。
+          转换规则，仅“_”前缀的属性才进行映射！
+             a. 去除“_”字符并把后面的第一个字母改大写。如：_salesOrderItems -> SalesOrderItems
+             b. 如果值是boolean类型的，“_”字符替换为“is”并把“_”后的首字母改大写。如：_new -> isNew
+    */
+
+/** 远程对象示例
+{
+  "type": "SalesOrder",
+  "isDirty": true,
+  "isDeleted": false,
+  "isNew": true,
+  "UserFields": [
+    {
+      "Name": "U_OrderType",
+      "Value": "S0000",
+      "ValueType": "db_Alphanumeric"
+    },
+    {
+      "Name": "U_OrderId",
+      "Value": "5768",
+      "ValueType": "db_Numeric"
+    },
+    {
+      "Name": "U_OrderDate",
+      "Value": "2017-01-22",
+      "ValueType": "db_Date"
+    },
+    {
+      "Name": "U_OrderTotal",
+      "Value": "999.888",
+      "ValueType": "db_Decimal"
+    }
+  ],
+  "ApprovalStatus": "Unaffected",
+  "Canceled": "Yes",
+  "CreateTime": 0,
+  "CreateUserSign": 0,
+  "CustomerCode": "C00001",
+  "Cycle": {
+    "Value": 1.050001,
+    "Unit": "hour"
+  },
+  "DataOwner": 0,
+  "DeliveryDate": "2017-01-22T00:00:00",
+  "DocEntry": 1,
+  "DocNum": 0,
+  "DocumentDate": "2017-01-22T00:00:00",
+  "DocumentRate": 0,
+  "DocumentStatus": "Closed",
+  "DocumentTotal": 99.99,
+  "Handwritten": "No",
+  "Instance": 0,
+  "LogInst": 0,
+  "ObjectCode": "CC_TT_SALESORDER",
+  "Period": 0,
+  "PostingDate": "2017-01-22T00:00:00",
+  "Referenced": "No",
+  "SalesOrderItems": [
+    {
+      "isDirty": true,
+      "isDeleted": false,
+      "isNew": true,
+      "Canceled": "No",
+      "CreateTime": 0,
+      "CreateUserSign": 0,
+      "DocEntry": 1,
+      "ItemCode": "A00001",
+      "LineId": 1,
+      "LineStatus": "Closed",
+      "LineTotal": 0,
+      "LogInst": 0,
+      "ObjectCode": "CC_TT_SALESORDER",
+      "OpenQuantity": 0,
+      "Price": 99.99,
+      "Quantity": 10,
+      "Referenced": "No",
+      "Status": "Open",
+      "UpdateTime": 0,
+      "UpdateUserSign": 0,
+      "VisOrder": 0
+    },
+    {
+      "isDirty": true,
+      "isDeleted": false,
+      "isNew": true,
+      "Canceled": "No",
+      "CreateTime": 0,
+      "CreateUserSign": 0,
+      "DocEntry": 1,
+      "ItemCode": "A00002",
+      "LineId": 2,
+      "LineStatus": "Closed",
+      "LineTotal": 0,
+      "LogInst": 0,
+      "ObjectCode": "CC_TT_SALESORDER",
+      "OpenQuantity": 0,
+      "Price": 199.990001,
+      "Quantity": 10,
+      "Referenced": "No",
+      "Status": "Open",
+      "UpdateTime": 0,
+      "UpdateUserSign": 0,
+      "VisOrder": 0
+    },
+    {
+      "isDirty": true,
+      "isDeleted": false,
+      "isNew": true,
+      "Canceled": "No",
+      "CreateTime": 0,
+      "CreateUserSign": 0,
+      "DocEntry": 1,
+      "ItemCode": "A00002",
+      "LineId": 3,
+      "LineStatus": "Closed",
+      "LineTotal": 0,
+      "LogInst": 0,
+      "ObjectCode": "CC_TT_SALESORDER",
+      "OpenQuantity": 0,
+      "Price": 199.990001,
+      "Quantity": 10,
+      "Referenced": "No",
+      "Status": "Open",
+      "UpdateTime": 0,
+      "UpdateUserSign": 0,
+      "VisOrder": 0
+    }
+  ],
+  "Series": 0,
+  "Status": "Closed",
+  "Transfered": "No",
+  "UpdateTime": 0,
+  "UpdateUserSign": 0,
+  "UserSign": 0
+}
+
+*/
+
+/**
 * 销售订单行对象
 */
 export class SalesOrderItem extends bobas.BusinessObject<SalesOrderItem> {
@@ -71,17 +213,18 @@ export class SalesOrderItem extends bobas.BusinessObject<SalesOrderItem> {
         this._lineTotal = value;
     }
 
-    private _user: User;
+    // 非“_”开始字符，不映射到远程对象
+    private oUser: User;
 
     get user(): User {
-        if (bobas.object.isNull(this._user)) {
-            this._user = new User();
+        if (bobas.object.isNull(this.oUser)) {
+            this.oUser = new User();
         }
-        return this._user;
+        return this.oUser;
     }
 
     set user(value: User) {
-        this._user = value;
+        this.oUser = value;
     }
 }
 /**
@@ -114,40 +257,42 @@ export class SalesOrder extends bobas.BusinessObject<SalesOrder> {
         this._docEntry = value;
     }
 
-    private _customer: string;
+    private _customerCode: string;
 
     get customer(): string {
-        return this._customer;
+        return this._customerCode;
     }
 
     set customer(value: string) {
-        this._customer = value;
+        this._customerCode = value;
     }
 
-    private _items: SalesOrderItems;
+    // 销售订单行，_salesOrderItems，映射远程对象
+    private _salesOrderItems: SalesOrderItems;
 
     get items(): SalesOrderItems {
-        if (bobas.object.isNull(this._items)) {
-            this._items = new SalesOrderItems(this);
+        if (bobas.object.isNull(this._salesOrderItems)) {
+            this._salesOrderItems = new SalesOrderItems(this);
         }
-        return this._items;
+        return this._salesOrderItems;
     }
 
     set items(value: SalesOrderItems) {
-        this._items = value;
+        this._salesOrderItems = value;
     }
 
-    private _user: User;
+    // 非“_”开始字符，不映射到远程对象
+    private oUser: User;
 
     get user(): User {
-        if (bobas.object.isNull(this._user)) {
-            this._user = new User();
+        if (bobas.object.isNull(this.oUser)) {
+            this.oUser = new User();
         }
-        return this._user;
+        return this.oUser;
     }
 
     set user(value: User) {
-        this._user = value;
+        this.oUser = value;
     }
 
 }
