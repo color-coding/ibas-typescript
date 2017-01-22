@@ -39,12 +39,13 @@ export class BORepositoryTest extends bobas.BORepositoryApplication {
         if (method === "hello") {
             // 特殊方法的处理
             let ajxSetting = super.createAjaxSettings(method, data);
+            ajxSetting.url = "http://localhost:8080/demo/services/jersey/hello";
             ajxSetting.type = "GET";
             ajxSetting.dataType = undefined;
             return ajxSetting;
         } else
-            if (method === "saveSalesOrder") {
-                // 特殊方法的处理
+            if (method === "saveSalesOrder" && this.address.indexOf("/json") < 0) {
+                // 特殊方法的处理，调用demo的保存方法时，返回值是OK
                 let ajxSetting = super.createAjaxSettings(method, data);
                 ajxSetting.type = "POST";
                 ajxSetting.contentType = "application/json; charset=utf-8";// 发送值类型

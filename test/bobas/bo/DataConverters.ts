@@ -30,9 +30,16 @@ class TestBOConverter extends bobas.BOConverter {
 
     constructor() {
         super();
-        this.mapping.set("SalesOrder", SalesOrder);
+        this.init();
     }
 
+    private init() {
+        // 注册业务对象映射
+        this.mappingBOs("SalesOrder", SalesOrder);
+
+        // 注册枚举映射
+        
+    }
 
     /**
      * 自定义解析
@@ -41,6 +48,20 @@ class TestBOConverter extends bobas.BOConverter {
      */
     protected customParsing(data: any): bobas.IBusinessObject {
         return data;
+    }
+
+    /**
+     * 转换数据
+     * @param boName 对象名称
+     * @param property 属性名称
+     * @param value 值
+     * @returns 转换的值
+     */
+    protected convertData(boName: string, property: string, value
+        : any): any {
+
+        // 不做处理，原始返回
+        return value;
     }
 
     /**

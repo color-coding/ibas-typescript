@@ -55,6 +55,7 @@ bobas.logger.log(bobas.emMessageLevel.DEBUG, "test: type of {0}", typeof (condit
 condition.alias = "docEntry";
 condition.operation = bobas.emConditionOperation.GRATER_EQUAL;
 condition.condVal = "1";
+condition = criteria.conditions.create();
 condition.alias = "docEntry";
 condition.operation = bobas.emConditionOperation.LESS_THAN;
 condition.condVal = "100000";
@@ -66,13 +67,15 @@ sort.sortType = bobas.emSortType.DESCENDING;
 //http://localhost:8080/demo/services/jersey/fetchSalesOrder?token=hahaha
 let boRepository = new BORepositoryTest();
 boRepository.token = "hahaha";
-boRepository.address = "http://localhost:8080/demo/services/jersey/";
+boRepository.address = "http://localhost:8080/demo/services/jersey/json/";
 boRepository.conect();
 boRepository.fetchSalesOrder(criteria, function (opRslt: bobas.IOperationResult<SalesOrder>) {
     bobas.logger.log(bobas.string.format("op code {0} and objects size {1}.", opRslt.resultCode, opRslt.resultObjects.length));
     let order = opRslt.resultObjects.firstOrDefault();
     bobas.assert.equals("order document status wrong.", order.documentStatus, bobas.emDocumentStatus.CLOSED);
+
 });
+order.markNew(true);
 boRepository.saveSalesOrder(order, function (opRslt: bobas.IOperationResult<SalesOrder>) {
     bobas.logger.log(bobas.string.format("op code {0} and objects size {1}.", opRslt.resultCode, opRslt.resultObjects.length));
 });

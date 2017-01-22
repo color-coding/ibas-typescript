@@ -20,6 +20,58 @@ import { logger } from '../messages/Messages';
  */
 export class Converter {
 
+    private _enumsMapping: Map<any, Map<any, string>>;
+    /**
+    * 业务对象映射<名称，类型>
+    */
+    get enumsMapping(): Map<any, Map<any, string>> {
+        if (object.isNull(this._enumsMapping)) {
+            this._enumsMapping = new Map<any, Map<any, string>>();
+            this.initEnums();
+        }
+        return this._enumsMapping;
+    }
+    /**
+     * 注册枚举映射
+     * @param emType 枚举类型
+     * @param source 本地值
+     * @param target 目标值
+     */
+    protected mappingEnums(emType: any, source: any, target: any) {
+        let vMap: Map<any, string>;
+        if (!this.enumsMapping.has(emType)) {
+            vMap = new Map<any, string>();
+            this.enumsMapping.set(emType, vMap);
+        } else {
+            vMap = this.enumsMapping.get(emType);
+        }
+        vMap.set(source, target);
+    }
+
+    private initEnums() {
+        // emConditionOperation
+        this.mappingEnums(emConditionOperation, emConditionOperation.CONTAIN, "co_CONTAIN");
+        this.mappingEnums(emConditionOperation, emConditionOperation.END, "co_END");
+        this.mappingEnums(emConditionOperation, emConditionOperation.EQUAL, "co_EQUAL");
+        this.mappingEnums(emConditionOperation, emConditionOperation.GRATER_EQUAL, "co_GRATER_EQUAL");
+        this.mappingEnums(emConditionOperation, emConditionOperation.GRATER_THAN, "co_GRATER_THAN");
+        this.mappingEnums(emConditionOperation, emConditionOperation.IS_NULL, "co_IS_NULL");
+        this.mappingEnums(emConditionOperation, emConditionOperation.LESS_EQUAL, "co_LESS_EQUAL");
+        this.mappingEnums(emConditionOperation, emConditionOperation.LESS_THAN, "co_LESS_THAN");
+        this.mappingEnums(emConditionOperation, emConditionOperation.NONE, "co_NONE");
+        this.mappingEnums(emConditionOperation, emConditionOperation.NOT_CONTAIN, "co_NOT_CONTAIN");
+        this.mappingEnums(emConditionOperation, emConditionOperation.NOT_EQUAL, "co_NOT_EQUAL");
+        this.mappingEnums(emConditionOperation, emConditionOperation.NOT_NULL, "co_NOT_NULL");
+        this.mappingEnums(emConditionOperation, emConditionOperation.START, "co_START");
+        // emConditionRelationship
+        this.mappingEnums(emConditionRelationship, emConditionRelationship.AND, "cr_CONTAIN");
+        this.mappingEnums(emConditionRelationship, emConditionRelationship.NONE, "cr_END");
+        this.mappingEnums(emConditionRelationship, emConditionRelationship.OR, "cr_NONE");
+        // emSortType
+        this.mappingEnums(emSortType, emSortType.ASCENDING, "st_DESCENDING");
+        this.mappingEnums(emSortType, emSortType.DESCENDING, "st_ASCENDING");
+    }
+
     /**
      * 解析枚举值
      * @param targetType 目标类型
@@ -57,6 +109,33 @@ export class Converter {
             }
         }
         throw new Error(i18n.prop("msg_cannot_converted_to_type", targetType, value));
+    }
+
+    /**
+     * 转换枚举值
+     * @param emType 枚举类型
+     * @param value 值
+     * @returns 转换的值
+     */
+    convertEnums(targetType: any, value: any): any {
+        if (this.enumsMapping.has(targetType)) {
+            // 存在此类型的映射
+            let vMap = this.enumsMapping.get(targetType);
+            if (vMap.has(value)) {
+                return vMap.get(value);
+            }
+        }
+        if (typeof value === "number") {
+            // 值是数值类型
+            for (let item in targetType) {
+                // 遍历枚举的所有属性
+                if (targetType[item] === value) {
+                    // 当枚举的值与值相同时，返回名称，即值对应的字符串
+                    return item;
+                }
+            }
+        }
+        return value;
     }
 
     /**
@@ -153,16 +232,26 @@ export abstract class BOConverter extends Converter implements IBOConverter {
     */
     static PROPERTY_NAME_TYPE: string = "type";
 
-    private _mapping: Map<string, any>;
+    private _boMapping: Map<string, any>;
     /**
     * 业务对象映射<名称，类型>
     */
-    get mapping(): Map<string, any> {
-        if (object.isNull(this._mapping)) {
-            this._mapping = new Map<string, any>();
+    get boMapping(): Map<string, any> {
+        if (object.isNull(this._boMapping)) {
+            this._boMapping = new Map<string, any>();
         }
-        return this._mapping;
+        return this._boMapping;
     }
+
+    /**
+     * 注册业务对象映射
+     * @param boType 类型名称
+     * @param localType 本地类型
+     */
+    protected mappingBOs(boType: string, localType: any) {
+        this.boMapping.set(boType, localType);
+    }
+
     /**
      * 自定义解析
      * @param data 远程数据
@@ -236,6 +325,14 @@ export abstract class BOConverter extends Converter implements IBOConverter {
             } else if (value instanceof Object) {
                 // 此属性是对象
                 value = this.convertProperties(value, {});
+            } else {
+                let newValue = this.convertData(sType, sName, value);
+                if (object.isNull(newValue)) {
+                    let msg = sType + " - " + name;
+                    logger.log(emMessageLevel.WARN, i18n.prop("msg_not_converted_data", msg));
+                } else {
+                    value = newValue;
+                }
             }
             if (object.isNull(value)) {
                 // 无效的值，则不添加此属性
@@ -247,6 +344,16 @@ export abstract class BOConverter extends Converter implements IBOConverter {
     }
 
     /**
+     * 转换数据
+     * @param boName 对象名称
+     * @param property 属性名称
+     * @param value 值
+     * @returns 转换的值
+     */
+    protected abstract convertData(boName: string, property: string, value
+        : any): any;
+
+    /**
     * 解析远程数据
     * @param datas 远程数据
     * @returns 操作结果数据
@@ -254,9 +361,9 @@ export abstract class BOConverter extends Converter implements IBOConverter {
     parsing(data: any): IBusinessObject {
         let dType: string = data.type;
         if (dType !== undefined) {
-            if (this.mapping.has(dType)) {
+            if (this.boMapping.has(dType)) {
                 // 注册了匹配的映射类型
-                let tType = this.mapping.get(dType);//对象的类型
+                let tType = this.boMapping.get(dType);//对象的类型
                 if (object.isNull(tType)) {
                     throw new Error(i18n.prop("msg_invaild_mapping_type", dType));
                 }
@@ -478,8 +585,8 @@ class CriteriaConverter extends DataConverter {
         newData.BracketOpenNum = data.bracketOpen;
         newData.ComparedAlias = data.comparedAlias;
         newData.CondVal = data.condVal;
-        newData.Operation = data.operation.toString();
-        newData.Relationship = data.relationship.toString();
+        newData.Operation = this.convertEnums(emConditionOperation, data.operation);
+        newData.Relationship = this.convertEnums(emConditionRelationship, data.relationship);
         newData.Remarks = data.remarks;
         return newData;
     }
@@ -490,7 +597,7 @@ class CriteriaConverter extends DataConverter {
             "SortType": ""
         };
         newData.Alias = data.alias;
-        newData.SortType = data.sortType.toString();
+        newData.SortType = this.convertEnums(emSortType, data.sortType);
         return newData;
     }
 
