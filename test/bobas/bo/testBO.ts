@@ -71,13 +71,12 @@ boRepository.address = "http://localhost:8080/demo/services/jersey/json/";
 boRepository.conect();
 boRepository.fetchSalesOrder(criteria, function (opRslt: bobas.IOperationResult<SalesOrder>) {
     bobas.logger.log(bobas.string.format("op code {0} and objects size {1}.", opRslt.resultCode, opRslt.resultObjects.length));
-    let order = opRslt.resultObjects.firstOrDefault();
-    bobas.assert.equals("order document status wrong.", order.documentStatus, bobas.emDocumentStatus.CLOSED);
-
 });
 order.markNew(true);
 boRepository.saveSalesOrder(order, function (opRslt: bobas.IOperationResult<SalesOrder>) {
     bobas.logger.log(bobas.string.format("op code {0} and objects size {1}.", opRslt.resultCode, opRslt.resultObjects.length));
+    let newOrder = opRslt.resultObjects.firstOrDefault();
+    bobas.assert.equals("order document status wrong.", order.documentStatus, newOrder.documentStatus);
 });
 
 
