@@ -213,13 +213,20 @@ export class SalesOrderItem extends bobas.BusinessObject<SalesOrderItem> {
         this._lineTotal = value;
     }
 
+    private _lineStatus: bobas.emDocumentStatus;
+
+    get lineStatus(): bobas.emDocumentStatus {
+        return this._lineStatus;
+    }
+
+    set lineStatus(value: bobas.emDocumentStatus) {
+        this._lineStatus = value;
+    }
+
     // 非“_”开始字符，不映射到远程对象
-    private oUser: User;
+    private oUser: User = new User();
 
     get user(): User {
-        if (bobas.object.isNull(this.oUser)) {
-            this.oUser = new User();
-        }
         return this.oUser;
     }
 
@@ -267,13 +274,30 @@ export class SalesOrder extends bobas.BusinessObject<SalesOrder> {
         this._customerCode = value;
     }
 
+    private _documentStatus: bobas.emDocumentStatus;
+
+    get documentStatus(): bobas.emDocumentStatus {
+        return this._documentStatus;
+    }
+
+    set documentStatus(value: bobas.emDocumentStatus) {
+        this._documentStatus = value;
+    }
+
+    private _canceled: bobas.emYesNo;
+
+    get canceled(): bobas.emYesNo {
+        return this._canceled;
+    }
+
+    set canceled(value: bobas.emYesNo) {
+        this._canceled = value;
+    }
+
     // 销售订单行，_salesOrderItems，映射远程对象
-    private _salesOrderItems: SalesOrderItems;
+    private _salesOrderItems: SalesOrderItems = new SalesOrderItems(this);
 
     get items(): SalesOrderItems {
-        if (bobas.object.isNull(this._salesOrderItems)) {
-            this._salesOrderItems = new SalesOrderItems(this);
-        }
         return this._salesOrderItems;
     }
 
@@ -282,12 +306,9 @@ export class SalesOrder extends bobas.BusinessObject<SalesOrder> {
     }
 
     // 非“_”开始字符，不映射到远程对象
-    private oUser: User;
+    private oUser: User = new User();
 
     get user(): User {
-        if (bobas.object.isNull(this.oUser)) {
-            this.oUser = new User();
-        }
         return this.oUser;
     }
 

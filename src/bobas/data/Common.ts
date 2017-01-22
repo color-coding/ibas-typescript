@@ -59,5 +59,25 @@ export class ArrayList<T> extends Array<T> implements List<T> {
             this.remove(this[index]);
         }
     }
+
+    /**
+    * 第一个或默认
+    */
+    firstOrDefault(): T {
+        if (this.length > 0) {
+            return this[0];
+        }
+        return null;
+    }
+
+    /**
+    * 最后一个或默认
+    */
+    lastOrDefault(): T {
+        if (this.length > 0) {
+            return this[this.length - 1];
+        }
+        return null;
+    }
 }
 

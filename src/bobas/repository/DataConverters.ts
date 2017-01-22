@@ -11,7 +11,7 @@ import {
     ICriteria, Criteria, ICondition, Condition, ISort, Sort, IChildCriteria, ChildCriteria,
     IOperationResult, OperationResult, OperationInformation
 } from '../data/Data';
-import { IBusinessObject, IDataConverter, IBOConverter } from '../core/Core';
+import { IBusinessObject, IDataConverter, IBOConverter, BusinessObjectBase, BusinessObjectListBase } from '../core/Core';
 import { i18n } from '../i18n/I18N';
 import { logger } from '../messages/Messages';
 
@@ -148,6 +148,10 @@ export abstract class DataConverter extends Converter implements IDataConverter 
  * 业务对象转换者
  */
 export abstract class BOConverter extends Converter implements IBOConverter {
+    /**
+    * 属性名称，类型
+    */
+    static PROPERTY_NAME_TYPE: string = "type";
 
     private _mapping: Map<string, any>;
     /**
@@ -179,12 +183,16 @@ export abstract class BOConverter extends Converter implements IBOConverter {
     }
 
     /**
-     * 获取属性的映射名称
+     * 获取映射的转换属性名称
      * @param name 源名称
      * @param value 值
      * @returns 映射的名称；null时表示没有映射。
      */
-    protected mappingProperty(name: string, value: any): string {
+    protected mappingConvertProperty(name: string, value: any): string {
+        if (BOConverter.PROPERTY_NAME_TYPE === name) {
+            // 类型
+            return name;
+        }
         if (!name.startsWith("_")) {
             // 非“_”开始属性名称，表示不映射属性
             return null;
@@ -210,7 +218,7 @@ export abstract class BOConverter extends Converter implements IBOConverter {
         for (let sName in source) {
             // 首字母改为小写
             let value = source[sName];
-            let name = this.mappingProperty(sName, value);
+            let name = this.mappingConvertProperty(sName, value);
             if (object.isNull(name)) {
                 // 没有解析出映射关系，继续下一个属性
                 continue;
@@ -275,6 +283,25 @@ export abstract class BOConverter extends Converter implements IBOConverter {
     }
 
     /**
+     * 获取映射的解析属性名称
+     * @param name 源名称
+     * @param value 值
+     * @returns 映射的名称；null时表示没有映射。
+     */
+    protected mappingParsingProperty(name: string, value: any): string {
+        if (BOConverter.PROPERTY_NAME_TYPE === name) {
+            // 类型
+            return name;
+        }
+        let newName = name;
+        if (newName.startsWith("is")) {
+            newName = newName.substring(2);
+        }
+        newName = "_" + newName[0].toLowerCase() + newName.substring(1);
+        return newName;
+    }
+
+    /**
      * 解析属性
      * @param source 源数据（远程类型）
      * @param target 目标数据（本地类型）
@@ -287,28 +314,57 @@ export abstract class BOConverter extends Converter implements IBOConverter {
         for (let sName in source) {
             // 首字母改为小写
             let value = source[sName];
-            let name = sName[0].toLowerCase() + sName.substring(1);
+            let name = this.mappingParsingProperty(sName, value);
+            if (object.isNull(name)) {
+                continue;
+            }
             if (Array.isArray(value)) {
                 // 此属性是数组
-
-            } else if (value instanceof Object) {
+                if (target[name] instanceof BusinessObjectListBase) {
+                    // 如果是业务对象列表，则使用默认子项构造器
+                    for (let item of value) {
+                        // 创建子项实例并添加到集合
+                        let newValue = target[name].create();
+                        this.parsingProperties(item, newValue);
+                    }
+                    // 已处理，继续下一个
+                    continue;
+                }
+            } else if (typeof value === "object") {
                 // 此属性是对象
-
-
-            } else if (typeof value === "string") {
-                // 此属性是字符
-                if (value.indexOf("T") > 0 && value.indexOf("-") > 0 && value.indexOf(":") > 0) {
-                    // 字符格式为日期，yyyy-MM-ddThh:mm:ss
-                    value = this.parsingDate(value);
+                if (target[name] instanceof BusinessObjectBase) {
+                    this.parsingProperties(value, target[name]);
+                    // 已处理，继续下一个
+                    continue;
+                }
+            } else {
+                let boName = target.constructor.name;
+                let property = name;
+                let newValue = this.parsingData(boName, property, value);
+                if (object.isNull(newValue)) {
+                    let msg = boName + " - " + property;
+                    logger.log(emMessageLevel.WARN, i18n.prop("msg_not_parsed_data", msg));
+                } else {
+                    value = newValue;
                 }
             }
-            target["_" + name] = value;
+            target[name] = value;
         }
         if (target.isLoading !== undefined) {
             // 取消赋值状态
             target.isLoading = false;
         }
     }
+
+    /**
+     * 解析数据
+     * @param boName 对象名称
+     * @param property 属性名称
+     * @param value 值
+     * @returns 解析的值
+     */
+    protected abstract parsingData(boName: string, property: string, value
+        : any): any;
 }
 
 /**

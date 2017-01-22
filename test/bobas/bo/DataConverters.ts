@@ -7,18 +7,18 @@
  */
 
 
-import { BOConverter, DataConverter4ibas, IBusinessObject } from '../../../src/bobas/bobas';
+import * as bobas from '../../../src/bobas/bobas';
 import { SalesOrder } from './SalesOrder';
 
 /**
  * Test 模块的数据转换者
  */
-export class DataConverter4Test extends DataConverter4ibas {
+export class DataConverter4Test extends bobas.DataConverter4ibas {
 
     /**
      * 创建业务对象转换者
      */
-    protected createBOConverter(): BOConverter {
+    protected createBOConverter(): bobas.BOConverter {
         return new TestBOConverter();
     }
 }
@@ -26,7 +26,7 @@ export class DataConverter4Test extends DataConverter4ibas {
 /**
  * Test 模块的业务对象转换者
  */
-class TestBOConverter extends BOConverter {
+class TestBOConverter extends bobas.BOConverter {
 
     constructor() {
         super();
@@ -39,8 +39,36 @@ class TestBOConverter extends BOConverter {
      * @param data 远程数据
      * @returns 本地数据
      */
-    protected customParsing(data: any): IBusinessObject {
+    protected customParsing(data: any): bobas.IBusinessObject {
         return data;
+    }
+
+    /**
+     * 解析数据
+     * @param boName 对象名称
+     * @param property 属性名称
+     * @param value 值
+     * @returns 解析的值
+    */
+    protected parsingData(boName: string, property: string, value
+        : any): any {
+        if (typeof value === "string") {
+            // 日期类型，直接转换
+            if (value.indexOf("T") > 0 && value.indexOf("-") > 0 && value.indexOf(":") > 0) {
+                // 字符格式为日期，yyyy-MM-ddThh:mm:ss
+                return this.parsingDate(value);
+            }
+            if (boName.startsWith(SalesOrder.name)) {
+                // 销售订单类型
+                if (property === "_documentStatus" || property === "_lineStatus") {
+                    return this.parsingEnums(bobas.emDocumentStatus, value);
+                } else if (property === "_canceled") {
+                    return this.parsingEnums(bobas.emYesNo, value);
+                }
+            }
+        }
+        // 不做处理，原始返回
+        return value;
     }
 }
 

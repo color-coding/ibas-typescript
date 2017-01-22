@@ -1,10 +1,10 @@
- /**
- * @license
- * Copyright color-coding studio. All Rights Reserved.
- *
- * Use of this source code is governed by an Apache License, Version 2.0
- * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
- */
+/**
+* @license
+* Copyright color-coding studio. All Rights Reserved.
+*
+* Use of this source code is governed by an Apache License, Version 2.0
+* that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
+*/
 
 import * as bobas from '../../../src/bobas/bobas';
 import { SalesOrder } from './SalesOrder';
@@ -13,6 +13,7 @@ import { BORepositoryTest } from './BORepository';
 let order = new SalesOrder();
 bobas.logger.log(bobas.emMessageLevel.DEBUG, "test: type of {0}", typeof (order));
 order.customer = "C00001";
+order.documentStatus = bobas.emDocumentStatus.RELEASED;
 let item = order.items.create();
 bobas.logger.log(bobas.emMessageLevel.DEBUG, "test: type of {0}", typeof (item));
 item.itemCode = "A00001";
@@ -69,6 +70,8 @@ boRepository.address = "http://localhost:8080/demo/services/jersey/";
 boRepository.conect();
 boRepository.fetchSalesOrder(criteria, function (opRslt: bobas.IOperationResult<SalesOrder>) {
     bobas.logger.log(bobas.string.format("op code {0} and objects size {1}.", opRslt.resultCode, opRslt.resultObjects.length));
+    let order = opRslt.resultObjects.firstOrDefault();
+    bobas.assert.equals("order document status wrong.", order.documentStatus, bobas.emDocumentStatus.CLOSED);
 });
 boRepository.saveSalesOrder(order, function (opRslt: bobas.IOperationResult<SalesOrder>) {
     bobas.logger.log(bobas.string.format("op code {0} and objects size {1}.", opRslt.resultCode, opRslt.resultObjects.length));
