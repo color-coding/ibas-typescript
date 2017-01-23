@@ -49,6 +49,8 @@ export class Converter {
     }
 
     private initEnums() {
+        /**
+        // 已调整服务端定义，以下代码在ibas-v0.1.2中无效。
         // emConditionOperation
         this.mappingEnums(emConditionOperation, emConditionOperation.CONTAIN, "co_CONTAIN");
         this.mappingEnums(emConditionOperation, emConditionOperation.END, "co_END");
@@ -70,6 +72,7 @@ export class Converter {
         // emSortType
         this.mappingEnums(emSortType, emSortType.ASCENDING, "st_DESCENDING");
         this.mappingEnums(emSortType, emSortType.DESCENDING, "st_ASCENDING");
+        */
     }
 
     /**

@@ -38,7 +38,7 @@ export abstract class BORemoteRepositoryJQuery extends BORemoteRepository {
             let opRslt = new OperationResult();
             opRslt.resultCode = -999;
             opRslt.message = string.format("{0} - {1}", textStatus, errorThrown);
-            logger.log(emMessageLevel.ERROR, "repository: call method [{2}] faild, {0} - {1}", textStatus, errorThrown, ajxSetting.url);
+            logger.log(emMessageLevel.ERROR, "repository: call method [{2}] faild, {0} - {1}.", textStatus, errorThrown, ajxSetting.url);
             listener.onCompleted(opRslt);
         };
         // 补充成功的事件
@@ -51,11 +51,11 @@ export abstract class BORemoteRepositoryJQuery extends BORemoteRepository {
             if (object.isNull(opRslt)) {
                 throw new Error(i18n.prop("msg_data_converter_parsing_faild"));
             }
-            logger.log(emMessageLevel.DEBUG, "repository: call method [{2}] sucessful, {0} - {1}", textStatus, opRslt.message, ajxSetting.url);
+            logger.log(emMessageLevel.DEBUG, "repository: call method [{2}] sucessful, {0} - {1}.", textStatus, opRslt.message, ajxSetting.url);
             listener.onCompleted(opRslt);
         };
         // 调用远程方法
-        logger.log(emMessageLevel.DEBUG, "repository: calling method {0}", ajxSetting.url);
+        logger.log(emMessageLevel.DEBUG, "repository: calling method [{0}].", ajxSetting.url);
         jQuery.ajax(ajxSetting);
     }
 

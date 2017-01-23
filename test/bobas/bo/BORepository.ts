@@ -57,10 +57,20 @@ export class BORepositoryTest extends bobas.BORepositoryApplication {
         return super.createAjaxSettings(method, data);
     }
 
+    /**
+     * 查询 销售订单
+     * @param criteria 查询
+     * @param callBack 回掉函数，参数为：bobas.IOperationResult<SalesOrder>
+     */
     fetchSalesOrder(criteria: bobas.ICriteria, callBack: Function) {
         super.fetch("SalesOrder", criteria, callBack);
     }
-
+    
+    /**
+     * 保存 销售订单
+     * @param bo 业务对象
+     * @param callBack 回掉函数，参数为：bobas.IOperationResult<SalesOrder>
+     */
     saveSalesOrder(bo: SalesOrder, callBack: Function) {
         super.save("SalesOrder", bo, callBack);
     }
