@@ -20,9 +20,5 @@ if "%WORK_FOLDER:~-0,1%" neq "\" SET WORK_FOLDER=%WORK_FOLDER%\
 
 for /f %%l in ('dir /s /b "%WORK_FOLDER%tsconfig.json"') DO (
   echo --开始编译：%%~dpl
-REM 改变工作目录
-  cd /d %%~dpl
-  call tsc
+  call tsc -p %%~dpl
 )
-REM 重置运行目录
-cd /d %STARTUP_FOLDER%
