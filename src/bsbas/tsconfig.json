@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "module": "amd",
+    "target": "es6",
+    "noImplicitAny": false,
+    "removeComments": true,
+    "sourceMap": false
+  },
+  "exclude": [
+  ]
+}
