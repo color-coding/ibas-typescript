@@ -13,6 +13,7 @@ ibas-typescript
 *.publishproj
 Web.config
 /.vs/
+/.vscode/
 /.metadata/
 /.recommenders/
 /RemoteSystemsTempFiles/

@@ -1,4 +1,4 @@
-/**
+ï»¿/**
 * @license
 * Copyright color-coding studio. All Rights Reserved.
 *
@@ -29,11 +29,11 @@ item.lineTotal = item.price * item.quantity;
 item.user.userCode = "ccc";
 bobas.logger.log(bobas.emMessageLevel.DEBUG, "test: {0}", "order", order.toString());
 order.user.userCode = "aaa";
-// ±éÀúÊôĞÔÃû³Æ£¬°üÀ¨×ÓÏî
+// éå†å±æ€§åç§°ï¼ŒåŒ…æ‹¬å­é¡¹
 bobas.logger.log(bobas.emMessageLevel.INFO, "test: {1}", "order", order.getProperties(true).size);
-// ±éÀúÊôĞÔÃû³Æ£¬²»°üÀ¨×ÓÏî
+// éå†å±æ€§åç§°ï¼Œä¸åŒ…æ‹¬å­é¡¹
 bobas.logger.log(bobas.emMessageLevel.INFO, "test: {0} {1}", "order", order.getProperties(false).size);
-// ²âÊÔ×´Ì¬
+// æµ‹è¯•çŠ¶æ€
 bobas.assert.equals("bo status isNew", order.isNew, true);
 bobas.assert.equals("bo status isDirty", order.isDirty, true);
 bobas.assert.equals("bo status isDeleted", order.isDeleted, false);
@@ -46,7 +46,7 @@ for (let item of order.items) {
     bobas.assert.equals("bo status isDirty", item.isDirty, false);
     bobas.assert.equals("bo status isDeleted", item.isDeleted, false);
 }
-// Ô¶³Ìµ÷ÓÃÒµÎñ²Ö¿â
+// è¿œç¨‹è°ƒç”¨ä¸šåŠ¡ä»“åº“
 let criteria = new bobas.Criteria();
 bobas.logger.log(bobas.emMessageLevel.DEBUG, "test: type of {0}", typeof (criteria));
 criteria.result = 100;
@@ -78,5 +78,4 @@ boRepository.saveSalesOrder(order, function (opRslt: bobas.IOperationResult<Sale
     let newOrder = opRslt.resultObjects.firstOrDefault();
     bobas.assert.equals("order document status wrong.", order.documentStatus, newOrder.documentStatus);
 });
-
 
