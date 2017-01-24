@@ -8,7 +8,6 @@
 # ide files & folder
 ibas-typescript
 *.js
-*.sln
 *.map
 *.tmp
 *.publishproj
@@ -18,6 +17,7 @@ Web.config
 /.recommenders/
 /RemoteSystemsTempFiles/
 /Servers/
+/.settings/
 
 # exceptions
 !src/3rdparty/*

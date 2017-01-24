@@ -7,6 +7,6 @@
  */
 
 
-import { } from './index';
+import { } from './bsapp/Console';
 
 
