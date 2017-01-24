@@ -5,7 +5,7 @@
  * Use of this source code is governed by an Apache License, Version 2.0
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
-// 业务对象编辑应用
+// 涓氬姟瀵硅薄缂栬緫搴旂敤
 
 /// <reference path="./BOApplications.d.ts" />
 import { } from "./BOApplications.d";
