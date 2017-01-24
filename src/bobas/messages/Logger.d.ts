@@ -17,6 +17,11 @@ import { IMessage } from "./Message.d";
 export interface ILogger {
 
     /**
+     * 消息输出的级别
+     */
+    level: emMessageLevel;
+
+    /**
      * 记录消息
      * @param message
      */

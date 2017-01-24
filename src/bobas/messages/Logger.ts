@@ -11,6 +11,7 @@
 
 import { string } from "../data/Data";
 import { emMessageLevel } from "../data/Enums";
+import { config } from "../configuration/Configuration";
 import { IMessage } from "./Message.d";
 import { Message } from "./Message";
 import { ILogger } from "./Logger.d";
@@ -19,6 +20,20 @@ import { ILogger } from "./Logger.d";
  * 运行消息记录
  */
 export class Logger implements ILogger {
+
+    constructor() {
+        this.level = config.get(config.CONFIG_ITEM_MESSAGES_LEVEL, emMessageLevel.ERROR);
+        let debug: boolean = config.get(config.CONFIG_ITEM_DEBUG_MODE, false);
+        if (debug) {
+            this.level = emMessageLevel.DEBUG;
+        }
+    }
+
+    /**
+     * 消息输出的级别
+     */
+    level: emMessageLevel;
+
     /**
      * 记录消息
      * @param message
@@ -74,6 +89,10 @@ export class Logger implements ILogger {
         // 如果参数未用完，则认为是模板输出的字符串
         if (msgPars.length > useCount) {
             message.content = string.format(message.content, msgPars.slice(useCount, msgPars.length));
+        }
+        if (this.level < message.level) {
+            // 超过日志输出的级别
+            return;
         }
         // 根据消息级别，定义使用的输出方法
         let putter: any;

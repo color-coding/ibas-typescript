@@ -32,7 +32,10 @@ export class Configuration {
      */
     ROOT_URL_SIGN: string = ".../";
 
+    /** 配置项目-调试模式 */
     CONFIG_ITEM_DEBUG_MODE: string = "debug";
+    /** 配置项目-消息输出级别 */
+    CONFIG_ITEM_MESSAGES_LEVEL: string = "msgLevel";
 
     /**
      * 获取当前库路径
@@ -112,7 +115,7 @@ export class Configuration {
             // 不存在配置内容，默认值替代
             return defalut;
         }
-        throw new Error(string.format("invalid parameter [{0}].",key));
+        throw new Error(string.format("invalid parameter [{0}].", key));
     }
 }
 
