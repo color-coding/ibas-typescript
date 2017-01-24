@@ -6,13 +6,13 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-export * from './Common.d';
-export * from './Common';
-export * from './Criteria.d';
-export * from './Criteria';
-export * from './OperationResult.d';
-export * from './OperationResult';
-export * from './Enums';
+export * from "./Common.d";
+export * from "./Common";
+export * from "./Criteria.d";
+export * from "./Criteria";
+export * from "./OperationResult.d";
+export * from "./OperationResult";
+export * from "./Enums";
 
 /**
  * 对字符串操作的封装方法
@@ -37,7 +37,7 @@ export module string {
      * @param args 替换字符
      */
     export function format(format: string, ...args: any[]): string {
-        var result = format;
+        let result = format;
         if (args.length > 0) {
             // 存在替代字符
             if (args.length === 1 && Array.isArray(args[0])) {
@@ -49,9 +49,8 @@ export module string {
                         result = result.replace(reg, args[key]);
                     }
                 }
-            }
-            else {
-                for (var i = 0; i < args.length; i++) {
+            } else {
+                for (let i = 0; i < args.length; i++) {
                     if (args[i] !== undefined) {
                         let reg = new RegExp("\\{" + i + "\\}", "g");
                         result = result.replace(reg, args[i]);

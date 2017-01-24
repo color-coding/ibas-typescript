@@ -9,11 +9,11 @@
 /**
  * 模块索引文件，此文件集中导出类
  */
-import { object } from '../data/Data';
-import { string } from '../data/Data';
-import { emMessageLevel } from '../data/Enums';
-import { config } from '../configuration/Configuration';
-import { logger } from '../messages/Messages';
+import { object } from "../data/Data";
+import { string } from "../data/Data";
+import { emMessageLevel } from "../data/Enums";
+import { config } from "../configuration/Configuration";
+import { logger } from "../messages/Messages";
 
 /**
  * 配置

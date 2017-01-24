@@ -8,15 +8,15 @@
 
 /// <reference path="./BusinessObject.d.ts" />
 
-import { object } from '../data/Data';
-import { IBusinessObject, IBusinessObjectList } from '../core/BusinessObjectCore.d';
-import { BusinessObjectBase, BusinessObjectListBase } from '../core/BusinessObjectCore';
+import { object } from "../data/Data";
+import { IBusinessObject, IBusinessObjectList } from "../core/BusinessObjectCore.d";
+import { BusinessObjectBase, BusinessObjectListBase } from "../core/BusinessObjectCore";
 import {
     IBusinessObjects, IBOLine, IBOReferenced,
     IBODocument, IBODocumentLine, IBODocumentLines,
     IBOMasterData, IBOMasterDataLine, IBOMasterDataLines,
     IBOSimple, IBOSimpleLine, IBOSimpleLines,
-} from './BusinessObject.d';
+} from "./BusinessObject.d";
 
 /**
  * 业务对象基类

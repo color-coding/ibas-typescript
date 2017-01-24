@@ -10,10 +10,10 @@ import {
     emMessageLevel, emConditionOperation, emConditionRelationship, emSortType, object,
     ICriteria, Criteria, ICondition, Condition, ISort, Sort, IChildCriteria, ChildCriteria,
     IOperationResult, OperationResult, OperationInformation
-} from '../data/Data';
-import { IBusinessObject, IDataConverter, IBOConverter, BusinessObjectBase, BusinessObjectListBase } from '../core/Core';
-import { i18n } from '../i18n/I18N';
-import { logger } from '../messages/Messages';
+} from "../data/Data";
+import { IBusinessObject, IDataConverter, IBOConverter, BusinessObjectBase, BusinessObjectListBase } from "../core/Core";
+import { i18n } from "../i18n/I18N";
+import { logger } from "../messages/Messages";
 
 /**
  * 数据转换者基类
@@ -22,8 +22,8 @@ export class Converter {
 
     private _enumsMapping: Map<any, Map<any, string>>;
     /**
-    * 业务对象映射<名称，类型>
-    */
+     * 业务对象映射<名称，类型>
+     */
     get enumsMapping(): Map<any, Map<any, string>> {
         if (object.isNull(this._enumsMapping)) {
             this._enumsMapping = new Map<any, Map<any, string>>();
@@ -49,7 +49,7 @@ export class Converter {
     }
 
     private initEnums() {
-        /**
+        /*
         // 已调整服务端定义，以下代码在ibas-v0.1.2中无效。
         // emConditionOperation
         this.mappingEnums(emConditionOperation, emConditionOperation.CONTAIN, "co_CONTAIN");
@@ -190,10 +190,10 @@ export class Converter {
     }
 
     /**
-    * 转换日期
-    * @param value 日期
-    * @returns 日期字符串
-    */
+     * 转换日期
+     * @param value 日期
+     * @returns 日期字符串
+     */
     convertDate(value: Date): string {
         let year: number = value.getFullYear(),
             month: number = value.getMonth(),
@@ -211,17 +211,17 @@ export class Converter {
 export abstract class DataConverter extends Converter implements IDataConverter {
 
     /**
-    * 转换数据
-    * @param data 当前类型数据
-    * @returns 转换的数据
-    */
+     * 转换数据
+     * @param data 当前类型数据
+     * @returns 转换的数据
+     */
     abstract convert(data: any): string;
 
     /**
-    * 解析数据
-    * @param data 原始数据
-    * @returns 当前类型数据
-    */
+     * 解析数据
+     * @param data 原始数据
+     * @returns 当前类型数据
+     */
     abstract parsing(data: any): any;
 
 }
@@ -231,14 +231,14 @@ export abstract class DataConverter extends Converter implements IDataConverter 
  */
 export abstract class BOConverter extends Converter implements IBOConverter {
     /**
-    * 属性名称，类型
-    */
+     * 属性名称，类型
+     */
     static PROPERTY_NAME_TYPE: string = "type";
 
     private _boMapping: Map<string, any>;
     /**
-    * 业务对象映射<名称，类型>
-    */
+     * 业务对象映射<名称，类型>
+     */
     get boMapping(): Map<string, any> {
         if (object.isNull(this._boMapping)) {
             this._boMapping = new Map<string, any>();
@@ -263,11 +263,11 @@ export abstract class BOConverter extends Converter implements IBOConverter {
     protected abstract customParsing(data: any): IBusinessObject;
 
     /**
-    * 转换数据
-    * 默认原则是：属性去“_”并首字母改大写
-    * @param data 当前类型数据
-    * @returns 转换的数据
-    */
+     * 转换数据
+     * 默认原则是：属性去“_”并首字母改大写
+     * @param data 当前类型数据
+     * @returns 转换的数据
+     */
     convert(data: IBusinessObject): Object {
         let newData = {};
         this.convertProperties(data, newData);
@@ -357,16 +357,16 @@ export abstract class BOConverter extends Converter implements IBOConverter {
         : any): any;
 
     /**
-    * 解析远程数据
-    * @param datas 远程数据
-    * @returns 操作结果数据
-    */
+     * 解析远程数据
+     * @param datas 远程数据
+     * @returns 操作结果数据
+     */
     parsing(data: any): IBusinessObject {
         let dType: string = data.type;
         if (dType !== undefined) {
             if (this.boMapping.has(dType)) {
                 // 注册了匹配的映射类型
-                let tType = this.boMapping.get(dType);//对象的类型
+                let tType = this.boMapping.get(dType);// 对象的类型
                 if (object.isNull(tType)) {
                     throw new Error(i18n.prop("msg_invaild_mapping_type", dType));
                 }
@@ -499,10 +499,10 @@ export abstract class DataConverter4ibas extends DataConverter {
     }
 
     /**
-    * 解析远程数据
-    * @param datas 远程数据
-    * @returns 操作结果数据
-    */
+     * 解析远程数据
+     * @param datas 远程数据
+     * @returns 操作结果数据
+     */
     parsing(data: any): IOperationResult<any> {
         let converter = new OperationResultConverter(this.createBOConverter());
         return converter.parsing(data);
@@ -531,10 +531,10 @@ class CriteriaConverter extends DataConverter {
     }
 
     /**
-    * 解析远程数据
-    * @param datas 远程数据
-    * @returns 操作结果数据
-    */
+     * 解析远程数据
+     * @param datas 远程数据
+     * @returns 操作结果数据
+     */
     parsing(data: any): ICriteria {
         return this.parsingCriteria(data);
     }
@@ -669,10 +669,10 @@ class OperationResultConverter extends DataConverter {
     protected boConverter: BOConverter;
 
     /**
-    * 转换数据
-    * @param data 当前类型数据
-    * @returns 转换的数据
-    */
+     * 转换数据
+     * @param data 当前类型数据
+     * @returns 转换的数据
+     */
     convert(data: IOperationResult<any>): string {
         let opRslt = {
             "type": "",
@@ -709,10 +709,10 @@ class OperationResultConverter extends DataConverter {
     }
 
     /**
-    * 解析远程数据
-    * @param datas 远程数据
-    * @returns 操作结果数据
-    */
+     * 解析远程数据
+     * @param datas 远程数据
+     * @returns 操作结果数据
+     */
     parsing(data: any): IOperationResult<any> {
         let opRslt = new OperationResult();
         if (data.type !== undefined && data.type === "OperationResult") {

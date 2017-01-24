@@ -9,10 +9,10 @@
 // 模块索引文件，此文件集中导出类
 
 
-export * from './BOApplications.d';
-export * from './BOApplication';
-export * from './BOChooseApplication';
-export * from './BOEditApplication';
-export * from './BOListApplication';
-export * from './BOViewApplication';
+export * from "./BOApplications.d";
+export * from "./BOApplication";
+export * from "./BOChooseApplication";
+export * from "./BOEditApplication";
+export * from "./BOListApplication";
+export * from "./BOViewApplication";
 

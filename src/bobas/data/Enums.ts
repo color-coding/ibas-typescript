@@ -7,12 +7,12 @@
  */
 
 /**
-* 消息级别
-*/
+ * 消息级别
+ */
 export enum emMessageLevel {
     /**
      * 严重错误
-    */
+     */
     FATAL,
     /**
      * 错误
@@ -132,7 +132,7 @@ export enum emApprovalStepStatus {
  * 审批状态
  */
 export enum emApprovalStatus {
-    /**不影响 */
+    /** 不影响 */
     UNAFFECTED,
     /** 审批中 */
     PROCESSING,

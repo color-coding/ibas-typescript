@@ -6,9 +6,9 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { List } from './Common.d';
-import { emConditionOperation, emConditionRelationship, emSortType } from './Enums';
-import { IBusinessObject } from '../core/BusinessObjectCore.d';
+import { List } from "./Common.d";
+import { emConditionOperation, emConditionRelationship, emSortType } from "./Enums";
+import { IBusinessObject } from "../core/BusinessObjectCore.d";
 
 /**
 * 查询
@@ -99,8 +99,8 @@ export interface ICriteria {
 export interface ICondition {
 
     /**
-    * 获取-条件字段（属性）名
-    */
+     * 获取-条件字段（属性）名
+     */
     alias: string;
     /**
      * 几个闭括号"）"
@@ -132,21 +132,21 @@ export interface ICondition {
     remarks: string;
 }
 /**
-* 查询条件集合
-*/
+ * 查询条件集合
+ */
 export interface IConditions extends List<ICondition> {
     /**
-    * 创建并返回新查询条件
-    */
+     * 创建并返回新查询条件
+     */
     create(): ICondition;
 }
 /**
-* 排序
+ * 排序
 */
 export interface ISort {
     /**
-    * 排序的字段（属性）名
-    */
+     * 排序的字段（属性）名
+     */
     alias: string;
 
     /**
@@ -156,12 +156,12 @@ export interface ISort {
 
 }
 /**
-* 排序集合
-*/
+ * 排序集合
+ */
 export interface ISorts extends List<ISort> {
     /**
-    * 创建并返回新排序
-    */
+     * 创建并返回新排序
+     */
     create(): ISort;
 }
 /**
@@ -185,7 +185,7 @@ export interface IChildCriteria extends ICriteria {
  */
 export interface IChildCriterias extends List<IChildCriteria> {
     /**
-    * 创建并返回新子项查询
-    */
+     * 创建并返回新子项查询
+     */
     create(): IChildCriteria;
 }

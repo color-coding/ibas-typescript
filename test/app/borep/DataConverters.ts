@@ -10,7 +10,7 @@ import {
     DataConverter4ibas,
     BOConverter,
     IBusinessObject
-} from '../../../src/bobas/bobas';
+} from "../../../src/bobas/bobas";
 
 /**
  * Test 模块的数据转换者
@@ -71,7 +71,7 @@ class TestBOConverter extends BOConverter {
      * @param property 属性名称
      * @param value 值
      * @returns 解析的值
-    */
+     */
     protected parsingData(boName: string, property: string, value
         : any): any {
         if (typeof value === "string") {

@@ -7,8 +7,8 @@
  */
 
 
-import * as bobas from '../../../src/bobas/bobas';
-import { SalesOrder } from './SalesOrder';
+import * as bobas from "../../../src/bobas/bobas";
+import { SalesOrder } from "./SalesOrder";
 
 /**
  * Test 模块的数据转换者

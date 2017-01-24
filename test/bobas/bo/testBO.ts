@@ -6,9 +6,9 @@
 * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
 */
 
-import * as bobas from '../../../src/bobas/bobas';
-import { SalesOrder } from './SalesOrder';
-import { BORepositoryTest } from './BORepository';
+import * as bobas from "../../../src/bobas/bobas";
+import { SalesOrder } from "./SalesOrder";
+import { BORepositoryTest } from "./BORepository";
 
 let order = new SalesOrder();
 bobas.logger.log(bobas.emMessageLevel.DEBUG, "test: type of {0}", typeof (order));

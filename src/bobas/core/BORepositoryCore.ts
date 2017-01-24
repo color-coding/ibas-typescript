@@ -11,11 +11,11 @@
 import {
     object, string, emMessageLevel,
     ArrayList, IOperationResult, ICriteria
-} from '../data/Data';
-import { IBusinessObject, IBusinessObjectList } from './BusinessObjectCore.d';
-import { IBORemoteRepository, RemoteListener, IDataConverter } from './BORepositoryCore.d';
-import { logger } from '../messages/Messages';
-import { i18n } from '../i18n/I18N';
+} from "../data/Data";
+import { IBusinessObject, IBusinessObjectList } from "./BusinessObjectCore.d";
+import { IBORemoteRepository, RemoteListener, IDataConverter } from "./BORepositoryCore.d";
+import { logger } from "../messages/Messages";
+import { i18n } from "../i18n/I18N";
 
 /**
  * 业务对象的远程仓库
@@ -23,8 +23,8 @@ import { i18n } from '../i18n/I18N';
 export abstract class BORemoteRepository implements IBORemoteRepository {
 
     /**
-    * 访问口令
-    */
+     * 访问口令
+     */
     private _token: string;
 
     get token(): string {
@@ -35,8 +35,8 @@ export abstract class BORemoteRepository implements IBORemoteRepository {
         this._token = value;
     }
     /**
-    * 远程服务地址
-    */
+     * 远程服务地址
+     */
     private _address: string;
 
     get address(): string {
@@ -48,11 +48,11 @@ export abstract class BORemoteRepository implements IBORemoteRepository {
     }
 
     /**
-    * 查询数据
-    * @param boName 业务对象名称
-    * @param criteria 查询
-    * @param callBack 完成后回调方法
-    */
+     * 查询数据
+     * @param boName 业务对象名称
+     * @param criteria 查询
+     * @param callBack 完成后回调方法
+     */
     fetch<P>(boName: string, criteria: ICriteria, callBack: Function) {
         let method: string = "fetch" + boName;
         let listener: RemoteListener = {
@@ -73,11 +73,11 @@ export abstract class BORemoteRepository implements IBORemoteRepository {
     }
 
     /**
-    * 保存数据
-    * @param boName 业务对象名称
-    * @param bo 业务对象
-    * @param callBack 完成后回调方法
-    */
+     * 保存数据
+     * @param boName 业务对象名称
+     * @param bo 业务对象
+     * @param callBack 完成后回调方法
+     */
     save<P>(boName: string, bo: IBusinessObject, callBack: Function) {
         let method: string = "save" + boName;
         let listener: RemoteListener = {
@@ -98,8 +98,8 @@ export abstract class BORemoteRepository implements IBORemoteRepository {
     }
 
     /**
-    * 调用远程方法
-    */
+     * 调用远程方法
+     */
     abstract callRemoteMethod(method: string, data: any, listener: RemoteListener);
     /**
      * 创建数据转换者

@@ -7,26 +7,26 @@
  */
 
 /// <reference path="../data/Common.d.ts" />
-import { List } from '../data/Common.d';
+import { List } from "../data/Common.d";
 
 /**
-* 属性改变监听者
-*/
+ * 属性改变监听者
+ */
 export interface PropertyChangedListener {
     /**
-    * 属性改变
-    */
+     * 属性改变
+     */
     propertyChanged(property: string);
 }
 
 /**
-* 可绑定对象
-*/
+ * 可绑定对象
+ */
 export interface IBindable {
     /**
-    * 注册监听事件
-    * @param listener 监听者
-    */
+     * 注册监听事件
+     * @param listener 监听者
+     */
     registerListener(listener: PropertyChangedListener);
 
     /**
@@ -37,32 +37,32 @@ export interface IBindable {
 }
 
 /**
-* 状态跟踪对象
-*/
+ * 状态跟踪对象
+ */
 export interface ITrackable {
     /**
-    * 是否新建
-    */
+     * 是否新建
+     */
     readonly isNew: boolean;
     /**
-    * 是否修改
-    */
+     * 是否修改
+     */
     readonly isDirty: boolean;
     /**
-    * 是否删除
-    */
+     * 是否删除
+     */
     readonly isDeleted: boolean;
     /**
-    * 是否能够保存
-    */
+     * 是否能够保存
+     */
     readonly isSavable: boolean;
     /**
-    * 是否有效
-    */
+     * 是否有效
+     */
     readonly isVaild: boolean;
     /**
-    * 是否加载数据中
-    */
+     * 是否加载数据中
+     */
     isLoading: boolean;
 
     /**
@@ -102,31 +102,31 @@ export interface ITrackable {
 }
 
 /**
-* 业务对象
-*/
+ * 业务对象
+ */
 export interface IBusinessObject extends ITrackable {
     /**
      * 获取属性的值
      * @param property 属性名称
-    */
+     */
     getProperty<P>(property: string): P;
 
     /**
      * 设置属性的值
      * @param property 属性名称
      * @param value 值
-    */
+     */
     setProperty<P>(property: string, value: P);
 
 }
 
 /**
-* 业务对象集合
-*/
+ * 业务对象集合
+ */
 export interface IBusinessObjectList<T extends IBusinessObject> extends List<T> {
     /**
-    * 新建并添加子项
-    */
+     * 新建并添加子项
+     */
     create(): T;
 
 }

@@ -10,10 +10,10 @@
  * 模块索引文件，此文件集中导出类
  */
 
-export * from './Message.d';
-export * from './Message';
-export * from './Logger.d';
-export * from './Logger';
+export * from "./Message.d";
+export * from "./Message";
+export * from "./Logger.d";
+export * from "./Logger";
 
-import {Logger} from './Logger';
+import {Logger} from "./Logger";
 export const logger: Logger = new Logger();

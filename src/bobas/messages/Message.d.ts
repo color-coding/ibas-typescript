@@ -8,34 +8,34 @@
 
 /// <reference path="../data/Enums.ts" />
 
-import { emMessageLevel } from '../data/Enums';
+import { emMessageLevel } from "../data/Enums";
 
 /**
-* 消息
-*/
+ * 消息
+ */
 export interface IMessage {
     /**
-    * 消息级别
-    */
+     * 消息级别
+     */
     level: emMessageLevel;
     /**
-    * 时间
-    */
+     * 时间
+     */
     time: Date;
     /**
-    * 内容
-    */
+     * 内容
+     */
     content: string;
     /**
-    * 标签
-    */
+     * 标签
+     */
     tag: string;
     /**
-    * 消息
-    */
+     * 消息
+     */
     toString(): string;
     /**
-    * 内容输出
-    */
+     * 内容输出
+     */
     outString(): string;
 }

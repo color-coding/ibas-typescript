@@ -8,17 +8,17 @@
 
 /// <reference path="./OperationResult.d.ts" />
 
-import { object } from './Data';
-import { List } from './Common.d';
-import { ArrayList } from './Common';
-import { IOperationInformation, IOperationMessages, IOperationResult } from './OperationResult.d';
+import { object } from "./Data";
+import { List } from "./Common.d";
+import { ArrayList } from "./Common";
+import { IOperationInformation, IOperationMessages, IOperationResult } from "./OperationResult.d";
 /**
  * 操作信息
  */
 export class OperationInformation implements IOperationInformation {
     /**
-    * 获取-名称
-    */
+     * 获取-名称
+     */
     private _name: string;
 
     get name(): string {
@@ -131,9 +131,9 @@ export class OperationMessages implements IOperationMessages {
 */
 export class OperationResult<P> extends OperationMessages implements IOperationResult<P> {
     /**
- * 返回对象
- * 
- */
+     * 返回对象
+     * 
+     */
     private _resultObjects: List<P>;
 
     get resultObjects(): List<P> {

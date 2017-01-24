@@ -8,7 +8,7 @@
 // 业务对象编辑应用
 
 /// <reference path="./BOApplications.d.ts" />
-import { } from './BOApplications.d'
-import { } from './BOApplication'
+import { } from "./BOApplications.d";
+import { } from "./BOApplication";
 
 

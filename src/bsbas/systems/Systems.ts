@@ -8,8 +8,8 @@
 
 // 模块索引文件，此文件集中导出类
 
-export * from './SystemCenterApp';
-export * from './UseLoginApp';
-export * from './AboutApp';
-export * from './HelpApp';
+export * from "./SystemCenterApp";
+export * from "./UseLoginApp";
+export * from "./AboutApp";
+export * from "./HelpApp";
 

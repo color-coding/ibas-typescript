@@ -9,16 +9,16 @@
 /// <reference path="./Logger.d.ts" />
 /// <reference path="./Message.d.ts" />
 
-import { string } from '../data/Data';
-import { emMessageLevel } from '../data/Enums';
-import { IMessage } from './Message.d';
-import { Message } from './Message';
-import { ILogger } from './Logger.d';
+import { string } from "../data/Data";
+import { emMessageLevel } from "../data/Enums";
+import { IMessage } from "./Message.d";
+import { Message } from "./Message";
+import { ILogger } from "./Logger.d";
 
 /**
-* 运行消息记录
-*/
-export class Logger {
+ * 运行消息记录
+ */
+export class Logger implements ILogger {
     /**
      * 记录消息
      * @param message

@@ -6,8 +6,8 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { IBusinessObject, IBusinessObjectList } from '../core/Core';
-import { object } from '../data/Data';
-import { ArrayList } from '../data/Common';
+import { IBusinessObject, IBusinessObjectList } from "../core/Core";
+import { object } from "../data/Data";
+import { ArrayList } from "../data/Common";
 
 

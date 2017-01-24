@@ -7,6 +7,6 @@
  */
 // 业务对象应用的相关说明文件
 
-import { } from '../core/Core'
+import { } from "../core/Core";
 
 

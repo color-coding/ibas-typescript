@@ -6,9 +6,9 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import * as bobas from '../../../src/bobas/bobas';
+import * as bobas from "../../../src/bobas/bobas";
 
-import { User } from './User';
+import { User } from "./User";
 
 /**
 * 约束：

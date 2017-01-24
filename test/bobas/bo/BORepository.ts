@@ -6,9 +6,9 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import * as bobas from '../../../src/bobas/bobas';
-import { DataConverter4Test } from './DataConverters';
-import { SalesOrder } from './SalesOrder';
+import * as bobas from "../../../src/bobas/bobas";
+import { DataConverter4Test } from "./DataConverters";
+import { SalesOrder } from "./SalesOrder";
 /**
  * 业务仓库应用
  */

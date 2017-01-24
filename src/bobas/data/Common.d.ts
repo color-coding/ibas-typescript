@@ -7,35 +7,35 @@
  */
 
 /**
-* 集合
-*/
+ * 集合
+ */
 export interface List<T> extends Array<T> {
     /**
      * 添加项目
      * @param item 项目
-    */
+     */
     add(item: T);
 
     /**
      * 移出项目
      * @param item 项目
-    */
+     */
     remove(item: T);
 
     /**
      * 移出项目
      * @param index 项目索引
-    */
+     */
     removeAt(index: number);
 
     /**
-    * 第一个或默认
-    */
+     * 第一个或默认
+     */
     firstOrDefault(): T;
 
     /**
-    * 最后一个或默认
-    */
+     * 最后一个或默认
+     */
     lastOrDefault(): T;
 }
 

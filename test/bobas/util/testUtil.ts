@@ -8,7 +8,7 @@
 
 /// <reference path="../../../src/3rdparty/jquery.d.ts" />
 
-import * as bobas from '../../../src/bobas/bobas';
+import * as bobas from "../../../src/bobas/bobas";
 // 测试读取资源文件
 console.log(bobas.i18n.prop("msg_hello_world"));
 bobas.i18n.load(".../test/resources/languages/test.zh_CN.json");

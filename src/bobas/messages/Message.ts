@@ -9,12 +9,12 @@
 /// <reference path="./Message.d.ts" />
 /// <reference path="../data/Enums.ts" />
 
-import { emMessageLevel } from '../data/Enums';
-import { IMessage } from './Message.d';
+import { emMessageLevel } from "../data/Enums";
+import { IMessage } from "./Message.d";
 
 /**
-* 消息
-*/
+ * 消息
+ */
 export class Message implements IMessage {
 
     constructor() {
@@ -23,20 +23,20 @@ export class Message implements IMessage {
     }
 
     /**
-    * 消息级别
-    */
+     * 消息级别
+     */
     level: emMessageLevel;
     /**
-    * 时间
-    */
+     * 时间
+     */
     time: Date;
     /**
-    * 内容
-    */
+     * 内容
+     */
     content: string;
     /**
-    * 标签
-    */
+     * 标签
+     */
     tag: string;
     /**
      * 格式化消息
@@ -56,11 +56,11 @@ export class Message implements IMessage {
      */
     outString(): string {
         let msg: string = "";
-        if (this.time !== undefined) {
-            msg = msg + this.time.toLocaleString();
-        }
         if (this.level !== undefined) {
-            msg = msg + " " + emMessageLevel[this.level];
+            msg = msg + "[" + emMessageLevel[this.level] + "]";
+        }
+        if (this.time !== undefined) {
+            msg = msg + " [" + this.time.toLocaleString() + "]";
         }
         if (msg.length > 0) {
             msg = msg + "\r\n";

@@ -8,7 +8,7 @@
 
 /// <reference path="./Common.d.ts" />
 
-import { List } from './Common.d';
+import { List } from "./Common.d";
 
 
 /**
@@ -61,8 +61,8 @@ export class ArrayList<T> extends Array<T> implements List<T> {
     }
 
     /**
-    * 第一个或默认
-    */
+     * 第一个或默认
+     */
     firstOrDefault(): T {
         if (this.length > 0) {
             return this[0];
@@ -71,8 +71,8 @@ export class ArrayList<T> extends Array<T> implements List<T> {
     }
 
     /**
-    * 最后一个或默认
-    */
+     * 最后一个或默认
+     */
     lastOrDefault(): T {
         if (this.length > 0) {
             return this[this.length - 1];

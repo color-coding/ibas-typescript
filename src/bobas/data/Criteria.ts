@@ -5,16 +5,15 @@
  * Use of this source code is governed by an Apache License, Version 2.0
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
-import { object } from './Data';
-import { List } from './Common.d';
-import { ArrayList } from './Common';
-import { emConditionOperation, emConditionRelationship, emSortType } from './Enums';
-import { IBusinessObject } from '../core/BusinessObjectCore.d';
-import { ICriteria, ICondition, IConditions, ISort, ISorts, IChildCriteria, IChildCriterias } from './Criteria.d';
+import { object } from "./Data";
+import { ArrayList } from "./Common";
+import { emConditionOperation, emConditionRelationship, emSortType } from "./Enums";
+import { IBusinessObject } from "../core/BusinessObjectCore.d";
+import { ICriteria, ICondition, IConditions, ISort, ISorts, IChildCriteria, IChildCriterias } from "./Criteria.d";
 
 /**
-* 查询
-*/
+ * 查询
+ */
 export class Criteria implements ICriteria {
 
     /**
@@ -31,7 +30,7 @@ export class Criteria implements ICriteria {
     }
 
     /**
-     *查询结果数量
+     * 查询结果数量
      */
     private _result: number;
 
@@ -100,7 +99,7 @@ export class Criteria implements ICriteria {
     set sorts(value: ISorts) {
         this._sorts = value;
     }
-    
+
     /**
      * 子查询集合
      */
@@ -171,8 +170,8 @@ export class Criteria implements ICriteria {
 }
 
 /**
-* 查询条件
-*/
+ * 查询条件
+ */
 export class Condition implements ICondition {
 
     constructor() {
@@ -181,8 +180,8 @@ export class Condition implements ICondition {
     }
 
     /**
-    * 获取-条件字段（属性）名
-    */
+     * 获取-条件字段（属性）名
+     */
     private _alias: string;
 
     get alias(): string {
@@ -278,12 +277,12 @@ export class Condition implements ICondition {
     }
 }
 /**
-* 查询条件集合
-*/
+ * 查询条件集合
+ */
 export class Conditions extends ArrayList<ICondition> implements IConditions {
     /**
-    * 创建并返回新查询条件
-    */
+     * 创建并返回新查询条件
+     */
     create(): ICondition {
         let item = new Condition();
         this.add(item);
@@ -291,8 +290,8 @@ export class Conditions extends ArrayList<ICondition> implements IConditions {
     }
 }
 /**
-* 排序
-*/
+ * 排序
+ */
 export class Sort implements ISort {
 
     constructor() {
@@ -300,8 +299,8 @@ export class Sort implements ISort {
     }
 
     /**
-    * 排序的字段（属性）名
-    */
+     * 排序的字段（属性）名
+     */
     private _alias: string;
 
     get alias(): string {
@@ -325,12 +324,12 @@ export class Sort implements ISort {
     }
 }
 /**
-* 排序集合
-*/
+ * 排序集合
+ */
 export class Sorts extends ArrayList<Sort> implements ISorts {
     /**
-    * 创建并返回新排序
-    */
+     * 创建并返回新排序
+     */
     create(): ISort {
         let item = new Sort();
         this.add(item);
@@ -339,12 +338,12 @@ export class Sorts extends ArrayList<Sort> implements ISorts {
 }
 
 /**
-* 子项查询
-*/
+ * 子项查询
+ */
 export class ChildCriteria extends Criteria implements IChildCriteria {
     /**
- * 获取-属性路径
- */
+     * 获取-属性路径
+     */
     private _propertyPath: string;
 
     get propertyPath(): string {
@@ -370,12 +369,12 @@ export class ChildCriteria extends Criteria implements IChildCriteria {
 }
 
 /**
-* 子项查询集合
-*/
+ * 子项查询集合
+ */
 export class ChildCriterias extends ArrayList<ChildCriteria> implements IChildCriterias {
     /**
      * 创建并返回子项查询
-    */
+     */
     create(): IChildCriteria {
         let item = new ChildCriteria();
         this.add(item);

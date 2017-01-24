@@ -7,5 +7,5 @@
  */
 
 /// <reference path="./Modules.d.ts" />
-import { IModule, IFunction, IApplication, IView, IConsole } from './Modules.d'
+import { IModule, IFunction, IApplication, IView, IConsole } from "./Modules.d";
 

@@ -10,7 +10,7 @@
  * 模块索引文件，此文件集中导出类
  */
 
-export * from './BusinessObjectCore.d';
-export * from './BusinessObjectCore';
-export * from './BORepositoryCore.d';
-export * from './BORepositoryCore';
+export * from "./BusinessObjectCore.d";
+export * from "./BusinessObjectCore";
+export * from "./BORepositoryCore.d";
+export * from "./BORepositoryCore";

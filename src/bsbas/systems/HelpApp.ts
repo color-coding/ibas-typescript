@@ -6,5 +6,5 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { } from '../core/Core'
+import { } from "../core/Core";
 

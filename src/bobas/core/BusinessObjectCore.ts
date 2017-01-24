@@ -8,9 +8,9 @@
 
 /// <reference path="./BusinessObjectCore.d.ts" />
 
-import { IBindable, PropertyChangedListener, ITrackable, IBusinessObject, IBusinessObjectList } from './BusinessObjectCore.d';
-import { object } from '../data/Data';
-import { ArrayList } from '../data/Common';
+import { IBindable, PropertyChangedListener, ITrackable, IBusinessObject, IBusinessObjectList } from "./BusinessObjectCore.d";
+import { object } from "../data/Data";
+import { ArrayList } from "../data/Common";
 
 /**
  * 可监听的对象
@@ -61,8 +61,8 @@ export abstract class Bindable implements IBindable {
 }
 
 /**
-* 状态跟踪对象
-*/
+ * 状态跟踪对象
+ */
 export abstract class TrackableBase extends Bindable implements ITrackable {
 
     constructor() {
@@ -271,8 +271,8 @@ export abstract class BusinessObjectBase<T extends IBusinessObject> extends Trac
     }
 
     /**
-    * 标记为未修改
-    */
+     * 标记为未修改
+     */
     markOld(recursive: boolean): void {
         super.markOld(recursive);
         if (recursive !== undefined && recursive === true) {
@@ -362,7 +362,7 @@ export abstract class BusinessObjectListBase<T extends IBusinessObject> extends 
      */
     abstract create(): T;
 
-        /**
+    /**
      * 添加项目
      * @param item 项目
      */

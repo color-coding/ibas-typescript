@@ -8,12 +8,12 @@
 
 /// <reference path="./Message.d.ts" />
 
-import { emMessageLevel } from '../data/Enums';
-import { IMessage } from './Message.d';
+import { emMessageLevel } from "../data/Enums";
+import { IMessage } from "./Message.d";
 
 /**
-* 消息记录员
-*/
+ * 消息记录员
+ */
 export interface ILogger {
 
     /**

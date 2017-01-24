@@ -8,15 +8,15 @@
 
 /// <reference path="./BORepository.d.ts" />
 
-import { } from './BORepository.d';
+import { } from "./BORepository.d";
 import {
     object, string, emMessageLevel,
     ArrayList, IOperationResult, OperationResult, ICriteria
-} from '../data/Data';
-import { IDataConverter, RemoteListener, BORemoteRepository } from '../core/Core';
-import { i18n } from '../i18n/I18N';
-import { logger } from '../messages/Messages';
-import { DataConverter4ibas } from './DataConverters';
+} from "../data/Data";
+import { IDataConverter, RemoteListener, BORemoteRepository } from "../core/Core";
+import { i18n } from "../i18n/I18N";
+import { logger } from "../messages/Messages";
+import { DataConverter4ibas } from "./DataConverters";
 
 /**
  * 业务对象的远程仓库-jQuery实现

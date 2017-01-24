@@ -10,8 +10,8 @@ import {
     object,
     IDataConverter,
     BORepositoryApplication
-} from '../../../src/bobas/bobas';
-import { DataConverter4Test } from './DataConverters';
+} from "../../../src/bobas/bobas";
+import { DataConverter4Test } from "./DataConverters";
 
 /**
  * 业务仓库应用

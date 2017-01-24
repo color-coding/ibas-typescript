@@ -11,13 +11,13 @@
  */
 
 // 导出的类型
-export * from './data/Data';
-export * from './messages/Messages';
-export * from './configuration/Configuration';
-export * from './i18n/I18N';
-export * from './core/Core';
-export * from './bo/BO';
-export * from './repository/Repository';
+export * from "./data/Data";
+export * from "./messages/Messages";
+export * from "./configuration/Configuration";
+export * from "./i18n/I18N";
+export * from "./core/Core";
+export * from "./bo/BO";
+export * from "./repository/Repository";
 // 导出的测试相关类型
-export * from './assert/Assert';
+export * from "./assert/Assert";
 

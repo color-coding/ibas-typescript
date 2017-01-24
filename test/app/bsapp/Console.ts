@@ -7,6 +7,6 @@
  */
 
 
-import { } from '../../../src/bsbas/bsbas';
+import { } from "../../../src/bsbas/bsbas";
 
 
