@@ -9,6 +9,7 @@
 /// <reference path="./Common.d.ts" />
 
 import { List } from "./Common.d";
+import { string } from "./Data";
 
 
 /**
@@ -80,4 +81,43 @@ export class ArrayList<T> extends Array<T> implements List<T> {
         return null;
     }
 }
+/**
+ * 字符串构建器
+ */
+export class StringBuilder {
 
+    private values: string[] = new Array<string>();
+
+    /**
+     * 获取当前长度
+     */
+    get length(): number {
+        return this.values.length;
+    }
+
+    /**
+     * 添加字符
+     */
+    append(str: any): void {
+        this.values.push(str.toString());
+    }
+
+    /**
+     * 添加格式化字符
+     * @param format 字符格式
+     * @param args 替换字符
+     */
+    appendFormat(format: string, ...args: any[]): void {
+        this.append(string.format(format, args));
+    }
+    /**
+     * 生成字符串
+     */
+    toString(): string {
+        let str: string = "";
+        for (let item of this.values) {
+            str += item;
+        }
+        return str;
+    }
+}

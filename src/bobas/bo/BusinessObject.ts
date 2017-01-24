@@ -18,6 +18,17 @@ import {
     IBOSimple, IBOSimpleLine, IBOSimpleLines,
 } from "./BusinessObject.d";
 
+
+/** 业务对象属性名称-DocEntry */
+export const BO_PROPERTY_NAME_DOCENTRY: string = "docEntry";
+/** 业务对象属性名称-Code */
+export const BO_PROPERTY_NAME_CODE: string = "code";
+/** 业务对象属性名称-ObjectKey */
+export const BO_PROPERTY_NAME_OBJECTKEY: string = "objectKey";
+/** 业务对象属性名称-LineId */
+export const BO_PROPERTY_NAME_LINEID: string = "lineId";
+
+
 /**
  * 业务对象基类
  */
@@ -58,7 +69,34 @@ export abstract class BusinessObjects<T extends IBusinessObject, P extends IBusi
      * @param item 项目
      */
     protected afterAdd(item: T) {
-
+        if (!object.isNull(this.parent)) {
+            // 父项主键值给子项
+            let docEntry: number = this.parent.getProperty<number>(BO_PROPERTY_NAME_DOCENTRY);
+            if (docEntry !== undefined) {
+                item.setProperty(BO_PROPERTY_NAME_DOCENTRY, docEntry);
+            }
+            let objectKey: number = this.parent.getProperty<number>(BO_PROPERTY_NAME_OBJECTKEY);
+            if (objectKey !== undefined) {
+                item.setProperty(BO_PROPERTY_NAME_DOCENTRY, objectKey);
+            }
+            let code: string = this.parent.getProperty<string>(BO_PROPERTY_NAME_CODE);
+            if (code !== undefined) {
+                item.setProperty(BO_PROPERTY_NAME_DOCENTRY, code);
+            }
+        }
+        if ((<any>item).lineId !== undefined) {
+            // 存在行编号，为其自动编号
+            let max: number = 1;
+            for (let tmp of this) {
+                let id: number = tmp.getProperty<number>(BO_PROPERTY_NAME_LINEID);
+                if (id !== undefined) {
+                    if (id > max) {
+                        max = id;
+                    }
+                }
+            }
+            item.setProperty(BO_PROPERTY_NAME_LINEID, max);
+        }
     }
 
 }

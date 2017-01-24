@@ -64,12 +64,11 @@ export abstract class BORemoteRepository implements IBORemoteRepository {
                 }
             }
         };
-        let converter = this.createDataConverter();
+        let converter: IDataConverter = this.createDataConverter();
         if (object.isNull(converter)) {
             throw new Error(i18n.prop("msg_invalid_data_converter"));
         }
-        let data = converter.convert(criteria);
-        this.callRemoteMethod(method, data, listener);
+        this.callRemoteMethod(method, converter.convert(criteria), listener);
     }
 
     /**
@@ -89,12 +88,11 @@ export abstract class BORemoteRepository implements IBORemoteRepository {
                 }
             }
         };
-        let converter = this.createDataConverter();
+        let converter: IDataConverter = this.createDataConverter();
         if (object.isNull(converter)) {
             throw new Error(i18n.prop("msg_invalid_data_converter"));
         }
-        let data = converter.convert(bo);
-        this.callRemoteMethod(method, data, listener);
+        this.callRemoteMethod(method, converter.convert(bo), listener);
     }
 
     /**

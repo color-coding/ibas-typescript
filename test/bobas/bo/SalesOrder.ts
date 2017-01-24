@@ -10,16 +10,16 @@ import * as bobas from "../../../src/bobas/bobas";
 
 import { User } from "./User";
 
-/**
-* 约束：
-*    1. 本地对象（如下，SalesOrder）的属性用set、get定义，便于扩展方法。
-*    2. 本地对象与远程对象，通过私有属性的名称构建关联关系。
+/*
+ 约束：
+    1. 本地对象（如下，SalesOrder）的属性用set、get定义，便于扩展方法。
+    2. 本地对象与远程对象，通过私有属性的名称构建关联关系。
           转换规则，仅“_”前缀的属性才进行映射！
              a. 去除“_”字符并把后面的第一个字母改大写。如：_salesOrderItems -> SalesOrderItems
              b. 如果值是boolean类型的，“_”字符替换为“is”并把“_”后的首字母改大写。如：_new -> isNew
-    */
+ */
 
-/** 远程对象示例
+/* 远程对象示例
 {
   "type": "SalesOrder",
   "isDirty": true,
@@ -153,90 +153,83 @@ import { User } from "./User";
 */
 
 /**
-* 销售订单行对象
-*/
+ * 销售订单行对象
+ */
 export class SalesOrderItem extends bobas.BusinessObject<SalesOrderItem> {
 
-    private _docEntry: number;
-
     get docEntry(): number {
-        return this._docEntry;
+        return this.getProperty<number>("_docEntry");
     }
 
     set docEntry(value: number) {
-        this._docEntry = value;
+        this.setProperty("_docEntry", value);
     }
 
-    private _lineId: number;
-
     get lineId(): number {
-        return this._lineId;
+        return this.getProperty<number>("_lineId");
     }
 
     set lineId(value: number) {
-        this._lineId = value;
+        this.setProperty("_lineId", value);
     }
-    private _itemCode: string;
 
     get itemCode(): string {
-        return this._itemCode;
+        return this.getProperty<string>("_itemCode");
     }
 
     set itemCode(value: string) {
-        this._itemCode = value;
+        this.setProperty("_itemCode", value);
     }
-    private _price: number;
 
     get price(): number {
-        return this._price;
+        return this.getProperty<number>("_price");
     }
 
     set price(value: number) {
-        this._price = value;
+        this.setProperty("_price", value);
     }
-    private _quantity: number;
 
     get quantity(): number {
-        return this._quantity;
+        return this.getProperty<number>("_quantity");
     }
 
     set quantity(value: number) {
-        this._quantity = value;
+        this.setProperty("_quantity", value);
     }
-    private _lineTotal: number;
 
     get lineTotal(): number {
-        return this._lineTotal;
+        return this.getProperty<number>("_lineTotal");
     }
 
     set lineTotal(value: number) {
-        this._lineTotal = value;
+        this.setProperty("_lineTotal", value);
     }
 
-    private _lineStatus: bobas.emDocumentStatus;
-
     get lineStatus(): bobas.emDocumentStatus {
-        return this._lineStatus;
+        return this.getProperty<bobas.emDocumentStatus>("_lineStatus");
     }
 
     set lineStatus(value: bobas.emDocumentStatus) {
-        this._lineStatus = value;
+        this.setProperty("_lineStatus", value);
     }
 
     // 非“_”开始字符，不映射到远程对象
-    private oUser: User = new User();
 
     get user(): User {
-        return this.oUser;
+        return this.getProperty<User>("oUser");
     }
 
     set user(value: User) {
-        this.oUser = value;
+        this.setProperty("oUser", value);
+    }
+
+    protected init(): void {
+        this.user = new User();
     }
 }
 /**
-* 销售订单行对象集合
-*/
+ * 销售订单行对象集合
+ */
 export class SalesOrderItems extends bobas.BusinessObjects<SalesOrderItem, SalesOrder> {
 
     /**
@@ -250,70 +243,62 @@ export class SalesOrderItems extends bobas.BusinessObjects<SalesOrderItem, Sales
 
 }
 /**
-* 销售订单对象
-*/
+ * 销售订单对象
+ */
 export class SalesOrder extends bobas.BusinessObject<SalesOrder> {
 
-    private _docEntry: number;
-
     get docEntry(): number {
-        return this._docEntry;
+        return this.getProperty<number>("_docEntry");
     }
 
     set docEntry(value: number) {
-        this._docEntry = value;
+        this.setProperty("_docEntry", value);
     }
 
-    private _customerCode: string;
-
     get customer(): string {
-        return this._customerCode;
+        return this.getProperty<string>("_customerCode");
     }
 
     set customer(value: string) {
-        this._customerCode = value;
+        this.setProperty("_customerCode", value);
     }
 
-    private _documentStatus: bobas.emDocumentStatus;
-
     get documentStatus(): bobas.emDocumentStatus {
-        return this._documentStatus;
+        return this.getProperty<bobas.emDocumentStatus>("_documentStatus");
     }
 
     set documentStatus(value: bobas.emDocumentStatus) {
-        this._documentStatus = value;
+        this.setProperty("_documentStatus", value);
     }
 
-    private _canceled: bobas.emYesNo;
-
     get canceled(): bobas.emYesNo {
-        return this._canceled;
+        return this.getProperty<bobas.emYesNo>("_canceled");
     }
 
     set canceled(value: bobas.emYesNo) {
-        this._canceled = value;
+        this.setProperty("_canceled", value);
     }
 
     // 销售订单行，_salesOrderItems，映射远程对象
-    private _salesOrderItems: SalesOrderItems = new SalesOrderItems(this);
-
     get items(): SalesOrderItems {
-        return this._salesOrderItems;
+        return this.getProperty<SalesOrderItems>("_salesOrderItems");
     }
 
     set items(value: SalesOrderItems) {
-        this._salesOrderItems = value;
+        this.setProperty("_salesOrderItems", value);
     }
 
     // 非“_”开始字符，不映射到远程对象
-    private oUser: User = new User();
-
     get user(): User {
-        return this.oUser;
+        return this.getProperty<User>("oUser");
     }
 
     set user(value: User) {
-        this.oUser = value;
+        this.setProperty("oUser", value);
     }
 
+    protected init(): void {
+        this.user = new User();
+        this.items = new SalesOrderItems(this);
+    }
 }

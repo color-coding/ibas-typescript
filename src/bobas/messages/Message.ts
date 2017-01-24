@@ -10,6 +10,7 @@
 /// <reference path="../data/Enums.ts" />
 
 import { emMessageLevel } from "../data/Enums";
+import { StringBuilder } from "../data/Common";
 import { IMessage } from "./Message.d";
 
 /**
@@ -42,35 +43,42 @@ export class Message implements IMessage {
      * 格式化消息
      */
     toString(): string {
-        let msg: string = "";
+        let builder: StringBuilder = new StringBuilder();
         if (this.tag !== undefined) {
-            msg = msg + this.tag + ": ";
+           builder.append(this.tag);
+           builder.append(": ");
         }
         if (this.content !== undefined) {
-            msg = msg + this.content;
+           builder.append(this.content);
         }
-        return msg;
+        return builder.toString();
     }
     /**
      * 格式化消息
      */
     outString(): string {
-        let msg: string = "";
+        let builder: StringBuilder = new StringBuilder();
         if (this.level !== undefined) {
-            msg = msg + "[" + emMessageLevel[this.level] + "]";
+            builder.append("[");
+            builder.append(emMessageLevel[this.level]);
+            builder.append("]");
         }
         if (this.time !== undefined) {
-            msg = msg + " [" + this.time.toLocaleString() + "]";
+            builder.append(" ");
+            builder.append("[");
+            builder.append(this.time.toLocaleString());
+            builder.append("]");
         }
-        if (msg.length > 0) {
-            msg = msg + "\r\n";
+        if (builder.length > 0) {
+           builder.append("\r\n");
         }
         if (this.tag !== undefined) {
-            msg = msg + this.tag + ": ";
+           builder.append(this.tag);
+           builder.append(": ");
         }
         if (this.content !== undefined) {
-            msg = msg + this.content;
+           builder.append(this.content);
         }
-        return msg;
+        return builder.toString();
     }
 }

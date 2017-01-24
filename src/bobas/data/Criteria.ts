@@ -284,7 +284,7 @@ export class Conditions extends ArrayList<ICondition> implements IConditions {
      * 创建并返回新查询条件
      */
     create(): ICondition {
-        let item = new Condition();
+        let item: ICondition = new Condition();
         this.add(item);
         return item;
     }
@@ -326,12 +326,12 @@ export class Sort implements ISort {
 /**
  * 排序集合
  */
-export class Sorts extends ArrayList<Sort> implements ISorts {
+export class Sorts extends ArrayList<ISort> implements ISorts {
     /**
      * 创建并返回新排序
      */
     create(): ISort {
-        let item = new Sort();
+        let item: ISort = new Sort();
         this.add(item);
         return item;
     }
@@ -371,12 +371,12 @@ export class ChildCriteria extends Criteria implements IChildCriteria {
 /**
  * 子项查询集合
  */
-export class ChildCriterias extends ArrayList<ChildCriteria> implements IChildCriterias {
+export class ChildCriterias extends ArrayList<IChildCriteria> implements IChildCriterias {
     /**
      * 创建并返回子项查询
      */
     create(): IChildCriteria {
-        let item = new ChildCriteria();
+        let item: IChildCriteria = new ChildCriteria();
         this.add(item);
         return item;
     }

@@ -9,23 +9,21 @@
 /// <reference path="./BusinessObjectCore.d.ts" />
 
 import { IBindable, PropertyChangedListener, ITrackable, IBusinessObject, IBusinessObjectList } from "./BusinessObjectCore.d";
-import { object } from "../data/Data";
+import { object, emMessageLevel } from "../data/Data";
 import { ArrayList } from "../data/Common";
+import { logger } from "../messages/Messages";
 
 /**
  * 可监听的对象
  */
 export abstract class Bindable implements IBindable {
 
-    constructor() {
-    }
-
     private listeners: ArrayList<PropertyChangedListener>;
     /**
      * 注册监听事件
      * @param listener 监听者
      */
-    registerListener(listener: PropertyChangedListener) {
+    registerListener(listener: PropertyChangedListener): void {
         if (object.isNull(this.listeners)) {
             this.listeners = new ArrayList<PropertyChangedListener>();
         }
@@ -36,7 +34,7 @@ export abstract class Bindable implements IBindable {
      * 移出监听事件
      * @param listener 监听者
      */
-    removeListener(listener: PropertyChangedListener) {
+    removeListener(listener: PropertyChangedListener): void {
         if (object.isNull(this.listeners)) {
             return;
         }
@@ -49,10 +47,15 @@ export abstract class Bindable implements IBindable {
 
     /**
      * 通知属性改变
+     * @param property 属性
      */
-    protected firePropertyChanged(property: string) {
+    protected firePropertyChanged(property: string): void {
         if (object.isNull(this.listeners)) {
             return;
+        }
+        if (property.startsWith("_")) {
+            // 除去映射符
+            property = property.substring(1);
         }
         for (let item of this.listeners) {
             item.propertyChanged(property);
@@ -83,7 +86,6 @@ export abstract class TrackableBase extends Bindable implements ITrackable {
     }
     set isNew(value: boolean) {
         this._new = value;
-        this.firePropertyChanged("isNew");
     }
 
     private _dirty: boolean;
@@ -95,7 +97,6 @@ export abstract class TrackableBase extends Bindable implements ITrackable {
     }
     set isDirty(value: boolean) {
         this._dirty = value;
-        this.firePropertyChanged("isDirty");
     }
 
     private _deleted: boolean;
@@ -107,7 +108,6 @@ export abstract class TrackableBase extends Bindable implements ITrackable {
     }
     set isDeleted(value: boolean) {
         this._deleted = value;
-        this.firePropertyChanged("isDeleted");
     }
 
     private _loading: boolean;
@@ -119,7 +119,6 @@ export abstract class TrackableBase extends Bindable implements ITrackable {
     }
     set isLoading(value: boolean) {
         this._loading = value;
-        this.firePropertyChanged("isLoading");
     }
 
     private _savable: boolean;
@@ -131,7 +130,6 @@ export abstract class TrackableBase extends Bindable implements ITrackable {
     }
     set isSavable(value: boolean) {
         this._savable = value;
-        this.firePropertyChanged("isSavable");
     }
 
     private _vaild: boolean;
@@ -143,7 +141,6 @@ export abstract class TrackableBase extends Bindable implements ITrackable {
     }
     set isVaild(value: boolean) {
         this._vaild = value;
-        this.firePropertyChanged("isVaild");
     }
 
     /**
@@ -200,20 +197,39 @@ export abstract class BusinessObjectBase<T extends IBusinessObject> extends Trac
 
     constructor() {
         super();
+        this.isLoading = true;
+        this.init();
+        this.isLoading = false;
+    }
+
+    /**
+     * 初始化方法，属性在此方法初始化
+     */
+    protected abstract init(): void;
+
+    /**
+     * 通知属性改变
+     * @param property 属性
+     */
+    protected firePropertyChanged(property: string): void {
+        if (this.isLoading) { return; }
+        if (!this.isDirty) { this.markDirty(false); }
+        super.firePropertyChanged(property);
     }
 
     /**
      * 获取属性值
      */
     getProperty<P>(property: string): P {
-        return undefined;
+        return this[property];
     }
 
     /**
      * 设置属性值
      */
-    setProperty<P>(property: string, value: P) {
-
+    setProperty<P>(property: string, value: P): void {
+        this[property] = value;
+        this.firePropertyChanged(property);
     }
 
     /**

@@ -9,8 +9,8 @@
 import * as bobas from "../../../src/bobas/bobas";
 
 /**
-* 用户
-*/
+ * 用户
+ */
 export class User extends bobas.BusinessObject<User> {
 
     private _userCode: string;
@@ -21,5 +21,9 @@ export class User extends bobas.BusinessObject<User> {
 
     set userCode(value: string) {
         this._userCode = value;
+    }
+
+    protected init() {
+
     }
 }

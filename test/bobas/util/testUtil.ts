@@ -57,6 +57,15 @@ bobas.assert.equals("string.count faild.", bobas.string.count("I'm niuren.zhu.",
 bobas.assert.equals("string.count faild.", bobas.string.count("I'm niuren.zhu.", "."), 2);
 // 测试配置项
 console.log(bobas.string.format("debug enabled is {0}", bobas.config.get(bobas.config.CONFIG_ITEM_DEBUG_MODE, false)));
+// 测试字符串构造器
+let builder: bobas.StringBuilder = new bobas.StringBuilder();
+builder.append("I");
+builder.append("'");
+builder.append("m");
+builder.append(" ");
+builder.appendFormat("{1}.{0}","zhu","niuren");
+builder.append(".");
+console.log(builder.toString());
 // 测试jquery
 var JQryAjxSetting: JQueryAjaxSettings = {
     url: "http://localhost:8080/demo/services/jersey/hello",

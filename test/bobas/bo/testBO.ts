@@ -10,12 +10,19 @@ import * as bobas from "../../../src/bobas/bobas";
 import { SalesOrder } from "./SalesOrder";
 import { BORepositoryTest } from "./BORepository";
 
+let listener: bobas.PropertyChangedListener = {
+    propertyChanged(property: string): void {
+        bobas.logger.log(bobas.emMessageLevel.DEBUG, "bo: property [{0}] was changed.", property);
+    }
+}
 let order = new SalesOrder();
+order.registerListener(listener);
 bobas.logger.log(bobas.emMessageLevel.DEBUG, "test: type of {0}", typeof (order));
 order.customer = "C00001";
 order.documentStatus = bobas.emDocumentStatus.RELEASED;
 let item = order.items.create();
 bobas.logger.log(bobas.emMessageLevel.DEBUG, "test: type of {0}", typeof (item));
+item.registerListener(listener);
 item.itemCode = "A00001";
 item.price = 1.99;
 item.quantity = 2;
