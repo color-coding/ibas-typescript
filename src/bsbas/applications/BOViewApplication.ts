@@ -8,7 +8,14 @@
 // 业务对象查看应用
 
 /// <reference path="./BOApplications.d.ts" />
-import { } from "./BOApplications.d";
-import { } from "./BOApplication";
+import { IBOViewApplicationView } from "./BOApplications.d";
+import { BOApplication } from "./BOApplication";
 
 
+/**
+ * 业务对象查看应用
+ */
+export class BOViewApplication<T extends IBOViewApplicationView> extends BOApplication<T> {
+
+
+}

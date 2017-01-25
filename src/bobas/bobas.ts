@@ -9,14 +9,15 @@
 /**
  * 模块索引文件，此文件集中导出类
  */
-
+/** 业务对象库（bobas）文件名称 */
+export const LIBRARY_BOBAS_ROOT_FILE_NAME: string ="bobas.js";
 /** 初始化函数 */
 import { config, Configuration } from "./configuration/Configuration";
 import { i18n } from "./i18n/I18N";
 import { string } from "./data/Data";
 /** 框架初始化 */
 let init = function init(): void {
-    let rootUrl = config.rootUrl(Configuration.LIBRARY_BOBAS_ROOT_FILE_NAME);
+    let rootUrl = config.rootUrl(LIBRARY_BOBAS_ROOT_FILE_NAME);
     // 加载配置-框架默认
     config.load(string.format("{0}/{1}", rootUrl, Configuration.CONFIG_FILE_URL));
     // 加载配置-网站默认

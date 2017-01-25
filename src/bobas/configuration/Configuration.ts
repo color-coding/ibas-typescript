@@ -19,8 +19,6 @@ export class Configuration {
 
     /** 默认配置文件名称 */
     static CONFIG_FILE_URL: string = "config.json";
-    /** 库的根文件名称 */
-    static LIBRARY_BOBAS_ROOT_FILE_NAME: string = "bobas.js";
 
     /**
      * 根路径标记

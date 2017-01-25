@@ -17,7 +17,7 @@ console.log(bobas.string.format("message level is {0}",
     bobas.config.get(bobas.config.CONFIG_ITEM_MESSAGES_LEVEL, bobas.emMessageLevel.FATAL, bobas.emMessageLevel)));
 // 测试读取资源文件
 console.log(bobas.i18n.prop("msg_hello_world"));
-bobas.i18n.load(".../test/resources/languages/test.zh_CN.json");
+bobas.i18n.load(".../test/bobas/resources/languages/test.zh_CN.json");
 console.log(bobas.i18n.prop("msg_hello_world"));
 // 测试日志
 bobas.logger.log(bobas.emMessageLevel.FATAL, "a fatal error", "test");
