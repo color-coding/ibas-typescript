@@ -43,6 +43,8 @@ export interface IFunction extends IElement {
 export interface IApplication<T extends IView> extends IElement {
     /** 应用的视图 */
     view: T;
+    /** 显示视图 */
+    show(): void;
 }
 /**
  * 应用-视图

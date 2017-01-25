@@ -7,4 +7,7 @@
  */
 
 
-import { } from "./bsapp/Console";
+import { MainApp } from "./bsapp/MainApp";
+
+let mainApp = new MainApp();
+mainApp.show();

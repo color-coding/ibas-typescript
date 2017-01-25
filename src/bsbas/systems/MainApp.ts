@@ -6,6 +6,12 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { } from "../core/Core";
+/// <reference path="./Systems.d.ts" />
+import { Application } from "./Application";
+import { IMainView } from "./Systems.d";
+
+/** 应用-登陆 */
+export class MainApp extends Application<IMainView> {
 
 
+}

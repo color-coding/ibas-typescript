@@ -49,20 +49,9 @@ export class Configuration {
                 continue;
             }
             if (atr.value.endsWith(fileName)) {
-                let tmp: string = atr.value.slice(0, atr.value.lastIndexOf(fileName));
-                let count: number = string.count(tmp, "../");
-                let tmps: string[] = window.document.location.pathname.split("/");
-                for (let j: number = 0; j < tmps.length; j++) {
-                    if (tmps[j] === undefined || tmps[j] === null) { continue; }
-                    if (tmps[j].length === 0) { continue; }
-                    if (j >= tmps.length - 1 - count) { break; }// 超过路径则退出
-                    root = root + "/" + tmps[j];
-                }
-                if (count > 0) {
-                    tmp = string.replace(tmp, "../", "");
-                    tmp = string.replace(tmp, "./", "");
-                    root = root + "/" + tmp;
-                }
+                let tmp: string = atr.value;
+                tmp = tmp.substring(0, tmp.length - fileName.length + 1);
+                root = tmp;
                 break;
             }
         }

@@ -6,12 +6,12 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { ModuleConsole } from "../core/Core";
+/// <reference path="./Systems.d.ts" />
+import { Application } from "./Application";
+import { ILoginView } from "./Systems.d";
 
+/** 应用-登陆 */
+export class LoginApp extends Application<ILoginView> {
 
-/**
- * 系统中心-控制台
- */
-export class Console extends ModuleConsole {
 
 }

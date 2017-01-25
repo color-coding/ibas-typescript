@@ -17,5 +17,8 @@ import { IBOApplicationView } from "./BOApplications.d";
  */
 export class BOApplication<T extends IBOApplicationView> extends Application<T> {
 
+    /** 显示视图 */
+    show(): void {
 
+    }
 }

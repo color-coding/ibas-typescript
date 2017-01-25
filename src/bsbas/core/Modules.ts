@@ -26,6 +26,9 @@ export class Element implements IElement {
  * 模块
  */
 export class Module extends Element implements IModule {
+    constructor() {
+        super();
+    }
     private _functions: List<IFunction>;
 
     /** 功能集合 */
@@ -53,7 +56,9 @@ export class Module extends Element implements IModule {
  * 模块-功能
  */
 export class Function extends Element implements IFunction {
-
+    constructor() {
+        super();
+    }
     private _applications: List<IApplication<IView>>;
 
     /** 功能集合 */
@@ -79,13 +84,22 @@ export class Function extends Element implements IFunction {
 /**
  * 功能-应用
  */
-export class Application<T extends IView> extends Element implements IApplication<T> {
+export abstract class Application<T extends IView> extends Element implements IApplication<T> {
+    constructor() {
+        super();
+    }
     /** 应用的视图 */
     view: T;
+    /** 显示视图 */
+    abstract show(): void;
 }
 /**
  * 模块控制台
  */
-export class ModuleConsole extends Module implements IConsole {
-
+export abstract class ModuleConsole extends Module implements IConsole {
+    constructor() {
+        super();
+    }
+    /** 初始化 */
+    abstract init(): void;
 }

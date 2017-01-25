@@ -28,5 +28,4 @@ export * from "./core/Core";
 export * from "./applications/Applications";
 export * from "./views/Views";
 // export * from "./services/Services";
-export * from "./systems/Systems";
 

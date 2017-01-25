@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @license
  * Copyright color-coding studio. All Rights Reserved.
  *
@@ -6,7 +6,12 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
+/// <reference path="./Systems.d.ts" />
+import { Application } from "./Application";
+import { ICenterView } from "./Systems.d";
 
-import { } from "../../../src/bsbas/bsbas";
+/** 应用-中心 */
+export class CenterApp extends Application<ICenterView> {
 
 
+}
