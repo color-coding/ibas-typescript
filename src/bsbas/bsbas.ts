@@ -8,6 +8,11 @@
 
 // 模块索引文件，此文件集中导出类
 
+import * as bobas from "../../src/bobas/bobas";
+
+// bobas内容
+export const config: bobas.Configuration = bobas.config;
+// 此模块内容
 export * from "./core/Core";
 export * from "./applications/Applications";
 export * from "./views/Views";

@@ -21,18 +21,22 @@ import { ILogger } from "./Logger.d";
  */
 export class Logger implements ILogger {
 
-    constructor() {
-        this.level = config.get(config.CONFIG_ITEM_MESSAGES_LEVEL, emMessageLevel.ERROR, emMessageLevel);
-        let debug: boolean = config.get(config.CONFIG_ITEM_DEBUG_MODE, false);
-        if (debug) {
-            this.level = emMessageLevel.DEBUG;
-        }
-    }
-
+    private _level: emMessageLevel;
     /**
      * 消息输出的级别
      */
-    level: emMessageLevel;
+    get level(): emMessageLevel {
+        if (string.isEmpty(this._level)) {
+            this._level = config.get(config.CONFIG_ITEM_MESSAGES_LEVEL, emMessageLevel.ERROR, emMessageLevel);
+            if (config.get(config.CONFIG_ITEM_DEBUG_MODE, false)) {
+                this._level = emMessageLevel.DEBUG;
+            }
+        }
+        return this._level;
+    }
+    set language(value: emMessageLevel) {
+        this._level = value;
+    }
 
     /**
      * 记录消息

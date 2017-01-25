@@ -9,19 +9,13 @@
 /**
  * 模块索引文件，此文件集中导出类
  */
-import { object } from "../data/Data";
-import { string } from "../data/Data";
-import { emMessageLevel } from "../data/Enums";
+import { object, string, emMessageLevel } from "../data/Data";
 import { config } from "../configuration/Configuration";
 import { logger } from "../messages/Messages";
-
 /**
  * 配置
  */
 export class I18N {
-
-    constructor() {
-    }
 
     static CONFIG_ITEM_LANGUAGE_CODE: string = "language";
 
@@ -58,17 +52,12 @@ export class I18N {
     load(address: string): void {
         let that = this;
         if (object.isNull(address)) {
-            address = string.format("{0}/resources/languages/bobas.{1}.json", config.rootUrl(), this.language);
-        } if (!address.startsWith("http")) {
+            return;
+        }
+        if (!address.startsWith("http")) {
             if (address.startsWith(config.ROOT_URL_SIGN)) {
                 // 补齐地址，根目录
-                address = window.location.origin + "/" + address.slice(config.ROOT_URL_SIGN.length, address.length);
-            } else if (address.startsWith("/")) {
-                // 补齐地址，库目录，/src/test/languages.json
-                address = config.rootUrl() + address;
-            } else {
-                // 补齐地址，库目录，src/test/languages.json
-                address = config.rootUrl() + "/" + address;
+                address = window.document.location.origin + "/" + address.slice(config.ROOT_URL_SIGN.length, address.length);
             }
         }
         var JQryAjxSetting: JQueryAjaxSettings = {
@@ -78,15 +67,17 @@ export class I18N {
             dataType: "json",
             async: false,
             cache: false,
-            error: function (xhr, status, error) {
+            error: function (xhr: JQueryXHR, status: string, error: string): void {
                 logger.log(emMessageLevel.ERROR, "i18n: get language file [{2}] faild [{0} - {1}].", status, error, address);
             },
-            success: function (data) {
+            success: function (data: any): void {
                 logger.log(emMessageLevel.DEBUG, "i18n: get language file [{0}] sucessful.", address);
                 if (data !== undefined && data !== null) {
                     if (object.isNull(that.items)) { that.items = new Map<string, string>(); }
                     for (let name in data) {
-                        that.items.set(name, data[name]);
+                        if (data[name] !== undefined) {
+                            that.items.set(name, data[name]);
+                        }
                     }
                 }
             },

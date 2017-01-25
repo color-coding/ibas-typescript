@@ -42,7 +42,9 @@ export abstract class BusinessObject<T extends IBusinessObject> extends Business
 /**
  * 业务对象集合基类
  */
-export abstract class BusinessObjects<T extends IBusinessObject, P extends IBusinessObject> extends BusinessObjectListBase<T> implements IBusinessObjects<T, P> {
+export abstract class BusinessObjects<T extends IBusinessObject, P extends IBusinessObject>
+    extends BusinessObjectListBase<T>
+    implements IBusinessObjects<T, P> {
     /**
      * 构造
      * @param parent 父项

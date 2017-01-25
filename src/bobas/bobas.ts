@@ -10,6 +10,20 @@
  * 模块索引文件，此文件集中导出类
  */
 
+/** 初始化函数 */
+import { config, Configuration } from "./configuration/Configuration";
+import { i18n } from "./i18n/I18N";
+import { string } from "./data/Data";
+/** 框架初始化 */
+let init = function init(): void {
+    let rootUrl = config.rootUrl(Configuration.LIBRARY_BOBAS_ROOT_FILE_NAME);
+    // 加载配置-框架默认
+    config.load(string.format("{0}/{1}", rootUrl, Configuration.CONFIG_FILE_URL));
+    // 加载配置-网站默认
+    config.load(string.format("{0}/{1}", config.rootUrl(null), Configuration.CONFIG_FILE_URL));
+    // 加载语言-框架默认
+    i18n.load(string.format("{0}/resources/languages/bobas.{1}.json", rootUrl, i18n.language));
+} ();
 // 导出的类型
 export * from "./data/Data";
 export * from "./messages/Messages";
@@ -20,4 +34,3 @@ export * from "./bo/BO";
 export * from "./repository/Repository";
 // 导出的测试相关类型
 export * from "./assert/Assert";
-

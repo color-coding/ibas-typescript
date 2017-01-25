@@ -241,6 +241,7 @@ export abstract class BusinessObjectBase<T extends IBusinessObject> extends Trac
         let properties = new Map();
         // 遍历属性名称
         for (let item in this) {
+            if (this[item] === undefined) { continue; }
             let name: string = item;
             let value = this[name];
             properties.set(name, value);
@@ -367,7 +368,9 @@ export abstract class BusinessObjectBase<T extends IBusinessObject> extends Trac
 /**
  * 业务对象集合基础
  */
-export abstract class BusinessObjectListBase<T extends IBusinessObject> extends ArrayList<T> implements IBusinessObjectList<T> {
+export abstract class BusinessObjectListBase<T extends IBusinessObject>
+    extends ArrayList<T>
+    implements IBusinessObjectList<T> {
 
     constructor() {
         super();
@@ -382,7 +385,7 @@ export abstract class BusinessObjectListBase<T extends IBusinessObject> extends 
      * 添加项目
      * @param item 项目
      */
-    add(item: T) {
+    add(item: T): void {
         // 无效值不做处理
         if (item === null || item === undefined) {
             return;
@@ -395,7 +398,7 @@ export abstract class BusinessObjectListBase<T extends IBusinessObject> extends 
      * 添加项目后
      * @param item 项目
      */
-    protected afterAdd(item: T) {
+    protected afterAdd(item: T): void {
 
     }
 
@@ -403,7 +406,7 @@ export abstract class BusinessObjectListBase<T extends IBusinessObject> extends 
      * 移出项目
      * @param item 项目
      */
-    remove(item: T) {
+    remove(item: T): void {
         // 无效值不做处理
         if (item === null || item === undefined) {
             return;
@@ -416,7 +419,7 @@ export abstract class BusinessObjectListBase<T extends IBusinessObject> extends 
      * 移出项目后
      * @param item 项目
      */
-    protected afterRemove(item: T) {
+    protected afterRemove(item: T): void {
 
     }
 }

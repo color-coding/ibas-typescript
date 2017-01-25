@@ -10,23 +10,18 @@
  * 模块索引文件，此文件集中导出类
  */
 /// <reference path="../../3rdparty/jquery.d.ts" />
-import { string, object } from "../data/Data";
+import { string } from "../data/Data";
 
 /**
  * 配置
  */
 export class Configuration {
 
-    /**
-     * 配置文件地址
-     */
-    private static CONFIG_FILE_URL: string = "config.json";
-    private static ROOT_FILE_NAME: string = "/bobas.js";
+    /** 默认配置文件名称 */
+    static CONFIG_FILE_URL: string = "config.json";
+    /** 库的根文件名称 */
+    static LIBRARY_BOBAS_ROOT_FILE_NAME: string = "bobas.js";
 
-    constructor() {
-        // 加载配置
-        this.load();
-    }
     /**
      * 根路径标记
      */
@@ -38,9 +33,16 @@ export class Configuration {
     CONFIG_ITEM_MESSAGES_LEVEL: string = "msgLevel";
 
     /**
-     * 获取当前库路径
+     * 获取当前根地址
+     * @param type 基准文件名称，null表示文档地址
      */
-    rootUrl(): string {
+    rootUrl(type: string): string {
+        if (type === undefined || type === null) {
+            // 未提供类型，则返回文档地址
+            let url: string = window.document.location.href;
+            return url.substring(0, url.lastIndexOf("/"));
+        }
+        let fileName: string = "/" + type;
         let root: string = window.document.location.origin;
         var docScripts: NodeListOf<HTMLScriptElement> = window.document.getElementsByTagName("script");
         for (let i: number = 0; i < docScripts.length; i++) {
@@ -48,8 +50,8 @@ export class Configuration {
             if (atr === undefined || atr === null) {
                 continue;
             }
-            if (atr.value.endsWith(Configuration.ROOT_FILE_NAME)) {
-                let tmp: string = atr.value.slice(0, atr.value.lastIndexOf(Configuration.ROOT_FILE_NAME));
+            if (atr.value.endsWith(fileName)) {
+                let tmp: string = atr.value.slice(0, atr.value.lastIndexOf(fileName));
                 let count: number = string.count(tmp, "../");
                 let tmps: string[] = window.document.location.pathname.split("/");
                 for (let j: number = 0; j < tmps.length; j++) {
@@ -74,9 +76,8 @@ export class Configuration {
     /**
      * 加载配置文件
      */
-    load(): void {
+    load(address: string): void {
         let that: any = this;
-        let address: string = string.format("{0}/{1}", this.rootUrl(), Configuration.CONFIG_FILE_URL);
         var JQryAjxSetting: JQueryAjaxSettings = {
             url: address,
             type: "GET",
@@ -84,16 +85,18 @@ export class Configuration {
             dataType: "json",
             async: false,
             cache: false,
-            error: function (xhr: JQueryXHR, status: string, error: string) {
-                console.error(string.format("config: get file [{2}] faild [{0} - {1}].", status, error, address));
+            error: function (xhr: JQueryXHR, status: string, error: string): void {
+                console.warn(string.format("config: get config file [{2}] faild [{0} - {1}].", status, error, address));
             },
-            success: function (data: any) {
-                console.debug(string.format("config: get file [{0}] successful.", address));
+            success: function (data: any): void {
+                console.log(string.format("config: get config file [{0}] successful.", address));
                 if (data !== undefined && data !== null) {
                     if (data.appSettings !== undefined && data.appSettings !== null) {
                         let setting: any = data.appSettings;
                         for (let name in setting) {
-                            that.items.set(name, setting[name]);
+                            if (setting[name] !== undefined) {
+                                that.items.set(name, setting[name]);
+                            }
                         }
                     }
                 }
@@ -160,7 +163,7 @@ export class Configuration {
         } else {
             // 未配置
             if (defalut !== undefined) {
-                return undefined;
+                return defalut;
             }
         }
         throw new Error(string.format("unable to get valid value for [{0}].", key));

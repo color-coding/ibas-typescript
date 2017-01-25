@@ -1,6 +1,7 @@
 {
+  "remark":"此文件内容可能会被后加载配置覆盖",
   "appSettings": {
-    "debug": true,
+    "debug": false,
     "language": "zh_CN",
     "msgLevel": "info"
   }
