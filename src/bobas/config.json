@@ -1,6 +1,6 @@
 {
   "appSettings": {
-    "debug": false,
+    "debug": true,
     "language": "zh_CN",
     "msgLevel": "info"
   }

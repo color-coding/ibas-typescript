@@ -22,7 +22,7 @@ import { ILogger } from "./Logger.d";
 export class Logger implements ILogger {
 
     constructor() {
-        this.level = config.get(config.CONFIG_ITEM_MESSAGES_LEVEL, emMessageLevel.ERROR);
+        this.level = config.get(config.CONFIG_ITEM_MESSAGES_LEVEL, emMessageLevel.ERROR, emMessageLevel);
         let debug: boolean = config.get(config.CONFIG_ITEM_DEBUG_MODE, false);
         if (debug) {
             this.level = emMessageLevel.DEBUG;

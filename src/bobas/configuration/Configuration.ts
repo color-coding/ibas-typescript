@@ -10,7 +10,7 @@
  * 模块索引文件，此文件集中导出类
  */
 /// <reference path="../../3rdparty/jquery.d.ts" />
-import { string } from "../data/Data";
+import { string, object } from "../data/Data";
 
 /**
  * 配置
@@ -105,17 +105,65 @@ export class Configuration {
     /**
      * 获取配置
      * @param key 项
+     */
+    get(key: string): any;
+    /**
+     * 获取配置
+     * @param key 项
      * @param defalut 默认值（未配置则使用此值）
      */
-    get(key: string, defalut: any): any {
+    get<T>(key: string, defalut: T): T;
+    /**
+     * 获取配置
+     * @param key 项
+     * @param defalut 默认值（未配置则使用此值）
+     * @param type 值类型
+     */
+    get<T>(key: string, defalut: T, type: any): T;
+    /**
+     * 获取配置
+     */
+    get<T>(...args: any[]): T {
+        let key: string, defalut: T, type: any;
+        if (args.length === 0) {
+            throw new Error(string.format("invaild param."));
+        }
+        // 配置项参数
+        key = args[0];
+        // 默认值参数
+        if (args.length > 0) {
+            defalut = args[1];
+        }
+        // 类型参数
+        if (args.length > 1) {
+            type = args[2];
+        }
+        let value: any;
         if (this.items.has(key)) {
-            return this.items.get(key);
+            // 配置了
+            value = this.items.get(key);
+            if (defalut !== undefined) {
+                // 提供了默认值
+                if (typeof value !== typeof defalut) {
+                    // 配置的值与默认值类型不符
+                    if (type !== undefined) {
+                        // 提供了转换参数
+                        for (let item in type) {
+                            if (string.equalsIgnoreCase(value, item)) {
+                                return type[item];
+                            }
+                        }
+                    }
+                }
+            }
+            return value;
+        } else {
+            // 未配置
+            if (defalut !== undefined) {
+                return undefined;
+            }
         }
-        if (defalut !== undefined) {
-            // 不存在配置内容，默认值替代
-            return defalut;
-        }
-        throw new Error(string.format("invalid parameter [{0}].", key));
+        throw new Error(string.format("unable to get valid value for [{0}].", key));
     }
 }
 

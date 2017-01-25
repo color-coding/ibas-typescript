@@ -94,6 +94,24 @@ export module string {
         }
         return content;
     }
+    /**
+     * 比较字符串
+     * @param value1 字符1
+     * @param value2 字符2
+     */
+    export function equals(value1: string, value2: string): boolean {
+        return value1 === value2;
+    }
+    /**
+     * 比较字符串，忽略大小写
+     * @param value1 字符1
+     * @param value2 字符2
+     */
+    export function equalsIgnoreCase(value1: string, value2: string): boolean {
+        let tmp1: string = value1.toLowerCase();
+        let tmp2: string = value2.toLowerCase();
+        return equals(tmp1, tmp2);
+    }
 }
 
 /**
