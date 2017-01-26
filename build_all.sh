@@ -22,16 +22,17 @@ fi
 # 其他参数
 OPTIONS=$2
 COMMOND=tsc
-if [ "${OPTIONS}" != "" ]
-then
-  COMMOND="bash ${COMMOND} ${OPTIONS}"
-  echo 命令：${COMMOND}
-fi
 
 # 遍历当前目录存在tsconfig.json则执行tsc
 for folder in `find ${WORK_FOLDER} -type f -name "*tsconfig.json*"`
 do
   folder=${folder%\/*}
   echo --开始编译：${folder}
-  eval "${COMMOND} -p ${folder}"
+  if [ "${OPTIONS}" != "" ]
+  then
+# 包括监听参数，后台运行命令
+    ${COMMOND} ${OPTIONS} -p ${folder} &
+  else 
+    ${COMMOND} -p ${folder}
+  fi
 done
