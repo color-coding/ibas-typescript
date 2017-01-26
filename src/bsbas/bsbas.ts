@@ -26,6 +26,5 @@ let init = function init(): void {
 // 此模块内容
 export * from "./core/Core";
 export * from "./applications/Applications";
-export * from "./views/Views";
 // export * from "./services/Services";
 
