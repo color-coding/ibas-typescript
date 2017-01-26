@@ -15,7 +15,7 @@
 * src\bobas       业务对象相关基础库。
 * src\bsbas       业务系统相关基础库。
 * test\bobas      业务对象相关测试。
-* test\bsbas      业务系统相关测试。
+* test\app        业务系统相关测试。
 
 ~~~
 注意：
@@ -26,8 +26,18 @@
 ~~~
 
 ## 说明 | Instructions
-
-
+* 配置文件说明
+~~~
+首先加载bobas/config.json。
+然后加载bsbas/config.json。
+最后加载html目录config.json。
+后面加载的配置会替换前面的。
+~~~
+* 脚本说明
+~~~
+build_all.bat/sh             用于编译ts文件，build_all.bat .\ -w 表示编译并监听文件变化。
+start_web_server_iis.bat     启动IIS Express服务，需要提前安装。
+~~~
 
 ## 鸣谢 | Thanks
 [牛加人等于朱](http://baike.baidu.com/view/1769.htm "NiurenZhu")<br>
