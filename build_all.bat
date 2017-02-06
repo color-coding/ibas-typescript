@@ -24,7 +24,7 @@ SET OPTIONS=%~2
 REM ππΩ®√¸¡Ó
 SET COMMOND=tsc
 if "%OPTIONS%" neq "" (
-  SET COMMOND=start /min %COMMOND% %OPTIONS%
+  SET COMMOND=start /min !COMMOND! %OPTIONS%
   echo √¸¡Ó£∫!COMMOND!
 )
 
