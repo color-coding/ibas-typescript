@@ -6,9 +6,10 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { List, ArrayList, object } from "../../../src/bobas/bobas";
-/// <reference path="./Modules.d.ts" />
-import { IElement, IModule, IFunction, IApplication, IView, IConsole } from "./Modules.d";
+/// <reference path="./Architectures.d.ts" />
+
+import { List, ArrayList, object, i18n, string, uuid } from "../../../src/bobas/bobas";
+import { IElement, IModule, IFunction, IApplication, IView, IConsole, IViewShower, IViewNavigation } from "./Architectures.d";
 
 
 /** 系统元素 */
@@ -88,10 +89,21 @@ export abstract class Application<T extends IView> extends Element implements IA
     constructor() {
         super();
     }
+
+    private _view: T;
     /** 应用的视图 */
-    view: T;
+    get view(): T {
+        if (object.isNull(this._view)) {
+            this._view = <T>this.navigation.create(this);
+        }
+        return this._view;
+    }
     /** 显示视图 */
     abstract show(): void;
+    /** 视图显示者 */
+    viewShower: IViewShower;
+    /** 视图导航 */
+    protected readonly abstract navigation: IViewNavigation;
 }
 /**
  * 模块控制台
@@ -102,4 +114,45 @@ export abstract class ModuleConsole extends Module implements IConsole {
     }
     /** 初始化 */
     abstract init(): void;
+}
+/**
+ * 视图-导航
+ */
+export abstract class ViewNavigation implements IViewNavigation {
+    /**
+     * 创建视图
+     * @param id 应用id
+     */
+    create(id: string): IView;
+    /**
+     * 创建视图
+     * @param app 应用
+     */
+    create<T extends IView>(app: IApplication<T>): IView;
+    /**
+     * 创建视图
+     */
+    create(data: any): IView {
+        let id: string = null;
+        if (typeof data === "string") {
+            id = data;
+        } else if (!object.isNull(data) && !object.isNull(data.id)) {
+            id = data.id;
+        }
+        if (object.isNull(id)) {
+            throw new Error(i18n.prop("msg_invalid_parameter", "view id"));
+        }
+        let view: IView = this.newView(id);
+        if (object.isNull(view)) {
+            throw new Error(i18n.prop("msg_invalid_view", id));
+        }
+        view.id = string.format("{%0} - {%1}", id, uuid.random());
+        return view;
+    }
+
+    /** 
+     * 创建实例     
+     * @param id 应用id
+     */
+    protected abstract newView(id: string): IView;
 }

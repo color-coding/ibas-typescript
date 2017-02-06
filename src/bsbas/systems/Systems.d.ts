@@ -11,12 +11,6 @@ import { List, IBusinessObject } from "../../../src/bobas/bobas";
 import { IView } from "../core/Core";
 
 /**
- * 原始的视图
- */
-export interface INativeView extends IView {
-
-}
-/**
  * 关于-视图
  */
 export interface IAboutView extends IView {
@@ -31,18 +25,23 @@ export interface IHelpView extends IView {
 /**
  * 登陆-视图
  */
-export interface ILoginView extends INativeView {
-
+export interface ILoginView extends IView {
+    /** 用户 */
+    user: string;
+    /** 密码 */
+    password: string;
+    /** 登陆 */
+    login(): void;
 }
 /**
  * 系统中心-视图
  */
-export interface ICenterView extends INativeView {
+export interface ICenterView extends IView {
 
 }
 /**
  * 入口-视图
  */
-export interface IMainView extends INativeView {
+export interface IMainView extends IView {
 
 }

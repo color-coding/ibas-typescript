@@ -9,16 +9,41 @@
 
 /// <reference path="./Systems.d.ts" />
 import * as core from "../core/Core";
-import { INativeView  } from "./Systems.d";
+import { i18n, object, logger, emMessageLevel } from "../../../src/bobas/bobas";
 
 
 /**
  * 业务对象应用
  */
-export class Application<T extends INativeView> extends core.Application<T> {
+export abstract class Application<T extends core.IView> extends core.Application<T> {
+
+    private _navigation: core.IViewNavigation;
+
+    get navigation(): core.IViewNavigation {
+        return this._navigation;
+    }
+    set navigation(navigation: core.IViewNavigation) {
+        this._navigation = navigation;
+    }
 
     /** 显示视图 */
     show(): void {
-
+        if (object.isNull(this.viewShower)) {
+            if (object.isNull(this.view)) {
+                throw new Error(i18n.prop("msg_invalid_view", this.name));
+            }
+            this.viewShower.show(this.view.darw());
+            this.afterViewShow();
+        } else {
+            throw new Error(i18n.prop("msg_invalid_view_shower", this.name));
+        }
     }
+    /** 视图显示后 */
+    protected afterViewShow(): void {
+        if (object.isNull(this.view)) {
+            throw new Error(i18n.prop("msg_invalid_view", this.name));
+        }
+        this.view.isDisplayed = true;
+        logger.log(emMessageLevel.DEBUG, "app: [%0 - %1]'s view displayed.", this.id, this.name);
+    };
 }

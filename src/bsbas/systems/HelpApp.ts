@@ -13,5 +13,15 @@ import { IHelpView } from "./Systems.d";
 /** 应用-帮助 */
 export class HelpApp extends Application<IHelpView> {
 
+    /** 应用标识 */
+    static APPLICATION_ID: string = "ac17a471-01f2-455f-9193-ddbfcaf81c0f";
+    /** 应用名称 */
+    static APPLICATION_NAME: string = "sys_app_help";
+
+    constructor() {
+        super();
+        this.id = HelpApp.APPLICATION_ID;
+        this.name = HelpApp.APPLICATION_NAME;
+    }
 
 }

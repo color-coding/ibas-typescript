@@ -13,5 +13,16 @@ import { IAboutView } from "./Systems.d";
 /** 应用-关于 */
 export class AboutApp extends Application<IAboutView> {
 
+    /** 应用标识 */
+    static APPLICATION_ID: string = "414b87e2-f9b7-425d-b1d7-7aeadfa2670e";
+    /** 应用名称 */
+    static APPLICATION_NAME: string = "sys_app_about";
+
+    constructor() {
+        super();
+        this.id = AboutApp.APPLICATION_ID;
+        this.name = AboutApp.APPLICATION_NAME;
+    }
+
 
 }

@@ -9,7 +9,8 @@
 /// <reference path="../../../src/3rdparty/jquery.d.ts" />
 
 import * as bobas from "../../../src/bobas/bobas";
-
+// 测试唯一标记uuid
+console.log(bobas.uuid.random());
 // 测试配置项
 console.log(bobas.string.format("debug enabled is {0}",
     bobas.config.get(bobas.config.CONFIG_ITEM_DEBUG_MODE, false)));

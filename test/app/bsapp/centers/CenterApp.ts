@@ -6,9 +6,10 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-// 模块索引文件，此文件集中导出类
+import * as sys from "../../../../src/bsbas/systems/Systems";
+
+/** 应用-登陆 */
+export class CenterApp extends sys.CenterApp {
 
 
-export * from "./Architectures.d";
-export * from "./Architectures";
-
+}

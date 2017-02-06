@@ -45,6 +45,8 @@ export interface IApplication<T extends IView> extends IElement {
     view: T;
     /** 显示视图 */
     show(): void;
+    /** 视图显示者 */
+    viewShower: IViewShower;
 }
 /**
  * 应用-视图
@@ -56,6 +58,30 @@ export interface IView {
     title: string;
     /** 绘制视图 */
     darw(): void;
+    /** 是否已显示 */
+    isDisplayed: boolean;
+}
+/**
+ * 视图-显示者
+ */
+export interface IViewShower {
+    /** 显示视图 */
+    show(view: any);
+}
+/**
+ * 视图-导航
+ */
+export interface IViewNavigation {
+    /**
+     * 创建视图
+     * @param id 应用id
+     */
+    create(id: string): IView;
+    /**
+     * 创建视图
+     * @param app 应用
+     */
+    create<T extends IView>(app: IApplication<T>): IView;
 }
 /**
  * 控制台

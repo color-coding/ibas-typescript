@@ -129,3 +129,17 @@ export module object {
         return false;
     }
 }
+/**
+ * 唯一标识
+ */
+export module uuid {
+    export function random(): string {
+        function s4(): string {
+            return Math.floor((1 + Math.random()) * 0x10000)
+                .toString(16)
+                .substring(1);
+        }
+        return s4() + s4() + "-" + s4() + "-" + s4() + "-" +
+            s4() + "-" + s4() + s4() + s4();
+    }
+}
