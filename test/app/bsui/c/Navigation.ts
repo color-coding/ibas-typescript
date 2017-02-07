@@ -10,6 +10,8 @@ import {
     ViewNavigation, IView,
     MainApp, LoginApp, CenterApp, AboutApp, HelpApp
 } from "../../../../src/bsbas/bsbas";
+import { MainView } from "./centers/MainView";
+import { LoginView } from "./centers/LoginView";
 
 /**
  * 视图导航
@@ -24,10 +26,10 @@ export class Navigation extends ViewNavigation {
         let view: IView = null;
         switch (id) {
             case MainApp.APPLICATION_ID:
-
+                view = new MainView();
                 break;
             case LoginApp.APPLICATION_ID:
-
+                view = new LoginView();
                 break;
             case CenterApp.APPLICATION_ID:
 

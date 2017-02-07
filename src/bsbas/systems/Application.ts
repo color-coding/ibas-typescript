@@ -34,6 +34,6 @@ export abstract class Application<T extends core.IView> extends core.Application
             throw new Error(i18n.prop("msg_invalid_view", this.name));
         }
         this.view.isDisplayed = true;
-        logger.log(emMessageLevel.DEBUG, "app: [%0 - %1]'s view displayed.", this.id, this.name);
+        logger.log(emMessageLevel.DEBUG, "app: [{0} - {1}]'s view displayed.", this.id, this.name);
     }
 }

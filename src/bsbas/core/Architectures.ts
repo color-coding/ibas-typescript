@@ -94,6 +94,9 @@ export abstract class Application<T extends IView> extends Element implements IA
     /** 应用的视图 */
     get view(): T {
         if (object.isNull(this._view)) {
+            if (object.isNull(this.navigation)) {
+                throw new Error(i18n.prop("msg_invalid_view_navigation", this.id));
+            }
             this._view = <T>this.navigation.create(this);
         }
         return this._view;
@@ -172,7 +175,7 @@ export abstract class ViewNavigation implements IViewNavigation {
         if (object.isNull(view)) {
             throw new Error(i18n.prop("msg_invalid_view", id));
         }
-        view.id = string.format("{%0} - {%1}", id, uuid.random());
+        view.id = string.format("{0} - {1}", id, uuid.random());
         return view;
     }
 

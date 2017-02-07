@@ -14,7 +14,7 @@ import {
     ModuleConsole, IViewNavigation, IModuleFunction,
     IApplication, IView, emPlantform
 } from "../../../src/bsbas/bsbas";
-import { MainApp } from "./MainApp";
+import { MainApp } from "./centers/MainApp";
 
 /**
  * 视图导航

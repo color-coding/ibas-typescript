@@ -30,7 +30,7 @@ export interface ILoginView extends IView {
     /** 密码 */
     password: string;
     /** 登陆 */
-    login(): void;
+    loginEvent(): void;
 }
 /**
  * 系统中心-视图
@@ -42,5 +42,4 @@ export interface ICenterView extends IView {
  * 入口-视图
  */
 export interface IMainView extends IView {
-
 }

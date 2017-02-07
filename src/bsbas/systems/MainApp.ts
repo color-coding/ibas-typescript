@@ -31,6 +31,7 @@ export abstract class MainApp extends Application<IMainView> {
         super.afterViewShow();
         let loginApp: LoginApp = new LoginApp();
         loginApp.viewShower = this.viewShower;
+        loginApp.navigation = this.navigation;
         loginApp.show();
     }
 }

@@ -58,7 +58,7 @@ export interface IView {
     /** 名称 */
     title: string;
     /** 绘制视图 */
-    darw(): void;
+    darw(): any;
     /** 是否已显示 */
     isDisplayed: boolean;
 }
