@@ -8,7 +8,7 @@
 // 业务对象应用
 
 import * as core from "../core/Core";
-import { i18n, object, logger, emMessageLevel } from "../../../src/bobas/bobas";
+import { i18n, object, logger, emMessageLevel } from "../../../ibas/bobas/bobas";
 
 
 /**

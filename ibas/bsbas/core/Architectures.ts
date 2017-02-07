@@ -7,7 +7,7 @@
  */
 
 /// <reference path="./Architectures.d.ts" />
-import { List, ArrayList, object, i18n, string, uuid } from "../../../src/bobas/bobas";
+import { List, ArrayList, object, i18n, string, uuid } from "../../../ibas/bobas/bobas";
 import { emPlantform } from "../data/Enums";
 import {
     IElement, IModule, IFunction, IApplication, IView,

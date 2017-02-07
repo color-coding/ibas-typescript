@@ -6,7 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import * as sys from "../../../../../src/bsbas/bsbas";
+import * as sys from "../../../../../ibas/bsbas/bsbas";
 
 /**
  * 系统入口应用

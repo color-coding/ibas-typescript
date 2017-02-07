@@ -11,18 +11,18 @@
 
 
 ## 项目结构 | Projects
-* src\3rdparty    第三方库，其中js库需要定义.d.ts文件。
-* src\bobas       业务对象相关基础库。
-* src\bsbas       业务系统相关基础库。
-* test\bobas      业务对象相关测试。
-* test\app        业务系统相关测试。
+* ibas/3rdparty    第三方库，其中js库需要定义.d.ts文件。
+* ibas/bobas       业务对象相关基础库。
+* ibas/bsbas       业务系统相关基础库。
+* test/bobas      业务对象相关测试。
+* test/app        业务系统相关测试。
 
 ~~~
 注意：
   1） .d.ts用于声明，此类型文件不会编译为js文件。
   2） .ts用于具体实现，会被编译为js文件。
-  3） src/bobas/data/Enums.ts用于定义库内所有的枚举类型。
-  4） src/bobas/data/Common.ts用于定义库内通用的数据类型。
+  3） ibas/bobas/data/Enums.ts用于定义库内所有的枚举类型。
+  4） ibas/bobas/data/Common.ts用于定义库内通用的数据类型。
 ~~~
 
 ## 说明 | Instructions

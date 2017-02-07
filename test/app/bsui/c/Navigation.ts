@@ -9,7 +9,7 @@
 import {
     ViewNavigation, IView,
     MainApp, LoginApp, CenterApp, AboutApp, HelpApp
-} from "../../../../src/bsbas/bsbas";
+} from "../../../../ibas/bsbas/bsbas";
 import { MainView } from "./centers/MainView";
 import { LoginView } from "./centers/LoginView";
 

@@ -6,7 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { List } from "../../../src/bobas/bobas";
+import { List } from "../../../ibas/bobas/bobas";
 import { emPlantform } from "../data/Enums";
 
 /** 系统元素 */

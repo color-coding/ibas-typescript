@@ -7,7 +7,7 @@
  */
 
 // 模块索引文件，此文件集中导出类
-import { Configuration, config, string, i18n } from "../../src/bobas/bobas";
+import { Configuration, config, string, i18n } from "../../ibas/bobas/bobas";
 /** 应用系统库（bsbas）文件名称 */
 export const LIBRARY_BSBAS_ROOT_FILE_NAME: string = "bsbas.js";
 /** 框架初始化 */

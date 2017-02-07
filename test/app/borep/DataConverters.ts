@@ -10,7 +10,7 @@ import {
     DataConverter4ibas,
     BOConverter,
     IBusinessObject
-} from "../../../src/bobas/bobas";
+} from "../../../ibas/bobas/bobas";
 
 /**
  * Test 模块的数据转换者
