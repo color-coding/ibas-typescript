@@ -1,5 +1,5 @@
 ﻿{
-    "msg_invalid_view_shower": "[{0}]的视图显示者无效",
-    "msg_invalid_view": "[{0}]的视图无效",
-    "msg_invalid_view_data": "[{0}]的视图数据无效"
+    "msg_invalid_view_shower": "应用[{0}]的视图显示者无效",
+    "msg_invalid_view": "应用[{0}]的视图无效",
+    "msg_invalid_view_data": "应用[{0}]的视图数据无效"
 }

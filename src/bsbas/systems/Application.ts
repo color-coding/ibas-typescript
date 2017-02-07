@@ -7,7 +7,6 @@
  */
 // 业务对象应用
 
-/// <reference path="./Systems.d.ts" />
 import * as core from "../core/Core";
 import { i18n, object, logger, emMessageLevel } from "../../../src/bobas/bobas";
 
@@ -17,18 +16,9 @@ import { i18n, object, logger, emMessageLevel } from "../../../src/bobas/bobas";
  */
 export abstract class Application<T extends core.IView> extends core.Application<T> {
 
-    private _navigation: core.IViewNavigation;
-
-    get navigation(): core.IViewNavigation {
-        return this._navigation;
-    }
-    set navigation(navigation: core.IViewNavigation) {
-        this._navigation = navigation;
-    }
-
     /** 显示视图 */
     show(): void {
-        if (object.isNull(this.viewShower)) {
+        if (!object.isNull(this.viewShower)) {
             if (object.isNull(this.view)) {
                 throw new Error(i18n.prop("msg_invalid_view", this.name));
             }
@@ -45,5 +35,5 @@ export abstract class Application<T extends core.IView> extends core.Application
         }
         this.view.isDisplayed = true;
         logger.log(emMessageLevel.DEBUG, "app: [%0 - %1]'s view displayed.", this.id, this.name);
-    };
+    }
 }

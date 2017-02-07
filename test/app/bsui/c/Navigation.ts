@@ -6,8 +6,10 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { ViewNavigation, IView } from "../../../src/bsbas/core/Core";
-import { MainApp, LoginApp, CenterApp, AboutApp, HelpApp } from "../../../src/bsbas/systems/Systems";
+import {
+    ViewNavigation, IView,
+    MainApp, LoginApp, CenterApp, AboutApp, HelpApp
+} from "../../../../src/bsbas/bsbas";
 
 /**
  * 视图导航

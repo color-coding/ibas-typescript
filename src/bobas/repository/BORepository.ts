@@ -7,16 +7,12 @@
  */
 
 /// <reference path="./BORepository.d.ts" />
-
-import { } from "./BORepository.d";
 import {
-    object, string, emMessageLevel,
-    ArrayList, IOperationResult, OperationResult, ICriteria
+    object, string, emMessageLevel, OperationResult
 } from "../data/Data";
-import { IDataConverter, RemoteListener, BORemoteRepository } from "../core/Core";
+import { RemoteListener, BORemoteRepository } from "../core/Core";
 import { i18n } from "../i18n/I18N";
 import { logger } from "../messages/Messages";
-import { DataConverter4ibas } from "./DataConverters";
 
 /**
  * 业务对象的远程仓库-jQuery实现
@@ -38,7 +34,8 @@ export abstract class BORemoteRepositoryJQuery extends BORemoteRepository {
             let opRslt = new OperationResult();
             opRslt.resultCode = -999;
             opRslt.message = string.format("{0} - {1}", textStatus, errorThrown);
-            logger.log(emMessageLevel.ERROR, "repository: call method [{2}] faild, {0} - {1}.", textStatus, errorThrown, ajxSetting.url);
+            logger.log(emMessageLevel.ERROR,
+                "repository: call method [{2}] faild, {0} - {1}.", textStatus, errorThrown, ajxSetting.url);
             listener.onCompleted(opRslt);
         };
         // 补充成功的事件
@@ -51,7 +48,8 @@ export abstract class BORemoteRepositoryJQuery extends BORemoteRepository {
             if (object.isNull(opRslt)) {
                 throw new Error(i18n.prop("msg_data_converter_parsing_faild"));
             }
-            logger.log(emMessageLevel.DEBUG, "repository: call method [{2}] sucessful, {0} - {1}.", textStatus, opRslt.message, ajxSetting.url);
+            logger.log(emMessageLevel.DEBUG,
+                "repository: call method [{2}] sucessful, {0} - {1}.", textStatus, opRslt.message, ajxSetting.url);
             listener.onCompleted(opRslt);
         };
         // 调用远程方法

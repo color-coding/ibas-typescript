@@ -6,8 +6,14 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-
-import { Console } from "./bsapp/Console";
-
-let console:Console = new Console();
-console.run();
+/** 平台 */
+export enum emPlantform {
+    /** 普通PC */
+    PC,
+    /** 苹果手机- */
+    IPHONE,
+    /** 苹果平板- */
+    IPAD,
+    /** 微软平板- */
+    SURFACE
+}

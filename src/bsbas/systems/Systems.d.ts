@@ -6,7 +6,6 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-
 import { List, IBusinessObject } from "../../../src/bobas/bobas";
 import { IView } from "../core/Core";
 

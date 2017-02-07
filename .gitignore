@@ -1,5 +1,6 @@
 # log file
 *_log_*.txt
+*.log
 
 # release folder
 /release/

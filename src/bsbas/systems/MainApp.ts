@@ -6,7 +6,6 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-/// <reference path="./Systems.d.ts" />
 import { Application } from "./Application";
 import { IMainView } from "./Systems.d";
 import { ViewShowerDefault } from "./ViewShowers";
@@ -31,7 +30,6 @@ export abstract class MainApp extends Application<IMainView> {
     protected afterViewShow(): void {
         super.afterViewShow();
         let loginApp: LoginApp = new LoginApp();
-        loginApp.navigation = this.navigation;
         loginApp.viewShower = this.viewShower;
         loginApp.show();
     }

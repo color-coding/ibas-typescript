@@ -66,7 +66,7 @@ export class I18N {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             async: false,
-            cache: false,
+            cache: true,
             error: function (xhr: JQueryXHR, status: string, error: string): void {
                 logger.log(emMessageLevel.ERROR, "i18n: get language file [{2}] faild [{0} - {1}].", status, error, address);
             },

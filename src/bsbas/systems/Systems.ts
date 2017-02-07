@@ -8,10 +8,10 @@
 
 // 模块索引文件，此文件集中导出类
 
-/// <reference path="./Systems.d.ts" />
+export * from "./Systems.d";
 
+export * from "./MainApp";
 export * from "./CenterApp";
 export * from "./LoginApp";
 export * from "./AboutApp";
 export * from "./HelpApp";
-export * from "./MainApp";

@@ -7,6 +7,7 @@
  */
 
 import { List } from "../../../src/bobas/bobas";
+import { emPlantform } from "../data/Enums";
 
 /** 系统元素 */
 export interface IElement {
@@ -29,7 +30,7 @@ export interface IModule extends IElement {
     default(): IFunction;
 }
 /**
- * 模块-功能
+ * 功能
  */
 export interface IFunction extends IElement {
     /** 应用集合 */
@@ -84,8 +85,16 @@ export interface IViewNavigation {
     create<T extends IView>(app: IApplication<T>): IView;
 }
 /**
- * 控制台
+ * 模块-控制台
  */
-export interface IConsole extends IModule {
-
+export interface IModuleConsole extends IModule {
+    /** 当前平台 */
+    plantform: emPlantform;
+}
+/**
+ * 模块-功能
+ */
+export interface IModuleFunction extends IFunction {
+    /** 注册应用 */
+    register(app: IApplication<IView>): void;
 }

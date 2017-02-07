@@ -7,9 +7,12 @@
  */
 
 /// <reference path="./Architectures.d.ts" />
-
 import { List, ArrayList, object, i18n, string, uuid } from "../../../src/bobas/bobas";
-import { IElement, IModule, IFunction, IApplication, IView, IConsole, IViewShower, IViewNavigation } from "./Architectures.d";
+import { emPlantform } from "../data/Enums";
+import {
+    IElement, IModule, IFunction, IApplication, IView,
+    IModuleConsole, IViewShower, IViewNavigation, IModuleFunction
+} from "./Architectures.d";
 
 
 /** 系统元素 */
@@ -31,7 +34,6 @@ export class Module extends Element implements IModule {
         super();
     }
     private _functions: List<IFunction>;
-
     /** 功能集合 */
     functions(): List<IFunction> {
         if (object.isNull(this._functions)) {
@@ -39,7 +41,6 @@ export class Module extends Element implements IModule {
         }
         return this._functions;
     }
-
     /** 默认功能 */
     default(): IFunction {
         return this.functions().firstOrDefault();
@@ -61,7 +62,14 @@ export class Function extends Element implements IFunction {
         super();
     }
     private _applications: List<IApplication<IView>>;
-
+    /** 注册功能 */
+    protected register(item: IApplication<IView>): void {
+        if (object.isNull(item)) { return; };
+        if (object.isNull(this._applications)) {
+            this._applications = new ArrayList<IApplication<IView>>();
+        }
+        this._applications.add(item);
+    }
     /** 功能集合 */
     applications(): List<IApplication<IView>> {
         if (object.isNull(this._applications)) {
@@ -72,14 +80,6 @@ export class Function extends Element implements IFunction {
     /** 默认功能 */
     default(): IApplication<IView> {
         return this.applications().firstOrDefault();
-    }
-    /** 注册功能 */
-    protected register(item: IApplication<IView>): void {
-        if (object.isNull(item)) { return; };
-        if (object.isNull(this._applications)) {
-            this._applications = new ArrayList<IApplication<IView>>();
-        }
-        this._applications.add(item);
     }
 }
 /**
@@ -103,17 +103,43 @@ export abstract class Application<T extends IView> extends Element implements IA
     /** 视图显示者 */
     viewShower: IViewShower;
     /** 视图导航 */
-    protected readonly abstract navigation: IViewNavigation;
+    navigation: IViewNavigation;
 }
 /**
  * 模块控制台
  */
-export abstract class ModuleConsole extends Module implements IConsole {
+export abstract class ModuleConsole extends Module implements IModuleConsole {
     constructor() {
         super();
     }
+    /** 当前平台 */
+    plantform: emPlantform;
     /** 初始化 */
     abstract init(): void;
+    /** 创建视图导航 */
+    abstract navigation(): IViewNavigation;
+    /** 创建功能 */
+    protected createFunction(): IModuleFunction {
+        let func: ModuleFunction = new ModuleFunction();
+        func.id = uuid.random();
+        func.navigation = this.navigation();
+        this.register(func);
+        return func;
+    }
+}
+/**
+ * 模块控制台
+ */
+export class ModuleFunction extends Function implements IModuleFunction {
+
+    /** 创建视图导航 */
+    navigation: IViewNavigation;
+    /** 注册功能 */
+    register(app: Application<IView>): void {
+        if (object.isNull(app)) { return; };
+        app.navigation = this.navigation;
+        super.register(app);
+    }
 }
 /**
  * 视图-导航

@@ -10,13 +10,17 @@
  * 模块索引文件，此文件集中导出类
  */
 /** 业务对象库（bobas）文件名称 */
-export const LIBRARY_BOBAS_ROOT_FILE_NAME: string ="bobas.js";
+export const LIBRARY_BOBAS_ROOT_FILE_NAME: string = "bobas.js";
 /** 初始化函数 */
 import { config, Configuration } from "./configuration/Configuration";
 import { i18n } from "./i18n/I18N";
 import { string } from "./data/Data";
 /** 框架初始化 */
-let init = function init(): void {
+export const isInitialized: boolean = function (): boolean {
+    if (isInitialized) {
+        // 初始化过，不再初始化
+        return;
+    }
     let rootUrl = config.rootUrl(LIBRARY_BOBAS_ROOT_FILE_NAME);
     // 加载配置-框架默认
     config.load(string.format("{0}/{1}", rootUrl, Configuration.CONFIG_FILE_URL));
@@ -24,6 +28,7 @@ let init = function init(): void {
     config.load(string.format("{0}/{1}", config.rootUrl(null), Configuration.CONFIG_FILE_URL));
     // 加载语言-框架默认
     i18n.load(string.format("{0}/resources/languages/bobas.{1}.json", rootUrl, i18n.language));
+    return true;
 } ();
 // 导出的类型
 export * from "./data/Data";
