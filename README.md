@@ -23,6 +23,7 @@
   2） .ts用于具体实现，会被编译为js文件。
   3） ibas/bobas/data/Enums.ts用于定义库内所有的枚举类型。
   4） ibas/bobas/data/Common.ts用于定义库内通用的数据类型。
+  5） ui控件使用的是sap的open-ui5，未挂载项目中，请自行下载http://openui5.org/download.html。
 ~~~
 
 ## 说明 | Instructions
