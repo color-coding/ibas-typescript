@@ -5,8 +5,42 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>ibas app test - open-ui5</title>
     <meta charset="utf-8" />
-    <script type="text/javascript" id="sap-ui-bootstrap" data-sap-ui-libs="sap.m" data-sap-ui-theme="sap_bluecrystal" src="../../../openui5/resources/sap-ui-core.js"></script>
-    <script data-main="./index" type="text/javascript" src="../../../ibas/3rdparty/require.js"></script>
+    <script type="text/javascript" src="../../../ibas/3rdparty/jquery.js"></script>
+    <script type="text/javascript">
+        let loadEntry = function () {
+            // 加载入口
+            let domScript = document.createElement('script');
+            domScript.src = "../../../ibas/3rdparty/require.js";
+            domScript.setAttribute("data-main", "./index");
+            document.getElementsByTagName('head')[0].appendChild(domScript);
+        }
+        let loadUI5 = function (url) {
+            // 加载opopenui5库
+            let domScript = document.createElement('script');
+            domScript.src = url;
+            domScript.setAttribute("id", "sap-ui-bootstrap");
+            domScript.setAttribute("data-sap-ui-theme", "sap_bluecrystal");
+            domScript.setAttribute("data-sap-ui-libs", "sap.m");
+            domScript.onload = domScript.onreadystatechange = function () {
+                if (!this.readyState || 'loaded' === this.readyState || 'complete' === this.readyState) {
+                    loadEntry();
+                }
+            }
+            document.getElementsByTagName('head')[0].appendChild(domScript);
+        }
+        $.ajax({
+            type: 'GET',
+            url: document.location.origin + "/openui5/resources/sap-ui-version.json",
+            success: function () {
+                // 本地库存在，则加载本地
+                loadUI5(document.location.origin + "/openui5/resources/sap-ui-core.js");
+            },
+            error: function () {
+                // 本地库不存在，则加载远程
+                loadUI5("https://openui5.hana.ondemand.com/resources/sap-ui-core.js");
+            }
+        });
+    </script>
 </head>
 
 <body>
