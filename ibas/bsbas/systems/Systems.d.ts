@@ -30,7 +30,7 @@ export interface ILoginView extends IView {
     /** 密码 */
     password: string;
     /** 登陆 */
-    loginEvent(): void;
+    loginEvent: Function;
 }
 /**
  * 系统中心-视图

@@ -7,15 +7,11 @@
  */
 
 /// <reference path="./BusinessObject.d.ts" />
-
 import { object } from "../data/Data";
-import { IBusinessObject, IBusinessObjectList } from "../core/BusinessObjectCore.d";
+import { IBusinessObject } from "../core/BusinessObjectCore.d";
 import { BusinessObjectBase, BusinessObjectListBase } from "../core/BusinessObjectCore";
 import {
-    IBusinessObjects, IBOLine, IBOReferenced,
-    IBODocument, IBODocumentLine, IBODocumentLines,
-    IBOMasterData, IBOMasterDataLine, IBOMasterDataLines,
-    IBOSimple, IBOSimpleLine, IBOSimpleLines,
+    IBusinessObjects
 } from "./BusinessObject.d";
 
 

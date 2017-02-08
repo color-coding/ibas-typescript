@@ -6,6 +6,8 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
+/// <reference path="../../3rdparty/jquery.d.ts" />
+import "../../3rdparty/jquery.js";
 /// <reference path="./BORepository.d.ts" />
 import {
     object, string, emMessageLevel, OperationResult

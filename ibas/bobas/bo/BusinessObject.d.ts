@@ -7,7 +7,6 @@
  */
 
 /// <reference path="../core/BusinessObjectCore.d.ts" />
-
 import { IBusinessObject, IBusinessObjectList } from "../core/BusinessObjectCore.d";
 import { emDocumentStatus, emBOStatus, emYesNo, emApprovalStatus } from "../data/Enums";
 import { ICriteria } from "../data/Criteria.d";

@@ -11,13 +11,7 @@ import * as sys from "../../../../../ibas/bsbas/bsbas";
 /**
  * 系统入口应用
  */
-export class MainView implements sys.IMainView {
-    /** 唯一标识 */
-    id: string;
-    /** 名称 */
-    title: string;
-    /** 是否已显示 */
-    isDisplayed: boolean;
+export class MainView extends sys.View  implements sys.IMainView {
     /** 绘制视图 */
     darw(): any {
         return "";

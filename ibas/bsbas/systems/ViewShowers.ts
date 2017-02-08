@@ -13,8 +13,7 @@ import { IViewShower } from "../core/Core";
  */
 export class ViewShowerDefault implements IViewShower {
     /** 显示视图 */
-    show(view: any) {
-        // 通过 jQuery 创建新元素
+    show(view: any): void {
         let div: HTMLDivElement = document.createElement("div");
         div.innerHTML = view;
         document.body.appendChild(div);
@@ -25,7 +24,7 @@ export class ViewShowerDefault implements IViewShower {
  */
 export class ViewShowerSystem implements IViewShower {
     /** 显示视图 */
-    show(view: any) {
+    show(view: any): void {
 
     }
 }

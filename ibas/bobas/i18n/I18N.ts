@@ -9,6 +9,8 @@
 /**
  * 模块索引文件，此文件集中导出类
  */
+/// <reference path="../../3rdparty/jquery.d.ts" />
+import "../../3rdparty/jquery.js";
 import { object, string, emMessageLevel } from "../data/Data";
 import { config } from "../configuration/Configuration";
 import { logger } from "../messages/Messages";

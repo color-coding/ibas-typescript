@@ -11,23 +11,26 @@ import * as sys from "../../../../../ibas/bsbas/bsbas";
 /**
  * 系统入口应用
  */
-export class LoginView implements sys.IMainView {
-    /** 唯一标识 */
-    id: string;
-    /** 名称 */
-    title: string;
-    /** 是否已显示 */
-    isDisplayed: boolean;
+export class LoginView extends sys.View implements sys.ILoginView {
+    /** 用户 */
+    get user(): string {
+        return null;
+    }
+    set user(value: string) {
+    }
+    /** 密码 */
+    get password(): string {
+        return null;
+    }
+    set password(value: string) {
+    }
+    /** 登陆 */
+    loginEvent(): void { 
+
+    }
     /** 绘制视图 */
     darw(): any {
-        return `<label>user</label>
-<input type="text" name="user">
-<br />
-<label>password</label>
-<input type="text" name="password">
-<br />
-<input type="button" value="login" onclick="testHello();" />
-<br />`;
+        return "";
     }
 
 }

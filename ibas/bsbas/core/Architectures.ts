@@ -109,6 +109,19 @@ export abstract class Application<T extends IView> extends Element implements IA
     navigation: IViewNavigation;
 }
 /**
+ * 视图
+ */
+export abstract class View implements IView {
+    /** 唯一标识 */
+    id: string;
+    /** 名称 */
+    title: string;
+    /** 是否已显示 */
+    isDisplayed: boolean;
+    /** 绘制视图 */
+    abstract darw(): any;
+}
+/**
  * 模块控制台
  */
 export abstract class ModuleConsole extends Module implements IModuleConsole {
