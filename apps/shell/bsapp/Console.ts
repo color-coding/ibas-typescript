@@ -8,7 +8,7 @@
 
 /// <reference path="../../../ibas/3rdparty/require.d.ts" />
 import {
-    i18n
+    i18n, config, string, Configuration
 } from "../../../ibas/bobas/bobas";
 import {
     ModuleConsole, IViewNavigation, IModuleFunction,
@@ -17,6 +17,8 @@ import {
 import { ViewShowerDefault } from "./ViewShowers";
 import { MainApp } from "./centers/MainApp";
 
+/** 业务对象库（bobas）文件名称 */
+export const ROOT_FILE_NAME: string = "shell/bsapp/Console.js";
 /**
  * 视图导航
  */
@@ -28,6 +30,13 @@ export class Console extends ModuleConsole {
     }
     /** 初始化 */
     init(): void {
+        // 获取根地址
+        let rootUrl: string = config.rootUrl(ROOT_FILE_NAME);
+        // 加载配置-框架默认
+        config.load(string.format("{0}/{1}", rootUrl, Configuration.CONFIG_FILE_URL));
+        // 加载语言-框架默认
+        i18n.load(string.format("{0}/shell/resources/languages/shell.{1}.json", rootUrl, i18n.language));
+        // 注册功能
         let func: IModuleFunction = this.createFunction();
         func.name = "sys_func_centers";
         func.description = i18n.prop(func.name);

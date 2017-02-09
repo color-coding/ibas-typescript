@@ -16,11 +16,9 @@ export const isInitialized: boolean = function (): boolean {
         // 初始化过，不再初始化
         return;
     }
-    let rootUrl = config.rootUrl(LIBRARY_BSBAS_ROOT_FILE_NAME);
+    let rootUrl: string = config.rootUrl(LIBRARY_BSBAS_ROOT_FILE_NAME);
     // 加载配置-框架默认
     config.load(string.format("{0}/{1}", rootUrl, Configuration.CONFIG_FILE_URL));
-    // 加载配置-网站默认
-    config.load(string.format("{0}/{1}", config.rootUrl(null), Configuration.CONFIG_FILE_URL));
     // 加载语言-框架默认
     i18n.load(string.format("{0}/resources/languages/bsbas.{1}.json", rootUrl, i18n.language));
 }();

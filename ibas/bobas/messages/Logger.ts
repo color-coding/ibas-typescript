@@ -27,10 +27,12 @@ export class Logger implements ILogger {
      */
     get level(): emMessageLevel {
         if (string.isEmpty(this._level)) {
-            this._level = config.get(config.CONFIG_ITEM_MESSAGES_LEVEL, emMessageLevel.ERROR, emMessageLevel);
+            // 没有设置则每次都从配置取
+            let level = config.get(config.CONFIG_ITEM_MESSAGES_LEVEL, emMessageLevel.ERROR, emMessageLevel);
             if (config.get(config.CONFIG_ITEM_DEBUG_MODE, false)) {
-                this._level = emMessageLevel.DEBUG;
+                level = emMessageLevel.DEBUG;
             }
+            return level;
         }
         return this._level;
     }
