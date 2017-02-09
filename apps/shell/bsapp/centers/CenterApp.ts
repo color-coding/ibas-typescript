@@ -6,10 +6,10 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import * as sys from "../../../../../ibas/bsbas/systems/Systems";
+import * as sys from "../../../../ibas/bsbas/systems/Systems";
 
 /** 应用-登陆 */
-export class LoginApp extends sys.LoginApp {
+export class CenterApp extends sys.CenterApp {
 
 
 }

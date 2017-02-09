@@ -6,14 +6,14 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-/// <reference path="../../../../ibas/3rdparty/require.d.ts" />
+/// <reference path="../../../ibas/3rdparty/require.d.ts" />
 import {
     i18n
-} from "../../../../ibas/bobas/bobas";
+} from "../../../ibas/bobas/bobas";
 import {
     ModuleConsole, IViewNavigation, IModuleFunction,
     IApplication, IView, emPlantform
-} from "../../../../ibas/bsbas/bsbas";
+} from "../../../ibas/bsbas/bsbas";
 import { ViewShowerDefault } from "./ViewShowers";
 import { MainApp } from "./centers/MainApp";
 

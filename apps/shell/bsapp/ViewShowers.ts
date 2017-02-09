@@ -6,8 +6,8 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-/// <reference path="../../../../openui5/typings/index.d.ts" />
-import { i18n, IView, IViewShower, object, logger, emMessageLevel } from "../../../../ibas/bsbas/bsbas";
+/// <reference path="../../../openui5/typings/index.d.ts" />
+import { i18n, IView, IViewShower, object, logger, emMessageLevel } from "../../../ibas/bsbas/bsbas";
 
 /**
  * 视图-显示者-默认
