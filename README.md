@@ -14,8 +14,9 @@
 * ibas/3rdparty    第三方库，其中js库需要定义.d.ts文件。
 * ibas/bobas       业务对象相关基础库。
 * ibas/bsbas       业务系统相关基础库。
-* test/bobas      业务对象相关测试。
-* test/app        业务系统相关测试。
+* apps/shell       业务系统应用相关。
+* test/bobas       业务对象相关测试。
+* test/app         业务系统相关测试。
 
 ~~~
 注意：
