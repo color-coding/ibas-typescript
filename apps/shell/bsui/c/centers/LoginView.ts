@@ -40,7 +40,7 @@ export class LoginView extends BOView implements ILoginView {
     darw(): any {
         this.txtUser = new sap.m.Input("", { value: "admin" });
         this.txtPassword = new sap.m.Input("", { value: "1q2w3e", type: "Password" });
-        this.butLogin = new sap.m.Button({ text: i18n.prop("sys_ui_login") });
+        this.butLogin = new sap.m.Button({ text: i18n.prop("sys_shell_ui_login") });
         this.butLogin.attachPress(this.fireLoginEvent, this);
         let logonLayout: sap.ui.layout.VerticalLayout = new sap.ui.layout.VerticalLayout(
             "",
@@ -48,9 +48,9 @@ export class LoginView extends BOView implements ILoginView {
                 width: "100%",
                 height: "100%"
             });
-        logonLayout.addContent(new sap.m.Label("", { text: i18n.prop("sys_ui_user") }));
+        logonLayout.addContent(new sap.m.Label("", { text: i18n.prop("sys_shell_ui_user") }));
         logonLayout.addContent(this.txtUser);
-        logonLayout.addContent(new sap.m.Label("", { text: i18n.prop("sys_ui_password") }));
+        logonLayout.addContent(new sap.m.Label("", { text: i18n.prop("sys_shell_ui_password") }));
         logonLayout.addContent(this.txtPassword);
         logonLayout.addContent(this.butLogin);
         // 重新赋值id

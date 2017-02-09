@@ -1,7 +1,7 @@
 ﻿{
-    "sys_func_centers": "系统中心",
-    "sys_ui_invalid": "无效的UI",
-    "sys_ui_user": "用户",
-    "sys_ui_password": "密码",
-    "sys_ui_login": "登录"
+    "sys_shell_func_centers": "系统中心",
+    "sys_shell_invalid_ui": "无效的UI",
+    "sys_shell_ui_user": "用户",
+    "sys_shell_ui_password": "密码",
+    "sys_shell_ui_login": "登录"
 }

@@ -38,7 +38,7 @@ export class Console extends ModuleConsole {
         i18n.load(string.format("{0}/shell/resources/languages/shell.{1}.json", rootUrl, i18n.language));
         // 注册功能
         let func: IModuleFunction = this.createFunction();
-        func.name = "sys_func_centers";
+        func.name = "sys_shell_func_centers";
         func.description = i18n.prop(func.name);
         let mainApp: MainApp = new MainApp();
         mainApp.viewShower = new ViewShowerDefault();

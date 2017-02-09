@@ -27,7 +27,7 @@ export * from "../../ibas/bobas/bobas";// 集中发布bobas内容，减少引用
 export * from "./data/Enums";
 export * from "./core/Core";
 export * from "./applications/Applications";
-export * from "./views/views";
+export * from "./views/Views";
 // export * from "./systems/Systems"; // 此需要单独引用，不再集中发布
 // export * from "./services/Services";
 

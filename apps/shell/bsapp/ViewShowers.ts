@@ -22,7 +22,7 @@ export class ViewShowerDefault implements IViewShower {
         } else if (view instanceof sap.tnt.ToolPage) {
             view.placeAt("content");
         } else {
-            throw new Error(i18n.prop("sys_ui_invalid"));
+            throw new Error(i18n.prop("sys_shell_invalid_ui"));
         }
     }
     /** 清理资源 */
