@@ -18,7 +18,7 @@ echo --当前工作的目录是[%WORK_FOLDER%]
 if not exist "%RELEASE_FOLDER%" mkdir "%RELEASE_FOLDER%"
 if exist "%RELEASE_FOLDER%%FILE_NAME%" del /q "%RELEASE_FOLDER%%FILE_NAME%"
 
-7z a -t%PACKAGE_TYPE% "%RELEASE_FOLDER%%FILE_NAME%" * -x!*.%PACKAGE_TYPE% -xr!out -xr!.git -xr!.settings -xr!.vs -xr!*.config -xr!*.publishproj
+7z a -t%PACKAGE_TYPE% "%RELEASE_FOLDER%%FILE_NAME%" * -x!*.%PACKAGE_TYPE% -xr!out -xr!.git -xr!.settings -xr!.vs* -xr!*.config -xr!*.publishproj
 
 if exist "%RELEASE_FOLDER%%FILE_NAME%" (
   echo --打包成功

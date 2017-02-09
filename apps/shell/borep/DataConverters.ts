@@ -15,7 +15,7 @@ import {
 /**
  * Test 模块的数据转换者
  */
-export class DataConverter4Test extends DataConverter4ibas {
+export class DataConverter4Shell extends DataConverter4ibas {
 
     /**
      * 创建业务对象转换者
