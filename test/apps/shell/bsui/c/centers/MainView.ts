@@ -8,12 +8,12 @@
 
 /// <reference path="../../../../../../openui5/typings/index.d.ts" />
 import { IMainView } from "../../../../../../ibas/bsbas/systems/Systems";
-import { View } from "../../../../../../ibas/bsbas/bsbas";
+import { BOView } from "../../../../../../ibas/bsbas/bsbas";
 
 /**
  * 系统入口应用
  */
-export class MainView extends View implements IMainView {
+export class MainView extends BOView implements IMainView {
     /** 绘制视图 */
     darw(): any {
         return null;

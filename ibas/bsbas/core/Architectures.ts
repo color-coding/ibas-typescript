@@ -101,6 +101,7 @@ export abstract class Application<T extends IView> extends Element implements IA
             if (object.isNull(this._view)) {
                 throw new Error(i18n.prop("msg_invalid_view", this.id));
             }
+            this._view.application = this;
             this.registerView();
         }
         return this._view;
@@ -113,11 +114,15 @@ export abstract class Application<T extends IView> extends Element implements IA
     viewShower: IViewShower;
     /** 视图导航 */
     navigation: IViewNavigation;
+    /** 清理资源 */
+    abstract destroy(): void;
 }
 /**
  * 视图
  */
 export abstract class View implements IView {
+    /** 应用 */
+    application: IApplication<IView>;
     /** 唯一标识 */
     id: string;
     /** 名称 */

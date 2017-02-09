@@ -66,7 +66,7 @@ export abstract class BusinessObjects<T extends IBusinessObject, P extends IBusi
      * 添加项目后
      * @param item 项目
      */
-    protected afterAdd(item: T) {
+    protected afterAdd(item: T): void {
         if (!object.isNull(this.parent)) {
             // 父项主键值给子项
             let docEntry: number = this.parent.getProperty<number>(BO_PROPERTY_NAME_DOCENTRY);

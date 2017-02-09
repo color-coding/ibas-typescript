@@ -6,12 +6,12 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { Application } from "./Application";
+import { BOApplication } from "../applications/Applications";
 import { IMainView } from "./Systems.d";
 import { LoginApp } from "./LoginApp";
 
 /** 应用-入口 */
-export abstract class MainApp extends Application<IMainView> {
+export abstract class MainApp extends BOApplication<IMainView> {
     /** 应用标识 */
     static APPLICATION_ID: string = "cbd51fd3-63b4-4777-9aad-9c2f303b56f8";
     /** 应用名称 */
@@ -23,7 +23,6 @@ export abstract class MainApp extends Application<IMainView> {
     }
     /** 注册视图 */
     protected registerView(): void {
-
     }
     /** 此应用视图显示后 */
     protected afterViewShow(): void {

@@ -14,6 +14,7 @@ import {
 } from "../../../../../ibas/bsbas/systems/Systems";
 import { MainView } from "./centers/MainView";
 import { LoginView } from "./centers/LoginView";
+import { CenterView } from "./centers/CenterView";
 
 /**
  * 视图导航
@@ -34,7 +35,7 @@ export class Navigation extends ViewNavigation {
                 view = new LoginView();
                 break;
             case CenterApp.APPLICATION_ID:
-
+                view = new CenterView();
                 break;
             case AboutApp.APPLICATION_ID:
 

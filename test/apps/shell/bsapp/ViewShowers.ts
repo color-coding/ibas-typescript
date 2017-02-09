@@ -7,7 +7,7 @@
  */
 
 /// <reference path="../../../../openui5/typings/index.d.ts" />
-import { i18n, IViewShower, object, logger, emMessageLevel } from "../../../../ibas/bsbas/bsbas";
+import { i18n, IView, IViewShower, object, logger, emMessageLevel } from "../../../../ibas/bsbas/bsbas";
 
 /**
  * 视图-显示者-默认
@@ -18,9 +18,18 @@ export class ViewShowerDefault implements IViewShower {
         if (object.isNull(view)) {
             logger.log(emMessageLevel.WARN, "shower: empty view.");
         } else if (view instanceof sap.ui.layout.VerticalLayout) {
-            view.placeAt("mainView");
+            view.placeAt("content");
+        } else if (view instanceof sap.tnt.ToolPage) {
+            view.placeAt("content");
         } else {
             throw new Error(i18n.prop("sys_ui_invalid"));
+        }
+    }
+    /** 清理资源 */
+    destroy(view: IView): void {
+        let ui = sap.ui.getCore().byId(view.id);
+        if (!object.isNull(ui)) {
+            ui.destroy(true);
         }
     }
 }
@@ -31,5 +40,12 @@ export class ViewShowerSystem implements IViewShower {
     /** 显示视图 */
     show(view: any): void {
 
+    }
+    /** 清理资源 */
+    destroy(view: IView): void {
+        let ui = sap.ui.getCore().byId(view.id);
+        if (!object.isNull(ui)) {
+            ui.destroy(true);
+        }
     }
 }

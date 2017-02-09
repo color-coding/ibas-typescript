@@ -8,12 +8,12 @@
 
 /// <reference path="../../../../../../openui5/typings/index.d.ts" />
 import { ILoginView } from "../../../../../../ibas/bsbas/systems/Systems";
-import { i18n, View } from "../../../../../../ibas/bsbas/bsbas";
+import { i18n, BOView } from "../../../../../../ibas/bsbas/bsbas";
 
 /**
  * 系统入口应用
  */
-export class LoginView extends View implements ILoginView {
+export class LoginView extends BOView implements ILoginView {
     private txtUser: sap.m.Input;
     /** 用户 */
     get user(): string {
@@ -33,14 +33,17 @@ export class LoginView extends View implements ILoginView {
     private butLogin: sap.m.Button;
     /** 登陆 */
     loginEvent: Function;
+    private fireLoginEvent(): void {
+        this.fireViewEvents(this.loginEvent, this.user, this.password);
+    }
     /** 绘制视图 */
     darw(): any {
         this.txtUser = new sap.m.Input("", { value: "admin" });
         this.txtPassword = new sap.m.Input("", { value: "1q2w3e", type: "Password" });
         this.butLogin = new sap.m.Button({ text: i18n.prop("sys_ui_login") });
-        this.butLogin.attachPress(null, this.loginEvent);
+        this.butLogin.attachPress(this.fireLoginEvent, this);
         let logonLayout: sap.ui.layout.VerticalLayout = new sap.ui.layout.VerticalLayout(
-            "logonLayout",
+            "",
             {
                 width: "100%",
                 height: "100%"
@@ -50,6 +53,8 @@ export class LoginView extends View implements ILoginView {
         logonLayout.addContent(new sap.m.Label("", { text: i18n.prop("sys_ui_password") }));
         logonLayout.addContent(this.txtPassword);
         logonLayout.addContent(this.butLogin);
+        // 重新赋值id
+        this.id = logonLayout.getId();
         return logonLayout;
     }
 

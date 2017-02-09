@@ -6,12 +6,13 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { Application } from "./Application";
+import { BOApplication } from "../applications/Applications";
 import { ILoginView } from "./Systems.d";
 import { logger, emMessageLevel } from "../../../ibas/bobas/bobas";
+import { CenterApp } from "./CenterApp";
 
 /** 应用-登陆 */
-export class LoginApp extends Application<ILoginView> {
+export class LoginApp extends BOApplication<ILoginView> {
 
     /** 应用标识 */
     static APPLICATION_ID: string = "9b1da07a-89a4-4008-97da-80c34b7f2eb8";
@@ -28,7 +29,16 @@ export class LoginApp extends Application<ILoginView> {
         this.view.loginEvent = this.login;
     }
 
-    private login(data: any) {
-        logger.log(emMessageLevel.INFO, "app: user [{0}] login system.", this.view.user);
+    private login(user: string, password: string): void {
+        logger.log(emMessageLevel.INFO, "app: user [{0}] login system.", user);
+        this.showCenter();
+    }
+
+    private showCenter(): void {
+        let centerApp: CenterApp = new CenterApp();
+        centerApp.viewShower = this.viewShower;
+        centerApp.navigation = this.navigation;
+        centerApp.show();
+        this.destroy();
     }
 }

@@ -46,6 +46,8 @@ export interface IApplication<T extends IView> extends IElement {
     view: T;
     /** 显示视图 */
     show(): void;
+    /** 清理资源 */
+    destroy(): void;
     /** 视图显示者 */
     viewShower: IViewShower;
 }
@@ -53,6 +55,8 @@ export interface IApplication<T extends IView> extends IElement {
  * 应用-视图
  */
 export interface IView {
+    /** 应用 */
+    application: IApplication<IView>;
     /** 唯一标识 */
     id: string;
     /** 名称 */
@@ -68,6 +72,8 @@ export interface IView {
 export interface IViewShower {
     /** 显示视图 */
     show(view: any);
+    /** 清理资源 */
+    destroy(view:IView): void;
 }
 /**
  * 视图-导航

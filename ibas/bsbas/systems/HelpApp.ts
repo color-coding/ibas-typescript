@@ -6,11 +6,11 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { Application } from "./Application";
+import { BOApplication } from "../applications/Applications";
 import { IHelpView } from "./Systems.d";
 
 /** 应用-帮助 */
-export class HelpApp extends Application<IHelpView> {
+export class HelpApp extends BOApplication<IHelpView> {
 
     /** 应用标识 */
     static APPLICATION_ID: string = "ac17a471-01f2-455f-9193-ddbfcaf81c0f";
