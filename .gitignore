@@ -20,7 +20,11 @@ Web.config
 /RemoteSystemsTempFiles/
 /Servers/
 /.settings/
-/openui5/
+/openui5/resources/
+/openui5/index.html
+/openui5/LICENSE.txt
+/openui5/NOTICE.txt
+/openui5/README.txt
 
 # exceptions
 !src/3rdparty/*
