@@ -6,14 +6,15 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-/// <reference path="../../../ibas/3rdparty/require.d.ts" />
+/// <reference path="../../../../ibas/3rdparty/require.d.ts" />
 import {
     i18n
-} from "../../../ibas/bobas/bobas";
+} from "../../../../ibas/bobas/bobas";
 import {
     ModuleConsole, IViewNavigation, IModuleFunction,
     IApplication, IView, emPlantform
-} from "../../../ibas/bsbas/bsbas";
+} from "../../../../ibas/bsbas/bsbas";
+import { ViewShowerDefault } from "./ViewShowers";
 import { MainApp } from "./centers/MainApp";
 
 /**
@@ -30,7 +31,9 @@ export class Console extends ModuleConsole {
         let func: IModuleFunction = this.createFunction();
         func.name = "sys_func_centers";
         func.description = i18n.prop(func.name);
-        func.register(new MainApp());
+        let mainApp: MainApp = new MainApp();
+        mainApp.viewShower = new ViewShowerDefault();
+        func.register(mainApp);
     }
     /** 运行 */
     run(): void {

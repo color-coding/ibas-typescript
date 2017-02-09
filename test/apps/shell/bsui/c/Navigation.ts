@@ -8,8 +8,10 @@
 
 import {
     ViewNavigation, IView,
+} from "../../../../../ibas/bsbas/bsbas";
+import {
     MainApp, LoginApp, CenterApp, AboutApp, HelpApp
-} from "../../../../ibas/bsbas/bsbas";
+} from "../../../../../ibas/bsbas/systems/Systems";
 import { MainView } from "./centers/MainView";
 import { LoginView } from "./centers/LoginView";
 

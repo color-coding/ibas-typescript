@@ -98,9 +98,15 @@ export abstract class Application<T extends IView> extends Element implements IA
                 throw new Error(i18n.prop("msg_invalid_view_navigation", this.id));
             }
             this._view = <T>this.navigation.create(this);
+            if (object.isNull(this._view)) {
+                throw new Error(i18n.prop("msg_invalid_view", this.id));
+            }
+            this.registerView();
         }
         return this._view;
     }
+    /** 注册视图 */
+    protected abstract registerView(): void;
     /** 显示视图 */
     abstract show(): void;
     /** 视图显示者 */

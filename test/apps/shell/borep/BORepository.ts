@@ -10,7 +10,7 @@ import {
     object,
     IDataConverter,
     BORepositoryApplication
-} from "../../../ibas/bobas/bobas";
+} from "../../../../ibas/bobas/bobas";
 import { DataConverter4Test } from "./DataConverters";
 
 /**

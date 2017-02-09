@@ -8,6 +8,7 @@
 
 import { Application } from "./Application";
 import { ILoginView } from "./Systems.d";
+import { logger, emMessageLevel } from "../../../ibas/bobas/bobas";
 
 /** 应用-登陆 */
 export class LoginApp extends Application<ILoginView> {
@@ -22,5 +23,12 @@ export class LoginApp extends Application<ILoginView> {
         this.id = LoginApp.APPLICATION_ID;
         this.name = LoginApp.APPLICATION_NAME;
     }
+    /** 注册视图 */
+    protected registerView(): void {
+        this.view.loginEvent = this.login;
+    }
 
+    private login(data: any) {
+        logger.log(emMessageLevel.INFO, "app: user [{0}] login system.", this.view.user);
+    }
 }

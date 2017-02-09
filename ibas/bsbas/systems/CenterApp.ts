@@ -22,5 +22,8 @@ export class CenterApp extends Application<ICenterView> {
         this.id = CenterApp.APPLICATION_ID;
         this.name = CenterApp.APPLICATION_NAME;
     }
+    /** 注册视图 */
+    protected registerView(): void {
 
+    }
 }

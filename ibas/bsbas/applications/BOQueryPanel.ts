@@ -15,7 +15,7 @@ import { IBOQueryPanelView } from "./BOApplications.d";
 /**
  * 业务对象查询面板
  */
-export class BOQueryPanel extends BOApplication<IBOQueryPanelView> {
+export abstract class BOQueryPanel extends BOApplication<IBOQueryPanelView> {
 
 
 }

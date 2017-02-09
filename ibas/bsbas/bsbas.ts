@@ -23,11 +23,12 @@ export const isInitialized: boolean = function (): boolean {
     config.load(string.format("{0}/{1}", config.rootUrl(null), Configuration.CONFIG_FILE_URL));
     // 加载语言-框架默认
     i18n.load(string.format("{0}/resources/languages/bsbas.{1}.json", rootUrl, i18n.language));
-} ();
+}();
+export * from "../../ibas/bobas/bobas";// 集中发布bobas内容，减少引用声明
 // 此模块内容
 export * from "./data/Enums";
 export * from "./core/Core";
 export * from "./applications/Applications";
-export * from "./systems/Systems";
+// export * from "./systems/Systems"; // 此需要单独引用，不再集中发布
 // export * from "./services/Services";
 

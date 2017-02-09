@@ -22,5 +22,8 @@ export class HelpApp extends Application<IHelpView> {
         this.id = HelpApp.APPLICATION_ID;
         this.name = HelpApp.APPLICATION_NAME;
     }
+    /** 注册视图 */
+    protected registerView(): void {
 
+    }
 }

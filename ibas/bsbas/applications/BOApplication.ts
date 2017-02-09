@@ -16,7 +16,7 @@ import { IBOApplicationView } from "./BOApplications.d";
 /**
  * 业务对象应用
  */
-export class BOApplication<T extends IBOApplicationView> extends Application<T> {
+export abstract class BOApplication<T extends IBOApplicationView> extends Application<T> {
 
     private _navigation: IViewNavigation;
 

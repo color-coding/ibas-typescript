@@ -15,7 +15,7 @@ import { BOApplication } from "./BOApplication";
 /**
  * 业务对象选择应用
  */
-export class BOChooseApplication<T extends IBOChooseApplicationView> extends BOApplication<T> {
+export abstract class BOChooseApplication<T extends IBOChooseApplicationView> extends BOApplication<T> {
 
 
 }

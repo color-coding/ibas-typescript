@@ -8,7 +8,6 @@
 
 import { Application } from "./Application";
 import { IMainView } from "./Systems.d";
-import { ViewShowerDefault } from "./ViewShowers";
 import { LoginApp } from "./LoginApp";
 
 /** 应用-入口 */
@@ -17,15 +16,15 @@ export abstract class MainApp extends Application<IMainView> {
     static APPLICATION_ID: string = "cbd51fd3-63b4-4777-9aad-9c2f303b56f8";
     /** 应用名称 */
     static APPLICATION_NAME: string = "sys_app_main";
-
     constructor() {
         super();
         this.id = MainApp.APPLICATION_ID;
         this.name = MainApp.APPLICATION_NAME;
-        // 设置视图显示方式
-        this.viewShower = new ViewShowerDefault();
     }
+    /** 注册视图 */
+    protected registerView(): void {
 
+    }
     /** 此应用视图显示后 */
     protected afterViewShow(): void {
         super.afterViewShow();

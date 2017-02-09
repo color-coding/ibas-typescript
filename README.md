@@ -42,4 +42,5 @@ start_web_server_iis.bat     启动IIS Express服务，需要提前安装。
 
 ## 鸣谢 | Thanks
 [牛加人等于朱](http://baike.baidu.com/view/1769.htm "NiurenZhu")<br>
+[DefinitelyTyped](http://definitelytyped.org/ "TypeScript Definition")<br>
 [Color-Coding](http://colorcoding.org/ "咔啦工作室")<br>

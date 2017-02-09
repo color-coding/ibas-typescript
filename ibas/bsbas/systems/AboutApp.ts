@@ -23,5 +23,9 @@ export class AboutApp extends Application<IAboutView> {
         this.name = AboutApp.APPLICATION_NAME;
     }
 
+    /** 注册视图 */
+    protected  registerView(): void { 
+
+    }
 
 }

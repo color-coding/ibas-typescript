@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @license
  * Copyright color-coding studio. All Rights Reserved.
  *
@@ -6,10 +6,8 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import * as sys from "../../../../ibas/bsbas/bsbas";
 
-/** 应用-登陆 */
-export class LoginApp extends sys.LoginApp {
+import { Console } from "./shell/bsapp/Console";
 
-
-}
+let console:Console = new Console();
+console.run();
