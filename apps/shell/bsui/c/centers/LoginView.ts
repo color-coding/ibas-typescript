@@ -16,7 +16,19 @@ import { i18n, BOView } from "../../../../../ibas/bsbas/bsbas";
 export class LoginView extends BOView implements ILoginView {
     /** 显示消息 */
     showMessages(msg: string): void {
-        alert(msg);
+        let that = this;
+        jQuery.sap.require("sap.m.MessageBox");
+        sap.m.MessageBox.show(
+            msg, {
+                icon: sap.m.MessageBox.Icon.WARNING,
+                title: i18n.prop(this.application.name),
+                actions: [sap.m.MessageBox.Action.OK],
+                onClose: function (): void {
+                    that.password = "";
+                    that.txtPassword.focus();
+                }
+            }
+        );
     }
     private txtUser: sap.m.Input;
     /** 用户 */
