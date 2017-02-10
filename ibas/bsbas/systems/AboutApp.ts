@@ -7,10 +7,10 @@
  */
 
 import { BOApplication } from "../applications/Applications";
-import { IAboutView } from "./Systems.d";
+import { IAboutView, IAboutApp } from "./Systems.d";
 
 /** 应用-关于 */
-export class AboutApp extends BOApplication<IAboutView> {
+export class AboutApp extends BOApplication<IAboutView> implements IAboutApp {
 
     /** 应用标识 */
     static APPLICATION_ID: string = "414b87e2-f9b7-425d-b1d7-7aeadfa2670e";
@@ -24,7 +24,7 @@ export class AboutApp extends BOApplication<IAboutView> {
     }
 
     /** 注册视图 */
-    protected  registerView(): void { 
+    protected registerView(): void {
 
     }
 

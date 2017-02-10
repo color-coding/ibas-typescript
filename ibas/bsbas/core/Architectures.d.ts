@@ -50,6 +50,8 @@ export interface IApplication<T extends IView> extends IElement {
     destroy(): void;
     /** 视图显示者 */
     viewShower: IViewShower;
+    /** 视图导航 */
+    navigation: IViewNavigation;
 }
 /**
  * 应用-视图

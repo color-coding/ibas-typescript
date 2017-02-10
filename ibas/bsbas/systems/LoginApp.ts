@@ -7,12 +7,12 @@
  */
 
 import { BOApplication } from "../applications/Applications";
-import { ILoginView } from "./Systems.d";
-import { logger, emMessageLevel } from "../../../ibas/bobas/bobas";
-import { CenterApp } from "./CenterApp";
+import { ILoginView, ILoginApp, ICenterApp } from "./Systems.d";
+import { Factories } from "./Factories";
+import { logger, emMessageLevel, IOperationMessages, object } from "../../../ibas/bobas/bobas";
 
 /** 应用-登陆 */
-export class LoginApp extends BOApplication<ILoginView> {
+export class LoginApp extends BOApplication<ILoginView> implements ILoginApp {
 
     /** 应用标识 */
     static APPLICATION_ID: string = "9b1da07a-89a4-4008-97da-80c34b7f2eb8";
@@ -31,11 +31,28 @@ export class LoginApp extends BOApplication<ILoginView> {
 
     private login(user: string, password: string): void {
         logger.log(emMessageLevel.INFO, "app: user [{0}] login system.", user);
-        this.showCenter();
+        let that = this;
+        let boRepository = Factories.systemsFactory.createRepository();
+        boRepository.connect(
+            this.view.user,
+            this.view.password,
+            function (opRslt: IOperationMessages): void {
+                try {
+                    if (object.isNull(opRslt)) {
+                        throw new Error();
+                    }
+                    if (opRslt.resultCode !== 0) {
+                        throw new Error(opRslt.message);
+                    }
+                    that.showCenter();
+                } catch (error) {
+                    that.view.showMessages(error);
+                }
+            });
     }
 
     private showCenter(): void {
-        let centerApp: CenterApp = new CenterApp();
+        let centerApp: ICenterApp = Factories.systemsFactory.createCenterApp();
         centerApp.viewShower = this.viewShower;
         centerApp.navigation = this.navigation;
         centerApp.show();

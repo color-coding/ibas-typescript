@@ -7,11 +7,12 @@
  */
 
 /// <reference path="./BusinessObjectCore.d.ts" />
-
-import { IBindable, PropertyChangedListener, ITrackable, IBusinessObject, IBusinessObjectList } from "./BusinessObjectCore.d";
-import { object, emMessageLevel } from "../data/Data";
+import {
+    IBindable, PropertyChangedListener, ITrackable,
+    IBusinessObject, IBusinessObjectList
+} from "./BusinessObjectCore.d";
+import { object } from "../data/Data";
 import { ArrayList } from "../data/Common";
-import { logger } from "../messages/Messages";
 
 /**
  * 可监听的对象

@@ -7,11 +7,11 @@
  */
 
 import { BOApplication } from "../applications/Applications";
-import { IMainView } from "./Systems.d";
-import { LoginApp } from "./LoginApp";
+import { IMainView, IMainApp, ILoginApp } from "./Systems.d";
+import { Factories } from "./Factories";
 
 /** 应用-入口 */
-export abstract class MainApp extends BOApplication<IMainView> {
+export abstract class MainApp extends BOApplication<IMainView> implements IMainApp {
     /** 应用标识 */
     static APPLICATION_ID: string = "cbd51fd3-63b4-4777-9aad-9c2f303b56f8";
     /** 应用名称 */
@@ -27,7 +27,7 @@ export abstract class MainApp extends BOApplication<IMainView> {
     /** 此应用视图显示后 */
     protected afterViewShow(): void {
         super.afterViewShow();
-        let loginApp: LoginApp = new LoginApp();
+        let loginApp: ILoginApp = Factories.systemsFactory.createLoginApp();
         loginApp.viewShower = this.viewShower;
         loginApp.navigation = this.navigation;
         loginApp.show();

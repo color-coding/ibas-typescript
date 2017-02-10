@@ -7,14 +7,11 @@
  */
 
 /// <reference path="./BORepositoryCore.d.ts" />
-
 import {
-    object, string, emMessageLevel,
-    ArrayList, IOperationResult, ICriteria
+    object, IOperationResult, ICriteria
 } from "../data/Data";
-import { IBusinessObject, IBusinessObjectList } from "./BusinessObjectCore.d";
+import { IBusinessObject } from "./BusinessObjectCore.d";
 import { IBORemoteRepository, RemoteListener, IDataConverter } from "./BORepositoryCore.d";
-import { logger } from "../messages/Messages";
 import { i18n } from "../i18n/I18N";
 
 /**
@@ -53,12 +50,12 @@ export abstract class BORemoteRepository implements IBORemoteRepository {
      * @param criteria 查询
      * @param callBack 完成后回调方法
      */
-    fetch<P>(boName: string, criteria: ICriteria, callBack: Function) {
+    fetch<P>(boName: string, criteria: ICriteria, callBack: Function): void {
         let method: string = "fetch" + boName;
         let listener: RemoteListener = {
             boName: boName,
             method: method,
-            onCompleted(opRslt: IOperationResult<any>) {
+            onCompleted(opRslt: IOperationResult<any>): void {
                 if (!object.isNull(callBack)) {
                     callBack.call(callBack, opRslt);
                 }
@@ -77,12 +74,12 @@ export abstract class BORemoteRepository implements IBORemoteRepository {
      * @param bo 业务对象
      * @param callBack 完成后回调方法
      */
-    save<P>(boName: string, bo: IBusinessObject, callBack: Function) {
+    save<P>(boName: string, bo: IBusinessObject, callBack: Function): void {
         let method: string = "save" + boName;
         let listener: RemoteListener = {
             boName: boName,
             method: method,
-            onCompleted(opRslt: IOperationResult<any>) {
+            onCompleted(opRslt: IOperationResult<any>): void {
                 if (!object.isNull(callBack)) {
                     callBack.call(callBack, opRslt);
                 }
@@ -98,7 +95,7 @@ export abstract class BORemoteRepository implements IBORemoteRepository {
     /**
      * 调用远程方法
      */
-    abstract callRemoteMethod(method: string, data: any, listener: RemoteListener);
+    abstract callRemoteMethod(method: string, data: any, listener: RemoteListener): void;
     /**
      * 创建数据转换者
      */

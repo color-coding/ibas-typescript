@@ -1,6 +1,16 @@
 {
   "appSettings": {
     "debug": true,
-    "language": "zh_CN"
+    "language": "zh_CN",
+    "offline": true
+  },
+  "offlineSettings": {
+    "users": [{
+      "user": "admin",
+      "password": "1q2w3e"
+    }],
+    "modules": [{
+
+    }]
   }
 }

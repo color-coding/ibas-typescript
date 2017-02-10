@@ -14,6 +14,10 @@ import { i18n, BOView } from "../../../../../ibas/bsbas/bsbas";
  * 系统入口应用
  */
 export class LoginView extends BOView implements ILoginView {
+    /** 显示消息 */
+    showMessages(msg: string): void {
+        alert(msg);
+    }
     private txtUser: sap.m.Input;
     /** 用户 */
     get user(): string {

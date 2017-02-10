@@ -9,26 +9,25 @@
 import {
     DataConverter4ibas,
     BOConverter,
+    DataConverter,
     IBusinessObject
 } from "../../../ibas/bobas/bobas";
 
 /**
- * Test 模块的数据转换者
+ * Shel 模块的数据转换者
  */
 export class DataConverter4Shell extends DataConverter4ibas {
-
     /**
      * 创建业务对象转换者
      */
     protected createBOConverter(): BOConverter {
-        return new TestBOConverter();
+        return new ShellBOConverter();
     }
 }
-
 /**
- * Test 模块的业务对象转换者
+ * Shell 模块的业务对象转换者
  */
-class TestBOConverter extends BOConverter {
+export class ShellBOConverter extends BOConverter {
 
     constructor() {
         super();
@@ -39,7 +38,7 @@ class TestBOConverter extends BOConverter {
         // 注册业务对象映射
 
         // 注册枚举映射
-        
+
     }
 
     /**
@@ -87,4 +86,26 @@ class TestBOConverter extends BOConverter {
         return value;
     }
 }
+/**
+ * 离线的数据转换者
+ */
+export class DataConverter4Offline extends DataConverter {
 
+    /**
+     * 转换数据
+     * @param data 当前类型数据
+     * @returns 转换的数据
+     */
+    convert(data: any): string {
+        return data;
+    }
+
+    /**
+     * 解析数据
+     * @param data 原始数据
+     * @returns 当前类型数据
+     */
+    parsing(data: any): any {
+        return data;
+    }
+}

@@ -8,21 +8,30 @@
 
 import {
     object, OperationMessages, OperationResult,
-    IDataConverter, BORepositoryApplication
-} from "../../../ibas/bobas/bobas";
-import {
-    IModule
+    IDataConverter, BORepositoryApplication,
+    IOperationResult, RemoteListener, i18n
 } from "../../../ibas/bsbas/bsbas";
 import {
     IBORepositorySystem
 } from "../../../ibas/bsbas/systems/Systems";
-import { DataConverter4Shell } from "./DataConverters";
+import { DataConverter4Shell, DataConverter4Offline } from "./DataConverters";
 
 
 /**
- * 业务仓库应用
+ * 业务仓库-壳-远程
  */
-export class BORepositoryShellSimple implements IBORepositorySystem {
+export class BORepositoryShell extends BORepositoryApplication implements IBORepositorySystem {
+
+    private converter: DataConverter4Shell;
+    /**
+     * 创建此模块的后端与前端数据的转换者
+     */
+    protected createDataConverter(): IDataConverter {
+        if (object.isNull(this.converter)) {
+            this.converter = new DataConverter4Shell();
+        }
+        return this.converter;
+    }
 	/**
 	 * 用户登录
 	 * @param user 用户
@@ -30,8 +39,107 @@ export class BORepositoryShellSimple implements IBORepositorySystem {
 	 * @param callBack 回掉方法，参数：IOperationMessages
 	 */
     connect(user: String, password: String, callBack: Function): void {
-        let opRslt: OperationMessages = new OperationResult();
-        callBack.apply(opRslt);
+        throw new Error("unrealized method.");
+    }
+
+	/**
+	 * 查询用户模块
+	 * @param userCode 用户
+	 * @param callBack 回掉方法，参数：IOperationResult<IModule>
+	 */
+    fetchUserModules(userCode: String, callBack: Function): void {
+        throw new Error("unrealized method.");
+    }
+
+	/**
+	 * 查询用户角色
+	 * @param token 用户口令
+	 * @param callBack 回掉方法，参数：IOperationResult<string>
+	 */
+    fetchUserRoles(userCode: String, callBack: Function): void {
+        throw new Error("unrealized method.");
+    }
+
+	/**
+	 * 查询用户角色权限
+	 * @param token 用户口令
+	 * @param callBack 回掉方法，参数：IOperationResult<IPrivilege>
+	 */
+    fetchUserPrivileges(userCode: String, callBack: Function): void {
+        throw new Error("unrealized method.");
+    }
+}
+
+/**
+ * 业务仓库应用
+ */
+export class BORepositoryShellOffLine extends BORepositoryShell {
+
+    /** 获取离线配置 */
+    private fetchOfflineSettings(callBack: Function): void {
+        this.address = document.location.href;
+        let method: string = "config.json";
+        let listener: RemoteListener = {
+            method: method,
+            onCompleted(settings: any): void {
+                if (!object.isNull(callBack)) {
+                    let offlineSettings = null;
+                    if (!object.isNull(settings) && !object.isNull(settings.offlineSettings)) {
+                        offlineSettings = settings.offlineSettings;
+                    }
+                    callBack.call(callBack, offlineSettings);
+                }
+            }
+        };
+        this.callRemoteMethod(method, null, listener);
+    }
+    /** 重载远程调用方法参数 */
+    protected createAjaxSettings(method: string, data: any): JQueryAjaxSettings {
+        // 重写ajax设置
+        if (method === "config.json") {
+            // 特殊方法的处理
+            let ajxSetting: JQueryAjaxSettings = super.createAjaxSettings(method, data);
+            ajxSetting.type = "GET";
+            return ajxSetting;
+        }
+        return super.createAjaxSettings(method, data);
+    }
+    private offlineConverter: DataConverter4Offline;
+    /**
+     * 创建此模块的后端与前端数据的转换者
+     */
+    protected createDataConverter(): IDataConverter {
+        if (object.isNull(this.offlineConverter)) {
+            this.offlineConverter = new DataConverter4Offline();
+        }
+        return this.offlineConverter;
+    }
+	/**
+	 * 用户登录
+	 * @param user 用户
+	 * @param passwrod 密码
+	 * @param callBack 回掉方法，参数：IOperationMessages
+	 */
+    connect(user: String, password: String, callBack: Function): void {
+        let funcMatchUser = function (offlineSettings: any) {
+            let opRslt: OperationMessages = new OperationResult();
+            opRslt.resultCode = -1;
+            opRslt.message = i18n.prop("sys_shell_user_and_password_not_match");
+            if (!object.isNull(offlineSettings)
+                && !object.isNull(offlineSettings.users)
+                && Array.isArray(offlineSettings.users)) {
+                for (let item of offlineSettings.users) {
+                    if (item.user === user
+                        && item.password === password) {
+                        opRslt.resultCode = 0;
+                        opRslt.message = "";
+                        break;
+                    }
+                }
+            }
+            callBack.call(callBack, opRslt);
+        };
+        this.fetchOfflineSettings(funcMatchUser);
     }
 
 	/**
@@ -64,21 +172,3 @@ export class BORepositoryShellSimple implements IBORepositorySystem {
         callBack.apply(opRslt);
     }
 }
-/**
- * 业务仓库-壳-远程
- */
-export class BORepositoryShell extends BORepositoryApplication {
-
-    private converter: DataConverter4Shell;
-    /**
-     * 创建此模块的后端与前端数据的转换者
-     */
-    protected createDataConverter(): IDataConverter {
-        if (object.isNull(this.converter)) {
-            this.converter = new DataConverter4Shell();
-        }
-        return this.converter;
-    }
-
-}
-

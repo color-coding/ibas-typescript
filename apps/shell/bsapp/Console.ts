@@ -14,9 +14,49 @@ import {
     ModuleConsole, IViewNavigation, IModuleFunction,
     IApplication, IView, emPlantform
 } from "../../../ibas/bsbas/bsbas";
+import {
+    IMainApp, ILoginApp, ICenterApp, IAboutApp, IHelpApp,
+    ISystemsFactory, IBORepositorySystem
+} from "../../../ibas/bsbas/systems/Systems.d";
+import { Factories } from "../../../ibas/bsbas/systems/Systems";
+import { BORepositoryShell, BORepositoryShellOffLine } from "../borep/BORepositories";
 import { ViewShowerDefault } from "./ViewShowers";
 import { MainApp } from "./centers/MainApp";
+import { LoginApp } from "./centers/LoginApp";
+import { CenterApp } from "./centers/CenterApp";
 
+
+/** 系统工厂 */
+export class SystemsFactory implements ISystemsFactory {
+    /** 创建入口应用 */
+    createMainApp(): IMainApp {
+        return new MainApp();
+    }
+    /** 创建登陆应用 */
+    createLoginApp(): ILoginApp {
+        return new LoginApp();
+    }
+    /** 创建系统中心应用 */
+    createCenterApp(): ICenterApp {
+        return new CenterApp();
+    }
+    /** 创建关于应用 */
+    createAboutApp(): IAboutApp {
+        return null;
+    }
+    /** 创建帮助应用 */
+    createHelpApp(): IHelpApp {
+        return null;
+    }
+    /** 创建仓库 */
+    createRepository(): IBORepositorySystem {
+        if (config.get(config.CONFIG_ITEM_OFFLINE_MODE, false)) {
+            // 当前处于离线模式
+            return new BORepositoryShellOffLine();
+        }
+        return new BORepositoryShell();
+    }
+}
 /** 业务对象库（bobas）文件名称 */
 export const ROOT_FILE_NAME: string = "shell/bsapp/Console.js";
 /**
@@ -30,6 +70,8 @@ export class Console extends ModuleConsole {
     }
     /** 初始化 */
     init(): void {
+        // 初始化系统工厂
+        Factories.systemsFactory = new SystemsFactory();
         // 获取根地址
         let rootUrl: string = config.rootUrl(ROOT_FILE_NAME);
         // 加载配置-框架默认
@@ -40,7 +82,7 @@ export class Console extends ModuleConsole {
         let func: IModuleFunction = this.createFunction();
         func.name = "sys_shell_func_centers";
         func.description = i18n.prop(func.name);
-        let mainApp: MainApp = new MainApp();
+        let mainApp: IMainApp = Factories.systemsFactory.createMainApp();
         mainApp.viewShower = new ViewShowerDefault();
         func.register(mainApp);
     }

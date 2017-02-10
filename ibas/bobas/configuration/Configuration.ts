@@ -30,6 +30,8 @@ export class Configuration {
     CONFIG_ITEM_DEBUG_MODE: string = "debug";
     /** 配置项目-消息输出级别 */
     CONFIG_ITEM_MESSAGES_LEVEL: string = "msgLevel";
+    /** 配置项目-离线模式 */
+    CONFIG_ITEM_OFFLINE_MODE: string = "offline";
 
     /**
      * 获取当前根地址

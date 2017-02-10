@@ -12,7 +12,7 @@ import "../../3rdparty/jquery.js";
 import {
     object, string, emMessageLevel, OperationResult
 } from "../data/Data";
-import { RemoteListener, BORemoteRepository } from "../core/Core";
+import { RemoteListener, BORemoteRepository, IDataConverter } from "../core/Core";
 import { i18n } from "../i18n/I18N";
 import { logger } from "../messages/Messages";
 
@@ -28,11 +28,11 @@ export abstract class BORemoteRepositoryJQuery extends BORemoteRepository {
      * @param data 数据
      * @param listener 方法监听
      */
-    callRemoteMethod(method: string, data: string, listener: RemoteListener) {
-        let that = this;
-        let ajxSetting = this.createAjaxSettings(method, data);
+    callRemoteMethod(method: string, data: string, listener: RemoteListener): void {
+        let that: BORemoteRepositoryJQuery = this;
+        let ajxSetting: JQueryAjaxSettings = this.createAjaxSettings(method, data);
         // 补充发生错误的事件
-        ajxSetting.error = function (jqXHR: JQueryXHR, textStatus: string, errorThrown: string) {
+        ajxSetting.error = function (jqXHR: JQueryXHR, textStatus: string, errorThrown: string): void {
             let opRslt = new OperationResult();
             opRslt.resultCode = -999;
             opRslt.message = string.format("{0} - {1}", textStatus, errorThrown);
@@ -41,12 +41,12 @@ export abstract class BORemoteRepositoryJQuery extends BORemoteRepository {
             listener.onCompleted(opRslt);
         };
         // 补充成功的事件
-        ajxSetting.success = function (data: any, textStatus: string, jqXHR: JQueryXHR) {
-            let converter = that.createDataConverter();
+        ajxSetting.success = function (data: any, textStatus: string, jqXHR: JQueryXHR): void {
+            let converter: IDataConverter = that.createDataConverter();
             if (object.isNull(converter)) {
                 throw new Error(i18n.prop("msg_invalid_data_converter"));
             }
-            let opRslt = converter.parsing(data);
+            let opRslt: any = converter.parsing(data);
             if (object.isNull(opRslt)) {
                 throw new Error(i18n.prop("msg_data_converter_parsing_faild"));
             }
@@ -65,7 +65,10 @@ export abstract class BORemoteRepositoryJQuery extends BORemoteRepository {
      * @param data 调用数据
      */
     protected createAjaxSettings(method: string, data: string): JQueryAjaxSettings {
-        let methodUrl = this.address;
+        if (object.isNull(this.address)) {
+            throw new Error(i18n.prop("msg_invalid_parameter", "address"));
+        }
+        let methodUrl: string = this.address;
         if (!methodUrl.endsWith("/")) {
             methodUrl = methodUrl + "/";
         }
@@ -80,7 +83,7 @@ export abstract class BORemoteRepositoryJQuery extends BORemoteRepository {
             dataType: "json",
             async: true,
             data: data
-        }
+        };
         return ajxSetting;
     }
 }

@@ -27,7 +27,7 @@ export class ViewShowerDefault implements IViewShower {
     }
     /** 清理资源 */
     destroy(view: IView): void {
-        let ui = sap.ui.getCore().byId(view.id);
+        let ui: sap.ui.core.Element = sap.ui.getCore().byId(view.id);
         if (!object.isNull(ui)) {
             ui.destroy(true);
         }
@@ -43,7 +43,7 @@ export class ViewShowerSystem implements IViewShower {
     }
     /** 清理资源 */
     destroy(view: IView): void {
-        let ui = sap.ui.getCore().byId(view.id);
+        let ui: sap.ui.core.Element = sap.ui.getCore().byId(view.id);
         if (!object.isNull(ui)) {
             ui.destroy(true);
         }

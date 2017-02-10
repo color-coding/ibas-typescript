@@ -7,10 +7,10 @@
  */
 
 import { BOApplication } from "../applications/Applications";
-import { IHelpView } from "./Systems.d";
+import { IHelpView, IHelpApp } from "./Systems.d";
 
 /** 应用-帮助 */
-export class HelpApp extends BOApplication<IHelpView> {
+export class HelpApp extends BOApplication<IHelpView> implements IHelpApp {
 
     /** 应用标识 */
     static APPLICATION_ID: string = "ac17a471-01f2-455f-9193-ddbfcaf81c0f";

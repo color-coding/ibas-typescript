@@ -7,10 +7,10 @@
  */
 
 import { BOApplication } from "../applications/Applications";
-import { ICenterView } from "./Systems.d";
+import { ICenterView, ICenterApp } from "./Systems.d";
 
 /** 应用-中心 */
-export class CenterApp extends BOApplication<ICenterView> {
+export class CenterApp extends BOApplication<ICenterView> implements ICenterApp {
 
     /** 应用标识 */
     static APPLICATION_ID: string = "c1ec9ee1-1138-4358-8323-c579f1e4be37";
