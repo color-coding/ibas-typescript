@@ -8,6 +8,7 @@
 
 import { List, IBusinessObject, IOperationMessages, IOperationResult } from "../../../ibas/bobas/bobas";
 import { IView, IModule, IApplication } from "../core/Core";
+import { emMessageType } from "../data/Enums";
 
 /** 关于-视图 */
 export interface IAboutView extends IView {
@@ -42,11 +43,47 @@ export interface ILoginApp extends IApplication<ILoginView> {
 }
 /** 系统中心-视图 */
 export interface ICenterView extends IView {
-
+	/**
+	 * 显示状态消息
+	 * @param type 消息类型
+	 * @param message 消息内容
+	 * @param callBack 回掉方法
+	 */
+	showStatusMessages(type: emMessageType, message: string, callBack: Function): void;
+	/**
+	 * 显示状态消息
+	 * @param type 消息类型
+	 * @param message 消息内容
+	 */
+	showStatusMessages(type: emMessageType, message: string): void;
+	/**
+	 * 显示消息对话框
+	 * @param type 消息类型
+	 * @param message 消息内容
+	 * @param callBack 回掉方法
+	 */
+	showMessageBox(type: emMessageType, message: string, callBack: Function): void;
+	/**
+	 * 显示消息对话框
+	 * @param type 消息类型
+	 * @param message 消息内容
+	 */
+	showMessageBox(type: emMessageType, message: string): void;
+	/**
+	 * 显示消息对话框
+	 * @param error 错误
+	 */
+	showMessageBox(error: Error): void;
+	/**
+	 * 显示模块
+	 * @param module 模块
+	 */
+	showModule(module: IUserModule): void;
 }
 /** 登陆-应用 */
 export interface ICenterApp extends IApplication<ICenterView> {
-
+	/** 初始化用户相关 */
+	init(user: IUser): void;
 }
 /** 入口-视图 */
 export interface IMainView extends IView {
@@ -55,8 +92,35 @@ export interface IMainView extends IView {
 export interface IMainApp extends IApplication<IMainView> {
 
 }
+/** 用户 */
+export interface IUser {
+	/** 编号 */
+	id: number;
+	/** 编码 */
+	userCode: string;
+	/** 名称 */
+	userName: string;
+}
+/** 用户模块 */
+export interface IUserModule {
+	/** 唯一标识 */
+	id: string;
+	/** 名称 */
+	name: string;
+	/** 类别 */
+	category: string;
+	/** 描述 */
+	description: string;
+	/** 地址 */
+	address: string;
+	/** 图标 */
+	icon: string;
+}
+/** 用户角色 */
+export interface IUserRole {
+}
 /** 用户权限 */
-export interface IPrivilege {
+export interface IUserPrivilege {
 }
 /** 系统仓库 */
 export interface IBORepositorySystem {
@@ -64,28 +128,28 @@ export interface IBORepositorySystem {
 	 * 用户登录
 	 * @param user 用户
 	 * @param passwrod 密码
-	 * @param callBack 回掉方法，参数：IOperationMessages
+	 * @param callBack 回掉方法，参数：IOperationResult<IUser>
 	 */
 	connect(user: String, password: String, callBack: Function): void;
 
 	/**
 	 * 查询用户模块
 	 * @param userCode 用户
-	 * @param callBack 回掉方法，参数：IOperationResult<IModule>
+	 * @param callBack 回掉方法，参数：IOperationResult<IUserModule>
 	 */
 	fetchUserModules(userCode: String, callBack: Function): void;
 
 	/**
 	 * 查询用户角色
 	 * @param token 用户口令
-	 * @param callBack 回掉方法，参数：IOperationResult<string>
+	 * @param callBack 回掉方法，参数：IOperationResult<IUserRole>
 	 */
 	fetchUserRoles(userCode: String, callBack: Function): void;
 
 	/**
 	 * 查询用户角色权限
 	 * @param token 用户口令
-	 * @param callBack 回掉方法，参数：IOperationResult<IPrivilege>
+	 * @param callBack 回掉方法，参数：IOperationResult<IUserPrivilege>
 	 */
 	fetchUserPrivileges(userCode: String, callBack: Function): void;
 }

@@ -58,6 +58,10 @@ export class OperationInformation implements IOperationInformation {
  * 操作消息
  */
 export class OperationMessages implements IOperationMessages {
+    constructor() {
+        this.resultCode = 0;
+        this.message = "OK.";
+    }
     /**
      * 结果标识
      */

@@ -6,8 +6,16 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
+import { IUser } from "../../../../ibas/bsbas/systems/Systems.d";
 
-import { Console } from "./shell/bsapp/Console";
-
-export const console: Console = new Console();
-console.run();
+/**
+ * 用户
+ */
+export class User implements IUser {
+    /** 编号 */
+    id: number;
+    /** 编码 */
+    userCode: string;
+    /** 名称 */
+    userName: string;
+}

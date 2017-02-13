@@ -44,36 +44,36 @@ export class Logger implements ILogger {
      * 记录消息
      * @param message
      */
-    log(message: IMessage);
+    log(message: IMessage): void;
     /**
      * 记录消息
      * @param level 消息级别
      * @param message 内容
      */
-    log(level: emMessageLevel, message: string);
+    log(level: emMessageLevel, message: string): void;
     /**
      * 记录消息
      * @param level 消息级别
      * @param format 消息格式
      * @param pars 格式内容
      */
-    log(level: emMessageLevel, format: string, ...pars: any[]);
+    log(level: emMessageLevel, format: string, ...pars: any[]): void;
     /**
      * 记录消息
      * @param message 内容
      */
-    log(format: string);
+    log(format: string): void;
     /**
      * 记录消息
      * @param message 内容
      * @param pars 格式内容
      */
-    log(format: string, ...pars: any[]);
+    log(format: string, ...pars: any[]): void;
     /**
      * 记录消息
      * @param msgPars 消息参数
      */
-    log(...msgPars: any[]) {
+    log(...msgPars: any[]): void {
         let message: Message;
         let useCount: number = 0;// 使用的参数
         if (msgPars[0] instanceof Message) {

@@ -17,3 +17,16 @@ export enum emPlantform {
     /** 微软平板- */
     SURFACE
 }
+/** 消息类型 */
+export enum emMessageType {
+    /** 消息 */
+    INFORMATION,
+    /** 成功 */
+    SUCCESS,
+    /** 错误 */
+    ERROR,
+    /** 警告 */
+    WARNING,
+    /** 问询 */
+    QUESTION
+}

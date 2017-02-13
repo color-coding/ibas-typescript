@@ -7,10 +7,30 @@
   "offlineSettings": {
     "users": [{
       "user": "admin",
+      "name": "administrator",
       "password": "1q2w3e"
     }],
     "modules": [{
-
-    }]
+        "id": "test-0",
+        "name": "module_a",
+        "category": "test",
+        "icon": "sap-icon://employee",
+        "address": ".../test/apps/modules_a/index.js"
+      },
+      {
+        "id": "test-1",
+        "name": "module_b",
+        "category": "test",
+        "icon": "sap-icon://building",
+        "address": ".../test/apps/modules_b/index.js"
+      },
+      {
+        "id": "test-2",
+        "name": "module_c",
+        "category": "test",
+        "icon": "sap-icon://action",
+        "address": ".../test/apps/modules_c/index.js"
+      }
+    ]
   }
 }

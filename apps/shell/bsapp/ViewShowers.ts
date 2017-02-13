@@ -33,19 +33,3 @@ export class ViewShowerDefault implements IViewShower {
         }
     }
 }
-/**
- * 视图-显示者-系统
- */
-export class ViewShowerSystem implements IViewShower {
-    /** 显示视图 */
-    show(view: any): void {
-
-    }
-    /** 清理资源 */
-    destroy(view: IView): void {
-        let ui: sap.ui.core.Element = sap.ui.getCore().byId(view.id);
-        if (!object.isNull(ui)) {
-            ui.destroy(true);
-        }
-    }
-}

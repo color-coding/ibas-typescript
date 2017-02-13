@@ -7,7 +7,10 @@
  */
 
 import { BOApplication } from "../applications/Applications";
-import { ICenterView, ICenterApp } from "./Systems.d";
+import { ICenterView, ICenterApp, IUser, IUserModule, IUserPrivilege, IUserRole } from "./Systems.d";
+import { Factories } from "./Factories";
+import { emMessageType } from "../data/Enums";
+import { i18n, logger, emMessageLevel, IOperationResult, object } from "../../../ibas/bobas/bobas";
 
 /** 应用-中心 */
 export class CenterApp extends BOApplication<ICenterView> implements ICenterApp {
@@ -25,5 +28,39 @@ export class CenterApp extends BOApplication<ICenterView> implements ICenterApp 
     /** 注册视图 */
     protected registerView(): void {
 
+    }
+    /** 初始化用户相关 */
+    init(user: IUser): void {
+        if (object.isNull(user)) {
+            return;
+        }
+        // 加载用户相关
+        logger.log(emMessageLevel.DEBUG, "center: initializing user [{0} - {1}]'s modules.", user.id, user.userCode);
+        this.view.showStatusMessages(
+            emMessageType.INFORMATION,
+            i18n.prop("msg_begin_initialize_user_modules", user.userCode, user.userName)
+        );
+        let that = this;
+        let boRep = Factories.systemsFactory.createRepository();
+        boRep.fetchUserModules(user.userCode, function (opRslt: IOperationResult<IUserModule>): void {
+            try {
+                if (opRslt.resultCode !== 0) {
+                    throw new Error(opRslt.message);
+                }
+                for (let module of opRslt.resultObjects) {
+                    that.view.showStatusMessages(
+                        emMessageType.INFORMATION,
+                        i18n.prop("msg_begin_initialize_modules",module.name, module.description)
+                    );
+                    that.initModule(module);
+                }
+            } catch (error) {
+                that.view.showMessageBox(error);
+            }
+        });
+    }
+
+    private initModule(module: IUserModule) {
+        this.view.showModule(module);
     }
 }

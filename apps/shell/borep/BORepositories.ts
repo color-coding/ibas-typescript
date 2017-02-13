@@ -15,6 +15,8 @@ import {
     IBORepositorySystem
 } from "../../../ibas/bsbas/systems/Systems";
 import { DataConverter4Shell, DataConverter4Offline } from "./DataConverters";
+import { User } from "./bo/User";
+import { UserModule } from "./bo/UserModule";
 
 
 /**
@@ -36,7 +38,7 @@ export class BORepositoryShell extends BORepositoryApplication implements IBORep
 	 * 用户登录
 	 * @param user 用户
 	 * @param passwrod 密码
-	 * @param callBack 回掉方法，参数：IOperationMessages
+	 * @param callBack 回掉方法，参数：IOperationResult<IUser>
 	 */
     connect(user: String, password: String, callBack: Function): void {
         throw new Error("unrealized method.");
@@ -45,7 +47,7 @@ export class BORepositoryShell extends BORepositoryApplication implements IBORep
 	/**
 	 * 查询用户模块
 	 * @param userCode 用户
-	 * @param callBack 回掉方法，参数：IOperationResult<IModule>
+	 * @param callBack 回掉方法，参数：IOperationResult<IUserModule>
 	 */
     fetchUserModules(userCode: String, callBack: Function): void {
         throw new Error("unrealized method.");
@@ -54,7 +56,7 @@ export class BORepositoryShell extends BORepositoryApplication implements IBORep
 	/**
 	 * 查询用户角色
 	 * @param token 用户口令
-	 * @param callBack 回掉方法，参数：IOperationResult<string>
+	 * @param callBack 回掉方法，参数：IOperationResult<IUserRole>
 	 */
     fetchUserRoles(userCode: String, callBack: Function): void {
         throw new Error("unrealized method.");
@@ -63,7 +65,7 @@ export class BORepositoryShell extends BORepositoryApplication implements IBORep
 	/**
 	 * 查询用户角色权限
 	 * @param token 用户口令
-	 * @param callBack 回掉方法，参数：IOperationResult<IPrivilege>
+	 * @param callBack 回掉方法，参数：IOperationResult<IUserPrivilege>
 	 */
     fetchUserPrivileges(userCode: String, callBack: Function): void {
         throw new Error("unrealized method.");
@@ -118,11 +120,11 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
 	 * 用户登录
 	 * @param user 用户
 	 * @param passwrod 密码
-	 * @param callBack 回掉方法，参数：IOperationMessages
+	 * @param callBack 回掉方法，参数：IOperationResult<IUser>
 	 */
     connect(user: String, password: String, callBack: Function): void {
-        let funcMatchUser = function (offlineSettings: any) {
-            let opRslt: OperationMessages = new OperationResult();
+        let func = function (offlineSettings: any): void {
+            let opRslt = new OperationResult();
             opRslt.resultCode = -1;
             opRslt.message = i18n.prop("sys_shell_user_and_password_not_match");
             if (!object.isNull(offlineSettings)
@@ -133,29 +135,50 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
                         && item.password === password) {
                         opRslt.resultCode = 0;
                         opRslt.message = "";
+                        let user: User = new User();
+                        user.userCode = item.user;
+                        user.userName = item.name;
+                        opRslt.resultObjects.add(user);
                         break;
                     }
                 }
             }
             callBack.call(callBack, opRslt);
         };
-        this.fetchOfflineSettings(funcMatchUser);
+        this.fetchOfflineSettings(func);
     }
 
 	/**
 	 * 查询用户模块
 	 * @param userCode 用户
-	 * @param callBack 回掉方法，参数：IOperationResult<IModule>
+	 * @param callBack 回掉方法，参数：IOperationResult<IUserModule>
 	 */
     fetchUserModules(userCode: String, callBack: Function): void {
-        let opRslt: OperationMessages = new OperationResult();
-        callBack.apply(opRslt);
+        let func = function (offlineSettings: any): void {
+            let opRslt = new OperationResult();
+            if (!object.isNull(offlineSettings)
+                && !object.isNull(offlineSettings.modules)
+                && Array.isArray(offlineSettings.modules)) {
+                for (let item of offlineSettings.modules) {
+                    let module = new UserModule();
+                    module.id = item.id;
+                    module.name = item.name;
+                    module.category = item.category;
+                    module.address = item.address;
+                    module.icon = item.icon;
+                    module.description = i18n.prop(module.name);
+                    opRslt.resultObjects.add(module);
+                }
+            }
+            callBack.call(callBack, opRslt);
+        };
+        this.fetchOfflineSettings(func);
     }
 
 	/**
 	 * 查询用户角色
 	 * @param token 用户口令
-	 * @param callBack 回掉方法，参数：IOperationResult<string>
+	 * @param callBack 回掉方法，参数：IOperationResult<IUserRole>
 	 */
     fetchUserRoles(userCode: String, callBack: Function): void {
         let opRslt: OperationMessages = new OperationResult();
@@ -165,7 +188,7 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
 	/**
 	 * 查询用户角色权限
 	 * @param token 用户口令
-	 * @param callBack 回掉方法，参数：IOperationResult<IPrivilege>
+	 * @param callBack 回掉方法，参数：IOperationResult<IUserPrivilege>
 	 */
     fetchUserPrivileges(userCode: String, callBack: Function): void {
         let opRslt: OperationMessages = new OperationResult();

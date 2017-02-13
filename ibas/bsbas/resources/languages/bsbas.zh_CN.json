@@ -7,5 +7,7 @@
     "sys_app_login": "应用-登录",
     "sys_app_center": "应用-系统中心",
     "sys_app_about": "应用-关于",
-    "sys_app_help": "应用-帮助"
+    "sys_app_help": "应用-帮助",
+    "msg_begin_initialize_user_modules": "初始化用户[{0} - {1}]的模块",
+    "msg_begin_initialize_modules": "初始化模块[{0} - {1}]"
 }
