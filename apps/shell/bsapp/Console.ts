@@ -8,9 +8,7 @@
 
 /// <reference path="../../../ibas/3rdparty/require.d.ts" />
 import {
-    i18n, config, string, Configuration
-} from "../../../ibas/bobas/bobas";
-import {
+    i18n, config, string, Configuration,
     ModuleConsole, IViewNavigation, IModuleFunction,
     IApplication, IView, emPlantform
 } from "../../../ibas/bsbas/bsbas";
@@ -57,27 +55,39 @@ export class SystemsFactory implements ISystemsFactory {
         return new BORepositoryShell();
     }
 }
-/** 业务对象库（bobas）文件名称 */
-export const ROOT_FILE_NAME: string = "shell/bsapp/Console.js";
-/**
- * 视图导航
- */
+
+/** 模块控制台 */
 export class Console extends ModuleConsole {
+    /** 模块-标识 */
+    static CONSOLE_ID: string = "00000000-ibas-cc01-00000000000000000";
+    /** 模块-名称 */
+    static CONSOLE_NAME: string = "sys_ibas";
+    /** 根文件名称 */
+    static ROOT_FILE_NAME: string = "shell/bsapp/Console.js";
+
+    constructor() {
+        super();
+        this.id = Console.CONSOLE_ID;
+        this.name = Console.CONSOLE_NAME;
+    }
     private _navigation: any;
     /** 创建视图导航 */
     navigation(): IViewNavigation {
         return this._navigation;
     }
     /** 初始化 */
-    init(): void {
+    protected init(): void {
         // 初始化系统工厂
         Factories.systemsFactory = new SystemsFactory();
         // 获取根地址
-        let rootUrl: string = config.rootUrl(ROOT_FILE_NAME);
+        let rootUrl: string = config.rootUrl(Console.ROOT_FILE_NAME);
         // 加载配置-框架默认
-        config.load(string.format("{0}/{1}", rootUrl, Configuration.CONFIG_FILE_URL));
+        config.load(string.format("{0}/{1}", rootUrl, Configuration.CONFIG_FILE_NAME));
         // 加载语言-框架默认
         i18n.load(string.format("{0}/shell/resources/languages/shell.{1}.json", rootUrl, i18n.language));
+        // 设置资源属性
+        this.description = i18n.prop(this.name);
+        this.icon = "../resources/logo.png";
         // 注册功能
         let func: IModuleFunction = this.createFunction();
         func.name = "sys_shell_func_centers";

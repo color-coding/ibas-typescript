@@ -136,13 +136,39 @@ export abstract class View implements IView {
  * 模块控制台
  */
 export abstract class ModuleConsole extends Module implements IModuleConsole {
+    /** 运行中的模块控制台 */
+    private static runningConsoles: Map<string, IModuleConsole>;
+    /** 注册模块控制台 */
+    static registerConsole(console: IModuleConsole): void {
+        if (object.isNull(ModuleConsole.runningConsoles)) {
+            ModuleConsole.runningConsoles = new Map();
+        }
+        ModuleConsole.runningConsoles.set(console.id, console);
+    } /** 注册模块控制台 */
+    static getConsole(id: string): IModuleConsole {
+        if (object.isNull(ModuleConsole.runningConsoles)) {
+            return null;
+        }
+        if (ModuleConsole.runningConsoles.has(id)) {
+            return ModuleConsole.runningConsoles.get(id);
+        }
+        return null;
+    }
+
     constructor() {
         super();
+        ModuleConsole.registerConsole(this);
     }
     /** 当前平台 */
     plantform: emPlantform;
+    /** 地址 */
+    address: string;
+    /** 图标 */
+    icon: string;
     /** 初始化 */
-    abstract init(): void;
+    protected abstract init(): void;
+    /** 运行 */
+    abstract run(): void;
     /** 创建视图导航 */
     abstract navigation(): IViewNavigation;
     /** 创建功能 */
@@ -159,6 +185,8 @@ export abstract class ModuleConsole extends Module implements IModuleConsole {
  */
 export class ModuleFunction extends Function implements IModuleFunction {
 
+    /** 图标 */
+    icon: string;
     /** 创建视图导航 */
     navigation: IViewNavigation;
     /** 注册功能 */

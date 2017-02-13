@@ -6,11 +6,13 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
+/// <reference path="../../../ibas/3rdparty/require.d.ts" />
+import { ModuleConsole, IModuleConsole } from "../core/Core";
 import { BOApplication } from "../applications/Applications";
 import { ICenterView, ICenterApp, IUser, IUserModule, IUserPrivilege, IUserRole } from "./Systems.d";
 import { Factories } from "./Factories";
 import { emMessageType } from "../data/Enums";
-import { i18n, logger, emMessageLevel, IOperationResult, object } from "../../../ibas/bobas/bobas";
+import { i18n, logger, emMessageLevel, IOperationResult, object, string } from "../../../ibas/bobas/bobas";
 
 /** 应用-中心 */
 export class CenterApp extends BOApplication<ICenterView> implements ICenterApp {
@@ -50,9 +52,9 @@ export class CenterApp extends BOApplication<ICenterView> implements ICenterApp 
                 for (let module of opRslt.resultObjects) {
                     that.view.showStatusMessages(
                         emMessageType.INFORMATION,
-                        i18n.prop("msg_begin_initialize_modules",module.name, module.description)
+                        i18n.prop("msg_begin_initialize_modules", module.name, module.description)
                     );
-                    that.initModule(module);
+                    that.initModuleConsole(module);
                 }
             } catch (error) {
                 that.view.showMessageBox(error);
@@ -60,7 +62,17 @@ export class CenterApp extends BOApplication<ICenterView> implements ICenterApp 
         });
     }
 
-    private initModule(module: IUserModule) {
-        this.view.showModule(module);
+    private initModuleConsole(module: IUserModule) {
+        let console: IModuleConsole;
+        require([module.address], function (): void {
+            console = ModuleConsole.getConsole(module.id);
+            if (object.isNull(console)) {
+                return;
+            }
+            // 有效模块控制台
+            if (console instanceof ModuleConsole) {
+                this.view.showModule(console);
+            }
+        });
     }
 }

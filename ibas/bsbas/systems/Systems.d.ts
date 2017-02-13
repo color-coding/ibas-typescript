@@ -7,7 +7,7 @@
  */
 
 import { List, IBusinessObject, IOperationMessages, IOperationResult } from "../../../ibas/bobas/bobas";
-import { IView, IModule, IApplication } from "../core/Core";
+import { IView, IModule, IApplication, IModuleConsole } from "../core/Core";
 import { emMessageType } from "../data/Enums";
 
 /** 关于-视图 */
@@ -76,9 +76,9 @@ export interface ICenterView extends IView {
 	showMessageBox(error: Error): void;
 	/**
 	 * 显示模块
-	 * @param module 模块
+	 * @param console 模块控制台
 	 */
-	showModule(module: IUserModule): void;
+	showModule(console: IModuleConsole): void;
 }
 /** 登陆-应用 */
 export interface ICenterApp extends IApplication<ICenterView> {
@@ -113,8 +113,8 @@ export interface IUserModule {
 	description: string;
 	/** 地址 */
 	address: string;
-	/** 图标 */
-	icon: string;
+	/** 控制台名称 */
+	console: string;
 }
 /** 用户角色 */
 export interface IUserRole {

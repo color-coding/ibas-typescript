@@ -18,13 +18,10 @@ import { string } from "../data/Data";
 export class Configuration {
 
     /** 默认配置文件名称 */
-    static CONFIG_FILE_URL: string = "config.json";
+    static CONFIG_FILE_NAME: string = "config.json";
 
-    /**
-     * 根路径标记
-     */
+    /** 根路径标记 */
     ROOT_URL_SIGN: string = ".../";
-
     /** 配置项目-调试模式 */
     CONFIG_ITEM_DEBUG_MODE: string = "debug";
     /** 配置项目-消息输出级别 */

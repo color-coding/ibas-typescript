@@ -98,11 +98,17 @@ export interface IViewNavigation {
 export interface IModuleConsole extends IModule {
     /** 当前平台 */
     plantform: emPlantform;
+	/** 地址 */
+	address: string;
+	/** 图标 */
+	icon: string;
 }
 /**
  * 模块-功能
  */
 export interface IModuleFunction extends IFunction {
+	/** 图标 */
+	icon: string;
     /** 注册应用 */
     register(app: IApplication<IView>): void;
 }

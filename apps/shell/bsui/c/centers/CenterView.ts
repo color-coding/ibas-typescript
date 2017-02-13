@@ -8,7 +8,7 @@
 
 /// <reference path="../../../../../openui5/typings/index.d.ts" />
 import { ICenterView, IUserModule } from "../../../../../ibas/bsbas/systems/Systems";
-import { i18n, object, BOView, emMessageType } from "../../../../../ibas/bsbas/bsbas";
+import { i18n, object, BOView, emMessageType, IModuleConsole } from "../../../../../ibas/bsbas/bsbas";
 
 /**
  * 系统入口应用
@@ -95,7 +95,7 @@ export class CenterView extends BOView implements ICenterView {
 	 * 显示模块
 	 * @param module 模块
 	 */
-    showModule(module: IUserModule): void {
+    showModule(module: IModuleConsole): void {
         let nvList: sap.tnt.NavigationList = this.navigation.getItem();
         let nvItem = new sap.tnt.NavigationListItem();
         nvItem.setKey(module.name);

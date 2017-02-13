@@ -22,6 +22,6 @@ export class UserModule implements IUserModule {
 	description: string;
 	/** 地址 */
 	address: string;
-	/** 图标 */
-	icon: string;
+	/** 控制台名称 */
+	console: string;
 }

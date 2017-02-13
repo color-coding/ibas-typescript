@@ -5,31 +5,34 @@
     "offline": true
   },
   "offlineSettings": {
-    "users": [{
-      "user": "admin",
-      "name": "administrator",
-      "password": "1q2w3e"
-    }],
-    "modules": [{
+    "users": [
+      {
+        "user": "admin",
+        "name": "administrator",
+        "password": "1q2w3e"
+      }
+    ],
+    "modules": [
+      {
         "id": "test-0",
         "name": "module_a",
         "category": "test",
-        "icon": "sap-icon://employee",
-        "address": ".../test/apps/modules_a/index.js"
+        "address": ".../../test/apps/module_a/index.js",
+        "console": "ConsoleModuleA"
       },
       {
         "id": "test-1",
         "name": "module_b",
         "category": "test",
-        "icon": "sap-icon://building",
-        "address": ".../test/apps/modules_b/index.js"
+        "address": ".../../test/apps/module_b/index.js",
+        "console": "ConsoleModuleB"
       },
       {
         "id": "test-2",
         "name": "module_c",
         "category": "test",
-        "icon": "sap-icon://action",
-        "address": ".../test/apps/modules_c/index.js"
+        "address": ".../../test/apps/module_c/index.js",
+        "console": "ConsoleModuleC"
       }
     ]
   }
