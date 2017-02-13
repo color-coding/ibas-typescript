@@ -7,7 +7,6 @@
  */
 
 /// <reference path="../../3rdparty/jquery.d.ts" />
-import "../../3rdparty/jquery.js";
 /// <reference path="./BORepository.d.ts" />
 import {
     object, string, emMessageLevel, OperationResult

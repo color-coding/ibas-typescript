@@ -3,7 +3,8 @@
 // Definitions by: Lukas May <https://www.dscsag.com/>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped 
 
-/// <reference types="jquery" />
+///// <reference types="jquery" />
+/// <reference path="../../ibas/3rdparty/jquery.d.ts" />
 
 declare interface Ui5Logger {
   //Allows to add a new LogListener that will be notified for new log entries.
