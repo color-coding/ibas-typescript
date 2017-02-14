@@ -173,11 +173,18 @@ export module url {
             url = value;
         }
         // 处理当前目录
-        url = url.replace(CURRENT_URL_SIGN, "");
+        let cIndex: number = url.indexOf(CURRENT_URL_SIGN);
+        while (cIndex >= 0) {
+            let tmp: string = url.substring(0, cIndex);
+            if (!tmp.endsWith(".")) {
+                url = tmp + url.substring(cIndex + PARENT_URL_SIGN.length - 1);
+            }
+            cIndex = url.indexOf(CURRENT_URL_SIGN, cIndex + 1);
+        }
         // 处理上级目录
         let pIndex: number = url.indexOf(PARENT_URL_SIGN);
         while (pIndex >= 0) {
-            let tmp = url.substring(0, pIndex);
+            let tmp: string = url.substring(0, pIndex);
             tmp = tmp.substring(0, tmp.lastIndexOf("/"));
             tmp = tmp.substring(0, tmp.lastIndexOf("/"));
             url = tmp + url.substring(pIndex + PARENT_URL_SIGN.length - 1);
