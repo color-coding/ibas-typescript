@@ -10,7 +10,7 @@
 import {
     i18n, config, string, Configuration,
     ModuleConsole, IViewNavigation, IModuleFunction,
-    IApplication, IView, emPlantform
+    IApplication, IView, emPlantform, url
 } from "../../../ibas/bsbas/bsbas";
 import {
     IMainApp, ILoginApp, ICenterApp, IAboutApp, IHelpApp,
@@ -80,7 +80,7 @@ export class Console extends ModuleConsole {
         // 初始化系统工厂
         Factories.systemsFactory = new SystemsFactory();
         // 获取根地址
-        let rootUrl: string = config.rootUrl(Console.ROOT_FILE_NAME);
+        let rootUrl: string = url.rootUrl(Console.ROOT_FILE_NAME);
         // 加载配置-框架默认
         config.load(string.format("{0}/{1}", rootUrl, Configuration.CONFIG_FILE_NAME));
         // 加载语言-框架默认

@@ -7,7 +7,7 @@
  */
 
 // 模块索引文件，此文件集中导出类
-import { Configuration, config, string, i18n } from "../../ibas/bobas/bobas";
+import { Configuration, config, string, i18n, url } from "../../ibas/bobas/bobas";
 /** 应用系统库（bsbas）文件名称 */
 export const LIBRARY_BSBAS_ROOT_FILE_NAME: string = "bsbas.js";
 /** 框架初始化 */
@@ -16,7 +16,7 @@ export const isInitialized: boolean = function (): boolean {
         // 初始化过，不再初始化
         return;
     }
-    let rootUrl: string = config.rootUrl(LIBRARY_BSBAS_ROOT_FILE_NAME);
+    let rootUrl: string = url.rootUrl(LIBRARY_BSBAS_ROOT_FILE_NAME);
     // 加载配置-框架默认
     config.load(string.format("{0}/{1}", rootUrl, Configuration.CONFIG_FILE_NAME));
     // 加载语言-框架默认

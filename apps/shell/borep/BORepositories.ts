@@ -9,7 +9,7 @@
 import {
     object, OperationMessages, OperationResult,
     IDataConverter, BORepositoryApplication,
-    IOperationResult, RemoteListener, i18n, config
+    IOperationResult, RemoteListener, i18n, config, url
 } from "../../../ibas/bsbas/bsbas";
 import {
     IBORepositorySystem
@@ -168,8 +168,8 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
                     module.console = item.console;
                     module.description = i18n.prop(module.name);
                     // 修正地址
-                    if (!object.isNull(module.address) && module.address.startsWith(config.ROOT_URL_SIGN)) {
-                        module.address = document.location.href + module.address.substring(config.ROOT_URL_SIGN.length);
+                    if (!object.isNull(module.address) && module.address.startsWith(url.ROOT_URL_SIGN)) {
+                        module.address = document.location.href + module.address.substring(url.ROOT_URL_SIGN.length);
                     }
                     opRslt.resultObjects.add(module);
                 }

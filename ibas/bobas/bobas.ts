@@ -14,14 +14,14 @@ export const LIBRARY_BOBAS_ROOT_FILE_NAME: string = "bobas.js";
 /** 初始化函数 */
 import { config, Configuration } from "./configuration/Configuration";
 import { i18n } from "./i18n/I18N";
-import { string } from "./data/Data";
+import { string ,url} from "./data/Data";
 /** 框架初始化 */
 export const isInitialized: boolean = function (): boolean {
     if (isInitialized) {
         // 初始化过，不再初始化
         return;
     }
-    let rootUrl: string = config.rootUrl(LIBRARY_BOBAS_ROOT_FILE_NAME);
+    let rootUrl: string = url.rootUrl(LIBRARY_BOBAS_ROOT_FILE_NAME);
     // 加载配置-框架默认
     config.load(string.format("{0}/{1}", rootUrl, Configuration.CONFIG_FILE_NAME));
     // 加载语言-框架默认

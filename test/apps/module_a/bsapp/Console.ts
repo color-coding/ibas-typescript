@@ -8,7 +8,7 @@
 
 /// <reference path="../../../../ibas/3rdparty/require.d.ts" />
 import {
-    ModuleConsole, IViewNavigation, IModuleFunction,
+    ModuleConsole, IViewNavigation, IModuleFunction, url,
     IApplication, IView, emPlantform, config, string, Configuration, i18n
 } from "../../../../ibas/bsbas/bsbas";
 
@@ -35,7 +35,7 @@ export class Console extends ModuleConsole {
     /** 初始化 */
     protected init(): void {
         // 获取根地址
-        let rootUrl: string = config.rootUrl(Console.ROOT_FILE_NAME);
+        let rootUrl: string = url.rootUrl(Console.ROOT_FILE_NAME);
         // 加载语言-框架默认
         i18n.load(string.format("{0}/module_a/resources/languages/module_a.{1}.json", rootUrl, i18n.language));
         // 设置资源属性

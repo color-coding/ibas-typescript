@@ -20,42 +20,12 @@ export class Configuration {
     /** 默认配置文件名称 */
     static CONFIG_FILE_NAME: string = "config.json";
 
-    /** 根路径标记 */
-    ROOT_URL_SIGN: string = ".../";
     /** 配置项目-调试模式 */
     CONFIG_ITEM_DEBUG_MODE: string = "debug";
     /** 配置项目-消息输出级别 */
     CONFIG_ITEM_MESSAGES_LEVEL: string = "msgLevel";
     /** 配置项目-离线模式 */
     CONFIG_ITEM_OFFLINE_MODE: string = "offline";
-
-    /**
-     * 获取当前根地址
-     * @param type 基准文件名称，null表示文档地址
-     */
-    rootUrl(type: string): string {
-        if (type === undefined || type === null) {
-            // 未提供类型，则返回文档地址
-            let url: string = window.document.location.href;
-            return url.substring(0, url.lastIndexOf("/"));
-        }
-        let fileName: string = "/" + type;
-        let root: string = window.document.location.origin;
-        var docScripts: NodeListOf<HTMLScriptElement> = window.document.getElementsByTagName("script");
-        for (let i: number = 0; i < docScripts.length; i++) {
-            let atr: Attr = docScripts[i].attributes.getNamedItem("src");
-            if (atr === undefined || atr === null) {
-                continue;
-            }
-            if (atr.value.endsWith(fileName)) {
-                let tmp: string = atr.value;
-                tmp = tmp.substring(0, tmp.length - fileName.length + 1);
-                root = tmp;
-                break;
-            }
-        }
-        return root;
-    }
 
     private items: Map<string, string> = new Map<string, string>();
 

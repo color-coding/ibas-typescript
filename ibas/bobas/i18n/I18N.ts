@@ -10,7 +10,7 @@
  * 模块索引文件，此文件集中导出类
  */
 /// <reference path="../../3rdparty/jquery.d.ts" />
-import { object, string, emMessageLevel } from "../data/Data";
+import { object, string, emMessageLevel,url } from "../data/Data";
 import { config } from "../configuration/Configuration";
 import { logger } from "../messages/Messages";
 /**
@@ -56,9 +56,9 @@ export class I18N {
             return;
         }
         if (!address.startsWith("http")) {
-            if (address.startsWith(config.ROOT_URL_SIGN)) {
+            if (address.startsWith(url.ROOT_URL_SIGN)) {
                 // 补齐地址，根目录
-                address = window.document.location.origin + "/" + address.slice(config.ROOT_URL_SIGN.length, address.length);
+                address = window.document.location.origin + "/" + address.slice(url.ROOT_URL_SIGN.length, address.length);
             }
         }
         var JQryAjxSetting: JQueryAjaxSettings = {

@@ -13,7 +13,7 @@ import { ICenterView, ICenterApp, IUser, IUserModule, IUserPrivilege, IUserRole 
 import { Factories } from "./Factories";
 import { emMessageType } from "../data/Enums";
 import { consolesManager } from "../runtime/Runtime";
-import { i18n, logger, emMessageLevel, IOperationResult, object, string } from "../../../ibas/bobas/bobas";
+import { i18n, logger, emMessageLevel, IOperationResult, object, string, url } from "../../../ibas/bobas/bobas";
 
 /** 应用-中心 */
 export class CenterApp extends BOApplication<ICenterView> implements ICenterApp {
@@ -67,19 +67,22 @@ export class CenterApp extends BOApplication<ICenterView> implements ICenterApp 
     protected initModuleConsole(module: IUserModule) {
         let console: IModuleConsole;
         // 模块入口地址
-        let url: string = module.address;
-        if (!url.endsWith(".js")) {
-            url = url + ".js";
+        let address: string = module.address;
+        if (!address.endsWith(".js")) {
+            address = address + ".js";
         }
+        address = url.normalize(address);
         // 定义模块
         define(
-            url,
-            ["require", "exports", url],
-            function (): void {
-                return;
+            address,
+            ["require", "exports", address],
+            function (require: any, exports: any, index: any): void {
+                "use strict";
+                exports.Index = index;
             });
         let that: CenterApp = this;
-        require([url], function (): void {
+        require([address], function (): void {
+            // 模块加载成功
             console = consolesManager.get(module.id);
             if (object.isNull(console)) {
                 that.view.showStatusMessages(
@@ -91,6 +94,11 @@ export class CenterApp extends BOApplication<ICenterView> implements ICenterApp 
             if (console instanceof ModuleConsole) {
                 that.view.showModule(console);
             }
+        }, function (): void {
+            // 模块加载失败
+            that.view.showStatusMessages(
+                emMessageType.ERROR,
+                i18n.prop("msg_not_found_module_console", module.id, module.name));
         });
     }
 
