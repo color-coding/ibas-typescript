@@ -12,5 +12,5 @@
 
 export * from "./BusinessObjectCore.d";
 export * from "./BusinessObjectCore";
-export * from "./BORepositoryCore.d";
+export * from "./RepositoryCore.d";
 export * from "./BORepositoryCore";

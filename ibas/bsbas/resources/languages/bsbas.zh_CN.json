@@ -9,5 +9,6 @@
     "sys_app_about": "应用-关于",
     "sys_app_help": "应用-帮助",
     "msg_begin_initialize_user_modules": "初始化用户[{0} - {1}]的模块",
-    "msg_begin_initialize_modules": "初始化模块[{0} - {1}]"
+    "msg_begin_initialize_modules": "初始化模块[{0} - {1}]",
+    "msg_not_found_module_console": "没有找到模块[{0} - {1}]，请检查是否注册且可用"
 }

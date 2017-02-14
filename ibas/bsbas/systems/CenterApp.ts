@@ -12,6 +12,7 @@ import { BOApplication } from "../applications/Applications";
 import { ICenterView, ICenterApp, IUser, IUserModule, IUserPrivilege, IUserRole } from "./Systems.d";
 import { Factories } from "./Factories";
 import { emMessageType } from "../data/Enums";
+import { consolesManager } from "../runtime/Runtime";
 import { i18n, logger, emMessageLevel, IOperationResult, object, string } from "../../../ibas/bobas/bobas";
 
 /** 应用-中心 */
@@ -52,7 +53,7 @@ export class CenterApp extends BOApplication<ICenterView> implements ICenterApp 
                 for (let module of opRslt.resultObjects) {
                     that.view.showStatusMessages(
                         emMessageType.INFORMATION,
-                        i18n.prop("msg_begin_initialize_modules", module.name, module.description)
+                        i18n.prop("msg_begin_initialize_modules", module.id, module.name)
                     );
                     that.initModuleConsole(module);
                 }
@@ -62,17 +63,36 @@ export class CenterApp extends BOApplication<ICenterView> implements ICenterApp 
         });
     }
 
-    private initModuleConsole(module: IUserModule) {
+    /** 初始化模块控制台 */
+    protected initModuleConsole(module: IUserModule) {
         let console: IModuleConsole;
-        require([module.address], function (): void {
-            console = ModuleConsole.getConsole(module.id);
+        // 模块入口地址
+        let url: string = module.address;
+        if (!url.endsWith(".js")) {
+            url = url + ".js";
+        }
+        // 定义模块
+        define(
+            url,
+            ["require", "exports", url],
+            function (): void {
+                return;
+            });
+        let that: CenterApp = this;
+        require([url], function (): void {
+            console = consolesManager.get(module.id);
             if (object.isNull(console)) {
+                that.view.showStatusMessages(
+                    emMessageType.WARNING,
+                    i18n.prop("msg_not_found_module_console", module.id, module.name));
                 return;
             }
             // 有效模块控制台
             if (console instanceof ModuleConsole) {
-                this.view.showModule(console);
+                that.view.showModule(console);
             }
         });
     }
+
+
 }

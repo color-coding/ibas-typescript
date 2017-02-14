@@ -48,18 +48,9 @@ export class Console extends ModuleConsole {
     }
     /** 运行 */
     run(): void {
+        // 保留基类方法
+        super.run();
         // 先加载ui导航
-        let that: Console = this;
-        let uiBack: Function = function (ui: any) {
-            // 设置导航
-            that._navigation = new ui.Navigation();
-            // 初始化
-            that.init();
-            // 调用入口应用
-            let app: IApplication<IView> = that.default().default();
-            app.show();
-        };
-        // 加载ui
         let uiModules: string[] = [];
         if (this.plantform === emPlantform.IPAD) {
             // 使用m类型视图
@@ -68,7 +59,16 @@ export class Console extends ModuleConsole {
             // 使用c类型视图
             uiModules.push("../bsui/c/Navigation");
         }
-        require(uiModules, uiBack);
+        let that: Console = this;
+        require(uiModules, function (ui: any): void {
+            // 设置导航
+            that._navigation = new ui.Navigation();
+            // 初始化
+            that.init();
+            // 调用入口应用
+            let app: IApplication<IView> = that.default().default();
+            app.show();
+        });
     }
 }
 

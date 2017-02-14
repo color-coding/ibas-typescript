@@ -13,7 +13,7 @@ import {
     IElement, IModule, IFunction, IApplication, IView,
     IModuleConsole, IViewShower, IViewNavigation, IModuleFunction
 } from "./Architectures.d";
-
+import { consolesManager } from "../runtime/Runtime";
 
 /** 系统元素 */
 export class Element implements IElement {
@@ -136,28 +136,9 @@ export abstract class View implements IView {
  * 模块控制台
  */
 export abstract class ModuleConsole extends Module implements IModuleConsole {
-    /** 运行中的模块控制台 */
-    private static runningConsoles: Map<string, IModuleConsole>;
-    /** 注册模块控制台 */
-    static registerConsole(console: IModuleConsole): void {
-        if (object.isNull(ModuleConsole.runningConsoles)) {
-            ModuleConsole.runningConsoles = new Map();
-        }
-        ModuleConsole.runningConsoles.set(console.id, console);
-    } /** 注册模块控制台 */
-    static getConsole(id: string): IModuleConsole {
-        if (object.isNull(ModuleConsole.runningConsoles)) {
-            return null;
-        }
-        if (ModuleConsole.runningConsoles.has(id)) {
-            return ModuleConsole.runningConsoles.get(id);
-        }
-        return null;
-    }
 
     constructor() {
         super();
-        ModuleConsole.registerConsole(this);
     }
     /** 当前平台 */
     plantform: emPlantform;
@@ -167,8 +148,11 @@ export abstract class ModuleConsole extends Module implements IModuleConsole {
     icon: string;
     /** 初始化 */
     protected abstract init(): void;
-    /** 运行 */
-    abstract run(): void;
+    /** 运行，重载后必须保留基类调用 */
+    run(): void {
+        // 注册当前模块
+        consolesManager.register(this);
+    }
     /** 创建视图导航 */
     abstract navigation(): IViewNavigation;
     /** 创建功能 */

@@ -17,21 +17,21 @@
         "id": "test-0",
         "name": "module_a",
         "category": "test",
-        "address": ".../../test/apps/module_a/index.js",
+        "address": ".../../test/apps/module_a/index",
         "console": "ConsoleModuleA"
       },
       {
         "id": "test-1",
         "name": "module_b",
         "category": "test",
-        "address": ".../../test/apps/module_b/index.js",
+        "address": ".../../test/apps/module_b/index",
         "console": "ConsoleModuleB"
       },
       {
         "id": "test-2",
         "name": "module_c",
         "category": "test",
-        "address": ".../../test/apps/module_c/index.js",
+        "address": ".../../test/apps/module_c/index",
         "console": "ConsoleModuleC"
       }
     ]

@@ -30,4 +30,5 @@ export * from "./applications/Applications";
 export * from "./views/Views";
 // export * from "./systems/Systems"; // 此需要单独引用，不再集中发布
 // export * from "./services/Services";
+export * from "./runtime/Runtime";
 

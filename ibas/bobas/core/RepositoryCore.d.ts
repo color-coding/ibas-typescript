@@ -135,3 +135,8 @@ export interface IRemoteDataConverter extends IDataConverter {
      */
     parsing(data: any): IOperationResult<any>;
 }
+/**
+ * 文件仓库
+ */
+export interface IFileRemoteRepository {
+}

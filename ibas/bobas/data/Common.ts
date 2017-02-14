@@ -121,3 +121,13 @@ export class StringBuilder {
         return str;
     }
 }
+
+/**
+ * 键值
+ */
+export class KeyValue {
+    /** 键 */
+    key: string;
+    /** 值 */
+    value: any;
+}

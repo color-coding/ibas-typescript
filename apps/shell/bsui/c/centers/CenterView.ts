@@ -35,7 +35,9 @@ export class CenterView extends BOView implements ICenterView {
     showStatusMessages(type: emMessageType, message: string, callBack: Function): void;
     /** 显示状态消息 */
     showStatusMessages(): void {
-
+        let type = arguments[0];
+        let message = arguments[1];
+        console.debug(message);
     }
 	/**
 	 * 显示消息对话框
