@@ -34,6 +34,13 @@ export class Console extends ModuleConsole {
     }
     /** 初始化 */
     protected init(): void {
+        // 注册功能
+
+    }
+    /** 运行 */
+    run(): void {
+        // 保留基类方法
+        super.run();
         // 获取根地址
         let rootUrl: string = url.rootUrl(Console.ROOT_FILE_NAME);
         // 加载语言-框架默认
@@ -41,15 +48,6 @@ export class Console extends ModuleConsole {
         // 设置资源属性
         this.description = i18n.prop(this.name);
         this.icon = "sap-icon://employee";
-        // 注册功能
-
-
-
-    }
-    /** 运行 */
-    run(): void {
-        // 保留基类方法
-        super.run();
         // 先加载ui导航
         let uiModules: string[] = [];
         if (this.plantform === emPlantform.IPAD) {
@@ -63,11 +61,6 @@ export class Console extends ModuleConsole {
         require(uiModules, function (ui: any): void {
             // 设置导航
             that._navigation = new ui.Navigation();
-            // 初始化
-            that.init();
-            // 调用入口应用
-            let app: IApplication<IView> = that.default().default();
-            app.show();
         });
     }
 }

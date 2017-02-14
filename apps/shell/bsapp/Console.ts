@@ -79,15 +79,6 @@ export class Console extends ModuleConsole {
     protected init(): void {
         // 初始化系统工厂
         Factories.systemsFactory = new SystemsFactory();
-        // 获取根地址
-        let rootUrl: string = url.rootUrl(Console.ROOT_FILE_NAME);
-        // 加载配置-框架默认
-        config.load(string.format("{0}/{1}", rootUrl, Configuration.CONFIG_FILE_NAME));
-        // 加载语言-框架默认
-        i18n.load(string.format("{0}/shell/resources/languages/shell.{1}.json", rootUrl, i18n.language));
-        // 设置资源属性
-        this.description = i18n.prop(this.name);
-        this.icon = "../resources/logo.png";
         // 注册功能
         let func: IModuleFunction = this.createFunction();
         func.name = "sys_shell_func_centers";
@@ -100,6 +91,15 @@ export class Console extends ModuleConsole {
     run(): void {
         // 保留基类方法
         super.run();
+        // 获取根地址
+        let rootUrl: string = url.rootUrl(Console.ROOT_FILE_NAME);
+        // 加载配置-框架默认
+        config.load(string.format("{0}/{1}", rootUrl, Configuration.CONFIG_FILE_NAME));
+        // 加载语言-框架默认
+        i18n.load(string.format("{0}/shell/resources/languages/shell.{1}.json", rootUrl, i18n.language));
+        // 设置资源属性
+        this.description = i18n.prop(this.name);
+        this.icon = "../resources/logo.png";
         // 先加载ui导航
         let uiModules: string[] = [];
         if (this.plantform === emPlantform.IPAD) {
@@ -113,7 +113,6 @@ export class Console extends ModuleConsole {
         require(uiModules, function (ui: any): void {
             // 设置导航
             that._navigation = new ui.Navigation();
-            // 初始化
             that.init();
             // 调用入口应用
             let app: IApplication<IView> = that.default().default();

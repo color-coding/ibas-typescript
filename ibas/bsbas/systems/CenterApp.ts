@@ -68,18 +68,15 @@ export class CenterApp extends BOApplication<ICenterView> implements ICenterApp 
         let console: IModuleConsole;
         // 模块入口地址
         let address: string = module.address;
-        if (!address.endsWith(".js")) {
-            address = address + ".js";
-        }
-        address = url.normalize(address);
-        // 定义模块
-        define(
-            address,
-            ["require", "exports", address],
-            function (require: any, exports: any, index: any): void {
-                "use strict";
-                exports.Index = index;
-            });
+        /*
+           if (!address.endsWith(".js")) {
+               address = address + ".js";
+           }
+          */
+        // 此处存在问题，
+        // 当地址以http开头requirejs不在修正引用文件名称，即：.js不添加。
+        // 关联引用也不修正名称。
+        // address = url.normalize(address);
         let that: CenterApp = this;
         require([address], function (): void {
             // 模块加载成功

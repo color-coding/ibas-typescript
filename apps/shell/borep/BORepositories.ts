@@ -167,10 +167,6 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
                     module.address = item.address;
                     module.console = item.console;
                     module.description = i18n.prop(module.name);
-                    // 修正地址
-                    if (!object.isNull(module.address) && module.address.startsWith(url.ROOT_URL_SIGN)) {
-                        module.address = document.location.href + module.address.substring(url.ROOT_URL_SIGN.length);
-                    }
                     opRslt.resultObjects.add(module);
                 }
             }
