@@ -14,13 +14,14 @@ import { i18n, IView, IViewShower, object, logger, emMessageLevel } from "../../
  */
 export class ViewShowerDefault implements IViewShower {
     /** 显示视图 */
-    show(view: any): void {
-        if (object.isNull(view)) {
+    show(view: IView): void {
+        let viewContent = view.darw();
+        if (object.isNull(viewContent)) {
             logger.log(emMessageLevel.WARN, "shower: empty view.");
-        } else if (view instanceof sap.ui.layout.VerticalLayout) {
-            view.placeAt("content");
-        } else if (view instanceof sap.tnt.ToolPage) {
-            view.placeAt("content");
+        } else if (viewContent instanceof sap.ui.layout.VerticalLayout) {
+            viewContent.placeAt("content");
+        } else if (viewContent instanceof sap.tnt.ToolPage) {
+            viewContent.placeAt("content");
         } else {
             throw new Error(i18n.prop("sys_shell_invalid_ui"));
         }

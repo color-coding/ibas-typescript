@@ -2,7 +2,9 @@
   "appSettings": {
     "debug": true,
     "language": "zh_CN",
-    "offline": true
+    "offline": true,
+    "defaultUser": "admin",
+    "defaultPassword":"1q2w3e"
   },
   "offlineSettings": {
     "users": [

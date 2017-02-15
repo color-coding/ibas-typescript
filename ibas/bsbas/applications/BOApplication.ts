@@ -28,7 +28,7 @@ export abstract class BOApplication<T extends IBOApplicationView> extends Applic
             if (object.isNull(this.view)) {
                 throw new Error(i18n.prop("msg_invalid_view", this.name));
             }
-            this.viewShower.show(this.view.darw());
+            this.viewShower.show(this.view);
             this.afterViewShow();
         } else {
             throw new Error(i18n.prop("msg_invalid_view_shower", this.name));

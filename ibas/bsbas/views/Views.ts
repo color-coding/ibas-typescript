@@ -13,6 +13,8 @@ import { i18n } from "../../bsbas/bsbas";
  * 视图
  */
 export abstract class BOView extends core.View {
+    /** 清理资源 */
+    destroyEvent: Function;
     /**  
      * 触发视图事件
      * @param event 触发的事件

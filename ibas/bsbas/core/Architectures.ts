@@ -104,6 +104,8 @@ export abstract class View implements IView {
     isDisplayed: boolean;
     /** 绘制视图 */
     abstract darw(): any;
+    /** 清理资源 */
+    destroyEvent: Function;
 }
 /** 模块控制台 */
 export abstract class ModuleConsole extends Module implements IModuleConsole {

@@ -15,7 +15,7 @@ import { i18n, object, BOView, emMessageType, IModuleConsole, IView } from "../.
  */
 export class CenterView extends BOView implements ICenterView {
     /** 显示视图 */
-    show(view: any): void {
+    show(view: IView): void {
         this.showView(view);
     }
     /** 清理资源 */
@@ -29,9 +29,9 @@ export class CenterView extends BOView implements ICenterView {
     /** 页面功能导航，左 */
     private navigation: sap.tnt.SideNavigation;
     /** 状态消息条 */
-    private statusBar: sap.ui.layout.VerticalLayout;
+    private statusBar: sap.m.Bar;
     /** 窗体显示 */
-    private form: sap.ui.layout.form.SimpleForm;
+    private form: sap.m.Page;
 	/**
 	 * 显示状态消息
 	 * @param type 消息类型
@@ -72,9 +72,9 @@ export class CenterView extends BOView implements ICenterView {
                 showCloseButton: true
             });
         // 清理已有的
-        // this.statusBar.destroyContent();
+        this.statusBar.destroyContentLeft();
         // 添加新的
-        this.statusBar.addContent(messageStrip);
+        this.statusBar.addContentLeft(messageStrip);
     }
     /**
      * 显示消息对话框
@@ -170,9 +170,10 @@ export class CenterView extends BOView implements ICenterView {
     }
 
     /** 显示视图 */
-    showView(view: any): void {
+    showView(view: IView): void {
+        let viewContent = view.darw();
         this.form.destroyContent();
-        this.form.addContent(view);
+        this.form.addContent(viewContent);
     }
     /** 清理资源 */
     destroyView(view: IView): void {
@@ -199,15 +200,28 @@ export class CenterView extends BOView implements ICenterView {
         this.page.setHeader(this.header);
         this.page.setSideContent(this.navigation);
         this.page.setSideExpanded(false);
-        this.form = new sap.ui.layout.form.SimpleForm("");
-
         this.page.addMainContent(this.form);
-        this.statusBar = new sap.ui.layout.VerticalLayout(
-            "",
-            {
-                width: "100%"
-            });
-        this.page.addMainContent(this.statusBar);
+        this.form = new sap.m.Page("");
+        this.form.setShowNavButton(true);
+        button = new sap.m.Button("", {
+            icon: "sap-icon://full-screen"
+        });
+        button.attachPress(this, function (): void {
+            this.header.setVisible(false);
+            this.navigation.setVisible(false);
+        }, this);
+        // this.form.addHeaderContent(button);
+        button = new sap.m.Button("", {
+            icon: "sap-icon://decline"
+        });
+        button.attachPress(this, function (): void {
+            this.form.destroyContent();
+        }, this);
+        this.form.addHeaderContent(button);
+        // this.form.setFloatingFooter(true);
+        this.statusBar = new sap.m.Bar("");
+        this.form.setFooter(this.statusBar);
+        this.page.addMainContent(this.form);
         this.id = this.page.getId();
         return this.page;
     }

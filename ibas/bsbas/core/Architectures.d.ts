@@ -65,13 +65,15 @@ export interface IView {
     darw(): any;
     /** 是否已显示 */
     isDisplayed: boolean;
+    /** 清理资源 */
+    destroyEvent: Function;
 }
 /**
  * 视图-显示者
  */
 export interface IViewShower {
     /** 显示视图 */
-    show(view: any);
+    show(view: IView);
     /** 清理资源 */
     destroy(view: IView): void;
 }

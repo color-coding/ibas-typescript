@@ -26,6 +26,7 @@ export class DemoApp extends BOApplication<IDemoView> {
     /** 注册视图 */
     protected registerView(): void {
         //
+        this.view.destroyEvent = this.destroy;
     }
 
 }

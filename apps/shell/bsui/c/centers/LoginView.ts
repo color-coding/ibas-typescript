@@ -8,7 +8,7 @@
 
 /// <reference path="../../../../../openui5/typings/index.d.ts" />
 import { ILoginView } from "../../../../../ibas/bsbas/systems/Systems";
-import { i18n, BOView } from "../../../../../ibas/bsbas/bsbas";
+import { i18n, BOView, config } from "../../../../../ibas/bsbas/bsbas";
 
 /**
  * 系统入口应用
@@ -54,8 +54,8 @@ export class LoginView extends BOView implements ILoginView {
     }
     /** 绘制视图 */
     darw(): any {
-        this.txtUser = new sap.m.Input("", { value: "admin" });
-        this.txtPassword = new sap.m.Input("", { value: "1q2w3e", type: "Password" });
+        this.txtUser = new sap.m.Input("", { value: config.get("defaultUser") });
+        this.txtPassword = new sap.m.Input("", { value: config.get("defaultPassword"), type: "Password" });
         this.butLogin = new sap.m.Button({ text: i18n.prop("sys_shell_ui_login") });
         this.butLogin.attachPress(this.fireLoginEvent, this);
         let logonLayout: sap.ui.layout.VerticalLayout = new sap.ui.layout.VerticalLayout(
