@@ -16,6 +16,8 @@ import { MainView } from "./centers/MainView";
 import { LoginView } from "./centers/LoginView";
 import { CenterView } from "./centers/CenterView";
 
+/** 导出视图显示 */
+export { ViewShowerDefault as ViewShower } from "../ViewShowers";
 /**
  * 视图导航
  */

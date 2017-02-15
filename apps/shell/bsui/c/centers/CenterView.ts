@@ -8,12 +8,20 @@
 
 /// <reference path="../../../../../openui5/typings/index.d.ts" />
 import { ICenterView, IUserModule } from "../../../../../ibas/bsbas/systems/Systems";
-import { i18n, object, BOView, emMessageType, IModuleConsole } from "../../../../../ibas/bsbas/bsbas";
+import { i18n, object, BOView, emMessageType, IModuleConsole, IView } from "../../../../../ibas/bsbas/bsbas";
 
 /**
- * 系统入口应用
+ * 系统入口视图
  */
 export class CenterView extends BOView implements ICenterView {
+    /** 显示视图 */
+    show(view: any): void {
+        this.showView(view);
+    }
+    /** 清理资源 */
+    destroy(view: IView): void {
+        this.destroyView(view);
+    }
     /** 主页面 */
     private page: sap.tnt.ToolPage;
     /** 页面头部 */
@@ -22,6 +30,8 @@ export class CenterView extends BOView implements ICenterView {
     private navigation: sap.tnt.SideNavigation;
     /** 状态消息条 */
     private statusBar: sap.ui.layout.VerticalLayout;
+    /** 窗体显示 */
+    private form: sap.ui.layout.form.SimpleForm;
 	/**
 	 * 显示状态消息
 	 * @param type 消息类型
@@ -120,11 +130,17 @@ export class CenterView extends BOView implements ICenterView {
             }
         );
     }
+	/**
+	 * 激活功能
+	 * 参数1 string 功能ID
+	 */
+    activateFunctionsEvent: Function;
     /**
      * 显示模块
      * @param module 模块
      */
     showModule(module: IModuleConsole): void {
+        let that = this;
         let nvList: sap.tnt.NavigationList = this.navigation.getItem();
         let nvItem: sap.tnt.NavigationListItem = new sap.tnt.NavigationListItem();
         nvItem.setKey(module.name);
@@ -137,6 +153,9 @@ export class CenterView extends BOView implements ICenterView {
                 let subNvItem: sap.tnt.NavigationListItem = new sap.tnt.NavigationListItem();
                 subNvItem.setKey(item.name);
                 subNvItem.setText(item.description);
+                subNvItem.attachSelect(null, function (): void {
+                    that.fireViewEvents(that.activateFunctionsEvent, item.id);
+                })
                 nvItem.addItem(subNvItem);
             }
         }
@@ -148,6 +167,19 @@ export class CenterView extends BOView implements ICenterView {
             module.addListener(showFunctions);
         }
         nvList.addItem(nvItem);
+    }
+
+    /** 显示视图 */
+    showView(view: any): void {
+        this.form.destroyContent();
+        this.form.addContent(view);
+    }
+    /** 清理资源 */
+    destroyView(view: IView): void {
+        let ui: sap.ui.core.Element = sap.ui.getCore().byId(view.id);
+        if (!object.isNull(ui)) {
+            ui.destroy(true);
+        }
     }
     /** 绘制视图 */
     darw(): any {
@@ -167,6 +199,9 @@ export class CenterView extends BOView implements ICenterView {
         this.page.setHeader(this.header);
         this.page.setSideContent(this.navigation);
         this.page.setSideExpanded(false);
+        this.form = new sap.ui.layout.form.SimpleForm("");
+
+        this.page.addMainContent(this.form);
         this.statusBar = new sap.ui.layout.VerticalLayout(
             "",
             {

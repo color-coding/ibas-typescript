@@ -33,7 +33,7 @@ export class Module extends Element implements IModule {
     }
     private _functions: List<IFunction>;
     /** 功能集合 */
-    functions(): List<IFunction> {
+    functions(): IFunction[] {
         if (object.isNull(this._functions)) {
             this._functions = new ArrayList<IFunction>();
         }
@@ -116,9 +116,21 @@ export abstract class ModuleConsole extends Module implements IModuleConsole {
     address: string;
     /** 图标 */
     icon: string;
+    /** 功能集合 */
+    functions(): IModuleFunction[] {
+        let list = new Array<IModuleFunction>();
+        for (let item of super.functions()) {
+            list.push(<IModuleFunction>item);
+        }
+        return list;
+    }
     /** 默认功能 */
     default(): IModuleFunction {
-        return <IModuleFunction>super.functions().firstOrDefault();
+        let list = this.functions();
+        if (list.length > 0) {
+            return list[0];
+        }
+        return null;
     }
     private listeners: Array<Function>;
     /** 添加初始化完成监听 */

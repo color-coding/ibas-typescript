@@ -7,7 +7,7 @@
  */
 
 import { List, IBusinessObject, IOperationMessages, IOperationResult } from "../../../ibas/bobas/bobas";
-import { IView, IModule, IApplication, IModuleConsole } from "../core/Core";
+import { IView, IModule, IApplication, IModuleConsole, IModuleFunction, IViewShower } from "../core/Core";
 import { emMessageType } from "../data/Enums";
 
 /** 关于-视图 */
@@ -42,7 +42,7 @@ export interface ILoginApp extends IApplication<ILoginView> {
 
 }
 /** 系统中心-视图 */
-export interface ICenterView extends IView {
+export interface ICenterView extends IView, IViewShower {
 	/**
 	 * 显示状态消息
 	 * @param type 消息类型
@@ -79,6 +79,11 @@ export interface ICenterView extends IView {
 	 * @param console 模块控制台
 	 */
 	showModule(console: IModuleConsole): void;
+	/**
+	 * 激活功能
+	 * 参数1 string 功能ID
+	 */
+	activateFunctionsEvent: Function;
 }
 /** 登陆-应用 */
 export interface ICenterApp extends IApplication<ICenterView> {

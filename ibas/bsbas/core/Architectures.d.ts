@@ -25,7 +25,7 @@ export interface IElement {
  */
 export interface IModule extends IElement {
     /** 功能集合 */
-    functions(): List<IFunction>;
+    functions(): IFunction[];
 }
 /**
  * 功能
@@ -102,8 +102,10 @@ export interface IModuleConsole extends IModule {
     icon: string;
     /** 初始化完成 */
     isInitialized: boolean;
+    /** 功能集合 */
+    functions(): IModuleFunction[];
     /** 默认功能 */
-    default(): IFunction;
+    default(): IModuleFunction;
     /** 添加初始化完成监听 */
     addListener(listener: Function): void;
 }

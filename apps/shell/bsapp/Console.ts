@@ -9,7 +9,7 @@
 /// <reference path="../../../ibas/3rdparty/require.d.ts" />
 import {
     i18n, config, string, Configuration,
-    ModuleConsole, IViewNavigation, IModuleFunction,
+    ModuleConsole, IViewNavigation, IModuleFunction, IViewShower,
     IApplication, IView, emPlantform, url
 } from "../../../ibas/bsbas/bsbas";
 import {
@@ -71,16 +71,18 @@ export class Console extends ModuleConsole {
         this.name = Console.CONSOLE_NAME;
     }
     private _navigation: any;
-    /** 创建视图导航 */
+    /** 视图导航 */
     navigation(): IViewNavigation {
         return this._navigation;
     }
+    /** 视图显示者 */
+    private _viewShower: IViewShower;
     /** 初始化 */
     protected registers(): void {
         // 初始化系统工厂
         Factories.systemsFactory = new SystemsFactory();
         // 注册功能
-        this.register(new CentersFunc());
+        this.register(new CentersFunc(this._viewShower));
     }
     /** 运行 */
     run(): void {
@@ -106,6 +108,8 @@ export class Console extends ModuleConsole {
         require(uiModules, function (ui: any): void {
             // 设置导航
             that._navigation = new ui.Navigation();
+            // 设置视图显示者
+            that._viewShower = new ui.ViewShower();
             // 调用初始化
             that.initialize();
             // 调用入口应用

@@ -7,7 +7,7 @@
  */
 
 /// <reference path="../../../ibas/3rdparty/require.d.ts" />
-import { ModuleConsole, IModuleConsole } from "../core/Core";
+import { ModuleConsole, IModuleConsole, IModuleFunction, IApplication, IView, IViewShower } from "../core/Core";
 import { BOApplication } from "../applications/Applications";
 import { ICenterView, ICenterApp, IUser, IUserModule, IUserPrivilege, IUserRole } from "./Systems.d";
 import { Factories } from "./Factories";
@@ -16,7 +16,7 @@ import { consolesManager } from "../runtime/Runtime";
 import { i18n, logger, emMessageLevel, IOperationResult, object, string, url } from "../../../ibas/bobas/bobas";
 
 /** 应用-中心 */
-export class CenterApp extends BOApplication<ICenterView> implements ICenterApp {
+export abstract class CenterApp extends BOApplication<ICenterView> implements ICenterApp {
 
     /** 应用标识 */
     static APPLICATION_ID: string = "c1ec9ee1-1138-4358-8323-c579f1e4be37";
@@ -31,6 +31,7 @@ export class CenterApp extends BOApplication<ICenterView> implements ICenterApp 
     /** 注册视图 */
     protected registerView(): void {
         // 注册视图事件
+        this.view.activateFunctionsEvent = this.activateFunctions;
     }
     /** 运行 */
     run(): void {
@@ -69,6 +70,16 @@ export class CenterApp extends BOApplication<ICenterView> implements ICenterApp 
             }
         });
     }
+    private functionMap: Map<string, IModuleFunction>;
+    /** 注册运行的功能 */
+    protected registerFunctions(module: IModuleConsole): void {
+        if (object.isNull(this.functionMap)) {
+            this.functionMap = new Map<string, IModuleFunction>();
+        }
+        for (let item of module.functions()) {
+            this.functionMap.set(item.id, item);
+        }
+    }
 
     /** 初始化模块控制台 */
     protected initModuleConsole(module: IUserModule) {
@@ -96,6 +107,9 @@ export class CenterApp extends BOApplication<ICenterView> implements ICenterApp 
             }
             // 有效模块控制台
             if (console instanceof ModuleConsole) {
+                console.addListener(function (): void {
+                    that.registerFunctions(console);
+                });
                 that.view.showModule(console);
             }
         }, function (): void {
@@ -106,5 +120,22 @@ export class CenterApp extends BOApplication<ICenterView> implements ICenterApp 
         });
     }
 
+    /** 视图事件-激活功能 */
+    private activateFunctions(id: string): void {
+        if (object.isNull(this.functionMap)) {
+            return;
+        }
+        if (this.functionMap.has(id)) {
+            let func: IModuleFunction = this.functionMap.get(id);
+            let app: IApplication<IView> = func.default();
+            if (object.isNull(app.navigation)) {
+                app.navigation = func.navigation;
+            }
+            if (object.isNull(app.viewShower)) {
+                app.viewShower = this.view;
+            }
+            app.run();
+        }
+    }
 
 }
