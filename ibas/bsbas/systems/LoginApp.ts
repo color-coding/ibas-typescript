@@ -55,8 +55,7 @@ export class LoginApp extends BOApplication<ILoginView> implements ILoginApp {
         let centerApp: ICenterApp = Factories.systemsFactory.createCenterApp();
         centerApp.viewShower = this.viewShower;
         centerApp.navigation = this.navigation;
-        centerApp.show();
-        centerApp.init(user);
+        centerApp.run(user);
         this.destroy();
     }
 }

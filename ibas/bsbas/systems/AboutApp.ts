@@ -25,7 +25,7 @@ export class AboutApp extends BOApplication<IAboutView> implements IAboutApp {
 
     /** 注册视图 */
     protected registerView(): void {
-
+        // 注册视图事件
     }
 
 }

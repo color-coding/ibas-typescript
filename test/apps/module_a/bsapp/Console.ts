@@ -11,6 +11,7 @@ import {
     ModuleConsole, IViewNavigation, IModuleFunction, url,
     IApplication, IView, emPlantform, config, string, Configuration, i18n
 } from "../../../../ibas/bsbas/bsbas";
+import { DemoFunc1, DemoFunc2, DemoFunc3 } from "./demo/DemoFunc";
 
 /** 模块控制台 */
 export class Console extends ModuleConsole {
@@ -33,14 +34,14 @@ export class Console extends ModuleConsole {
         return this._navigation;
     }
     /** 初始化 */
-    protected init(): void {
+    protected registers(): void {
         // 注册功能
-
+        this.register(new DemoFunc1());
+        this.register(new DemoFunc2());
+        this.register(new DemoFunc3());
     }
     /** 运行 */
     run(): void {
-        // 保留基类方法
-        super.run();
         // 获取根地址
         let rootUrl: string = url.rootUrl(Console.ROOT_FILE_NAME);
         // 加载语言-框架默认
@@ -61,7 +62,11 @@ export class Console extends ModuleConsole {
         require(uiModules, function (ui: any): void {
             // 设置导航
             that._navigation = new ui.Navigation();
+            // 调用初始化
+            that.initialize();
         });
+        // 保留基类方法
+        super.run();
     }
 }
 

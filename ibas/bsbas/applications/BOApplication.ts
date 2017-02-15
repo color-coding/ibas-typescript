@@ -18,6 +18,10 @@ import { IBOApplicationView } from "./BOApplications.d";
  */
 export abstract class BOApplication<T extends IBOApplicationView> extends Application<T> {
 
+    /** 运行 */
+    run(): void {
+        this.show();
+    }
     /** 显示视图 */
     show(): void {
         if (!object.isNull(this.viewShower)) {
@@ -38,13 +42,17 @@ export abstract class BOApplication<T extends IBOApplicationView> extends Applic
         this.view.isDisplayed = true;
         logger.log(emMessageLevel.DEBUG, "app: [{0} - {1}]'s view displayed.", this.id, this.name);
     }
-
-    /** 清理资源 */
-    destroy(): void {
+    /** 关闭视图 */
+    close(): void {
         if (!object.isNull(this.view)) {
             if (!object.isNull(this.viewShower)) {
                 this.viewShower.destroy(this.view);
             }
         }
+
+    }
+    /** 清理资源 */
+    destroy(): void {
+        this.close();
     }
 }

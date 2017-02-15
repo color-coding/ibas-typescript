@@ -82,8 +82,8 @@ export interface ICenterView extends IView {
 }
 /** 登陆-应用 */
 export interface ICenterApp extends IApplication<ICenterView> {
-	/** 初始化用户相关 */
-	init(user: IUser): void;
+	/** 运行 */
+	run(user: IUser): void;
 }
 /** 入口-视图 */
 export interface IMainView extends IView {
@@ -113,8 +113,6 @@ export interface IUserModule {
 	description: string;
 	/** 地址 */
 	address: string;
-	/** 控制台名称 */
-	console: string;
 }
 /** 用户角色 */
 export interface IUserRole {

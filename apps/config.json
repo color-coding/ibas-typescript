@@ -17,22 +17,19 @@
         "id": "test-0",
         "name": "module_a",
         "category": "test",
-        "address": "../../../test/apps/module_a/index",
-        "console": "ConsoleModuleA"
+        "address": "../../../test/apps/module_a/index"
       },
       {
         "id": "test-1",
         "name": "module_b",
         "category": "test",
-        "address": "../../../test/apps/module_b/index",
-        "console": "ConsoleModuleB"
+        "address": "../../../test/apps/module_b/index"
       },
       {
         "id": "test-2",
         "name": "module_c",
         "category": "test",
-        "address": "../../../test/apps/module_c/index",
-        "console": "ConsoleModuleC"
+        "address": "../../../test/apps/module_c/index"
       }
     ]
   }

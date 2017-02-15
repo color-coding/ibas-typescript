@@ -30,10 +30,17 @@ export class CenterApp extends BOApplication<ICenterView> implements ICenterApp 
     }
     /** 注册视图 */
     protected registerView(): void {
-
+        // 注册视图事件
+    }
+    /** 运行 */
+    run(): void {
+        super.run();
+        let user: IUser = arguments[0];
+        // 初始化
+        this.init(user);
     }
     /** 初始化用户相关 */
-    init(user: IUser): void {
+    private init(user: IUser): void {
         if (object.isNull(user)) {
             return;
         }

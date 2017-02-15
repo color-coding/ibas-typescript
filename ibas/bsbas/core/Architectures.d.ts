@@ -26,17 +26,11 @@ export interface IElement {
 export interface IModule extends IElement {
     /** 功能集合 */
     functions(): List<IFunction>;
-    /** 默认功能 */
-    default(): IFunction;
 }
 /**
  * 功能
  */
 export interface IFunction extends IElement {
-    /** 应用集合 */
-    applications(): List<IApplication<IView>>;
-    /** 默认应用 */
-    default(): IApplication<IView>;
 }
 /**
  * 功能-应用
@@ -44,8 +38,12 @@ export interface IFunction extends IElement {
 export interface IApplication<T extends IView> extends IElement {
     /** 应用的视图 */
     view: T;
+    /** 运行 */
+    run(...args: any[]): void;
     /** 显示视图 */
     show(): void;
+    /** 关闭视图 */
+    close(): void;
     /** 清理资源 */
     destroy(): void;
     /** 视图显示者 */
@@ -75,7 +73,7 @@ export interface IViewShower {
     /** 显示视图 */
     show(view: any);
     /** 清理资源 */
-    destroy(view:IView): void;
+    destroy(view: IView): void;
 }
 /**
  * 视图-导航
@@ -98,17 +96,25 @@ export interface IViewNavigation {
 export interface IModuleConsole extends IModule {
     /** 当前平台 */
     plantform: emPlantform;
-	/** 地址 */
-	address: string;
-	/** 图标 */
-	icon: string;
+    /** 地址 */
+    address: string;
+    /** 图标 */
+    icon: string;
+    /** 初始化完成 */
+    isInitialized: boolean;
+    /** 默认功能 */
+    default(): IFunction;
+    /** 添加初始化完成监听 */
+    addListener(listener: Function): void;
 }
 /**
  * 模块-功能
  */
 export interface IModuleFunction extends IFunction {
-	/** 图标 */
-	icon: string;
-    /** 注册应用 */
-    register(app: IApplication<IView>): void;
+    /** 图标 */
+    icon: string;
+    /** 视图导航 */
+    navigation: IViewNavigation;
+    /** 默认应用 */
+    default(): IApplication<IView>;
 }

@@ -6,12 +6,12 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import * as sys from "../../../../ibas/bsbas/systems/Systems";
+import { MainApp as AbstractMainApp } from "../../../../ibas/bsbas/systems/Systems";
 
 /**
  * 系统入口应用
  */
-export class MainApp extends sys.MainApp {
+export class MainApp extends AbstractMainApp {
 
 
 }

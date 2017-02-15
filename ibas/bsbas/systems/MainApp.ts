@@ -23,6 +23,7 @@ export abstract class MainApp extends BOApplication<IMainView> implements IMainA
     }
     /** 注册视图 */
     protected registerView(): void {
+        // 注册视图事件
     }
     /** 此应用视图显示后 */
     protected afterViewShow(): void {
@@ -30,6 +31,6 @@ export abstract class MainApp extends BOApplication<IMainView> implements IMainA
         let loginApp: ILoginApp = Factories.systemsFactory.createLoginApp();
         loginApp.viewShower = this.viewShower;
         loginApp.navigation = this.navigation;
-        loginApp.show();
+        loginApp.run();
     }
 }

@@ -20,6 +20,8 @@ export class CenterView extends BOView implements ICenterView {
     private header: sap.tnt.ToolHeader;
     /** 页面功能导航，左 */
     private navigation: sap.tnt.SideNavigation;
+    /** 状态消息条 */
+    private statusBar: sap.ui.layout.VerticalLayout;
 	/**
 	 * 显示状态消息
 	 * @param type 消息类型
@@ -35,31 +37,52 @@ export class CenterView extends BOView implements ICenterView {
     showStatusMessages(type: emMessageType, message: string, callBack: Function): void;
     /** 显示状态消息 */
     showStatusMessages(): void {
-        let type = arguments[0];
-        let message = arguments[1];
+        let type: emMessageType = arguments[0];
+        let message: string = arguments[1];
+        let uiType: sap.ui.core.MessageType = sap.ui.core.MessageType.None;
+        let uiIcon: any = undefined;
         if (type === emMessageType.ERROR) {
-            console.error(message);
-        } else {
-            console.debug(message);
+            uiType = sap.ui.core.MessageType.Error;
+        } else if (type === emMessageType.QUESTION) {
+            uiType = sap.ui.core.MessageType.Warning;
+        } else if (type === emMessageType.SUCCESS) {
+            uiType = sap.ui.core.MessageType.Success;
+        } else if (type === emMessageType.WARNING) {
+            uiType = sap.ui.core.MessageType.Warning;
+        } else if (type === emMessageType.INFORMATION) {
+            uiType = sap.ui.core.MessageType.Information;
         }
+        let messageStrip: sap.m.MessageStrip = new sap.m.MessageStrip(
+            "",
+            {
+                text: message,
+                type: uiType,
+                customIcon: uiIcon,
+                showIcon: true,
+                showCloseButton: true
+            });
+        // 清理已有的
+        // this.statusBar.destroyContent();
+        // 添加新的
+        this.statusBar.addContent(messageStrip);
     }
-	/**
-	 * 显示消息对话框
-	 * @param type 消息类型
-	 * @param message 消息内容
-	 * @param callBack 回掉方法
-	 */
+    /**
+     * 显示消息对话框
+     * @param type 消息类型
+     * @param message 消息内容
+     * @param callBack 回掉方法
+     */
     showMessageBox(type: emMessageType, message: string, callBack: Function): void;
-	/**
-	 * 显示消息对话框
-	 * @param type 消息类型
-	 * @param message 消息内容
-	 */
+    /**
+     * 显示消息对话框
+     * @param type 消息类型
+     * @param message 消息内容
+     */
     showMessageBox(type: emMessageType, message: string): void;
-	/**
-	 * 显示消息对话框
-	 * @param error 错误
-	 */
+    /**
+     * 显示消息对话框
+     * @param error 错误
+     */
     showMessageBox(error: Error): void;
     /** 显示消息对话框 */
     showMessageBox(): void {
@@ -73,8 +96,8 @@ export class CenterView extends BOView implements ICenterView {
         } else if (arguments.length === 3) {
             callBack = arguments[2];
         }
-        let actions = [sap.m.MessageBox.Action.OK];
-        let icon = sap.m.MessageBox.Icon.INFORMATION;
+        let actions: any = [sap.m.MessageBox.Action.OK];
+        let icon: any = sap.m.MessageBox.Icon.INFORMATION;
         if (type === emMessageType.ERROR) {
             icon = sap.m.MessageBox.Icon.ERROR;
         } else if (type === emMessageType.QUESTION) {
@@ -97,18 +120,33 @@ export class CenterView extends BOView implements ICenterView {
             }
         );
     }
-	/**
-	 * 显示模块
-	 * @param module 模块
-	 */
+    /**
+     * 显示模块
+     * @param module 模块
+     */
     showModule(module: IModuleConsole): void {
         let nvList: sap.tnt.NavigationList = this.navigation.getItem();
-        let nvItem = new sap.tnt.NavigationListItem();
+        let nvItem: sap.tnt.NavigationListItem = new sap.tnt.NavigationListItem();
         nvItem.setKey(module.name);
         nvItem.setText(module.description);
         nvItem.setIcon(module.icon);
-        nvItem.setEnabled(false);
+        nvItem.setEnabled(true);
         nvItem.setExpanded(false);
+        let showFunctions: Function = function (): void {
+            for (let item of module.functions()) {
+                let subNvItem: sap.tnt.NavigationListItem = new sap.tnt.NavigationListItem();
+                subNvItem.setKey(item.name);
+                subNvItem.setText(item.description);
+                nvItem.addItem(subNvItem);
+            }
+        }
+        if (module.isInitialized) {
+            // 已初始化完成
+            showFunctions();
+        } else {
+            // 未初始化完成，等待完成后显示
+            module.addListener(showFunctions);
+        }
         nvList.addItem(nvItem);
     }
     /** 绘制视图 */
@@ -129,6 +167,12 @@ export class CenterView extends BOView implements ICenterView {
         this.page.setHeader(this.header);
         this.page.setSideContent(this.navigation);
         this.page.setSideExpanded(false);
+        this.statusBar = new sap.ui.layout.VerticalLayout(
+            "",
+            {
+                width: "100%"
+            });
+        this.page.addMainContent(this.statusBar);
         this.id = this.page.getId();
         return this.page;
     }

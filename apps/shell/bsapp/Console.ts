@@ -18,7 +18,7 @@ import {
 } from "../../../ibas/bsbas/systems/Systems.d";
 import { Factories } from "../../../ibas/bsbas/systems/Systems";
 import { BORepositoryShell, BORepositoryShellOffLine } from "../borep/BORepositories";
-import { ViewShowerDefault } from "./ViewShowers";
+import { CentersFunc } from "./centers/CentersFunc";
 import { MainApp } from "./centers/MainApp";
 import { LoginApp } from "./centers/LoginApp";
 import { CenterApp } from "./centers/CenterApp";
@@ -76,21 +76,14 @@ export class Console extends ModuleConsole {
         return this._navigation;
     }
     /** 初始化 */
-    protected init(): void {
+    protected registers(): void {
         // 初始化系统工厂
         Factories.systemsFactory = new SystemsFactory();
         // 注册功能
-        let func: IModuleFunction = this.createFunction();
-        func.name = "sys_shell_func_centers";
-        func.description = i18n.prop(func.name);
-        let mainApp: IMainApp = Factories.systemsFactory.createMainApp();
-        mainApp.viewShower = new ViewShowerDefault();
-        func.register(mainApp);
+        this.register(new CentersFunc());
     }
     /** 运行 */
     run(): void {
-        // 保留基类方法
-        super.run();
         // 获取根地址
         let rootUrl: string = url.rootUrl(Console.ROOT_FILE_NAME);
         // 加载配置-框架默认
@@ -113,11 +106,14 @@ export class Console extends ModuleConsole {
         require(uiModules, function (ui: any): void {
             // 设置导航
             that._navigation = new ui.Navigation();
-            that.init();
+            // 调用初始化
+            that.initialize();
             // 调用入口应用
             let app: IApplication<IView> = that.default().default();
             app.show();
         });
+        // 保留基类方法
+        super.run();
     }
 }
 
