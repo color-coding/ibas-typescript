@@ -7,7 +7,7 @@
  */
 
 /// <reference path="../../../openui5/typings/index.d.ts" />
-import { i18n, IView, IViewShower, object, logger, emMessageLevel } from "../../../ibas/bsbas/bsbas";
+import { i18n, IView, IViewShower, object, logger, emMessageLevel,emMessageType } from "../../../ibas/bsbas/bsbas";
 
 /**
  * 视图-显示者-默认
@@ -53,5 +53,9 @@ export class ViewShowerDefault implements IViewShower {
                 this.busyDialog.close();
             }
         }
+    }
+    /** 设置消息 */
+    messages(view: IView, type: emMessageType, msg: string): any { 
+        //
     }
 }

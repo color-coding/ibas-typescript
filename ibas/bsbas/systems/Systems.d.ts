@@ -47,13 +47,6 @@ export interface ICenterView extends IView, IViewShower {
 	 * 显示状态消息
 	 * @param type 消息类型
 	 * @param message 消息内容
-	 * @param callBack 回掉方法
-	 */
-	showStatusMessages(type: emMessageType, message: string, callBack: Function): void;
-	/**
-	 * 显示状态消息
-	 * @param type 消息类型
-	 * @param message 消息内容
 	 */
 	showStatusMessages(type: emMessageType, message: string): void;
 	/**

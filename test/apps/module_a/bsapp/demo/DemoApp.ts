@@ -7,7 +7,7 @@
  */
 
 import {
-    BOApplication, IView
+    BOApplication, IView, emMessageType
 } from "../../../../../ibas/bsbas/bsbas";
 
 /** 应用-演示 */
@@ -31,7 +31,8 @@ export class DemoApp extends BOApplication<IDemoView> {
     /** 视图显示后 */
     protected viewShowed(): void {
         //
-        this.busy(true,"ding!");
+        this.busy(true, "ding!");
+        this.messages(emMessageType.SUCCESS, "boom!");
     }
 }
 /** 视图-演示 */

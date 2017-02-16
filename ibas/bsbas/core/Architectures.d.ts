@@ -7,7 +7,7 @@
  */
 
 import { List } from "../../../ibas/bobas/bobas";
-import { emPlantform } from "../data/Enums";
+import { emPlantform, emMessageType } from "../data/Enums";
 
 /** 系统元素 */
 export interface IElement {
@@ -78,6 +78,8 @@ export interface IViewShower {
     destroy(view: IView): void;
     /** 设置忙状态 */
     busy(view: IView, busy: boolean, msg: string): any;
+    /** 设置消息 */
+    messages(view: IView, type: emMessageType, msg: string): any;
 }
 /**
  * 视图-导航

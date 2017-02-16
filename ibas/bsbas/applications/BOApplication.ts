@@ -11,6 +11,7 @@
 import { i18n, object, logger, emMessageLevel } from "../../../ibas/bobas/bobas";
 import { Application } from "../core/Architectures";
 import { IBOApplicationView } from "./BOApplications.d";
+import { emMessageType } from "../data/Enums";
 
 
 /**
@@ -67,6 +68,26 @@ export abstract class BOApplication<T extends IBOApplicationView> extends Applic
         let msg: string = arguments[1];
         if (!object.isNull(this.viewShower)) {
             this.viewShower.busy(this.view, busy, msg);
+        } else {
+            throw new Error(i18n.prop("msg_invalid_view_shower", this.name));
+        }
+    }
+    /** 设置消息 */
+    protected messages(msg: string): void
+    /** 设置消息 */
+    protected messages(type: emMessageType, msg: string): void
+    /** 设置消息 */
+    protected messages(): void {
+        let type: emMessageType = emMessageType.INFORMATION;
+        let msg: string;
+        if (arguments.length === 1) {
+            msg = arguments[0];
+        } else if (arguments.length === 2) {
+            type = arguments[0];
+            msg = arguments[1];
+        }
+        if (!object.isNull(this.viewShower)) {
+            this.viewShower.messages(this.view, type, msg);
         } else {
             throw new Error(i18n.prop("msg_invalid_view_shower", this.name));
         }
