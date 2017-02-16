@@ -292,6 +292,7 @@ export class CenterView extends BOView implements ICenterView {
                                 type: sap.m.ButtonType.Transparent,
                                 press: function (): void {
                                     that.fireViewEvents(that.helpEvent);
+                                    popover.close();
                                 }
                             }),
                             new sap.m.Button({
@@ -299,6 +300,7 @@ export class CenterView extends BOView implements ICenterView {
                                 type: sap.m.ButtonType.Transparent,
                                 press: function (): void {
                                     that.fireViewEvents(that.aboutEvent);
+                                    popover.close();
                                 }
                             }),
                             new sap.m.Button({
@@ -347,7 +349,7 @@ export class CenterView extends BOView implements ICenterView {
         }));
         // 退出钮
         this.form.addHeaderContent(new sap.m.Button("", {
-            icon: "sap-icon://decline",
+            icon: "sap-icon://inspect-down",
             type: sap.m.ButtonType.Transparent,
             press: function (): void {
                 that.form.destroyContent();

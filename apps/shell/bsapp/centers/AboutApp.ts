@@ -18,7 +18,7 @@ import {
 export class AboutApp extends AbstractAboutApp {
 
     /** 视图显示后 */
-    protected afterViewShow(): void {
+    protected viewShowed(): void {
         let address: string = url.normalize(".../shell/version.json");
         let that = this;
         var JQryAjxSetting: JQueryAjaxSettings = {
