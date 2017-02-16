@@ -9,7 +9,7 @@
 /// <reference path="../../../ibas/3rdparty/require.d.ts" />
 import { ModuleConsole, IModuleConsole, IModuleFunction, IApplication, IView, IViewShower } from "../core/Core";
 import { BOApplication } from "../applications/Applications";
-import { ICenterView, ICenterApp, IMainApp, IUser, IUserModule, IUserPrivilege, IUserRole } from "./Systems.d";
+import { ICenterView, ICenterApp, IUser, IUserModule, IUserPrivilege, IUserRole } from "./Systems.d";
 import { Factories } from "./Factories";
 import { emMessageType } from "../data/Enums";
 import { consolesManager } from "../runtime/Runtime";
@@ -36,6 +36,11 @@ export abstract class CenterApp extends BOApplication<ICenterView> implements IC
         this.view.helpEvent = this.help;
         this.view.destroyEvent = this.destroy;
     }
+    /** 清理资源 */
+    destroy(): void {
+        // 重写清理方法
+        this.view.destroy(this.view);
+    }
     /** 运行 */
     run(): void {
         super.run();
@@ -55,14 +60,6 @@ export abstract class CenterApp extends BOApplication<ICenterView> implements IC
         let app: IApplication<IView> = Factories.systemsFactory.createAboutApp();
         app.navigation = this.navigation;
         app.viewShower = this.view;
-        app.run();
-    }
-    /** 清理资源 */
-    destroy(): void {
-        super.destroy();
-        let app: IMainApp = Factories.systemsFactory.createMainApp();
-        app.viewShower = this.viewShower;
-        app.navigation = this.navigation;
         app.run();
     }
     /** 初始化用户相关 */

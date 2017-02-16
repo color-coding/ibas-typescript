@@ -186,7 +186,7 @@ export class CenterView extends BOView implements ICenterView {
     destroyView(view: IView): void {
         if (view instanceof CenterView) {
             // 自身销毁，从浏览器缓存刷新页面
-            location.reload(false);
+            window.location.reload(false);
         } else {
             let ui: sap.ui.core.Element = sap.ui.getCore().byId(view.id);
             if (!object.isNull(ui)) {
