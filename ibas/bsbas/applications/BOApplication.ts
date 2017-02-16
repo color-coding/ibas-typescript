@@ -17,7 +17,6 @@ import { IBOApplicationView } from "./BOApplications.d";
  * 业务对象应用
  */
 export abstract class BOApplication<T extends IBOApplicationView> extends Application<T> {
-
     /** 运行 */
     run(): void {
         this.show();
@@ -35,13 +34,16 @@ export abstract class BOApplication<T extends IBOApplicationView> extends Applic
         }
     }
     /** 视图显示后 */
-    protected afterViewShow(): void {
+    private afterViewShow(): void {
         if (object.isNull(this.view)) {
             throw new Error(i18n.prop("msg_invalid_view", this.name));
         }
         this.view.isDisplayed = true;
         logger.log(emMessageLevel.DEBUG, "app: [{0} - {1}]'s view displayed.", this.id, this.name);
+        this.viewShowed();
     }
+    /** 视图显示后 */
+    protected abstract viewShowed(): void;
     /** 关闭视图 */
     close(): void {
         if (!object.isNull(this.view)) {
@@ -54,5 +56,19 @@ export abstract class BOApplication<T extends IBOApplicationView> extends Applic
     /** 清理资源 */
     destroy(): void {
         this.close();
+    }
+    /** 设置忙状态 */
+    protected busy(busy: boolean): void
+    /** 设置忙状态 */
+    protected busy(busy: boolean, msg: string): void
+    /** 设置忙状态 */
+    protected busy(): void {
+        let busy: boolean = arguments[0];
+        let msg: string = arguments[1];
+        if (!object.isNull(this.viewShower)) {
+            this.viewShower.busy(this.view, busy, msg);
+        } else {
+            throw new Error(i18n.prop("msg_invalid_view_shower", this.name));
+        }
     }
 }

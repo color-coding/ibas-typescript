@@ -48,6 +48,10 @@ export abstract class CenterApp extends BOApplication<ICenterView> implements IC
         // 初始化
         this.init(user);
     }
+    /** 视图显示后 */
+    protected viewShowed(): void {
+        //
+    }
     /** 帮助 */
     private help(): void {
         let app: IApplication<IView> = Factories.systemsFactory.createHelpApp();

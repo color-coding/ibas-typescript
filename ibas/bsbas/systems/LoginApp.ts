@@ -9,7 +9,7 @@
 import { BOApplication } from "../applications/Applications";
 import { ILoginView, ILoginApp, ICenterApp, IUser } from "./Systems.d";
 import { Factories } from "./Factories";
-import { logger, emMessageLevel, IOperationResult, object } from "../../../ibas/bobas/bobas";
+import { logger, emMessageLevel, IOperationResult, object, i18n } from "../../../ibas/bobas/bobas";
 
 /** 应用-登陆 */
 export class LoginApp extends BOApplication<ILoginView> implements ILoginApp {
@@ -28,8 +28,13 @@ export class LoginApp extends BOApplication<ILoginView> implements ILoginApp {
     protected registerView(): void {
         this.view.loginEvent = this.login;
     }
-
+    /** 视图显示后 */
+    protected viewShowed(): void {
+        //
+    }
+    //** 登录系统 */
     private login(user: string, password: string): void {
+        this.busy(true, i18n.prop("msg_logging_system"));
         logger.log(emMessageLevel.INFO, "app: user [{0}] login system.", user);
         let that = this;
         let boRepository = Factories.systemsFactory.createRepository();
@@ -38,6 +43,7 @@ export class LoginApp extends BOApplication<ILoginView> implements ILoginApp {
             this.view.password,
             function (opRslt: IOperationResult<IUser>): void {
                 try {
+                    that.busy(false);
                     if (object.isNull(opRslt)) {
                         throw new Error();
                     }

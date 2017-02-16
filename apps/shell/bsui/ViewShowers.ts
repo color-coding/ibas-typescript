@@ -32,5 +32,26 @@ export class ViewShowerDefault implements IViewShower {
         if (!object.isNull(ui)) {
             ui.destroy(true);
         }
+        // 销毁忙对话框
+        if (!object.isNull(this.busyDialog)) {
+            this.busyDialog.destroy(true);
+        }
+    }
+    /** 忙对话框 */
+    private busyDialog: sap.m.BusyDialog;
+    /** 设置忙状态 */
+    busy(view: IView, busy: boolean, msg: string): any {
+        if (busy) {
+            if (object.isNull(this.busyDialog)) {
+                this.busyDialog = new sap.m.BusyDialog("");
+            }
+            this.busyDialog.setTitle(view.title);
+            this.busyDialog.setText(msg);
+            this.busyDialog.open();
+        } else {
+            if (!object.isNull(this.busyDialog)) {
+                this.busyDialog.close();
+            }
+        }
     }
 }

@@ -21,6 +21,7 @@ export class DemoView extends BOView implements IDemoView {
     darw(): any {
         let form = new sap.ui.layout.VerticalLayout("");
         form.addContent(new sap.m.TextArea("", { value: "hello world." }));
+        this.id = form.getId();
         return form;
     }
 }

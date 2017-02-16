@@ -28,7 +28,11 @@ export class DemoApp extends BOApplication<IDemoView> {
         //
         this.view.destroyEvent = this.destroy;
     }
-
+    /** 视图显示后 */
+    protected viewShowed(): void {
+        //
+        this.busy(true,"ding!");
+    }
 }
 /** 视图-演示 */
 export interface IDemoView extends IView {

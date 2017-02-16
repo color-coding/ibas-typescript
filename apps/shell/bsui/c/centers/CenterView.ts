@@ -22,6 +22,10 @@ export class CenterView extends BOView implements ICenterView {
     destroy(view: IView): void {
         this.destroyView(view);
     }
+    /** 设置忙状态 */
+    busy(view: IView, busy: boolean, msg: string): any {
+        this.busyView(view, busy, msg);
+    }
     /** 主页面 */
     private page: sap.tnt.ToolPage;
     /** 页面头部 */
@@ -34,6 +38,8 @@ export class CenterView extends BOView implements ICenterView {
     private form: sap.m.Page;
     /** 用户信息条 */
     private userBar: sap.m.Button;
+    /** 忙对话框 */
+    private busyDialog: sap.m.BusyDialog;
 	/**
 	 * 显示状态消息
 	 * @param type 消息类型
@@ -77,6 +83,12 @@ export class CenterView extends BOView implements ICenterView {
         this.statusBar.destroyContentLeft();
         // 添加新的
         this.statusBar.addContentLeft(messageStrip);
+        // 延迟清除消息
+        setTimeout(function (): void {
+            if (messageStrip) {
+                messageStrip.destroy(true);
+            }
+        }, 2000);
     }
     /**
      * 显示消息对话框
@@ -194,6 +206,28 @@ export class CenterView extends BOView implements ICenterView {
             }
         }
     }
+    /** 设置忙状态 */
+    busyView(view: IView, busy: boolean, msg: string): any {
+        let ui: sap.ui.core.Element = sap.ui.getCore().byId(view.id);
+        if (!object.isNull(ui) && ui instanceof sap.ui.core.Control) {
+            // 视图自身可设置忙状态
+            ui.setBusy(busy);
+        } else {
+            // 视图不能设置忙状态，使用全局对话框
+            if (busy) {
+                if (object.isNull(this.busyDialog)) {
+                    this.busyDialog = new sap.m.BusyDialog("");
+                }
+                this.busyDialog.setTitle(view.title);
+                this.busyDialog.setText(msg);
+                this.busyDialog.open();
+            } else {
+                if (!object.isNull(this.busyDialog)) {
+                    this.busyDialog.close();
+                }
+            }
+        }
+    }
     /** 显示用户信息 */
     showUser(user: IUser): void {
         if (!object.isNull(user.userName)) {
@@ -274,7 +308,7 @@ export class CenterView extends BOView implements ICenterView {
         this.page.setSideExpanded(false);
         this.page.addMainContent(this.form);
         this.form = new sap.m.Page("");
-        this.form.setShowNavButton(true);
+        // this.form.setShowNavButton(true);// 回退钮
         button = new sap.m.Button("", {
             icon: "sap-icon://full-screen",
             type: sap.m.ButtonType.Transparent,

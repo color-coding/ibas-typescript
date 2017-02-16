@@ -27,4 +27,8 @@ export class HelpApp extends BOApplication<IHelpView> implements IHelpApp {
         // 注册视图事件
 
     }
+    /** 视图显示后 */
+    protected viewShowed(): void {
+        //
+    }
 }

@@ -76,6 +76,8 @@ export interface IViewShower {
     show(view: IView);
     /** 清理资源 */
     destroy(view: IView): void;
+    /** 设置忙状态 */
+    busy(view: IView, busy: boolean, msg: string): any;
 }
 /**
  * 视图-导航

@@ -25,9 +25,8 @@ export abstract class MainApp extends BOApplication<IMainView> implements IMainA
     protected registerView(): void {
         // 注册视图事件
     }
-    /** 此应用视图显示后 */
-    protected afterViewShow(): void {
-        super.afterViewShow();
+    /** 视图显示后 */
+    protected viewShowed(): void {
         let loginApp: ILoginApp = Factories.systemsFactory.createLoginApp();
         loginApp.viewShower = this.viewShower;
         loginApp.navigation = this.navigation;

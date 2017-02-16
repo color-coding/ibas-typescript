@@ -22,10 +22,12 @@ export class AboutApp extends BOApplication<IAboutView> implements IAboutApp {
         this.id = AboutApp.APPLICATION_ID;
         this.name = AboutApp.APPLICATION_NAME;
     }
-
     /** 注册视图 */
     protected registerView(): void {
         // 注册视图事件
     }
-
+    /** 视图显示后 */
+    protected viewShowed(): void {
+        //
+    }
 }
