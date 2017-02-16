@@ -12,7 +12,8 @@ import { emMessageType } from "../data/Enums";
 
 /** 关于-视图 */
 export interface IAboutView extends IView {
-
+	/** 显示版本 */
+	showVersions(version: any): void;
 }
 /** 关于-应用 */
 export interface IAboutApp extends IApplication<IAboutView> {
@@ -20,7 +21,6 @@ export interface IAboutApp extends IApplication<IAboutView> {
 }
 /** 帮助-视图 */
 export interface IHelpView extends IView {
-
 }
 /** 帮助-应用 */
 export interface IHelpApp extends IApplication<IHelpView> {
@@ -84,6 +84,12 @@ export interface ICenterView extends IView, IViewShower {
 	 * 参数1 string 功能ID
 	 */
 	activateFunctionsEvent: Function;
+	/** 显示用户信息 */
+	showUser(user: IUser): void;
+	/** 激活帮助 */
+	helpEvent: Function;
+	/** 激活关于 */
+	aboutEvent: Function;
 }
 /** 登陆-应用 */
 export interface ICenterApp extends IApplication<ICenterView> {

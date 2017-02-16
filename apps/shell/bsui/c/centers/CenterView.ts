@@ -7,11 +7,11 @@
  */
 
 /// <reference path="../../../../../openui5/typings/index.d.ts" />
-import { ICenterView, IUserModule } from "../../../../../ibas/bsbas/systems/Systems";
-import { i18n, object, BOView, emMessageType, IModuleConsole, IView } from "../../../../../ibas/bsbas/bsbas";
+import { ICenterView, IUserModule, IUser } from "../../../../../ibas/bsbas/systems/Systems";
+import { i18n, object, BOView, UrlView, emMessageType, IModuleConsole, IView } from "../../../../../ibas/bsbas/bsbas";
 
 /**
- * 系统入口视图
+ * 视图-中心
  */
 export class CenterView extends BOView implements ICenterView {
     /** 显示视图 */
@@ -32,6 +32,8 @@ export class CenterView extends BOView implements ICenterView {
     private statusBar: sap.m.Bar;
     /** 窗体显示 */
     private form: sap.m.Page;
+    /** 用户信息条 */
+    private userBar: sap.m.Button;
 	/**
 	 * 显示状态消息
 	 * @param type 消息类型
@@ -171,29 +173,99 @@ export class CenterView extends BOView implements ICenterView {
 
     /** 显示视图 */
     showView(view: IView): void {
-        let viewContent = view.darw();
-        this.form.destroyContent();
-        this.form.addContent(viewContent);
+        if (view instanceof UrlView) {
+            // 视图为地址视图
+            window.open(view.url());
+        } else {
+            let viewContent = view.darw();
+            this.form.destroyContent();
+            this.form.addContent(viewContent);
+        }
     }
     /** 清理资源 */
     destroyView(view: IView): void {
-        let ui: sap.ui.core.Element = sap.ui.getCore().byId(view.id);
-        if (!object.isNull(ui)) {
-            ui.destroy(true);
+        if (view instanceof CenterView) {
+            // 自身销毁，从浏览器缓存刷新页面
+            location.reload(false);
+        } else {
+            let ui: sap.ui.core.Element = sap.ui.getCore().byId(view.id);
+            if (!object.isNull(ui)) {
+                ui.destroy(true);
+            }
         }
     }
+    /** 显示用户信息 */
+    showUser(user: IUser): void {
+        if (!object.isNull(user.userName)) {
+            this.userBar.setText(user.userName);
+        } else if (!object.isNull(user.userCode)) {
+            this.userBar.setText(user.userCode);
+        } else {
+            this.userBar.setText(i18n.prop("sys_shell_unknown_user"));
+        }
+    }
+    /** 激活帮助 */
+    helpEvent: Function;
+    /** 激活关于 */
+    aboutEvent: Function;
     /** 绘制视图 */
     darw(): any {
+        let that = this;
         this.header = new sap.tnt.ToolHeader();
         let button: sap.m.Button = new sap.m.Button("", {
             icon: "sap-icon://menu2",
-            type: "Transparent"
+            type: sap.m.ButtonType.Transparent,
+            press: function (): void {
+                let expanded: boolean = that.page.getSideExpanded();
+                that.page.setSideExpanded(!expanded);
+            }
         });
-        button.attachPress(this, function (): void {
-            let expanded: boolean = this.page.getSideExpanded();
-            this.page.setSideExpanded(!expanded);
-        }, this);
         this.header.addContent(button);
+        let spacer: sap.m.ToolbarSpacer = new sap.m.ToolbarSpacer("");
+        spacer.setLayoutData(new sap.m.OverflowToolbarLayoutData("", {
+            priority: sap.m.OverflowToolbarPriority.NeverOverflow,
+            minWidth: "20px"
+        }));
+        this.header.addContent(spacer);
+        this.userBar = new sap.m.Button("", {
+            layoutData: new sap.m.OverflowToolbarLayoutData("", {
+                priority: sap.m.OverflowToolbarPriority.NeverOverflow
+            }),
+            press: function (event: any): void {
+                let popover: sap.m.Popover = new sap.m.Popover(
+                    "", {
+                        showHeader: false,
+                        placement: sap.m.PlacementType.Auto,
+                        content: [
+                            new sap.m.Button({
+                                text: i18n.prop("sys_shell_ui_help"),
+                                type: sap.m.ButtonType.Transparent,
+                                press: function (): void {
+                                    that.fireViewEvents(that.helpEvent);
+                                }
+                            }),
+                            new sap.m.Button({
+                                text: i18n.prop("sys_shell_ui_about"),
+                                type: sap.m.ButtonType.Transparent,
+                                press: function (): void {
+                                    that.fireViewEvents(that.aboutEvent);
+                                }
+                            }),
+                            new sap.m.Button({
+                                text: i18n.prop("sys_shell_ui_logout"),
+                                type: sap.m.ButtonType.Transparent,
+                                press: function (): void {
+                                    that.fireViewEvents(that.destroyEvent);
+                                }
+                            })
+                        ]
+                    }
+                );
+                (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
+                popover.openBy(event.getSource(), true);
+            }
+        });
+        this.header.addContent(this.userBar);
         this.navigation = new sap.tnt.SideNavigation();
         this.navigation.setItem(new sap.tnt.NavigationList());
         this.page = new sap.tnt.ToolPage();
@@ -204,19 +276,21 @@ export class CenterView extends BOView implements ICenterView {
         this.form = new sap.m.Page("");
         this.form.setShowNavButton(true);
         button = new sap.m.Button("", {
-            icon: "sap-icon://full-screen"
+            icon: "sap-icon://full-screen",
+            type: sap.m.ButtonType.Transparent,
+            press: function (): void {
+                that.header.setVisible(false);
+                that.navigation.setVisible(false);
+            }
         });
-        button.attachPress(this, function (): void {
-            this.header.setVisible(false);
-            this.navigation.setVisible(false);
-        }, this);
         // this.form.addHeaderContent(button);
         button = new sap.m.Button("", {
-            icon: "sap-icon://decline"
+            icon: "sap-icon://decline",
+            type: sap.m.ButtonType.Transparent,
+            press: function (): void {
+                that.form.destroyContent();
+            }
         });
-        button.attachPress(this, function (): void {
-            this.form.destroyContent();
-        }, this);
         this.form.addHeaderContent(button);
         // this.form.setFloatingFooter(true);
         this.statusBar = new sap.m.Bar("");

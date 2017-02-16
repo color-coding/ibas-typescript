@@ -15,6 +15,8 @@ import {
 import { MainView } from "./centers/MainView";
 import { LoginView } from "./centers/LoginView";
 import { CenterView } from "./centers/CenterView";
+import { AboutView } from "./centers/AboutView";
+import { HelpView } from "./centers/HelpView";
 
 /** 导出视图显示 */
 export { ViewShowerDefault as ViewShower } from "../ViewShowers";
@@ -40,10 +42,10 @@ export class Navigation extends ViewNavigation {
                 view = new CenterView();
                 break;
             case AboutApp.APPLICATION_ID:
-
+                view = new AboutView();
                 break;
             case HelpApp.APPLICATION_ID:
-
+                view = new HelpView();
                 break;
             default:
                 break;

@@ -1,0 +1,22 @@
+{
+	"name": "ibas-shell",
+	"version": "0.1.0",
+	"buildTimestamp": "201702161011",
+	"libraries": [{
+			"name": "jquery",
+			"version": "3.1.1"
+		},
+		{
+			"name": "requirejs",
+			"version": "2.3.2"
+		},
+		{
+			"name": "ibas.bobas",
+			"version": "0.1.0"
+		},
+		{
+			"name": "ibas.bsbas",
+			"version": "0.1.0"
+		}
+	]
+}

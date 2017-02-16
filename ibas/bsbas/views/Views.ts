@@ -9,9 +9,7 @@
 import * as core from "../core/Core";
 import { i18n } from "../../bsbas/bsbas";
 
-/**
- * 视图
- */
+/** 业务对象视图 */
 export abstract class BOView extends core.View {
     /** 清理资源 */
     destroyEvent: Function;
@@ -26,4 +24,8 @@ export abstract class BOView extends core.View {
         }
         event.apply(this.application, pars);
     }
+}
+/** 地址视图 */
+export abstract class UrlView extends core.View {
+    abstract url(): string;
 }

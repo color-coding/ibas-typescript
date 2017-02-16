@@ -7,13 +7,17 @@
  */
 
 /// <reference path="../../../../../openui5/typings/index.d.ts" />
-import { IMainView } from "../../../../../ibas/bsbas/systems/Systems";
-import { BOView } from "../../../../../ibas/bsbas/bsbas";
+import { IHelpView } from "../../../../../ibas/bsbas/systems/Systems";
+import { UrlView, config } from "../../../../../ibas/bsbas/bsbas";
 
 /**
- * 视图-入口
+ * 视图-帮助
  */
-export class MainView extends BOView implements IMainView {
+export class HelpView extends UrlView implements IHelpView {
+    /** 地址 */
+    url(): string {
+        return config.get("helpUrl");
+    }
     /** 绘制视图 */
     darw(): any {
         return null;

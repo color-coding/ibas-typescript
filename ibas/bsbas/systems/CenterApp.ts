@@ -9,7 +9,7 @@
 /// <reference path="../../../ibas/3rdparty/require.d.ts" />
 import { ModuleConsole, IModuleConsole, IModuleFunction, IApplication, IView, IViewShower } from "../core/Core";
 import { BOApplication } from "../applications/Applications";
-import { ICenterView, ICenterApp, IUser, IUserModule, IUserPrivilege, IUserRole } from "./Systems.d";
+import { ICenterView, ICenterApp, IMainApp, IUser, IUserModule, IUserPrivilege, IUserRole } from "./Systems.d";
 import { Factories } from "./Factories";
 import { emMessageType } from "../data/Enums";
 import { consolesManager } from "../runtime/Runtime";
@@ -32,6 +32,9 @@ export abstract class CenterApp extends BOApplication<ICenterView> implements IC
     protected registerView(): void {
         // 注册视图事件
         this.view.activateFunctionsEvent = this.activateFunctions;
+        this.view.aboutEvent = this.about;
+        this.view.helpEvent = this.help;
+        this.view.destroyEvent = this.destroy;
     }
     /** 运行 */
     run(): void {
@@ -40,11 +43,34 @@ export abstract class CenterApp extends BOApplication<ICenterView> implements IC
         // 初始化
         this.init(user);
     }
+    /** 帮助 */
+    private help(): void {
+        let app: IApplication<IView> = Factories.systemsFactory.createHelpApp();
+        app.navigation = this.navigation;
+        app.viewShower = this.view;
+        app.run();
+    }
+    /** 关于 */
+    private about(): void {
+        let app: IApplication<IView> = Factories.systemsFactory.createAboutApp();
+        app.navigation = this.navigation;
+        app.viewShower = this.view;
+        app.run();
+    }
+    /** 清理资源 */
+    destroy(): void {
+        super.destroy();
+        let app: IMainApp = Factories.systemsFactory.createMainApp();
+        app.viewShower = this.viewShower;
+        app.navigation = this.navigation;
+        app.run();
+    }
     /** 初始化用户相关 */
     private init(user: IUser): void {
         if (object.isNull(user)) {
             return;
         }
+        this.view.showUser(user);
         // 加载用户相关
         logger.log(emMessageLevel.DEBUG, "center: initializing user [{0} - {1}]'s modules.", user.id, user.userCode);
         this.view.showStatusMessages(

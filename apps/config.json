@@ -3,19 +3,17 @@
     "debug": true,
     "language": "zh_CN",
     "offline": true,
+    "helpUrl": "http://www.baidu.com",
     "defaultUser": "admin",
-    "defaultPassword":"1q2w3e"
+    "defaultPassword": "1q2w3e"
   },
   "offlineSettings": {
-    "users": [
-      {
-        "user": "admin",
-        "name": "administrator",
-        "password": "1q2w3e"
-      }
-    ],
-    "modules": [
-      {
+    "users": [{
+      "user": "admin",
+      "name": "administrator",
+      "password": "1q2w3e"
+    }],
+    "modules": [{
         "id": "test-0",
         "name": "module_a",
         "category": "test",

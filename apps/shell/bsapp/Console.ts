@@ -22,6 +22,8 @@ import { CentersFunc } from "./centers/CentersFunc";
 import { MainApp } from "./centers/MainApp";
 import { LoginApp } from "./centers/LoginApp";
 import { CenterApp } from "./centers/CenterApp";
+import { AboutApp } from "./centers/AboutApp";
+import { HelpApp } from "./centers/HelpApp";
 
 
 /** 系统工厂 */
@@ -40,11 +42,11 @@ export class SystemsFactory implements ISystemsFactory {
     }
     /** 创建关于应用 */
     createAboutApp(): IAboutApp {
-        return null;
+        return new AboutApp();
     }
     /** 创建帮助应用 */
     createHelpApp(): IHelpApp {
-        return null;
+        return new HelpApp();
     }
     /** 创建仓库 */
     createRepository(): IBORepositorySystem {

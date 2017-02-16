@@ -11,7 +11,7 @@ import { ILoginView } from "../../../../../ibas/bsbas/systems/Systems";
 import { i18n, BOView, config } from "../../../../../ibas/bsbas/bsbas";
 
 /**
- * 系统入口应用
+ * 视图-登陆
  */
 export class LoginView extends BOView implements ILoginView {
     /** 显示消息 */
