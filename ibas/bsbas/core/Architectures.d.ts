@@ -69,6 +69,15 @@ export interface IView {
     destroyEvent: Function;
 }
 /**
+ * 应用-视图
+ */
+export interface IUrlView extends IView {
+    /** 内部打开 */
+    isInside: boolean;
+    /** 地址 */
+    url: string;
+}
+/**
  * 视图-显示者
  */
 export interface IViewShower {

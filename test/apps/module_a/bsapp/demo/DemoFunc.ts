@@ -10,6 +10,7 @@ import {
     ModuleFunction, IApplication, IView, i18n
 } from "../../../../../ibas/bsbas/bsbas";
 import { DemoApp } from "./DemoApp";
+import { DemoUrlApp } from "./DemoUrlApp";
 
 /** 功能-演示 */
 export class DemoFunc1 extends ModuleFunction {
@@ -48,6 +49,23 @@ export class DemoFunc3 extends DemoFunc1 {
         this.id = DemoFunc3.FUNCTION_ID;
         this.name = DemoFunc3.FUNCTION_NAME;
         this.description = i18n.prop(this.name);
+    }
+}
+/** 功能-演示 */
+export class DemoUrlFunc extends ModuleFunction {
+    static FUNCTION_ID = "1e70db7a-1e07-4c7d-8149-c61b1b72e5ed";
+    static FUNCTION_NAME = "module_a_func_url";
+    constructor() {
+        super();
+        this.id = DemoUrlFunc.FUNCTION_ID;
+        this.name = DemoUrlFunc.FUNCTION_NAME;
+        this.description = i18n.prop(this.name);
+    }
+    /** 默认功能 */
+    default(): IApplication<IView> {
+        let app: DemoUrlApp = new DemoUrlApp();
+        app.navigation = this.navigation;
+        return app;
     }
 }
 

@@ -7,7 +7,7 @@
  */
 
 import { List, IBusinessObject, IOperationMessages, IOperationResult } from "../../../ibas/bobas/bobas";
-import { IView, IModule, IApplication, IModuleConsole, IModuleFunction, IViewShower } from "../core/Core";
+import { IView,IUrlView, IModule, IApplication, IModuleConsole, IModuleFunction, IViewShower } from "../core/Core";
 import { emMessageType } from "../data/Enums";
 
 /** 关于-视图 */
@@ -20,7 +20,7 @@ export interface IAboutApp extends IApplication<IAboutView> {
 
 }
 /** 帮助-视图 */
-export interface IHelpView extends IView {
+export interface IHelpView extends IUrlView {
 }
 /** 帮助-应用 */
 export interface IHelpApp extends IApplication<IHelpView> {

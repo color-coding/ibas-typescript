@@ -8,7 +8,7 @@
 
 /// <reference path="../../../../../openui5/typings/index.d.ts" />
 import { ICenterView, IUserModule, IUser } from "../../../../../ibas/bsbas/systems/Systems";
-import { i18n, object, BOView, UrlView, emMessageType, IModuleConsole, IView } from "../../../../../ibas/bsbas/bsbas";
+import { i18n, object, string, BOView, UrlView, emMessageType, IModuleConsole, IView } from "../../../../../ibas/bsbas/bsbas";
 
 /**
  * 视图-中心
@@ -72,19 +72,17 @@ export class CenterView extends BOView implements ICenterView {
                 showIcon: true,
                 showCloseButton: true
             });
-        if (this.statusBar.getVisible() === false) {
-            this.statusBar.setVisible(true);
-        }
+        this.form.setFooter(this.statusBar);
         // 清理已有的
         this.statusBar.destroyContentLeft();
         // 添加新的
         this.statusBar.addContentLeft(messageStrip);
         // 延迟清除消息
-        let bar = this.statusBar;
+        let that = this;
         setTimeout(function (): void {
             if (messageStrip) {
                 messageStrip.destroy(true);
-                bar.setVisible(false);
+                that.form.setFooter(null);
             }
         }, 2000);
     }
@@ -185,7 +183,20 @@ export class CenterView extends BOView implements ICenterView {
     showView(view: IView): void {
         if (view instanceof UrlView) {
             // 视图为地址视图
-            window.open(view.url());
+            if (view.isInside) {
+                // 内部打开
+                let html: string = string.format(
+                    `<iframe src="{0}" width="100%" height="99%" scrolling="no" frameborder="0" ></iframe>`
+                    , view.url);
+                this.form.destroyContent();
+                this.form.addContent(new sap.ui.core.HTML("",
+                    {
+                        content: html
+                    }));
+            } else {
+                // 外部打开
+                window.open(view.url);
+            }
         } else {
             let viewContent = view.darw();
             this.form.destroyContent();
@@ -343,7 +354,9 @@ export class CenterView extends BOView implements ICenterView {
             }
         }));
         // this.form.setFloatingFooter(true);
-        this.statusBar = new sap.m.Bar("");
+        this.statusBar = new sap.m.Bar("", {
+            type: sap.m.ButtonType.Transparent
+        });
         this.form.setFooter(this.statusBar);
         this.page.addMainContent(this.form);
         this.id = this.page.getId();

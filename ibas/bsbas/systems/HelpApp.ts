@@ -16,6 +16,10 @@ export class HelpApp extends BOApplication<IHelpView> implements IHelpApp {
     static APPLICATION_ID: string = "ac17a471-01f2-455f-9193-ddbfcaf81c0f";
     /** 应用名称 */
     static APPLICATION_NAME: string = "sys_app_help";
+    /** 配置项目-帮助地址 */
+    static CONFIG_ITEM_HELP_URL: string = "helpUrl";
+    /** 配置项目-内部浏览帮助 */
+    static CONFIG_ITEM_HELP_INSIDE: string = "helpInside";
 
     constructor() {
         super();

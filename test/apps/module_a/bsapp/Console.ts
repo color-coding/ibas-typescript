@@ -11,7 +11,7 @@ import {
     ModuleConsole, IViewNavigation, IModuleFunction, url,
     IApplication, IView, emPlantform, config, string, Configuration, i18n
 } from "../../../../ibas/bsbas/bsbas";
-import { DemoFunc1, DemoFunc2, DemoFunc3 } from "./demo/DemoFunc";
+import { DemoFunc1, DemoFunc2, DemoFunc3, DemoUrlFunc } from "./demo/DemoFunc";
 
 /** 模块控制台 */
 export class Console extends ModuleConsole {
@@ -39,6 +39,7 @@ export class Console extends ModuleConsole {
         this.register(new DemoFunc1());
         this.register(new DemoFunc2());
         this.register(new DemoFunc3());
+        this.register(new DemoUrlFunc());
     }
     /** 运行 */
     run(): void {

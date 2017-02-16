@@ -11,6 +11,8 @@ import {
 } from "../../../../../ibas/bsbas/bsbas";
 import { DemoApp } from "../../bsapp/demo/DemoApp";
 import { DemoView } from "./demo/DemoView";
+import { DemoUrlApp } from "../../bsapp/demo/DemoUrlApp";
+import { DemoUrlView } from "./demo/DemoUrlView";
 
 /**
  * 视图导航
@@ -26,6 +28,10 @@ export class Navigation extends ViewNavigation {
         switch (id) {
             case DemoApp.APPLICATION_ID:
                 view = new DemoView();
+                break;
+            case DemoUrlApp.APPLICATION_ID:
+                view = new DemoUrlView();
+                break;
             default:
                 break;
         }

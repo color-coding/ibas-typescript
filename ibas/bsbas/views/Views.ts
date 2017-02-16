@@ -26,6 +26,9 @@ export abstract class BOView extends core.View {
     }
 }
 /** 地址视图 */
-export abstract class UrlView extends core.View {
-    abstract url(): string;
+export abstract class UrlView extends core.View implements core.IUrlView {
+    /** 内部打开 */
+    isInside: boolean;
+    /** 地址 */
+    url: string;
 }

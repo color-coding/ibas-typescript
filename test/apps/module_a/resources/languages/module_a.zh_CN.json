@@ -2,5 +2,6 @@
     "test_module_a": "测试A",
     "module_a_func_one": "功能一",
     "module_a_func_two": "功能二",
-    "module_a_func_three": "功能三"
+    "module_a_func_three": "功能三",
+    "module_a_func_url": "外部系统"
 }
