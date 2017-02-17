@@ -17,8 +17,12 @@ export class QueryPanelView extends View implements IQueryPanelView {
     private searchField: sap.m.SearchField;
     /** 绘制视图 */
     darw(): any {
+        let that = this;
         this.searchField = new sap.m.SearchField("", {
-            width: "98%"
+            width: "98%",
+            search: function () {
+                that.fireViewEvents(that.searchEvent);
+            }
         });
         return this.searchField;
     }

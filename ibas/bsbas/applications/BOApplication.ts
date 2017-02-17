@@ -78,11 +78,11 @@ export abstract class BOApplication<T extends IBOView> extends Application<T> {
         }
     }
     /** 设置消息 */
-    protected messages(msg: string): void
+    protected proceeding(msg: string): void
     /** 设置消息 */
-    protected messages(type: emMessageType, msg: string): void
+    protected proceeding(type: emMessageType, msg: string): void
     /** 设置消息 */
-    protected messages(): void {
+    protected proceeding(): void {
         let type: emMessageType = emMessageType.INFORMATION;
         let msg: string;
         if (arguments.length === 1) {
@@ -92,7 +92,42 @@ export abstract class BOApplication<T extends IBOView> extends Application<T> {
             msg = arguments[1];
         }
         if (!object.isNull(this.viewShower)) {
-            this.viewShower.messages(this.view, type, msg);
+            this.viewShower.proceeding(this.view, type, msg);
+        } else {
+            throw new Error(i18n.prop("msg_invalid_view_shower", this.name));
+        }
+    }
+    /**
+     * 显示消息对话框
+     * @param type 消息类型
+     * @param message 消息内容
+     * @param callBack 回掉方法
+     */
+    protected messages(type: emMessageType, message: string, callBack: Function): void;
+    /**
+     * 显示消息对话框
+     * @param type 消息类型
+     * @param message 消息内容
+     */
+    protected messages(type: emMessageType, message: string): void;
+    /**
+     * 显示消息对话框
+     * @param error 错误
+     */
+    protected messages(error: Error): void;
+    /** 显示消息对话框 */
+    protected messages(): void {
+        let type: emMessageType;
+        let message: string;
+        let callBack: Function;
+        if (arguments.length === 1 && arguments[0] instanceof Error) {
+            type = emMessageType.ERROR;
+            message = arguments[0].message;
+        } else if (arguments.length === 3) {
+            callBack = arguments[2];
+        }
+        if (!object.isNull(this.viewShower)) {
+            this.viewShower.messages(type, message, callBack);
         } else {
             throw new Error(i18n.prop("msg_invalid_view_shower", this.name));
         }

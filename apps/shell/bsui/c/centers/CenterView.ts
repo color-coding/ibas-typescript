@@ -32,8 +32,12 @@ export class CenterView extends BOView implements ICenterView {
         this.busyView(view, busy, msg);
     }
     /** 设置消息 */
-    messages(view: IView, type: emMessageType, msg: string): any {
+    proceeding(view: IView, type: emMessageType, msg: string): any {
         this.showStatusMessages(type, msg);
+    }
+    /** 对话消息 */
+    messages(type: emMessageType, msg: string, callBack: Function): any {
+        this.showMessageBox(type, msg, callBack);
     }
     /** 主页面 */
     private page: sap.tnt.ToolPage;
@@ -129,7 +133,12 @@ export class CenterView extends BOView implements ICenterView {
         if (arguments.length === 1 && arguments[0] instanceof Error) {
             type = emMessageType.ERROR;
             message = arguments[0].message;
+        } else if (arguments.length === 2) {
+            type = arguments[0];
+            message = arguments[1];
         } else if (arguments.length === 3) {
+            type = arguments[0];
+            message = arguments[1];
             callBack = arguments[2];
         }
         let actions: any = [sap.m.MessageBox.Action.OK];
@@ -244,6 +253,8 @@ export class CenterView extends BOView implements ICenterView {
                     queryPanel.run(function (): void {
                         panel.destroyContent();
                         panel.addContent(queryPanel.view.darw());
+                        // 监听查询面板
+                        queryPanel.addListener(view);
                     });
                 }
             }

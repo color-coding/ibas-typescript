@@ -16,7 +16,7 @@ import {
 /**
  * 离线的数据转换者
  */
-export class DataConverter4Module extends DataConverter {
+export class DataConverter4Demo extends DataConverter {
 
     /**
      * 转换数据

@@ -7,48 +7,31 @@
  */
 
 import {
-    ModuleFunction, IApplication, IView, i18n
+    ModuleFunction, IApplication, IView, i18n,string,url
 } from "../../../../../ibas/bsbas/index";
 import { DemoListApp } from "./DemoListApp";
 import { DemoUrlApp } from "./DemoUrlApp";
 
 /** 功能-演示 */
-export class DemoFunc1 extends ModuleFunction {
+export class DemoFunc extends ModuleFunction {
     static FUNCTION_ID = "754a9a69-9c51-43af-acf4-ba21120ff8e1";
     static FUNCTION_NAME = "module_a_func_one";
+    static ROOT_FILE_NAME: string = "module_a/index";
     constructor() {
         super();
-        this.id = DemoFunc1.FUNCTION_ID;
-        this.name = DemoFunc1.FUNCTION_NAME;
+        this.id = DemoFunc.FUNCTION_ID;
+        this.name = DemoFunc.FUNCTION_NAME;
         this.description = i18n.prop(this.name);
     }
     /** 默认功能 */
     default(): IApplication<IView> {
+        // 获取根地址
+        let rootUrl: string = url.rootUrl(DemoFunc.ROOT_FILE_NAME);
+        // 加载语言-框架默认
+        i18n.load(string.format("{0}/resources/languages/bo/salesorder.json", rootUrl, i18n.language));
         let app: DemoListApp = new DemoListApp();
         app.navigation = this.navigation;
         return app;
-    }
-}
-/** 功能-演示 */
-export class DemoFunc2 extends DemoFunc1 {
-    static FUNCTION_ID = "754a9a69-9c51-43af-acf4-ba21120ff8e2";
-    static FUNCTION_NAME = "module_a_func_two";
-    constructor() {
-        super();
-        this.id = DemoFunc2.FUNCTION_ID;
-        this.name = DemoFunc2.FUNCTION_NAME;
-        this.description = i18n.prop(this.name);
-    }
-}
-/** 功能-演示 */
-export class DemoFunc3 extends DemoFunc1 {
-    static FUNCTION_ID = "754a9a69-9c51-43af-acf4-ba21120ff8e3";
-    static FUNCTION_NAME = "module_a_func_three";
-    constructor() {
-        super();
-        this.id = DemoFunc3.FUNCTION_ID;
-        this.name = DemoFunc3.FUNCTION_NAME;
-        this.description = i18n.prop(this.name);
     }
 }
 /** 功能-演示 */

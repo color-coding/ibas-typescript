@@ -13,7 +13,7 @@ import { BOApplication } from "./BOApplication";
 /**
  * 业务对象编辑应用
  */
-export abstract class BOEditApplication<T extends IBOEditView> extends BOApplication<T> {
+export abstract class BOEditApplication<T extends IBOEditView, D> extends BOApplication<T> {
 
 
 }

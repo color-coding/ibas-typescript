@@ -54,7 +54,7 @@ export class LoginApp extends BOApplication<ILoginView> implements ILoginApp {
                     }
                     that.showCenter(opRslt.resultObjects.firstOrDefault());
                 } catch (error) {
-                    that.view.showMessages(error.message);
+                    that.messages(error);
                 }
             });
     }

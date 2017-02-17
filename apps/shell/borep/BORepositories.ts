@@ -97,7 +97,7 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
     /** 重载远程调用方法参数 */
     protected createAjaxSettings(method: string, data: any): JQueryAjaxSettings {
         // 重写ajax设置
-        if (method === "config.json") {
+        if (method === ".json") {
             // 特殊方法的处理
             let ajxSetting: JQueryAjaxSettings = super.createAjaxSettings(method, data);
             ajxSetting.type = "GET";

@@ -24,7 +24,6 @@ export class QueryPanel extends QueryPanelBase<IQueryPanelView>  {
             setTimeout(callBack, 2000);
         }
     }
-
 }
 /** 视图-演示 */
 export interface IQueryPanelView extends IQueryPanelViewBase {

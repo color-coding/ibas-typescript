@@ -56,8 +56,20 @@ export class ViewShowerDefault implements IViewShower {
             }
         }
     }
-    /** 设置消息 */
-    messages(view: IView, type: emMessageType, msg: string): any { 
-        //
+    /** 进程消息 */
+    proceeding(view: IView, type: emMessageType, msg: string): any {
+        this.messages(type, msg, null);
+    }
+    /** 对话消息 */
+    messages(type: emMessageType, msg: string, callBack: Function): any {
+        let that = this;
+        jQuery.sap.require("sap.m.MessageBox");
+        sap.m.MessageBox.show(
+            msg, {
+                icon: sap.m.MessageBox.Icon.WARNING,
+                title: i18n.prop("sys_shell_name"),
+                actions: [sap.m.MessageBox.Action.OK],
+            }
+        );
     }
 }

@@ -87,8 +87,10 @@ export interface IViewShower {
     destroy(view: IView): void;
     /** 设置忙状态 */
     busy(view: IView, busy: boolean, msg: string): any;
-    /** 设置消息 */
-    messages(view: IView, type: emMessageType, msg: string): any;
+    /** 进程消息 */
+    proceeding(view: IView, type: emMessageType, msg: string): any;
+    /** 对话消息 */
+    messages(type: emMessageType, msg: string, callBack: Function): any;
 }
 /**
  * 视图-导航

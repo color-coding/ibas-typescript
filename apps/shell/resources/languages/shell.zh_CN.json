@@ -1,4 +1,5 @@
 ﻿{
+    "sys_shell_name": "ibas",
     "sys_shell_func_centers": "系统中心",
     "sys_shell_invalid_ui": "无效的UI",
     "sys_shell_ui_user": "用户",
@@ -11,5 +12,14 @@
     "sys_shell_unknown_user": "未知用户",
     "sys_shell_fetching_data": "查询数据中，请稍后",
     "sys_shell_invalid_query_panel": "无效的查询面板",
-    "sys_shell_initialize_query_panel": "初始化查询面板，请稍后"
+    "sys_shell_initialize_query_panel": "初始化查询面板，请稍后",
+    "sys_shell_ui_data_new": "新建",
+    "sys_shell_ui_data_view": "查看",
+    "sys_shell_ui_data_edit": "编辑",
+    "sys_shell_ui_data_delete": "删除",
+    "sys_shell_ui_data_close": "关闭",
+    "sys_shell_ui_data_cancel": "取消",
+    "sys_shell_ui_data_choose": "选择",
+    "sys_shell_ui_data_remove": "移除",
+    "sys_shell_ui_data_add": "添加"
 }

@@ -34,7 +34,8 @@ item.price = 0.99;
 item.quantity = 20;
 item.lineTotal = item.price * item.quantity;
 item.user.userCode = "ccc";
-bobas.logger.log(bobas.emMessageLevel.DEBUG, "test: {0}", "order", order.toString());
+bobas.logger.log(bobas.emMessageLevel.DEBUG, "test: {0} {1}", "order", order.toString());
+bobas.logger.log(bobas.emMessageLevel.DEBUG, "{0}", JSON.stringify(order));
 order.user.userCode = "aaa";
 // 遍历属性名称，包括子项
 bobas.logger.log(bobas.emMessageLevel.INFO, "test: {1}", "order", order.getProperties(true).size);

@@ -20,19 +20,6 @@ export abstract class UrlView extends View implements IUrlView {
 }
 /** 业务对象视图 */
 export abstract class BOView extends View implements IBOView {
-    /** 清理资源 */
-    destroyEvent: Function;
-    /**  
-     * 触发视图事件
-     * @param event 触发的事件
-     * @param pars 参数
-     */
-    protected fireViewEvents(event: Function, ...pars: any[]): void {
-        if (typeof event !== "function") {
-            throw new Error(i18n.prop("msg_invalid_parameter", "event"));
-        }
-        event.apply(this.application, pars);
-    }
 }
 /** 业务对象列表视图 */
 export abstract class BOListView extends BOView implements IBOListView, IUseQueryPanel {
@@ -42,4 +29,8 @@ export abstract class BOListView extends BOView implements IBOListView, IUseQuer
     query(criteria: ICriteria): void {
         this.fireViewEvents(this.fetchDataEvent, criteria);
     }
+    /** 新建数据事件 */
+    newDataEvent: Function;
+    /** 查看数据事件，参数：目标数据 */
+    viewDataEvent: Function;
 }

@@ -16,14 +16,20 @@ import { BOApplication } from "./BOApplication";
 /**
  * 业务对象列表应用
  */
-export abstract class BOListApplication<T extends IBOListView> extends BOApplication<T> {
+export abstract class BOListApplication<T extends IBOListView, D> extends BOApplication<T> {
 
     /** 注册视图，重载需要回掉此方法 */
     protected registerView(): void {
         this.view.destroyEvent = this.destroy;
         this.view.fetchDataEvent = this.fetchData;
+        this.view.newDataEvent = this.newData;
+        this.view.viewDataEvent = this.viewData;
     }
     /** 查询数据 */
     protected abstract fetchData(criteria: ICriteria): void;
+    /** 新建数据 */
+    protected abstract newData(): void;
+    /** 查看数据，参数：目标数据 */
+    protected abstract viewData(data: D): void;
 
 }

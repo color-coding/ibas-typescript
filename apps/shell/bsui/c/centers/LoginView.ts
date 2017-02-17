@@ -18,22 +18,7 @@ export class LoginView extends BOView implements ILoginView {
     static CONFIG_ITEM_DEFAULT_USER = "defaultUser";
     /** 配置项目-默认用户密码 */
     static CONFIG_ITEM_DEFAULT_PASSWORD = "defaultPassword";
-    /** 显示消息 */
-    showMessages(msg: string): void {
-        let that = this;
-        jQuery.sap.require("sap.m.MessageBox");
-        sap.m.MessageBox.show(
-            msg, {
-                icon: sap.m.MessageBox.Icon.WARNING,
-                title: i18n.prop(this.application.name),
-                actions: [sap.m.MessageBox.Action.OK],
-                onClose: function (): void {
-                    that.password = "";
-                    that.txtPassword.focus();
-                }
-            }
-        );
-    }
+    
     private txtUser: sap.m.Input;
     /** 用户 */
     get user(): string {

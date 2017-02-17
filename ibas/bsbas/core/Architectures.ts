@@ -105,6 +105,17 @@ export abstract class View implements IView {
     abstract darw(): any;
     /** 清理资源 */
     destroyEvent: Function;
+    /**  
+     * 触发视图事件
+     * @param event 触发的事件
+     * @param pars 参数
+     */
+    protected fireViewEvents(event: Function, ...pars: any[]): void {
+        if (typeof event !== "function") {
+            throw new Error(i18n.prop("msg_invalid_parameter", "event"));
+        }
+        event.apply(this.application, pars);
+    }
 }
 /** 模块控制台 */
 export abstract class ModuleConsole extends Module implements IModuleConsole {

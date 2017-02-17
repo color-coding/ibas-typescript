@@ -29,6 +29,10 @@ export interface IBOChooseView extends IBOView {
 export interface IBOListView extends IBOView, IUseQueryPanel {
     /** 查询数据事件，参数：查询条件 ICriteria */
     fetchDataEvent: Function;
+    /** 新建数据事件 */
+    newDataEvent: Function;
+    /** 查看数据事件，参数：目标数据 */
+    viewDataEvent: Function;
 }
 /**
  * 业务对象应用-编辑视图

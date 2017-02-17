@@ -38,8 +38,6 @@ export interface ILoginView extends IView {
 	password: string;
 	/** 登陆 */
 	loginEvent: Function;
-	/** 显示消息 */
-	showMessages(msg: string): void;
 }
 /** 登陆-应用 */
 export interface ILoginApp extends IApplication<ILoginView> {
@@ -104,10 +102,12 @@ export interface IMainApp extends IApplication<IMainView> {
 export interface IQueryPanel<T extends IQueryPanelView> extends IApplication<T> {
 	/** 运行 参数，初始化回调 */
 	run(callBack: Function): void;
+	/** 注册监听 */
+	addListener(listener: IUseQueryPanel);
 }
 /** 查询面板-视图 */
 export interface IQueryPanelView extends IView {
-	/** 查询 */
+	/** 查询事件 */
 	searchEvent: Function;
 	/** 查询内容 */
 	searchContent: string;

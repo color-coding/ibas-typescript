@@ -3,5 +3,13 @@
     "module_a_func_one": "功能一",
     "module_a_func_two": "功能二",
     "module_a_func_three": "功能三",
-    "module_a_func_url": "外部系统"
+    "module_a_func_url": "外部系统",
+    "module_a_app_demo_list": "应用-数据列表",
+    "module_a_ui_column_a": "列A",
+    "module_a_ui_column_b": "列B",
+    "module_a_ui_column_c": "列C",
+    "module_a_ui_column_d": "列D",
+    "module_a_ui_column_e": "列E",
+    "module_a_ui_column_f": "列F",
+    "module_a_ui_no_edit": "禁止编辑"
 }

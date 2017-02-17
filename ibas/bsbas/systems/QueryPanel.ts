@@ -6,13 +6,16 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
+import {
+    object, ICriteria, Criteria
+} from "../../../ibas/bobas/index";
 import { BOApplication } from "../applications/index";
-import { IQueryPanelView } from "./Systems.d";
+import { IQueryPanelView, IQueryPanel, IUseQueryPanel } from "./Systems.d";
 
 /**
  * 查询面板
  */
-export abstract class QueryPanel<T extends IQueryPanelView> extends BOApplication<T> {
+export abstract class QueryPanel<T extends IQueryPanelView> extends BOApplication<T> implements IQueryPanel<T> {
     /** 应用标识 */
     static APPLICATION_ID: string = "69e3d786-5bf5-451d-b660-3eb485171af5";
     /** 应用名称 */
@@ -25,6 +28,7 @@ export abstract class QueryPanel<T extends IQueryPanelView> extends BOApplicatio
     /** 注册视图 */
     protected registerView(): void {
         // 注册视图事件
+        this.view.searchEvent = this.search;
     }
     /** 视图显示后 */
     protected viewShowed(): void { }
@@ -38,4 +42,27 @@ export abstract class QueryPanel<T extends IQueryPanelView> extends BOApplicatio
     }
     /** 初始化 */
     protected abstract init(callBack: Function): void;
+
+    private listeners: Array<IUseQueryPanel>;
+    /** 注册监听 */
+    addListener(listener: IUseQueryPanel) {
+        if (object.isNull(this.listeners)) {
+            this.listeners = new Array();
+        }
+        this.listeners.push(listener);
+    }
+    /** 查询 */
+    search(): void {
+        let criteria: ICriteria = new Criteria();
+        this.fireQuery(criteria);
+    }
+    /** 通知查询事件 */
+    protected fireQuery(criteria: ICriteria) {
+        if (object.isNull(this.listeners)) {
+            return;
+        }
+        for (let listener of this.listeners) {
+            listener.query(criteria);
+        }
+    }
 }
