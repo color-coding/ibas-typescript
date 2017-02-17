@@ -14,11 +14,11 @@ import {
 } from "../../../ibas/bsbas/index";
 import {
     IMainApp, ILoginApp, ICenterApp, IAboutApp, IHelpApp,
-    ISystemsFactory, IBORepositorySystem
+    ISystemsFactory, IBORepositorySystem, IQueryPanel, IQueryPanelView
 } from "../../../ibas/bsbas/systems/index";
 import { Factories } from "../../../ibas/bsbas/systems/index";
 import { BORepositoryShell, BORepositoryShellOffLine } from "../borep/BORepositories";
-import { CentersFunc, MainApp, LoginApp, CenterApp, AboutApp, HelpApp } from "./centers/index";
+import { CentersFunc, MainApp, LoginApp, CenterApp, AboutApp, HelpApp, QueryPanel } from "./centers/index";
 
 
 /** 系统工厂 */
@@ -50,6 +50,10 @@ export class SystemsFactory implements ISystemsFactory {
             return new BORepositoryShellOffLine();
         }
         return new BORepositoryShell();
+    }
+    /** 创建帮助应用 */
+    createQueryPanel(): IQueryPanel<IQueryPanelView> {
+        return new QueryPanel();
     }
 }
 

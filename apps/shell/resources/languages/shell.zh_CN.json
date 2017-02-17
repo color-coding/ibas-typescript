@@ -8,5 +8,8 @@
     "sys_shell_ui_help": "帮助",
     "sys_shell_ui_about": "关于",
     "sys_shell_ui_logout": "退出",
-    "sys_shell_unknown_user": "未知用户"
+    "sys_shell_unknown_user": "未知用户",
+    "sys_shell_fetching_data": "查询数据中，请稍后",
+    "sys_shell_invalid_query_panel": "无效的查询面板",
+    "sys_shell_initialize_query_panel": "初始化查询面板，请稍后"
 }

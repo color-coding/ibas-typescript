@@ -8,10 +8,11 @@
 
 /// <reference path="../../../../../openui5/typings/index.d.ts" />
 import {
-    i18n, object, string, BOView, UrlView, emMessageType, IModuleConsole, IView
+    i18n, object, string, BOView, UrlView, emMessageType,
+    IModuleConsole, IView, config, BOListView
 } from "../../../../../ibas/bsbas/index";
 import {
-    ICenterView, IUserModule, IUser
+    ICenterView, IUserModule, IUser, Factories
 } from "../../../../../ibas/bsbas/systems/index";
 
 /**
@@ -48,6 +49,12 @@ export class CenterView extends BOView implements ICenterView {
     private userBar: sap.m.Button;
     /** 忙对话框 */
     private busyDialog: sap.m.BusyDialog;
+    /** 状态消息延迟时间（毫秒） */
+    private statusDelay?: number;
+    /** 配置项目-状态消息延迟时间 */
+    static CONFIG_ITEM_STATUS_MESSAGES_DELAY = "statusDelay";
+    /** 配置项目-全屏模式 */
+    static CONFIG_ITEM_FULL_SCREEN = "fullScreen";
 	/**
 	 * 显示状态消息
 	 * @param type 消息类型
@@ -82,13 +89,18 @@ export class CenterView extends BOView implements ICenterView {
         // 添加新的
         this.statusBar.addContent(messageStrip);
         // 延迟清除消息
-        let that = this;
-        setTimeout(function (): void {
-            if (messageStrip) {
-                messageStrip.destroy(true);
-                that.form.setFooter(null);
-            }
-        }, 2000);
+        if (object.isNull(this.statusDelay)) {
+            this.statusDelay = config.get(CenterView.CONFIG_ITEM_STATUS_MESSAGES_DELAY, 0) * 1000;
+        }
+        if (this.statusDelay > 0) {
+            let that = this;
+            setTimeout(function (): void {
+                if (messageStrip) {
+                    messageStrip.destroy(true);
+                    that.form.setFooter(null);
+                }
+            }, this.statusDelay);
+        }
     }
     /**
      * 显示消息对话框
@@ -202,9 +214,39 @@ export class CenterView extends BOView implements ICenterView {
                 window.open(view.url);
             }
         } else {
-            let viewContent = view.darw();
             this.form.destroyContent();
-            this.form.addContent(viewContent);
+            this.form.addContent(view.darw());
+            // 设置标题
+            if (!object.isNull(view.title)) {
+                this.form.setTitle(view.title);
+            } else if (!object.isNull(view.id)) {
+                this.form.setTitle(view.id);
+            }
+            // 添加查询面板
+            if (view instanceof BOListView) {
+                let queryPanel = Factories.systemsFactory.createQueryPanel();
+                if (object.isNull(queryPanel)) {
+                    // 查询面板无效，不添加
+                    this.showStatusMessages(emMessageType.ERROR, i18n.prop("sys_shell_invalid_query_panel"));
+                } else {
+                    // 设置视图导航
+                    queryPanel.navigation = this.application.navigation;
+                    // 查询面板位置，先添加提示
+                    let panel: sap.m.OverflowToolbar = new sap.m.OverflowToolbar("", {
+                        content: [new sap.m.MessageStrip("", {
+                            text: i18n.prop("sys_shell_initialize_query_panel"),
+                            type: sap.ui.core.MessageType.Warning
+                        })]
+                    });
+                    this.form.setSubHeader(panel);
+                    this.form.setShowSubHeader(true);
+                    // 运行查询面板，初始化完成添加到视图
+                    queryPanel.run(function (): void {
+                        panel.destroyContent();
+                        panel.addContent(queryPanel.view.darw());
+                    });
+                }
+            }
         }
     }
     /** 清理资源 */
@@ -258,7 +300,7 @@ export class CenterView extends BOView implements ICenterView {
     /** 绘制视图 */
     darw(): any {
         let that = this;
-        this.header = new sap.tnt.ToolHeader();
+        this.header = new sap.tnt.ToolHeader("");
         // 收缩菜单钮
         this.header.addContent(new sap.m.Button("", {
             icon: "sap-icon://menu2",
@@ -267,8 +309,7 @@ export class CenterView extends BOView implements ICenterView {
                 priority: sap.m.OverflowToolbarPriority.NeverOverflow
             }),
             press: function (): void {
-                let expanded: boolean = that.page.getSideExpanded();
-                that.page.setSideExpanded(!expanded);
+                that.page.setSideExpanded(!that.page.getSideExpanded());
             }
         }));
         this.header.addContent(new sap.m.ToolbarSpacer("", { width: "20px" }));
@@ -332,9 +373,14 @@ export class CenterView extends BOView implements ICenterView {
         this.form = new sap.m.Page("");
         // 回退钮 
         // this.form.setShowNavButton(true);
-        // 全屏钮 
+        // 全屏钮
+        let icon: string = "sap-icon://full-screen";
+        if (config.get(CenterView.CONFIG_ITEM_FULL_SCREEN, false)) {
+            this.page.setHeader(null);
+            icon = "sap-icon://exit-full-screen";
+        }
         this.form.addHeaderContent(new sap.m.Button("", {
-            icon: "sap-icon://full-screen",
+            icon: icon,
             type: sap.m.ButtonType.Transparent,
             press: function (event: any): void {
                 if (this.getIcon() === "sap-icon://full-screen") {
@@ -357,10 +403,13 @@ export class CenterView extends BOView implements ICenterView {
             type: sap.m.ButtonType.Transparent,
             press: function (): void {
                 that.form.destroyContent();
+                that.form.setTitle(null);
+                that.form.setSubHeader(null);
+                that.form.setShowSubHeader(false);
             }
         }));
         // this.form.setFloatingFooter(true);
-        this.statusBar = new sap.m.Toolbar("", {
+        this.statusBar = new sap.m.OverflowToolbar("", {
             design: sap.m.ToolbarDesign.Transparent,
             height: "3rem"
         });

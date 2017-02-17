@@ -4,6 +4,8 @@
     "language": "zh_CN",
     "offline": true,
     "helpUrl": "http://www.baidu.com",
+    "fullScreen": true,
+    "statusDelay": 2,
     "defaultUser": "admin",
     "defaultPassword": "1q2w3e"
   },

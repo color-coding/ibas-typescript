@@ -6,14 +6,14 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { IBOChooseApplicationView } from "./BOApplications.d";
+import { IBOChooseView } from "./BOApplications.d";
 import { BOApplication } from "./BOApplication";
 
 
 /**
  * 业务对象选择应用
  */
-export abstract class BOChooseApplication<T extends IBOChooseApplicationView> extends BOApplication<T> {
+export abstract class BOChooseApplication<T extends IBOChooseView> extends BOApplication<T> {
 
 
 }

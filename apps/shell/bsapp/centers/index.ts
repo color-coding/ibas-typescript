@@ -12,3 +12,4 @@ export * from "./AboutApp";
 export * from "./HelpApp";
 export * from "./CenterApp";
 export * from "./CentersFunc";
+export * from "./QueryPanel";

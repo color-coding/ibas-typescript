@@ -9,7 +9,7 @@
 import {
     ModuleFunction, IApplication, IView, i18n
 } from "../../../../../ibas/bsbas/index";
-import { DemoApp } from "./DemoApp";
+import { DemoListApp } from "./DemoListApp";
 import { DemoUrlApp } from "./DemoUrlApp";
 
 /** 功能-演示 */
@@ -24,7 +24,7 @@ export class DemoFunc1 extends ModuleFunction {
     }
     /** 默认功能 */
     default(): IApplication<IView> {
-        let app: DemoApp = new DemoApp();
+        let app: DemoListApp = new DemoListApp();
         app.navigation = this.navigation;
         return app;
     }

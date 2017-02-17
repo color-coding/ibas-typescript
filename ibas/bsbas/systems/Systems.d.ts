@@ -7,7 +7,7 @@
  */
 
 import {
-	List, IBusinessObject, IOperationMessages, IOperationResult
+	List, IBusinessObject, IOperationMessages, IOperationResult, ICriteria
 } from "../../../ibas/bobas/index";
 import {
 	IView, IUrlView, IModule, IApplication, IModuleConsole, IModuleFunction, IViewShower
@@ -100,6 +100,23 @@ export interface IMainView extends IView {
 export interface IMainApp extends IApplication<IMainView> {
 
 }
+/** 查询面板-应用 */
+export interface IQueryPanel<T extends IQueryPanelView> extends IApplication<T> {
+	/** 运行 参数，初始化回调 */
+	run(callBack: Function): void;
+}
+/** 查询面板-视图 */
+export interface IQueryPanelView extends IView {
+	/** 查询 */
+	searchEvent: Function;
+	/** 查询内容 */
+	searchContent: string;
+}
+/** 使用查询面板 */
+export interface IUseQueryPanel {
+	/** 查询数据 */
+	query(criteria: ICriteria): void;
+}
 /** 用户 */
 export interface IUser {
 	/** 编号 */
@@ -173,4 +190,6 @@ export interface ISystemsFactory {
 	createHelpApp(): IHelpApp;
 	/** 创建仓库 */
 	createRepository(): IBORepositorySystem;
+	/** 创建查询面板 */
+	createQueryPanel(): IQueryPanel<IQueryPanelView>;
 }

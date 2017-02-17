@@ -80,7 +80,7 @@ export abstract class CenterApp extends BOApplication<ICenterView> implements IC
         logger.log(emMessageLevel.DEBUG, "center: initializing user [{0} - {1}]'s modules.", user.id, user.userCode);
         this.view.showStatusMessages(
             emMessageType.INFORMATION,
-            i18n.prop("msg_begin_initialize_user_modules", user.userCode, user.userName)
+            i18n.prop("msg_initialize_user_modules", user.userCode, user.userName)
         );
         let that = this;
         let boRep = Factories.systemsFactory.createRepository();
@@ -92,7 +92,7 @@ export abstract class CenterApp extends BOApplication<ICenterView> implements IC
                 for (let module of opRslt.resultObjects) {
                     that.view.showStatusMessages(
                         emMessageType.INFORMATION,
-                        i18n.prop("msg_begin_initialize_modules", module.id, module.name)
+                        i18n.prop("msg_initialize_modules", module.id, module.name)
                     );
                     that.initModuleConsole(module);
                 }

@@ -18,7 +18,7 @@ export class Console extends ModuleConsole {
     /** 模块-标识 */
     static CONSOLE_ID: string = "test-0";
     /** 模块-名称 */
-    static CONSOLE_NAME: string = "test_module_a";
+    static CONSOLE_NAME: string = "module_a_name";
     /** 根文件名称 */
     static ROOT_FILE_NAME: string = "module_a/index";
 

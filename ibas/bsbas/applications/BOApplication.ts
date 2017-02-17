@@ -11,13 +11,13 @@ import {
 } from "../../../ibas/bobas/index";
 import { Application } from "../core/index";
 import { emMessageType } from "../data/index";
-import { IBOApplicationView } from "./BOApplications.d";
+import { IBOView } from "./BOApplications.d";
 
 
 /**
  * 业务对象应用
  */
-export abstract class BOApplication<T extends IBOApplicationView> extends Application<T> {
+export abstract class BOApplication<T extends IBOView> extends Application<T> {
     /** 运行 */
     run(): void {
         this.show();
@@ -27,6 +27,11 @@ export abstract class BOApplication<T extends IBOApplicationView> extends Applic
         if (!object.isNull(this.viewShower)) {
             if (object.isNull(this.view)) {
                 throw new Error(i18n.prop("msg_invalid_view", this.name));
+            }
+            if (!object.isNull(this.description)) {
+                this.view.title = this.description;
+            } else {
+                this.view.title = this.name;
             }
             this.viewShower.show(this.view);
             this.afterViewShow();

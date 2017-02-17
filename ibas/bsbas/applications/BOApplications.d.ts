@@ -9,40 +9,36 @@
 
 import { List, IBusinessObject } from "../../../ibas/bobas/index";
 import { IView } from "../core/index";
+import { IUseQueryPanel } from "../systems/index";
 
 /**
  * 业务对象应用-视图
  */
-export interface IBOApplicationView extends IView {
+export interface IBOView extends IView {
 
 }
 /**
  * 业务对象应用-选择视图
  */
-export interface IBOChooseApplicationView extends IBOApplicationView {
+export interface IBOChooseView extends IBOView {
 
 }
 /**
  * 业务对象应用-列表视图
  */
-export interface IBOListApplicationView extends IBOApplicationView {
-
+export interface IBOListView extends IBOView, IUseQueryPanel {
+    /** 查询数据事件，参数：查询条件 ICriteria */
+    fetchDataEvent: Function;
 }
 /**
  * 业务对象应用-编辑视图
  */
-export interface IBOEditApplicationView extends IBOApplicationView {
+export interface IBOEditView extends IBOView {
 
 }
 /**
  * 业务对象应用-查看视图
  */
-export interface IBOViewApplicationView extends IBOApplicationView {
-
-}
-/**
- * 业务对象应用-查询面板视图
- */
-export interface IBOQueryPanelView extends IBOApplicationView {
+export interface IBOViewView extends IBOView {
 
 }

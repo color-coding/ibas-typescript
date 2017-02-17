@@ -10,9 +10,9 @@ import {
     ViewNavigation, IView,
 } from "../../../../ibas/bsbas/index";
 import {
-    MainApp, LoginApp, CenterApp, AboutApp, HelpApp
+    MainApp, LoginApp, CenterApp, AboutApp, HelpApp, QueryPanel
 } from "../../../../ibas/bsbas/systems/index";
-import { MainView, LoginView, CenterView, AboutView, HelpView } from "./centers/index";
+import { MainView, LoginView, CenterView, AboutView, HelpView, QueryPanelView } from "./centers/index";
 
 /** 导出视图显示 */
 export { ViewShowerDefault as ViewShower } from "../ViewShowers";
@@ -42,6 +42,9 @@ export class Navigation extends ViewNavigation {
                 break;
             case HelpApp.APPLICATION_ID:
                 view = new HelpView();
+                break;
+            case QueryPanel.APPLICATION_ID:
+                view = new QueryPanelView();
                 break;
             default:
                 break;
