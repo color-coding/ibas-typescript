@@ -41,7 +41,7 @@ export class CenterView extends BOView implements ICenterView {
     /** 页面功能导航，左 */
     private navigation: sap.tnt.SideNavigation;
     /** 状态消息条 */
-    private statusBar: sap.m.Bar;
+    private statusBar: sap.m.Toolbar;
     /** 窗体显示 */
     private form: sap.m.Page;
     /** 用户信息条 */
@@ -78,9 +78,9 @@ export class CenterView extends BOView implements ICenterView {
             });
         this.form.setFooter(this.statusBar);
         // 清理已有的
-        this.statusBar.destroyContentLeft();
+        this.statusBar.destroyContent();
         // 添加新的
-        this.statusBar.addContentLeft(messageStrip);
+        this.statusBar.addContent(messageStrip);
         // 延迟清除消息
         let that = this;
         setTimeout(function (): void {
@@ -360,8 +360,9 @@ export class CenterView extends BOView implements ICenterView {
             }
         }));
         // this.form.setFloatingFooter(true);
-        this.statusBar = new sap.m.Bar("", {
-            type: sap.m.ButtonType.Transparent
+        this.statusBar = new sap.m.Toolbar("", {
+            design: sap.m.ToolbarDesign.Transparent,
+            height: "3rem"
         });
         this.form.setFooter(this.statusBar);
         this.page.addMainContent(this.form);

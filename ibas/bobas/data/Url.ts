@@ -86,7 +86,6 @@ export module url {
                     url = normalize(atr.baseURI + atr.value);
                 }
             }
-            console.log(url);
             if (url.endsWith(fileName)) {
                 root = url.substring(0, url.lastIndexOf("/"));
                 break;
