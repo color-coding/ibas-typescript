@@ -10,10 +10,12 @@ import {
     emMessageLevel, emConditionOperation, emConditionRelationship, emSortType, object,
     ICriteria, Criteria, ICondition, Condition, ISort, Sort, IChildCriteria, ChildCriteria,
     IOperationResult, OperationResult, OperationInformation
-} from "../data/Data";
-import { IBusinessObject, IDataConverter, IBOConverter, BusinessObjectBase, BusinessObjectListBase } from "../core/Core";
-import { i18n } from "../i18n/I18N";
-import { logger } from "../messages/Messages";
+} from "../data/index";
+import {
+    IBusinessObject, IDataConverter, IBOConverter, BusinessObjectBase, BusinessObjectListBase
+} from "../core/index";
+import { i18n } from "../i18n/index";
+import { logger } from "../messages/index";
 
 /**
  * 数据转换者基类

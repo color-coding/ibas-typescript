@@ -6,10 +6,12 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { BOApplication } from "../applications/Applications";
+import {
+    logger, emMessageLevel, IOperationResult, object, i18n
+} from "../../../ibas/bobas/index";
+import { BOApplication } from "../applications/index";
 import { ILoginView, ILoginApp, ICenterApp, IUser } from "./Systems.d";
 import { Factories } from "./Factories";
-import { logger, emMessageLevel, IOperationResult, object, i18n } from "../../../ibas/bobas/bobas";
 
 /** 应用-登陆 */
 export class LoginApp extends BOApplication<ILoginView> implements ILoginApp {

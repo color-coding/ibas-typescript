@@ -7,8 +7,8 @@
  */
 
 /// <reference path="../../../../../openui5/typings/index.d.ts" />
-import { ILoginView } from "../../../../../ibas/bsbas/systems/Systems";
-import { i18n, BOView, config } from "../../../../../ibas/bsbas/bsbas";
+import { ILoginView } from "../../../../../ibas/bsbas/systems/index";
+import { i18n, BOView, config } from "../../../../../ibas/bsbas/index";
 
 /**
  * 视图-登陆

@@ -6,11 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-/// <reference path="./Message.d.ts" />
-/// <reference path="../data/Enums.ts" />
-
-import { emMessageLevel } from "../data/Enums";
-import { StringBuilder } from "../data/Common";
+import { StringBuilder,emMessageLevel } from "../data/index";
 import { IMessage } from "./Message.d";
 
 /**

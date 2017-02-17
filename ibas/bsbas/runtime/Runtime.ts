@@ -9,8 +9,8 @@
 // 模块索引文件，此文件集中导出类
 
 
-import { KeyValue, object } from "../../../ibas/bobas/bobas";
-import { IModuleConsole } from "../core/Architectures.d";
+import { KeyValue, object } from "../../../ibas/bobas/index";
+import { IModuleConsole } from "../core/index";
 
 /** 模块控制台管理员 */
 class ConsolesManager {

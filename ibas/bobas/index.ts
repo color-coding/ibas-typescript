@@ -9,12 +9,12 @@
 /**
  * 模块索引文件，此文件集中导出类
  */
-/** 业务对象库（bobas）文件名称 */
-export const LIBRARY_BOBAS_ROOT_FILE_NAME: string = "bobas.js";
 /** 初始化函数 */
-import { config, Configuration } from "./configuration/Configuration";
-import { i18n } from "./i18n/I18N";
-import { string ,url} from "./data/Data";
+import { config, Configuration } from "./configuration/index";
+import { i18n } from "./i18n/index";
+import { string, url } from "./data/index";
+/** 业务对象库（bobas）文件名称 */
+export const LIBRARY_BOBAS_ROOT_FILE_NAME: string = "/bobas/index";
 /** 框架初始化 */
 export const isInitialized: boolean = function (): boolean {
     if (isInitialized) {
@@ -29,12 +29,12 @@ export const isInitialized: boolean = function (): boolean {
     return true;
 }();
 // 导出的类型
-export * from "./data/Data";
-export * from "./messages/Messages";
-export * from "./configuration/Configuration";
-export * from "./i18n/I18N";
-export * from "./core/Core";
-export * from "./bo/BO";
-export * from "./repository/Repository";
+export * from "./data/index";
+export * from "./messages/index";
+export * from "./configuration/index";
+export * from "./i18n/index";
+export * from "./core/index";
+export * from "./bo/index";
+export * from "./repository/index";
 // 导出的测试相关类型
-export * from "./assert/Assert";
+export * from "./assert/index";

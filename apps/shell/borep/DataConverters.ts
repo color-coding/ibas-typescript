@@ -11,7 +11,7 @@ import {
     BOConverter,
     DataConverter,
     IBusinessObject
-} from "../../../ibas/bobas/bobas";
+} from "../../../ibas/bobas/index";
 
 /**
  * Shel 模块的数据转换者

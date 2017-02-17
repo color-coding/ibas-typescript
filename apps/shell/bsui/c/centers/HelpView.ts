@@ -7,8 +7,8 @@
  */
 
 /// <reference path="../../../../../openui5/typings/index.d.ts" />
-import { IHelpView } from "../../../../../ibas/bsbas/systems/Systems";
-import { UrlView, config } from "../../../../../ibas/bsbas/bsbas";
+import { IHelpView } from "../../../../../ibas/bsbas/systems/index";
+import { UrlView, config } from "../../../../../ibas/bsbas/index";
 
 /**
  * 视图-帮助

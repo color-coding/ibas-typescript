@@ -6,14 +6,18 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-/// <reference path="../../../ibas/3rdparty/require.d.ts" />
-import { ModuleConsole, IModuleConsole, IModuleFunction, IApplication, IView, IViewShower } from "../core/Core";
-import { BOApplication } from "../applications/Applications";
+/// <reference path="../../../ibas/3rdparty/index.d.ts" />
+import {
+    i18n, logger, emMessageLevel, IOperationResult, object, string, url
+} from "../../../ibas/bobas/index";
+import {
+    ModuleConsole, IModuleConsole, IModuleFunction, IApplication, IView, IViewShower
+} from "../core/index";
+import { emMessageType } from "../data/index";
+import { consolesManager } from "../runtime/index";
+import { BOApplication } from "../applications/index";
 import { ICenterView, ICenterApp, IUser, IUserModule, IUserPrivilege, IUserRole } from "./Systems.d";
 import { Factories } from "./Factories";
-import { emMessageType } from "../data/Enums";
-import { consolesManager } from "../runtime/Runtime";
-import { i18n, logger, emMessageLevel, IOperationResult, object, string, url } from "../../../ibas/bobas/bobas";
 
 /** 应用-中心 */
 export abstract class CenterApp extends BOApplication<ICenterView> implements ICenterApp {

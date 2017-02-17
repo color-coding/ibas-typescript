@@ -7,7 +7,7 @@
  */
 
 
-import * as bobas from "../../../ibas/bobas/bobas";
+import * as bobas from "../../../ibas/bobas/index";
 import { SalesOrder } from "./SalesOrder";
 
 /**

@@ -6,7 +6,9 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { ModuleFunction, IApplication, IView, IViewShower } from "../../../../ibas/bsbas/bsbas";
+import {
+    ModuleFunction, IApplication, IView, IViewShower
+} from "../../../../ibas/bsbas/index";
 import { MainApp } from "./MainApp";
 
 /** 功能-系统中心 */

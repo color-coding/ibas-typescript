@@ -10,7 +10,7 @@ import {
     object, OperationMessages, OperationResult,
     IDataConverter, BORepositoryApplication,
     IOperationResult, RemoteListener, i18n
-} from "../../../../ibas/bsbas/bsbas";
+} from "../../../../ibas/bobas/index";
 import { DataConverter4Module } from "./DataConverters";
 
 /**

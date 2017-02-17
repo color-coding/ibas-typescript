@@ -11,19 +11,14 @@ import {
     i18n, config, string, Configuration,
     ModuleConsole, IViewNavigation, IModuleFunction, IViewShower,
     IApplication, IView, emPlantform, url
-} from "../../../ibas/bsbas/bsbas";
+} from "../../../ibas/bsbas/index";
 import {
     IMainApp, ILoginApp, ICenterApp, IAboutApp, IHelpApp,
     ISystemsFactory, IBORepositorySystem
-} from "../../../ibas/bsbas/systems/Systems.d";
-import { Factories } from "../../../ibas/bsbas/systems/Systems";
+} from "../../../ibas/bsbas/systems/index";
+import { Factories } from "../../../ibas/bsbas/systems/index";
 import { BORepositoryShell, BORepositoryShellOffLine } from "../borep/BORepositories";
-import { CentersFunc } from "./centers/CentersFunc";
-import { MainApp } from "./centers/MainApp";
-import { LoginApp } from "./centers/LoginApp";
-import { CenterApp } from "./centers/CenterApp";
-import { AboutApp } from "./centers/AboutApp";
-import { HelpApp } from "./centers/HelpApp";
+import { CentersFunc, MainApp, LoginApp, CenterApp, AboutApp, HelpApp } from "./centers/index";
 
 
 /** 系统工厂 */
@@ -65,7 +60,7 @@ export class Console extends ModuleConsole {
     /** 模块-名称 */
     static CONSOLE_NAME: string = "sys_ibas";
     /** 根文件名称 */
-    static ROOT_FILE_NAME: string = "shell/bsapp/Console.js";
+    static ROOT_FILE_NAME: string = "apps/index";
 
     constructor() {
         super();
@@ -96,7 +91,7 @@ export class Console extends ModuleConsole {
         i18n.load(string.format("{0}/shell/resources/languages/shell.{1}.json", rootUrl, i18n.language));
         // 设置资源属性
         this.description = i18n.prop(this.name);
-        this.icon = "../resources/logo.png";
+        this.icon = string.format("{0}/shell/resources/logo.png", rootUrl);
         // 先加载ui导航
         let uiModules: string[] = [];
         if (this.plantform === emPlantform.IPAD) {

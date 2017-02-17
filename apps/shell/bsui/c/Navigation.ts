@@ -8,15 +8,11 @@
 
 import {
     ViewNavigation, IView,
-} from "../../../../ibas/bsbas/bsbas";
+} from "../../../../ibas/bsbas/index";
 import {
     MainApp, LoginApp, CenterApp, AboutApp, HelpApp
-} from "../../../../ibas/bsbas/systems/Systems";
-import { MainView } from "./centers/MainView";
-import { LoginView } from "./centers/LoginView";
-import { CenterView } from "./centers/CenterView";
-import { AboutView } from "./centers/AboutView";
-import { HelpView } from "./centers/HelpView";
+} from "../../../../ibas/bsbas/systems/index";
+import { MainView, LoginView, CenterView, AboutView, HelpView } from "./centers/index";
 
 /** 导出视图显示 */
 export { ViewShowerDefault as ViewShower } from "../ViewShowers";

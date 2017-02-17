@@ -6,13 +6,13 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-/// <reference path="../../3rdparty/jquery.d.ts" />
+/// <reference path="../../3rdparty/index.d.ts" />
 import {
     object, string, emMessageLevel, OperationResult
-} from "../data/Data";
-import { RemoteListener, BORemoteRepository, IDataConverter } from "../core/Core";
-import { i18n } from "../i18n/I18N";
-import { logger } from "../messages/Messages";
+} from "../data/index";
+import { RemoteListener, BORemoteRepository, IDataConverter } from "../core/index";
+import { i18n } from "../i18n/index";
+import { logger } from "../messages/index";
 
 /**
  * 业务对象的远程仓库-jQuery实现

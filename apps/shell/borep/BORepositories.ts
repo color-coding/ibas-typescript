@@ -10,13 +10,12 @@ import {
     object, OperationMessages, OperationResult,
     IDataConverter, BORepositoryApplication,
     IOperationResult, RemoteListener, i18n, config, url
-} from "../../../ibas/bsbas/bsbas";
+} from "../../../ibas/bobas/index";
 import {
     IBORepositorySystem
-} from "../../../ibas/bsbas/systems/Systems";
+} from "../../../ibas/bsbas/systems/index";
 import { DataConverter4Shell, DataConverter4Offline } from "./DataConverters";
-import { User } from "./bo/User";
-import { UserModule } from "./bo/UserModule";
+import { User, UserModule } from "./bo/index";
 
 
 /**

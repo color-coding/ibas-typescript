@@ -7,9 +7,9 @@
  */
 
 // 模块索引文件，此文件集中导出类
-import { Configuration, config, string, i18n, url } from "../../ibas/bobas/bobas";
+import { Configuration, config, string, i18n, url } from "../../ibas/bobas/index";
 /** 应用系统库（bsbas）文件名称 */
-export const LIBRARY_BSBAS_ROOT_FILE_NAME: string = "bsbas.js";
+export const LIBRARY_BSBAS_ROOT_FILE_NAME: string = "/bsbas/index";
 /** 框架初始化 */
 export const isInitialized: boolean = function (): boolean {
     if (isInitialized) {
@@ -22,13 +22,13 @@ export const isInitialized: boolean = function (): boolean {
     // 加载语言-框架默认
     i18n.load(string.format("{0}/resources/languages/bsbas.{1}.json", rootUrl, i18n.language));
 }();
-export * from "../../ibas/bobas/bobas";// 集中发布bobas内容，减少引用声明
+export * from "../../ibas/bobas/index";// 集中发布bobas内容，减少引用声明
 // 此模块内容
-export * from "./data/Enums";
-export * from "./core/Core";
-export * from "./applications/Applications";
-export * from "./views/Views";
-// export * from "./systems/Systems"; // 此需要单独引用，不再集中发布
-// export * from "./services/Services";
-export * from "./runtime/Runtime";
+export * from "./data/index";
+export * from "./core/index";
+export * from "./applications/index";
+export * from "./views/index";
+// export * from "./systems/index"; // 此需要单独引用，不再集中发布
+// export * from "./services/index";
+export * from "./runtime/index";
 

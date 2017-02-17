@@ -6,7 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import * as bobas from "../../../ibas/bobas/bobas";
+import * as bobas from "../../../ibas/bobas/index";
 
 import { User } from "./User";
 

@@ -6,10 +6,10 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-/// <reference path="./BusinessObject.d.ts" />
-import { object } from "../data/Data";
-import { IBusinessObject } from "../core/BusinessObjectCore.d";
-import { BusinessObjectBase, BusinessObjectListBase } from "../core/BusinessObjectCore";
+import { object } from "../data/index";
+import {
+    IBusinessObject, BusinessObjectBase, BusinessObjectListBase
+} from "../core/index";
 import {
     IBusinessObjects
 } from "./BusinessObject.d";

@@ -7,8 +7,8 @@
  */
 // 业务对象应用的相关说明文件
 
-import { List, IBusinessObject } from "../../../ibas/bobas/bobas";
-import { IView } from "../core/Core";
+import { List, IBusinessObject } from "../../../ibas/bobas/index";
+import { IView } from "../core/index";
 
 /**
  * 业务对象应用-视图

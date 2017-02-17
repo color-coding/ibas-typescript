@@ -9,8 +9,8 @@
 /**
  * 模块索引文件，此文件集中导出类
  */
-/// <reference path="../../3rdparty/jquery.d.ts" />
-import { string } from "../data/Data";
+/// <reference path="../../3rdparty/index.d.ts" />
+import { string } from "../data/index";
 
 /**
  * 配置
@@ -125,8 +125,3 @@ export class Configuration {
         throw new Error(string.format("unable to get valid value for [{0}].", key));
     }
 }
-
-/**
- * 发布的配置实例
- */
-export const config: Configuration = new Configuration();

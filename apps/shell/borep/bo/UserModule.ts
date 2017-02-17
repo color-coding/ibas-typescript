@@ -6,7 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { IUserModule } from "../../../../ibas/bsbas/systems/Systems.d";
+import { IUserModule } from "../../../../ibas/bsbas/systems/index";
 
 /**
  * 用户模块

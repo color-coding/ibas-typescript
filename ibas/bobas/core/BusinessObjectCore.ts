@@ -6,7 +6,6 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-/// <reference path="./BusinessObjectCore.d.ts" />
 import {
     IBindable, PropertyChangedListener, ITrackable,
     IBusinessObject, IBusinessObjectList

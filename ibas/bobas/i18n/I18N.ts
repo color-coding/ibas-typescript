@@ -10,9 +10,9 @@
  * 模块索引文件，此文件集中导出类
  */
 /// <reference path="../../3rdparty/jquery.d.ts" />
-import { object, string, emMessageLevel,url } from "../data/Data";
-import { config } from "../configuration/Configuration";
-import { logger } from "../messages/Messages";
+import { object, string, emMessageLevel,url } from "../data/index";
+import { config } from "../configuration/index";
+import { logger } from "../messages/index";
 /**
  * 配置
  */
@@ -86,9 +86,3 @@ export class I18N {
         jQuery.ajax(JQryAjxSetting);
     }
 }
-
-
-/**
- * 发布的配置实例
- */
-export const i18n: I18N = new I18N();

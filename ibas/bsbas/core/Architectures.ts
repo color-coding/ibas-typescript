@@ -6,14 +6,13 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-/// <reference path="./Architectures.d.ts" />
-import { List, ArrayList, object, i18n, string, uuid } from "../../../ibas/bobas/bobas";
-import { emPlantform } from "../data/Enums";
+import { List, ArrayList, object, i18n, string, uuid } from "../../../ibas/bobas/index";
+import { emPlantform } from "../data/index";
 import {
     IElement, IModule, IFunction, IApplication, IView,
     IModuleConsole, IViewShower, IViewNavigation, IModuleFunction
 } from "./Architectures.d";
-import { consolesManager } from "../runtime/Runtime";
+import { consolesManager } from "../runtime/index";
 
 /** 系统元素 */
 export class Element implements IElement {

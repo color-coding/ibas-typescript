@@ -6,9 +6,9 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
+import { IBusinessObject } from "../core/index";
 import { List } from "./Common.d";
 import { emConditionOperation, emConditionRelationship, emSortType } from "./Enums";
-import { IBusinessObject } from "../core/BusinessObjectCore.d";
 
 /**
 * 查询

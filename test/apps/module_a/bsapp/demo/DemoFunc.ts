@@ -8,7 +8,7 @@
 
 import {
     ModuleFunction, IApplication, IView, i18n
-} from "../../../../../ibas/bsbas/bsbas";
+} from "../../../../../ibas/bsbas/index";
 import { DemoApp } from "./DemoApp";
 import { DemoUrlApp } from "./DemoUrlApp";
 

@@ -6,8 +6,8 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { HelpApp as AbstractHelpApp } from "../../../../ibas/bsbas/systems/Systems";
-import { config } from "../../../../ibas/bsbas/bsbas";
+import { HelpApp as AbstractHelpApp } from "../../../../ibas/bsbas/systems/index";
+import { config } from "../../../../ibas/bsbas/index";
 
 /**
  * 帮助应用

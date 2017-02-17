@@ -6,8 +6,8 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { List } from "../../../ibas/bobas/bobas";
-import { emPlantform, emMessageType } from "../data/Enums";
+import { List } from "../../../ibas/bobas/index";
+import { emPlantform, emMessageType } from "../data/index";
 
 /** 系统元素 */
 export interface IElement {

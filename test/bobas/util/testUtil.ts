@@ -6,9 +6,9 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-/// <reference path="../../../ibas/3rdparty/jquery.d.ts" />
+/// <reference path="../../../ibas/3rdparty/index.d.ts" />
+import * as bobas from "../../../ibas/bobas/index";
 
-import * as bobas from "../../../ibas/bobas/bobas";
 // 测试唯一标记uuid
 console.log(bobas.uuid.random());
 // 测试配置项

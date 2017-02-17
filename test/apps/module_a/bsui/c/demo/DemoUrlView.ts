@@ -9,8 +9,8 @@
 /// <reference path="../../../../../../openui5/typings/index.d.ts" />
 import {
     UrlView
-} from "../../../../../../ibas/bsbas/bsbas";
-import { IDemoUrlView } from "../../../bsapp/demo/DemoUrlApp";
+} from "../../../../../../ibas/bsbas/index";
+import { IDemoUrlView } from "../../../bsapp/demo/index";
 
 /**
  * 视图-demo

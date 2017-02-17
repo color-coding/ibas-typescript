@@ -6,7 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { BOApplication } from "../applications/Applications";
+import { BOApplication } from "../applications/index";
 import { IAboutView, IAboutApp } from "./Systems.d";
 
 /** 应用-关于 */

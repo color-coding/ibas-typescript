@@ -8,7 +8,7 @@
 
 import {
     BOApplication, IView, emMessageType
-} from "../../../../../ibas/bsbas/bsbas";
+} from "../../../../../ibas/bsbas/index";
 
 /** 应用-演示 */
 export class DemoApp extends BOApplication<IDemoView> {

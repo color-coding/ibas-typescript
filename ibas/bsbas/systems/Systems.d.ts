@@ -6,9 +6,13 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { List, IBusinessObject, IOperationMessages, IOperationResult } from "../../../ibas/bobas/bobas";
-import { IView,IUrlView, IModule, IApplication, IModuleConsole, IModuleFunction, IViewShower } from "../core/Core";
-import { emMessageType } from "../data/Enums";
+import {
+	List, IBusinessObject, IOperationMessages, IOperationResult
+} from "../../../ibas/bobas/index";
+import {
+	IView, IUrlView, IModule, IApplication, IModuleConsole, IModuleFunction, IViewShower
+} from "../core/index";
+import { emMessageType } from "../data/index";
 
 /** 关于-视图 */
 export interface IAboutView extends IView {

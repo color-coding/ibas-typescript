@@ -7,7 +7,9 @@
  */
 
 /// <reference path="../../../openui5/typings/index.d.ts" />
-import { i18n, IView, IViewShower, object, logger, emMessageLevel,emMessageType } from "../../../ibas/bsbas/bsbas";
+import {
+    i18n, IView, IViewShower, object, logger, emMessageLevel, emMessageType
+} from "../../../ibas/bsbas/index";
 
 /**
  * 视图-显示者-默认

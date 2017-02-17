@@ -6,8 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-/// <reference path="../data/Common.d.ts" />
-import { List } from "../data/Common.d";
+import { List } from "../data/index";
 
 /**
  * 属性改变监听者

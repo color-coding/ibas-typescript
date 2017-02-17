@@ -7,8 +7,12 @@
  */
 
 /// <reference path="../../../../../openui5/typings/index.d.ts" />
-import { ICenterView, IUserModule, IUser } from "../../../../../ibas/bsbas/systems/Systems";
-import { i18n, object, string, BOView, UrlView, emMessageType, IModuleConsole, IView } from "../../../../../ibas/bsbas/bsbas";
+import {
+    i18n, object, string, BOView, UrlView, emMessageType, IModuleConsole, IView
+} from "../../../../../ibas/bsbas/index";
+import {
+    ICenterView, IUserModule, IUser
+} from "../../../../../ibas/bsbas/systems/index";
 
 /**
  * 视图-中心
@@ -338,7 +342,7 @@ export class CenterView extends BOView implements ICenterView {
                     that.page.setHeader(null);
                     // that.page.setSideContent(null);
                     that.form.setFloatingFooter(true);
-                    this.setIcon("sap-icon://minimize");
+                    this.setIcon("sap-icon://exit-full-screen");
                 } else {
                     that.page.setHeader(that.header);
                     // that.page.setSideContent(that.navigation);

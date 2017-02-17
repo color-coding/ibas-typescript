@@ -6,12 +6,12 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-/// <reference path="../../../../ibas/3rdparty/require.d.ts" />
+/// <reference path="../../../../ibas/3rdparty/index.d.ts" />
 import {
     ModuleConsole, IViewNavigation, IModuleFunction, url,
     IApplication, IView, emPlantform, config, string, Configuration, i18n
-} from "../../../../ibas/bsbas/bsbas";
-import { DemoFunc1, DemoFunc2, DemoFunc3, DemoUrlFunc } from "./demo/DemoFunc";
+} from "../../../../ibas/bsbas/index";
+import { DemoFunc1, DemoFunc2, DemoFunc3, DemoUrlFunc } from "./demo/index";
 
 /** 模块控制台 */
 export class Console extends ModuleConsole {
@@ -20,7 +20,7 @@ export class Console extends ModuleConsole {
     /** 模块-名称 */
     static CONSOLE_NAME: string = "test_module_a";
     /** 根文件名称 */
-    static ROOT_FILE_NAME: string = "module_a/bsapp/Console.js";
+    static ROOT_FILE_NAME: string = "module_a/index";
 
     constructor() {
         super();
@@ -46,7 +46,7 @@ export class Console extends ModuleConsole {
         // 获取根地址
         let rootUrl: string = url.rootUrl(Console.ROOT_FILE_NAME);
         // 加载语言-框架默认
-        i18n.load(string.format("{0}/module_a/resources/languages/module_a.{1}.json", rootUrl, i18n.language));
+        i18n.load(string.format("{0}/resources/languages/module_a.{1}.json", rootUrl, i18n.language));
         // 设置资源属性
         this.description = i18n.prop(this.name);
         this.icon = "sap-icon://employee";

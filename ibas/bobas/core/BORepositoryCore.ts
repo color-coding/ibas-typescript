@@ -6,13 +6,12 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-/// <reference path="./RepositoryCore.d.ts" />
 import {
     object, IOperationResult, ICriteria
-} from "../data/Data";
+} from "../data/index";
+import { i18n } from "../i18n/index";
 import { IBusinessObject } from "./BusinessObjectCore.d";
 import { IBORemoteRepository, RemoteListener, IDataConverter } from "./RepositoryCore.d";
-import { i18n } from "../i18n/I18N";
 
 /**
  * 业务对象的远程仓库

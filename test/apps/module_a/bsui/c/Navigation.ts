@@ -8,11 +8,9 @@
 
 import {
     ViewNavigation, IView,
-} from "../../../../../ibas/bsbas/bsbas";
-import { DemoApp } from "../../bsapp/demo/DemoApp";
-import { DemoView } from "./demo/DemoView";
-import { DemoUrlApp } from "../../bsapp/demo/DemoUrlApp";
-import { DemoUrlView } from "./demo/DemoUrlView";
+} from "../../../../../ibas/bsbas/index";
+import { DemoApp, DemoUrlApp } from "../../bsapp/demo/index";
+import { DemoView, DemoUrlView } from "./demo/index";
 
 /**
  * 视图导航

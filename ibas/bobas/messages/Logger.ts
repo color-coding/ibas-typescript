@@ -6,12 +6,8 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-/// <reference path="./Logger.d.ts" />
-/// <reference path="./Message.d.ts" />
-
-import { string } from "../data/Data";
-import { emMessageLevel } from "../data/Enums";
-import { config } from "../configuration/Configuration";
+import { string ,emMessageLevel} from "../data/index";
+import { config } from "../configuration/index";
 import { IMessage } from "./Message.d";
 import { Message } from "./Message";
 import { ILogger } from "./Logger.d";

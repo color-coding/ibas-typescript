@@ -6,11 +6,11 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import * as core from "../core/Core";
-import { i18n } from "../../bsbas/bsbas";
+import { i18n } from "../../../ibas/bobas/index";
+import { View, IUrlView } from "../core/index";
 
 /** 业务对象视图 */
-export abstract class BOView extends core.View {
+export abstract class BOView extends View {
     /** 清理资源 */
     destroyEvent: Function;
     /**  
@@ -26,7 +26,7 @@ export abstract class BOView extends core.View {
     }
 }
 /** 地址视图 */
-export abstract class UrlView extends core.View implements core.IUrlView {
+export abstract class UrlView extends View implements IUrlView {
     /** 内部打开 */
     isInside: boolean;
     /** 地址 */
