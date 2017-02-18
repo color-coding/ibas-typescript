@@ -9,8 +9,8 @@
 import {
     ViewNavigation, IView,
 } from "../../../../../ibas/bsbas/index";
-import { DemoListApp, DemoUrlApp } from "../../bsapp/demo/index";
-import { DemoListView, DemoUrlView } from "./demo/index";
+import * as app from "../../bsapp/demo/index";
+import * as ui from "./demo/index";
 
 /**
  * 视图导航
@@ -24,11 +24,20 @@ export class Navigation extends ViewNavigation {
     protected newView(id: string): IView {
         let view: IView = null;
         switch (id) {
-            case DemoListApp.APPLICATION_ID:
-                view = new DemoListView();
+            case app.DemoUrlApp.APPLICATION_ID:
+                view = new ui.DemoUrlView();
                 break;
-            case DemoUrlApp.APPLICATION_ID:
-                view = new DemoUrlView();
+            case app.DemoListApp.APPLICATION_ID:
+                view = new ui.DemoListView();
+                break;
+            case app.DemoChooseApp.APPLICATION_ID:
+                view = new ui.DemoChooseView();
+                break;
+            case app.DemoViewApp.APPLICATION_ID:
+                view = new ui.DemoViewView();
+                break;
+            case app.DemoEditApp.APPLICATION_ID:
+                view = new ui.DemoEditView();
                 break;
             default:
                 break;

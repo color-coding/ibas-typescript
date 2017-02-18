@@ -15,7 +15,7 @@ import { DemoUrlApp } from "./DemoUrlApp";
 /** 功能-演示 */
 export class DemoFunc extends ModuleFunction {
     static FUNCTION_ID = "754a9a69-9c51-43af-acf4-ba21120ff8e1";
-    static FUNCTION_NAME = "module_a_func_one";
+    static FUNCTION_NAME = "module_a_func_demo";
     static ROOT_FILE_NAME: string = "module_a/index";
     constructor() {
         super();

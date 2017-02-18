@@ -9,7 +9,7 @@
 /// <reference path="../../../../../openui5/typings/index.d.ts" />
 import {
     i18n, object, string, BOView, UrlView, emMessageType,
-    IModuleConsole, IView, config, BOListView
+    IModuleConsole, IView, config, BOListView, BOQueryView, BOChooseView
 } from "../../../../../ibas/bsbas/index";
 import {
     ICenterView, IUserModule, IUser, Factories
@@ -208,31 +208,25 @@ export class CenterView extends BOView implements ICenterView {
     showView(view: IView): void {
         if (view instanceof UrlView) {
             // 视图为地址视图
-            if (view.isInside) {
-                // 内部打开
-                let html: string = string.format(
-                    `<iframe src="{0}" width="100%" height="99%" scrolling="no" frameborder="0" ></iframe>`
-                    , view.url);
-                this.form.destroyContent();
-                this.form.addContent(new sap.ui.core.HTML("",
-                    {
-                        content: html
-                    }));
-            } else {
-                // 外部打开
-                window.open(view.url);
-            }
+            this.showUrlView(view);
+        } else if (view instanceof BOChooseView) {
+            // 对话框视图
+            this.showDialogView(view);
         } else {
+            // 正常视图
+            this.form.destroySubHeader();
             this.form.destroyContent();
-            this.form.addContent(view.darw());
+            this.form.setShowHeader(true);
             // 设置标题
             if (!object.isNull(view.title)) {
                 this.form.setTitle(view.title);
             } else if (!object.isNull(view.id)) {
                 this.form.setTitle(view.id);
             }
+            this.form = this.form;
+            this.form.addContent(view.darw());
             // 添加查询面板
-            if (view instanceof BOListView) {
+            if (view instanceof BOQueryView) {
                 let queryPanel = Factories.systemsFactory.createQueryPanel();
                 if (object.isNull(queryPanel)) {
                     // 查询面板无效，不添加
@@ -258,7 +252,44 @@ export class CenterView extends BOView implements ICenterView {
                     });
                 }
             }
+
         }
+    }
+    /** 显示地址视图 */
+    showUrlView(view: UrlView): void {
+        if (view.isInside) {
+            // 内部打开
+            let html: string = string.format(
+                `<iframe src="{0}" width="100%" height="99.6%" scrolling="no" frameborder="0" ></iframe>`
+                , view.url);
+            this.form.setShowHeader(false);
+            this.form.destroySubHeader();
+            this.form.destroyContent();
+            this.form.addContent(new sap.ui.core.HTML("",
+                {
+                    content: html
+                }));
+        } else {
+            // 外部打开
+            window.open(view.url);
+        }
+    }
+    /** 显示对话视图 */
+    showDialogView(view: BOChooseView): void {
+        let title: string;
+        // 设置标题
+        if (!object.isNull(view.title)) {
+            title = view.title;
+        } else if (!object.isNull(view.id)) {
+            title = view.id;
+        }
+        let dialog: sap.m.Dialog = new sap.m.Dialog("", {
+            title: title,
+            search: "handleSearch",
+            confirm: "handleClose",
+            cancel: "handleClose",
+        });
+        dialog.open();
     }
     /** 清理资源 */
     destroyView(view: IView): void {

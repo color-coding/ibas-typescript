@@ -7,11 +7,11 @@
  */
 
 import {
-    i18n, object, logger, emMessageLevel
+    i18n, object, logger, emMessageLevel, ICriteria
 } from "../../../ibas/bobas/index";
 import { Application } from "../core/index";
 import { emMessageType } from "../data/index";
-import { IBOView } from "./BOApplications.d";
+import { IBOView, IBOQueryView } from "./BOApplications.d";
 
 
 /**
@@ -19,7 +19,7 @@ import { IBOView } from "./BOApplications.d";
  */
 export abstract class BOApplication<T extends IBOView> extends Application<T> {
     /** 运行 */
-    run(): void {
+    run(...args: any[]): void {
         this.show();
     }
     /** 显示视图 */
@@ -120,11 +120,23 @@ export abstract class BOApplication<T extends IBOView> extends Application<T> {
         let type: emMessageType;
         let message: string;
         let callBack: Function;
-        if (arguments.length === 1 && arguments[0] instanceof Error) {
-            type = emMessageType.ERROR;
-            message = arguments[0].message;
-        } else if (arguments.length === 3) {
+        if (arguments.length === 1) {
+            if (arguments[0] instanceof Error) {
+                type = emMessageType.ERROR;
+                message = arguments[0].message;
+            }
+            else {
+                type = emMessageType.INFORMATION;
+                message = arguments[0];
+            }
+        } else if (arguments.length = 2) {
+            type = arguments[0];
+            message = arguments[1];
             callBack = arguments[2];
+        } else if (arguments.length === 3) {
+            type = emMessageType.INFORMATION;
+            message = arguments[0];
+            callBack = arguments[1];
         }
         if (!object.isNull(this.viewShower)) {
             this.viewShower.messages(type, message, callBack);
@@ -132,4 +144,16 @@ export abstract class BOApplication<T extends IBOView> extends Application<T> {
             throw new Error(i18n.prop("msg_invalid_view_shower", this.name));
         }
     }
+}
+/**
+ * 业务对象查询应用
+ */
+export abstract class BOQueryApplication<T extends IBOQueryView> extends BOApplication<T> {
+    /** 注册视图，重载需要回掉此方法 */
+    protected registerView(): void {
+        this.view.destroyEvent = this.destroy;
+        this.view.fetchDataEvent = this.fetchData;
+    }
+    /** 查询数据 */
+    protected abstract fetchData(criteria: ICriteria): void;
 }

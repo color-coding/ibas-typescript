@@ -7,7 +7,7 @@
  */
 
 import { IBOEditView } from "./BOApplications.d";
-import { BOApplication } from "./BOApplication";
+import { BOApplication } from "./BOApplications";
 
 
 /**
@@ -15,5 +15,13 @@ import { BOApplication } from "./BOApplication";
  */
 export abstract class BOEditApplication<T extends IBOEditView, D> extends BOApplication<T> {
 
-
+    /** 注册视图，重载需要回掉此方法 */
+    protected registerView(): void {
+        this.view.destroyEvent = this.destroy;
+        this.view.saveDataEvent = this.saveData;
+    }
+    /** 当前编辑的数据 */
+    protected abstract editData: D;
+    /** 选择数据，参数：数据 */
+    protected abstract saveData(): void;
 }

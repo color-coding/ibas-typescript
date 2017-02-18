@@ -10,18 +10,17 @@ import {
     ICriteria
 } from "../../../ibas/bobas/index";
 import { IBOListView } from "./BOApplications.d";
-import { BOApplication } from "./BOApplication";
+import { BOQueryApplication } from "./BOApplications";
 
 
 /**
  * 业务对象列表应用
  */
-export abstract class BOListApplication<T extends IBOListView, D> extends BOApplication<T> {
+export abstract class BOListApplication<T extends IBOListView, D> extends BOQueryApplication<T> {
 
     /** 注册视图，重载需要回掉此方法 */
     protected registerView(): void {
-        this.view.destroyEvent = this.destroy;
-        this.view.fetchDataEvent = this.fetchData;
+        super.registerView();
         this.view.newDataEvent = this.newData;
         this.view.viewDataEvent = this.viewData;
     }

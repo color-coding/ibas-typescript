@@ -8,17 +8,16 @@
 
 /// <reference path="../../../../../../openui5/typings/index.d.ts" />
 import {
-    BOListView, i18n
+    BOChooseView, i18n
 } from "../../../../../../ibas/bsbas/index";
-import { IDemoListView } from "../../../bsapp/demo/index";
+import { SalesOrder } from "../../../borep/bo/index";
+import { IDemoChooseView } from "../../../bsapp/demo/index";
 
 /**
  * 视图-demo
  */
-export class DemoListView extends BOListView implements IDemoListView {
+export class DemoChooseView extends BOChooseView implements IDemoChooseView {
 
-    /** 编辑数据，参数：目标数据 */
-    editDataEvent: Function;
     /** 绘制视图 */
     darw(): any {
         let that = this;
@@ -26,27 +25,19 @@ export class DemoListView extends BOListView implements IDemoListView {
         form.setToolbar(new sap.m.Toolbar("", {
             content: [
                 new sap.m.Button("", {
+                    text: i18n.prop("sys_shell_ui_data_choose"),
+                    type: sap.m.ButtonType.Transparent,
+                    icon: "sap-icon://accept",
+                    press: function (): void {
+                        that.fireViewEvents(that.chooseDataEvent);
+                    }
+                }),
+                new sap.m.Button("", {
                     text: i18n.prop("sys_shell_ui_data_new"),
                     type: sap.m.ButtonType.Transparent,
                     icon: "sap-icon://create",
                     press: function (): void {
                         that.fireViewEvents(that.newDataEvent);
-                    }
-                }),
-                new sap.m.Button("", {
-                    text: i18n.prop("sys_shell_ui_data_view"),
-                    type: sap.m.ButtonType.Transparent,
-                    icon: "sap-icon://display",
-                    press: function (): void {
-                        that.fireViewEvents(that.viewDataEvent);
-                    }
-                }),
-                new sap.m.Button("", {
-                    text: i18n.prop("sys_shell_ui_data_edit"),
-                    type: sap.m.ButtonType.Transparent,
-                    icon: "sap-icon://edit",
-                    press: function (): void {
-                        that.fireViewEvents(that.editDataEvent);
                     }
                 })
             ]
@@ -98,5 +89,4 @@ export class DemoListView extends BOListView implements IDemoListView {
         this.table.setModel(uiDatas);
         this.table.bindItems("/");
     }
-
 }

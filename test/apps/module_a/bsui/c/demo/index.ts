@@ -6,5 +6,8 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-export * from "./DemoListView";
 export * from "./DemoUrlView";
+export * from "./DemoListView";
+export * from "./DemoViewView";
+export * from "./DemoEditView";
+export * from "./DemoChooseView";

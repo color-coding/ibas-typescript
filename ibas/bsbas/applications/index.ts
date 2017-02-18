@@ -10,7 +10,7 @@
 
 
 export * from "./BOApplications.d";
-export * from "./BOApplication";
+export * from "./BOApplications";
 export * from "./BOChooseApplication";
 export * from "./BOEditApplication";
 export * from "./BOListApplication";

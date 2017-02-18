@@ -7,32 +7,30 @@
  */
 
 import {
-    BOListApplication, IBOListView, emMessageType, ICriteria, i18n, IOperationResult
+    BOChooseApplication, IBOChooseView, emMessageType, ICriteria, i18n, IOperationResult
 } from "../../../../../ibas/bsbas/index";
 import { BORepositoryDemo } from "../../borep/BORepositories";
 import { SalesOrder, SalesOrderItem, SalesOrderItems } from "../../borep/bo/index";
 import { DemoEditApp } from "./DemoEditApp";
-import { DemoViewApp } from "./DemoViewApp";
 
-/** 列表应用-演示 */
-export class DemoListApp extends BOListApplication<IDemoListView, SalesOrder> {
+/** 应用-演示 */
+export class DemoChooseApp extends BOChooseApplication<IDemoChooseView, SalesOrder> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "f873e18d-b9ca-476b-b300-b177c194d41a";
+    static APPLICATION_ID: string = "7cfa552b-adc4-4cc9-8dac-1533c7dc0013";
     /** 应用名称 */
-    static APPLICATION_NAME: string = "module_a_app_demo_list";
+    static APPLICATION_NAME: string = "module_a_app_demo_choose";
 
     constructor() {
         super();
-        this.id = DemoListApp.APPLICATION_ID;
-        this.name = DemoListApp.APPLICATION_NAME;
+        this.id = DemoChooseApp.APPLICATION_ID;
+        this.name = DemoChooseApp.APPLICATION_NAME;
         this.description = i18n.prop(this.name);
     }
     /** 注册视图 */
     protected registerView(): void {
         super.registerView();
         // 其他事件
-        this.view.editDataEvent = this.editData;
     }
     /** 视图显示后 */
     protected viewShowed(): void {
@@ -63,23 +61,13 @@ export class DemoListApp extends BOListApplication<IDemoListView, SalesOrder> {
         app.viewShower = this.viewShower;
         app.run();
     }
-    /** 查看数据，参数：目标数据 */
-    protected viewData(data: SalesOrder): void {
-        let app = new DemoViewApp();
-        app.navigation= this.navigation;
-        app.viewShower = this.viewShower;
-        app.run(data);
+    /** 选择数据 */
+    protected chooseData(data: SalesOrder): void {
 
-    }
-    /** 编辑数据，参数：目标数据 */
-    protected editData(data: SalesOrder): void {
-        this.messages(emMessageType.ERROR, i18n.prop("module_a_ui_no_edit"));
     }
 }
 /** 视图-演示 */
-export interface IDemoListView extends IBOListView {
-    /** 编辑数据事件，参数：编辑对象 */
-    editDataEvent: Function;
+export interface IDemoChooseView extends IBOChooseView {
     /** 显示数据 */
     showData(datas: SalesOrder[]): void;
 }

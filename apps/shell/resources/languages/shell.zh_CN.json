@@ -21,5 +21,7 @@
     "sys_shell_ui_data_cancel": "取消",
     "sys_shell_ui_data_choose": "选择",
     "sys_shell_ui_data_remove": "移除",
-    "sys_shell_ui_data_add": "添加"
+    "sys_shell_ui_data_add": "添加",
+    "sys_shell_ui_data_save": "保存",
+    "sys_shell_ui_sucessful": "操作成功"
 }
