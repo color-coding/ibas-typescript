@@ -24,8 +24,14 @@ export class DemoListView extends BOListView implements IDemoListView {
         let that = this;
         let form = new sap.uxap.ObjectPageLayout("");
         let headerTitle = new sap.uxap.ObjectPageHeader("", {
-            headerDesign: sap.uxap.ObjectPageHeaderDesign.Light,
+            headerDesign: sap.uxap.ObjectPageHeaderDesign.Dark,
+            isObjectSubtitleAlwaysVisible: false,
+            isActionAreaAlwaysVisible: false,
+            isObjectTitleAlwaysVisible: false,
             navigationBar: new sap.m.Bar("", {
+                contentLeft: [
+
+                ],
                 contentMiddle: [
                     new sap.m.Button("", {
                         text: i18n.prop("sys_shell_ui_data_new"),
@@ -51,6 +57,8 @@ export class DemoListView extends BOListView implements IDemoListView {
                             that.fireViewEvents(that.editDataEvent);
                         }
                     })
+                ],
+                contentRight: [
                 ]
             })
         });

@@ -203,7 +203,16 @@ export class CenterView extends BOView implements ICenterView {
         }
         nvList.addItem(nvItem);
     }
-
+    private _viewQueue: Array<IView>;
+    get viewQueue() {
+        if (object.isNull(this._viewQueue)) {
+            this._viewQueue = new Array<IView>();
+        }
+        return this._viewQueue;
+    }
+    set viewQueue(values: Array<IView>) {
+        this._viewQueue = values;
+    }
     /** 显示视图 */
     showView(view: IView): void {
         if (view instanceof UrlView) {
@@ -252,7 +261,7 @@ export class CenterView extends BOView implements ICenterView {
                     });
                 }
             }
-
+            this.viewQueue.push(view);
         }
     }
     /** 显示地址视图 */
@@ -300,6 +309,18 @@ export class CenterView extends BOView implements ICenterView {
             let ui: sap.ui.core.Element = sap.ui.getCore().byId(view.id);
             if (!object.isNull(ui)) {
                 ui.destroy(true);
+            }
+            // 清理视图队列后续视图
+            let index = this.viewQueue.indexOf(view);
+            if (index >= 0 && index < this.viewQueue.length) {
+                let beDestoryView = this.viewQueue.slice(index);
+                this.viewQueue = this.viewQueue.slice(0, index);
+                for (let item of beDestoryView) {
+                    ui = sap.ui.getCore().byId(view.id);
+                    if (!object.isNull(ui)) {
+                        ui.destroy(true);
+                    }
+                }
             }
         }
     }
@@ -412,9 +433,30 @@ export class CenterView extends BOView implements ICenterView {
         this.page.setSideContent(this.navigation);
         this.page.setSideExpanded(false);
         this.page.addMainContent(this.form);
-        this.form = new sap.m.Page("");
-        // 回退钮 
-        // this.form.setShowNavButton(true);
+        this.form = new sap.m.Page("", {
+            showNavButton: true,
+        });
+        // 回退钮
+        this.form.setShowNavButton(true);
+        this.form.attachNavButtonPress(null, function (): void {
+            let ctrls = that.form.getContent();
+            let preView;
+            if (!object.isNull(ctrls)) {
+                for (let item of ctrls) {
+                    for (let view of that.viewQueue) {
+                        if (view.id === item.getId()) {
+                            if (!object.isNull(preView)) {
+                                that.showView(preView);
+                                that.destroyView(view);
+                                break;
+                            }
+                        }
+                        // 记录上一个视图
+                        preView = view;
+                    }
+                }
+            }
+        });
         // 全屏钮
         let icon: string = "sap-icon://full-screen";
         if (config.get(CenterView.CONFIG_ITEM_FULL_SCREEN, false)) {
