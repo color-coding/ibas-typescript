@@ -260,7 +260,7 @@ export class CenterView extends BOView implements ICenterView {
         if (view.isInside) {
             // 内部打开
             let html: string = string.format(
-                `<iframe src="{0}" width="100%" height="99.6%" scrolling="no" frameborder="0" ></iframe>`
+                `<iframe src="{0}" width="99%" height="99%" scrolling="no"></iframe>`
                 , view.url);
             this.form.setShowHeader(false);
             this.form.destroySubHeader();

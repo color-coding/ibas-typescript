@@ -74,9 +74,14 @@ export abstract class BORemoteRepositoryJQuery extends BORemoteRepository {
         if (!object.isNull(this.token)) {
             methodUrl = methodUrl + string.format("?token={0}", this.token);
         }
+        let type:string = "POST";
+        if (method.endsWith(".json")) {
+            // 获取文件，使用get
+            type = "GET";
+        }
         let ajxSetting: JQueryAjaxSettings = {
             url: methodUrl,
-            type: "POST",
+            type: type,
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             async: true,

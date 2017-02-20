@@ -94,17 +94,6 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
         };
         this.callRemoteMethod(method, null, listener);
     }
-    /** 重载远程调用方法参数 */
-    protected createAjaxSettings(method: string, data: any): JQueryAjaxSettings {
-        // 重写ajax设置
-        if (method === ".json") {
-            // 特殊方法的处理
-            let ajxSetting: JQueryAjaxSettings = super.createAjaxSettings(method, data);
-            ajxSetting.type = "GET";
-            return ajxSetting;
-        }
-        return super.createAjaxSettings(method, data);
-    }
     private offlineConverter: DataConverter4Offline;
     /**
      * 创建此模块的后端与前端数据的转换者
