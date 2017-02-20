@@ -36,14 +36,14 @@ export class DemoViewView extends BOViewView implements IDemoViewView {
             }),
             content: [
                 new sap.ui.core.Title("", { text: "Customer" }),
-                new sap.m.Label("", { text: i18n.prop("module_a_bo_salesorder_customer") }),
+                new sap.m.Label("", { text: i18n.prop("bo_salesorder_customer") }),
                 new sap.m.Text("", { text: "{customer}" }),
                 new sap.ui.core.Title("", { text: "Document" }),
-                new sap.m.Label("", { text: i18n.prop("module_a_bo_salesorder_docentry") }),
+                new sap.m.Label("", { text: i18n.prop("bo_salesorder_docentry") }),
                 new sap.m.Text("", { text: "{docEntry}" }),
-                new sap.m.Label("", { text: i18n.prop("module_a_bo_salesorder_documentstatus") }),
+                new sap.m.Label("", { text: i18n.prop("bo_salesorder_documentstatus") }),
                 new sap.m.Text("", { text: "{documentStatus}" }),
-                new sap.m.Label("", { text: i18n.prop("module_a_bo_salesorder_canceled") }),
+                new sap.m.Label("", { text: i18n.prop("bo_salesorder_canceled") }),
                 new sap.m.Text("", { text: "{canceled}" })
             ]
         });
@@ -52,7 +52,7 @@ export class DemoViewView extends BOViewView implements IDemoViewView {
             columns: [
                 new sap.m.Column({
                     header: new sap.m.Label("", {
-                        text: i18n.prop("module_a_bo_salesorderitem_lineid")
+                        text: i18n.prop("bo_salesorderitem_lineid")
                     }),
                     template: new sap.m.Text("", {
                         text: "{lineId}"
@@ -60,7 +60,7 @@ export class DemoViewView extends BOViewView implements IDemoViewView {
                 }),
                 new sap.m.Column({
                     header: new sap.m.Label("", {
-                        text: i18n.prop("module_a_bo_salesorderitem_linestatus")
+                        text: i18n.prop("bo_salesorderitem_linestatus")
                     }),
                     template: new sap.m.Text("", {
                         text: "{lineStatus}"
@@ -68,7 +68,7 @@ export class DemoViewView extends BOViewView implements IDemoViewView {
                 }),
                 new sap.m.Column({
                     header: new sap.m.Label("", {
-                        text: i18n.prop("module_a_bo_salesorderitem_itemcode")
+                        text: i18n.prop("bo_salesorderitem_itemcode")
                     }),
                     template: new sap.m.Text("", {
                         text: "{itemCode}"
@@ -76,7 +76,7 @@ export class DemoViewView extends BOViewView implements IDemoViewView {
                 }),
                 new sap.m.Column({
                     header: new sap.m.Label("", {
-                        text: i18n.prop("module_a_bo_salesorderitem_price")
+                        text: i18n.prop("bo_salesorderitem_price")
                     }),
                     template: new sap.m.Text("", {
                         text: "{Price}"
@@ -84,7 +84,7 @@ export class DemoViewView extends BOViewView implements IDemoViewView {
                 }),
                 new sap.m.Column({
                     header: new sap.m.Label("", {
-                        text: i18n.prop("module_a_bo_salesorderitem_quantity")
+                        text: i18n.prop("bo_salesorderitem_quantity")
                     }),
                     template: new sap.m.Text("", {
                         text: "{Quantity}"
@@ -92,7 +92,7 @@ export class DemoViewView extends BOViewView implements IDemoViewView {
                 }),
                 new sap.m.Column({
                     header: new sap.m.Label("", {
-                        text: i18n.prop("module_a_bo_salesorderitem_linetotal")
+                        text: i18n.prop("bo_salesorderitem_linetotal")
                     }),
                     template: new sap.m.Text("", {
                         text: "{lineTotal}"

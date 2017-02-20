@@ -46,7 +46,7 @@ export class DemoChooseView extends BOChooseView implements IDemoChooseView {
             columns: [
                 new sap.m.Column({
                     header: new sap.m.Label("", {
-                        text: i18n.prop("module_a_bo_salesorder_docentry")
+                        text: i18n.prop("bo_salesorder_docentry")
                     }),
                     template: new sap.m.Text("", {
                         text: "{docEntry}"
@@ -54,7 +54,7 @@ export class DemoChooseView extends BOChooseView implements IDemoChooseView {
                 }),
                 new sap.m.Column({
                     header: new sap.m.Label("", {
-                        text: i18n.prop("module_a_bo_salesorder_customer")
+                        text: i18n.prop("bo_salesorder_customer")
                     }),
                     template: new sap.m.Text("", {
                         text: "{customer}"
@@ -62,7 +62,7 @@ export class DemoChooseView extends BOChooseView implements IDemoChooseView {
                 }),
                 new sap.m.Column({
                     header: new sap.m.Label("", {
-                        text: i18n.prop("module_a_bo_salesorder_documentstatus")
+                        text: i18n.prop("bo_salesorder_documentstatus")
                     }),
                     template: new sap.m.Text("", {
                         text: "{documentStatus}"
@@ -70,7 +70,7 @@ export class DemoChooseView extends BOChooseView implements IDemoChooseView {
                 }),
                 new sap.m.Column({
                     header: new sap.m.Label("", {
-                        text: i18n.prop("module_a_bo_salesorder_canceled")
+                        text: i18n.prop("bo_salesorder_canceled")
                     }),
                     template: new sap.m.Text("", {
                         text: "{canceled}"
