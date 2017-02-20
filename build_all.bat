@@ -30,6 +30,9 @@ if "%OPTIONS%" neq "" (
 
 for /f %%l in ('dir /s /b "%WORK_FOLDER%tsconfig.json"') DO (
   echo --开始编译：%%~dpl
+REM 清理已存在js
+  del /s %%~dpl*.js
+REM 运行编译命令
   call !COMMOND! -p %%~dpl
 )
 

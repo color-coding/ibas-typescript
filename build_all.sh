@@ -28,6 +28,9 @@ for folder in `find ${WORK_FOLDER} -type f -name "*tsconfig.json*"`
 do
   folder=${folder%\/*}
   echo --开始编译：${folder}
+# 清理已存在js
+  find ${folder} -name "*.js" -exec rm {} \;
+# 运行编译命令
   if [ "${OPTIONS}" != "" ]
   then
 # 包括监听参数，后台运行命令
