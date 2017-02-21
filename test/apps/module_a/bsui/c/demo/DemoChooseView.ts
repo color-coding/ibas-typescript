@@ -43,40 +43,48 @@ export class DemoChooseView extends BOChooseView implements IDemoChooseView {
             ]
         }));
         this.table = new sap.m.Table("", {
+            fixedLayout: true,
             columns: [
                 new sap.m.Column({
-                    header: new sap.m.Label("", {
+                    header: new sap.m.Text("", {
                         text: i18n.prop("bo_salesorder_docentry")
-                    }),
-                    template: new sap.m.Text("", {
-                        text: "{docEntry}"
                     })
                 }),
                 new sap.m.Column({
-                    header: new sap.m.Label("", {
+                    header: new sap.m.Text("", {
                         text: i18n.prop("bo_salesorder_customer")
-                    }),
-                    template: new sap.m.Text("", {
-                        text: "{customer}"
                     })
                 }),
                 new sap.m.Column({
-                    header: new sap.m.Label("", {
+                    header: new sap.m.Text("", {
                         text: i18n.prop("bo_salesorder_documentstatus")
-                    }),
-                    template: new sap.m.Text("", {
-                        text: "{documentStatus}"
                     })
                 }),
                 new sap.m.Column({
-                    header: new sap.m.Label("", {
+                    header: new sap.m.Text("", {
                         text: i18n.prop("bo_salesorder_canceled")
-                    }),
-                    template: new sap.m.Text("", {
-                        text: "{canceled}"
                     })
                 })
-            ]
+            ],
+            items: {
+                path: "/",
+                template: new sap.m.ColumnListItem("", {
+                    cells: [
+                        new sap.m.Text("", {
+                            text: "{docEntry}"
+                        }),
+                        new sap.m.Text("", {
+                            text: "{customer}"
+                        }),
+                        new sap.m.Text("", {
+                            text: "{documentStatus}"
+                        }),
+                        new sap.m.Text("", {
+                            text: "{canceled}"
+                        })
+                    ]
+                })
+            }
         });
         form.addContent(this.table);
         this.id = form.getId();

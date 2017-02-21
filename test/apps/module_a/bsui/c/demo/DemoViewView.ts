@@ -49,56 +49,64 @@ export class DemoViewView extends BOViewView implements IDemoViewView {
         });
         form.addContent(new sap.ui.core.Title("", { text: "Items" }));
         this.table = new sap.m.Table("", {
+            fixedLayout: true,
             columns: [
                 new sap.m.Column({
-                    header: new sap.m.Label("", {
+                    header: new sap.m.Text("", {
                         text: i18n.prop("bo_salesorderitem_lineid")
-                    }),
-                    template: new sap.m.Text("", {
-                        text: "{lineId}"
                     })
                 }),
                 new sap.m.Column({
-                    header: new sap.m.Label("", {
+                    header: new sap.m.Text("", {
                         text: i18n.prop("bo_salesorderitem_linestatus")
-                    }),
-                    template: new sap.m.Text("", {
-                        text: "{lineStatus}"
                     })
                 }),
                 new sap.m.Column({
-                    header: new sap.m.Label("", {
+                    header: new sap.m.Text("", {
                         text: i18n.prop("bo_salesorderitem_itemcode")
-                    }),
-                    template: new sap.m.Text("", {
-                        text: "{itemCode}"
                     })
                 }),
                 new sap.m.Column({
-                    header: new sap.m.Label("", {
+                    header: new sap.m.Text("", {
                         text: i18n.prop("bo_salesorderitem_price")
-                    }),
-                    template: new sap.m.Text("", {
-                        text: "{Price}"
                     })
                 }),
                 new sap.m.Column({
-                    header: new sap.m.Label("", {
+                    header: new sap.m.Text("", {
                         text: i18n.prop("bo_salesorderitem_quantity")
-                    }),
-                    template: new sap.m.Text("", {
-                        text: "{Quantity}"
                     })
                 }),
                 new sap.m.Column({
-                    header: new sap.m.Label("", {
+                    header: new sap.m.Text("", {
                         text: i18n.prop("bo_salesorderitem_linetotal")
-                    }),
-                    template: new sap.m.Text("", {
-                        text: "{lineTotal}"
                     })
                 })
-            ]
+            ],
+            items: {
+                path: "/",
+                template: new sap.m.ColumnListItem("", {
+                    cells: [,
+                        new sap.m.Text("", {
+                            text: "{lineId}"
+                        }),
+                        new sap.m.Text("", {
+                            text: "{lineStatus}"
+                        }),
+                        new sap.m.Text("", {
+                            text: "{itemCode}"
+                        }),
+                        new sap.m.Text("", {
+                            text: "{Price}"
+                        }),
+                        new sap.m.Text("", {
+                            text: "{Quantity}"
+                        }),
+                        new sap.m.Text("", {
+                            text: "{lineTotal}"
+                        })
+                    ]
+                })
+            }
         });
         form.addContent(this.table);
         this.id = form.getId();

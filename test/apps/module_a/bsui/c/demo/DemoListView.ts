@@ -8,7 +8,7 @@
 
 /// <reference path="../../../../../../openui5/typings/index.d.ts" />
 import {
-    BOListView, i18n
+    BOListView, i18n, emDocumentStatus
 } from "../../../../../../ibas/bsbas/index";
 import { IDemoListView } from "../../../bsapp/demo/index";
 
@@ -52,40 +52,49 @@ export class DemoListView extends BOListView implements IDemoListView {
             ]
         }));
         this.table = new sap.m.Table("", {
+            fixedLayout: true,
+            growingScrollToLoad: true,
             columns: [
                 new sap.m.Column({
-                    header: new sap.m.Label("", {
+                    header: new sap.m.Text("", {
                         text: i18n.prop("bo_salesorder_docentry")
-                    }),
-                    template: new sap.m.Text("", {
-                        text: "{/docEntry}"
                     })
                 }),
                 new sap.m.Column({
-                    header: new sap.m.Label("", {
+                    header: new sap.m.Text("", {
                         text: i18n.prop("bo_salesorder_customer")
-                    }),
-                    template: new sap.m.Text("", {
-                        text: "{/customer}"
                     })
                 }),
                 new sap.m.Column({
-                    header: new sap.m.Label("", {
+                    header: new sap.m.Text("", {
                         text: i18n.prop("bo_salesorder_documentstatus")
-                    }),
-                    template: new sap.m.Text("", {
-                        text: "{/documentStatus}"
                     })
                 }),
                 new sap.m.Column({
-                    header: new sap.m.Label("", {
+                    header: new sap.m.Text("", {
                         text: i18n.prop("bo_salesorder_canceled")
-                    }),
-                    template: new sap.m.Text("", {
-                        text: "{/canceled}"
                     })
                 })
-            ]
+            ],
+            items: {
+                path: "/",
+                template: new sap.m.ColumnListItem("", {
+                    cells: [
+                        new sap.m.Text("", {
+                            text: "{docEntry}"
+                        }),
+                        new sap.m.Text("", {
+                            text: "{customer}"
+                        }),
+                        new sap.m.Text("", {
+                            text: "{documentStatus}"
+                        }),
+                        new sap.m.Text("", {
+                            text: "{canceled}"
+                        })
+                    ]
+                })
+            }
         });
         form.addContent(this.table);
         this.id = form.getId();

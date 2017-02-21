@@ -72,8 +72,9 @@ export class DemoEditView extends BOEditView implements IDemoEditView {
         });
         this.form.addContent(new sap.ui.core.Title("", { text: i18n.prop("bo_salesorderitem") }));
         this.table = new sap.m.Table("", {
-            rows: "{/}",
+            fixedLayout: true,
             headerToolbar: new sap.m.Toolbar("", {
+                level: "H2",
                 content: [
                     new sap.m.Button("", {
                         text: i18n.prop("sys_shell_ui_data_add"),
@@ -95,57 +96,62 @@ export class DemoEditView extends BOEditView implements IDemoEditView {
             }),
             columns: [
                 new sap.m.Column({
-                    header: new sap.m.Label("", {
+                    header: new sap.m.Text("", {
                         text: i18n.prop("bo_salesorderitem_lineid")
-                    }),
-                    template: new sap.m.Text("", {
-                        text: "{/lineId}"
                     })
                 }),
                 new sap.m.Column({
-                    header: new sap.m.Label("", {
+                    header: new sap.m.Text("", {
                         text: i18n.prop("bo_salesorderitem_linestatus")
-                    }),
-                    template: new sap.m.Text("", {
-                        selectedKey: "{/lineStatus}",
-                        showSecondaryValues: true,
-                        editable: false,
-                        items: utils.createComboBoxItems(emDocumentStatus)
                     })
                 }),
                 new sap.m.Column({
-                    header: new sap.m.Label("", {
+                    header: new sap.m.Text("", {
                         text: i18n.prop("bo_salesorderitem_itemcode")
-                    }),
-                    template: new sap.m.Input("", {
-                        value: "{/itemCode}"
                     })
                 }),
                 new sap.m.Column({
-                    header: new sap.m.Label("", {
+                    header: new sap.m.Text("", {
                         text: i18n.prop("bo_salesorderitem_price")
-                    }),
-                    template: new sap.m.Input("", {
-                        value: "{/Price}"
                     })
                 }),
                 new sap.m.Column({
-                    header: new sap.m.Label("", {
+                    header: new sap.m.Text("", {
                         text: i18n.prop("bo_salesorderitem_quantity")
-                    }),
-                    template: new sap.m.Input("", {
-                        value: "{/Quantity}"
                     })
                 }),
                 new sap.m.Column({
-                    header: new sap.m.Label("", {
+                    header: new sap.m.Text("", {
                         text: i18n.prop("bo_salesorderitem_linetotal")
-                    }),
-                    template: new sap.m.Input("", {
-                        value: "{/lineTotal}"
                     })
                 })
-            ]
+            ],
+            items: {
+                path: "/",
+                template: new sap.m.ColumnListItem("", {
+                    cells: [,
+                        new sap.m.Text("", {
+                            text: "{lineId}"
+                        }),
+                        new sap.m.ComboBox("", {
+                            selectedKey: "{lineStatus}",
+                            items: utils.createComboBoxItems(emDocumentStatus)
+                        }),
+                        new sap.m.Input("", {
+                            value: "{itemCode}"
+                        }),
+                        new sap.m.Input("", {
+                            value: "{Price}"
+                        }),
+                        new sap.m.Input("", {
+                            value: "{Quantity}"
+                        }),
+                        new sap.m.Input("", {
+                            value: "{lineTotal}"
+                        })
+                    ]
+                })
+            }
         });
         this.form.addContent(this.table);
         this.id = this.form.getId();
