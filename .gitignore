@@ -25,6 +25,7 @@ Web.config
 /openui5/LICENSE.txt
 /openui5/NOTICE.txt
 /openui5/README.txt
+/tomcat/
 
 # exceptions
 !src/3rdparty/*

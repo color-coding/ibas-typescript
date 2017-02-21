@@ -11,12 +11,14 @@
 
 
 ## 项目结构 | Projects
-* ibas/3rdparty    第三方库，其中js库需要定义.d.ts文件。
-* ibas/bobas       业务对象相关基础库。
-* ibas/bsbas       业务系统相关基础库。
-* apps/shell       业务系统应用相关。
-* test/bobas       业务对象相关测试。
-* test/app         业务系统相关测试。
+* ibas/3rdparty      第三方库，其中js库需要定义.d.ts文件。
+* ibas/bobas         业务对象相关基础库。
+* ibas/bsbas         业务系统相关基础库。
+* apps/shell         业务系统应用相关。
+* openui5/typings    openui5相关定义。
+* openui5/resources  openui5代码，此目录需要自行下载维护。
+* test/bobas         业务对象相关测试。
+* test/app           业务系统相关测试。
 
 ~~~
 注意：
@@ -37,8 +39,9 @@
 ~~~
 * 脚本说明
 ~~~
-build_all.bat/sh             用于编译ts文件，build_all.bat .\ -w 表示编译并监听文件变化。
-start_web_server_iis.bat     启动IIS Express服务，需要提前安装。
+build_all.bat/sh                   用于编译ts文件，build_all.bat .\ -w 表示编译并监听文件变化。
+start_web_server_iis.bat           启动IIS Express服务，需要提前安装。
+start_web_server_tomcat.bat/sh     启动tomcat服务，请自行下载tomcat并解压到此目录，详见脚本说明。
 ~~~
 
 ## 鸣谢 | Thanks
