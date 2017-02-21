@@ -72,7 +72,7 @@ export class SalesOrderItem extends bobas.BusinessObject<SalesOrderItem> {
      * 初始化方法，属性在此方法初始化
      */
     protected init(): void {
-
+        this.lineStatus = bobas.emDocumentStatus.PLANNED;
     }
 
 }
@@ -140,6 +140,7 @@ export class SalesOrder extends bobas.BusinessObject<SalesOrder> {
      * 初始化方法，属性在此方法初始化
      */
     protected init(): void {
+        this.documentStatus = bobas.emDocumentStatus.PLANNED;
         this.items = new SalesOrderItems(this);
     }
 }

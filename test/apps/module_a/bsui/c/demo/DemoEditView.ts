@@ -8,8 +8,9 @@
 
 /// <reference path="../../../../../../openui5/typings/index.d.ts" />
 import {
-    BOEditView, i18n
+    BOEditView, i18n, emDocumentStatus, emYesNo
 } from "../../../../../../ibas/bsbas/index";
+import { utils } from "../../../../../../openui5/typings/ibas.utils";
 import { SalesOrder, SalesOrderItem } from "../../../borep/bo/index";
 import { IDemoEditView } from "../../../bsapp/demo/index";
 
@@ -18,6 +19,10 @@ import { IDemoEditView } from "../../../bsapp/demo/index";
  */
 export class DemoEditView extends BOEditView implements IDemoEditView {
 
+    /** 添加销售订单事件 */
+    addSalesOrderItemEvent: Function;
+    /** 删除销售订单行事件 */
+    removeSalesOrderItemEvent: Function;
     /** 选择销售订单事件 */
     chooseSalesOrderEvent: Function;
     /** 选择销售订单行事件 */
@@ -25,7 +30,7 @@ export class DemoEditView extends BOEditView implements IDemoEditView {
     /** 绘制视图 */
     darw(): any {
         let that = this;
-        let form = new sap.ui.layout.form.SimpleForm("", {
+        this.form = new sap.ui.layout.form.SimpleForm("", {
             toolbar: new sap.m.Toolbar("", {
                 content: [
                     new sap.m.Button("", {
@@ -42,7 +47,7 @@ export class DemoEditView extends BOEditView implements IDemoEditView {
                 new sap.ui.core.Title("", { text: "Customer" }),
                 new sap.m.Label("", { text: i18n.prop("bo_salesorder_customer") }),
                 new sap.m.Input("", {
-                    value: "{customer}",
+                    value: "{/customer}",
                     showValueHelp: true,
                     valueHelpRequest: function () {
                         that.fireViewEvents(that.chooseSalesOrderEvent);
@@ -50,22 +55,51 @@ export class DemoEditView extends BOEditView implements IDemoEditView {
                 }),
                 new sap.ui.core.Title("", { text: "Document" }),
                 new sap.m.Label("", { text: i18n.prop("bo_salesorder_docentry") }),
-                new sap.m.Input("", { value: "{docEntry}" }),
+                new sap.m.Input("", { value: "{/docEntry}" }),
                 new sap.m.Label("", { text: i18n.prop("bo_salesorder_documentstatus") }),
-                new sap.m.Input("", { value: "{documentStatus}" }),
+                new sap.m.ComboBox("",
+                    {
+                        selectedKey: "{/documentStatus}",
+                        items: utils.createComboBoxItems(emDocumentStatus)
+                    }),
                 new sap.m.Label("", { text: i18n.prop("bo_salesorder_canceled") }),
-                new sap.m.Input("", { value: "{canceled}" })
+                new sap.m.ComboBox("",
+                    {
+                        selectedKey: "{/canceled}",
+                        items: utils.createComboBoxItems(emYesNo)
+                    })
             ]
         });
-        form.addContent(new sap.ui.core.Title("", { text: i18n.prop("bo_salesorderitem") }));
+        this.form.addContent(new sap.ui.core.Title("", { text: i18n.prop("bo_salesorderitem") }));
         this.table = new sap.m.Table("", {
+            rows: "{/}",
+            headerToolbar: new sap.m.Toolbar("", {
+                content: [
+                    new sap.m.Button("", {
+                        text: i18n.prop("sys_shell_ui_data_add"),
+                        type: sap.m.ButtonType.Transparent,
+                        icon: "sap-icon://add",
+                        press: function (): void {
+                            that.fireViewEvents(that.addSalesOrderItemEvent);
+                        }
+                    }),
+                    new sap.m.Button("", {
+                        text: i18n.prop("sys_shell_ui_data_remove"),
+                        type: sap.m.ButtonType.Transparent,
+                        icon: "sap-icon://less",
+                        press: function (): void {
+                            that.fireViewEvents(that.removeSalesOrderItemEvent);
+                        }
+                    })
+                ]
+            }),
             columns: [
                 new sap.m.Column({
                     header: new sap.m.Label("", {
                         text: i18n.prop("bo_salesorderitem_lineid")
                     }),
                     template: new sap.m.Text("", {
-                        text: "{lineId}"
+                        text: "{/lineId}"
                     })
                 }),
                 new sap.m.Column({
@@ -73,7 +107,10 @@ export class DemoEditView extends BOEditView implements IDemoEditView {
                         text: i18n.prop("bo_salesorderitem_linestatus")
                     }),
                     template: new sap.m.Text("", {
-                        text: "{lineStatus}"
+                        selectedKey: "{/lineStatus}",
+                        showSecondaryValues: true,
+                        editable: false,
+                        items: utils.createComboBoxItems(emDocumentStatus)
                     })
                 }),
                 new sap.m.Column({
@@ -81,7 +118,7 @@ export class DemoEditView extends BOEditView implements IDemoEditView {
                         text: i18n.prop("bo_salesorderitem_itemcode")
                     }),
                     template: new sap.m.Input("", {
-                        value: "{itemCode}"
+                        value: "{/itemCode}"
                     })
                 }),
                 new sap.m.Column({
@@ -89,7 +126,7 @@ export class DemoEditView extends BOEditView implements IDemoEditView {
                         text: i18n.prop("bo_salesorderitem_price")
                     }),
                     template: new sap.m.Input("", {
-                        value: "{Price}"
+                        value: "{/Price}"
                     })
                 }),
                 new sap.m.Column({
@@ -97,7 +134,7 @@ export class DemoEditView extends BOEditView implements IDemoEditView {
                         text: i18n.prop("bo_salesorderitem_quantity")
                     }),
                     template: new sap.m.Input("", {
-                        value: "{Quantity}"
+                        value: "{/Quantity}"
                     })
                 }),
                 new sap.m.Column({
@@ -105,19 +142,25 @@ export class DemoEditView extends BOEditView implements IDemoEditView {
                         text: i18n.prop("bo_salesorderitem_linetotal")
                     }),
                     template: new sap.m.Input("", {
-                        value: "{lineTotal}"
+                        value: "{/lineTotal}"
                     })
                 })
             ]
         });
-        form.addContent(this.table);
-        this.id = form.getId();
-        return form;
+        this.form.addContent(this.table);
+        this.id = this.form.getId();
+        return this.form;
     }
+    private form: sap.ui.layout.form.SimpleForm;
     private table: sap.m.Table;
 
     /** 显示数据 */
-    showSalesOrder(data: SalesOrder): void { }
+    showSalesOrder(data: SalesOrder): void {
+        this.form.setModel(new sap.ui.model.json.JSONModel(data));
+
+    }
     /** 显示数据 */
-    showSalesOrderItems(datas: SalesOrderItem[]): void { }
+    showSalesOrderItems(datas: SalesOrderItem[]): void {
+        this.table.setModel(new sap.ui.model.json.JSONModel(datas));
+    }
 }

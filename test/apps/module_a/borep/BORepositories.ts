@@ -8,7 +8,7 @@
 
 import {
     object, OperationMessages, OperationResult,
-    IDataConverter, BORepositoryApplication,url,
+    IDataConverter, BORepositoryApplication, url,
     IOperationResult, RemoteListener, ICriteria
 } from "../../../../ibas/bobas/index";
 import { DataConverter4Demo } from "./DataConverters";
@@ -43,7 +43,9 @@ export class BORepositoryDemo extends BORepositoryApplication {
             onCompleted(orders: any): void {
                 if (!object.isNull(callBack)) {
                     let opRslt = new OperationResult<bo.SalesOrder>();
-                    opRslt.resultObjects.add(orders);
+                    for (let item of orders) {
+                        opRslt.resultObjects.add(item);
+                    }
                     callBack.call(callBack, opRslt);
                 }
             }

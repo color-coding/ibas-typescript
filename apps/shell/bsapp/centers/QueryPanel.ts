@@ -21,7 +21,7 @@ export class QueryPanel extends QueryPanelBase<IQueryPanelView>  {
     /** 初始化 */
     protected init(callBack: Function): void {
         if (callBack instanceof Function) {
-            setTimeout(callBack, 2000);
+            setTimeout(callBack, 1000);
         }
     }
 }

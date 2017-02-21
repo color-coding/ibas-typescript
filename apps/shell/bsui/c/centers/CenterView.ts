@@ -322,6 +322,26 @@ export class CenterView extends BOView implements ICenterView {
                     }
                 }
             }
+            // 显示最后视图
+            if (this.viewQueue.length > 0) {
+                this.showView(this.viewQueue[this.viewQueue.length - 1]);
+            }
+        }
+    }
+    /** 清理当前视图 */
+    destroyCurrentView(): void {
+        this.form.setTitle(null);
+        this.form.setSubHeader(null);
+        this.form.setShowSubHeader(false);
+        let ctrls = this.form.getContent();
+        if (!object.isNull(ctrls)) {
+            for (let item of ctrls) {
+                for (let view of this.viewQueue) {
+                    if (view.id === item.getId()) {
+                        this.destroyView(view);
+                    }
+                }
+            }
         }
     }
     /** 设置忙状态 */
@@ -438,25 +458,7 @@ export class CenterView extends BOView implements ICenterView {
         });
         // 回退钮
         this.form.setShowNavButton(true);
-        this.form.attachNavButtonPress(null, function (): void {
-            let ctrls = that.form.getContent();
-            let preView;
-            if (!object.isNull(ctrls)) {
-                for (let item of ctrls) {
-                    for (let view of that.viewQueue) {
-                        if (view.id === item.getId()) {
-                            if (!object.isNull(preView)) {
-                                that.showView(preView);
-                                that.destroyView(view);
-                                break;
-                            }
-                        }
-                        // 记录上一个视图
-                        preView = view;
-                    }
-                }
-            }
-        });
+        this.form.attachNavButtonPress(null, this.destroyCurrentView, this);
         // 全屏钮
         let icon: string = "sap-icon://full-screen";
         if (config.get(CenterView.CONFIG_ITEM_FULL_SCREEN, false)) {
@@ -486,10 +488,7 @@ export class CenterView extends BOView implements ICenterView {
             icon: "sap-icon://inspect-down",
             type: sap.m.ButtonType.Transparent,
             press: function (): void {
-                that.form.destroyContent();
-                that.form.setTitle(null);
-                that.form.setSubHeader(null);
-                that.form.setShowSubHeader(false);
+                that.destroyCurrentView();
             }
         }));
         // this.form.setFloatingFooter(true);

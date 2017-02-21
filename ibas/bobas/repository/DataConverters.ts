@@ -310,6 +310,9 @@ export abstract class BOConverter extends Converter implements IBOConverter {
         let sType = source.constructor.name;
         target.type = sType;
         for (let sName in source) {
+            if (object.isNull(sName)) {
+                continue;
+            }
             // 首字母改为小写
             let value = source[sName];
             let name = this.mappingConvertProperty(sName, value);
@@ -424,6 +427,9 @@ export abstract class BOConverter extends Converter implements IBOConverter {
             target.isLoading = true;
         }
         for (let sName in source) {
+            if (object.isNull(sName)) {
+                continue;
+            }
             // 首字母改为小写
             let value = source[sName];
             let name = this.mappingParsingProperty(sName, value);

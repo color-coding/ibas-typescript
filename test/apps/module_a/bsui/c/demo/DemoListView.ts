@@ -58,7 +58,7 @@ export class DemoListView extends BOListView implements IDemoListView {
                         text: i18n.prop("bo_salesorder_docentry")
                     }),
                     template: new sap.m.Text("", {
-                        text: "{docEntry}"
+                        text: "{/docEntry}"
                     })
                 }),
                 new sap.m.Column({
@@ -66,7 +66,7 @@ export class DemoListView extends BOListView implements IDemoListView {
                         text: i18n.prop("bo_salesorder_customer")
                     }),
                     template: new sap.m.Text("", {
-                        text: "{customer}"
+                        text: "{/customer}"
                     })
                 }),
                 new sap.m.Column({
@@ -74,7 +74,7 @@ export class DemoListView extends BOListView implements IDemoListView {
                         text: i18n.prop("bo_salesorder_documentstatus")
                     }),
                     template: new sap.m.Text("", {
-                        text: "{documentStatus}"
+                        text: "{/documentStatus}"
                     })
                 }),
                 new sap.m.Column({
@@ -82,7 +82,7 @@ export class DemoListView extends BOListView implements IDemoListView {
                         text: i18n.prop("bo_salesorder_canceled")
                     }),
                     template: new sap.m.Text("", {
-                        text: "{canceled}"
+                        text: "{/canceled}"
                     })
                 })
             ]
@@ -94,9 +94,7 @@ export class DemoListView extends BOListView implements IDemoListView {
     private table: sap.m.Table;
     /** 显示数据 */
     showData(datas: any): void {
-        let uiDatas = new sap.ui.model.json.JSONModel(datas);
-        this.table.setModel(uiDatas);
-        this.table.bindItems("/");
+        this.table.setModel(new sap.ui.model.json.JSONModel(datas));
     }
 
 }

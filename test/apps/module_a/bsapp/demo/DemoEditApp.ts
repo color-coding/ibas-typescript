@@ -7,7 +7,7 @@
  */
 
 import {
-    BOEditApplication, IBOEditView, emMessageType, ICriteria, i18n, IOperationResult, object
+    BOEditApplication, IBOEditView, emMessageType, ICriteria, i18n, IOperationResult, object, emYesNo
 } from "../../../../../ibas/bsbas/index";
 import { BORepositoryDemo } from "../../borep/BORepositories";
 import { SalesOrder, SalesOrderItem, SalesOrderItems } from "../../borep/bo/index";
@@ -34,6 +34,8 @@ export class DemoEditApp extends BOEditApplication<IDemoEditView, SalesOrder> {
         // 其他事件
         this.view.chooseSalesOrderEvent = this.chooseSalesOrder;
         this.view.chooseSalesOrderItemEvent = this.chooseSalesOrderItem;
+        this.view.addSalesOrderItemEvent = this.addSalesOrderItem;
+        this.view.removeSalesOrderItemEvent = this.removeSalesOrderItem;
     }
     /** 视图显示后 */
     protected viewShowed(): void {
@@ -52,6 +54,10 @@ export class DemoEditApp extends BOEditApplication<IDemoEditView, SalesOrder> {
         let data: SalesOrder = arguments[0];
         if (object.isNull(data)) {
             data = new SalesOrder();
+            data.customer = "C00001";
+            data.canceled = emYesNo.YES;
+            let item = data.items.create();
+            item.itemCode = "A00001";
         }
         this.editData = data;
         super.run();
@@ -67,9 +73,25 @@ export class DemoEditApp extends BOEditApplication<IDemoEditView, SalesOrder> {
     chooseSalesOrderItem(): void {
 
     }
+    /** 添加销售订单事件 */
+    addSalesOrderItem(): void {
+        this.editData.items.create();
+        this.view.showSalesOrderItems(this.editData.items);
+    }
+    /** 删除销售订单行事件 */
+    removeSalesOrderItem(item: SalesOrderItem): void {
+        if (this.editData.items.indexOf(item) >= 0) {
+            this.editData.items.remove(item);
+            this.view.showSalesOrderItems(this.editData.items);
+        }
+    }
 }
 /** 视图-演示 */
 export interface IDemoEditView extends IBOEditView {
+    /** 添加销售订单事件 */
+    addSalesOrderItemEvent: Function;
+    /** 删除销售订单行事件 */
+    removeSalesOrderItemEvent: Function;
     /** 选择销售订单事件 */
     chooseSalesOrderEvent: Function;
     /** 选择销售订单行事件 */
