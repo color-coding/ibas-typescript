@@ -20,7 +20,7 @@ export class ViewShowerDefault implements IViewShower {
         let viewContent = view.darw();
         if (object.isNull(viewContent)) {
             logger.log(emMessageLevel.WARN, "shower: empty view.");
-        } else if (viewContent instanceof sap.ui.layout.form.Form) {
+        } else if (viewContent instanceof sap.ui.layout.Grid) {
             viewContent.placeAt("content");
         } else if (viewContent instanceof sap.tnt.ToolPage) {
             viewContent.placeAt("content");

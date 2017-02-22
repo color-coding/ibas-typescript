@@ -55,49 +55,21 @@ export class LoginView extends BOView implements ILoginView {
             text: i18n.prop("sys_shell_ui_login")
         });
         this.butLogin.attachPress(this.fireLoginEvent, this);
-        this.form = new sap.ui.layout.form.Form("",
+        this.form = new sap.ui.layout.Grid("",
             {
-                formContainers: [
-                    new sap.ui.layout.form.FormContainer("", {
-                        formElements: [
-                            new sap.ui.layout.form.FormElement("",
-                                {
-                                    fields: [
-                                        new sap.m.Label("", { text: i18n.prop("sys_shell_ui_user") })
-                                    ]
-                                }),
-                            new sap.ui.layout.form.FormElement("",
-                                {
-                                    fields: [
-                                        this.txtUser
-                                    ]
-                                }),
-                            new sap.ui.layout.form.FormElement("",
-                                {
-                                    fields: [
-                                        new sap.m.Label("", { text: i18n.prop("sys_shell_ui_password") })
-                                    ]
-                                }),
-                            new sap.ui.layout.form.FormElement("",
-                                {
-                                    fields: [
-                                        this.txtPassword
-                                    ]
-                                }),
-                            new sap.ui.layout.form.FormElement("",
-                                {
-                                    fields: [
-                                        this.butLogin
-                                    ]
-                                }),
-                        ]
-                    })
+                defaultSpan: "L3 M4 S6",
+                content: [
+                    new sap.m.Label("", { text: i18n.prop("sys_shell_ui_user") }),
+                    this.txtUser,
+                    new sap.m.Label("", { text: i18n.prop("sys_shell_ui_password") }),
+                    this.txtPassword,
+                    this.butLogin
                 ]
             });
         // 重新赋值id
         this.id = this.form.getId();
         return this.form;
     }
-    private form: sap.ui.layout.form.Form;
+    private form: sap.ui.layout.Grid;
 
 }
