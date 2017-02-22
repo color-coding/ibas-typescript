@@ -30,4 +30,5 @@ Web.config
 
 # exceptions
 !src/3rdparty/*
-!openui5/typings/*
+!openui5/typings/*.ts
+!openui5/typings/*.json
