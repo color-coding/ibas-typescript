@@ -25,6 +25,7 @@ export class LoginApp extends BOApplication<ILoginView> implements ILoginApp {
         super();
         this.id = LoginApp.APPLICATION_ID;
         this.name = LoginApp.APPLICATION_NAME;
+        this.description = i18n.prop(this.name);
     }
     /** 注册视图 */
     protected registerView(): void {

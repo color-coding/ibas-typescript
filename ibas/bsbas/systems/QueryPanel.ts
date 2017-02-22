@@ -7,7 +7,7 @@
  */
 
 import {
-    object, ICriteria, Criteria
+    object, ICriteria, Criteria,i18n
 } from "../../../ibas/bobas/index";
 import { BOBarApplication } from "../applications/index";
 import { IQueryPanelView, IQueryPanel, IUseQueryPanel } from "./Systems.d";
@@ -24,6 +24,7 @@ export abstract class QueryPanel<T extends IQueryPanelView> extends BOBarApplica
         super();
         this.id = QueryPanel.APPLICATION_ID;
         this.name = QueryPanel.APPLICATION_NAME;
+        this.description = i18n.prop(this.name);
     }
     /** 注册视图 */
     protected registerView(): void {

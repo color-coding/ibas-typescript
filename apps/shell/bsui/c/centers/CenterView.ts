@@ -247,32 +247,36 @@ export class CenterView extends BOView implements ICenterView, IEmbeddedQueryPan
                     // 设置视图导航
                     queryPanel.navigation = this.application.navigation;
                     queryPanel.viewShower = this;
-                    queryPanel.description = i18n.prop(queryPanel.name);
                     let embeddedView: IEmbeddedQueryPanel;
                     // 判断面板嵌入位置
                     if (view instanceof BOQueryViewWithPanel) {
                         // 视图继承嵌入接口
-                        embeddedView = view;
+                        if (!view.isDisplayed) {
+                            // 没有显示过才处理
+                            embeddedView = view;
+                        }
                     } else {
                         // 视图不嵌入
                         embeddedView = this;
                     }
-                    // 查询面板位置，先添加提示
-                    embeddedView.embedded(new sap.m.Toolbar("", {
-                        width: "100%",
-                        design: sap.m.ToolbarDesign.Transparent,
-                        content: [
-                            new sap.m.MessageStrip("", {
-                                text: i18n.prop("sys_shell_initialize_query_panel"),
-                                type: sap.ui.core.MessageType.Warning
-                            })]
-                    }));
-                    // 运行查询面板，初始化完成添加到视图
-                    queryPanel.run(function (): void {
-                        embeddedView.embedded(queryPanel.view.darwBar());
-                        // 监听查询面板
-                        queryPanel.addListener(view);
-                    });
+                    if (!object.isNull(embeddedView)) {
+                        // 查询面板位置，先添加提示
+                        embeddedView.embedded(new sap.m.Toolbar("", {
+                            width: "100%",
+                            design: sap.m.ToolbarDesign.Transparent,
+                            content: [
+                                new sap.m.MessageStrip("", {
+                                    text: i18n.prop("sys_shell_initialize_query_panel"),
+                                    type: sap.ui.core.MessageType.Warning
+                                })]
+                        }));
+                        // 运行查询面板，初始化完成添加到视图
+                        queryPanel.run(function (): void {
+                            embeddedView.embedded(queryPanel.view.darwBar());
+                            // 监听查询面板
+                            queryPanel.addListener(view);
+                        });
+                    }
                 }
             }
             this.viewQueue.push(view);

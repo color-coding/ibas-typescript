@@ -6,6 +6,9 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
+import {
+    i18n
+} from "../../../ibas/bobas/index";
 import { BOResidentApplication } from "../applications/index";
 import { ISuggestionView, ISuggestionApp } from "./Systems.d";
 
@@ -21,6 +24,7 @@ export class SuggestionApp extends BOResidentApplication<ISuggestionView> implem
         super();
         this.id = SuggestionApp.APPLICATION_ID;
         this.name = SuggestionApp.APPLICATION_NAME;
+        this.description = i18n.prop(this.name);
     }
     /** 注册视图 */
     protected registerView(): void {

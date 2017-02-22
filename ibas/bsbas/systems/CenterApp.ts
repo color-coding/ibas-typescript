@@ -32,6 +32,7 @@ export abstract class CenterApp extends BOApplication<ICenterView> implements IC
         super();
         this.id = CenterApp.APPLICATION_ID;
         this.name = CenterApp.APPLICATION_NAME;
+        this.description = i18n.prop(this.name);
     }
     /** 注册视图 */
     protected registerView(): void {
@@ -60,7 +61,6 @@ export abstract class CenterApp extends BOApplication<ICenterView> implements IC
         let app: IBarApplication<IBarView> = Factories.systemsFactory.createSuggestionApp();
         app.navigation = this.navigation;
         app.viewShower = this.view;
-        app.description = i18n.prop(app.name);
         this.view.showResidentView(app.view);
     }
     /** 帮助 */
@@ -68,7 +68,6 @@ export abstract class CenterApp extends BOApplication<ICenterView> implements IC
         let app: IApplication<IView> = Factories.systemsFactory.createHelpApp();
         app.navigation = this.navigation;
         app.viewShower = this.view;
-        app.description = i18n.prop(app.name);
         app.run();
     }
     /** 关于 */
@@ -76,7 +75,6 @@ export abstract class CenterApp extends BOApplication<ICenterView> implements IC
         let app: IApplication<IView> = Factories.systemsFactory.createAboutApp();
         app.navigation = this.navigation;
         app.viewShower = this.view;
-        app.description = i18n.prop(app.name);
         app.run();
     }
     /** 初始化用户相关 */

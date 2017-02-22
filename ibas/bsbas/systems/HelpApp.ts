@@ -6,6 +6,9 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
+import {
+    i18n, 
+} from "../../../ibas/bobas/index";
 import { BOApplication } from "../applications/index";
 import { IHelpView, IHelpApp } from "./Systems.d";
 
@@ -25,6 +28,7 @@ export class HelpApp extends BOApplication<IHelpView> implements IHelpApp {
         super();
         this.id = HelpApp.APPLICATION_ID;
         this.name = HelpApp.APPLICATION_NAME;
+        this.description = i18n.prop(this.name);
     }
     /** 注册视图 */
     protected registerView(): void {
