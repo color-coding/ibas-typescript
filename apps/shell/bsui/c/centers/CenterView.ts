@@ -205,7 +205,7 @@ export class CenterView extends BOView implements ICenterView {
         nvList.addItem(nvItem);
     }
     private _viewQueue: Array<IView>;
-    get viewQueue() {
+    get viewQueue(): Array<IView> {
         if (object.isNull(this._viewQueue)) {
             this._viewQueue = new Array<IView>();
         }
@@ -216,6 +216,7 @@ export class CenterView extends BOView implements ICenterView {
     }
     /** 显示视图 */
     showView(view: IView): void {
+        let that = this;
         if (view instanceof UrlView) {
             // 视图为地址视图
             this.showUrlView(view);
@@ -245,19 +246,21 @@ export class CenterView extends BOView implements ICenterView {
                 } else {
                     // 设置视图导航
                     queryPanel.navigation = this.application.navigation;
+                    queryPanel.viewShower = this;
+                    queryPanel.description = i18n.prop(queryPanel.name);
                     // 查询面板位置，先添加提示
-                    let panel: sap.m.OverflowToolbar = new sap.m.OverflowToolbar("", {
+                    this.form.setSubHeader(new sap.m.OverflowToolbar("", {
                         content: [new sap.m.MessageStrip("", {
                             text: i18n.prop("sys_shell_initialize_query_panel"),
                             type: sap.ui.core.MessageType.Warning
                         })]
-                    });
-                    this.form.setSubHeader(panel);
+                    }));
                     this.form.setShowSubHeader(true);
                     // 运行查询面板，初始化完成添加到视图
                     queryPanel.run(function (): void {
-                        panel.destroyContent();
-                        panel.addContent(queryPanel.view.darw());
+                        that.form.destroySubHeader();
+                        that.form.setSubHeader(queryPanel.view.darwBar());
+                        that.form.setShowSubHeader(true);
                         // 监听查询面板
                         queryPanel.addListener(view);
                     });

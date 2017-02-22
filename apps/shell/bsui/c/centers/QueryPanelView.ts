@@ -7,25 +7,34 @@
  */
 
 /// <reference path="../../../../../openui5/typings/index.d.ts" />
-import { View } from "../../../../../ibas/bsbas/index";
+import { BOBarView } from "../../../../../ibas/bsbas/index";
 import { IQueryPanelView } from "../../../bsapp/centers/QueryPanel";
 
 /**
  * 视图-查询面板
  */
-export class QueryPanelView extends View implements IQueryPanelView {
-    private searchField: sap.m.SearchField;
-    /** 绘制视图 */
-    darw(): any {
+export class QueryPanelView extends BOBarView implements IQueryPanelView {
+    /** 绘制工具条视图 */
+    darwBar(): any {
         let that = this;
         this.searchField = new sap.m.SearchField("", {
-            width: "98%",
             search: function () {
                 that.fireViewEvents(that.searchEvent);
             }
         });
-        return this.searchField;
+        this.configButton = new sap.m.Button("", {
+            icon: "sap-icon://filter",
+            type: sap.m.ButtonType.Transparent,
+            press: function (): void {
+                that.fireViewEvents(that.showFullViewEvent);
+            }
+        });
+        return new sap.m.Toolbar("", {
+            content: [this.searchField, this.configButton]
+        });
     }
+    private searchField: sap.m.SearchField;
+    private configButton: sap.m.Button;
     /** 查询 */
     searchEvent: Function;
     /** 查询内容 */
@@ -34,5 +43,9 @@ export class QueryPanelView extends View implements IQueryPanelView {
     }
     set searchContent(value: string) {
         this.searchField.setValue(value);
+    }
+    /** 绘制视图 */
+    darw(): any {
+
     }
 }

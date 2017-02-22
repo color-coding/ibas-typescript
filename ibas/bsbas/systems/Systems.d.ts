@@ -116,7 +116,7 @@ export interface IQueryPanel<T extends IQueryPanelView> extends IApplication<T> 
 	addListener(listener: IUseQueryPanel);
 }
 /** 查询面板-视图 */
-export interface IQueryPanelView extends IView {
+export interface IQueryPanelView extends IBarView {
 	/** 查询事件 */
 	searchEvent: Function;
 	/** 查询内容 */

@@ -9,13 +9,13 @@
 import {
     object, ICriteria, Criteria
 } from "../../../ibas/bobas/index";
-import { BOApplication } from "../applications/index";
+import { BOBarApplication } from "../applications/index";
 import { IQueryPanelView, IQueryPanel, IUseQueryPanel } from "./Systems.d";
 
 /**
  * 查询面板
  */
-export abstract class QueryPanel<T extends IQueryPanelView> extends BOApplication<T> implements IQueryPanel<T> {
+export abstract class QueryPanel<T extends IQueryPanelView> extends BOBarApplication<T> implements IQueryPanel<T> {
     /** 应用标识 */
     static APPLICATION_ID: string = "69e3d786-5bf5-451d-b660-3eb485171af5";
     /** 应用名称 */
@@ -27,6 +27,7 @@ export abstract class QueryPanel<T extends IQueryPanelView> extends BOApplicatio
     }
     /** 注册视图 */
     protected registerView(): void {
+        super.registerView();
         // 注册视图事件
         this.view.searchEvent = this.search;
     }
