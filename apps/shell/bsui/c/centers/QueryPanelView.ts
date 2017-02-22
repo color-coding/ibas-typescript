@@ -30,7 +30,12 @@ export class QueryPanelView extends BOBarView implements IQueryPanelView {
             }
         });
         return new sap.m.Toolbar("", {
-            content: [this.searchField, this.configButton]
+            width: "100%",
+            design: sap.m.ToolbarDesign.Transparent,
+            content: [
+                this.searchField,
+                this.configButton
+            ]
         });
     }
     private searchField: sap.m.SearchField;

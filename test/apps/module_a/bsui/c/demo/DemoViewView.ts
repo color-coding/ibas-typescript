@@ -8,10 +8,11 @@
 
 /// <reference path="../../../../../../openui5/typings/index.d.ts" />
 import {
-    BOViewView, i18n
+    BOViewView, i18n, emDocumentStatus
 } from "../../../../../../ibas/bsbas/index";
 import { SalesOrder, SalesOrderItem } from "../../../borep/bo/index";
 import { IDemoViewView } from "../../../bsapp/demo/index";
+import { utils } from "../../../../../../openui5/typings/ibas.utils";
 
 /**
  * 视图-demo
@@ -21,19 +22,7 @@ export class DemoViewView extends BOViewView implements IDemoViewView {
     /** 绘制视图 */
     darw(): any {
         let that = this;
-        let form = new sap.ui.layout.form.SimpleForm("", {
-            toolbar: new sap.m.Toolbar("", {
-                content: [
-                    new sap.m.Button("", {
-                        text: i18n.prop("sys_shell_ui_data_edit"),
-                        type: sap.m.ButtonType.Transparent,
-                        icon: "sap-icon://edit",
-                        press: function (): void {
-                            that.fireViewEvents(that.editDataEvent);
-                        }
-                    })
-                ]
-            }),
+        this.form = new sap.ui.layout.form.SimpleForm("", {
             content: [
                 new sap.ui.core.Title("", { text: "Customer" }),
                 new sap.m.Label("", { text: i18n.prop("bo_salesorder_customer") }),
@@ -47,72 +36,73 @@ export class DemoViewView extends BOViewView implements IDemoViewView {
                 new sap.m.Text("", { text: "{canceled}" })
             ]
         });
-        form.addContent(new sap.ui.core.Title("", { text: "Items" }));
-        this.table = new sap.m.Table("", {
-            fixedLayout: true,
+        this.form.addContent(new sap.ui.core.Title("", { text: "Items" }));
+        this.table = new sap.ui.table.Table("", {
+            visibleRowCount: 6,
+            rows: "{/}",
             columns: [
-                new sap.m.Column({
-                    header: new sap.m.Text("", {
-                        text: i18n.prop("bo_salesorderitem_lineid")
+                new sap.ui.table.Column("", {
+                    label: i18n.prop("bo_salesorderitem_lineid"),
+                    template: new sap.m.Text("", {
+                        text: "{lineId}"
                     })
                 }),
-                new sap.m.Column({
-                    header: new sap.m.Text("", {
-                        text: i18n.prop("bo_salesorderitem_linestatus")
+                new sap.ui.table.Column("", {
+                    label: i18n.prop("bo_salesorderitem_linestatus"),
+                    template: new sap.m.ComboBox("", {
+                        selectedKey: "{lineStatus}",
+                        items: utils.createComboBoxItems(emDocumentStatus)
                     })
                 }),
-                new sap.m.Column({
-                    header: new sap.m.Text("", {
-                        text: i18n.prop("bo_salesorderitem_itemcode")
+                new sap.ui.table.Column("", {
+                    label: i18n.prop("bo_salesorderitem_itemcode"),
+                    template: new sap.m.Text("", {
+                        text: "{itemCode}"
                     })
                 }),
-                new sap.m.Column({
-                    header: new sap.m.Text("", {
-                        text: i18n.prop("bo_salesorderitem_price")
+                new sap.ui.table.Column("", {
+                    label: i18n.prop("bo_salesorderitem_price"),
+                    template: new sap.m.Text("", {
+                        text: "{price}"
                     })
                 }),
-                new sap.m.Column({
-                    header: new sap.m.Text("", {
-                        text: i18n.prop("bo_salesorderitem_quantity")
+                new sap.ui.table.Column("", {
+                    label: i18n.prop("bo_salesorderitem_quantity"),
+                    template: new sap.m.Text("", {
+                        text: "{quantity}"
                     })
                 }),
-                new sap.m.Column({
-                    header: new sap.m.Text("", {
-                        text: i18n.prop("bo_salesorderitem_linetotal")
+                new sap.ui.table.Column("", {
+                    label: i18n.prop("bo_salesorderitem_linetotal"),
+                    template: new sap.m.Text("", {
+                        text: "{lineTotal}"
                     })
                 })
-            ],
-            items: {
-                path: "/",
-                template: new sap.m.ColumnListItem("", {
-                    cells: [,
-                        new sap.m.Text("", {
-                            text: "{lineId}"
-                        }),
-                        new sap.m.Text("", {
-                            text: "{lineStatus}"
-                        }),
-                        new sap.m.Text("", {
-                            text: "{itemCode}"
-                        }),
-                        new sap.m.Text("", {
-                            text: "{Price}"
-                        }),
-                        new sap.m.Text("", {
-                            text: "{Quantity}"
-                        }),
-                        new sap.m.Text("", {
-                            text: "{lineTotal}"
-                        })
-                    ]
-                })
-            }
+            ]
         });
-        form.addContent(this.table);
-        this.id = form.getId();
-        return form;
+        this.form.addContent(this.table);
+        this.page = new sap.m.Page("", {
+            showHeader: false,
+            subHeader: new sap.m.Toolbar("", {
+                content: [
+                    new sap.m.Button("", {
+                        text: i18n.prop("sys_shell_ui_data_edit"),
+                        type: sap.m.ButtonType.Transparent,
+                        icon: "sap-icon://edit",
+                        press: function (): void {
+                            that.fireViewEvents(that.editDataEvent);
+                        }
+                    })
+                ]
+            }),
+            content: [this.form]
+        });
+        this.id = this.page.getId();
+        return this.page;
     }
-    private table: sap.m.Table;
+    private page: sap.m.Page;
+    private form: sap.ui.layout.form.SimpleForm;
+    private table: sap.ui.table.Table;
 
     /** 显示数据 */
     showSalesOrder(data: SalesOrder): void { }

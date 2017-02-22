@@ -98,32 +98,33 @@ export class DemoEditView extends BOEditView implements IDemoEditView {
                 }),
                 new sap.ui.table.Column("", {
                     label: i18n.prop("bo_salesorderitem_itemcode"),
-                    template: new sap.m.Text("", {
-                        text: "{itemCode}"
+                    template: new sap.m.Input("", {
+                        value: "{itemCode}",
+                        showValueHelp: true
                     })
                 }),
                 new sap.ui.table.Column("", {
                     label: i18n.prop("bo_salesorderitem_price"),
-                    template: new sap.m.Text("", {
-                        text: "{price}"
+                    template: new sap.m.Input("", {
+                        value: "{price}"
                     })
                 }),
                 new sap.ui.table.Column("", {
                     label: i18n.prop("bo_salesorderitem_quantity"),
-                    template: new sap.m.Text("", {
-                        text: "{quantity}"
+                    template: new sap.m.Input("", {
+                        value: "{quantity}"
                     })
                 }),
                 new sap.ui.table.Column("", {
                     label: i18n.prop("bo_salesorderitem_linetotal"),
-                    template: new sap.m.Text("", {
-                        text: "{lineTotal}"
+                    template: new sap.m.Input("", {
+                        value: "{lineTotal}"
                     })
                 })
             ]
         });
         this.form.addContent(this.table);
-        let page = new sap.m.Page("", {
+        this.page = new sap.m.Page("", {
             showHeader: false,
             subHeader: new sap.m.Toolbar("", {
                 content: [
@@ -139,9 +140,10 @@ export class DemoEditView extends BOEditView implements IDemoEditView {
             }),
             content: [this.form]
         });
-        this.id = page.getId();
-        return page;
+        this.id = this.page.getId();
+        return this.page;
     }
+    private page: sap.m.Page;
     private form: sap.ui.layout.form.SimpleForm;
     private table: sap.ui.table.Table;
 

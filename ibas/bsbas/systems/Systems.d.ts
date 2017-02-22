@@ -127,6 +127,11 @@ export interface IUseQueryPanel {
 	/** 查询数据 */
 	query(criteria: ICriteria): void;
 }
+/** 嵌入查询面板 */
+export interface IEmbeddedQueryPanel {
+    /** 嵌入 */
+    embedded(view: any): void;
+}
 /** 用户 */
 export interface IUser {
 	/** 编号 */

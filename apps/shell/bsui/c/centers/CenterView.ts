@@ -10,16 +10,16 @@
 import {
     i18n, object, string, BOView, UrlView, emMessageType,
     IModuleConsole, IView, config, IBarView, BOQueryView,
-    BOChooseView, BOBarView
+    BOChooseView, BOBarView, BOQueryViewWithPanel
 } from "../../../../../ibas/bsbas/index";
 import {
-    ICenterView, IUserModule, IUser, Factories
+    ICenterView, IUserModule, IUser, Factories, IEmbeddedQueryPanel
 } from "../../../../../ibas/bsbas/systems/index";
 
 /**
  * 视图-中心
  */
-export class CenterView extends BOView implements ICenterView {
+export class CenterView extends BOView implements ICenterView, IEmbeddedQueryPanel {
     /** 显示视图 */
     show(view: IView): void {
         this.showView(view);
@@ -248,19 +248,28 @@ export class CenterView extends BOView implements ICenterView {
                     queryPanel.navigation = this.application.navigation;
                     queryPanel.viewShower = this;
                     queryPanel.description = i18n.prop(queryPanel.name);
+                    let embeddedView: IEmbeddedQueryPanel;
+                    // 判断面板嵌入位置
+                    if (view instanceof BOQueryViewWithPanel) {
+                        // 视图继承嵌入接口
+                        embeddedView = view;
+                    } else {
+                        // 视图不嵌入
+                        embeddedView = this;
+                    }
                     // 查询面板位置，先添加提示
-                    this.form.setSubHeader(new sap.m.OverflowToolbar("", {
-                        content: [new sap.m.MessageStrip("", {
-                            text: i18n.prop("sys_shell_initialize_query_panel"),
-                            type: sap.ui.core.MessageType.Warning
-                        })]
+                    embeddedView.embedded(new sap.m.Toolbar("", {
+                        width: "100%",
+                        design: sap.m.ToolbarDesign.Transparent,
+                        content: [
+                            new sap.m.MessageStrip("", {
+                                text: i18n.prop("sys_shell_initialize_query_panel"),
+                                type: sap.ui.core.MessageType.Warning
+                            })]
                     }));
-                    this.form.setShowSubHeader(true);
                     // 运行查询面板，初始化完成添加到视图
                     queryPanel.run(function (): void {
-                        that.form.destroySubHeader();
-                        that.form.setSubHeader(queryPanel.view.darwBar());
-                        that.form.setShowSubHeader(true);
+                        embeddedView.embedded(queryPanel.view.darwBar());
                         // 监听查询面板
                         queryPanel.addListener(view);
                     });
@@ -268,6 +277,12 @@ export class CenterView extends BOView implements ICenterView {
             }
             this.viewQueue.push(view);
         }
+    }
+    /** 嵌入查询面板 */
+    embedded(view: any): void {
+        this.form.destroySubHeader();
+        this.form.setSubHeader(view);
+        this.form.setShowSubHeader(true);
     }
     /** 显示地址视图 */
     showUrlView(view: UrlView): void {
