@@ -17,6 +17,10 @@
 		{
 			"name": "ibas.bsbas",
 			"version": "0.1.0"
+		},
+		{
+			"name": "openui5",
+			"version": "1.44.6"
 		}
 	]
 }

@@ -16,20 +16,60 @@ import { BOView } from "../../../../../ibas/bsbas/index";
 export class AboutView extends BOView implements IAboutView {
     /** 绘制视图 */
     darw(): any {
-        let form = new sap.ui.layout.VerticalLayout("", {
-            width: "100%",
-            height: "100%"
+        this.form = new sap.ui.layout.form.SimpleForm("", {
+            maxContainerCols: 2,
+            editable: false,
+            layout: sap.ui.layout.form.SimpleFormLayout.ResponsiveGridLayout,
+            labelSpanL: 3,
+            labelSpanM: 3,
+            emptySpanL: 4,
+            emptySpanM: 4,
+            columnsL: 1,
+            columnsM: 1,
+            content: []
         });
-        this.textArea = new sap.m.TextArea("", {
-            width: "100%",
-            height: "100%"
-        });
-        form.addContent(this.textArea);
-        return form;
+        this.id = this.form.getId();
+        return this.form;
     }
-    private textArea: sap.m.TextArea;
+    private form: sap.ui.layout.form.SimpleForm;
     /** 显示版本 */
     showVersions(version: any): void {
-        this.textArea.setValue(JSON.stringify(version));
+        this.form.addContent(new sap.ui.core.Title("", { text: "Shell" }));
+        this.form.addContent(new sap.m.Label("", { text: "name" }));
+        this.form.addContent(new sap.m.Text("", { text: version.name }));
+        this.form.addContent(new sap.m.Label("", { text: "version" }));
+        this.form.addContent(new sap.m.Text("", { text: version.version }));
+        this.form.addContent(new sap.m.Label("", { text: "buildTimestamp" }));
+        this.form.addContent(new sap.m.Text("", { text: version.buildTimestamp }));
+        this.form.addContent(new sap.ui.core.Title("", { text: "Libraries" }));
+        for (let item of version.libraries) {
+            this.form.addContent(new sap.m.Label("", { text: "name" }));
+            this.form.addContent(new sap.m.Text("", { text: item.name }));
+            this.form.addContent(new sap.m.Label("", { text: "version" }));
+            this.form.addContent(new sap.m.Text("", { text: item.version }));
+        }
+        this.form.addContent(new sap.ui.core.Title("", { text: "Authors" }));
+        this.form.addContent(new sap.m.Label("", { text: "niuren.zhu" }));
+        this.form.addContent(new sap.m.Link("", {
+            text: "niuren.zhu@icloud.com",
+            press: function () {
+                sap.m.URLHelper.triggerEmail(this.getText(),"hi, niuren.zhu");
+            }
+        }));
+        this.form.addContent(new sap.ui.core.Title("", { text: "Thanks" }));
+        this.form.addContent(new sap.m.Label("", { text: "color-coding studio" }));
+        this.form.addContent(new sap.m.Link("", {
+            text: "http://www.colorcoding.org",
+            press: function () {
+                sap.m.URLHelper.redirect(this.getText(), true);
+            }
+        }));
+        this.form.addContent(new sap.m.Label("", { text: "sap" }));
+        this.form.addContent(new sap.m.Link("", {
+            text: "http://www.sap.com",
+            press: function () {
+                sap.m.URLHelper.redirect(this.getText(), true);
+            }
+        }));
     }
 }

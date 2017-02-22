@@ -18,7 +18,7 @@ export class LoginView extends BOView implements ILoginView {
     static CONFIG_ITEM_DEFAULT_USER = "defaultUser";
     /** 配置项目-默认用户密码 */
     static CONFIG_ITEM_DEFAULT_PASSWORD = "defaultPassword";
-    
+
     private txtUser: sap.m.Input;
     /** 用户 */
     get user(): string {
@@ -55,20 +55,49 @@ export class LoginView extends BOView implements ILoginView {
             text: i18n.prop("sys_shell_ui_login")
         });
         this.butLogin.attachPress(this.fireLoginEvent, this);
-        let logonLayout: sap.ui.layout.VerticalLayout = new sap.ui.layout.VerticalLayout(
-            "",
+        this.form = new sap.ui.layout.form.Form("",
             {
-                width: "100%",
-                height: "100%"
+                formContainers: [
+                    new sap.ui.layout.form.FormContainer("", {
+                        formElements: [
+                            new sap.ui.layout.form.FormElement("",
+                                {
+                                    fields: [
+                                        new sap.m.Label("", { text: i18n.prop("sys_shell_ui_user") })
+                                    ]
+                                }),
+                            new sap.ui.layout.form.FormElement("",
+                                {
+                                    fields: [
+                                        this.txtUser
+                                    ]
+                                }),
+                            new sap.ui.layout.form.FormElement("",
+                                {
+                                    fields: [
+                                        new sap.m.Label("", { text: i18n.prop("sys_shell_ui_password") })
+                                    ]
+                                }),
+                            new sap.ui.layout.form.FormElement("",
+                                {
+                                    fields: [
+                                        this.txtPassword
+                                    ]
+                                }),
+                            new sap.ui.layout.form.FormElement("",
+                                {
+                                    fields: [
+                                        this.butLogin
+                                    ]
+                                }),
+                        ]
+                    })
+                ]
             });
-        logonLayout.addContent(new sap.m.Label("", { text: i18n.prop("sys_shell_ui_user") }));
-        logonLayout.addContent(this.txtUser);
-        logonLayout.addContent(new sap.m.Label("", { text: i18n.prop("sys_shell_ui_password") }));
-        logonLayout.addContent(this.txtPassword);
-        logonLayout.addContent(this.butLogin);
         // 重新赋值id
-        this.id = logonLayout.getId();
-        return logonLayout;
+        this.id = this.form.getId();
+        return this.form;
     }
+    private form: sap.ui.layout.form.Form;
 
 }
