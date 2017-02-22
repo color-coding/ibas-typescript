@@ -13,3 +13,4 @@ export * from "./DemoEditView";
 export * from "./DemoChooseView";
 export * from "./DemoResidentView";
 // export * from "./DemoListView.uxap";
+// export * from "./DemoEditView.uxap";

@@ -18,7 +18,7 @@ export class SuggestionView extends BOResidentView implements ISuggestionView {
     darwBar(): any {
         let that = this;
         return new sap.m.Button("", {
-            icon: "sap-icon://discussion-2",
+            icon: "sap-icon://discussion",
             type: sap.m.ButtonType.Transparent,
             press: function (): void {
                 that.fireViewEvents(that.showFullViewEvent);

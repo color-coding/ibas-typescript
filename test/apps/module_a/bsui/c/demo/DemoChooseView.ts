@@ -42,59 +42,43 @@ export class DemoChooseView extends BOChooseView implements IDemoChooseView {
                 })
             ]
         }));
-        this.table = new sap.m.Table("", {
-            fixedLayout: true,
+        this.table = new sap.ui.table.Table("", {
+            visibleRowCount: 15,
+            rows: "{/}",
             columns: [
-                new sap.m.Column({
-                    header: new sap.m.Text("", {
-                        text: i18n.prop("bo_salesorder_docentry")
+                new sap.ui.table.Column("", {
+                    label: i18n.prop("bo_salesorder_docentry"),
+                    template: new sap.m.Text("", {
+                        text: "{docEntry}"
                     })
                 }),
-                new sap.m.Column({
-                    header: new sap.m.Text("", {
-                        text: i18n.prop("bo_salesorder_customer")
+                new sap.ui.table.Column("", {
+                    label: i18n.prop("bo_salesorder_customer"),
+                    template: new sap.m.Text("", {
+                        text: "{customer}"
                     })
                 }),
-                new sap.m.Column({
-                    header: new sap.m.Text("", {
-                        text: i18n.prop("bo_salesorder_documentstatus")
+                new sap.ui.table.Column("", {
+                    label: i18n.prop("bo_salesorder_documentstatus"),
+                    template: new sap.m.Text("", {
+                        text: "{documentStatus}"
                     })
                 }),
-                new sap.m.Column({
-                    header: new sap.m.Text("", {
-                        text: i18n.prop("bo_salesorder_canceled")
+                new sap.ui.table.Column("", {
+                    label: i18n.prop("bo_salesorder_canceled"),
+                    template: new sap.m.Text("", {
+                        text: "{canceled}"
                     })
                 })
-            ],
-            items: {
-                path: "/",
-                template: new sap.m.ColumnListItem("", {
-                    cells: [
-                        new sap.m.Text("", {
-                            text: "{docEntry}"
-                        }),
-                        new sap.m.Text("", {
-                            text: "{customer}"
-                        }),
-                        new sap.m.Text("", {
-                            text: "{documentStatus}"
-                        }),
-                        new sap.m.Text("", {
-                            text: "{canceled}"
-                        })
-                    ]
-                })
-            }
+            ]
         });
         form.addContent(this.table);
         this.id = form.getId();
         return form;
     }
-    private table: sap.m.Table;
+    private table: sap.ui.table.Table;
     /** 显示数据 */
     showData(datas: any): void {
-        let uiDatas = new sap.ui.model.json.JSONModel(datas);
-        this.table.setModel(uiDatas);
-        this.table.bindItems("/");
+        this.table.setModel(new sap.ui.model.json.JSONModel(datas));
     }
 }

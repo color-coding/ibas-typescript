@@ -276,7 +276,9 @@ export class CenterView extends BOView implements ICenterView {
             let html: string = string.format(
                 `<iframe src="{0}" width="99%" height="99%" scrolling="no"></iframe>`
                 , view.url);
-            this.form.setShowHeader(false);
+            if (object.isNull(this.page.getHeader())) {
+                this.form.setShowHeader(false);
+            }
             this.form.destroySubHeader();
             this.form.destroyContent();
             this.form.addContent(new sap.ui.core.HTML("",
