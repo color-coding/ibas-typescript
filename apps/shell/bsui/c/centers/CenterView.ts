@@ -251,10 +251,14 @@ export class CenterView extends BOView implements ICenterView, IEmbeddedQueryPan
                     // 判断面板嵌入位置
                     if (view instanceof BOQueryViewWithPanel) {
                         // 视图继承嵌入接口
+                        /*
                         if (!view.isDisplayed) {
                             // 没有显示过才处理
                             embeddedView = view;
                         }
+                        // 存在问题，二次显示面板不带出
+                        */
+                        embeddedView = view;
                     } else {
                         // 视图不嵌入
                         embeddedView = this;
