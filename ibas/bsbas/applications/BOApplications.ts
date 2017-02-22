@@ -9,7 +9,7 @@
 import {
     i18n, object, logger, emMessageLevel, ICriteria
 } from "../../../ibas/bobas/index";
-import { Application } from "../core/index";
+import { Application, IBarView } from "../core/index";
 import { emMessageType } from "../data/index";
 import { IBOView, IBOQueryView } from "./BOApplications.d";
 
@@ -124,8 +124,7 @@ export abstract class BOApplication<T extends IBOView> extends Application<T> {
             if (arguments[0] instanceof Error) {
                 type = emMessageType.ERROR;
                 message = arguments[0].message;
-            }
-            else {
+            } else {
                 type = emMessageType.INFORMATION;
                 message = arguments[0];
             }
@@ -156,4 +155,22 @@ export abstract class BOQueryApplication<T extends IBOQueryView> extends BOAppli
     }
     /** 查询数据 */
     protected abstract fetchData(criteria: ICriteria): void;
+}
+/**
+ * 业务对象工具条应用
+ */
+export abstract class BOBarApplication<T extends IBarView> extends BOApplication<T> {
+    /** 注册视图，重载需要回掉此方法 */
+    protected registerView(): void {
+        this.view.destroyEvent = this.destroy;
+        this.view.showFullViewEvent = this.showFullView;
+    }
+    /** 激活完整视图 */
+    protected showFullView(): void {
+        this.show();
+    }
+    /** 运行 */
+    run(...args: any[]): void {
+        // 不支持运行
+    }
 }

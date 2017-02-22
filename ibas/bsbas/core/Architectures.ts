@@ -10,7 +10,7 @@ import { List, ArrayList, object, i18n, string, uuid } from "../../../ibas/bobas
 import { emPlantform } from "../data/index";
 import {
     IElement, IModule, IFunction, IApplication, IView,
-    IModuleConsole, IViewShower, IViewNavigation, IModuleFunction
+    IModuleConsole, IViewShower, IViewNavigation, IModuleFunction,
 } from "./Architectures.d";
 import { consolesManager } from "../runtime/index";
 
@@ -182,11 +182,37 @@ export abstract class ModuleConsole extends Module implements IModuleConsole {
     }
     /** 创建视图导航 */
     abstract navigation(): IViewNavigation;
+    private _applications: ArrayList<IApplication<IView>>;
+    /** 已实例应用集合 */
+    applications(): IApplication<IView>[] {
+        if (object.isNull(this._applications)) {
+            this._applications = new ArrayList<IApplication<IView>>();
+        }
+        return this._applications;
+    }
     /** 注册功能 */
-    protected register(item: IModuleFunction): void {
-        item.id = uuid.random();
-        item.navigation = this.navigation();
-        super.register(item);
+    protected register(item: ModuleFunction): void;
+    /** 注册应用 */
+    protected register(item: Application<IView>): void;
+    /** 注册实现，需要区分注册内容 */
+    protected register(): void {
+        let item: any = arguments[0];
+        if (item instanceof ModuleFunction) {
+            // 注册模块功能
+            item.id = uuid.random();
+            item.navigation = this.navigation();
+            super.register(item);
+        } else if (item instanceof Functions) {
+            // 注册功能
+            super.register(item);
+        } else if (item instanceof Application) {
+            // 注册应用
+            if (object.isNull(this._applications)) {
+                this._applications = new ArrayList<IApplication<IView>>();
+            }
+            item.navigation = this.navigation();
+            this._applications.add(item);
+        }
     }
 }
 /** 模块控制台 */

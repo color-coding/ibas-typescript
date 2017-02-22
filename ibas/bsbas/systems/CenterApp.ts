@@ -8,14 +8,15 @@
 
 /// <reference path="../../../ibas/3rdparty/index.d.ts" />
 import {
-    i18n, logger, emMessageLevel, IOperationResult, object, string, url
+    i18n, logger, emMessageLevel, IOperationResult, object,
 } from "../../../ibas/bobas/index";
 import {
-    ModuleConsole, IModuleConsole, IModuleFunction, IApplication, IView, IViewShower
+    ModuleConsole, IModuleConsole, IModuleFunction, IApplication,
+    IView, IBarView, IBarApplication
 } from "../core/index";
 import { emMessageType } from "../data/index";
 import { consolesManager } from "../runtime/index";
-import { BOApplication } from "../applications/index";
+import { BOApplication, BOResidentApplication } from "../applications/index";
 import { ICenterView, ICenterApp, IUser, IUserModule, IUserPrivilege, IUserRole } from "./Systems.d";
 import { Factories } from "./Factories";
 
@@ -54,13 +55,20 @@ export abstract class CenterApp extends BOApplication<ICenterView> implements IC
     }
     /** 视图显示后 */
     protected viewShowed(): void {
-        //
+        // 显示常驻应用
+        // 显示建议应用
+        let app: IBarApplication<IBarView> = Factories.systemsFactory.createSuggestionApp();
+        app.navigation = this.navigation;
+        app.viewShower = this.view;
+        app.description = i18n.prop(app.name);
+        this.view.showResidentView(app.view);
     }
     /** 帮助 */
     private help(): void {
         let app: IApplication<IView> = Factories.systemsFactory.createHelpApp();
         app.navigation = this.navigation;
         app.viewShower = this.view;
+        app.description = i18n.prop(app.name);
         app.run();
     }
     /** 关于 */
@@ -68,6 +76,7 @@ export abstract class CenterApp extends BOApplication<ICenterView> implements IC
         let app: IApplication<IView> = Factories.systemsFactory.createAboutApp();
         app.navigation = this.navigation;
         app.viewShower = this.view;
+        app.description = i18n.prop(app.name);
         app.run();
     }
     /** 初始化用户相关 */
@@ -140,6 +149,13 @@ export abstract class CenterApp extends BOApplication<ICenterView> implements IC
             if (console instanceof ModuleConsole) {
                 console.addListener(function (): void {
                     that.registerFunctions(console);
+                    // 显示常驻应用
+                    for (let app of console.applications()) {
+                        if (app instanceof BOResidentApplication) {
+                            app.viewShower = that.view;
+                            that.view.showResidentView(app.view);
+                        }
+                    }
                 });
                 that.view.showModule(console);
             }

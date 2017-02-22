@@ -9,7 +9,8 @@
 /// <reference path="../../../../../openui5/typings/index.d.ts" />
 import {
     i18n, object, string, BOView, UrlView, emMessageType,
-    IModuleConsole, IView, config, BOListView, BOQueryView, BOChooseView
+    IModuleConsole, IView, config, IBarView, BOQueryView,
+    BOChooseView, BOBarView
 } from "../../../../../ibas/bsbas/index";
 import {
     ICenterView, IUserModule, IUser, Factories
@@ -218,7 +219,8 @@ export class CenterView extends BOView implements ICenterView {
         if (view instanceof UrlView) {
             // 视图为地址视图
             this.showUrlView(view);
-        } else if (view instanceof BOChooseView) {
+        } else if (view instanceof BOChooseView
+            || view instanceof BOBarView) {
             // 对话框视图
             this.showDialogView(view);
         } else {
@@ -284,7 +286,7 @@ export class CenterView extends BOView implements ICenterView {
         }
     }
     /** 显示对话视图 */
-    showDialogView(view: BOChooseView): void {
+    showDialogView(view: BOView): void {
         let title: string;
         // 设置标题
         if (!object.isNull(view.title)) {
@@ -299,6 +301,13 @@ export class CenterView extends BOView implements ICenterView {
             cancel: "handleClose",
         });
         dialog.open();
+    }
+    /** 显示常驻视图 */
+    showResidentView(view: IBarView): void {
+        let bar = view.darwBar();
+        if (!object.isNull(bar)) {
+            this.header.insertContent(bar, this.header.getContent().length - 1);
+        }
     }
     /** 清理资源 */
     destroyView(view: IView): void {

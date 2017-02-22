@@ -11,5 +11,6 @@ export * from "./LoginApp";
 export * from "./AboutApp";
 export * from "./HelpApp";
 export * from "./CenterApp";
+export * from "./SuggestionApp";
 export * from "./CentersFunc";
 export * from "./QueryPanel";

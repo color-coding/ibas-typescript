@@ -7,9 +7,11 @@
  */
 
 import { i18n, ICriteria } from "../../../ibas/bobas/index";
-import { View, IUrlView } from "../core/index";
-import { IBOView, IBOListView, IBOQueryView, IBOChooseView, IBOEditView, IBOViewView } from "../applications/index";
-import { IUseQueryPanel } from "../systems/index";
+import { View, IUrlView, IBarView } from "../core/index";
+import {
+    IBOView, IBOListView, IBOQueryView, IBOChooseView,
+    IBOEditView, IBOViewView, IBOResidentView, IBOShortcutView
+} from "../applications/index";
 
 /** 地址视图 */
 export abstract class UrlView extends View implements IUrlView {
@@ -55,4 +57,19 @@ export abstract class BOEditView extends BOView implements IBOEditView {
     editDataEvent: Function;
     /** 新建数据事件 */
     saveDataEvent: Function;
+}
+/** 业务对象工具条视图 */
+export abstract class BOBarView extends BOView implements IBarView {
+    /** 绘制工具条 */
+    abstract darwBar(): any;
+    /** 激活完整视图事件 */
+    showFullViewEvent: Function;
+}
+/** 业务对象常驻应用视图 */
+export abstract class BOResidentView extends BOBarView implements IBOResidentView {
+
+}
+/** 业务对象快捷应用视图 */
+export abstract class BOShortcutView extends BOBarView implements IBOShortcutView {
+
 }

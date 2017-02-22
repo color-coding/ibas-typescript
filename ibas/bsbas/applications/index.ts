@@ -15,4 +15,6 @@ export * from "./BOChooseApplication";
 export * from "./BOEditApplication";
 export * from "./BOListApplication";
 export * from "./BOViewApplication";
+export * from "./BOShortcutApplication";
+export * from "./BOResidentApplication";
 

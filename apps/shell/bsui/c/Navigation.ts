@@ -9,10 +9,8 @@
 import {
     ViewNavigation, IView,
 } from "../../../../ibas/bsbas/index";
-import {
-    MainApp, LoginApp, CenterApp, AboutApp, HelpApp, QueryPanel
-} from "../../../../ibas/bsbas/systems/index";
-import { MainView, LoginView, CenterView, AboutView, HelpView, QueryPanelView } from "./centers/index";
+import * as app from "../../../../ibas/bsbas/systems/index";
+import * as ui from "./centers/index";
 
 /** 导出视图显示 */
 export { ViewShowerDefault as ViewShower } from "../ViewShowers";
@@ -28,23 +26,26 @@ export class Navigation extends ViewNavigation {
     protected newView(id: string): IView {
         let view: IView = null;
         switch (id) {
-            case MainApp.APPLICATION_ID:
-                view = new MainView();
+            case app.MainApp.APPLICATION_ID:
+                view = new ui.MainView();
                 break;
-            case LoginApp.APPLICATION_ID:
-                view = new LoginView();
+            case app.LoginApp.APPLICATION_ID:
+                view = new ui.LoginView();
                 break;
-            case CenterApp.APPLICATION_ID:
-                view = new CenterView();
+            case app.CenterApp.APPLICATION_ID:
+                view = new ui.CenterView();
                 break;
-            case AboutApp.APPLICATION_ID:
-                view = new AboutView();
+            case app.AboutApp.APPLICATION_ID:
+                view = new ui.AboutView();
                 break;
-            case HelpApp.APPLICATION_ID:
-                view = new HelpView();
+            case app.HelpApp.APPLICATION_ID:
+                view = new ui.HelpView();
                 break;
-            case QueryPanel.APPLICATION_ID:
-                view = new QueryPanelView();
+            case app.QueryPanel.APPLICATION_ID:
+                view = new ui.QueryPanelView();
+                break;
+            case app.SuggestionApp.APPLICATION_ID:
+                view = new ui.SuggestionView();
                 break;
             default:
                 break;

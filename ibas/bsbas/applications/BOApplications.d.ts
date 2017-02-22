@@ -8,7 +8,7 @@
 // 业务对象应用的相关说明文件
 
 import { List, IBusinessObject } from "../../../ibas/bobas/index";
-import { IView } from "../core/index";
+import { IView, IBarView } from "../core/index";
 import { IUseQueryPanel } from "../systems/index";
 
 /**
@@ -58,5 +58,19 @@ export interface IBOEditView extends IBOView {
 export interface IBOViewView extends IBOView {
     /** 编辑数据事件 */
     editDataEvent: Function;
+
+}
+/**
+ * 业务对象常驻应用-视图
+ */
+export interface IBOResidentView extends IBarView {
+
+
+}
+/**
+ * 业务对象快捷应用-视图
+ */
+export interface IBOShortcutView extends IBarView {
+
 
 }

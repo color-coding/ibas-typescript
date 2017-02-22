@@ -39,6 +39,9 @@ export class Navigation extends ViewNavigation {
             case app.DemoEditApp.APPLICATION_ID:
                 view = new ui.DemoEditView();
                 break;
+            case app.DemoResidentApp.APPLICATION_ID:
+                view = new ui.DemoResidentView();
+                break;
             default:
                 break;
         }

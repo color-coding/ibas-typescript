@@ -10,7 +10,8 @@ import {
 	List, IBusinessObject, IOperationMessages, IOperationResult, ICriteria
 } from "../../../ibas/bobas/index";
 import {
-	IView, IUrlView, IModule, IApplication, IModuleConsole, IModuleFunction, IViewShower
+	IView, IUrlView, IModule, IApplication, IModuleConsole,
+	IModuleFunction, IViewShower, IBarView
 } from "../core/index";
 import { emMessageType } from "../data/index";
 
@@ -85,6 +86,8 @@ export interface ICenterView extends IView, IViewShower {
 	helpEvent: Function;
 	/** 激活关于 */
 	aboutEvent: Function;
+	/** 显示常驻视图 */
+	showResidentView(view: IBarView): void;
 }
 /** 登陆-应用 */
 export interface ICenterApp extends IApplication<ICenterView> {
@@ -96,6 +99,13 @@ export interface IMainView extends IView {
 }
 /** 登陆-应用 */
 export interface IMainApp extends IApplication<IMainView> {
+
+}
+/** 建议-视图 */
+export interface ISuggestionView extends IBarView {
+}
+/** 建议-应用 */
+export interface ISuggestionApp extends IApplication<ISuggestionView> {
 
 }
 /** 查询面板-应用 */
@@ -188,6 +198,8 @@ export interface ISystemsFactory {
 	createAboutApp(): IAboutApp;
 	/** 创建帮助应用 */
 	createHelpApp(): IHelpApp;
+	/** 创建建议应用 */
+	createSuggestionApp(): ISuggestionApp;
 	/** 创建仓库 */
 	createRepository(): IBORepositorySystem;
 	/** 创建查询面板 */

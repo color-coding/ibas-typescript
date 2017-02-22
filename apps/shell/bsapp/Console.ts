@@ -13,12 +13,12 @@ import {
     IApplication, IView, emPlantform, url
 } from "../../../ibas/bsbas/index";
 import {
-    IMainApp, ILoginApp, ICenterApp, IAboutApp, IHelpApp,
+    IMainApp, ILoginApp, ICenterApp, IAboutApp, IHelpApp, ISuggestionApp,
     ISystemsFactory, IBORepositorySystem, IQueryPanel, IQueryPanelView
 } from "../../../ibas/bsbas/systems/index";
 import { Factories } from "../../../ibas/bsbas/systems/index";
 import { BORepositoryShell, BORepositoryShellOffLine } from "../borep/BORepositories";
-import { CentersFunc, MainApp, LoginApp, CenterApp, AboutApp, HelpApp, QueryPanel } from "./centers/index";
+import { CentersFunc, MainApp, LoginApp, CenterApp, AboutApp, HelpApp, QueryPanel, SuggestionApp } from "./centers/index";
 
 
 /** 系统工厂 */
@@ -42,6 +42,10 @@ export class SystemsFactory implements ISystemsFactory {
     /** 创建帮助应用 */
     createHelpApp(): IHelpApp {
         return new HelpApp();
+    }
+    /** 创建建议应用 */
+    createSuggestionApp(): ISuggestionApp {
+        return new SuggestionApp();
     }
     /** 创建仓库 */
     createRepository(): IBORepositorySystem {

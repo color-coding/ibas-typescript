@@ -52,6 +52,11 @@ export interface IApplication<T extends IView> extends IElement {
     navigation: IViewNavigation;
 }
 /**
+ * 工具条-应用
+ */
+export interface IBarApplication<T extends IBarView> extends IApplication<T> {
+}
+/**
  * 应用-视图
  */
 export interface IView {
@@ -76,6 +81,15 @@ export interface IUrlView extends IView {
     isInside: boolean;
     /** 地址 */
     url: string;
+}
+/**
+ * 工具条应用-视图
+ */
+export interface IBarView extends IView {
+    /** 绘制工具条视图 */
+    darwBar(): any;
+    /** 激活完整视图事件 */
+    showFullViewEvent: Function;
 }
 /**
  * 视图-显示者
@@ -125,6 +139,8 @@ export interface IModuleConsole extends IModule {
     default(): IModuleFunction;
     /** 添加初始化完成监听 */
     addListener(listener: Function): void;
+    /** 已实例应用集合 */
+    applications(): IApplication<IView>[];
 }
 /**
  * 模块-功能
