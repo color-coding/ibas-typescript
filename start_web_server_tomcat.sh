@@ -24,5 +24,5 @@ then
   fi
   "${TOMCAT_START_SCRIPT}"
 else
-  echo %TOMCAT_FOLDER%不存在！
+  echo TOMCAT_FOLDER不存在！
 fi
