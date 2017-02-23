@@ -549,22 +549,22 @@ class CriteriaConverter extends DataConverter {
 
     convertCriteria(data: ICriteria): any {
         let newData = {
-            "BusinessObjectCode": "",
+            "BOCode": "",
             "ChildCriterias": [],
             "Conditions": [],
-            "NotLoadedChildren": false,
+            "NoChilds": false,
             "Remarks": "",
             "ResultCount": -1,
             "Sorts": []
         };
-        newData.BusinessObjectCode = data.boCode;
+        newData.BOCode = data.boCode;
         for (let item of data.childCriterias) {
             newData.ChildCriterias.push(this.convertChildCriteria(item));
         }
         for (let item of data.conditions) {
             newData.Conditions.push(this.convertCondition(item));
         }
-        newData.NotLoadedChildren = data.noChilds;
+        newData.NoChilds = data.noChilds;
         newData.Remarks = data.remarks;
         newData.ResultCount = data.result;
         for (let item of data.sorts) {
@@ -583,8 +583,8 @@ class CriteriaConverter extends DataConverter {
     convertCondition(data: ICondition): any {
         let newData = {
             "Alias": "",
-            "BracketCloseNum": 0,
-            "BracketOpenNum": 0,
+            "BracketClose": 0,
+            "BracketOpen": 0,
             "ComparedAlias": "",
             "CondVal": "",
             "Operation": "",
@@ -592,8 +592,8 @@ class CriteriaConverter extends DataConverter {
             "Remarks": ""
         };
         newData.Alias = data.alias;
-        newData.BracketCloseNum = data.bracketClose;
-        newData.BracketOpenNum = data.bracketOpen;
+        newData.BracketClose = data.bracketClose;
+        newData.BracketOpen = data.bracketOpen;
         newData.ComparedAlias = data.comparedAlias;
         newData.CondVal = data.condVal;
         newData.Operation = this.convertEnums(emConditionOperation, data.operation);
