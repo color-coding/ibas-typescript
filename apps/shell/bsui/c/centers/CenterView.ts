@@ -212,8 +212,10 @@ export class CenterView extends ibas.BOView implements sys.ICenterView, sys.IEmb
         } else {
             // 正常视图
             this.form.setSubHeader(null);
-            this.form.destroyContent();
-            this.form.setShowHeader(true);
+            // this.form.destroyContent();
+            for (let item of this.form.getContent()) {
+                this.form.removeContent(item);
+            }
             // 设置标题
             if (!ibas.object.isNull(view.title)) {
                 this.form.setTitle(view.title);
@@ -238,7 +240,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView, sys.IEmb
     }
     /** 嵌入查询面板 */
     embedded(view: any): void {
-        this.form.destroySubHeader();
+        this.form.setSubHeader(null);
         this.form.setSubHeader(view);
         this.form.setShowSubHeader(true);
     }
@@ -327,11 +329,12 @@ export class CenterView extends ibas.BOView implements sys.ICenterView, sys.IEmb
                 queryPanel.run(function (): void {
                     // 清理提示
                     strip.destroy(true);
-                    embeddedView.embedded(queryPanel.view.darwBar());
+                    let viewContent = queryPanel.view.darwBar();
+                    embeddedView.embedded(viewContent);
                     // 监听查询面板
                     queryPanel.addListener(view);
                     // 记录面板，下次使用
-                    that.queryPanels.set(view.id, queryPanel);
+                    that.queryPanels.set(view.id, viewContent);
                 });
             }
         }
@@ -352,18 +355,28 @@ export class CenterView extends ibas.BOView implements sys.ICenterView, sys.IEmb
             let beDestory = new Array<ibas.IView>();
             let done = false;
             for (let item of this.viewQueue.keys()) {
+                if (view.id === item.id) {
+                    done = true;
+                }
                 if (done) {
                     beDestory.push(item);
                     continue;
                 }
-                if (view.id === item.id) {
-                    done = true;
-                }
             }
             for (let i: number = beDestory.length - 1; i >= 0; i--) {
-                let ui: sap.ui.core.Element = sap.ui.getCore().byId(beDestory[i].id);
+                let item = beDestory[i];
+                let ui: sap.ui.core.Element = sap.ui.getCore().byId(item.id);
                 if (!ibas.object.isNull(ui)) {
                     ui.destroy(true);
+                }
+                this.viewQueue.delete(item);
+                // 清理缓存的查询面板
+                if (this.queryPanels.has(item.id)) {
+                    let panelContent = this.queryPanels.get(item.id);
+                    if (panelContent instanceof sap.ui.core.Element) {
+                        panelContent.destroy(true);
+                    }
+                    this.queryPanels.delete(item.id);
                 }
             }
             // 显示最后视图

@@ -87,7 +87,6 @@ export class DemoListView extends ibas.BOListView implements IDemoListView {
     }
     /** 嵌入查询面板 */
     embedded(view: any): void {
-        this.page.destroyHeaderContent();
         this.page.addHeaderContent(view);
         this.page.setShowHeader(true);
     }
