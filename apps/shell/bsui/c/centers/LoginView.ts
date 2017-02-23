@@ -7,13 +7,13 @@
  */
 
 /// <reference path="../../../../../openui5/typings/index.d.ts" />
-import { ILoginView } from "../../../../../ibas/bsbas/systems/index";
-import { i18n, BOView, config } from "../../../../../ibas/index";
+import * as sys from "../../../../../ibas/bsbas/systems/index";
+import * as ibas from "../../../../../ibas/index";
 
 /**
  * 视图-登陆
  */
-export class LoginView extends BOView implements ILoginView {
+export class LoginView extends ibas.BOView implements sys.ILoginView {
     /** 配置项目-默认用户 */
     static CONFIG_ITEM_DEFAULT_USER = "defaultUser";
     /** 配置项目-默认用户密码 */
@@ -44,24 +44,24 @@ export class LoginView extends BOView implements ILoginView {
     /** 绘制视图 */
     darw(): any {
         this.txtUser = new sap.m.Input("", {
-            value: config.get(LoginView.CONFIG_ITEM_DEFAULT_USER)
+            value: ibas.config.get(LoginView.CONFIG_ITEM_DEFAULT_USER)
         });
         this.txtPassword = new sap.m.Input("",
             {
-                value: config.get(LoginView.CONFIG_ITEM_DEFAULT_PASSWORD),
+                value:ibas. config.get(LoginView.CONFIG_ITEM_DEFAULT_PASSWORD),
                 type: "Password"
             });
         this.butLogin = new sap.m.Button("", {
-            text: i18n.prop("sys_shell_ui_login")
+            text: ibas.i18n.prop("sys_shell_ui_login")
         });
         this.butLogin.attachPress(this.fireLoginEvent, this);
         this.form = new sap.ui.layout.Grid("",
             {
                 defaultSpan: "L3 M4 S6",
                 content: [
-                    new sap.m.Label("", { text: i18n.prop("sys_shell_ui_user") }),
+                    new sap.m.Label("", { text: ibas.i18n.prop("sys_shell_ui_user") }),
                     this.txtUser,
-                    new sap.m.Label("", { text: i18n.prop("sys_shell_ui_password") }),
+                    new sap.m.Label("", { text: ibas.i18n.prop("sys_shell_ui_password") }),
                     this.txtPassword,
                     this.butLogin
                 ]

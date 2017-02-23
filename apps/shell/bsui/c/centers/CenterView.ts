@@ -7,37 +7,31 @@
  */
 
 /// <reference path="../../../../../openui5/typings/index.d.ts" />
-import {
-    i18n, object, string, BOView, UrlView, emMessageType,
-    IModuleConsole, IView, config, IBarView, BOQueryView,
-    BOChooseView, BOBarView, BOQueryViewWithPanel
-} from "../../../../../ibas/index";
-import {
-    ICenterView, IUserModule, IUser, Factories, IEmbeddedQueryPanel
-} from "../../../../../ibas/bsbas/systems/index";
+import * as ibas from "../../../../../ibas/index";
+import * as sys from "../../../../../ibas/bsbas/systems/index";
 
 /**
  * 视图-中心
  */
-export class CenterView extends BOView implements ICenterView, IEmbeddedQueryPanel {
+export class CenterView extends ibas.BOView implements sys.ICenterView, sys.IEmbeddedQueryPanel {
     /** 显示视图 */
-    show(view: IView): void {
+    show(view: ibas.IView): void {
         this.showView(view);
     }
     /** 清理资源 */
-    destroy(view: IView): void {
+    destroy(view: ibas.IView): void {
         this.destroyView(view);
     }
     /** 设置忙状态 */
-    busy(view: IView, busy: boolean, msg: string): any {
+    busy(view: ibas.IView, busy: boolean, msg: string): any {
         this.busyView(view, busy, msg);
     }
     /** 设置消息 */
-    proceeding(view: IView, type: emMessageType, msg: string): any {
+    proceeding(view: ibas.IView, type: ibas.emMessageType, msg: string): any {
         this.showStatusMessages(type, msg);
     }
     /** 对话消息 */
-    messages(type: emMessageType, msg: string, callBack: Function): any {
+    messages(type: ibas.emMessageType, msg: string, callBack: Function): any {
         this.showMessageBox(type, msg, callBack);
     }
     /** 主页面 */
@@ -65,18 +59,18 @@ export class CenterView extends BOView implements ICenterView, IEmbeddedQueryPan
 	 * @param type 消息类型
 	 * @param message 消息内容
 	 */
-    showStatusMessages(type: emMessageType, message: string): void {
+    showStatusMessages(type: ibas.emMessageType, message: string): void {
         let uiType: sap.ui.core.MessageType = sap.ui.core.MessageType.None;
         let uiIcon: any = undefined;
-        if (type === emMessageType.ERROR) {
+        if (type === ibas.emMessageType.ERROR) {
             uiType = sap.ui.core.MessageType.Error;
-        } else if (type === emMessageType.QUESTION) {
+        } else if (type === ibas.emMessageType.QUESTION) {
             uiType = sap.ui.core.MessageType.Warning;
-        } else if (type === emMessageType.SUCCESS) {
+        } else if (type === ibas.emMessageType.SUCCESS) {
             uiType = sap.ui.core.MessageType.Success;
-        } else if (type === emMessageType.WARNING) {
+        } else if (type === ibas.emMessageType.WARNING) {
             uiType = sap.ui.core.MessageType.Warning;
-        } else if (type === emMessageType.INFORMATION) {
+        } else if (type === ibas.emMessageType.INFORMATION) {
             uiType = sap.ui.core.MessageType.Information;
         }
         let messageStrip: sap.m.MessageStrip = new sap.m.MessageStrip(
@@ -94,8 +88,8 @@ export class CenterView extends BOView implements ICenterView, IEmbeddedQueryPan
         // 添加新的
         this.statusBar.addContent(messageStrip);
         // 延迟清除消息
-        if (object.isNull(this.statusDelay)) {
-            this.statusDelay = config.get(CenterView.CONFIG_ITEM_STATUS_MESSAGES_DELAY, 0) * 1000;
+        if (ibas.object.isNull(this.statusDelay)) {
+            this.statusDelay = ibas.config.get(CenterView.CONFIG_ITEM_STATUS_MESSAGES_DELAY, 0) * 1000;
         }
         if (this.statusDelay > 0) {
             let that = this;
@@ -113,13 +107,13 @@ export class CenterView extends BOView implements ICenterView, IEmbeddedQueryPan
      * @param message 消息内容
      * @param callBack 回掉方法
      */
-    showMessageBox(type: emMessageType, message: string, callBack: Function): void;
+    showMessageBox(type: ibas.emMessageType, message: string, callBack: Function): void;
     /**
      * 显示消息对话框
      * @param type 消息类型
      * @param message 消息内容
      */
-    showMessageBox(type: emMessageType, message: string): void;
+    showMessageBox(type: ibas.emMessageType, message: string): void;
     /**
      * 显示消息对话框
      * @param error 错误
@@ -128,11 +122,11 @@ export class CenterView extends BOView implements ICenterView, IEmbeddedQueryPan
     /** 显示消息对话框 */
     showMessageBox(): void {
         jQuery.sap.require("sap.m.MessageBox");
-        let type: emMessageType;
+        let type: ibas.emMessageType;
         let message: string;
         let callBack: Function;
         if (arguments.length === 1 && arguments[0] instanceof Error) {
-            type = emMessageType.ERROR;
+            type = ibas.emMessageType.ERROR;
             message = arguments[0].message;
         } else if (arguments.length === 2) {
             type = arguments[0];
@@ -144,22 +138,22 @@ export class CenterView extends BOView implements ICenterView, IEmbeddedQueryPan
         }
         let actions: any = [sap.m.MessageBox.Action.OK];
         let icon: any = sap.m.MessageBox.Icon.INFORMATION;
-        if (type === emMessageType.ERROR) {
+        if (type === ibas.emMessageType.ERROR) {
             icon = sap.m.MessageBox.Icon.ERROR;
-        } else if (type === emMessageType.QUESTION) {
+        } else if (type === ibas.emMessageType.QUESTION) {
             icon = sap.m.MessageBox.Icon.QUESTION;
-        } else if (type === emMessageType.SUCCESS) {
+        } else if (type === ibas.emMessageType.SUCCESS) {
             icon = sap.m.MessageBox.Icon.SUCCESS;
-        } else if (type === emMessageType.WARNING) {
+        } else if (type === ibas.emMessageType.WARNING) {
             icon = sap.m.MessageBox.Icon.WARNING;
         }
         sap.m.MessageBox.show(
             message, {
                 icon: icon,
-                title: i18n.prop(this.application.name),
+                title: ibas.i18n.prop(this.application.name),
                 actions: actions,
                 onClose: function (): void {
-                    if (!object.isNull(callBack)) {
+                    if (!ibas.object.isNull(callBack)) {
                         callBack.call(callBack);
                     }
                 }
@@ -175,7 +169,7 @@ export class CenterView extends BOView implements ICenterView, IEmbeddedQueryPan
      * 显示模块
      * @param module 模块
      */
-    showModule(module: IModuleConsole): void {
+    showModule(module: ibas.IModuleConsole): void {
         let that = this;
         let nvList: sap.tnt.NavigationList = this.navigation.getItem();
         let nvItem: sap.tnt.NavigationListItem = new sap.tnt.NavigationListItem();
@@ -204,86 +198,42 @@ export class CenterView extends BOView implements ICenterView, IEmbeddedQueryPan
         }
         nvList.addItem(nvItem);
     }
-    private _viewQueue: Array<IView>;
-    get viewQueue(): Array<IView> {
-        if (object.isNull(this._viewQueue)) {
-            this._viewQueue = new Array<IView>();
-        }
-        return this._viewQueue;
-    }
-    set viewQueue(values: Array<IView>) {
-        this._viewQueue = values;
-    }
+    private viewQueue: Map<ibas.IView, any> = new Map<ibas.IView, any>();
     /** 显示视图 */
-    showView(view: IView): void {
+    showView(view: ibas.IView): void {
         let that = this;
-        if (view instanceof UrlView) {
+        if (view instanceof ibas.UrlView) {
             // 视图为地址视图
             this.showUrlView(view);
-        } else if (view instanceof BOChooseView
-            || view instanceof BOBarView) {
+        } else if (view instanceof ibas.BOChooseView
+            || view instanceof ibas.BOBarView) {
             // 对话框视图
             this.showDialogView(view);
         } else {
             // 正常视图
-            this.form.destroySubHeader();
+            this.form.setSubHeader(null);
             this.form.destroyContent();
             this.form.setShowHeader(true);
             // 设置标题
-            if (!object.isNull(view.title)) {
+            if (!ibas.object.isNull(view.title)) {
                 this.form.setTitle(view.title);
-            } else if (!object.isNull(view.id)) {
+            } else if (!ibas.object.isNull(view.id)) {
                 this.form.setTitle(view.id);
             }
-            this.form = this.form;
-            this.form.addContent(view.darw());
-            // 添加查询面板
-            if (view instanceof BOQueryView) {
-                let queryPanel = Factories.systemsFactory.createQueryPanel();
-                if (object.isNull(queryPanel)) {
-                    // 查询面板无效，不添加
-                    this.showStatusMessages(emMessageType.ERROR, i18n.prop("sys_shell_invalid_query_panel"));
-                } else {
-                    // 设置视图导航
-                    queryPanel.navigation = this.application.navigation;
-                    queryPanel.viewShower = this;
-                    let embeddedView: IEmbeddedQueryPanel;
-                    // 判断面板嵌入位置
-                    if (view instanceof BOQueryViewWithPanel) {
-                        // 视图继承嵌入接口
-                        /*
-                        if (!view.isDisplayed) {
-                            // 没有显示过才处理
-                            embeddedView = view;
-                        }
-                        // 存在问题，二次显示面板不带出
-                        */
-                        embeddedView = view;
-                    } else {
-                        // 视图不嵌入
-                        embeddedView = this;
-                    }
-                    if (!object.isNull(embeddedView)) {
-                        // 查询面板位置，先添加提示
-                        embeddedView.embedded(new sap.m.Toolbar("", {
-                            width: "100%",
-                            design: sap.m.ToolbarDesign.Transparent,
-                            content: [
-                                new sap.m.MessageStrip("", {
-                                    text: i18n.prop("sys_shell_initialize_query_panel"),
-                                    type: sap.ui.core.MessageType.Warning
-                                })]
-                        }));
-                        // 运行查询面板，初始化完成添加到视图
-                        queryPanel.run(function (): void {
-                            embeddedView.embedded(queryPanel.view.darwBar());
-                            // 监听查询面板
-                            queryPanel.addListener(view);
-                        });
-                    }
-                }
+            // 优先使用缓存中视图数据
+            let viewContent: any;
+            if (this.viewQueue.has(view)) {
+                viewContent = this.viewQueue.get(view);
             }
-            this.viewQueue.push(view);
+            if (ibas.object.isNull(viewContent)) {
+                viewContent = view.darw();
+            }
+            this.form.addContent(viewContent);
+            this.viewQueue.set(view, viewContent);
+            // 添加查询面板
+            if (view instanceof ibas.BOQueryView) {
+                this.showQueryPanel(view);
+            }
         }
     }
     /** 嵌入查询面板 */
@@ -293,13 +243,13 @@ export class CenterView extends BOView implements ICenterView, IEmbeddedQueryPan
         this.form.setShowSubHeader(true);
     }
     /** 显示地址视图 */
-    showUrlView(view: UrlView): void {
+    showUrlView(view: ibas.UrlView): void {
         if (view.isInside) {
             // 内部打开
-            let html: string = string.format(
+            let html: string = ibas.string.format(
                 `<iframe src="{0}" width="99%" height="99%" scrolling="no"></iframe>`
                 , view.url);
-            if (object.isNull(this.page.getHeader())) {
+            if (ibas.object.isNull(this.page.getHeader())) {
                 this.form.setShowHeader(false);
             }
             this.form.destroySubHeader();
@@ -314,12 +264,12 @@ export class CenterView extends BOView implements ICenterView, IEmbeddedQueryPan
         }
     }
     /** 显示对话视图 */
-    showDialogView(view: BOView): void {
+    showDialogView(view: ibas.BOView): void {
         let title: string;
         // 设置标题
-        if (!object.isNull(view.title)) {
+        if (!ibas.object.isNull(view.title)) {
             title = view.title;
-        } else if (!object.isNull(view.id)) {
+        } else if (!ibas.object.isNull(view.id)) {
             title = view.id;
         }
         let dialog: sap.m.Dialog = new sap.m.Dialog("", {
@@ -331,37 +281,98 @@ export class CenterView extends BOView implements ICenterView, IEmbeddedQueryPan
         dialog.open();
     }
     /** 显示常驻视图 */
-    showResidentView(view: IBarView): void {
+    showResidentView(view: ibas.IBarView): void {
         let bar = view.darwBar();
-        if (!object.isNull(bar)) {
+        if (!ibas.object.isNull(bar)) {
             this.header.insertContent(bar, this.header.getContent().length - 1);
         }
     }
+    private queryPanels = new Map<string, any>();
+    showQueryPanel(view: ibas.BOQueryView) {
+        let queryPanel = sys.Factories.systemsFactory.createQueryPanel();
+        if (ibas.object.isNull(queryPanel)) {
+            // 查询面板无效，不添加
+            this.showStatusMessages(ibas.emMessageType.ERROR, ibas.i18n.prop("sys_shell_invalid_query_panel"));
+        } else {
+            let that = this;
+            // 设置视图导航
+            queryPanel.navigation = this.application.navigation;
+            queryPanel.viewShower = this;
+            let embeddedView: sys.IEmbeddedQueryPanel;
+            // 判断面板嵌入位置
+            if (view instanceof ibas.BOQueryViewWithPanel) {
+                // 视图继承嵌入接口
+                embeddedView = view;
+            } else {
+                // 视图不嵌入
+                embeddedView = this;
+            }
+            // 先使用缓存中的，再次新建
+            if (this.queryPanels.has(view.id)) {
+                // 已创建查询面板
+                embeddedView.embedded(this.queryPanels.get(view.id));
+            } else {
+                // 查询面板位置，先添加提示
+                let strip = new sap.m.Toolbar("", {
+                    width: "100%",
+                    design: sap.m.ToolbarDesign.Transparent,
+                    content: [
+                        new sap.m.MessageStrip("", {
+                            text: ibas.i18n.prop("sys_shell_initialize_query_panel"),
+                            type: sap.ui.core.MessageType.Warning
+                        })]
+                });
+                embeddedView.embedded(strip);
+                // 运行查询面板，初始化完成添加到视图
+                queryPanel.run(function (): void {
+                    // 清理提示
+                    strip.destroy(true);
+                    embeddedView.embedded(queryPanel.view.darwBar());
+                    // 监听查询面板
+                    queryPanel.addListener(view);
+                    // 记录面板，下次使用
+                    that.queryPanels.set(view.id, queryPanel);
+                });
+            }
+        }
+    }
     /** 清理资源 */
-    destroyView(view: IView): void {
+    destroyView(view: ibas.IView): void {
         if (view instanceof CenterView) {
             // 自身销毁，从浏览器缓存刷新页面
             window.location.reload(false);
-        } else {
+        } else if (!this.viewQueue.has(view)) {
+            // 不是通过系统中心加载的页面，删除
             let ui: sap.ui.core.Element = sap.ui.getCore().byId(view.id);
-            if (!object.isNull(ui)) {
+            if (!ibas.object.isNull(ui)) {
                 ui.destroy(true);
             }
+        } else {
             // 清理视图队列后续视图
-            let index = this.viewQueue.indexOf(view);
-            if (index >= 0 && index < this.viewQueue.length) {
-                let beDestoryView = this.viewQueue.slice(index);
-                this.viewQueue = this.viewQueue.slice(0, index);
-                for (let item of beDestoryView) {
-                    ui = sap.ui.getCore().byId(view.id);
-                    if (!object.isNull(ui)) {
-                        ui.destroy(true);
-                    }
+            let beDestory = new Array<ibas.IView>();
+            let done = false;
+            for (let item of this.viewQueue.keys()) {
+                if (done) {
+                    beDestory.push(item);
+                    continue;
+                }
+                if (view.id === item.id) {
+                    done = true;
+                }
+            }
+            for (let i: number = beDestory.length - 1; i >= 0; i--) {
+                let ui: sap.ui.core.Element = sap.ui.getCore().byId(beDestory[i].id);
+                if (!ibas.object.isNull(ui)) {
+                    ui.destroy(true);
                 }
             }
             // 显示最后视图
-            if (this.viewQueue.length > 0) {
-                this.showView(this.viewQueue[this.viewQueue.length - 1]);
+            if (this.viewQueue.size > 0) {
+                let lastView: ibas.IView;
+                for (let item of this.viewQueue.keys()) {
+                    lastView = item;
+                }
+                this.showView(lastView);
             }
         }
     }
@@ -371,46 +382,50 @@ export class CenterView extends BOView implements ICenterView, IEmbeddedQueryPan
         this.form.setSubHeader(null);
         this.form.setShowSubHeader(false);
         let ctrls = this.form.getContent();
-        if (!object.isNull(ctrls)) {
+        if (!ibas.object.isNull(ctrls)) {
+            let beDestory = new Array<ibas.IView>();
             for (let item of ctrls) {
-                for (let view of this.viewQueue) {
+                for (let view of this.viewQueue.keys()) {
                     if (view.id === item.getId()) {
-                        this.destroyView(view);
+                        beDestory.push(view);
                     }
                 }
+            }
+            for (let i: number = beDestory.length - 1; i >= 0; i--) {
+                this.destroyView(beDestory[i]);
             }
         }
     }
     /** 设置忙状态 */
-    busyView(view: IView, busy: boolean, msg: string): any {
+    busyView(view: ibas.IView, busy: boolean, msg: string): any {
         let ui: sap.ui.core.Element = sap.ui.getCore().byId(view.id);
-        if (!object.isNull(ui) && ui instanceof sap.ui.core.Control) {
+        if (!ibas.object.isNull(ui) && ui instanceof sap.ui.core.Control) {
             // 视图自身可设置忙状态
             ui.setBusy(busy);
         } else {
             // 视图不能设置忙状态，使用全局对话框
             if (busy) {
-                if (object.isNull(this.busyDialog)) {
+                if (ibas.object.isNull(this.busyDialog)) {
                     this.busyDialog = new sap.m.BusyDialog("");
                 }
                 this.busyDialog.setTitle(view.title);
                 this.busyDialog.setText(msg);
                 this.busyDialog.open();
             } else {
-                if (!object.isNull(this.busyDialog)) {
+                if (!ibas.object.isNull(this.busyDialog)) {
                     this.busyDialog.close();
                 }
             }
         }
     }
     /** 显示用户信息 */
-    showUser(user: IUser): void {
-        if (!object.isNull(user.userName)) {
+    showUser(user: sys.IUser): void {
+        if (!ibas.object.isNull(user.userName)) {
             this.userBar.setText(user.userName);
-        } else if (!object.isNull(user.userCode)) {
+        } else if (!ibas.object.isNull(user.userCode)) {
             this.userBar.setText(user.userCode);
         } else {
-            this.userBar.setText(i18n.prop("sys_shell_unknown_user"));
+            this.userBar.setText(ibas.i18n.prop("sys_shell_unknown_user"));
         }
     }
     /** 激活帮助 */
@@ -453,7 +468,7 @@ export class CenterView extends BOView implements ICenterView, IEmbeddedQueryPan
                         placement: sap.m.PlacementType.Bottom,
                         content: [
                             new sap.m.Button({
-                                text: i18n.prop("sys_shell_ui_help"),
+                                text: ibas.i18n.prop("sys_shell_ui_help"),
                                 type: sap.m.ButtonType.Transparent,
                                 press: function (): void {
                                     that.fireViewEvents(that.helpEvent);
@@ -461,7 +476,7 @@ export class CenterView extends BOView implements ICenterView, IEmbeddedQueryPan
                                 }
                             }),
                             new sap.m.Button({
-                                text: i18n.prop("sys_shell_ui_about"),
+                                text: ibas.i18n.prop("sys_shell_ui_about"),
                                 type: sap.m.ButtonType.Transparent,
                                 press: function (): void {
                                     that.fireViewEvents(that.aboutEvent);
@@ -469,7 +484,7 @@ export class CenterView extends BOView implements ICenterView, IEmbeddedQueryPan
                                 }
                             }),
                             new sap.m.Button({
-                                text: i18n.prop("sys_shell_ui_logout"),
+                                text: ibas.i18n.prop("sys_shell_ui_logout"),
                                 type: sap.m.ButtonType.Transparent,
                                 press: function (): void {
                                     that.fireViewEvents(that.destroyEvent);
@@ -498,7 +513,7 @@ export class CenterView extends BOView implements ICenterView, IEmbeddedQueryPan
         this.form.attachNavButtonPress(null, this.destroyCurrentView, this);
         // 全屏钮
         let icon: string = "sap-icon://full-screen";
-        if (config.get(CenterView.CONFIG_ITEM_FULL_SCREEN, false)) {
+        if (ibas.config.get(CenterView.CONFIG_ITEM_FULL_SCREEN, false)) {
             this.page.setHeader(null);
             icon = "sap-icon://exit-full-screen";
         }

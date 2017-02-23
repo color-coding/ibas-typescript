@@ -6,14 +6,8 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import {
-    object, OperationMessages, OperationResult,
-    IDataConverter, BORepositoryApplication,
-    IOperationResult, RemoteListener, i18n, config, url
-} from "../../../ibas/bobas/index";
-import {
-    IBORepositorySystem
-} from "../../../ibas/bsbas/systems/index";
+import * as ibas from "../../../ibas/index";
+import * as sys from "../../../ibas/bsbas/systems/index";
 import { DataConverter4Shell, DataConverter4Offline } from "./DataConverters";
 import { User, UserModule } from "./bo/index";
 
@@ -21,14 +15,14 @@ import { User, UserModule } from "./bo/index";
 /**
  * 业务仓库-壳-远程
  */
-export class BORepositoryShell extends BORepositoryApplication implements IBORepositorySystem {
+export class BORepositoryShell extends ibas.BORepositoryApplication implements sys.IBORepositorySystem {
 
     private converter: DataConverter4Shell;
     /**
      * 创建此模块的后端与前端数据的转换者
      */
-    protected createDataConverter(): IDataConverter {
-        if (object.isNull(this.converter)) {
+    protected createDataConverter(): ibas.IDataConverter {
+        if (ibas.object.isNull(this.converter)) {
             this.converter = new DataConverter4Shell();
         }
         return this.converter;
@@ -80,12 +74,12 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
     private fetchOfflineSettings(callBack: Function): void {
         this.address = document.location.href;
         let method: string = "config.json";
-        let listener: RemoteListener = {
+        let listener: ibas.RemoteListener = {
             method: method,
             onCompleted(settings: any): void {
-                if (!object.isNull(callBack)) {
+                if (!ibas.object.isNull(callBack)) {
                     let offlineSettings = null;
-                    if (!object.isNull(settings) && !object.isNull(settings.offlineSettings)) {
+                    if (!ibas.object.isNull(settings) && !ibas.object.isNull(settings.offlineSettings)) {
                         offlineSettings = settings.offlineSettings;
                     }
                     callBack.call(callBack, offlineSettings);
@@ -98,8 +92,8 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
     /**
      * 创建此模块的后端与前端数据的转换者
      */
-    protected createDataConverter(): IDataConverter {
-        if (object.isNull(this.offlineConverter)) {
+    protected createDataConverter(): ibas.IDataConverter {
+        if (ibas.object.isNull(this.offlineConverter)) {
             this.offlineConverter = new DataConverter4Offline();
         }
         return this.offlineConverter;
@@ -112,11 +106,11 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
 	 */
     connect(user: String, password: String, callBack: Function): void {
         let func = function (offlineSettings: any): void {
-            let opRslt = new OperationResult();
+            let opRslt = new ibas.OperationResult();
             opRslt.resultCode = -1;
-            opRslt.message = i18n.prop("sys_shell_user_and_password_not_match");
-            if (!object.isNull(offlineSettings)
-                && !object.isNull(offlineSettings.users)
+            opRslt.message = ibas.i18n.prop("sys_shell_user_and_password_not_match");
+            if (!ibas.object.isNull(offlineSettings)
+                && !ibas.object.isNull(offlineSettings.users)
                 && Array.isArray(offlineSettings.users)) {
                 for (let item of offlineSettings.users) {
                     if (item.user === user
@@ -143,9 +137,9 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
 	 */
     fetchUserModules(userCode: String, callBack: Function): void {
         let func = function (offlineSettings: any): void {
-            let opRslt = new OperationResult();
-            if (!object.isNull(offlineSettings)
-                && !object.isNull(offlineSettings.modules)
+            let opRslt = new ibas.OperationResult();
+            if (!ibas.object.isNull(offlineSettings)
+                && !ibas.object.isNull(offlineSettings.modules)
                 && Array.isArray(offlineSettings.modules)) {
                 for (let item of offlineSettings.modules) {
                     let module = new UserModule();
@@ -154,7 +148,7 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
                     module.category = item.category;
                     module.address = item.address;
                     module.console = item.console;
-                    module.description = i18n.prop(module.name);
+                    module.description = ibas.i18n.prop(module.name);
                     opRslt.resultObjects.add(module);
                 }
             }
@@ -169,7 +163,7 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
 	 * @param callBack 回掉方法，参数：IOperationResult<IUserRole>
 	 */
     fetchUserRoles(userCode: String, callBack: Function): void {
-        let opRslt: OperationMessages = new OperationResult();
+        let opRslt: ibas.OperationMessages = new ibas.OperationResult();
         callBack.apply(opRslt);
     }
 
@@ -179,7 +173,7 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
 	 * @param callBack 回掉方法，参数：IOperationResult<IUserPrivilege>
 	 */
     fetchUserPrivileges(userCode: String, callBack: Function): void {
-        let opRslt: OperationMessages = new OperationResult();
+        let opRslt: ibas.OperationMessages = new ibas.OperationResult();
         callBack.apply(opRslt);
     }
 }

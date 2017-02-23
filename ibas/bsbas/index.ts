@@ -12,15 +12,12 @@ import { Configuration, config, string, i18n, url } from "../bobas/index";
 export const LIBRARY_BSBAS_ROOT_FILE_NAME: string = "/bsbas/index";
 /** 框架初始化 */
 const isInitialized: boolean = function (): boolean {
-    if (isInitialized) {
-        // 初始化过，不再初始化
-        return;
-    }
     let rootUrl: string = url.rootUrl(LIBRARY_BSBAS_ROOT_FILE_NAME);
     // 加载配置-框架默认
     config.load(string.format("{0}/{1}", rootUrl, Configuration.CONFIG_FILE_NAME));
     // 加载语言-框架默认
     i18n.load(string.format("{0}/resources/languages/bsbas.{1}.json", rootUrl, i18n.language));
+    return true;
 }();
 // 此模块内容
 export * from "./data/index";

@@ -7,13 +7,13 @@
  */
 
 /// <reference path="../../../../../openui5/typings/index.d.ts" />
-import { IHelpView } from "../../../../../ibas/bsbas/systems/index";
-import { UrlView, config } from "../../../../../ibas/index";
+import * as sys from "../../../../../ibas/bsbas/systems/index";
+import * as ibas from "../../../../../ibas/index";
 
 /**
  * 视图-帮助
  */
-export class HelpView extends UrlView implements IHelpView {
+export class HelpView extends ibas.UrlView implements sys.IHelpView {
     /** 绘制视图 */
     darw(): any {
         return null;

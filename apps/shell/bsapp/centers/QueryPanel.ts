@@ -6,18 +6,13 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import {
-    object
-} from "../../../../ibas/index";
-import {
-    QueryPanel as QueryPanelBase,
-    IQueryPanelView as IQueryPanelViewBase
-} from "../../../../ibas/bsbas/systems/index";
+import * as ibas from "../../../../ibas/index";
+import * as sys from "../../../../ibas/bsbas/systems/index";
 
 /**
  * 查询面板
  */
-export class QueryPanel extends QueryPanelBase<IQueryPanelView>  {
+export class QueryPanel extends sys.QueryPanel<IQueryPanelView>  {
     /** 初始化 */
     protected init(callBack: Function): void {
         if (callBack instanceof Function) {
@@ -26,6 +21,6 @@ export class QueryPanel extends QueryPanelBase<IQueryPanelView>  {
     }
 }
 /** 视图-演示 */
-export interface IQueryPanelView extends IQueryPanelViewBase {
+export interface IQueryPanelView extends sys.IQueryPanelView {
 
 }

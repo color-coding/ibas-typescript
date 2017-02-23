@@ -6,12 +6,12 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { IUserModule } from "../../../../ibas/bsbas/systems/index";
+import * as sys from "../../../../ibas/bsbas/systems/index";
 
 /**
  * 用户模块
  */
-export class UserModule implements IUserModule {
+export class UserModule implements sys.IUserModule {
 	/** 唯一标识 */
 	id: string;
 	/** 名称 */

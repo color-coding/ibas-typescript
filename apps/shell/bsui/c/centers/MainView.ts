@@ -7,13 +7,13 @@
  */
 
 /// <reference path="../../../../../openui5/typings/index.d.ts" />
-import { IMainView } from "../../../../../ibas/bsbas/systems/index";
-import { BOView } from "../../../../../ibas/index";
+import * as sys from "../../../../../ibas/bsbas/systems/index";
+import * as ibas from "../../../../../ibas/index";
 
 /**
  * 视图-入口
  */
-export class MainView extends BOView implements IMainView {
+export class MainView extends ibas.BOView implements sys.IMainView {
     /** 绘制视图 */
     darw(): any {
         return null;

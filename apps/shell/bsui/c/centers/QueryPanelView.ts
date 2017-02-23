@@ -7,13 +7,13 @@
  */
 
 /// <reference path="../../../../../openui5/typings/index.d.ts" />
-import { BOBarView } from "../../../../../ibas/index";
-import { IQueryPanelView } from "../../../bsapp/centers/QueryPanel";
+import * as sys from "../../../../../ibas/bsbas/systems/index";
+import * as ibas from "../../../../../ibas/index";
 
 /**
  * 视图-查询面板
  */
-export class QueryPanelView extends BOBarView implements IQueryPanelView {
+export class QueryPanelView extends ibas.BOBarView implements sys.IQueryPanelView {
     /** 绘制工具条视图 */
     darwBar(): any {
         let that = this;

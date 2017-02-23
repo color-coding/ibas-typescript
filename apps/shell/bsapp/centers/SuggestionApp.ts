@@ -6,13 +6,13 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { SuggestionApp as AbstractSuggestionApp } from "../../../../ibas/bsbas/systems/index";
-import { config } from "../../../../ibas/index";
+import * as ibas from "../../../../ibas/index";
+import * as sys from "../../../../ibas/bsbas/systems/index";
 
 /**
  * 建议应用
  */
-export class SuggestionApp extends AbstractSuggestionApp {
+export class SuggestionApp extends sys.SuggestionApp {
     /** 运行 */
     run(): void {
         super.run();

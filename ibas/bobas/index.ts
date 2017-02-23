@@ -17,10 +17,6 @@ import { string, url } from "./data/index";
 export const LIBRARY_BOBAS_ROOT_FILE_NAME: string = "/bobas/index";
 /** 框架初始化 */
 const isInitialized: boolean = function (): boolean {
-    if (isInitialized) {
-        // 初始化过，不再初始化
-        return;
-    }
     let rootUrl: string = url.rootUrl(LIBRARY_BOBAS_ROOT_FILE_NAME);
     // 加载配置-框架默认
     config.load(string.format("{0}/{1}", rootUrl, Configuration.CONFIG_FILE_NAME));

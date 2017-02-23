@@ -6,28 +6,23 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import {
-    DataConverter4ibas,
-    BOConverter,
-    DataConverter,
-    IBusinessObject
-} from "../../../ibas/bobas/index";
+import * as ibas from "../../../ibas/index";
 
 /**
  * Shel 模块的数据转换者
  */
-export class DataConverter4Shell extends DataConverter4ibas {
+export class DataConverter4Shell extends ibas.DataConverter4ibas {
     /**
      * 创建业务对象转换者
      */
-    protected createBOConverter(): BOConverter {
+    protected createBOConverter(): ibas.BOConverter {
         return new ShellBOConverter();
     }
 }
 /**
  * Shell 模块的业务对象转换者
  */
-export class ShellBOConverter extends BOConverter {
+export class ShellBOConverter extends ibas.BOConverter {
 
     constructor() {
         super();
@@ -46,7 +41,7 @@ export class ShellBOConverter extends BOConverter {
      * @param data 远程数据
      * @returns 本地数据
      */
-    protected customParsing(data: any): IBusinessObject {
+    protected customParsing(data: any): ibas.IBusinessObject {
         return data;
     }
 
@@ -89,7 +84,7 @@ export class ShellBOConverter extends BOConverter {
 /**
  * 离线的数据转换者
  */
-export class DataConverter4Offline extends DataConverter {
+export class DataConverter4Offline extends ibas.DataConverter {
 
     /**
      * 转换数据

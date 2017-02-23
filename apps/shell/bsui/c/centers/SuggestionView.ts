@@ -7,13 +7,13 @@
  */
 
 /// <reference path="../../../../../openui5/typings/index.d.ts" />
-import { ISuggestionView } from "../../../../../ibas/bsbas/systems/index";
-import { BOResidentView } from "../../../../../ibas/index";
+import * as sys from "../../../../../ibas/bsbas/systems/index";
+import * as ibas from "../../../../../ibas/index";
 
 /**
  * 视图-建议
  */
-export class SuggestionView extends BOResidentView implements ISuggestionView {
+export class SuggestionView extends ibas.BOResidentView implements sys.ISuggestionView {
     /** 绘制工具条视图 */
     darwBar(): any {
         let that = this;

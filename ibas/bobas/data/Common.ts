@@ -13,6 +13,15 @@ import { string } from "./index";
  * 数组集合
  */
 export class ArrayList<T> extends Array<T> implements List<T> {
+    /** 创建集合，仅值 */
+    static create<P>(map: Map<any, P>): ArrayList<P> {
+        let list = new ArrayList<P>();
+        for (let item of map.values()) {
+            list.add(item);
+        }
+        return list;
+    }
+
     /**
      * 添加项目
      * @param item 项目

@@ -6,12 +6,12 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { IUser } from "../../../../ibas/bsbas/systems/index";
+import * as sys from "../../../../ibas/bsbas/systems/index";
 
 /**
  * 用户
  */
-export class User implements IUser {
+export class User implements sys.IUser {
     /** 编号 */
     id: number;
     /** 编码 */

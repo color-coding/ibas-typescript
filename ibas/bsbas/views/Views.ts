@@ -37,7 +37,7 @@ export abstract class BOQueryView extends BOView implements IBOQueryView {
 }
 /** 业务对象查询视图，带查询面板 */
 export abstract class BOQueryViewWithPanel extends BOQueryView implements IEmbeddedQueryPanel {
-    /** 嵌入查询面板 */
+    /** 嵌入查询面板，返回值：是否需要初始化 */
     abstract embedded(view: any): void;
 }
 /** 业务对象列表视图 */

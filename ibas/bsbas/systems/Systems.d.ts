@@ -130,7 +130,7 @@ export interface IUseQueryPanel {
 /** 嵌入查询面板 */
 export interface IEmbeddedQueryPanel {
     /** 嵌入 */
-    embedded(view: any): void;
+	embedded(view: any): void;
 }
 /** 用户 */
 export interface IUser {

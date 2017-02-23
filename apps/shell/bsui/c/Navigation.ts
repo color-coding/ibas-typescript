@@ -6,10 +6,8 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import {
-    ViewNavigation, IView,
-} from "../../../../ibas/index";
-import * as app from "../../../../ibas/bsbas/systems/index";
+import * as ibas from "../../../../ibas/index";
+import * as app from "../../bsapp/centers/index";
 import * as ui from "./centers/index";
 
 /** 导出视图显示 */
@@ -17,14 +15,14 @@ export { ViewShowerDefault as ViewShower } from "../ViewShowers";
 /**
  * 视图导航
  */
-export class Navigation extends ViewNavigation {
+export class Navigation extends ibas.ViewNavigation {
 
     /** 
      * 创建实例     
      * @param id 应用id
      */
-    protected newView(id: string): IView {
-        let view: IView = null;
+    protected newView(id: string): ibas.IView {
+        let view: ibas.IView = null;
         switch (id) {
             case app.MainApp.APPLICATION_ID:
                 view = new ui.MainView();
