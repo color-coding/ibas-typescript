@@ -13,7 +13,7 @@ import * as sys from "../../../../../ibas/bsbas/systems/index";
 /**
  * 视图-中心
  */
-export class CenterView extends ibas.BOView implements sys.ICenterView, sys.IEmbeddedQueryPanel {
+export class CenterView extends ibas.BOView implements sys.ICenterView {
     /** 显示视图 */
     show(view: ibas.IView): void {
         this.showView(view);
@@ -205,10 +205,12 @@ export class CenterView extends ibas.BOView implements sys.ICenterView, sys.IEmb
         if (view instanceof ibas.UrlView) {
             // 视图为地址视图
             this.showUrlView(view);
-        } else if (view instanceof ibas.BOChooseView
-            || view instanceof ibas.BOBarView) {
-            // 对话框视图
-            this.showDialogView(view);
+        } else if (view instanceof ibas.BOChooseView) {
+            // 选择视图
+            this.showChooseView(view);
+        } else if (view instanceof ibas.BOBarView) {
+            // 工具条视图
+            this.showBarView(view);
         } else {
             // 正常视图
             this.form.setSubHeader(null);
@@ -234,15 +236,17 @@ export class CenterView extends ibas.BOView implements sys.ICenterView, sys.IEmb
             this.viewQueue.set(view, viewContent);
             // 添加查询面板
             if (view instanceof ibas.BOQueryView) {
-                this.showQueryPanel(view);
+                let queryView: sys.IEmbeddedQueryPanel = {
+                    /** 嵌入查询面板 */
+                    embedded(view: any): void {
+                        that.form.setSubHeader(null);
+                        that.form.setSubHeader(view);
+                        that.form.setShowSubHeader(true);
+                    }
+                };
+                this.showQueryPanel(view, queryView);
             }
         }
-    }
-    /** 嵌入查询面板 */
-    embedded(view: any): void {
-        this.form.setSubHeader(null);
-        this.form.setSubHeader(view);
-        this.form.setShowSubHeader(true);
     }
     /** 显示地址视图 */
     showUrlView(view: ibas.UrlView): void {
@@ -265,8 +269,8 @@ export class CenterView extends ibas.BOView implements sys.ICenterView, sys.IEmb
             window.open(view.url);
         }
     }
-    /** 显示对话视图 */
-    showDialogView(view: ibas.BOView): void {
+    /** 显示选择视图 */
+    showChooseView(view: ibas.BOChooseView): void {
         let title: string;
         // 设置标题
         if (!ibas.object.isNull(view.title)) {
@@ -274,12 +278,69 @@ export class CenterView extends ibas.BOView implements sys.ICenterView, sys.IEmb
         } else if (!ibas.object.isNull(view.id)) {
             title = view.id;
         }
+        let that = this;
         let dialog: sap.m.Dialog = new sap.m.Dialog("", {
             title: title,
-            search: "handleSearch",
-            confirm: "handleClose",
-            cancel: "handleClose",
+            type: sap.m.DialogType.Standard,
+            state: sap.ui.core.ValueState.None,
+            // resizable: true,
+            // draggable: true,
+            stretchOnPhone: true,
+            horizontalScrolling: false,
+            verticalScrolling: false,
+            content: [view.darw()],
+            afterClose: function (): void {
+                // 清理缓存的查询面板
+                if (that.queryPanels.has(view.id)) {
+                    let panelContent = that.queryPanels.get(view.id);
+                    if (panelContent instanceof sap.ui.core.Element) {
+                        panelContent.destroy(true);
+                    }
+                    that.queryPanels.delete(view.id);
+                }
+            },
+            buttons: [view.darwBars()]
         });
+        // 修改id号
+        view.id = dialog.getId();
+        dialog.open();
+        // 添加查询面板
+        if (view instanceof ibas.BOQueryView) {
+            let queryView: sys.IEmbeddedQueryPanel = {
+                /** 嵌入查询面板 */
+                embedded(view: any): void {
+                    dialog.setSubHeader(null);
+                    dialog.setSubHeader(view);
+                }
+            };
+            this.showQueryPanel(view, queryView);
+        }
+    }
+    /** 显示工具条视图 */
+    showBarView(view: ibas.BOBarView): void {
+        let title: string;
+        // 设置标题
+        if (!ibas.object.isNull(view.title)) {
+            title = view.title;
+        } else if (!ibas.object.isNull(view.id)) {
+            title = view.id;
+        }
+        let that = this;
+        let dialog: sap.m.Dialog = new sap.m.Dialog("", {
+            title: title,
+            type: sap.m.DialogType.Standard,
+            state: sap.ui.core.ValueState.None,
+            // resizable: true,
+            // draggable: true,
+            stretchOnPhone: true,
+            horizontalScrolling: false,
+            verticalScrolling: false,
+            content: [view.darw()],
+            afterClose: function (): void {
+            },
+        });
+        // 修改id号
+        view.id = dialog.getId();
         dialog.open();
     }
     /** 显示常驻视图 */
@@ -290,7 +351,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView, sys.IEmb
         }
     }
     private queryPanels = new Map<string, any>();
-    showQueryPanel(view: ibas.BOQueryView) {
+    showQueryPanel(view: ibas.BOQueryView, embeddedView: sys.IEmbeddedQueryPanel): void {
         let queryPanel = sys.Factories.systemsFactory.createQueryPanel();
         if (ibas.object.isNull(queryPanel)) {
             // 查询面板无效，不添加
@@ -300,14 +361,10 @@ export class CenterView extends ibas.BOView implements sys.ICenterView, sys.IEmb
             // 设置视图导航
             queryPanel.navigation = this.application.navigation;
             queryPanel.viewShower = this;
-            let embeddedView: sys.IEmbeddedQueryPanel;
             // 判断面板嵌入位置
             if (view instanceof ibas.BOQueryViewWithPanel) {
                 // 视图继承嵌入接口
                 embeddedView = view;
-            } else {
-                // 视图不嵌入
-                embeddedView = this;
             }
             // 先使用缓存中的，再次新建
             if (this.queryPanels.has(view.id)) {
@@ -316,8 +373,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView, sys.IEmb
             } else {
                 // 查询面板位置，先添加提示
                 let strip = new sap.m.Toolbar("", {
-                    width: "100%",
-                    design: sap.m.ToolbarDesign.Transparent,
+                    design: sap.m.ToolbarDesign.Auto,
                     content: [
                         new sap.m.MessageStrip("", {
                             text: ibas.i18n.prop("sys_shell_initialize_query_panel"),

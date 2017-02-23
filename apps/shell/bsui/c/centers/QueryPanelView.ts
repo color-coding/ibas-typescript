@@ -31,7 +31,7 @@ export class QueryPanelView extends ibas.BOBarView implements sys.IQueryPanelVie
         });
         return new sap.m.Toolbar("", {
             width: "100%",
-            design: sap.m.ToolbarDesign.Transparent,
+            design: sap.m.ToolbarDesign.Auto,
             content: [
                 this.searchField,
                 this.configButton

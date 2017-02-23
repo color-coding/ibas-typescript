@@ -8,7 +8,7 @@
 
 /// <reference path="../../../../../../openui5/typings/index.d.ts" />
 import * as ibas from "../../../../../../ibas/index";
-import { SalesOrder } from "../../../borep/bo/index";
+import * as bo from "../../../borep/bo/index";
 import { IDemoChooseView } from "../../../bsapp/demo/index";
 
 /**
@@ -16,30 +16,40 @@ import { IDemoChooseView } from "../../../bsapp/demo/index";
  */
 export class DemoChooseView extends ibas.BOChooseView implements IDemoChooseView {
 
+    /** 绘制工具条 */
+    darwBars(): any {
+        let that = this;
+        return [
+            new sap.m.Button("", {
+                text: ibas.i18n.prop("sys_shell_ui_data_new"),
+                type: sap.m.ButtonType.Transparent,
+                // icon: "sap-icon://create",
+                press: function (): void {
+                    that.fireViewEvents(that.newDataEvent);
+                }
+            }),
+            new sap.m.Button("", {
+                text: ibas.i18n.prop("sys_shell_ui_data_choose"),
+                type: sap.m.ButtonType.Transparent,
+                // icon: "sap-icon://accept",
+                press: function (): void {
+                    that.fireViewEvents(that.chooseDataEvent);
+                }
+            }),
+            new sap.m.Button("", {
+                text: ibas.i18n.prop("sys_shell_ui_exit"),
+                type: sap.m.ButtonType.Transparent,
+                // icon: "sap-icon://inspect-down",
+                press: function (): void {
+                    that.fireViewEvents(that.destroyEvent);
+                }
+            }),
+        ]
+    }
     /** 绘制视图 */
     darw(): any {
         let that = this;
-        let form = new sap.ui.layout.form.SimpleForm("");
-        form.setToolbar(new sap.m.Toolbar("", {
-            content: [
-                new sap.m.Button("", {
-                    text: ibas.i18n.prop("sys_shell_ui_data_choose"),
-                    type: sap.m.ButtonType.Transparent,
-                    icon: "sap-icon://accept",
-                    press: function (): void {
-                        that.fireViewEvents(that.chooseDataEvent);
-                    }
-                }),
-                new sap.m.Button("", {
-                    text: ibas.i18n.prop("sys_shell_ui_data_new"),
-                    type: sap.m.ButtonType.Transparent,
-                    icon: "sap-icon://create",
-                    press: function (): void {
-                        that.fireViewEvents(that.newDataEvent);
-                    }
-                })
-            ]
-        }));
+        this.form = new sap.ui.layout.form.SimpleForm("");
         this.table = new sap.ui.table.Table("", {
             visibleRowCount: 15,
             rows: "{/}",
@@ -70,10 +80,11 @@ export class DemoChooseView extends ibas.BOChooseView implements IDemoChooseView
                 })
             ]
         });
-        form.addContent(this.table);
-        this.id = form.getId();
-        return form;
+        this.form.addContent(this.table);
+        this.id = this.form.getId();
+        return this.form;
     }
+    private form: sap.ui.layout.form.SimpleForm;
     private table: sap.ui.table.Table;
     /** 显示数据 */
     showData(datas: any): void {

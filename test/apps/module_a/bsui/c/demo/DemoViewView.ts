@@ -8,7 +8,7 @@
 
 /// <reference path="../../../../../../openui5/typings/index.d.ts" />
 import * as ibas from "../../../../../../ibas/index";
-import { SalesOrder, SalesOrderItem } from "../../../borep/bo/index";
+import * as bo from "../../../borep/bo/index";
 import { IDemoViewView } from "../../../bsapp/demo/index";
 import { utils } from "../../../../../../openui5/typings/ibas.utils";
 
@@ -103,7 +103,7 @@ export class DemoViewView extends ibas.BOViewView implements IDemoViewView {
     private table: sap.ui.table.Table;
 
     /** 显示数据 */
-    showSalesOrder(data: SalesOrder): void { }
+    showSalesOrder(data: bo.SalesOrder): void { }
     /** 显示数据 */
-    showSalesOrderItems(datas: SalesOrderItem[]): void { }
+    showSalesOrderItems(datas: bo.SalesOrderItem[]): void { }
 }

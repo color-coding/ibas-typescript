@@ -53,6 +53,8 @@ export abstract class BOChooseView extends BOQueryView implements IBOChooseView 
     newDataEvent: Function;
     /** 选择数据事件，参数：选择数据 */
     chooseDataEvent: Function;
+    /** 绘制工具条 */
+    abstract darwBars(): any;
 }
 /** 业务对象查看视图 */
 export abstract class BOViewView extends BOView implements IBOViewView {

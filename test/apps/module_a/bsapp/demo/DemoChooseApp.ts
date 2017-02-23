@@ -54,6 +54,9 @@ export class DemoChooseApp extends ibas.BOChooseApplication<IDemoChooseView, bo.
     }
     /** 新建数据 */
     protected newData(): void {
+        // 关闭自身
+        this.destroy();
+        // 调用编辑应用
         let app = new DemoEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;

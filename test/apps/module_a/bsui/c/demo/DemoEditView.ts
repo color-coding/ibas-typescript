@@ -9,7 +9,7 @@
 /// <reference path="../../../../../../openui5/typings/index.d.ts" />
 import * as ibas from "../../../../../../ibas/index";
 import { utils } from "../../../../../../openui5/typings/ibas.utils";
-import { SalesOrder, SalesOrderItem } from "../../../borep/bo/index";
+import * as bo from "../../../borep/bo/index";
 import { IDemoEditView } from "../../../bsapp/demo/index";
 
 /**
@@ -146,12 +146,12 @@ export class DemoEditView extends ibas.BOEditView implements IDemoEditView {
     private table: sap.ui.table.Table;
 
     /** 显示数据 */
-    showSalesOrder(data: SalesOrder): void {
+    showSalesOrder(data: bo.SalesOrder): void {
         this.form.setModel(new sap.ui.model.json.JSONModel(data));
 
     }
     /** 显示数据 */
-    showSalesOrderItems(datas: SalesOrderItem[]): void {
+    showSalesOrderItems(datas: bo.SalesOrderItem[]): void {
         this.table.setModel(new sap.ui.model.json.JSONModel(datas));
     }
 }
