@@ -8,7 +8,7 @@
 
 import * as ibas from "../../../../../ibas/index";
 import { BORepositoryDemo } from "../../borep/BORepositories";
-import { SalesOrder, SalesOrderItem, SalesOrderItems } from "../../borep/bo/index";
+import * as  bo from "../../borep/bo/index";
 
 /** 查看应用-演示 */
 export class DemoViewApp extends ibas.BOViewApplication<IDemoViewView> {
@@ -42,10 +42,10 @@ export class DemoViewApp extends ibas.BOViewApplication<IDemoViewView> {
         app.viewShower = this.viewShower;
         app.run();
     }
-    protected viewData: SalesOrder;
+    protected viewData: bo.SalesOrder;
     /** 运行,覆盖原方法 */
     run(...args: any[]): void {
-        let data: SalesOrder = arguments[0];
+        let data: bo.SalesOrder = arguments[0];
         if (ibas.object.isNull(data)) {
             throw new Error(ibas.i18n.prop("msg_invalid_parameter", "view data"));
         }
@@ -56,7 +56,7 @@ export class DemoViewApp extends ibas.BOViewApplication<IDemoViewView> {
 /** 视图-演示 */
 export interface IDemoViewView extends ibas.IBOViewView {
     /** 显示数据 */
-    showSalesOrder(data: SalesOrder): void;
+    showSalesOrder(data: bo.SalesOrder): void;
     /** 显示数据 */
-    showSalesOrderItems(datas: SalesOrderItem[]): void;
+    showSalesOrderItems(datas: bo.SalesOrderItem[]): void;
 }

@@ -9,7 +9,7 @@
 import * as ibas from "../../../ibas/index";
 import * as sys from "../../../ibas/bsbas/systems/index";
 import { DataConverter4Shell, DataConverter4Offline } from "./DataConverters";
-import { User, UserModule } from "./bo/index";
+import * as bo from "./bo/index";
 
 
 /**
@@ -117,7 +117,7 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
                         && item.password === password) {
                         opRslt.resultCode = 0;
                         opRslt.message = "";
-                        let user: User = new User();
+                        let user: bo.User = new bo.User();
                         user.userCode = item.user;
                         user.userName = item.name;
                         opRslt.resultObjects.add(user);
@@ -142,7 +142,7 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
                 && !ibas.object.isNull(offlineSettings.modules)
                 && Array.isArray(offlineSettings.modules)) {
                 for (let item of offlineSettings.modules) {
-                    let module = new UserModule();
+                    let module = new bo.UserModule();
                     module.id = item.id;
                     module.name = item.name;
                     module.category = item.category;

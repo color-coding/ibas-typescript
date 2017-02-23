@@ -8,12 +8,12 @@
 
 import * as ibas from "../../../../../ibas/index";
 import { BORepositoryDemo } from "../../borep/BORepositories";
-import { SalesOrder, SalesOrderItem, SalesOrderItems } from "../../borep/bo/index";
+import * as  bo from "../../borep/bo/index";
 import { DemoChooseApp } from "./DemoChooseApp";
 
 
 /** 应用-演示 */
-export class DemoEditApp extends ibas.BOEditApplication<IDemoEditView, SalesOrder> {
+export class DemoEditApp extends ibas.BOEditApplication<IDemoEditView, bo.SalesOrder> {
 
     /** 应用标识 */
     static APPLICATION_ID: string = "b77d974d-57a0-4373-884e-b1ec43471c5a";
@@ -42,16 +42,16 @@ export class DemoEditApp extends ibas.BOEditApplication<IDemoEditView, SalesOrde
         this.view.showSalesOrderItems(this.editData.items);
     }
     /** 待编辑的数据 */
-    protected editData: SalesOrder;
+    protected editData: bo.SalesOrder;
     /** 保存数据 */
     protected saveData(): void {
         this.messages(ibas.emMessageType.SUCCESS, ibas.i18n.prop("sys_shell_ui_sucessful"));
     }
     /** 运行,覆盖原方法 */
     run(...args: any[]): void {
-        let data: SalesOrder = arguments[0];
+        let data: bo.SalesOrder = arguments[0];
         if (ibas.object.isNull(data)) {
-            data = new SalesOrder();
+            data = new bo.SalesOrder();
             data.customer = "C00001";
             data.canceled = ibas.emYesNo.YES;
             let item = data.items.create();
@@ -77,7 +77,7 @@ export class DemoEditApp extends ibas.BOEditApplication<IDemoEditView, SalesOrde
         this.view.showSalesOrderItems(this.editData.items);
     }
     /** 删除销售订单行事件 */
-    removeSalesOrderItem(item: SalesOrderItem): void {
+    removeSalesOrderItem(item: bo.SalesOrderItem): void {
         if (this.editData.items.indexOf(item) >= 0) {
             this.editData.items.remove(item);
             this.view.showSalesOrderItems(this.editData.items);
@@ -95,7 +95,7 @@ export interface IDemoEditView extends ibas.IBOEditView {
     /** 选择销售订单行事件 */
     chooseSalesOrderItemEvent: Function;
     /** 显示数据 */
-    showSalesOrder(data: SalesOrder): void;
+    showSalesOrder(data: bo.SalesOrder): void;
     /** 显示数据 */
-    showSalesOrderItems(datas: SalesOrderItem[]): void;
+    showSalesOrderItems(datas: bo.SalesOrderItem[]): void;
 }

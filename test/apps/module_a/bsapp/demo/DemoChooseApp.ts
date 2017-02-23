@@ -8,11 +8,11 @@
 
 import * as ibas from "../../../../../ibas/index";
 import { BORepositoryDemo } from "../../borep/BORepositories";
-import { SalesOrder, SalesOrderItem, SalesOrderItems } from "../../borep/bo/index";
+import * as bo from "../../borep/bo/index";
 import { DemoEditApp } from "./DemoEditApp";
 
 /** 应用-演示 */
-export class DemoChooseApp extends ibas.BOChooseApplication<IDemoChooseView, SalesOrder> {
+export class DemoChooseApp extends ibas.BOChooseApplication<IDemoChooseView, bo.SalesOrder> {
 
     /** 应用标识 */
     static APPLICATION_ID: string = "7cfa552b-adc4-4cc9-8dac-1533c7dc0013";
@@ -39,7 +39,7 @@ export class DemoChooseApp extends ibas.BOChooseApplication<IDemoChooseView, Sal
         this.busy(true);
         let that = this;
         let boRep = new BORepositoryDemo();
-        boRep.fetchSalesOrder(criteria, function (opRslt: ibas.IOperationResult<SalesOrder>): void {
+        boRep.fetchSalesOrder(criteria, function (opRslt: ibas.IOperationResult<bo.SalesOrder>): void {
             try {
                 if (opRslt.resultCode !== 0) {
                     throw new Error(opRslt.message);
@@ -55,17 +55,17 @@ export class DemoChooseApp extends ibas.BOChooseApplication<IDemoChooseView, Sal
     /** 新建数据 */
     protected newData(): void {
         let app = new DemoEditApp();
-        app.navigation= this.navigation;
+        app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run();
     }
     /** 选择数据 */
-    protected chooseData(data: SalesOrder): void {
+    protected chooseData(data: bo.SalesOrder): void {
 
     }
 }
 /** 视图-演示 */
 export interface IDemoChooseView extends ibas.IBOChooseView {
     /** 显示数据 */
-    showData(datas: SalesOrder[]): void;
+    showData(datas: bo.SalesOrder[]): void;
 }

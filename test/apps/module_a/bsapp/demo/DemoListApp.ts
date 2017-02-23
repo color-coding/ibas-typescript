@@ -8,12 +8,12 @@
 
 import * as ibas from "../../../../../ibas/index";
 import { BORepositoryDemo } from "../../borep/BORepositories";
-import { SalesOrder, SalesOrderItem, SalesOrderItems } from "../../borep/bo/index";
+import * as  bo from "../../borep/bo/index";
 import { DemoEditApp } from "./DemoEditApp";
 import { DemoViewApp } from "./DemoViewApp";
 
 /** 列表应用-演示 */
-export class DemoListApp extends ibas.BOListApplication<IDemoListView, SalesOrder> {
+export class DemoListApp extends ibas.BOListApplication<IDemoListView, bo.SalesOrder> {
 
     /** 应用标识 */
     static APPLICATION_ID: string = "f873e18d-b9ca-476b-b300-b177c194d41a";
@@ -37,11 +37,11 @@ export class DemoListApp extends ibas.BOListApplication<IDemoListView, SalesOrde
         // 视图加载完成
     }
     /** 查询数据 */
-    protected fetchData(criteria:ibas. ICriteria): void {
+    protected fetchData(criteria: ibas.ICriteria): void {
         this.busy(true);
         let that = this;
         let boRep = new BORepositoryDemo();
-        boRep.fetchSalesOrder(criteria, function (opRslt: ibas.IOperationResult<SalesOrder>): void {
+        boRep.fetchSalesOrder(criteria, function (opRslt: ibas.IOperationResult<bo.SalesOrder>): void {
             try {
                 if (opRslt.resultCode !== 0) {
                     throw new Error(opRslt.message);
@@ -57,20 +57,20 @@ export class DemoListApp extends ibas.BOListApplication<IDemoListView, SalesOrde
     /** 新建数据 */
     protected newData(): void {
         let app = new DemoEditApp();
-        app.navigation= this.navigation;
+        app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run();
     }
     /** 查看数据，参数：目标数据 */
-    protected viewData(data: SalesOrder): void {
+    protected viewData(data: bo.SalesOrder): void {
         let app = new DemoViewApp();
-        app.navigation= this.navigation;
+        app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run(data);
 
     }
     /** 编辑数据，参数：目标数据 */
-    protected editData(data: SalesOrder): void {
+    protected editData(data: bo.SalesOrder): void {
         this.messages(ibas.emMessageType.ERROR, ibas.i18n.prop("module_a_ui_no_edit"));
     }
 }
@@ -79,5 +79,5 @@ export interface IDemoListView extends ibas.IBOListView {
     /** 编辑数据事件，参数：编辑对象 */
     editDataEvent: Function;
     /** 显示数据 */
-    showData(datas: SalesOrder[]): void;
+    showData(datas: bo.SalesOrder[]): void;
 }
