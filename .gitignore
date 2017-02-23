@@ -29,6 +29,6 @@ Web.config
 /tomcat/
 
 # exceptions
-!src/3rdparty/*
+!ibas/3rdparty/*.js
 !openui5/typings/*.ts
 !openui5/typings/*.json

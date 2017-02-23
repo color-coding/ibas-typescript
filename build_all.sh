@@ -34,7 +34,7 @@ do
     if [ ! -e "${folder_sub}/keeps.txt" ]
     then
       cd ${folder_sub}
-      rm *.js;
+      rm -f *.js;
     fi
     cd ${folder}
   done
