@@ -8,7 +8,7 @@
 
 import {
     ViewNavigation, IView,
-} from "../../../../ibas/bsbas/index";
+} from "../../../../ibas/index";
 import * as app from "../../../../ibas/bsbas/systems/index";
 import * as ui from "./centers/index";
 

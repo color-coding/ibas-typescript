@@ -7,15 +7,13 @@
  */
 
 /// <reference path="../../../../../../openui5/typings/index.d.ts" />
-import {
-    BOResidentView
-} from "../../../../../../ibas/bsbas/index";
+import * as ibas from "../../../../../../ibas/index";
 import { IDemoResidentView } from "../../../bsapp/demo/index";
 
 /**
  * 视图-建议
  */
-export class DemoResidentView extends BOResidentView implements IDemoResidentView {
+export class DemoResidentView extends ibas.BOResidentView implements IDemoResidentView {
     /** 绘制工具条视图 */
     darwBar(): any {
         let that = this;

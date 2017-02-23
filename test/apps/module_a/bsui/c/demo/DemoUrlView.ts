@@ -7,15 +7,13 @@
  */
 
 /// <reference path="../../../../../../openui5/typings/index.d.ts" />
-import {
-    UrlView
-} from "../../../../../../ibas/bsbas/index";
+import * as ibas from "../../../../../../ibas/index";
 import { IDemoUrlView } from "../../../bsapp/demo/index";
 
 /**
  * 视图-demo
  */
-export class DemoUrlView extends UrlView implements IDemoUrlView {
+export class DemoUrlView extends ibas.UrlView implements IDemoUrlView {
 
     /** 绘制视图 */
     darw(): any {

@@ -8,7 +8,7 @@
 
 import {
     ModuleFunction, IApplication, IView, IViewShower
-} from "../../../../ibas/bsbas/index";
+} from "../../../../ibas/index";
 import { MainApp } from "./MainApp";
 
 /** 功能-系统中心 */

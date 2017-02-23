@@ -8,7 +8,7 @@
 
 /// <reference path="../../../../../openui5/typings/index.d.ts" />
 import { ISuggestionView } from "../../../../../ibas/bsbas/systems/index";
-import { BOResidentView } from "../../../../../ibas/bsbas/index";
+import { BOResidentView } from "../../../../../ibas/index";
 
 /**
  * 视图-建议

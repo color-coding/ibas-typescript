@@ -6,12 +6,10 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import {
-    BOApplication, IUrlView, emMessageType, config
-} from "../../../../../ibas/bsbas/index";
+import * as ibas from "../../../../../ibas/index";
 
 /** 应用-演示 */
-export class DemoUrlApp extends BOApplication<IDemoUrlView> {
+export class DemoUrlApp extends ibas.BOApplication<IDemoUrlView> {
 
     /** 应用标识 */
     static APPLICATION_ID: string = "12dd3006-7055-409b-9fc5-8b4434b1c781";
@@ -40,5 +38,5 @@ export class DemoUrlApp extends BOApplication<IDemoUrlView> {
     }
 }
 /** 视图-演示 */
-export interface IDemoUrlView extends IUrlView {
+export interface IDemoUrlView extends ibas.IUrlView {
 }

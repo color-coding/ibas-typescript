@@ -29,11 +29,15 @@ if "%OPTIONS%" neq "" (
 )
 
 for /f %%l in ('dir /s /b "%WORK_FOLDER%tsconfig.json"') DO (
-  echo --开始编译：%%~dpl
-REM 清理已存在js
-  del /s %%~dpl*.js
+  SET FOLDER=%%~dpl
+  echo --开始编译：!FOLDER!
+REM 不存在keeps.txt文件时，清理已存在js
+  for /f %%m in ('dir /s /b /a:d "!FOLDER!"') DO (
+    SET FOLDER_SUB=%%~dpm
+    if not exist !FOLDER_SUB!keeps.txt if exist !FOLDER_SUB!*.js del !FOLDER_SUB!*.js
+  )
 REM 运行编译命令
-  call !COMMOND! -p %%~dpl
+  call !COMMOND! -p !FOLDER!
 )
 
 

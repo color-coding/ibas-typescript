@@ -3,27 +3,27 @@ echo ***************************************************************************
 echo      start_web_server_tomcat.bat
 echo                     by niuren.zhu
 echo                           2017.02.21
-echo  Ëµï¿½ï¿½ï¿½ï¿½
-echo     1. ï¿½ï¿½ï¿½ï¿½tomcatï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½ï¿½Â·ï¿½ï¿½.\tomcat\
-echo     2. ï¿½Å±ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½Â·ï¿½ï¿½tomcatï¿½Ç·ï¿½ï¿½ï¿½ï¿½Ú£ï¿½ï¿½ï¿½Ó³ï¿½ï¿½ï¿½ï¿½ï¿½ëµ½webappsÄ¿Â¼ï¿½ï¿½
-echo     3. ï¿½×´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½Ô±È¨ï¿½Þ¡ï¿½
+echo  ËµÃ÷£º
+echo     1. Æô¶¯tomcat·þÎñ£¬Ä¬ÈÏÂ·¾¶.\tomcat\
+echo     2. ½Å±¾×Ô¶¯¼ì²éÔ¼¶¨Â·¾¶tomcatÊÇ·ñ´æÔÚ£¬²¢Ó³Éä´úÂëµ½webappsÄ¿Â¼¡£
+echo     3. Ê×´ÎÔËÐÐÐèÒª¹ÜÀíÔ±È¨ÏÞ¡£
 echo ****************************************************************************
-REM ï¿½ï¿½ï¿½Ã²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+REM ÉèÖÃ²ÎÊý±äÁ¿
 SET WORK_FOLDER=%~dp0
 SET TOMCAT_FOLDER=%WORK_FOLDER%tomcat\
 SET TOMCAT_APPS_FOLDER=%TOMCAT_FOLDER%webapps\
 SET TOMCAT_START_SCRIPT=%TOMCAT_FOLDER%bin\startup.bat
 
 if exist %TOMCAT_FOLDER% (
-REM ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½Ó³ï¿½ï¿½
+REM ¼ì²é³ÌÐòÊÇ·ñÓ³Éä
 if not exist "%TOMCAT_APPS_FOLDER%ts" (
   mklink /d "%TOMCAT_APPS_FOLDER%ts" "%WORK_FOLDER%"
 )
-REM ï¿½ï¿½ï¿½ï¿½tomcat
+REM Æô¶¯tomcat
   cd "%TOMCAT_FOLDER%"
   call "%TOMCAT_START_SCRIPT%"
   cd "%WORK_FOLDER%"
 ) else (
-  echo TOMCAT_FOLDERï¿½ï¿½ï¿½ï¿½ï¿½Ú£ï¿½
+  echo TOMCAT_FOLDER²»´æÔÚ£¡
   pause
 )

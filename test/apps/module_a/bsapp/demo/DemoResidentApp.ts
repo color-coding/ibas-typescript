@@ -6,12 +6,10 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import {
-    BOResidentApplication, IBOResidentView, i18n, object
-} from "../../../../../ibas/bsbas/index";
+import * as ibas from "../../../../../ibas/index";
 
 /** 常驻应用-演示 */
-export class DemoResidentApp extends BOResidentApplication<IDemoResidentView> {
+export class DemoResidentApp extends ibas.BOResidentApplication<IDemoResidentView> {
 
     /** 应用标识 */
     static APPLICATION_ID: string = "f460a685-5e82-4268-aa1a-b767dbfa0d87";
@@ -22,7 +20,7 @@ export class DemoResidentApp extends BOResidentApplication<IDemoResidentView> {
         super();
         this.id = DemoResidentApp.APPLICATION_ID;
         this.name = DemoResidentApp.APPLICATION_NAME;
-        this.description = i18n.prop(this.name);
+        this.description = ibas.i18n.prop(this.name);
     }
     /** 注册视图 */
     protected registerView(): void {
@@ -36,5 +34,5 @@ export class DemoResidentApp extends BOResidentApplication<IDemoResidentView> {
 
 }
 /** 视图-演示 */
-export interface IDemoResidentView extends IBOResidentView {
+export interface IDemoResidentView extends ibas.IBOResidentView {
 }

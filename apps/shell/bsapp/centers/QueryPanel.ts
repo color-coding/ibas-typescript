@@ -8,7 +8,7 @@
 
 import {
     object
-} from "../../../../ibas/bobas/index";
+} from "../../../../ibas/index";
 import {
     QueryPanel as QueryPanelBase,
     IQueryPanelView as IQueryPanelViewBase

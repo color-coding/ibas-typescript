@@ -7,7 +7,7 @@
  */
 
 import { HelpApp as AbstractHelpApp } from "../../../../ibas/bsbas/systems/index";
-import { config } from "../../../../ibas/bsbas/index";
+import { config } from "../../../../ibas/index";
 
 /**
  * 帮助应用

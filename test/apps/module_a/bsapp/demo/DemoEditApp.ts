@@ -6,16 +6,14 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import {
-    BOEditApplication, IBOEditView, emMessageType, ICriteria, i18n, IOperationResult, object, emYesNo
-} from "../../../../../ibas/bsbas/index";
+import * as ibas from "../../../../../ibas/index";
 import { BORepositoryDemo } from "../../borep/BORepositories";
 import { SalesOrder, SalesOrderItem, SalesOrderItems } from "../../borep/bo/index";
 import { DemoChooseApp } from "./DemoChooseApp";
 
 
 /** 应用-演示 */
-export class DemoEditApp extends BOEditApplication<IDemoEditView, SalesOrder> {
+export class DemoEditApp extends ibas.BOEditApplication<IDemoEditView, SalesOrder> {
 
     /** 应用标识 */
     static APPLICATION_ID: string = "b77d974d-57a0-4373-884e-b1ec43471c5a";
@@ -26,7 +24,7 @@ export class DemoEditApp extends BOEditApplication<IDemoEditView, SalesOrder> {
         super();
         this.id = DemoEditApp.APPLICATION_ID;
         this.name = DemoEditApp.APPLICATION_NAME;
-        this.description = i18n.prop(this.name);
+        this.description = ibas.i18n.prop(this.name);
     }
     /** 注册视图 */
     protected registerView(): void {
@@ -47,15 +45,15 @@ export class DemoEditApp extends BOEditApplication<IDemoEditView, SalesOrder> {
     protected editData: SalesOrder;
     /** 保存数据 */
     protected saveData(): void {
-        this.messages(emMessageType.SUCCESS, i18n.prop("sys_shell_ui_sucessful"));
+        this.messages(ibas.emMessageType.SUCCESS, ibas.i18n.prop("sys_shell_ui_sucessful"));
     }
     /** 运行,覆盖原方法 */
     run(...args: any[]): void {
         let data: SalesOrder = arguments[0];
-        if (object.isNull(data)) {
+        if (ibas.object.isNull(data)) {
             data = new SalesOrder();
             data.customer = "C00001";
-            data.canceled = emYesNo.YES;
+            data.canceled = ibas.emYesNo.YES;
             let item = data.items.create();
             item.itemCode = "A00001";
         }
@@ -87,7 +85,7 @@ export class DemoEditApp extends BOEditApplication<IDemoEditView, SalesOrder> {
     }
 }
 /** 视图-演示 */
-export interface IDemoEditView extends IBOEditView {
+export interface IDemoEditView extends ibas.IBOEditView {
     /** 添加销售订单事件 */
     addSalesOrderItemEvent: Function;
     /** 删除销售订单行事件 */

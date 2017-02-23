@@ -7,7 +7,7 @@
  */
 
 import { SuggestionApp as AbstractSuggestionApp } from "../../../../ibas/bsbas/systems/index";
-import { config } from "../../../../ibas/bsbas/index";
+import { config } from "../../../../ibas/index";
 
 /**
  * 建议应用

@@ -6,17 +6,12 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import {
-    DataConverter4ibas,
-    BOConverter,
-    DataConverter,
-    IBusinessObject
-} from "../../../../ibas/bobas/index";
+import * as ibas from "../../../../ibas/index";
 
 /**
  * 离线的数据转换者
  */
-export class DataConverter4Demo extends DataConverter {
+export class DataConverter4Demo extends ibas.DataConverter {
 
     /**
      * 转换数据

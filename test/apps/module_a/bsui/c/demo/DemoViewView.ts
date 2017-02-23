@@ -7,9 +7,7 @@
  */
 
 /// <reference path="../../../../../../openui5/typings/index.d.ts" />
-import {
-    BOViewView, i18n, emDocumentStatus
-} from "../../../../../../ibas/bsbas/index";
+import * as ibas from "../../../../../../ibas/index";
 import { SalesOrder, SalesOrderItem } from "../../../borep/bo/index";
 import { IDemoViewView } from "../../../bsapp/demo/index";
 import { utils } from "../../../../../../openui5/typings/ibas.utils";
@@ -17,7 +15,7 @@ import { utils } from "../../../../../../openui5/typings/ibas.utils";
 /**
  * 视图-demo
  */
-export class DemoViewView extends BOViewView implements IDemoViewView {
+export class DemoViewView extends ibas.BOViewView implements IDemoViewView {
 
     /** 绘制视图 */
     darw(): any {
@@ -25,14 +23,14 @@ export class DemoViewView extends BOViewView implements IDemoViewView {
         this.form = new sap.ui.layout.form.SimpleForm("", {
             content: [
                 new sap.ui.core.Title("", { text: "Customer" }),
-                new sap.m.Label("", { text: i18n.prop("bo_salesorder_customer") }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_customer") }),
                 new sap.m.Text("", { text: "{customer}" }),
                 new sap.ui.core.Title("", { text: "Document" }),
-                new sap.m.Label("", { text: i18n.prop("bo_salesorder_docentry") }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_docentry") }),
                 new sap.m.Text("", { text: "{docEntry}" }),
-                new sap.m.Label("", { text: i18n.prop("bo_salesorder_documentstatus") }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_documentstatus") }),
                 new sap.m.Text("", { text: "{documentStatus}" }),
-                new sap.m.Label("", { text: i18n.prop("bo_salesorder_canceled") }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_canceled") }),
                 new sap.m.Text("", { text: "{canceled}" })
             ]
         });
@@ -42,38 +40,38 @@ export class DemoViewView extends BOViewView implements IDemoViewView {
             rows: "{/}",
             columns: [
                 new sap.ui.table.Column("", {
-                    label: i18n.prop("bo_salesorderitem_lineid"),
+                    label: ibas.i18n.prop("bo_salesorderitem_lineid"),
                     template: new sap.m.Text("", {
                         text: "{lineId}"
                     })
                 }),
                 new sap.ui.table.Column("", {
-                    label: i18n.prop("bo_salesorderitem_linestatus"),
+                    label: ibas.i18n.prop("bo_salesorderitem_linestatus"),
                     template: new sap.m.ComboBox("", {
                         selectedKey: "{lineStatus}",
-                        items: utils.createComboBoxItems(emDocumentStatus)
+                        items: utils.createComboBoxItems(ibas.emDocumentStatus)
                     })
                 }),
                 new sap.ui.table.Column("", {
-                    label: i18n.prop("bo_salesorderitem_itemcode"),
+                    label: ibas.i18n.prop("bo_salesorderitem_itemcode"),
                     template: new sap.m.Text("", {
                         text: "{itemCode}"
                     })
                 }),
                 new sap.ui.table.Column("", {
-                    label: i18n.prop("bo_salesorderitem_price"),
+                    label: ibas.i18n.prop("bo_salesorderitem_price"),
                     template: new sap.m.Text("", {
                         text: "{price}"
                     })
                 }),
                 new sap.ui.table.Column("", {
-                    label: i18n.prop("bo_salesorderitem_quantity"),
+                    label: ibas.i18n.prop("bo_salesorderitem_quantity"),
                     template: new sap.m.Text("", {
                         text: "{quantity}"
                     })
                 }),
                 new sap.ui.table.Column("", {
-                    label: i18n.prop("bo_salesorderitem_linetotal"),
+                    label: ibas.i18n.prop("bo_salesorderitem_linetotal"),
                     template: new sap.m.Text("", {
                         text: "{lineTotal}"
                     })
@@ -86,7 +84,7 @@ export class DemoViewView extends BOViewView implements IDemoViewView {
             subHeader: new sap.m.Toolbar("", {
                 content: [
                     new sap.m.Button("", {
-                        text: i18n.prop("sys_shell_ui_data_edit"),
+                        text: ibas.i18n.prop("sys_shell_ui_data_edit"),
                         type: sap.m.ButtonType.Transparent,
                         icon: "sap-icon://edit",
                         press: function (): void {

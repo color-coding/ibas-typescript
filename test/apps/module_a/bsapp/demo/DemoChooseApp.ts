@@ -6,15 +6,13 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import {
-    BOChooseApplication, IBOChooseView, emMessageType, ICriteria, i18n, IOperationResult
-} from "../../../../../ibas/bsbas/index";
+import * as ibas from "../../../../../ibas/index";
 import { BORepositoryDemo } from "../../borep/BORepositories";
 import { SalesOrder, SalesOrderItem, SalesOrderItems } from "../../borep/bo/index";
 import { DemoEditApp } from "./DemoEditApp";
 
 /** 应用-演示 */
-export class DemoChooseApp extends BOChooseApplication<IDemoChooseView, SalesOrder> {
+export class DemoChooseApp extends ibas.BOChooseApplication<IDemoChooseView, SalesOrder> {
 
     /** 应用标识 */
     static APPLICATION_ID: string = "7cfa552b-adc4-4cc9-8dac-1533c7dc0013";
@@ -25,7 +23,7 @@ export class DemoChooseApp extends BOChooseApplication<IDemoChooseView, SalesOrd
         super();
         this.id = DemoChooseApp.APPLICATION_ID;
         this.name = DemoChooseApp.APPLICATION_NAME;
-        this.description = i18n.prop(this.name);
+        this.description = ibas.i18n.prop(this.name);
     }
     /** 注册视图 */
     protected registerView(): void {
@@ -37,11 +35,11 @@ export class DemoChooseApp extends BOChooseApplication<IDemoChooseView, SalesOrd
         // 视图加载完成
     }
     /** 查询数据 */
-    protected fetchData(criteria: ICriteria): void {
+    protected fetchData(criteria: ibas.ICriteria): void {
         this.busy(true);
         let that = this;
         let boRep = new BORepositoryDemo();
-        boRep.fetchSalesOrder(criteria, function (opRslt: IOperationResult<SalesOrder>): void {
+        boRep.fetchSalesOrder(criteria, function (opRslt: ibas.IOperationResult<SalesOrder>): void {
             try {
                 if (opRslt.resultCode !== 0) {
                     throw new Error(opRslt.message);
@@ -52,7 +50,7 @@ export class DemoChooseApp extends BOChooseApplication<IDemoChooseView, SalesOrd
                 that.messages(error);
             }
         });
-        this.proceeding(emMessageType.INFORMATION, i18n.prop("sys_shell_fetching_data"));
+        this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_fetching_data"));
     }
     /** 新建数据 */
     protected newData(): void {
@@ -67,7 +65,7 @@ export class DemoChooseApp extends BOChooseApplication<IDemoChooseView, SalesOrd
     }
 }
 /** 视图-演示 */
-export interface IDemoChooseView extends IBOChooseView {
+export interface IDemoChooseView extends ibas.IBOChooseView {
     /** 显示数据 */
     showData(datas: SalesOrder[]): void;
 }

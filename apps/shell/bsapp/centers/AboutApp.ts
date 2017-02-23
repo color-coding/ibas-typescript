@@ -10,7 +10,7 @@ import {
     i18n, config, string, Configuration,
     ModuleConsole, IViewNavigation, IModuleFunction, IViewShower,
     IApplication, IView, emPlantform, url
-} from "../../../../ibas/bsbas/index";
+} from "../../../../ibas/index";
 import { AboutApp as AbstractAboutApp } from "../../../../ibas/bsbas/systems/index";
 
 /**

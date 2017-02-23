@@ -7,7 +7,7 @@
  */
 
 /// <reference path="../../../../../openui5/typings/index.d.ts" />
-import { BOBarView } from "../../../../../ibas/bsbas/index";
+import { BOBarView } from "../../../../../ibas/index";
 import { IQueryPanelView } from "../../../bsapp/centers/QueryPanel";
 
 /**

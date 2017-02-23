@@ -11,7 +11,7 @@ import {
     i18n, object, string, BOView, UrlView, emMessageType,
     IModuleConsole, IView, config, IBarView, BOQueryView,
     BOChooseView, BOBarView, BOQueryViewWithPanel
-} from "../../../../../ibas/bsbas/index";
+} from "../../../../../ibas/index";
 import {
     ICenterView, IUserModule, IUser, Factories, IEmbeddedQueryPanel
 } from "../../../../../ibas/bsbas/systems/index";

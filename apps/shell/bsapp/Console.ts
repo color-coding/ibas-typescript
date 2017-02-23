@@ -11,7 +11,7 @@ import {
     i18n, config, string, Configuration,
     ModuleConsole, IViewNavigation, IModuleFunction, IViewShower,
     IApplication, IView, emPlantform, url
-} from "../../../ibas/bsbas/index";
+} from "../../../ibas/index";
 import {
     IMainApp, ILoginApp, ICenterApp, IAboutApp, IHelpApp, ISuggestionApp,
     ISystemsFactory, IBORepositorySystem, IQueryPanel, IQueryPanelView

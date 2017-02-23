@@ -16,7 +16,7 @@ import { string, url } from "./data/index";
 /** 业务对象库（bobas）文件名称 */
 export const LIBRARY_BOBAS_ROOT_FILE_NAME: string = "/bobas/index";
 /** 框架初始化 */
-export const isInitialized: boolean = function (): boolean {
+const isInitialized: boolean = function (): boolean {
     if (isInitialized) {
         // 初始化过，不再初始化
         return;

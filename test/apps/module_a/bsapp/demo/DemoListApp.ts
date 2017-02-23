@@ -6,16 +6,14 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import {
-    BOListApplication, IBOListView, emMessageType, ICriteria, i18n, IOperationResult
-} from "../../../../../ibas/bsbas/index";
+import * as ibas from "../../../../../ibas/index";
 import { BORepositoryDemo } from "../../borep/BORepositories";
 import { SalesOrder, SalesOrderItem, SalesOrderItems } from "../../borep/bo/index";
 import { DemoEditApp } from "./DemoEditApp";
 import { DemoViewApp } from "./DemoViewApp";
 
 /** 列表应用-演示 */
-export class DemoListApp extends BOListApplication<IDemoListView, SalesOrder> {
+export class DemoListApp extends ibas.BOListApplication<IDemoListView, SalesOrder> {
 
     /** 应用标识 */
     static APPLICATION_ID: string = "f873e18d-b9ca-476b-b300-b177c194d41a";
@@ -26,7 +24,7 @@ export class DemoListApp extends BOListApplication<IDemoListView, SalesOrder> {
         super();
         this.id = DemoListApp.APPLICATION_ID;
         this.name = DemoListApp.APPLICATION_NAME;
-        this.description = i18n.prop(this.name);
+        this.description = ibas.i18n.prop(this.name);
     }
     /** 注册视图 */
     protected registerView(): void {
@@ -39,11 +37,11 @@ export class DemoListApp extends BOListApplication<IDemoListView, SalesOrder> {
         // 视图加载完成
     }
     /** 查询数据 */
-    protected fetchData(criteria: ICriteria): void {
+    protected fetchData(criteria:ibas. ICriteria): void {
         this.busy(true);
         let that = this;
         let boRep = new BORepositoryDemo();
-        boRep.fetchSalesOrder(criteria, function (opRslt: IOperationResult<SalesOrder>): void {
+        boRep.fetchSalesOrder(criteria, function (opRslt: ibas.IOperationResult<SalesOrder>): void {
             try {
                 if (opRslt.resultCode !== 0) {
                     throw new Error(opRslt.message);
@@ -54,7 +52,7 @@ export class DemoListApp extends BOListApplication<IDemoListView, SalesOrder> {
                 that.messages(error);
             }
         });
-        this.proceeding(emMessageType.INFORMATION, i18n.prop("sys_shell_fetching_data"));
+        this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_fetching_data"));
     }
     /** 新建数据 */
     protected newData(): void {
@@ -73,11 +71,11 @@ export class DemoListApp extends BOListApplication<IDemoListView, SalesOrder> {
     }
     /** 编辑数据，参数：目标数据 */
     protected editData(data: SalesOrder): void {
-        this.messages(emMessageType.ERROR, i18n.prop("module_a_ui_no_edit"));
+        this.messages(ibas.emMessageType.ERROR, ibas.i18n.prop("module_a_ui_no_edit"));
     }
 }
 /** 视图-演示 */
-export interface IDemoListView extends IBOListView {
+export interface IDemoListView extends ibas.IBOListView {
     /** 编辑数据事件，参数：编辑对象 */
     editDataEvent: Function;
     /** 显示数据 */

@@ -7,14 +7,11 @@
  */
 
 /// <reference path="../../../../ibas/3rdparty/index.d.ts" />
-import {
-    ModuleConsole, IViewNavigation, IModuleFunction, url,
-    IApplication, IView, emPlantform, config, string, Configuration, i18n
-} from "../../../../ibas/bsbas/index";
+import * as ibas from "../../../../ibas/index";
 import { DemoFunc, DemoUrlFunc, DemoResidentApp } from "./demo/index";
 
 /** 模块控制台 */
-export class Console extends ModuleConsole {
+export class Console extends ibas.ModuleConsole {
     /** 模块-标识 */
     static CONSOLE_ID: string = "test-0";
     /** 模块-名称 */
@@ -30,7 +27,7 @@ export class Console extends ModuleConsole {
 
     private _navigation: any;
     /** 创建视图导航 */
-    navigation(): IViewNavigation {
+    navigation(): ibas.IViewNavigation {
         return this._navigation;
     }
     /** 初始化 */
@@ -44,15 +41,15 @@ export class Console extends ModuleConsole {
     /** 运行 */
     run(): void {
         // 获取根地址
-        let rootUrl: string = url.rootUrl(Console.ROOT_FILE_NAME);
+        let rootUrl: string = ibas.url.rootUrl(Console.ROOT_FILE_NAME);
         // 加载语言-框架默认
-        i18n.load(string.format("{0}/resources/languages/module_a.{1}.json", rootUrl, i18n.language));
+        ibas.i18n.load(ibas.string.format("{0}/resources/languages/module_a.{1}.json", rootUrl, ibas.i18n.language));
         // 设置资源属性
-        this.description = i18n.prop(this.name);
+        this.description = ibas.i18n.prop(this.name);
         this.icon = "sap-icon://employee";
         // 先加载ui导航
         let uiModules: string[] = [];
-        if (this.plantform === emPlantform.IPAD) {
+        if (this.plantform === ibas.emPlantform.IPAD) {
             // 使用m类型视图
             uiModules.push("../bsui/m/Navigation");
         } else {

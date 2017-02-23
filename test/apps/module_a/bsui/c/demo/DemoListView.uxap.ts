@@ -7,15 +7,13 @@
  */
 
 /// <reference path="../../../../../../openui5/typings/index.d.ts" />
-import {
-    BOListView, i18n
-} from "../../../../../../ibas/bsbas/index";
+import * as ibas from "../../../../../../ibas/index";
 import { IDemoListView } from "../../../bsapp/demo/index";
 
 /**
  * 视图-demo
  */
-export class DemoListView extends BOListView implements IDemoListView {
+export class DemoListView extends ibas.BOListView implements IDemoListView {
 
     /** 编辑数据，参数：目标数据 */
     editDataEvent: Function;
@@ -34,7 +32,7 @@ export class DemoListView extends BOListView implements IDemoListView {
                 ],
                 contentMiddle: [
                     new sap.m.Button("", {
-                        text: i18n.prop("sys_shell_ui_data_new"),
+                        text: ibas.i18n.prop("sys_shell_ui_data_new"),
                         type: sap.m.ButtonType.Transparent,
                         icon: "sap-icon://create",
                         press: function (): void {
@@ -42,7 +40,7 @@ export class DemoListView extends BOListView implements IDemoListView {
                         }
                     }),
                     new sap.m.Button("", {
-                        text: i18n.prop("sys_shell_ui_data_view"),
+                        text: ibas.i18n.prop("sys_shell_ui_data_view"),
                         type: sap.m.ButtonType.Transparent,
                         icon: "sap-icon://display",
                         press: function (): void {
@@ -50,7 +48,7 @@ export class DemoListView extends BOListView implements IDemoListView {
                         }
                     }),
                     new sap.m.Button("", {
-                        text: i18n.prop("sys_shell_ui_data_edit"),
+                        text: ibas.i18n.prop("sys_shell_ui_data_edit"),
                         type: sap.m.ButtonType.Transparent,
                         icon: "sap-icon://edit",
                         press: function (): void {
@@ -67,7 +65,7 @@ export class DemoListView extends BOListView implements IDemoListView {
             columns: [
                 new sap.m.Column({
                     header: new sap.m.Label("", {
-                        text: i18n.prop("bo_salesorder_docentry")
+                        text: ibas.i18n.prop("bo_salesorder_docentry")
                     }),
                     template: new sap.m.Text("", {
                         text: "{docEntry}"
@@ -75,7 +73,7 @@ export class DemoListView extends BOListView implements IDemoListView {
                 }),
                 new sap.m.Column({
                     header: new sap.m.Label("", {
-                        text: i18n.prop("bo_salesorder_customer")
+                        text: ibas.i18n.prop("bo_salesorder_customer")
                     }),
                     template: new sap.m.Text("", {
                         text: "{customer}"
@@ -83,7 +81,7 @@ export class DemoListView extends BOListView implements IDemoListView {
                 }),
                 new sap.m.Column({
                     header: new sap.m.Label("", {
-                        text: i18n.prop("bo_salesorder_documentstatus")
+                        text: ibas.i18n.prop("bo_salesorder_documentstatus")
                     }),
                     template: new sap.m.Text("", {
                         text: "{documentStatus}"
@@ -91,7 +89,7 @@ export class DemoListView extends BOListView implements IDemoListView {
                 }),
                 new sap.m.Column({
                     header: new sap.m.Label("", {
-                        text: i18n.prop("bo_salesorder_canceled")
+                        text: ibas.i18n.prop("bo_salesorder_canceled")
                     }),
                     template: new sap.m.Text("", {
                         text: "{canceled}"
@@ -114,5 +112,8 @@ export class DemoListView extends BOListView implements IDemoListView {
         this.table.setModel(uiDatas);
         this.table.bindItems("/");
     }
+    /** 嵌入查询面板 */
+    embedded(view: any): void {
 
+    }
 }

@@ -6,14 +6,12 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import {
-    BOViewApplication, IBOViewView, emMessageType, ICriteria, i18n, IOperationResult, object
-} from "../../../../../ibas/bsbas/index";
+import * as ibas from "../../../../../ibas/index";
 import { BORepositoryDemo } from "../../borep/BORepositories";
 import { SalesOrder, SalesOrderItem, SalesOrderItems } from "../../borep/bo/index";
 
 /** 查看应用-演示 */
-export class DemoViewApp extends BOViewApplication<IDemoViewView> {
+export class DemoViewApp extends ibas.BOViewApplication<IDemoViewView> {
 
     /** 应用标识 */
     static APPLICATION_ID: string = "a16e23d8-5783-428a-98e4-4a622282f366";
@@ -24,7 +22,7 @@ export class DemoViewApp extends BOViewApplication<IDemoViewView> {
         super();
         this.id = DemoViewApp.APPLICATION_ID;
         this.name = DemoViewApp.APPLICATION_NAME;
-        this.description = i18n.prop(this.name);
+        this.description = ibas.i18n.prop(this.name);
     }
     /** 注册视图 */
     protected registerView(): void {
@@ -48,15 +46,15 @@ export class DemoViewApp extends BOViewApplication<IDemoViewView> {
     /** 运行,覆盖原方法 */
     run(...args: any[]): void {
         let data: SalesOrder = arguments[0];
-        if (object.isNull(data)) {
-            throw new Error(i18n.prop("msg_invalid_parameter", "view data"));
+        if (ibas.object.isNull(data)) {
+            throw new Error(ibas.i18n.prop("msg_invalid_parameter", "view data"));
         }
         this.viewData = data;
         super.run();
     }
 }
 /** 视图-演示 */
-export interface IDemoViewView extends IBOViewView {
+export interface IDemoViewView extends ibas.IBOViewView {
     /** 显示数据 */
     showSalesOrder(data: SalesOrder): void;
     /** 显示数据 */

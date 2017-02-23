@@ -6,12 +6,12 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import * as bobas from "../../../../../ibas/bobas/index";
+import * as ibas from "../../../../../ibas/index";
 
 /**
  * 销售订单行对象
  */
-export class SalesOrderItem extends bobas.BusinessObject<SalesOrderItem> {
+export class SalesOrderItem extends ibas.BusinessObject<SalesOrderItem> {
 
     get docEntry(): number {
         return this.getProperty<number>("_docEntry");
@@ -61,25 +61,25 @@ export class SalesOrderItem extends bobas.BusinessObject<SalesOrderItem> {
         this.setProperty("_lineTotal", value);
     }
 
-    get lineStatus(): bobas.emDocumentStatus {
-        return this.getProperty<bobas.emDocumentStatus>("_lineStatus");
+    get lineStatus(): ibas.emDocumentStatus {
+        return this.getProperty<ibas.emDocumentStatus>("_lineStatus");
     }
 
-    set lineStatus(value: bobas.emDocumentStatus) {
+    set lineStatus(value: ibas.emDocumentStatus) {
         this.setProperty("_lineStatus", value);
     }
     /**
      * 初始化方法，属性在此方法初始化
      */
     protected init(): void {
-        this.lineStatus = bobas.emDocumentStatus.PLANNED;
+        this.lineStatus = ibas.emDocumentStatus.PLANNED;
     }
 
 }
 /**
  * 销售订单行对象集合
  */
-export class SalesOrderItems extends bobas.BusinessObjects<SalesOrderItem, SalesOrder> {
+export class SalesOrderItems extends ibas.BusinessObjects<SalesOrderItem, SalesOrder> {
 
     /**
      * 创建并添加子项
@@ -94,7 +94,7 @@ export class SalesOrderItems extends bobas.BusinessObjects<SalesOrderItem, Sales
 /**
  * 销售订单对象
  */
-export class SalesOrder extends bobas.BusinessObject<SalesOrder> {
+export class SalesOrder extends ibas.BusinessObject<SalesOrder> {
 
     get docEntry(): number {
         return this.getProperty<number>("_docEntry");
@@ -112,19 +112,19 @@ export class SalesOrder extends bobas.BusinessObject<SalesOrder> {
         this.setProperty("_customerCode", value);
     }
 
-    get documentStatus(): bobas.emDocumentStatus {
-        return this.getProperty<bobas.emDocumentStatus>("_documentStatus");
+    get documentStatus(): ibas.emDocumentStatus {
+        return this.getProperty<ibas.emDocumentStatus>("_documentStatus");
     }
 
-    set documentStatus(value: bobas.emDocumentStatus) {
+    set documentStatus(value: ibas.emDocumentStatus) {
         this.setProperty("_documentStatus", value);
     }
 
-    get canceled(): bobas.emYesNo {
-        return this.getProperty<bobas.emYesNo>("_canceled");
+    get canceled(): ibas.emYesNo {
+        return this.getProperty<ibas.emYesNo>("_canceled");
     }
 
-    set canceled(value: bobas.emYesNo) {
+    set canceled(value: ibas.emYesNo) {
         this.setProperty("_canceled", value);
     }
 
@@ -140,7 +140,7 @@ export class SalesOrder extends bobas.BusinessObject<SalesOrder> {
      * 初始化方法，属性在此方法初始化
      */
     protected init(): void {
-        this.documentStatus = bobas.emDocumentStatus.PLANNED;
+        this.documentStatus = ibas.emDocumentStatus.PLANNED;
         this.items = new SalesOrderItems(this);
     }
 }

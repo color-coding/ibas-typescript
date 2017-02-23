@@ -7,11 +7,11 @@
  */
 
 // 模块索引文件，此文件集中导出类
-import { Configuration, config, string, i18n, url } from "../../ibas/bobas/index";
+import { Configuration, config, string, i18n, url } from "../bobas/index";
 /** 应用系统库（bsbas）文件名称 */
 export const LIBRARY_BSBAS_ROOT_FILE_NAME: string = "/bsbas/index";
 /** 框架初始化 */
-export const isInitialized: boolean = function (): boolean {
+const isInitialized: boolean = function (): boolean {
     if (isInitialized) {
         // 初始化过，不再初始化
         return;
@@ -22,7 +22,6 @@ export const isInitialized: boolean = function (): boolean {
     // 加载语言-框架默认
     i18n.load(string.format("{0}/resources/languages/bsbas.{1}.json", rootUrl, i18n.language));
 }();
-export * from "../../ibas/bobas/index";// 集中发布bobas内容，减少引用声明
 // 此模块内容
 export * from "./data/index";
 export * from "./core/index";
