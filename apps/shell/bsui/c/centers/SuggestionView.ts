@@ -17,14 +17,19 @@ export class SuggestionView extends ibas.BOResidentView implements sys.ISuggesti
     /** 绘制工具条视图 */
     darwBar(): any {
         let that = this;
-        return new sap.m.Button("", {
-            icon: "sap-icon://discussion",
-            type: sap.m.ButtonType.Transparent,
-            press: function (): void {
-                that.fireViewEvents(that.showFullViewEvent);
-            }
-        });
+        // 不重复创建工具条钮
+        if (ibas.object.isNull(this.bar)) {
+            this.bar = new sap.m.Button("", {
+                icon: "sap-icon://discussion",
+                type: sap.m.ButtonType.Transparent,
+                press: function (): void {
+                    that.fireViewEvents(that.showFullViewEvent);
+                }
+            });
+        }
+        return this.bar;
     }
+    private bar: sap.m.Button;
     /** 激活完整视图事件 */
     showFullViewEvent: Function;
     /** 绘制视图 */

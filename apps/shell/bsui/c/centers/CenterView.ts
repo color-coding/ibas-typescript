@@ -205,9 +205,9 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         if (view instanceof ibas.UrlView) {
             // 视图为地址视图
             this.showUrlView(view);
-        } else if (view instanceof ibas.BOChooseView) {
+        } else if (view instanceof ibas.BODialogView) {
             // 选择视图
-            this.showChooseView(view);
+            this.showDialogView(view);
         } else if (view instanceof ibas.BOBarView) {
             // 工具条视图
             this.showBarView(view);
@@ -269,8 +269,8 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             window.open(view.url);
         }
     }
-    /** 显示选择视图 */
-    showChooseView(view: ibas.BOChooseView): void {
+    /** 显示对话框视图 */
+    showDialogView(view: ibas.BODialogView): void {
         let title: string;
         // 设置标题
         if (!ibas.object.isNull(view.title)) {
@@ -318,30 +318,15 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
     }
     /** 显示工具条视图 */
     showBarView(view: ibas.BOBarView): void {
-        let title: string;
-        // 设置标题
-        if (!ibas.object.isNull(view.title)) {
-            title = view.title;
-        } else if (!ibas.object.isNull(view.id)) {
-            title = view.id;
-        }
-        let that = this;
-        let dialog: sap.m.Dialog = new sap.m.Dialog("", {
-            title: title,
-            type: sap.m.DialogType.Standard,
-            state: sap.ui.core.ValueState.None,
-            // resizable: true,
-            // draggable: true,
-            stretchOnPhone: true,
-            horizontalScrolling: false,
-            verticalScrolling: false,
-            content: [view.darw()],
-            afterClose: function (): void {
-            },
+        let popover: sap.m.Popover = new sap.m.Popover("", {
+            showHeader: false,
+            placement: sap.m.PlacementType.Bottom,
+            content: [
+                view.darw()
+            ]
         });
-        // 修改id号
-        view.id = dialog.getId();
-        dialog.open();
+        (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
+        popover.openBy(view.darwBar(), true);
     }
     /** 显示常驻视图 */
     showResidentView(view: ibas.IBarView): void {

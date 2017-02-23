@@ -13,31 +13,35 @@ import * as ibas from "../../../../../ibas/index";
 /**
  * 视图-查询面板
  */
-export class QueryPanelView extends ibas.BOBarView implements sys.IQueryPanelView {
+export class QueryPanelView extends ibas.BOPanelView implements sys.IQueryPanelView {
     /** 绘制工具条视图 */
     darwBar(): any {
-        let that = this;
-        this.searchField = new sap.m.SearchField("", {
-            search: function () {
-                that.fireViewEvents(that.searchEvent);
-            }
-        });
-        this.configButton = new sap.m.Button("", {
-            icon: "sap-icon://filter",
-            type: sap.m.ButtonType.Transparent,
-            press: function (): void {
-                that.fireViewEvents(that.showFullViewEvent);
-            }
-        });
-        return new sap.m.Toolbar("", {
-            width: "100%",
-            design: sap.m.ToolbarDesign.Auto,
-            content: [
-                this.searchField,
-                this.configButton
-            ]
-        });
+        if (ibas.object.isNull(this.bar)) {
+            let that = this;
+            this.searchField = new sap.m.SearchField("", {
+                search: function () {
+                    that.fireViewEvents(that.searchEvent);
+                }
+            });
+            this.configButton = new sap.m.Button("", {
+                icon: "sap-icon://filter",
+                type: sap.m.ButtonType.Transparent,
+                press: function (): void {
+                    that.fireViewEvents(that.showFullViewEvent);
+                }
+            });
+            this.bar = new sap.m.Toolbar("", {
+                width: "100%",
+                design: sap.m.ToolbarDesign.Auto,
+                content: [
+                    this.searchField,
+                    this.configButton
+                ]
+            });
+        }
+        return this.bar;
     }
+    private bar: sap.m.Toolbar;
     private searchField: sap.m.SearchField;
     private configButton: sap.m.Button;
     /** 查询 */
@@ -49,6 +53,8 @@ export class QueryPanelView extends ibas.BOBarView implements sys.IQueryPanelVie
     set searchContent(value: string) {
         this.searchField.setValue(value);
     }
+    /** 绘制工具条 */
+    darwBars(): any{}
     /** 绘制视图 */
     darw(): any {
 

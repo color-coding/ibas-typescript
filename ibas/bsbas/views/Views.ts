@@ -27,7 +27,21 @@ export abstract class UrlView extends View implements IUrlView {
 export abstract class BOView extends View implements IBOView {
 }
 /** 业务对象查询视图 */
+export abstract class BODialogView extends BOView {
+    /** 绘制工具条 */
+    abstract darwBars(): any;
+}
+/** 业务对象查询视图 */
 export abstract class BOQueryView extends BOView implements IBOQueryView {
+    /** 查询数据事件，参数：查询条件 ICriteria */
+    fetchDataEvent: Function;
+    /** 查询数据 */
+    query(criteria: ICriteria): void {
+        this.fireViewEvents(this.fetchDataEvent, criteria);
+    }
+}
+/** 业务对象查询对话视图 */
+export abstract class BOQueryDialogView extends BODialogView implements IBOQueryView {
     /** 查询数据事件，参数：查询条件 ICriteria */
     fetchDataEvent: Function;
     /** 查询数据 */
@@ -48,13 +62,11 @@ export abstract class BOListView extends BOQueryView implements IBOListView {
     viewDataEvent: Function;
 }
 /** 业务对象选择视图 */
-export abstract class BOChooseView extends BOQueryView implements IBOChooseView {
+export abstract class BOChooseView extends BOQueryDialogView implements IBOChooseView {
     /** 新建数据事件 */
     newDataEvent: Function;
     /** 选择数据事件，参数：选择数据 */
     chooseDataEvent: Function;
-    /** 绘制工具条 */
-    abstract darwBars(): any;
 }
 /** 业务对象查看视图 */
 export abstract class BOViewView extends BOView implements IBOViewView {
@@ -70,6 +82,13 @@ export abstract class BOEditView extends BOView implements IBOEditView {
 }
 /** 业务对象工具条视图 */
 export abstract class BOBarView extends BOView implements IBarView {
+    /** 绘制工具条 */
+    abstract darwBar(): any;
+    /** 激活完整视图事件 */
+    showFullViewEvent: Function;
+}
+/** 业务对象面板视图 */
+export abstract class BOPanelView extends BODialogView implements IBarView {
     /** 绘制工具条 */
     abstract darwBar(): any;
     /** 激活完整视图事件 */
