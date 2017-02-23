@@ -305,7 +305,8 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         view.id = dialog.getId();
         dialog.open();
         // 添加查询面板
-        if (view instanceof ibas.BOQueryView) {
+        if (view instanceof ibas.BOQueryView
+            || view instanceof ibas.BOQueryDialogView) {
             let queryView: sys.IEmbeddedQueryPanel = {
                 /** 嵌入查询面板 */
                 embedded(view: any): void {

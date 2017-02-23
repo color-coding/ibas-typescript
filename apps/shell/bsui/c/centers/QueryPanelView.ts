@@ -18,12 +18,16 @@ export class QueryPanelView extends ibas.BOPanelView implements sys.IQueryPanelV
     darwBar(): any {
         if (ibas.object.isNull(this.bar)) {
             let that = this;
-            this.searchField = new sap.m.SearchField("", {
+            this.search = new sap.m.SearchField("", {
                 search: function () {
                     that.fireViewEvents(that.searchEvent);
                 }
             });
-            this.configButton = new sap.m.Button("", {
+            this.baseOn = new sap.m.ComboBox("", {
+                placeholder: ibas.i18n.prop("sys_shell_ui_base_on_criteria"),
+                maxWidth: "30%"
+            });
+            this.config = new sap.m.Button("", {
                 icon: "sap-icon://filter",
                 type: sap.m.ButtonType.Transparent,
                 press: function (): void {
@@ -34,27 +38,29 @@ export class QueryPanelView extends ibas.BOPanelView implements sys.IQueryPanelV
                 width: "100%",
                 design: sap.m.ToolbarDesign.Auto,
                 content: [
-                    this.searchField,
-                    this.configButton
+                    this.search,
+                    this.baseOn,
+                    this.config
                 ]
             });
         }
         return this.bar;
     }
     private bar: sap.m.Toolbar;
-    private searchField: sap.m.SearchField;
-    private configButton: sap.m.Button;
+    private search: sap.m.SearchField;
+    private config: sap.m.Button;
+    private baseOn: sap.m.ComboBox;
     /** 查询 */
     searchEvent: Function;
     /** 查询内容 */
     get searchContent(): string {
-        return this.searchField.getValue();
+        return this.search.getValue();
     }
     set searchContent(value: string) {
-        this.searchField.setValue(value);
+        this.search.setValue(value);
     }
     /** 绘制工具条 */
-    darwBars(): any{}
+    darwBars(): any { }
     /** 绘制视图 */
     darw(): any {
 
