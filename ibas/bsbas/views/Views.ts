@@ -41,7 +41,7 @@ export abstract class BOQueryViewWithPanel extends BOQueryView implements IEmbed
     abstract embedded(view: any): void;
 }
 /** 业务对象列表视图 */
-export abstract class BOListView extends BOQueryViewWithPanel implements IBOListView {
+export abstract class BOListView extends BOQueryView implements IBOListView {
     /** 新建数据事件 */
     newDataEvent: Function;
     /** 查看数据事件，参数：目标数据 */
