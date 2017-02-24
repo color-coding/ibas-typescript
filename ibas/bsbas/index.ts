@@ -16,7 +16,7 @@ const isInitialized: boolean = function (): boolean {
     // 加载配置-框架默认
     config.load(string.format("{0}/{1}", rootUrl, Configuration.CONFIG_FILE_NAME));
     // 加载语言-框架默认
-    i18n.load(string.format("{0}/resources/languages/bsbas.{1}.json", rootUrl, i18n.language));
+    i18n.load(string.format("{0}/resources/languages/bsbas.{1}.json", rootUrl, "{0}"));
     return true;
 }();
 // 此模块内容

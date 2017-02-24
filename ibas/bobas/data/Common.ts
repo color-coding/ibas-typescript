@@ -86,6 +86,17 @@ export class ArrayList<T> extends Array<T> implements List<T> {
         }
         return null;
     }
+    /**
+     * 是否包含
+     */
+    contain(value: T): boolean {
+        for (let tmp of this) {
+            if (value === tmp) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
 /**
  * 字符串构建器

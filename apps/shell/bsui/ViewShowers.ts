@@ -15,12 +15,12 @@ import * as ibas from "../../../ibas/index";
 export class ViewShowerDefault implements ibas.IViewShower {
     /** 显示视图 */
     show(view: ibas.IView): void {
-        let viewContent = view.darw();
+        let viewContent: any = view.darw();
         if (ibas.object.isNull(viewContent)) {
             ibas.logger.log(ibas.emMessageLevel.WARN, "shower: empty view.");
-        } else if (viewContent instanceof sap.ui.layout.Grid) {
-            viewContent.placeAt("content");
         } else if (viewContent instanceof sap.tnt.ToolPage) {
+            viewContent.placeAt("content");
+        } else if (viewContent instanceof sap.ui.core.Control) {
             viewContent.placeAt("content");
         } else {
             throw new Error(ibas.i18n.prop("sys_shell_invalid_ui"));
@@ -60,7 +60,6 @@ export class ViewShowerDefault implements ibas.IViewShower {
     }
     /** 对话消息 */
     messages(type: ibas.emMessageType, msg: string, callBack: Function): any {
-        let that = this;
         jQuery.sap.require("sap.m.MessageBox");
         sap.m.MessageBox.show(
             msg, {

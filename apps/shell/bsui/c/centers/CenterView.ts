@@ -542,7 +542,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                                 text: ibas.i18n.prop("sys_shell_ui_logout"),
                                 type: sap.m.ButtonType.Transparent,
                                 press: function (): void {
-                                    that.fireViewEvents(that.destroyEvent);
+                                    that.fireViewEvents(that.closeEvent);
                                 }
                             })
                         ]

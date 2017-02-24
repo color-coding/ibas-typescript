@@ -20,7 +20,7 @@ export class QueryPanel extends sys.QueryPanel<IQueryPanelView>  {
         }
     }
 }
-/** 视图-演示 */
+/** 视图-查询面板 */
 export interface IQueryPanelView extends sys.IQueryPanelView {
 
 }

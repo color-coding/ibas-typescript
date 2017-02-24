@@ -4,6 +4,7 @@
     "sys_shell_invalid_ui": "无效的UI",
     "sys_shell_ui_user": "用户",
     "sys_shell_ui_password": "密码",
+    "sys_shell_ui_language": "语言",
     "sys_shell_ui_login": "登录",
     "sys_shell_user_and_password_not_match": "用户和密码不匹配",
     "sys_shell_ui_help": "帮助",
@@ -24,6 +25,7 @@
     "sys_shell_ui_data_add": "添加",
     "sys_shell_ui_data_save": "保存",
     "sys_shell_ui_sucessful": "操作成功",    
-    "sys_shell_ui_exit": "退出",    
-    "sys_shell_ui_base_on_criteria": "请选择基于的查询"
+    "sys_shell_ui_exit": "退出",
+    "sys_shell_ui_base_on_criteria": "请选择基于的查询",
+    "sys_shell_ui_chooose_language": "请选择语言"
 }

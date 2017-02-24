@@ -59,10 +59,6 @@ export abstract class BOApplication<T extends IBOView> extends Application<T> {
         }
 
     }
-    /** 清理资源 */
-    destroy(): void {
-        this.close();
-    }
     /** 设置忙状态 */
     protected busy(busy: boolean): void
     /** 设置忙状态 */
@@ -150,7 +146,7 @@ export abstract class BOApplication<T extends IBOView> extends Application<T> {
 export abstract class BOQueryApplication<T extends IBOQueryView> extends BOApplication<T> {
     /** 注册视图，重载需要回掉此方法 */
     protected registerView(): void {
-        this.view.destroyEvent = this.destroy;
+        this.view.closeEvent = this.close;
         this.view.fetchDataEvent = this.fetchData;
     }
     /** 查询数据 */
@@ -162,7 +158,7 @@ export abstract class BOQueryApplication<T extends IBOQueryView> extends BOAppli
 export abstract class BOBarApplication<T extends IBarView> extends BOApplication<T> {
     /** 注册视图，重载需要回掉此方法 */
     protected registerView(): void {
-        this.view.destroyEvent = this.destroy;
+        this.view.closeEvent = this.close;
         this.view.showFullViewEvent = this.showFullView;
     }
     /** 激活完整视图 */

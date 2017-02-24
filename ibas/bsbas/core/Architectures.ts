@@ -88,8 +88,11 @@ export abstract class Application<T extends IView> extends Element implements IA
     abstract show(): void;
     /** 关闭视图 */
     abstract close(): void;
-    /** 清理资源 */
-    abstract destroy(): void;
+    /** 清理资源（视图关闭并取消引用） */
+    destroy(): void {
+        this.close();
+        this._view = null;
+    }
 }
 /** 视图 */
 export abstract class View implements IView {
@@ -103,8 +106,8 @@ export abstract class View implements IView {
     isDisplayed: boolean;
     /** 绘制视图 */
     abstract darw(): any;
-    /** 清理资源 */
-    destroyEvent: Function;
+    /** 关闭视图 */
+    closeEvent: Function;
     /**  
      * 触发视图事件
      * @param event 触发的事件

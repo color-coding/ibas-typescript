@@ -11,7 +11,7 @@ import { IMainView, IMainApp, ILoginApp } from "./Systems.d";
 import { Factories } from "./Factories";
 
 /** 应用-入口 */
-export abstract class MainApp extends BOApplication<IMainView> implements IMainApp {
+export abstract class MainApp<T extends IMainView> extends BOApplication<T> implements IMainApp {
     /** 应用标识 */
     static APPLICATION_ID: string = "cbd51fd3-63b4-4777-9aad-9c2f303b56f8";
     /** 应用名称 */

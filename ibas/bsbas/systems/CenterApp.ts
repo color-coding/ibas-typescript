@@ -17,11 +17,14 @@ import {
 import { emMessageType } from "../data/index";
 import { consolesManager } from "../runtime/index";
 import { BOApplication, BOResidentApplication } from "../applications/index";
-import { ICenterView, ICenterApp, IUser, IUserModule, IUserPrivilege, IUserRole } from "./Systems.d";
+import {
+    ICenterView, ICenterApp, IBORepositorySystem,
+    IUser, IUserModule, IUserPrivilege, IUserRole
+} from "./Systems.d";
 import { Factories } from "./Factories";
 
 /** 应用-中心 */
-export abstract class CenterApp extends BOApplication<ICenterView> implements ICenterApp {
+export abstract class CenterApp<T extends ICenterView> extends BOApplication<T> implements ICenterApp {
 
     /** 应用标识 */
     static APPLICATION_ID: string = "c1ec9ee1-1138-4358-8323-c579f1e4be37";
@@ -40,10 +43,10 @@ export abstract class CenterApp extends BOApplication<ICenterView> implements IC
         this.view.activateFunctionsEvent = this.activateFunctions;
         this.view.aboutEvent = this.about;
         this.view.helpEvent = this.help;
-        this.view.destroyEvent = this.destroy;
+        this.view.closeEvent = this.close;
     }
     /** 清理资源 */
-    destroy(): void {
+    close(): void {
         // 重写清理方法
         this.view.destroy(this.view);
     }
@@ -89,8 +92,8 @@ export abstract class CenterApp extends BOApplication<ICenterView> implements IC
             emMessageType.INFORMATION,
             i18n.prop("msg_initialize_user_modules", user.userCode, user.userName)
         );
-        let that = this;
-        let boRep = Factories.systemsFactory.createRepository();
+        let that: this = this;
+        let boRep: IBORepositorySystem = Factories.systemsFactory.createRepository();
         boRep.fetchUserModules(user.userCode, function (opRslt: IOperationResult<IUserModule>): void {
             try {
                 if (opRslt.resultCode !== 0) {
@@ -120,7 +123,7 @@ export abstract class CenterApp extends BOApplication<ICenterView> implements IC
     }
 
     /** 初始化模块控制台 */
-    protected initModuleConsole(module: IUserModule) {
+    protected initModuleConsole(module: IUserModule):void {
         let console: IModuleConsole;
         // 模块入口地址
         let address: string = module.address;
@@ -133,7 +136,7 @@ export abstract class CenterApp extends BOApplication<ICenterView> implements IC
         // 当地址以http开头requirejs不在修正引用文件名称，即：.js不添加。
         // 关联引用也不修正名称。
         // address = url.normalize(address);
-        let that: CenterApp = this;
+        let that: this = this;
         require([address], function (): void {
             // 模块加载成功
             console = consolesManager.get(module.id);

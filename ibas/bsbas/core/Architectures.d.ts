@@ -70,8 +70,8 @@ export interface IView {
     darw(): any;
     /** 是否已显示 */
     isDisplayed: boolean;
-    /** 清理资源 */
-    destroyEvent: Function;
+    /** 关闭视图 */
+    closeEvent: Function;
 }
 /**
  * 应用-视图

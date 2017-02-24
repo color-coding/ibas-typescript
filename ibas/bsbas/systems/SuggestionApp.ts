@@ -13,7 +13,7 @@ import { BOResidentApplication } from "../applications/index";
 import { ISuggestionView, ISuggestionApp } from "./Systems.d";
 
 /** 应用-建议 */
-export class SuggestionApp extends BOResidentApplication<ISuggestionView> implements ISuggestionApp {
+export class SuggestionApp<T extends ISuggestionView> extends BOResidentApplication<T> implements ISuggestionApp {
 
     /** 应用标识 */
     static APPLICATION_ID: string = "7b8d3e3d-8396-470d-9730-44da36d54640";

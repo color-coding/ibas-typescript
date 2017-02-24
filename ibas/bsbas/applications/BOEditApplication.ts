@@ -17,7 +17,7 @@ export abstract class BOEditApplication<T extends IBOEditView, D> extends BOAppl
 
     /** 注册视图，重载需要回掉此方法 */
     protected registerView(): void {
-        this.view.destroyEvent = this.destroy;
+        this.view.closeEvent = this.close;
         this.view.saveDataEvent = this.saveData;
     }
     /** 当前编辑的数据 */

@@ -10,11 +10,11 @@ import {
     logger, emMessageLevel, IOperationResult, object, i18n
 } from "../../../ibas/bobas/index";
 import { BOApplication } from "../applications/index";
-import { ILoginView, ILoginApp, ICenterApp, IUser } from "./Systems.d";
+import { ILoginView, ILoginApp, ICenterApp, IUser, IBORepositorySystem } from "./Systems.d";
 import { Factories } from "./Factories";
 
 /** 应用-登陆 */
-export class LoginApp extends BOApplication<ILoginView> implements ILoginApp {
+export class LoginApp<T extends ILoginView> extends BOApplication<T> implements ILoginApp {
 
     /** 应用标识 */
     static APPLICATION_ID: string = "9b1da07a-89a4-4008-97da-80c34b7f2eb8";
@@ -35,12 +35,12 @@ export class LoginApp extends BOApplication<ILoginView> implements ILoginApp {
     protected viewShowed(): void {
         //
     }
-    //** 登录系统 */
-    private login(user: string, password: string): void {
+    /** 登录系统 */
+    private login(): void {
         this.busy(true, i18n.prop("msg_logging_system"));
-        logger.log(emMessageLevel.INFO, "app: user [{0}] login system.", user);
-        let that = this;
-        let boRepository = Factories.systemsFactory.createRepository();
+        logger.log(emMessageLevel.INFO, "app: user [{0}] login system.", this.view.user);
+        let that: this = this;
+        let boRepository: IBORepositorySystem = Factories.systemsFactory.createRepository();
         boRepository.connect(
             this.view.user,
             this.view.password,

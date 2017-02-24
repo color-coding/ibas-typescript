@@ -7,13 +7,13 @@
  */
 
 import {
-    i18n, 
+    i18n,
 } from "../../../ibas/bobas/index";
 import { BOApplication } from "../applications/index";
 import { IAboutView, IAboutApp } from "./Systems.d";
 
 /** 应用-关于 */
-export class AboutApp extends BOApplication<IAboutView> implements IAboutApp {
+export class AboutApp<T extends IAboutView> extends BOApplication<T> implements IAboutApp {
 
     /** 应用标识 */
     static APPLICATION_ID: string = "414b87e2-f9b7-425d-b1d7-7aeadfa2670e";

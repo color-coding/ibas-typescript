@@ -38,31 +38,60 @@ export class LoginView extends ibas.BOView implements sys.ILoginView {
     private butLogin: sap.m.Button;
     /** 登陆 */
     loginEvent: Function;
-    private fireLoginEvent(): void {
-        this.fireViewEvents(this.loginEvent, this.user, this.password);
+    private languages: sap.m.ComboBox;
+    /** 语言 */
+    get language(): string {
+        return this.languages.getSelectedKey();
     }
+    set language(value: string) {
+        this.languages.setSelectedKey(value);
+    }
+    /** 显示语言列表 */
+    displayLanguages(list: string[]): void {
+        this.languages.destroyItems();
+        for (let item of list) {
+            this.languages.addItem(new sap.ui.core.Item("", {
+                text: item,
+                // enabled: false,
+                textDirection: sap.ui.core.TextDirection.Inherit,
+                key: item
+            }));
+        }
+    }
+    /** 改变语言 */
+    changeLanguageEvent: Function;
     /** 绘制视图 */
     darw(): any {
+        let that: this = this;
         this.txtUser = new sap.m.Input("", {
             value: ibas.config.get(LoginView.CONFIG_ITEM_DEFAULT_USER)
         });
         this.txtPassword = new sap.m.Input("",
             {
-                value:ibas. config.get(LoginView.CONFIG_ITEM_DEFAULT_PASSWORD),
+                value: ibas.config.get(LoginView.CONFIG_ITEM_DEFAULT_PASSWORD),
                 type: "Password"
             });
-        this.butLogin = new sap.m.Button("", {
-            text: ibas.i18n.prop("sys_shell_ui_login")
+        this.languages = new sap.m.ComboBox("", {
+            placeholder: ibas.i18n.prop("sys_shell_ui_chooose_language"),
+            selectionChange: function (): void {
+                that.fireViewEvents(that.changeLanguageEvent);
+            }
         });
-        this.butLogin.attachPress(this.fireLoginEvent, this);
-        this.form = new sap.ui.layout.Grid("",
+        this.butLogin = new sap.m.Button("", {
+            text: ibas.i18n.prop("sys_shell_ui_login"),
+            press: function (): void {
+                that.fireViewEvents(that.loginEvent);
+            }
+        });
+        this.form = new sap.ui.layout.form.SimpleForm("",
             {
-                defaultSpan: "L3 M4 S6",
                 content: [
                     new sap.m.Label("", { text: ibas.i18n.prop("sys_shell_ui_user") }),
                     this.txtUser,
                     new sap.m.Label("", { text: ibas.i18n.prop("sys_shell_ui_password") }),
                     this.txtPassword,
+                    new sap.m.Label("", { text: ibas.i18n.prop("sys_shell_ui_language") }),
+                    this.languages,
                     this.butLogin
                 ]
             });
@@ -70,6 +99,6 @@ export class LoginView extends ibas.BOView implements sys.ILoginView {
         this.id = this.form.getId();
         return this.form;
     }
-    private form: sap.ui.layout.Grid;
+    private form: sap.ui.layout.form.SimpleForm;
 
 }

@@ -12,12 +12,18 @@ import * as sys from "../../../../ibas/bsbas/systems/index";
 /**
  * 关于应用
  */
-export class AboutApp extends sys.AboutApp {
+export class AboutApp extends sys.AboutApp<IAboutView> {
 
+    /** 注册视图 */
+    protected registerView(): void {
+        super.registerView();
+        // 其他事件
+    }
     /** 视图显示后 */
     protected viewShowed(): void {
+        super.viewShowed();
         let address: string = ibas.url.normalize(".../shell/version.json");
-        let that = this;
+        let that:this = this;
         var JQryAjxSetting: JQueryAjaxSettings = {
             url: address,
             type: "GET",
@@ -37,4 +43,8 @@ export class AboutApp extends sys.AboutApp {
         };
         jQuery.ajax(JQryAjxSetting);
     }
+}
+/** 视图-关于 */
+export interface IAboutView extends sys.IAboutView {
+
 }

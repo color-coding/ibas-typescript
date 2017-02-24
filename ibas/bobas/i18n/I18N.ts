@@ -10,7 +10,7 @@
  * 模块索引文件，此文件集中导出类
  */
 /// <reference path="../../3rdparty/jquery.d.ts" />
-import { object, string, emMessageLevel,url } from "../data/index";
+import { object, string, emMessageLevel, url, ArrayList } from "../data/index";
 import { config } from "../configuration/index";
 import { logger } from "../messages/index";
 /**
@@ -29,6 +29,7 @@ export class I18N {
     }
     set language(value: string) {
         this._language = value;
+        this.reload();
     }
 
     private items: Map<string, string>;
@@ -50,6 +51,13 @@ export class I18N {
         return string.format("[{0}]", key);
     }
 
+    private languageFile: ArrayList<string> = new ArrayList<string>();
+    /** 重新加载已加载 */
+    reload(): void {
+        for (let item of this.languageFile) {
+            this.load(item);
+        }
+    }
     load(address: string): void {
         let that = this;
         if (object.isNull(address)) {
@@ -60,6 +68,14 @@ export class I18N {
                 // 补齐地址，根目录
                 address = window.document.location.origin + "/" + address.slice(url.ROOT_URL_SIGN.length, address.length);
             }
+        }
+        if (address.indexOf("{0}") > 0) {
+            // 加载文件为模板
+            if (!this.languageFile.contain(address)) {
+                // 记录到列表
+                this.languageFile.push(address.valueOf());
+            }
+            address = string.format(address, this.language);
         }
         var JQryAjxSetting: JQueryAjaxSettings = {
             url: address,

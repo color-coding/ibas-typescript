@@ -62,6 +62,14 @@ export class Configuration {
     }
 
     /**
+     * 设置配置
+     * @param key 项
+     * @param value 值
+     */
+    set(key: string, value: any): void {
+        this.items.set(key, value);
+    }
+    /**
      * 获取配置
      * @param key 项
      */
