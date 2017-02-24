@@ -49,7 +49,7 @@ export class Console extends ibas.ModuleConsole {
         this.icon = "sap-icon://employee";
         // 先加载ui导航
         let uiModules: string[] = [];
-        if (this.plantform === ibas.emPlantform.IPAD) {
+        if (this.plantform === ibas.emPlantform.PHONE) {
             // 使用m类型视图
             uiModules.push("../bsui/m/Navigation");
         } else {

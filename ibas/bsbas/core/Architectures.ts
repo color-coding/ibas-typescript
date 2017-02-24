@@ -6,7 +6,10 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { List, ArrayList, object, i18n, string, uuid } from "../../../ibas/bobas/index";
+import {
+    List, ArrayList, object, i18n, string, uuid,
+    config
+} from "../../../ibas/bobas/index";
 import { emPlantform } from "../data/index";
 import {
     IElement, IModule, IFunction, IApplication, IView,
@@ -122,18 +125,22 @@ export abstract class View implements IView {
 }
 /** 模块控制台 */
 export abstract class ModuleConsole extends Module implements IModuleConsole {
+    /** 配置项目-平台 */
+    static CONFIG_ITEM_PLANTFORM: string = "plantform";
     constructor() {
         super();
     }
     /** 当前平台 */
-    plantform: emPlantform;
+    get plantform(): emPlantform {
+        return config.get(ModuleConsole.CONFIG_ITEM_PLANTFORM, emPlantform.DESKTOP);
+    }
     /** 地址 */
     address: string;
     /** 图标 */
     icon: string;
     /** 功能集合 */
     functions(): IModuleFunction[] {
-        let list = new Array<IModuleFunction>();
+        let list: Array<IModuleFunction> = new Array<IModuleFunction>();
         for (let item of super.functions()) {
             list.push(<IModuleFunction>item);
         }
@@ -141,7 +148,7 @@ export abstract class ModuleConsole extends Module implements IModuleConsole {
     }
     /** 默认功能 */
     default(): IModuleFunction {
-        let list = this.functions();
+        let list: IModuleFunction[] = this.functions();
         if (list.length > 0) {
             return list[0];
         }

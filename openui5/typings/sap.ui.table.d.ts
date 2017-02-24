@@ -15,6 +15,9 @@ declare namespace sap {
             export class Table extends sap.ui.core.Control {
                 constructor(mSettings?: any);
                 constructor(sId: string, mSettings?: any);
+                /** 获取选中的项目 */
+                getSelectedIndices(): any[];
+                getContextByIndex(iIndex): any;
             }
             export class Column extends sap.ui.core.Control {
                 constructor(mSettings?: any);

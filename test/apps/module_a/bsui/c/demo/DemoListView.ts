@@ -9,6 +9,7 @@
 /// <reference path="../../../../../../openui5/typings/index.d.ts" />
 import * as ibas from "../../../../../../ibas/index";
 import * as bo from "../../../borep/bo/index";
+import { utils } from "../../../../../../openui5/typings/ibas.utils";
 import { IDemoListView } from "../../../bsapp/demo/index";
 
 /**
@@ -68,7 +69,10 @@ export class DemoListView extends ibas.BOListView implements IDemoListView {
                         type: sap.m.ButtonType.Transparent,
                         icon: "sap-icon://display",
                         press: function (): void {
-                            that.fireViewEvents(that.viewDataEvent);
+                            that.fireViewEvents(that.viewDataEvent,
+                                // 获取表格选中的对象    
+                                utils.getTableSelecteds<bo.SalesOrderItem>(that.table).firstOrDefault()
+                            );
                         }
                     }),
                     new sap.m.Button("", {

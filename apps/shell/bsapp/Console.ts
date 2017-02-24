@@ -82,8 +82,23 @@ export class Console extends ibas.ModuleConsole {
         // 注册功能
         this.register(new CentersFunc(this._viewShower));
     }
+    /** 初始化平台 */
+    initPlatform(): void {
+        let plantform: ibas.emPlantform = ibas.emPlantform.DESKTOP;
+        if (!ibas.object.isNull(navigator) && !ibas.object.isNull(navigator.userAgent)) {
+            let agent: string = navigator.userAgent.toLowerCase();
+            if (agent.indexOf("android") >= 0
+                || agent.indexOf("iphone") >= 0) {
+                plantform = ibas.emPlantform.PHONE;
+            } else if (agent.indexOf("ipad") >= 0) {
+                plantform = ibas.emPlantform.TABLET;
+            }
+        }
+        ibas.config.set(ibas.ModuleConsole.CONFIG_ITEM_PLANTFORM, plantform);
+    }
     /** 运行 */
     run(): void {
+        this.initPlatform();
         // 获取根地址
         let rootUrl: string = ibas.url.rootUrl(Console.ROOT_FILE_NAME);
         // 加载配置-框架默认
@@ -92,10 +107,10 @@ export class Console extends ibas.ModuleConsole {
         ibas.i18n.load(ibas.string.format("{0}/shell/resources/languages/shell.{1}.json", rootUrl, "{0}"));
         // 设置资源属性
         this.description = ibas.i18n.prop(this.name);
-        this.icon = ibas.string.format("{0}/shell/resources/logo.png", rootUrl);
+        this.icon = ibas.string.format("{0}/shell/resources/images/logo_small.png", rootUrl);
         // 先加载ui导航
         let uiModules: string[] = [];
-        if (this.plantform === ibas.emPlantform.IPAD) {
+        if (this.plantform === ibas.emPlantform.PHONE) {
             // 使用m类型视图
             uiModules.push("../bsui/m/Navigation");
         } else {

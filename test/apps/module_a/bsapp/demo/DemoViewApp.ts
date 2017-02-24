@@ -9,6 +9,7 @@
 import * as ibas from "../../../../../ibas/index";
 import { BORepositoryDemo } from "../../borep/BORepositories";
 import * as  bo from "../../borep/bo/index";
+import { DemoEditApp } from "./DemoEditApp";
 
 /** 查看应用-演示 */
 export class DemoViewApp extends ibas.BOViewApplication<IDemoViewView> {
@@ -28,6 +29,7 @@ export class DemoViewApp extends ibas.BOViewApplication<IDemoViewView> {
     protected registerView(): void {
         super.registerView();
         // 其他事件
+        this.view.editDataEvent = this.editData;
     }
     /** 视图显示后 */
     protected viewShowed(): void {
@@ -37,10 +39,10 @@ export class DemoViewApp extends ibas.BOViewApplication<IDemoViewView> {
     }
     /** 编辑数据，参数：目标数据 */
     protected editData(): void {
-        let app = new DemoViewApp();
+        let app = new DemoEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
-        app.run();
+        app.run(this.viewData);
     }
     protected viewData: bo.SalesOrder;
     /** 运行,覆盖原方法 */

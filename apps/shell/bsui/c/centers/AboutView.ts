@@ -52,22 +52,22 @@ export class AboutView extends ibas.BOView implements sys.IAboutView {
         this.form.addContent(new sap.m.Label("", { text: "niuren.zhu" }));
         this.form.addContent(new sap.m.Link("", {
             text: "niuren.zhu@icloud.com",
-            press: function () {
-                sap.m.URLHelper.triggerEmail(this.getText(),"hi, niuren.zhu");
+            press: function (): void {
+                sap.m.URLHelper.triggerEmail(this.getText(), "hi, niuren.zhu");
             }
         }));
         this.form.addContent(new sap.ui.core.Title("", { text: "Thanks" }));
         this.form.addContent(new sap.m.Label("", { text: "color-coding studio" }));
         this.form.addContent(new sap.m.Link("", {
             text: "http://www.colorcoding.org",
-            press: function () {
+            press: function (): void {
                 sap.m.URLHelper.redirect(this.getText(), true);
             }
         }));
         this.form.addContent(new sap.m.Label("", { text: "sap" }));
         this.form.addContent(new sap.m.Link("", {
             text: "http://www.sap.com",
-            press: function () {
+            press: function (): void {
                 sap.m.URLHelper.redirect(this.getText(), true);
             }
         }));

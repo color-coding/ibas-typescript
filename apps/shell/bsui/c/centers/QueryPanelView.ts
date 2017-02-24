@@ -17,9 +17,9 @@ export class QueryPanelView extends ibas.BOPanelView implements sys.IQueryPanelV
     /** 绘制工具条视图 */
     darwBar(): any {
         if (ibas.object.isNull(this.bar)) {
-            let that = this;
+            let that: this = this;
             this.search = new sap.m.SearchField("", {
-                search: function () {
+                search: function (): void {
                     that.fireViewEvents(that.searchEvent);
                 }
             });
@@ -60,9 +60,11 @@ export class QueryPanelView extends ibas.BOPanelView implements sys.IQueryPanelV
         this.search.setValue(value);
     }
     /** 绘制工具条 */
-    darwBars(): any { }
+    darwBars(): any {
+        //
+    }
     /** 绘制视图 */
     darw(): any {
-
+        //
     }
 }

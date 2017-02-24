@@ -35,3 +35,26 @@ export module uuid {
             s4() + "-" + s4() + s4() + s4();
     }
 }
+/**
+ * 枚举
+ */
+export module enums {
+    /** 转换为枚举值
+     * @param type 目标类型
+     * @param value 值
+     * @returns 枚举值，失败为undefined
+     */
+    export function valueOf(type: any, value: any): number {
+        if (object.isNull(type) || object.isNull(value)) {
+            return undefined;
+        }
+        for (let item in type) {
+            if (typeof item === typeof value) {
+                if (item === value) {
+                    return type[item];
+                }
+            }
+        }
+        return undefined;
+    }
+}

@@ -83,7 +83,12 @@ export module url {
                 if (url.startsWith("http")) {
                     url = normalize(atr.value);
                 } else {
-                    url = normalize(atr.baseURI + atr.value);
+                    if (object.isNull(atr.baseURI)) {
+                        // 有的浏览器，不存在此属性
+                        url = normalize(window.document.location.href + atr.value);
+                    } else {
+                        url = normalize(atr.baseURI + atr.value);
+                    }
                 }
             }
             if (url.endsWith(fileName)) {

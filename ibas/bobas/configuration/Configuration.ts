@@ -27,7 +27,7 @@ export class Configuration {
     /** 配置项目-离线模式 */
     CONFIG_ITEM_OFFLINE_MODE: string = "offline";
 
-    private items: Map<string, string> = new Map<string, string>();
+    private items: Map<string, any> = new Map<string, any>();
 
     /**
      * 加载配置文件
@@ -130,6 +130,7 @@ export class Configuration {
                 return defalut;
             }
         }
-        throw new Error(string.format("unable to get valid value for [{0}].", key));
+        console.warn(string.format("unable to get valid value for [{0}].", key));
+        return undefined;
     }
 }

@@ -8,14 +8,14 @@
 
 /** 平台 */
 export enum emPlantform {
-    /** 普通PC */
-    PC,
-    /** 苹果手机- */
-    IPHONE,
-    /** 苹果平板- */
-    IPAD,
-    /** 微软平板- */
-    SURFACE
+    /** 平板和桌面 */
+    COMBINATION,
+    /** 桌面 */
+    DESKTOP,
+    /** 手机 */
+    PHONE,
+    /** 平板 */
+    TABLET
 }
 /** 消息类型 */
 export enum emMessageType {

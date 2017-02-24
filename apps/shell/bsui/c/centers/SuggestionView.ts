@@ -16,7 +16,7 @@ import * as ibas from "../../../../../ibas/index";
 export class SuggestionView extends ibas.BOResidentView implements sys.ISuggestionView {
     /** 绘制工具条视图 */
     darwBar(): any {
-        let that = this;
+        let that: this = this;
         // 不重复创建工具条钮
         if (ibas.object.isNull(this.bar)) {
             this.bar = new sap.m.Button("", {
@@ -34,5 +34,6 @@ export class SuggestionView extends ibas.BOResidentView implements sys.ISuggesti
     showFullViewEvent: Function;
     /** 绘制视图 */
     darw(): any {
+        //
     }
 }

@@ -41,7 +41,7 @@ export class DemoChooseView extends ibas.BOChooseView implements IDemoChooseView
                 type: sap.m.ButtonType.Transparent,
                 // icon: "sap-icon://inspect-down",
                 press: function (): void {
-                    that.fireViewEvents(that.destroyEvent);
+                    that.fireViewEvents(that.closeEvent);
                 }
             }),
         ]

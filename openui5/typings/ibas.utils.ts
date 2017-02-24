@@ -4,7 +4,7 @@
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
 /// <reference path="./sap.ui.d.ts" />
-import { i18n, string, object } from "../../ibas/bobas/index";
+import { i18n, string, object, List, ArrayList } from "../../ibas/bobas/index";
 
 export namespace utils {
     export function createComboBoxItems(data: any): sap.ui.core.Item[] {
@@ -40,5 +40,16 @@ export namespace utils {
             }));
         }
         return items;
+    }
+    /** 获取表格选中的对象 */
+    export function getTableSelecteds<T>(table: sap.ui.table.Table): List<T> {
+        let selecteds: List<T> = new ArrayList<T>();
+        var idxs: any[] = table.getSelectedIndices();
+        if (idxs.length > 0) {
+            for (var i = 0; i < idxs.length; i++) {
+                selecteds.push(table.getContextByIndex(idxs[i]).getObject());
+            }
+        }
+        return selecteds;
     }
 }

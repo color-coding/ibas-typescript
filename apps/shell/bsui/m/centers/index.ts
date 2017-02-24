@@ -6,8 +6,5 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-
-import { Console } from "./bsapp/Console";
-
-const console: Console = new Console();
-console.run();
+export * from "./MainView";
+export * from "./LoginView";
