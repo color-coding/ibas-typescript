@@ -327,7 +327,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             let that: this = this;
             // 设置视图导航
             queryPanel.navigation = this.application.navigation;
-            queryPanel.viewShower = this;
+            queryPanel.viewShower = <any>this.application;
             // 判断面板嵌入位置
             if (view instanceof ibas.BOQueryViewWithPanel) {
                 // 视图继承嵌入接口

@@ -41,23 +41,25 @@ export class LoginApp<T extends ILoginView> extends BOApplication<T> implements 
         logger.log(emMessageLevel.INFO, "app: user [{0}] login system.", this.view.user);
         let that: this = this;
         let boRepository: IBORepositorySystem = Factories.systemsFactory.createRepository();
-        boRepository.connect(
-            this.view.user,
-            this.view.password,
-            function (opRslt: IOperationResult<IUser>): void {
+        boRepository.connect({
+            caller: this, // 设置调用者，则onCompleted修正this
+            user: this.view.user,
+            password: this.view.password,
+            onCompleted: function (opRslt: IOperationResult<IUser>): void {
                 try {
-                    that.busy(false);
+                    this.busy(false);
                     if (object.isNull(opRslt)) {
                         throw new Error();
                     }
                     if (opRslt.resultCode !== 0) {
                         throw new Error(opRslt.message);
                     }
-                    that.showCenter(opRslt.resultObjects.firstOrDefault());
+                    this.showCenter(opRslt.resultObjects.firstOrDefault());
                 } catch (error) {
-                    that.messages(error);
+                    this.messages(error);
                 }
-            });
+            }
+        });
     }
 
     private showCenter(user: IUser): void {

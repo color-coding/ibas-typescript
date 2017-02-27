@@ -7,7 +7,8 @@
  */
 
 import {
-	List, IBusinessObject, IOperationMessages, IOperationResult, ICriteria
+	List, IBusinessObject, IOperationMessages, IOperationResult, ICriteria,
+	MethodListener
 } from "../../../ibas/bobas/index";
 import {
 	IView, IUrlView, IModule, IApplication, IModuleConsole,
@@ -166,36 +167,57 @@ export interface IUserRole {
 /** 用户权限 */
 export interface IUserPrivilege {
 }
+/**
+ * 登录调用监听者
+ */
+export interface ConnectListener extends MethodListener {
+	/** 用户 */
+	user: String;
+	/** 密码 */
+	password: String;
+    /**
+     * 调用完成
+     * @param opRslt 结果
+     */
+	onCompleted(opRslt: IOperationResult<IUser>);
+}
+/**
+ * 用户相关调用监听者
+ */
+export interface UserListener<P> extends MethodListener {
+	/** 用户编码 */
+	userCode: String;
+    /**
+     * 调用完成
+     * @param opRslt 结果
+     */
+	onCompleted(opRslt: IOperationResult<P>);
+}
 /** 系统仓库 */
 export interface IBORepositorySystem {
 	/**
 	 * 用户登录
-	 * @param user 用户
-	 * @param passwrod 密码
-	 * @param callBack 回掉方法，参数：IOperationResult<IUser>
+	 * @param listener 登录监听者
 	 */
-	connect(user: String, password: String, callBack: Function): void;
+	connect(listener: ConnectListener): void;
 
 	/**
 	 * 查询用户模块
-	 * @param userCode 用户
-	 * @param callBack 回掉方法，参数：IOperationResult<IUserModule>
+	 * @param listener 用户检索监听者
 	 */
-	fetchUserModules(userCode: String, callBack: Function): void;
+	fetchUserModules(listener: UserListener<IUserModule>): void;
 
 	/**
 	 * 查询用户角色
-	 * @param token 用户口令
-	 * @param callBack 回掉方法，参数：IOperationResult<IUserRole>
+	 * @param listener 用户检索监听者
 	 */
-	fetchUserRoles(userCode: String, callBack: Function): void;
+	fetchUserRoles(listener: UserListener<IUserRole>): void;
 
 	/**
 	 * 查询用户角色权限
-	 * @param token 用户口令
-	 * @param callBack 回掉方法，参数：IOperationResult<IUserPrivilege>
+	 * @param listener 用户检索监听者
 	 */
-	fetchUserPrivileges(userCode: String, callBack: Function): void;
+	fetchUserPrivileges(listener: UserListener<IUserPrivilege>): void;
 }
 /** 系统工厂 */
 export interface ISystemsFactory {

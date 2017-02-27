@@ -40,18 +40,27 @@ export class DemoListApp extends ibas.BOListApplication<IDemoListView, bo.SalesO
     protected fetchData(criteria: ibas.ICriteria): void {
         this.busy(true);
         let that = this;
-        let boRep = new BORepositoryDemo();
-        boRep.fetchSalesOrder(criteria, function (opRslt: ibas.IOperationResult<bo.SalesOrder>): void {
-            try {
-                if (opRslt.resultCode !== 0) {
-                    throw new Error(opRslt.message);
+        let boRepository = new BORepositoryDemo();
+        let fetcher: ibas.FetchListener<bo.SalesOrder> = {
+            /** 查询条件 */
+            criteria: criteria,
+            /**
+             * 调用完成
+             * @param opRslt 结果
+             */
+            onCompleted: function (opRslt: ibas.IOperationResult<bo.SalesOrder>): void {
+                try {
+                    if (opRslt.resultCode !== 0) {
+                        throw new Error(opRslt.message);
+                    }
+                    that.view.showData(opRslt.resultObjects);
+                    that.busy(false);
+                } catch (error) {
+                    that.messages(error);
                 }
-                that.view.showData(opRslt.resultObjects);
-                that.busy(false);
-            } catch (error) {
-                that.messages(error);
             }
-        });
+        }
+        boRepository.fetchSalesOrder(fetcher);
         this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_fetching_data"));
     }
     /** 新建数据 */

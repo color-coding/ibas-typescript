@@ -77,13 +77,31 @@ let boRepository = new BORepositoryTest();
 boRepository.token = "hahaha";
 boRepository.address = "http://localhost:8080/demo/services/jersey/json/";
 boRepository.conect();
-boRepository.fetchSalesOrder(criteria, function (opRslt: bobas.IOperationResult<SalesOrder>) {
-    bobas.logger.log(bobas.string.format("op code {0} and objects size {1}.", opRslt.resultCode, opRslt.resultObjects.length));
-});
+let fetcher: bobas.FetchListener<SalesOrder> = {
+    /** 查询条件 */
+    criteria: criteria,
+    /**
+     * 调用完成
+     * @param opRslt 结果
+     */
+    onCompleted: function (opRslt: bobas.IOperationResult<SalesOrder>) {
+        bobas.logger.log(bobas.string.format("op code {0} and objects size {1}.", opRslt.resultCode, opRslt.resultObjects.length));
+    }
+}
+boRepository.fetchSalesOrder(fetcher);
 order.markNew(true);
-boRepository.saveSalesOrder(order, function (opRslt: bobas.IOperationResult<SalesOrder>) {
-    bobas.logger.log(bobas.string.format("op code {0} and objects size {1}.", opRslt.resultCode, opRslt.resultObjects.length));
-    let newOrder = opRslt.resultObjects.firstOrDefault();
-    bobas.assert.equals("order document status wrong.", order.documentStatus, newOrder.documentStatus);
-});
+let saver: bobas.SaveListener<SalesOrder> = {
+    /** 被保存对象 */
+    beSaved: order,
+    /**
+     * 调用完成
+     * @param opRslt 结果
+     */
+    onCompleted: function (opRslt: bobas.IOperationResult<SalesOrder>) {
+        bobas.logger.log(bobas.string.format("op code {0} and objects size {1}.", opRslt.resultCode, opRslt.resultObjects.length));
+        let newOrder = opRslt.resultObjects.firstOrDefault();
+        bobas.assert.equals("order document status wrong.", order.documentStatus, newOrder.documentStatus);
+    }
+}
+boRepository.saveSalesOrder(saver);
 

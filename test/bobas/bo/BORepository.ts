@@ -59,20 +59,18 @@ export class BORepositoryTest extends bobas.BORepositoryApplication {
 
     /**
      * 查询 销售订单
-     * @param criteria 查询
-     * @param callBack 回掉函数，参数为：bobas.IOperationResult<SalesOrder>
+     * @param listener 查询监听者
      */
-    fetchSalesOrder(criteria: bobas.ICriteria, callBack: Function) {
-        super.fetch("SalesOrder", criteria, callBack);
+    fetchSalesOrder(listener: bobas.FetchListener<SalesOrder>): void {
+        super.fetch("SalesOrder", listener);
     }
-    
+
     /**
      * 保存 销售订单
-     * @param bo 业务对象
-     * @param callBack 回掉函数，参数为：bobas.IOperationResult<SalesOrder>
+     * @param listener 保存监听者
      */
-    saveSalesOrder(bo: SalesOrder, callBack: Function) {
-        super.save("SalesOrder", bo, callBack);
+    saveSalesOrder(listener: bobas.SaveListener<SalesOrder>) {
+        super.save("SalesOrder", listener);
     }
 }
 

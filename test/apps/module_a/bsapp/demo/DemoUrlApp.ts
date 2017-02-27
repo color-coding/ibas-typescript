@@ -24,7 +24,7 @@ export class DemoUrlApp extends ibas.BOApplication<IDemoUrlView> {
     /** 注册视图 */
     protected registerView(): void {
         //
-        this.view.destroyEvent = this.destroy;
+        this.view.closeEvent = this.close;
     }
     /** 视图显示后 */
     protected viewShowed(): void {

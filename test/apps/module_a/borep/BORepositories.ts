@@ -28,25 +28,23 @@ export class BORepositoryDemo extends ibas.BORepositoryApplication {
 
     /**
      * 查询 销售订单
-     * @param criteria 查询
-     * @param callBack 回掉函数，参数为：IOperationResult<SalesOrder>
+     * @param listener 查询监听者
      */
-    fetchSalesOrder(criteria: ibas.ICriteria, callBack: Function) {
+    fetchSalesOrder(listener: ibas.FetchListener<bo.SalesOrder>): void {
         this.address = ibas.url.rootUrl("module_a/index");
         let method: string = "borep/bo/SalesOrders.json";
-        let listener: ibas.RemoteListener = {
-            method: method,
+        let remoteListener: ibas.RemoteListener = {
             onCompleted(orders: any): void {
-                if (!ibas.object.isNull(callBack)) {
+                if (!ibas.object.isNull(listener.onCompleted)) {
                     let opRslt = new ibas.OperationResult<bo.SalesOrder>();
                     for (let item of orders) {
                         opRslt.resultObjects.add(item);
                     }
-                    callBack.call(callBack, opRslt);
+                    listener.onCompleted.call(listener.onCompleted, opRslt);
                 }
             }
         };
-        this.callRemoteMethod(method, null, listener);
+        this.callRemoteMethod(method, null, remoteListener);
     }
 
     /**
@@ -54,9 +52,9 @@ export class BORepositoryDemo extends ibas.BORepositoryApplication {
      * @param bo 业务对象
      * @param callBack 回掉函数，参数为：IOperationResult<SalesOrder>
      */
-    saveSalesOrder(bo: bo.SalesOrder, callBack: Function) {
+    saveSalesOrder(listener: ibas.SaveListener<bo.SalesOrder>): void {
         let opRslt = new ibas.OperationResult<bo.SalesOrder>();
-        opRslt.resultObjects.add(bo);
-        callBack.call(callBack, opRslt);
+        opRslt.resultObjects.add(listener.beSaved);
+        listener.onCompleted.call(listener.onCompleted, opRslt);
     }
 }

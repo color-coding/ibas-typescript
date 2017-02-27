@@ -122,20 +122,23 @@ export abstract class CenterApp<T extends ICenterView> extends Application<T> im
         );
         let that: this = this;
         let boRep: IBORepositorySystem = Factories.systemsFactory.createRepository();
-        boRep.fetchUserModules(user.userCode, function (opRslt: IOperationResult<IUserModule>): void {
-            try {
-                if (opRslt.resultCode !== 0) {
-                    throw new Error(opRslt.message);
+        boRep.fetchUserModules({
+            userCode: user.userCode,
+            onCompleted: function (opRslt: IOperationResult<IUserModule>): void {
+                try {
+                    if (opRslt.resultCode !== 0) {
+                        throw new Error(opRslt.message);
+                    }
+                    for (let module of opRslt.resultObjects) {
+                        that.view.showStatusMessages(
+                            emMessageType.INFORMATION,
+                            i18n.prop("msg_initialize_modules", module.id, module.name)
+                        );
+                        that.initModuleConsole(module);
+                    }
+                } catch (error) {
+                    that.view.showMessageBox(error);
                 }
-                for (let module of opRslt.resultObjects) {
-                    that.view.showStatusMessages(
-                        emMessageType.INFORMATION,
-                        i18n.prop("msg_initialize_modules", module.id, module.name)
-                    );
-                    that.initModuleConsole(module);
-                }
-            } catch (error) {
-                that.view.showMessageBox(error);
             }
         });
     }

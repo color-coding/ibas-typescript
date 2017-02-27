@@ -11,7 +11,7 @@ import {
 } from "../data/index";
 import { i18n } from "../i18n/index";
 import { IBusinessObject } from "./BusinessObjectCore.d";
-import { IBORemoteRepository, RemoteListener, IDataConverter } from "./RepositoryCore.d";
+import { IBORemoteRepository, RemoteListener, IDataConverter, FetchListener, SaveListener } from "./RepositoryCore.d";
 
 /**
  * 业务对象的远程仓库
@@ -46,49 +46,38 @@ export abstract class BORemoteRepository implements IBORemoteRepository {
     /**
      * 查询数据
      * @param boName 业务对象名称
-     * @param criteria 查询
-     * @param callBack 完成后回调方法
+     * @param listener 查询监听者
      */
-    fetch<P>(boName: string, criteria: ICriteria, callBack: Function): void {
+    fetch<P>(boName: string, listener: FetchListener<P>): void {
         let method: string = "fetch" + boName;
-        let listener: RemoteListener = {
-            boName: boName,
-            method: method,
+        let remoteListener: RemoteListener = {
             onCompleted(opRslt: IOperationResult<any>): void {
-                if (!object.isNull(callBack)) {
-                    callBack.call(callBack, opRslt);
-                }
+                listener.onCompleted.call(object.isNull(listener.caller) ? listener : listener.caller, opRslt);
             }
         };
         let converter: IDataConverter = this.createDataConverter();
         if (object.isNull(converter)) {
             throw new Error(i18n.prop("msg_invalid_data_converter"));
         }
-        this.callRemoteMethod(method, converter.convert(criteria), listener);
+        this.callRemoteMethod(method, converter.convert(listener.criteria), remoteListener);
     }
-
     /**
      * 保存数据
      * @param boName 业务对象名称
-     * @param bo 业务对象
-     * @param callBack 完成后回调方法
+     * @param listener 保存监听者
      */
-    save<P>(boName: string, bo: IBusinessObject, callBack: Function): void {
+    save<P>(boName: string, listener: SaveListener<P>): void {
         let method: string = "save" + boName;
-        let listener: RemoteListener = {
-            boName: boName,
-            method: method,
+        let remoteListener: RemoteListener = {
             onCompleted(opRslt: IOperationResult<any>): void {
-                if (!object.isNull(callBack)) {
-                    callBack.call(callBack, opRslt);
-                }
+                listener.onCompleted.call(object.isNull(listener.caller) ? listener : listener.caller, opRslt);
             }
         };
         let converter: IDataConverter = this.createDataConverter();
         if (object.isNull(converter)) {
             throw new Error(i18n.prop("msg_invalid_data_converter"));
         }
-        this.callRemoteMethod(method, converter.convert(bo), listener);
+        this.callRemoteMethod(method, converter.convert(listener.beSaved), remoteListener);
     }
 
     /**
