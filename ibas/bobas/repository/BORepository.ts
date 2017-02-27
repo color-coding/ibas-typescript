@@ -10,7 +10,7 @@
 import {
     object, string, emMessageLevel, OperationResult
 } from "../data/index";
-import { RemoteListener, BORemoteRepository, IDataConverter } from "../core/index";
+import { MethodCaller, BORemoteRepository, IDataConverter } from "../core/index";
 import { i18n } from "../i18n/index";
 import { logger } from "../messages/index";
 
@@ -24,9 +24,9 @@ export abstract class BORemoteRepositoryJQuery extends BORemoteRepository {
      * 特殊调用参数可重载createAjaxSettings方法
      * @param method 方法名称
      * @param data 数据
-     * @param listener 方法监听
+     * @param caller 方法监听
      */
-    callRemoteMethod(method: string, data: string, listener: RemoteListener): void {
+    callRemoteMethod(method: string, data: string, caller: MethodCaller): void {
         let that: BORemoteRepositoryJQuery = this;
         let ajxSetting: JQueryAjaxSettings = this.createAjaxSettings(method, data);
         // 补充发生错误的事件
@@ -36,7 +36,7 @@ export abstract class BORemoteRepositoryJQuery extends BORemoteRepository {
             opRslt.message = string.format("{0} - {1}", textStatus, errorThrown);
             logger.log(emMessageLevel.ERROR,
                 "repository: call method [{2}] faild, {0} - {1}.", textStatus, errorThrown, ajxSetting.url);
-            listener.onCompleted(opRslt);
+            caller.onCompleted(opRslt);
         };
         // 补充成功的事件
         ajxSetting.success = function (data: any, textStatus: string, jqXHR: JQueryXHR): void {
@@ -50,7 +50,7 @@ export abstract class BORemoteRepositoryJQuery extends BORemoteRepository {
             }
             logger.log(emMessageLevel.DEBUG,
                 "repository: call method [{2}] sucessful, {0} - {1}.", textStatus, opRslt.message, ajxSetting.url);
-            listener.onCompleted(opRslt);
+            caller.onCompleted(opRslt);
         };
         // 调用远程方法
         logger.log(emMessageLevel.DEBUG, "repository: calling method [{0}].", ajxSetting.url);

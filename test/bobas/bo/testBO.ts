@@ -77,7 +77,8 @@ let boRepository = new BORepositoryTest();
 boRepository.token = "hahaha";
 boRepository.address = "http://localhost:8080/demo/services/jersey/json/";
 boRepository.conect();
-let fetcher: bobas.FetchListener<SalesOrder> = {
+// 通过变量调用
+let fetcher: bobas.FetchCaller<SalesOrder> = {
     /** 查询条件 */
     criteria: criteria,
     /**
@@ -90,7 +91,8 @@ let fetcher: bobas.FetchListener<SalesOrder> = {
 }
 boRepository.fetchSalesOrder(fetcher);
 order.markNew(true);
-let saver: bobas.SaveListener<SalesOrder> = {
+// 直接调用
+boRepository.saveSalesOrder({
     /** 被保存对象 */
     beSaved: order,
     /**
@@ -102,6 +104,5 @@ let saver: bobas.SaveListener<SalesOrder> = {
         let newOrder = opRslt.resultObjects.firstOrDefault();
         bobas.assert.equals("order document status wrong.", order.documentStatus, newOrder.documentStatus);
     }
-}
-boRepository.saveSalesOrder(saver);
+});
 

@@ -39,7 +39,7 @@ export class DemoChooseApp extends ibas.BOChooseApplication<IDemoChooseView, bo.
         this.busy(true);
         let that = this;
         let boRepository = new BORepositoryDemo();
-        let fetcher: ibas.FetchListener<bo.SalesOrder> = {
+        let fetcher: ibas.FetchCaller<bo.SalesOrder> = {
             /** 查询条件 */
             criteria: criteria,
             /**

@@ -26,12 +26,12 @@ export class BORepositoryTest extends bobas.BORepositoryApplication {
     }
 
     conect() {
-        let listener: bobas.RemoteListener = {
+        let caller: bobas.MethodCaller = {
             onCompleted(opRslt: bobas.IOperationResult<any>) {
                 console.debug(opRslt.resultCode + " - " + opRslt.message);
             }
         };
-        super.callRemoteMethod("hello", null, listener);
+        super.callRemoteMethod("hello", null, caller);
     }
 
     protected createAjaxSettings(method: string, data: any): JQueryAjaxSettings {
@@ -59,18 +59,18 @@ export class BORepositoryTest extends bobas.BORepositoryApplication {
 
     /**
      * 查询 销售订单
-     * @param listener 查询监听者
+     * @param caller 查询监听者
      */
-    fetchSalesOrder(listener: bobas.FetchListener<SalesOrder>): void {
-        super.fetch("SalesOrder", listener);
+    fetchSalesOrder(caller: bobas.FetchCaller<SalesOrder>): void {
+        super.fetch("SalesOrder", caller);
     }
 
     /**
      * 保存 销售订单
-     * @param listener 保存监听者
+     * @param caller 保存监听者
      */
-    saveSalesOrder(listener: bobas.SaveListener<SalesOrder>) {
-        super.save("SalesOrder", listener);
+    saveSalesOrder(caller: bobas.SaveCaller<SalesOrder>): void {
+        super.save("SalesOrder", caller);
     }
 }
 

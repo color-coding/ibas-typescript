@@ -8,7 +8,7 @@
 
 import {
 	List, IBusinessObject, IOperationMessages, IOperationResult, ICriteria,
-	MethodListener
+	MethodCaller
 } from "../../../ibas/bobas/index";
 import {
 	IView, IUrlView, IModule, IApplication, IModuleConsole,
@@ -168,9 +168,9 @@ export interface IUserRole {
 export interface IUserPrivilege {
 }
 /**
- * 登录调用监听者
+ * 登录调用者
  */
-export interface ConnectListener extends MethodListener {
+export interface ConnectCaller extends MethodCaller {
 	/** 用户 */
 	user: String;
 	/** 密码 */
@@ -182,9 +182,9 @@ export interface ConnectListener extends MethodListener {
 	onCompleted(opRslt: IOperationResult<IUser>);
 }
 /**
- * 用户相关调用监听者
+ * 用户相关调用者
  */
-export interface UserListener<P> extends MethodListener {
+export interface UserMethodsCaller<P> extends MethodCaller {
 	/** 用户编码 */
 	userCode: String;
     /**
@@ -197,27 +197,27 @@ export interface UserListener<P> extends MethodListener {
 export interface IBORepositorySystem {
 	/**
 	 * 用户登录
-	 * @param listener 登录监听者
+	 * @param caller 登录监听者
 	 */
-	connect(listener: ConnectListener): void;
+	connect(caller: ConnectCaller): void;
 
 	/**
 	 * 查询用户模块
-	 * @param listener 用户检索监听者
+	 * @param caller 用户检索监听者
 	 */
-	fetchUserModules(listener: UserListener<IUserModule>): void;
+	fetchUserModules(caller: UserMethodsCaller<IUserModule>): void;
 
 	/**
 	 * 查询用户角色
-	 * @param listener 用户检索监听者
+	 * @param caller 用户检索监听者
 	 */
-	fetchUserRoles(listener: UserListener<IUserRole>): void;
+	fetchUserRoles(caller: UserMethodsCaller<IUserRole>): void;
 
 	/**
 	 * 查询用户角色权限
-	 * @param listener 用户检索监听者
+	 * @param caller 用户检索监听者
 	 */
-	fetchUserPrivileges(listener: UserListener<IUserPrivilege>): void;
+	fetchUserPrivileges(caller: UserMethodsCaller<IUserPrivilege>): void;
 }
 /** 系统工厂 */
 export interface ISystemsFactory {

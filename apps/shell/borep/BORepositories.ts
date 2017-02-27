@@ -31,7 +31,7 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements s
 	 * 用户登录
 	 * @param listener 登录监听者
 	 */
-    connect(listener: sys.ConnectListener): void {
+    connect(listener: sys.ConnectCaller): void {
         throw new Error("unrealized method.");
     }
 
@@ -39,7 +39,7 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements s
 	 * 查询用户模块
 	 * @param listener 用户检索监听者
 	 */
-    fetchUserModules(listener: sys.UserListener<sys.IUserModule>): void {
+    fetchUserModules(listener: sys.UserMethodsCaller<sys.IUserModule>): void {
         throw new Error("unrealized method.");
     }
 
@@ -47,7 +47,7 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements s
 	 * 查询用户角色
 	 * @param listener 用户检索监听者
 	 */
-    fetchUserRoles(listener: sys.UserListener<sys.IUserRole>): void {
+    fetchUserRoles(listener: sys.UserMethodsCaller<sys.IUserRole>): void {
         throw new Error("unrealized method.");
     }
 
@@ -55,7 +55,7 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements s
 	 * 查询用户角色权限
 	 * @param listener 用户检索监听者
 	 */
-    fetchUserPrivileges(listener: sys.UserListener<sys.IUserPrivilege>): void {
+    fetchUserPrivileges(listener: sys.UserMethodsCaller<sys.IUserPrivilege>): void {
         throw new Error("unrealized method.");
     }
 }
@@ -69,7 +69,7 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
     private fetchOfflineSettings(callBack: Function): void {
         this.address = document.location.href;
         let method: string = "config.json";
-        let listener: ibas.RemoteListener = {
+        let caller: ibas.MethodCaller = {
             onCompleted(settings: any): void {
                 if (!ibas.object.isNull(callBack)) {
                     let offlineSettings: any = null;
@@ -80,7 +80,7 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
                 }
             }
         };
-        this.callRemoteMethod(method, null, listener);
+        this.callRemoteMethod(method, null, caller);
     }
     private offlineConverter: DataConverter4Offline;
     /**
@@ -95,9 +95,9 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
 
 	/**
 	 * 用户登录
-	 * @param listener 登录监听者
+	 * @param caller 登录者
 	 */
-    connect(listener: sys.ConnectListener): void {
+    connect(caller: sys.ConnectCaller): void {
         let callBack = function (offlineSettings: any): void {
             let opRslt = new ibas.OperationResult();
             opRslt.resultCode = -1;
@@ -106,8 +106,8 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
                 && !ibas.object.isNull(offlineSettings.users)
                 && Array.isArray(offlineSettings.users)) {
                 for (let item of offlineSettings.users) {
-                    if (item.user === listener.user
-                        && item.password === listener.password) {
+                    if (item.user === caller.user
+                        && item.password === caller.password) {
                         opRslt.resultCode = 0;
                         opRslt.message = "";
                         let user: bo.User = new bo.User();
@@ -118,16 +118,16 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
                     }
                 }
             }
-            listener.onCompleted.call(ibas.object.isNull(listener.caller) ? listener : listener.caller, opRslt);
+            caller.onCompleted.call(ibas.object.isNull(caller.caller) ? caller : caller.caller, opRslt);
         };
         this.fetchOfflineSettings(callBack);
     }
 
 	/**
 	 * 查询用户模块
-	 * @param listener 用户检索监听者
+	 * @param caller 用户检索者
 	 */
-    fetchUserModules(listener: sys.UserListener<sys.IUserModule>): void {
+    fetchUserModules(caller: sys.UserMethodsCaller<sys.IUserModule>): void {
         let callBack = function (offlineSettings: any): void {
             let opRslt = new ibas.OperationResult();
             if (!ibas.object.isNull(offlineSettings)
@@ -144,7 +144,7 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
                     opRslt.resultObjects.add(module);
                 }
             }
-            listener.onCompleted.call(ibas.object.isNull(listener.caller) ? listener : listener.caller, opRslt);
+            caller.onCompleted.call(ibas.object.isNull(caller.caller) ? caller : caller.caller, opRslt);
         };
         this.fetchOfflineSettings(callBack);
     }
@@ -152,17 +152,17 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
 
 	/**
 	 * 查询用户角色
-	 * @param listener 用户检索监听者
+	 * @param caller 用户检索者
 	 */
-    fetchUserRoles(listener: sys.UserListener<sys.IUserRole>): void {
+    fetchUserRoles(caller: sys.UserMethodsCaller<sys.IUserRole>): void {
         throw new Error("unrealized method.");
     }
 
 	/**
 	 * 查询用户角色权限
-	 * @param listener 用户检索监听者
+	 * @param caller 用户检索者
 	 */
-    fetchUserPrivileges(listener: sys.UserListener<sys.IUserPrivilege>): void {
+    fetchUserPrivileges(caller: sys.UserMethodsCaller<sys.IUserPrivilege>): void {
         throw new Error("unrealized method.");
     }
 }

@@ -15,7 +15,7 @@ import { IBusinessObject, IBusinessObjectList } from "./BusinessObjectCore.d";
 /**
  * 查询调用监听者
  */
-export interface MethodListener {
+export interface MethodCaller {
     /** 调用者，若设置值，则为onCompleted方法的this */
     caller?: any;
     /**
@@ -25,9 +25,9 @@ export interface MethodListener {
     onCompleted(opRslt: IOperationResult<any>);
 }
 /**
- * 查询调用监听者
+ * 查询调用者
  */
-export interface FetchListener<P> extends MethodListener {
+export interface FetchCaller<P> extends MethodCaller {
     /** 查询条件 */
     criteria: ICriteria;
     /**
@@ -37,9 +37,9 @@ export interface FetchListener<P> extends MethodListener {
     onCompleted(opRslt: IOperationResult<P>);
 }
 /**
- * 保存调用监听者
+ * 保存调用者
  */
-export interface SaveListener<P> extends MethodListener {
+export interface SaveCaller<P> extends MethodCaller {
     /** 被保存对象 */
     beSaved: P;
     /**
@@ -59,22 +59,15 @@ export interface IBORepository {
     /**
      * 查询数据
      * @param boName 业务对象名称
-     * @param listener 查询监听者
+     * @param caller 查询监听者
      */
-    fetch<P>(boName: string, listener: FetchListener<P>);
+    fetch<P>(boName: string, caller: FetchCaller<P>);
     /**
      * 保存数据
      * @param boName 业务对象名称
-     * @param listener 保存监听者
+     * @param caller 保存监听者
      */
-    save<P>(boName: string, listener: SaveListener<P>);
-}
-
-/**
- * 远程调用监听者
- */
-export interface RemoteListener extends MethodListener {
-
+    save<P>(boName: string, caller: SaveCaller<P>);
 }
 
 /**
@@ -89,7 +82,7 @@ export interface IRemoteRepository {
     /**
      * 调用远程方法
      */
-    callRemoteMethod(method: string, data: any, listener: RemoteListener);
+    callRemoteMethod(method: string, data: any, caller: MethodCaller);
 }
 
 /**
