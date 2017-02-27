@@ -28,7 +28,7 @@ export class BORepositoryDemo extends ibas.BORepositoryApplication {
 
     /**
      * 查询 销售订单
-     * @param caller 查询监听者
+     * @param caller 查询者
      */
     fetchSalesOrder(caller: ibas.FetchCaller<bo.SalesOrder>): void {
         this.address = ibas.url.rootUrl("module_a/index");
@@ -49,7 +49,7 @@ export class BORepositoryDemo extends ibas.BORepositoryApplication {
 
     /**
      * 保存 销售订单
-     * @param caller 保存监听者
+     * @param caller 保存者
      */
     saveSalesOrder(caller: ibas.SaveCaller<bo.SalesOrder>): void {
         let opRslt = new ibas.OperationResult<bo.SalesOrder>();

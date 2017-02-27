@@ -85,7 +85,7 @@ let fetcher: bobas.FetchCaller<SalesOrder> = {
      * 调用完成
      * @param opRslt 结果
      */
-    onCompleted: function (opRslt: bobas.IOperationResult<SalesOrder>) {
+    onCompleted(opRslt: bobas.IOperationResult<SalesOrder>): void {
         bobas.logger.log(bobas.string.format("op code {0} and objects size {1}.", opRslt.resultCode, opRslt.resultObjects.length));
     }
 }
@@ -99,7 +99,7 @@ boRepository.saveSalesOrder({
      * 调用完成
      * @param opRslt 结果
      */
-    onCompleted: function (opRslt: bobas.IOperationResult<SalesOrder>) {
+    onCompleted(opRslt: bobas.IOperationResult<SalesOrder>): void {
         bobas.logger.log(bobas.string.format("op code {0} and objects size {1}.", opRslt.resultCode, opRslt.resultObjects.length));
         let newOrder = opRslt.resultObjects.firstOrDefault();
         bobas.assert.equals("order document status wrong.", order.documentStatus, newOrder.documentStatus);

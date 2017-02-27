@@ -48,7 +48,7 @@ export class DemoListApp extends ibas.BOListApplication<IDemoListView, bo.SalesO
              * 调用完成
              * @param opRslt 结果
              */
-            onCompleted: function (opRslt: ibas.IOperationResult<bo.SalesOrder>): void {
+            onCompleted(opRslt: ibas.IOperationResult<bo.SalesOrder>): void {
                 try {
                     if (opRslt.resultCode !== 0) {
                         throw new Error(opRslt.message);

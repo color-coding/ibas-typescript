@@ -59,7 +59,7 @@ export class BORepositoryTest extends bobas.BORepositoryApplication {
 
     /**
      * 查询 销售订单
-     * @param caller 查询监听者
+     * @param caller 查询者
      */
     fetchSalesOrder(caller: bobas.FetchCaller<SalesOrder>): void {
         super.fetch("SalesOrder", caller);
@@ -67,7 +67,7 @@ export class BORepositoryTest extends bobas.BORepositoryApplication {
 
     /**
      * 保存 销售订单
-     * @param caller 保存监听者
+     * @param caller 保存者
      */
     saveSalesOrder(caller: bobas.SaveCaller<SalesOrder>): void {
         super.save("SalesOrder", caller);
