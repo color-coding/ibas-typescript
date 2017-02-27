@@ -14,26 +14,6 @@ import * as sys from "../../../../../ibas/bsbas/systems/index";
  * 视图-中心
  */
 export class CenterView extends ibas.BOView implements sys.ICenterView {
-    /** 显示视图 */
-    show(view: ibas.IView): void {
-        this.showView(view);
-    }
-    /** 清理资源 */
-    destroy(view: ibas.IView): void {
-        this.destroyView(view);
-    }
-    /** 设置忙状态 */
-    busy(view: ibas.IView, busy: boolean, msg: string): any {
-        this.busyView(view, busy, msg);
-    }
-    /** 设置消息 */
-    proceeding(view: ibas.IView, type: ibas.emMessageType, msg: string): any {
-        this.showStatusMessages(type, msg);
-    }
-    /** 对话消息 */
-    messages(type: ibas.emMessageType, msg: string, callBack: Function): any {
-        this.showMessageBox(type, msg, callBack);
-    }
     /** 主页面 */
     private page: sap.tnt.ToolPage;
     /** 页面头部 */

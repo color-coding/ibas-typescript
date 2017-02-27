@@ -45,7 +45,13 @@ export interface ILoginApp extends IApplication<ILoginView> {
 
 }
 /** 系统中心-视图 */
-export interface ICenterView extends IView, IViewShower {
+export interface ICenterView extends IView {
+	/** 清理资源 */
+	destroyView(view: IView): void
+	/** 显示视图 */
+	showView(view: IView): void;
+	/** 设置忙状态 */
+	busyView(view: IView, busy: boolean, msg: string): any;
 	/**
 	 * 显示状态消息
 	 * @param type 消息类型
@@ -129,7 +135,7 @@ export interface IUseQueryPanel {
 }
 /** 嵌入查询面板 */
 export interface IEmbeddedQueryPanel {
-    /** 嵌入 */
+	/** 嵌入 */
 	embedded(view: any): void;
 }
 /** 用户 */

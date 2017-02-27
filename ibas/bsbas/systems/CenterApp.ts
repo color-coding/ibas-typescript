@@ -12,11 +12,11 @@ import {
 } from "../../../ibas/bobas/index";
 import {
     ModuleConsole, IModuleConsole, IModuleFunction, IApplication,
-    IView, IBarView, IBarApplication
+    IView, IBarView, IBarApplication, IViewShower, Application
 } from "../core/index";
 import { emMessageType } from "../data/index";
 import { consolesManager } from "../runtime/index";
-import { BOApplication, BOResidentApplication } from "../applications/index";
+import { BOResidentApplication } from "../applications/index";
 import {
     ICenterView, ICenterApp, IBORepositorySystem,
     IUser, IUserModule, IUserPrivilege, IUserRole
@@ -24,7 +24,7 @@ import {
 import { Factories } from "./Factories";
 
 /** 应用-中心 */
-export abstract class CenterApp<T extends ICenterView> extends BOApplication<T> implements ICenterApp {
+export abstract class CenterApp<T extends ICenterView> extends Application<T> implements ICenterApp, IViewShower {
 
     /** 应用标识 */
     static APPLICATION_ID: string = "c1ec9ee1-1138-4358-8323-c579f1e4be37";
@@ -37,6 +37,39 @@ export abstract class CenterApp<T extends ICenterView> extends BOApplication<T> 
         this.name = CenterApp.APPLICATION_NAME;
         this.description = i18n.prop(this.name);
     }
+    show(view: IView): void;
+    show(): void;
+    /** 显示视图 */
+    show(): void {
+        if (arguments.length === 0) {
+            // 显示自身视图时
+            if (!object.isNull(this.viewShower)) {
+                if (object.isNull(this.view)) {
+                    throw new Error(i18n.prop("msg_invalid_view", this.name));
+                }
+                if (!object.isNull(this.description)) {
+                    this.view.title = this.description;
+                } else {
+                    this.view.title = this.name;
+                }
+                this.viewShower.show(this.view);
+                this.afterViewShow();
+            } else {
+                throw new Error(i18n.prop("msg_invalid_view_shower", this.name));
+            }
+        } else {
+            // 显示应用视图时
+            this.showView(arguments[0]);
+        }
+    }
+    /** 视图显示后 */
+    private afterViewShow(): void {
+        if (object.isNull(this.view)) {
+            throw new Error(i18n.prop("msg_invalid_view", this.name));
+        }
+        this.view.isDisplayed = true;
+        this.viewShowed();
+    }
     /** 注册视图 */
     protected registerView(): void {
         // 注册视图事件
@@ -45,14 +78,9 @@ export abstract class CenterApp<T extends ICenterView> extends BOApplication<T> 
         this.view.helpEvent = this.help;
         this.view.closeEvent = this.close;
     }
-    /** 清理资源 */
-    close(): void {
-        // 重写清理方法
-        this.view.destroy(this.view);
-    }
     /** 运行 */
     run(): void {
-        super.run();
+        this.show();
         let user: IUser = arguments[0];
         // 初始化
         this.init(user);
@@ -63,21 +91,21 @@ export abstract class CenterApp<T extends ICenterView> extends BOApplication<T> 
         // 显示建议应用
         let app: IBarApplication<IBarView> = Factories.systemsFactory.createSuggestionApp();
         app.navigation = this.navigation;
-        app.viewShower = this.view;
+        app.viewShower = this;
         this.view.showResidentView(app.view);
     }
     /** 帮助 */
     private help(): void {
         let app: IApplication<IView> = Factories.systemsFactory.createHelpApp();
         app.navigation = this.navigation;
-        app.viewShower = this.view;
+        app.viewShower = this;
         app.run();
     }
     /** 关于 */
     private about(): void {
         let app: IApplication<IView> = Factories.systemsFactory.createAboutApp();
         app.navigation = this.navigation;
-        app.viewShower = this.view;
+        app.viewShower = this;
         app.run();
     }
     /** 初始化用户相关 */
@@ -123,7 +151,7 @@ export abstract class CenterApp<T extends ICenterView> extends BOApplication<T> 
     }
 
     /** 初始化模块控制台 */
-    protected initModuleConsole(module: IUserModule):void {
+    protected initModuleConsole(module: IUserModule): void {
         let console: IModuleConsole;
         // 模块入口地址
         let address: string = module.address;
@@ -153,7 +181,7 @@ export abstract class CenterApp<T extends ICenterView> extends BOApplication<T> 
                     // 显示常驻应用
                     for (let app of console.applications()) {
                         if (app instanceof BOResidentApplication) {
-                            app.viewShower = that.view;
+                            app.viewShower = that;
                             that.view.showResidentView(app.view);
                         }
                     }
@@ -180,10 +208,37 @@ export abstract class CenterApp<T extends ICenterView> extends BOApplication<T> 
                 app.navigation = func.navigation;
             }
             if (object.isNull(app.viewShower)) {
-                app.viewShower = this.view;
+                app.viewShower = this;
             }
             app.run();
         }
     }
-
+    /** 关闭视图 */
+    close(): void {
+        this.view.destroyView(this.view);
+    }
+    /** 清理资源 */
+    destroy(): void {
+        if (arguments.length === 0) {
+            super.destroy();
+        } else {
+            this.view.destroyView(arguments[0]);
+        }
+    }
+    /** 设置忙状态 */
+    busy(view: IView, busy: boolean, msg: string): any {
+        this.view.busyView(view, busy, msg);
+    }
+    /** 设置消息 */
+    proceeding(view: IView, type: emMessageType, msg: string): any {
+        this.view.showStatusMessages(type, msg);
+    }
+    /** 对话消息 */
+    messages(type: emMessageType, msg: string, callBack: Function): any {
+        this.view.showMessageBox(type, msg, callBack);
+    }
+    /** 显示视图，可重载并添加权限控制 */
+    showView(view: IView): void {
+        this.view.showView(view);
+    }
 }
