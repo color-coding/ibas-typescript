@@ -34,5 +34,51 @@ export class DemoResidentView extends ibas.BOResidentView implements IDemoReside
     showFullViewEvent: Function;
     /** 绘制视图 */
     darw(): any {
+        let form = new sap.ui.layout.VerticalLayout("", {
+            class: "sapUiContentPadding",
+            width: "100%",
+            content: [
+                new sap.m.List("", {
+                    class: "sapContrast sapContrastPlus",
+                    items: [
+                        new sap.m.NotificationListGroup("", {
+                            title: "SO-0000001的审批",
+                            description: "订单内容简讯",
+                            datetime: "1 hour",
+                            collapsed: true,
+                            autoPriority: true,
+                            showCloseButton: false,
+                            authorName: "业务员：张三",
+                            authorPicture: "sap-icon://person-placeholder",
+                            items: [
+                                new sap.m.NotificationListItem("", {
+                                    title: "销售经理审批",
+                                    description: "已拒绝，没钱了",
+                                    showCloseButton: false,
+                                    datetime: "1 hour",
+                                    authorPicture: "sap-icon://person-placeholder",
+                                    authorName: "经理：张四",
+                                })
+                            ],
+                            buttons: [,
+                                new sap.m.Button("", {
+                                    text: "详情",
+                                    type: sap.m.ButtonType.Default
+                                }),
+                                new sap.m.Button("", {
+                                    text: "批准",
+                                    type: sap.m.ButtonType.Accept
+                                }),
+                                new sap.m.Button("", {
+                                    text: "拒绝",
+                                    type: sap.m.ButtonType.Reject
+                                })
+                            ]
+                        }),
+                    ]
+                }),
+            ]
+        });
+        return form;
     }
 }

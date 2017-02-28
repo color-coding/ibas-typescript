@@ -94,7 +94,7 @@ export class Console extends ibas.ModuleConsole {
                 plantform = ibas.emPlantform.TABLET;
             }
         }
-        ibas.config.set(ibas.ModuleConsole.CONFIG_ITEM_PLANTFORM, plantform);
+        // ibas.config.set(ibas.ModuleConsole.CONFIG_ITEM_PLANTFORM, plantform);
     }
     /** 运行 */
     run(): void {

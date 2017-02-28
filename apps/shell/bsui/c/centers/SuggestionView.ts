@@ -7,6 +7,7 @@
  */
 
 /// <reference path="../../../../../openui5/typings/index.d.ts" />
+/// <reference path="../../../../../ibas/3rdparty/html2canvas.d.ts" />
 import * as sys from "../../../../../ibas/bsbas/systems/index";
 import * as ibas from "../../../../../ibas/index";
 
@@ -34,6 +35,25 @@ export class SuggestionView extends ibas.BOResidentView implements sys.ISuggesti
     showFullViewEvent: Function;
     /** 绘制视图 */
     darw(): any {
-        //
+        return new sap.m.FeedInput("", {
+            maxLength: 0,
+            placeholder: ibas.i18n.prop("sys_shell_ui_submit_suggestion"),
+            icon: "",// 当前用户的头像
+            showIcon: true,
+            iconDensityAware: true,
+            post: function (): void {
+                // 提交，发消息和自动截屏
+                // 截取content元素内容
+                require(
+                    ["../../../../../ibas/3rdparty/html2canvas.js"],
+                    function (): void {
+                        html2canvas(document.getElementById("content"),
+                            {
+                                background: "ibas sreenshot",
+                                allowTaint: true // 允许跨域
+                            });
+                    });
+            }
+        })
     }
 }

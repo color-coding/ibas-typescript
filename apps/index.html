@@ -26,6 +26,21 @@
             domScript.setAttribute("data-sap-ui-preload", "async");
             domScript.onload = domScript.onreadystatechange = function () {
                 if (!this.readyState || 'loaded' === this.readyState || 'complete' === this.readyState) {
+                    // attach to event
+                    sap.ui.Device.media.attachHandler(fnSizeChanged, null, sap.ui.Device.media.RANGESETS.SAP_STANDARD);
+                    // eventHandler: 
+                    function fnSizeChanged(mParams) {
+                        switch (mParams.name) {
+                            case "Phone":
+                                sap.ui.Device.media.initRangeSet(sap.ui.Device.media.RANGESETS.SAP_3STEPS);
+                                break;
+                            case "Tablet":
+                                sap.ui.Device.media.initRangeSet(sap.ui.Device.media.RANGESETS.SAP_6STEPS);
+                                break;
+                            case "Desktop":
+                                sap.ui.Device.media.initRangeSet(sap.ui.Device.media.RANGESETS.SAP_STANDARD);
+                        }
+                    }
                     loadEntry();
                 }
             }
