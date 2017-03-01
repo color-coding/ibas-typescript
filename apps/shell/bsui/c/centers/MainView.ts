@@ -16,7 +16,9 @@ import * as ibas from "../../../../../ibas/index";
 export class MainView extends ibas.BOView implements sys.IMainView {
     /** 绘制视图 */
     darw(): any {
-        return null;
+        this.app = new sap.m.App("ibas-app");
+        this.id = this.app.getId();
+        return this.app;
     }
-
+    private app: sap.m.App;
 }

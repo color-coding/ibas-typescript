@@ -18,10 +18,19 @@ export class ViewShowerDefault implements ibas.IViewShower {
         let viewContent: any = view.darw();
         if (ibas.object.isNull(viewContent)) {
             ibas.logger.log(ibas.emMessageLevel.WARN, "shower: empty view.");
-        } else if (viewContent instanceof sap.tnt.ToolPage) {
+        } else if (viewContent instanceof sap.m.App) {
             viewContent.placeAt("content");
-        } else if (viewContent instanceof sap.ui.core.Control) {
-            viewContent.placeAt("content");
+        } else if (viewContent instanceof sap.tnt.ToolPage
+            || viewContent instanceof sap.ui.core.Control) {
+            let app: sap.ui.core.Element = sap.ui.getCore().byId("ibas-app");
+            if (app instanceof sap.m.App) {
+                let page = app.getInitialPage();
+                if (page instanceof sap.ui.core.Control) {
+                    page.destroy(true);
+                }
+                app.addPage(viewContent);
+                app.setInitialPage(viewContent);
+            }
         } else {
             throw new Error(ibas.i18n.prop("sys_shell_invalid_ui"));
         }
