@@ -63,6 +63,10 @@ export class LoginView extends ibas.BOView implements sys.ILoginView {
     changeLanguageEvent: Function;
     /** 绘制视图 */
     darw(): any {
+        // 设置默认平台
+        if (sap.ui.Device.system.phone) {
+            ibas.config.set(ibas.ModuleConsole.CONFIG_ITEM_PLANTFORM, ibas.emPlantform.PHONE);
+        }
         let that: this = this;
         this.txtUser = new sap.m.Input("", {
             value: ibas.config.get(LoginView.CONFIG_ITEM_DEFAULT_USER)

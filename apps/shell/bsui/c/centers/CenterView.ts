@@ -421,6 +421,10 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         if (!ibas.object.isNull(ctrls)) {
             let beDestory: Array<ibas.IView> = new Array<ibas.IView>();
             for (let item of ctrls) {
+                if (item instanceof sap.ui.core.HTML) {
+                    // iframe直接消毁
+                    item.destroy(true);
+                }
                 for (let view of this.viewQueue.keys()) {
                     if (view.id === item.getId()) {
                         beDestory.push(view);
@@ -580,8 +584,8 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                 that.destroyCurrentView();
             }
         }));
-        // this.form.setFloatingFooter(true);
-        this.statusBar = new sap.m.OverflowToolbar("", {
+        // this.form.setFloatingFooter(true); // 浮起状态条
+        this.statusBar = new sap.m.Toolbar("", {
             design: sap.m.ToolbarDesign.Transparent,
             height: "3rem"
         });

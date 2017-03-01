@@ -67,7 +67,12 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
 
     /** 获取离线配置 */
     private fetchSettings(caller: ibas.MethodCaller): void {
-        this.address = document.location.href;
+        let index = document.location.href.toLowerCase().indexOf(".html");
+        if (index > 0) {
+            this.address = ibas.url.normalize(document.location.href.substring(0, document.location.href.lastIndexOf("/")));
+        } else {
+            this.address = ibas.url.normalize(document.location.href);
+        }
         let method: string = "config.json";
         let remotecaller: ibas.MethodCaller = {
             onCompleted(settings: any): void {

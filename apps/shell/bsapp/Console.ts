@@ -94,11 +94,11 @@ export class Console extends ibas.ModuleConsole {
                 plantform = ibas.emPlantform.TABLET;
             }
         }
-        // ibas.config.set(ibas.ModuleConsole.CONFIG_ITEM_PLANTFORM, plantform);
+        ibas.config.set(ibas.ModuleConsole.CONFIG_ITEM_PLANTFORM, plantform);
     }
     /** 运行 */
     run(): void {
-        this.initPlatform();
+        // this.initPlatform();
         // 获取根地址
         let rootUrl: string = ibas.url.rootUrl(Console.ROOT_FILE_NAME);
         // 加载配置-框架默认
@@ -110,7 +110,8 @@ export class Console extends ibas.ModuleConsole {
         this.icon = ibas.string.format("{0}/shell/resources/images/logo_small.png", rootUrl);
         // 先加载ui导航
         let uiModules: string[] = [];
-        if (this.plantform === ibas.emPlantform.PHONE) {
+        if (!ibas.config.get(ibas.config.CONFIG_ITEM_DISABLE_PLATFORM_VIEW, false)
+            && this.plantform === ibas.emPlantform.PHONE) {
             // 使用m类型视图
             uiModules.push("../bsui/m/Navigation");
         } else {

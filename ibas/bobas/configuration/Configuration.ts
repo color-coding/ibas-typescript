@@ -26,6 +26,8 @@ export class Configuration {
     CONFIG_ITEM_MESSAGES_LEVEL: string = "msgLevel";
     /** 配置项目-离线模式 */
     CONFIG_ITEM_OFFLINE_MODE: string = "offline";
+    /** 配置项目-禁用平台视图 */
+    CONFIG_ITEM_DISABLE_PLATFORM_VIEW: string = "disablePlatformView";
 
     private items: Map<string, any> = new Map<string, any>();
 

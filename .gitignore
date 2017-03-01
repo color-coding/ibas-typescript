@@ -27,6 +27,8 @@ Web.config
 /openui5/README.txt
 /openui5/typings/*.js
 /tomcat/
+/others/
+
 
 # exceptions
 !ibas/3rdparty/*.js
