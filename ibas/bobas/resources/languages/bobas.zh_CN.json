@@ -1,4 +1,4 @@
-﻿{
+{
   "msg_invalid_parameter": "无效的参数[{0}]",
   "msg_load_config_file_faild": "读取配置文件失败[{0} - {1}]",
   "msg_load_config_file_successful": "读取配置文件成功",
