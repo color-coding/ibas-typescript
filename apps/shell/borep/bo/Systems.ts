@@ -6,7 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { emPrivilegeSource, emPrivilegeValue } from "../../../../ibas/bsbas/data/index";
+import { emPrivilegeSource, emAuthoriseType } from "../../../../ibas/bsbas/data/index";
 import * as sys from "../../../../ibas/bsbas/systems/index";
 
 /**
@@ -16,9 +16,11 @@ export class User implements sys.IUser {
 	/** 编号 */
 	id: number;
 	/** 编码 */
-	userCode: string;
+	code: string;
 	/** 名称 */
-	userName: string;
+	name: string;
+	/** 超级用户 */
+	super: boolean;
 }
 /**
  * 用户模块
@@ -30,12 +32,10 @@ export class UserModule implements sys.IUserModule {
 	name: string;
 	/** 类别 */
 	category: string;
-	/** 描述 */
-	description: string;
 	/** 地址 */
 	address: string;
-	/** 控制台名称 */
-	console: string;
+	/** 仓库地址 */
+	repository: string;
 }
 /**
  * 用户权限
@@ -46,5 +46,5 @@ export class UserPrivilege implements sys.IUserPrivilege {
 	/** 权限目标 */
 	target: string;
 	/** 权限值 */
-	value: emPrivilegeValue;
+	value: emAuthoriseType;
 }

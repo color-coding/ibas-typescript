@@ -109,8 +109,8 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
                             opRslt.resultCode = 0;
                             opRslt.message = "";
                             let user: bo.User = new bo.User();
-                            user.userCode = item.user;
-                            user.userName = item.name;
+                            user.code = item.user;
+                            user.name = item.name;
                             opRslt.resultObjects.add(user);
                             break;
                         }
@@ -138,8 +138,6 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
                         module.name = item.name;
                         module.category = item.category;
                         module.address = item.address;
-                        module.console = item.console;
-                        module.description = ibas.i18n.prop(module.name);
                         opRslt.resultObjects.add(module);
                     }
                 }
@@ -163,7 +161,7 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
                         let privilege = new bo.UserPrivilege();
                         privilege.source = ibas.enums.valueOf(ibas.emPrivilegeSource, item.source);
                         privilege.target = item.target;
-                        privilege.value = ibas.enums.valueOf(ibas.emPrivilegeValue, item.value);
+                        privilege.value = ibas.enums.valueOf(ibas.emAuthoriseType, item.value);
                         opRslt.resultObjects.add(privilege);
                     }
                 }

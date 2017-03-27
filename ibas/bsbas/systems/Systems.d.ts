@@ -14,7 +14,7 @@ import {
 	IView, IUrlView, IModule, IApplication, IModuleConsole,
 	IModuleFunction, IViewShower, IBarView
 } from "../core/index";
-import { emMessageType, emPrivilegeSource, emPrivilegeValue } from "../data/index";
+import { emMessageType, emPrivilegeSource, emAuthoriseType } from "../data/index";
 
 /** 关于-视图 */
 export interface IAboutView extends IView {
@@ -144,9 +144,11 @@ export interface IUser {
 	/** 编号 */
 	id: number;
 	/** 编码 */
-	userCode: string;
+	code: string;
 	/** 名称 */
-	userName: string;
+	name: string;
+	/** 超级用户 */
+	super: boolean;
 }
 /** 用户模块 */
 export interface IUserModule {
@@ -156,10 +158,10 @@ export interface IUserModule {
 	name: string;
 	/** 类别 */
 	category: string;
-	/** 描述 */
-	description: string;
 	/** 地址 */
 	address: string;
+	/** 仓库地址 */
+	repository: string;
 }
 /** 用户权限 */
 export interface IUserPrivilege {
@@ -168,7 +170,7 @@ export interface IUserPrivilege {
 	/** 权限目标 */
 	target: string;
 	/** 权限值 */
-	value: emPrivilegeValue;
+	value: emAuthoriseType;
 }
 /**
  * 登录调用者

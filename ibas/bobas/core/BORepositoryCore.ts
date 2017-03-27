@@ -7,9 +7,11 @@
  */
 
 import {
-    object, IOperationResult, ICriteria
+    object, IOperationResult, ICriteria, string, emMessageLevel
 } from "../data/index";
 import { i18n } from "../i18n/index";
+import { config } from "../configuration/index";
+import { logger } from "../messages/index";
 import { IBusinessObject } from "./BusinessObjectCore.d";
 import { IBORemoteRepository, MethodCaller, IDataConverter, FetchCaller, SaveCaller } from "./RepositoryCore.d";
 
@@ -17,7 +19,18 @@ import { IBORemoteRepository, MethodCaller, IDataConverter, FetchCaller, SaveCal
  * 业务对象的远程仓库
  */
 export abstract class BORemoteRepository implements IBORemoteRepository {
+    /** 远程仓库的默认地址模板 */
+    static CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS: string = "default_address_{0}";
 
+    constructor() {
+        // 获取远程仓库的默认地址
+        let name: string = this.constructor.name;
+        let address: string = config.get(string.format(BORemoteRepository.CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS, name));
+        if (!object.isNull(address)) {
+            this.address = address;
+            logger.log(emMessageLevel.DEBUG, "repository: using repository's default address [{0}].", this.address);
+        }
+    }
     /**
      * 访问口令
      */

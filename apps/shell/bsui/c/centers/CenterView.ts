@@ -460,10 +460,10 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
     }
     /** 显示用户信息 */
     showUser(user: sys.IUser): void {
-        if (!ibas.object.isNull(user.userName)) {
-            this.userBar.setText(user.userName);
-        } else if (!ibas.object.isNull(user.userCode)) {
-            this.userBar.setText(user.userCode);
+        if (!ibas.object.isNull(user.name)) {
+            this.userBar.setText(user.name);
+        } else if (!ibas.object.isNull(user.code)) {
+            this.userBar.setText(user.code);
         } else {
             this.userBar.setText(ibas.i18n.prop("sys_shell_unknown_user"));
         }

@@ -38,7 +38,7 @@ export enum emPrivilegeSource {
 	BUSINESS_OBJECT
 }
 /** 权限值 */
-export enum emPrivilegeValue {
+export enum emAuthoriseType {
 	/** 没权限 */
 	ALL,
 	/** 读取权限 */

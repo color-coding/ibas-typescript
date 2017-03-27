@@ -8,13 +8,14 @@
 
 /// <reference path="../../../ibas/3rdparty/index.d.ts" />
 import {
-    i18n, logger, emMessageLevel, IOperationResult, object,
+    i18n, logger, emMessageLevel, IOperationResult,
+    object, BORemoteRepository, config, string
 } from "../../../ibas/bobas/index";
 import {
     ModuleConsole, IModuleConsole, IModuleFunction, IApplication,
     IView, IBarView, IBarApplication, IViewShower, Application
 } from "../core/index";
-import { emMessageType, emPrivilegeSource, emPrivilegeValue } from "../data/index";
+import { emMessageType, emPrivilegeSource, emAuthoriseType } from "../data/index";
 import { consolesManager } from "../runtime/index";
 import {
     BOResidentApplication, BOApplication,
@@ -119,15 +120,15 @@ export abstract class CenterApp<T extends ICenterView> extends Application<T> im
         }
         this.view.showUser(user);
         // 加载用户相关
-        logger.log(emMessageLevel.DEBUG, "center: initializing user [{0} - {1}]'s modules.", user.id, user.userCode);
+        logger.log(emMessageLevel.DEBUG, "center: initializing user [{0} - {1}]'s modules.", user.id, user.code);
         this.view.showStatusMessages(
             emMessageType.INFORMATION,
-            i18n.prop("msg_initialize_user_modules", user.userCode, user.userName)
+            i18n.prop("msg_initialize_user_modules", user.code, user.name)
         );
         let that: this = this;
         let boRep: IBORepositorySystem = Factories.systemsFactory.createRepository();
         boRep.fetchUserModules({
-            userCode: user.userCode,
+            userCode: user.code,
             onCompleted: function (opRslt: IOperationResult<IUserModule>): void {
                 try {
                     if (opRslt.resultCode !== 0) {
@@ -146,7 +147,7 @@ export abstract class CenterApp<T extends ICenterView> extends Application<T> im
             }
         });
         boRep.fetchUserPrivileges({
-            userCode: user.userCode,
+            userCode: user.code,
             onCompleted: function (opRslt: IOperationResult<IUserPrivilege>): void {
                 try {
                     if (opRslt.resultCode !== 0) {
@@ -196,6 +197,14 @@ export abstract class CenterApp<T extends ICenterView> extends Application<T> im
                     i18n.prop("msg_not_found_module_console", module.id, module.name));
                 return;
             }
+            // 注册模块业务仓库默认地址，创建实例时默认取此地址
+            if (!object.isNull(module.name) && !object.isNull(module.repository)) {
+                let configName: string = string.format(
+                    BORemoteRepository.CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS
+                    , module.name);
+                config.set(configName, module.repository);
+                logger.log(emMessageLevel.DEBUG, "repository: register repository's default address [{0}].", module.repository);
+            }
             // 有效模块控制台
             if (console instanceof ModuleConsole) {
                 console.addListener(function (): void {
@@ -239,7 +248,7 @@ export abstract class CenterApp<T extends ICenterView> extends Application<T> im
     /** 用户权限 */
     private userPrivileges: Array<IUserPrivilege>;
     /** 判断是否可以运行应用 */
-    protected canRun(app: IApplication<IView>):boolean {
+    protected canRun(app: IApplication<IView>): boolean {
         let run: boolean = true;
         if (!object.isNull(this.userPrivileges)) {
             if (app instanceof BOApplication) {
@@ -251,7 +260,7 @@ export abstract class CenterApp<T extends ICenterView> extends Application<T> im
                     if (item.target !== app.boCode) {
                         continue;
                     }
-                    if (item.value === emPrivilegeValue.READ) {
+                    if (item.value === emAuthoriseType.READ) {
                         if (app instanceof BOListApplication) {
                             run = true;
                         } else if (app instanceof BOChooseApplication) {
@@ -262,7 +271,7 @@ export abstract class CenterApp<T extends ICenterView> extends Application<T> im
                             run = false;
                         }
                     } else {
-                        run = item.value === emPrivilegeValue.NONE ? false : true;
+                        run = item.value === emAuthoriseType.NONE ? false : true;
                     }
                     break;
                 }
@@ -275,7 +284,7 @@ export abstract class CenterApp<T extends ICenterView> extends Application<T> im
                 if (item.target !== app.id) {
                     continue;
                 }
-                run = item.value === emPrivilegeValue.NONE ? false : true;
+                run = item.value === emAuthoriseType.NONE ? false : true;
                 break;
             }
         }
