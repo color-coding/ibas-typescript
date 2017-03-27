@@ -131,7 +131,7 @@ export class OperationMessages implements IOperationMessages {
 }
 /**
  * 操作消息结果
-*/
+ */
 export class OperationResult<P> extends OperationMessages implements IOperationResult<P> {
     /**
      * 返回对象

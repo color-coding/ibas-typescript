@@ -161,9 +161,6 @@ export interface IUserModule {
 	/** 地址 */
 	address: string;
 }
-/** 用户角色 */
-export interface IUserRole {
-}
 /** 用户权限 */
 export interface IUserPrivilege {
 	/** 来源 */
@@ -212,12 +209,6 @@ export interface IBORepositorySystem {
 	 * @param caller 用户检索监听者
 	 */
 	fetchUserModules(caller: UserMethodsCaller<IUserModule>): void;
-
-	/**
-	 * 查询用户角色
-	 * @param caller 用户检索监听者
-	 */
-	fetchUserRoles(caller: UserMethodsCaller<IUserRole>): void;
 
 	/**
 	 * 查询用户角色权限

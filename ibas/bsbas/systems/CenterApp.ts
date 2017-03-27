@@ -23,7 +23,7 @@ import {
 } from "../applications/index";
 import {
     ICenterView, ICenterApp, IBORepositorySystem,
-    IUser, IUserModule, IUserPrivilege, IUserRole
+    IUser, IUserModule, IUserPrivilege
 } from "./Systems.d";
 import { Factories } from "./Factories";
 
@@ -239,7 +239,7 @@ export abstract class CenterApp<T extends ICenterView> extends Application<T> im
     /** 用户权限 */
     private userPrivileges: Array<IUserPrivilege>;
     /** 判断是否可以运行应用 */
-    protected canRun(app: IApplication<IView>) {
+    protected canRun(app: IApplication<IView>):boolean {
         let run: boolean = true;
         if (!object.isNull(this.userPrivileges)) {
             if (app instanceof BOApplication) {

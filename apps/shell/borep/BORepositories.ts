@@ -44,14 +44,6 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements s
     }
 
 	/**
-	 * 查询用户角色
-	 * @param listener 用户检索监听者
-	 */
-    fetchUserRoles(listener: sys.UserMethodsCaller<sys.IUserRole>): void {
-        throw new Error("unrealized method.");
-    }
-
-	/**
 	 * 查询用户角色权限
 	 * @param listener 用户检索监听者
 	 */
@@ -67,7 +59,7 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
 
     /** 获取离线配置 */
     private fetchSettings(caller: ibas.MethodCaller): void {
-        let index = document.location.href.toLowerCase().indexOf(".html");
+        let index:number = document.location.href.toLowerCase().indexOf(".html");
         if (index > 0) {
             this.address = ibas.url.normalize(document.location.href.substring(0, document.location.href.lastIndexOf("/")));
         } else {
@@ -154,15 +146,6 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
                 caller.onCompleted.call(ibas.object.isNull(caller.caller) ? caller : caller.caller, opRslt);
             }
         });
-    }
-
-
-	/**
-	 * 查询用户角色
-	 * @param caller 用户检索者
-	 */
-    fetchUserRoles(caller: sys.UserMethodsCaller<sys.IUserRole>): void {
-        throw new Error("unrealized method.");
     }
 
 	/**
