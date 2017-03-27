@@ -14,7 +14,7 @@ import {
 	IView, IUrlView, IModule, IApplication, IModuleConsole,
 	IModuleFunction, IViewShower, IBarView
 } from "../core/index";
-import { emMessageType } from "../data/index";
+import { emMessageType, emPrivilegeSource, emPrivilegeValue } from "../data/index";
 
 /** 关于-视图 */
 export interface IAboutView extends IView {
@@ -166,6 +166,12 @@ export interface IUserRole {
 }
 /** 用户权限 */
 export interface IUserPrivilege {
+	/** 来源 */
+	source: emPrivilegeSource;
+	/** 权限目标 */
+	target: string;
+	/** 权限值 */
+	value: emPrivilegeValue;
 }
 /**
  * 登录调用者

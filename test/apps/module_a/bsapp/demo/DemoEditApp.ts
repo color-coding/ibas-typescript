@@ -25,6 +25,7 @@ export class DemoEditApp extends ibas.BOEditApplication<IDemoEditView, bo.SalesO
         this.id = DemoEditApp.APPLICATION_ID;
         this.name = DemoEditApp.APPLICATION_NAME;
         this.description = ibas.i18n.prop(this.name);
+        this.boCode = "DEMO";
     }
     /** 注册视图 */
     protected registerView(): void {

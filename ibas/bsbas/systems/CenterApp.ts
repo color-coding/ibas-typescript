@@ -14,9 +14,13 @@ import {
     ModuleConsole, IModuleConsole, IModuleFunction, IApplication,
     IView, IBarView, IBarApplication, IViewShower, Application
 } from "../core/index";
-import { emMessageType } from "../data/index";
+import { emMessageType, emPrivilegeSource, emPrivilegeValue } from "../data/index";
 import { consolesManager } from "../runtime/index";
-import { BOResidentApplication } from "../applications/index";
+import {
+    BOResidentApplication, BOApplication,
+    BOChooseApplication, BOListApplication,
+    BOViewApplication, BOEditApplication
+} from "../applications/index";
 import {
     ICenterView, ICenterApp, IBORepositorySystem,
     IUser, IUserModule, IUserPrivilege, IUserRole
@@ -141,6 +145,21 @@ export abstract class CenterApp<T extends ICenterView> extends Application<T> im
                 }
             }
         });
+        boRep.fetchUserPrivileges({
+            userCode: user.userCode,
+            onCompleted: function (opRslt: IOperationResult<IUserPrivilege>): void {
+                try {
+                    if (opRslt.resultCode !== 0) {
+                        throw new Error(opRslt.message);
+                    }
+                    that.userPrivileges = opRslt.resultObjects;
+                    // 此处应该通过权限过滤下已加载内容
+                } catch (error) {
+                    that.view.showMessageBox(error);
+                    // 权限获取失败，此处应该退出系统
+                }
+            }
+        });
     }
     private functionMap: Map<string, IModuleFunction>;
     /** 注册运行的功能 */
@@ -216,6 +235,52 @@ export abstract class CenterApp<T extends ICenterView> extends Application<T> im
             app.run();
         }
     }
+
+    /** 用户权限 */
+    private userPrivileges: Array<IUserPrivilege>;
+    /** 判断是否可以运行应用 */
+    protected canRun(app: IApplication<IView>) {
+        let run: boolean = true;
+        if (!object.isNull(this.userPrivileges)) {
+            if (app instanceof BOApplication) {
+                // 应用是业务对象应用，根据应用类型设置权限
+                for (let item of this.userPrivileges) {
+                    if (item.source !== emPrivilegeSource.BUSINESS_OBJECT) {
+                        continue;
+                    }
+                    if (item.target !== app.boCode) {
+                        continue;
+                    }
+                    if (item.value === emPrivilegeValue.READ) {
+                        if (app instanceof BOListApplication) {
+                            run = true;
+                        } else if (app instanceof BOChooseApplication) {
+                            run = true;
+                        } else if (app instanceof BOViewApplication) {
+                            run = true;
+                        } else if (app instanceof BOEditApplication) {
+                            run = false;
+                        }
+                    } else {
+                        run = item.value === emPrivilegeValue.NONE ? false : true;
+                    }
+                    break;
+                }
+            }
+            // 应用设置，覆盖之前设置
+            for (let item of this.userPrivileges) {
+                if (item.source !== emPrivilegeSource.APPLICATION) {
+                    continue;
+                }
+                if (item.target !== app.id) {
+                    continue;
+                }
+                run = item.value === emPrivilegeValue.NONE ? false : true;
+                break;
+            }
+        }
+        return run;
+    }
     /** 关闭视图 */
     close(): void {
         this.view.destroyView(this.view);
@@ -242,6 +307,13 @@ export abstract class CenterApp<T extends ICenterView> extends Application<T> im
     }
     /** 显示视图，可重载并添加权限控制 */
     showView(view: IView): void {
+        if (!object.isNull(view.application)) {
+            if (!this.canRun(view.application)) {
+                throw new Error(
+                    i18n.prop("msg_application_not_allowed_run",
+                        object.isNull(view.application.description) ? view.application.name : view.application.description));
+            }
+        }
         this.view.showView(view);
     }
 }

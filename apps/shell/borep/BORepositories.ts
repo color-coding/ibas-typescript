@@ -9,7 +9,7 @@
 import * as ibas from "../../../ibas/index";
 import * as sys from "../../../ibas/bsbas/systems/index";
 import { DataConverter4Shell, DataConverter4Offline } from "./DataConverters";
-import * as bo from "./bo/index";
+import * as bo from "./bo/Systems";
 
 
 /**
@@ -170,6 +170,22 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
 	 * @param caller 用户检索者
 	 */
     fetchUserPrivileges(caller: sys.UserMethodsCaller<sys.IUserPrivilege>): void {
-        throw new Error("unrealized method.");
+        this.fetchSettings({
+            onCompleted(settings: any): void {
+                let opRslt = new ibas.OperationResult();
+                if (!ibas.object.isNull(settings)
+                    && !ibas.object.isNull(settings.privileges)
+                    && Array.isArray(settings.privileges)) {
+                    for (let item of settings.privileges) {
+                        let privilege = new bo.UserPrivilege();
+                        privilege.source = ibas.enums.valueOf(ibas.emPrivilegeSource, item.source);
+                        privilege.target = item.target;
+                        privilege.value = ibas.enums.valueOf(ibas.emPrivilegeValue, item.value);
+                        opRslt.resultObjects.add(privilege);
+                    }
+                }
+                caller.onCompleted.call(ibas.object.isNull(caller.caller) ? caller : caller.caller, opRslt);
+            }
+        });
     }
 }

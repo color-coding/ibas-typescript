@@ -18,6 +18,8 @@ import { IBOView, IBOQueryView } from "./BOApplications.d";
  * 业务对象应用
  */
 export abstract class BOApplication<T extends IBOView> extends Application<T> {
+    /** 业务对象编码 */
+    boCode: string;
     /** 运行 */
     run(...args: any[]): void {
         this.show();
@@ -33,8 +35,12 @@ export abstract class BOApplication<T extends IBOView> extends Application<T> {
             } else {
                 this.view.title = this.name;
             }
-            this.viewShower.show(this.view);
-            this.afterViewShow();
+            try {
+                this.viewShower.show(this.view);
+                this.afterViewShow();
+            } catch (error) {
+                this.viewShower.messages(emMessageType.ERROR, error.message, null);
+            }
         } else {
             throw new Error(i18n.prop("msg_invalid_view_shower", this.name));
         }

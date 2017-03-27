@@ -4,22 +4,26 @@
     "language": "zh_CN",
     "offline": true,
     "helpUrl": "http://www.baidu.com",
-    "fullScreen": true,
+    "fullScreen": false,
     "statusDelay": 2,
     "disablePlatformView": true,
     "defaultUser": "admin",
     "defaultPassword": "1q2w3e"
   },
   "languages": [
-    "zh_CN", "en_US"
+    "zh_CN",
+    "en_US"
   ],
   "offlineSettings": {
-    "users": [{
-      "user": "admin",
-      "name": "administrator",
-      "password": "1q2w3e"
-    }],
-    "modules": [{
+    "users": [
+      {
+        "user": "admin",
+        "name": "administrator",
+        "password": "1q2w3e"
+      }
+    ],
+    "modules": [
+      {
         "id": "test-0",
         "name": "module_a",
         "category": "test",
@@ -36,6 +40,18 @@
         "name": "module_c",
         "category": "test",
         "address": "../../../test/apps/module_c/index"
+      }
+    ],
+    "privileges": [
+      {
+        "source": "APPLICATION",
+        "target": "//b77d974d-57a0-4373-884e-b1ec43471c5a",
+        "value": "NONE"
+      },
+      {
+        "source": "BUSINESS_OBJECT",
+        "target": "DEMO",
+        "value": "READ"
       }
     ]
   }
