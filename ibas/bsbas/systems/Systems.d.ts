@@ -8,7 +8,7 @@
 
 import {
 	List, IBusinessObject, IOperationMessages, IOperationResult, ICriteria,
-	MethodCaller
+	MethodCaller, SaveCaller
 } from "../../../ibas/bobas/index";
 import {
 	IView, IUrlView, IModule, IApplication, IModuleConsole,
@@ -120,7 +120,7 @@ export interface IQueryPanel<T extends IQueryPanelView> extends IApplication<T> 
 	/** 运行 参数，初始化回调 */
 	run(callBack: Function): void;
 	/** 注册监听 */
-	addListener(listener: IUseQueryPanel);
+	register(listener: IUseQueryPanel);
 }
 /** 查询面板-视图 */
 export interface IQueryPanelView extends IBarView {
@@ -128,9 +128,15 @@ export interface IQueryPanelView extends IBarView {
 	searchEvent: Function;
 	/** 查询内容 */
 	searchContent: string;
+	/** 使用的查询标识 */
+	usingQueryId: string;
 }
 /** 使用查询面板 */
 export interface IUseQueryPanel {
+	/** 查询标识 */
+	readonly queryId: string;
+	/** 查询目标 */
+	readonly queryTarget?: any;
 	/** 查询数据 */
 	query(criteria: ICriteria): void;
 }
@@ -172,6 +178,35 @@ export interface IUserPrivilege {
 	/** 权限值 */
 	value: emAuthoriseType;
 }
+/** 用户查询 */
+export interface IUserQuery {
+	/** 标记 */
+	id: string;
+	/** 名称 */
+	name: string;
+	/** 查询 */
+	criteria: ICriteria;
+	/** 顺序 */
+	order: number;
+}
+/** 业务对象信息 */
+export interface IBOInfo {
+	/** 名称 */
+	name: string;
+	/** 编码 */
+	code: string;
+	/** 类型 */
+	type: string;
+	/** 属性集合 */
+	properties: Array<IBOPropertyInfo>;
+}
+/** 业务对象属性信息 */
+export interface IBOPropertyInfo {
+	/** 属性 */
+	property: string;
+	/** 查询 */
+	searched: boolean;
+}
 /**
  * 登录调用者
  */
@@ -198,25 +233,64 @@ export interface UserMethodsCaller<P> extends MethodCaller {
      */
 	onCompleted(opRslt: IOperationResult<P>);
 }
+/**
+ * 用户查询调用者
+ */
+export interface UserQueriesCaller extends UserMethodsCaller<IUserQuery> {
+	/** 查询标识 */
+	queryId: String;
+}
+/**
+ * 业务对象信息调用者
+ */
+export interface BOInfoCaller extends MethodCaller {
+	/** 业务对象名称 */
+	boName: string;
+	/** 业务对象编码 */
+	boCode: string;
+    /**
+     * 调用完成
+     * @param opRslt 结果
+     */
+	onCompleted(opRslt: IOperationResult<IBOInfo>);
+}
 /** 系统仓库 */
 export interface IBORepositorySystem {
 	/**
 	 * 用户登录
-	 * @param caller 登录监听者
+	 * @param caller 监听者
 	 */
 	connect(caller: ConnectCaller): void;
 
 	/**
 	 * 查询用户模块
-	 * @param caller 用户检索监听者
+	 * @param caller 监听者
 	 */
 	fetchUserModules(caller: UserMethodsCaller<IUserModule>): void;
 
 	/**
-	 * 查询用户角色权限
-	 * @param caller 用户检索监听者
+	 * 查询用户权限
+	 * @param caller 监听者
 	 */
 	fetchUserPrivileges(caller: UserMethodsCaller<IUserPrivilege>): void;
+
+	/**
+	 * 查询用户查询
+	 * @param caller 监听者
+	 */
+	fetchUserQueries(caller: UserQueriesCaller): void;
+
+	/**
+	 * 保存用户查询
+	 * @param caller 监听者
+	 */
+	saveUserQuery(caller: SaveCaller<IUserQuery>): void;
+
+	/**
+	 * 业务对象信息查询
+	 * @param caller 监听者
+	 */
+	fetchBOInfos(caller: BOInfoCaller): void;
 }
 /** 系统工厂 */
 export interface ISystemsFactory {

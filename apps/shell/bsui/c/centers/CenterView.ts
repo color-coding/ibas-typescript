@@ -349,13 +349,13 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                 });
                 embeddedView.embedded(strip);
                 // 运行查询面板，初始化完成添加到视图
+                // 监听查询面板
+                queryPanel.register(view);
                 queryPanel.run(function (): void {
                     // 清理提示
                     strip.destroy(true);
                     let viewContent: any = queryPanel.view.darwBar();
                     embeddedView.embedded(viewContent);
-                    // 监听查询面板
-                    queryPanel.addListener(view);
                     // 记录面板，下次使用
                     that.queryPanels.set(view.id, viewContent);
                 });

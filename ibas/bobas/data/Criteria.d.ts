@@ -117,7 +117,7 @@ export interface ICondition {
     /**
      * 比较的值
      */
-    condVal: string;
+    value: string;
     /**
      * 比较方法
      */

@@ -16,7 +16,7 @@ import {
     IView, IBarView, IBarApplication, IViewShower, Application
 } from "../core/index";
 import { emMessageType, emPrivilegeSource, emAuthoriseType } from "../data/index";
-import { consolesManager } from "../runtime/index";
+import { consolesManager, variablesManager } from "../runtime/index";
 import {
     BOResidentApplication, BOApplication,
     BOChooseApplication, BOListApplication,
@@ -118,6 +118,11 @@ export abstract class CenterApp<T extends ICenterView> extends Application<T> im
         if (object.isNull(user)) {
             return;
         }
+        // 注册运行变量
+        variablesManager.register(variablesManager.VARIABLE_NAME_USER_ID, user.id);
+        variablesManager.register(variablesManager.VARIABLE_NAME_USER_CODE, user.code);
+        variablesManager.register(variablesManager.VARIABLE_NAME_USER_NAME, user.name);
+        // 显示当前用户
         this.view.showUser(user);
         // 加载用户相关
         logger.log(emMessageLevel.DEBUG, "center: initializing user [{0} - {1}]'s modules.", user.id, user.code);

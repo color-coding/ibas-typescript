@@ -50,6 +50,30 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements s
     fetchUserPrivileges(listener: sys.UserMethodsCaller<sys.IUserPrivilege>): void {
         throw new Error("unrealized method.");
     }
+
+    /**
+     * 查询用户查询
+     * @param caller 监听者
+     */
+    fetchUserQueries(caller: sys.UserQueriesCaller): void {
+        throw new Error("unrealized method.");
+    }
+
+	/**
+	 * 保存用户查询
+	 * @param caller 监听者
+	 */
+    saveUserQuery(caller: ibas.SaveCaller<sys.IUserQuery>): void {
+        throw new Error("unrealized method.");
+    }
+
+	/**
+	 * 业务对象信息查询
+	 * @param caller 监听者
+	 */
+    fetchBOInfos(caller: sys.BOInfoCaller): void {
+        throw new Error("unrealized method.");
+    }
 }
 
 /**
@@ -59,7 +83,7 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
 
     /** 获取离线配置 */
     private fetchSettings(caller: ibas.MethodCaller): void {
-        let index:number = document.location.href.toLowerCase().indexOf(".html");
+        let index: number = document.location.href.toLowerCase().indexOf(".html");
         if (index > 0) {
             this.address = ibas.url.normalize(document.location.href.substring(0, document.location.href.lastIndexOf("/")));
         } else {
@@ -168,5 +192,29 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
                 caller.onCompleted.call(ibas.object.isNull(caller.caller) ? caller : caller.caller, opRslt);
             }
         });
+    }
+    /**
+     * 查询用户查询
+     * @param caller 监听者
+     */
+    fetchUserQueries(caller: sys.UserQueriesCaller): void {
+        let opRslt = new ibas.OperationResult();
+        caller.onCompleted.call(ibas.object.isNull(caller.caller) ? caller : caller.caller, opRslt);
+    }
+	/**
+	 * 保存用户查询
+	 * @param caller 监听者
+	 */
+    saveUserQuery(caller: ibas.SaveCaller<sys.IUserQuery>): void {
+        let opRslt = new ibas.OperationResult();
+        caller.onCompleted.call(ibas.object.isNull(caller.caller) ? caller : caller.caller, opRslt);
+    }
+	/**
+	 * 业务对象信息查询
+	 * @param caller 监听者
+	 */
+    fetchBOInfos(caller: sys.BOInfoCaller): void {
+        let opRslt = new ibas.OperationResult();
+        caller.onCompleted.call(ibas.object.isNull(caller.caller) ? caller : caller.caller, opRslt);
     }
 }

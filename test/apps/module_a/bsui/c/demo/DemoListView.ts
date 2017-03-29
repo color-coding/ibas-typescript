@@ -95,6 +95,10 @@ export class DemoListView extends ibas.BOListView implements IDemoListView {
         this.page.addHeaderContent(view);
         this.page.setShowHeader(true);
     }
+    /** 返回查询的对象 */
+    get queryTarget(): any {
+        return bo.SalesOrder;
+    }
     private page: sap.m.Page;
     private form: sap.ui.layout.form.SimpleForm;
     private table: sap.ui.table.Table;

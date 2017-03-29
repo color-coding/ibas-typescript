@@ -39,12 +39,28 @@ export const consolesManager: ConsolesManager = new ConsolesManager();
 
 /** 变量管理员 */
 class VariablesManager {
+    VARIABLE_NAME_USER_ID: string = "sys_user_id";
+    VARIABLE_NAME_USER_CODE: string = "sys_user_code";
+    VARIABLE_NAME_USER_NAME: string = "sys_user_name";
     /** 运行中的变量 */
     private variables: Map<string, KeyValue>;
+
     /** 注册变量 */
-    register(variable: KeyValue): void {
+    register(variable: KeyValue): void;
+    /** 注册变量 */
+    register(key: string, value: any): void;
+    /** 注册变量 */
+    register(): void {
         if (object.isNull(this.variables)) {
             this.variables = new Map();
+        }
+        let variable: KeyValue;
+        if (arguments.length === 1) {
+            variable = arguments[0];
+        } else if (arguments.length === 2) {
+            variable = new KeyValue();
+            variable.key = arguments[0];
+            variable.value = arguments[1];
         }
         this.variables.set(variable.key, variable);
     }
@@ -57,6 +73,14 @@ class VariablesManager {
             return this.variables.get(key);
         }
         return null;
+    }
+    /** 获取变量 */
+    getValue(key: string): any {
+        let value = this.get(key);
+        if (object.isNull(value)) {
+            return null;
+        }
+        return value.value;
     }
 }
 /** 控制台管理员实例 */

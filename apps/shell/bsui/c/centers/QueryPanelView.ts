@@ -25,7 +25,7 @@ export class QueryPanelView extends ibas.BOPanelView implements sys.IQueryPanelV
             });
             this.baseOn = new sap.m.ComboBox("", {
                 placeholder: ibas.i18n.prop("sys_shell_ui_base_on_criteria"),
-                maxWidth: "30%"
+                maxWidth: "40%"
             });
             this.config = new sap.m.Button("", {
                 icon: "sap-icon://filter",
@@ -58,6 +58,13 @@ export class QueryPanelView extends ibas.BOPanelView implements sys.IQueryPanelV
     }
     set searchContent(value: string) {
         this.search.setValue(value);
+    }
+    /** 查询内容 */
+    get usingQueryId(): string {
+        return this.baseOn.getValue();
+    }
+    set usingQueryId(value: string) {
+        this.baseOn.setValue(value);
     }
     /** 绘制工具条 */
     darwBars(): any {

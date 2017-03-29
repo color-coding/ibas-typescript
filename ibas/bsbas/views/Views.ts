@@ -6,7 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { i18n, ICriteria } from "../../../ibas/bobas/index";
+import { ICriteria } from "../../../ibas/bobas/index";
 import { View, IUrlView, IBarView } from "../core/index";
 import {
     IBOView, IBOListView, IBOQueryView, IBOChooseView,
@@ -33,6 +33,10 @@ export abstract class BODialogView extends BOView {
 }
 /** 业务对象查询视图 */
 export abstract class BOQueryView extends BOView implements IBOQueryView {
+    /** 查询标识 */
+    get queryId(): string {
+        return this.application.id;
+    }
     /** 查询数据事件，参数：查询条件 ICriteria */
     fetchDataEvent: Function;
     /** 查询数据 */
@@ -42,6 +46,10 @@ export abstract class BOQueryView extends BOView implements IBOQueryView {
 }
 /** 业务对象查询对话视图 */
 export abstract class BOQueryDialogView extends BODialogView implements IBOQueryView {
+    /** 查询标识 */
+    get queryId(): string {
+        return this.application.id;
+    }
     /** 查询数据事件，参数：查询条件 ICriteria */
     fetchDataEvent: Function;
     /** 查询数据 */

@@ -586,7 +586,7 @@ class CriteriaConverter extends DataConverter {
             "BracketClose": 0,
             "BracketOpen": 0,
             "ComparedAlias": "",
-            "CondVal": "",
+            "Value": "",
             "Operation": "",
             "Relationship": "",
             "Remarks": ""
@@ -595,7 +595,7 @@ class CriteriaConverter extends DataConverter {
         newData.BracketClose = data.bracketClose;
         newData.BracketOpen = data.bracketOpen;
         newData.ComparedAlias = data.comparedAlias;
-        newData.CondVal = data.condVal;
+        newData.Value = data.value;
         newData.Operation = this.convertEnums(emConditionOperation, data.operation);
         newData.Relationship = this.convertEnums(emConditionRelationship, data.relationship);
         newData.Remarks = data.remarks;
@@ -648,7 +648,7 @@ class CriteriaConverter extends DataConverter {
         newData.bracketClose = data.BracketCloseNum;
         newData.bracketOpen = data.BracketOpenNum;
         newData.comparedAlias = data.ComparedAlias;
-        newData.condVal = data.CondVal;
+        newData.value = data.Value;
         newData.operation = this.parsingEnums(emConditionOperation, data.Operation);
         newData.relationship = this.parsingEnums(emConditionRelationship, data.Relationship);
         newData.remarks = data.Remarks;

@@ -39,7 +39,6 @@ export class LoginApp<T extends ILoginView> extends BOApplication<T> implements 
     private login(): void {
         this.busy(true, i18n.prop("msg_logging_system"));
         logger.log(emMessageLevel.INFO, "app: user [{0}] login system.", this.view.user);
-        let that: this = this;
         let boRepository: IBORepositorySystem = Factories.systemsFactory.createRepository();
         boRepository.connect({
             caller: this, // 设置调用者，则onCompleted修正this

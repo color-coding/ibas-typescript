@@ -231,14 +231,14 @@ export class Condition implements ICondition {
     /**
      * 比较的值
      */
-    private _condVal: string;
+    private _value: string;
 
-    get condVal(): string {
-        return this._condVal;
+    get value(): string {
+        return this._value;
     }
 
-    set condVal(value: string) {
-        this._condVal = value;
+    set value(value: string) {
+        this._value = value;
     }
     /**
      * 比较方法
