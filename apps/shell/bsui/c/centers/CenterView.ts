@@ -315,6 +315,8 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         let bar: any = view.darwBar();
         if (!ibas.object.isNull(bar)) {
             this.header.insertContent(bar, this.header.getContent().length - 1);
+            // 触发工具条显示完成事件
+            view.barShowedEvent.apply(view.application);
         }
     }
     private queryPanels = new Map<string, any>();
@@ -356,6 +358,8 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                     strip.destroy(true);
                     let viewContent: any = queryPanel.view.darwBar();
                     embeddedView.embedded(viewContent);
+                    // 触发工具条显示完成事件
+                    queryPanel.view.barShowedEvent.apply(queryPanel);
                     // 记录面板，下次使用
                     that.queryPanels.set(view.id, viewContent);
                 });

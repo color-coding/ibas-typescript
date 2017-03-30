@@ -7,7 +7,8 @@
  */
 
 import {
-    object, ICriteria, Criteria, ICondition, i18n, IOperationResult, config, ISort, emSortType, emConditionOperation
+    object, ICriteria, Criteria, ICondition, i18n, IOperationResult,
+    config, ISort, emSortType, emConditionOperation, ArrayList
 } from "../../../ibas/bobas/index";
 import { BOBarApplication } from "../applications/index";
 import { emMessageType } from "../data/index";
@@ -56,7 +57,10 @@ export abstract class QueryPanel<T extends IQueryPanelView> extends BOBarApplica
                     if (opRslt.resultCode !== 0) {
                         throw new Error(opRslt.message);
                     }
-                    that.queries = opRslt.resultObjects;
+                    that.queries = new ArrayList<IUserQuery>();
+                    for (let item of opRslt.resultObjects){ 
+                        that.queries.add(item);
+                    }
                     that.init(callBack);
                 } catch (error) {
                     that.messages(error);
@@ -72,16 +76,33 @@ export abstract class QueryPanel<T extends IQueryPanelView> extends BOBarApplica
     register(listener: IUseQueryPanel): void {
         this.listener = listener;
     }
-    private queries: Array<IUserQuery>;
-    private currentCriteria(): ICriteria {
-        let criteria: ICriteria;
+    protected get targetName(): string {
+        let boName: any = null;
+        if (!object.isNull(this.listener.queryTarget)) {
+            boName = this.listener.queryTarget;
+            if (!object.isNull(boName) && typeof boName !== "string" && !object.isNull(boName.name)) {
+                // 如果目标是对象，则使用其名称
+                boName = boName.name;
+            }
+        }
+        return boName;
+    }
+    protected queries: ArrayList<IUserQuery>;
+    protected currentQuery(): IUserQuery {
         if (!object.isNull(this.queries)) {
-            for (let item of this.queries) {
-                if (item.id === this.view.usingQueryId) {
-                    criteria = item.criteria;
-                    break;
+            for (let index: number = 0; index < this.queries.length; index++) {
+                if (index.toString() === this.view.usingQuery) {
+                    return this.queries[index];
                 }
             }
+        }
+        return null;
+    }
+    protected currentCriteria(): ICriteria {
+        let query: IUserQuery = this.currentQuery();
+        let criteria: ICriteria;
+        if (!object.isNull(query)) {
+            criteria = query.criteria;
         }
         if (object.isNull(criteria)) {
             criteria = new Criteria();
@@ -119,34 +140,32 @@ export abstract class QueryPanel<T extends IQueryPanelView> extends BOBarApplica
         // 没有查询条件，尝试从注册信息添加
         let that = this;
         if (criteria.conditions.length === 0 && !object.isNull(this.listener.queryTarget)) {
-            let boName: any = this.listener.queryTarget;
-            if (!object.isNull(boName) && typeof boName !== "string" && !object.isNull(boName.name)) {
-                // 如果目标是对象，则使用其名称
-                boName = boName.name;
-            }
-            let boRepository = Factories.systemsFactory.createRepository();
-            boRepository.fetchBOInfos({
-                boCode: null,
-                boName: boName,
-                onCompleted(opRslt: IOperationResult<IBOInfo>): void {
-                    if (opRslt.resultCode === 0) {
-                        for (let boItem of opRslt.resultObjects) {
-                            for (let boProperty of boItem.properties) {
-                                if (!boProperty.searched) {
-                                    continue;
+            let boName: string = this.targetName;
+            if (!object.isNull(boName)) {
+                let boRepository = Factories.systemsFactory.createRepository();
+                boRepository.fetchBOInfos({
+                    boCode: null,
+                    boName: boName,
+                    onCompleted(opRslt: IOperationResult<IBOInfo>): void {
+                        if (opRslt.resultCode === 0) {
+                            for (let boItem of opRslt.resultObjects) {
+                                for (let boProperty of boItem.properties) {
+                                    if (!boProperty.searched) {
+                                        continue;
+                                    }
+                                    let condition: ICondition = criteria.conditions.create();
+                                    condition.alias = boProperty.property;
+                                    condition.value = that.view.searchContent;
+                                    condition.operation = emConditionOperation.CONTAIN;
                                 }
-                                let condition: ICondition = criteria.conditions.create();
-                                condition.alias = boProperty.property;
-                                condition.value = that.view.searchContent;
-                                condition.operation = emConditionOperation.CONTAIN;
                             }
+                        } else {
+                            that.messages(emMessageType.WARNING, opRslt.message);
                         }
-                    } else {
-                        that.messages(emMessageType.WARNING, opRslt.message);
+                        that.fireQuery(criteria);
                     }
-                    that.fireQuery(criteria);
-                }
-            });
+                });
+            }
         } else {
             this.fireQuery(criteria);
         }

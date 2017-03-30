@@ -8,6 +8,8 @@
 
 import * as ibas from "../../../../ibas/index";
 import * as sys from "../../../../ibas/bsbas/systems/index";
+import { BORepositoryShell } from "../../borep/BORepositories";
+import { UserQuery } from "../../borep/bo/Systems";
 
 /**
  * 查询面板
@@ -16,11 +18,104 @@ export class QueryPanel extends sys.QueryPanel<IQueryPanelView>  {
     /** 初始化 */
     protected init(callBack: Function): void {
         if (callBack instanceof Function) {
-            setTimeout(callBack, 1000);
+            setTimeout(callBack, 5);
         }
+    }
+    /** 注册视图 */
+    protected registerView(): void {
+        super.registerView();
+        // 注册视图事件
+        this.view.deleteQueryEvent = this.deleteQuery;
+        this.view.saveQueryEvent = this.saveQuery;
+        this.view.addQueryConditionEvent = this.addQueryCondition;
+        this.view.removeQueryConditionEvent = this.removeQueryCondition;
+    }
+    /** 视图显示后 */
+    protected viewShowed(): void {
+        this.editQuery = <UserQuery>this.currentQuery();
+        if (ibas.object.isNull(this.editQuery)) {
+            this.editQuery = new UserQuery();
+            this.editQuery.id = this.id;
+            this.editQuery.name = ibas.i18n.prop("sys_shell_ui_data_new") + ibas.i18n.prop("sys_query_panel");
+            this.editQuery.order = 1;
+            this.queries.add(this.editQuery);
+            this.view.usingQuery = this.editQuery.name;
+        }
+        if (ibas.object.isNull(this.editQuery.criteria)) {
+            this.editQuery.criteria = new ibas.Criteria();
+        }
+        this.view.showQuery(this.editQuery);
+        this.view.showQueryConditions(this.editQuery.criteria.conditions);
+    }
+    /** 工具条显示完成 */
+    protected barShowed(): void {
+        this.showQueries();
+    }
+
+    private showQueries(): void {
+        if (ibas.object.isNull(this.queries)) {
+            return;
+        }
+        let keyValues: Array<ibas.KeyValue> = new Array<ibas.KeyValue>();
+        for (let index: number = 0; index < this.queries.length; index++) {
+            keyValues.push(new ibas.KeyValue(index.toString(), this.queries[index].name));
+        }
+        this.view.showQueries(keyValues);
+    }
+    private editQuery: UserQuery;
+
+    private deleteQuery(): void {
+        // 去除查询后保存，表示删除
+        this.editQuery.criteria = null;
+        this.saveQuery();
+    }
+    private saveQuery(): void {
+        let that = this;
+        let boRepository: BORepositoryShell = new BORepositoryShell();
+        boRepository.saveUserQuery({
+            beSaved: this.editQuery,
+            onCompleted(opRslt: ibas.IOperationResult<sys.IUserQuery>): void {
+                try {
+                    if (opRslt.resultCode !== 0) {
+                        throw new Error(opRslt.message);
+                    }
+                    that.messages(ibas.emMessageType.SUCCESS, ibas.i18n.prop("sys_shell_ui_sucessful"));
+                    // 操作成功，刷新数据，关闭界面
+                    if (ibas.object.isNull(that.editQuery.criteria)) {
+                        // 没查询，表示删除
+                        that.queries.remove(that.editQuery);
+                        that.barShowed();
+                    }
+                    that.close();
+                } catch (error) {
+                    that.messages(error);
+                }
+            }
+        });
+    }
+    private addQueryCondition(): void {
+        this.editQuery.criteria.conditions.create();
+        this.view.showQueryConditions(this.editQuery.criteria.conditions);
+    }
+    private removeQueryCondition(condition: ibas.ICondition): void {
+        this.editQuery.criteria.conditions.remove(condition);
+        this.view.showQueryConditions(this.editQuery.criteria.conditions);
     }
 }
 /** 视图-查询面板 */
 export interface IQueryPanelView extends sys.IQueryPanelView {
-
+    /** 显示可用查询 */
+    showQueries(datas: ibas.KeyValue[]): void;
+    /** 删除查询 */
+    deleteQueryEvent: Function;
+    /** 保存查询 */
+    saveQueryEvent: Function;
+    /** 显示查询内容 */
+    showQuery(data: UserQuery): void;
+    /** 显示查询条件 */
+    showQueryConditions(datas: ibas.ICondition[]): void;
+    /** 添加查询条件 */
+    addQueryConditionEvent: Function;
+    /** 移出查询 */
+    removeQueryConditionEvent: Function;
 }

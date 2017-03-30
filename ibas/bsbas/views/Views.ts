@@ -94,6 +94,8 @@ export abstract class BOBarView extends BOView implements IBarView {
     abstract darwBar(): any;
     /** 激活完整视图事件 */
     showFullViewEvent: Function;
+    /** 工具条视图显示完成事件 */
+    barShowedEvent: Function;
 }
 /** 业务对象面板视图 */
 export abstract class BOPanelView extends BODialogView implements IBarView {
@@ -101,6 +103,8 @@ export abstract class BOPanelView extends BODialogView implements IBarView {
     abstract darwBar(): any;
     /** 激活完整视图事件 */
     showFullViewEvent: Function;
+    /** 工具条视图显示完成事件 */
+    barShowedEvent: Function;
 }
 /** 业务对象常驻应用视图 */
 export abstract class BOResidentView extends BOBarView implements IBOResidentView {

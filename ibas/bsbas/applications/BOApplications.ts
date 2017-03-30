@@ -166,6 +166,11 @@ export abstract class BOBarApplication<T extends IBarView> extends BOApplication
     protected registerView(): void {
         this.view.closeEvent = this.close;
         this.view.showFullViewEvent = this.showFullView;
+        this.view.barShowedEvent = this.barShowed;
+    }
+    /** 工具条显示完成，可重载 */
+    protected barShowed(): void {
+        // 工具条显示完成
     }
     /** 激活完整视图 */
     protected showFullView(): void {

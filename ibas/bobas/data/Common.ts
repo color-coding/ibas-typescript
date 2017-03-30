@@ -15,7 +15,7 @@ import { string } from "./index";
 export class ArrayList<T> extends Array<T> implements List<T> {
     /** 创建集合，仅值 */
     static create<P>(map: Map<any, P>): ArrayList<P> {
-        let list = new ArrayList<P>();
+        let list: ArrayList<P> = new ArrayList<P>();
         for (let item of map.values()) {
             list.add(item);
         }
@@ -26,7 +26,7 @@ export class ArrayList<T> extends Array<T> implements List<T> {
      * 添加项目
      * @param item 项目
      */
-    add(item: T) {
+    add(item: T): void {
         // 无效值不做处理
         if (item === null || item === undefined) {
             return;
@@ -38,18 +38,22 @@ export class ArrayList<T> extends Array<T> implements List<T> {
      * 移出项目
      * @param item 项目
      */
-    remove(item: T) {
+    remove(item: T): void {
         // 无效值不做处理
         if (item === null || item === undefined) {
             return;
         }
-        let keeps = new Array();// 临时数组
+        let keeps: Array<T> = new Array();// 临时数组
         for (let tmp of this) {
             if (item === tmp) {
                 // 被移出的数组，不保留
-                break;
+                continue;
             }
-            keeps.push(item);
+            keeps.push(tmp);
+        }
+        // 清除数组
+        while (this.length > 0) {
+            this.pop();
         }
         // 重新插入被保存的
         for (let tmp of keeps) {
@@ -61,7 +65,7 @@ export class ArrayList<T> extends Array<T> implements List<T> {
      * 移出项目
      * @param index 项目索引
      */
-    removeAt(index: number) {
+    removeAt(index: number): void {
         if (index >= 0 && index < super.length) {
             this.remove(this[index]);
         }
@@ -143,6 +147,18 @@ export class StringBuilder {
  * 键值
  */
 export class KeyValue {
+    constructor();
+    constructor(value: string);
+    constructor(key: string, value: any);
+    constructor() {
+        if (arguments[0] !== undefined) {
+            this.key = arguments[0];
+            this.value = arguments[0];
+        }
+        if (arguments[1] !== undefined) {
+            this.value = arguments[1];
+        }
+    }
     /** 键 */
     key: string;
     /** 值 */

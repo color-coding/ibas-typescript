@@ -29,5 +29,13 @@
     "sys_shell_ui_exit": "退出",
     "sys_shell_ui_base_on_criteria": "请选择基于的查询",
     "sys_shell_ui_submit_suggestion": "提交意见（系统会自动截屏）",
-    "sys_shell_ui_chooose_language": "请选择语言"
+    "sys_shell_ui_chooose_language": "请选择语言",
+    "sys_shell_ui_query_name": "名称",
+    "sys_shell_ui_query_order": "使用频率",
+    "sys_shell_ui_query_condition_relationship": "关系",
+    "sys_shell_ui_query_condition_bracketopen": "开括号",
+    "sys_shell_ui_query_condition_alias": "字段",
+    "sys_shell_ui_query_condition_operation": "比较方式",
+    "sys_shell_ui_query_condition_value": "值",
+    "sys_shell_ui_query_condition_bracketclose": "闭括号"
 }

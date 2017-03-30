@@ -44,12 +44,11 @@ export class DemoChooseView extends ibas.BOChooseView implements IDemoChooseView
                     that.fireViewEvents(that.closeEvent);
                 }
             }),
-        ]
+        ];
     }
     /** 绘制视图 */
     darw(): any {
         let that = this;
-        this.form = new sap.ui.layout.form.SimpleForm("");
         this.table = new sap.ui.table.Table("", {
             visibleRowCount: 15,
             rows: "{/}",
@@ -80,11 +79,9 @@ export class DemoChooseView extends ibas.BOChooseView implements IDemoChooseView
                 })
             ]
         });
-        this.form.addContent(this.table);
-        this.id = this.form.getId();
-        return this.form;
+        this.id = this.table.getId();
+        return this.table;
     }
-    private form: sap.ui.layout.form.SimpleForm;
     private table: sap.ui.table.Table;
     /** 显示数据 */
     showData(datas: any): void {

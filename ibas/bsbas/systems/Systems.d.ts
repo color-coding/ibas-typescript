@@ -128,8 +128,8 @@ export interface IQueryPanelView extends IBarView {
 	searchEvent: Function;
 	/** 查询内容 */
 	searchContent: string;
-	/** 使用的查询标识 */
-	usingQueryId: string;
+    /** 使用的查询 */
+    usingQuery: string;
 }
 /** 使用查询面板 */
 export interface IUseQueryPanel {
@@ -204,6 +204,8 @@ export interface IBOInfo {
 export interface IBOPropertyInfo {
 	/** 属性 */
 	property: string;
+	/** 描述 */
+	description: string;
 	/** 查询 */
 	searched: boolean;
 }
@@ -282,6 +284,7 @@ export interface IBORepositorySystem {
 
 	/**
 	 * 保存用户查询
+	 * 当被保存的查询没有条件时则认为是删除
 	 * @param caller 监听者
 	 */
 	saveUserQuery(caller: SaveCaller<IUserQuery>): void;

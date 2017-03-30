@@ -90,6 +90,8 @@ export interface IBarView extends IView {
     darwBar(): any;
     /** 激活完整视图事件 */
     showFullViewEvent: Function;
+    /** 工具条视图显示完成事件 */
+    barShowedEvent: Function;
 }
 /**
  * 视图-显示者

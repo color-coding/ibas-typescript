@@ -6,7 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { emPrivilegeSource, emAuthoriseType } from "../../../../ibas/bsbas/data/index";
+import { emPrivilegeSource, emAuthoriseType, ICriteria } from "../../../../ibas/index";
 import * as sys from "../../../../ibas/bsbas/systems/index";
 
 /**
@@ -48,6 +48,21 @@ export class UserPrivilege implements sys.IUserPrivilege {
 	/** 权限值 */
 	value: emAuthoriseType;
 }
+/**
+ * 用户查询
+ */
+export class UserQuery implements sys.IUserQuery {
+	/** 标记 */
+	id: string;
+	/** 名称 */
+	name: string;
+	/** 查询 */
+	criteria: ICriteria;
+	/** 顺序 */
+	order: number;
+	/** 查询目标 */
+	target: string;
+}
 /** 业务对象信息 */
 export class BOInfo implements sys.IBOInfo {
 	/** 名称 */
@@ -63,6 +78,8 @@ export class BOInfo implements sys.IBOInfo {
 export class BOPropertyInfo implements sys.IBOPropertyInfo {
 	/** 属性 */
 	property: string;
+	/** 描述 */
+	description: string;
 	/** 查询 */
 	searched: boolean;
 }
