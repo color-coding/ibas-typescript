@@ -72,10 +72,10 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
     }
     /** 查询内容 */
     get usingQuery(): string {
-        return this.baseOn.getValue();
+        return this.baseOn.getSelectedKey();
     }
     set usingQuery(value: string) {
-        this.baseOn.setValue(value);
+        this.baseOn.setSelectedKey(value);
     }
     /** 显示可用查询 */
     showQueries(datas: ibas.KeyValue[]): void {
@@ -98,22 +98,28 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
     private boName: string;
     /** 显示查询条件 */
     showQueryConditions(datas: ibas.ICondition[]): void {
-        if (ibas.object.isNull(this.table) && !ibas.object.isNull(this.boName)) {
+        if (ibas.object.isNull(this.table)) {
             // 尚未初始化表格
-            let that = this;
-            let boRepository: sys.IBORepositorySystem = sys.Factories.systemsFactory.createRepository();
-            boRepository.fetchBOInfos({
-                boName: this.boName,
-                boCode: null,
-                onCompleted(opRslt: ibas.IOperationResult<sys.IBOInfo>): void {
-                    let boInfo: sys.IBOInfo = opRslt.resultObjects.firstOrDefault();
-                    if (ibas.object.isNull(boInfo)) {
-                        that.createTable([]);
-                    } else {
-                        that.createTable(boInfo.properties);
+            if (!ibas.object.isNull(this.boName)) {
+                let that = this;
+                let boRepository: sys.IBORepositorySystem = sys.Factories.systemsFactory.createRepository();
+                boRepository.fetchBOInfos({
+                    boName: this.boName,
+                    boCode: null,
+                    onCompleted(opRslt: ibas.IOperationResult<sys.IBOInfo>): void {
+                        let boInfo: sys.IBOInfo = opRslt.resultObjects.firstOrDefault();
+                        if (ibas.object.isNull(boInfo)) {
+                            that.createTable([]);
+                        } else {
+                            that.createTable(boInfo.properties);
+                        }
+                        this.table.setModel(new sap.ui.model.json.JSONModel(datas));
                     }
-                }
-            });
+                });
+            } else {
+                this.createTable([]);
+                this.table.setModel(new sap.ui.model.json.JSONModel(datas));
+            }
         } else {
             this.table.setModel(new sap.ui.model.json.JSONModel(datas));
         }
