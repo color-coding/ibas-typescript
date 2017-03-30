@@ -14,6 +14,11 @@ echo '**************************************************************************
 STARTUP_FOLDER=`pwd`
 # 工作目录默认第一个参数
 WORK_FOLDER=$1
+# 修正相对目录为启动目录
+if [ "${WORK_FOLDER}" == "./" ]
+then
+  WORK_FOLDER=${STARTUP_FOLDER}
+fi
 # 未提供工作目录，则取启动目录
 if [ "${WORK_FOLDER}" == "" ]
 then
@@ -24,7 +29,7 @@ OPTIONS=$2
 COMMOND=tsc
 
 # 遍历当前目录存在tsconfig.json则执行tsc
-for folder in `find ${WORK_FOLDER} -type f -name "*tsconfig.json*"`
+for folder in `find ${WORK_FOLDER} -type f -name tsconfig.json`
 do
   folder=${folder%\/*}
   echo --开始编译：${folder}
