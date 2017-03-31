@@ -7,7 +7,7 @@
  */
 
 import {
-    i18n,
+    i18n, debug, config
 } from "../../../ibas/bobas/index";
 import { BOApplication } from "../applications/index";
 import { IAboutView, IAboutApp } from "./Systems.d";
@@ -33,5 +33,8 @@ export class AboutApp<T extends IAboutView> extends BOApplication<T> implements 
     /** 视图显示后 */
     protected viewShowed(): void {
         //
+        if (config.get(config.CONFIG_ITEM_DEBUG_MODE) == true) {
+            debug.printScripts();
+        }
     }
 }

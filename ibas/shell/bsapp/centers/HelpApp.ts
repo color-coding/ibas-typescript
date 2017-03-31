@@ -7,12 +7,11 @@
  */
 
 import * as ibas from "../../../../ibas/index";
-import * as sys from "../../../../ibas/bsbas/systems/index";
 
 /**
  * 应用-帮助
  */
-export class HelpApp extends sys.HelpApp<IHelpView> {
+export class HelpApp extends ibas.HelpApp<IHelpView> {
     /** 注册视图 */
     protected registerView(): void {
         super.registerView();
@@ -24,13 +23,13 @@ export class HelpApp extends sys.HelpApp<IHelpView> {
     }
     /** 运行 */
     run(): void {
-        this.view.url = ibas.config.get(sys.HelpApp.CONFIG_ITEM_HELP_URL);
-        this.view.isInside = ibas.config.get(sys.HelpApp.CONFIG_ITEM_HELP_INSIDE, false);
+        this.view.url = ibas.config.get(ibas.HelpApp.CONFIG_ITEM_HELP_URL);
+        this.view.isInside = ibas.config.get(ibas.HelpApp.CONFIG_ITEM_HELP_INSIDE, false);
         super.run();
     }
 
 }
 /** 视图-帮助 */
-export interface IHelpView extends sys.IHelpView {
+export interface IHelpView extends ibas.IHelpView {
 
 }

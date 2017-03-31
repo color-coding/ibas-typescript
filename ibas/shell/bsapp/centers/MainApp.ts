@@ -7,12 +7,11 @@
  */
 
 import * as ibas from "../../../../ibas/index";
-import * as sys from "../../../../ibas/bsbas/systems/index";
 
 /**
  * 应用-系统入口
  */
-export class MainApp extends sys.MainApp<IMainView> {
+export class MainApp extends ibas.MainApp<IMainView> {
     /** 注册视图 */
     protected registerView(): void {
         super.registerView();
@@ -25,6 +24,6 @@ export class MainApp extends sys.MainApp<IMainView> {
 
 }
 /** 视图-系统入口 */
-export interface IMainView extends sys.IMainView {
+export interface IMainView extends ibas.IMainView {
 
 }

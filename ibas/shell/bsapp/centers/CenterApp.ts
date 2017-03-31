@@ -7,10 +7,9 @@
  */
 
 import * as ibas from "../../../../ibas/index";
-import * as sys from "../../../../ibas/bsbas/systems/index";
 
 /** 应用-中心 */
-export class CenterApp extends sys.CenterApp<ICenterView> {
+export class CenterApp extends ibas.CenterApp<ICenterView> {
 
     /** 注册视图 */
     protected registerView(): void {
@@ -24,6 +23,6 @@ export class CenterApp extends sys.CenterApp<ICenterView> {
 
 }
 /** 视图-中心 */
-export interface ICenterView extends sys.ICenterView {
+export interface ICenterView extends ibas.ICenterView {
 
 }

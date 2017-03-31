@@ -7,12 +7,11 @@
  */
 
 import * as ibas from "../../../../ibas/index";
-import * as sys from "../../../../ibas/bsbas/systems/index";
 
 /**
  * 应用-建议
  */
-export class SuggestionApp extends sys.SuggestionApp<ISuggestionView> {
+export class SuggestionApp extends ibas.SuggestionApp<ISuggestionView> {
     /** 注册视图 */
     protected registerView(): void {
         super.registerView();
@@ -29,6 +28,6 @@ export class SuggestionApp extends sys.SuggestionApp<ISuggestionView> {
 
 }
 /** 视图-建议 */
-export interface ISuggestionView extends sys.ISuggestionView {
+export interface ISuggestionView extends ibas.ISuggestionView {
 
 }

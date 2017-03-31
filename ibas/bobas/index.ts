@@ -40,3 +40,4 @@ export * from "./bo/index";
 export * from "./repository/index";
 // 导出的测试相关类型
 export * from "./assert/index";
+export * from "./debug/index";

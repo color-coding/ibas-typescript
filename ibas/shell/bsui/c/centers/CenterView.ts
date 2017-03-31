@@ -8,13 +8,12 @@
 
 /// <reference path="../../../../../openui5/typings/index.d.ts" />
 import * as ibas from "../../../../../ibas/index";
-import * as sys from "../../../../../ibas/bsbas/systems/index";
 import { utils } from "../../../../../openui5/typings/ibas.utils";
 
 /**
  * 视图-中心
  */
-export class CenterView extends ibas.BOView implements sys.ICenterView {
+export class CenterView extends ibas.BOView implements ibas.ICenterView {
     /** 主页面 */
     private page: sap.tnt.ToolPage;
     /** 页面头部 */
@@ -22,7 +21,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
     /** 页面功能导航，左 */
     private navigation: sap.tnt.SideNavigation;
     /** 状态消息条 */
-    private statusBar: sap.m.Toolbar;
+    private statusBar: sap.m.OverflowToolbar;
     /** 窗体显示 */
     private form: sap.m.Page;
     /** 用户信息条 */
@@ -67,7 +66,10 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         // 清理已有的
         this.statusBar.destroyContent();
         // 添加新的
-        this.statusBar.addContent(messageStrip);
+        this.statusBar.addContent(new sap.ui.layout.VerticalLayout("", {
+            width: "100%",
+            content: [messageStrip]
+        }));
         // 延迟清除消息
         if (ibas.object.isNull(this.statusDelay)) {
             this.statusDelay = ibas.config.get(CenterView.CONFIG_ITEM_STATUS_MESSAGES_DELAY, 0) * 1000;
@@ -77,6 +79,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             setTimeout(function (): void {
                 if (messageStrip) {
                     messageStrip.destroy(true);
+                    that.statusBar.destroyContent();
                     that.form.setFooter(null);
                 }
             }, this.statusDelay);
@@ -176,7 +179,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             this.viewQueue.set(view, viewContent);
             // 添加查询面板
             if (view instanceof ibas.BOQueryView) {
-                let queryView: sys.IEmbeddedQueryPanel = {
+                let queryView: ibas.IEmbeddedQueryPanel = {
                     /** 嵌入查询面板 */
                     embedded(view: any): void {
                         that.form.setSubHeader(null);
@@ -247,7 +250,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         // 添加查询面板
         if (view instanceof ibas.BOQueryView
             || view instanceof ibas.BOQueryDialogView) {
-            let queryView: sys.IEmbeddedQueryPanel = {
+            let queryView: ibas.IEmbeddedQueryPanel = {
                 /** 嵌入查询面板 */
                 embedded(view: any): void {
                     dialog.setSubHeader(null);
@@ -279,8 +282,8 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         }
     }
     private queryPanels = new Map<string, any>();
-    showQueryPanel(view: ibas.BOQueryView, embeddedView: sys.IEmbeddedQueryPanel): void {
-        let queryPanel: sys.IQueryPanel<sys.IQueryPanelView> = sys.Factories.systemsFactory.createQueryPanel();
+    showQueryPanel(view: ibas.BOQueryView, embeddedView: ibas.IEmbeddedQueryPanel): void {
+        let queryPanel: ibas.IQueryPanel<ibas.IQueryPanelView> = ibas.Factories.systemsFactory.createQueryPanel();
         if (ibas.object.isNull(queryPanel)) {
             // 查询面板无效，不添加
             this.showStatusMessage(ibas.emMessageType.ERROR, ibas.i18n.prop("sys_shell_invalid_query_panel"));
@@ -422,7 +425,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         }
     }
     /** 显示用户信息 */
-    showUser(user: sys.IUser): void {
+    showUser(user: ibas.IUser): void {
         if (!ibas.object.isNull(user.name)) {
             this.userBar.setText(user.name);
         } else if (!ibas.object.isNull(user.code)) {
@@ -548,9 +551,10 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             }
         }));
         // this.form.setFloatingFooter(true); // 浮起状态条
-        this.statusBar = new sap.m.Toolbar("", {
+        this.statusBar = new sap.m.OverflowToolbar("", {
             design: sap.m.ToolbarDesign.Transparent,
-            height: "3rem"
+            height: "auto",
+            width: "auto"
         });
         this.form.setFooter(this.statusBar);
         this.page.addMainContent(this.form);

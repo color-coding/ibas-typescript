@@ -7,14 +7,13 @@
  */
 
 /// <reference path="../../../../../openui5/typings/index.d.ts" />
-import * as sys from "../../../../../ibas/bsbas/systems/index";
 import * as ibas from "../../../../../ibas/index";
 import { utils } from "../../../../../openui5/typings/ibas.utils";
 
 /**
  * 视图-登陆
  */
-export class LoginView extends ibas.BOView implements sys.ILoginView {
+export class LoginView extends ibas.BOView implements ibas.ILoginView {
     /** 配置项目-默认用户 */
     static CONFIG_ITEM_DEFAULT_USER = "defaultUser";
     /** 配置项目-默认用户密码 */

@@ -7,12 +7,11 @@
  */
 
 import * as ibas from "../../../../ibas/index";
-import * as sys from "../../../../ibas/bsbas/systems/index";
 
 /**
  * 关于应用
  */
-export class AboutApp extends sys.AboutApp<IAboutView> {
+export class AboutApp extends ibas.AboutApp<IAboutView> {
 
     /** 注册视图 */
     protected registerView(): void {
@@ -22,7 +21,7 @@ export class AboutApp extends sys.AboutApp<IAboutView> {
     /** 视图显示后 */
     protected viewShowed(): void {
         super.viewShowed();
-        let address: string = ibas.url.normalize(".../shell/version.json");
+        let address: string = ibas.url.normalize(".../version.json");
         let that:this = this;
         var JQryAjxSetting: JQueryAjaxSettings = {
             url: address,
@@ -45,6 +44,6 @@ export class AboutApp extends sys.AboutApp<IAboutView> {
     }
 }
 /** 视图-关于 */
-export interface IAboutView extends sys.IAboutView {
+export interface IAboutView extends ibas.IAboutView {
 
 }

@@ -7,10 +7,9 @@
  */
 
 import * as ibas from "../../../../ibas/index";
-import * as sys from "../../../../ibas/bsbas/systems/index";
 
 /** 应用-登陆 */
-export class LoginApp extends sys.LoginApp<ILoginView> {
+export class LoginApp extends ibas.LoginApp<ILoginView> {
 
     /** 注册视图 */
     protected registerView(): void {
@@ -51,7 +50,7 @@ export class LoginApp extends sys.LoginApp<ILoginView> {
     }
 }
 /** 视图-登陆 */
-export interface ILoginView extends sys.ILoginView {
+export interface ILoginView extends ibas.ILoginView {
     /** 显示语言列表 */
     displayLanguages(list: string[]): void;
     /** 改变语言 */
