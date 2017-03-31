@@ -15,5 +15,13 @@ export * from "./Message";
 export * from "./Logger.d";
 export * from "./Logger";
 
-import {Logger} from "./Logger";
-export const logger: Logger = new Logger();
+import { Logger } from "./Logger";
+export const logger: Logger = function () {
+    if ((<any>window).ibas === undefined) {
+        (<any>window).ibas = {};
+    }
+    if ((<any>window).ibas.logger === undefined) {
+        (<any>window).ibas.logger = new Logger();
+    }
+    return (<any>window).ibas.logger;
+}();

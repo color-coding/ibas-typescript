@@ -13,7 +13,7 @@ import { KeyValue, object } from "../../../ibas/bobas/index";
 import { IModuleConsole } from "../core/index";
 
 /** 模块控制台管理员 */
-class ConsolesManager {
+export class ConsolesManager {
     /** 运行中的模块控制台 */
     private consoles: Map<string, IModuleConsole>;
     /** 注册模块控制台 */
@@ -34,11 +34,9 @@ class ConsolesManager {
         return null;
     }
 }
-/** 控制台管理员实例 */
-export const consolesManager: ConsolesManager = new ConsolesManager();
 
 /** 变量管理员 */
-class VariablesManager {
+export class VariablesManager {
     VARIABLE_NAME_USER_ID: string = "sys_user_id";
     VARIABLE_NAME_USER_CODE: string = "sys_user_code";
     VARIABLE_NAME_USER_NAME: string = "sys_user_name";
@@ -83,5 +81,3 @@ class VariablesManager {
         return value.value;
     }
 }
-/** 控制台管理员实例 */
-export const variablesManager: VariablesManager = new VariablesManager();

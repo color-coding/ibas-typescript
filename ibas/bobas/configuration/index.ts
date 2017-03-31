@@ -14,5 +14,13 @@ export * from "./Configuration";
  * 发布的配置实例
  */
 import { Configuration } from "./Configuration";
-export const config: Configuration = new Configuration();
+export const config: Configuration = function () {
+    if ((<any>window).ibas === undefined) {
+        (<any>window).ibas = {};
+    }
+    if ((<any>window).ibas.config === undefined) {
+        (<any>window).ibas.config = new Configuration();
+    }
+    return (<any>window).ibas.config;
+}();
 
