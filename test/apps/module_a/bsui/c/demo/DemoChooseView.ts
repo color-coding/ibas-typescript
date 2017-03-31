@@ -63,8 +63,12 @@ export class DemoChooseView extends ibas.BOChooseView implements IDemoChooseView
                 }),
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_salesorder_customer"),
-                    template: new sap.m.Text("", {
-                        wrapping: false
+                    template: new sap.m.Link("", {
+                        wrapping: false,
+                        press(evt: any): void {
+                            let value = evt.getSource().getText();
+
+                        }
                     }).bindProperty("text", {
                         path: "customer"
                     })

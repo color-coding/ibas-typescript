@@ -87,6 +87,7 @@ export class DemoEditView extends ibas.BOEditView implements IDemoEditView {
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_salesorderitem_lineid"),
                     template: new sap.m.Text("", {
+                        width: "100%",
                     }).bindProperty("text", {
                         path: "lineId"
                     })
@@ -94,6 +95,7 @@ export class DemoEditView extends ibas.BOEditView implements IDemoEditView {
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_salesorderitem_linestatus"),
                     template: new sap.m.Select("", {
+                        width: "100%",
                         items: utils.createComboBoxItems(ibas.emDocumentStatus)
                     }).bindProperty("selectedKey", {
                         path: "lineStatus"
@@ -102,6 +104,7 @@ export class DemoEditView extends ibas.BOEditView implements IDemoEditView {
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_salesorderitem_itemcode"),
                     template: new sap.m.Input("", {
+                        width: "100%",
                         showValueHelp: true
                     }).bindProperty("value", {
                         path: "itemCode"
@@ -110,6 +113,7 @@ export class DemoEditView extends ibas.BOEditView implements IDemoEditView {
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_salesorderitem_price"),
                     template: new sap.m.Input("", {
+                        width: "100%",
                     }).bindProperty("value", {
                         path: "price"
                     })
@@ -117,6 +121,7 @@ export class DemoEditView extends ibas.BOEditView implements IDemoEditView {
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_salesorderitem_quantity"),
                     template: new sap.m.Input("", {
+                        width: "100%",
                     }).bindProperty("value", {
                         path: "quantity"
                     })
@@ -125,6 +130,7 @@ export class DemoEditView extends ibas.BOEditView implements IDemoEditView {
                     label: ibas.i18n.prop("bo_salesorderitem_linetotal"),
                     template: new sap.m.Input("", {
                     }).bindProperty("value", {
+                        width: "100%",
                         path: "lineTotal"
                     })
                 })

@@ -226,8 +226,8 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             // resizable: true,
             // draggable: true,
             stretchOnPhone: true,
-            horizontalScrolling: false,
-            verticalScrolling: false,
+            horizontalScrolling: true,
+            verticalScrolling: true,
             content: [view.darw()],
             afterClose: function (): void {
                 // 清理缓存的查询面板

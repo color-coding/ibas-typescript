@@ -209,47 +209,63 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
                 ]
             }),
             visibleRowCount: 5,
-            minAutoRowCount: 5,
             enableSelectAll: false,
             rows: "{/}",
             columns: [
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("sys_shell_ui_query_condition_relationship"),
+                    width: "100px",
+                    autoResizable: true,
                     template: new sap.m.Select("", {
+                        width: "100%",
                         selectedKey: "{relationship}",
                         items: utils.createComboBoxItems(ibas.emConditionRelationship)
                     })
                 }),
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("sys_shell_ui_query_condition_bracketopen"),
+                    width: "100px",
+                    autoResizable: true,
                     template: new sap.m.Select("", {
+                        width: "100%",
                         selectedKey: "{bracketOpen}",
                         items: this.getCharListItem("(")
                     })
                 }),
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("sys_shell_ui_query_condition_alias"),
+                    width: "200px",
+                    autoResizable: true,
                     template: new sap.m.Select("", {
+                        width: "100%",
                         selectedKey: "{alias}",
                         items: this.getPropertyListItem(properies)
                     })
                 }),
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("sys_shell_ui_query_condition_operation"),
+                    width: "140px",
+                    autoResizable: true,
                     template: new sap.m.Select("", {
+                        width: "100%",
                         selectedKey: "{operation}",
                         items: utils.createComboBoxItems(ibas.emConditionOperation)
                     })
                 }),
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("sys_shell_ui_query_condition_value"),
+                    width: "120px",
+                    autoResizable: true,
                     template: new sap.m.Input("", {
                         value: "{value}"
                     })
                 }),
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("sys_shell_ui_query_condition_bracketclose"),
+                    width: "100px",
+                    autoResizable: true,
                     template: new sap.m.Select("", {
+                        width: "100%",
                         selectedKey: "{bracketClose}",
                         items: this.getCharListItem(")")
                     })
@@ -272,6 +288,7 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
         this.boName = null;
         let that = this;
         this.form = new sap.ui.layout.VerticalLayout("", {
+            width: "100%",
             content: [
                 new sap.m.Toolbar("", {
                     content: [

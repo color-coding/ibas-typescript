@@ -22,7 +22,8 @@ export class DemoListView extends ibas.BOListView implements IDemoListView {
         let that = this;
         this.form = new sap.ui.layout.form.SimpleForm("");
         this.table = new sap.ui.table.Table("", {
-            visibleRowCount: 15,
+            //visibleRowCount: 15,
+            visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Interactive,
             rows: "{/}",
             columns: [
                 new sap.ui.table.Column("", {
@@ -35,8 +36,12 @@ export class DemoListView extends ibas.BOListView implements IDemoListView {
                 }),
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_salesorder_customer"),
-                    template: new sap.m.Text("", {
-                        wrapping: false
+                    template: new sap.m.Link("", {
+                        wrapping: false,
+                        press(evt: any): void {
+                            let value = evt.getSource().getText();
+
+                        }
                     }).bindProperty("text", {
                         path: "customer"
                     })
