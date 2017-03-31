@@ -53,7 +53,7 @@ export class Configuration {
                         let setting: any = data.appSettings;
                         for (let name in setting) {
                             if (setting[name] !== undefined) {
-                                that.items.set(name, setting[name]);
+                                that.set(name, setting[name]);
                             }
                         }
                     }

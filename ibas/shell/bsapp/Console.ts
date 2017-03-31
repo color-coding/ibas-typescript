@@ -7,9 +7,8 @@
  */
 
 /// <reference path="../../../ibas/3rdparty/require.d.ts" />
-import * as ibas from "../../../ibas/index";
 import * as sys from "../../../ibas/bsbas/systems/index";
-import { Factories } from "../../../ibas/bsbas/systems/index";
+import * as ibas from "../../../ibas/index";
 import { BORepositoryShell, BORepositoryShellOffLine } from "../borep/BORepositories";
 import { CentersFunc, MainApp, LoginApp, CenterApp, AboutApp, HelpApp, QueryPanel, SuggestionApp } from "./centers/index";
 
@@ -60,8 +59,6 @@ export class Console extends ibas.ModuleConsole {
     static CONSOLE_ID: string = "00000000-ibas-cc01-00000000000000000";
     /** 模块-名称 */
     static CONSOLE_NAME: string = "sys_ibas";
-    /** 根文件名称 */
-    static ROOT_FILE_NAME: string = "apps/index";
 
     constructor() {
         super();
@@ -78,7 +75,7 @@ export class Console extends ibas.ModuleConsole {
     /** 初始化 */
     protected registers(): void {
         // 初始化系统工厂
-        Factories.systemsFactory = new SystemsFactory();
+        sys.Factories.systemsFactory = new SystemsFactory();
         // 注册功能
         this.register(new CentersFunc(this._viewShower));
     }
@@ -100,14 +97,14 @@ export class Console extends ibas.ModuleConsole {
     run(): void {
         // this.initPlatform();
         // 获取根地址
-        let rootUrl: string = ibas.url.rootUrl(Console.ROOT_FILE_NAME);
+        let rootUrl: string = ibas.url.rootUrl(undefined);
         // 加载配置-框架默认
         ibas.config.load(ibas.string.format("{0}/{1}", rootUrl, ibas.Configuration.CONFIG_FILE_NAME));
         // 加载语言-框架默认
-        ibas.i18n.load(ibas.string.format("{0}/shell/resources/languages/shell.{1}.json", rootUrl, "{0}"));
+        ibas.i18n.load(ibas.string.format("{0}/resources/languages/shell.{1}.json", rootUrl, "{0}"));
         // 设置资源属性
         this.description = ibas.i18n.prop(this.name);
-        this.icon = ibas.string.format("{0}/shell/resources/images/logo_small.png", rootUrl);
+        this.icon = ibas.string.format("{0}/resources/images/logo_small.png", rootUrl);
         // 先加载ui导航
         let uiModules: string[] = [];
         if (!ibas.config.get(ibas.config.CONFIG_ITEM_DISABLE_PLATFORM_VIEW, false)

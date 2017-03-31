@@ -16,13 +16,19 @@ import { string, url } from "./data/index";
 /** 业务对象库（bobas）文件名称 */
 export const LIBRARY_BOBAS_ROOT_FILE_NAME: string = "/bobas/index";
 /** 框架初始化 */
-const isInitialized: boolean = function (): boolean {
-    let rootUrl: string = url.rootUrl(LIBRARY_BOBAS_ROOT_FILE_NAME);
-    // 加载配置-框架默认
-    config.load(string.format("{0}/{1}", rootUrl, Configuration.CONFIG_FILE_NAME));
-    // 加载语言-框架默认
-    i18n.load(string.format("{0}/resources/languages/bobas.{1}.json", rootUrl, "{0}"));
-    return true;
+let init = function () {
+    if ((<any>window).ibas === undefined) {
+        (<any>window).ibas = {};
+    }
+    if ((<any>window).ibas.bobas === undefined) {
+        (<any>window).ibas.bobas = {};
+
+        let rootUrl: string = url.rootUrl(LIBRARY_BOBAS_ROOT_FILE_NAME);
+        // 加载配置-框架默认
+        config.load(string.format("{0}/{1}", rootUrl, Configuration.CONFIG_FILE_NAME));
+        // 加载语言-框架默认
+        i18n.load(string.format("{0}/resources/languages/bobas.{1}.json", rootUrl, "{0}"));
+    }
 }();
 // 导出的类型
 export * from "./data/index";
