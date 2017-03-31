@@ -66,9 +66,20 @@ export class QueryPanel extends sys.QueryPanel<IQueryPanelView>  {
     private editQuery: UserQuery;
 
     private deleteQuery(): void {
-        // 去除查询后保存，表示删除
-        this.editQuery.criteria = null;
-        this.saveQuery();
+        let that = this;
+        this.messages({
+            type: ibas.emMessageType.QUESTION,
+            title: ibas.i18n.prop(this.name),
+            message: ibas.i18n.prop("msg_whether_to_delete"),
+            actions: [ibas.emMessageAction.YES, ibas.emMessageAction.NO],
+            onCompleted(action: ibas.emMessageAction): void {
+                if (action === ibas.emMessageAction.YES) {
+                    // 去除查询后保存，表示删除
+                    that.editQuery.criteria = null;
+                    that.saveQuery();
+                }
+            }
+        });
     }
     private saveQuery(): void {
         let that = this;

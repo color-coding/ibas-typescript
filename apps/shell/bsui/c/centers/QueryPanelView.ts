@@ -26,8 +26,9 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
                     that.fireViewEvents(that.searchEvent);
                 }
             });
-            this.baseOn = new sap.m.ComboBox("", {
+            this.baseOn = new sap.m.Select("", {
                 placeholder: ibas.i18n.prop("sys_shell_ui_base_on_criteria"),
+                width: "40%",
                 maxWidth: "40%"
             });
             this.config = new sap.m.Button("", {
@@ -52,7 +53,7 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
     private bar: sap.m.Toolbar;
     private search: sap.m.SearchField;
     private config: sap.m.Button;
-    private baseOn: sap.m.ComboBox;
+    private baseOn: sap.m.Select;
     /** 查询 */
     searchEvent: Function;
     /** 删除查询 */
@@ -214,28 +215,28 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
             columns: [
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("sys_shell_ui_query_condition_relationship"),
-                    template: new sap.m.ComboBox("", {
+                    template: new sap.m.Select("", {
                         selectedKey: "{relationship}",
                         items: utils.createComboBoxItems(ibas.emConditionRelationship)
                     })
                 }),
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("sys_shell_ui_query_condition_bracketopen"),
-                    template: new sap.m.ComboBox("", {
+                    template: new sap.m.Select("", {
                         selectedKey: "{bracketOpen}",
                         items: this.getCharListItem("(")
                     })
                 }),
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("sys_shell_ui_query_condition_alias"),
-                    template: new sap.m.ComboBox("", {
+                    template: new sap.m.Select("", {
                         selectedKey: "{alias}",
                         items: this.getPropertyListItem(properies)
                     })
                 }),
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("sys_shell_ui_query_condition_operation"),
-                    template: new sap.m.ComboBox("", {
+                    template: new sap.m.Select("", {
                         selectedKey: "{operation}",
                         items: utils.createComboBoxItems(ibas.emConditionOperation)
                     })
@@ -248,7 +249,7 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
                 }),
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("sys_shell_ui_query_condition_bracketclose"),
-                    template: new sap.m.ComboBox("", {
+                    template: new sap.m.Select("", {
                         selectedKey: "{bracketClose}",
                         items: this.getCharListItem(")")
                     })

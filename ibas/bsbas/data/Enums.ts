@@ -30,19 +30,40 @@ export enum emMessageType {
     /** 问询 */
     QUESTION
 }
+/** 消息动作 */
+export enum emMessageAction {
+    /** 终止 */
+    ABORT,
+    /** 取消 */
+    CANCEL,
+    /** 关闭 */
+    CLOSE,
+    /** 删除 */
+    DELETE,
+    /** 忽略 */
+    IGNORE,
+    /** 否 */
+    NO,
+    /** 确定 */
+    OK,
+    /** 重试 */
+    RETRY,
+    /** 是 */
+    YES
+}
 /** 权限来源 */
 export enum emPrivilegeSource {
-	/** 应用设置 */
-	APPLICATION,
-	/** 业务对象设置 */
-	BUSINESS_OBJECT
+    /** 应用设置 */
+    APPLICATION,
+    /** 业务对象设置 */
+    BUSINESS_OBJECT
 }
 /** 权限值 */
 export enum emAuthoriseType {
-	/** 没权限 */
-	ALL,
-	/** 读取权限 */
-	READ,
-	/** 没有权限 */
-	NONE
+    /** 没权限 */
+    ALL,
+    /** 读取权限 */
+    READ,
+    /** 没有权限 */
+    NONE
 }

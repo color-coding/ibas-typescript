@@ -9,6 +9,7 @@
 /// <reference path="../../../../../openui5/typings/index.d.ts" />
 import * as ibas from "../../../../../ibas/index";
 import * as sys from "../../../../../ibas/bsbas/systems/index";
+import { utils } from "../../../../../openui5/typings/ibas.utils";
 
 /**
  * 视图-中心
@@ -39,7 +40,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
 	 * @param type 消息类型
 	 * @param message 消息内容
 	 */
-    showStatusMessages(type: ibas.emMessageType, message: string): void {
+    showStatusMessage(type: ibas.emMessageType, message: string): void {
         let uiType: sap.ui.core.MessageType = sap.ui.core.MessageType.None;
         let uiIcon: any = undefined;
         if (type === ibas.emMessageType.ERROR) {
@@ -81,60 +82,18 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             }, this.statusDelay);
         }
     }
-    /**
-     * 显示消息对话框
-     * @param type 消息类型
-     * @param message 消息内容
-     * @param callBack 回掉方法
-     */
-    showMessageBox(type: ibas.emMessageType, message: string, callBack: Function): void;
-    /**
-     * 显示消息对话框
-     * @param type 消息类型
-     * @param message 消息内容
-     */
-    showMessageBox(type: ibas.emMessageType, message: string): void;
-    /**
-     * 显示消息对话框
-     * @param error 错误
-     */
-    showMessageBox(error: Error): void;
-    /** 显示消息对话框 */
-    showMessageBox(): void {
+    /** 对话消息 */
+    showMessageBox(caller: ibas.IMessgesCaller): void {
         jQuery.sap.require("sap.m.MessageBox");
-        let type: ibas.emMessageType;
-        let message: string;
-        let callBack: Function;
-        if (arguments.length === 1 && arguments[0] instanceof Error) {
-            type = ibas.emMessageType.ERROR;
-            message = arguments[0].message;
-        } else if (arguments.length === 2) {
-            type = arguments[0];
-            message = arguments[1];
-        } else if (arguments.length === 3) {
-            type = arguments[0];
-            message = arguments[1];
-            callBack = arguments[2];
-        }
-        let actions: any = [sap.m.MessageBox.Action.OK];
-        let icon: any = sap.m.MessageBox.Icon.INFORMATION;
-        if (type === ibas.emMessageType.ERROR) {
-            icon = sap.m.MessageBox.Icon.ERROR;
-        } else if (type === ibas.emMessageType.QUESTION) {
-            icon = sap.m.MessageBox.Icon.QUESTION;
-        } else if (type === ibas.emMessageType.SUCCESS) {
-            icon = sap.m.MessageBox.Icon.SUCCESS;
-        } else if (type === ibas.emMessageType.WARNING) {
-            icon = sap.m.MessageBox.Icon.WARNING;
-        }
         sap.m.MessageBox.show(
-            message, {
-                icon: icon,
-                title: ibas.i18n.prop(this.application.name),
-                actions: actions,
-                onClose: function (): void {
-                    if (!ibas.object.isNull(callBack)) {
-                        callBack.call(callBack);
+            caller.message,
+            {
+                icon: utils.toMessageBoxIcon(caller.type),
+                title: caller.title,
+                actions: utils.toMessageBoxAction(caller.actions),
+                onClose(oAction: any): void {
+                    if (!ibas.object.isNull(caller.onCompleted)) {
+                        caller.onCompleted(utils.toMessageAction(oAction));
                     }
                 }
             }
@@ -324,7 +283,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         let queryPanel: sys.IQueryPanel<sys.IQueryPanelView> = sys.Factories.systemsFactory.createQueryPanel();
         if (ibas.object.isNull(queryPanel)) {
             // 查询面板无效，不添加
-            this.showStatusMessages(ibas.emMessageType.ERROR, ibas.i18n.prop("sys_shell_invalid_query_panel"));
+            this.showStatusMessage(ibas.emMessageType.ERROR, ibas.i18n.prop("sys_shell_invalid_query_panel"));
         } else {
             let that: this = this;
             // 设置视图导航

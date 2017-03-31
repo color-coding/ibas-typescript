@@ -9,7 +9,7 @@
 import {
     i18n, object, logger, emMessageLevel, ICriteria
 } from "../../../ibas/bobas/index";
-import { Application, IBarView } from "../core/index";
+import { Application, IBarView, IMessgesCaller } from "../core/index";
 import { emMessageType } from "../data/index";
 import { IBOView, IBOQueryView } from "./BOApplications.d";
 
@@ -39,7 +39,11 @@ export abstract class BOApplication<T extends IBOView> extends Application<T> {
                 this.viewShower.show(this.view);
                 this.afterViewShow();
             } catch (error) {
-                this.viewShower.messages(emMessageType.ERROR, error.message, null);
+                this.viewShower.messages(
+                    {
+                        type: emMessageType.ERROR,
+                        message: arguments[0].message
+                    });
             }
         } else {
             throw new Error(i18n.prop("msg_invalid_view_shower", this.name));
@@ -101,11 +105,9 @@ export abstract class BOApplication<T extends IBOView> extends Application<T> {
     }
     /**
      * 显示消息对话框
-     * @param type 消息类型
-     * @param message 消息内容
-     * @param callBack 回掉方法
+     * @param caller 消息调用者
      */
-    protected messages(type: emMessageType, message: string, callBack: Function): void;
+    protected messages(caller: IMessgesCaller): void;
     /**
      * 显示消息对话框
      * @param type 消息类型
@@ -119,28 +121,32 @@ export abstract class BOApplication<T extends IBOView> extends Application<T> {
     protected messages(error: Error): void;
     /** 显示消息对话框 */
     protected messages(): void {
-        let type: emMessageType;
-        let message: string;
-        let callBack: Function;
+        let caller: IMessgesCaller;
         if (arguments.length === 1) {
-            if (arguments[0] instanceof Error) {
-                type = emMessageType.ERROR;
-                message = arguments[0].message;
+            if (arguments[0].message !== undefined && arguments[0].type !== undefined) {
+                caller = arguments[0];
+            } else if (arguments[0] instanceof Error) {
+                caller = {
+                    title: i18n.prop(this.name),
+                    type: emMessageType.ERROR,
+                    message: arguments[0].message
+                };
             } else {
-                type = emMessageType.INFORMATION;
-                message = arguments[0];
+                caller = {
+                    title: i18n.prop(this.name),
+                    type: emMessageType.INFORMATION,
+                    message: arguments[0]
+                };
             }
-        } else if (arguments.length = 2) {
-            type = arguments[0];
-            message = arguments[1];
-            callBack = arguments[2];
-        } else if (arguments.length === 3) {
-            type = emMessageType.INFORMATION;
-            message = arguments[0];
-            callBack = arguments[1];
+        } else if (arguments.length === 2) {
+            caller = {
+                title: i18n.prop(this.name),
+                type: arguments[0],
+                message: arguments[1]
+            };
         }
         if (!object.isNull(this.viewShower)) {
-            this.viewShower.messages(type, message, callBack);
+            this.viewShower.messages(caller);
         } else {
             throw new Error(i18n.prop("msg_invalid_view_shower", this.name));
         }

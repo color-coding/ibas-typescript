@@ -12,7 +12,7 @@ import {
 } from "../../../ibas/bobas/index";
 import {
 	IView, IUrlView, IModule, IApplication, IModuleConsole,
-	IModuleFunction, IViewShower, IBarView
+	IModuleFunction, IViewShower, IBarView, IMessgesCaller
 } from "../core/index";
 import { emMessageType, emPrivilegeSource, emAuthoriseType } from "../data/index";
 
@@ -58,25 +58,12 @@ export interface ICenterView extends IView {
 	 * @param type 消息类型
 	 * @param message 消息内容
 	 */
-	showStatusMessages(type: emMessageType, message: string): void;
+	showStatusMessage(type: emMessageType, message: string): void;
 	/**
 	 * 显示消息对话框
-	 * @param type 消息类型
-	 * @param message 消息内容
-	 * @param callBack 回掉方法
+	 * @param caller 消息调用者
 	 */
-	showMessageBox(type: emMessageType, message: string, callBack: Function): void;
-	/**
-	 * 显示消息对话框
-	 * @param type 消息类型
-	 * @param message 消息内容
-	 */
-	showMessageBox(type: emMessageType, message: string): void;
-	/**
-	 * 显示消息对话框
-	 * @param error 错误
-	 */
-	showMessageBox(error: Error): void;
+	showMessageBox(caller: IMessgesCaller): void;
 	/**
 	 * 显示模块
 	 * @param console 模块控制台
@@ -128,8 +115,8 @@ export interface IQueryPanelView extends IBarView {
 	searchEvent: Function;
 	/** 查询内容 */
 	searchContent: string;
-    /** 使用的查询 */
-    usingQuery: string;
+	/** 使用的查询 */
+	usingQuery: string;
 }
 /** 使用查询面板 */
 export interface IUseQueryPanel {

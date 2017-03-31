@@ -8,6 +8,7 @@
 
 /// <reference path="../../../openui5/typings/index.d.ts" />
 import * as ibas from "../../../ibas/index";
+import { utils } from "../../../openui5/typings/ibas.utils";
 
 /**
  * 视图-显示者-默认
@@ -49,7 +50,7 @@ export class ViewShowerDefault implements ibas.IViewShower {
     /** 忙对话框 */
     private busyDialog: sap.m.BusyDialog;
     /** 设置忙状态 */
-    busy(view: ibas.IView, busy: boolean, msg: string): any {
+    busy(view: ibas.IView, busy: boolean, msg: string): void {
         if (busy) {
             if (ibas.object.isNull(this.busyDialog)) {
                 this.busyDialog = new sap.m.BusyDialog("");
@@ -64,17 +65,26 @@ export class ViewShowerDefault implements ibas.IViewShower {
         }
     }
     /** 进程消息 */
-    proceeding(view: ibas.IView, type: ibas.emMessageType, msg: string): any {
-        this.messages(type, msg, null);
+    proceeding(view: ibas.IView, type: ibas.emMessageType, msg: string): void {
+        this.messages({
+            type: type,
+            message: msg
+        });
     }
     /** 对话消息 */
-    messages(type: ibas.emMessageType, msg: string, callBack: Function): any {
+    messages(caller: ibas.IMessgesCaller): void {
         jQuery.sap.require("sap.m.MessageBox");
         sap.m.MessageBox.show(
-            msg, {
-                icon: sap.m.MessageBox.Icon.WARNING,
+            caller.message,
+            {
+                icon: utils.toMessageBoxIcon(caller.type),
                 title: ibas.i18n.prop("sys_shell_name"),
-                actions: [sap.m.MessageBox.Action.OK],
+                actions: utils.toMessageBoxAction(caller.actions),
+                onClose(oAction: any): void {
+                    if (!ibas.object.isNull(caller.onCompleted)) {
+                        caller.onCompleted(utils.toMessageAction(oAction));
+                    }
+                }
             }
         );
     }

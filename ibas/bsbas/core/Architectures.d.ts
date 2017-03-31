@@ -7,7 +7,7 @@
  */
 
 import { List } from "../../../ibas/bobas/index";
-import { emPlantform, emMessageType } from "../data/index";
+import { emPlantform, emMessageType, emMessageAction } from "../data/index";
 
 /** 系统元素 */
 export interface IElement {
@@ -93,6 +93,19 @@ export interface IBarView extends IView {
     /** 工具条视图显示完成事件 */
     barShowedEvent: Function;
 }
+/** 对话消息调用者 */
+export interface IMessgesCaller {
+    /** 类型 */
+    type: emMessageType;
+    /** 内容 */
+    message: string;
+    /** 标题 */
+    title?: string;
+    /** 动作 */
+    actions?: emMessageAction[];
+    /** 调用完成 */
+    onCompleted?(action: emMessageAction): void;
+}
 /**
  * 视图-显示者
  */
@@ -102,11 +115,11 @@ export interface IViewShower {
     /** 清理资源 */
     destroy(view: IView): void;
     /** 设置忙状态 */
-    busy(view: IView, busy: boolean, msg: string): any;
+    busy(view: IView, busy: boolean, msg: string): void;
     /** 进程消息 */
-    proceeding(view: IView, type: emMessageType, msg: string): any;
+    proceeding(view: IView, type: emMessageType, msg: string): void;
     /** 对话消息 */
-    messages(type: emMessageType, msg: string, callBack: Function): any;
+    messages(caller: IMessgesCaller): void;
 }
 /**
  * 视图-导航

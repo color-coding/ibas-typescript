@@ -13,7 +13,7 @@ import {
 } from "../../../ibas/bobas/index";
 import {
     ModuleConsole, IModuleConsole, IModuleFunction, IApplication,
-    IView, IBarView, IBarApplication, IViewShower, Application
+    IView, IBarView, IBarApplication, IViewShower, Application, IMessgesCaller
 } from "../core/index";
 import { emMessageType, emPrivilegeSource, emAuthoriseType } from "../data/index";
 import { consolesManager, variablesManager } from "../runtime/index";
@@ -126,7 +126,7 @@ export abstract class CenterApp<T extends ICenterView> extends Application<T> im
         this.view.showUser(user);
         // 加载用户相关
         logger.log(emMessageLevel.DEBUG, "center: initializing user [{0} - {1}]'s modules.", user.id, user.code);
-        this.view.showStatusMessages(
+        this.view.showStatusMessage(
             emMessageType.INFORMATION,
             i18n.prop("msg_initialize_user_modules", user.code, user.name)
         );
@@ -140,7 +140,7 @@ export abstract class CenterApp<T extends ICenterView> extends Application<T> im
                         throw new Error(opRslt.message);
                     }
                     for (let module of opRslt.resultObjects) {
-                        that.view.showStatusMessages(
+                        that.view.showStatusMessage(
                             emMessageType.INFORMATION,
                             i18n.prop("msg_initialize_modules", module.id, module.name)
                         );
@@ -197,7 +197,7 @@ export abstract class CenterApp<T extends ICenterView> extends Application<T> im
             // 模块加载成功
             console = consolesManager.get(module.id);
             if (object.isNull(console)) {
-                that.view.showStatusMessages(
+                that.view.showStatusMessage(
                     emMessageType.WARNING,
                     i18n.prop("msg_not_found_module_console", module.id, module.name));
                 return;
@@ -226,7 +226,7 @@ export abstract class CenterApp<T extends ICenterView> extends Application<T> im
             }
         }, function (): void {
             // 模块加载失败
-            that.view.showStatusMessages(
+            that.view.showStatusMessage(
                 emMessageType.ERROR,
                 i18n.prop("msg_not_found_module_console", module.id, module.name));
         });
@@ -313,11 +313,11 @@ export abstract class CenterApp<T extends ICenterView> extends Application<T> im
     }
     /** 设置消息 */
     proceeding(view: IView, type: emMessageType, msg: string): any {
-        this.view.showStatusMessages(type, msg);
+        this.view.showStatusMessage(type, msg);
     }
     /** 对话消息 */
-    messages(type: emMessageType, msg: string, callBack: Function): any {
-        this.view.showMessageBox(type, msg, callBack);
+    messages(caller: IMessgesCaller): any {
+        this.view.showMessageBox(caller);
     }
     /** 显示视图，可重载并添加权限控制 */
     showView(view: IView): void {

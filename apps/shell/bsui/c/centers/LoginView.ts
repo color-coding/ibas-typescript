@@ -19,7 +19,10 @@ export class LoginView extends ibas.BOView implements sys.ILoginView {
     static CONFIG_ITEM_DEFAULT_USER = "defaultUser";
     /** 配置项目-默认用户密码 */
     static CONFIG_ITEM_DEFAULT_PASSWORD = "defaultPassword";
-
+    /** 登陆 */
+    loginEvent: Function;
+    /** 改变语言 */
+    changeLanguageEvent: Function;
     private txtUser: sap.m.Input;
     /** 用户 */
     get user(): string {
@@ -37,9 +40,7 @@ export class LoginView extends ibas.BOView implements sys.ILoginView {
         this.txtPassword.setValue(value);
     }
     private butLogin: sap.m.Button;
-    /** 登陆 */
-    loginEvent: Function;
-    private languages: sap.m.ComboBox;
+    private languages: sap.m.Select;
     /** 语言 */
     get language(): string {
         return this.languages.getSelectedKey();
@@ -59,8 +60,6 @@ export class LoginView extends ibas.BOView implements sys.ILoginView {
             }));
         }
     }
-    /** 改变语言 */
-    changeLanguageEvent: Function;
     /** 绘制视图 */
     darw(): any {
         // 设置默认平台
@@ -76,9 +75,9 @@ export class LoginView extends ibas.BOView implements sys.ILoginView {
                 value: ibas.config.get(LoginView.CONFIG_ITEM_DEFAULT_PASSWORD),
                 type: "Password"
             });
-        this.languages = new sap.m.ComboBox("", {
+        this.languages = new sap.m.Select("", {
             placeholder: ibas.i18n.prop("sys_shell_ui_chooose_language"),
-            selectionChange: function (): void {
+            change: function (): void {
                 that.fireViewEvents(that.changeLanguageEvent);
             }
         });
@@ -90,6 +89,7 @@ export class LoginView extends ibas.BOView implements sys.ILoginView {
         });
         this.form = new sap.ui.layout.form.SimpleForm("",
             {
+                layout: sap.ui.layout.form.SimpleFormLayout.ResponsiveGridLayout,
                 content: [
                     new sap.m.Label("", { text: ibas.i18n.prop("sys_shell_ui_user") }),
                     this.txtUser,
@@ -98,7 +98,7 @@ export class LoginView extends ibas.BOView implements sys.ILoginView {
                     new sap.m.Label("", { text: ibas.i18n.prop("sys_shell_ui_language") }),
                     this.languages,
                     new sap.m.Label("", { text: ibas.i18n.prop("sys_shell_ui_plantform") }),
-                    new sap.m.ComboBox("", {
+                    new sap.m.Select("", {
                         enabled: false,
                         items: utils.createComboBoxItems(ibas.emPlantform),
                         selectedKey: ibas.config.get(ibas.ModuleConsole.CONFIG_ITEM_PLANTFORM)
