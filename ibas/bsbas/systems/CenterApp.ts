@@ -15,7 +15,7 @@ import {
     ModuleConsole, IModuleConsole, IModuleFunction, IApplication,
     IView, IBarView, IBarApplication, IViewShower, Application, IMessgesCaller
 } from "../core/index";
-import { emMessageType, emPrivilegeSource, emAuthoriseType } from "../data/index";
+import { emMessageType, emPrivilegeSource, emAuthoriseType, emMessageAction } from "../data/index";
 import { consolesManager, variablesManager } from "../runtime/index";
 import {
     BOResidentApplication, BOApplication,
@@ -297,7 +297,18 @@ export abstract class CenterApp<T extends ICenterView> extends Application<T> im
     }
     /** 关闭视图 */
     close(): void {
-        this.view.destroyView(this.view);
+        let that = this;
+        this.messages({
+            type: emMessageType.QUESTION,
+            title: i18n.prop(this.name),
+            message: i18n.prop("msg_whether_to_exit"),
+            actions: [emMessageAction.YES, emMessageAction.NO],
+            onCompleted(action: emMessageAction): void {
+                if (action === emMessageAction.YES) {
+                    that.view.destroyView(that.view);
+                }
+            }
+        });
     }
     /** 清理资源 */
     destroy(): void {

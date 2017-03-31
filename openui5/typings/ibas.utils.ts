@@ -4,7 +4,10 @@
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
 /// <reference path="./sap.ui.d.ts" />
-import { i18n, string, object, List, ArrayList, emMessageAction, emMessageType } from "../../ibas/index";
+import {
+    i18n, string, object, List, ArrayList, emMessageAction, emMessageType,
+    enums
+} from "../../ibas/index";
 
 export namespace utils {
     export function createComboBoxItems(data: any): sap.ui.core.Item[] {
@@ -28,18 +31,21 @@ export namespace utils {
         let items = new Array<sap.ui.core.Item>();
         for (let item of map) {
             let key: any = item[0];
-            let text: any = item[1];
-            // 存在语言资源则使用
-            let tmp = i18n.prop(string.format("data_{0}_{1}", data.constructor.name, key));
-            if (!tmp.startsWith("[") && !tmp.endsWith("]")) {
-                text = tmp;
-            }
             items.push(new sap.ui.core.Item("", {
                 key: key,
-                text: text
+                text: enums.describe(data, item[1])
             }));
         }
         return items;
+    }
+    /** 获取表格选中的对象 */
+    export function resizeTable<T>(table: sap.ui.table.Table): void {
+        if (object.isNull(table)) {
+            return;
+        }
+        for (let i: number = 1; i < table.getColumns().length; i++) {
+
+        }
     }
     /** 获取表格选中的对象 */
     export function getTableSelecteds<T>(table: sap.ui.table.Table): List<T> {

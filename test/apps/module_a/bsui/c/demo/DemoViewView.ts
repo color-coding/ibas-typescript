@@ -42,38 +42,52 @@ export class DemoViewView extends ibas.BOViewView implements IDemoViewView {
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_salesorderitem_lineid"),
                     template: new sap.m.Text("", {
-                        text: "{lineId}"
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "lineId"
                     })
                 }),
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_salesorderitem_linestatus"),
-                    template: new sap.m.ComboBox("", {
-                        selectedKey: "{lineStatus}",
-                        items: utils.createComboBoxItems(ibas.emDocumentStatus)
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "lineStatus",
+                        formatter(data: any): any {
+                            return ibas.enums.describe(ibas.emDocumentStatus, data);
+                        }
                     })
                 }),
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_salesorderitem_itemcode"),
                     template: new sap.m.Text("", {
-                        text: "{itemCode}"
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "itemCode"
                     })
                 }),
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_salesorderitem_price"),
                     template: new sap.m.Text("", {
-                        text: "{price}"
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "price"
                     })
                 }),
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_salesorderitem_quantity"),
                     template: new sap.m.Text("", {
-                        text: "{quantity}"
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "quantity"
                     })
                 }),
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_salesorderitem_linetotal"),
                     template: new sap.m.Text("", {
-                        text: "{lineTotal}"
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "lineTotal"
                     })
                 })
             ]

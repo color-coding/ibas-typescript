@@ -33,26 +33,29 @@ export class DemoEditView extends ibas.BOEditView implements IDemoEditView {
                 new sap.ui.core.Title("", { text: "Customer" }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_customer") }),
                 new sap.m.Input("", {
-                    value: "{/customer}",
                     showValueHelp: true,
                     valueHelpRequest: function () {
                         that.fireViewEvents(that.chooseSalesOrderEvent);
                     }
+                }).bindProperty("value", {
+                    path: "customer"
                 }),
                 new sap.ui.core.Title("", { text: "Document" }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_docentry") }),
                 new sap.m.Input("", { value: "{/docEntry}" }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_documentstatus") }),
-                new sap.m.ComboBox("",
+                new sap.m.Select("",
                     {
-                        selectedKey: "{/documentStatus}",
                         items: utils.createComboBoxItems(ibas.emDocumentStatus)
+                    }).bindProperty("selectedKey", {
+                        path: "documentStatus"
                     }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_canceled") }),
-                new sap.m.ComboBox("",
+                new sap.m.Select("",
                     {
-                        selectedKey: "{/canceled}",
                         items: utils.createComboBoxItems(ibas.emYesNo)
+                    }).bindProperty("selectedKey", {
+                        path: "canceled"
                     })
             ]
         });
@@ -84,39 +87,45 @@ export class DemoEditView extends ibas.BOEditView implements IDemoEditView {
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_salesorderitem_lineid"),
                     template: new sap.m.Text("", {
-                        text: "{lineId}"
+                    }).bindProperty("text", {
+                        path: "lineId"
                     })
                 }),
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_salesorderitem_linestatus"),
-                    template: new sap.m.ComboBox("", {
-                        selectedKey: "{lineStatus}",
+                    template: new sap.m.Select("", {
                         items: utils.createComboBoxItems(ibas.emDocumentStatus)
+                    }).bindProperty("selectedKey", {
+                        path: "lineStatus"
                     })
                 }),
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_salesorderitem_itemcode"),
                     template: new sap.m.Input("", {
-                        value: "{itemCode}",
                         showValueHelp: true
+                    }).bindProperty("value", {
+                        path: "itemCode"
                     })
                 }),
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_salesorderitem_price"),
                     template: new sap.m.Input("", {
-                        value: "{price}"
+                    }).bindProperty("value", {
+                        path: "price"
                     })
                 }),
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_salesorderitem_quantity"),
                     template: new sap.m.Input("", {
-                        value: "{quantity}"
+                    }).bindProperty("value", {
+                        path: "quantity"
                     })
                 }),
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_salesorderitem_linetotal"),
                     template: new sap.m.Input("", {
-                        value: "{lineTotal}"
+                    }).bindProperty("value", {
+                        path: "lineTotal"
                     })
                 })
             ]

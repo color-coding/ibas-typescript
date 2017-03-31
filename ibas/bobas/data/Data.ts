@@ -5,7 +5,8 @@
  * Use of this source code is governed by an Apache License, Version 2.0
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
-
+import { i18n } from "../i18n/index";
+import { string } from "./String";
 /**
  * 对象
  */
@@ -56,5 +57,32 @@ export module enums {
             }
         }
         return undefined;
+    }
+    /**
+     * 描述枚举值
+     * @param type 目标类型
+     * @param value 值
+     * @returns 首先语言，然后枚举，最后原始
+     */
+    export function describe(type: any, value: any): string {
+        if (object.isNull(type) || object.isNull(value)) {
+            return value;
+        }
+        // 获取枚举值
+        let sValue: any = value;
+        if (typeof sValue === "number") {
+            sValue = type[sValue];
+        }
+        let dValue: string = sValue;
+        // 获取枚举名称
+        let name = "em_";// type.name;
+        if (!object.isNull(name)) {
+            dValue = i18n.prop((name + sValue).toLowerCase());
+            if (dValue.startsWith("[") && dValue.endsWith("]")) {
+                // 没有找到语言描述
+                dValue = sValue;
+            }
+        }
+        return dValue;
     }
 }

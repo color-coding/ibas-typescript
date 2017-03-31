@@ -32,7 +32,79 @@
                 "lineTotal": 19.8
             }
         ],
-        "customer": "C00001",
+        "customer": "C00002",
+        "documentStatus": 2
+    },
+    {
+        "salesOrderItems": [
+            {
+                "itemCode": "A00001",
+                "price": 1.99,
+                "quantity": 2,
+                "lineTotal": 3.98
+            },
+            {
+                "itemCode": "A00002",
+                "price": 0.99,
+                "quantity": 20,
+                "lineTotal": 19.8
+            }
+        ],
+        "customer": "C00003",
+        "documentStatus": 3
+    },
+    {
+        "salesOrderItems": [
+            {
+                "itemCode": "A00001",
+                "price": 1.99,
+                "quantity": 2,
+                "lineTotal": 3.98
+            },
+            {
+                "itemCode": "A00002",
+                "price": 0.99,
+                "quantity": 20,
+                "lineTotal": 19.8
+            }
+        ],
+        "customer": "C00004",
+        "documentStatus": 3
+    },
+    {
+        "salesOrderItems": [
+            {
+                "itemCode": "A00001",
+                "price": 1.99,
+                "quantity": 2,
+                "lineTotal": 3.98
+            },
+            {
+                "itemCode": "A00002",
+                "price": 0.99,
+                "quantity": 20,
+                "lineTotal": 19.8
+            }
+        ],
+        "customer": "C00005",
+        "documentStatus": 2
+    },
+    {
+        "salesOrderItems": [
+            {
+                "itemCode": "A00001",
+                "price": 1.99,
+                "quantity": 2,
+                "lineTotal": 3.98
+            },
+            {
+                "itemCode": "A00002",
+                "price": 0.99,
+                "quantity": 20,
+                "lineTotal": 19.8
+            }
+        ],
+        "customer": "C00006",
         "documentStatus": 1
     },
     {
@@ -50,80 +122,8 @@
                 "lineTotal": 19.8
             }
         ],
-        "customer": "C00001",
-        "documentStatus": 1
-    },
-    {
-        "salesOrderItems": [
-            {
-                "itemCode": "A00001",
-                "price": 1.99,
-                "quantity": 2,
-                "lineTotal": 3.98
-            },
-            {
-                "itemCode": "A00002",
-                "price": 0.99,
-                "quantity": 20,
-                "lineTotal": 19.8
-            }
-        ],
-        "customer": "C00001",
-        "documentStatus": 1
-    },
-    {
-        "salesOrderItems": [
-            {
-                "itemCode": "A00001",
-                "price": 1.99,
-                "quantity": 2,
-                "lineTotal": 3.98
-            },
-            {
-                "itemCode": "A00002",
-                "price": 0.99,
-                "quantity": 20,
-                "lineTotal": 19.8
-            }
-        ],
-        "customer": "C00001",
-        "documentStatus": 1
-    },
-    {
-        "salesOrderItems": [
-            {
-                "itemCode": "A00001",
-                "price": 1.99,
-                "quantity": 2,
-                "lineTotal": 3.98
-            },
-            {
-                "itemCode": "A00002",
-                "price": 0.99,
-                "quantity": 20,
-                "lineTotal": 19.8
-            }
-        ],
-        "customer": "C00001",
-        "documentStatus": 1
-    },
-    {
-        "salesOrderItems": [
-            {
-                "itemCode": "A00001",
-                "price": 1.99,
-                "quantity": 2,
-                "lineTotal": 3.98
-            },
-            {
-                "itemCode": "A00002",
-                "price": 0.99,
-                "quantity": 20,
-                "lineTotal": 19.8
-            }
-        ],
-        "customer": "C00001",
-        "documentStatus": 1
+        "customer": "C00007",
+        "documentStatus": 0
     },
     {
         "salesOrderItems": [

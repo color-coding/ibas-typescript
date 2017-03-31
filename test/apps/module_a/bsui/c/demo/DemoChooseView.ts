@@ -56,25 +56,39 @@ export class DemoChooseView extends ibas.BOChooseView implements IDemoChooseView
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_salesorder_docentry"),
                     template: new sap.m.Text("", {
-                        text: "{docEntry}"
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "docEntry"
                     })
                 }),
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_salesorder_customer"),
                     template: new sap.m.Text("", {
-                        text: "{customer}"
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "customer"
                     })
                 }),
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_salesorder_documentstatus"),
                     template: new sap.m.Text("", {
-                        text: "{documentStatus}"
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "documentStatus",
+                        formatter(data: any): any {
+                            return ibas.enums.describe(ibas.emDocumentStatus, data);
+                        }
                     })
                 }),
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_salesorder_canceled"),
                     template: new sap.m.Text("", {
-                        text: "{canceled}"
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "canceled",
+                        formatter(data: any): any {
+                            return ibas.enums.describe(ibas.emYesNo, data);
+                        }
                     })
                 })
             ]

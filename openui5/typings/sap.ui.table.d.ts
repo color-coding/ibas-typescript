@@ -18,6 +18,7 @@ declare namespace sap {
                 /** 获取选中的项目 */
                 getSelectedIndices(): any[];
                 getContextByIndex(iIndex: any): any;
+                getColumns(): sap.ui.table.Column[];
             }
             export class Column extends sap.ui.core.Control {
                 constructor(mSettings?: any);

@@ -10,7 +10,11 @@
  * 模块索引文件，此文件集中导出类
  */
 /// <reference path="../../3rdparty/jquery.d.ts" />
-import { object, string, emMessageLevel, url, ArrayList } from "../data/index";
+import { emMessageLevel } from "../data/Enums";
+import { object } from "../data/Data";
+import { string } from "../data/String";
+import { ArrayList } from "../data/Common";
+import { url } from "../data/Url";
 import { config } from "../configuration/index";
 import { logger } from "../messages/index";
 /**
