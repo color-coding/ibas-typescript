@@ -44,8 +44,8 @@ export class FileRepositoryAjax extends FileRepository implements IRemoteReposit
         let opRslt: OperationResult<any> = new OperationResult();
         // 补充发生错误的事件
         ajxSetting.error = function (jqXHR: JQueryXHR, textStatus: string, errorThrown: string): void {
-            opRslt.resultCode = -999;
-            opRslt.message = string.format("{0} - {1}", textStatus, errorThrown);
+            opRslt.resultCode = -jqXHR.status;
+            opRslt.message = string.format("{0} - {1}", textStatus, i18n.prop("msg_network_error"));
             logger.log(emMessageLevel.ERROR,
                 "repository: call method [{2}] faild, {0} - {1}.", textStatus, errorThrown, ajxSetting.url);
             caller.onCompleted.call(object.isNull(caller.caller) ? caller : caller.caller, opRslt);
@@ -209,8 +209,8 @@ export class BORepositoryAjax extends BORepository implements IRemoteRepository 
         // 补充发生错误的事件
         ajxSetting.error = function (jqXHR: JQueryXHR, textStatus: string, errorThrown: string): void {
             let opRslt = new OperationResult();
-            opRslt.resultCode = -999;
-            opRslt.message = string.format("{0} - {1}", textStatus, errorThrown);
+            opRslt.resultCode = -jqXHR.status;
+            opRslt.message = string.format("{0} - {1}", textStatus, i18n.prop("msg_network_error"));
             logger.log(emMessageLevel.ERROR,
                 "repository: call method [{2}] faild, {0} - {1}.", textStatus, errorThrown, ajxSetting.url);
             caller.onCompleted.call(object.isNull(caller.caller) ? caller : caller.caller, opRslt);

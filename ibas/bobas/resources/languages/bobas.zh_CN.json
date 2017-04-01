@@ -50,5 +50,6 @@
   "msg_not_converted_data": "没有转换的数据[{0}]",
   "msg_invaild_mapping_type": "[{0}]的映射对象类型无效",
   "msg_cannot_create_mapping_type_instance": "无法创建映射类型实例",
+  "msg_network_error": "服务器资源不可用，请稍后重试",
   "msg_operation_not_allowed_on_offline": "处于离线状态，不允许执行此操作"
 }
