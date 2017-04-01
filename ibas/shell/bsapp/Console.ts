@@ -48,7 +48,7 @@ export class SystemsFactory implements sys.ISystemsFactory {
         return new BORepositoryShell();
     }
     /** 创建帮助应用 */
-    createQueryPanel(): sys.IQueryPanel<ibas.IQueryPanelView> {
+    createQueryPanel(): sys.IQueryPanel<sys.IQueryPanelView> {
         return new QueryPanel();
     }
 }

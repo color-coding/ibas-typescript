@@ -7,6 +7,7 @@
  */
 
 import * as ibas from "../../../ibas/index";
+import * as bo from "./bo/Systems";
 
 /**
  * Shel 模块的数据转换者
@@ -85,22 +86,65 @@ export class ShellBOConverter extends ibas.BOConverter {
  * 离线的数据转换者
  */
 export class DataConverter4Offline extends ibas.DataConverter {
-
     /**
      * 转换数据
      * @param data 当前类型数据
+     * @param sign 操作标记
      * @returns 转换的数据
      */
-    convert(data: any): string {
+    convert(data: any, sign: string): string {
         return data;
     }
-
     /**
      * 解析数据
      * @param data 原始数据
+     * @param sign 操作标记
      * @returns 当前类型数据
      */
-    parsing(data: any): any {
+    parsing(data: any, sign: string): any {
+        if (sign === "users.json") {
+            let user: bo.User = new bo.User();
+            user.id = data.id;
+            user.code = data.user;
+            user.name = data.name;
+            user.password = data.password;
+            user.super = data.super;
+            return user;
+        } else if (sign === "usermodules.json") {
+            let module = new bo.UserModule();
+            module.id = data.id;
+            module.name = data.name;
+            module.category = data.category;
+            module.address = data.address;
+            return module;
+        } else if (sign === "userprivileges.json") {
+            let privilege = new bo.UserPrivilege();
+            privilege.source = ibas.enums.valueOf(ibas.emPrivilegeSource, data.source);
+            privilege.target = data.target;
+            privilege.value = ibas.enums.valueOf(ibas.emAuthoriseType, data.value);
+            return privilege;
+        } else if (sign === "userqueries.json") {
+            let query = new bo.UserQuery();
+            query.id = data.id;
+            query.name = data.name;
+            query.order = data.order;
+            query.criteria = new ibas.Criteria();// 此处没有处理转换
+            return query;
+        } else if (sign === "boinfos.json") {
+            let boInfo = new bo.BOInfo();
+            boInfo.code = data.code;
+            boInfo.name = data.name;
+            boInfo.type = data.type;
+            boInfo.properties = new Array();
+            for (let pItem of data.properties) {
+                let propertyInfo = new bo.BOPropertyInfo();
+                propertyInfo.property = pItem.property;
+                propertyInfo.description = pItem.description;
+                propertyInfo.searched = pItem.searched;
+                boInfo.properties.push(propertyInfo);
+            }
+            return boInfo;
+        }
         return data;
     }
 }

@@ -22,6 +22,8 @@ export class User implements sys.IUser {
 	name: string;
 	/** 超级用户 */
 	super: boolean;
+	/** 密码 */
+	password: string;
 }
 /**
  * 用户模块

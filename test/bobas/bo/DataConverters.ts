@@ -26,7 +26,7 @@ export class DataConverter4Test extends bobas.DataConverter4ibas {
 /**
  * Test 模块的业务对象转换者
  */
-class TestBOConverter extends bobas.BOConverter {
+export class TestBOConverter extends bobas.BOConverter {
 
     constructor() {
         super();
@@ -38,7 +38,7 @@ class TestBOConverter extends bobas.BOConverter {
         this.mappingBOs("SalesOrder", SalesOrder);
 
         // 注册枚举映射
-        
+
     }
 
     /**

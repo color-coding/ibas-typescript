@@ -17,9 +17,7 @@ import { ArrayList } from "../data/Common";
 import { url } from "../data/Url";
 import { config } from "../configuration/index";
 import { logger } from "../messages/index";
-/**
- * 配置
- */
+/** 多语言 */
 export class I18N {
 
     static CONFIG_ITEM_LANGUAGE_CODE: string = "language";
@@ -37,7 +35,6 @@ export class I18N {
     }
 
     private items: Map<string, string>;
-
     /**
      * 输出描述
      * @param key 检索值

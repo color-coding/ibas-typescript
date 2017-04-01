@@ -211,20 +211,20 @@ export class Converter {
  * 数据转换者基类
  */
 export abstract class DataConverter extends Converter implements IDataConverter {
-
     /**
      * 转换数据
      * @param data 当前类型数据
+     * @param sign 操作标记
      * @returns 转换的数据
      */
-    abstract convert(data: any): string;
-
+    abstract convert(data: any, sign: string): string;
     /**
      * 解析数据
      * @param data 原始数据
+     * @param sign 操作标记
      * @returns 当前类型数据
      */
-    abstract parsing(data: any): any;
+    abstract parsing(data: any, sign: string): any;
 
 }
 

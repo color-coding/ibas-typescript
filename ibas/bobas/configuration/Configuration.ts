@@ -19,7 +19,6 @@ export class Configuration {
 
     /** 默认配置文件名称 */
     static CONFIG_FILE_NAME: string = "config.json";
-
     /** 配置项目-调试模式 */
     CONFIG_ITEM_DEBUG_MODE: string = "debug";
     /** 配置项目-消息输出级别 */
@@ -30,7 +29,6 @@ export class Configuration {
     CONFIG_ITEM_DISABLE_PLATFORM_VIEW: string = "disablePlatformView";
 
     private items: Map<string, any> = new Map<string, any>();
-
     /**
      * 加载配置文件
      */
@@ -62,7 +60,6 @@ export class Configuration {
         };
         jQuery.ajax(JQryAjxSetting);
     }
-
     /**
      * 设置配置
      * @param key 项

@@ -9,7 +9,7 @@
 /// <reference path="../../../ibas/3rdparty/index.d.ts" />
 import {
     i18n, logger, emMessageLevel, IOperationResult,
-    object, BORemoteRepository, config, string
+    object, config, string, BORepositoryApplication
 } from "../../../ibas/bobas/index";
 import {
     ModuleConsole, IModuleConsole, IModuleFunction, IApplication,
@@ -133,7 +133,7 @@ export abstract class CenterApp<T extends ICenterView> extends Application<T> im
         let that: this = this;
         let boRep: IBORepositorySystem = Factories.systemsFactory.createRepository();
         boRep.fetchUserModules({
-            userCode: user.code,
+            user: user.code,
             onCompleted: function (opRslt: IOperationResult<IUserModule>): void {
                 try {
                     if (opRslt.resultCode !== 0) {
@@ -152,7 +152,7 @@ export abstract class CenterApp<T extends ICenterView> extends Application<T> im
             }
         });
         boRep.fetchUserPrivileges({
-            userCode: user.code,
+            user: user.code,
             onCompleted: function (opRslt: IOperationResult<IUserPrivilege>): void {
                 try {
                     if (opRslt.resultCode !== 0) {
@@ -205,7 +205,7 @@ export abstract class CenterApp<T extends ICenterView> extends Application<T> im
             // 注册模块业务仓库默认地址，创建实例时默认取此地址
             if (!object.isNull(module.name) && !object.isNull(module.repository)) {
                 let configName: string = string.format(
-                    BORemoteRepository.CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS
+                    BORepositoryApplication.CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS
                     , module.name);
                 config.set(configName, module.repository);
                 logger.log(emMessageLevel.DEBUG, "repository: register repository's default address [{0}].", module.repository);

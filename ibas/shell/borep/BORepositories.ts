@@ -11,44 +11,66 @@ import * as ibas from "../../../ibas/index";
 import { DataConverter4Shell, DataConverter4Offline } from "./DataConverters";
 import * as bo from "./bo/Systems";
 
-
 /**
  * 业务仓库-壳-远程
  */
 export class BORepositoryShell extends ibas.BORepositoryApplication implements sys.IBORepositorySystem {
 
-    private converter: DataConverter4Shell;
     /**
      * 创建此模块的后端与前端数据的转换者
      */
-    protected createDataConverter(): ibas.IDataConverter {
-        if (ibas.object.isNull(this.converter)) {
-            this.converter = new DataConverter4Shell();
-        }
-        return this.converter;
+    protected createConverter(): ibas.IDataConverter {
+        return new DataConverter4Shell();
+    }
+
+    /** 创建远程仓库 */
+    protected createRemoteRepository(): ibas.IRemoteRepository {
+        let boRepository: ibas.BORepositoryAjax = new ibas.BORepositoryAjax();
+        boRepository.address = this.address;
+        boRepository.token = this.token;
+        boRepository.converter = this.createConverter();
+        return boRepository;
     }
 	/**
 	 * 用户登录
 	 * @param listener 登录监听者
 	 */
-    connect(listener: sys.ConnectCaller): void {
-        throw new Error("unrealized method.");
+    connect(caller: sys.ConnectCaller): void {
+        let remoteRepository: ibas.IRemoteRepository = this.createRemoteRepository();
+        if (ibas.object.isNull(remoteRepository)) {
+            throw new Error(ibas.i18n.prop("msg_invalid_parameter", "remoteRepository"));
+        }
+        this.token = undefined;
+        let method = ibas.string.format("userConnect?user={0}&password={1}", caller.user, caller.password);
+        remoteRepository.callRemoteMethod(method, undefined, caller);
     }
 
 	/**
 	 * 查询用户模块
 	 * @param listener 用户检索监听者
 	 */
-    fetchUserModules(listener: sys.UserMethodsCaller<sys.IUserModule>): void {
-        throw new Error("unrealized method.");
+    fetchUserModules(caller: sys.UserMethodsCaller<sys.IUserModule>): void {
+        let remoteRepository: ibas.IRemoteRepository = this.createRemoteRepository();
+        if (ibas.object.isNull(remoteRepository)) {
+            throw new Error(ibas.i18n.prop("msg_invalid_parameter", "remoteRepository"));
+        }
+        this.token = undefined;
+        let method = ibas.string.format("fetchUserModules?user={0}", caller.user);
+        remoteRepository.callRemoteMethod(method, undefined, caller);
     }
 
 	/**
 	 * 查询用户角色权限
 	 * @param listener 用户检索监听者
 	 */
-    fetchUserPrivileges(listener: sys.UserMethodsCaller<sys.IUserPrivilege>): void {
-        throw new Error("unrealized method.");
+    fetchUserPrivileges(caller: sys.UserMethodsCaller<sys.IUserPrivilege>): void {
+        let remoteRepository: ibas.IRemoteRepository = this.createRemoteRepository();
+        if (ibas.object.isNull(remoteRepository)) {
+            throw new Error(ibas.i18n.prop("msg_invalid_parameter", "remoteRepository"));
+        }
+        this.token = undefined;
+        let method = ibas.string.format("fetchUserPrivileges?user={0}", caller.user);
+        remoteRepository.callRemoteMethod(method, undefined, caller);
     }
 
     /**
@@ -56,7 +78,13 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements s
      * @param caller 监听者
      */
     fetchUserQueries(caller: sys.UserQueriesCaller): void {
-        throw new Error("unrealized method.");
+        let remoteRepository: ibas.IRemoteRepository = this.createRemoteRepository();
+        if (ibas.object.isNull(remoteRepository)) {
+            throw new Error(ibas.i18n.prop("msg_invalid_parameter", "remoteRepository"));
+        }
+        this.token = undefined;
+        let method = ibas.string.format("fetchUserQueries?user={0}", caller.user);
+        remoteRepository.callRemoteMethod(method, undefined, caller);
     }
 
 	/**
@@ -64,7 +92,7 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements s
 	 * @param caller 监听者
 	 */
     saveUserQuery(caller: ibas.SaveCaller<sys.IUserQuery>): void {
-        throw new Error("unrealized method.");
+        this.save("UserQuery", caller);
     }
 
 	/**
@@ -72,7 +100,13 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements s
 	 * @param caller 监听者
 	 */
     fetchBOInfos(caller: sys.BOInfoCaller): void {
-        throw new Error("unrealized method.");
+        let remoteRepository: ibas.IRemoteRepository = this.createRemoteRepository();
+        if (ibas.object.isNull(remoteRepository)) {
+            throw new Error(ibas.i18n.prop("msg_invalid_parameter", "remoteRepository"));
+        }
+        this.token = undefined;
+        let method = ibas.string.format("fetchBOInfos?boName={0}", caller.boName);
+        remoteRepository.callRemoteMethod(method, undefined, caller);
     }
 }
 
@@ -81,37 +115,11 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements s
  */
 export class BORepositoryShellOffLine extends BORepositoryShell {
 
-    /** 获取离线配置 */
-    private fetchSettings(caller: ibas.MethodCaller): void {
-        let index: number = document.location.href.toLowerCase().indexOf(".html");
-        if (index > 0) {
-            this.address = ibas.url.normalize(document.location.href.substring(0, document.location.href.lastIndexOf("/")));
-        } else {
-            this.address = ibas.url.normalize(document.location.href);
-        }
-        let method: string = "config.json";
-        let remotecaller: ibas.MethodCaller = {
-            onCompleted(settings: any): void {
-                if (!ibas.object.isNull(caller.onCompleted)) {
-                    let offlineSettings: any = null;
-                    if (!ibas.object.isNull(settings) && !ibas.object.isNull(settings.offlineSettings)) {
-                        offlineSettings = settings.offlineSettings;
-                    }
-                    caller.onCompleted.call(caller, offlineSettings);
-                }
-            }
-        };
-        this.callRemoteMethod(method, null, remotecaller);
-    }
-    private offlineConverter: DataConverter4Offline;
     /**
      * 创建此模块的后端与前端数据的转换者
      */
-    protected createDataConverter(): ibas.IDataConverter {
-        if (ibas.object.isNull(this.offlineConverter)) {
-            this.offlineConverter = new DataConverter4Offline();
-        }
-        return this.offlineConverter;
+    protected createConverter(): ibas.IDataConverter {
+        return new DataConverter4Offline();
     }
 
 	/**
@@ -119,30 +127,25 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
 	 * @param caller 登录者
 	 */
     connect(caller: sys.ConnectCaller): void {
-        this.fetchSettings({
-            onCompleted(settings: any): void {
+        let fetchCaller: ibas.FetchCaller<bo.User> = {
+            criteria: null,
+            onCompleted(opRsltFetch): void {
                 let opRslt = new ibas.OperationResult();
                 opRslt.resultCode = -1;
                 opRslt.message = ibas.i18n.prop("sys_shell_user_and_password_not_match");
-                if (!ibas.object.isNull(settings)
-                    && !ibas.object.isNull(settings.users)
-                    && Array.isArray(settings.users)) {
-                    for (let item of settings.users) {
-                        if (item.user === caller.user
-                            && item.password === caller.password) {
-                            opRslt.resultCode = 0;
-                            opRslt.message = "";
-                            let user: bo.User = new bo.User();
-                            user.code = item.user;
-                            user.name = item.name;
-                            opRslt.resultObjects.add(user);
-                            break;
-                        }
+                for (let item of opRsltFetch.resultObjects) {
+                    if (item.code === caller.user
+                        && item.password === caller.password) {
+                        opRslt.resultCode = 0;
+                        opRslt.message = "Ok.";
+                        opRslt.resultObjects.add(item);
+                        break;
                     }
                 }
                 caller.onCompleted.call(ibas.object.isNull(caller.caller) ? caller : caller.caller, opRslt);
             }
-        });
+        };
+        this.fetch("User", fetchCaller);
     }
 
 	/**
@@ -150,24 +153,13 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
 	 * @param caller 用户检索者
 	 */
     fetchUserModules(caller: sys.UserMethodsCaller<sys.IUserModule>): void {
-        this.fetchSettings({
-            onCompleted(settings: any): void {
-                let opRslt = new ibas.OperationResult();
-                if (!ibas.object.isNull(settings)
-                    && !ibas.object.isNull(settings.modules)
-                    && Array.isArray(settings.modules)) {
-                    for (let item of settings.modules) {
-                        let module = new bo.UserModule();
-                        module.id = item.id;
-                        module.name = item.name;
-                        module.category = item.category;
-                        module.address = item.address;
-                        opRslt.resultObjects.add(module);
-                    }
-                }
+        let fetchCaller: ibas.FetchCaller<any> = {
+            criteria: null,
+            onCompleted(opRslt): void {
                 caller.onCompleted.call(ibas.object.isNull(caller.caller) ? caller : caller.caller, opRslt);
             }
-        });
+        };
+        this.fetch("UserModule", fetchCaller);
     }
 
 	/**
@@ -175,46 +167,38 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
 	 * @param caller 用户检索者
 	 */
     fetchUserPrivileges(caller: sys.UserMethodsCaller<sys.IUserPrivilege>): void {
-        this.fetchSettings({
-            onCompleted(settings: any): void {
-                let opRslt = new ibas.OperationResult();
-                if (!ibas.object.isNull(settings)
-                    && !ibas.object.isNull(settings.privileges)
-                    && Array.isArray(settings.privileges)) {
-                    for (let item of settings.privileges) {
-                        let privilege = new bo.UserPrivilege();
-                        privilege.source = ibas.enums.valueOf(ibas.emPrivilegeSource, item.source);
-                        privilege.target = item.target;
-                        privilege.value = ibas.enums.valueOf(ibas.emAuthoriseType, item.value);
-                        opRslt.resultObjects.add(privilege);
-                    }
-                }
+        let fetchCaller: ibas.FetchCaller<any> = {
+            criteria: null,
+            onCompleted(opRslt): void {
                 caller.onCompleted.call(ibas.object.isNull(caller.caller) ? caller : caller.caller, opRslt);
             }
-        });
+        };
+        this.fetch("UserPrivilege", fetchCaller);
     }
     /**
      * 查询用户查询
      * @param caller 监听者
      */
     fetchUserQueries(caller: sys.UserQueriesCaller): void {
-        let opRslt = new ibas.OperationResult();
-        caller.onCompleted.call(ibas.object.isNull(caller.caller) ? caller : caller.caller, opRslt);
-    }
-	/**
-	 * 保存用户查询
-	 * @param caller 监听者
-	 */
-    saveUserQuery(caller: ibas.SaveCaller<sys.IUserQuery>): void {
-        let opRslt = new ibas.OperationResult();
-        caller.onCompleted.call(ibas.object.isNull(caller.caller) ? caller : caller.caller, opRslt);
+        let fetchCaller: ibas.FetchCaller<any> = {
+            criteria: null,
+            onCompleted(opRslt): void {
+                caller.onCompleted.call(ibas.object.isNull(caller.caller) ? caller : caller.caller, opRslt);
+            }
+        };
+        this.fetch("UserQuery", fetchCaller);
     }
 	/**
 	 * 业务对象信息查询
 	 * @param caller 监听者
 	 */
     fetchBOInfos(caller: sys.BOInfoCaller): void {
-        let opRslt = new ibas.OperationResult();
-        caller.onCompleted.call(ibas.object.isNull(caller.caller) ? caller : caller.caller, opRslt);
+        let fetchCaller: ibas.FetchCaller<any> = {
+            criteria: null,
+            onCompleted(opRslt): void {
+                caller.onCompleted.call(ibas.object.isNull(caller.caller) ? caller : caller.caller, opRslt);
+            }
+        };
+        this.fetch("BOInfo", fetchCaller);
     }
 }

@@ -49,9 +49,18 @@ export interface SaveCaller<P> extends MethodCaller {
     onCompleted(opRslt: IOperationResult<P>);
 }
 /**
- * 业务对象仓库
+ * 加载文件调用者
  */
-export interface IBORepository {
+export interface LoadFileCaller extends MethodCaller {
+    /** 协议类型 */
+    contentType?: string;
+    /** 数据类型 */
+    dataType?: string;
+}
+/**
+ * 业务对象仓库，只读
+ */
+export interface IBORepositoryReadonly {
     /**
      * 访问口令
      */
@@ -62,6 +71,11 @@ export interface IBORepository {
      * @param caller 查询监听者
      */
     fetch<P>(boName: string, caller: FetchCaller<P>);
+}
+/**
+ * 业务对象仓库
+ */
+export interface IBORepository extends IBORepositoryReadonly {
     /**
      * 保存数据
      * @param boName 业务对象名称
@@ -69,29 +83,33 @@ export interface IBORepository {
      */
     save<P>(boName: string, caller: SaveCaller<P>);
 }
-
 /**
  * 远程仓库
  */
 export interface IRemoteRepository {
-
     /**
      * 远程服务地址
      */
     address: string;
     /**
      * 调用远程方法
+     * @param method 方法地址
+     * @param data 数据
+     * @param caller 调用者
      */
-    callRemoteMethod(method: string, data: any, caller: MethodCaller);
+    callRemoteMethod(method: string, data: string, caller: MethodCaller): void;
 }
-
 /**
- * 业务对象远程仓库
+ * 文件仓库
  */
-export interface IBORemoteRepository extends IBORepository, IRemoteRepository {
-
+export interface IFileRepository {
+    /**
+     * 加载文件
+     * @param fileName 文件名称
+     * @param caller 监听者
+     */
+    loadFile(fileName: string, caller: LoadFileCaller);
 }
-
 /**
  * 数据转换者
  */
@@ -99,18 +117,18 @@ export interface IDataConverter {
     /**
      * 转换数据
      * @param data 当前类型数据
+     * @param sign 操作标记
      * @returns 转换的数据
      */
-    convert(data: any): string;
-
+    convert(data: any, sign: string): string;
     /**
      * 解析数据
      * @param data 原始数据
+     * @param sign 操作标记
      * @returns 当前类型数据
      */
-    parsing(data: any): any;
+    parsing(data: any, sign: string): any;
 }
-
 /**
  * 数据转换者
  */
@@ -120,8 +138,7 @@ export interface IBOConverter {
      * @param data 当前类型数据
      * @returns 转换的数据
      */
-    convert(data: IBusinessObject): Object;
-
+    convert(data: IBusinessObject): any;
     /**
      * 解析业务对象数据
      * @param data 原始数据
@@ -129,7 +146,6 @@ export interface IBOConverter {
      */
     parsing(data: any): IBusinessObject;
 }
-
 /**
  * 远程数据转换者
  */
@@ -152,9 +168,4 @@ export interface IRemoteDataConverter extends IDataConverter {
      * @returns 操作结果数据
      */
     parsing(data: any): IOperationResult<any>;
-}
-/**
- * 文件仓库
- */
-export interface IFileRemoteRepository {
 }

@@ -2,57 +2,18 @@
   "appSettings": {
     "debug": true,
     "language": "zh_CN",
-    "offline": true,
+    "offline": false,
     "helpUrl": "http://www.baidu.com",
     "fullScreen": false,
     "statusDelay": 2,
     "disablePlatformView": true,
     "defaultUser": "admin",
-    "defaultPassword": "1q2w3e"
+    "defaultPassword": "1q2w3e",
+    "RepositoryAddress|BORepositoryShellOffLine": ".../../../test/repository",
+    "RepositoryAddress|BORepositoryShell": "http://localhost:8080/initialfantasy/services/rest/datas"
   },
   "languages": [
     "zh_CN",
     "en_US"
-  ],
-  "offlineSettings": {
-    "users": [
-      {
-        "user": "admin",
-        "name": "administrator",
-        "password": "1q2w3e"
-      }
-    ],
-    "modules": [
-      {
-        "id": "test-0",
-        "name": "module_a",
-        "category": "test",
-        "address": "../../../test/apps/module_a/index"
-      },
-      {
-        "id": "test-1",
-        "name": "module_b",
-        "category": "test",
-        "address": "../../../test/apps/module_b/index"
-      },
-      {
-        "id": "test-2",
-        "name": "module_c",
-        "category": "test",
-        "address": "../../../test/apps/module_c/index"
-      }
-    ],
-    "privileges": [
-      {
-        "source": "APPLICATION",
-        "target": "//b77d974d-57a0-4373-884e-b1ec43471c5a",
-        "value": "NONE"
-      },
-      {
-        "source": "BUSINESS_OBJECT",
-        "target": "//DEMO",
-        "value": "READ"
-      }
-    ]
-  }
+  ]
 }

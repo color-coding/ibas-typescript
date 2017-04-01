@@ -14,7 +14,7 @@ let listener: bobas.PropertyChangedListener = {
     propertyChanged(property: string): void {
         bobas.logger.log(bobas.emMessageLevel.DEBUG, "bo: property [{0}] was changed.", property);
     }
-}
+};
 let order = new SalesOrder();
 order.registerListener(listener);
 bobas.logger.log(bobas.emMessageLevel.DEBUG, "test: type of {0}", typeof (order));
@@ -71,12 +71,11 @@ let sort = criteria.sorts.create();
 bobas.logger.log(bobas.emMessageLevel.DEBUG, "test: type of {0}", typeof (sort));
 sort.alias = "docEntry";
 sort.sortType = bobas.emSortType.DESCENDING;
-
-//http://localhost:8080/demo/services/jersey/fetchSalesOrder?token=hahaha
 let boRepository = new BORepositoryTest();
 boRepository.token = "hahaha";
+// 测试在线服务仓库
+boRepository.offline = false;
 boRepository.address = "http://localhost:8080/demo/services/jersey/json/";
-boRepository.conect();
 // 通过变量调用
 let fetcher: bobas.FetchCaller<SalesOrder> = {
     /** 查询条件 */
@@ -103,6 +102,15 @@ boRepository.saveSalesOrder({
         bobas.logger.log(bobas.string.format("op code {0} and objects size {1}.", opRslt.resultCode, opRslt.resultObjects.length));
         let newOrder = opRslt.resultObjects.firstOrDefault();
         bobas.assert.equals("order document status wrong.", order.documentStatus, newOrder.documentStatus);
+    }
+});
+// 测试离线仓库
+boRepository.offline = true;
+boRepository.address = bobas.url.rootUrl(undefined) + "/../../repository";
+boRepository.fetchSalesOrder({
+    criteria: criteria,
+    onCompleted(opRslt: bobas.IOperationResult<SalesOrder>): void {
+        bobas.logger.log(bobas.string.format("op code {0} and objects size {1}.", opRslt.resultCode, opRslt.resultObjects.length));
     }
 });
 

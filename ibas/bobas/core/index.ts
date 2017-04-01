@@ -12,5 +12,6 @@
 
 export * from "./BusinessObjectCore.d";
 export * from "./BusinessObjectCore";
-export * from "./RepositoryCore.d";
+export * from "./BORepositoryCore.d";
 export * from "./BORepositoryCore";
+export * from "./BORepositoriesAjax";

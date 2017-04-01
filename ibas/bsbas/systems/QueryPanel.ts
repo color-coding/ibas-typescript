@@ -50,7 +50,7 @@ export abstract class QueryPanel<T extends IQueryPanelView> extends BOBarApplica
         let boRepository: IBORepositorySystem = Factories.systemsFactory.createRepository();
         let that = this;
         boRepository.fetchUserQueries({
-            userCode: variablesManager.getValue(variablesManager.VARIABLE_NAME_USER_CODE),
+            user: variablesManager.getValue(variablesManager.VARIABLE_NAME_USER_CODE),
             queryId: this.listener.queryId,
             onCompleted: function (opRslt: IOperationResult<IUserQuery>): void {
                 try {

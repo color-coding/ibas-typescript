@@ -214,8 +214,8 @@ export interface ConnectCaller extends MethodCaller {
  * 用户相关调用者
  */
 export interface UserMethodsCaller<P> extends MethodCaller {
-	/** 用户编码 */
-	userCode: String;
+	/** 用户 */
+	user: String;
     /**
      * 调用完成
      * @param opRslt 结果

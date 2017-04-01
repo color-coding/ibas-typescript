@@ -73,19 +73,11 @@ builder.append(" ");
 builder.appendFormat("{1}.{0}", "zhu", "niuren");
 builder.append(".");
 console.log(builder.toString());
-// 测试jquery
-var JQryAjxSetting: JQueryAjaxSettings = {
-    url: "http://localhost:8080/demo/services/jersey/hello",
-    type: "GET",
-    contentType: "application/json; charset=utf-8",
-    //dataType: "json",
-    async: true,
-    error: function (xhr, status, error) {
-        console.log(error);
-    },
-    success: function () {
-        console.log("success");
-    },
-};
-jQuery.ajax(JQryAjxSetting);
-
+// 测试文件仓库
+let fileRepository = new bobas.FileRepositoryAjax();
+fileRepository.address = bobas.url.rootUrl(undefined) + "/../../repository";
+fileRepository.loadFile("salesorders.json", {
+    onCompleted(opRslt): void {
+        console.log(opRslt.message);
+    }
+});

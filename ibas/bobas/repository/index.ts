@@ -9,7 +9,6 @@
 /**
  * 模块索引文件，此文件集中导出类
  */
-export * from "./BORepository.d";
-export * from "./BORepository";
+export * from "./BORepositories";
 export * from "./DataConverters";
 
