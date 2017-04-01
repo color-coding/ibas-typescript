@@ -3,7 +3,7 @@
 
 ## 鼓励师 | Encourager
 [![encourager]](http://baike.baidu.com/view/10998931.htm)  
-[encourager]:https://github.com/color-coding/ibas-typescript/raw/master/encourager.gif "はしもとかんな"
+[encourager]:https://github.com/color-coding/ibas-typescript/blob/master/encourager.gif "はしもとかんな"
 * 姓名：桥本环奈（はしもとかんな）
 * 生日：1999年2月3日
 * 国籍：日本
