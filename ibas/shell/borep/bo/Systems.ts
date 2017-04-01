@@ -6,13 +6,14 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
+import * as sys from "../../../../ibas/bsbas/systems/index";
 import * as ibas from "../../../../ibas/index";
 import { emPrivilegeSource, emAuthoriseType, ICriteria } from "../../../../ibas/index";
 
 /**
  * 用户
  */
-export class User implements ibas.IUser {
+export class User implements sys.IUser {
 	/** 编号 */
 	id: number;
 	/** 编码 */
@@ -25,7 +26,7 @@ export class User implements ibas.IUser {
 /**
  * 用户模块
  */
-export class UserModule implements ibas.IUserModule {
+export class UserModule implements sys.IUserModule {
 	/** 唯一标识 */
 	id: string;
 	/** 名称 */
@@ -40,7 +41,7 @@ export class UserModule implements ibas.IUserModule {
 /**
  * 用户权限
  */
-export class UserPrivilege implements ibas.IUserPrivilege {
+export class UserPrivilege implements sys.IUserPrivilege {
 	/** 来源 */
 	source: emPrivilegeSource;
 	/** 权限目标 */
@@ -51,7 +52,7 @@ export class UserPrivilege implements ibas.IUserPrivilege {
 /**
  * 用户查询
  */
-export class UserQuery implements ibas.IUserQuery {
+export class UserQuery implements sys.IUserQuery {
 	/** 标记 */
 	id: string;
 	/** 名称 */
@@ -64,7 +65,7 @@ export class UserQuery implements ibas.IUserQuery {
 	target: string;
 }
 /** 业务对象信息 */
-export class BOInfo implements ibas.IBOInfo {
+export class BOInfo implements sys.IBOInfo {
 	/** 名称 */
 	name: string;
 	/** 编码 */
@@ -75,7 +76,7 @@ export class BOInfo implements ibas.IBOInfo {
 	properties: Array<BOPropertyInfo>;
 }
 /** 业务对象属性信息 */
-export class BOPropertyInfo implements ibas.IBOPropertyInfo {
+export class BOPropertyInfo implements sys.IBOPropertyInfo {
 	/** 属性 */
 	property: string;
 	/** 描述 */

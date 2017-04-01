@@ -7,12 +7,13 @@
  */
 
 /// <reference path="../../../../../openui5/typings/index.d.ts" />
+import * as sys from "../../../../../ibas/bsbas/systems/index";
 import * as ibas from "../../../../../ibas/index";
 
 /**
  * 视图-关于
  */
-export class AboutView extends ibas.BOView implements ibas.IAboutView {
+export class AboutView extends ibas.BOView implements sys.IAboutView {
     /** 绘制视图 */
     darw(): any {
         this.form = new sap.ui.layout.form.SimpleForm("", {

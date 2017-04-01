@@ -7,6 +7,7 @@
  */
 
 /// <reference path="../../../../../openui5/typings/index.d.ts" />
+import * as sys from "../../../../../ibas/bsbas/systems/index";
 import * as ibas from "../../../../../ibas/index";
 import { utils } from "../../../../../openui5/typings/ibas.utils";
 import { IQueryPanelView } from "../../../bsapp/centers/QueryPanel";
@@ -102,12 +103,12 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
             // 尚未初始化表格
             if (!ibas.object.isNull(this.boName)) {
                 let that = this;
-                let boRepository: ibas.IBORepositorySystem = ibas.Factories.systemsFactory.createRepository();
+                let boRepository: sys.IBORepositorySystem = sys.Factories.systemsFactory.createRepository();
                 boRepository.fetchBOInfos({
                     boName: this.boName,
                     boCode: null,
-                    onCompleted(opRslt: ibas.IOperationResult<ibas.IBOInfo>): void {
-                        let boInfo: ibas.IBOInfo = opRslt.resultObjects.firstOrDefault();
+                    onCompleted(opRslt: ibas.IOperationResult<sys.IBOInfo>): void {
+                        let boInfo: sys.IBOInfo = opRslt.resultObjects.firstOrDefault();
                         if (ibas.object.isNull(boInfo)) {
                             that.createTable([]);
                         } else {
@@ -173,7 +174,7 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
         return items;
     }
     private table: sap.ui.table.Table;
-    private getPropertyListItem(properies: ibas.IBOPropertyInfo[]): sap.ui.core.ListItem[] {
+    private getPropertyListItem(properies: sys.IBOPropertyInfo[]): sap.ui.core.ListItem[] {
         let items: Array<sap.ui.core.ListItem> = [];
         for (let property of properies) {
             items.push(new sap.ui.core.ListItem("", {
@@ -183,7 +184,7 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
         }
         return items;
     }
-    private createTable(properies: ibas.IBOPropertyInfo[]): void {
+    private createTable(properies: sys.IBOPropertyInfo[]): void {
         let that = this;
         this.table = new sap.ui.table.Table("", {
             extension: new sap.m.Toolbar("", {

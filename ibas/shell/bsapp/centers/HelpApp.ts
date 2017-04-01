@@ -6,12 +6,13 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
+import * as sys from "../../../../ibas/bsbas/systems/index";
 import * as ibas from "../../../../ibas/index";
 
 /**
  * 应用-帮助
  */
-export class HelpApp extends ibas.HelpApp<IHelpView> {
+export class HelpApp extends sys.HelpApp<IHelpView> {
     /** 注册视图 */
     protected registerView(): void {
         super.registerView();
@@ -23,13 +24,13 @@ export class HelpApp extends ibas.HelpApp<IHelpView> {
     }
     /** 运行 */
     run(): void {
-        this.view.url = ibas.config.get(ibas.HelpApp.CONFIG_ITEM_HELP_URL);
-        this.view.isInside = ibas.config.get(ibas.HelpApp.CONFIG_ITEM_HELP_INSIDE, false);
+        this.view.url = ibas.config.get(sys.HelpApp.CONFIG_ITEM_HELP_URL);
+        this.view.isInside = ibas.config.get(sys.HelpApp.CONFIG_ITEM_HELP_INSIDE, false);
         super.run();
     }
 
 }
 /** 视图-帮助 */
-export interface IHelpView extends ibas.IHelpView {
+export interface IHelpView extends sys.IHelpView {
 
 }

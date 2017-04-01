@@ -6,6 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
+import * as sys from "../../../../ibas/bsbas/systems/index";
 import * as ibas from "../../../../ibas/index";
 import * as app from "../../bsapp/centers/index";
 import * as ui from "./centers/index";
@@ -17,8 +18,8 @@ export { ViewShowerDefault as ViewShower } from "../ViewShowers";
  */
 export class Navigation extends ibas.ViewNavigation {
 
-    /** 
-     * 创建实例     
+    /**
+     * 创建实例
      * @param id 应用id
      */
     protected newView(id: string): ibas.IView {

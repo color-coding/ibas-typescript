@@ -8,12 +8,13 @@
 
 /// <reference path="../../../../../openui5/typings/index.d.ts" />
 /// <reference path="../../../../../ibas/3rdparty/html2canvas.d.ts" />
+import * as sys from "../../../../../ibas/bsbas/systems/index";
 import * as ibas from "../../../../../ibas/index";
 
 /**
  * 视图-建议
  */
-export class SuggestionView extends ibas.BOResidentView implements ibas.ISuggestionView {
+export class SuggestionView extends ibas.BOResidentView implements sys.ISuggestionView {
     /** 绘制工具条视图 */
     darwBar(): any {
         let that: this = this;

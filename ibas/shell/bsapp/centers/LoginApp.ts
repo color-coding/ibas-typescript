@@ -6,10 +6,11 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
+import * as sys from "../../../../ibas/bsbas/systems/index";
 import * as ibas from "../../../../ibas/index";
 
 /** 应用-登陆 */
-export class LoginApp extends ibas.LoginApp<ILoginView> {
+export class LoginApp extends sys.LoginApp<ILoginView> {
 
     /** 注册视图 */
     protected registerView(): void {
@@ -50,7 +51,7 @@ export class LoginApp extends ibas.LoginApp<ILoginView> {
     }
 }
 /** 视图-登陆 */
-export interface ILoginView extends ibas.ILoginView {
+export interface ILoginView extends sys.ILoginView {
     /** 显示语言列表 */
     displayLanguages(list: string[]): void;
     /** 改变语言 */

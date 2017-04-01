@@ -6,6 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
+import * as sys from "../../../../ibas/bsbas/systems/index";
 import * as ibas from "../../../../ibas/index";
 import { BORepositoryShell } from "../../borep/BORepositories";
 import { UserQuery } from "../../borep/bo/Systems";
@@ -13,7 +14,7 @@ import { UserQuery } from "../../borep/bo/Systems";
 /**
  * 查询面板
  */
-export class QueryPanel extends ibas.QueryPanel<IQueryPanelView>  {
+export class QueryPanel extends sys.QueryPanel<IQueryPanelView>  {
     /** 初始化 */
     protected init(callBack: Function): void {
         if (callBack instanceof Function) {
@@ -85,7 +86,7 @@ export class QueryPanel extends ibas.QueryPanel<IQueryPanelView>  {
         let boRepository: BORepositoryShell = new BORepositoryShell();
         boRepository.saveUserQuery({
             beSaved: this.editQuery,
-            onCompleted(opRslt: ibas.IOperationResult<ibas.IUserQuery>): void {
+            onCompleted(opRslt: ibas.IOperationResult<sys.IUserQuery>): void {
                 try {
                     if (opRslt.resultCode !== 0) {
                         throw new Error(opRslt.message);
@@ -114,7 +115,7 @@ export class QueryPanel extends ibas.QueryPanel<IQueryPanelView>  {
     }
 }
 /** 视图-查询面板 */
-export interface IQueryPanelView extends ibas.IQueryPanelView {
+export interface IQueryPanelView extends sys.IQueryPanelView {
     /** 显示可用查询 */
     showQueries(datas: ibas.KeyValue[]): void;
     /** 删除查询 */

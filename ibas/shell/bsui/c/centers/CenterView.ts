@@ -7,13 +7,14 @@
  */
 
 /// <reference path="../../../../../openui5/typings/index.d.ts" />
+import * as sys from "../../../../../ibas/bsbas/systems/index";
 import * as ibas from "../../../../../ibas/index";
 import { utils } from "../../../../../openui5/typings/ibas.utils";
 
 /**
  * 视图-中心
  */
-export class CenterView extends ibas.BOView implements ibas.ICenterView {
+export class CenterView extends ibas.BOView implements sys.ICenterView {
     /** 主页面 */
     private page: sap.tnt.ToolPage;
     /** 页面头部 */
@@ -179,7 +180,7 @@ export class CenterView extends ibas.BOView implements ibas.ICenterView {
             this.viewQueue.set(view, viewContent);
             // 添加查询面板
             if (view instanceof ibas.BOQueryView) {
-                let queryView: ibas.IEmbeddedQueryPanel = {
+                let queryView: sys.IEmbeddedQueryPanel = {
                     /** 嵌入查询面板 */
                     embedded(view: any): void {
                         that.form.setSubHeader(null);
@@ -250,7 +251,7 @@ export class CenterView extends ibas.BOView implements ibas.ICenterView {
         // 添加查询面板
         if (view instanceof ibas.BOQueryView
             || view instanceof ibas.BOQueryDialogView) {
-            let queryView: ibas.IEmbeddedQueryPanel = {
+            let queryView: sys.IEmbeddedQueryPanel = {
                 /** 嵌入查询面板 */
                 embedded(view: any): void {
                     dialog.setSubHeader(null);
@@ -282,8 +283,8 @@ export class CenterView extends ibas.BOView implements ibas.ICenterView {
         }
     }
     private queryPanels = new Map<string, any>();
-    showQueryPanel(view: ibas.BOQueryView, embeddedView: ibas.IEmbeddedQueryPanel): void {
-        let queryPanel: ibas.IQueryPanel<ibas.IQueryPanelView> = ibas.Factories.systemsFactory.createQueryPanel();
+    showQueryPanel(view: ibas.BOQueryView, embeddedView: sys.IEmbeddedQueryPanel): void {
+        let queryPanel: sys.IQueryPanel<sys.IQueryPanelView> = sys.Factories.systemsFactory.createQueryPanel();
         if (ibas.object.isNull(queryPanel)) {
             // 查询面板无效，不添加
             this.showStatusMessage(ibas.emMessageType.ERROR, ibas.i18n.prop("sys_shell_invalid_query_panel"));
@@ -425,7 +426,7 @@ export class CenterView extends ibas.BOView implements ibas.ICenterView {
         }
     }
     /** 显示用户信息 */
-    showUser(user: ibas.IUser): void {
+    showUser(user: sys.IUser): void {
         if (!ibas.object.isNull(user.name)) {
             this.userBar.setText(user.name);
         } else if (!ibas.object.isNull(user.code)) {

@@ -7,39 +7,40 @@
  */
 
 /// <reference path="../../../ibas/3rdparty/require.d.ts" />
+import * as sys from "../../../ibas/bsbas/systems/index";
 import * as ibas from "../../../ibas/index";
 import { BORepositoryShell, BORepositoryShellOffLine } from "../borep/BORepositories";
 import { CentersFunc, MainApp, LoginApp, CenterApp, AboutApp, HelpApp, QueryPanel, SuggestionApp } from "./centers/index";
 
 
 /** 系统工厂 */
-export class SystemsFactory implements ibas.ISystemsFactory {
+export class SystemsFactory implements sys.ISystemsFactory {
     /** 创建入口应用 */
-    createMainApp(): ibas.IMainApp {
+    createMainApp(): sys.IMainApp {
         return new MainApp();
     }
     /** 创建登陆应用 */
-    createLoginApp(): ibas.ILoginApp {
+    createLoginApp(): sys.ILoginApp {
         return new LoginApp();
     }
     /** 创建系统中心应用 */
-    createCenterApp(): ibas.ICenterApp {
+    createCenterApp(): sys.ICenterApp {
         return new CenterApp();
     }
     /** 创建关于应用 */
-    createAboutApp(): ibas.IAboutApp {
+    createAboutApp(): sys.IAboutApp {
         return new AboutApp();
     }
     /** 创建帮助应用 */
-    createHelpApp(): ibas.IHelpApp {
+    createHelpApp(): sys.IHelpApp {
         return new HelpApp();
     }
     /** 创建建议应用 */
-    createSuggestionApp(): ibas.ISuggestionApp {
+    createSuggestionApp(): sys.ISuggestionApp {
         return new SuggestionApp();
     }
     /** 创建仓库 */
-    createRepository(): ibas.IBORepositorySystem {
+    createRepository(): sys.IBORepositorySystem {
         if (ibas.config.get(ibas.config.CONFIG_ITEM_OFFLINE_MODE, false)) {
             // 当前处于离线模式
             return new BORepositoryShellOffLine();
@@ -47,7 +48,7 @@ export class SystemsFactory implements ibas.ISystemsFactory {
         return new BORepositoryShell();
     }
     /** 创建帮助应用 */
-    createQueryPanel(): ibas.IQueryPanel<ibas.IQueryPanelView> {
+    createQueryPanel(): sys.IQueryPanel<ibas.IQueryPanelView> {
         return new QueryPanel();
     }
 }
@@ -74,7 +75,7 @@ export class Console extends ibas.ModuleConsole {
     /** 初始化 */
     protected registers(): void {
         // 初始化系统工厂
-        ibas.Factories.systemsFactory = new SystemsFactory();
+        sys.Factories.systemsFactory = new SystemsFactory();
         // 注册功能
         this.register(new CentersFunc(this._viewShower));
     }

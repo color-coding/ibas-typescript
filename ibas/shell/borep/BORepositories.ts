@@ -6,6 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
+import * as sys from "../../../ibas/bsbas/systems/index";
 import * as ibas from "../../../ibas/index";
 import { DataConverter4Shell, DataConverter4Offline } from "./DataConverters";
 import * as bo from "./bo/Systems";
@@ -14,7 +15,7 @@ import * as bo from "./bo/Systems";
 /**
  * 业务仓库-壳-远程
  */
-export class BORepositoryShell extends ibas.BORepositoryApplication implements ibas.IBORepositorySystem {
+export class BORepositoryShell extends ibas.BORepositoryApplication implements sys.IBORepositorySystem {
 
     private converter: DataConverter4Shell;
     /**
@@ -30,7 +31,7 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements i
 	 * 用户登录
 	 * @param listener 登录监听者
 	 */
-    connect(listener: ibas.ConnectCaller): void {
+    connect(listener: sys.ConnectCaller): void {
         throw new Error("unrealized method.");
     }
 
@@ -38,7 +39,7 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements i
 	 * 查询用户模块
 	 * @param listener 用户检索监听者
 	 */
-    fetchUserModules(listener: ibas.UserMethodsCaller<ibas.IUserModule>): void {
+    fetchUserModules(listener: sys.UserMethodsCaller<sys.IUserModule>): void {
         throw new Error("unrealized method.");
     }
 
@@ -46,7 +47,7 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements i
 	 * 查询用户角色权限
 	 * @param listener 用户检索监听者
 	 */
-    fetchUserPrivileges(listener: ibas.UserMethodsCaller<ibas.IUserPrivilege>): void {
+    fetchUserPrivileges(listener: sys.UserMethodsCaller<sys.IUserPrivilege>): void {
         throw new Error("unrealized method.");
     }
 
@@ -54,7 +55,7 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements i
      * 查询用户查询
      * @param caller 监听者
      */
-    fetchUserQueries(caller: ibas.UserQueriesCaller): void {
+    fetchUserQueries(caller: sys.UserQueriesCaller): void {
         throw new Error("unrealized method.");
     }
 
@@ -62,7 +63,7 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements i
 	 * 保存用户查询
 	 * @param caller 监听者
 	 */
-    saveUserQuery(caller: ibas.SaveCaller<ibas.IUserQuery>): void {
+    saveUserQuery(caller: ibas.SaveCaller<sys.IUserQuery>): void {
         throw new Error("unrealized method.");
     }
 
@@ -70,7 +71,7 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements i
 	 * 业务对象信息查询
 	 * @param caller 监听者
 	 */
-    fetchBOInfos(caller: ibas.BOInfoCaller): void {
+    fetchBOInfos(caller: sys.BOInfoCaller): void {
         throw new Error("unrealized method.");
     }
 }
@@ -117,7 +118,7 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
 	 * 用户登录
 	 * @param caller 登录者
 	 */
-    connect(caller: ibas.ConnectCaller): void {
+    connect(caller: sys.ConnectCaller): void {
         this.fetchSettings({
             onCompleted(settings: any): void {
                 let opRslt = new ibas.OperationResult();
@@ -148,7 +149,7 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
 	 * 查询用户模块
 	 * @param caller 用户检索者
 	 */
-    fetchUserModules(caller: ibas.UserMethodsCaller<ibas.IUserModule>): void {
+    fetchUserModules(caller: sys.UserMethodsCaller<sys.IUserModule>): void {
         this.fetchSettings({
             onCompleted(settings: any): void {
                 let opRslt = new ibas.OperationResult();
@@ -173,7 +174,7 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
 	 * 查询用户角色权限
 	 * @param caller 用户检索者
 	 */
-    fetchUserPrivileges(caller: ibas.UserMethodsCaller<ibas.IUserPrivilege>): void {
+    fetchUserPrivileges(caller: sys.UserMethodsCaller<sys.IUserPrivilege>): void {
         this.fetchSettings({
             onCompleted(settings: any): void {
                 let opRslt = new ibas.OperationResult();
@@ -196,7 +197,7 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
      * 查询用户查询
      * @param caller 监听者
      */
-    fetchUserQueries(caller: ibas.UserQueriesCaller): void {
+    fetchUserQueries(caller: sys.UserQueriesCaller): void {
         let opRslt = new ibas.OperationResult();
         caller.onCompleted.call(ibas.object.isNull(caller.caller) ? caller : caller.caller, opRslt);
     }
@@ -204,7 +205,7 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
 	 * 保存用户查询
 	 * @param caller 监听者
 	 */
-    saveUserQuery(caller: ibas.SaveCaller<ibas.IUserQuery>): void {
+    saveUserQuery(caller: ibas.SaveCaller<sys.IUserQuery>): void {
         let opRslt = new ibas.OperationResult();
         caller.onCompleted.call(ibas.object.isNull(caller.caller) ? caller : caller.caller, opRslt);
     }
@@ -212,7 +213,7 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
 	 * 业务对象信息查询
 	 * @param caller 监听者
 	 */
-    fetchBOInfos(caller: ibas.BOInfoCaller): void {
+    fetchBOInfos(caller: sys.BOInfoCaller): void {
         let opRslt = new ibas.OperationResult();
         caller.onCompleted.call(ibas.object.isNull(caller.caller) ? caller : caller.caller, opRslt);
     }

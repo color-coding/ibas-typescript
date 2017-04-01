@@ -6,12 +6,13 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
+import * as sys from "../../../../ibas/bsbas/systems/index";
 import * as ibas from "../../../../ibas/index";
 
 /**
  * 应用-建议
  */
-export class SuggestionApp extends ibas.SuggestionApp<ISuggestionView> {
+export class SuggestionApp extends sys.SuggestionApp<ISuggestionView> {
     /** 注册视图 */
     protected registerView(): void {
         super.registerView();
@@ -28,6 +29,6 @@ export class SuggestionApp extends ibas.SuggestionApp<ISuggestionView> {
 
 }
 /** 视图-建议 */
-export interface ISuggestionView extends ibas.ISuggestionView {
+export interface ISuggestionView extends sys.ISuggestionView {
 
 }

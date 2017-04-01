@@ -6,12 +6,13 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
+import * as sys from "../../../../ibas/bsbas/systems/index";
 import * as ibas from "../../../../ibas/index";
 
 /**
  * 关于应用
  */
-export class AboutApp extends ibas.AboutApp<IAboutView> {
+export class AboutApp extends sys.AboutApp<IAboutView> {
 
     /** 注册视图 */
     protected registerView(): void {
@@ -44,6 +45,6 @@ export class AboutApp extends ibas.AboutApp<IAboutView> {
     }
 }
 /** 视图-关于 */
-export interface IAboutView extends ibas.IAboutView {
+export interface IAboutView extends sys.IAboutView {
 
 }

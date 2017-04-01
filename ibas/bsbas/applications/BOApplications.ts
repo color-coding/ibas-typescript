@@ -39,10 +39,12 @@ export abstract class BOApplication<T extends IBOView> extends Application<T> {
                 this.viewShower.show(this.view);
                 this.afterViewShow();
             } catch (error) {
+                let title: string = this.description;
                 this.viewShower.messages(
                     {
+                        title: title,
                         type: emMessageType.ERROR,
-                        message: arguments[0].message
+                        message: error.message
                     });
             }
         } else {
