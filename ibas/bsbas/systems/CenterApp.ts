@@ -8,7 +8,7 @@
 
 /// <reference path="../../../ibas/3rdparty/index.d.ts" />
 import {
-    i18n, logger, emMessageLevel, IOperationResult,
+    i18n, logger, emMessageLevel, IOperationResult, url,
     object, config, string, BORepositoryApplication
 } from "../../../ibas/bobas/index";
 import {
@@ -180,7 +180,6 @@ export abstract class CenterApp<T extends ICenterView> extends Application<T> im
 
     /** 初始化模块控制台 */
     protected initModuleConsole(module: IUserModule): void {
-        let console: IModuleConsole;
         // 模块入口地址
         let address: string = module.address;
         /*
@@ -193,26 +192,55 @@ export abstract class CenterApp<T extends ICenterView> extends Application<T> im
         // 关联引用也不修正名称。
         // address = url.normalize(address);
         let that: this = this;
-        require([address], function (): void {
-            // 模块加载成功
-            console = consolesManager.get(module.id);
-            if (object.isNull(console)) {
-                that.view.showStatusMessage(
-                    emMessageType.WARNING,
-                    i18n.prop("msg_not_found_module_console", module.id, module.name));
-                return;
-            }
-            // 注册模块业务仓库默认地址，创建实例时默认取此地址
-            if (!object.isNull(module.name) && !object.isNull(module.repository)) {
-                let configName: string = string.format(
-                    BORepositoryApplication.CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS
-                    , module.name);
-                config.set(configName, module.repository);
-                logger.log(emMessageLevel.DEBUG, "repository: register repository's default address [{0}].", module.repository);
-            }
-            // 有效模块控制台
-            if (console instanceof ModuleConsole) {
+        let baseUrl = address;//.substring(0, address.indexOf("index"));
+        let indexName = module.index;
+        if (object.isNull(indexName) || indexName === "") {
+            indexName = "index";
+        }
+        indexName = string.format("{0}/{1}", module.name, indexName);
+        let moduleRequire = (<any>window).require.config({
+            baseUrl: baseUrl
+        });
+        logger.log(emMessageLevel.DEBUG, "center: module [{0}], root: [{1}]; index: [{2}].", module.name, baseUrl, indexName);
+        // 补全路径
+        // if (!address.endsWith(".js")) {
+        //    address = address + ".js";
+        // }
+        moduleRequire([indexName], function (moduleIndex: any): void {
+            try {
+                // 模块加载成功
+                if (object.isNull(moduleIndex)) {
+                    // 模块的索引文件加载不成功，或返回值不正确
+                    throw new Error(i18n.prop("msg_invalid_module_index", object.isNull(module.name) ? module.id : module.name));
+                }
+                // 模块加载成功
+                if (object.isNull(moduleIndex)) {
+                    // 模块的索引文件加载不成功，或返回值不正确
+                    throw new Error(i18n.prop("msg_invalid_module_index", object.isNull(module.name) ? module.id : module.name));
+                }
+                let consoleClass = moduleIndex.default;
+                if (object.isNull(consoleClass) && consoleClass.prototype !== ModuleConsole) {
+                    // 模块的控制台无效
+                    // throw new Error(i18n.prop("msg_invalid_module_console", object.isNull(module.name) ? module.id : module.name));
+                }
+                let console: ModuleConsole = new consoleClass();
+                if (!(console instanceof ModuleConsole)) {
+                    // 控制台实例无效
+                    // throw new Error(i18n.prop("msg_invalid_module_console_instance", object.isNull(module.name) ? module.id : module.name));
+                }
+                // 有效模块控制台
                 console.addListener(function (): void {
+                    // 注册模块业务仓库默认地址，创建实例时默认取此地址
+                    if (!object.isNull(module.name) && !object.isNull(module.repository)) {
+                        let configName: string = string.format(
+                            BORepositoryApplication.CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS
+                            , module.name);
+                        config.set(configName, module.repository);
+                        logger.log(emMessageLevel.DEBUG, "repository: register repository's default address [{0}].", module.repository);
+                    }
+                    // 显示模块
+                    that.view.showModule(console);
+                    // 注册模块功能
                     that.registerFunctions(console);
                     // 显示常驻应用
                     for (let app of console.applications()) {
@@ -222,13 +250,15 @@ export abstract class CenterApp<T extends ICenterView> extends Application<T> im
                         }
                     }
                 });
-                that.view.showModule(console);
+                console.run();
+            } catch (error) {
+                that.view.showStatusMessage(emMessageType.ERROR, error);
             }
         }, function (): void {
             // 模块加载失败
             that.view.showStatusMessage(
                 emMessageType.ERROR,
-                i18n.prop("msg_not_found_module_console", module.id, module.name));
+                i18n.prop("msg_invalid_module_index", object.isNull(module.name) ? module.id : module.name));
         });
     }
 

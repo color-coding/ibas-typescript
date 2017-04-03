@@ -13,9 +13,9 @@ try {
     }
     if ((<any>window).ibas.shell === undefined) {
         (<any>window).ibas.shell = {
-            console: new Console()
+            version: "0.1.0"
         };
-        (<any>window).ibas.shell.console.run();
+        (new Console()).run();
     }
 } catch (error) {
     let message: string = "您的浏览器不支持此应用，请联系管理员。" + "\r\n"

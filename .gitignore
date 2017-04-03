@@ -28,6 +28,7 @@ Web.config
 /openui5/typings/*.js
 /tomcat/
 /others/
+/test/apps/module_b/
 
 
 # exceptions

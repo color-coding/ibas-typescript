@@ -16,7 +16,9 @@ let init = function () {
         (<any>window).ibas = {};
     }
     if ((<any>window).ibas.bsbas === undefined) {
-        (<any>window).ibas.bsbas = {};
+        (<any>window).ibas.bsbas = {
+            version: "0.1.0"
+        };
 
         let rootUrl: string = url.rootUrl(LIBRARY_BSBAS_ROOT_FILE_NAME);
         // 加载配置-框架默认

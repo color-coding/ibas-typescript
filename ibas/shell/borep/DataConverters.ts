@@ -114,6 +114,7 @@ export class DataConverter4Offline extends ibas.DataConverter {
             let module = new bo.UserModule();
             module.id = data.id;
             module.name = data.name;
+            module.index = data.index;
             module.category = data.category;
             module.address = data.address;
             return module;

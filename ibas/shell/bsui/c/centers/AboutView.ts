@@ -39,8 +39,6 @@ export class AboutView extends ibas.BOView implements sys.IAboutView {
         this.form.addContent(new sap.m.Text("", { text: version.name }));
         this.form.addContent(new sap.m.Label("", { text: "version" }));
         this.form.addContent(new sap.m.Text("", { text: version.version }));
-        this.form.addContent(new sap.m.Label("", { text: "buildTimestamp" }));
-        this.form.addContent(new sap.m.Text("", { text: version.buildTimestamp }));
         this.form.addContent(new sap.ui.core.Title("", { text: "Libraries" }));
         for (let item of version.libraries) {
             this.form.addContent(new sap.m.Label("", { text: "name" }));

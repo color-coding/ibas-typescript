@@ -8,6 +8,4 @@
 
 
 import { Console } from "./bsapp/Console";
-
-const console: Console = new Console();
-console.run();
+export default Console;

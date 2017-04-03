@@ -23,6 +23,8 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
     private navigation: sap.tnt.SideNavigation;
     /** 状态消息条 */
     private statusBar: sap.m.OverflowToolbar;
+    /** 消息历史框 */
+    private messageHistory: sap.m.MessagePopover;
     /** 窗体显示 */
     private form: sap.m.Page;
     /** 用户信息条 */
@@ -82,6 +84,12 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                     messageStrip.destroy(true);
                     that.statusBar.destroyContent();
                     that.form.setFooter(null);
+                    let popMessage = new sap.m.MessagePopoverItem("", {
+                        type: messageStrip.getType(),
+                        title: messageStrip.getText(),
+                        counter: that.messageHistory.getItems().length,
+                    });
+                    that.messageHistory.addItem(popMessage);
                 }
             }, this.statusDelay);
         }
@@ -103,10 +111,10 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             }
         );
     }
-	/**
-	 * 激活功能
-	 * 参数1 string 功能ID
-	 */
+    /**
+     * 激活功能
+     * 参数1 string 功能ID
+     */
     activateFunctionsEvent: Function;
     /**
      * 显示模块
@@ -512,6 +520,21 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         this.page.setSideContent(this.navigation);
         this.page.setSideExpanded(false);
         this.page.addMainContent(this.form);
+        // 消息历史框
+        this.messageHistory = new sap.m.MessagePopover("", {
+            initiallyExpanded: false,
+
+        });
+        this.navigation.setFixedItem(new sap.tnt.NavigationList("", {
+            items: [
+                new sap.tnt.NavigationListItem("", {
+                    title: ibas.i18n.prop("sys_shell_ui_messages_history"),
+                    icon: "sap-icon://message-popup",
+                    select: function (event: any): void {
+                        that.messageHistory.openBy(event.getSource());
+                    }
+                })],
+        }));
         this.form = new sap.m.Page("", {
             showNavButton: true,
         });

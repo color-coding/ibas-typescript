@@ -21,7 +21,9 @@ let init = function () {
         (<any>window).ibas = {};
     }
     if ((<any>window).ibas.bobas === undefined) {
-        (<any>window).ibas.bobas = {};
+        (<any>window).ibas.bobas = {
+            version:"0.1.0"
+        };
 
         let rootUrl: string = url.rootUrl(LIBRARY_BOBAS_ROOT_FILE_NAME);
         // 加载配置-框架默认

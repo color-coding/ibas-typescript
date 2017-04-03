@@ -33,6 +33,8 @@ export class UserModule implements sys.IUserModule {
 	id: string;
 	/** 名称 */
 	name: string;
+	/** 索引文件 */
+	index: string;
 	/** 类别 */
 	category: string;
 	/** 地址 */
