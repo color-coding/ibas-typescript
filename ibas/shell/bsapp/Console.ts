@@ -110,16 +110,13 @@ export class Console extends ibas.ModuleConsole {
         if (!ibas.config.get(ibas.config.CONFIG_ITEM_DISABLE_PLATFORM_VIEW, false)
             && this.plantform === ibas.emPlantform.PHONE) {
             // 使用m类型视图
-            uiModules.push("m/Navigation");
+            uiModules.push("../bsui/m/Navigation");
         } else {
             // 使用c类型视图
-            uiModules.push("c/Navigation");
+            uiModules.push("../bsui/c/Navigation");
         }
         let that: Console = this;
-        let uiRequire = ibas.requires.create({
-            baseUrl: "./bsui/"
-        });
-        uiRequire(uiModules, function (ui: any): void {
+        require(uiModules, function (ui: any): void {
             if (ibas.config.get(ibas.config.CONFIG_ITEM_DEBUG_MODE) == true) {
                 ibas.debug.printScripts("shell view");
             }

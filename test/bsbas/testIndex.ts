@@ -8,5 +8,8 @@
 
 import * as ibas from "../../ibas/index";
 import * as sys from "../../ibas/bsbas/systems/index";
-console.log(sys.CenterApp.APPLICATION_ID);
+class CenterApp extends sys.CenterApp<sys.ICenterView>{
+
+}
+let app = new CenterApp();
 ibas.debug.printScripts();
