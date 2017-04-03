@@ -7,8 +7,8 @@
  */
 
 /// <reference path="../../../../../openui5/typings/index.d.ts" />
-import * as sys from "../../../../../ibas/bsbas/systems/index";
-import * as ibas from "../../../../../ibas/index";
+import * as sys from "../../../../bsbas/systems/index";
+import * as ibas from "../../../../index";
 import { utils } from "../../../../../openui5/typings/ibas.utils";
 import { IQueryPanelView } from "../../../bsapp/centers/QueryPanel";
 import { UserQuery } from "../../../borep/bo/Systems";

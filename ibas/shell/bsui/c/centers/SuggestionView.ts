@@ -7,9 +7,9 @@
  */
 
 /// <reference path="../../../../../openui5/typings/index.d.ts" />
-/// <reference path="../../../../../ibas/3rdparty/html2canvas.d.ts" />
-import * as sys from "../../../../../ibas/bsbas/systems/index";
-import * as ibas from "../../../../../ibas/index";
+/// <reference path="../../../../3rdparty/html2canvas.d.ts" />
+import * as sys from "../../../../bsbas/systems/index";
+import * as ibas from "../../../../index";
 
 /**
  * 视图-建议

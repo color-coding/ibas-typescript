@@ -6,9 +6,9 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-/// <reference path="../../../ibas/3rdparty/require.d.ts" />
-import * as sys from "../../../ibas/bsbas/systems/index";
-import * as ibas from "../../../ibas/index";
+/// <reference path="../../3rdparty/require.d.ts" />
+import * as sys from "../../bsbas/systems/index";
+import * as ibas from "../../index";
 import { BORepositoryShell, BORepositoryShellOffLine } from "../borep/BORepositories";
 import { CentersFunc, MainApp, LoginApp, CenterApp, AboutApp, HelpApp, QueryPanel, SuggestionApp } from "./centers/index";
 
