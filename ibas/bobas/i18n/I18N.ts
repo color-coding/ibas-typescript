@@ -10,11 +10,7 @@
  * 模块索引文件，此文件集中导出类
  */
 /// <reference path="../../3rdparty/jquery.d.ts" />
-import { emMessageLevel } from "../data/Enums";
-import { object } from "../data/Data";
-import { string } from "../data/String";
-import { ArrayList } from "../data/Common";
-import { url } from "../data/Url";
+import { emMessageLevel, object, string, url } from "../data/index";
 import { config } from "../configuration/index";
 import { logger } from "../messages/index";
 /** 多语言 */
@@ -52,10 +48,10 @@ export class I18N {
         return string.format("[{0}]", key);
     }
 
-    private languageFile: ArrayList<string> = new ArrayList<string>();
+    private languageFiles: Array<string> = new Array<string>();
     /** 重新加载已加载 */
     reload(): void {
-        for (let item of this.languageFile) {
+        for (let item of this.languageFiles) {
             this.load(item);
         }
     }
@@ -72,9 +68,16 @@ export class I18N {
         }
         if (address.indexOf("{0}") > 0) {
             // 加载文件为模板
-            if (!this.languageFile.contain(address)) {
+            let has = false;
+            for (let item of this.languageFiles) {
+                if (item === address) {
+                    has = true;
+                    break;
+                }
+            }
+            if (!has) {
                 // 记录到列表
-                this.languageFile.push(address.valueOf());
+                this.languageFiles.push(address.valueOf());
             }
             address = string.format(address, this.language);
         }

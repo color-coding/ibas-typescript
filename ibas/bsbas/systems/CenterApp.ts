@@ -9,7 +9,7 @@
 /// <reference path="../../3rdparty/index.d.ts" />
 import {
     i18n, logger, emMessageLevel, IOperationResult, url,
-    object, config, string, BORepositoryApplication
+    object, config, string, BORepositoryApplication, requires
 } from "../../bobas/index";
 import {
     ModuleConsole, IModuleConsole, IModuleFunction, IApplication,
@@ -198,14 +198,10 @@ export abstract class CenterApp<T extends ICenterView> extends Application<T> im
             indexName = "index";
         }
         indexName = string.format("{0}/{1}", module.name, indexName);
-        let moduleRequire = (<any>window).require.config({
+        let moduleRequire = requires.create({
             baseUrl: baseUrl
         });
-        logger.log(emMessageLevel.DEBUG, "center: module [{0}], root: [{1}]; index: [{2}].", module.name, baseUrl, indexName);
-        // 补全路径
-        // if (!address.endsWith(".js")) {
-        //    address = address + ".js";
-        // }
+        logger.log(emMessageLevel.DEBUG, "center: module [{0}] {root: [{1}], index: [{2}]}.", module.name, baseUrl, indexName);
         moduleRequire([indexName], function (moduleIndex: any): void {
             try {
                 // 模块加载成功

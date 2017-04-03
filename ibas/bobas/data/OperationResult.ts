@@ -6,7 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { object } from "./index";
+import { object } from "./Data";
 import { List } from "./Common.d";
 import { ArrayList } from "./Common";
 import { IOperationInformation, IOperationMessages, IOperationResult } from "./OperationResult.d";

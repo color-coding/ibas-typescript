@@ -8,7 +8,6 @@
 
 import * as sys from "../../../bsbas/systems/index";
 import * as ibas from "../../../index";
-import { emPrivilegeSource, emAuthoriseType, ICriteria } from "../../../../ibas/index";
 
 /**
  * 用户
@@ -47,11 +46,11 @@ export class UserModule implements sys.IUserModule {
  */
 export class UserPrivilege implements sys.IUserPrivilege {
 	/** 来源 */
-	source: emPrivilegeSource;
+	source: ibas.emPrivilegeSource;
 	/** 权限目标 */
 	target: string;
 	/** 权限值 */
-	value: emAuthoriseType;
+	value: ibas.emAuthoriseType;
 }
 /**
  * 用户查询
@@ -62,7 +61,7 @@ export class UserQuery implements sys.IUserQuery {
 	/** 名称 */
 	name: string;
 	/** 查询 */
-	criteria: ICriteria;
+	criteria: ibas.ICriteria;
 	/** 顺序 */
 	order: number;
 	/** 查询目标 */

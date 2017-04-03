@@ -71,29 +71,28 @@ export module url {
         if (!fileName.startsWith("/")) { fileName = "/" + fileName; }
         if (!fileName.endsWith(".js")) { fileName = fileName + ".js"; }
         let root: string = window.document.location.origin;
-        var docScripts: NodeListOf<HTMLScriptElement> = window.document.getElementsByTagName("script");
-        for (let i: number = 0; i < docScripts.length; i++) {
-            let atr: Attr = docScripts[i].attributes.getNamedItem("src");
-            if (atr === undefined || atr === null) {
-                continue;
-            }
-            let url: string = atr.value;
-            if (url.indexOf("./") >= 0) {
-                // 相对路径地址，需要处理下
-                if (url.startsWith("http")) {
-                    url = normalize(atr.value);
-                } else {
-                    if (object.isNull(atr.baseURI)) {
-                        // 有的浏览器，不存在此属性
-                        url = normalize(window.document.location.href + atr.value);
+        let scripts: NodeListOf<HTMLScriptElement> = document.getElementsByTagName("script");
+        for (let index: number = 0; index < scripts.length; index++) {
+            let script: HTMLScriptElement = scripts[index];
+            if (script.src !== undefined && script.src !== null && script.src.length !== 0) {
+                let url: string = script.src;
+                if (url.indexOf("./") >= 0) {
+                    // 相对路径地址，需要处理下
+                    if (url.startsWith("http")) {
+                        url = normalize(url);
                     } else {
-                        url = normalize(atr.baseURI + atr.value);
+                        if (object.isNull(script.baseURI)) {
+                            // 有的浏览器，不存在此属性
+                            url = normalize(window.document.location.href + script.src);
+                        } else {
+                            url = normalize(script.baseURI + script.src);
+                        }
                     }
                 }
-            }
-            if (url.endsWith(fileName)) {
-                root = url.substring(0, url.lastIndexOf("/"));
-                break;
+                if (url.endsWith(fileName)) {
+                    root = url.substring(0, url.lastIndexOf("/"));
+                    break;
+                }
             }
         }
         return root;

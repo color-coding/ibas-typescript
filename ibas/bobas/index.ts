@@ -22,7 +22,7 @@ let init = function () {
     }
     if ((<any>window).ibas.bobas === undefined) {
         (<any>window).ibas.bobas = {
-            version:"0.1.0"
+            version: "0.1.0"
         };
 
         let rootUrl: string = url.rootUrl(LIBRARY_BOBAS_ROOT_FILE_NAME);
@@ -40,6 +40,7 @@ export * from "./i18n/index";
 export * from "./core/index";
 export * from "./bo/index";
 export * from "./repository/index";
+export * from "./utils/index";
 // 导出的测试相关类型
 export * from "./assert/index";
 export * from "./debug/index";

@@ -10,8 +10,7 @@ import {
     IBindable, PropertyChangedListener, ITrackable,
     IBusinessObject, IBusinessObjectList
 } from "./BusinessObjectCore.d";
-import { object } from "../data/Data";
-import { ArrayList } from "../data/Common";
+import { object, ArrayList } from "../data/index";
 
 /**
  * 可监听的对象

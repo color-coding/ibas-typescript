@@ -7,7 +7,7 @@
  */
 
 import { List } from "./Common.d";
-import { string } from "./index";
+import { string } from "./String";
 
 /**
  * 数组集合

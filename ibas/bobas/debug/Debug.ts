@@ -9,8 +9,14 @@
 /** 调试 */
 export module debug {
     /** 显示已加载的脚本 */
+    export function printScripts(name: string): void;
+    export function printScripts(): void;
+    /** 显示已加载的脚本 */
     export function printScripts(): void {
         let scripts: NodeListOf<HTMLScriptElement> = document.getElementsByTagName("script");
+        if (arguments[0] !== undefined) {
+            console.debug("-------------------  " + arguments[0] + "  --------------------");
+        }
         for (let index: number = 0; index < scripts.length; index++) {
             let script: HTMLScriptElement = scripts[index];
             if (script.src !== undefined && script.src !== null && script.src.length !== 0) {
@@ -18,6 +24,9 @@ export module debug {
             } else if (script.innerHTML !== undefined && script.innerHTML !== null && script.innerHTML.length !== 0) {
                 console.debug("script: content %s", script.innerHTML);
             }
+        }
+        if (arguments[0] !== undefined) {
+            console.debug("-------------------  " + arguments[0] + "  --------------------");
         }
     }
 }

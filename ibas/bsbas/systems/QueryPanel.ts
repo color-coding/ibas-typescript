@@ -12,8 +12,8 @@ import {
 } from "../../bobas/index";
 import { BOBarApplication } from "../applications/index";
 import { emMessageType } from "../data/index";
-import { IQueryPanelView, IQueryPanel, IUseQueryPanel, IUserQuery, IBORepositorySystem, IBOInfo, IBOPropertyInfo } from "./Systems.d";
 import { variablesManager } from "../runtime/index";
+import { IQueryPanelView, IQueryPanel, IUseQueryPanel, IUserQuery, IBORepositorySystem, IBOInfo, IBOPropertyInfo } from "./Systems.d";
 import { Factories } from "./Factories";
 
 /**

@@ -110,13 +110,19 @@ export class Console extends ibas.ModuleConsole {
         if (!ibas.config.get(ibas.config.CONFIG_ITEM_DISABLE_PLATFORM_VIEW, false)
             && this.plantform === ibas.emPlantform.PHONE) {
             // 使用m类型视图
-            uiModules.push("../bsui/m/Navigation");
+            uiModules.push("m/Navigation");
         } else {
             // 使用c类型视图
-            uiModules.push("../bsui/c/Navigation");
+            uiModules.push("c/Navigation");
         }
         let that: Console = this;
-        require(uiModules, function (ui: any): void {
+        let uiRequire = ibas.requires.create({
+            baseUrl: "./bsui/"
+        });
+        uiRequire(uiModules, function (ui: any): void {
+            if (ibas.config.get(ibas.config.CONFIG_ITEM_DEBUG_MODE) == true) {
+                ibas.debug.printScripts("shell view");
+            }
             // 设置导航
             that._navigation = new ui.Navigation();
             // 设置视图显示者
@@ -127,6 +133,9 @@ export class Console extends ibas.ModuleConsole {
             let app: ibas.IApplication<ibas.IView> = that.default().default();
             app.show();
         });
+        if (ibas.config.get(ibas.config.CONFIG_ITEM_DEBUG_MODE) == true) {
+            ibas.debug.printScripts("shell console");
+        }
         // 保留基类方法
         super.run();
     }
