@@ -8,7 +8,7 @@
 
 import {
     i18n
-} from "../../../ibas/bobas/index";
+} from "../../bobas/index";
 import { BOResidentApplication } from "../applications/index";
 import { ISuggestionView, ISuggestionApp } from "./Systems.d";
 

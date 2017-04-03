@@ -8,7 +8,7 @@
 
 import {
     i18n, object, logger, emMessageLevel, ICriteria
-} from "../../../ibas/bobas/index";
+} from "../../bobas/index";
 import { Application, IBarView, IMessgesCaller } from "../core/index";
 import { emMessageType } from "../data/index";
 import { IBOView, IBOQueryView } from "./BOApplications.d";

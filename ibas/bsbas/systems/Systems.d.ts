@@ -9,7 +9,7 @@
 import {
 	List, IBusinessObject, IOperationMessages, IOperationResult, ICriteria,
 	MethodCaller, SaveCaller
-} from "../../../ibas/bobas/index";
+} from "../../bobas/index";
 import {
 	IView, IUrlView, IModule, IApplication, IModuleConsole,
 	IModuleFunction, IViewShower, IBarView, IMessgesCaller

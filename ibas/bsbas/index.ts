@@ -32,7 +32,7 @@ export * from "./data/index";
 export * from "./core/index";
 export * from "./applications/index";
 export * from "./views/index";
-// export * from "./systems/index"; // 不集中发布此内容
+// export * from "./systems/index";
 // export * from "./services/index";
 export * from "./runtime/index";
 

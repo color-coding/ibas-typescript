@@ -8,7 +8,7 @@
 
 import {
     i18n, debug, config
-} from "../../../ibas/bobas/index";
+} from "../../bobas/index";
 import { BOApplication } from "../applications/index";
 import { IAboutView, IAboutApp } from "./Systems.d";
 

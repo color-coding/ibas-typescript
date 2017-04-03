@@ -7,7 +7,7 @@
  */
 // 业务对象应用的相关说明文件
 
-import { List, IBusinessObject } from "../../../ibas/bobas/index";
+import { List, IBusinessObject } from "../../bobas/index";
 import { IView, IBarView } from "../core/index";
 import { IUseQueryPanel } from "../systems/index";
 

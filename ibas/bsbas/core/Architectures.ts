@@ -9,7 +9,7 @@
 import {
     List, ArrayList, object, i18n, string, uuid,
     config
-} from "../../../ibas/bobas/index";
+} from "../../bobas/index";
 import { emPlantform } from "../data/index";
 import {
     IElement, IModule, IFunction, IApplication, IView,

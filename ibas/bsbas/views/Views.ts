@@ -6,7 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { ICriteria } from "../../../ibas/bobas/index";
+import { ICriteria } from "../../bobas/index";
 import { View, IUrlView, IBarView } from "../core/index";
 import {
     IBOView, IBOListView, IBOQueryView, IBOChooseView,

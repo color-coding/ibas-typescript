@@ -9,7 +9,7 @@
 import {
     object, ICriteria, Criteria, ICondition, i18n, IOperationResult,
     config, ISort, emSortType, emConditionOperation, ArrayList
-} from "../../../ibas/bobas/index";
+} from "../../bobas/index";
 import { BOBarApplication } from "../applications/index";
 import { emMessageType } from "../data/index";
 import { IQueryPanelView, IQueryPanel, IUseQueryPanel, IUserQuery, IBORepositorySystem, IBOInfo, IBOPropertyInfo } from "./Systems.d";

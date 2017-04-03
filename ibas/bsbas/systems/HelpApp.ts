@@ -8,7 +8,7 @@
 
 import {
     i18n,
-} from "../../../ibas/bobas/index";
+} from "../../bobas/index";
 import { BOApplication } from "../applications/index";
 import { IHelpView, IHelpApp } from "./Systems.d";
 

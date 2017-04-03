@@ -8,7 +8,7 @@
 
 import {
     ICriteria
-} from "../../../ibas/bobas/index";
+} from "../../bobas/index";
 import { IBOListView } from "./BOApplications.d";
 import { BOQueryApplication } from "./BOApplications";
 
