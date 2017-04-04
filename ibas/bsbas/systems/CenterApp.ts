@@ -200,7 +200,7 @@ export abstract class CenterApp<T extends ICenterView> extends Application<T> im
         indexName = string.format("{0}/{1}", module.name, indexName);
         let moduleRequire = requires.create({
             baseUrl: baseUrl
-        });
+        }, ["ibas/index"]);
         logger.log(emMessageLevel.DEBUG, "center: module [{0}] {root: [{1}], index: [{2}]}.", module.name, baseUrl, indexName);
         moduleRequire([indexName], function (moduleIndex: any): void {
             try {
