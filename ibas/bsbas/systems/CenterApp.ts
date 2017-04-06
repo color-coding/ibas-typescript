@@ -189,6 +189,7 @@ export abstract class CenterApp<T extends ICenterView> extends Application<T> im
         logger.log(emMessageLevel.DEBUG, "center: module [{0}] {root: [{1}], index: [{2}]}.", module.name, address, indexName);
         moduleRequire([indexName], function (moduleIndex: any): void {
             try {
+                logger.log(emMessageLevel.DEBUG, "center: got a console from [{0}].", (<any>moduleRequire).toUrl(indexName));
                 // 模块加载成功
                 if (object.isNull(moduleIndex)) {
                     // 模块的索引文件加载不成功，或返回值不正确

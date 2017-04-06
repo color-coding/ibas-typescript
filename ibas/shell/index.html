@@ -27,10 +27,7 @@
         };
         let loadEntry = function () {
             // 加载ibas
-            let ibasRequire = require.config({
-                baseUrl: './',
-            });
-            ibasRequire(["../index.js"], function (ibas) {
+            require(["../index.js"], function (ibas) {
                 // 加载成功，创建壳加载
                 let sysRequire = ibas.requires.create({
                 }, []);

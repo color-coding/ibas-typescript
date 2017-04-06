@@ -20,6 +20,7 @@ export class DemoUrlApp extends ibas.BOApplication<IDemoUrlView> {
         super();
         this.id = DemoUrlApp.APPLICATION_ID;
         this.name = DemoUrlApp.APPLICATION_NAME;
+        this.description = ibas.i18n.prop(this.name);
     }
     /** 注册视图 */
     protected registerView(): void {
