@@ -7,9 +7,8 @@
  */
 
 import {
-    i18n,
-} from "../../bobas/index";
-import { BOApplication } from "../applications/index";
+    i18n, BOApplication
+} from "ibas/index";
 import { IHelpView, IHelpApp } from "./Systems.d";
 
 /** 应用-帮助 */

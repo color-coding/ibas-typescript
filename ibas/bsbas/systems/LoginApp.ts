@@ -7,9 +7,9 @@
  */
 
 import {
-    logger, emMessageLevel, IOperationResult, object, i18n
-} from "../../bobas/index";
-import { BOApplication } from "../applications/index";
+    logger, emMessageLevel, IOperationResult, object, i18n,
+    BOApplication
+} from "ibas/index";
 import { ILoginView, ILoginApp, ICenterApp, IUser, IBORepositorySystem } from "./Systems.d";
 import { Factories } from "./Factories";
 

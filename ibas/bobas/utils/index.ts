@@ -29,9 +29,20 @@ export module requires {
             let script: HTMLScriptElement = scripts[index];
             if (script.src !== undefined && script.src !== null && script.src.length !== 0) {
                 for (let name of names) {
-                    if (script.src.endsWith(name + ".js")) {
-                        config.paths[name] = script.src;
-                        break;
+                    if (name.endsWith(".js")) {
+                        // 指定了js文件
+                        if (script.src.endsWith(name)) {
+                            config.paths[name] = script.src;
+                            break;
+                        }
+                    } else {
+                        // 非js结尾不是文件，所有此路径的js均返回
+                        if (script.src.indexOf(name) > 0 && script.src.endsWith(".js")) {
+                            name = script.src.substring(script.src.indexOf(name));
+                            name = name.substring(0, name.lastIndexOf(".js"));
+                            config.paths[name] = script.src.substring(0, script.src.lastIndexOf(".js"));
+                            break;
+                        }
                     }
                 }
             }

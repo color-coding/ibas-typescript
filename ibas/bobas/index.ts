@@ -16,7 +16,7 @@ import { string, url } from "./data/index";
 /** 业务对象库（bobas）文件名称 */
 export const LIBRARY_BOBAS_ROOT_FILE_NAME: string = "/bobas/index";
 /** 框架初始化 */
-let init = function () {
+let init: Function = function (): void {
     if ((<any>window).ibas === undefined) {
         (<any>window).ibas = {};
     }
@@ -31,7 +31,7 @@ let init = function () {
         // 加载语言-框架默认
         i18n.load(string.format("{0}/resources/languages/bobas.{1}.json", rootUrl, "{0}"));
     }
-}();
+}; init();
 // 导出的类型
 export * from "./data/index";
 export * from "./messages/index";

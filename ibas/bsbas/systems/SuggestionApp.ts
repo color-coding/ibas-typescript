@@ -7,9 +7,8 @@
  */
 
 import {
-    i18n
-} from "../../bobas/index";
-import { BOResidentApplication } from "../applications/index";
+    i18n, BOResidentApplication
+} from "ibas/index";
 import { ISuggestionView, ISuggestionApp } from "./Systems.d";
 
 /** 应用-建议 */

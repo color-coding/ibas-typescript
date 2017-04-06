@@ -7,9 +7,8 @@
  */
 
 import {
-    i18n, debug, config
-} from "../../bobas/index";
-import { BOApplication } from "../applications/index";
+    i18n, debug, config, BOApplication
+} from "ibas/index";
 import { IAboutView, IAboutApp } from "./Systems.d";
 
 /** 应用-关于 */

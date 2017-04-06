@@ -6,6 +6,9 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
+if ((<any>window).ibas === undefined) {
+    (<any>window).ibas = {};
+}
 export * from "./bobas/index";
 export * from "./bsbas/index";
 

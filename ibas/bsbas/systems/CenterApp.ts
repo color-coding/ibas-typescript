@@ -8,20 +8,13 @@
 
 /// <reference path="../../3rdparty/index.d.ts" />
 import {
-    i18n, logger, emMessageLevel, IOperationResult, url,
-    object, config, string, BORepositoryApplication, requires
-} from "../../bobas/index";
-import {
-    ModuleConsole, IModuleConsole, IModuleFunction, IApplication,
-    IView, IBarView, IBarApplication, IViewShower, Application, IMessgesCaller
-} from "../core/index";
-import { emMessageType, emPrivilegeSource, emAuthoriseType, emMessageAction } from "../data/index";
-import { consolesManager, variablesManager } from "../runtime/index";
-import {
-    BOResidentApplication, BOApplication,
-    BOChooseApplication, BOListApplication,
+    i18n, logger, emMessageLevel, IOperationResult, object, config, string, requires,
+    ModuleConsole, IModuleConsole, IModuleFunction, IApplication, BORepositoryApplication,
+    IView, IBarView, IBarApplication, IViewShower, Application, IMessgesCaller,
+    emMessageType, emPrivilegeSource, emAuthoriseType, emMessageAction, variablesManager,
+    BOResidentApplication, BOApplication, BOChooseApplication, BOListApplication,
     BOViewApplication, BOEditApplication
-} from "../applications/index";
+} from "ibas/index";
 import {
     ICenterView, ICenterApp, IBORepositorySystem,
     IUser, IUserModule, IUserPrivilege
@@ -198,9 +191,9 @@ export abstract class CenterApp<T extends ICenterView> extends Application<T> im
             indexName = "index";
         }
         indexName = string.format("{0}/{1}", module.name, indexName);
-        let moduleRequire = requires.create({
+        let moduleRequire: Function = requires.create({
             baseUrl: baseUrl
-        }, ["ibas/index"]);
+        }, ["ibas/"]);
         logger.log(emMessageLevel.DEBUG, "center: module [{0}] {root: [{1}], index: [{2}]}.", module.name, baseUrl, indexName);
         moduleRequire([indexName], function (moduleIndex: any): void {
             try {

@@ -7,8 +7,8 @@
  */
 
 /// <reference path="../../3rdparty/require.d.ts" />
-import * as sys from "../../bsbas/systems/index";
-import * as ibas from "../../index";
+import * as sys from "ibas/bsbas/systems/index";
+import * as ibas from "ibas/index";
 import { BORepositoryShell, BORepositoryShellOffLine } from "../borep/BORepositories";
 import { CentersFunc, MainApp, LoginApp, CenterApp, AboutApp, HelpApp, QueryPanel, SuggestionApp } from "./centers/index";
 
@@ -117,7 +117,7 @@ export class Console extends ibas.ModuleConsole {
         }
         let that: Console = this;
         require(uiModules, function (ui: any): void {
-            if (ibas.config.get(ibas.config.CONFIG_ITEM_DEBUG_MODE) == true) {
+            if (ibas.config.get(ibas.config.CONFIG_ITEM_DEBUG_MODE) === true) {
                 ibas.debug.printScripts("shell view");
             }
             // 设置导航
@@ -130,7 +130,7 @@ export class Console extends ibas.ModuleConsole {
             let app: ibas.IApplication<ibas.IView> = that.default().default();
             app.show();
         });
-        if (ibas.config.get(ibas.config.CONFIG_ITEM_DEBUG_MODE) == true) {
+        if (ibas.config.get(ibas.config.CONFIG_ITEM_DEBUG_MODE) === true) {
             ibas.debug.printScripts("shell console");
         }
         // 保留基类方法

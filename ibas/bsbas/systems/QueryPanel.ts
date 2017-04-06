@@ -8,12 +8,10 @@
 
 import {
     object, ICriteria, Criteria, ICondition, i18n, IOperationResult,
-    config, ISort, emSortType, emConditionOperation, ArrayList
-} from "../../bobas/index";
-import { BOBarApplication } from "../applications/index";
-import { emMessageType } from "../data/index";
-import { variablesManager } from "../runtime/index";
-import { IQueryPanelView, IQueryPanel, IUseQueryPanel, IUserQuery, IBORepositorySystem, IBOInfo, IBOPropertyInfo } from "./Systems.d";
+    config, ISort, emSortType, emConditionOperation, ArrayList, BOBarApplication,
+    emMessageType, variablesManager
+} from "ibas/index";
+import { IQueryPanelView, IQueryPanel, IUseQueryPanel, IUserQuery, IBORepositorySystem, IBOInfo } from "./Systems.d";
 import { Factories } from "./Factories";
 
 /**
@@ -58,7 +56,7 @@ export abstract class QueryPanel<T extends IQueryPanelView> extends BOBarApplica
                         throw new Error(opRslt.message);
                     }
                     that.queries = new ArrayList<IUserQuery>();
-                    for (let item of opRslt.resultObjects){ 
+                    for (let item of opRslt.resultObjects) {
                         that.queries.add(item);
                     }
                     that.init(callBack);

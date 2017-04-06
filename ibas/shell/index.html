@@ -7,13 +7,48 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8" />
     <script type="text/javascript" src="../3rdparty/jquery.js"></script>
+    <script type="text/javascript" src="../3rdparty/require.js"></script>
     <script type="text/javascript">
+        // 显示消息
+        let requireError = function (error) {
+            console.error(error);
+            let scripts = document.getElementsByTagName("script");
+            console.debug("-------------------  error  --------------------");
+            for (let index = 0; index < scripts.length; index++) {
+                let script = scripts[index];
+                if (script.src !== undefined && script.src !== null && script.src.length !== 0) {
+                    console.debug("script: file %s", script.src);
+                } else if (script.innerHTML !== undefined && script.innerHTML !== null && script.innerHTML.length !== 0) {
+                    console.debug("script: content %s", script.innerHTML);
+                }
+            }
+            console.debug("-------------------  error  --------------------");
+            alert("应用加载失败，请联系管理员或尝试使用其他浏览器。");
+        };
         let loadEntry = function () {
-            // 加载入口
-            let domScript = document.createElement('script');
-            domScript.src = "../3rdparty/require.js";
-            domScript.setAttribute("data-main", "./index");
-            document.getElementsByTagName('head')[0].appendChild(domScript);
+            // 加载ibas
+            let ibasRequire = require.config({
+                baseUrl: './',
+            });
+            ibasRequire(["../index.js"], function (ibas) {
+                // 加载成功，创建壳加载
+                let sysRequire = ibas.requires.create({
+                    // require配置参数
+                    baseUrl: './',
+                }, ["ibas/"]);
+                // 加载应用系统
+                sysRequire(["../bsbas/systems/index.js"], function () {
+                    // 加载成功
+                    requireError(null);
+                    let shellRequire = ibas.requires.create({
+                        // require配置参数
+                        baseUrl: './',
+                    }, ["ibas/"]);
+                    shellRequire(["./index.js"], function (index) {
+                        requireError(null);
+                    }, requireError);
+                }, requireError);
+            }, requireError);
         }
         let loadUI5 = function (url) {
             // 加载opopenui5库

@@ -8,13 +8,10 @@
 
 import {
 	List, IBusinessObject, IOperationMessages, IOperationResult, ICriteria,
-	MethodCaller, SaveCaller
-} from "../../bobas/index";
-import {
-	IView, IUrlView, IModule, IApplication, IModuleConsole,
-	IModuleFunction, IViewShower, IBarView, IMessgesCaller
-} from "../core/index";
-import { emMessageType, emPrivilegeSource, emAuthoriseType } from "../data/index";
+	MethodCaller, SaveCaller, IView, IUrlView, IModule, IApplication,
+	IModuleConsole, IModuleFunction, IViewShower, IBarView, IMessgesCaller,
+	emMessageType, emPrivilegeSource, emAuthoriseType
+} from "ibas/index";
 
 /** 关于-视图 */
 export interface IAboutView extends IView {
