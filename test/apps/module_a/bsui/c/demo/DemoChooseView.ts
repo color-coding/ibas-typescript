@@ -7,7 +7,7 @@
  */
 
 /// <reference path="../../../../../../openui5/typings/index.d.ts" />
-import * as ibas from "../../../../../../ibas/index";
+import * as ibas from "ibas/index";
 import * as bo from "../../../borep/bo/index";
 import { IDemoChooseView } from "../../../bsapp/demo/index";
 

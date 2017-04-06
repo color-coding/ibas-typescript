@@ -7,10 +7,10 @@
  */
 
 /// <reference path="../../../../../../openui5/typings/index.d.ts" />
-import * as ibas from "../../../../../../ibas/index";
+import * as ibas from "ibas/index";
+import { utils } from "openui5/typings/ibas.utils";
 import * as bo from "../../../borep/bo/index";
 import { IDemoViewView } from "../../../bsapp/demo/index";
-import { utils } from "../../../../../../openui5/typings/ibas.utils";
 
 /**
  * 视图-demo

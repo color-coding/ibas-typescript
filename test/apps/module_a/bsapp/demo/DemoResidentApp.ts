@@ -6,7 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import * as ibas from "../../../../../ibas/index";
+import * as ibas from "ibas/index";
 
 /** 常驻应用-演示 */
 export class DemoResidentApp extends ibas.BOResidentApplication<IDemoResidentView> {

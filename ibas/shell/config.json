@@ -7,6 +7,7 @@
     "fullScreen": false,
     "statusDelay": 2,
     "disablePlatformView": true,
+    "sharedLibraries": "openui5,",
     "defaultUser": "admin",
     "defaultPassword": "1q2w3e",
     "RepositoryAddress|BORepositoryShellOffLine": ".../../../test/repository",

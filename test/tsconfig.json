@@ -3,6 +3,7 @@
         "module": "amd",
         "target": "es6",
         "noImplicitAny": false,
-        "removeComments": true
+        "removeComments": true,
+        "baseUrl": "../"
     }
 }

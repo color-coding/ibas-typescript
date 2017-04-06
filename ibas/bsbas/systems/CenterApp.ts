@@ -8,7 +8,7 @@
 
 /// <reference path="../../3rdparty/index.d.ts" />
 import {
-    i18n, logger, emMessageLevel, IOperationResult, object, config, string, requires,
+    i18n, logger, emMessageLevel, IOperationResult, object, config, string, requires, url,
     ModuleConsole, IModuleConsole, IModuleFunction, IApplication, BORepositoryApplication,
     IView, IBarView, IBarApplication, IViewShower, Application, IMessgesCaller,
     emMessageType, emPrivilegeSource, emAuthoriseType, emMessageAction, variablesManager,
@@ -175,26 +175,18 @@ export abstract class CenterApp<T extends ICenterView> extends Application<T> im
     protected initModuleConsole(module: IUserModule): void {
         // 模块入口地址
         let address: string = module.address;
-        /*
-           if (!address.endsWith(".js")) {
-               address = address + ".js";
-           }
-          */
-        // 此处存在问题，
-        // 当地址以http开头requirejs不在修正引用文件名称，即：.js不添加。
-        // 关联引用也不修正名称。
-        // address = url.normalize(address);
+        address = url.normalize(address);
         let that: this = this;
-        let baseUrl = address;//.substring(0, address.indexOf("index"));
-        let indexName = module.index;
+        let indexName: string = module.index;
         if (object.isNull(indexName) || indexName === "") {
             indexName = "index";
         }
         indexName = string.format("{0}/{1}", module.name, indexName);
         let moduleRequire: Function = requires.create({
-            baseUrl: baseUrl
-        }, ["ibas/"]);
-        logger.log(emMessageLevel.DEBUG, "center: module [{0}] {root: [{1}], index: [{2}]}.", module.name, baseUrl, indexName);
+            baseUrl: address,
+            context: module.name
+        }, []);
+        logger.log(emMessageLevel.DEBUG, "center: module [{0}] {root: [{1}], index: [{2}]}.", module.name, address, indexName);
         moduleRequire([indexName], function (moduleIndex: any): void {
             try {
                 // 模块加载成功

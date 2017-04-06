@@ -3,13 +3,13 @@
     "id": "test-0",
     "name": "module_a",
     "category": "test",
-    "address": "../../test/apps/"
+    "address": ".../../../test/apps/"
   },
   {
     "id": "test-1",
     "name": "module_b",
     "category": "test",
-    "address": "../../test/apps/"
+    "address": ".../../../test/apps/"
   },
   {
     "id": "test-2",

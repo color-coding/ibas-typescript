@@ -7,7 +7,7 @@
  */
 
 /// <reference path="../../../../ibas/3rdparty/index.d.ts" />
-import * as ibas from "../../../../ibas/index";
+import * as ibas from "ibas/index";
 import { DemoFunc, DemoUrlFunc, DemoResidentApp } from "./demo/index";
 
 /** 模块控制台 */

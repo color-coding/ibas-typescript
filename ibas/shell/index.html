@@ -33,19 +33,13 @@
             ibasRequire(["../index.js"], function (ibas) {
                 // 加载成功，创建壳加载
                 let sysRequire = ibas.requires.create({
-                    // require配置参数
-                    baseUrl: './',
-                }, ["ibas/"]);
+                }, []);
                 // 加载应用系统
                 sysRequire(["../bsbas/systems/index.js"], function () {
                     // 加载成功
-                    requireError(null);
                     let shellRequire = ibas.requires.create({
-                        // require配置参数
-                        baseUrl: './',
-                    }, ["ibas/"]);
+                    }, []);
                     shellRequire(["./index.js"], function (index) {
-                        requireError(null);
                     }, requireError);
                 }, requireError);
             }, requireError);

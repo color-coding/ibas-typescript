@@ -6,7 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import * as ibas from "../../../../../ibas/index";
+import * as ibas from "ibas/index";
 import * as app from "../../bsapp/demo/index";
 import * as ui from "./demo/index";
 
