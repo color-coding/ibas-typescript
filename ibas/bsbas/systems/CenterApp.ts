@@ -181,7 +181,6 @@ export abstract class CenterApp<T extends ICenterView> extends Application<T> im
         if (object.isNull(indexName) || indexName === "") {
             indexName = "index";
         }
-        indexName = string.format("{0}/{1}", module.name, indexName);
         let moduleRequire: Function = requires.create({
             baseUrl: address,
             context: requires.naming(module.name)

@@ -4,10 +4,11 @@
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
 /// <reference path="./sap.ui.d.ts" />
+/// <reference path="../../ibas/index.ts" />
 import {
     i18n, string, object, List, ArrayList, emMessageAction, emMessageType,
     enums
-} from "../../ibas/index";
+} from "ibas/index";
 
 export namespace utils {
     export function createComboBoxItems(data: any): sap.ui.core.Item[] {
