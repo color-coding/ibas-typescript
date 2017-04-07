@@ -7,7 +7,7 @@
  */
 
 import {
-    i18n, object, logger, emMessageLevel, ICriteria
+    i18n, object, logger, emMessageLevel, ICriteria, config
 } from "../../bobas/index";
 import { Application, IBarView, IMessgesCaller } from "../core/index";
 import { emMessageType } from "../data/index";
@@ -44,7 +44,7 @@ export abstract class BOApplication<T extends IBOView> extends Application<T> {
                     {
                         title: title,
                         type: emMessageType.ERROR,
-                        message: error.message
+                        message: config.get(config.CONFIG_ITEM_DEBUG_MODE, false) ? error.stack : error.message
                     });
             }
         } else {
@@ -131,7 +131,7 @@ export abstract class BOApplication<T extends IBOView> extends Application<T> {
                 caller = {
                     title: i18n.prop(this.name),
                     type: emMessageType.ERROR,
-                    message: arguments[0].message
+                    message: config.get(config.CONFIG_ITEM_DEBUG_MODE, false) ? arguments[0].stack : arguments[0].message
                 };
             } else {
                 caller = {
