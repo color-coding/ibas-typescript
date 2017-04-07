@@ -27,17 +27,22 @@
         };
         let loadEntry = function () {
             // 加载ibas
-            require(["../index.js"], function (ibas) {
+            let require = requirejs.config({
+                baseUrl: "./../../"
+            });
+            require(["ibas/index"], function (ibas) {
                 // 加载成功，创建壳加载
                 let sysRequire = ibas.requires.create({
+                    baseUrl: "./../../"
                 }, []);
                 // 加载应用系统
-                sysRequire(["../bsbas/systems/index.js"], function () {
+                sysRequire(["ibas/bsbas/systems/index"], function () {
                     // 加载成功
                     let shellRequire = ibas.requires.create({
-                        context: ibas.requires.naming("shell")
+                        context: ibas.requires.naming("shell"),
+                        baseUrl: ibas.url.normalize(".../../")
                     }, ["ibas/bsbas/systems"]);
-                    shellRequire(["./index.js"], function (index) {
+                    shellRequire(["shell/index"], function (index) {
                     }, requireError);
                 }, requireError);
             }, requireError);

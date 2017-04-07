@@ -58,7 +58,7 @@ export class Console extends ibas.ModuleConsole {
     /** 模块-标识 */
     static CONSOLE_ID: string = "00000000-ibas-cc01-00000000000000000";
     /** 模块-名称 */
-    static CONSOLE_NAME: string = "sys_ibas";
+    static CONSOLE_NAME: string = "ibas.shell";
 
     constructor() {
         super();

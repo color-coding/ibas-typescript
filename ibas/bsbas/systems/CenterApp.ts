@@ -193,22 +193,30 @@ export abstract class CenterApp<T extends ICenterView> extends Application<T> im
                 // 模块加载成功
                 if (object.isNull(moduleIndex)) {
                     // 模块的索引文件加载不成功，或返回值不正确
-                    throw new Error(i18n.prop("msg_invalid_module_index", object.isNull(module.name) ? module.id : module.name));
+                    throw new Error(
+                        i18n.prop("msg_invalid_module_index", object.isNull(module.name) ? module.id : module.name)
+                    );
                 }
                 // 模块加载成功
                 if (object.isNull(moduleIndex)) {
                     // 模块的索引文件加载不成功，或返回值不正确
-                    throw new Error(i18n.prop("msg_invalid_module_index", object.isNull(module.name) ? module.id : module.name));
+                    throw new Error(
+                        i18n.prop("msg_invalid_module_index", object.isNull(module.name) ? module.id : module.name)
+                    );
                 }
-                let consoleClass = moduleIndex.default;
+                let consoleClass: any = moduleIndex.default;
                 if (object.isNull(consoleClass) && consoleClass.prototype !== ModuleConsole) {
                     // 模块的控制台无效
-                    // throw new Error(i18n.prop("msg_invalid_module_console", object.isNull(module.name) ? module.id : module.name));
+                    // throw new Error(
+                    //    i18n.prop("msg_invalid_module_console", object.isNull(module.name) ? module.id : module.name)
+                    // );
                 }
                 let console: ModuleConsole = new consoleClass();
                 if (!(console instanceof ModuleConsole)) {
                     // 控制台实例无效
-                    // throw new Error(i18n.prop("msg_invalid_module_console_instance", object.isNull(module.name) ? module.id : module.name));
+                    // throw new Error(
+                    //    i18n.prop("msg_invalid_module_console_instance", object.isNull(module.name) ? module.id : module.name)
+                    // );
                 }
                 // 有效模块控制台
                 console.addListener(function (): void {
