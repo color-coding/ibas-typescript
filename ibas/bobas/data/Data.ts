@@ -21,6 +21,64 @@ export module object {
         }
         return false;
     }
+    /**
+     * 判断数据是否为某类型
+     * @param instance 数据
+     * @param type 类型
+     */
+    export function instanceOf(instance: any, type: any): boolean {
+        if (isNull(instance) || isNull(type)) {
+            return false;
+        }
+        // 直接判断
+        if (instance instanceof type) {
+            return true;
+        }
+        // 通过名称判断，不安全
+        let tType: any = Object.getPrototypeOf(instance).constructor;
+        if (isAssignableFrom(tType, type)) {
+            return true;
+        }
+        return false;
+    }
+    /**
+     * 判断是否为其子类
+     * @param subType 待判断类型
+     * @param type 父类型
+     */
+    export function isAssignableFrom(subType: any, type: any): boolean {
+        if (isNull(subType) || isNull(type)) {
+            return false;
+        }
+        if (subType === type) {
+            return true;
+        }
+        let cType: any = Object.getPrototypeOf(subType);
+        while (!isNull(cType)) {
+            if (isSame(cType, type)) {
+                return true;
+            }
+            cType = Object.getPrototypeOf(cType);
+        }
+        return false;
+    }
+    /**
+     * 是否一样
+     * @param type1 类型1
+     * @param type2 类型2
+     */
+    export function isSame(type1: any, type2: any): boolean {
+        if (type1 === type2) {
+            return true;
+        }
+        if (isNull(type1) || isNull(type2)) {
+            return false;
+        }
+        if (type1.name === type2.name) {
+            return true;
+        }
+        return false;
+    }
 }
 /**
  * 唯一标识

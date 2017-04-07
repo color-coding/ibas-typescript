@@ -142,8 +142,6 @@ export interface IViewNavigation {
 export interface IModuleConsole extends IModule {
     /** 当前平台 */
     readonly plantform: emPlantform;
-    /** 地址 */
-    address: string;
     /** 图标 */
     icon: string;
     /** 初始化完成 */

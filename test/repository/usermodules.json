@@ -3,13 +3,15 @@
     "id": "test-0",
     "name": "module_a",
     "category": "test",
-    "address": ".../../../test/apps/module_a/"
+    "address": ".../../../test/apps/module_a/",
+    "repository": ".../../../test/repository"
   },
   {
     "id": "test-1",
     "name": "module_b",
     "category": "test",
-    "address": ".../../../test/apps/module_b/"
+    "address": ".../../../test/apps/module_b/",
+    "repository": ".../../../test/repository"
   },
   {
     "id": "test-2",

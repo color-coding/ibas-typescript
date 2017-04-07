@@ -13,7 +13,7 @@ import {
     IView, IBarView, IBarApplication, IViewShower, Application, IMessgesCaller,
     emMessageType, emPrivilegeSource, emAuthoriseType, emMessageAction, variablesManager,
     BOResidentApplication, BOApplication, BOChooseApplication, BOListApplication,
-    BOViewApplication, BOEditApplication
+    BOViewApplication, BOEditApplication, IBOView
 } from "ibas/index";
 import {
     ICenterView, ICenterApp, IBORepositorySystem,
@@ -204,18 +204,18 @@ export abstract class CenterApp<T extends ICenterView> extends Application<T> im
                     );
                 }
                 let consoleClass: any = moduleIndex.default;
-                if (object.isNull(consoleClass) && consoleClass.prototype !== ModuleConsole) {
+                if (object.isNull(consoleClass) || !object.isAssignableFrom(consoleClass, ModuleConsole)) {
                     // 模块的控制台无效
-                    // throw new Error(
-                    //    i18n.prop("msg_invalid_module_console", object.isNull(module.name) ? module.id : module.name)
-                    // );
+                    throw new Error(
+                        i18n.prop("msg_invalid_module_console", object.isNull(module.name) ? module.id : module.name)
+                    );
                 }
                 let console: ModuleConsole = new consoleClass();
-                if (!(console instanceof ModuleConsole)) {
+                if (!(object.instanceOf(console, ModuleConsole))) {
                     // 控制台实例无效
-                    // throw new Error(
-                    //    i18n.prop("msg_invalid_module_console_instance", object.isNull(module.name) ? module.id : module.name)
-                    // );
+                    throw new Error(
+                        i18n.prop("msg_invalid_module_console_instance", object.isNull(module.name) ? module.id : module.name)
+                    );
                 }
                 // 有效模块控制台
                 console.addListener(function (): void {
@@ -233,12 +233,16 @@ export abstract class CenterApp<T extends ICenterView> extends Application<T> im
                     that.registerFunctions(console);
                     // 显示常驻应用
                     for (let app of console.applications()) {
-                        if (app instanceof BOResidentApplication) {
+                        if (object.instanceOf(app, BOResidentApplication)) {
                             app.viewShower = that;
-                            that.view.showResidentView(app.view);
+                            that.view.showResidentView(<IBarView>app.view);
                         }
                     }
                 });
+                // 设置默认业务仓库
+                if (!object.isNull(module.repository)) {
+                    console.setRepository(module.repository);
+                }
                 console.run();
             } catch (error) {
                 that.view.showStatusMessage(emMessageType.ERROR, error);
@@ -275,23 +279,23 @@ export abstract class CenterApp<T extends ICenterView> extends Application<T> im
     protected canRun(app: IApplication<IView>): boolean {
         let run: boolean = true;
         if (!object.isNull(this.userPrivileges)) {
-            if (app instanceof BOApplication) {
+            if (object.instanceOf(app, BOApplication)) {
                 // 应用是业务对象应用，根据应用类型设置权限
                 for (let item of this.userPrivileges) {
                     if (item.source !== emPrivilegeSource.BUSINESS_OBJECT) {
                         continue;
                     }
-                    if (item.target !== app.boCode) {
+                    if (item.target !== (<BOApplication<IBOView>>app).boCode) {
                         continue;
                     }
                     if (item.value === emAuthoriseType.READ) {
-                        if (app instanceof BOListApplication) {
+                        if (object.instanceOf(app, BOListApplication)) {
                             run = true;
-                        } else if (app instanceof BOChooseApplication) {
+                        } else if (object.instanceOf(app, BOChooseApplication)) {
                             run = true;
-                        } else if (app instanceof BOViewApplication) {
+                        } else if (object.instanceOf(app, BOViewApplication)) {
                             run = true;
-                        } else if (app instanceof BOEditApplication) {
+                        } else if (object.instanceOf(app, BOEditApplication)) {
                             run = false;
                         }
                     } else {

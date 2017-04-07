@@ -65,6 +65,10 @@ export class Console extends ibas.ModuleConsole {
         this.id = Console.CONSOLE_ID;
         this.name = Console.CONSOLE_NAME;
     }
+    /** 设置仓库地址 */
+    setRepository(address: string): void {
+        // 壳不用设置
+    }
     private _navigation: any;
     /** 视图导航 */
     navigation(): ibas.IViewNavigation {
@@ -117,9 +121,6 @@ export class Console extends ibas.ModuleConsole {
         }
         let that: Console = this;
         require(uiModules, function (ui: any): void {
-            if (ibas.config.get(ibas.config.CONFIG_ITEM_DEBUG_MODE) === true) {
-                ibas.debug.printScripts("shell view");
-            }
             // 设置导航
             that._navigation = new ui.Navigation();
             // 设置视图显示者
@@ -130,9 +131,6 @@ export class Console extends ibas.ModuleConsole {
             let app: ibas.IApplication<ibas.IView> = that.default().default();
             app.show();
         });
-        if (ibas.config.get(ibas.config.CONFIG_ITEM_DEBUG_MODE) === true) {
-            ibas.debug.printScripts("shell console");
-        }
         // 保留基类方法
         super.run();
     }

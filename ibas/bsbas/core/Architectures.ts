@@ -134,8 +134,6 @@ export abstract class ModuleConsole extends Module implements IModuleConsole {
     get plantform(): emPlantform {
         return config.get(ModuleConsole.CONFIG_ITEM_PLANTFORM, emPlantform.DESKTOP);
     }
-    /** 地址 */
-    address: string;
     /** 图标 */
     icon: string;
     /** 功能集合 */
@@ -224,6 +222,8 @@ export abstract class ModuleConsole extends Module implements IModuleConsole {
             this._applications.add(item);
         }
     }
+    /** 设置仓库地址 */
+    abstract setRepository(address: string): void;
 }
 /** 模块控制台 */
 export abstract class ModuleFunction extends Functions implements IModuleFunction {

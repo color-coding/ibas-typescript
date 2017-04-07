@@ -117,6 +117,7 @@ export class DataConverter4Offline extends ibas.DataConverter {
             module.index = data.index;
             module.category = data.category;
             module.address = data.address;
+            module.repository = data.repository;
             return module;
         } else if (sign === "userprivileges.json") {
             let privilege = new bo.UserPrivilege();

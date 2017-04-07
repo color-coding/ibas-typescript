@@ -153,15 +153,15 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
     /** 显示视图 */
     showView(view: ibas.IView): void {
         let that: this = this;
-        if (view instanceof ibas.UrlView) {
+        if (ibas.object.instanceOf(view, ibas.UrlView)) {
             // 视图为地址视图
-            this.showUrlView(view);
-        } else if (view instanceof ibas.BODialogView) {
+            this.showUrlView(<ibas.UrlView>view);
+        } else if (ibas.object.instanceOf(view, ibas.BODialogView)) {
             // 选择视图
-            this.showDialogView(view);
-        } else if (view instanceof ibas.BOBarView) {
+            this.showDialogView(<ibas.BODialogView>view);
+        } else if (ibas.object.instanceOf(view, ibas.BOBarView)) {
             // 工具条视图
-            this.showBarView(view);
+            this.showBarView(<ibas.BOBarView>view);
         } else {
             // 正常视图
             this.form.setShowHeader(true);
@@ -187,7 +187,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             this.form.addContent(viewContent);
             this.viewQueue.set(view, viewContent);
             // 添加查询面板
-            if (view instanceof ibas.BOQueryView) {
+            if (ibas.object.instanceOf(view, ibas.BOQueryView)) {
                 let queryView: sys.IEmbeddedQueryPanel = {
                     /** 嵌入查询面板 */
                     embedded(view: any): void {
@@ -196,7 +196,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                         that.form.setShowSubHeader(true);
                     }
                 };
-                this.showQueryPanel(view, queryView);
+                this.showQueryPanel(<ibas.BOQueryView>view, queryView);
             }
         }
     }
@@ -257,8 +257,8 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         view.id = dialog.getId();
         dialog.open();
         // 添加查询面板
-        if (view instanceof ibas.BOQueryView
-            || view instanceof ibas.BOQueryDialogView) {
+        if (ibas.object.instanceOf(view, ibas.BOQueryView)
+            || ibas.object.instanceOf(view, ibas.BOQueryDialogView)) {
             let queryView: sys.IEmbeddedQueryPanel = {
                 /** 嵌入查询面板 */
                 embedded(view: any): void {
@@ -266,7 +266,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                     dialog.setSubHeader(view);
                 }
             };
-            this.showQueryPanel(view, queryView);
+            this.showQueryPanel(<ibas.BOQueryView><any>view, queryView);
         }
     }
     /** 显示工具条视图 */
@@ -302,9 +302,9 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             queryPanel.navigation = this.application.navigation;
             queryPanel.viewShower = <any>this.application;
             // 判断面板嵌入位置
-            if (view instanceof ibas.BOQueryViewWithPanel) {
+            if (ibas.object.instanceOf(view, ibas.BOQueryViewWithPanel)) {
                 // 视图继承嵌入接口
-                embeddedView = view;
+                embeddedView = <ibas.BOQueryViewWithPanel>view;
             }
             // 先使用缓存中的，再次新建
             if (this.queryPanels.has(view.id)) {

@@ -8,6 +8,7 @@
 
 /// <reference path="../../../../ibas/3rdparty/index.d.ts" />
 import * as ibas from "ibas/index";
+import { BORepositoryDemo } from "../borep/BORepositories";
 import { DemoFunc, DemoUrlFunc, DemoResidentApp } from "./demo/index";
 
 /** 模块控制台 */
@@ -25,6 +26,13 @@ export class Console extends ibas.ModuleConsole {
         this.name = Console.CONSOLE_NAME;
     }
 
+    /** 设置仓库地址 */
+    setRepository(address: string): void {
+        // 壳不用设置
+        ibas.config.set(ibas.string.format(
+            BORepositoryDemo.CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS, BORepositoryDemo.name), address
+        );
+    }
     private _navigation: any;
     /** 创建视图导航 */
     navigation(): ibas.IViewNavigation {
