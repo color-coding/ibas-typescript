@@ -6,7 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { string ,emMessageLevel} from "../data/index";
+import { string, emMessageLevel } from "../data/index";
 import { config } from "../configuration/index";
 import { IMessage } from "./Message.d";
 import { Message } from "./Message";
@@ -70,6 +70,12 @@ export class Logger implements ILogger {
      * @param msgPars 消息参数
      */
     log(...msgPars: any[]): void {
+        // edge不开启调试模式,不能输出消息
+        if ((<any>window).Debug !== undefined && (<any>window).Debug !== null) {
+            if ((<any>window).Debug.debuggerEnabled !== true) {
+                return;
+            }
+        }
         let message: Message;
         let useCount: number = 0;// 使用的参数
         if (msgPars[0] instanceof Message) {
@@ -106,7 +112,8 @@ export class Logger implements ILogger {
             putter = console.warn;
         } else if (message.level === emMessageLevel.DEBUG) {
             putter = console.debug;
-        } else {
+        }
+        if (putter === undefined || putter === null) {
             putter = console.log;
         }
         putter(message.outString());

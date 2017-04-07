@@ -28,8 +28,8 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
             });
             this.baseOn = new sap.m.Select("", {
                 placeholder: ibas.i18n.prop("sys_shell_ui_base_on_criteria"),
-                width: "40%",
-                maxWidth: "40%"
+                width: "55%",
+                maxWidth: "55%"
             });
             this.config = new sap.m.Button("", {
                 icon: "sap-icon://filter",

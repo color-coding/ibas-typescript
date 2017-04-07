@@ -12,17 +12,6 @@
         // 显示消息
         let requireError = function (error) {
             console.error(error);
-            let scripts = document.getElementsByTagName("script");
-            console.debug("-------------------  error  --------------------");
-            for (let index = 0; index < scripts.length; index++) {
-                let script = scripts[index];
-                if (script.src !== undefined && script.src !== null && script.src.length !== 0) {
-                    console.debug("script: file %s", script.src);
-                } else if (script.innerHTML !== undefined && script.innerHTML !== null && script.innerHTML.length !== 0) {
-                    console.debug("script: content %s", script.innerHTML);
-                }
-            }
-            console.debug("-------------------  error  --------------------");
             alert("应用加载失败，请联系管理员或尝试使用其他浏览器。");
         };
         let loadEntry = function () {
