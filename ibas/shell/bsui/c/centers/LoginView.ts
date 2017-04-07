@@ -68,13 +68,12 @@ export class LoginView extends ibas.BOView implements sys.ILoginView {
         }
         let that: this = this;
         this.txtUser = new sap.m.Input("", {
-            value: ibas.config.get(LoginView.CONFIG_ITEM_DEFAULT_USER)
+            value: config.get(config.CONFIG_ITEM_DEBUG_MODE, false) ? ibas.config.get(LoginView.CONFIG_ITEM_DEFAULT_USER) : "",
         });
-        this.txtPassword = new sap.m.Input("",
-            {
-                value: ibas.config.get(LoginView.CONFIG_ITEM_DEFAULT_PASSWORD),
-                type: "Password"
-            });
+        this.txtPassword = new sap.m.Input("", {
+            value: config.get(config.CONFIG_ITEM_DEBUG_MODE, false) ? ibas.config.get(LoginView.CONFIG_ITEM_DEFAULT_PASSWORD) : "",
+            type: "Password"
+        });
         this.languages = new sap.m.Select("", {
             placeholder: ibas.i18n.prop("sys_shell_ui_chooose_language"),
             change: function (): void {
