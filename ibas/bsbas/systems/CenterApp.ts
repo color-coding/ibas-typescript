@@ -184,7 +184,7 @@ export abstract class CenterApp<T extends ICenterView> extends Application<T> im
         indexName = string.format("{0}/{1}", module.name, indexName);
         let moduleRequire: Function = requires.create({
             baseUrl: address,
-            context: module.name
+            context: requires.naming(module.name)
         }, []);
         logger.log(emMessageLevel.DEBUG, "center: module [{0}] {root: [{1}], index: [{2}]}.", module.name, address, indexName);
         moduleRequire([indexName], function (moduleIndex: any): void {

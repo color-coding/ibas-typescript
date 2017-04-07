@@ -16,7 +16,7 @@ export * from "./Logger.d";
 export * from "./Logger";
 
 import { Logger } from "./Logger";
-export const logger: Logger = function () {
+export const logger: Logger = function (): Logger {
     if ((<any>window).ibas === undefined) {
         (<any>window).ibas = {};
     }

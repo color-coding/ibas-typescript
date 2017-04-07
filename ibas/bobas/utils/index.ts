@@ -11,7 +11,13 @@ import * as cnf from "../configuration/index";
 /**  */
 export module requires {
     /** 模块间共享的类库名称，逗号分隔 */
-    const CONFIG_ITEM_SHARED_LIBRARIES: string = "sharedLibraries";
+    export const CONFIG_ITEM_SHARED_LIBRARIES: string = "sharedLibraries";
+    /** 加载器名称模板 */
+    export const CONTEXT_NAME_TEMPLATE_IBAS: string = "ibas.{0}";
+    /** 命名 */
+    export function naming(name: string): string {
+        return CONTEXT_NAME_TEMPLATE_IBAS.replace("{0}", name);
+    }
     /**
      * 创建require实例
      * @param config 配置
@@ -22,7 +28,10 @@ export module requires {
             throw new Error("not found requirejs.");
         }
         let names: ArrayList<string> = new ArrayList<string>();
-        names.push("ibas");
+        // names.push("ibas");
+        names.push("ibas/bobas");
+        names.push("ibas/bsbas");
+        names.push("ibas/index.js");
         if (library !== undefined && library !== null) {
             if (library instanceof Array) {
                 // 定义了path
@@ -54,7 +63,8 @@ export module requires {
                         if (name.endsWith(".js")) {
                             // 指定了js文件
                             if (script.src.endsWith(name)) {
-                                config.paths[name] = script.src;
+                                config.paths[name.substring(0, name.lastIndexOf(".js"))]
+                                    = script.src.substring(0, script.src.lastIndexOf(".js"));
                                 break;
                             }
                         } else {

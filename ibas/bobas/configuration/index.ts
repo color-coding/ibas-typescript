@@ -14,7 +14,7 @@ export * from "./Configuration";
  * 发布的配置实例
  */
 import { Configuration } from "./Configuration";
-export const config: Configuration = function () {
+export const config: Configuration = function (): Configuration {
     if ((<any>window).ibas === undefined) {
         (<any>window).ibas = {};
     }

@@ -35,7 +35,8 @@
                 sysRequire(["../bsbas/systems/index.js"], function () {
                     // 加载成功
                     let shellRequire = ibas.requires.create({
-                    }, []);
+                        context: ibas.requires.naming("shell")
+                    }, ["ibas/bsbas/systems"]);
                     shellRequire(["./index.js"], function (index) {
                     }, requireError);
                 }, requireError);

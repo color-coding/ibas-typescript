@@ -14,7 +14,7 @@ export * from "./I18N";
 
 /** 发布的配置实例 */
 import { I18N } from "./I18N";
-export const i18n: I18N = function () {
+export const i18n: I18N = function (): I18N {
     if ((<any>window).ibas === undefined) {
         (<any>window).ibas = {};
     }
