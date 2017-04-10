@@ -6,7 +6,7 @@
     "helpUrl": "http://www.baidu.com",
     "fullScreen": false,
     "statusDelay": 2,
-    "disablePlatformView": true,
+    "disablePlatformView": false,
     "sharedLibraries": "openui5/typings,",
     "defaultUser": "admin",
     "defaultPassword": "1q2w3e",

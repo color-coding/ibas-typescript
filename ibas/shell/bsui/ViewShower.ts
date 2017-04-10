@@ -13,7 +13,15 @@ import { utils } from "../../../openui5/typings/ibas.utils";
 /**
  * 视图-显示者-默认
  */
-export class ViewShowerDefault implements ibas.IViewShower {
+export default class ViewShowerDefault implements ibas.IViewShower {
+
+    constructor() {
+        // 设置默认平台
+        if (sap.ui.Device.system.phone) {
+            ibas.config.set(ibas.ModuleConsole.CONFIG_ITEM_PLANTFORM, ibas.emPlantform.PHONE);
+        }
+    }
+
     /** 显示视图 */
     show(view: ibas.IView): void {
         let viewContent: any = view.darw();

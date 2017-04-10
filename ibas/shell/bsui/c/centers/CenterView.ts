@@ -528,7 +528,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         this.navigation.setFixedItem(new sap.tnt.NavigationList("", {
             items: [
                 new sap.tnt.NavigationListItem("", {
-                    title: ibas.i18n.prop("sys_shell_ui_messages_history"),
+                    text: ibas.i18n.prop("sys_shell_ui_messages_history"),
                     icon: "sap-icon://message-popup",
                     select: function (event: any): void {
                         that.messageHistory.openBy(event.getSource());

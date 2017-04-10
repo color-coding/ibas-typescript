@@ -83,23 +83,8 @@ export class Console extends ibas.ModuleConsole {
         // 注册功能
         this.register(new CentersFunc(this._viewShower));
     }
-    /** 初始化平台 */
-    initPlatform(): void {
-        let plantform: ibas.emPlantform = ibas.emPlantform.DESKTOP;
-        if (!ibas.object.isNull(navigator) && !ibas.object.isNull(navigator.userAgent)) {
-            let agent: string = navigator.userAgent.toLowerCase();
-            if (agent.indexOf("android") >= 0
-                || agent.indexOf("iphone") >= 0) {
-                plantform = ibas.emPlantform.PHONE;
-            } else if (agent.indexOf("ipad") >= 0) {
-                plantform = ibas.emPlantform.TABLET;
-            }
-        }
-        ibas.config.set(ibas.ModuleConsole.CONFIG_ITEM_PLANTFORM, plantform);
-    }
     /** 运行 */
     run(): void {
-        // this.initPlatform();
         // 获取根地址
         let rootUrl: string = ibas.url.rootUrl(undefined);
         // 加载配置-框架默认
@@ -109,27 +94,30 @@ export class Console extends ibas.ModuleConsole {
         // 设置资源属性
         this.description = ibas.i18n.prop(this.name);
         this.icon = ibas.string.format("{0}/resources/images/logo_small.png", rootUrl);
-        // 先加载ui导航
-        let uiModules: string[] = [];
-        if (!ibas.config.get(ibas.config.CONFIG_ITEM_DISABLE_PLATFORM_VIEW, false)
-            && this.plantform === ibas.emPlantform.PHONE) {
-            // 使用m类型视图
-            uiModules.push("../bsui/m/Navigation");
-        } else {
-            // 使用c类型视图
-            uiModules.push("../bsui/c/Navigation");
-        }
+        // 加载视图显示者
         let that: Console = this;
-        require(uiModules, function (ui: any): void {
-            // 设置导航
-            that._navigation = new ui.Navigation();
+        require(["../bsui/ViewShower"], function (ViewShower: any): void {
             // 设置视图显示者
-            that._viewShower = new ui.ViewShower();
-            // 调用初始化
-            that.initialize();
-            // 调用入口应用
-            let app: ibas.IApplication<ibas.IView> = that.default().default();
-            app.show();
+            that._viewShower = new ViewShower.default();
+            // 加载ui导航
+            let uiModules: string[] = [];
+            if (!ibas.config.get(ibas.config.CONFIG_ITEM_DISABLE_PLATFORM_VIEW, false)
+                && that.plantform === ibas.emPlantform.PHONE) {
+                // 使用m类型视图
+                uiModules.push("../bsui/m/Navigation");
+            } else {
+                // 使用c类型视图
+                uiModules.push("../bsui/c/Navigation");
+            }
+            require(uiModules, function (ui: any): void {
+                // 设置导航
+                that._navigation = new ui.default();
+                // 调用初始化
+                that.initialize();
+                // 调用入口应用
+                let app: ibas.IApplication<ibas.IView> = that.default().default();
+                app.show();
+            });
         });
         // 保留基类方法
         super.run();

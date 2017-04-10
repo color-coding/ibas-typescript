@@ -1,0 +1,16 @@
+﻿/**
+ * @license
+ * Copyright color-coding studio. All Rights Reserved.
+ *
+ * Use of this source code is governed by an Apache License, Version 2.0
+ * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
+ */
+
+export * from "./DemoUrlView";
+export * from "./DemoListView";
+export * from "./DemoViewView";
+export * from "./DemoEditView";
+export * from "./DemoChooseView";
+export * from "./DemoResidentView";
+// export * from "./DemoListView.uxap";
+// export * from "./DemoEditView.uxap";

@@ -10,12 +10,10 @@ import * as ibas from "ibas/index";
 import * as app from "../../bsapp/centers/index";
 import * as ui from "./centers/index";
 
-/** 导出视图显示 */
-export { ViewShowerDefault as ViewShower } from "../ViewShowers";
 /**
  * 视图导航
  */
-export class Navigation extends ibas.ViewNavigation {
+export default class Navigation extends ibas.ViewNavigation {
 
     /**
      * 创建实例
@@ -29,6 +27,21 @@ export class Navigation extends ibas.ViewNavigation {
                 break;
             case app.LoginApp.APPLICATION_ID:
                 view = new ui.LoginView();
+                break;
+            case app.CenterApp.APPLICATION_ID:
+                view = new ui.CenterView();
+                break;
+            case app.AboutApp.APPLICATION_ID:
+                view = new ui.AboutView();
+                break;
+            case app.HelpApp.APPLICATION_ID:
+                view = new ui.HelpView();
+                break;
+            case app.QueryPanel.APPLICATION_ID:
+                view = new ui.QueryPanelView();
+                break;
+            case app.SuggestionApp.APPLICATION_ID:
+                view = new ui.SuggestionView();
                 break;
             default:
                 break;

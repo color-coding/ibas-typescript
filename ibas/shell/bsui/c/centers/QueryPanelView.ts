@@ -6,7 +6,6 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-/// <reference path="../../../../../openui5/typings/index.d.ts" />
 import * as ibas from "ibas/index";
 import * as sys from "ibas/bsbas/systems/index";
 import { utils } from "../../../../../openui5/typings/ibas.utils";
@@ -96,7 +95,7 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
         this.boName = data.target;
         this.form.setModel(new sap.ui.model.json.JSONModel(data));
     }
-    private boName: string;
+    protected boName: string;
     /** 显示查询条件 */
     showQueryConditions(datas: ibas.ICondition[]): void {
         if (ibas.object.isNull(this.table)) {
@@ -110,15 +109,18 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
                     onCompleted(opRslt: ibas.IOperationResult<sys.IBOInfo>): void {
                         let boInfo: sys.IBOInfo = opRslt.resultObjects.firstOrDefault();
                         if (ibas.object.isNull(boInfo)) {
-                            that.createTable([]);
+                            that.table = that.createTable([]);
+                            that.form.addContent(that.table);
                         } else {
-                            that.createTable(boInfo.properties);
+                            that.table = that.createTable(boInfo.properties);
+                            that.form.addContent(that.table);
                         }
-                        this.table.setModel(new sap.ui.model.json.JSONModel(datas));
+                        that.table.setModel(new sap.ui.model.json.JSONModel(datas));
                     }
                 });
             } else {
-                this.createTable([]);
+                this.table = this.createTable([]);
+                this.form.addContent(this.table);
                 this.table.setModel(new sap.ui.model.json.JSONModel(datas));
             }
         } else {
@@ -155,7 +157,7 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
             }),
         ];
     }
-    private getCharListItem(char: string): sap.ui.core.ListItem[] {
+    protected getCharListItem(char: string): sap.ui.core.ListItem[] {
         // 获取重复的字符
         let count: number = 4;
         let items: Array<sap.ui.core.ListItem> = [];
@@ -174,19 +176,21 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
         return items;
     }
     private table: sap.ui.table.Table;
-    private getPropertyListItem(properies: sys.IBOPropertyInfo[]): sap.ui.core.ListItem[] {
+    protected getPropertyListItem(properies: sys.IBOPropertyInfo[]): sap.ui.core.ListItem[] {
         let items: Array<sap.ui.core.ListItem> = [];
-        for (let property of properies) {
-            items.push(new sap.ui.core.ListItem("", {
-                key: property.property,
-                text: property.description,
-            }));
+        if (!ibas.object.isNull(properies)) {
+            for (let property of properies) {
+                items.push(new sap.ui.core.ListItem("", {
+                    key: property.property,
+                    text: property.description,
+                }));
+            }
         }
         return items;
     }
-    private createTable(properies: sys.IBOPropertyInfo[]): void {
+    private createTable(properies: sys.IBOPropertyInfo[]): sap.ui.table.Table {
         let that = this;
-        this.table = new sap.ui.table.Table("", {
+        let table: sap.ui.table.Table = new sap.ui.table.Table("", {
             extension: new sap.m.Toolbar("", {
                 content: [
                     new sap.m.Button("", {
@@ -272,9 +276,9 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
                 })
             ]
         });
-        this.form.addContent(this.table);
+        return table;
     }
-    private form: sap.ui.layout.VerticalLayout;
+    protected form: sap.ui.layout.VerticalLayout;
     /** 绘制视图 */
     darw(): any {
         if (this.form != null) {

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @license
  * Copyright color-coding studio. All Rights Reserved.
  *
@@ -6,18 +6,18 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
+/// <reference path="../../../../../../openui5/typings/index.d.ts" />
 import * as ibas from "ibas/index";
-import * as sys from "ibas/bsbas/systems/index";
+import { utils } from "openui5/typings/ibas.utils";
+import { IDemoUrlView } from "../../../bsapp/demo/index";
 
 /**
- * 视图-入口
+ * 视图-demo
  */
-export class MainView extends ibas.BOView implements sys.IMainView {
+export class DemoUrlView extends ibas.UrlView implements IDemoUrlView {
+
     /** 绘制视图 */
     darw(): any {
-        this.app = new sap.m.App("ibas-app");
-        this.id = this.app.getId();
-        return this.app;
+        return null;
     }
-    private app: sap.m.App;
 }

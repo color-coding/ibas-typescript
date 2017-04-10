@@ -68,7 +68,7 @@ export class Console extends ibas.ModuleConsole {
         let that: Console = this;
         require(uiModules, function (ui: any): void {
             // 设置导航
-            that._navigation = new ui.Navigation();
+            that._navigation = new ui.default();
             // 调用初始化
             that.initialize();
         });

@@ -9,11 +9,11 @@
 /// <reference path="../../../../../openui5/typings/index.d.ts" />
 import * as ibas from "ibas/index";
 import * as sys from "ibas/bsbas/systems/index";
-import { MainView as cMainView } from "../../c/centers/index";
+import { AboutView as cAboutView } from "../../c/centers/index";
 
 /**
- * 视图-入口
+ * 视图-关于
  */
-export class MainView extends cMainView implements sys.IMainView {
+export class AboutView extends cAboutView implements sys.IAboutView {
 
 }
