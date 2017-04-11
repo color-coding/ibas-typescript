@@ -166,3 +166,12 @@ export interface IModuleFunction extends IFunction {
     /** 默认应用 */
     default(): IApplication<IView>;
 }
+/**
+ * 应用服务
+ */
+export interface IApplicationService extends IElement {
+    /** 图标 */
+    icon: string;
+    /** 运行服务 */
+    run(): void;
+}

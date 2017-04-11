@@ -6,12 +6,12 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { BOApplication } from "ibas/index";
+import { Application } from "ibas/index";
 import { IMainView, IMainApp, ILoginApp } from "./Systems.d";
 import { Factories } from "./Factories";
 
 /** 应用-入口 */
-export abstract class MainApp<T extends IMainView> extends BOApplication<T> implements IMainApp {
+export abstract class MainApp<T extends IMainView> extends Application<T> implements IMainApp {
     /** 应用标识 */
     static APPLICATION_ID: string = "cbd51fd3-63b4-4777-9aad-9c2f303b56f8";
     /** 应用名称 */

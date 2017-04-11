@@ -9,17 +9,15 @@
 import {
     i18n, object, logger, emMessageLevel, ICriteria, config
 } from "../../bobas/index";
-import { Application, IBarView, IMessgesCaller } from "../core/index";
+import { AbstractApplication, IView, IBarView, IMessgesCaller, IApplicationService } from "../core/index";
 import { emMessageType } from "../data/index";
-import { IBOView, IBOQueryView } from "./BOApplications.d";
+import { IBOView, IBOQueryView, IBOViewWithServices, IServicesShower } from "./Applications.d";
 
 
 /**
  * 业务对象应用
  */
-export abstract class BOApplication<T extends IBOView> extends Application<T> {
-    /** 业务对象编码 */
-    boCode: string;
+export abstract class Application<T extends IView> extends AbstractApplication<T> {
     /** 运行 */
     run(...args: any[]): void {
         this.show();
@@ -59,6 +57,10 @@ export abstract class BOApplication<T extends IBOView> extends Application<T> {
         this.view.isDisplayed = true;
         logger.log(emMessageLevel.DEBUG, "app: [{0} - {1}]'s view displayed.", this.id, this.name);
         this.viewShowed();
+    }
+    /** 注册视图 */
+    protected registerView(): void {
+        this.view.closeEvent = this.close;
     }
     /** 视图显示后 */
     protected abstract viewShowed(): void;
@@ -155,24 +157,12 @@ export abstract class BOApplication<T extends IBOView> extends Application<T> {
     }
 }
 /**
- * 业务对象查询应用
+ * 工具条应用
  */
-export abstract class BOQueryApplication<T extends IBOQueryView> extends BOApplication<T> {
+export abstract class BarApplication<T extends IBarView> extends Application<T> {
     /** 注册视图，重载需要回掉此方法 */
     protected registerView(): void {
-        this.view.closeEvent = this.close;
-        this.view.fetchDataEvent = this.fetchData;
-    }
-    /** 查询数据 */
-    protected abstract fetchData(criteria: ICriteria): void;
-}
-/**
- * 业务对象工具条应用
- */
-export abstract class BOBarApplication<T extends IBarView> extends BOApplication<T> {
-    /** 注册视图，重载需要回掉此方法 */
-    protected registerView(): void {
-        this.view.closeEvent = this.close;
+        super.registerView();
         this.view.showFullViewEvent = this.showFullView;
         this.view.barShowedEvent = this.barShowed;
     }
@@ -188,4 +178,60 @@ export abstract class BOBarApplication<T extends IBarView> extends BOApplication
     run(...args: any[]): void {
         // 不支持运行
     }
+}
+/**
+ * 业务对象应用
+ */
+export abstract class BOApplication<T extends IBOView> extends Application<T> {
+    /** 业务对象编码 */
+    boCode: string;
+    /** 注册视图，重载需要回掉此方法 */
+    protected registerView(): void {
+        super.registerView();
+    }
+}
+/**
+ * 业务对象应用，带服务
+ */
+export abstract class BOApplicationWithServices<T extends IBOViewWithServices> extends Application<T> {
+    /** 业务对象编码 */
+    boCode: string;
+    /** 注册视图，重载需要回掉此方法 */
+    protected registerView(): void {
+        super.registerView();
+        this.view.callServicesEvent = this.callServices;
+    }
+    /** 调用应用的服务 */
+    protected callServices(): void {
+        let shower: IServicesShower = arguments[0];
+        if (object.isNull(shower)) {
+            shower = (<IServicesShower><any>this.view);
+        }
+        if (object.isNull(shower) || shower.displayServices === undefined) {
+            this.proceeding(emMessageType.WARNING, i18n.prop("msg_not_provided_display_service_method", this.description));
+            return;
+        }
+        shower.displayServices([{
+            id: "",
+            name: "测试服务",
+            category: "",
+            description: "",
+            icon: "sap-icon://video",
+            run(): void {
+                logger.log("service: to be run.");
+            }
+        }]);
+    }
+}
+/**
+ * 业务对象查询应用
+ */
+export abstract class BOQueryApplication<T extends IBOQueryView> extends BOApplication<T> {
+    /** 注册视图，重载需要回掉此方法 */
+    protected registerView(): void {
+        super.registerView();
+        this.view.fetchDataEvent = this.fetchData;
+    }
+    /** 查询数据 */
+    protected abstract fetchData(criteria: ICriteria): void;
 }

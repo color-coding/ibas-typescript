@@ -9,7 +9,7 @@
 import * as ibas from "ibas/index";
 
 /** 常驻应用-演示 */
-export class DemoResidentApp extends ibas.BOResidentApplication<IDemoResidentView> {
+export class DemoResidentApp extends ibas.ResidentApplication<IDemoResidentView> {
 
     /** 应用标识 */
     static APPLICATION_ID: string = "f460a685-5e82-4268-aa1a-b767dbfa0d87";
@@ -34,5 +34,5 @@ export class DemoResidentApp extends ibas.BOResidentApplication<IDemoResidentVie
 
 }
 /** 视图-演示 */
-export interface IDemoResidentView extends ibas.IBOResidentView {
+export interface IDemoResidentView extends ibas.IResidentView {
 }

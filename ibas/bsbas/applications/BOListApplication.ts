@@ -9,14 +9,14 @@
 import {
     ICriteria
 } from "../../bobas/index";
-import { IBOListView } from "./BOApplications.d";
-import { BOQueryApplication } from "./BOApplications";
+import { IBOListView } from "./Applications.d";
+import { BOApplicationWithServices } from "./Applications";
 
 
 /**
  * 业务对象列表应用
  */
-export abstract class BOListApplication<T extends IBOListView, D> extends BOQueryApplication<T> {
+export abstract class BOListApplication<T extends IBOListView, D> extends BOApplicationWithServices<T> {
 
     /** 注册视图，重载需要回掉此方法 */
     protected registerView(): void {

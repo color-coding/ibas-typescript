@@ -57,7 +57,7 @@ export class Functions extends Element implements IFunction {
     }
 }
 /** 功能-应用 */
-export abstract class Application<T extends IView> extends Element implements IApplication<T> {
+export abstract class AbstractApplication<T extends IView> extends Element implements IApplication<T> {
     constructor() {
         super();
     }
@@ -201,7 +201,7 @@ export abstract class ModuleConsole extends Module implements IModuleConsole {
     /** 注册功能 */
     protected register(item: ModuleFunction): void;
     /** 注册应用 */
-    protected register(item: Application<IView>): void;
+    protected register(item: AbstractApplication<IView>): void;
     /** 注册实现，需要区分注册内容 */
     protected register(): void {
         let item: any = arguments[0];
@@ -213,7 +213,7 @@ export abstract class ModuleConsole extends Module implements IModuleConsole {
         } else if (item instanceof Functions) {
             // 注册功能
             super.register(item);
-        } else if (item instanceof Application) {
+        } else if (item instanceof AbstractApplication) {
             // 注册应用
             if (object.isNull(this._applications)) {
                 this._applications = new ArrayList<IApplication<IView>>();

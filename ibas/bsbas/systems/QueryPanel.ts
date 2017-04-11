@@ -8,7 +8,7 @@
 
 import {
     object, ICriteria, Criteria, ICondition, i18n, IOperationResult,
-    config, ISort, emSortType, emConditionOperation, ArrayList, BOBarApplication,
+    config, ISort, emSortType, emConditionOperation, ArrayList, BarApplication,
     emMessageType, variablesManager
 } from "ibas/index";
 import { IQueryPanelView, IQueryPanel, IUseQueryPanel, IUserQuery, IBORepositorySystem, IBOInfo } from "./Systems.d";
@@ -17,7 +17,7 @@ import { Factories } from "./Factories";
 /**
  * 查询面板
  */
-export abstract class QueryPanel<T extends IQueryPanelView> extends BOBarApplication<T> implements IQueryPanel<T> {
+export abstract class QueryPanel<T extends IQueryPanelView> extends BarApplication<T> implements IQueryPanel<T> {
     /** 应用标识 */
     static APPLICATION_ID: string = "69e3d786-5bf5-451d-b660-3eb485171af5";
     /** 应用名称 */

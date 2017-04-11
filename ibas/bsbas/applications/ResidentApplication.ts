@@ -6,14 +6,14 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { IBOResidentView } from "./BOApplications.d";
-import { BOBarApplication } from "./BOApplications";
+import { IResidentView } from "./Applications.d";
+import { BarApplication } from "./Applications";
 
 
 /**
- * 业务对象常驻应用
+ * 常驻应用
  */
-export abstract class BOResidentApplication<T extends IBOResidentView> extends BOBarApplication<T> {
+export abstract class ResidentApplication<T extends IResidentView> extends BarApplication<T> {
 
     /** 注册视图，重载需要回掉此方法 */
     protected registerView(): void {

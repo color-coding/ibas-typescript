@@ -6,18 +6,18 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { IBOEditView } from "./BOApplications.d";
-import { BOApplication } from "./BOApplications";
+import { IBOEditView } from "./Applications.d";
+import { BOApplicationWithServices } from "./Applications";
 
 
 /**
  * 业务对象编辑应用
  */
-export abstract class BOEditApplication<T extends IBOEditView, D> extends BOApplication<T> {
+export abstract class BOEditApplication<T extends IBOEditView, D> extends BOApplicationWithServices<T> {
 
     /** 注册视图，重载需要回掉此方法 */
     protected registerView(): void {
-        this.view.closeEvent = this.close;
+        super.registerView();
         this.view.saveDataEvent = this.saveData;
     }
     /** 当前编辑的数据 */

@@ -10,9 +10,9 @@
 import {
     i18n, logger, emMessageLevel, IOperationResult, object, config, string, requires, url,
     ModuleConsole, IModuleConsole, IModuleFunction, IApplication, BORepositoryApplication,
-    IView, IBarView, IBarApplication, IViewShower, Application, IMessgesCaller,
+    IView, IBarView, IBarApplication, IViewShower, AbstractApplication, IMessgesCaller,
     emMessageType, emPrivilegeSource, emAuthoriseType, emMessageAction, variablesManager,
-    BOResidentApplication, BOApplication, BOChooseApplication, BOListApplication,
+    ResidentApplication, BOApplication, BOChooseApplication, BOListApplication,
     BOViewApplication, BOEditApplication, IBOView
 } from "ibas/index";
 import {
@@ -22,7 +22,7 @@ import {
 import { Factories } from "./Factories";
 
 /** 应用-中心 */
-export abstract class CenterApp<T extends ICenterView> extends Application<T> implements ICenterApp, IViewShower {
+export abstract class CenterApp<T extends ICenterView> extends AbstractApplication<T> implements ICenterApp, IViewShower {
 
     /** 应用标识 */
     static APPLICATION_ID: string = "c1ec9ee1-1138-4358-8323-c579f1e4be37";
@@ -233,7 +233,7 @@ export abstract class CenterApp<T extends ICenterView> extends Application<T> im
                     that.registerFunctions(console);
                     // 显示常驻应用
                     for (let app of console.applications()) {
-                        if (object.instanceOf(app, BOResidentApplication)) {
+                        if (object.instanceOf(app, ResidentApplication)) {
                             app.viewShower = that;
                             that.view.showResidentView(<IBarView>app.view);
                         }

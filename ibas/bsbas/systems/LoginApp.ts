@@ -8,13 +8,13 @@
 
 import {
     logger, emMessageLevel, IOperationResult, object, i18n,
-    BOApplication
+    Application
 } from "ibas/index";
 import { ILoginView, ILoginApp, ICenterApp, IUser, IBORepositorySystem } from "./Systems.d";
 import { Factories } from "./Factories";
 
 /** 应用-登陆 */
-export class LoginApp<T extends ILoginView> extends BOApplication<T> implements ILoginApp {
+export class LoginApp<T extends ILoginView> extends Application<T> implements ILoginApp {
 
     /** 应用标识 */
     static APPLICATION_ID: string = "9b1da07a-89a4-4008-97da-80c34b7f2eb8";

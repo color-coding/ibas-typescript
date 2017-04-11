@@ -95,8 +95,8 @@ export class DemoViewView extends ibas.BOViewView implements IDemoViewView {
         this.form.addContent(this.table);
         this.page = new sap.m.Page("", {
             showHeader: false,
-            subHeader: new sap.m.Toolbar("", {
-                content: [
+            subHeader: new sap.m.Bar("", {
+                contentLeft: [
                     new sap.m.Button("", {
                         text: ibas.i18n.prop("sys_shell_ui_data_edit"),
                         type: sap.m.ButtonType.Transparent,
@@ -105,6 +105,20 @@ export class DemoViewView extends ibas.BOViewView implements IDemoViewView {
                             that.fireViewEvents(that.editDataEvent);
                         }
                     })
+                ],
+                contentRight: [
+                    new sap.m.Button("", {
+                        type: sap.m.ButtonType.Transparent,
+                        icon: "sap-icon://action",
+                        press: function (): void {
+                            that.fireViewEvents(that.callServicesEvent, {
+                                displayServices(services: ibas.IApplicationService[]): void {
+
+                                }
+                            });
+                        }
+                    })
+
                 ]
             }),
             content: [this.form]

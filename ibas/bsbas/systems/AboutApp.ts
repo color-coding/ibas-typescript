@@ -7,12 +7,12 @@
  */
 
 import {
-    i18n, debug, config, BOApplication
+    i18n, debug, config, Application
 } from "ibas/index";
 import { IAboutView, IAboutApp } from "./Systems.d";
 
 /** 应用-关于 */
-export class AboutApp<T extends IAboutView> extends BOApplication<T> implements IAboutApp {
+export class AboutApp<T extends IAboutView> extends Application<T> implements IAboutApp {
 
     /** 应用标识 */
     static APPLICATION_ID: string = "414b87e2-f9b7-425d-b1d7-7aeadfa2670e";

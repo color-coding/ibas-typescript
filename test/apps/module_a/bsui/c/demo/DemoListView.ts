@@ -73,8 +73,8 @@ export class DemoListView extends ibas.BOListView implements IDemoListView {
         this.form.addContent(this.table);
         this.page = new sap.m.Page("", {
             showHeader: false,
-            subHeader: new sap.m.Toolbar("", {
-                content: [
+            subHeader: new sap.m.Bar("", {
+                contentLeft: [
                     new sap.m.Button("", {
                         text: ibas.i18n.prop("sys_shell_ui_data_new"),
                         type: sap.m.ButtonType.Transparent,
@@ -89,7 +89,7 @@ export class DemoListView extends ibas.BOListView implements IDemoListView {
                         icon: "sap-icon://display",
                         press: function (): void {
                             that.fireViewEvents(that.viewDataEvent,
-                                // 获取表格选中的对象    
+                                // 获取表格选中的对象
                                 utils.getTableSelecteds<bo.SalesOrderItem>(that.table).firstOrDefault()
                             );
                         }
@@ -101,7 +101,40 @@ export class DemoListView extends ibas.BOListView implements IDemoListView {
                         press: function (): void {
                             that.fireViewEvents(that.editDataEvent);
                         }
+                    }),
+                    new sap.m.ToolbarSeparator(""),
+
+                ],
+                contentRight: [
+                    new sap.m.Button("", {
+                        type: sap.m.ButtonType.Transparent,
+                        icon: "sap-icon://action",
+                        press: function (event): void {
+                            that.fireViewEvents(that.callServicesEvent, {
+                                displayServices(services: ibas.IApplicationService[]): void {
+                                    let popover: sap.m.Popover = new sap.m.Popover("", {
+                                        showHeader: false,
+                                        placement: sap.m.PlacementType.Bottom,
+                                    });
+                                    for (let service of services) {
+                                        let button = new sap.m.Button({
+                                            text: ibas.i18n.prop(service.name),
+                                            type: sap.m.ButtonType.Transparent,
+                                            icon: service.icon,
+                                            press: function (): void {
+                                                service.run();
+                                                popover.close();
+                                            }
+                                        });
+                                        popover.addContent(button);
+                                    }
+                                    //(<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
+                                    popover.openBy(event.getSource(), true);
+                                }
+                            });
+                        }
                     })
+
                 ]
             }),
             content: [this.form]

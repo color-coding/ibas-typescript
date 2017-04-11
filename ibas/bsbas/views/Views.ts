@@ -7,10 +7,10 @@
  */
 
 import { ICriteria } from "../../bobas/index";
-import { View, IUrlView, IBarView } from "../core/index";
+import { View, IUrlView, IView, IBarView, IApplicationService } from "../core/index";
 import {
     IBOView, IBOListView, IBOQueryView, IBOChooseView,
-    IBOEditView, IBOViewView, IBOResidentView, IBOShortcutView
+    IBOEditView, IBOViewView, IResidentView, IShortcutView
 } from "../applications/index";
 import {
     IEmbeddedQueryPanel
@@ -68,6 +68,8 @@ export abstract class BOListView extends BOQueryView implements IBOListView {
     newDataEvent: Function;
     /** 查看数据事件，参数：目标数据 */
     viewDataEvent: Function;
+    /** 调用服务事件 */
+    callServicesEvent: Function;
 }
 /** 业务对象选择视图 */
 export abstract class BOChooseView extends BOQueryDialogView implements IBOChooseView {
@@ -80,6 +82,8 @@ export abstract class BOChooseView extends BOQueryDialogView implements IBOChoos
 export abstract class BOViewView extends BOView implements IBOViewView {
     /** 编辑数据事件 */
     editDataEvent: Function;
+    /** 调用服务事件 */
+    callServicesEvent: Function;
 }
 /** 业务对象编辑视图 */
 export abstract class BOEditView extends BOView implements IBOEditView {
@@ -87,6 +91,8 @@ export abstract class BOEditView extends BOView implements IBOEditView {
     editDataEvent: Function;
     /** 新建数据事件 */
     saveDataEvent: Function;
+    /** 调用服务事件 */
+    callServicesEvent: Function;
 }
 /** 业务对象工具条视图 */
 export abstract class BOBarView extends BOView implements IBarView {
@@ -107,13 +113,13 @@ export abstract class BOPanelView extends BODialogView implements IBarView {
     barShowedEvent: Function;
 }
 /** 业务对象常驻应用视图 */
-export abstract class BOResidentView extends BOBarView implements IBOResidentView {
+export abstract class BOResidentView extends BOBarView implements IResidentView {
 
 }
 /** 业务对象快捷应用视图 */
-export abstract class BOShortcutView extends BOBarView implements IBOShortcutView {
+export abstract class BOShortcutView extends BOBarView implements IShortcutView {
 
 }
 /** 页签视图 */
-export abstract class TabView extends View implements IBOView {
+export abstract class TabView extends View implements IView {
 }
