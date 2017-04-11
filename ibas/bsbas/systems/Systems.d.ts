@@ -44,6 +44,12 @@ export interface ILoginApp extends IApplication<ILoginView> {
 }
 /** 系统中心-视图 */
 export interface ICenterView extends IView {
+	/** 激活帮助 */
+	helpEvent: Function;
+	/** 激活关于 */
+	aboutEvent: Function;
+    /** 激活功能，参数1 string 功能ID */
+	activateFunctionsEvent: Function;
 	/** 清理资源 */
 	destroyView(view: IView): void
 	/** 显示视图 */
@@ -66,17 +72,8 @@ export interface ICenterView extends IView {
 	 * @param console 模块控制台
 	 */
 	showModule(console: IModuleConsole): void;
-	/**
-	 * 激活功能
-	 * 参数1 string 功能ID
-	 */
-	activateFunctionsEvent: Function;
 	/** 显示用户信息 */
 	showUser(user: IUser): void;
-	/** 激活帮助 */
-	helpEvent: Function;
-	/** 激活关于 */
-	aboutEvent: Function;
 	/** 显示常驻视图 */
 	showResidentView(view: IBarView): void;
 }

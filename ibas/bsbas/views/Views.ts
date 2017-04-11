@@ -114,3 +114,6 @@ export abstract class BOResidentView extends BOBarView implements IBOResidentVie
 export abstract class BOShortcutView extends BOBarView implements IBOShortcutView {
 
 }
+/** 页签视图 */
+export abstract class TabView extends View implements IBOView {
+}

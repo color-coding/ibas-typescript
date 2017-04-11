@@ -21,3 +21,16 @@ export class DemoUrlView extends ibas.UrlView implements IDemoUrlView {
         return null;
     }
 }
+/**
+ * 视图-demo
+ */
+export class DemoTabUrlView extends ibas.TabView implements IDemoUrlView {
+    /** 内部打开 */
+    isInside: boolean;
+    /** 地址 */
+    url: string;
+    /** 绘制视图 */
+    darw(): any {
+        return null;
+    }
+}

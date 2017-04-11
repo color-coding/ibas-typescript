@@ -8,7 +8,7 @@
 
 import * as ibas from "ibas/index";
 import { DemoListApp } from "./DemoListApp";
-import { DemoUrlApp } from "./DemoUrlApp";
+import { DemoUrlApp, DemoTabUrlApp } from "./DemoUrlApp";
 
 /** 功能-演示 */
 export class DemoFunc extends ibas.ModuleFunction {
@@ -45,6 +45,23 @@ export class DemoUrlFunc extends ibas.ModuleFunction {
     /** 默认功能 */
     default(): ibas.IApplication<ibas.IView> {
         let app: DemoUrlApp = new DemoUrlApp();
+        app.navigation = this.navigation;
+        return app;
+    }
+}
+/** 功能-演示 */
+export class DemoTabFunc extends ibas.ModuleFunction {
+    static FUNCTION_ID = "a4f404c1-559d-4099-89f5-fab4a6d5fa23";
+    static FUNCTION_NAME = "module_a_func_tab";
+    constructor() {
+        super();
+        this.id = DemoTabFunc.FUNCTION_ID;
+        this.name = DemoTabFunc.FUNCTION_NAME;
+        this.description = ibas.i18n.prop(this.name);
+    }
+    /** 默认功能 */
+    default(): ibas.IApplication<ibas.IView> {
+        let app: DemoTabUrlApp = new DemoTabUrlApp();
         app.navigation = this.navigation;
         return app;
     }

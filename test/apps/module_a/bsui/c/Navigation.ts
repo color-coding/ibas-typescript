@@ -25,6 +25,9 @@ export default class Navigation extends ibas.ViewNavigation {
             case app.DemoUrlApp.APPLICATION_ID:
                 view = new ui.DemoUrlView();
                 break;
+            case app.DemoTabUrlApp.APPLICATION_ID:
+                view = new ui.DemoTabUrlView();
+                break;
             case app.DemoListApp.APPLICATION_ID:
                 view = new ui.DemoListView();
                 break;

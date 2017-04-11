@@ -16,6 +16,7 @@
     "sys_shell_fetching_data": "查询数据中，请稍后",
     "sys_shell_invalid_query_panel": "无效的查询面板",
     "sys_shell_initialize_query_panel": "初始化查询面板，请稍后",
+    "sys_shell_ui_close_view": "关闭视图",
     "sys_shell_ui_data_new": "新建",
     "sys_shell_ui_data_view": "查看",
     "sys_shell_ui_data_edit": "编辑",

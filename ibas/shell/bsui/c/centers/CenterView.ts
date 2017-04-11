@@ -37,6 +37,151 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
     static CONFIG_ITEM_STATUS_MESSAGES_DELAY = "statusDelay";
     /** 配置项目-全屏模式 */
     static CONFIG_ITEM_FULL_SCREEN = "fullScreen";
+    /** 激活帮助 */
+    helpEvent: Function;
+    /** 激活关于 */
+    aboutEvent: Function;
+    /** 激活功能，参数1 string 功能ID */
+    activateFunctionsEvent: Function;
+    /** 绘制视图 */
+    darw(): any {
+        let that: this = this;
+        this.header = new sap.tnt.ToolHeader("");
+        // 收缩菜单钮
+        this.header.addContent(new sap.m.Button("", {
+            icon: "sap-icon://menu2",
+            type: sap.m.ButtonType.Transparent,
+            layoutData: new sap.m.OverflowToolbarLayoutData("", {
+                priority: sap.m.OverflowToolbarPriority.NeverOverflow
+            }),
+            press: function (): void {
+                that.page.setSideExpanded(!that.page.getSideExpanded());
+            }
+        }));
+        this.header.addContent(new sap.m.ToolbarSpacer("", { width: "20px" }));
+        this.header.addContent(new sap.tnt.ToolHeaderUtilitySeparator(""));
+        this.header.addContent(new sap.m.ToolbarSpacer("", {
+            layoutData: new sap.m.OverflowToolbarLayoutData("", {
+                priority: sap.m.OverflowToolbarPriority.NeverOverflow,
+                minWidth: "20px"
+            })
+        }));
+        // 用户钮
+        this.userBar = new sap.m.Button("", {
+            type: sap.m.ButtonType.Transparent,
+            layoutData: new sap.m.OverflowToolbarLayoutData("", {
+                priority: sap.m.OverflowToolbarPriority.NeverOverflow
+            }),
+            press: function (event: any): void {
+                let popover: sap.m.Popover = new sap.m.Popover(
+                    "", {
+                        showHeader: false,
+                        placement: sap.m.PlacementType.Bottom,
+                        content: [
+                            new sap.m.Button({
+                                text: ibas.i18n.prop("sys_shell_ui_help"),
+                                type: sap.m.ButtonType.Transparent,
+                                press: function (): void {
+                                    that.fireViewEvents(that.helpEvent);
+                                    popover.close();
+                                }
+                            }),
+                            new sap.m.Button({
+                                text: ibas.i18n.prop("sys_shell_ui_about"),
+                                type: sap.m.ButtonType.Transparent,
+                                press: function (): void {
+                                    that.fireViewEvents(that.aboutEvent);
+                                    popover.close();
+                                }
+                            }),
+                            new sap.m.Button({
+                                text: ibas.i18n.prop("sys_shell_ui_logout"),
+                                type: sap.m.ButtonType.Transparent,
+                                press: function (): void {
+                                    that.fireViewEvents(that.closeEvent);
+                                }
+                            })
+                        ]
+                    }
+                );
+                (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
+                popover.openBy(event.getSource(), true);
+            }
+        });
+        this.header.addContent(this.userBar);
+        this.navigation = new sap.tnt.SideNavigation();
+        this.navigation.setItem(new sap.tnt.NavigationList());
+        this.page = new sap.tnt.ToolPage();
+        this.page.setHeader(this.header);
+        this.page.setSideContent(this.navigation);
+        this.page.setSideExpanded(false);
+        this.page.addMainContent(this.form);
+        // 消息历史框
+        this.messageHistory = new sap.m.MessagePopover("", {
+            initiallyExpanded: false,
+
+        });
+        this.navigation.setFixedItem(new sap.tnt.NavigationList("", {
+            items: [
+                new sap.tnt.NavigationListItem("", {
+                    text: ibas.i18n.prop("sys_shell_ui_messages_history"),
+                    icon: "sap-icon://message-popup",
+                    select: function (event: any): void {
+                        that.messageHistory.openBy(event.getSource());
+                    }
+                })],
+        }));
+        this.form = new sap.m.Page("", {
+            showNavButton: true,
+        });
+        // 回退钮
+        this.form.setShowNavButton(true);
+        this.form.attachNavButtonPress(null, this.destroyCurrentView, this);
+        // 全屏钮
+        let icon: string = "sap-icon://full-screen";
+        if (ibas.config.get(CenterView.CONFIG_ITEM_FULL_SCREEN, false)
+            && ibas.config.get(ibas.ModuleConsole.CONFIG_ITEM_PLANTFORM) !== ibas.emPlantform.PHONE) {
+            this.page.setHeader(null);
+            icon = "sap-icon://exit-full-screen";
+        }
+        this.form.addHeaderContent(new sap.m.Button("", {
+            icon: icon,
+            type: sap.m.ButtonType.Transparent,
+            press: function (event: any): void {
+                if (this.getIcon() === "sap-icon://full-screen") {
+                    that.page.setSideExpanded(false);
+                    that.page.setHeader(null);
+                    // that.page.setSideContent(null);
+                    that.form.setFloatingFooter(true);
+                    this.setIcon("sap-icon://exit-full-screen");
+                } else {
+                    that.page.setHeader(that.header);
+                    // that.page.setSideContent(that.navigation);
+                    that.form.setFloatingFooter(false);
+                    this.setIcon("sap-icon://full-screen");
+                }
+            }
+        }));
+        // 退出钮
+        this.form.addHeaderContent(new sap.m.Button("", {
+            icon: "sap-icon://inspect-down",
+            tooltip: ibas.i18n.prop("sys_shell_ui_close_view"),
+            type: sap.m.ButtonType.Transparent,
+            press: function (): void {
+                that.destroyCurrentView();
+            }
+        }));
+        // this.form.setFloatingFooter(true); // 浮起状态条
+        this.statusBar = new sap.m.OverflowToolbar("", {
+            design: sap.m.ToolbarDesign.Transparent,
+            height: "auto",
+            width: "auto"
+        });
+        this.form.setFooter(this.statusBar);
+        this.page.addMainContent(this.form);
+        this.id = this.page.getId();
+        return this.page;
+    }
 	/**
 	 * 显示状态消息
 	 * @param type 消息类型
@@ -112,11 +257,6 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         );
     }
     /**
-     * 激活功能
-     * 参数1 string 功能ID
-     */
-    activateFunctionsEvent: Function;
-    /**
      * 显示模块
      * @param module 模块
      */
@@ -149,70 +289,147 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         }
         nvList.addItem(nvItem);
     }
+    /** 设置忙状态 */
+    busyView(view: ibas.IView, busy: boolean, msg: string): any {
+        let ui: sap.ui.core.Element = sap.ui.getCore().byId(view.id);
+        if (!ibas.object.isNull(ui) && ui instanceof sap.ui.core.Control) {
+            // 视图自身可设置忙状态
+            ui.setBusy(busy);
+        } else {
+            // 视图不能设置忙状态，使用全局对话框
+            if (busy) {
+                if (ibas.object.isNull(this.busyDialog)) {
+                    this.busyDialog = new sap.m.BusyDialog("");
+                }
+                this.busyDialog.setTitle(view.title);
+                this.busyDialog.setText(msg);
+                this.busyDialog.open();
+            } else {
+                if (!ibas.object.isNull(this.busyDialog)) {
+                    this.busyDialog.close();
+                }
+            }
+        }
+    }
+    /** 显示用户信息 */
+    showUser(user: sys.IUser): void {
+        if (!ibas.object.isNull(user.name)) {
+            this.userBar.setText(user.name);
+        } else if (!ibas.object.isNull(user.code)) {
+            this.userBar.setText(user.code);
+        } else {
+            this.userBar.setText(ibas.i18n.prop("sys_shell_unknown_user"));
+        }
+    }
     private viewQueue: Map<ibas.IView, any> = new Map<ibas.IView, any>();
     /** 显示视图 */
     showView(view: ibas.IView): void {
-        let that: this = this;
-        if (ibas.object.instanceOf(view, ibas.UrlView)) {
-            // 视图为地址视图
-            this.showUrlView(<ibas.UrlView>view);
-        } else if (ibas.object.instanceOf(view, ibas.BODialogView)) {
+        if (ibas.object.instanceOf(view, ibas.BODialogView)) {
             // 选择视图
             this.showDialogView(<ibas.BODialogView>view);
         } else if (ibas.object.instanceOf(view, ibas.BOBarView)) {
             // 工具条视图
             this.showBarView(<ibas.BOBarView>view);
         } else {
-            // 正常视图
-            this.form.setShowHeader(true);
-            this.form.setSubHeader(null);
-            // this.form.destroyContent();
-            for (let item of this.form.getContent()) {
-                this.form.removeContent(item);
-            }
-            // 设置标题
-            if (!ibas.object.isNull(view.title)) {
-                this.form.setTitle(view.title);
-            } else if (!ibas.object.isNull(view.id)) {
-                this.form.setTitle(view.id);
-            }
-            // 优先使用缓存中视图数据
-            let viewContent: any;
-            if (this.viewQueue.has(view)) {
-                viewContent = this.viewQueue.get(view);
-            }
-            if (ibas.object.isNull(viewContent)) {
-                viewContent = view.darw();
-            }
-            this.form.addContent(viewContent);
-            this.viewQueue.set(view, viewContent);
-            // 添加查询面板
-            if (ibas.object.instanceOf(view, ibas.BOQueryView)) {
-                let queryView: sys.IEmbeddedQueryPanel = {
-                    /** 嵌入查询面板 */
-                    embedded(view: any): void {
-                        that.form.setSubHeader(null);
-                        that.form.setSubHeader(view);
-                        that.form.setShowSubHeader(true);
+            let container: sap.m.Page = this.form;
+            // 获取视图显示的容器
+            if (ibas.object.instanceOf(view, ibas.TabView)) {
+                // 页签视图
+                let tabContainer: sap.m.TabContainer;
+                for (let item of container.getContent()) {
+                    if (item instanceof sap.m.TabContainer) {
+                        tabContainer = item;
+                        break;
                     }
-                };
-                this.showQueryPanel(<ibas.BOQueryView>view, queryView);
+                }
+                if (ibas.object.isNull(tabContainer)) {
+                    tabContainer = new sap.m.TabContainer("", {
+                        itemClose: function (oControlEvent: any): void {
+                            // 删除页签
+                        }
+                    });
+                    for (let item of this.form.getContent()) {
+                        this.form.removeContent(item);
+                    }
+                    this.form.setShowHeader(true);
+                    this.form.setSubHeader(null);
+                    this.form.setTitle(null);
+                    this.form.addContent(tabContainer);
+                }
+                container = new sap.m.Page("", {
+                    showHeader: false,
+                    showSubHeader: false,
+                });
+                // 接口没定义addItem方法？
+                (<any>tabContainer).addItem(new sap.m.TabContainerItem("", {
+                    name: view.title,
+                    key: view.id,
+                    modified: false,
+                    content: [container]
+                }));
+            } else {
+                // 普通视图
+                for (let item of container.getContent()) {
+                    container.removeContent(item);
+                }
+                container.setShowHeader(true);
+                container.setSubHeader(null);
+                container.setTitle(null);
+                // 设置标题
+                if (!ibas.object.isNull(view.title)) {
+                    container.setTitle(view.title);
+                } else if (!ibas.object.isNull(view.id)) {
+                    container.setTitle(view.id);
+                }
+            }
+            if (ibas.object.instanceOf(view, ibas.UrlView)) {
+                // 视图为地址视图
+                this.showUrlView(<ibas.UrlView>view, container);
+            } else {
+                // 一般视图
+                this.showCommonView(<ibas.View>view, container);
             }
         }
     }
+    /** 显示一般视图 */
+    showCommonView(view: ibas.View, container: sap.m.Page): void {
+        // this.form.destroyContent();
+        // 优先使用缓存中视图数据
+        let viewContent: any;
+        if (this.viewQueue.has(view)) {
+            viewContent = this.viewQueue.get(view);
+        }
+        if (ibas.object.isNull(viewContent)) {
+            viewContent = view.darw();
+        }
+        container.addContent(viewContent);
+        this.viewQueue.set(view, viewContent);
+        // 添加查询面板
+        if (ibas.object.instanceOf(view, ibas.BOQueryView)) {
+            let queryView: sys.IEmbeddedQueryPanel = {
+                /** 嵌入查询面板 */
+                embedded(view: any): void {
+                    container.setSubHeader(null);
+                    container.setSubHeader(view);
+                    container.setShowSubHeader(true);
+                }
+            };
+            this.showQueryPanel(<ibas.BOQueryView>view, queryView);
+        }
+    }
     /** 显示地址视图 */
-    showUrlView(view: ibas.UrlView): void {
+    showUrlView(view: ibas.UrlView, container: sap.m.Page): void {
         if (view.isInside) {
             // 内部打开
             let html: string = ibas.string.format(
                 `<iframe src="{0}" width="99%" height="99%" scrolling="no"></iframe>`
                 , view.url);
             if (ibas.object.isNull(this.page.getHeader())) {
-                this.form.setShowHeader(false);
+                container.setShowHeader(false);
             }
-            this.form.destroySubHeader();
-            this.form.destroyContent();
-            this.form.addContent(new sap.ui.core.HTML("",
+            container.destroySubHeader();
+            container.destroyContent();
+            container.addContent(new sap.ui.core.HTML("",
                 {
                     content: html
                 }));
@@ -342,11 +559,14 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         if (view instanceof CenterView) {
             // 自身销毁，从浏览器缓存刷新页面
             window.location.reload(false);
+            return;
         } else if (!this.viewQueue.has(view)) {
             // 不是通过系统中心加载的页面，删除
-            let ui: sap.ui.core.Element = sap.ui.getCore().byId(view.id);
-            if (!ibas.object.isNull(ui)) {
-                ui.destroy(true);
+            if (!ibas.object.isNull(view)) {
+                let ui: sap.ui.core.Element = sap.ui.getCore().byId(view.id);
+                if (!ibas.object.isNull(ui)) {
+                    ui.destroy(true);
+                }
             }
         } else {
             // 清理视图队列后续视图
@@ -377,14 +597,14 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                     this.queryPanels.delete(item.id);
                 }
             }
-            // 显示最后视图
-            if (this.viewQueue.size > 0) {
-                let lastView: ibas.IView;
-                for (let item of this.viewQueue.keys()) {
-                    lastView = item;
-                }
-                this.showView(lastView);
+        }
+        // 显示最后视图
+        if (this.viewQueue.size > 0) {
+            let lastView: ibas.IView;
+            for (let item of this.viewQueue.keys()) {
+                lastView = item;
             }
+            this.showView(lastView);
         }
     }
     /** 清理当前视图 */
@@ -399,6 +619,17 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                 if (item instanceof sap.ui.core.HTML) {
                     // iframe直接消毁
                     item.destroy(true);
+                } else if (item instanceof sap.m.TabContainer) {
+                    // 页签直接消毁
+                    for (let tabItem of item.getItems()) {
+                        for (let view of this.viewQueue.keys()) {
+                            if (view.id === tabItem.getKey()) {
+                                beDestory.push(view);
+                            }
+                        }
+                    }
+                    item.destroy(true);
+                    continue;
                 }
                 for (let view of this.viewQueue.keys()) {
                     if (view.id === item.getId()) {
@@ -406,183 +637,15 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                     }
                 }
             }
-            for (let i: number = beDestory.length - 1; i >= 0; i--) {
-                this.destroyView(beDestory[i]);
-            }
-        }
-    }
-    /** 设置忙状态 */
-    busyView(view: ibas.IView, busy: boolean, msg: string): any {
-        let ui: sap.ui.core.Element = sap.ui.getCore().byId(view.id);
-        if (!ibas.object.isNull(ui) && ui instanceof sap.ui.core.Control) {
-            // 视图自身可设置忙状态
-            ui.setBusy(busy);
-        } else {
-            // 视图不能设置忙状态，使用全局对话框
-            if (busy) {
-                if (ibas.object.isNull(this.busyDialog)) {
-                    this.busyDialog = new sap.m.BusyDialog("");
+            if (beDestory.length > 0) {
+                // 移出被销毁的视图
+                for (let i: number = beDestory.length - 1; i >= 0; i--) {
+                    this.destroyView(beDestory[i]);
                 }
-                this.busyDialog.setTitle(view.title);
-                this.busyDialog.setText(msg);
-                this.busyDialog.open();
             } else {
-                if (!ibas.object.isNull(this.busyDialog)) {
-                    this.busyDialog.close();
-                }
+                // 移出空视图，显示上个视图
+                this.destroyView(null);
             }
         }
-    }
-    /** 显示用户信息 */
-    showUser(user: sys.IUser): void {
-        if (!ibas.object.isNull(user.name)) {
-            this.userBar.setText(user.name);
-        } else if (!ibas.object.isNull(user.code)) {
-            this.userBar.setText(user.code);
-        } else {
-            this.userBar.setText(ibas.i18n.prop("sys_shell_unknown_user"));
-        }
-    }
-    /** 激活帮助 */
-    helpEvent: Function;
-    /** 激活关于 */
-    aboutEvent: Function;
-    /** 绘制视图 */
-    darw(): any {
-        let that: this = this;
-        this.header = new sap.tnt.ToolHeader("");
-        // 收缩菜单钮
-        this.header.addContent(new sap.m.Button("", {
-            icon: "sap-icon://menu2",
-            type: sap.m.ButtonType.Transparent,
-            layoutData: new sap.m.OverflowToolbarLayoutData("", {
-                priority: sap.m.OverflowToolbarPriority.NeverOverflow
-            }),
-            press: function (): void {
-                that.page.setSideExpanded(!that.page.getSideExpanded());
-            }
-        }));
-        this.header.addContent(new sap.m.ToolbarSpacer("", { width: "20px" }));
-        this.header.addContent(new sap.tnt.ToolHeaderUtilitySeparator(""));
-        this.header.addContent(new sap.m.ToolbarSpacer("", {
-            layoutData: new sap.m.OverflowToolbarLayoutData("", {
-                priority: sap.m.OverflowToolbarPriority.NeverOverflow,
-                minWidth: "20px"
-            })
-        }));
-        // 用户钮
-        this.userBar = new sap.m.Button("", {
-            type: sap.m.ButtonType.Transparent,
-            layoutData: new sap.m.OverflowToolbarLayoutData("", {
-                priority: sap.m.OverflowToolbarPriority.NeverOverflow
-            }),
-            press: function (event: any): void {
-                let popover: sap.m.Popover = new sap.m.Popover(
-                    "", {
-                        showHeader: false,
-                        placement: sap.m.PlacementType.Bottom,
-                        content: [
-                            new sap.m.Button({
-                                text: ibas.i18n.prop("sys_shell_ui_help"),
-                                type: sap.m.ButtonType.Transparent,
-                                press: function (): void {
-                                    that.fireViewEvents(that.helpEvent);
-                                    popover.close();
-                                }
-                            }),
-                            new sap.m.Button({
-                                text: ibas.i18n.prop("sys_shell_ui_about"),
-                                type: sap.m.ButtonType.Transparent,
-                                press: function (): void {
-                                    that.fireViewEvents(that.aboutEvent);
-                                    popover.close();
-                                }
-                            }),
-                            new sap.m.Button({
-                                text: ibas.i18n.prop("sys_shell_ui_logout"),
-                                type: sap.m.ButtonType.Transparent,
-                                press: function (): void {
-                                    that.fireViewEvents(that.closeEvent);
-                                }
-                            })
-                        ]
-                    }
-                );
-                (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
-                popover.openBy(event.getSource(), true);
-            }
-        });
-        this.header.addContent(this.userBar);
-        this.navigation = new sap.tnt.SideNavigation();
-        this.navigation.setItem(new sap.tnt.NavigationList());
-        this.page = new sap.tnt.ToolPage();
-        this.page.setHeader(this.header);
-        this.page.setSideContent(this.navigation);
-        this.page.setSideExpanded(false);
-        this.page.addMainContent(this.form);
-        // 消息历史框
-        this.messageHistory = new sap.m.MessagePopover("", {
-            initiallyExpanded: false,
-
-        });
-        this.navigation.setFixedItem(new sap.tnt.NavigationList("", {
-            items: [
-                new sap.tnt.NavigationListItem("", {
-                    text: ibas.i18n.prop("sys_shell_ui_messages_history"),
-                    icon: "sap-icon://message-popup",
-                    select: function (event: any): void {
-                        that.messageHistory.openBy(event.getSource());
-                    }
-                })],
-        }));
-        this.form = new sap.m.Page("", {
-            showNavButton: true,
-        });
-        // 回退钮
-        this.form.setShowNavButton(true);
-        this.form.attachNavButtonPress(null, this.destroyCurrentView, this);
-        // 全屏钮
-        let icon: string = "sap-icon://full-screen";
-        if (ibas.config.get(CenterView.CONFIG_ITEM_FULL_SCREEN, false)
-            && ibas.config.get(ibas.ModuleConsole.CONFIG_ITEM_PLANTFORM) !== ibas.emPlantform.PHONE) {
-            this.page.setHeader(null);
-            icon = "sap-icon://exit-full-screen";
-        }
-        this.form.addHeaderContent(new sap.m.Button("", {
-            icon: icon,
-            type: sap.m.ButtonType.Transparent,
-            press: function (event: any): void {
-                if (this.getIcon() === "sap-icon://full-screen") {
-                    that.page.setSideExpanded(false);
-                    that.page.setHeader(null);
-                    // that.page.setSideContent(null);
-                    that.form.setFloatingFooter(true);
-                    this.setIcon("sap-icon://exit-full-screen");
-                } else {
-                    that.page.setHeader(that.header);
-                    // that.page.setSideContent(that.navigation);
-                    that.form.setFloatingFooter(false);
-                    this.setIcon("sap-icon://full-screen");
-                }
-            }
-        }));
-        // 退出钮
-        this.form.addHeaderContent(new sap.m.Button("", {
-            icon: "sap-icon://inspect-down",
-            type: sap.m.ButtonType.Transparent,
-            press: function (): void {
-                that.destroyCurrentView();
-            }
-        }));
-        // this.form.setFloatingFooter(true); // 浮起状态条
-        this.statusBar = new sap.m.OverflowToolbar("", {
-            design: sap.m.ToolbarDesign.Transparent,
-            height: "auto",
-            width: "auto"
-        });
-        this.form.setFooter(this.statusBar);
-        this.page.addMainContent(this.form);
-        this.id = this.page.getId();
-        return this.page;
     }
 }
