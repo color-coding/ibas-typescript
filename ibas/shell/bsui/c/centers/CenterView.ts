@@ -360,13 +360,15 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                     showHeader: false,
                     showSubHeader: false,
                 });
-                // 接口没定义addItem方法？
-                (<any>tabContainer).addItem(new sap.m.TabContainerItem("", {
+                let containerItem = new sap.m.TabContainerItem("", {
                     name: view.title,
                     key: view.id,
                     modified: false,
                     content: [container]
-                }));
+                });
+                // 接口没定义addItem方法？
+                (<any>tabContainer).addItem(containerItem);
+                (<any>tabContainer).setSelectedItem(containerItem);
             } else {
                 // 普通视图
                 for (let item of container.getContent()) {
@@ -554,47 +556,60 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             }
         }
     }
+
     /** 清理资源 */
-    destroyView(view: ibas.IView): void {
-        if (view instanceof CenterView) {
-            // 自身销毁，从浏览器缓存刷新页面
-            window.location.reload(false);
-            return;
-        } else if (!this.viewQueue.has(view)) {
-            // 不是通过系统中心加载的页面，删除
-            if (!ibas.object.isNull(view)) {
-                let ui: sap.ui.core.Element = sap.ui.getCore().byId(view.id);
-                if (!ibas.object.isNull(ui)) {
-                    ui.destroy(true);
-                }
-            }
+    destroyView(view: ibas.IView): void;
+    /** 清理资源 */
+    destroyView(views: ibas.IView[]): void;
+    /** 清理资源 */
+    destroyView(): void {
+        let views: ibas.IView[];
+        if (arguments[0] instanceof CenterView) {
+            views = [arguments[0]];
         } else {
-            // 清理视图队列后续视图
-            let beDestory: Array<ibas.IView> = new Array<ibas.IView>();
-            let done: boolean = false;
-            for (let item of this.viewQueue.keys()) {
-                if (view.id === item.id) {
-                    done = true;
-                }
-                if (done) {
-                    beDestory.push(item);
-                    continue;
-                }
-            }
-            for (let i: number = beDestory.length - 1; i >= 0; i--) {
-                let item: ibas.IView = beDestory[i];
-                let ui: sap.ui.core.Element = sap.ui.getCore().byId(item.id);
-                if (!ibas.object.isNull(ui)) {
-                    ui.destroy(true);
-                }
-                this.viewQueue.delete(item);
-                // 清理缓存的查询面板
-                if (this.queryPanels.has(item.id)) {
-                    let panelContent: any = this.queryPanels.get(item.id);
-                    if (panelContent instanceof sap.ui.core.Element) {
-                        panelContent.destroy(true);
+            views = arguments[0];
+        }
+        for (let view of views) {
+            if (view instanceof CenterView) {
+                // 自身销毁，从浏览器缓存刷新页面
+                window.location.reload(false);
+                return;
+            } else if (!this.viewQueue.has(view)) {
+                // 不是通过系统中心加载的页面，删除
+                if (!ibas.object.isNull(view)) {
+                    let ui: sap.ui.core.Element = sap.ui.getCore().byId(view.id);
+                    if (!ibas.object.isNull(ui)) {
+                        ui.destroy(true);
                     }
-                    this.queryPanels.delete(item.id);
+                }
+            } else {
+                // 清理视图队列后续视图
+                let beDestory: Array<ibas.IView> = new Array<ibas.IView>();
+                let done: boolean = false;
+                for (let item of this.viewQueue.keys()) {
+                    if (view.id === item.id) {
+                        done = true;
+                    }
+                    if (done) {
+                        beDestory.push(item);
+                        continue;
+                    }
+                }
+                for (let i: number = beDestory.length - 1; i >= 0; i--) {
+                    let item: ibas.IView = beDestory[i];
+                    let ui: sap.ui.core.Element = sap.ui.getCore().byId(item.id);
+                    if (!ibas.object.isNull(ui)) {
+                        ui.destroy(true);
+                    }
+                    this.viewQueue.delete(item);
+                    // 清理缓存的查询面板
+                    if (this.queryPanels.has(item.id)) {
+                        let panelContent: any = this.queryPanels.get(item.id);
+                        if (panelContent instanceof sap.ui.core.Element) {
+                            panelContent.destroy(true);
+                        }
+                        this.queryPanels.delete(item.id);
+                    }
                 }
             }
         }
@@ -639,9 +654,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             }
             if (beDestory.length > 0) {
                 // 移出被销毁的视图
-                for (let i: number = beDestory.length - 1; i >= 0; i--) {
-                    this.destroyView(beDestory[i]);
-                }
+                this.destroyView(beDestory);
             } else {
                 // 移出空视图，显示上个视图
                 this.destroyView(null);
