@@ -8,6 +8,7 @@
 
 /// <reference path="../../../../../../openui5/typings/index.d.ts" />
 import * as ibas from "ibas/index";
+import { utils } from "openui5/typings/ibas.utils";
 import * as bo from "../../../borep/bo/index";
 import { IDemoChooseView } from "../../../bsapp/demo/index";
 
@@ -33,7 +34,7 @@ export class DemoChooseView extends ibas.BOChooseView implements IDemoChooseView
                 type: sap.m.ButtonType.Transparent,
                 // icon: "sap-icon://accept",
                 press: function (): void {
-                    that.fireViewEvents(that.chooseDataEvent);
+                    that.fireViewEvents(that.chooseDataEvent, utils.getTableSelecteds(that.table));
                 }
             }),
             new sap.m.Button("", {

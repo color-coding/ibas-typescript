@@ -160,6 +160,7 @@ export class ServicesManager {
                     category: mapping.category,
                     description: mapping.description,
                     icon: mapping.icon,
+                    onCompleted: Function,
                     run(): void {
                         // 创建服务
                         let service: IService<IServiceContract> = mapping.create();
@@ -192,8 +193,8 @@ export class ServicesManager {
         for (let service of this.getServices(proxy)) {
             if (service.category === caller.boCode) {
                 // 存在业务对象选择服务
-                service.run();
                 service.onCompleted = caller.onCompleted;
+                service.run();
                 return;
             }
         }

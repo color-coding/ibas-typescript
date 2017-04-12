@@ -60,7 +60,7 @@ export abstract class BOChooseService<T extends IBOChooseView, D> extends BOChoo
         }
         try {
             // 调用完成事件
-            this.onCompleted.apply(this.onCompleted, list);
+            this.onCompleted.call(this.onCompleted, list);
         } catch (error) {
             // 完成事件出错
             this.messages(error);
