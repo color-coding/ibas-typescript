@@ -23,6 +23,7 @@ export abstract class BOListApplication<T extends IBOListView, D> extends BOAppl
         super.registerView();
         this.view.newDataEvent = this.newData;
         this.view.viewDataEvent = this.viewData;
+        this.view.fetchDataEvent = this.fetchData;
     }
     /** 查询数据 */
     protected abstract fetchData(criteria: ICriteria): void;

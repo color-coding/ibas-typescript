@@ -564,10 +564,10 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
     /** 清理资源 */
     destroyView(): void {
         let views: ibas.IView[];
-        if (arguments[0] instanceof CenterView) {
-            views = [arguments[0]];
-        } else {
+        if (arguments[0] instanceof Array) {
             views = arguments[0];
+        } else {
+            views = [arguments[0]];
         }
         for (let view of views) {
             if (view instanceof CenterView) {
