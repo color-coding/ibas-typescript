@@ -4,6 +4,14 @@
         "target": "es6",
         "noImplicitAny": false,
         "removeComments": true,
-        "baseUrl": "../"
+        "baseUrl": "./",
+        "paths": {
+            "ibas/index": [
+                "../ibas/index"
+            ],
+            "openui5/typings/ibas.utils": [
+                "../openui5/typings/ibas.utils"
+            ]
+        }
     }
 }

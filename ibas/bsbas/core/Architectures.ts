@@ -15,7 +15,6 @@ import {
     IElement, IModule, IFunction, IApplication, IView,
     IModuleConsole, IViewShower, IViewNavigation, IModuleFunction,
 } from "./Architectures.d";
-import { consolesManager } from "../runtime/index";
 
 /** 系统元素 */
 export class Element implements IElement {
@@ -184,10 +183,7 @@ export abstract class ModuleConsole extends Module implements IModuleConsole {
     /** 注册 */
     protected abstract registers(): void;
     /** 运行，重载后必须保留基类调用 */
-    run(): void {
-        // 注册当前模块
-        consolesManager.register(this);
-    }
+    run(): void { }
     /** 创建视图导航 */
     abstract navigation(): IViewNavigation;
     private _applications: ArrayList<IApplication<IView>>;

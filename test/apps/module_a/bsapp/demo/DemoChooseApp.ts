@@ -72,7 +72,7 @@ export class DemoChooseApp extends ibas.BOChooseApplication<IDemoChooseView, bo.
         app.run();
     }
     /** 选择数据 */
-    protected chooseData(data: bo.SalesOrder): void {
+    protected chooseData(datas: bo.SalesOrder[]): void {
 
     }
 }

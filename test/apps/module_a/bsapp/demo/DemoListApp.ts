@@ -82,6 +82,14 @@ export class DemoListApp extends ibas.BOListApplication<IDemoListView, bo.SalesO
     protected editData(data: bo.SalesOrder): void {
         this.messages(ibas.emMessageType.ERROR, ibas.i18n.prop("module_a_ui_no_edit"));
     }
+    /** 获取服务的契约 */
+    protected getServiceProxies(): ibas.IServiceProxy<ibas.IServiceContract>[] {
+        return [
+            new ibas.ApplicationServiceProxy({
+                AppId: this.id
+            }),
+        ];
+    }
 }
 /** 视图-演示 */
 export interface IDemoListView extends ibas.IBOListView {

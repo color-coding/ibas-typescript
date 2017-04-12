@@ -7,11 +7,12 @@
  */
 
 import { ICriteria } from "../../bobas/index";
-import { View, IUrlView, IView, IBarView, IApplicationService } from "../core/index";
+import { View, IUrlView, IView, IBarView, } from "../core/index";
 import {
     IBOView, IBOListView, IBOQueryView, IBOChooseView,
     IBOEditView, IBOViewView, IResidentView, IShortcutView
 } from "../applications/index";
+import { IApplicationService } from "../services/index";
 import {
     IEmbeddedQueryPanel
 } from "../systems/index";

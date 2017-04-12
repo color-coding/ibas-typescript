@@ -54,6 +54,10 @@ export class DemoViewApp extends ibas.BOViewApplication<IDemoViewView> {
         this.viewData = data;
         super.run();
     }
+    /** 获取服务的契约 */
+    protected getServiceContracts(): ibas.IServiceContract[] {
+        return [];
+    }
 }
 /** 视图-演示 */
 export interface IDemoViewView extends ibas.IBOViewView {

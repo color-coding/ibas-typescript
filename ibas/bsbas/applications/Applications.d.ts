@@ -8,8 +8,9 @@
 // 业务对象应用的相关说明文件
 
 import { List, IBusinessObject } from "../../bobas/index";
-import { IView, IBarView, IApplicationService } from "../core/index";
+import { IView, IBarView } from "../core/index";
 import { IUseQueryPanel } from "../systems/index";
+import { IApplicationService } from "../services/index";
 
 /**
  * 业务对象应用-视图
@@ -22,13 +23,6 @@ export interface IBOView extends IView {
 export interface IBOViewWithServices extends IBOView {
     /** 调用服务事件，参数1 IServicesShower显示服务者 */
     callServicesEvent: Function;
-}
-/**
- * 显示服务者
- */
-export interface IServicesShower {
-    /** 显示服务 */
-    displayServices(services: IApplicationService[]): void;
 }
 /**
  * 业务对象应用-选择视图

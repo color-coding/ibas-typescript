@@ -7,13 +7,13 @@
  */
 
 import { IBOEditView } from "./Applications.d";
-import { BOApplicationWithServices } from "./Applications";
+import { BOApplication } from "./Applications";
 
 
 /**
  * 业务对象编辑应用
  */
-export abstract class BOEditApplication<T extends IBOEditView, D> extends BOApplicationWithServices<T> {
+export abstract class BOEditApplication<T extends IBOEditView, D> extends BOApplication<T> {
 
     /** 注册视图，重载需要回掉此方法 */
     protected registerView(): void {

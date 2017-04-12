@@ -9,7 +9,6 @@
 import { IBOChooseView } from "./Applications.d";
 import { BOQueryApplication } from "./Applications";
 
-
 /**
  * 业务对象选择应用
  */
@@ -22,8 +21,15 @@ export abstract class BOChooseApplication<T extends IBOChooseView, D> extends BO
         this.view.newDataEvent = this.newData;
     }
     /** 选择数据，参数：数据 */
-    protected abstract chooseData(data: D): void;
+    protected abstract chooseData(datas: D[]): void;
     /** 新建数据 */
     protected abstract newData(): void;
+
+}
+/**
+ * 业务对象选择服务
+ * 类型参数：视图，选择数据，服务契约
+ */
+export abstract class BOChooseService<T extends IBOChooseView, D> extends BOChooseApplication<T, D> {
 
 }

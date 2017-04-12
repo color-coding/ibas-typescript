@@ -20,3 +20,9 @@ export abstract class BOViewApplication<T extends IBOViewView> extends BOApplica
         super.registerView();
     }
 }
+/**
+ * 业务对象查看应用服务
+ */
+export abstract class BOViewService<T extends IBOViewView> extends BOViewApplication<T> {
+
+}

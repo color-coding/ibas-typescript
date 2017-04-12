@@ -9,9 +9,10 @@
 import {
     i18n, object, logger, emMessageLevel, ICriteria, config
 } from "../../bobas/index";
-import { AbstractApplication, IView, IBarView, IMessgesCaller, IApplicationService } from "../core/index";
+import { AbstractApplication, IView, IBarView, IMessgesCaller } from "../core/index";
 import { emMessageType } from "../data/index";
-import { IBOView, IBOQueryView, IBOViewWithServices, IServicesShower } from "./Applications.d";
+import { IApplicationService, IServiceContract, IServicesShower, IServiceProxy } from "../services/index";
+import { IBOView, IBOQueryView, IBOViewWithServices } from "./Applications.d";
 
 
 /**
@@ -191,6 +192,18 @@ export abstract class BOApplication<T extends IBOView> extends Application<T> {
     }
 }
 /**
+ * 业务对象查询应用
+ */
+export abstract class BOQueryApplication<T extends IBOQueryView> extends BOApplication<T> {
+    /** 注册视图，重载需要回掉此方法 */
+    protected registerView(): void {
+        super.registerView();
+        this.view.fetchDataEvent = this.fetchData;
+    }
+    /** 查询数据 */
+    protected abstract fetchData(criteria: ICriteria): void;
+}
+/**
  * 业务对象应用，带服务
  */
 export abstract class BOApplicationWithServices<T extends IBOViewWithServices> extends Application<T> {
@@ -202,7 +215,7 @@ export abstract class BOApplicationWithServices<T extends IBOViewWithServices> e
         this.view.callServicesEvent = this.callServices;
     }
     /** 调用应用的服务 */
-    protected callServices(): void {
+    private callServices(): void {
         let shower: IServicesShower = arguments[0];
         if (object.isNull(shower)) {
             shower = (<IServicesShower><any>this.view);
@@ -222,16 +235,6 @@ export abstract class BOApplicationWithServices<T extends IBOViewWithServices> e
             }
         }]);
     }
-}
-/**
- * 业务对象查询应用
- */
-export abstract class BOQueryApplication<T extends IBOQueryView> extends BOApplication<T> {
-    /** 注册视图，重载需要回掉此方法 */
-    protected registerView(): void {
-        super.registerView();
-        this.view.fetchDataEvent = this.fetchData;
-    }
-    /** 查询数据 */
-    protected abstract fetchData(criteria: ICriteria): void;
+    /** 获取服务的契约 */
+    protected abstract getServiceProxies(): IServiceProxy<IServiceContract>[];
 }

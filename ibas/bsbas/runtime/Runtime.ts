@@ -8,32 +8,7 @@
 
 // 模块索引文件，此文件集中导出类
 
-
 import { KeyValue, object } from "../../bobas/index";
-import { IModuleConsole } from "../core/index";
-
-/** 模块控制台管理员 */
-export class ConsolesManager {
-    /** 运行中的模块控制台 */
-    private consoles: Map<string, IModuleConsole>;
-    /** 注册模块控制台 */
-    register(console: IModuleConsole): void {
-        if (object.isNull(this.consoles)) {
-            this.consoles = new Map();
-        }
-        this.consoles.set(console.id, console);
-    }
-    /** 获取模块控制台 */
-    get(id: string): IModuleConsole {
-        if (object.isNull(this.consoles)) {
-            return null;
-        }
-        if (this.consoles.has(id)) {
-            return this.consoles.get(id);
-        }
-        return null;
-    }
-}
 
 /** 变量管理员 */
 export class VariablesManager {
