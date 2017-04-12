@@ -9,7 +9,11 @@
 /// <reference path="../../../../ibas/3rdparty/index.d.ts" />
 import * as ibas from "ibas/index";
 import { BORepositoryDemo } from "../borep/BORepositories";
-import { DemoFunc, DemoUrlFunc, DemoTabFunc, DemoResidentApp, DemoServiceMapping } from "./demo/index";
+import {
+    DemoFunc, DemoUrlFunc, DemoTabFunc,
+    DemoResidentApp, DemoServiceMapping,
+    DemoChooseServiceMapping
+} from "./demo/index";
 
 /** 模块控制台 */
 export class Console extends ibas.ModuleConsole {
@@ -48,6 +52,7 @@ export class Console extends ibas.ModuleConsole {
         this.register(new DemoResidentApp());
         // 注册服务
         this.register(new DemoServiceMapping());
+        this.register(new DemoChooseServiceMapping());
     }
     /** 运行 */
     run(): void {

@@ -61,18 +61,39 @@ export class DemoEditApp extends ibas.BOEditApplication<IDemoEditView, bo.SalesO
     }
     /** 选择销售订单事件 */
     chooseSalesOrder(): void {
+        let that = this;
         ibas.servicesManager.runChooseService<bo.SalesOrder>({
             boCode: bo.SalesOrder.name,
             criteria: [
-                new ibas.KeyValue("customer", "A0001")
+                new ibas.Condition("customer", ibas.emConditionOperation.START, "A0001")
             ],
-            onCompleted(seleteds: ibas.List<bo.SalesOrder>): void {
-
+            onCompleted(selecteds: ibas.List<bo.SalesOrder>): void {
+                that.editData.customer = selecteds.firstOrDefault().customer;
             }
         });
     }
     /** 选择销售订单行事件 */
-    chooseSalesOrderItem(): void {
+    chooseSalesOrderItem(caller: bo.SalesOrderItem): void {
+        let that = this;
+        ibas.servicesManager.runChooseService<bo.SalesOrder>({
+            caller: caller,
+            boCode: bo.SalesOrder.name,
+            criteria: [
+                new ibas.Condition("customer", ibas.emConditionOperation.START, "A0001")
+            ],
+            onCompleted(selecteds: ibas.List<bo.SalesOrder>): void {
+                // 获取触发的对象
+                let index = that.editData.items.indexOf(this.caller);
+                let item = that.editData.items[index];
+                // 选择返回数量多余触发数量时,自动创建新的项目
+                for (let selected of selecteds) {
+                    if (ibas.object.isNull(item)) {
+                        item = that.editData.items.create();
+                    }
+                    item.itemCode = selected.customer;
+                }
+            }
+        });
 
     }
     /** 添加销售订单事件 */

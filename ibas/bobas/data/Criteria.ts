@@ -175,9 +175,21 @@ export class Criteria implements ICriteria {
  */
 export class Condition implements ICondition {
 
+    constructor(alias: string, operation: emConditionOperation);
+    constructor(alias: string, operation: emConditionOperation, value: string);
+    constructor();
     constructor() {
         this.operation = emConditionOperation.EQUAL;
         this.relationship = emConditionRelationship.AND;
+        if (arguments[0] !== undefined) {
+            this.alias = arguments[0];
+        }
+        if (arguments[1] !== undefined) {
+            this.operation = arguments[1];
+        }
+        if (arguments[2] !== undefined) {
+            this.value = arguments[2];
+        }
     }
 
     /**
@@ -295,8 +307,16 @@ export class Conditions extends ArrayList<ICondition> implements IConditions {
  */
 export class Sort implements ISort {
 
+    constructor();
+    constructor(alias: string, sortType: emSortType);
     constructor() {
         this.sortType = emSortType.ASCENDING;
+        if (arguments[0] !== undefined) {
+            this.alias = arguments[0];
+        }
+        if (arguments[1] !== undefined) {
+            this.sortType = arguments[1];
+        }
     }
 
     /**

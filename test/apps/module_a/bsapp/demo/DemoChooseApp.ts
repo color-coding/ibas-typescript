@@ -12,7 +12,7 @@ import * as bo from "../../borep/bo/index";
 import { DemoEditApp } from "./DemoEditApp";
 
 /** 应用-演示 */
-export class DemoChooseApp extends ibas.BOChooseApplication<IDemoChooseView, bo.SalesOrder> {
+export class DemoChooseApp extends ibas.BOChooseService<IDemoChooseView, bo.SalesOrder> {
 
     /** 应用标识 */
     static APPLICATION_ID: string = "7cfa552b-adc4-4cc9-8dac-1533c7dc0013";
@@ -71,13 +71,24 @@ export class DemoChooseApp extends ibas.BOChooseApplication<IDemoChooseView, bo.
         app.viewShower = this.viewShower;
         app.run();
     }
-    /** 选择数据 */
-    protected chooseData(datas: bo.SalesOrder[]): void {
-
-    }
 }
 /** 视图-演示 */
 export interface IDemoChooseView extends ibas.IBOChooseView {
     /** 显示数据 */
     showData(datas: bo.SalesOrder[]): void;
+}
+/** 选择服务映射 */
+export class DemoChooseServiceMapping extends ibas.BOChooseServiceMapping {
+
+    constructor() {
+        super();
+        this.id = DemoChooseApp.APPLICATION_ID;
+        this.name = DemoChooseApp.APPLICATION_NAME;
+        this.boCode = bo.SalesOrder.name;
+        this.description = ibas.i18n.prop(this.name);
+    }
+    /** 创建服务并运行 */
+    create(): ibas.IService<ibas.IServiceContract> {
+        return new DemoChooseApp();
+    }
 }

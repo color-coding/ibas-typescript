@@ -5,7 +5,7 @@
  * Use of this source code is governed by an Apache License, Version 2.0
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
-import { IBusinessObject, ICriteria, KeyValue, List } from "../../bobas/index";
+import { IBusinessObject, ICriteria, KeyValue, List, ICondition } from "../../bobas/index";
 import { IElement, IViewShower, IViewNavigation } from "../core/index";
 
 /**
@@ -25,6 +25,8 @@ export interface IServiceAgent extends IElement {
     icon: string;
     /** 运行服务 */
     run(): void;
+    /** 完成 */
+    onCompleted?: Function;
 }
 /**
  * 应用服务映射
@@ -34,6 +36,10 @@ export interface IServiceMapping extends IElement {
     icon: string;
     /** 服务代理 */
     proxy: any;
+    /** 视图显示者 */
+    viewShower: IViewShower;
+    /** 视图导航 */
+    navigation: IViewNavigation;
     /** 创建服务并运行 */
     create(): IService<IServiceContract>;
 }
@@ -68,14 +74,14 @@ export interface IBOLinkServiceContract extends IServiceContract {
     /** 业务对象编码 */
     boCode: string;
     /** 连接的值 */
-    linkValue: string | KeyValue[] | ICriteria;
+    linkValue: string | ICriteria | ICondition[];
 }
 /** 业务对象选择服务的契约 */
 export interface IBOChooseServiceContract extends IServiceContract {
     /** 业务对象编码 */
     boCode: string;
     /** 条件 */
-    criteria?: ICriteria | KeyValue[];
+    criteria?: ICriteria | ICondition[];
 }
 /** 应用服务的契约 */
 export interface IApplicationServiceContract extends IServiceContract {
@@ -86,10 +92,6 @@ export interface IApplicationServiceContract extends IServiceContract {
 export interface IServiceProxy<C extends IServiceContract> {
     /** 服务的契约 */
     contract: C;
-    /** 视图显示者 */
-    viewShower?: IViewShower;
-    /** 视图导航 */
-    navigation?: IViewNavigation;
 }
 /** 服务调用者 */
 export interface IServiceCaller {
@@ -99,25 +101,22 @@ export interface IServiceCaller {
 /**
  * 业务对象选择服务
  */
-export interface IBOChooseService<C extends IBOChooseServiceContract> {
-    /** 运行服务 */
-    run(contract: C): void;
+export interface IBOChooseService extends IService<IBOChooseServiceContract> {
     /** 完成 */
-    onCompleted?: Function;
+    onCompleted: Function;
 }
 /**
  * 业务对象选择服务
  */
-export interface IBOLinkService<C extends IBOLinkServiceContract> {
-    /** 运行服务 */
-    run(contract: C): void;
-    /** 完成 */
-    onCompleted?: Function;
+export interface IBOLinkService extends IService<IBOLinkServiceContract> {
+
 }
 /** 业务对象选择服务调用者 */
 export interface IBOChooseServiceCaller<D> extends IServiceCaller, IBOChooseServiceContract {
+    /** 调用者 */
+    caller?: any
     /** 服务调用完成 */
-    onCompleted(seleteds: List<D>): void;
+    onCompleted(selecteds: List<D>): void;
 }
 /** 业务对象连接服务调用者 */
 export interface IBOLinkServiceCaller<D> extends IServiceCaller, IBOLinkServiceContract {

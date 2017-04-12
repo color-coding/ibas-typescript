@@ -234,7 +234,6 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
                     // 显示常驻应用
                     for (let app of console.applications()) {
                         if (object.instanceOf(app, ResidentApplication)) {
-                            app.viewShower = that;
                             that.view.showResidentView(<IBarView>app.view);
                         }
                     }
@@ -243,6 +242,8 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
                 if (!object.isNull(module.repository)) {
                     console.setRepository(module.repository);
                 }
+                // 设置视图显示者
+                console.viewShower = that;
                 console.run();
             } catch (error) {
                 that.view.showStatusMessage(emMessageType.ERROR, error);

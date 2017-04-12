@@ -232,12 +232,6 @@ export abstract class BOApplicationWithServices<T extends IBOViewWithServices> e
         // 获取服务
         let services: Array<IServiceAgent> = new Array<IServiceAgent>();
         for (let proxy of proxies) {
-            if (object.isNull(proxy.navigation)) {
-                proxy.navigation = this.navigation;
-            }
-            if (object.isNull(proxy.viewShower)) {
-                proxy.viewShower = this.viewShower;
-            }
             for (let service of servicesManager.getServices(proxy)) {
                 services.push(service);
             }

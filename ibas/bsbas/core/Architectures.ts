@@ -187,6 +187,8 @@ export abstract class ModuleConsole extends Module implements IModuleConsole {
     run(): void { }
     /** 创建视图导航 */
     abstract navigation(): IViewNavigation;
+    /** 视图显示者 */
+    viewShower: IViewShower;
     private _applications: ArrayList<IApplication<IView>>;
     /** 已实例应用集合 */
     applications(): IApplication<IView>[] {
@@ -218,9 +220,12 @@ export abstract class ModuleConsole extends Module implements IModuleConsole {
                 this._applications = new ArrayList<IApplication<IView>>();
             }
             item.navigation = this.navigation();
+            item.viewShower = this.viewShower;
             this._applications.add(item);
         } else if (item instanceof ServiceMapping) {
             // 注册服务
+            item.navigation = this.navigation();
+            item.viewShower = this.viewShower;
             servicesManager.register(item);
         }
     }

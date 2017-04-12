@@ -50,7 +50,7 @@ export module object {
         if (isNull(subType) || isNull(type)) {
             return false;
         }
-        if (subType === type) {
+        if (isSame(subType, type)) {
             return true;
         }
         let cType: any = Object.getPrototypeOf(subType);

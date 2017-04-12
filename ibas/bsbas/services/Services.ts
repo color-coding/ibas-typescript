@@ -6,7 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { object, config, i18n } from "../../bobas/index";
+import { object, config, i18n, logger, emMessageLevel } from "../../bobas/index";
 import { AbstractApplication as Application, IViewShower, IViewNavigation, IView } from "../core/index";
 import {
     IServiceContract, IServiceProxy, IService,
@@ -24,6 +24,10 @@ export abstract class ServiceMapping implements IServiceMapping {
     constructor() {
         this.icon = config.get(ServiceMapping.CONFIG_ITEM_DEFALUT_SERVICE_ICON);
     }
+    /** 视图显示者 */
+    viewShower: IViewShower;
+    /** 视图导航 */
+    navigation: IViewNavigation;
     /** 唯一标识 */
     id: string;
     /** 名称 */
@@ -34,7 +38,7 @@ export abstract class ServiceMapping implements IServiceMapping {
     description: string;
     /** 图标 */
     icon: string;
-    /** 服务代理 */
+    /** 服务契约代理 */
     proxy: any;
     /** 创建服务 */
     abstract create(): IService<IServiceContract>;
@@ -45,8 +49,15 @@ export abstract class BOChooseServiceMapping extends ServiceMapping {
         super();
         this.proxy = BOChooseServiceProxy;
     }
+    /** 重写此属性到boCode */
+    get category(): string {
+        return this.boCode;
+    }
+    set category(value: string) {
+        this.boCode = value;
+    }
     /** 业务对象编码 */
-    abstract readonly boCode: string;
+    boCode: string;
     /** 创建服务 */
     abstract create(): IService<IBOChooseServiceContract>;
 }
@@ -56,8 +67,15 @@ export abstract class BOLinkServiceMapping extends ServiceMapping {
         super();
         this.proxy = BOLinkServiceProxy;
     }
+    /** 重写此属性到boCode */
+    get category(): string {
+        return this.boCode;
+    }
+    set category(value: string) {
+        this.boCode = value;
+    }
     /** 业务对象编码 */
-    abstract readonly boCode: string;
+    boCode: string;
     /** 创建服务 */
     abstract create(): IService<IBOLinkServiceContract>;
 }
@@ -68,10 +86,6 @@ export class ServiceProxy<C extends IServiceContract> implements IServiceProxy<C
     }
     /** 服务的契约 */
     contract: C;
-    /** 视图显示者 */
-    viewShower?: IViewShower;
-    /** 视图导航 */
-    navigation?: IViewNavigation;
 }
 /** 数据服务代理 */
 export class DataServiceProxy extends ServiceProxy<IDataServiceContract> {
@@ -87,11 +101,13 @@ export class BOListServiceProxy extends ServiceProxy<IBOListServiceContract> {
 }
 /** 业务对象连接服务代理 */
 export class BOLinkServiceProxy extends ServiceProxy<IBOLinkServiceContract> {
-
+    /** 业务对象代码 */
+    boCode: string;
 }
 /** 业务对象选择服务代理 */
 export class BOChooseServiceProxy extends ServiceProxy<IBOChooseServiceContract> {
-
+    /** 业务对象代码 */
+    boCode: string;
 }
 /** 应用服务代理 */
 export class ApplicationServiceProxy extends ServiceProxy<IApplicationServiceContract> {
@@ -150,10 +166,12 @@ export class ServicesManager {
                         if (!object.isNull(service)) {
                             // 运行服务
                             if (object.instanceOf(service, Application)) {
-                                (<Application<IView>>service).viewShower = proxy.viewShower;
-                                (<Application<IView>>service).navigation = proxy.navigation;
+                                (<Application<IView>>service).viewShower = mapping.viewShower;
+                                (<Application<IView>>service).navigation = mapping.navigation;
                             }
                             service.run(proxy.contract);
+                            // 完成服务委托给代理
+                            service.onCompleted = this.onCompleted;
                         }
                     }
                 });
@@ -170,5 +188,15 @@ export class ServicesManager {
         if (object.isNull(caller.boCode)) {
             throw new Error(i18n.prop("msg_invalid_parameter", "caller.boCode"));
         }
+        let proxy: IServiceProxy<IServiceContract> = new BOChooseServiceProxy(caller);
+        for (let service of this.getServices(proxy)) {
+            if (service.category === caller.boCode) {
+                // 存在业务对象选择服务
+                service.run();
+                service.onCompleted = caller.onCompleted;
+                return;
+            }
+        }
+        logger.log(emMessageLevel.WARN, "services: not found [{0}]'s choose service.", caller.boCode);
     }
 }
