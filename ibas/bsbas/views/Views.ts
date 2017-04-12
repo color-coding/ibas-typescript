@@ -12,7 +12,6 @@ import {
     IBOView, IBOListView, IBOQueryView, IBOChooseView,
     IBOEditView, IBOViewView, IResidentView, IShortcutView
 } from "../applications/index";
-import { IApplicationService } from "../services/index";
 import {
     IEmbeddedQueryPanel
 } from "../systems/index";

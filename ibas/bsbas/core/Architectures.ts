@@ -15,6 +15,7 @@ import {
     IElement, IModule, IFunction, IApplication, IView,
     IModuleConsole, IViewShower, IViewNavigation, IModuleFunction,
 } from "./Architectures.d";
+import { ServiceMapping, servicesManager } from "../services/index";
 
 /** 系统元素 */
 export class Element implements IElement {
@@ -198,6 +199,8 @@ export abstract class ModuleConsole extends Module implements IModuleConsole {
     protected register(item: ModuleFunction): void;
     /** 注册应用 */
     protected register(item: AbstractApplication<IView>): void;
+    /** 注册服务 */
+    protected register(item: ServiceMapping): void;
     /** 注册实现，需要区分注册内容 */
     protected register(): void {
         let item: any = arguments[0];
@@ -216,6 +219,9 @@ export abstract class ModuleConsole extends Module implements IModuleConsole {
             }
             item.navigation = this.navigation();
             this._applications.add(item);
+        } else if (item instanceof ServiceMapping) {
+            // 注册服务
+            servicesManager.register(item);
         }
     }
     /** 设置仓库地址 */
@@ -263,8 +269,8 @@ export abstract class ViewNavigation implements IViewNavigation {
         return view;
     }
 
-    /** 
-     * 创建实例     
+    /**
+     * 创建实例
      * @param id 应用id
      */
     protected abstract newView(id: string): IView;

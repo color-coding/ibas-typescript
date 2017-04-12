@@ -10,7 +10,6 @@
 import { List, IBusinessObject } from "../../bobas/index";
 import { IView, IBarView } from "../core/index";
 import { IUseQueryPanel } from "../systems/index";
-import { IApplicationService } from "../services/index";
 
 /**
  * 业务对象应用-视图

@@ -11,7 +11,7 @@ import {
 } from "../../bobas/index";
 import { AbstractApplication, IView, IBarView, IMessgesCaller } from "../core/index";
 import { emMessageType } from "../data/index";
-import { IApplicationService, IServiceContract, IServicesShower, IServiceProxy } from "../services/index";
+import { IServiceAgent, IServiceContract, IServicesShower, IServiceProxy, servicesManager } from "../services/index";
 import { IBOView, IBOQueryView, IBOViewWithServices } from "./Applications.d";
 
 
@@ -216,6 +216,11 @@ export abstract class BOApplicationWithServices<T extends IBOViewWithServices> e
     }
     /** 调用应用的服务 */
     private callServices(): void {
+        let proxies: IServiceProxy<IServiceContract>[] = this.getServiceProxies();
+        if (object.isNull(proxies) || proxies.length === 0) {
+            // 没有提供服务代理则退出
+            return;
+        }
         let shower: IServicesShower = arguments[0];
         if (object.isNull(shower)) {
             shower = (<IServicesShower><any>this.view);
@@ -224,16 +229,21 @@ export abstract class BOApplicationWithServices<T extends IBOViewWithServices> e
             this.proceeding(emMessageType.WARNING, i18n.prop("msg_not_provided_display_service_method", this.description));
             return;
         }
-        shower.displayServices([{
-            id: "",
-            name: "测试服务",
-            category: "",
-            description: "",
-            icon: "sap-icon://video",
-            run(): void {
-                logger.log("service: to be run.");
+        // 获取服务
+        let services: Array<IServiceAgent> = new Array<IServiceAgent>();
+        for (let proxy of proxies) {
+            if (object.isNull(proxy.navigation)) {
+                proxy.navigation = this.navigation;
             }
-        }]);
+            if (object.isNull(proxy.viewShower)) {
+                proxy.viewShower = this.viewShower;
+            }
+            for (let service of servicesManager.getServices(proxy)) {
+                services.push(service);
+            }
+        }
+        // 显示可用服务
+        shower.displayServices(services);
     }
     /** 获取服务的契约 */
     protected abstract getServiceProxies(): IServiceProxy<IServiceContract>[];

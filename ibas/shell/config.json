@@ -10,6 +10,7 @@
     "sharedLibraries": "openui5/typings,",
     "defaultUser": "admin",
     "defaultPassword": "1q2w3e",
+    "defalutServiceIcon": "sap-icon://e-care",
     "RepositoryAddress|BORepositoryShellOffLine": ".../../../test/repository",
     "RepositoryAddress|BORepositoryShell": "http://localhost:8080/initialfantasy/services/rest/datas"
   },

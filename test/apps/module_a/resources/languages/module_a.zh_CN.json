@@ -10,5 +10,6 @@
     "module_a_app_demo_edit": "应用-数据编辑",
     "module_a_app_demo_view": "应用-数据查看",
     "module_a_app_demo_resident": "应用-常驻",
+    "module_a_app_demo_service": "服务应用",
     "module_a_ui_no_edit": "禁止编辑"
 }

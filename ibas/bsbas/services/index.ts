@@ -10,4 +10,14 @@
 
 export * from "./Services.d";
 export * from "./Services";
-
+import { ServicesManager } from "./Services";
+/** 服务管理员实例 */
+export const servicesManager: ServicesManager = function (): ServicesManager {
+    if ((<any>window).ibas === undefined) {
+        (<any>window).ibas = {};
+    }
+    if ((<any>window).ibas.servicesManager === undefined) {
+        (<any>window).ibas.servicesManager = new ServicesManager();
+    }
+    return (<any>window).ibas.servicesManager;
+}();

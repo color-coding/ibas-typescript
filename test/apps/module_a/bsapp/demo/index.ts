@@ -12,4 +12,5 @@ export * from "./DemoEditApp";
 export * from "./DemoChooseApp";
 export * from "./DemoUrlApp";
 export * from "./DemoResidentApp";
+export * from "./DemoService";
 export * from "./DemosFunc";

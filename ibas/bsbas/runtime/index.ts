@@ -11,7 +11,7 @@
  */
 import {  VariablesManager } from "./Runtime";
 
-/** 控制台管理员实例 */
+/** 变量管理员实例 */
 export const variablesManager: VariablesManager = function (): VariablesManager {
     if ((<any>window).ibas === undefined) {
         (<any>window).ibas = {};

@@ -109,15 +109,15 @@ export class DemoListView extends ibas.BOListView implements IDemoListView {
                     new sap.m.Button("", {
                         type: sap.m.ButtonType.Transparent,
                         icon: "sap-icon://action",
-                        press: function (event): void {
+                        press: function (event: any): void {
                             that.fireViewEvents(that.callServicesEvent, {
-                                displayServices(services: ibas.IApplicationService[]): void {
+                                displayServices(services: ibas.IServiceAgent[]): void {
                                     let popover: sap.m.Popover = new sap.m.Popover("", {
                                         showHeader: false,
                                         placement: sap.m.PlacementType.Bottom,
                                     });
                                     for (let service of services) {
-                                        let button = new sap.m.Button({
+                                        popover.addContent(new sap.m.Button({
                                             text: ibas.i18n.prop(service.name),
                                             type: sap.m.ButtonType.Transparent,
                                             icon: service.icon,
@@ -125,10 +125,8 @@ export class DemoListView extends ibas.BOListView implements IDemoListView {
                                                 service.run();
                                                 popover.close();
                                             }
-                                        });
-                                        popover.addContent(button);
+                                        }));
                                     }
-                                    //(<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
                                     popover.openBy(event.getSource(), true);
                                 }
                             });
