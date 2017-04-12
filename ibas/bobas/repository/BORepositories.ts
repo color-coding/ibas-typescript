@@ -23,7 +23,7 @@ import { logger } from "../messages/index";
 export abstract class BORepositoryApplication {
 
     /** 远程仓库的默认地址模板 */
-    static CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS: string = "RepositoryAddress|{0}";
+    static CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS: string = "repositoryAddress|{0}";
 
     constructor() {
         // 获取离线状态

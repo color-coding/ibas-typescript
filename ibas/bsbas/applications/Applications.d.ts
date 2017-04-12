@@ -51,7 +51,7 @@ export interface IBOListView extends IBOQueryView, IBOViewWithServices {
 /**
  * 业务对象应用-编辑视图
  */
-export interface IBOEditView extends IBOViewWithServices {
+export interface IBOEditView extends IBOView {
     /** 保存数据事件 */
     saveDataEvent: Function;
 }

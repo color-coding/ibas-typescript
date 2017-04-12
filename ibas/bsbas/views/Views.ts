@@ -91,8 +91,6 @@ export abstract class BOEditView extends BOView implements IBOEditView {
     editDataEvent: Function;
     /** 新建数据事件 */
     saveDataEvent: Function;
-    /** 调用服务事件 */
-    callServicesEvent: Function;
 }
 /** 业务对象工具条视图 */
 export abstract class BOBarView extends BOView implements IBarView {

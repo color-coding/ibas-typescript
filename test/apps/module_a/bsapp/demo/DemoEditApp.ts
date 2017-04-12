@@ -9,8 +9,6 @@
 import * as ibas from "ibas/index";
 import { BORepositoryDemo } from "../../borep/BORepositories";
 import * as  bo from "../../borep/bo/index";
-import { DemoChooseApp } from "./DemoChooseApp";
-
 
 /** 应用-演示 */
 export class DemoEditApp extends ibas.BOEditApplication<IDemoEditView, bo.SalesOrder> {
@@ -63,10 +61,15 @@ export class DemoEditApp extends ibas.BOEditApplication<IDemoEditView, bo.SalesO
     }
     /** 选择销售订单事件 */
     chooseSalesOrder(): void {
-        let app = new DemoChooseApp();
-        app.navigation = this.navigation;
-        app.viewShower = this.viewShower;
-        app.run();
+        ibas.servicesManager.runChooseService<bo.SalesOrder>({
+            boCode: bo.SalesOrder.name,
+            criteria: [
+                new ibas.KeyValue("customer", "A0001")
+            ],
+            onCompleted(seleteds: ibas.List<bo.SalesOrder>): void {
+
+            }
+        });
     }
     /** 选择销售订单行事件 */
     chooseSalesOrderItem(): void {

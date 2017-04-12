@@ -6,13 +6,14 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { object, config } from "../../bobas/index";
+import { object, config, i18n } from "../../bobas/index";
 import { AbstractApplication as Application, IViewShower, IViewNavigation, IView } from "../core/index";
 import {
     IServiceContract, IServiceProxy, IService,
     IBOServiceContract, IApplicationServiceContract,
     IDataServiceContract, IBOListServiceContract,
-    IServiceMapping, IServiceAgent
+    IServiceMapping, IServiceAgent, IBOChooseServiceCaller,
+    IBOLinkServiceContract, IBOChooseServiceContract,
 } from "./Services.d";
 
 
@@ -35,8 +36,30 @@ export abstract class ServiceMapping implements IServiceMapping {
     icon: string;
     /** 服务代理 */
     proxy: any;
-    /** 创建服务并运行 */
+    /** 创建服务 */
     abstract create(): IService<IServiceContract>;
+}
+/** 业务对象选择服务映射 */
+export abstract class BOChooseServiceMapping extends ServiceMapping {
+    constructor() {
+        super();
+        this.proxy = BOChooseServiceProxy;
+    }
+    /** 业务对象编码 */
+    abstract readonly boCode: string;
+    /** 创建服务 */
+    abstract create(): IService<IBOChooseServiceContract>;
+}
+/** 业务对象连接服务映射 */
+export abstract class BOLinkServiceMapping extends ServiceMapping {
+    constructor() {
+        super();
+        this.proxy = BOLinkServiceProxy;
+    }
+    /** 业务对象编码 */
+    abstract readonly boCode: string;
+    /** 创建服务 */
+    abstract create(): IService<IBOLinkServiceContract>;
 }
 /** 服务代理 */
 export class ServiceProxy<C extends IServiceContract> implements IServiceProxy<C> {
@@ -60,6 +83,14 @@ export class BOServiceProxy extends ServiceProxy<IBOServiceContract> {
 }
 /** 业务对象列表服务代理 */
 export class BOListServiceProxy extends ServiceProxy<IBOListServiceContract> {
+
+}
+/** 业务对象连接服务代理 */
+export class BOLinkServiceProxy extends ServiceProxy<IBOLinkServiceContract> {
+
+}
+/** 业务对象选择服务代理 */
+export class BOChooseServiceProxy extends ServiceProxy<IBOChooseServiceContract> {
 
 }
 /** 应用服务代理 */
@@ -131,4 +162,13 @@ export class ServicesManager {
         return services;
     }
 
+    /** 运行选择服务 */
+    runChooseService<D>(caller: IBOChooseServiceCaller<D>): void {
+        if (object.isNull(caller)) {
+            throw new Error(i18n.prop("msg_invalid_parameter", "caller"));
+        }
+        if (object.isNull(caller.boCode)) {
+            throw new Error(i18n.prop("msg_invalid_parameter", "caller.boCode"));
+        }
+    }
 }

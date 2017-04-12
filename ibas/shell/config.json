@@ -11,8 +11,8 @@
     "defaultUser": "admin",
     "defaultPassword": "1q2w3e",
     "defalutServiceIcon": "sap-icon://e-care",
-    "RepositoryAddress|BORepositoryShellOffLine": ".../../../test/repository",
-    "RepositoryAddress|BORepositoryShell": "http://localhost:8080/initialfantasy/services/rest/datas"
+    "repositoryAddress|BORepositoryShellOffLine": ".../../../test/repository",
+    "repositoryAddress|BORepositoryShell": "http://localhost:8080/initialfantasy/services/rest/datas"
   },
   "languages": [
     "zh_CN",

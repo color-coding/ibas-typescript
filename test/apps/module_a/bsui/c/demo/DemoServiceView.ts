@@ -16,7 +16,17 @@ import { IDemoServiceView } from "../../../bsapp/demo/index";
  */
 export class DemoServiceView extends ibas.BODialogView implements IDemoServiceView {
     darwBars(): any {
-
+        let that = this;
+        return [
+            new sap.m.Button("", {
+                text: ibas.i18n.prop("sys_shell_ui_exit"),
+                type: sap.m.ButtonType.Transparent,
+                // icon: "sap-icon://inspect-down",
+                press: function (): void {
+                    that.fireViewEvents(that.closeEvent);
+                }
+            }),
+        ];
     }
     /** 绘制视图 */
     darw(): any {
