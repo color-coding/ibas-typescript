@@ -37,6 +37,7 @@
     "msg_initialize_user_modules": "初始化用户[{0} - {1}]的模块",
     "msg_initialize_modules": "初始化模块[{0} - {1}]",
     "msg_application_not_allowed_run": "没有权限运行应用[{0}]",
+    "msg_application_view_was_displayed": "应用[{0}]的视图已经显示",
     "msg_whether_to_delete": "请确认是否删除？",
     "msg_whether_to_exit": "请确认是退出？",
     "msg_not_provided_display_service_method": "没有提供显示[{0}]服务的方法"

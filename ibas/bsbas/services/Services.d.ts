@@ -14,8 +14,16 @@ import { IElement, IViewShower, IViewNavigation } from "../core/index";
 export interface IService<C extends IServiceContract> {
     /** 运行服务 */
     run(contract: C): void;
-    /** 完成 */
-    onCompleted?: Function;
+}
+/**
+ * 业务对象选择服务
+ */
+export interface IBOChooseService extends IService<IBOChooseServiceContract> {
+}
+/**
+ * 业务对象选择服务
+ */
+export interface IBOLinkService extends IService<IBOLinkServiceContract> {
 }
 /**
  * 应用服务代理
@@ -25,8 +33,6 @@ export interface IServiceAgent extends IElement {
     icon: string;
     /** 运行服务 */
     run(): void;
-    /** 完成 */
-    onCompleted?: Function;
 }
 /**
  * 应用服务映射
@@ -52,7 +58,8 @@ export interface IServicesShower {
 }
 /** 服务的契约 */
 export interface IServiceContract {
-
+    /** 完成 */
+    onCompleted?: Function;
 }
 /** 业务对象服务的契约 */
 export interface IDataServiceContract extends IServiceContract {
@@ -95,21 +102,8 @@ export interface IServiceProxy<C extends IServiceContract> {
 }
 /** 服务调用者 */
 export interface IServiceCaller {
-    /** 服务调用完成 */
-    onCompleted(pars: any): void;
-}
-/**
- * 业务对象选择服务
- */
-export interface IBOChooseService extends IService<IBOChooseServiceContract> {
-    /** 完成 */
-    onCompleted: Function;
-}
-/**
- * 业务对象选择服务
- */
-export interface IBOLinkService extends IService<IBOLinkServiceContract> {
-
+    /** 完成事件 */
+    onCompleted?: Function;
 }
 /** 业务对象选择服务调用者 */
 export interface IBOChooseServiceCaller<D> extends IServiceCaller, IBOChooseServiceContract {
@@ -119,6 +113,7 @@ export interface IBOChooseServiceCaller<D> extends IServiceCaller, IBOChooseServ
     onCompleted(selecteds: List<D>): void;
 }
 /** 业务对象连接服务调用者 */
-export interface IBOLinkServiceCaller<D> extends IServiceCaller, IBOLinkServiceContract {
-
+export interface IBOLinkServiceCaller extends IServiceCaller, IBOLinkServiceContract {
+    /** 调用者 */
+    caller?: any
 }

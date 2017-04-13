@@ -6,7 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { object, ArrayList } from "../../bobas/index";
+import { object, ArrayList, Criteria, Condition } from "../../bobas/index";
 import { IBOChooseView } from "./Applications.d";
 import { BOQueryApplication } from "./Applications";
 import { IBOChooseService, IBOChooseServiceContract } from "../services/index";
@@ -29,15 +29,46 @@ export abstract class BOChooseApplication<T extends IBOChooseView, D> extends BO
 }
 /**
  * 业务对象选择服务
- * 类型参数：视图，选择数据，服务契约
+ * 类型参数：视图，选择数据
  */
 export abstract class BOChooseService<T extends IBOChooseView, D> extends BOChooseApplication<T, D>
     implements IBOChooseService {
-
+    /** 配置项目-自动选择数据 */
+    static CONFIG_ITEM_AUTO_CHOOSE_DATA = "autoChooseData";
+    /** 运行 */
+    run(...args: any[]): void {
+        if (!object.isNull(args) && args.length === 1) {
+            // 判断是否为选择契约
+            let contract: IBOChooseServiceContract = args[0];
+            if (contract.boCode === this.boCode) {
+                // 选择契约且为此应用
+                this.onCompleted = contract.onCompleted;
+                // 分析查询条件
+                let criteria: Criteria;
+                if (contract.criteria instanceof Criteria) {
+                    criteria = contract.criteria;
+                } else if (contract.criteria instanceof Array) {
+                    criteria = new Criteria();
+                    for (let item of contract.criteria) {
+                        if (item instanceof Condition) {
+                            criteria.conditions.add(item);
+                        }
+                    }
+                }
+                // 存在查询，则直接触发查询事件
+                if (!object.isNull(criteria) && criteria.conditions.length > 0) {
+                    this.fetchData(criteria);
+                    // 进入查询，不在执行后部分
+                    return;
+                }
+            }
+        }
+        super.run(args);
+    }
     /** 完成 */
-    onCompleted: Function;
+    private onCompleted: Function;
     /** 触发完成事件 */
-    protected fireCompleted(selecteds: D[] | D): void {
+    private fireCompleted(selecteds: D[] | D): void {
         // 关闭视图
         this.close();
         if (object.isNull(this.onCompleted)) {

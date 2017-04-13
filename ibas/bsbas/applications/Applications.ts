@@ -29,6 +29,11 @@ export abstract class Application<T extends IView> extends AbstractApplication<T
             if (object.isNull(this.view)) {
                 throw new Error(i18n.prop("msg_invalid_view", this.name));
             }
+            if (this.view.isDisplayed) {
+                // 已显示的视图不在显示
+                this.proceeding(emMessageType.WARNING, i18n.prop("msg_application_view_was_displayed", this.name));
+                return;
+            }
             if (!object.isNull(this.description)) {
                 this.view.title = this.description;
             } else {
@@ -80,6 +85,9 @@ export abstract class Application<T extends IView> extends AbstractApplication<T
     protected busy(busy: boolean, msg: string): void
     /** 设置忙状态 */
     protected busy(): void {
+        if (!this.isViewShowed()) {
+            return;
+        }
         let busy: boolean = arguments[0];
         let msg: string = arguments[1];
         if (!object.isNull(this.viewShower)) {

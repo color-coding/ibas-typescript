@@ -51,6 +51,7 @@ export class DemoEditApp extends ibas.BOEditApplication<IDemoEditView, bo.SalesO
         let data: bo.SalesOrder = arguments[0];
         if (ibas.object.isNull(data)) {
             data = new bo.SalesOrder();
+            data.docEntry = 100;
             data.customer = "C00001";
             data.canceled = ibas.emYesNo.YES;
             let item = data.items.create();

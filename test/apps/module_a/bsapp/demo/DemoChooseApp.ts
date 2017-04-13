@@ -24,6 +24,7 @@ export class DemoChooseApp extends ibas.BOChooseService<IDemoChooseView, bo.Sale
         this.id = DemoChooseApp.APPLICATION_ID;
         this.name = DemoChooseApp.APPLICATION_NAME;
         this.description = ibas.i18n.prop(this.name);
+        this.boCode = bo.SalesOrder.name;
     }
     /** 注册视图 */
     protected registerView(): void {
@@ -51,8 +52,18 @@ export class DemoChooseApp extends ibas.BOChooseService<IDemoChooseView, bo.Sale
                     if (opRslt.resultCode !== 0) {
                         throw new Error(opRslt.message);
                     }
-                    that.view.showData(opRslt.resultObjects);
-                    that.busy(false);
+                    if (opRslt.resultObjects.length === 1
+                        && ibas.config.get(ibas.BOChooseService.CONFIG_ITEM_AUTO_CHOOSE_DATA, true)) {
+                        // 仅一条数据，直接选择
+                        that.chooseData(opRslt.resultObjects);
+                    } else {
+                        if (!that.isViewShowed()) {
+                            // 没显示视图，先显示
+                            that.show();
+                        }
+                        that.view.showData(opRslt.resultObjects);
+                        that.busy(false);
+                    }
                 } catch (error) {
                     that.messages(error);
                 }

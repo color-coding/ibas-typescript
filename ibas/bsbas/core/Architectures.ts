@@ -83,6 +83,17 @@ export abstract class AbstractApplication<T extends IView> extends Element imple
         }
         return this._view;
     }
+    /** 视图是否已显示 */
+    isViewShowed(): boolean {
+        if (object.isNull(this._view)) {
+            return false;
+        }
+        if (this._view.isDisplayed) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     /** 注册视图 */
     protected abstract registerView(): void;
     /** 运行 */

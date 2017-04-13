@@ -38,25 +38,23 @@ export class DemoEditView extends ibas.BOEditView implements IDemoEditView {
                         that.fireViewEvents(that.chooseSalesOrderEvent);
                     }
                 }).bindProperty("value", {
-                    path: "customer"
+                    path: "/customer"
                 }),
                 new sap.ui.core.Title("", { text: "Document" }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_docentry") }),
                 new sap.m.Input("", { value: "{/docEntry}" }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_documentstatus") }),
-                new sap.m.Select("",
-                    {
-                        items: utils.createComboBoxItems(ibas.emDocumentStatus)
-                    }).bindProperty("selectedKey", {
-                        path: "documentStatus"
-                    }),
+                new sap.m.Select("", {
+                    items: utils.createComboBoxItems(ibas.emDocumentStatus)
+                }).bindProperty("selectedKey", {
+                    path: "/documentStatus"
+                }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_canceled") }),
-                new sap.m.Select("",
-                    {
-                        items: utils.createComboBoxItems(ibas.emYesNo)
-                    }).bindProperty("selectedKey", {
-                        path: "canceled"
-                    })
+                new sap.m.Select("", {
+                    items: utils.createComboBoxItems(ibas.emYesNo)
+                }).bindProperty("selectedKey", {
+                    path: "canceled"
+                })
             ]
         });
         this.form.addContent(new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_salesorderitem") }));

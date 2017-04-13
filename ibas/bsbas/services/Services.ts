@@ -14,6 +14,7 @@ import {
     IDataServiceContract, IBOListServiceContract,
     IServiceMapping, IServiceAgent, IBOChooseServiceCaller,
     IBOLinkServiceContract, IBOChooseServiceContract,
+    IBOLinkServiceCaller,
 } from "./Services.d";
 
 
@@ -160,7 +161,6 @@ export class ServicesManager {
                     category: mapping.category,
                     description: mapping.description,
                     icon: mapping.icon,
-                    onCompleted: Function,
                     run(): void {
                         // 创建服务
                         let service: IService<IServiceContract> = mapping.create();
@@ -171,8 +171,6 @@ export class ServicesManager {
                                 (<Application<IView>>service).navigation = mapping.navigation;
                             }
                             service.run(proxy.contract);
-                            // 完成服务委托给代理
-                            service.onCompleted = this.onCompleted;
                         }
                     }
                 });
@@ -193,7 +191,24 @@ export class ServicesManager {
         for (let service of this.getServices(proxy)) {
             if (service.category === caller.boCode) {
                 // 存在业务对象选择服务
-                service.onCompleted = caller.onCompleted;
+                service.run();
+                return;
+            }
+        }
+        logger.log(emMessageLevel.WARN, "services: not found [{0}]'s choose service.", caller.boCode);
+    }
+    /** 运行连接服务 */
+    runLinkService(caller: IBOLinkServiceCaller): void {
+        if (object.isNull(caller)) {
+            throw new Error(i18n.prop("msg_invalid_parameter", "caller"));
+        }
+        if (object.isNull(caller.boCode)) {
+            throw new Error(i18n.prop("msg_invalid_parameter", "caller.boCode"));
+        }
+        let proxy: IServiceProxy<IServiceContract> = new BOLinkServiceProxy(caller);
+        for (let service of this.getServices(proxy)) {
+            if (service.category === caller.boCode) {
+                // 此连接服务
                 service.run();
                 return;
             }
