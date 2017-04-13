@@ -11,6 +11,7 @@
     "defaultUser": "admin",
     "defaultPassword": "1q2w3e",
     "defalutServiceIcon": "sap-icon://e-care",
+    "defalutModuleIcon": "sap-icon://nutrition-activity",
     "repositoryAddress|BORepositoryShellOffLine": ".../../../test/repository",
     "repositoryAddress|BORepositoryShell": "http://localhost:8080/initialfantasy/services/rest/datas"
   },

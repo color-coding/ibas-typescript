@@ -138,8 +138,11 @@ export abstract class View implements IView {
 export abstract class ModuleConsole extends Module implements IModuleConsole {
     /** 配置项目-平台 */
     static CONFIG_ITEM_PLANTFORM: string = "plantform";
+    /** 配置项目-默认模块图标 */
+    static CONFIG_ITEM_DEFALUT_MODULE_ICON: string = "defalutModuleIcon";
     constructor() {
         super();
+        this.icon = config.get(ModuleConsole.CONFIG_ITEM_DEFALUT_MODULE_ICON);
     }
     /** 当前平台 */
     get plantform(): emPlantform {

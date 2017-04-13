@@ -59,7 +59,8 @@ export class Console extends ibas.ModuleConsole {
     static CONSOLE_ID: string = "00000000-ibas-cc01-00000000000000000";
     /** 模块-名称 */
     static CONSOLE_NAME: string = "ibas.shell";
-
+    /** 根文件名称 */
+    static ROOT_FILE_NAME: string = "shell/index";
     constructor() {
         super();
         this.id = Console.CONSOLE_ID;
@@ -86,7 +87,7 @@ export class Console extends ibas.ModuleConsole {
     /** 运行 */
     run(): void {
         // 获取根地址
-        let rootUrl: string = ibas.url.rootUrl(undefined);
+        let rootUrl: string = ibas.url.rootUrl(Console.ROOT_FILE_NAME);
         // 加载配置-框架默认
         ibas.config.load(ibas.string.format("{0}/{1}", rootUrl, ibas.Configuration.CONFIG_FILE_NAME));
         // 加载语言-框架默认

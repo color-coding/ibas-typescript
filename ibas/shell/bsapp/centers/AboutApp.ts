@@ -22,8 +22,9 @@ export class AboutApp extends sys.AboutApp<IAboutView> {
     /** 视图显示后 */
     protected viewShowed(): void {
         super.viewShowed();
-        let address: string = ibas.url.normalize(".../version.json");
-        let that:this = this;
+        let rootUrl: string = ibas.url.rootUrl("shell/index");
+        let address: string = ibas.url.normalize(rootUrl + "/version.json");
+        let that: this = this;
         var JQryAjxSetting: JQueryAjaxSettings = {
             url: address,
             type: "GET",
