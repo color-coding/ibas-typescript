@@ -75,6 +75,9 @@ export class SalesOrderItem extends ibas.BusinessObject<SalesOrderItem> {
         this.lineStatus = ibas.emDocumentStatus.PLANNED;
     }
 
+    delete(): void {
+        this.markDeleted(true);
+    }
 }
 /**
  * 销售订单行对象集合

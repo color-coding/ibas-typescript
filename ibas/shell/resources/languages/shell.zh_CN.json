@@ -14,6 +14,7 @@
     "sys_shell_unknown_user": "未知用户",
     "sys_shell_ui_messages_history": "历史消息",
     "sys_shell_fetching_data": "查询数据中，请稍后",
+    "sys_shell_saving_data": "保存数据中，请稍后",
     "sys_shell_invalid_query_panel": "无效的查询面板",
     "sys_shell_initialize_query_panel": "初始化查询面板，请稍后",
     "sys_shell_ui_close_view": "关闭视图",
@@ -39,5 +40,8 @@
     "sys_shell_ui_query_condition_alias": "字段",
     "sys_shell_ui_query_condition_operation": "比较方式",
     "sys_shell_ui_query_condition_value": "值",
-    "sys_shell_ui_query_condition_bracketclose": "闭括号"
+    "sys_shell_ui_query_condition_bracketclose": "闭括号",
+    "sys_shell_ui_whether_to_delete": "共[{0}]个对象是否删除？",
+    "sys_shell_ui_data_deleting": "正在删除[{0}]",
+    "sys_shell_ui_data_delete_error": "删除[{0}]失败，{1}"
 }

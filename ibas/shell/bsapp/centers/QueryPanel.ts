@@ -82,28 +82,32 @@ export class QueryPanel extends sys.QueryPanel<IQueryPanelView>  {
         });
     }
     private saveQuery(): void {
-        let that = this;
-        let boRepository: BORepositoryShell = new BORepositoryShell();
-        boRepository.saveUserQuery({
-            beSaved: this.editQuery,
-            onCompleted(opRslt: ibas.IOperationResult<sys.IUserQuery>): void {
-                try {
-                    if (opRslt.resultCode !== 0) {
-                        throw new Error(opRslt.message);
+        try {
+            let that = this;
+            let boRepository: BORepositoryShell = new BORepositoryShell();
+            boRepository.saveUserQuery({
+                beSaved: this.editQuery,
+                onCompleted(opRslt: ibas.IOperationResult<sys.IUserQuery>): void {
+                    try {
+                        if (opRslt.resultCode !== 0) {
+                            throw new Error(opRslt.message);
+                        }
+                        that.messages(ibas.emMessageType.SUCCESS, ibas.i18n.prop("sys_shell_ui_sucessful"));
+                        // 操作成功，刷新数据，关闭界面
+                        if (ibas.object.isNull(that.editQuery.criteria)) {
+                            // 没查询，表示删除
+                            that.queries.remove(that.editQuery);
+                            that.barShowed();
+                        }
+                        that.close();
+                    } catch (error) {
+                        that.messages(error);
                     }
-                    that.messages(ibas.emMessageType.SUCCESS, ibas.i18n.prop("sys_shell_ui_sucessful"));
-                    // 操作成功，刷新数据，关闭界面
-                    if (ibas.object.isNull(that.editQuery.criteria)) {
-                        // 没查询，表示删除
-                        that.queries.remove(that.editQuery);
-                        that.barShowed();
-                    }
-                    that.close();
-                } catch (error) {
-                    that.messages(error);
                 }
-            }
-        });
+            });
+        } catch (error) {
+            this.messages(error);
+        }
     }
     private addQueryCondition(): void {
         this.editQuery.criteria.conditions.create();

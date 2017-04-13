@@ -44,8 +44,38 @@ export class DemoEditApp extends ibas.BOEditApplication<IDemoEditView, bo.SalesO
     protected editData: bo.SalesOrder;
     /** 保存数据 */
     protected saveData(): void {
-        this.messages(ibas.emMessageType.SUCCESS, ibas.i18n.prop("sys_shell_ui_sucessful"));
+        try {
+            let that = this;
+            let boRepository: BORepositoryDemo = new BORepositoryDemo();
+            boRepository.saveSalesOrder({
+                beSaved: this.editData,
+                onCompleted(opRslt: ibas.IOperationResult<bo.SalesOrder>): void {
+                    try {
+                        that.busy(false);
+                        if (opRslt.resultCode !== 0) {
+                            throw new Error(opRslt.message);
+                        }
+                        if (opRslt.resultObjects.length === 0) {
+                            this.messages(ibas.emMessageType.SUCCESS, "{0}{1}",
+                                ibas.i18n.prop("sys_shell_ui_data_delete"),
+                                ibas.i18n.prop("sys_shell_ui_sucessful"));
+                        } else {
+                            this.messages(ibas.emMessageType.SUCCESS, "{0}{1}",
+                                ibas.i18n.prop("sys_shell_ui_data_save"),
+                                ibas.i18n.prop("sys_shell_ui_sucessful"));
+                        }
+                    } catch (error) {
+                        that.messages(error);
+                    }
+                }
+            });
+            this.busy(true);
+            this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_saving_data"));
+        } catch (error) {
+            this.messages(error);
+        }
     }
+
     /** 运行,覆盖原方法 */
     run(...args: any[]): void {
         let data: bo.SalesOrder = arguments[0];

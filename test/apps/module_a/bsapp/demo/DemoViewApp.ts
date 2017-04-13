@@ -53,7 +53,7 @@ export class DemoViewApp extends ibas.BOViewService<IDemoViewView> {
             super.run(args);
         }
     }
-    protected fetchData(criteria: ibas.ICriteria | string) {
+    protected fetchData(criteria: ibas.ICriteria | string): void {
         this.busy(true);
         let that = this;
         if (typeof criteria === "string") {
