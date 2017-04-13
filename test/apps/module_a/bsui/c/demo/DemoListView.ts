@@ -38,9 +38,11 @@ export class DemoListView extends ibas.BOListView implements IDemoListView {
                     label: ibas.i18n.prop("bo_salesorder_customer"),
                     template: new sap.m.Link("", {
                         wrapping: false,
-                        press(evt: any): void {
-                            let value = evt.getSource().getText();
-
+                        press(event: any): void {
+                            ibas.servicesManager.runLinkService({
+                                boCode: bo.SalesOrder.name,
+                                linkValue: event.getSource().getText()
+                            });
                         }
                     }).bindProperty("text", {
                         path: "customer"

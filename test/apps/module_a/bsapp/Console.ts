@@ -12,7 +12,7 @@ import { BORepositoryDemo } from "../borep/BORepositories";
 import {
     DemoFunc, DemoUrlFunc, DemoTabFunc,
     DemoResidentApp, DemoServiceMapping,
-    DemoChooseServiceMapping
+    DemoChooseServiceMapping, DemoLinkServiceMapping
 } from "./demo/index";
 
 /** 模块控制台 */
@@ -53,6 +53,7 @@ export class Console extends ibas.ModuleConsole {
         // 注册服务
         this.register(new DemoServiceMapping());
         this.register(new DemoChooseServiceMapping());
+        this.register(new DemoLinkServiceMapping());
     }
     /** 运行 */
     run(): void {

@@ -40,7 +40,7 @@ export abstract class BOChooseService<T extends IBOChooseView, D> extends BOChoo
         if (!object.isNull(args) && args.length === 1) {
             // 判断是否为选择契约
             let contract: IBOChooseServiceContract = args[0];
-            if (contract.boCode === this.boCode) {
+            if (!object.isNull(contract.boCode) && contract.boCode === this.boCode) {
                 // 选择契约且为此应用
                 this.onCompleted = contract.onCompleted;
                 // 分析查询条件

@@ -205,6 +205,9 @@ export class ServicesManager {
         if (object.isNull(caller.boCode)) {
             throw new Error(i18n.prop("msg_invalid_parameter", "caller.boCode"));
         }
+        if (object.isNull(caller.linkValue)) {
+            throw new Error(i18n.prop("msg_invalid_parameter", "caller.linkValue"));
+        }
         let proxy: IServiceProxy<IServiceContract> = new BOLinkServiceProxy(caller);
         for (let service of this.getServices(proxy)) {
             if (service.category === caller.boCode) {
@@ -213,6 +216,6 @@ export class ServicesManager {
                 return;
             }
         }
-        logger.log(emMessageLevel.WARN, "services: not found [{0}]'s choose service.", caller.boCode);
+        logger.log(emMessageLevel.WARN, "services: not found [{0}]'s link service.", caller.boCode);
     }
 }

@@ -40,7 +40,7 @@ export class DemoChooseApp extends ibas.BOChooseService<IDemoChooseView, bo.Sale
         this.busy(true);
         let that = this;
         let boRepository = new BORepositoryDemo();
-        let fetcher: ibas.FetchCaller<bo.SalesOrder> = {
+        boRepository.fetchSalesOrder({
             /** 查询条件 */
             criteria: criteria,
             /**
@@ -68,8 +68,7 @@ export class DemoChooseApp extends ibas.BOChooseService<IDemoChooseView, bo.Sale
                     that.messages(error);
                 }
             }
-        }
-        boRepository.fetchSalesOrder(fetcher);
+        });
         this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_fetching_data"));
     }
     /** 新建数据 */

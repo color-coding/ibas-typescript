@@ -12,7 +12,7 @@ import * as  bo from "../../borep/bo/index";
 import { DemoEditApp } from "./DemoEditApp";
 
 /** 查看应用-演示 */
-export class DemoViewApp extends ibas.BOViewApplication<IDemoViewView> {
+export class DemoViewApp extends ibas.BOViewService<IDemoViewView> {
 
     /** 应用标识 */
     static APPLICATION_ID: string = "a16e23d8-5783-428a-98e4-4a622282f366";
@@ -45,14 +45,43 @@ export class DemoViewApp extends ibas.BOViewApplication<IDemoViewView> {
         app.run(this.viewData);
     }
     protected viewData: bo.SalesOrder;
-    /** 运行,覆盖原方法 */
     run(...args: any[]): void {
-        let data: bo.SalesOrder = arguments[0];
-        if (ibas.object.isNull(data)) {
-            throw new Error(ibas.i18n.prop("msg_invalid_parameter", "view data"));
+        if (!ibas.object.isNull(args) && args.length === 1 && args[0] instanceof bo.SalesOrder) {
+            this.viewData = args[0];
+            this.show();
+        } else {
+            super.run(args);
         }
-        this.viewData = data;
-        super.run();
+    }
+    protected fetchData(criteria: ibas.ICriteria | string) {
+        this.busy(true);
+        let that = this;
+        if (typeof criteria === "string") {
+            criteria = new ibas.Criteria();
+            // 添加查询条件
+
+        }
+        let boRepository = new BORepositoryDemo();
+        boRepository.fetchSalesOrder({
+            /** 查询条件 */
+            criteria: criteria,
+            /**
+             * 调用完成
+             * @param opRslt 结果
+             */
+            onCompleted(opRslt: ibas.IOperationResult<bo.SalesOrder>): void {
+                try {
+                    if (opRslt.resultCode !== 0) {
+                        throw new Error(opRslt.message);
+                    }
+                    that.viewData = opRslt.resultObjects.firstOrDefault();
+                    that.viewShowed();
+                } catch (error) {
+                    that.messages(error);
+                }
+            }
+        });
+        this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_fetching_data"));
     }
     /** 获取服务的代理 */
     protected getServiceProxies(): ibas.IServiceProxy<ibas.IServiceContract>[] {
@@ -69,4 +98,19 @@ export interface IDemoViewView extends ibas.IBOViewView {
     showSalesOrder(data: bo.SalesOrder): void;
     /** 显示数据 */
     showSalesOrderItems(datas: bo.SalesOrderItem[]): void;
+}
+/** 连接服务映射 */
+export class DemoLinkServiceMapping extends ibas.BOLinkServiceMapping {
+
+    constructor() {
+        super();
+        this.id = DemoViewApp.APPLICATION_ID;
+        this.name = DemoViewApp.APPLICATION_NAME;
+        this.boCode = bo.SalesOrder.name;
+        this.description = ibas.i18n.prop(this.name);
+    }
+    /** 创建服务并运行 */
+    create(): ibas.IService<ibas.IServiceContract> {
+        return new DemoViewApp();
+    }
 }
