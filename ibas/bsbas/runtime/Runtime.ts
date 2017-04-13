@@ -12,9 +12,9 @@ import { KeyValue, object } from "../../bobas/index";
 
 /** 变量管理员 */
 export class VariablesManager {
-    VARIABLE_NAME_USER_ID: string = "sys_user_id";
-    VARIABLE_NAME_USER_CODE: string = "sys_user_code";
-    VARIABLE_NAME_USER_NAME: string = "sys_user_name";
+    VARIABLE_NAME_USER_ID: string = "${USER_ID}";
+    VARIABLE_NAME_USER_CODE: string = "${USER_CODE}";
+    VARIABLE_NAME_USER_NAME: string = "${USER_NAME}";
     /** 运行中的变量 */
     private variables: Map<string, KeyValue>;
 
