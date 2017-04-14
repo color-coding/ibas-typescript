@@ -6,7 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { object, ArrayList, Criteria, Condition } from "../../bobas/index";
+import { object, ArrayList, Criteria, Condition, emConditionOperation } from "../../bobas/index";
 import { IBOChooseView } from "./Applications.d";
 import { BOQueryApplication } from "./Applications";
 import { IBOChooseService, IBOChooseServiceContract } from "../services/index";
@@ -51,7 +51,17 @@ export abstract class BOChooseService<T extends IBOChooseView, D> extends BOChoo
                     criteria = new Criteria();
                     for (let item of contract.criteria) {
                         if (item instanceof Condition) {
-                            criteria.conditions.add(item);
+                            // 过滤无效查询条件
+                            if (object.isNull(item.alias) || item.alias.length === 0) {
+                                continue;
+                            }
+                            if (item.operation === emConditionOperation.IS_NULL
+                                || item.operation === emConditionOperation.NOT_NULL
+                                || (object.isNull(item.value) && item.value.length > 0)
+                                || (object.isNull(item.comparedAlias) && item.comparedAlias.length > 0)
+                            ) {
+                                criteria.conditions.add(item);
+                            }
                         }
                     }
                 }

@@ -9,8 +9,9 @@
 /**
  * 模块索引文件，此文件集中导出类
  */
-import {  VariablesManager } from "./Runtime";
+export * from "./runtime";
 
+import {  VariablesManager } from "./Runtime";
 /** 变量管理员实例 */
 export const variablesManager: VariablesManager = function (): VariablesManager {
     if ((<any>window).ibas === undefined) {

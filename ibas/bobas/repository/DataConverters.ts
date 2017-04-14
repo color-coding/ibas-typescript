@@ -9,10 +9,12 @@
 import {
     emMessageLevel, emConditionOperation, emConditionRelationship, emSortType, object,
     ICriteria, Criteria, ICondition, Condition, ISort, Sort, IChildCriteria, ChildCriteria,
-    IOperationResult, OperationResult, OperationInformation
+    IOperationResult, OperationResult, OperationInformation, dates, enums,
+    emApprovalStatus, emBOStatus, emDocumentStatus, emYesNo
 } from "../data/index";
 import {
-    IBusinessObject, IDataConverter, IBOConverter, BusinessObjectBase, BusinessObjectListBase
+    IBusinessObject, IDataConverter, BusinessObjectBase, BusinessObjectListBase,
+    boFactory, IBOConverter,
 } from "../core/index";
 import { i18n } from "../i18n/index";
 import { logger } from "../messages/index";
@@ -20,284 +22,115 @@ import { logger } from "../messages/index";
 /**
  * 数据转换者基类
  */
-export class Converter {
-
-    private _enumsMapping: Map<any, Map<any, string>>;
-    /**
-     * 业务对象映射<名称，类型>
-     */
-    get enumsMapping(): Map<any, Map<any, string>> {
-        if (object.isNull(this._enumsMapping)) {
-            this._enumsMapping = new Map<any, Map<any, string>>();
-            this.initEnums();
-        }
-        return this._enumsMapping;
+export abstract class BOConverter implements IBOConverter<IBusinessObject, any> {
+    /** 远程对象，类型属性名称 */
+    static REMOTE_OBJECT_TYPE_PROPERTY_NAME: string = "type";
+    /** 获取对象类型 */
+    protected getTypeName(data: any): string {
+        return data[BOConverter.REMOTE_OBJECT_TYPE_PROPERTY_NAME];
     }
+    /** 设置对象类型 */
+    protected setTypeName(data: any, type: string): void {
+        data[BOConverter.REMOTE_OBJECT_TYPE_PROPERTY_NAME] = type;
+    }
+
     /**
-     * 注册枚举映射
-     * @param emType 枚举类型
-     * @param source 本地值
-     * @param target 目标值
+     * 解析远程数据
+     * @param datas 远程数据
+     * @returns 操作结果数据
      */
-    protected mappingEnums(emType: any, source: any, target: any) {
-        let vMap: Map<any, string>;
-        if (!this.enumsMapping.has(emType)) {
-            vMap = new Map<any, string>();
-            this.enumsMapping.set(emType, vMap);
+    parsing(data: any): IBusinessObject {
+        let dType: string = this.getTypeName(data);
+        if (dType !== undefined) {
+            // 创建对象实例
+            let tType: any = boFactory.classOf(dType);
+            if (object.isNull(tType)) {
+                throw new Error(i18n.prop("msg_invaild_mapping_type", dType));
+            }
+            let newData: any = new tType;
+            if (object.isNull(newData)) {
+                throw new Error(i18n.prop("msg_cannot_create_mapping_type_instance", dType));
+            }
+            logger.log(emMessageLevel.DEBUG, "converter: {0} mapped {1}.", dType, tType.name);
+            this.parsingProperties(data, newData);
+            return newData;
         } else {
-            vMap = this.enumsMapping.get(emType);
+            dType = "unknown";
         }
-        vMap.set(source, target);
-    }
-
-    private initEnums() {
-        /*
-        // 已调整服务端定义，以下代码在ibas-v0.1.2中无效。
-        // emConditionOperation
-        this.mappingEnums(emConditionOperation, emConditionOperation.CONTAIN, "co_CONTAIN");
-        this.mappingEnums(emConditionOperation, emConditionOperation.END, "co_END");
-        this.mappingEnums(emConditionOperation, emConditionOperation.EQUAL, "co_EQUAL");
-        this.mappingEnums(emConditionOperation, emConditionOperation.GRATER_EQUAL, "co_GRATER_EQUAL");
-        this.mappingEnums(emConditionOperation, emConditionOperation.GRATER_THAN, "co_GRATER_THAN");
-        this.mappingEnums(emConditionOperation, emConditionOperation.IS_NULL, "co_IS_NULL");
-        this.mappingEnums(emConditionOperation, emConditionOperation.LESS_EQUAL, "co_LESS_EQUAL");
-        this.mappingEnums(emConditionOperation, emConditionOperation.LESS_THAN, "co_LESS_THAN");
-        this.mappingEnums(emConditionOperation, emConditionOperation.NONE, "co_NONE");
-        this.mappingEnums(emConditionOperation, emConditionOperation.NOT_CONTAIN, "co_NOT_CONTAIN");
-        this.mappingEnums(emConditionOperation, emConditionOperation.NOT_EQUAL, "co_NOT_EQUAL");
-        this.mappingEnums(emConditionOperation, emConditionOperation.NOT_NULL, "co_NOT_NULL");
-        this.mappingEnums(emConditionOperation, emConditionOperation.START, "co_START");
-        // emConditionRelationship
-        this.mappingEnums(emConditionRelationship, emConditionRelationship.AND, "cr_CONTAIN");
-        this.mappingEnums(emConditionRelationship, emConditionRelationship.NONE, "cr_END");
-        this.mappingEnums(emConditionRelationship, emConditionRelationship.OR, "cr_NONE");
-        // emSortType
-        this.mappingEnums(emSortType, emSortType.ASCENDING, "st_DESCENDING");
-        this.mappingEnums(emSortType, emSortType.DESCENDING, "st_ASCENDING");
-        */
+        // 没有匹配的映射类型
+        logger.log(emMessageLevel.DEBUG, "converter: {0} using custom parsing.", dType);
+        let newData: IBusinessObject = this.customParsing(data);
+        if (!object.isNull(newData)) {
+            return newData;
+        }
+        // 没处理，直接返回
+        logger.log(emMessageLevel.WARN, i18n.prop("msg_not_parsed_data", dType));
+        return data;
     }
 
     /**
-     * 解析枚举值
-     * @param targetType 目标类型
-     * @param value 当前值（字符串）
-     * @returns 对应枚举类型的值索引
+     * 解析属性
+     * @param source 源数据（远程类型）
+     * @param target 目标数据（本地类型）
      */
-    parsingEnums(targetType: any, value: any): number {
-        if (typeof value === "number") {
-            // 枚举索引直接返回值
-            return value;
-        } else if (typeof value === "string" && !object.isNull(targetType)) {
-            // 枚举索引直接返回值
-            value = value.toUpperCase();
-            let tmpName = null;
-            // 枚举的字符在值中
-            // 枚举字符去了前缀，所以需要全部比较取最短的（匹配度最高）
-            for (let name in targetType) {
-                if (typeof name !== "string") {
+    protected parsingProperties(source: any, target: any): void {
+        for (let sName in source) {
+            if (object.isNull(sName)) {
+                continue;
+            }
+            // 首字母改为小写
+            let sValue: any = source[sName];
+            let tName: string = sName;
+            if (object.isNull(tName)) {
+                continue;
+            }
+            if (Array.isArray(sValue)) {
+                // 此属性是数组
+                if (target[tName] instanceof BusinessObjectListBase) {
+                    // 如果是业务对象列表，则使用默认子项构造器
+                    for (let item of sValue) {
+                        // 创建子项实例并添加到集合
+                        this.parsingProperties(item, target[tName].create());
+                    }
+                    // 已处理，继续下一个
                     continue;
                 }
-                let tValue = name.toUpperCase();
-                if (value.endsWith(tValue)) {
-                    if (!object.isNull(tmpName)) {
-                        // 已存在匹配的，看看是否字符最短
-                        if (name.length > tmpName.length) {
-                            tmpName = name;
-                        }
-                    } else {
-                        tmpName = name;
-                    }
+            } else if (typeof sValue === "object") {
+                // 此属性是对象
+                if (object.isNull(target[tName])) {
+                    // 解析对象
+                    target[tName] = this.parsing(sValue);
+                    // 已处理，继续下一个
+                    continue;
+                } else if (target[tName] instanceof BusinessObjectBase) {
+                    // 对象属性赋值
+                    this.parsingProperties(sValue, target[tName]);
+                    // 已处理，继续下一个
+                    continue;
+                }
+            } else {
+                let boName: string = target.constructor.name;
+                let newValue: string = this.parsingData(boName, tName, sValue);
+                if (object.isNull(newValue)) {
+                    let msg: string = boName + " - " + tName;
+                    logger.log(emMessageLevel.WARN, i18n.prop("msg_not_parsed_data", msg));
+                } else {
+                    sValue = newValue;
                 }
             }
-            if (!object.isNull(tmpName)) {
-                return targetType[tmpName];
-            }
+            target[tName] = sValue;
         }
-        throw new Error(i18n.prop("msg_cannot_converted_to_type", targetType, value));
     }
-
-    /**
-     * 转换枚举值
-     * @param emType 枚举类型
-     * @param value 值
-     * @returns 转换的值
-     */
-    convertEnums(targetType: any, value: any): any {
-        if (this.enumsMapping.has(targetType)) {
-            // 存在此类型的映射
-            let vMap = this.enumsMapping.get(targetType);
-            if (vMap.has(value)) {
-                return vMap.get(value);
-            }
-        }
-        if (typeof value === "number") {
-            // 值是数值类型
-            for (let item in targetType) {
-                // 遍历枚举的所有属性
-                if (targetType[item] === value) {
-                    // 当枚举的值与值相同时，返回名称，即值对应的字符串
-                    return item;
-                }
-            }
-        }
-        return value;
-    }
-
-    /**
-     * 解析日期，支持以下格式
-     * yyyy/MM/dd'T'HH:mm:ss
-     * yyyy-MM-dd'T'HH:mm:ss
-     * @param value 日期字符
-     * @returns 日期
-     */
-    parsingDate(value: string): Date {
-        let spTime = "T";
-        if (value.indexOf("'T'") > 0) {
-            spTime = "'T'";
-        }
-        let tmps = value.split(spTime);
-        let date = tmps[0];
-        let time = tmps[1];
-        let year: number = 0, month: number = 0, day: number = 0, hour: number = 0, minute: number = 0, second: number = 0;
-        if (!object.isNull(date)) {
-            let spChar = "-";
-            if (date.indexOf("/") > 0) {
-                spChar = "/";
-            }
-            tmps = date.split(spChar);
-            if (!object.isNull(tmps[0])) {
-                year = Number.parseInt(tmps[0]);
-            }
-            if (!object.isNull(tmps[1])) {
-                month = Number.parseInt(tmps[1]);
-            }
-            if (!object.isNull(tmps[2])) {
-                day = Number.parseInt(tmps[2]);
-            }
-        }
-        if (!object.isNull(time)) {
-            let spChar = ":";
-            tmps = time.split(spChar);
-            if (!object.isNull(tmps[0])) {
-                hour = Number.parseInt(tmps[0]);
-            }
-            if (!object.isNull(tmps[1])) {
-                minute = Number.parseInt(tmps[1]);
-            }
-            if (!object.isNull(tmps[2])) {
-                second = Number.parseInt(tmps[2]);
-            }
-        }
-        return new Date(year, month, day, hour, minute, second);
-    }
-
-    /**
-     * 转换日期
-     * @param value 日期
-     * @returns 日期字符串
-     */
-    convertDate(value: Date): string {
-        let year: number = value.getFullYear(),
-            month: number = value.getMonth(),
-            day: number = value.getDate(),
-            hour: number = value.getHours(),
-            minute: number = value.getMinutes(),
-            second: number = value.getSeconds();
-        return year + "-" + month + "-" + day + "T" + hour + ":" + minute + ":" + second;
-    }
-}
-
-/**
- * 数据转换者基类
- */
-export abstract class DataConverter extends Converter implements IDataConverter {
-    /**
-     * 转换数据
-     * @param data 当前类型数据
-     * @param sign 操作标记
-     * @returns 转换的数据
-     */
-    abstract convert(data: any, sign: string): string;
-    /**
-     * 解析数据
-     * @param data 原始数据
-     * @param sign 操作标记
-     * @returns 当前类型数据
-     */
-    abstract parsing(data: any, sign: string): any;
-
-}
-
-/**
- * 业务对象转换者
- */
-export abstract class BOConverter extends Converter implements IBOConverter {
-    /**
-     * 属性名称，类型
-     */
-    static PROPERTY_NAME_TYPE: string = "type";
-
-    private _boMapping: Map<string, any>;
-    /**
-     * 业务对象映射<名称，类型>
-     */
-    get boMapping(): Map<string, any> {
-        if (object.isNull(this._boMapping)) {
-            this._boMapping = new Map<string, any>();
-        }
-        return this._boMapping;
-    }
-
-    /**
-     * 注册业务对象映射
-     * @param boType 类型名称
-     * @param localType 本地类型
-     */
-    protected mappingBOs(boType: string, localType: any) {
-        this.boMapping.set(boType, localType);
-    }
-
-    /**
-     * 自定义解析
-     * @param data 远程数据
-     * @returns 本地数据
-     */
-    protected abstract customParsing(data: any): IBusinessObject;
 
     /**
      * 转换数据
-     * 默认原则是：属性去“_”并首字母改大写
      * @param data 当前类型数据
      * @returns 转换的数据
      */
     convert(data: IBusinessObject): Object {
-        let newData = {};
+        let newData: any = {};
         this.convertProperties(data, newData);
         return newData;
-    }
-
-    /**
-     * 获取映射的转换属性名称
-     * @param name 源名称
-     * @param value 值
-     * @returns 映射的名称；null时表示没有映射。
-     */
-    protected mappingConvertProperty(name: string, value: any): string {
-        if (BOConverter.PROPERTY_NAME_TYPE === name) {
-            // 类型
-            return name;
-        }
-        if (!name.startsWith("_")) {
-            // 非“_”开始属性名称，表示不映射属性
-            return null;
-        }
-        // 去除“_”并后面字母改大写
-        let newName = name[1].toUpperCase() + name.substring(2);
-        if (typeof value === "boolean") {
-            // 布尔类型，映射规则是，替换“_”为“is”
-            newName = "is" + newName;
-        }
-        return newName;
     }
 
     /**
@@ -307,15 +140,13 @@ export abstract class BOConverter extends Converter implements IBOConverter {
      * @returns 目标数据
      */
     protected convertProperties(source: any, target: any): any {
-        let sType = source.constructor.name;
-        target.type = sType;
+        this.setTypeName(target, source.constructor.name);
         for (let sName in source) {
             if (object.isNull(sName)) {
                 continue;
             }
-            // 首字母改为小写
-            let value = source[sName];
-            let name = this.mappingConvertProperty(sName, value);
+            let value: any = source[sName];
+            let name: string = sName;
             if (object.isNull(name)) {
                 // 没有解析出映射关系，继续下一个属性
                 continue;
@@ -329,14 +160,14 @@ export abstract class BOConverter extends Converter implements IBOConverter {
                 value = newValue;
             } else if (value instanceof Date) {
                 // 此属性是字符
-                value = this.convertDate(value);
+                value = dates.toString(value);
             } else if (value instanceof Object) {
                 // 此属性是对象
                 value = this.convertProperties(value, {});
             } else {
-                let newValue = this.convertData(sType, sName, value);
+                let newValue: any = this.convertData(source.constructor.name, sName, value);
                 if (object.isNull(newValue)) {
-                    let msg = sType + " - " + name;
+                    let msg: string = source.constructor.name + " - " + name;
                     logger.log(emMessageLevel.WARN, i18n.prop("msg_not_converted_data", msg));
                 } else {
                     value = newValue;
@@ -350,130 +181,6 @@ export abstract class BOConverter extends Converter implements IBOConverter {
         }
         return target;
     }
-
-    /**
-     * 转换数据
-     * @param boName 对象名称
-     * @param property 属性名称
-     * @param value 值
-     * @returns 转换的值
-     */
-    protected abstract convertData(boName: string, property: string, value
-        : any): any;
-
-    /**
-     * 解析远程数据
-     * @param datas 远程数据
-     * @returns 操作结果数据
-     */
-    parsing(data: any): IBusinessObject {
-        let dType: string = data.type;
-        if (dType !== undefined) {
-            if (this.boMapping.has(dType)) {
-                // 注册了匹配的映射类型
-                let tType = this.boMapping.get(dType);// 对象的类型
-                if (object.isNull(tType)) {
-                    throw new Error(i18n.prop("msg_invaild_mapping_type", dType));
-                }
-                let newData: any = new tType;
-                if (object.isNull(newData)) {
-                    throw new Error(i18n.prop("msg_cannot_create_mapping_type_instance", dType));
-                }
-                logger.log(emMessageLevel.DEBUG, "converter: {0} mapped {1}.", dType, tType.name);
-                this.parsingProperties(data, newData);
-                return newData;
-            }
-        } else {
-            dType = "unknown";
-        }
-        // 没有匹配的映射类型
-        logger.log(emMessageLevel.DEBUG, "converter: {0} using custom parsing.", dType);
-        let newData = this.customParsing(data);
-        if (!object.isNull(newData)) {
-            return newData;
-        }
-        // 没处理，直接返回
-        logger.log(emMessageLevel.WARN, i18n.prop("msg_not_parsed_data", dType));
-        return data;
-    }
-
-    /**
-     * 获取映射的解析属性名称
-     * @param name 源名称
-     * @param value 值
-     * @returns 映射的名称；null时表示没有映射。
-     */
-    protected mappingParsingProperty(name: string, value: any): string {
-        if (BOConverter.PROPERTY_NAME_TYPE === name) {
-            // 类型
-            return name;
-        }
-        let newName = name;
-        if (newName.startsWith("is")) {
-            newName = newName.substring(2);
-        }
-        newName = "_" + newName[0].toLowerCase() + newName.substring(1);
-        return newName;
-    }
-
-    /**
-     * 解析属性
-     * @param source 源数据（远程类型）
-     * @param target 目标数据（本地类型）
-     */
-    protected parsingProperties(source: any, target: any) {
-        if (target.isLoading !== undefined) {
-            // 置为赋值状态
-            target.isLoading = true;
-        }
-        for (let sName in source) {
-            if (object.isNull(sName)) {
-                continue;
-            }
-            // 首字母改为小写
-            let value = source[sName];
-            let name = this.mappingParsingProperty(sName, value);
-            if (object.isNull(name)) {
-                continue;
-            }
-            if (Array.isArray(value)) {
-                // 此属性是数组
-                if (target[name] instanceof BusinessObjectListBase) {
-                    // 如果是业务对象列表，则使用默认子项构造器
-                    for (let item of value) {
-                        // 创建子项实例并添加到集合
-                        let newValue = target[name].create();
-                        this.parsingProperties(item, newValue);
-                    }
-                    // 已处理，继续下一个
-                    continue;
-                }
-            } else if (typeof value === "object") {
-                // 此属性是对象
-                if (target[name] instanceof BusinessObjectBase) {
-                    this.parsingProperties(value, target[name]);
-                    // 已处理，继续下一个
-                    continue;
-                }
-            } else {
-                let boName = target.constructor.name;
-                let property = name;
-                let newValue = this.parsingData(boName, property, value);
-                if (object.isNull(newValue)) {
-                    let msg = boName + " - " + property;
-                    logger.log(emMessageLevel.WARN, i18n.prop("msg_not_parsed_data", msg));
-                } else {
-                    value = newValue;
-                }
-            }
-            target[name] = value;
-        }
-        if (target.isLoading !== undefined) {
-            // 取消赋值状态
-            target.isLoading = false;
-        }
-    }
-
     /**
      * 解析数据
      * @param boName 对象名称
@@ -481,14 +188,46 @@ export abstract class BOConverter extends Converter implements IBOConverter {
      * @param value 值
      * @returns 解析的值
      */
-    protected abstract parsingData(boName: string, property: string, value
-        : any): any;
+    protected parsingData(boName: string, property: string, value: any): any {
+        if (typeof value === "string") {
+            // 日期类型，直接转换
+            if (value.indexOf("T") > 0 && value.indexOf("-") > 0 && value.indexOf(":") > 0) {
+                // 字符格式为日期，yyyy-MM-ddThh:mm:ss
+                return dates.valueOf(value);
+            } else if (property === "DocumentStatus" || property === "LineStatus") {
+                return enums.valueOf(emDocumentStatus, value);
+            } else if (property === "Canceled" || property === "Referenced"
+                || property === "Transfered" || property === "Activated" || property === "Deleted") {
+                return enums.valueOf(emYesNo, value);
+            } else if (property === "Status") {
+                return enums.valueOf(emBOStatus, value);
+            } else if (property === "ApprovalStatus") {
+                return enums.valueOf(emApprovalStatus, value);
+            }
+        }
+        // 不做处理，原始返回
+        return value;
+    }
+    /**
+     * 转换数据
+     * @param boName 对象名称
+     * @param property 属性名称
+     * @param value 值
+     * @returns 转换的值
+     */
+    protected abstract convertData(boName: string, property: string, value: any): any;
+    /**
+     * 自定义解析
+     * @param data 远程数据
+     * @returns 本地数据
+     */
+    protected abstract customParsing(data: any): IBusinessObject;
 }
 
 /**
  * 数据转换，ibas-java-后台服务
  */
-export abstract class DataConverter4ibas extends DataConverter {
+export abstract class DataConverter4ibas implements IDataConverter {
 
     /**
      * 转为远程数据
@@ -497,11 +236,9 @@ export abstract class DataConverter4ibas extends DataConverter {
     convert(data: any): string {
         let remote: any = null;
         if (data instanceof Criteria) {
-            let converter = new CriteriaConverter();
-            remote = converter.convert(data);
+            remote = (new CriteriaConverter()).convert(data);
         } else {
-            let converter = this.createBOConverter();
-            remote = converter.convert(data);
+            remote = this.createConverter().convert(data);
         }
         return JSON.stringify(remote);
     }
@@ -512,20 +249,19 @@ export abstract class DataConverter4ibas extends DataConverter {
      * @returns 操作结果数据
      */
     parsing(data: any): IOperationResult<any> {
-        let converter = new OperationResultConverter(this.createBOConverter());
-        return converter.parsing(data);
+        return (new OperationResultConverter(this.createConverter())).parsing(data);
     }
 
     /**
      * 创建业务对象转换者
      */
-    protected abstract createBOConverter(): BOConverter;
+    protected abstract createConverter(): BOConverter;
 }
 
 /**
  * 查询转换者
  */
-class CriteriaConverter extends DataConverter {
+class CriteriaConverter implements IBOConverter<ICriteria, any> {
 
     /**
      * 转为目标对象
@@ -548,7 +284,7 @@ class CriteriaConverter extends DataConverter {
     }
 
     convertCriteria(data: ICriteria): any {
-        let newData = {
+        let newData: any = {
             "BOCode": "",
             "ChildCriterias": [],
             "Conditions": [],
@@ -596,8 +332,8 @@ class CriteriaConverter extends DataConverter {
         newData.BracketOpen = data.bracketOpen;
         newData.ComparedAlias = data.comparedAlias;
         newData.Value = data.value;
-        newData.Operation = this.convertEnums(emConditionOperation, data.operation);
-        newData.Relationship = this.convertEnums(emConditionRelationship, data.relationship);
+        newData.Operation = enums.toString(emConditionOperation, data.operation);
+        newData.Relationship = enums.toString(emConditionRelationship, data.relationship);
         newData.Remarks = data.remarks;
         return newData;
     }
@@ -608,7 +344,7 @@ class CriteriaConverter extends DataConverter {
             "SortType": ""
         };
         newData.Alias = data.alias;
-        newData.SortType = this.convertEnums(emSortType, data.sortType);
+        newData.SortType = enums.toString(emSortType, data.sortType);
         return newData;
     }
 
@@ -649,8 +385,8 @@ class CriteriaConverter extends DataConverter {
         newData.bracketOpen = data.BracketOpenNum;
         newData.comparedAlias = data.ComparedAlias;
         newData.value = data.Value;
-        newData.operation = this.parsingEnums(emConditionOperation, data.Operation);
-        newData.relationship = this.parsingEnums(emConditionRelationship, data.Relationship);
+        newData.operation = enums.valueOf(emConditionOperation, data.Operation);
+        newData.relationship = enums.valueOf(emConditionRelationship, data.Relationship);
         newData.remarks = data.Remarks;
         return newData;
     }
@@ -658,7 +394,7 @@ class CriteriaConverter extends DataConverter {
     parsingSort(data: any): ISort {
         let newData = new Sort();
         newData.alias = data.Alias;
-        newData.sortType = this.parsingEnums(emSortType, data.SortType);
+        newData.sortType = enums.valueOf(emSortType, data.SortType);
         return newData;
     }
 
@@ -667,10 +403,9 @@ class CriteriaConverter extends DataConverter {
 /**
  * 操作结果转换者
  */
-class OperationResultConverter extends DataConverter {
+class OperationResultConverter implements IBOConverter<IOperationResult<any>, any> {
 
     constructor(converter: BOConverter) {
-        super();
         this.boConverter = converter;
     }
 
@@ -682,7 +417,7 @@ class OperationResultConverter extends DataConverter {
      * @returns 转换的数据
      */
     convert(data: IOperationResult<any>): string {
-        let opRslt = {
+        let opRslt: any = {
             "type": "",
             "Message": "",
             "ResultCode": 0,
@@ -692,18 +427,17 @@ class OperationResultConverter extends DataConverter {
             "Informations": [],
             "ResultObjects": []
         }
-        var converter = this.boConverter;
         opRslt.type = "OperationResult";
         opRslt.SignID = data.signID;
-        opRslt.Time = this.convertDate(data.time);
+        opRslt.Time = dates.toString(data.time);
         opRslt.UserSign = data.userSign;
         opRslt.ResultCode = data.resultCode;
         opRslt.Message = data.message;
         for (let item of data.resultObjects) {
-            opRslt.ResultObjects.push(converter.convert(item));
+            opRslt.ResultObjects.push(this.boConverter.convert(item));
         }
         for (let item of data.informations) {
-            let info = {
+            let info: any = {
                 "Name": "",
                 "Tag": "",
                 "Contents": ""
@@ -722,17 +456,16 @@ class OperationResultConverter extends DataConverter {
      * @returns 操作结果数据
      */
     parsing(data: any): IOperationResult<any> {
-        let opRslt = new OperationResult();
+        let opRslt: IOperationResult<any> = new OperationResult();
         if (data.type !== undefined && data.type === "OperationResult") {
             // 可识别的类型
-            var converter = this.boConverter;
             opRslt.signID = data.SignID;
-            opRslt.time = this.parsingDate(data.Time);
+            opRslt.time = dates.valueOf(data.Time);
             opRslt.userSign = data.UserSign;
             opRslt.resultCode = data.ResultCode;
             opRslt.message = data.Message;
             for (let item of data.ResultObjects) {
-                opRslt.resultObjects.add(converter.parsing(item));
+                opRslt.resultObjects.add(this.boConverter.parsing(item));
             }
             for (let item of data.Informations) {
                 let info = new OperationInformation();

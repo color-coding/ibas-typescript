@@ -11,7 +11,7 @@ import * as ibas from "ibas/index";
 /**
  * 离线的数据转换者
  */
-export class DataConverter4Demo extends ibas.DataConverter {
+export class DataConverter4Demo implements ibas.IDataConverter {
 
     /**
      * 转换数据

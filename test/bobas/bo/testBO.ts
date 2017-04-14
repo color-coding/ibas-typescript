@@ -20,9 +20,9 @@ bobas.boFactory.register(SalesOrder);
 let order: SalesOrder = bobas.boFactory.create<SalesOrder>(SalesOrder.name);
 order.registerListener(listener);
 bobas.logger.log(bobas.emMessageLevel.DEBUG, "test: type of {0}", typeof (order));
-order.customer = "C00001";
+order.customerCode = "C00001";
 order.documentStatus = bobas.emDocumentStatus.RELEASED;
-let item = order.items.create();
+let item = order.salesOrderItems.create();
 bobas.logger.log(bobas.emMessageLevel.DEBUG, "test: type of {0}", typeof (item));
 item.registerListener(listener);
 item.itemCode = "A00001";
@@ -30,7 +30,7 @@ item.price = 1.99;
 item.quantity = 2;
 item.lineTotal = item.price * item.quantity;
 item.user.userCode = "bbb";
-item = order.items.create();
+item = order.salesOrderItems.create();
 item.itemCode = "A00002";
 item.price = 0.99;
 item.quantity = 20;
@@ -38,7 +38,6 @@ item.lineTotal = item.price * item.quantity;
 item.user.userCode = "ccc";
 bobas.logger.log(bobas.emMessageLevel.DEBUG, "test: {0} {1}", "order", order.toString());
 bobas.logger.log(bobas.emMessageLevel.DEBUG, "{0}", JSON.stringify(order));
-order.user.userCode = "aaa";
 // 遍历属性名称，包括子项
 bobas.logger.log(bobas.emMessageLevel.INFO, "test: {1}", "order", order.getProperties(true).size);
 // 遍历属性名称，不包括子项
@@ -51,7 +50,7 @@ order.markOld(true);
 bobas.assert.equals("bo status isNew", order.isNew, false);
 bobas.assert.equals("bo status isDirty", order.isDirty, false);
 bobas.assert.equals("bo status isDeleted", order.isDeleted, false);
-for (let item of order.items) {
+for (let item of order.salesOrderItems) {
     bobas.assert.equals("bo status isNew", item.isNew, false);
     bobas.assert.equals("bo status isDirty", item.isDirty, false);
     bobas.assert.equals("bo status isDeleted", item.isDeleted, false);

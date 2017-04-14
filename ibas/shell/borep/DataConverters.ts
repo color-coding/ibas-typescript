@@ -16,7 +16,7 @@ export class DataConverter4Shell extends ibas.DataConverter4ibas {
     /**
      * 创建业务对象转换者
      */
-    protected createBOConverter(): ibas.BOConverter {
+    protected createConverter(): ibas.BOConverter {
         return new ShellBOConverter();
     }
 }
@@ -24,18 +24,6 @@ export class DataConverter4Shell extends ibas.DataConverter4ibas {
  * Shell 模块的业务对象转换者
  */
 export class ShellBOConverter extends ibas.BOConverter {
-
-    constructor() {
-        super();
-        this.init();
-    }
-
-    private init() {
-        // 注册业务对象映射
-
-        // 注册枚举映射
-
-    }
 
     /**
      * 自定义解析
@@ -53,9 +41,7 @@ export class ShellBOConverter extends ibas.BOConverter {
      * @param value 值
      * @returns 转换的值
      */
-    protected convertData(boName: string, property: string, value
-        : any): any {
-
+    protected convertData(boName: string, property: string, value: any): any {
         // 不做处理，原始返回
         return value;
     }
@@ -67,25 +53,14 @@ export class ShellBOConverter extends ibas.BOConverter {
      * @param value 值
      * @returns 解析的值
      */
-    protected parsingData(boName: string, property: string, value
-        : any): any {
-        if (typeof value === "string") {
-            // 日期类型，直接转换
-            if (value.indexOf("T") > 0 && value.indexOf("-") > 0 && value.indexOf(":") > 0) {
-                // 字符格式为日期，yyyy-MM-ddThh:mm:ss
-                return this.parsingDate(value);
-            }
-
-
-        }
-        // 不做处理，原始返回
-        return value;
+    protected parsingData(boName: string, property: string, value: any): any {
+        return super.parsingData(boName, property, value);
     }
 }
 /**
  * 离线的数据转换者
  */
-export class DataConverter4Offline extends ibas.DataConverter {
+export class DataConverter4Offline implements ibas.IDataConverter {
     /**
      * 转换数据
      * @param data 当前类型数据

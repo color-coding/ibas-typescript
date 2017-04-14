@@ -10,7 +10,7 @@ import {
     object, string, emMessageLevel, url
 } from "../data/index";
 import {
-    FetchCaller, SaveCaller, IRemoteRepository, IBORepository, IBORepositoryReadonly,
+    FetchCaller, SaveCaller, IBORepository, IBORepositoryReadonly,
     BORepositoryAjax, BOFileRepositoryAjax, IDataConverter
 } from "../core/index";
 import { config } from "../configuration/index";

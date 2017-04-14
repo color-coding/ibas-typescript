@@ -115,57 +115,37 @@ export interface IFileRepository {
  */
 export interface IDataConverter {
     /**
-     * 转换数据
-     * @param data 当前类型数据
-     * @param sign 操作标记
-     * @returns 转换的数据
+     * 转换业务对象数据
+     * @param data 本地类型
+     * @param sign 特殊标记
+     * @returns 目标类型
      */
-    convert(data: any, sign: string): string;
+    convert(data: any, sign: string): any;
     /**
-     * 解析数据
-     * @param data 原始数据
-     * @param sign 操作标记
-     * @returns 当前类型数据
+     * 解析业务对象数据
+     * @param data 目标类型
+     * @param sign 特殊标记
+     * @returns 本地类型
      */
     parsing(data: any, sign: string): any;
 }
 /**
  * 数据转换者
+ * 泛型1，本地类型
+ * 泛型2，目标类型
  */
-export interface IBOConverter {
+export interface IBOConverter<L, T> {
     /**
      * 转换业务对象数据
-     * @param data 当前类型数据
-     * @returns 转换的数据
+     * @param data 本地类型
+     * @returns 目标类型
      */
-    convert(data: IBusinessObject): any;
+    convert(data: L): T;
     /**
      * 解析业务对象数据
-     * @param data 原始数据
-     * @returns 当前类型数据
+     * @param data 目标类型
+     * @returns 本地类型
      */
-    parsing(data: any): IBusinessObject;
-}
-/**
- * 远程数据转换者
- */
-export interface IRemoteDataConverter extends IDataConverter {
-    /**
-     * 转换查询为远程数据
-     * @param criteria 查询
-     * @returns 符合远程数据的字符串
-     */
-    convert(criteria: ICriteria): string;
-    /**
-     * 转换业务对象为远程数据
-     * @param bo 业务对象
-     * @returns 符合远程数据的字符串
-     */
-    convert(bo: IBusinessObject): string;
-    /**
-     * 解析远程数据
-     * @param data 远程数据
-     * @returns 操作结果数据
-     */
-    parsing(data: any): IOperationResult<any>;
+    parsing(data: T): L;
+
 }

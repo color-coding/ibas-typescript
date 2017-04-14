@@ -9,7 +9,7 @@
 import {
     object, ICriteria, Criteria, ICondition, i18n, IOperationResult,
     config, ISort, emSortType, emConditionOperation, ArrayList, BarApplication,
-    emMessageType, variablesManager
+    emMessageType, variablesManager,VariablesManager
 } from "ibas/index";
 import { IQueryPanelView, IQueryPanel, IUseQueryPanel, IUserQuery, IBORepositorySystem, IBOInfo } from "./Systems.d";
 import { Factories } from "./Factories";
@@ -48,7 +48,7 @@ export abstract class QueryPanel<T extends IQueryPanelView> extends BarApplicati
         let boRepository: IBORepositorySystem = Factories.systemsFactory.createRepository();
         let that = this;
         boRepository.fetchUserQueries({
-            user: variablesManager.getValue(variablesManager.VARIABLE_NAME_USER_CODE),
+            user: variablesManager.getValue(VariablesManager.VARIABLE_NAME_USER_CODE),
             queryId: this.listener.queryId,
             onCompleted: function (opRslt: IOperationResult<IUserQuery>): void {
                 try {

@@ -6,7 +6,6 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 import { i18n } from "../i18n/index";
-import { string } from "./String";
 /**
  * 对象
  */
@@ -119,12 +118,24 @@ export module enums {
         }
         for (let item in type) {
             if (typeof item === typeof value) {
-                if (item === value) {
+                if (item.toUpperCase() === value.toUpperCase()) {
                     return type[item];
                 }
             }
         }
         return undefined;
+    }
+    /**
+     * 转为字符串
+     * @param type 类型
+     * @param value 值
+     */
+    export function toString(type: any, value: any): string {
+        if (typeof value === "number") {
+            // 值是数值类型
+            return type[value];
+        }
+        return value;
     }
     /**
      * 描述枚举值
@@ -143,7 +154,7 @@ export module enums {
         }
         let dValue: string = sValue;
         // 获取枚举名称
-        let name = "em_";// type.name;
+        let name: string = "em_";// type.name;
         if (!object.isNull(name)) {
             dValue = i18n.prop((name + sValue).toLowerCase());
             if (dValue.startsWith("[") && dValue.endsWith("]")) {
@@ -152,5 +163,71 @@ export module enums {
             }
         }
         return dValue;
+    }
+}
+
+export module dates {
+
+    /**
+     * 解析日期，支持以下格式
+     * yyyy/MM/dd'T'HH:mm:ss
+     * yyyy-MM-dd'T'HH:mm:ss
+     * @param value 日期字符
+     * @returns 日期
+     */
+    export function valueOf(value: string): Date {
+        let spTime: string = "T";
+        if (value.indexOf("'T'") > 0) {
+            spTime = "'T'";
+        }
+        let tmps: string[] = value.split(spTime);
+        let date: string = tmps[0];
+        let time: string = tmps[1];
+        let year: number = 0, month: number = 0, day: number = 0, hour: number = 0, minute: number = 0, second: number = 0;
+        if (!object.isNull(date)) {
+            let spChar: string = "-";
+            if (date.indexOf("/") > 0) {
+                spChar = "/";
+            }
+            tmps = date.split(spChar);
+            if (!object.isNull(tmps[0])) {
+                year = Number.parseInt(tmps[0]);
+            }
+            if (!object.isNull(tmps[1])) {
+                month = Number.parseInt(tmps[1]);
+            }
+            if (!object.isNull(tmps[2])) {
+                day = Number.parseInt(tmps[2]);
+            }
+        }
+        if (!object.isNull(time)) {
+            let spChar: string = ":";
+            tmps = time.split(spChar);
+            if (!object.isNull(tmps[0])) {
+                hour = Number.parseInt(tmps[0]);
+            }
+            if (!object.isNull(tmps[1])) {
+                minute = Number.parseInt(tmps[1]);
+            }
+            if (!object.isNull(tmps[2])) {
+                second = Number.parseInt(tmps[2]);
+            }
+        }
+        return new Date(year, month, day, hour, minute, second);
+    }
+
+    /**
+     * 转换日期
+     * @param value 日期
+     * @returns 日期字符串
+     */
+    export function toString(value: Date): string {
+        let year: number = value.getFullYear(),
+            month: number = value.getMonth(),
+            day: number = value.getDate(),
+            hour: number = value.getHours(),
+            minute: number = value.getMinutes(),
+            second: number = value.getSeconds();
+        return year + "-" + month + "-" + day + "T" + hour + ":" + minute + ":" + second;
     }
 }

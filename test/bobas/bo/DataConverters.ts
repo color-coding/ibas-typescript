@@ -8,7 +8,7 @@
 
 
 import * as bobas from "../../../ibas/bobas/index";
-import { SalesOrder } from "./SalesOrder";
+import { SalesOrder, SalesOrderItem } from "./SalesOrder";
 
 /**
  * Test 模块的数据转换者
@@ -18,7 +18,7 @@ export class DataConverter4Test extends bobas.DataConverter4ibas {
     /**
      * 创建业务对象转换者
      */
-    protected createBOConverter(): bobas.BOConverter {
+    protected createConverter(): bobas.BOConverter {
         return new TestBOConverter();
     }
 }
@@ -30,15 +30,6 @@ export class TestBOConverter extends bobas.BOConverter {
 
     constructor() {
         super();
-        this.init();
-    }
-
-    private init() {
-        // 注册业务对象映射
-        this.mappingBOs("SalesOrder", SalesOrder);
-
-        // 注册枚举映射
-
     }
 
     /**
@@ -57,8 +48,7 @@ export class TestBOConverter extends bobas.BOConverter {
      * @param value 值
      * @returns 转换的值
      */
-    protected convertData(boName: string, property: string, value
-        : any): any {
+    protected convertData(boName: string, property: string, value: any): any {
 
         // 不做处理，原始返回
         return value;
@@ -71,25 +61,13 @@ export class TestBOConverter extends bobas.BOConverter {
      * @param value 值
      * @returns 解析的值
     */
-    protected parsingData(boName: string, property: string, value
-        : any): any {
-        if (typeof value === "string") {
-            // 日期类型，直接转换
-            if (value.indexOf("T") > 0 && value.indexOf("-") > 0 && value.indexOf(":") > 0) {
-                // 字符格式为日期，yyyy-MM-ddThh:mm:ss
-                return this.parsingDate(value);
-            }
-            if (boName.startsWith(SalesOrder.name)) {
-                // 销售订单类型
-                if (property === "_documentStatus" || property === "_lineStatus") {
-                    return this.parsingEnums(bobas.emDocumentStatus, value);
-                } else if (property === "_canceled") {
-                    return this.parsingEnums(bobas.emYesNo, value);
-                }
-            }
+    protected parsingData(boName: string, property: string, value: any): any {
+        if (1 > 2) {
+            // 特殊处理，否则使用默认
+            return value;
+        } else {
+            return super.parsingData(boName, property, value);
         }
-        // 不做处理，原始返回
-        return value;
     }
 }
 
