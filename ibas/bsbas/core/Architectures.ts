@@ -140,6 +140,9 @@ export abstract class ModuleConsole extends Module implements IModuleConsole {
     static CONFIG_ITEM_PLANTFORM: string = "plantform";
     /** 配置项目-默认模块图标 */
     static CONFIG_ITEM_DEFALUT_MODULE_ICON: string = "defalutModuleIcon";
+    /** 配置项目-禁用平台视图 */
+    static CONFIG_ITEM_DISABLE_PLATFORM_VIEW: string = "disablePlatformView";
+
     constructor() {
         super();
     }

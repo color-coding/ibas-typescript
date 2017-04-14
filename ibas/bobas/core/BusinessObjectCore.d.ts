@@ -129,3 +129,13 @@ export interface IBusinessObjectList<T extends IBusinessObject> extends List<T> 
     create(): T;
 
 }
+
+/** 业务对象工厂 */
+export interface IBOFactory {
+    /** 注册对象 */
+    register(bo: any): void;
+    /** 获取对象类型，参数1：对象名称 */
+    classOf(name: string): any;
+    /** 创建对象实例，参数1：对象名称 */
+    create<B extends IBusinessObject>(name: string): B;
+}

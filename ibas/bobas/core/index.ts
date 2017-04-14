@@ -15,3 +15,15 @@ export * from "./BusinessObjectCore";
 export * from "./BORepositoryCore.d";
 export * from "./BORepositoryCore";
 export * from "./BORepositoriesAjax";
+
+/** 创建业务对象工厂实例 */
+import { BOFactory } from "./BusinessObjectCore";
+export const boFactory: BOFactory = function (): BOFactory {
+    if ((<any>window).ibas === undefined) {
+        (<any>window).ibas = {};
+    }
+    if ((<any>window).ibas.boFactory === undefined) {
+        (<any>window).ibas.boFactory = new BOFactory();
+    }
+    return (<any>window).ibas.boFactory;
+}();

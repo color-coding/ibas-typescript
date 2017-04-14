@@ -28,6 +28,10 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
     static APPLICATION_ID: string = "c1ec9ee1-1138-4358-8323-c579f1e4be37";
     /** 应用名称 */
     static APPLICATION_NAME: string = "sys_app_center";
+    // 变量名称
+    static VARIABLE_NAME_USER_ID: string = "${USER_ID}";
+    static VARIABLE_NAME_USER_CODE: string = "${USER_CODE}";
+    static VARIABLE_NAME_USER_NAME: string = "${USER_NAME}";
 
     constructor() {
         super();
@@ -112,9 +116,9 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
             return;
         }
         // 注册运行变量
-        variablesManager.register(variablesManager.VARIABLE_NAME_USER_ID, user.id);
-        variablesManager.register(variablesManager.VARIABLE_NAME_USER_CODE, user.code);
-        variablesManager.register(variablesManager.VARIABLE_NAME_USER_NAME, user.name);
+        variablesManager.register(CenterApp.VARIABLE_NAME_USER_ID, user.id);
+        variablesManager.register(CenterApp.VARIABLE_NAME_USER_CODE, user.code);
+        variablesManager.register(CenterApp.VARIABLE_NAME_USER_NAME, user.name);
         // 显示当前用户
         this.view.showUser(user);
         // 加载用户相关

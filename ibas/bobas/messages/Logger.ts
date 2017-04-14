@@ -17,6 +17,8 @@ import { ILogger } from "./Logger.d";
  */
 export class Logger implements ILogger {
 
+    /** 配置项目-消息输出级别 */
+    static CONFIG_ITEM_MESSAGES_LEVEL: string = "msgLevel";
     private _level: emMessageLevel;
     /**
      * 消息输出的级别
@@ -24,7 +26,7 @@ export class Logger implements ILogger {
     get level(): emMessageLevel {
         if (string.isEmpty(this._level)) {
             // 没有设置则每次都从配置取
-            let level = config.get(config.CONFIG_ITEM_MESSAGES_LEVEL, emMessageLevel.ERROR, emMessageLevel);
+            let level = config.get(Logger.CONFIG_ITEM_MESSAGES_LEVEL, emMessageLevel.ERROR, emMessageLevel);
             if (config.get(config.CONFIG_ITEM_DEBUG_MODE, false)) {
                 level = emMessageLevel.DEBUG;
             }

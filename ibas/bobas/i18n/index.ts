@@ -16,7 +16,10 @@ export * from "./I18N";
 import { I18N } from "./I18N";
 export const i18n: I18N = function (): I18N {
     if ((<any>window).ibas === undefined) {
-        (<any>window).ibas = {};
+        (<any>window).ibas = {
+            url: "https://github.com/color-coding/ibas-typescript",
+            author: "niuren.zhu"
+        };
     }
     if ((<any>window).ibas.i18n === undefined) {
         (<any>window).ibas.i18n = new I18N();

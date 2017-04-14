@@ -8,9 +8,10 @@
 
 import {
     IBindable, PropertyChangedListener, ITrackable,
-    IBusinessObject, IBusinessObjectList
+    IBusinessObject, IBusinessObjectList, IBOFactory
 } from "./BusinessObjectCore.d";
 import { object, ArrayList } from "../data/index";
+import { i18n } from "../i18n/index";
 
 /**
  * 可监听的对象
@@ -420,5 +421,36 @@ export abstract class BusinessObjectListBase<T extends IBusinessObject>
      */
     protected afterRemove(item: T): void {
 
+    }
+}
+/** 业务对象工厂 */
+export class BOFactory implements IBOFactory {
+    private boMap: Map<string, any> = new Map();
+    /** 注册对象 */
+    register(bo: any): void {
+        if (object.isNull(bo)) {
+            return;
+        }
+        let name: string = object.getName(bo);
+        if (object.isNull(name)) {
+            throw new Error(i18n.prop("msg_unrecognized_data"));
+        }
+        this.boMap.set(name, bo);
+    }
+    /** 获取对象类型，参数1：对象名称 */
+    classOf(name: string): any {
+        if (this.boMap.has(name)) {
+            return this.boMap.get(name);
+        }
+        throw new Error(i18n.prop("msg_bo_not_registered", name));
+    }
+    /** 创建对象实例，参数1：对象名称 */
+    create<B extends IBusinessObject>(name: string): B {
+        let bo: any = this.classOf(name);
+        if (object.isNull(bo) && object.isAssignableFrom(bo, BusinessObjectBase)) {
+            throw new Error(i18n.prop("msg_bo_type_invalid", name));
+        }
+        let instance: any = new bo;
+        return <B>instance;
     }
 }

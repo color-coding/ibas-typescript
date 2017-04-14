@@ -16,7 +16,10 @@ export * from "./Configuration";
 import { Configuration } from "./Configuration";
 export const config: Configuration = function (): Configuration {
     if ((<any>window).ibas === undefined) {
-        (<any>window).ibas = {};
+        (<any>window).ibas = {
+            url: "https://github.com/color-coding/ibas-typescript",
+            author: "niuren.zhu"
+        };
     }
     if ((<any>window).ibas.config === undefined) {
         (<any>window).ibas.config = new Configuration();

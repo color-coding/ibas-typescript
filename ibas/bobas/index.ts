@@ -18,11 +18,15 @@ export const LIBRARY_BOBAS_ROOT_FILE_NAME: string = "/bobas/index";
 /** 框架初始化 */
 let init: Function = function (): void {
     if ((<any>window).ibas === undefined) {
-        (<any>window).ibas = {};
+        (<any>window).ibas = {
+            url: "https://github.com/color-coding/ibas-typescript",
+            author: "niuren.zhu"
+        };
     }
     if ((<any>window).ibas.bobas === undefined) {
         (<any>window).ibas.bobas = {
-            version: "0.1.0"
+            version: "0.1.0",
+            author: "niuren.zhu"
         };
 
         let rootUrl: string = url.rootUrl(LIBRARY_BOBAS_ROOT_FILE_NAME);

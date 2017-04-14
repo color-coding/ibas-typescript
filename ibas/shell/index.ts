@@ -8,11 +8,15 @@
 
 import { Console } from "./bsapp/Console";
 if ((<any>window).ibas === undefined) {
-    (<any>window).ibas = {};
+    (<any>window).ibas = {
+        url: "https://github.com/color-coding/ibas-typescript",
+        author: "niuren.zhu"
+    };
 }
 if ((<any>window).ibas.shell === undefined) {
     (<any>window).ibas.shell = {
-        version: "0.1.0"
+        version: "0.1.0",
+        author: "niuren.zhu"
     };
     (new Console()).run();
 }

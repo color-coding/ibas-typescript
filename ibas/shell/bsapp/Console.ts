@@ -41,7 +41,7 @@ export class SystemsFactory implements sys.ISystemsFactory {
     }
     /** 创建仓库 */
     createRepository(): sys.IBORepositorySystem {
-        if (ibas.config.get(ibas.config.CONFIG_ITEM_OFFLINE_MODE, false)) {
+        if (ibas.config.get(ibas.BORepositoryApplication.CONFIG_ITEM_OFFLINE_MODE, false)) {
             // 当前处于离线模式
             return new BORepositoryShellOffLine();
         }
@@ -102,7 +102,7 @@ export class Console extends ibas.ModuleConsole {
             that.viewShower = new ViewShower.default();
             // 加载ui导航
             let uiModules: string[] = [];
-            if (!ibas.config.get(ibas.config.CONFIG_ITEM_DISABLE_PLATFORM_VIEW, false)
+            if (!ibas.config.get(ibas.ModuleConsole.CONFIG_ITEM_DISABLE_PLATFORM_VIEW, false)
                 && that.plantform === ibas.emPlantform.PHONE) {
                 // 使用m类型视图
                 uiModules.push("../bsui/m/Navigation");

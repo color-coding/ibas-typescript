@@ -16,17 +16,10 @@ import { string } from "../data/index";
  * 配置
  */
 export class Configuration {
-
     /** 默认配置文件名称 */
     static CONFIG_FILE_NAME: string = "config.json";
     /** 配置项目-调试模式 */
     CONFIG_ITEM_DEBUG_MODE: string = "debug";
-    /** 配置项目-消息输出级别 */
-    CONFIG_ITEM_MESSAGES_LEVEL: string = "msgLevel";
-    /** 配置项目-离线模式 */
-    CONFIG_ITEM_OFFLINE_MODE: string = "offline";
-    /** 配置项目-禁用平台视图 */
-    CONFIG_ITEM_DISABLE_PLATFORM_VIEW: string = "disablePlatformView";
 
     private items: Map<string, any> = new Map<string, any>();
     /**

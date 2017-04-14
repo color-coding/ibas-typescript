@@ -79,6 +79,16 @@ export module object {
         }
         return false;
     }
+    /**
+     * 获取类型名称
+     * @param type 类型
+     */
+    export function getName(type: any): any {
+        if (object.isNull(type)) {
+            return undefined;
+        }
+        return type.name;
+    }
 }
 /**
  * 唯一标识

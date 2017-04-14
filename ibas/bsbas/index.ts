@@ -13,11 +13,15 @@ export const LIBRARY_BSBAS_ROOT_FILE_NAME: string = "/bsbas/index";
 /** 框架初始化 */
 let init: Function = function (): void {
     if ((<any>window).ibas === undefined) {
-        (<any>window).ibas = {};
+        (<any>window).ibas = {
+            url: "https://github.com/color-coding/ibas-typescript",
+            author: "niuren.zhu"
+        };
     }
     if ((<any>window).ibas.bsbas === undefined) {
         (<any>window).ibas.bsbas = {
-            version: "0.1.0"
+            version: "0.1.0",
+            author: "niuren.zhu"
         };
 
         let rootUrl: string = url.rootUrl(LIBRARY_BSBAS_ROOT_FILE_NAME);

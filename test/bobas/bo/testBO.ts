@@ -15,7 +15,9 @@ let listener: bobas.PropertyChangedListener = {
         bobas.logger.log(bobas.emMessageLevel.DEBUG, "bo: property [{0}] was changed.", property);
     }
 };
-let order = new SalesOrder();
+// 测试工厂
+bobas.boFactory.register(SalesOrder);
+let order: SalesOrder = bobas.boFactory.create<SalesOrder>(SalesOrder.name);
 order.registerListener(listener);
 bobas.logger.log(bobas.emMessageLevel.DEBUG, "test: type of {0}", typeof (order));
 order.customer = "C00001";

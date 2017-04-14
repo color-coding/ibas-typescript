@@ -24,12 +24,14 @@ export abstract class BORepositoryApplication {
 
     /** 模块仓库名称模板 */
     static MODULE_REPOSITORY_NAME_TEMPLATE: string = "BORepository{0}";
+    /** 配置项目-离线模式 */
+    static CONFIG_ITEM_OFFLINE_MODE: string = "offline";
     /** 远程仓库的默认地址模板 */
     static CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS: string = "repositoryAddress|{0}";
 
     constructor() {
         // 获取离线状态
-        this.offline = config.get(config.CONFIG_ITEM_OFFLINE_MODE, false);
+        this.offline = config.get(BORepositoryApplication.CONFIG_ITEM_OFFLINE_MODE, false);
         // 获取远程仓库的默认地址
         let name: string = this.constructor.name;
         let address: string = config.get(string.format(BORepositoryApplication.CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS, name));

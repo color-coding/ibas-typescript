@@ -18,7 +18,10 @@ export * from "./Logger";
 import { Logger } from "./Logger";
 export const logger: Logger = function (): Logger {
     if ((<any>window).ibas === undefined) {
-        (<any>window).ibas = {};
+        (<any>window).ibas = {
+            url: "https://github.com/color-coding/ibas-typescript",
+            author: "niuren.zhu"
+        };
     }
     if ((<any>window).ibas.logger === undefined) {
         (<any>window).ibas.logger = new Logger();
