@@ -142,7 +142,6 @@ export abstract class ModuleConsole extends Module implements IModuleConsole {
     static CONFIG_ITEM_DEFALUT_MODULE_ICON: string = "defalutModuleIcon";
     constructor() {
         super();
-        this.icon = config.get(ModuleConsole.CONFIG_ITEM_DEFALUT_MODULE_ICON);
     }
     /** 当前平台 */
     get plantform(): emPlantform {
@@ -198,7 +197,12 @@ export abstract class ModuleConsole extends Module implements IModuleConsole {
     /** 注册 */
     protected abstract registers(): void;
     /** 运行，重载后必须保留基类调用 */
-    run(): void { }
+    run(): void {
+        // 修正模块图标
+        if (object.isNull(this.icon) || this.icon.length === 0) {
+            this.icon = config.get(ModuleConsole.CONFIG_ITEM_DEFALUT_MODULE_ICON);
+        }
+    }
     /** 创建视图导航 */
     abstract navigation(): IViewNavigation;
     /** 视图显示者 */
@@ -243,8 +247,10 @@ export abstract class ModuleConsole extends Module implements IModuleConsole {
             servicesManager.register(item);
         }
     }
-    /** 设置仓库地址 */
-    abstract setRepository(address: string): void;
+    /** 设置仓库地址，返回值是否执行默认设置 */
+    setRepository(address: string): boolean {
+        return true;
+    }
 }
 /** 模块控制台 */
 export abstract class ModuleFunction extends Functions implements IModuleFunction {

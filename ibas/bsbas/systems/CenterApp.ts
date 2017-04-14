@@ -219,14 +219,6 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
                 }
                 // 有效模块控制台
                 console.addListener(function (): void {
-                    // 注册模块业务仓库默认地址，创建实例时默认取此地址
-                    if (!object.isNull(module.name) && !object.isNull(module.repository)) {
-                        let configName: string = string.format(
-                            BORepositoryApplication.CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS
-                            , module.name);
-                        config.set(configName, module.repository);
-                        logger.log(emMessageLevel.DEBUG, "repository: register repository's default address [{0}].", module.repository);
-                    }
                     // 显示模块
                     that.view.showModule(console);
                     // 注册模块功能
@@ -238,9 +230,20 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
                         }
                     }
                 });
-                // 设置默认业务仓库
+                // 设置仓库地址
                 if (!object.isNull(module.repository)) {
-                    console.setRepository(module.repository);
+                    let done: boolean = console.setRepository(module.repository);
+                    // 注册模块业务仓库默认地址，创建实例时默认取此地址
+                    if (!object.isNull(console.name) && done) {
+                        module.repository = url.normalize(module.repository);
+                        let repositoryName: string = string.format(BORepositoryApplication.MODULE_REPOSITORY_NAME_TEMPLATE, console.name);
+                        let configName: string = string.format(
+                            BORepositoryApplication.CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS
+                            , repositoryName);
+                        config.set(configName, module.repository);
+                        logger.log(emMessageLevel.DEBUG,
+                            "repository: register [{0}]'s default address [{1}].", repositoryName, module.repository);
+                    }
                 }
                 // 设置视图显示者
                 console.viewShower = that;

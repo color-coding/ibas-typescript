@@ -22,6 +22,8 @@ import { logger } from "../messages/index";
  */
 export abstract class BORepositoryApplication {
 
+    /** 模块仓库名称模板 */
+    static MODULE_REPOSITORY_NAME_TEMPLATE: string = "BORepository{0}";
     /** 远程仓库的默认地址模板 */
     static CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS: string = "repositoryAddress|{0}";
 

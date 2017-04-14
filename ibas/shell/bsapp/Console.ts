@@ -66,40 +66,40 @@ export class Console extends ibas.ModuleConsole {
         this.id = Console.CONSOLE_ID;
         this.name = Console.CONSOLE_NAME;
     }
-    /** 设置仓库地址 */
-    setRepository(address: string): void {
-        // 壳不用设置
-    }
     private _navigation: any;
     /** 视图导航 */
     navigation(): ibas.IViewNavigation {
         return this._navigation;
     }
-    /** 视图显示者 */
-    private _viewShower: ibas.IViewShower;
     /** 初始化 */
     protected registers(): void {
         // 初始化系统工厂
         sys.Factories.systemsFactory = new SystemsFactory();
         // 注册功能
-        this.register(new CentersFunc(this._viewShower));
+        this.register(new CentersFunc(this.viewShower));
     }
     /** 运行 */
     run(): void {
-        // 获取根地址
+        // 获取壳根地址
         let rootUrl: string = ibas.url.rootUrl(Console.ROOT_FILE_NAME);
-        // 加载配置-框架默认
+        // 加载配置-壳
         ibas.config.load(ibas.string.format("{0}/{1}", rootUrl, ibas.Configuration.CONFIG_FILE_NAME));
-        // 加载语言-框架默认
+        // 加载语言-壳
         ibas.i18n.load(ibas.string.format("{0}/resources/languages/shell.{1}.json", rootUrl, "{0}"));
         // 设置资源属性
         this.description = ibas.i18n.prop(this.name);
         this.icon = ibas.string.format("{0}/resources/images/logo_small.png", rootUrl);
+        // 加载网站配置文件
+        let siteUrl: string = ibas.url.rootUrl(undefined);
+        if (siteUrl !== rootUrl) {
+            // 网站与壳地址不同，加载网站配置
+            ibas.config.load(ibas.string.format("{0}/{1}", siteUrl, ibas.Configuration.CONFIG_FILE_NAME));
+        }
         // 加载视图显示者
         let that: Console = this;
         require(["../bsui/ViewShower"], function (ViewShower: any): void {
             // 设置视图显示者
-            that._viewShower = new ViewShower.default();
+            that.viewShower = new ViewShower.default();
             // 加载ui导航
             let uiModules: string[] = [];
             if (!ibas.config.get(ibas.config.CONFIG_ITEM_DISABLE_PLATFORM_VIEW, false)

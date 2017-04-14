@@ -31,11 +31,12 @@ export class Console extends ibas.ModuleConsole {
     }
 
     /** 设置仓库地址 */
-    setRepository(address: string): void {
+    setRepository(address: string): boolean {
         // 壳不用设置
         ibas.config.set(ibas.string.format(
             BORepositoryDemo.CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS, BORepositoryDemo.name), address
         );
+        return false;
     }
     private _navigation: any;
     /** 创建视图导航 */
