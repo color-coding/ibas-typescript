@@ -9,7 +9,7 @@
 /**
  * 模块索引文件，此文件集中导出类
  */
-export * from "./runtime";
+export * from "./Runtime";
 
 import {  VariablesManager } from "./Runtime";
 /** 变量管理员实例 */
