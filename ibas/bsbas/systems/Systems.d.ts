@@ -197,9 +197,9 @@ export interface IBOPropertyInfo {
  */
 export interface ConnectCaller extends MethodCaller {
 	/** 用户 */
-	user: String;
+	user: string;
 	/** 密码 */
-	password: String;
+	password: string;
     /**
      * 调用完成
      * @param opRslt 结果
@@ -211,7 +211,7 @@ export interface ConnectCaller extends MethodCaller {
  */
 export interface UserMethodsCaller<P> extends MethodCaller {
 	/** 用户 */
-	user: String;
+	user: string;
     /**
      * 调用完成
      * @param opRslt 结果
@@ -223,7 +223,7 @@ export interface UserMethodsCaller<P> extends MethodCaller {
  */
 export interface UserQueriesCaller extends UserMethodsCaller<IUserQuery> {
 	/** 查询标识 */
-	queryId: String;
+	queryId: string;
 }
 /**
  * 业务对象信息调用者

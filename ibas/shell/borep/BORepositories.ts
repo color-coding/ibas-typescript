@@ -127,9 +127,18 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
 	 * @param caller 登录者
 	 */
     connect(caller: sys.ConnectCaller): void {
+        let criteria = new ibas.Criteria();
+        let condition = criteria.conditions.create();
+        condition.alias = "code";
+        condition.value = caller.user;
+        condition = criteria.conditions.create();
+        condition.alias = "password";
+        condition.value = caller.password;
+
         let fetchCaller: ibas.FetchCaller<bo.User> = {
-            criteria: null,
+            criteria: criteria,
             onCompleted(opRsltFetch): void {
+                // 没有实现查询应用，手动过滤下
                 let opRslt = new ibas.OperationResult();
                 opRslt.resultCode = -1;
                 opRslt.message = ibas.i18n.prop("sys_shell_user_and_password_not_match");
@@ -137,7 +146,7 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
                     if (item.code === caller.user
                         && item.password === caller.password) {
                         opRslt.resultCode = 0;
-                        opRslt.message = "Ok.";
+                        opRslt.message = "ok.";
                         opRslt.resultObjects.add(item);
                         break;
                     }
@@ -153,7 +162,7 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
 	 * @param caller 用户检索者
 	 */
     fetchUserModules(caller: sys.UserMethodsCaller<sys.IUserModule>): void {
-        let fetchCaller: ibas.FetchCaller<any> = {
+        let fetchCaller: ibas.FetchCaller<bo.UserModule> = {
             criteria: null,
             onCompleted(opRslt): void {
                 caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
@@ -167,7 +176,7 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
 	 * @param caller 用户检索者
 	 */
     fetchUserPrivileges(caller: sys.UserMethodsCaller<sys.IUserPrivilege>): void {
-        let fetchCaller: ibas.FetchCaller<any> = {
+        let fetchCaller: ibas.FetchCaller<bo.UserPrivilege> = {
             criteria: null,
             onCompleted(opRslt): void {
                 caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
@@ -180,9 +189,22 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
      * @param caller 监听者
      */
     fetchUserQueries(caller: sys.UserQueriesCaller): void {
-        let fetchCaller: ibas.FetchCaller<any> = {
+        let criteria = new ibas.Criteria();
+        let condition = criteria.conditions.create();
+        condition.alias = "id";
+        condition.value = caller.queryId;
+
+        let fetchCaller: ibas.FetchCaller<bo.UserQuery> = {
             criteria: null,
-            onCompleted(opRslt): void {
+            onCompleted(opRsltFetch): void {
+                // 没有实现查询应用，手动过滤下
+                let opRslt = new ibas.OperationResult<bo.UserQuery>();
+                for (let item of opRsltFetch.resultObjects) {
+                    if (item.id !== caller.queryId) {
+                        continue;
+                    }
+                    opRslt.resultObjects.add(item);
+                }
                 caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
             }
         };
@@ -193,9 +215,22 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
 	 * @param caller 监听者
 	 */
     fetchBOInfos(caller: sys.BOInfoCaller): void {
-        let fetchCaller: ibas.FetchCaller<any> = {
+        let criteria = new ibas.Criteria();
+        let condition = criteria.conditions.create();
+        condition.alias = "name";
+        condition.value = caller.boName;
+
+        let fetchCaller: ibas.FetchCaller<bo.BOInfo> = {
             criteria: null,
-            onCompleted(opRslt): void {
+            onCompleted(opRsltFetch): void {
+                // 没有实现查询应用，手动过滤下
+                let opRslt = new ibas.OperationResult<bo.BOInfo>();
+                for (let item of opRsltFetch.resultObjects) {
+                    if (item.name !== caller.boName) {
+                        continue;
+                    }
+                    opRslt.resultObjects.add(item);
+                }
                 caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
             }
         };
