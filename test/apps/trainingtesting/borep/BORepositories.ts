@@ -8,7 +8,7 @@
 
 import * as ibas from "ibas/index";
 import * as bo from "./bo/index";
-import { IBORepositoryTrainingTesting } from "api/borepository.d";
+import { IBORepositoryTrainingTesting } from "api/BORepository.d";
 import { DataConverterOnline, DataConverterOffline } from "./DataConverters";
 
 /** <%Domain.Name%> 业务仓库 */

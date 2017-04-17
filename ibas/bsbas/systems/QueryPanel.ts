@@ -9,7 +9,7 @@
 import {
     objects, ICriteria, Criteria, ICondition, i18n, IOperationResult,
     config, ISort, emSortType, emConditionOperation, ArrayList, BarApplication,
-    emMessageType, variablesManager,VariablesManager
+    emMessageType, variablesManager, VariablesManager
 } from "ibas/index";
 import { IQueryPanelView, IQueryPanel, IUseQueryPanel, IUserQuery, IBORepositorySystem, IBOInfo } from "./Systems.d";
 import { Factories } from "./Factories";
