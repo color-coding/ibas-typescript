@@ -127,10 +127,6 @@ export class BOFileRepositoryAjax extends FileRepositoryAjax implements IBORepos
      * @param caller 查询监听者
      */
     fetch<P>(boName: string, caller: FetchCaller<P>): void {
-        if (boName.endsWith("y")) {
-            // y结尾单词的复数
-            boName = boName.substring(0, boName.length - 2) + "ie";
-        }
         let fileName: string = strings.format("{0}s.json", boName).toLowerCase();
         let that = this;
         let loadFileCaller: LoadFileCaller = {

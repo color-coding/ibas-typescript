@@ -1,9 +1,17 @@
 [
   {
-    "id": "test-0",
-    "name": "module_a",
-    "category": "test",
-    "address": ".../../../test/apps/module_a/",
+    "id": "edd25576-d1d8-4cab-87fa-52c834668524",
+    "name": "TrainingTesting",
+    "category": "",
+    "address": "../../test/apps/trainingtesting/",
+    "repository": ".../../../test/repository"
+  },
+  {
+    "id": "edd25576-d1d8-4cab-87fa-52c834668525",
+    "name": "TrainingTestingOthers",
+    "category": "",
+    "index":"index.others",
+    "address": "../../test/apps/trainingtesting/",
     "repository": ".../../../test/repository"
   },
   {
@@ -18,12 +26,5 @@
     "name": "module_c",
     "category": "test",
     "address": "../../test/apps/module_c/"
-  },
-  {
-    "id": "edd25576-d1d8-4cab-87fa-52c834668524",
-    "name": "TrainingTesting",
-    "category": "",
-    "address": "../../test/apps/trainingtesting/",
-    "repository": ".../test/repository"
   }
 ]

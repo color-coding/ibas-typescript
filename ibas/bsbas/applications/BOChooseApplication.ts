@@ -57,8 +57,8 @@ export abstract class BOChooseService<T extends IBOChooseView, D> extends BOChoo
                             }
                             if (item.operation === emConditionOperation.IS_NULL
                                 || item.operation === emConditionOperation.NOT_NULL
-                                || (objects.isNull(item.value) && item.value.length > 0)
-                                || (objects.isNull(item.comparedAlias) && item.comparedAlias.length > 0)
+                                || (!objects.isNull(item.value) && item.value.length > 0)
+                                || (!objects.isNull(item.comparedAlias) && item.comparedAlias.length > 0)
                             ) {
                                 criteria.conditions.add(item);
                             }
