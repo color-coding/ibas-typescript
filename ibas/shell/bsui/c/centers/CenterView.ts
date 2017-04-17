@@ -219,7 +219,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             content: [messageStrip]
         }));
         // 延迟清除消息
-        if (ibas.object.isNull(this.statusDelay)) {
+        if (ibas.objects.isNull(this.statusDelay)) {
             this.statusDelay = ibas.config.get(CenterView.CONFIG_ITEM_STATUS_MESSAGES_DELAY, 0) * 1000;
         }
         if (this.statusDelay > 0) {
@@ -249,7 +249,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                 title: caller.title,
                 actions: utils.toMessageBoxAction(caller.actions),
                 onClose(oAction: any): void {
-                    if (!ibas.object.isNull(caller.onCompleted)) {
+                    if (!ibas.objects.isNull(caller.onCompleted)) {
                         caller.onCompleted(utils.toMessageAction(oAction));
                     }
                 }
@@ -292,20 +292,20 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
     /** 设置忙状态 */
     busyView(view: ibas.IView, busy: boolean, msg: string): any {
         let ui: sap.ui.core.Element = sap.ui.getCore().byId(view.id);
-        if (!ibas.object.isNull(ui) && ui instanceof sap.ui.core.Control) {
+        if (!ibas.objects.isNull(ui) && ui instanceof sap.ui.core.Control) {
             // 视图自身可设置忙状态
             ui.setBusy(busy);
         } else {
             // 视图不能设置忙状态，使用全局对话框
             if (busy) {
-                if (ibas.object.isNull(this.busyDialog)) {
+                if (ibas.objects.isNull(this.busyDialog)) {
                     this.busyDialog = new sap.m.BusyDialog("");
                 }
                 this.busyDialog.setTitle(view.title);
                 this.busyDialog.setText(msg);
                 this.busyDialog.open();
             } else {
-                if (!ibas.object.isNull(this.busyDialog)) {
+                if (!ibas.objects.isNull(this.busyDialog)) {
                     this.busyDialog.close();
                 }
             }
@@ -313,9 +313,9 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
     }
     /** 显示用户信息 */
     showUser(user: sys.IUser): void {
-        if (!ibas.object.isNull(user.name)) {
+        if (!ibas.objects.isNull(user.name)) {
             this.userBar.setText(user.name);
-        } else if (!ibas.object.isNull(user.code)) {
+        } else if (!ibas.objects.isNull(user.code)) {
             this.userBar.setText(user.code);
         } else {
             this.userBar.setText(ibas.i18n.prop("sys_shell_unknown_user"));
@@ -324,16 +324,16 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
     private viewQueue: Map<ibas.IView, any> = new Map<ibas.IView, any>();
     /** 显示视图 */
     showView(view: ibas.IView): void {
-        if (ibas.object.instanceOf(view, ibas.BODialogView)) {
+        if (ibas.objects.instanceOf(view, ibas.BODialogView)) {
             // 选择视图
             this.showDialogView(<ibas.BODialogView>view);
-        } else if (ibas.object.instanceOf(view, ibas.BOBarView)) {
+        } else if (ibas.objects.instanceOf(view, ibas.BOBarView)) {
             // 工具条视图
             this.showBarView(<ibas.BOBarView>view);
         } else {
             let container: sap.m.Page = this.form;
             // 获取视图显示的容器
-            if (ibas.object.instanceOf(view, ibas.TabView)) {
+            if (ibas.objects.instanceOf(view, ibas.TabView)) {
                 // 页签视图
                 let tabContainer: sap.m.TabContainer;
                 for (let item of container.getContent()) {
@@ -342,7 +342,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                         break;
                     }
                 }
-                if (ibas.object.isNull(tabContainer)) {
+                if (ibas.objects.isNull(tabContainer)) {
                     tabContainer = new sap.m.TabContainer("", {
                         itemClose: function (oControlEvent: any): void {
                             // 删除页签
@@ -378,13 +378,13 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                 container.setSubHeader(null);
                 container.setTitle(null);
                 // 设置标题
-                if (!ibas.object.isNull(view.title)) {
+                if (!ibas.objects.isNull(view.title)) {
                     container.setTitle(view.title);
-                } else if (!ibas.object.isNull(view.id)) {
+                } else if (!ibas.objects.isNull(view.id)) {
                     container.setTitle(view.id);
                 }
             }
-            if (ibas.object.instanceOf(view, ibas.UrlView)) {
+            if (ibas.objects.instanceOf(view, ibas.UrlView)) {
                 // 视图为地址视图
                 this.showUrlView(<ibas.UrlView>view, container);
             } else {
@@ -401,13 +401,13 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         if (this.viewQueue.has(view)) {
             viewContent = this.viewQueue.get(view);
         }
-        if (ibas.object.isNull(viewContent)) {
+        if (ibas.objects.isNull(viewContent)) {
             viewContent = view.darw();
         }
         container.addContent(viewContent);
         this.viewQueue.set(view, viewContent);
         // 添加查询面板
-        if (ibas.object.instanceOf(view, ibas.BOQueryView)) {
+        if (ibas.objects.instanceOf(view, ibas.BOQueryView)) {
             let queryView: sys.IEmbeddedQueryPanel = {
                 /** 嵌入查询面板 */
                 embedded(view: any): void {
@@ -423,10 +423,10 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
     showUrlView(view: ibas.UrlView, container: sap.m.Page): void {
         if (view.isInside) {
             // 内部打开
-            let html: string = ibas.string.format(
+            let html: string = ibas.strings.format(
                 `<iframe src="{0}" width="99%" height="99%" scrolling="no"></iframe>`
                 , view.url);
-            if (ibas.object.isNull(this.page.getHeader())) {
+            if (ibas.objects.isNull(this.page.getHeader())) {
                 container.setShowHeader(false);
             }
             container.destroySubHeader();
@@ -444,9 +444,9 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
     showDialogView(view: ibas.BODialogView): void {
         let title: string;
         // 设置标题
-        if (!ibas.object.isNull(view.title)) {
+        if (!ibas.objects.isNull(view.title)) {
             title = view.title;
-        } else if (!ibas.object.isNull(view.id)) {
+        } else if (!ibas.objects.isNull(view.id)) {
             title = view.id;
         }
         let that: this = this;
@@ -476,8 +476,8 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         view.id = dialog.getId();
         dialog.open();
         // 添加查询面板
-        if (ibas.object.instanceOf(view, ibas.BOQueryView)
-            || ibas.object.instanceOf(view, ibas.BOQueryDialogView)) {
+        if (ibas.objects.instanceOf(view, ibas.BOQueryView)
+            || ibas.objects.instanceOf(view, ibas.BOQueryDialogView)) {
             let queryView: sys.IEmbeddedQueryPanel = {
                 /** 嵌入查询面板 */
                 embedded(view: any): void {
@@ -503,7 +503,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
     /** 显示常驻视图 */
     showResidentView(view: ibas.IBarView): void {
         let bar: any = view.darwBar();
-        if (!ibas.object.isNull(bar)) {
+        if (!ibas.objects.isNull(bar)) {
             this.header.insertContent(bar, this.header.getContent().length - 1);
             // 触发工具条显示完成事件
             view.barShowedEvent.apply(view.application);
@@ -512,7 +512,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
     private queryPanels = new Map<string, any>();
     showQueryPanel(view: ibas.BOQueryView, embeddedView: sys.IEmbeddedQueryPanel): void {
         let queryPanel: sys.IQueryPanel<sys.IQueryPanelView> = sys.Factories.systemsFactory.createQueryPanel();
-        if (ibas.object.isNull(queryPanel)) {
+        if (ibas.objects.isNull(queryPanel)) {
             // 查询面板无效，不添加
             this.showStatusMessage(ibas.emMessageType.ERROR, ibas.i18n.prop("sys_shell_invalid_query_panel"));
         } else {
@@ -521,7 +521,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             queryPanel.navigation = this.application.navigation;
             queryPanel.viewShower = <any>this.application;
             // 判断面板嵌入位置
-            if (ibas.object.instanceOf(view, ibas.BOQueryViewWithPanel)) {
+            if (ibas.objects.instanceOf(view, ibas.BOQueryViewWithPanel)) {
                 // 视图继承嵌入接口
                 embeddedView = <ibas.BOQueryViewWithPanel>view;
             }
@@ -576,9 +576,9 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                 return;
             } else if (!this.viewQueue.has(view)) {
                 // 不是通过系统中心加载的页面，删除
-                if (!ibas.object.isNull(view)) {
+                if (!ibas.objects.isNull(view)) {
                     let ui: sap.ui.core.Element = sap.ui.getCore().byId(view.id);
-                    if (!ibas.object.isNull(ui)) {
+                    if (!ibas.objects.isNull(ui)) {
                         ui.destroy(true);
                     }
                 }
@@ -598,7 +598,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                 for (let i: number = beDestory.length - 1; i >= 0; i--) {
                     let item: ibas.IView = beDestory[i];
                     let ui: sap.ui.core.Element = sap.ui.getCore().byId(item.id);
-                    if (!ibas.object.isNull(ui)) {
+                    if (!ibas.objects.isNull(ui)) {
                         ui.destroy(true);
                     }
                     this.viewQueue.delete(item);
@@ -628,7 +628,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         this.form.setSubHeader(null);
         this.form.setShowSubHeader(false);
         let ctrls: sap.ui.core.Control[] = this.form.getContent();
-        if (!ibas.object.isNull(ctrls)) {
+        if (!ibas.objects.isNull(ctrls)) {
             let beDestory: Array<ibas.IView> = new Array<ibas.IView>();
             for (let item of ctrls) {
                 if (item instanceof sap.ui.core.HTML) {

@@ -16,7 +16,7 @@ export class SuggestionView extends ibas.BOResidentView implements sys.ISuggesti
     darwBar(): any {
         let that: this = this;
         // 不重复创建工具条钮
-        if (ibas.object.isNull(this.bar)) {
+        if (ibas.objects.isNull(this.bar)) {
             this.bar = new sap.m.Button("", {
                 icon: "sap-icon://discussion",
                 type: sap.m.ButtonType.Transparent,

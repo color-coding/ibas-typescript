@@ -6,7 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { object } from "../data/index";
+import { objects } from "../data/index";
 import {
     IBusinessObject, BusinessObjectBase, BusinessObjectListBase
 } from "../core/index";
@@ -51,7 +51,7 @@ export abstract class BusinessObjects<T extends IBusinessObject, P extends IBusi
      */
     constructor(parent: P) {
         super();
-        if (object.isNull(parent)) {
+        if (objects.isNull(parent)) {
             this.parent = parent;
         }
     }
@@ -71,7 +71,7 @@ export abstract class BusinessObjects<T extends IBusinessObject, P extends IBusi
      * @param item 项目
      */
     protected afterAdd(item: T): void {
-        if (!object.isNull(this.parent)) {
+        if (!objects.isNull(this.parent)) {
             // 父项主键值给子项
             let docEntry: number = this.parent.getProperty<number>(BO_PROPERTY_NAME_DOCENTRY);
             if (docEntry !== undefined) {

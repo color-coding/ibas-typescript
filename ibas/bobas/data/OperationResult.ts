@@ -6,7 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { object } from "./Data";
+import { objects } from "./Data";
 import { List } from "./Common.d";
 import { ArrayList } from "./Common";
 import { IOperationInformation, IOperationMessages, IOperationResult } from "./OperationResult.d";
@@ -106,7 +106,7 @@ export class OperationMessages implements IOperationMessages {
     private _time: Date;
 
     get time(): Date {
-        if (object.isNull(this._time)) {
+        if (objects.isNull(this._time)) {
             this._time = new Date();
         }
         return this._time;
@@ -140,7 +140,7 @@ export class OperationResult<P> extends OperationMessages implements IOperationR
     private _resultObjects: List<P>;
 
     get resultObjects(): List<P> {
-        if (object.isNull(this._resultObjects)) {
+        if (objects.isNull(this._resultObjects)) {
             this._resultObjects = new ArrayList<P>();
         }
         return this._resultObjects;
@@ -157,7 +157,7 @@ export class OperationResult<P> extends OperationMessages implements IOperationR
     private _informations: List<IOperationInformation>;
 
     get informations(): List<IOperationInformation> {
-        if (object.isNull(this._informations)) {
+        if (objects.isNull(this._informations)) {
             this._informations = new ArrayList<IOperationInformation>();
         }
         return this._informations;

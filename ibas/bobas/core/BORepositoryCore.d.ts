@@ -7,7 +7,7 @@
  */
 
 import {
-    object, ArrayList, IOperationResult, ICriteria
+    objects, ArrayList, IOperationResult, ICriteria
 } from "../data/index";
 import { IBusinessObject, IBusinessObjectList } from "./BusinessObjectCore.d";
 

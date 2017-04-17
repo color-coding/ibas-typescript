@@ -33,7 +33,7 @@ export class Console extends ibas.ModuleConsole {
     /** 设置仓库地址 */
     setRepository(address: string): boolean {
         // 壳不用设置
-        ibas.config.set(ibas.string.format(
+        ibas.config.set(ibas.strings.format(
             BORepositoryDemo.CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS, BORepositoryDemo.name), address
         );
         return false;
@@ -61,7 +61,7 @@ export class Console extends ibas.ModuleConsole {
         // 获取根地址
         let rootUrl: string = ibas.url.rootUrl(Console.ROOT_FILE_NAME);
         // 加载语言-框架默认
-        ibas.i18n.load(ibas.string.format("{0}/resources/languages/module_a.{1}.json", rootUrl, ibas.i18n.language));
+        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/module_a.{1}.json", rootUrl, ibas.i18n.language));
         // 设置资源属性
         this.description = ibas.i18n.prop(this.name);
         this.icon = "sap-icon://employee";

@@ -8,7 +8,7 @@
 
 /// <reference path="../../3rdparty/index.d.ts" />
 import {
-    object, string, emMessageLevel, OperationResult, IOperationResult, ArrayList
+    objects, strings, emMessageLevel, OperationResult, IOperationResult, ArrayList
 } from "../data/index";
 import { i18n } from "../i18n/index";
 import { logger } from "../messages/index";
@@ -45,17 +45,17 @@ export class FileRepositoryAjax extends FileRepository implements IRemoteReposit
         // 补充发生错误的事件
         ajxSetting.error = function (jqXHR: JQueryXHR, textStatus: string, errorThrown: string): void {
             opRslt.resultCode = -jqXHR.status;
-            opRslt.message = string.format("{0} - {1}", textStatus, i18n.prop("msg_network_error"));
+            opRslt.message = strings.format("{0} - {1}", textStatus, i18n.prop("msg_network_error"));
             logger.log(emMessageLevel.ERROR,
                 "repository: call method [{2}] faild, {0} - {1}.", textStatus, errorThrown, ajxSetting.url);
-            caller.onCompleted.call(object.isNull(caller.caller) ? caller : caller.caller, opRslt);
+            caller.onCompleted.call(objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
         };
         // 补充成功的事件
         ajxSetting.success = function (data: any, textStatus: string, jqXHR: JQueryXHR): void {
             opRslt.resultObjects.add(data);
             logger.log(emMessageLevel.DEBUG,
                 "repository: call method [{2}] sucessful, {0} - {1}.", textStatus, opRslt.message, ajxSetting.url);
-            caller.onCompleted.call(object.isNull(caller.caller) ? caller : caller.caller, opRslt);
+            caller.onCompleted.call(objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
         };
         // 调用远程方法
         logger.log(emMessageLevel.DEBUG, "repository: calling method [{0}].", ajxSetting.url);
@@ -75,7 +75,7 @@ export class FileRepositoryAjax extends FileRepository implements IRemoteReposit
      * @param dataType 返回的数据类型
      */
     protected createAjaxSettings(fileName: string, caller: LoadFileCaller): JQueryAjaxSettings {
-        if (object.isNull(this.address)) {
+        if (objects.isNull(this.address)) {
             throw new Error(i18n.prop("msg_invalid_parameter", "address"));
         }
         let methodUrl: string = this.address;
@@ -85,11 +85,11 @@ export class FileRepositoryAjax extends FileRepository implements IRemoteReposit
         methodUrl = methodUrl + fileName;
         let type: string = "GET";
         let contentType: string = "application/json; charset=utf-8";
-        if (!object.isNull(caller.contentType)) {
+        if (!objects.isNull(caller.contentType)) {
             contentType = caller.contentType;
         }
         let dataType: string = "json";
-        if (!object.isNull(caller.dataType)) {
+        if (!objects.isNull(caller.dataType)) {
             dataType = caller.dataType;
         }
         let ajxSetting: JQueryAjaxSettings = {
@@ -131,11 +131,11 @@ export class BOFileRepositoryAjax extends FileRepositoryAjax implements IBORepos
             // y结尾单词的复数
             boName = boName.substring(0, boName.length - 2) + "ie";
         }
-        let fileName: string = string.format("{0}s.json", boName).toLowerCase();
+        let fileName: string = strings.format("{0}s.json", boName).toLowerCase();
         let that = this;
         let loadFileCaller: LoadFileCaller = {
             onCompleted(opRslt: IOperationResult<any>): void {
-                if (!object.isNull(that.converter)) {
+                if (!objects.isNull(that.converter)) {
                     let datas: ArrayList<any> = new ArrayList();
                     for (let item of opRslt.resultObjects) {
                         if (item instanceof Array) {
@@ -149,7 +149,7 @@ export class BOFileRepositoryAjax extends FileRepositoryAjax implements IBORepos
                     // 替换为转换后的数据
                     opRslt.resultObjects = datas;
                 }
-                caller.onCompleted.call(object.isNull(caller.caller) ? caller : caller.caller, opRslt);
+                caller.onCompleted.call(objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
             }
         };
         this.loadFile(fileName, loadFileCaller);
@@ -168,7 +168,7 @@ export class BORepositoryAjax extends BORepository implements IRemoteRepository 
     /** 数据转换者 */
     private _converter: IDataConverter;
     get converter(): IDataConverter {
-        if (object.isNull(this._converter)) {
+        if (objects.isNull(this._converter)) {
             throw new Error(i18n.prop("msg_invalid_data_converter"));
         }
         return this._converter;
@@ -210,20 +210,20 @@ export class BORepositoryAjax extends BORepository implements IRemoteRepository 
         ajxSetting.error = function (jqXHR: JQueryXHR, textStatus: string, errorThrown: string): void {
             let opRslt = new OperationResult();
             opRslt.resultCode = -jqXHR.status;
-            opRslt.message = string.format("{0} - {1}", textStatus, i18n.prop("msg_network_error"));
+            opRslt.message = strings.format("{0} - {1}", textStatus, i18n.prop("msg_network_error"));
             logger.log(emMessageLevel.ERROR,
                 "repository: call method [{2}] faild, {0} - {1}.", textStatus, errorThrown, ajxSetting.url);
-            caller.onCompleted.call(object.isNull(caller.caller) ? caller : caller.caller, opRslt);
+            caller.onCompleted.call(objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
         };
         // 补充成功的事件
         ajxSetting.success = function (data: any, textStatus: string, jqXHR: JQueryXHR): void {
             let opRslt: any = that.converter.parsing(data, method);
-            if (object.isNull(opRslt)) {
+            if (objects.isNull(opRslt)) {
                 throw new Error(i18n.prop("msg_data_converter_parsing_faild"));
             }
             logger.log(emMessageLevel.DEBUG,
                 "repository: call method [{2}] sucessful, {0} - {1}.", textStatus, opRslt.message, ajxSetting.url);
-            caller.onCompleted.call(object.isNull(caller.caller) ? caller : caller.caller, opRslt);
+            caller.onCompleted.call(objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
         };
         // 调用远程方法
         logger.log(emMessageLevel.DEBUG, "repository: calling method [{0}].", ajxSetting.url);
@@ -236,7 +236,7 @@ export class BORepositoryAjax extends BORepository implements IRemoteRepository 
      * @param data 调用数据
      */
     protected createAjaxSettings(method: string, data: string): JQueryAjaxSettings {
-        if (object.isNull(this.address)) {
+        if (objects.isNull(this.address)) {
             throw new Error(i18n.prop("msg_invalid_parameter", "address"));
         }
         let methodUrl: string = this.address;
@@ -244,13 +244,13 @@ export class BORepositoryAjax extends BORepository implements IRemoteRepository 
             methodUrl = methodUrl + "/";
         }
         methodUrl = methodUrl + method;
-        if (!object.isNull(this.token) && methodUrl.indexOf("token=") < 0) {
+        if (!objects.isNull(this.token) && methodUrl.indexOf("token=") < 0) {
             if (methodUrl.indexOf("?") >= 0) {
                 methodUrl = methodUrl + "&";
             } else {
                 methodUrl = methodUrl + "?";
             }
-            methodUrl = methodUrl + string.format("token={0}", this.token);
+            methodUrl = methodUrl + strings.format("token={0}", this.token);
         }
         let ajxSetting: JQueryAjaxSettings = {
             url: methodUrl,

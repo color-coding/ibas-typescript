@@ -18,6 +18,6 @@ export * from "./OperationResult.d";
 export * from "./OperationResult";
 export * from "./Enums";
 export * from "./Data";
-export * from "./String";
+export * from "./Strings";
 export * from "./Url";
 

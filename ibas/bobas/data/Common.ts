@@ -7,7 +7,7 @@
  */
 
 import { List } from "./Common.d";
-import { string } from "./String";
+import { strings } from "./Strings";
 
 /**
  * 数组集合
@@ -129,7 +129,7 @@ export class StringBuilder {
      * @param args 替换字符
      */
     appendFormat(format: string, ...args: any[]): void {
-        this.append(string.format(format, args));
+        this.append(strings.format(format, args));
     }
     /**
      * 生成字符串

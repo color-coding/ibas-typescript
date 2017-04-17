@@ -7,7 +7,7 @@
  */
 
 import {
-    emMessageLevel, emConditionOperation, emConditionRelationship, emSortType, object,
+    emMessageLevel, emConditionOperation, emConditionRelationship, emSortType, objects,
     ICriteria, Criteria, ICondition, Condition, ISort, Sort, IChildCriteria, ChildCriteria,
     IOperationResult, OperationResult, OperationInformation, dates, enums,
     emApprovalStatus, emBOStatus, emDocumentStatus, emYesNo
@@ -44,11 +44,11 @@ export abstract class BOConverter implements IBOConverter<IBusinessObject, any> 
         if (dType !== undefined) {
             // 创建对象实例
             let tType: any = boFactory.classOf(dType);
-            if (object.isNull(tType)) {
+            if (objects.isNull(tType)) {
                 throw new Error(i18n.prop("msg_invaild_mapping_type", dType));
             }
             let newData: any = new tType;
-            if (object.isNull(newData)) {
+            if (objects.isNull(newData)) {
                 throw new Error(i18n.prop("msg_cannot_create_mapping_type_instance", dType));
             }
             logger.log(emMessageLevel.DEBUG, "converter: {0} mapped {1}.", dType, tType.name);
@@ -60,7 +60,7 @@ export abstract class BOConverter implements IBOConverter<IBusinessObject, any> 
         // 没有匹配的映射类型
         logger.log(emMessageLevel.DEBUG, "converter: {0} using custom parsing.", dType);
         let newData: IBusinessObject = this.customParsing(data);
-        if (!object.isNull(newData)) {
+        if (!objects.isNull(newData)) {
             return newData;
         }
         // 没处理，直接返回
@@ -75,13 +75,13 @@ export abstract class BOConverter implements IBOConverter<IBusinessObject, any> 
      */
     protected parsingProperties(source: any, target: any): void {
         for (let sName in source) {
-            if (object.isNull(sName)) {
+            if (objects.isNull(sName)) {
                 continue;
             }
             // 首字母改为小写
             let sValue: any = source[sName];
             let tName: string = sName;
-            if (object.isNull(tName)) {
+            if (objects.isNull(tName)) {
                 continue;
             }
             if (Array.isArray(sValue)) {
@@ -97,7 +97,7 @@ export abstract class BOConverter implements IBOConverter<IBusinessObject, any> 
                 }
             } else if (typeof sValue === "object") {
                 // 此属性是对象
-                if (object.isNull(target[tName])) {
+                if (objects.isNull(target[tName])) {
                     // 解析对象
                     target[tName] = this.parsing(sValue);
                     // 已处理，继续下一个
@@ -111,7 +111,7 @@ export abstract class BOConverter implements IBOConverter<IBusinessObject, any> 
             } else {
                 let boName: string = target.constructor.name;
                 let newValue: string = this.parsingData(boName, tName, sValue);
-                if (object.isNull(newValue)) {
+                if (objects.isNull(newValue)) {
                     let msg: string = boName + " - " + tName;
                     logger.log(emMessageLevel.WARN, i18n.prop("msg_not_parsed_data", msg));
                 } else {
@@ -142,12 +142,12 @@ export abstract class BOConverter implements IBOConverter<IBusinessObject, any> 
     protected convertProperties(source: any, target: any): any {
         this.setTypeName(target, source.constructor.name);
         for (let sName in source) {
-            if (object.isNull(sName)) {
+            if (objects.isNull(sName)) {
                 continue;
             }
             let value: any = source[sName];
             let name: string = sName;
-            if (object.isNull(name)) {
+            if (objects.isNull(name)) {
                 // 没有解析出映射关系，继续下一个属性
                 continue;
             }
@@ -166,14 +166,14 @@ export abstract class BOConverter implements IBOConverter<IBusinessObject, any> 
                 value = this.convertProperties(value, {});
             } else {
                 let newValue: any = this.convertData(source.constructor.name, sName, value);
-                if (object.isNull(newValue)) {
+                if (objects.isNull(newValue)) {
                     let msg: string = source.constructor.name + " - " + name;
                     logger.log(emMessageLevel.WARN, i18n.prop("msg_not_converted_data", msg));
                 } else {
                     value = newValue;
                 }
             }
-            if (object.isNull(value)) {
+            if (objects.isNull(value)) {
                 // 无效的值，则不添加此属性
                 continue;
             }

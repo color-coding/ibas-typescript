@@ -10,7 +10,7 @@ import {
     IBindable, PropertyChangedListener, ITrackable,
     IBusinessObject, IBusinessObjectList, IBOFactory
 } from "./BusinessObjectCore.d";
-import { object, ArrayList } from "../data/index";
+import { objects, ArrayList } from "../data/index";
 import { i18n } from "../i18n/index";
 
 /**
@@ -24,7 +24,7 @@ export abstract class Bindable implements IBindable {
      * @param listener 监听者
      */
     registerListener(listener: PropertyChangedListener): void {
-        if (object.isNull(this.listeners)) {
+        if (objects.isNull(this.listeners)) {
             this.listeners = new ArrayList<PropertyChangedListener>();
         }
         this.listeners.push(listener);
@@ -35,7 +35,7 @@ export abstract class Bindable implements IBindable {
      * @param listener 监听者
      */
     removeListener(listener: PropertyChangedListener): void {
-        if (object.isNull(this.listeners)) {
+        if (objects.isNull(this.listeners)) {
             return;
         }
         for (let item of this.listeners) {
@@ -50,7 +50,7 @@ export abstract class Bindable implements IBindable {
      * @param property 属性
      */
     protected firePropertyChanged(property: string): void {
-        if (object.isNull(this.listeners)) {
+        if (objects.isNull(this.listeners)) {
             return;
         }
         if (property.startsWith("_")) {
@@ -428,11 +428,11 @@ export class BOFactory implements IBOFactory {
     private boMap: Map<string, any> = new Map();
     /** 注册对象 */
     register(bo: any): void {
-        if (object.isNull(bo)) {
+        if (objects.isNull(bo)) {
             return;
         }
-        let name: string = object.getName(bo);
-        if (object.isNull(name)) {
+        let name: string = objects.getName(bo);
+        if (objects.isNull(name)) {
             throw new Error(i18n.prop("msg_unrecognized_data"));
         }
         this.boMap.set(name, bo);
@@ -447,7 +447,7 @@ export class BOFactory implements IBOFactory {
     /** 创建对象实例，参数1：对象名称 */
     create<B extends IBusinessObject>(name: string): B {
         let bo: any = this.classOf(name);
-        if (object.isNull(bo) && object.isAssignableFrom(bo, BusinessObjectBase)) {
+        if (objects.isNull(bo) && objects.isAssignableFrom(bo, BusinessObjectBase)) {
             throw new Error(i18n.prop("msg_bo_type_invalid", name));
         }
         let instance: any = new bo;

@@ -6,7 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { string, emMessageLevel } from "../data/index";
+import { strings, emMessageLevel } from "../data/index";
 import { config } from "../configuration/index";
 import { IMessage } from "./Message.d";
 import { Message } from "./Message";
@@ -24,7 +24,7 @@ export class Logger implements ILogger {
      * 消息输出的级别
      */
     get level(): emMessageLevel {
-        if (string.isEmpty(this._level)) {
+        if (strings.isEmpty(this._level)) {
             // 没有设置则每次都从配置取
             let level = config.get(Logger.CONFIG_ITEM_MESSAGES_LEVEL, emMessageLevel.ERROR, emMessageLevel);
             if (config.get(config.CONFIG_ITEM_DEBUG_MODE, false)) {
@@ -98,7 +98,7 @@ export class Logger implements ILogger {
         }
         // 如果参数未用完，则认为是模板输出的字符串
         if (msgPars.length > useCount) {
-            message.content = string.format(message.content, msgPars.slice(useCount, msgPars.length));
+            message.content = strings.format(message.content, msgPars.slice(useCount, msgPars.length));
         }
         if (this.level < message.level) {
             // 超过日志输出的级别

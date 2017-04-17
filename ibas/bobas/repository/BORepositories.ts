@@ -7,7 +7,7 @@
  */
 
 import {
-    object, string, emMessageLevel, url
+    objects, strings, emMessageLevel, url
 } from "../data/index";
 import {
     FetchCaller, SaveCaller, IBORepository, IBORepositoryReadonly,
@@ -34,8 +34,8 @@ export abstract class BORepositoryApplication {
         this.offline = config.get(BORepositoryApplication.CONFIG_ITEM_OFFLINE_MODE, false);
         // 获取远程仓库的默认地址
         let name: string = this.constructor.name;
-        let address: string = config.get(string.format(BORepositoryApplication.CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS, name));
-        if (!object.isNull(address)) {
+        let address: string = config.get(strings.format(BORepositoryApplication.CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS, name));
+        if (!objects.isNull(address)) {
             address = url.normalize(address);
             this.address = address;
             logger.log(emMessageLevel.DEBUG, "repository: using repository's default address [{0}].", this.address);
@@ -95,7 +95,7 @@ export abstract class BORepositoryApplication {
     /** 查询业务对象 */
     protected fetch<P>(boName: string, caller: FetchCaller<P>): void {
         let boRepository: IBORepositoryReadonly = this.createReadonlyRepository();
-        if (object.isNull(boRepository)) {
+        if (objects.isNull(boRepository)) {
             throw new Error(i18n.prop("msg_invalid_parameter", "boRepository"));
         }
         boRepository.fetch(boName, caller);
@@ -106,7 +106,7 @@ export abstract class BORepositoryApplication {
             throw new Error(i18n.prop("msg_operation_not_allowed_on_offline"));
         }
         let boRepository: IBORepository = this.createRepository();
-        if (object.isNull(boRepository)) {
+        if (objects.isNull(boRepository)) {
             throw new Error(i18n.prop("msg_invalid_parameter", "boRepository"));
         }
         boRepository.save(boName, caller);

@@ -31,8 +31,8 @@ export class LoginApp extends sys.LoginApp<ILoginView> {
             dataType: "json",
             async: true,
             success: function (data: any): void {
-                if (!ibas.object.isNull(data)
-                    && !ibas.object.isNull(data.languages)
+                if (!ibas.objects.isNull(data)
+                    && !ibas.objects.isNull(data.languages)
                     && Array.isArray(data.languages)) {
                     that.view.displayLanguages(data.languages);
                     that.view.language = ibas.i18n.language;

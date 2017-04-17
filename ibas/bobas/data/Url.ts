@@ -6,7 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { object } from "./Data";
+import { objects } from "./Data";
 
 /**
  * 地址
@@ -20,7 +20,7 @@ export module url {
     export const CURRENT_URL_SIGN: string = "./";
     /** 正常化地址 */
     export function normalize(value: string): string {
-        if (object.isNull(value)) {
+        if (objects.isNull(value)) {
             return null;
         }
         let url: string;
@@ -81,7 +81,7 @@ export module url {
                     if (url.startsWith("http")) {
                         url = normalize(url);
                     } else {
-                        if (object.isNull(script.baseURI)) {
+                        if (objects.isNull(script.baseURI)) {
                             // 有的浏览器，不存在此属性
                             url = normalize(window.document.location.href + script.src);
                         } else {

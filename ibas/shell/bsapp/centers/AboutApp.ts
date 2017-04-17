@@ -33,10 +33,10 @@ export class AboutApp extends sys.AboutApp<IAboutView> {
             async: false,
             cache: false,
             error: function (xhr: JQueryXHR, status: string, error: string): void {
-                console.warn(ibas.string.format("about: get version file [{2}] faild [{0} - {1}].", status, error, address));
+                console.warn(ibas.strings.format("about: get version file [{2}] faild [{0} - {1}].", status, error, address));
             },
             success: function (data: any): void {
-                console.log(ibas.string.format("about: get version file [{0}] successful.", address));
+                console.log(ibas.strings.format("about: get version file [{0}] successful.", address));
                 if (data !== undefined && data !== null) {
                     that.view.showVersions(data);
                 }

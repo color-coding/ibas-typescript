@@ -86,7 +86,7 @@ let fetcher: bobas.FetchCaller<SalesOrder> = {
      * @param opRslt 结果
      */
     onCompleted(opRslt: bobas.IOperationResult<SalesOrder>): void {
-        bobas.logger.log(bobas.string.format("op code {0} and objects size {1}.", opRslt.resultCode, opRslt.resultObjects.length));
+        bobas.logger.log(bobas.strings.format("op code {0} and objects size {1}.", opRslt.resultCode, opRslt.resultObjects.length));
     }
 }
 boRepository.fetchSalesOrder(fetcher);
@@ -100,7 +100,7 @@ boRepository.saveSalesOrder({
      * @param opRslt 结果
      */
     onCompleted(opRslt: bobas.IOperationResult<SalesOrder>): void {
-        bobas.logger.log(bobas.string.format("op code {0} and objects size {1}.", opRslt.resultCode, opRslt.resultObjects.length));
+        bobas.logger.log(bobas.strings.format("op code {0} and objects size {1}.", opRslt.resultCode, opRslt.resultObjects.length));
         let newOrder = opRslt.resultObjects.firstOrDefault();
         bobas.assert.equals("order document status wrong.", order.documentStatus, newOrder.documentStatus);
     }
@@ -111,7 +111,7 @@ boRepository.address = bobas.url.rootUrl(undefined) + "/../../repository";
 boRepository.fetchSalesOrder({
     criteria: criteria,
     onCompleted(opRslt: bobas.IOperationResult<SalesOrder>): void {
-        bobas.logger.log(bobas.string.format("op code {0} and objects size {1}.", opRslt.resultCode, opRslt.resultObjects.length));
+        bobas.logger.log(bobas.strings.format("op code {0} and objects size {1}.", opRslt.resultCode, opRslt.resultObjects.length));
     }
 });
 

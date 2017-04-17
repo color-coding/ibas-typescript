@@ -7,7 +7,7 @@
  */
 
 import {
-    object, ICriteria, Criteria, ICondition, i18n, IOperationResult,
+    objects, ICriteria, Criteria, ICondition, i18n, IOperationResult,
     config, ISort, emSortType, emConditionOperation, ArrayList, BarApplication,
     emMessageType, variablesManager,VariablesManager
 } from "ibas/index";
@@ -76,9 +76,9 @@ export abstract class QueryPanel<T extends IQueryPanelView> extends BarApplicati
     }
     protected get targetName(): string {
         let boName: any = null;
-        if (!object.isNull(this.listener.queryTarget)) {
+        if (!objects.isNull(this.listener.queryTarget)) {
             boName = this.listener.queryTarget;
-            if (!object.isNull(boName) && typeof boName !== "string" && !object.isNull(boName.name)) {
+            if (!objects.isNull(boName) && typeof boName !== "string" && !objects.isNull(boName.name)) {
                 // 如果目标是对象，则使用其名称
                 boName = boName.name;
             }
@@ -87,7 +87,7 @@ export abstract class QueryPanel<T extends IQueryPanelView> extends BarApplicati
     }
     protected queries: ArrayList<IUserQuery>;
     protected currentQuery(): IUserQuery {
-        if (!object.isNull(this.queries)) {
+        if (!objects.isNull(this.queries)) {
             for (let index: number = 0; index < this.queries.length; index++) {
                 if (index.toString() === this.view.usingQuery) {
                     return this.queries[index];
@@ -99,10 +99,10 @@ export abstract class QueryPanel<T extends IQueryPanelView> extends BarApplicati
     protected currentCriteria(): ICriteria {
         let query: IUserQuery = this.currentQuery();
         let criteria: ICriteria;
-        if (!object.isNull(query)) {
+        if (!objects.isNull(query)) {
             criteria = query.criteria;
         }
-        if (object.isNull(criteria)) {
+        if (objects.isNull(criteria)) {
             criteria = new Criteria();
         }
         return criteria;
@@ -117,18 +117,18 @@ export abstract class QueryPanel<T extends IQueryPanelView> extends BarApplicati
         }
         // 给查询条件赋值
         for (let item of criteria.conditions) {
-            if (object.isNull(item.value)) {
+            if (objects.isNull(item.value)) {
                 item.value = this.view.searchContent;
             }
         }
         // 没有排序条件，尝试添加
         if (criteria.sorts.length === 0) {
-            if (!object.isNull(this.listener.queryTarget)) {
-                if (!object.isNull(this.listener.queryTarget.DocEntry)) {
+            if (!objects.isNull(this.listener.queryTarget)) {
+                if (!objects.isNull(this.listener.queryTarget.DocEntry)) {
                     let sort: ISort = criteria.sorts.create();
                     sort.alias = "DocEntry";
                     sort.sortType = emSortType.DESCENDING;
-                } else if (!object.isNull(this.listener.queryTarget.ObjectKey)) {
+                } else if (!objects.isNull(this.listener.queryTarget.ObjectKey)) {
                     let sort: ISort = criteria.sorts.create();
                     sort.alias = "ObjectKey";
                     sort.sortType = emSortType.DESCENDING;
@@ -137,9 +137,9 @@ export abstract class QueryPanel<T extends IQueryPanelView> extends BarApplicati
         }
         // 没有查询条件，尝试从注册信息添加
         let that = this;
-        if (criteria.conditions.length === 0 && !object.isNull(this.listener.queryTarget)) {
+        if (criteria.conditions.length === 0 && !objects.isNull(this.listener.queryTarget)) {
             let boName: string = this.targetName;
-            if (!object.isNull(boName)) {
+            if (!objects.isNull(boName)) {
                 let boRepository = Factories.systemsFactory.createRepository();
                 boRepository.fetchBOInfos({
                     boCode: null,
@@ -170,7 +170,7 @@ export abstract class QueryPanel<T extends IQueryPanelView> extends BarApplicati
     }
     /** 通知查询事件 */
     protected fireQuery(criteria: ICriteria): void {
-        if (!object.isNull(this.listener)) {
+        if (!objects.isNull(this.listener)) {
             this.listener.query(criteria);
         }
         this.busy(false);

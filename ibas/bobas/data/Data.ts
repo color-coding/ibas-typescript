@@ -9,7 +9,7 @@ import { i18n } from "../i18n/index";
 /**
  * 对象
  */
-export module object {
+export module objects {
     /**
      * 是否为空
      * @param object 判断对象
@@ -83,7 +83,7 @@ export module object {
      * @param type 类型
      */
     export function getName(type: any): any {
-        if (object.isNull(type)) {
+        if (objects.isNull(type)) {
             return undefined;
         }
         return type.name;
@@ -113,7 +113,7 @@ export module enums {
      * @returns 枚举值，失败为undefined
      */
     export function valueOf(type: any, value: any): number {
-        if (object.isNull(type) || object.isNull(value)) {
+        if (objects.isNull(type) || objects.isNull(value)) {
             return undefined;
         }
         for (let item in type) {
@@ -144,7 +144,7 @@ export module enums {
      * @returns 首先语言，然后枚举，最后原始
      */
     export function describe(type: any, value: any): string {
-        if (object.isNull(type) || object.isNull(value)) {
+        if (objects.isNull(type) || objects.isNull(value)) {
             return value;
         }
         // 获取枚举值
@@ -155,7 +155,7 @@ export module enums {
         let dValue: string = sValue;
         // 获取枚举名称
         let name: string = "em_";// type.name;
-        if (!object.isNull(name)) {
+        if (!objects.isNull(name)) {
             dValue = i18n.prop((name + sValue).toLowerCase());
             if (dValue.startsWith("[") && dValue.endsWith("]")) {
                 // 没有找到语言描述
@@ -184,32 +184,32 @@ export module dates {
         let date: string = tmps[0];
         let time: string = tmps[1];
         let year: number = 0, month: number = 0, day: number = 0, hour: number = 0, minute: number = 0, second: number = 0;
-        if (!object.isNull(date)) {
+        if (!objects.isNull(date)) {
             let spChar: string = "-";
             if (date.indexOf("/") > 0) {
                 spChar = "/";
             }
             tmps = date.split(spChar);
-            if (!object.isNull(tmps[0])) {
+            if (!objects.isNull(tmps[0])) {
                 year = Number.parseInt(tmps[0]);
             }
-            if (!object.isNull(tmps[1])) {
+            if (!objects.isNull(tmps[1])) {
                 month = Number.parseInt(tmps[1]);
             }
-            if (!object.isNull(tmps[2])) {
+            if (!objects.isNull(tmps[2])) {
                 day = Number.parseInt(tmps[2]);
             }
         }
-        if (!object.isNull(time)) {
+        if (!objects.isNull(time)) {
             let spChar: string = ":";
             tmps = time.split(spChar);
-            if (!object.isNull(tmps[0])) {
+            if (!objects.isNull(tmps[0])) {
                 hour = Number.parseInt(tmps[0]);
             }
-            if (!object.isNull(tmps[1])) {
+            if (!objects.isNull(tmps[1])) {
                 minute = Number.parseInt(tmps[1]);
             }
-            if (!object.isNull(tmps[2])) {
+            if (!objects.isNull(tmps[2])) {
                 second = Number.parseInt(tmps[2]);
             }
         }

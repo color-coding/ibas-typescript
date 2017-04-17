@@ -6,7 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { object, ArrayList, Criteria, Condition, emConditionOperation } from "../../bobas/index";
+import { objects, ArrayList, Criteria, Condition, emConditionOperation } from "../../bobas/index";
 import { IBOChooseView } from "./Applications.d";
 import { BOQueryApplication } from "./Applications";
 import { IBOChooseService, IBOChooseServiceContract } from "../services/index";
@@ -37,10 +37,10 @@ export abstract class BOChooseService<T extends IBOChooseView, D> extends BOChoo
     static CONFIG_ITEM_AUTO_CHOOSE_DATA = "autoChooseData";
     /** 运行 */
     run(...args: any[]): void {
-        if (!object.isNull(args) && args.length === 1) {
+        if (!objects.isNull(args) && args.length === 1) {
             // 判断是否为选择契约
             let contract: IBOChooseServiceContract = args[0];
-            if (!object.isNull(contract.boCode) && contract.boCode === this.boCode) {
+            if (!objects.isNull(contract.boCode) && contract.boCode === this.boCode) {
                 // 选择契约且为此应用
                 this.onCompleted = contract.onCompleted;
                 // 分析查询条件
@@ -52,13 +52,13 @@ export abstract class BOChooseService<T extends IBOChooseView, D> extends BOChoo
                     for (let item of contract.criteria) {
                         if (item instanceof Condition) {
                             // 过滤无效查询条件
-                            if (object.isNull(item.alias) || item.alias.length === 0) {
+                            if (objects.isNull(item.alias) || item.alias.length === 0) {
                                 continue;
                             }
                             if (item.operation === emConditionOperation.IS_NULL
                                 || item.operation === emConditionOperation.NOT_NULL
-                                || (object.isNull(item.value) && item.value.length > 0)
-                                || (object.isNull(item.comparedAlias) && item.comparedAlias.length > 0)
+                                || (objects.isNull(item.value) && item.value.length > 0)
+                                || (objects.isNull(item.comparedAlias) && item.comparedAlias.length > 0)
                             ) {
                                 criteria.conditions.add(item);
                             }
@@ -66,7 +66,7 @@ export abstract class BOChooseService<T extends IBOChooseView, D> extends BOChoo
                     }
                 }
                 // 存在查询，则直接触发查询事件
-                if (!object.isNull(criteria) && criteria.conditions.length > 0) {
+                if (!objects.isNull(criteria) && criteria.conditions.length > 0) {
                     this.fetchData(criteria);
                     // 进入查询，不在执行后部分
                     return;
@@ -81,7 +81,7 @@ export abstract class BOChooseService<T extends IBOChooseView, D> extends BOChoo
     private fireCompleted(selecteds: D[] | D): void {
         // 关闭视图
         this.close();
-        if (object.isNull(this.onCompleted)) {
+        if (objects.isNull(this.onCompleted)) {
             return;
         }
         // 转换返回类型

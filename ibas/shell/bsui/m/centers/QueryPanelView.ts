@@ -23,7 +23,7 @@ export class QueryPanelView extends cQueryPanelView implements IQueryPanelView {
     /** 显示查询条件 */
     showQueryConditions(datas: ibas.ICondition[]): void {
         let that = this;
-        if (ibas.object.isNull(this.list)) {
+        if (ibas.objects.isNull(this.list)) {
             // 尚未初始化表格
             this.list = new sap.m.List("", {
                 inset: true,
@@ -34,14 +34,14 @@ export class QueryPanelView extends cQueryPanelView implements IQueryPanelView {
             });
             this.form.addContent(this.list);
             // 获取列描述
-            if (!ibas.object.isNull(this.boName)) {
+            if (!ibas.objects.isNull(this.boName)) {
                 let boRepository: sys.IBORepositorySystem = sys.Factories.systemsFactory.createRepository();
                 boRepository.fetchBOInfos({
                     boName: this.boName,
                     boCode: null,
                     onCompleted(opRslt: ibas.IOperationResult<sys.IBOInfo>): void {
                         let boInfo: sys.IBOInfo = opRslt.resultObjects.firstOrDefault();
-                        if (ibas.object.isNull(boInfo)) {
+                        if (ibas.objects.isNull(boInfo)) {
                             that.properies = boInfo.properties;
                         }
                         // 查询完列，回调显示数据

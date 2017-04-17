@@ -10,7 +10,7 @@
  * 模块索引文件，此文件集中导出类
  */
 /// <reference path="../../3rdparty/index.d.ts" />
-import { string } from "../data/index";
+import { strings } from "../data/index";
 
 /**
  * 配置
@@ -35,10 +35,10 @@ export class Configuration {
             async: false,
             cache: false,
             error: function (xhr: JQueryXHR, status: string, error: string): void {
-                console.warn(string.format("config: get config file [{2}] faild [{0} - {1}].", status, error, address));
+                console.warn(strings.format("config: get config file [{2}] faild [{0} - {1}].", status, error, address));
             },
             success: function (data: any): void {
-                console.log(string.format("config: get config file [{0}] successful.", address));
+                console.log(strings.format("config: get config file [{0}] successful.", address));
                 if (data !== undefined && data !== null) {
                     if (data.appSettings !== undefined && data.appSettings !== null) {
                         let setting: any = data.appSettings;
@@ -85,7 +85,7 @@ export class Configuration {
     get<T>(...args: any[]): T {
         let key: string, defalut: T, type: any;
         if (args.length === 0) {
-            throw new Error(string.format("invaild param."));
+            throw new Error(strings.format("invaild param."));
         }
         // 配置项参数
         key = args[0];
@@ -108,7 +108,7 @@ export class Configuration {
                     if (type !== undefined) {
                         // 提供了转换参数
                         for (let item in type) {
-                            if (string.equalsIgnoreCase(value, item)) {
+                            if (strings.equalsIgnoreCase(value, item)) {
                                 return type[item];
                             }
                         }
@@ -122,7 +122,7 @@ export class Configuration {
                 return defalut;
             }
         }
-        console.warn(string.format("unable to get valid value for [{0}].", key));
+        console.warn(strings.format("unable to get valid value for [{0}].", key));
         return undefined;
     }
 }

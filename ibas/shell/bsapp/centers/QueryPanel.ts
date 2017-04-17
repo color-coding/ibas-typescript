@@ -33,7 +33,7 @@ export class QueryPanel extends sys.QueryPanel<IQueryPanelView>  {
     /** 视图显示后 */
     protected viewShowed(): void {
         this.editQuery = <UserQuery>this.currentQuery();
-        if (ibas.object.isNull(this.editQuery)) {
+        if (ibas.objects.isNull(this.editQuery)) {
             this.editQuery = new UserQuery();
             this.editQuery.id = this.id;
             this.editQuery.name = ibas.i18n.prop("sys_shell_ui_data_new") + ibas.i18n.prop("sys_query_panel");
@@ -42,7 +42,7 @@ export class QueryPanel extends sys.QueryPanel<IQueryPanelView>  {
             this.showQueries();
             this.view.usingQuery = (this.queries.length - 1).toString();
         }
-        if (ibas.object.isNull(this.editQuery.criteria)) {
+        if (ibas.objects.isNull(this.editQuery.criteria)) {
             this.editQuery.criteria = new ibas.Criteria();
         }
         this.view.showQuery(this.editQuery);
@@ -54,7 +54,7 @@ export class QueryPanel extends sys.QueryPanel<IQueryPanelView>  {
     }
 
     private showQueries(): void {
-        if (ibas.object.isNull(this.queries)) {
+        if (ibas.objects.isNull(this.queries)) {
             return;
         }
         let keyValues: Array<ibas.KeyValue> = new Array<ibas.KeyValue>();
@@ -94,7 +94,7 @@ export class QueryPanel extends sys.QueryPanel<IQueryPanelView>  {
                         }
                         that.messages(ibas.emMessageType.SUCCESS, ibas.i18n.prop("sys_shell_ui_sucessful"));
                         // 操作成功，刷新数据，关闭界面
-                        if (ibas.object.isNull(that.editQuery.criteria)) {
+                        if (ibas.objects.isNull(that.editQuery.criteria)) {
                             // 没查询，表示删除
                             that.queries.remove(that.editQuery);
                             that.barShowed();

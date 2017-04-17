@@ -26,7 +26,7 @@ export class DemoFunc extends ibas.ModuleFunction {
         // 获取根地址
         let rootUrl: string = ibas.url.rootUrl(DemoFunc.ROOT_FILE_NAME);
         // 加载语言-框架默认
-        ibas.i18n.load(ibas.string.format("{0}/resources/languages/bo/salesorder.json", rootUrl, ibas.i18n.language));
+        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/salesorder.json", rootUrl, ibas.i18n.language));
         let app: DemoListApp = new DemoListApp();
         app.navigation = this.navigation;
         return app;

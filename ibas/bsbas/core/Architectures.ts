@@ -7,7 +7,7 @@
  */
 
 import {
-    List, ArrayList, object, i18n, string, uuid,
+    List, ArrayList, objects, i18n, strings, uuid,
     config
 } from "../../bobas/index";
 import { emPlantform } from "../data/index";
@@ -36,22 +36,22 @@ export class Module extends Element implements IModule {
     private _functions: List<IFunction>;
     /** 功能集合 */
     functions(): IFunction[] {
-        if (object.isNull(this._functions)) {
+        if (objects.isNull(this._functions)) {
             this._functions = new ArrayList<IFunction>();
         }
         return this._functions;
     }
     /** 注册功能 */
     protected register(item: IFunction): void {
-        if (object.isNull(item)) { return; };
-        if (object.isNull(this._functions)) {
+        if (objects.isNull(item)) { return; };
+        if (objects.isNull(this._functions)) {
             this._functions = new ArrayList<IFunction>();
         }
         this._functions.add(item);
     }
 }
 /** 模块-功能 */
-export class Functions extends Element implements IFunction {
+export abstract class AbstractFunction extends Element implements IFunction {
     constructor() {
         super();
     }
@@ -70,12 +70,12 @@ export abstract class AbstractApplication<T extends IView> extends Element imple
     private _view: T;
     /** 应用的视图 */
     get view(): T {
-        if (object.isNull(this._view)) {
-            if (object.isNull(this.navigation)) {
+        if (objects.isNull(this._view)) {
+            if (objects.isNull(this.navigation)) {
                 throw new Error(i18n.prop("msg_invalid_view_navigation", this.id));
             }
             this._view = <T>this.navigation.create(this);
-            if (object.isNull(this._view)) {
+            if (objects.isNull(this._view)) {
                 throw new Error(i18n.prop("msg_invalid_view", this.id));
             }
             this._view.application = this;
@@ -85,7 +85,7 @@ export abstract class AbstractApplication<T extends IView> extends Element imple
     }
     /** 视图是否已显示 */
     isViewShowed(): boolean {
-        if (object.isNull(this._view)) {
+        if (objects.isNull(this._view)) {
             return false;
         }
         if (this._view.isDisplayed) {
@@ -171,7 +171,7 @@ export abstract class ModuleConsole extends Module implements IModuleConsole {
     private listeners: Array<Function>;
     /** 添加初始化完成监听 */
     addListener(listener: Function): void {
-        if (object.isNull(this.listeners)) {
+        if (objects.isNull(this.listeners)) {
             this.listeners = new Array<Function>();
         }
         this.listeners.push(listener);
@@ -186,7 +186,7 @@ export abstract class ModuleConsole extends Module implements IModuleConsole {
     /** 初始化完成，需要手工调用 */
     protected fireInitialized(): void {
         this.isInitialized = true;
-        if (object.isNull(this.listeners)) {
+        if (objects.isNull(this.listeners)) {
             return;
         }
         for (let listener of this.listeners) {
@@ -202,7 +202,7 @@ export abstract class ModuleConsole extends Module implements IModuleConsole {
     /** 运行，重载后必须保留基类调用 */
     run(): void {
         // 修正模块图标
-        if (object.isNull(this.icon) || this.icon.length === 0) {
+        if (objects.isNull(this.icon) || this.icon.length === 0) {
             this.icon = config.get(ModuleConsole.CONFIG_ITEM_DEFALUT_MODULE_ICON);
         }
     }
@@ -213,7 +213,7 @@ export abstract class ModuleConsole extends Module implements IModuleConsole {
     private _applications: ArrayList<IApplication<IView>>;
     /** 已实例应用集合 */
     applications(): IApplication<IView>[] {
-        if (object.isNull(this._applications)) {
+        if (objects.isNull(this._applications)) {
             this._applications = new ArrayList<IApplication<IView>>();
         }
         return this._applications;
@@ -232,12 +232,12 @@ export abstract class ModuleConsole extends Module implements IModuleConsole {
             item.id = uuid.random();
             item.navigation = this.navigation();
             super.register(item);
-        } else if (item instanceof Functions) {
+        } else if (item instanceof AbstractFunction) {
             // 注册功能
             super.register(item);
         } else if (item instanceof AbstractApplication) {
             // 注册应用
-            if (object.isNull(this._applications)) {
+            if (objects.isNull(this._applications)) {
                 this._applications = new ArrayList<IApplication<IView>>();
             }
             item.navigation = this.navigation();
@@ -256,7 +256,7 @@ export abstract class ModuleConsole extends Module implements IModuleConsole {
     }
 }
 /** 模块控制台 */
-export abstract class ModuleFunction extends Functions implements IModuleFunction {
+export abstract class ModuleFunction extends AbstractFunction implements IModuleFunction {
     /** 图标 */
     icon: string;
     /** 创建视图导航 */
@@ -283,17 +283,17 @@ export abstract class ViewNavigation implements IViewNavigation {
         let id: string = null;
         if (typeof data === "string") {
             id = data;
-        } else if (!object.isNull(data) && !object.isNull(data.id)) {
+        } else if (!objects.isNull(data) && !objects.isNull(data.id)) {
             id = data.id;
         }
-        if (object.isNull(id)) {
+        if (objects.isNull(id)) {
             throw new Error(i18n.prop("msg_invalid_parameter", "view id"));
         }
         let view: IView = this.newView(id);
-        if (object.isNull(view)) {
+        if (objects.isNull(view)) {
             throw new Error(i18n.prop("msg_invalid_view", id));
         }
-        view.id = string.format("{0} - {1}", id, uuid.random());
+        view.id = strings.format("{0} - {1}", id, uuid.random());
         return view;
     }
 

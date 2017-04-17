@@ -20,7 +20,7 @@ export class BORepositoryDemo extends ibas.BORepositoryApplication {
      * 创建此模块的后端与前端数据的转换者
      */
     protected createConverter(): ibas.IDataConverter {
-        if (ibas.object.isNull(this.converter)) {
+        if (ibas.objects.isNull(this.converter)) {
             this.converter = new DataConverter4Demo();
         }
         return this.converter;

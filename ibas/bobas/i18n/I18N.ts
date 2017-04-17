@@ -10,7 +10,7 @@
  * 模块索引文件，此文件集中导出类
  */
 /// <reference path="../../3rdparty/jquery.d.ts" />
-import { emMessageLevel, object, string, url } from "../data/index";
+import { emMessageLevel, objects, strings, url } from "../data/index";
 import { config } from "../configuration/index";
 import { logger } from "../messages/index";
 /** 多语言 */
@@ -20,7 +20,7 @@ export class I18N {
 
     private _language: string;
     get language(): string {
-        if (string.isEmpty(this._language)) {
+        if (strings.isEmpty(this._language)) {
             this._language = config.get(I18N.CONFIG_ITEM_LANGUAGE_CODE, "zh_CN");
         }
         return this._language;
@@ -37,15 +37,15 @@ export class I18N {
      * @param args 替代内容
      */
     prop(key: string, ...args: any[]): string {
-        if (object.isNull(this.items)) {
+        if (objects.isNull(this.items)) {
             // 没有初始化则加载
             this.items = new Map<string, string>();
             this.load(null);
         }
         if (this.items.has(key)) {
-            return string.format(this.items.get(key), args);
+            return strings.format(this.items.get(key), args);
         }
-        return string.format("[{0}]", key);
+        return strings.format("[{0}]", key);
     }
 
     private languageFiles: Array<string> = new Array<string>();
@@ -57,7 +57,7 @@ export class I18N {
     }
     load(address: string): void {
         let that = this;
-        if (object.isNull(address)) {
+        if (objects.isNull(address)) {
             return;
         }
         if (!address.startsWith("http")) {
@@ -79,7 +79,7 @@ export class I18N {
                 // 记录到列表
                 this.languageFiles.push(address.valueOf());
             }
-            address = string.format(address, this.language);
+            address = strings.format(address, this.language);
         }
         var JQryAjxSetting: JQueryAjaxSettings = {
             url: address,
@@ -94,7 +94,7 @@ export class I18N {
             success: function (data: any): void {
                 logger.log(emMessageLevel.DEBUG, "i18n: get language file [{0}] sucessful.", address);
                 if (data !== undefined && data !== null) {
-                    if (object.isNull(that.items)) { that.items = new Map<string, string>(); }
+                    if (objects.isNull(that.items)) { that.items = new Map<string, string>(); }
                     for (let name in data) {
                         if (data[name] !== undefined) {
                             that.items.set(name, data[name]);

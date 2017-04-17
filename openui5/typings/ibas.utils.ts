@@ -5,17 +5,14 @@
 
 /// <reference path="./sap.ui.d.ts" />
 /// <reference path="../../ibas/index.ts" />
-import {
-    i18n, string, object, List, ArrayList, emMessageAction, emMessageType,
-    enums
-} from "ibas/index";
+import * as ibas from "ibas/index";
 
 export namespace utils {
     export function createComboBoxItems(data: any): sap.ui.core.Item[] {
         // 首先获取枚举内容
         let map = new Map<string, string>();
         for (let item in data) {
-            if (object.isNull(item)) {
+            if (ibas.objects.isNull(item)) {
                 continue;
             }
             let key: any = item;
@@ -34,14 +31,14 @@ export namespace utils {
             let key: any = item[0];
             items.push(new sap.ui.core.Item("", {
                 key: key,
-                text: enums.describe(data, item[1])
+                text: ibas.enums.describe(data, item[1])
             }));
         }
         return items;
     }
     /** 获取表格选中的对象 */
     export function resizeTable<T>(table: sap.ui.table.Table): void {
-        if (object.isNull(table)) {
+        if (ibas.objects.isNull(table)) {
             return;
         }
         for (let i: number = 1; i < table.getColumns().length; i++) {
@@ -49,8 +46,8 @@ export namespace utils {
         }
     }
     /** 获取表格选中的对象 */
-    export function getTableSelecteds<T>(table: sap.ui.table.Table): List<T> {
-        let selecteds: List<T> = new ArrayList<T>();
+    export function getTableSelecteds<T>(table: sap.ui.table.Table): ibas.List<T> {
+        let selecteds: ibas.List<T> = new ibas.ArrayList<T>();
         var idxs: any[] = table.getSelectedIndices();
         if (idxs.length > 0) {
             for (var i = 0; i < idxs.length; i++) {
@@ -60,55 +57,55 @@ export namespace utils {
         return selecteds;
     }
     /** 回转消息框值 */
-    export function toMessageAction(data: any): emMessageAction {
+    export function toMessageAction(data: any): ibas.emMessageAction {
         switch (data) {
             case sap.m.MessageBox.Action.ABORT:
-                return emMessageAction.ABORT;
+                return ibas.emMessageAction.ABORT;
             case sap.m.MessageBox.Action.CANCEL:
-                return emMessageAction.CANCEL;
+                return ibas.emMessageAction.CANCEL;
             case sap.m.MessageBox.Action.CLOSE:
-                return emMessageAction.CLOSE;
+                return ibas.emMessageAction.CLOSE;
             case sap.m.MessageBox.Action.DELETE:
-                return emMessageAction.DELETE;
+                return ibas.emMessageAction.DELETE;
             case sap.m.MessageBox.Action.IGNORE:
-                return emMessageAction.IGNORE;
+                return ibas.emMessageAction.IGNORE;
             case sap.m.MessageBox.Action.NO:
-                return emMessageAction.NO;
+                return ibas.emMessageAction.NO;
             case sap.m.MessageBox.Action.RETRY:
-                return emMessageAction.RETRY;
+                return ibas.emMessageAction.RETRY;
             case sap.m.MessageBox.Action.YES:
-                return emMessageAction.YES;
+                return ibas.emMessageAction.YES;
             default:
-                return emMessageAction.OK;
+                return ibas.emMessageAction.OK;
         }
     }
     /** 转换消息框动作值 */
-    export function toMessageBoxAction(data: emMessageAction): any;
+    export function toMessageBoxAction(data: ibas.emMessageAction): any;
     /** 转换消息框动作值 */
-    export function toMessageBoxAction(datas: emMessageAction[]): any;
+    export function toMessageBoxAction(datas: ibas.emMessageAction[]): any;
     /** 转换消息框动作值 */
     export function toMessageBoxAction(): any {
         let data: any = arguments[0];
-        if (object.isNull(data)) {
+        if (ibas.objects.isNull(data)) {
             return undefined;
         }
-        var toValue: Function = function (data: emMessageAction): any {
+        var toValue: Function = function (data: ibas.emMessageAction): any {
             switch (data) {
-                case emMessageAction.ABORT:
+                case ibas.emMessageAction.ABORT:
                     return sap.m.MessageBox.Action.ABORT;
-                case emMessageAction.CANCEL:
+                case ibas.emMessageAction.CANCEL:
                     return sap.m.MessageBox.Action.CANCEL;
-                case emMessageAction.CLOSE:
+                case ibas.emMessageAction.CLOSE:
                     return sap.m.MessageBox.Action.CLOSE;
-                case emMessageAction.DELETE:
+                case ibas.emMessageAction.DELETE:
                     return sap.m.MessageBox.Action.DELETE;
-                case emMessageAction.IGNORE:
+                case ibas.emMessageAction.IGNORE:
                     return sap.m.MessageBox.Action.IGNORE;
-                case emMessageAction.NO:
+                case ibas.emMessageAction.NO:
                     return sap.m.MessageBox.Action.NO;
-                case emMessageAction.RETRY:
+                case ibas.emMessageAction.RETRY:
                     return sap.m.MessageBox.Action.RETRY;
-                case emMessageAction.YES:
+                case ibas.emMessageAction.YES:
                     return sap.m.MessageBox.Action.YES;
                 default:
                     return sap.m.MessageBox.Action.OK;
@@ -125,17 +122,17 @@ export namespace utils {
         }
     }
     /** 转换消息类型值  */
-    export function toMessageBoxIcon(data: emMessageType): any {
+    export function toMessageBoxIcon(data: ibas.emMessageType): any {
         switch (data) {
-            case emMessageType.ERROR:
+            case ibas.emMessageType.ERROR:
                 return sap.m.MessageBox.Icon.ERROR;
-            case emMessageType.INFORMATION:
+            case ibas.emMessageType.INFORMATION:
                 return sap.m.MessageBox.Icon.INFORMATION;
-            case emMessageType.QUESTION:
+            case ibas.emMessageType.QUESTION:
                 return sap.m.MessageBox.Icon.QUESTION;
-            case emMessageType.SUCCESS:
+            case ibas.emMessageType.SUCCESS:
                 return sap.m.MessageBox.Icon.SUCCESS;
-            case emMessageType.WARNING:
+            case ibas.emMessageType.WARNING:
                 return sap.m.MessageBox.Icon.WARNING;
             default:
                 return sap.m.MessageBox.Icon.NONE;

@@ -18,7 +18,7 @@ import { UserQuery } from "../../../borep/bo/Systems";
 export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView {
     /** 绘制工具条视图 */
     darwBar(): any {
-        if (ibas.object.isNull(this.bar)) {
+        if (ibas.objects.isNull(this.bar)) {
             let that: this = this;
             this.search = new sap.m.SearchField("", {
                 search: function (): void {
@@ -98,9 +98,9 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
     protected boName: string;
     /** 显示查询条件 */
     showQueryConditions(datas: ibas.ICondition[]): void {
-        if (ibas.object.isNull(this.table)) {
+        if (ibas.objects.isNull(this.table)) {
             // 尚未初始化表格
-            if (!ibas.object.isNull(this.boName)) {
+            if (!ibas.objects.isNull(this.boName)) {
                 let that = this;
                 let boRepository: sys.IBORepositorySystem = sys.Factories.systemsFactory.createRepository();
                 boRepository.fetchBOInfos({
@@ -108,7 +108,7 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
                     boCode: null,
                     onCompleted(opRslt: ibas.IOperationResult<sys.IBOInfo>): void {
                         let boInfo: sys.IBOInfo = opRslt.resultObjects.firstOrDefault();
-                        if (ibas.object.isNull(boInfo)) {
+                        if (ibas.objects.isNull(boInfo)) {
                             that.table = that.createTable([]);
                             that.form.addContent(that.table);
                         } else {
@@ -178,7 +178,7 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
     private table: sap.ui.table.Table;
     protected getPropertyListItem(properies: sys.IBOPropertyInfo[]): sap.ui.core.ListItem[] {
         let items: Array<sap.ui.core.ListItem> = [];
-        if (!ibas.object.isNull(properies)) {
+        if (!ibas.objects.isNull(properies)) {
             for (let property of properies) {
                 items.push(new sap.ui.core.ListItem("", {
                     key: property.property,

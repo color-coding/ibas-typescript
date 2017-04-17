@@ -46,7 +46,7 @@ export class DemoViewApp extends ibas.BOViewService<IDemoViewView> {
     }
     protected viewData: bo.SalesOrder;
     run(...args: any[]): void {
-        if (!ibas.object.isNull(args) && args.length === 1 && args[0] instanceof bo.SalesOrder) {
+        if (!ibas.objects.isNull(args) && args.length === 1 && args[0] instanceof bo.SalesOrder) {
             this.viewData = args[0];
             this.show();
         } else {

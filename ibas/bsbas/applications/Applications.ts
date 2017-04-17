@@ -7,7 +7,7 @@
  */
 
 import {
-    i18n, object, logger, emMessageLevel, ICriteria, config
+    i18n, objects, logger, emMessageLevel, ICriteria, config
 } from "../../bobas/index";
 import { AbstractApplication, IView, IBarView, IMessgesCaller } from "../core/index";
 import { emMessageType } from "../data/index";
@@ -25,8 +25,8 @@ export abstract class Application<T extends IView> extends AbstractApplication<T
     }
     /** 显示视图 */
     show(): void {
-        if (!object.isNull(this.viewShower)) {
-            if (object.isNull(this.view)) {
+        if (!objects.isNull(this.viewShower)) {
+            if (objects.isNull(this.view)) {
                 throw new Error(i18n.prop("msg_invalid_view", this.name));
             }
             if (this.view.isDisplayed) {
@@ -34,7 +34,7 @@ export abstract class Application<T extends IView> extends AbstractApplication<T
                 this.proceeding(emMessageType.WARNING, i18n.prop("msg_application_view_was_displayed", this.name));
                 return;
             }
-            if (!object.isNull(this.description)) {
+            if (!objects.isNull(this.description)) {
                 this.view.title = this.description;
             } else {
                 this.view.title = this.name;
@@ -57,7 +57,7 @@ export abstract class Application<T extends IView> extends AbstractApplication<T
     }
     /** 视图显示后 */
     private afterViewShow(): void {
-        if (object.isNull(this.view)) {
+        if (objects.isNull(this.view)) {
             throw new Error(i18n.prop("msg_invalid_view", this.name));
         }
         this.view.isDisplayed = true;
@@ -72,8 +72,8 @@ export abstract class Application<T extends IView> extends AbstractApplication<T
     protected abstract viewShowed(): void;
     /** 关闭视图 */
     close(): void {
-        if (!object.isNull(this.view)) {
-            if (!object.isNull(this.viewShower)) {
+        if (!objects.isNull(this.view)) {
+            if (!objects.isNull(this.viewShower)) {
                 this.viewShower.destroy(this.view);
             }
         }
@@ -90,7 +90,7 @@ export abstract class Application<T extends IView> extends AbstractApplication<T
         }
         let busy: boolean = arguments[0];
         let msg: string = arguments[1];
-        if (!object.isNull(this.viewShower)) {
+        if (!objects.isNull(this.viewShower)) {
             this.viewShower.busy(this.view, busy, msg);
         } else {
             throw new Error(i18n.prop("msg_invalid_view_shower", this.name));
@@ -110,7 +110,7 @@ export abstract class Application<T extends IView> extends AbstractApplication<T
             type = arguments[0];
             msg = arguments[1];
         }
-        if (!object.isNull(this.viewShower)) {
+        if (!objects.isNull(this.viewShower)) {
             this.viewShower.proceeding(this.view, type, msg);
         } else {
             throw new Error(i18n.prop("msg_invalid_view_shower", this.name));
@@ -158,7 +158,7 @@ export abstract class Application<T extends IView> extends AbstractApplication<T
                 message: arguments[1]
             };
         }
-        if (!object.isNull(this.viewShower)) {
+        if (!objects.isNull(this.viewShower)) {
             this.viewShower.messages(caller);
         } else {
             throw new Error(i18n.prop("msg_invalid_view_shower", this.name));
@@ -225,15 +225,15 @@ export abstract class BOApplicationWithServices<T extends IBOViewWithServices> e
     /** 调用应用的服务 */
     private callServices(): void {
         let proxies: IServiceProxy<IServiceContract>[] = this.getServiceProxies();
-        if (object.isNull(proxies) || proxies.length === 0) {
+        if (objects.isNull(proxies) || proxies.length === 0) {
             // 没有提供服务代理则退出
             return;
         }
         let shower: IServicesShower = arguments[0];
-        if (object.isNull(shower)) {
+        if (objects.isNull(shower)) {
             shower = (<IServicesShower><any>this.view);
         }
-        if (object.isNull(shower) || shower.displayServices === undefined) {
+        if (objects.isNull(shower) || shower.displayServices === undefined) {
             this.proceeding(emMessageType.WARNING, i18n.prop("msg_not_provided_display_service_method", this.description));
             return;
         }

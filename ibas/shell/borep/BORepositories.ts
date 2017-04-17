@@ -37,11 +37,11 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements s
 	 */
     connect(caller: sys.ConnectCaller): void {
         let remoteRepository: ibas.IRemoteRepository = this.createRemoteRepository();
-        if (ibas.object.isNull(remoteRepository)) {
+        if (ibas.objects.isNull(remoteRepository)) {
             throw new Error(ibas.i18n.prop("msg_invalid_parameter", "remoteRepository"));
         }
         this.token = undefined;
-        let method = ibas.string.format("userConnect?user={0}&password={1}", caller.user, caller.password);
+        let method = ibas.strings.format("userConnect?user={0}&password={1}", caller.user, caller.password);
         remoteRepository.callRemoteMethod(method, undefined, caller);
     }
 
@@ -51,11 +51,11 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements s
 	 */
     fetchUserModules(caller: sys.UserMethodsCaller<sys.IUserModule>): void {
         let remoteRepository: ibas.IRemoteRepository = this.createRemoteRepository();
-        if (ibas.object.isNull(remoteRepository)) {
+        if (ibas.objects.isNull(remoteRepository)) {
             throw new Error(ibas.i18n.prop("msg_invalid_parameter", "remoteRepository"));
         }
         this.token = undefined;
-        let method = ibas.string.format("fetchUserModules?user={0}", caller.user);
+        let method = ibas.strings.format("fetchUserModules?user={0}", caller.user);
         remoteRepository.callRemoteMethod(method, undefined, caller);
     }
 
@@ -65,11 +65,11 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements s
 	 */
     fetchUserPrivileges(caller: sys.UserMethodsCaller<sys.IUserPrivilege>): void {
         let remoteRepository: ibas.IRemoteRepository = this.createRemoteRepository();
-        if (ibas.object.isNull(remoteRepository)) {
+        if (ibas.objects.isNull(remoteRepository)) {
             throw new Error(ibas.i18n.prop("msg_invalid_parameter", "remoteRepository"));
         }
         this.token = undefined;
-        let method = ibas.string.format("fetchUserPrivileges?user={0}", caller.user);
+        let method = ibas.strings.format("fetchUserPrivileges?user={0}", caller.user);
         remoteRepository.callRemoteMethod(method, undefined, caller);
     }
 
@@ -79,11 +79,11 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements s
      */
     fetchUserQueries(caller: sys.UserQueriesCaller): void {
         let remoteRepository: ibas.IRemoteRepository = this.createRemoteRepository();
-        if (ibas.object.isNull(remoteRepository)) {
+        if (ibas.objects.isNull(remoteRepository)) {
             throw new Error(ibas.i18n.prop("msg_invalid_parameter", "remoteRepository"));
         }
         this.token = undefined;
-        let method = ibas.string.format("fetchUserQueries?user={0}", caller.user);
+        let method = ibas.strings.format("fetchUserQueries?user={0}", caller.user);
         remoteRepository.callRemoteMethod(method, undefined, caller);
     }
 
@@ -101,11 +101,11 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements s
 	 */
     fetchBOInfos(caller: sys.BOInfoCaller): void {
         let remoteRepository: ibas.IRemoteRepository = this.createRemoteRepository();
-        if (ibas.object.isNull(remoteRepository)) {
+        if (ibas.objects.isNull(remoteRepository)) {
             throw new Error(ibas.i18n.prop("msg_invalid_parameter", "remoteRepository"));
         }
         this.token = undefined;
-        let method = ibas.string.format("fetchBOInfos?boName={0}", caller.boName);
+        let method = ibas.strings.format("fetchBOInfos?boName={0}", caller.boName);
         remoteRepository.callRemoteMethod(method, undefined, caller);
     }
 }
@@ -142,7 +142,7 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
                         break;
                     }
                 }
-                caller.onCompleted.call(ibas.object.isNull(caller.caller) ? caller : caller.caller, opRslt);
+                caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
             }
         };
         this.fetch("User", fetchCaller);
@@ -156,7 +156,7 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
         let fetchCaller: ibas.FetchCaller<any> = {
             criteria: null,
             onCompleted(opRslt): void {
-                caller.onCompleted.call(ibas.object.isNull(caller.caller) ? caller : caller.caller, opRslt);
+                caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
             }
         };
         this.fetch("UserModule", fetchCaller);
@@ -170,7 +170,7 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
         let fetchCaller: ibas.FetchCaller<any> = {
             criteria: null,
             onCompleted(opRslt): void {
-                caller.onCompleted.call(ibas.object.isNull(caller.caller) ? caller : caller.caller, opRslt);
+                caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
             }
         };
         this.fetch("UserPrivilege", fetchCaller);
@@ -183,7 +183,7 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
         let fetchCaller: ibas.FetchCaller<any> = {
             criteria: null,
             onCompleted(opRslt): void {
-                caller.onCompleted.call(ibas.object.isNull(caller.caller) ? caller : caller.caller, opRslt);
+                caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
             }
         };
         this.fetch("UserQuery", fetchCaller);
@@ -196,7 +196,7 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
         let fetchCaller: ibas.FetchCaller<any> = {
             criteria: null,
             onCompleted(opRslt): void {
-                caller.onCompleted.call(ibas.object.isNull(caller.caller) ? caller : caller.caller, opRslt);
+                caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
             }
         };
         this.fetch("BOInfo", fetchCaller);

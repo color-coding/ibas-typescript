@@ -18,5 +18,12 @@
     "name": "module_c",
     "category": "test",
     "address": "../../test/apps/module_c/"
+  },
+  {
+    "id": "edd25576-d1d8-4cab-87fa-52c834668524",
+    "name": "TrainingTesting",
+    "category": "",
+    "address": "../../test/apps/trainingtesting/",
+    "repository": ".../test/repository"
   }
 ]

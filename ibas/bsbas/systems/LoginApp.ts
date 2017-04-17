@@ -7,7 +7,7 @@
  */
 
 import {
-    logger, emMessageLevel, IOperationResult, object, i18n,
+    logger, emMessageLevel, IOperationResult, objects, i18n,
     Application
 } from "ibas/index";
 import { ILoginView, ILoginApp, ICenterApp, IUser, IBORepositorySystem } from "./Systems.d";
@@ -47,7 +47,7 @@ export class LoginApp<T extends ILoginView> extends Application<T> implements IL
             onCompleted: function (opRslt: IOperationResult<IUser>): void {
                 try {
                     this.busy(false);
-                    if (object.isNull(opRslt)) {
+                    if (objects.isNull(opRslt)) {
                         throw new Error();
                     }
                     if (opRslt.resultCode !== 0) {

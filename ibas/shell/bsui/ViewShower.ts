@@ -25,7 +25,7 @@ export default class ViewShowerDefault implements ibas.IViewShower {
     /** 显示视图 */
     show(view: ibas.IView): void {
         let viewContent: any = view.darw();
-        if (ibas.object.isNull(viewContent)) {
+        if (ibas.objects.isNull(viewContent)) {
             ibas.logger.log(ibas.emMessageLevel.WARN, "shower: empty view.");
         } else if (viewContent instanceof sap.m.App) {
             viewContent.placeAt("content");
@@ -47,11 +47,11 @@ export default class ViewShowerDefault implements ibas.IViewShower {
     /** 清理资源 */
     destroy(view: ibas.IView): void {
         let ui: sap.ui.core.Element = sap.ui.getCore().byId(view.id);
-        if (!ibas.object.isNull(ui)) {
+        if (!ibas.objects.isNull(ui)) {
             ui.destroy(true);
         }
         // 销毁忙对话框
-        if (!ibas.object.isNull(this.busyDialog)) {
+        if (!ibas.objects.isNull(this.busyDialog)) {
             this.busyDialog.destroy(true);
         }
     }
@@ -60,14 +60,14 @@ export default class ViewShowerDefault implements ibas.IViewShower {
     /** 设置忙状态 */
     busy(view: ibas.IView, busy: boolean, msg: string): void {
         if (busy) {
-            if (ibas.object.isNull(this.busyDialog)) {
+            if (ibas.objects.isNull(this.busyDialog)) {
                 this.busyDialog = new sap.m.BusyDialog("");
             }
             this.busyDialog.setTitle(view.title);
             this.busyDialog.setText(msg);
             this.busyDialog.open();
         } else {
-            if (!ibas.object.isNull(this.busyDialog)) {
+            if (!ibas.objects.isNull(this.busyDialog)) {
                 this.busyDialog.close();
             }
         }
@@ -89,7 +89,7 @@ export default class ViewShowerDefault implements ibas.IViewShower {
                 title: ibas.i18n.prop("sys_shell_name"),
                 actions: utils.toMessageBoxAction(caller.actions),
                 onClose(oAction: any): void {
-                    if (!ibas.object.isNull(caller.onCompleted)) {
+                    if (!ibas.objects.isNull(caller.onCompleted)) {
                         caller.onCompleted(utils.toMessageAction(oAction));
                     }
                 }

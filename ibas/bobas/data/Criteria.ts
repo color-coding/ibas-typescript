@@ -7,7 +7,7 @@
  */
 
 import { IBusinessObject } from "../core/index";
-import { object } from "./Data";
+import { objects } from "./Data";
 import { ArrayList } from "./Common";
 import { emConditionOperation, emConditionRelationship, emSortType } from "./Enums";
 import { ICriteria, ICondition, IConditions, ISort, ISorts, IChildCriteria, IChildCriterias } from "./Criteria.d";
@@ -75,7 +75,7 @@ export class Criteria implements ICriteria {
     private _conditions: IConditions;
 
     get conditions(): IConditions {
-        if (object.isNull(this._conditions)) {
+        if (objects.isNull(this._conditions)) {
             this._conditions = new Conditions();
         }
         return this._conditions;
@@ -91,7 +91,7 @@ export class Criteria implements ICriteria {
     private _sorts: ISorts;
 
     get sorts(): ISorts {
-        if (object.isNull(this._sorts)) {
+        if (objects.isNull(this._sorts)) {
             this._sorts = new Sorts();
         }
         return this._sorts;
@@ -107,7 +107,7 @@ export class Criteria implements ICriteria {
     private _childCriterias: IChildCriterias;
 
     get childCriterias(): IChildCriterias {
-        if (object.isNull(this._childCriterias)) {
+        if (objects.isNull(this._childCriterias)) {
             this._childCriterias = new ChildCriterias();
         }
         return this._childCriterias;

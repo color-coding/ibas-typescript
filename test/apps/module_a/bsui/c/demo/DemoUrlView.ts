@@ -31,7 +31,7 @@ export class DemoTabUrlView extends ibas.TabView implements IDemoUrlView {
     url: string;
     /** 绘制视图 */
     darw(): any {
-        let html: string = ibas.string.format(
+        let html: string = ibas.strings.format(
             `<iframe src="{0}" width="99%" height="99%" scrolling="no"></iframe>`
             , this.url);
         return new sap.ui.core.HTML("",

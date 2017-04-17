@@ -6,7 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { object, config, i18n, logger, emMessageLevel } from "../../bobas/index";
+import { objects, config, i18n, logger, emMessageLevel } from "../../bobas/index";
 import { AbstractApplication as Application, IViewShower, IViewNavigation, IView } from "../core/index";
 import {
     IServiceContract, IServiceProxy, IService,
@@ -120,17 +120,17 @@ export class ServicesManager {
     private mappings: Map<string, IServiceMapping>;
     /** 注册服务映射 */
     register(mapping: IServiceMapping): void {
-        if (object.isNull(mapping)) {
+        if (objects.isNull(mapping)) {
             return;
         }
-        if (object.isNull(this.mappings)) {
+        if (objects.isNull(this.mappings)) {
             this.mappings = new Map();
         }
         this.mappings.set(mapping.id, mapping);
     }
     /** 获取服务映射 */
     getServiceMapping(id: string): IServiceMapping {
-        if (object.isNull(this.mappings)) {
+        if (objects.isNull(this.mappings)) {
             return null;
         }
         if (this.mappings.has(id)) {
@@ -141,7 +141,7 @@ export class ServicesManager {
     /** 获取服务代理 */
     getServiceProxy(id: string): IServiceProxy<IServiceContract> {
         let mappping = this.getServiceMapping(id);
-        if (object.isNull(mappping)) {
+        if (objects.isNull(mappping)) {
             return null;
         }
         return mappping.proxy();
@@ -149,9 +149,9 @@ export class ServicesManager {
     /** 获取服务 */
     getServices(proxy: IServiceProxy<IServiceContract>): IServiceAgent[] {
         let services: Array<IServiceAgent> = new Array<IServiceAgent>();
-        if (!object.isNull(this.mappings)) {
+        if (!objects.isNull(this.mappings)) {
             for (let mapping of this.mappings.values()) {
-                if (!object.instanceOf(proxy, mapping.proxy)) {
+                if (!objects.instanceOf(proxy, mapping.proxy)) {
                     continue;
                 }
                 // 创建服务
@@ -164,9 +164,9 @@ export class ServicesManager {
                     run(): void {
                         // 创建服务
                         let service: IService<IServiceContract> = mapping.create();
-                        if (!object.isNull(service)) {
+                        if (!objects.isNull(service)) {
                             // 运行服务
-                            if (object.instanceOf(service, Application)) {
+                            if (objects.instanceOf(service, Application)) {
                                 (<Application<IView>>service).viewShower = mapping.viewShower;
                                 (<Application<IView>>service).navigation = mapping.navigation;
                             }
@@ -181,10 +181,10 @@ export class ServicesManager {
 
     /** 运行选择服务 */
     runChooseService<D>(caller: IBOChooseServiceCaller<D>): void {
-        if (object.isNull(caller)) {
+        if (objects.isNull(caller)) {
             throw new Error(i18n.prop("msg_invalid_parameter", "caller"));
         }
-        if (object.isNull(caller.boCode)) {
+        if (objects.isNull(caller.boCode)) {
             throw new Error(i18n.prop("msg_invalid_parameter", "caller.boCode"));
         }
         let proxy: IServiceProxy<IServiceContract> = new BOChooseServiceProxy(caller);
@@ -199,13 +199,13 @@ export class ServicesManager {
     }
     /** 运行连接服务 */
     runLinkService(caller: IBOLinkServiceCaller): void {
-        if (object.isNull(caller)) {
+        if (objects.isNull(caller)) {
             throw new Error(i18n.prop("msg_invalid_parameter", "caller"));
         }
-        if (object.isNull(caller.boCode)) {
+        if (objects.isNull(caller.boCode)) {
             throw new Error(i18n.prop("msg_invalid_parameter", "caller.boCode"));
         }
-        if (object.isNull(caller.linkValue)) {
+        if (objects.isNull(caller.linkValue)) {
             throw new Error(i18n.prop("msg_invalid_parameter", "caller.linkValue"));
         }
         let proxy: IServiceProxy<IServiceContract> = new BOLinkServiceProxy(caller);

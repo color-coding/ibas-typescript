@@ -79,7 +79,7 @@ export class DemoEditApp extends ibas.BOEditApplication<IDemoEditView, bo.SalesO
     /** 运行,覆盖原方法 */
     run(...args: any[]): void {
         let data: bo.SalesOrder = arguments[0];
-        if (ibas.object.isNull(data)) {
+        if (ibas.objects.isNull(data)) {
             data = new bo.SalesOrder();
             data.docEntry = 100;
             data.customer = "C00001";
@@ -118,7 +118,7 @@ export class DemoEditApp extends ibas.BOEditApplication<IDemoEditView, bo.SalesO
                 let item = that.editData.items[index];
                 // 选择返回数量多余触发数量时,自动创建新的项目
                 for (let selected of selecteds) {
-                    if (ibas.object.isNull(item)) {
+                    if (ibas.objects.isNull(item)) {
                         item = that.editData.items.create();
                     }
                     item.itemCode = selected.customer;

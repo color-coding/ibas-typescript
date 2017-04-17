@@ -8,7 +8,7 @@
 
 // 模块索引文件，此文件集中导出类
 
-import { KeyValue, object } from "../../bobas/index";
+import { KeyValue, objects } from "../../bobas/index";
 
 /** 变量管理员 */
 export class VariablesManager {
@@ -24,7 +24,7 @@ export class VariablesManager {
     register(key: string, value: any): void;
     /** 注册变量 */
     register(): void {
-        if (object.isNull(this.variables)) {
+        if (objects.isNull(this.variables)) {
             this.variables = new Map();
         }
         let variable: KeyValue;
@@ -39,7 +39,7 @@ export class VariablesManager {
     }
     /** 获取变量 */
     get(key: string): KeyValue {
-        if (object.isNull(this.variables)) {
+        if (objects.isNull(this.variables)) {
             return null;
         }
         if (this.variables.has(key)) {
@@ -50,7 +50,7 @@ export class VariablesManager {
     /** 获取变量 */
     getValue(key: string): any {
         let value: any = this.get(key);
-        if (object.isNull(value)) {
+        if (objects.isNull(value)) {
             return null;
         }
         return value.value;

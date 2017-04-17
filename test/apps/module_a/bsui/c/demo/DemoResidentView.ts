@@ -19,7 +19,7 @@ export class DemoResidentView extends ibas.BOResidentView implements IDemoReside
     darwBar(): any {
         let that = this;
         // 不重复创建工具条钮
-        if (ibas.object.isNull(this.bar)) {
+        if (ibas.objects.isNull(this.bar)) {
             this.bar = new sap.m.Button("", {
                 icon: "sap-icon://fob-watch",
                 type: sap.m.ButtonType.Transparent,
