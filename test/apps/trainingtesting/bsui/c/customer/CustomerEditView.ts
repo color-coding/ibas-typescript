@@ -9,7 +9,7 @@
 import * as ibas from "ibas/index";
 import { utils } from "openui5/typings/ibas.utils";
 import * as bo from "../../../borep/bo/index";
-import { ICustomerEditView } from "../../../bsapp/Customer/index";
+import { ICustomerEditView } from "../../../bsapp/customer/index";
 
 /**
  * 视图-Customer

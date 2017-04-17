@@ -9,7 +9,7 @@
 import * as ibas from "ibas/index";
 import { utils } from "openui5/typings/ibas.utils";
 import * as bo from "../../../borep/bo/index";
-import { IMaterialEditView } from "../../../bsapp/Material/index";
+import { IMaterialEditView } from "../../../bsapp/material/index";
 
 /**
  * 视图-Material

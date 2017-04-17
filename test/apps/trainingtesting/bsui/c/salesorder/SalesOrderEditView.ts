@@ -9,7 +9,7 @@
 import * as ibas from "ibas/index";
 import { utils } from "openui5/typings/ibas.utils";
 import * as bo from "../../../borep/bo/index";
-import { ISalesOrderEditView } from "../../../bsapp/SalesOrder/index";
+import { ISalesOrderEditView } from "../../../bsapp/salesorder/index";
 
 /**
  * 视图-SalesOrder
