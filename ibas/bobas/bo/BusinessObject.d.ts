@@ -9,14 +9,15 @@
 /// <reference path="../core/BusinessObjectCore.d.ts" />
 import { IBusinessObject, IBusinessObjectList } from "../core/index";
 import {
-    emDocumentStatus, emBOStatus, emYesNo, emApprovalStatus, ICriteria
+    emDocumentStatus, emBOStatus, emYesNo, emApprovalStatus, ICriteria, List
 } from "../data/index";
 
 /**
 * 业务对象集合
 */
 export interface IBusinessObjects<T extends IBusinessObject, P extends IBusinessObject> extends IBusinessObjectList<T> {
-
+    /** 过滤删除的项目 */
+    filterDeleted(): List<T>;
 }
 
 /**

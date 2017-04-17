@@ -108,7 +108,10 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
                         width: "100%",
                         showValueHelp: true,
                         valueHelpRequest: function (): void {
-                            that.fireViewEvents(that.chooseSalesOrderItemMaterialEvent);
+                            that.fireViewEvents(that.chooseSalesOrderItemMaterialEvent,
+                                // 获取当前对象
+                                this.getBindingContext().getObject()
+                            );
                         }
                     }).bindProperty("value", {
                         path: "itemCode"

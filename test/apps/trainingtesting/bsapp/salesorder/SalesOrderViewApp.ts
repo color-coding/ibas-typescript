@@ -87,7 +87,11 @@ export class SalesOrderViewApp extends ibas.BOViewService<ISalesOrderViewView> {
     }
     /** 获取服务的契约 */
     protected getServiceProxies(): ibas.IServiceProxy<ibas.IServiceContract>[] {
-        return [];
+        return [
+            new ibas.BOServiceProxy({
+                data: this.viewData
+            })
+        ];
     }
 }
 /** 视图-销售订单 */

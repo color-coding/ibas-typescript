@@ -43,17 +43,28 @@ export class SalesOrderListView extends ibas.BOListView implements ISalesOrderLi
                     })
                 }),
                 new sap.ui.table.Column("", {
-                    label: ibas.i18n.prop("bo_salesorder_customer"),
+                    label: ibas.i18n.prop("bo_salesorder_customercode"),
                     template: new sap.m.Link("", {
                         wrapping: false,
                         press(event: any): void {
                             ibas.servicesManager.runLinkService({
-                                boCode: bo.SalesOrder.name,
+                                boCode: bo.Customer.BUSINESS_OBJECT_CODE,
                                 linkValue: event.getSource().getText()
                             });
                         }
                     }).bindProperty("text", {
-                        path: "customer"
+                        path: "customerCode"
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_salesorder_customername"),
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "customerName",
+                        formatter(data: any): any {
+                            return ibas.enums.describe(ibas.emDocumentStatus, data);
+                        }
                     })
                 }),
                 new sap.ui.table.Column("", {
@@ -109,7 +120,10 @@ export class SalesOrderListView extends ibas.BOListView implements ISalesOrderLi
                         type: sap.m.ButtonType.Transparent,
                         icon: "sap-icon://edit",
                         press: function (): void {
-                            that.fireViewEvents(that.editDataEvent);
+                            that.fireViewEvents(that.editDataEvent,
+                                // 获取表格选中的对象
+                                utils.getTableSelecteds<bo.Customer>(that.table).firstOrDefault()
+                            );
                         }
                     }),
                     new sap.m.ToolbarSeparator(""),

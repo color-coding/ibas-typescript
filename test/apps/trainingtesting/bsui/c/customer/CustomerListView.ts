@@ -34,6 +34,31 @@ export class CustomerListView extends ibas.BOListView implements ICustomerListVi
             visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Interactive,
             rows: "{/}",
             columns: [
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_customer_code"),
+                    template: new sap.m.Link("", {
+                        wrapping: false,
+                        press(event: any): void {
+                            ibas.servicesManager.runLinkService({
+                                boCode: bo.Customer.BUSINESS_OBJECT_CODE,
+                                linkValue: event.getSource().getText()
+                            });
+                        }
+                    }).bindProperty("text", {
+                        path: "code"
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_customer_name"),
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "name",
+                        formatter(data: any): any {
+                            return ibas.enums.describe(ibas.emDocumentStatus, data);
+                        }
+                    })
+                }),
             ]
         });
         this.form.addContent(this.table);
@@ -65,7 +90,10 @@ export class CustomerListView extends ibas.BOListView implements ICustomerListVi
                         type: sap.m.ButtonType.Transparent,
                         icon: "sap-icon://edit",
                         press: function (): void {
-                            that.fireViewEvents(that.editDataEvent);
+                            that.fireViewEvents(that.editDataEvent,
+                                // 获取表格选中的对象
+                                utils.getTableSelecteds<bo.Customer>(that.table).firstOrDefault()
+                            );
                         }
                     }),
                     new sap.m.ToolbarSeparator(""),

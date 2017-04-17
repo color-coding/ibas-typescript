@@ -38,7 +38,10 @@ export class SalesOrderChooseView extends ibas.BOChooseView implements ISalesOrd
                 type: sap.m.ButtonType.Transparent,
                 // icon: "sap-icon://accept",
                 press: function (): void {
-                    that.fireViewEvents(that.chooseDataEvent);
+                    that.fireViewEvents(that.chooseDataEvent,
+                        // 获取表格选中的对象
+                        utils.getTableSelecteds<bo.Customer>(that.table)
+                    );
                 }
             }),
             new sap.m.Button("", {
@@ -68,15 +71,28 @@ export class SalesOrderChooseView extends ibas.BOChooseView implements ISalesOrd
                     })
                 }),
                 new sap.ui.table.Column("", {
-                    label: ibas.i18n.prop("bo_salesorder_customer"),
+                    label: ibas.i18n.prop("bo_salesorder_customercode"),
                     template: new sap.m.Link("", {
                         wrapping: false,
-                        press(evt: any): void {
-                            let value = evt.getSource().getText();
-
+                        press(event: any): void {
+                            ibas.servicesManager.runLinkService({
+                                boCode: bo.Customer.BUSINESS_OBJECT_CODE,
+                                linkValue: event.getSource().getText()
+                            });
                         }
                     }).bindProperty("text", {
-                        path: "customer"
+                        path: "customerCode"
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_salesorder_customername"),
+                       template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "customerName",
+                        formatter(data: any): any {
+                            return ibas.enums.describe(ibas.emDocumentStatus, data);
+                        }
                     })
                 }),
                 new sap.ui.table.Column("", {

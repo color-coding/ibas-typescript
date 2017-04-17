@@ -26,10 +26,6 @@ export class MaterialFunc extends ibas.ModuleFunction {
     }
     /** 默认功能 */
     default(): ibas.IApplication<ibas.IView> {
-        // 获取根地址
-        let rootUrl: string = ibas.url.rootUrl(MaterialFunc.ROOT_FILE_NAME);
-        // 加载语言-框架默认
-        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/Material.{1}.json", rootUrl, ibas.i18n.language));
         let app: MaterialListApp = new MaterialListApp();
         app.navigation = this.navigation;
         return app;

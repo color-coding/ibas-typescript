@@ -41,7 +41,7 @@ export class SalesOrderEditApp extends ibas.BOEditApplication<ISalesOrderEditVie
     protected viewShowed(): void {
         // 视图加载完成
         this.view.showSalesOrder(this.editData);
-        this.view.showSalesOrderItems(this.editData.salesOrderItems);
+        this.view.showSalesOrderItems(this.editData.salesOrderItems.filterDeleted());
     }
     /** 运行,覆盖原方法 */
     run(...args: any[]): void {
@@ -116,13 +116,13 @@ export class SalesOrderEditApp extends ibas.BOEditApplication<ISalesOrderEditVie
     /** 添加销售订单-行事件 */
     addSalesOrderItem(): void {
         this.editData.salesOrderItems.create();
-        this.view.showSalesOrderItems(this.editData.salesOrderItems);
+        this.view.showSalesOrderItems(this.editData.salesOrderItems.filterDeleted());
     }
     /** 删除销售订单-行事件 */
     removeSalesOrderItem(item: bo.SalesOrderItem): void {
         if (this.editData.salesOrderItems.indexOf(item) >= 0) {
             this.editData.salesOrderItems.remove(item);
-            this.view.showSalesOrderItems(this.editData.salesOrderItems);
+            this.view.showSalesOrderItems(this.editData.salesOrderItems.filterDeleted());
         }
     }
 
@@ -151,15 +151,22 @@ export class SalesOrderEditApp extends ibas.BOEditApplication<ISalesOrderEditVie
             ],
             onCompleted(selecteds: ibas.List<bo.Material>): void {
                 // 获取触发的对象
-                let index = that.editData.salesOrderItems.indexOf(this.caller);
+                let index: number = that.editData.salesOrderItems.indexOf(caller);
                 let item = that.editData.salesOrderItems[index];
                 // 选择返回数量多余触发数量时,自动创建新的项目
+                let created: boolean = false;
                 for (let selected of selecteds) {
                     if (ibas.objects.isNull(item)) {
                         item = that.editData.salesOrderItems.create();
+                        created = true;
                     }
                     item.itemCode = selected.code;
                     item.itemDescription = selected.name;
+                    item = null;
+                }
+                if (created) {
+                    // 创建了新的行项目
+                    that.view.showSalesOrderItems(that.editData.salesOrderItems.filterDeleted());
                 }
             }
         });

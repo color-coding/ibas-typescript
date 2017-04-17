@@ -14,7 +14,7 @@ export class DemoService extends ibas.Application<IDemoServiceView> implements i
     /** 应用标识 */
     static APPLICATION_ID: string = "6f00f7d9-3dbc-4eff-98ad-fe67ca0cca34";
     /** 应用名称 */
-    static APPLICATION_NAME: string = "trainingtestingothers_app_tab";
+    static APPLICATION_NAME: string = "trainingtestingothers_app_service";
 
     constructor() {
         super();

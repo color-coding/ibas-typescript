@@ -38,7 +38,10 @@ export class CustomerChooseView extends ibas.BOChooseView implements ICustomerCh
                 type: sap.m.ButtonType.Transparent,
                 // icon: "sap-icon://accept",
                 press: function (): void {
-                    that.fireViewEvents(that.chooseDataEvent);
+                    that.fireViewEvents(that.chooseDataEvent,
+                        // 获取表格选中的对象
+                        utils.getTableSelecteds<bo.Customer>(that.table)
+                    );
                 }
             }),
             new sap.m.Button("", {
@@ -59,6 +62,31 @@ export class CustomerChooseView extends ibas.BOChooseView implements ICustomerCh
             visibleRowCount: 15,
             rows: "{/}",
             columns: [
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_customer_code"),
+                    template: new sap.m.Link("", {
+                        wrapping: false,
+                        press(event: any): void {
+                            ibas.servicesManager.runLinkService({
+                                boCode: bo.Customer.BUSINESS_OBJECT_CODE,
+                                linkValue: event.getSource().getText()
+                            });
+                        }
+                    }).bindProperty("text", {
+                        path: "code"
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_customer_name"),
+                       template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "name",
+                        formatter(data: any): any {
+                            return ibas.enums.describe(ibas.emDocumentStatus, data);
+                        }
+                    })
+                }),
             ]
         });
         this.id = this.table.getId();

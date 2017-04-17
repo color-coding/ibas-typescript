@@ -6,7 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { objects } from "../data/index";
+import { objects, List, ArrayList } from "../data/index";
 import {
     IBusinessObject, BusinessObjectBase, BusinessObjectListBase
 } from "../core/index";
@@ -100,5 +100,18 @@ export abstract class BusinessObjects<T extends IBusinessObject, P extends IBusi
             item.setProperty(BO_PROPERTY_NAME_LINEID, max);
         }
     }
-
+    /** 过滤删除的项目 */
+    filterDeleted(): List<T> {
+        let list: ArrayList<T> = new ArrayList<T>();
+        for (let item of this) {
+            if (objects.isNull(item)) {
+                continue;
+            }
+            if (item.isDeleted) {
+                continue;
+            }
+            list.add(item);
+        }
+        return list;
+    }
 }

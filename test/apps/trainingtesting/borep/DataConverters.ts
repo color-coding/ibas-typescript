@@ -56,6 +56,7 @@ class TrainingTestingBOConverter extends ibas.BOConverter {
 /** TrainingTesting 模块的离线数据转换者 */
 export class DataConverterOffline implements ibas.IDataConverter {
 
+    private boConverter = new TrainingTestingBOConverter();
     /**
      * 转换业务对象数据
      * @param data 本地类型
@@ -72,6 +73,16 @@ export class DataConverterOffline implements ibas.IDataConverter {
      * @returns 本地类型
      */
     parsing(data: any, sign: string): any {
+        if (sign === ibas.strings.format("{0}s.json", bo.SalesOrder.name.toLowerCase())) {
+            data[ibas.BOConverter.REMOTE_OBJECT_TYPE_PROPERTY_NAME] = bo.SalesOrder.name;
+            return this.boConverter.parsing(data);
+        } else if (sign === ibas.strings.format("{0}s.json", bo.Material.name.toLowerCase())) {
+            data[ibas.BOConverter.REMOTE_OBJECT_TYPE_PROPERTY_NAME] = bo.Material.name;
+            return this.boConverter.parsing(data);
+        } else if (sign === ibas.strings.format("{0}s.json", bo.Customer.name.toLowerCase())) {
+            data[ibas.BOConverter.REMOTE_OBJECT_TYPE_PROPERTY_NAME] = bo.Customer.name;
+            return this.boConverter.parsing(data);
+        }
         return data;
     }
 }
