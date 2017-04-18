@@ -7,8 +7,9 @@
  */
 
 import { IBusinessObject } from "../core/index";
+import { BO_PROPERTY_NAME_DOCENTRY, BO_PROPERTY_NAME_OBJECTKEY } from "../bo/index";
 import { objects } from "./Data";
-import { ArrayList } from "./Common";
+import { ArrayList, StringBuilder } from "./Common";
 import { emConditionOperation, emConditionRelationship, emSortType } from "./Enums";
 import { ICriteria, ICondition, IConditions, ISort, ISorts, IChildCriteria, IChildCriterias } from "./Criteria.d";
 
@@ -128,44 +129,161 @@ export class Criteria implements ICriteria {
      * 转换为字符串
      */
     toString(): string {
-        throw new Error("not implemented.");
+        let builder: StringBuilder = new StringBuilder();
+        builder.append("{");
+        for (let item of this.conditions) {
+            if (builder.length > 1) {
+                if (item.relationship === emConditionRelationship.OR) {
+                    builder.append(" || ");
+                } else {
+                    builder.append(" && ");
+                }
+            }
+            builder.append(item.toString());
+        }
+        builder.append("}");
+        return builder.toString();
     }
 
     /**
      * 计算下一结果集的查询条件
-     * 
-     * 注意BO多主键情况下，请自行修正。
-     * 
+     * 注意BO多主键情况下，请自行修正
      * @param lastBO
      *            起始业务对象
      * @return 查询
      */
-    nextCriteria(lastBO: IBusinessObject): ICriteria {
-        throw new Error("not implemented.");
+    next(lastBO: IBusinessObject): ICriteria {
+        if (lastBO != null) {
+            let boCriteria: ICriteria = this.boCriteria(lastBO);
+            if (boCriteria == null) {
+                return null;
+            }
+            for (let condition of boCriteria.conditions) {
+                if (this.sorts.length > 0 && this.sorts.firstOrDefault().sortType === emSortType.DESCENDING) {
+                    // 降序排序，则下一个数据集为小于条件
+                    condition.operation = emConditionOperation.LESS_THAN;
+                } else {
+                    condition.operation = emConditionOperation.GRATER_THAN;
+                }
+            }
+            return this.copyFrom(boCriteria);
+        }
+        return null;
     }
 
     /**
      * 计算上一个结果集的查询条件
-     * 
-     * 注意BO多主键情况下，请自行修正。
-     * 
+     * 注意BO多主键情况下，请自行修正
      * @param firstBO
      *            起始业务对象
      * @return 查询
      */
-    previousCriteria(firstBO: IBusinessObject): ICriteria {
-        throw new Error("not implemented.");
+    previous(firstBO: IBusinessObject): ICriteria {
+        if (firstBO != null) {
+            let boCriteria: ICriteria = this.boCriteria(firstBO);
+            if (boCriteria == null) {
+                return null;
+            }
+            for (let condition of boCriteria.conditions) {
+                if (this.sorts.length > 0 && this.sorts.firstOrDefault().sortType === emSortType.DESCENDING) {
+                    // 降序排序，则下一个数据集为大于条件
+                    condition.operation = emConditionOperation.GRATER_THAN;
+                } else {
+                    condition.operation = emConditionOperation.LESS_THAN;
+                }
+            }
+            return this.copyFrom(boCriteria);
+        }
+        return null;
     }
 
+    protected boCriteria(bo: IBusinessObject): ICriteria {
+        let boCriteria: ICriteria = null;
+        // 判断BO类型，添加下个集合条件，尽量使用数值字段
+        if ((<any>bo)[BO_PROPERTY_NAME_OBJECTKEY] !== undefined) {
+            boCriteria = new Criteria();
+            let condition: ICondition = boCriteria.conditions.create();
+            condition.alias = BO_PROPERTY_NAME_OBJECTKEY;
+            condition.value = (<any>bo)[BO_PROPERTY_NAME_OBJECTKEY];
+        } else if ((<any>bo)[BO_PROPERTY_NAME_DOCENTRY] !== undefined) {
+            boCriteria = new Criteria();
+            let condition: ICondition = boCriteria.conditions.create();
+            condition.alias = BO_PROPERTY_NAME_DOCENTRY;
+            condition.value = (<any>bo)[BO_PROPERTY_NAME_DOCENTRY];
+        }
+        if (boCriteria == null) {
+            boCriteria = bo.criteria();
+        }
+        return boCriteria;
+    }
     /**
      * 复制查询条件
-     * 
      * @param criteria
      *            基于的查询
      * @return 查询
      */
     copyFrom(criteria: ICriteria): ICriteria {
-        throw new Error("not implemented.");
+        let nCriteria: ICriteria = this.clone();
+        if (criteria != null) {
+            let tmpCriteria: ICriteria = criteria.clone();
+            // 复制子项查询
+            for (let tmpChildCriteria of tmpCriteria.childCriterias) {
+                if (objects.isNull(tmpChildCriteria.propertyPath)) {
+                    continue;
+                }
+                let isNew: boolean = true;
+                for (let myChildCriteria of nCriteria.childCriterias) {
+                    if (objects.isNull(myChildCriteria.propertyPath)) {
+                        continue;
+                    }
+                    if (myChildCriteria.propertyPath === tmpChildCriteria.propertyPath) {
+                        isNew = false;
+                        break;
+                    }
+                }
+                if (isNew) {
+                    nCriteria.childCriterias.add(tmpChildCriteria);
+                }
+            }
+            // 复制查询条件
+            if (nCriteria.conditions.length > 0) {
+                // 原始条件括号括起
+                let condition: ICondition = nCriteria.conditions.firstOrDefault();
+                condition.bracketOpen = condition.bracketOpen + 1;
+                condition = nCriteria.conditions[nCriteria.conditions.length - 1];
+                condition.bracketClose = condition.bracketClose + 1;
+            }
+            if (tmpCriteria.conditions.length > 0) {
+                // 拷贝条件括号括起
+                let condition: ICondition = tmpCriteria.conditions.firstOrDefault();
+                condition.bracketOpen = condition.bracketOpen + 1;
+                condition = tmpCriteria.conditions[tmpCriteria.conditions.length - 1];
+                condition.bracketClose = condition.bracketClose + 1;
+            }
+            for (let condition of tmpCriteria.conditions) {
+                nCriteria.conditions.add(condition);
+            }
+            // 复制排序条件
+            for (let tmpSort of tmpCriteria.sorts) {
+                if (objects.isNull(tmpSort.alias)) {
+                    continue;
+                }
+                let isNew: boolean = true;
+                for (let mySort of nCriteria.sorts) {
+                    if (objects.isNull(mySort.alias)) {
+                        continue;
+                    }
+                    if (mySort.alias === tmpSort.alias) {
+                        isNew = false;
+                        break;
+                    }
+                }
+                if (isNew) {
+                    nCriteria.sorts.add(tmpSort);
+                }
+            }
+        }
+        return nCriteria;
     }
 
 }
@@ -288,6 +406,21 @@ export class Condition implements ICondition {
     set remarks(value: string) {
         this._remarks = value;
     }
+
+    /**
+     * 转换为字符串
+     */
+    toString(): string {
+        let builder: StringBuilder = new StringBuilder();
+        builder.append("{");
+        builder.append(this.alias);
+        builder.append(" ");
+        builder.append(this.operation);
+        builder.append(" ");
+        builder.append(this.value);
+        builder.append("}");
+        return builder.toString();
+    }
 }
 /**
  * 查询条件集合
@@ -342,6 +475,18 @@ export class Sort implements ISort {
 
     set sortType(value: emSortType) {
         this._sortType = value;
+    }
+    /**
+     * 转换为字符串
+     */
+    toString(): string {
+        let builder: StringBuilder = new StringBuilder();
+        builder.append("{");
+        builder.append(this.alias);
+        builder.append(" ");
+        builder.append(this.sortType);
+        builder.append("}");
+        return builder.toString();
     }
 }
 /**

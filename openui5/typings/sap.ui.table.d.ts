@@ -19,6 +19,8 @@ declare namespace sap {
                 getSelectedIndices(): any[];
                 getContextByIndex(iIndex: any): any;
                 getColumns(): sap.ui.table.Column[];
+                getVisibleRowCount(): number;
+                getFirstVisibleRow(): number;
             }
             export class Column extends sap.ui.core.Control {
                 constructor(mSettings?: any);

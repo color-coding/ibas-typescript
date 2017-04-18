@@ -6,7 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { List } from "../data/index";
+import { List, ICriteria } from "../data/index";
 
 /**
  * 属性改变监听者
@@ -122,6 +122,8 @@ export interface IBusinessObject extends ITrackable {
      */
     setProperty<P>(property: string, value: P);
 
+    /** 获取查询 */
+    criteria(): ICriteria;
 }
 
 /**

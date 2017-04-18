@@ -6,7 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { objects, List, ArrayList } from "../data/index";
+import { objects, List, ArrayList, ICriteria } from "../data/index";
 import {
     IBusinessObject, BusinessObjectBase, BusinessObjectListBase
 } from "../core/index";
@@ -36,6 +36,10 @@ export abstract class BusinessObject<T extends IBusinessObject> extends Business
     /** 删除 */
     delete(): void {
         this.markDeleted(true);
+    }
+    /** 获取查询 */
+    criteria(): ICriteria {
+        return null;
     }
 }
 

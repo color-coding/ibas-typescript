@@ -165,4 +165,47 @@ export namespace utils {
             }
         }
     }
+    /** 结果集触发者 */
+    export interface IResultsTrigger {
+        /** 调用者,query方法的this变量 */
+        caller: any;
+        /** 监听对象 */
+        listener: sap.ui.table.Table;
+        /** 查询 */
+        criteria: ibas.ICriteria;
+        /** 触发方法 */
+        query(criteria: ibas.ICriteria): void;
+    }
+    /** 自动触发下一个结果集查询 */
+    export function triggerNextResults(trigger: IResultsTrigger): void {
+        // 离线模式下不支持
+        if (ibas.config.get(ibas.BORepositoryApplication.CONFIG_ITEM_OFFLINE_MODE, false)) {
+            return;
+        }
+        if (ibas.objects.isNull(trigger)
+            || ibas.objects.isNull(trigger.listener)
+            || ibas.objects.isNull(trigger.criteria)
+        ) {
+            return;
+        }
+        // 绑定触发一次的事件
+        trigger.listener.attachEventOnce("_rowsUpdated", undefined, function (): void {
+            let model: any = trigger.listener.getModel(undefined);
+            if (!ibas.objects.isNull(model)) {
+                let data: any = model.getData();
+                if (!ibas.objects.isNull(data)) {
+                    var dataCount: number = data.length;
+                    var visibleRow: number = this.getVisibleRowCount();
+                    if (dataCount > 0 && dataCount > visibleRow) {
+                        var firstRow: number = this.getFirstVisibleRow(); // 当前页的第一行
+                        var lastPageCount: number = dataCount % visibleRow; // 最后一页行数
+                        if (firstRow >= (dataCount - lastPageCount) ||
+                            firstRow >= (dataCount - visibleRow)) {
+                            trigger.query.call(trigger.caller, trigger.criteria);
+                        }
+                    }
+                }
+            }
+        });
+    }
 }

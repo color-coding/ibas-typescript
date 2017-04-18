@@ -69,7 +69,7 @@ export interface ICriteria {
      *            起始业务对象
      * @return 查询
      */
-    nextCriteria(lastBO: IBusinessObject): ICriteria;
+    next(lastBO: IBusinessObject): ICriteria;
 
     /**
      * 计算上一个结果集的查询条件
@@ -80,7 +80,7 @@ export interface ICriteria {
      *            起始业务对象
      * @return 查询
      */
-    previousCriteria(firstBO: IBusinessObject): ICriteria;
+    previous(firstBO: IBusinessObject): ICriteria;
 
     /**
      * 复制查询条件

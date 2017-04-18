@@ -184,6 +184,22 @@ export class SalesOrderListView extends ibas.BOListView implements ISalesOrderLi
     /** 显示数据 */
     showData(datas: bo.SalesOrder[]): void {
         this.table.setModel(new sap.ui.model.json.JSONModel(datas));
+        // 表格滚动条到底，自动触发查询下一个结果集
+        if (!ibas.objects.isNull(this.lastCriteria) && datas.length > 0) {
+            let nextCriteria: ibas.ICriteria = this.lastCriteria.next(datas[datas.length - 1]);
+            utils.triggerNextResults({
+                caller: this,
+                listener: this.table,
+                criteria: nextCriteria,
+                query: this.query
+            });
+        }
+    }
+    private lastCriteria: ibas.ICriteria;
+    /** 记录上次查询条件，表格滚动时自动触发 */
+    query(criteria: ibas.ICriteria): void {
+        super.query(criteria);
+        this.lastCriteria = criteria;
     }
 
 }
