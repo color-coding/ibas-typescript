@@ -50,7 +50,10 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
                 }),
                 new sap.ui.core.Title("", { text: "Document" }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_docentry") }),
-                new sap.m.Input("", { value: "{/docEntry}" }),
+                new sap.m.Input("", {
+                    value: "{/docEntry}",
+                    type: sap.m.InputType.Number
+                }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_documentstatus") }),
                 new sap.m.Select("", {
                     items: utils.createComboBoxItems(ibas.emDocumentStatus)
@@ -127,6 +130,7 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
                     label: ibas.i18n.prop("bo_salesorderitem_price"),
                     template: new sap.m.Input("", {
                         width: "100%",
+                        type: sap.m.InputType.Number
                     }).bindProperty("value", {
                         path: "price"
                     })
@@ -135,6 +139,7 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
                     label: ibas.i18n.prop("bo_salesorderitem_quantity"),
                     template: new sap.m.Input("", {
                         width: "100%",
+                        type: sap.m.InputType.Number
                     }).bindProperty("value", {
                         path: "quantity"
                     })
@@ -142,8 +147,9 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_salesorderitem_linetotal"),
                     template: new sap.m.Input("", {
-                    }).bindProperty("value", {
                         width: "100%",
+                        type: sap.m.InputType.Number,
+                    }).bindProperty("value", {
                         path: "lineTotal"
                     })
                 })
