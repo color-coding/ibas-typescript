@@ -121,9 +121,6 @@ export interface IBusinessObject extends ITrackable {
      * @param value 值
      */
     setProperty<P>(property: string, value: P);
-
-    /** 获取查询 */
-    criteria(): ICriteria;
 }
 
 /**

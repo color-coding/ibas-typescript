@@ -88,6 +88,47 @@ export module objects {
         }
         return type.name;
     }
+    /**
+     * 克隆对象
+     * @param data 数据
+     */
+    export function clone<D>(data: D): D {
+        if (objects.isNull(data)) {
+            return data;
+        }
+        let type: any = Object.getPrototypeOf(data).constructor;
+        let newData: any = new type;
+        for (let name in data) {
+            if (objects.isNull(name)) {
+                continue;
+            }
+            let value: any = data[name];
+            if (value instanceof Array) {
+                let nValue: any = newData[name];
+                if (nValue === undefined) {
+                    nValue = [];
+                    newData[name] = nValue;
+                }
+                for (let item of value) {
+                    let nItem: any = clone(item);
+                    if (nValue.add !== undefined) {
+                        nValue.add(nItem);
+                    } else {
+                        nValue.push(nItem);
+                    }
+                }
+            } else if (value instanceof Object) {
+                // 克隆新对象
+                let nValue: any = clone(value);
+                if (objects.isNull(nValue)) {
+                    newData[name] = nValue;
+                }
+            } else {
+                newData[name] = value;
+            }
+        }
+        return newData;
+    }
 }
 /**
  * 唯一标识

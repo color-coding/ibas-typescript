@@ -6,8 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { IBusinessObject } from "../core/index";
-import { BO_PROPERTY_NAME_DOCENTRY, BO_PROPERTY_NAME_OBJECTKEY } from "../bo/index";
+import { BO_PROPERTY_NAME_DOCENTRY, BO_PROPERTY_NAME_OBJECTKEY, BusinessObject } from "../bo/index";
 import { objects } from "./Data";
 import { ArrayList, StringBuilder } from "./Common";
 import { emConditionOperation, emConditionRelationship, emSortType } from "./Enums";
@@ -122,7 +121,7 @@ export class Criteria implements ICriteria {
      * 克隆
      */
     clone(): ICriteria {
-        throw new Error("not implemented.");
+        return objects.clone(this);
     }
 
     /**
@@ -152,7 +151,7 @@ export class Criteria implements ICriteria {
      *            起始业务对象
      * @return 查询
      */
-    next(lastBO: IBusinessObject): ICriteria {
+    next(lastBO: BusinessObject<any>): ICriteria {
         if (lastBO != null) {
             let boCriteria: ICriteria = this.boCriteria(lastBO);
             if (boCriteria == null) {
@@ -178,7 +177,7 @@ export class Criteria implements ICriteria {
      *            起始业务对象
      * @return 查询
      */
-    previous(firstBO: IBusinessObject): ICriteria {
+    previous(firstBO: BusinessObject<any>): ICriteria {
         if (firstBO != null) {
             let boCriteria: ICriteria = this.boCriteria(firstBO);
             if (boCriteria == null) {
@@ -197,7 +196,7 @@ export class Criteria implements ICriteria {
         return null;
     }
 
-    protected boCriteria(bo: IBusinessObject): ICriteria {
+    protected boCriteria(bo: BusinessObject<any>): ICriteria {
         let boCriteria: ICriteria = null;
         // 判断BO类型，添加下个集合条件，尽量使用数值字段
         if ((<any>bo)[BO_PROPERTY_NAME_OBJECTKEY] !== undefined) {

@@ -8,9 +8,10 @@
 
 import {
     IBindable, PropertyChangedListener, ITrackable,
-    IBusinessObject, IBusinessObjectList, IBOFactory
+    IBusinessObject, IBusinessObjectList, IBOFactory,
 } from "./BusinessObjectCore.d";
-import { objects, ArrayList } from "../data/index";
+import { objects } from "../data/Data";
+import { ArrayList } from "../data/Common";
 import { i18n } from "../i18n/index";
 
 /**

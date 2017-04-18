@@ -278,7 +278,7 @@ export interface IApprovalData extends IBusinessObject {
     /**
      * 数据查询条件
      */
-    getCriteria(): ICriteria;
+    criteria(): ICriteria;
 }
 /**
  * 数据所有权
