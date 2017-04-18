@@ -86,7 +86,7 @@ export class SalesOrderChooseView extends ibas.BOChooseView implements ISalesOrd
                 }),
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_salesorder_customername"),
-                       template: new sap.m.Text("", {
+                    template: new sap.m.Text("", {
                         wrapping: false
                     }).bindProperty("text", {
                         path: "customerName",

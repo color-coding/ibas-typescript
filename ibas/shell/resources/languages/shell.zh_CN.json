@@ -44,5 +44,6 @@
     "sys_shell_ui_whether_to_delete": "共[{0}]个对象是否删除？",
     "sys_shell_ui_data_deleting": "正在删除[{0}]",
     "sys_shell_ui_data_delete_error": "删除[{0}]失败，{1}",
+    "sys_shell_ui_data_created_new": "创建了新的对象",
     "sys_shell_ui_please_chooose_data": "请选择{0}的数据"
 }

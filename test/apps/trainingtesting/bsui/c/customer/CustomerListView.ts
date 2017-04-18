@@ -96,7 +96,7 @@ export class CustomerListView extends ibas.BOListView implements ICustomerListVi
                             );
                         }
                     }),
-                    new sap.m.ToolbarSeparator(""),
+                    // new sap.m.ToolbarSeparator(""),
                     new sap.m.Button("", {
                         text: ibas.i18n.prop("sys_shell_ui_data_delete"),
                         type: sap.m.ButtonType.Transparent,

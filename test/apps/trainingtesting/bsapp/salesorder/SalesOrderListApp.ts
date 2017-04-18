@@ -75,7 +75,7 @@ export class SalesOrderListApp extends ibas.BOListApplication<ISalesOrderListVie
     /** 查看数据，参数：目标数据 */
     protected viewData(data: bo.SalesOrder): void {
         // 检查目标数据
-        if (ibas.objects.isNull(data)){
+        if (ibas.objects.isNull(data)) {
             this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("sys_shell_ui_please_chooose_data",
                 ibas.i18n.prop("sys_shell_ui_data_view")
             ));
@@ -90,7 +90,7 @@ export class SalesOrderListApp extends ibas.BOListApplication<ISalesOrderListVie
     /** 编辑数据，参数：目标数据 */
     protected editData(data: bo.SalesOrder): void {
         // 检查目标数据
-        if (ibas.objects.isNull(data)){
+        if (ibas.objects.isNull(data)) {
             this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("sys_shell_ui_please_chooose_data",
                 ibas.i18n.prop("sys_shell_ui_data_edit")
             ));
@@ -104,16 +104,16 @@ export class SalesOrderListApp extends ibas.BOListApplication<ISalesOrderListVie
     /** 删除数据，参数：目标数据集合 */
     protected deleteData(data: bo.SalesOrder): void {
         // 检查目标数据
-        if (ibas.objects.isNull(data)){
+        if (ibas.objects.isNull(data)) {
             this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("sys_shell_ui_please_chooose_data",
                 ibas.i18n.prop("sys_shell_ui_data_delete")
             ));
             return;
         }
-        let beDeleteds:ibas.ArrayList<bo.SalesOrder> = new ibas.ArrayList<bo.SalesOrder>();
-        if (data instanceof Array ) {
+        let beDeleteds: ibas.ArrayList<bo.SalesOrder> = new ibas.ArrayList<bo.SalesOrder>();
+        if (data instanceof Array) {
             for (let item of data) {
-                if (item instanceof bo.SalesOrder) {
+                if (ibas.objects.instanceOf(item, bo.SalesOrder)) {
                     item.delete();
                     beDeleteds.add(item);
                 }
@@ -133,8 +133,7 @@ export class SalesOrderListApp extends ibas.BOListApplication<ISalesOrderListVie
                 if (action === ibas.emMessageAction.YES) {
                     try {
                         let boRepository: BORepositoryTrainingTesting = new BORepositoryTrainingTesting();
-                        let method:Function = function(beSaved: bo.SalesOrder):void {
-                            this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_ui_data_deleting", beSaved));
+                        let saveMethod: Function = function (beSaved: bo.SalesOrder): void {
                             boRepository.saveSalesOrder({
                                 beSaved: beSaved,
                                 onCompleted(opRslt: ibas.IOperationResult<bo.SalesOrder>): void {
@@ -143,26 +142,29 @@ export class SalesOrderListApp extends ibas.BOListApplication<ISalesOrderListVie
                                             throw new Error(opRslt.message);
                                         }
                                         // 保存下一个数据
-                                        let index = beDeleteds.indexOf(beSaved) + 1;
+                                        let index: number = beDeleteds.indexOf(beSaved) + 1;
                                         if (index > 0 && index < beDeleteds.length) {
-                                            method.call(method, beDeleteds[index]);
+                                            saveMethod(beDeleteds[index]);
                                         } else {
                                             // 处理完成
                                             that.busy(false);
-                                            this.messages(ibas.emMessageType.SUCCESS, "{0}{1}",
-                                                ibas.i18n.prop("sys_shell_ui_data_delete"),
-                                                ibas.i18n.prop("sys_shell_ui_sucessful"));
+                                            that.messages(ibas.emMessageType.SUCCESS,
+                                                ibas.i18n.prop("sys_shell_ui_data_delete") + ibas.i18n.prop("sys_shell_ui_sucessful"));
                                         }
                                     } catch (error) {
-                                        this.messages(ibas.emMessageType.ERROR,
+                                        that.messages(ibas.emMessageType.ERROR,
                                             ibas.i18n.prop("sys_shell_ui_data_delete_error", beSaved, error.message));
                                     }
                                 }
                             });
-                        }
-                        this.busy(true);
+                            that.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_ui_data_deleting", beSaved));
+                        };
+                        that.busy(true);
+                        // 开始保存
+                        saveMethod(beDeleteds.firstOrDefault());
                     } catch (error) {
-                        throw error;
+                        that.busy(false);
+                        that.messages(error);
                     }
                 }
             }

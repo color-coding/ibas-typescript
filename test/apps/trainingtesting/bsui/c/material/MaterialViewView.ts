@@ -72,7 +72,6 @@ export class MaterialViewView extends ibas.BOViewView implements IMaterialViewVi
     }
     private page: sap.m.Page;
     private form: sap.ui.layout.form.SimpleForm;
-    private table: sap.ui.table.Table;
 
     /** 显示数据 */
     showMaterial(data: bo.Material): void {

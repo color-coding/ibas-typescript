@@ -84,9 +84,9 @@ export abstract class BOConverter implements IBOConverter<IBusinessObject, any> 
             if (objects.isNull(tName)) {
                 continue;
             }
-            if (Array.isArray(sValue)) {
+            if (sValue instanceof Array) {
                 // 此属性是数组
-                if (target[tName] instanceof BusinessObjectListBase) {
+                if (objects.instanceOf(target[tName], BusinessObjectListBase)) {
                     // 如果是业务对象列表，则使用默认子项构造器
                     for (let item of sValue) {
                         // 创建子项实例并添加到集合
@@ -102,7 +102,7 @@ export abstract class BOConverter implements IBOConverter<IBusinessObject, any> 
                     target[tName] = this.parsing(sValue);
                     // 已处理，继续下一个
                     continue;
-                } else if (target[tName] instanceof BusinessObjectBase) {
+                } else if (objects.instanceOf(target[tName], BusinessObjectBase)) {
                     // 对象属性赋值
                     this.parsingProperties(sValue, target[tName]);
                     // 已处理，继续下一个
@@ -151,7 +151,7 @@ export abstract class BOConverter implements IBOConverter<IBusinessObject, any> 
                 // 没有解析出映射关系，继续下一个属性
                 continue;
             }
-            if (Array.isArray(value)) {
+            if (value instanceof Array) {
                 // 此属性是数组
                 let newValue = [];
                 for (let item of value) {
@@ -235,7 +235,7 @@ export abstract class DataConverter4ibas implements IDataConverter {
      */
     convert(data: any): string {
         let remote: any = null;
-        if (data instanceof Criteria) {
+        if (objects.instanceOf(data, Criteria)) {
             remote = (new CriteriaConverter()).convert(data);
         } else {
             remote = this.createConverter().convert(data);
@@ -268,7 +268,7 @@ class CriteriaConverter implements IBOConverter<ICriteria, any> {
      * @param data 本地对象
      */
     convert(data: Criteria): any {
-        if (!(data instanceof Criteria)) {
+        if (!(objects.instanceOf(data, Criteria))) {
             return data;
         }
         return this.convertCriteria(data);

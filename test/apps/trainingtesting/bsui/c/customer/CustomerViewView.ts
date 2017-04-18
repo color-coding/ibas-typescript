@@ -72,7 +72,6 @@ export class CustomerViewView extends ibas.BOViewView implements ICustomerViewVi
     }
     private page: sap.m.Page;
     private form: sap.ui.layout.form.SimpleForm;
-    private table: sap.ui.table.Table;
 
     /** 显示数据 */
     showCustomer(data: bo.Customer): void {

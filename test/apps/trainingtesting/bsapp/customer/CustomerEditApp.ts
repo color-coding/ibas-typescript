@@ -41,13 +41,13 @@ export class CustomerEditApp extends ibas.BOEditApplication<ICustomerEditView, b
     /** 运行,覆盖原方法 */
     run(...args: any[]): void {
         // 尝试设置编辑对象
-        if (!ibas.objects.isNull(args) && args.length === 1 && args[0] instanceof bo.Customer) {
+        if (!ibas.objects.isNull(args) && args.length === 1 && ibas.objects.instanceOf(args[0], bo.Customer)) {
             this.editData = args[0];
         }
         // 创建编辑对象实例
         if (ibas.objects.isNull(this.editData)) {
             this.editData = new bo.Customer();
-
+            this.proceeding(ibas.emMessageType.WARNING, ibas.i18n.prop("sys_shell_ui_data_created_new"));
         }
         super.run();
     }

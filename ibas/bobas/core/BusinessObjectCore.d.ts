@@ -12,6 +12,8 @@ import { List } from "../data/index";
  * 属性改变监听者
  */
 export interface PropertyChangedListener {
+    /** 标记 */
+    id?: string;
     /**
      * 属性改变
      */
@@ -27,12 +29,15 @@ export interface IBindable {
      * @param listener 监听者
      */
     registerListener(listener: PropertyChangedListener);
-
     /**
      * 移出监听事件
      * @param listener 监听者
      */
     removeListener(listener: PropertyChangedListener);
+    /**
+     * 移出全部监听事件
+     */
+    removeListener(recursive: boolean): void;
 }
 
 /**

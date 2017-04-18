@@ -56,10 +56,11 @@ export class CustomerEditView extends ibas.BOEditView implements ICustomerEditVi
     }
     private page: sap.m.Page;
     private form: sap.ui.layout.form.SimpleForm;
-    private table: sap.ui.table.Table;
 
     /** 显示数据 */
     showCustomer(data: bo.Customer): void {
         this.form.setModel(new sap.ui.model.json.JSONModel(data));
+        // 监听属性改变，并更新控件
+        utils.refreshModelChanged(this.form, data);
     }
 }

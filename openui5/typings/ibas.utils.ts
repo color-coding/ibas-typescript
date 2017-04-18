@@ -8,6 +8,10 @@
 import * as ibas from "ibas/index";
 
 export namespace utils {
+    /**
+     * 创建下拉框可选项
+     * @param data 枚举类型
+     */
     export function createComboBoxItems(data: any): sap.ui.core.Item[] {
         // 首先获取枚举内容
         let map = new Map<string, string>();
@@ -35,15 +39,6 @@ export namespace utils {
             }));
         }
         return items;
-    }
-    /** 获取表格选中的对象 */
-    export function resizeTable<T>(table: sap.ui.table.Table): void {
-        if (ibas.objects.isNull(table)) {
-            return;
-        }
-        for (let i: number = 1; i < table.getColumns().length; i++) {
-
-        }
     }
     /** 获取表格选中的对象 */
     export function getTableSelecteds<T>(table: sap.ui.table.Table): ibas.List<T> {
@@ -136,6 +131,38 @@ export namespace utils {
                 return sap.m.MessageBox.Icon.WARNING;
             default:
                 return sap.m.MessageBox.Icon.NONE;
+        }
+    }
+    /** 监听模型变化，并刷新控件 */
+    export function refreshModelChanged(managedObject: sap.ui.base.ManagedObject, data: ibas.IBindable): void;
+    /** 监听模型变化，并刷新控件 */
+    export function refreshModelChanged(managedObject: sap.ui.base.ManagedObject, data: ibas.IBindable[]): void;
+    /** 监听模型变化，并刷新控件 */
+    export function refreshModelChanged(): void {
+        let managedObject: sap.ui.base.ManagedObject, data: ibas.IBindable[];
+        managedObject = arguments[0];
+        data = arguments[1];
+        if (ibas.objects.isNull(managedObject) || ibas.objects.isNull(data)) {
+            return;
+        }
+        let datas: Array<ibas.IBindable> = [];
+        if (data instanceof Array) {
+            datas = data;
+        } else {
+            datas.push(data);
+        }
+        for (let item of datas) {
+            if (item.registerListener !== undefined) {
+                item.registerListener({
+                    id: managedObject.getId(),
+                    propertyChanged(property: string): void {
+                        let model: sap.ui.model.Model = managedObject.getModel(undefined);
+                        if (!ibas.objects.isNull(model)) {
+                            model.refresh(false);
+                        }
+                    }
+                });
+            }
         }
     }
 }

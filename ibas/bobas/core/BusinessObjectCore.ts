@@ -27,20 +27,35 @@ export abstract class Bindable implements IBindable {
         if (objects.isNull(this.listeners)) {
             this.listeners = new ArrayList<PropertyChangedListener>();
         }
+        // 存在指定id则更新
+        for (let index: number = 0; index < this.listeners.length; index++) {
+            let item: PropertyChangedListener = this.listeners[index];
+            if (item.id === listener.id && listener.id !== undefined) {
+                this.listeners[index] = item;
+                return;
+            }
+        }
         this.listeners.push(listener);
     }
 
+    /** 移出全部监听 */
+    removeListener(recursive: boolean): void;
     /**
      * 移出监听事件
      * @param listener 监听者
      */
-    removeListener(listener: PropertyChangedListener): void {
+    removeListener(listener: PropertyChangedListener): void;
+    /** 移出监听实现 */
+    removeListener(): void {
         if (objects.isNull(this.listeners)) {
             return;
         }
-        for (let item of this.listeners) {
-            if (item === listener) {
-                this.listeners.remove(item);
+        let listener: PropertyChangedListener = arguments[0];
+        if (!objects.isNull(listener)) {
+            for (let item of this.listeners) {
+                if (item === listener) {
+                    this.listeners.remove(item);
+                }
             }
         }
     }
@@ -53,9 +68,13 @@ export abstract class Bindable implements IBindable {
         if (objects.isNull(this.listeners)) {
             return;
         }
-        if (property.startsWith("_")) {
-            // 除去映射符
-            property = property.substring(1);
+        if (!objects.isNull(property) && property.length > 0) {
+            if (property.startsWith("_")) {
+                // 除去映射符
+                property = property.substring(1);
+            }
+            // 属性首字母小写
+            property = property[0].toLowerCase() + property.substring(1);
         }
         for (let item of this.listeners) {
             item.propertyChanged(property);
@@ -238,24 +257,24 @@ export abstract class BusinessObjectBase<T extends IBusinessObject> extends Trac
      * @param recursive 递归
      */
     getProperties(recursive: boolean): Map<string, any> {
-        let properties = new Map();
+        let properties: Map<string, any> = new Map();
         // 遍历属性名称
         for (let item in this) {
             if (this[item] === undefined) { continue; }
             let name: string = item;
-            let value = this[name];
+            let value: any = this[name];
             properties.set(name, value);
             if (recursive) {
                 // 遍历子项
                 if (Array.isArray(value)) {
                     // 数组子项，生成格式为： items[0].name {object}
-                    let index = 0;
+                    let index: number = 0;
                     for (let sub of value) {
-                        let subName = name + "[" + index + "]";
+                        let subName: string = name + "[" + index + "]";
                         properties.set(subName, sub);
                         if (sub.getProperties !== undefined) {
                             for (let subSub of sub.getProperties(recursive)) {
-                                let subSubName = subName + "." + subSub[0];
+                                let subSubName: string = subName + "." + subSub[0];
                                 properties.set(subSubName, subSub[1]);
                             }
                         }
@@ -264,7 +283,7 @@ export abstract class BusinessObjectBase<T extends IBusinessObject> extends Trac
                 } else if (value.getProperties !== undefined) {
                     // 存在此方法，则调用，生成格式： user.userCode
                     for (let sub of value.getProperties(recursive)) {
-                        let subName = name + "." + sub[0];
+                        let subName: string = name + "." + sub[0];
                         properties.set(subName, sub[1]);
                     }
                 }
@@ -274,13 +293,13 @@ export abstract class BusinessObjectBase<T extends IBusinessObject> extends Trac
     }
 
     protected getChildBOs(): Map<string, IBusinessObject> {
-        let childs = new Map();
+        let childs: Map<string, IBusinessObject> = new Map();
         // 遍历属性名称
         for (let item of this.getProperties(true)) {
             let name: string = item[0];
-            let value = item[1];
-            if (value.getChildBOs !== undefined) {
-                // 存在此方法，认为是个BO
+            let value: any = item[1];
+            if (objects.instanceOf(value, BusinessObjectBase)) {
+                // 继承此类，则认为是IBusinessObject
                 childs.set(name, value);
             }
         }
@@ -294,7 +313,7 @@ export abstract class BusinessObjectBase<T extends IBusinessObject> extends Trac
         super.markOld(recursive);
         if (recursive !== undefined && recursive === true) {
             for (let item of this.getChildBOs()) {
-                let value = item[1];
+                let value: IBusinessObject = item[1];
                 if (value.markOld !== undefined) {
                     value.markOld(false);// 此处不再递归，因为已处于递归环境
                 }
@@ -309,7 +328,7 @@ export abstract class BusinessObjectBase<T extends IBusinessObject> extends Trac
         super.markNew(recursive);
         if (recursive !== undefined && recursive === true) {
             for (let item of this.getChildBOs()) {
-                let value = item[1];
+                let value: IBusinessObject = item[1];
                 if (value.markNew !== undefined) {
                     value.markNew(false);// 此处不再递归，因为已处于递归环境
                 }
@@ -324,7 +343,7 @@ export abstract class BusinessObjectBase<T extends IBusinessObject> extends Trac
         super.markDeleted(recursive);
         if (recursive !== undefined && recursive === true) {
             for (let item of this.getChildBOs()) {
-                let value = item[1];
+                let value: IBusinessObject = item[1];
                 if (value.markDeleted !== undefined) {
                     value.markDeleted(false);// 此处不再递归，因为已处于递归环境
                 }
@@ -339,7 +358,7 @@ export abstract class BusinessObjectBase<T extends IBusinessObject> extends Trac
         super.markDirty(recursive);
         if (recursive !== undefined && recursive === true) {
             for (let item of this.getChildBOs()) {
-                let value = item[1];
+                let value: IBusinessObject = item[1];
                 if (value.markDirty !== undefined) {
                     value.markDirty(false);// 此处不再递归，因为已处于递归环境
                 }
@@ -356,9 +375,22 @@ export abstract class BusinessObjectBase<T extends IBusinessObject> extends Trac
         super.clearDeleted(recursive);
         if (recursive !== undefined && recursive === true) {
             for (let item of this.getChildBOs()) {
-                let value = item[1];
+                let value: IBusinessObject = item[1];
                 if (value.clearDeleted !== undefined) {
                     value.clearDeleted(false);// 此处不再递归，因为已处于递归环境
+                }
+            }
+        }
+    }
+    /** 移出监听实现 */
+    removeListener(): void {
+        super.removeListener(<any>arguments);
+        let recursive: boolean = arguments[0];
+        if (recursive === true) {
+            for (let item of this.getChildBOs()) {
+                let value: any = item[1];
+                if (value.removeListener !== undefined) {
+                    value.removeListener(false);
                 }
             }
         }
@@ -399,7 +431,7 @@ export abstract class BusinessObjectListBase<T extends IBusinessObject>
      * @param item 项目
      */
     protected afterAdd(item: T): void {
-
+        // 可重载
     }
 
     /**
@@ -420,7 +452,7 @@ export abstract class BusinessObjectListBase<T extends IBusinessObject>
      * @param item 项目
      */
     protected afterRemove(item: T): void {
-
+        // 可重载
     }
 }
 /** 业务对象工厂 */

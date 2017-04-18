@@ -24,14 +24,14 @@ export class SalesOrderViewView extends ibas.BOViewView implements ISalesOrderVi
             ]
         });
         this.form.addContent(new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_salesorderitem") }));
-        this.table = new sap.ui.table.Table("", {
+        this.tableSalesOrderItem = new sap.ui.table.Table("", {
             enableSelectAll: false,
             visibleRowCount: 6,
             rows: "{/}",
             columns: [
             ]
         });
-        this.form.addContent(this.table);
+        this.form.addContent(this.tableSalesOrderItem);
         this.page = new sap.m.Page("", {
             showHeader: false,
             subHeader: new sap.m.Bar("", {
@@ -81,7 +81,7 @@ export class SalesOrderViewView extends ibas.BOViewView implements ISalesOrderVi
     }
     private page: sap.m.Page;
     private form: sap.ui.layout.form.SimpleForm;
-    private table: sap.ui.table.Table;
+    private tableSalesOrderItem: sap.ui.table.Table;
 
     /** 显示数据 */
     showSalesOrder(data: bo.SalesOrder): void {
@@ -89,6 +89,6 @@ export class SalesOrderViewView extends ibas.BOViewView implements ISalesOrderVi
     }
     /** 显示数据 */
     showSalesOrderItems(datas: bo.SalesOrderItem[]): void {
-        this.table.setModel(new sap.ui.model.json.JSONModel(datas));
+        this.tableSalesOrderItem.setModel(new sap.ui.model.json.JSONModel(datas));
     }
 }

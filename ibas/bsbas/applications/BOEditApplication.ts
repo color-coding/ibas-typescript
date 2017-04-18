@@ -8,6 +8,7 @@
 
 import { IBOEditView } from "./Applications.d";
 import { BOApplication } from "./Applications";
+import { objects, BusinessObject, IBusinessObject, Bindable } from "../../bobas/index";
 
 
 /**
@@ -24,4 +25,13 @@ export abstract class BOEditApplication<T extends IBOEditView, D> extends BOAppl
     protected abstract editData: D;
     /** 选择数据，参数：数据 */
     protected abstract saveData(): void;
+    /** 关闭视图 */
+    close(): void {
+        if (objects.instanceOf(this.editData, Bindable)) {
+            // 移出所有事件监听，防止资源不被回收
+            (<Bindable><any>this.editData).removeListener(true);
+        }
+        this.editData = undefined;
+        super.close();
+    }
 }

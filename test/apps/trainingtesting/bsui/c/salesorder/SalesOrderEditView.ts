@@ -40,7 +40,13 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
                         that.fireViewEvents(that.chooseSalesOrderCustomerEvent);
                     }
                 }).bindProperty("value", {
-                    path: "/customer"
+                    path: "/customerCode"
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_documentdate") }),
+                new sap.m.DatePicker("", {
+                    valueFormat: "yyyy-MM-dd",
+                }).bindProperty("dateValue", {
+                    path: "/documentDate"
                 }),
                 new sap.ui.core.Title("", { text: "Document" }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_docentry") }),
@@ -60,7 +66,7 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
             ]
         });
         this.form.addContent(new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_salesorderitem") }));
-        this.table = new sap.ui.table.Table("", {
+        this.tableSalesOrderItem = new sap.ui.table.Table("", {
             extension: new sap.m.Toolbar("", {
                 content: [
                     new sap.m.Button("", {
@@ -143,7 +149,7 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
                 })
             ]
         });
-        this.form.addContent(this.table);
+        this.form.addContent(this.tableSalesOrderItem);
         this.page = new sap.m.Page("", {
             showHeader: false,
             subHeader: new sap.m.Toolbar("", {
@@ -174,14 +180,18 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
     }
     private page: sap.m.Page;
     private form: sap.ui.layout.form.SimpleForm;
-    private table: sap.ui.table.Table;
+    private tableSalesOrderItem: sap.ui.table.Table;
 
     /** 显示数据 */
     showSalesOrder(data: bo.SalesOrder): void {
         this.form.setModel(new sap.ui.model.json.JSONModel(data));
+        // 监听属性改变，并更新控件
+        utils.refreshModelChanged(this.form, data);
     }
     /** 显示数据 */
     showSalesOrderItems(datas: bo.SalesOrderItem[]): void {
-        this.table.setModel(new sap.ui.model.json.JSONModel(datas));
+        this.tableSalesOrderItem.setModel(new sap.ui.model.json.JSONModel(datas));
+        // 监听属性改变，并更新控件
+        utils.refreshModelChanged(this.tableSalesOrderItem, datas);
     }
 }
