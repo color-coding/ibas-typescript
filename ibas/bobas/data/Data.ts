@@ -6,6 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 import { i18n } from "../i18n/index";
+import { ArrayList } from "./Common";
 /**
  * 对象
  */
@@ -98,6 +99,10 @@ export module objects {
         }
         let type: any = Object.getPrototypeOf(data).constructor;
         let newData: any = new type;
+        // 置为加载数据状态，此状态不触发事件
+        if (newData.isLoding !== undefined) {
+            newData.isLoding = true;
+        }
         for (let name in data) {
             if (objects.isNull(name)) {
                 continue;
@@ -106,7 +111,7 @@ export module objects {
             if (value instanceof Array) {
                 let nValue: any = newData[name];
                 if (nValue === undefined) {
-                    nValue = [];
+                    nValue = new ArrayList<any>();
                     newData[name] = nValue;
                 }
                 for (let item of value) {
@@ -126,6 +131,10 @@ export module objects {
             } else {
                 newData[name] = value;
             }
+        }
+        // 取消加载数据状态
+        if (newData.isLoding !== undefined) {
+            newData.isLoding = false;
         }
         return newData;
     }

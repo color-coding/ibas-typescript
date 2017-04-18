@@ -343,9 +343,21 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                     }
                 }
                 if (ibas.objects.isNull(tabContainer)) {
+                    let that = this;
                     tabContainer = new sap.m.TabContainer("", {
                         itemClose: function (oControlEvent: any): void {
                             // 删除页签
+                            let key = oControlEvent.getParameters().item.getKey();
+                            let cView: ibas.IView;
+                            for (let item of that.viewQueue.keys()) {
+                                if (item.id === key) {
+                                    cView = item;
+                                    break;
+                                }
+                            }
+                            if (!ibas.objects.isNull(cView)) {
+                                that.destroyView(cView);
+                            }
                         }
                     });
                     for (let item of this.form.getContent()) {
@@ -355,11 +367,18 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                     this.form.setSubHeader(null);
                     this.form.setTitle(null);
                     this.form.addContent(tabContainer);
+                } else {
+                    if (this.viewQueue.has(view)) {
+                        // 页签视图已在显示列表中，不再处理
+                        return;
+                    }
                 }
                 container = new sap.m.Page("", {
                     showHeader: false,
                     showSubHeader: false,
                 });
+                // 修正viewid
+                view.id = container.getId();
                 let containerItem = new sap.m.TabContainerItem("", {
                     name: view.title,
                     key: view.id,
@@ -582,6 +601,22 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                         ui.destroy(true);
                     }
                 }
+            } else if (ibas.objects.instanceOf(view, ibas.TabView)) {
+                // 当是页签应用时，不清理后续
+                let ui: sap.ui.core.Element = sap.ui.getCore().byId(view.id);
+                if (!ibas.objects.isNull(ui)) {
+                    ui.destroy(true);
+                }
+                this.viewQueue.delete(view);
+                // 清理缓存的查询面板
+                if (this.queryPanels.has(view.id)) {
+                    let panelContent: any = this.queryPanels.get(view.id);
+                    if (panelContent instanceof sap.ui.core.Element) {
+                        panelContent.destroy(true);
+                    }
+                    this.queryPanels.delete(view.id);
+                }
+                return;
             } else {
                 // 清理视图队列后续视图
                 let beDestory: Array<ibas.IView> = new Array<ibas.IView>();
@@ -592,7 +627,6 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                     }
                     if (done) {
                         beDestory.push(item);
-                        continue;
                     }
                 }
                 for (let i: number = beDestory.length - 1; i >= 0; i--) {

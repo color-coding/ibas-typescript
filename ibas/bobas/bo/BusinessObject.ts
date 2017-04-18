@@ -23,6 +23,11 @@ export const BO_PROPERTY_NAME_CODE: string = "code";
 export const BO_PROPERTY_NAME_OBJECTKEY: string = "objectKey";
 /** 业务对象属性名称-LineId */
 export const BO_PROPERTY_NAME_LINEID: string = "lineId";
+/** 需要被重置的属性名称 */
+export const NEED_BE_RESET_PROPERTIES: string[] = ["_listeners",
+    "createDate", "createTime", "updateDate", "updateTime", "logInst", "createUserSign", "updateUserSign",
+    "createActionId", "updateActionId", "referenced", "canceled", "deleted", "approvalStatus", "lineStatus", "status", "documentStatus"
+];
 
 
 /**
@@ -40,6 +45,21 @@ export abstract class BusinessObject<T extends IBusinessObject> extends Business
     /** 获取查询 */
     criteria(): ICriteria {
         return null;
+    }
+    /** 克隆对象 */
+    clone(): T {
+        let newBO = objects.clone<T>(<T><any>this);
+        // 设置为新对象
+        newBO.markNew(true);
+        // 重置部分属性值
+        newBO.isLoading = true;
+        for (let item of NEED_BE_RESET_PROPERTIES) {
+            if (newBO[item] !== undefined) {
+                newBO[item] = undefined;
+            }
+        }
+        newBO.isLoading = false;
+        return newBO;
     }
 }
 

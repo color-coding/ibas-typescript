@@ -55,7 +55,13 @@ for (let item of order.salesOrderItems) {
     bobas.assert.equals("bo status isDirty", item.isDirty, false);
     bobas.assert.equals("bo status isDeleted", item.isDeleted, false);
 }
-// 远程调用业务仓库
+bobas.logger.log(bobas.emMessageLevel.INFO, "test: {0} {1}", "order", order.getProperties(false).size);
+console.log(JSON.stringify(order));
+// 克隆对象
+let cOrder = order.clone();
+console.log(JSON.stringify(cOrder));
+bobas.assert.equals("clone bo instance is not change.", order === cOrder, false);
+// 测试查询
 let criteria = new bobas.Criteria();
 bobas.logger.log(bobas.emMessageLevel.DEBUG, "test: type of {0}", typeof (criteria));
 criteria.result = 100;
@@ -69,9 +75,14 @@ condition.alias = "docEntry";
 condition.operation = bobas.emConditionOperation.LESS_THAN;
 condition.value = "100000";
 let sort = criteria.sorts.create();
-bobas.logger.log(bobas.emMessageLevel.DEBUG, "test: type of {0}", typeof (sort));
 sort.alias = "docEntry";
 sort.sortType = bobas.emSortType.DESCENDING;
+console.log(criteria.toString());
+// 克隆对象
+let cCriteria = criteria.clone();
+console.log(cCriteria.toString());
+bobas.assert.equals("clone bo instance is not change.", criteria === cCriteria, false);
+// 远程调用业务仓库
 let boRepository = new BORepositoryTest();
 boRepository.token = "hahaha";
 // 测试在线服务仓库

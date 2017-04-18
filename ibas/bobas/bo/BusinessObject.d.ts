@@ -53,7 +53,7 @@ export interface IBODocument extends IBusinessObject {
     /**
      * 单据状态
      */
-    getDocumentStatus: emDocumentStatus;
+    documentStatus: emDocumentStatus;
     /**
      * 过账日期
      */

@@ -19,24 +19,24 @@ import { i18n } from "../i18n/index";
  */
 export abstract class Bindable implements IBindable {
 
-    private listeners: ArrayList<PropertyChangedListener>;
+    private _listeners: ArrayList<PropertyChangedListener>;
     /**
      * 注册监听事件
      * @param listener 监听者
      */
     registerListener(listener: PropertyChangedListener): void {
-        if (objects.isNull(this.listeners)) {
-            this.listeners = new ArrayList<PropertyChangedListener>();
+        if (objects.isNull(this._listeners)) {
+            this._listeners = new ArrayList<PropertyChangedListener>();
         }
         // 存在指定id则更新
-        for (let index: number = 0; index < this.listeners.length; index++) {
-            let item: PropertyChangedListener = this.listeners[index];
+        for (let index: number = 0; index < this._listeners.length; index++) {
+            let item: PropertyChangedListener = this._listeners[index];
             if (item.id === listener.id && listener.id !== undefined) {
-                this.listeners[index] = item;
+                this._listeners[index] = item;
                 return;
             }
         }
-        this.listeners.push(listener);
+        this._listeners.push(listener);
     }
 
     /** 移出全部监听 */
@@ -48,14 +48,14 @@ export abstract class Bindable implements IBindable {
     removeListener(listener: PropertyChangedListener): void;
     /** 移出监听实现 */
     removeListener(): void {
-        if (objects.isNull(this.listeners)) {
+        if (objects.isNull(this._listeners)) {
             return;
         }
         let listener: PropertyChangedListener = arguments[0];
         if (!objects.isNull(listener)) {
-            for (let item of this.listeners) {
+            for (let item of this._listeners) {
                 if (item === listener) {
-                    this.listeners.remove(item);
+                    this._listeners.remove(item);
                 }
             }
         }
@@ -66,7 +66,7 @@ export abstract class Bindable implements IBindable {
      * @param property 属性
      */
     protected firePropertyChanged(property: string): void {
-        if (objects.isNull(this.listeners)) {
+        if (objects.isNull(this._listeners)) {
             return;
         }
         if (!objects.isNull(property) && property.length > 0) {
@@ -77,7 +77,7 @@ export abstract class Bindable implements IBindable {
             // 属性首字母小写
             property = property[0].toLowerCase() + property.substring(1);
         }
-        for (let item of this.listeners) {
+        for (let item of this._listeners) {
             item.propertyChanged(property);
         }
     }

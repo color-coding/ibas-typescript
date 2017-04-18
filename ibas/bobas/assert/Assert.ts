@@ -27,21 +27,21 @@ export module assert {
      * 断言相等
      * @param pars 参数
      */
-    export function equals(...pars: any[]): void {
+    export function equals(): void {
         let message: string, unexpected: any, actual: any
-        if (pars.length === 2) {
+        if (arguments.length === 2) {
             message = "assertion failure: not equals.";
-            unexpected = pars[0];
-            actual = pars[1];
-        } else if (pars.length === 3) {
-            message = pars[0];
-            unexpected = pars[1];
-            actual = pars[2];
+            unexpected = arguments[0];
+            actual = arguments[1];
+        } else if (arguments.length === 3) {
+            message = arguments[0];
+            unexpected = arguments[1];
+            actual = arguments[2];
         } else {
             throw new Error("assert equals invalid parameters.");
         }
         if (unexpected instanceof Date && actual instanceof Date) {
-            if (isEqualsDate(unexpected, actual)) {
+            if (equalsDate(unexpected, actual)) {
                 return;
             }
         }
@@ -54,7 +54,7 @@ export module assert {
      * @param unexpected 判断的
      * @param actual 实际的
      */
-    function isEqualsDate(unexpected: Date, actual: Date): boolean {
+    function equalsDate(unexpected: Date, actual: Date): boolean {
         return unexpected.getTime() === actual.getTime();
     }
 }

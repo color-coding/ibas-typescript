@@ -132,11 +132,9 @@ export class Criteria implements ICriteria {
         builder.append("{");
         for (let item of this.conditions) {
             if (builder.length > 1) {
-                if (item.relationship === emConditionRelationship.OR) {
-                    builder.append(" || ");
-                } else {
-                    builder.append(" && ");
-                }
+                builder.append(" ");
+                builder.append(this.charRelationship(item.relationship));
+                builder.append(" ");
             }
             builder.append(item.toString());
         }
@@ -144,6 +142,13 @@ export class Criteria implements ICriteria {
         return builder.toString();
     }
 
+    private charRelationship(value: emConditionRelationship): string {
+        if (value === emConditionRelationship.OR) {
+            return "||";
+        } else {
+            return "&&";
+        }
+    }
     /**
      * 计算下一结果集的查询条件
      * 注意BO多主键情况下，请自行修正
@@ -414,11 +419,40 @@ export class Condition implements ICondition {
         builder.append("{");
         builder.append(this.alias);
         builder.append(" ");
-        builder.append(this.operation);
+        builder.append(this.charOperation(this.operation));
         builder.append(" ");
         builder.append(this.value);
         builder.append("}");
         return builder.toString();
+    }
+
+    private charOperation(value: emConditionOperation): string {
+        switch (value) {
+            case emConditionOperation.CONTAIN:
+                return "like";
+            case emConditionOperation.END:
+                return "like";
+            case emConditionOperation.EQUAL:
+                return "=";
+            case emConditionOperation.GRATER_EQUAL:
+                return ">=";
+            case emConditionOperation.GRATER_THAN:
+                return ">";
+            case emConditionOperation.IS_NULL:
+                return "is null";
+            case emConditionOperation.LESS_THAN:
+                return "<";
+            case emConditionOperation.NOT_CONTAIN:
+                return "not like";
+            case emConditionOperation.NOT_EQUAL:
+                return "<>";
+            case emConditionOperation.NOT_NULL:
+                return "not null";
+            case emConditionOperation.START:
+                return "like";
+            default:
+                return "?";
+        }
     }
 }
 /**
@@ -483,7 +517,7 @@ export class Sort implements ISort {
         builder.append("{");
         builder.append(this.alias);
         builder.append(" ");
-        builder.append(this.sortType);
+        builder.append(emSortType[this.sortType]);
         builder.append("}");
         return builder.toString();
     }
