@@ -171,6 +171,21 @@ export class SalesOrderListView extends ibas.BOListView implements ISalesOrderLi
             content: [this.form]
         });
         this.id = this.page.getId();
+        // 添加列表自动查询事件
+        utils.triggerNextResults({
+            listener: this.table,
+            next(data: any): void {
+                if (ibas.objects.isNull(that.lastCriteria)) {
+                    return;
+                }
+                let criteria: ibas.ICriteria = that.lastCriteria.next(data);
+                if (ibas.objects.isNull(criteria)) {
+                    return;
+                }
+                that.fireViewEvents(that.fetchDataEvent, criteria);
+                console.debug(criteria.toString());
+            }
+        });
         return this.page;
     }
     /** 嵌入查询面板 */
@@ -183,17 +198,24 @@ export class SalesOrderListView extends ibas.BOListView implements ISalesOrderLi
     private table: sap.ui.table.Table;
     /** 显示数据 */
     showData(datas: bo.SalesOrder[]): void {
-        this.table.setModel(new sap.ui.model.json.JSONModel(datas));
-        // 表格滚动条到底，自动触发查询下一个结果集
-        if (!ibas.objects.isNull(this.lastCriteria) && datas.length > 0) {
-            let nextCriteria: ibas.ICriteria = this.lastCriteria.next(datas[datas.length - 1]);
-            utils.triggerNextResults({
-                caller: this,
-                listener: this.table,
-                criteria: nextCriteria,
-                query: this.query
-            });
+        let done: boolean = false;
+        let model: sap.ui.model.Model = this.table.getModel(undefined);
+        if (!ibas.objects.isNull(model)) {
+            // 已存在绑定数据，添加新的
+            let hDatas: bo.SalesOrder[] = (<any>model).getData();
+            if (!ibas.objects.isNull(hDatas)) {
+                for (let item of datas) {
+                    hDatas.push(item);
+                }
+                model.refresh(false);
+                done = true;
+            }
         }
+        if (!done) {
+            // 没有显示数据
+            this.table.setModel(new sap.ui.model.json.JSONModel(datas));
+        }
+        this.table.setBusy(false);
     }
     private lastCriteria: ibas.ICriteria;
     /** 记录上次查询条件，表格滚动时自动触发 */
