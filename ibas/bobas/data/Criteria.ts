@@ -6,7 +6,11 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { BO_PROPERTY_NAME_DOCENTRY, BO_PROPERTY_NAME_OBJECTKEY, BusinessObject } from "../bo/index";
+import {
+    BO_PROPERTY_NAME_DOCENTRY, BO_PROPERTY_NAME_OBJECTKEY, BO_PROPERTY_NAME_CODE, BO_PROPERTY_NAME_LINEID,
+    BusinessObject, BODocument, BODocumentLine, BOMasterData, BOMasterDataLine,
+    BOSimple, BOSimpleLine
+} from "../bo/index";
 import { objects } from "./Data";
 import { ArrayList, StringBuilder } from "./Common";
 import { emConditionOperation, emConditionRelationship, emSortType } from "./Enums";
@@ -158,17 +162,17 @@ export class Criteria implements ICriteria {
      */
     next(lastBO: BusinessObject<any>): ICriteria {
         if (lastBO != null) {
-            let boCriteria: ICriteria = this.boCriteria(lastBO);
+            let sortType: emSortType = emSortType.ASCENDING;
+            let operation: emConditionOperation = emConditionOperation.GRATER_THAN;
+            if (this.sorts.length > 0) {
+                sortType = this.sorts[0].sortType;
+            }
+            if (sortType === emSortType.DESCENDING) {
+                operation = emConditionOperation.LESS_THAN;
+            }
+            let boCriteria: ICriteria = this.boCriteria(lastBO, operation);
             if (boCriteria == null) {
                 return null;
-            }
-            for (let condition of boCriteria.conditions) {
-                if (this.sorts.length > 0 && this.sorts.firstOrDefault().sortType === emSortType.DESCENDING) {
-                    // 降序排序，则下一个数据集为小于条件
-                    condition.operation = emConditionOperation.LESS_THAN;
-                } else {
-                    condition.operation = emConditionOperation.GRATER_THAN;
-                }
             }
             return this.copyFrom(boCriteria);
         }
@@ -184,39 +188,100 @@ export class Criteria implements ICriteria {
      */
     previous(firstBO: BusinessObject<any>): ICriteria {
         if (firstBO != null) {
-            let boCriteria: ICriteria = this.boCriteria(firstBO);
+            let sortType: emSortType = emSortType.ASCENDING;
+            let operation: emConditionOperation = emConditionOperation.LESS_THAN;
+            if (this.sorts.length > 0) {
+                sortType = this.sorts[0].sortType;
+            }
+            if (sortType === emSortType.DESCENDING) {
+                operation = emConditionOperation.GRATER_THAN;
+            }
+            let boCriteria: ICriteria = this.boCriteria(firstBO, operation);
             if (boCriteria == null) {
                 return null;
-            }
-            for (let condition of boCriteria.conditions) {
-                if (this.sorts.length > 0 && this.sorts.firstOrDefault().sortType === emSortType.DESCENDING) {
-                    // 降序排序，则下一个数据集为大于条件
-                    condition.operation = emConditionOperation.GRATER_THAN;
-                } else {
-                    condition.operation = emConditionOperation.LESS_THAN;
-                }
             }
             return this.copyFrom(boCriteria);
         }
         return null;
     }
 
-    protected boCriteria(bo: BusinessObject<any>): ICriteria {
+    protected boCriteria(bo: BusinessObject<any>, operation: emConditionOperation): ICriteria {
         let boCriteria: ICriteria = null;
         // 判断BO类型，添加下个集合条件，尽量使用数值字段
-        if ((<any>bo)[BO_PROPERTY_NAME_OBJECTKEY] !== undefined) {
-            boCriteria = new Criteria();
-            let condition: ICondition = boCriteria.conditions.create();
-            condition.alias = BO_PROPERTY_NAME_OBJECTKEY;
-            condition.value = (<any>bo)[BO_PROPERTY_NAME_OBJECTKEY];
-        } else if ((<any>bo)[BO_PROPERTY_NAME_DOCENTRY] !== undefined) {
+        if (objects.isAssignableFrom(bo, BODocument)
+            || objects.isAssignableFrom(bo, BOMasterData)) {
             boCriteria = new Criteria();
             let condition: ICondition = boCriteria.conditions.create();
             condition.alias = BO_PROPERTY_NAME_DOCENTRY;
-            condition.value = (<any>bo)[BO_PROPERTY_NAME_DOCENTRY];
+            condition.value = bo[BO_PROPERTY_NAME_DOCENTRY];
+            condition.operation = operation;
+        } else if (objects.isAssignableFrom(bo, BOSimple)) {
+            boCriteria = new Criteria();
+            let condition: ICondition = boCriteria.conditions.create();
+            condition.alias = BO_PROPERTY_NAME_OBJECTKEY;
+            condition.value = bo[BO_PROPERTY_NAME_OBJECTKEY];
+            condition.operation = operation;
+        } else if (objects.isAssignableFrom(bo, BODocumentLine)) {
+            boCriteria = new Criteria();
+            // 父项相等时
+            let condition: ICondition = boCriteria.conditions.create();
+            condition.bracketOpen = 2;
+            condition.alias = BO_PROPERTY_NAME_DOCENTRY;
+            condition.value = bo[BO_PROPERTY_NAME_DOCENTRY];
+            condition = boCriteria.conditions.create();
+            condition.bracketClose = 1;
+            condition.alias = BO_PROPERTY_NAME_LINEID;
+            condition.value = bo[BO_PROPERTY_NAME_LINEID];
+            condition.operation = operation;
+            condition = boCriteria.conditions.create();
+            // 父项不相等时
+            condition.bracketClose = 1;
+            condition.alias = BO_PROPERTY_NAME_DOCENTRY;
+            condition.value = bo[BO_PROPERTY_NAME_DOCENTRY];
+            condition.operation = operation;
+        } else if (objects.isAssignableFrom(bo, BOMasterDataLine)) {
+            boCriteria = new Criteria();
+            // 父项相等时
+            let condition: ICondition = boCriteria.conditions.create();
+            condition.bracketOpen = 2;
+            condition.alias = BO_PROPERTY_NAME_CODE;
+            condition.value = bo[BO_PROPERTY_NAME_CODE];
+            condition = boCriteria.conditions.create();
+            condition.bracketClose = 1;
+            condition.alias = BO_PROPERTY_NAME_LINEID;
+            condition.value = bo[BO_PROPERTY_NAME_LINEID];
+            condition.operation = operation;
+            condition = boCriteria.conditions.create();
+            // 父项不相等时
+            condition.bracketClose = 1;
+            condition.alias = BO_PROPERTY_NAME_CODE;
+            condition.value = bo[BO_PROPERTY_NAME_CODE];
+            condition.operation = operation;
+        } else if (objects.isAssignableFrom(bo, BOSimpleLine)) {
+            boCriteria = new Criteria();
+            // 父项相等时
+            let condition: ICondition = boCriteria.conditions.create();
+            condition.bracketOpen = 2;
+            condition.alias = BO_PROPERTY_NAME_OBJECTKEY;
+            condition.value = bo[BO_PROPERTY_NAME_OBJECTKEY];
+            condition = boCriteria.conditions.create();
+            condition.bracketClose = 1;
+            condition.alias = BO_PROPERTY_NAME_LINEID;
+            condition.value = bo[BO_PROPERTY_NAME_LINEID];
+            condition.operation = operation;
+            condition = boCriteria.conditions.create();
+            // 父项不相等时
+            condition.bracketClose = 1;
+            condition.alias = BO_PROPERTY_NAME_OBJECTKEY;
+            condition.value = bo[BO_PROPERTY_NAME_OBJECTKEY];
+            condition.operation = operation;
         }
+        // 不是标准类型
         if (boCriteria == null) {
             boCriteria = bo.criteria();
+            for (let condition of boCriteria.conditions) {
+                condition.operation = operation;
+            }
         }
         return boCriteria;
     }
@@ -303,6 +368,8 @@ export class Condition implements ICondition {
     constructor() {
         this.operation = emConditionOperation.EQUAL;
         this.relationship = emConditionRelationship.AND;
+        this.bracketOpen = 0;
+        this.bracketClose = 0;
         if (arguments[0] !== undefined) {
             this.alias = arguments[0];
         }

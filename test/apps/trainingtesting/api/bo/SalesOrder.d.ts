@@ -12,11 +12,17 @@ import {
     emBOStatus,
     emApprovalStatus,
     IBusinessObject,
-    IBusinessObjects
+    IBusinessObjects,
+    IBOMasterData,
+    IBOMasterDataLine,
+    IBODocument,
+    IBODocumentLine,
+    IBOSimple,
+    IBOSimpleLine
 } from "ibas/index";
 
 /** 销售订单 */
-export interface ISalesOrder extends IBusinessObject {
+export interface ISalesOrder extends IBODocument {
 
     /** 凭证编号 */
     docEntry: number;
@@ -146,7 +152,7 @@ export interface ISalesOrder extends IBusinessObject {
 }
 
 /** 销售订单-行 */
-export interface ISalesOrderItem extends IBusinessObject {
+export interface ISalesOrderItem extends IBODocumentLine {
 
     /** 编码 */
     docEntry: number;

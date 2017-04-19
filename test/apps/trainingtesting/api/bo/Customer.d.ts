@@ -12,11 +12,17 @@ import {
     emBOStatus,
     emApprovalStatus,
     IBusinessObject,
-    IBusinessObjects
+    IBusinessObjects,
+    IBOMasterData,
+    IBOMasterDataLine,
+    IBODocument,
+    IBODocumentLine,
+    IBOSimple,
+    IBOSimpleLine
 } from "ibas/index";
 
 /** 客户主数据 */
-export interface ICustomer extends IBusinessObject {
+export interface ICustomer extends IBOMasterData {
 
     /** 客户编号 */
     code: string;

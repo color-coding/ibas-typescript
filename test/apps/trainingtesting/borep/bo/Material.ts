@@ -12,12 +12,18 @@ import {
     emBOStatus,
     emApprovalStatus,
     BusinessObject,
-    BusinessObjects
+    BusinessObjects,
+    BOMasterData,
+    BOMasterDataLine,
+    BODocument,
+    BODocumentLine,
+    BOSimple,
+    BOSimpleLine,
 } from "ibas/index";
 import * as api from "api/bo/index.d";
 
 /** 物料主数据 */
-export class Material extends BusinessObject<Material> implements api.IMaterial {
+export class Material extends BOMasterData<Material> implements api.IMaterial {
 
     /** 业务对象编码 */
     static BUSINESS_OBJECT_CODE: string = "CC_TT_MATERIALS";

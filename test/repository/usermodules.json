@@ -4,7 +4,7 @@
     "name": "TrainingTesting",
     "category": "",
     "address": ".../../../test/apps/trainingtesting/",
-    "repository": ".../../../test/repository"
+    "repository": "http://localhost:7878/trainingtesting/services/rest/data"
   },
   {
     "id": "edd25576-d1d8-4cab-87fa-52c834668525",

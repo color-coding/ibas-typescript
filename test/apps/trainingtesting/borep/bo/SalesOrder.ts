@@ -12,12 +12,18 @@ import {
     emBOStatus,
     emApprovalStatus,
     BusinessObject,
-    BusinessObjects
+    BusinessObjects,
+    BOMasterData,
+    BOMasterDataLine,
+    BODocument,
+    BODocumentLine,
+    BOSimple,
+    BOSimpleLine,
 } from "ibas/index";
 import * as api from "api/bo/index.d";
 
 /** 销售订单 */
-export class SalesOrder extends BusinessObject<SalesOrder> implements api.ISalesOrder {
+export class SalesOrder extends BODocument<SalesOrder> implements api.ISalesOrder {
 
     /** 业务对象编码 */
     static BUSINESS_OBJECT_CODE: string = "CC_TT_SALESORDER";
@@ -486,7 +492,7 @@ export class SalesOrder extends BusinessObject<SalesOrder> implements api.ISales
 }
 
 /** 销售订单-行 */
-export class SalesOrderItem extends BusinessObject<SalesOrderItem> implements api.ISalesOrderItem {
+export class SalesOrderItem extends BODocumentLine<SalesOrderItem> implements api.ISalesOrderItem {
 
     /** 构造函数 */
     constructor() {

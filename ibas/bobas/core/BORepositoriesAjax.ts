@@ -218,7 +218,7 @@ export class BORepositoryAjax extends BORepository implements IRemoteRepository 
                 throw new Error(i18n.prop("msg_data_converter_parsing_faild"));
             }
             logger.log(emMessageLevel.DEBUG,
-                "repository: call method [{2}] sucessful, {0} - {1}.", textStatus, opRslt.message, ajxSetting.url);
+                "repository: call method [{2}] sucessful, {0} - {1}.", opRslt.resultCode, opRslt.message, ajxSetting.url);
             caller.onCompleted.call(objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
         };
         // 调用远程方法

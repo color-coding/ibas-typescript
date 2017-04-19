@@ -9,7 +9,9 @@
 import {
     objects, ICriteria, Criteria, ICondition, i18n, IOperationResult,
     config, ISort, emSortType, emConditionOperation, ArrayList, BarApplication,
-    emMessageType, variablesManager, VariablesManager
+    emMessageType, variablesManager, VariablesManager, BODocument, BOMasterData, BOSimple,
+    BODocumentLine, BOMasterDataLine, BOSimpleLine,
+    BO_PROPERTY_NAME_CODE, BO_PROPERTY_NAME_DOCENTRY, BO_PROPERTY_NAME_LINEID, BO_PROPERTY_NAME_OBJECTKEY
 } from "ibas/index";
 import { IQueryPanelView, IQueryPanel, IUseQueryPanel, IUserQuery, IBORepositorySystem, IBOInfo } from "./Systems.d";
 import { Factories } from "./Factories";
@@ -112,7 +114,7 @@ export abstract class QueryPanel<T extends IQueryPanelView> extends BarApplicati
         this.busy(true);
         let criteria: ICriteria = this.currentCriteria();
         // 修正查询数量
-        if (criteria.result < 1) {
+        if (objects.isNull(criteria.result) || criteria.result < 1) {
             criteria.result = config.get(QueryPanel.CONFIG_ITEM_CRITERIA_RESULT_COUNT, 30);
         }
         // 给查询条件赋值
@@ -124,14 +126,36 @@ export abstract class QueryPanel<T extends IQueryPanelView> extends BarApplicati
         // 没有排序条件，尝试添加
         if (criteria.sorts.length === 0) {
             if (!objects.isNull(this.listener.queryTarget)) {
-                if (!objects.isNull(this.listener.queryTarget.DocEntry)) {
+                if (objects.isAssignableFrom(this.listener.queryTarget, BODocument)
+                    || objects.isAssignableFrom(this.listener.queryTarget, BOMasterData)) {
                     let sort: ISort = criteria.sorts.create();
-                    sort.alias = "DocEntry";
+                    sort.alias = BO_PROPERTY_NAME_DOCENTRY;
                     sort.sortType = emSortType.DESCENDING;
-                } else if (!objects.isNull(this.listener.queryTarget.ObjectKey)) {
+                } else if (objects.isAssignableFrom(this.listener.queryTarget, BOSimple)) {
                     let sort: ISort = criteria.sorts.create();
-                    sort.alias = "ObjectKey";
+                    sort.alias = BO_PROPERTY_NAME_OBJECTKEY;
                     sort.sortType = emSortType.DESCENDING;
+                } else if (objects.isAssignableFrom(this.listener.queryTarget, BODocumentLine)) {
+                    let sort: ISort = criteria.sorts.create();
+                    sort.alias = BO_PROPERTY_NAME_DOCENTRY;
+                    sort.sortType = emSortType.DESCENDING;
+                    sort = criteria.sorts.create();
+                    sort.alias = BO_PROPERTY_NAME_LINEID;
+                    sort.sortType = emSortType.ASCENDING;
+                } else if (objects.isAssignableFrom(this.listener.queryTarget, BOMasterDataLine)) {
+                    let sort: ISort = criteria.sorts.create();
+                    sort.alias = BO_PROPERTY_NAME_CODE;
+                    sort.sortType = emSortType.DESCENDING;
+                    sort = criteria.sorts.create();
+                    sort.alias = BO_PROPERTY_NAME_LINEID;
+                    sort.sortType = emSortType.ASCENDING;
+                } else if (objects.isAssignableFrom(this.listener.queryTarget, BOSimpleLine)) {
+                    let sort: ISort = criteria.sorts.create();
+                    sort.alias = BO_PROPERTY_NAME_OBJECTKEY;
+                    sort.sortType = emSortType.DESCENDING;
+                    sort = criteria.sorts.create();
+                    sort.alias = BO_PROPERTY_NAME_LINEID;
+                    sort.sortType = emSortType.ASCENDING;
                 }
             }
         }

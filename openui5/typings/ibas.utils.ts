@@ -189,7 +189,7 @@ export namespace utils {
             return;
         }
         // 绑定触发一次的事件
-        trigger.listener.attachEventOnce("_rowsUpdated", undefined, function (): void {
+        trigger.listener.attachEvent("_rowsUpdated", undefined, function (): void {
             let model: any = trigger.listener.getModel(undefined);
             if (!ibas.objects.isNull(model)) {
                 let data: any = model.getData();

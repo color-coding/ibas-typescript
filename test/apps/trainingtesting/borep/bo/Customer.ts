@@ -12,12 +12,18 @@ import {
     emBOStatus,
     emApprovalStatus,
     BusinessObject,
-    BusinessObjects
+    BusinessObjects,
+    BOMasterData,
+    BOMasterDataLine,
+    BODocument,
+    BODocumentLine,
+    BOSimple,
+    BOSimpleLine,
 } from "ibas/index";
 import * as api from "api/bo/index.d";
 
 /** 客户主数据 */
-export class Customer extends BusinessObject<Customer> implements api.ICustomer {
+export class Customer extends BOMasterData<Customer> implements api.ICustomer {
 
     /** 业务对象编码 */
     static BUSINESS_OBJECT_CODE: string = "CC_TT_CUSTOMER";

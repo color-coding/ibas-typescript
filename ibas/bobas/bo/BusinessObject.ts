@@ -6,12 +6,12 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { objects, List, ArrayList, ICriteria } from "../data/index";
+import { objects, List, ArrayList, ICriteria, Criteria, ICondition } from "../data/index";
 import {
     IBusinessObject, BusinessObjectBase, BusinessObjectListBase
 } from "../core/index";
 import {
-    IBusinessObjects
+    IBusinessObjects, IBODocument, IBODocumentLine, IBOMasterData, IBOMasterDataLine, IBOSimple, IBOSimpleLine
 } from "./BusinessObject.d";
 
 
@@ -137,5 +137,93 @@ export abstract class BusinessObjects<T extends IBusinessObject, P extends IBusi
             list.add(item);
         }
         return list;
+    }
+}
+
+/**
+ * 单据对象基类
+ */
+export abstract class BODocument<T extends IBODocument> extends BusinessObject<T> {
+    /** 获取查询 */
+    criteria(): ICriteria {
+        let criteria: ICriteria = new Criteria();
+        let condition: ICondition = criteria.conditions.create();
+        condition.alias = BO_PROPERTY_NAME_DOCENTRY;
+        condition.value = this[BO_PROPERTY_NAME_DOCENTRY];
+        return criteria;
+    }
+}
+/**
+ * 单据行对象基类
+ */
+export abstract class BODocumentLine<T extends IBODocumentLine> extends BusinessObject<T> {
+    /** 获取查询 */
+    criteria(): ICriteria {
+        let criteria: ICriteria = new Criteria();
+        let condition: ICondition = criteria.conditions.create();
+        condition.alias = BO_PROPERTY_NAME_DOCENTRY;
+        condition.value = this[BO_PROPERTY_NAME_DOCENTRY];
+        condition = criteria.conditions.create();
+        condition.alias = BO_PROPERTY_NAME_LINEID;
+        condition.value = this[BO_PROPERTY_NAME_LINEID];
+        return criteria;
+    }
+}
+/**
+ * 主数据对象基类
+ */
+export abstract class BOMasterData<T extends IBOMasterData> extends BusinessObject<T> {
+    /** 获取查询 */
+    criteria(): ICriteria {
+        let criteria: ICriteria = new Criteria();
+        let condition: ICondition = criteria.conditions.create();
+        condition.alias = BO_PROPERTY_NAME_CODE;
+        condition.value = this[BO_PROPERTY_NAME_CODE];
+        return criteria;
+    }
+}
+/**
+ * 主数据行对象基类
+ */
+export abstract class BOMasterDataLine<T extends IBOMasterDataLine> extends BusinessObject<T> {
+    /** 获取查询 */
+    criteria(): ICriteria {
+        let criteria: ICriteria = new Criteria();
+        let condition: ICondition = criteria.conditions.create();
+        condition.alias = BO_PROPERTY_NAME_CODE;
+        condition.value = this[BO_PROPERTY_NAME_CODE];
+        condition = criteria.conditions.create();
+        condition.alias = BO_PROPERTY_NAME_LINEID;
+        condition.value = this[BO_PROPERTY_NAME_LINEID];
+        return criteria;
+    }
+}
+/**
+ * 简单对象基类
+ */
+export abstract class BOSimple<T extends IBOSimple> extends BusinessObject<T> {
+    /** 获取查询 */
+    criteria(): ICriteria {
+        let criteria: ICriteria = new Criteria();
+        let condition: ICondition = criteria.conditions.create();
+        condition.alias = BO_PROPERTY_NAME_OBJECTKEY;
+        condition.value = this[BO_PROPERTY_NAME_OBJECTKEY];
+        return criteria;
+    }
+}
+/**
+ * 简单行对象基类
+ */
+export abstract class BOSimpleLine<T extends IBOSimpleLine> extends BusinessObject<T> {
+    /** 获取查询 */
+    criteria(): ICriteria {
+        let criteria: ICriteria = new Criteria();
+        let condition: ICondition = criteria.conditions.create();
+        condition.alias = BO_PROPERTY_NAME_OBJECTKEY;
+        condition.value = this[BO_PROPERTY_NAME_OBJECTKEY];
+        condition = criteria.conditions.create();
+        condition.alias = BO_PROPERTY_NAME_LINEID;
+        condition.value = this[BO_PROPERTY_NAME_LINEID];
+        return criteria;
     }
 }
