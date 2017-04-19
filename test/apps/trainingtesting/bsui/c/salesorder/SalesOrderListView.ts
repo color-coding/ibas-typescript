@@ -183,7 +183,6 @@ export class SalesOrderListView extends ibas.BOListView implements ISalesOrderLi
                     return;
                 }
                 that.fireViewEvents(that.fetchDataEvent, criteria);
-                console.debug(criteria.toString());
             }
         });
         return this.page;
@@ -222,6 +221,8 @@ export class SalesOrderListView extends ibas.BOListView implements ISalesOrderLi
     query(criteria: ibas.ICriteria): void {
         super.query(criteria);
         this.lastCriteria = criteria;
+        // 清除历史数据
+        this.table.setModel(null);
     }
 
 }
