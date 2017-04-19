@@ -41,7 +41,12 @@ export class SystemsFactory implements sys.ISystemsFactory {
     }
     /** 创建仓库 */
     createRepository(): sys.IBORepositorySystem {
-        if (ibas.config.get(ibas.BORepositoryApplication.CONFIG_ITEM_OFFLINE_MODE, false)) {
+        // 全局离线状态
+        let offline: boolean = ibas.config.get(ibas.BORepositoryApplication.CONFIG_ITEM_OFFLINE_MODE, false);
+        // 壳仓库离线状态
+        offline = ibas.config.get(
+            ibas.BORepositoryApplication.CONFIG_ITEM_OFFLINE_MODE + "|" + BORepositoryShell.name, offline);
+        if (offline) {
             // 当前处于离线模式
             return new BORepositoryShellOffLine();
         }

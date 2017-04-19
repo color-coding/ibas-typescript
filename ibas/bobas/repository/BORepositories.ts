@@ -30,10 +30,13 @@ export abstract class BORepositoryApplication {
     static CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS: string = "repositoryAddress|{0}";
 
     constructor() {
-        // 获取离线状态
-        this.offline = config.get(BORepositoryApplication.CONFIG_ITEM_OFFLINE_MODE, false);
-        // 获取远程仓库的默认地址
+        // 子类名称
         let name: string = this.constructor.name;
+        // 获取全局离线状态
+        this.offline = config.get(BORepositoryApplication.CONFIG_ITEM_OFFLINE_MODE, false);
+        // 获取此仓库离线状态
+        this.offline = config.get(BORepositoryApplication.CONFIG_ITEM_OFFLINE_MODE + "|" + name, this.offline);
+        // 获取远程仓库的默认地址
         let address: string = config.get(strings.format(BORepositoryApplication.CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS, name));
         if (!objects.isNull(address)) {
             address = url.normalize(address);

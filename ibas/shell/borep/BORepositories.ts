@@ -115,6 +115,13 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements s
  */
 export class BORepositoryShellOffLine extends BORepositoryShell {
 
+    constructor() {
+        super();
+        // 重新获取离线状态
+        let name: string = super.constructor.name;
+        // 获取此仓库离线状态
+        this.offline = ibas.config.get(ibas.BORepositoryApplication.CONFIG_ITEM_OFFLINE_MODE + "|" + name, this.offline);
+    }
     /**
      * 创建此模块的后端与前端数据的转换者
      */
