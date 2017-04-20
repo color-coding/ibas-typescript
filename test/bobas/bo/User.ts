@@ -11,7 +11,7 @@ import * as bobas from "../../../ibas/bobas/index";
 /**
  * 用户
  */
-export class User extends bobas.BusinessObject<User> {
+export class User extends bobas.BusinessObject<User>  {
 
     private _userCode: string;
 
@@ -24,6 +24,15 @@ export class User extends bobas.BusinessObject<User> {
     }
 
     protected init() {
-
+    }
+    criteria(): bobas.ICriteria {
+        let criteria: bobas.ICriteria = new bobas.Criteria();
+        let condition: bobas.ICondition = criteria.conditions.create();
+        condition.alias = "userCode";
+        condition.value = this.userCode;
+        return criteria;
+    }
+    toString(): string {
+        return bobas.strings.format("{user: {0}}", this.userCode);
     }
 }

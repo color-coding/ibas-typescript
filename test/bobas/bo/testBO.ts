@@ -56,6 +56,7 @@ for (let item of order.salesOrderItems) {
     bobas.assert.equals("bo status isDeleted", item.isDeleted, false);
 }
 bobas.logger.log(bobas.emMessageLevel.INFO, "test: {0} {1}", "order", order.getProperties(false).size);
+bobas.logger.log(bobas.emMessageLevel.INFO, "test: {0}", order.toString());
 console.log(JSON.stringify(order));
 // 克隆对象
 let cOrder = order.clone();

@@ -6,7 +6,10 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { objects, List, ArrayList, ICriteria, Criteria, ICondition } from "../data/index";
+import {
+    objects, List, ArrayList, ICriteria, Criteria, ICondition,
+    StringBuilder
+} from "../data/index";
 import {
     IBusinessObject, BusinessObjectBase, BusinessObjectListBase
 } from "../core/index";
@@ -23,6 +26,8 @@ export const BO_PROPERTY_NAME_CODE: string = "code";
 export const BO_PROPERTY_NAME_OBJECTKEY: string = "objectKey";
 /** 业务对象属性名称-LineId */
 export const BO_PROPERTY_NAME_LINEID: string = "lineId";
+/** 业务对象属性名称-objectCode */
+export const BO_PROPERTY_NAME_OBJECTCODE: string = "objectCode";
 /** 需要被重置的属性名称 */
 export const NEED_BE_RESET_PROPERTIES: string[] = ["_listeners",
     "createDate", "createTime", "updateDate", "updateTime", "logInst", "createUserSign", "updateUserSign",
@@ -38,13 +43,13 @@ export abstract class BusinessObject<T extends IBusinessObject> extends Business
     constructor() {
         super();
     }
+    /** 获取查询 */
+    abstract criteria(): ICriteria;
+    /** 输出字符串 */
+    abstract toString(): string;
     /** 删除 */
     delete(): void {
         this.markDeleted(true);
-    }
-    /** 获取查询 */
-    criteria(): ICriteria {
-        return null;
     }
     /** 克隆对象 */
     clone(): T {
@@ -152,6 +157,23 @@ export abstract class BODocument<T extends IBODocument> extends BusinessObject<T
         condition.value = this[BO_PROPERTY_NAME_DOCENTRY];
         return criteria;
     }
+    /** 输出字符串 */
+    toString(): string {
+        let builder: StringBuilder = new StringBuilder();
+        builder.append("{");
+        builder.append("[");
+        builder.append(this[BO_PROPERTY_NAME_OBJECTCODE]);
+        builder.append("].");
+        builder.append("[");
+        builder.append(BO_PROPERTY_NAME_DOCENTRY);
+        builder.append(" ");
+        builder.append("=");
+        builder.append(" ");
+        builder.append(this[BO_PROPERTY_NAME_DOCENTRY]);
+        builder.append("]");
+        builder.append("}");
+        return builder.toString();
+    }
 }
 /**
  * 单据行对象基类
@@ -168,6 +190,31 @@ export abstract class BODocumentLine<T extends IBODocumentLine> extends Business
         condition.value = this[BO_PROPERTY_NAME_LINEID];
         return criteria;
     }
+    /** 输出字符串 */
+    toString(): string {
+        let builder: StringBuilder = new StringBuilder();
+        builder.append("{");
+        builder.append("[");
+        builder.append(this[BO_PROPERTY_NAME_OBJECTCODE]);
+        builder.append("].");
+        builder.append("[");
+        builder.append(BO_PROPERTY_NAME_DOCENTRY);
+        builder.append(" ");
+        builder.append("=");
+        builder.append(" ");
+        builder.append(this[BO_PROPERTY_NAME_DOCENTRY]);
+        builder.append("]");
+        builder.append("&");
+        builder.append("[");
+        builder.append(BO_PROPERTY_NAME_LINEID);
+        builder.append(" ");
+        builder.append("=");
+        builder.append(" ");
+        builder.append(this[BO_PROPERTY_NAME_LINEID]);
+        builder.append("]");
+        builder.append("}");
+        return builder.toString();
+    }
 }
 /**
  * 主数据对象基类
@@ -180,6 +227,23 @@ export abstract class BOMasterData<T extends IBOMasterData> extends BusinessObje
         condition.alias = BO_PROPERTY_NAME_CODE;
         condition.value = this[BO_PROPERTY_NAME_CODE];
         return criteria;
+    }
+    /** 输出字符串 */
+    toString(): string {
+        let builder: StringBuilder = new StringBuilder();
+        builder.append("{");
+        builder.append("[");
+        builder.append(this[BO_PROPERTY_NAME_OBJECTCODE]);
+        builder.append("].");
+        builder.append("[");
+        builder.append(BO_PROPERTY_NAME_CODE);
+        builder.append(" ");
+        builder.append("=");
+        builder.append(" ");
+        builder.append(this[BO_PROPERTY_NAME_CODE]);
+        builder.append("]");
+        builder.append("}");
+        return builder.toString();
     }
 }
 /**
@@ -197,6 +261,31 @@ export abstract class BOMasterDataLine<T extends IBOMasterDataLine> extends Busi
         condition.value = this[BO_PROPERTY_NAME_LINEID];
         return criteria;
     }
+    /** 输出字符串 */
+    toString(): string {
+        let builder: StringBuilder = new StringBuilder();
+        builder.append("{");
+        builder.append("[");
+        builder.append(this[BO_PROPERTY_NAME_OBJECTCODE]);
+        builder.append("].");
+        builder.append("[");
+        builder.append(BO_PROPERTY_NAME_CODE);
+        builder.append(" ");
+        builder.append("=");
+        builder.append(" ");
+        builder.append(this[BO_PROPERTY_NAME_CODE]);
+        builder.append("]");
+        builder.append("&");
+        builder.append("[");
+        builder.append(BO_PROPERTY_NAME_LINEID);
+        builder.append(" ");
+        builder.append("=");
+        builder.append(" ");
+        builder.append(this[BO_PROPERTY_NAME_LINEID]);
+        builder.append("]");
+        builder.append("}");
+        return builder.toString();
+    }
 }
 /**
  * 简单对象基类
@@ -209,6 +298,23 @@ export abstract class BOSimple<T extends IBOSimple> extends BusinessObject<T> {
         condition.alias = BO_PROPERTY_NAME_OBJECTKEY;
         condition.value = this[BO_PROPERTY_NAME_OBJECTKEY];
         return criteria;
+    }
+    /** 输出字符串 */
+    toString(): string {
+        let builder: StringBuilder = new StringBuilder();
+        builder.append("{");
+        builder.append("[");
+        builder.append(this[BO_PROPERTY_NAME_OBJECTCODE]);
+        builder.append("].");
+        builder.append("[");
+        builder.append(BO_PROPERTY_NAME_OBJECTKEY);
+        builder.append(" ");
+        builder.append("=");
+        builder.append(" ");
+        builder.append(this[BO_PROPERTY_NAME_OBJECTKEY]);
+        builder.append("]");
+        builder.append("}");
+        return builder.toString();
     }
 }
 /**
@@ -225,5 +331,30 @@ export abstract class BOSimpleLine<T extends IBOSimpleLine> extends BusinessObje
         condition.alias = BO_PROPERTY_NAME_LINEID;
         condition.value = this[BO_PROPERTY_NAME_LINEID];
         return criteria;
+    }
+    /** 输出字符串 */
+    toString(): string {
+        let builder: StringBuilder = new StringBuilder();
+        builder.append("{");
+        builder.append("[");
+        builder.append(this[BO_PROPERTY_NAME_OBJECTCODE]);
+        builder.append("].");
+        builder.append("[");
+        builder.append(BO_PROPERTY_NAME_OBJECTKEY);
+        builder.append(" ");
+        builder.append("=");
+        builder.append(" ");
+        builder.append(this[BO_PROPERTY_NAME_OBJECTKEY]);
+        builder.append("]");
+        builder.append("&");
+        builder.append("[");
+        builder.append(BO_PROPERTY_NAME_LINEID);
+        builder.append(" ");
+        builder.append("=");
+        builder.append(" ");
+        builder.append(this[BO_PROPERTY_NAME_LINEID]);
+        builder.append("]");
+        builder.append("}");
+        return builder.toString();
     }
 }

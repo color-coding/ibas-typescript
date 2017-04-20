@@ -7,7 +7,7 @@
  */
 
 import {
-    BusinessObject, BusinessObjects,
+    BusinessObject, BusinessObjects,BODocument,BODocumentLine,
     emYesNo, emDocumentStatus, emBOStatus, emApprovalStatus
 } from "../../../ibas/bobas/index";
 import { User } from "./User";
@@ -155,7 +155,7 @@ import { User } from "./User";
 */
 
 /** 销售订单 */
-export class SalesOrder extends BusinessObject<SalesOrder> {
+export class SalesOrder extends BODocument<SalesOrder> {
 
     /** 业务对象编码 */
     static BUSINESS_OBJECT_CODE: string = "CC_TT_SALESORDER";
@@ -623,7 +623,7 @@ export class SalesOrder extends BusinessObject<SalesOrder> {
 }
 
 /** 销售订单-行 */
-export class SalesOrderItem extends BusinessObject<SalesOrderItem> {
+export class SalesOrderItem extends BODocumentLine<SalesOrderItem> {
 
     /** 构造函数 */
     constructor() {

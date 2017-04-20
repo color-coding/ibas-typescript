@@ -120,7 +120,13 @@ export class StringBuilder {
      * 添加字符
      */
     append(str: any): void {
-        this.values.push(str.toString());
+        if (str === undefined) {
+            this.values.push("undefined");
+        } else if (str === null) {
+            this.values.push("null");
+        } else {
+            this.values.push(str.toString());
+        }
     }
 
     /**

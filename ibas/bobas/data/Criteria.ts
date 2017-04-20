@@ -375,6 +375,7 @@ export class Condition implements ICondition {
     constructor(alias: string, operation: emConditionOperation, value: string);
     constructor();
     constructor() {
+        this.alias = "";
         this.operation = emConditionOperation.EQUAL;
         this.relationship = emConditionRelationship.AND;
         this.bracketOpen = 0;
