@@ -101,6 +101,7 @@ export class MaterialChooseView extends ibas.BOChooseView implements IMaterialCh
                 if (ibas.objects.isNull(criteria)) {
                     return;
                 }
+                ibas.logger.log(ibas.emMessageLevel.DEBUG, "result: {0}", criteria.toString());
                 that.fireViewEvents(that.fetchDataEvent, criteria);
             }
         });
@@ -134,6 +135,8 @@ export class MaterialChooseView extends ibas.BOChooseView implements IMaterialCh
         super.query(criteria);
         this.lastCriteria = criteria;
         // 清除历史数据
+        this.table.setBusy(true);
+        this.table.setFirstVisibleRow(0);
         this.table.setModel(null);
     }
 }

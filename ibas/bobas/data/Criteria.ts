@@ -132,6 +132,13 @@ export class Criteria implements ICriteria {
      * 转换为字符串
      */
     toString(): string {
+        let repeat: Function = function (count: number, char: string): string {
+            let rChars: string = "";
+            for (let index: number = 0; index < count; index++) {
+                rChars = rChars + char;
+            }
+            return rChars;
+        }
         let builder: StringBuilder = new StringBuilder();
         builder.append("{");
         for (let item of this.conditions) {
@@ -140,7 +147,9 @@ export class Criteria implements ICriteria {
                 builder.append(this.charRelationship(item.relationship));
                 builder.append(" ");
             }
+            builder.append(repeat(item.bracketOpen, "("));
             builder.append(item.toString());
+            builder.append(repeat(item.bracketClose, ")"));
         }
         builder.append("}");
         return builder.toString();

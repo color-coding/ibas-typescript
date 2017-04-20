@@ -21,6 +21,7 @@ declare namespace sap {
                 getColumns(): sap.ui.table.Column[];
                 getVisibleRowCount(): number;
                 getFirstVisibleRow(): number;
+                setFirstVisibleRow(row: number): sap.ui.table.Table
             }
             export class Column extends sap.ui.core.Control {
                 constructor(mSettings?: any);
