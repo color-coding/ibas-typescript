@@ -53,6 +53,9 @@ export class Console extends ibas.ModuleConsole {
         let rootUrl: string = ibas.url.rootUrl(Console.ROOT_FILE_NAME);
         // 加载语言-框架默认
         ibas.i18n.load(ibas.strings.format("{0}/resources/languages/trainingtesting.{1}.json", rootUrl, ibas.i18n.language));
+        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/material.{1}.json", rootUrl, ibas.i18n.language));
+        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/customer.{1}.json", rootUrl, ibas.i18n.language));
+        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/salesorder.{1}.json", rootUrl, ibas.i18n.language));
         // 设置资源属性
         this.description = ibas.i18n.prop(this.name.toLowerCase());
         this.icon = ibas.i18n.prop(this.name.toLowerCase() + "_icon");
@@ -114,9 +117,6 @@ export class ConsoleOthers extends ibas.ModuleConsole {
         let rootUrl: string = ibas.url.rootUrl(Console.ROOT_FILE_NAME);
         // 加载语言-框架默认
         ibas.i18n.load(ibas.strings.format("{0}/resources/languages/trainingtestingothers.{1}.json", rootUrl, ibas.i18n.language));
-        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/material.{1}.json", rootUrl, ibas.i18n.language));
-        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/customer.{1}.json", rootUrl, ibas.i18n.language));
-        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/salesorder.{1}.json", rootUrl, ibas.i18n.language));
         // 设置资源属性
         this.description = ibas.i18n.prop(this.name.toLowerCase());
         // 先加载ui导航

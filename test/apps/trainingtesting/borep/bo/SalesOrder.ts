@@ -20,10 +20,14 @@ import {
     BOSimple,
     BOSimpleLine,
 } from "ibas/index";
-import * as api from "api/bo/index.d";
+import {
+    ISalesOrder,
+    ISalesOrderItem,
+    ISalesOrderItems
+} from "../../api/index";
 
 /** 销售订单 */
-export class SalesOrder extends BODocument<SalesOrder> implements api.ISalesOrder {
+export class SalesOrder extends BODocument<SalesOrder> implements ISalesOrder {
 
     /** 业务对象编码 */
     static BUSINESS_OBJECT_CODE: string = "CC_TT_SALESORDER";
@@ -492,7 +496,7 @@ export class SalesOrder extends BODocument<SalesOrder> implements api.ISalesOrde
 }
 
 /** 销售订单-行 */
-export class SalesOrderItem extends BODocumentLine<SalesOrderItem> implements api.ISalesOrderItem {
+export class SalesOrderItem extends BODocumentLine<SalesOrderItem> implements ISalesOrderItem {
 
     /** 构造函数 */
     constructor() {
@@ -824,7 +828,7 @@ export class SalesOrderItem extends BODocumentLine<SalesOrderItem> implements ap
 }
 
 /** 销售订单-行 集合 */
-export class SalesOrderItems extends BusinessObjects<SalesOrderItem, SalesOrder> implements api.ISalesOrderItems {
+export class SalesOrderItems extends BusinessObjects<SalesOrderItem, SalesOrder> implements ISalesOrderItems {
 
     /** 创建并添加子项 */
     create(): SalesOrderItem {

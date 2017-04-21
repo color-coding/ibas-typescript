@@ -3,7 +3,7 @@
 // Definitions by: niuren.zhu <niuren.zhu@icloud.com>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
-/// <reference path="./sap.ui.d.ts" />
+/// <reference path="./index.d.ts" />
 /// <reference path="../../ibas/index.ts" />
 import * as ibas from "ibas/index";
 

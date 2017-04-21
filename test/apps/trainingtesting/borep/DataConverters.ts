@@ -8,6 +8,8 @@
 
 import * as ibas from "ibas/index";
 import * as bo from "./bo/index";
+import {
+} from "../api/index";
 
 /** TrainingTesting 模块的数据转换者 */
 export class DataConverterOnline extends ibas.DataConverter4ibas {

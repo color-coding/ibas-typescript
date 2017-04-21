@@ -6,7 +6,6 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-/// <reference path="../../../../../../openui5/typings/index.d.ts" />
 import * as ibas from "ibas/index";
 import { utils } from "openui5/typings/ibas.utils";
 import { IDemoUrlView } from "../../../bsapp/others/index";

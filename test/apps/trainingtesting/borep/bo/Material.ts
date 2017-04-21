@@ -20,10 +20,12 @@ import {
     BOSimple,
     BOSimpleLine,
 } from "ibas/index";
-import * as api from "api/bo/index.d";
+import {
+    IMaterial
+} from "../../api/index";
 
 /** 物料主数据 */
-export class Material extends BOMasterData<Material> implements api.IMaterial {
+export class Material extends BOMasterData<Material> implements IMaterial {
 
     /** 业务对象编码 */
     static BUSINESS_OBJECT_CODE: string = "CC_TT_MATERIALS";

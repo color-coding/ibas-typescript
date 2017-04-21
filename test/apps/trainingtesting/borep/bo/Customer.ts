@@ -20,10 +20,12 @@ import {
     BOSimple,
     BOSimpleLine,
 } from "ibas/index";
-import * as api from "api/bo/index.d";
+import {
+    ICustomer
+} from "../../api/index";
 
 /** 客户主数据 */
-export class Customer extends BOMasterData<Customer> implements api.ICustomer {
+export class Customer extends BOMasterData<Customer> implements ICustomer {
 
     /** 业务对象编码 */
     static BUSINESS_OBJECT_CODE: string = "CC_TT_CUSTOMER";
