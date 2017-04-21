@@ -28,10 +28,11 @@ Web.config
 /openui5/typings/*.js
 /tomcat/
 /others/
-/test/apps/module_b/
+/test/apps/
 
 
 # exceptions
 !ibas/3rdparty/*.js
 !openui5/typings/*.ts
 !openui5/typings/*.json
+!/test/apps/trainingtesting/

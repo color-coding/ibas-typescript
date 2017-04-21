@@ -2,7 +2,7 @@
   "appSettings": {
     "debug": true,
     "language": "zh_CN",
-    "offline": false,
+    "offline": true,
     "offline|BORepositoryShell": true,
     "helpUrl": "http://www.baidu.com",
     "fullScreen": false,

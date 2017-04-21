@@ -45,5 +45,5 @@
     "sys_shell_ui_data_deleting": "正在删除[{0}]",
     "sys_shell_ui_data_delete_error": "删除[{0}]失败，{1}",
     "sys_shell_ui_data_created_new": "创建了新的对象",
-    "sys_shell_ui_please_chooose_data": "请选择{0}的数据"
+    "sys_shell_ui_please_chooose_data": "请选择{0}数据"
 }

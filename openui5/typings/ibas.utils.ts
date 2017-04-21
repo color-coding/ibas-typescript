@@ -12,9 +12,22 @@ export namespace utils {
      * 创建下拉框可选项
      * @param data 枚举类型
      */
-    export function createComboBoxItems(data: any): sap.ui.core.Item[] {
+    export function createComboBoxItems(data: any): sap.ui.core.Item[];
+    /**
+     * 创建下拉框可选项
+     * @param data 枚举类型
+     * @param blank 是否创建空白项
+     */
+    export function createComboBoxItems(data: any, blank: boolean): sap.ui.core.Item[];
+    /** 创建下拉框可选项 */
+    export function createComboBoxItems(): sap.ui.core.Item[] {
         // 首先获取枚举内容
+        let data: any = arguments[0];
+        let blank: boolean = arguments[1];
         let map = new Map<string, string>();
+        if (blank) {
+            map.set("", ibas.i18n.prop("sys_shell_ui_please_chooose_data", ""));
+        }
         for (let item in data) {
             if (ibas.objects.isNull(item)) {
                 continue;

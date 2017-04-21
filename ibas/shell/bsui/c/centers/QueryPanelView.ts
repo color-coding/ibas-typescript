@@ -178,6 +178,10 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
     private table: sap.ui.table.Table;
     protected getPropertyListItem(properies: sys.IBOPropertyInfo[]): sap.ui.core.ListItem[] {
         let items: Array<sap.ui.core.ListItem> = [];
+        items.push(new sap.ui.core.ListItem("", {
+            key: "",
+            text: ibas.i18n.prop("sys_shell_ui_please_chooose_data", ""),
+        }));
         if (!ibas.objects.isNull(properies)) {
             for (let property of properies) {
                 items.push(new sap.ui.core.ListItem("", {

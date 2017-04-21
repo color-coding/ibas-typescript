@@ -4,27 +4,28 @@
     "name": "TrainingTesting",
     "category": "",
     "address": ".../../../test/apps/trainingtesting/",
-    "repository": "http://localhost:7878/trainingtesting/services/rest/data"
+    "repository": ".../../../test/repository"
   },
   {
     "id": "edd25576-d1d8-4cab-87fa-52c834668525",
     "name": "TrainingTestingOthers",
     "category": "",
-    "index":"index.others",
+    "index": "index.others",
     "address": ".../../../test/apps/trainingtesting/",
     "repository": ".../../../test/repository"
   },
   {
-    "id": "test-1",
-    "name": "module_b",
-    "category": "test",
-    "address": ".../../../test/apps/module_b/",
+    "id": "c2b31c06-20d8-44a2-bb34-17f47ed01859",
+    "name": "InitialFantasy",
+    "category": "",
+    "address": ".../../../test/apps/initialfantasy/",
     "repository": ".../../../test/repository"
   },
   {
-    "id": "test-2",
-    "name": "module_c",
-    "category": "test",
-    "address": "../../test/apps/module_c/"
+    "id": "cbd4ef0f-ee88-4ea7-96c7-13f974026b58",
+    "name": "ImportExport",
+    "category": "",
+    "address": ".../../../test/apps/importexport/",
+    "repository": ".../../../test/repository"
   }
 ]
