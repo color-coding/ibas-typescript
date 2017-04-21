@@ -480,6 +480,8 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             verticalScrolling: true,
             content: [view.darw()],
             afterClose: function (): void {
+                // 设置视图未显示
+                view.isDisplayed = false;
                 // 清理缓存的查询面板
                 if (that.queryPanels.has(view.id)) {
                     let panelContent: any = that.queryPanels.get(view.id);
@@ -509,9 +511,14 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
     }
     /** 显示工具条视图 */
     showBarView(view: ibas.BOBarView): void {
+        let that = this;
         let popover: sap.m.Popover = new sap.m.Popover("", {
             showHeader: false,
             placement: sap.m.PlacementType.Bottom,
+            afterClose(event: any): void {
+                // 设置视图未显示
+                view.isDisplayed = false;
+            },
             content: [
                 view.darw()
             ]

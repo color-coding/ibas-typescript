@@ -33,12 +33,13 @@ for /f %%l in ('dir /s /b "%WORK_FOLDER%tsconfig.json"') DO (
   SET FOLDER=%%~dpl
   echo --开始编译：!FOLDER!
 REM 不存在keeps.txt文件时，清理已存在js
-  for /f %%m in ('dir /s /b /a:d "!FOLDER!"') DO (
-    SET FOLDER_SUB=%%~dpm
-    if not exist !FOLDER_SUB!keeps.txt if exist !FOLDER_SUB!*.js del !FOLDER_SUB!*.js
+  for /f %%m in ('dir /b /a:d "!FOLDER!"') DO (
+    SET FOLDER_SUB=!FOLDER!%%m\
+    if not exist !FOLDER_SUB!keeps.txt (
+      echo ---清理目录：!FOLDER_SUB!
+      del /s !FOLDER_SUB!*.js >nul
+    )
   )
 REM 运行编译命令
   call !COMMOND! -p !FOLDER!
 )
-
-
