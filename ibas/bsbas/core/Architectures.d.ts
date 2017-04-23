@@ -72,6 +72,8 @@ export interface IView {
     isDisplayed: boolean;
     /** 关闭视图 */
     closeEvent: Function;
+    /** 键盘按钮按下 */
+    onKeyDown(event: KeyboardEvent): void;
 }
 /**
  * 应用-视图

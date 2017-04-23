@@ -8,7 +8,7 @@
 
 import {
     List, ArrayList, objects, i18n, strings, uuid,
-    config
+    config, logger, emMessageLevel
 } from "../../bobas/index";
 import { emPlantform } from "../data/index";
 import {
@@ -132,6 +132,11 @@ export abstract class View implements IView {
             throw new Error(i18n.prop("msg_invalid_parameter", "event"));
         }
         event.apply(this.application, pars);
+    }
+    /** 按钮按下时 */
+    onKeyDown(event: KeyboardEvent): void {
+        // 可重载
+        logger.log(emMessageLevel.DEBUG, "view: key [{0}] down at [{1}].", event.keyCode, this.id);
     }
 }
 /** 模块控制台 */

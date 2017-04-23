@@ -107,6 +107,15 @@ export class LoginView extends ibas.BOView implements sys.ILoginView {
             });
         // 重新赋值id
         this.id = this.form.getId();
+        // 键盘按钮按下
+        document.onkeydown = function (event): void {
+            if (ibas.objects.isNull(event)) {
+                return;
+            }
+            if (event.keyCode === 13) {
+                that.fireViewEvents(that.loginEvent);
+            }
+        };
         return this.form;
     }
     private form: sap.ui.layout.form.SimpleForm;
