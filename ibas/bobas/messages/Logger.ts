@@ -112,8 +112,6 @@ export class Logger implements ILogger {
             putter = console.error;
         } else if (message.level === emMessageLevel.WARN) {
             putter = console.warn;
-        } else if (message.level === emMessageLevel.DEBUG) {
-            putter = console.debug;
         }
         if (putter === undefined || putter === null) {
             putter = console.log;
