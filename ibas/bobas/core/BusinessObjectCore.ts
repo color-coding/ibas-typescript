@@ -418,13 +418,28 @@ export abstract class BusinessObjectListBase<T extends IBusinessObject>
      * 添加项目
      * @param item 项目
      */
-    add(item: T): void {
+    add(item: T): void;
+    /**
+     * 添加项目
+     * @param items 项目集合
+     */
+    add(items: T[]): void;
+    add(): void {
         // 无效值不做处理
-        if (item === null || item === undefined) {
+        if (arguments === null || arguments === undefined) {
             return;
         }
-        super.add(item);
-        this.afterAdd(item);
+        for (let arg of arguments) {
+            if (arg instanceof Array) {
+                for (let item of arg) {
+                    super.add(item);
+                    this.afterAdd(item);
+                }
+            } else {
+                super.add(arg);
+                this.afterAdd(arg);
+            }
+        }
     }
 
     /**

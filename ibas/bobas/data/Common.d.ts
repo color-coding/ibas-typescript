@@ -15,6 +15,11 @@ export interface List<T> extends Array<T> {
      * @param item 项目
      */
     add(item: T);
+    /**
+     * 添加项目
+     * @param items 项目数组
+     */
+    add(items: T[]);
 
     /**
      * 移出项目

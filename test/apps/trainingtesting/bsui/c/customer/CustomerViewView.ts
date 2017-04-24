@@ -58,6 +58,7 @@ export class CustomerViewView extends ibas.BOViewView implements ICustomerViewVi
                                             }
                                         }));
                                     }
+                                    (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
                                     popover.openBy(event.getSource(), true);
                                 }
                             });

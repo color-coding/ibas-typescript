@@ -161,6 +161,7 @@ export class SalesOrderListView extends ibas.BOListView implements ISalesOrderLi
                                             }
                                         }));
                                     }
+                                    (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
                                     popover.openBy(event.getSource(), true);
                                 }
                             });

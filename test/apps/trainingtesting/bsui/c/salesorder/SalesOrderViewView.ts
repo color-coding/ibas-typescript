@@ -67,6 +67,7 @@ export class SalesOrderViewView extends ibas.BOViewView implements ISalesOrderVi
                                             }
                                         }));
                                     }
+                                    (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
                                     popover.openBy(event.getSource(), true);
                                 }
                             });

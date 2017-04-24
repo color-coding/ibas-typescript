@@ -104,4 +104,17 @@ export module strings {
         let tmp2: string = value2.toLowerCase();
         return equals(tmp1, tmp2);
     }
+    /**
+     * 补齐字符串
+     * @param value 值
+     * @param size 长度
+     * @param char 补齐字符
+     */
+    export function fill(value: any, size: number, char: string): string {
+        let newValue: string = value.toString();
+        for (let index: number = newValue.length; index < size; index++) {
+            newValue = char + newValue;
+        }
+        return newValue;
+    }
 }

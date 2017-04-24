@@ -7,6 +7,7 @@
  */
 import { i18n } from "../i18n/index";
 import { ArrayList } from "./Common";
+import { strings } from "./Strings";
 /**
  * 对象
  */
@@ -83,11 +84,21 @@ export module objects {
      * 获取类型名称
      * @param type 类型
      */
-    export function getName(type: any): any {
+    export function getName(type: any): string {
         if (objects.isNull(type)) {
             return undefined;
         }
         return type.name;
+    }
+    /**
+     * 获取实例类型
+     * @param 实例 类型
+     */
+    export function getType(instance: any): any {
+        if (objects.isNull(instance)) {
+            return undefined;
+        }
+        return instance.constructor;
     }
     /**
      * 克隆对象
@@ -266,18 +277,58 @@ export module dates {
         return new Date(year, month, day, hour, minute, second);
     }
 
+    const DATA_SEPARATOR: string = "-";
+    const TIME_SEPARATOR: string = ":";
+    const DATA_TIME_SEPARATOR: string = "T";
+    const DATA_PART_YEAR: string = "yyyy";
+    const DATA_PART_MONTH: string = "MM";
+    const DATA_PART_DAY: string = "dd";
+    const DATA_PART_HOUR: string = "hh";
+    const DATA_PART_MINUTE: string = "mm";
+    const DATA_PART_SECOND: string = "ss";
     /**
      * 转换日期
      * @param value 日期
      * @returns 日期字符串
      */
-    export function toString(value: Date): string {
+    export function toString(value: Date): string;
+    /**
+     * 转换日期
+     * @param value 日期
+     * @param format 格式字符，yyyy-MM-dd
+     * @returns 日期字符串
+     */
+    export function toString(value: Date, format: string): string;
+    /**
+     * 转换日期
+     * @param value 日期
+     * @returns 日期字符串
+     */
+    export function toString(): string {
+        let value: Date = arguments[0];
+        let format: string =
+            DATA_PART_YEAR + DATA_SEPARATOR +
+            DATA_PART_MONTH + DATA_SEPARATOR +
+            DATA_PART_DAY +
+            DATA_TIME_SEPARATOR +
+            DATA_PART_HOUR + TIME_SEPARATOR +
+            DATA_PART_MINUTE + TIME_SEPARATOR +
+            DATA_PART_SECOND;
+        if (!objects.isNull(arguments[1])) {
+            format = arguments[1];
+        }
         let year: number = value.getFullYear(),
             month: number = value.getMonth(),
             day: number = value.getDate(),
             hour: number = value.getHours(),
             minute: number = value.getMinutes(),
             second: number = value.getSeconds();
-        return year + "-" + month + "-" + day + "T" + hour + ":" + minute + ":" + second;
+        format = format.replace(DATA_PART_YEAR, strings.fill(year, DATA_PART_YEAR.length, "0"));
+        format = format.replace(DATA_PART_MONTH, strings.fill(month, DATA_PART_MONTH.length, "0"));
+        format = format.replace(DATA_PART_DAY, strings.fill(day, DATA_PART_DAY.length, "0"));
+        format = format.replace(DATA_PART_HOUR, strings.fill(hour, DATA_PART_HOUR.length, "0"));
+        format = format.replace(DATA_PART_MINUTE, strings.fill(minute, DATA_PART_MINUTE.length, "0"));
+        format = format.replace(DATA_PART_SECOND, strings.fill(second, DATA_PART_SECOND.length, "0"));
+        return format;
     }
 }

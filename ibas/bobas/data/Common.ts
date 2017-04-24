@@ -26,12 +26,27 @@ export class ArrayList<T> extends Array<T> implements List<T> {
      * 添加项目
      * @param item 项目
      */
-    add(item: T): void {
+    add(item: T): void;
+    /**
+     * 添加项目
+     * @param items 项目数组
+     */
+    add(items: T[]): void;
+
+    add(): void {
         // 无效值不做处理
-        if (item === null || item === undefined) {
+        if (arguments === null || arguments === undefined) {
             return;
         }
-        this.push(item);
+        for (let arg of arguments) {
+            if (arg instanceof Array) {
+                for (let item of arg) {
+                    this.push(item);
+                }
+            } else {
+                this.push(arg);
+            }
+        }
     }
 
     /**

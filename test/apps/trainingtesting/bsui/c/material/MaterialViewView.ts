@@ -58,6 +58,7 @@ export class MaterialViewView extends ibas.BOViewView implements IMaterialViewVi
                                             }
                                         }));
                                     }
+                                    (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
                                     popover.openBy(event.getSource(), true);
                                 }
                             });

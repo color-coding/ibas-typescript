@@ -139,7 +139,7 @@ export class BOFileRepositoryAjax extends FileRepositoryAjax implements IBORepos
                                 datas.push(that.converter.parsing(subItem, fileName));
                             }
                         } else {
-                            datas.push(that.converter.parsing(item, boName));
+                            datas.push(that.converter.parsing(item, fileName));
                         }
                     }
                     // 替换为转换后的数据

@@ -131,6 +131,7 @@ export class MaterialListView extends ibas.BOListView implements IMaterialListVi
                                             }
                                         }));
                                     }
+                                    (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
                                     popover.openBy(event.getSource(), true);
                                 }
                             });

@@ -131,6 +131,7 @@ export class CustomerListView extends ibas.BOListView implements ICustomerListVi
                                             }
                                         }));
                                     }
+                                    (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
                                     popover.openBy(event.getSource(), true);
                                 }
                             });
