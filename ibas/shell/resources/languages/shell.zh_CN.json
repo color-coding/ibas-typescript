@@ -28,6 +28,8 @@
     "sys_shell_ui_data_remove": "移除",
     "sys_shell_ui_data_add": "添加",
     "sys_shell_ui_data_save": "保存",
+    "sys_shell_ui_upload": "上传",
+    "sys_shell_ui_download": "下载",
     "sys_shell_ui_sucessful": "操作成功",
     "sys_shell_ui_done": "操作完成",
     "sys_shell_ui_exit": "退出",
