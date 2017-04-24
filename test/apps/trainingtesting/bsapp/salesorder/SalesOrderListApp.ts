@@ -172,7 +172,11 @@ export class SalesOrderListApp extends ibas.BOListApplication<ISalesOrderListVie
     }
     /** 获取服务的契约 */
     protected getServiceProxies(): ibas.IServiceProxy<ibas.IServiceContract>[] {
-        return [];
+        return [
+            new ibas.BOListServiceProxy({
+                data: this.view.getSeletecteds()
+            })
+        ];
     }
 }
 /** 视图-销售订单 */
@@ -181,6 +185,8 @@ export interface ISalesOrderListView extends ibas.IBOListView {
     editDataEvent: Function;
     /** 删除数据事件，参数：删除对象集合 */
     deleteDataEvent: Function;
+    /** 获取选择的数据 */
+    getSeletecteds(): bo.SalesOrder[];
     /** 显示数据 */
     showData(datas: bo.SalesOrder[]): void;
 }

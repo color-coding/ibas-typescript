@@ -227,5 +227,8 @@ export class SalesOrderListView extends ibas.BOListView implements ISalesOrderLi
         this.table.setFirstVisibleRow(0);
         this.table.setModel(null);
     }
-
+    /** 获取选择的数据 */
+    getSeletecteds(): bo.SalesOrder[] {
+        return utils.getTableSelecteds<bo.SalesOrder>(this.table);
+    }
 }
