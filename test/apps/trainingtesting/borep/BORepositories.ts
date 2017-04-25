@@ -11,7 +11,7 @@ import * as bo from "./bo/index";
 import { IBORepositoryTrainingTesting } from "../api/index";
 import { DataConverterOnline, DataConverterOffline } from "./DataConverters";
 
-/** <%Domain.Name%> 业务仓库 */
+/** 培训&测试 业务仓库 */
 export class BORepositoryTrainingTesting extends ibas.BORepositoryApplication implements IBORepositoryTrainingTesting {
 
     /** 创建此模块的后端与前端数据的转换者 */

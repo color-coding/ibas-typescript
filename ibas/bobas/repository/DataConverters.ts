@@ -191,7 +191,7 @@ export abstract class BOConverter implements IBOConverter<IBusinessObject, any> 
     protected parsingData(boName: string, property: string, value: any): any {
         if (typeof value === "string") {
             // 日期类型，直接转换
-            if (value.indexOf("T") > 0 && value.indexOf("-") > 0 && value.indexOf(":") > 0) {
+            if (value.length < 20 && value.indexOf("T") > 0 && value.indexOf("-") > 0 && value.indexOf(":") > 0) {
                 // 字符格式为日期，yyyy-MM-ddThh:mm:ss
                 return dates.valueOf(value);
             } else if (property === "DocumentStatus" || property === "LineStatus") {

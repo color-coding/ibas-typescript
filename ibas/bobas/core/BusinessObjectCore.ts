@@ -254,7 +254,6 @@ export abstract class BusinessObjectBase<T extends IBusinessObject> extends Trac
 
     /**
      * 获取对象属性
-     * 
      * @param recursive 递归
      */
     getProperties(recursive: boolean): Map<string, any> {
