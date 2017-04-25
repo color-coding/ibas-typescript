@@ -90,7 +90,7 @@ export class Console extends ibas.ModuleConsole {
         // 加载配置-壳
         ibas.config.load(ibas.strings.format("{0}/{1}", rootUrl, ibas.Configuration.CONFIG_FILE_NAME));
         // 加载语言-壳
-        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/shell.{1}.json", rootUrl, "{0}"));
+        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/shell.json", rootUrl));
         // 设置资源属性
         this.description = ibas.i18n.prop(this.name);
         this.icon = ibas.strings.format("{0}/resources/images/logo_small.png", rootUrl);

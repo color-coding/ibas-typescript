@@ -28,7 +28,7 @@ let init: Function = function (): void {
         // 加载配置-框架默认
         config.load(strings.format("{0}/{1}", rootUrl, Configuration.CONFIG_FILE_NAME));
         // 加载语言-框架默认
-        i18n.load(strings.format("{0}/resources/languages/bsbas.{1}.json", rootUrl, "{0}"));
+        i18n.load(strings.format("{0}/resources/languages/bsbas.json", rootUrl));
     }
 }; init();
 // 此模块内容

@@ -90,6 +90,9 @@ export class LoginView extends ibas.BOView implements sys.ILoginView {
             {
                 layout: sap.ui.layout.form.SimpleFormLayout.ResponsiveGridLayout,
                 content: [
+                    new sap.m.Label("", {
+                        text: "ibas",
+                    }),
                     new sap.m.Label("", { text: ibas.i18n.prop("sys_shell_ui_user") }),
                     this.txtUser,
                     new sap.m.Label("", { text: ibas.i18n.prop("sys_shell_ui_password") }),
@@ -102,7 +105,11 @@ export class LoginView extends ibas.BOView implements sys.ILoginView {
                         items: utils.createComboBoxItems(ibas.emPlantform),
                         selectedKey: ibas.config.get(ibas.ModuleConsole.CONFIG_ITEM_PLANTFORM)
                     }),
-                    this.butLogin
+                    this.butLogin,
+                    new sap.m.Label("", {
+                        text: "Copyright © 2016-2017 ColorCoding Studio",
+                        textAlign: "Right",
+                    })
                 ]
             });
         // 重新赋值id
