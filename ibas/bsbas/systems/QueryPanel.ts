@@ -10,12 +10,14 @@ import {
     objects, ICriteria, Criteria, ICondition, i18n, IOperationResult,
     config, ISort, emSortType, emConditionOperation, ArrayList, BarApplication,
     emMessageType, variablesManager, VariablesManager, BODocument, BOMasterData, BOSimple,
-    BODocumentLine, BOMasterDataLine, BOSimpleLine,
+    BODocumentLine, BOMasterDataLine, BOSimpleLine, VARIABLE_NAME_USER_CODE,
     BO_PROPERTY_NAME_CODE, BO_PROPERTY_NAME_DOCENTRY, BO_PROPERTY_NAME_LINEID, BO_PROPERTY_NAME_OBJECTKEY
 } from "ibas/index";
 import { IQueryPanelView, IQueryPanel, IUseQueryPanel, IUserQuery, IBORepositorySystem, IBOInfo } from "./Systems.d";
 import { Factories } from "./Factories";
 
+/** 查询结果集数量 */
+export const CONFIG_ITEM_CRITERIA_RESULT_COUNT: string = "criteriaResultCount";
 /**
  * 查询面板
  */
@@ -24,8 +26,6 @@ export abstract class QueryPanel<T extends IQueryPanelView> extends BarApplicati
     static APPLICATION_ID: string = "69e3d786-5bf5-451d-b660-3eb485171af5";
     /** 应用名称 */
     static APPLICATION_NAME: string = "sys_query_panel";
-    /** 查询结果集数量 */
-    static CONFIG_ITEM_CRITERIA_RESULT_COUNT: string = "criteriaResultCount";
 
     constructor() {
         super();
@@ -50,7 +50,7 @@ export abstract class QueryPanel<T extends IQueryPanelView> extends BarApplicati
         let boRepository: IBORepositorySystem = Factories.systemsFactory.createRepository();
         let that = this;
         boRepository.fetchUserQueries({
-            user: variablesManager.getValue(VariablesManager.VARIABLE_NAME_USER_CODE),
+            user: variablesManager.getValue(VARIABLE_NAME_USER_CODE),
             queryId: this.listener.queryId,
             onCompleted: function (opRslt: IOperationResult<IUserQuery>): void {
                 try {
@@ -115,7 +115,7 @@ export abstract class QueryPanel<T extends IQueryPanelView> extends BarApplicati
         let criteria: ICriteria = this.currentCriteria();
         // 修正查询数量
         if (objects.isNull(criteria.result) || criteria.result < 1) {
-            criteria.result = config.get(QueryPanel.CONFIG_ITEM_CRITERIA_RESULT_COUNT, 30);
+            criteria.result = config.get(CONFIG_ITEM_CRITERIA_RESULT_COUNT, 30);
         }
         // 给查询条件赋值
         for (let item of criteria.conditions) {

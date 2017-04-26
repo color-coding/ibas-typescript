@@ -12,14 +12,14 @@
 /// <reference path="../../3rdparty/index.d.ts" />
 import { strings } from "../data/index";
 
+/** 配置项目-调试模式 */
+export const CONFIG_ITEM_DEBUG_MODE: string = "debug";
+/** 默认配置文件名称 */
+export const CONFIG_FILE_NAME: string = "config.json";
 /**
  * 配置
  */
 export class Configuration {
-    /** 默认配置文件名称 */
-    static CONFIG_FILE_NAME: string = "config.json";
-    /** 配置项目-调试模式 */
-    CONFIG_ITEM_DEBUG_MODE: string = "debug";
 
     private items: Map<string, any> = new Map<string, any>();
     /**

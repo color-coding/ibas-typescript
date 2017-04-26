@@ -17,32 +17,36 @@ import { config } from "../configuration/index";
 import { i18n } from "../i18n/index";
 import { logger } from "../messages/index";
 
+/** 模块仓库名称模板 */
+export const MODULE_REPOSITORY_NAME_TEMPLATE: string = "BORepository{0}";
+/** 配置项目-离线模式 */
+export const CONFIG_ITEM_OFFLINE_MODE: string = "offline";
+/** 配置项目-远程仓库的默认地址模板 */
+export const CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS: string = "repositoryAddress|{0}";
+/** 配置项目-用户口令 */
+export const CONFIG_ITEM_USER_TOKEN: string = "userToken";
 /**
  * 业务仓库应用
  */
 export abstract class BORepositoryApplication {
 
-    /** 模块仓库名称模板 */
-    static MODULE_REPOSITORY_NAME_TEMPLATE: string = "BORepository{0}";
-    /** 配置项目-离线模式 */
-    static CONFIG_ITEM_OFFLINE_MODE: string = "offline";
-    /** 远程仓库的默认地址模板 */
-    static CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS: string = "repositoryAddress|{0}";
 
     constructor() {
         // 子类名称
         let name: string = this.constructor.name;
         // 获取全局离线状态
-        this.offline = config.get(BORepositoryApplication.CONFIG_ITEM_OFFLINE_MODE, false);
+        this.offline = config.get(CONFIG_ITEM_OFFLINE_MODE, false);
         // 获取此仓库离线状态
-        this.offline = config.get(BORepositoryApplication.CONFIG_ITEM_OFFLINE_MODE + "|" + name, this.offline);
+        this.offline = config.get(CONFIG_ITEM_OFFLINE_MODE + "|" + name, this.offline);
         // 获取远程仓库的默认地址
-        let address: string = config.get(strings.format(BORepositoryApplication.CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS, name));
+        let address: string = config.get(strings.format(CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS, name));
         if (!objects.isNull(address)) {
             address = url.normalize(address);
             this.address = address;
             logger.log(emMessageLevel.DEBUG, "repository: using repository's default address [{0}].", this.address);
         }
+        // 用户口令
+        this.token = config.get(CONFIG_ITEM_USER_TOKEN);
     }
 
     private _address: string;

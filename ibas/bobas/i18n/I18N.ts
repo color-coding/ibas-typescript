@@ -17,18 +17,19 @@ import { url } from "../data/Url";
 import { ArrayList } from "../data/Common";
 import { config } from "../configuration/index";
 import { logger } from "../messages/index";
+
+/** 配置项目-语言编码 */
+export const CONFIG_ITEM_LANGUAGE_CODE: string = "language";
 /** 多语言 */
 export class I18N {
     /** 默认语言编码 */
     private DEFAULT_LANGUAGE_CODE: string = "en_US";
-    /** 配置项目-语言编码 */
-    static CONFIG_ITEM_LANGUAGE_CODE: string = "language";
 
     private _language: string;
     /** 语言 */
     get language(): string {
         if (strings.isEmpty(this._language)) {
-            this._language = config.get(I18N.CONFIG_ITEM_LANGUAGE_CODE, this.DEFAULT_LANGUAGE_CODE);
+            this._language = config.get(CONFIG_ITEM_LANGUAGE_CODE, this.DEFAULT_LANGUAGE_CODE);
         }
         return this._language;
     }

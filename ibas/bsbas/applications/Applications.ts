@@ -7,7 +7,7 @@
  */
 
 import {
-    i18n, objects, logger, emMessageLevel, ICriteria, config
+    i18n, objects, logger, emMessageLevel, ICriteria, config, CONFIG_ITEM_DEBUG_MODE
 } from "../../bobas/index";
 import { AbstractApplication, IView, IBarView, IMessgesCaller } from "../core/index";
 import { emMessageType } from "../data/index";
@@ -48,7 +48,7 @@ export abstract class Application<T extends IView> extends AbstractApplication<T
                     {
                         title: title,
                         type: emMessageType.ERROR,
-                        message: config.get(config.CONFIG_ITEM_DEBUG_MODE, false) ? error.stack : error.message
+                        message: config.get(CONFIG_ITEM_DEBUG_MODE, false) ? error.stack : error.message
                     });
             }
         } else {
@@ -143,7 +143,7 @@ export abstract class Application<T extends IView> extends AbstractApplication<T
                 caller = {
                     title: i18n.prop(this.name),
                     type: emMessageType.ERROR,
-                    message: config.get(config.CONFIG_ITEM_DEBUG_MODE, false) ? arguments[0].stack : arguments[0].message
+                    message: config.get(CONFIG_ITEM_DEBUG_MODE, false) ? arguments[0].stack : arguments[0].message
                 };
             } else {
                 caller = {

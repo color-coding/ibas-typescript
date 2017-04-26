@@ -11,6 +11,10 @@ import * as ibas from "ibas/index";
 import * as sys from "ibas/bsbas/systems/index";
 import { utils } from "../../../../../openui5/typings/ibas.utils";
 
+/** 配置项目-状态消息延迟时间 */
+export const CONFIG_ITEM_STATUS_MESSAGES_DELAY: string = "statusDelay";
+/** 配置项目-全屏模式 */
+export const CONFIG_ITEM_FULL_SCREEN: string = "fullScreen";
 /**
  * 视图-中心
  */
@@ -33,10 +37,6 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
     private busyDialog: sap.m.BusyDialog;
     /** 状态消息延迟时间（毫秒） */
     private statusDelay?: number;
-    /** 配置项目-状态消息延迟时间 */
-    static CONFIG_ITEM_STATUS_MESSAGES_DELAY = "statusDelay";
-    /** 配置项目-全屏模式 */
-    static CONFIG_ITEM_FULL_SCREEN = "fullScreen";
     /** 激活帮助 */
     helpEvent: Function;
     /** 激活关于 */
@@ -139,8 +139,8 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         this.form.attachNavButtonPress(null, this.destroyCurrentView, this);
         // 全屏钮
         let icon: string = "sap-icon://full-screen";
-        if (ibas.config.get(CenterView.CONFIG_ITEM_FULL_SCREEN, false)
-            && ibas.config.get(ibas.ModuleConsole.CONFIG_ITEM_PLANTFORM) !== ibas.emPlantform.PHONE) {
+        if (ibas.config.get(CONFIG_ITEM_FULL_SCREEN, false)
+            && ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM) !== ibas.emPlantform.PHONE) {
             this.page.setHeader(null);
             icon = "sap-icon://exit-full-screen";
         }
@@ -220,7 +220,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         }));
         // 延迟清除消息
         if (ibas.objects.isNull(this.statusDelay)) {
-            this.statusDelay = ibas.config.get(CenterView.CONFIG_ITEM_STATUS_MESSAGES_DELAY, 0) * 1000;
+            this.statusDelay = ibas.config.get(CONFIG_ITEM_STATUS_MESSAGES_DELAY, 0) * 1000;
         }
         if (this.statusDelay > 0) {
             let that: this = this;

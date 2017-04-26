@@ -7,18 +7,18 @@
  */
 
 import { strings, emMessageLevel } from "../data/index";
-import { config } from "../configuration/index";
+import { config, CONFIG_ITEM_DEBUG_MODE } from "../configuration/index";
 import { IMessage } from "./Message.d";
 import { Message } from "./Message";
 import { ILogger } from "./Logger.d";
 
+/** 配置项目-消息输出级别 */
+export const CONFIG_ITEM_MESSAGES_LEVEL: string = "msgLevel";
 /**
  * 运行消息记录
  */
 export class Logger implements ILogger {
 
-    /** 配置项目-消息输出级别 */
-    static CONFIG_ITEM_MESSAGES_LEVEL: string = "msgLevel";
     private _level: emMessageLevel;
     /**
      * 消息输出的级别
@@ -26,8 +26,8 @@ export class Logger implements ILogger {
     get level(): emMessageLevel {
         if (strings.isEmpty(this._level)) {
             // 没有设置则每次都从配置取
-            let level = config.get(Logger.CONFIG_ITEM_MESSAGES_LEVEL, emMessageLevel.ERROR, emMessageLevel);
-            if (config.get(config.CONFIG_ITEM_DEBUG_MODE, false)) {
+            let level: emMessageLevel = config.get(CONFIG_ITEM_MESSAGES_LEVEL, emMessageLevel.ERROR, emMessageLevel);
+            if (config.get(CONFIG_ITEM_DEBUG_MODE, false)) {
                 level = emMessageLevel.DEBUG;
             }
             return level;

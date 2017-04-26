@@ -11,14 +11,14 @@ import * as ibas from "ibas/index";
 import * as sys from "ibas/bsbas/systems/index";
 import { utils } from "../../../../../openui5/typings/ibas.utils";
 
+/** 配置项目-默认用户 */
+export const CONFIG_ITEM_DEFAULT_USER: string = "defaultUser";
+/** 配置项目-默认用户密码 */
+export const CONFIG_ITEM_DEFAULT_PASSWORD: string = "defaultPassword";
 /**
  * 视图-登陆
  */
 export class LoginView extends ibas.BOView implements sys.ILoginView {
-    /** 配置项目-默认用户 */
-    static CONFIG_ITEM_DEFAULT_USER = "defaultUser";
-    /** 配置项目-默认用户密码 */
-    static CONFIG_ITEM_DEFAULT_PASSWORD = "defaultPassword";
     /** 登陆 */
     loginEvent: Function;
     /** 改变语言 */
@@ -64,13 +64,13 @@ export class LoginView extends ibas.BOView implements sys.ILoginView {
     darw(): any {
         let that: this = this;
         this.txtUser = new sap.m.Input("", {
-            value: ibas.config.get(ibas.config.CONFIG_ITEM_DEBUG_MODE, false)
-                ? ibas.config.get(LoginView.CONFIG_ITEM_DEFAULT_USER)
+            value: ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE, false)
+                ? ibas.config.get(CONFIG_ITEM_DEFAULT_USER)
                 : "",
         });
         this.txtPassword = new sap.m.Input("", {
-            value: ibas.config.get(ibas.config.CONFIG_ITEM_DEBUG_MODE, false)
-                ? ibas.config.get(LoginView.CONFIG_ITEM_DEFAULT_PASSWORD)
+            value: ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE, false)
+                ? ibas.config.get(CONFIG_ITEM_DEFAULT_PASSWORD)
                 : "",
             type: "Password"
         });
@@ -103,7 +103,7 @@ export class LoginView extends ibas.BOView implements sys.ILoginView {
                     new sap.m.Select("", {
                         enabled: false,
                         items: utils.createComboBoxItems(ibas.emPlantform),
-                        selectedKey: ibas.config.get(ibas.ModuleConsole.CONFIG_ITEM_PLANTFORM)
+                        selectedKey: ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM)
                     }),
                     this.butLogin,
                     new sap.m.Label("", {

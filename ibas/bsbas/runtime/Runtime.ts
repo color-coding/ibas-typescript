@@ -10,12 +10,14 @@
 
 import { KeyValue, objects } from "../../bobas/index";
 
+/** 变量-用户ID */
+export const VARIABLE_NAME_USER_ID: string = "${USER_ID}";
+/** 变量-用户编码 */
+export const VARIABLE_NAME_USER_CODE: string = "${USER_CODE}";
+/** 变量-用户名称 */
+export const VARIABLE_NAME_USER_NAME: string = "${USER_NAME}";
 /** 变量管理员 */
 export class VariablesManager {
-    // 变量名称
-    static VARIABLE_NAME_USER_ID: string = "${USER_ID}";
-    static VARIABLE_NAME_USER_CODE: string = "${USER_CODE}";
-    static VARIABLE_NAME_USER_NAME: string = "${USER_NAME}";
     /** 运行中的变量 */
     private variables: Map<string, KeyValue>;
     /** 注册变量 */

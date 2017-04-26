@@ -8,7 +8,7 @@
 
 import {
     logger, emMessageLevel, IOperationResult, objects, i18n,
-    Application
+    Application, config, CONFIG_ITEM_USER_TOKEN
 } from "ibas/index";
 import { ILoginView, ILoginApp, ICenterApp, IUser, IBORepositorySystem } from "./Systems.d";
 import { Factories } from "./Factories";
@@ -53,7 +53,15 @@ export class LoginApp<T extends ILoginView> extends Application<T> implements IL
                     if (opRslt.resultCode !== 0) {
                         throw new Error(opRslt.message);
                     }
-                    this.showCenter(opRslt.resultObjects.firstOrDefault());
+                    let user: IUser = opRslt.resultObjects.firstOrDefault();
+                    // 设置默认用户口令
+                    config.set(CONFIG_ITEM_USER_TOKEN, opRslt.userSign);
+                    // 启动系统中心
+                    let centerApp: ICenterApp = Factories.systemsFactory.createCenterApp();
+                    centerApp.viewShower = this.viewShower;
+                    centerApp.navigation = this.navigation;
+                    centerApp.run(user);
+                    this.destroy();
                 } catch (error) {
                     this.messages(error);
                 }
@@ -61,11 +69,4 @@ export class LoginApp<T extends ILoginView> extends Application<T> implements IL
         });
     }
 
-    private showCenter(user: IUser): void {
-        let centerApp: ICenterApp = Factories.systemsFactory.createCenterApp();
-        centerApp.viewShower = this.viewShower;
-        centerApp.navigation = this.navigation;
-        centerApp.run(user);
-        this.destroy();
-    }
 }

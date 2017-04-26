@@ -7,7 +7,7 @@
  */
 
 import {
-    i18n, debug, config, Application
+    i18n, debug, config, Application, CONFIG_ITEM_DEBUG_MODE
 } from "ibas/index";
 import { IAboutView, IAboutApp } from "./Systems.d";
 
@@ -31,8 +31,7 @@ export class AboutApp<T extends IAboutView> extends Application<T> implements IA
     }
     /** 视图显示后 */
     protected viewShowed(): void {
-        //
-        if (config.get(config.CONFIG_ITEM_DEBUG_MODE) == true) {
+        if (config.get(CONFIG_ITEM_DEBUG_MODE)) {
             debug.printScripts();
         }
     }

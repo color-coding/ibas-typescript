@@ -42,10 +42,10 @@ export class SystemsFactory implements sys.ISystemsFactory {
     /** 创建仓库 */
     createRepository(): sys.IBORepositorySystem {
         // 全局离线状态
-        let offline: boolean = ibas.config.get(ibas.BORepositoryApplication.CONFIG_ITEM_OFFLINE_MODE, false);
+        let offline: boolean = ibas.config.get(ibas.CONFIG_ITEM_OFFLINE_MODE, false);
         // 壳仓库离线状态
         offline = ibas.config.get(
-            ibas.BORepositoryApplication.CONFIG_ITEM_OFFLINE_MODE + "|" + BORepositoryShell.name, offline);
+            ibas.CONFIG_ITEM_OFFLINE_MODE + "|" + BORepositoryShell.name, offline);
         if (offline) {
             // 当前处于离线模式
             return new BORepositoryShellOffLine();
@@ -88,7 +88,7 @@ export class Console extends ibas.ModuleConsole {
         // 获取壳根地址
         let rootUrl: string = ibas.url.rootUrl(Console.ROOT_FILE_NAME);
         // 加载配置-壳
-        ibas.config.load(ibas.strings.format("{0}/{1}", rootUrl, ibas.Configuration.CONFIG_FILE_NAME));
+        ibas.config.load(ibas.strings.format("{0}/{1}", rootUrl, ibas.CONFIG_FILE_NAME));
         // 加载语言-壳
         ibas.i18n.load(ibas.strings.format("{0}/resources/languages/shell.json", rootUrl));
         // 设置资源属性
@@ -98,7 +98,7 @@ export class Console extends ibas.ModuleConsole {
         let siteUrl: string = ibas.url.rootUrl(undefined);
         if (siteUrl !== rootUrl) {
             // 网站与壳地址不同，加载网站配置
-            ibas.config.load(ibas.strings.format("{0}/{1}", siteUrl, ibas.Configuration.CONFIG_FILE_NAME));
+            ibas.config.load(ibas.strings.format("{0}/{1}", siteUrl, ibas.CONFIG_FILE_NAME));
         }
         // 加载视图显示者
         let that: Console = this;
@@ -107,7 +107,7 @@ export class Console extends ibas.ModuleConsole {
             that.viewShower = new ViewShower.default();
             // 加载ui导航
             let uiModules: string[] = [];
-            if (!ibas.config.get(ibas.ModuleConsole.CONFIG_ITEM_DISABLE_PLATFORM_VIEW, false)
+            if (!ibas.config.get(ibas.CONFIG_ITEM_DISABLE_PLATFORM_VIEW, false)
                 && that.plantform === ibas.emPlantform.PHONE) {
                 // 使用m类型视图
                 uiModules.push("../bsui/m/Navigation");

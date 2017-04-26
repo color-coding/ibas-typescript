@@ -9,11 +9,13 @@
 /// <reference path="../../3rdparty/index.d.ts" />
 import {
     i18n, logger, emMessageLevel, IOperationResult, objects, config, strings, requires, url,
-    ModuleConsole, IModuleConsole, IModuleFunction, IApplication, BORepositoryApplication,
+    ModuleConsole, IModuleConsole, IModuleFunction, IApplication, enums,emPlantform,
     IView, IBarView, IBarApplication, IViewShower, AbstractApplication, IMessgesCaller,
     emMessageType, emPrivilegeSource, emAuthoriseType, emMessageAction, variablesManager,
     ResidentApplication, BOApplication, BOChooseApplication, BOListApplication,
-    BOViewApplication, BOEditApplication, IBOView,VariablesManager
+    BOViewApplication, BOEditApplication, IBOView,
+    MODULE_REPOSITORY_NAME_TEMPLATE, CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS,
+    VARIABLE_NAME_USER_ID, VARIABLE_NAME_USER_CODE, VARIABLE_NAME_USER_NAME, CONFIG_ITEM_DEBUG_MODE
 } from "ibas/index";
 import {
     ICenterView, ICenterApp, IBORepositorySystem,
@@ -112,9 +114,9 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
             return;
         }
         // 注册运行变量
-        variablesManager.register(VariablesManager.VARIABLE_NAME_USER_ID, user.id);
-        variablesManager.register(VariablesManager.VARIABLE_NAME_USER_CODE, user.code);
-        variablesManager.register(VariablesManager.VARIABLE_NAME_USER_NAME, user.name);
+        variablesManager.register(VARIABLE_NAME_USER_ID, user.id);
+        variablesManager.register(VARIABLE_NAME_USER_CODE, user.code);
+        variablesManager.register(VARIABLE_NAME_USER_NAME, user.name);
         // 显示当前用户
         this.view.showUser(user);
         // 加载用户相关
@@ -127,6 +129,7 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
         let boRep: IBORepositorySystem = Factories.systemsFactory.createRepository();
         boRep.fetchUserModules({
             user: user.code,
+            platform: enums.toString(emPlantform, this.plantform),
             onCompleted: function (opRslt: IOperationResult<IUserModule>): void {
                 try {
                     if (opRslt.resultCode !== 0) {
@@ -140,12 +143,16 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
                         that.initModuleConsole(module);
                     }
                 } catch (error) {
-                    that.view.showMessageBox(error);
+                    that.view.showMessageBox({
+                        type: emMessageType.ERROR,
+                        message: config.get(CONFIG_ITEM_DEBUG_MODE, false) ? error.stack : error.message
+                    });
                 }
             }
         });
         boRep.fetchUserPrivileges({
             user: user.code,
+            platform: enums.toString(emPlantform, this.plantform),
             onCompleted: function (opRslt: IOperationResult<IUserPrivilege>): void {
                 try {
                     if (opRslt.resultCode !== 0) {
@@ -154,7 +161,10 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
                     that.userPrivileges = opRslt.resultObjects;
                     // 此处应该通过权限过滤下已加载内容
                 } catch (error) {
-                    that.view.showMessageBox(error);
+                    that.view.showMessageBox({
+                        type: emMessageType.ERROR,
+                        message: config.get(CONFIG_ITEM_DEBUG_MODE, false) ? error.stack : error.message
+                    });
                     // 权限获取失败，此处应该退出系统
                 }
             }
@@ -236,9 +246,9 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
                     // 注册模块业务仓库默认地址，创建实例时默认取此地址
                     if (!objects.isNull(console.name) && done) {
                         module.repository = url.normalize(module.repository);
-                        let repositoryName: string = strings.format(BORepositoryApplication.MODULE_REPOSITORY_NAME_TEMPLATE, console.name);
+                        let repositoryName: string = strings.format(MODULE_REPOSITORY_NAME_TEMPLATE, console.name);
                         let configName: string = strings.format(
-                            BORepositoryApplication.CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS
+                            CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS
                             , repositoryName);
                         config.set(configName, module.repository);
                         logger.log(emMessageLevel.DEBUG,

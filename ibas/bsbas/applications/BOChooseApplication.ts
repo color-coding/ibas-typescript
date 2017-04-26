@@ -27,14 +27,14 @@ export abstract class BOChooseApplication<T extends IBOChooseView, D> extends BO
     /** 新建数据 */
     protected abstract newData(): void;
 }
+/** 配置项目-自动选择数据 */
+export const CONFIG_ITEM_AUTO_CHOOSE_DATA: string = "autoChooseData";
 /**
  * 业务对象选择服务
  * 类型参数：视图，选择数据
  */
 export abstract class BOChooseService<T extends IBOChooseView, D> extends BOChooseApplication<T, D>
     implements IBOChooseService {
-    /** 配置项目-自动选择数据 */
-    static CONFIG_ITEM_AUTO_CHOOSE_DATA = "autoChooseData";
     /** 运行 */
     run(...args: any[]): void {
         if (!objects.isNull(args) && args.length === 1) {

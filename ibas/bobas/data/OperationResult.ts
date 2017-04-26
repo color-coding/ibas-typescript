@@ -135,7 +135,6 @@ export class OperationMessages implements IOperationMessages {
 export class OperationResult<P> extends OperationMessages implements IOperationResult<P> {
     /**
      * 返回对象
-     * 
      */
     private _resultObjects: List<P>;
 
@@ -152,7 +151,6 @@ export class OperationResult<P> extends OperationMessages implements IOperationR
 
     /**
      * 操作执行信息
-     * 
      */
     private _informations: List<IOperationInformation>;
 

@@ -10,7 +10,7 @@ import {
 	List, IBusinessObject, IOperationMessages, IOperationResult, ICriteria,
 	MethodCaller, SaveCaller, IView, IUrlView, IModule, IApplication,
 	IModuleConsole, IModuleFunction, IViewShower, IBarView, IMessgesCaller,
-	emMessageType, emPrivilegeSource, emAuthoriseType
+	emMessageType, emPrivilegeSource, emAuthoriseType, emPlantform
 } from "ibas/index";
 
 /** 关于-视图 */
@@ -48,7 +48,7 @@ export interface ICenterView extends IView {
 	helpEvent: Function;
 	/** 激活关于 */
 	aboutEvent: Function;
-    /** 激活功能，参数1 string 功能ID */
+	/** 激活功能，参数1 string 功能ID */
 	activateFunctionsEvent: Function;
 	/** 清理资源 */
 	destroyView(view: IView): void
@@ -212,6 +212,8 @@ export interface ConnectCaller extends MethodCaller {
 export interface UserMethodsCaller<P> extends MethodCaller {
 	/** 用户 */
 	user: string;
+	/** 平台 */
+	platform?: string;
     /**
      * 调用完成
      * @param opRslt 结果

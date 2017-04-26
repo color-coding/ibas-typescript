@@ -17,13 +17,13 @@ import {
     IBOLinkServiceCaller,
 } from "./Services.d";
 
+/** 配置项目-默认服务图片 */
+export const CONFIG_ITEM_DEFALUT_SERVICE_ICON: string = "defalutServiceIcon";
 
 /** 服务映射 */
 export abstract class ServiceMapping implements IServiceMapping {
-    /** 配置项目-默认服务图片 */
-    static CONFIG_ITEM_DEFALUT_SERVICE_ICON = "defalutServiceIcon";
     constructor() {
-        this.icon = config.get(ServiceMapping.CONFIG_ITEM_DEFALUT_SERVICE_ICON);
+        this.icon = config.get(CONFIG_ITEM_DEFALUT_SERVICE_ICON);
     }
     /** 视图显示者 */
     viewShower: IViewShower;

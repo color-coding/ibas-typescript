@@ -8,7 +8,7 @@
 
 import {
     List, ArrayList, objects, i18n, strings, uuid,
-    config, logger, emMessageLevel
+    config, logger, emMessageLevel,
 } from "../../bobas/index";
 import { emPlantform } from "../data/index";
 import {
@@ -56,17 +56,21 @@ export abstract class AbstractFunction extends Element implements IFunction {
         super();
     }
 }
+/** 配置项目-平台 */
+export const CONFIG_ITEM_PLANTFORM: string = "plantform";
 /** 功能-应用 */
 export abstract class AbstractApplication<T extends IView> extends Element implements IApplication<T> {
     constructor() {
         super();
     }
-
+    /** 当前平台 */
+    protected get plantform(): emPlantform {
+        return config.get(CONFIG_ITEM_PLANTFORM, emPlantform.DESKTOP, emPlantform);
+    }
     /** 视图显示者 */
     viewShower: IViewShower;
     /** 视图导航 */
     navigation: IViewNavigation;
-
     private _view: T;
     /** 应用的视图 */
     get view(): T {
@@ -139,21 +143,19 @@ export abstract class View implements IView {
         logger.log(emMessageLevel.DEBUG, "view: key [{0}] down at [{1}].", event.keyCode, this.id);
     }
 }
+/** 配置项目-默认模块图标 */
+export const CONFIG_ITEM_DEFALUT_MODULE_ICON: string = "defalutModuleIcon";
+/** 配置项目-禁用平台视图 */
+export const CONFIG_ITEM_DISABLE_PLATFORM_VIEW: string = "disablePlatformView";
 /** 模块控制台 */
 export abstract class ModuleConsole extends Module implements IModuleConsole {
-    /** 配置项目-平台 */
-    static CONFIG_ITEM_PLANTFORM: string = "plantform";
-    /** 配置项目-默认模块图标 */
-    static CONFIG_ITEM_DEFALUT_MODULE_ICON: string = "defalutModuleIcon";
-    /** 配置项目-禁用平台视图 */
-    static CONFIG_ITEM_DISABLE_PLATFORM_VIEW: string = "disablePlatformView";
 
     constructor() {
         super();
     }
     /** 当前平台 */
     get plantform(): emPlantform {
-        return config.get(ModuleConsole.CONFIG_ITEM_PLANTFORM, emPlantform.DESKTOP);
+        return config.get(CONFIG_ITEM_PLANTFORM, emPlantform.DESKTOP, emPlantform);
     }
     /** 图标 */
     icon: string;
@@ -208,7 +210,7 @@ export abstract class ModuleConsole extends Module implements IModuleConsole {
     run(): void {
         // 修正模块图标
         if (objects.isNull(this.icon) || this.icon.length === 0) {
-            this.icon = config.get(ModuleConsole.CONFIG_ITEM_DEFALUT_MODULE_ICON);
+            this.icon = config.get(CONFIG_ITEM_DEFALUT_MODULE_ICON);
         }
     }
     /** 创建视图导航 */

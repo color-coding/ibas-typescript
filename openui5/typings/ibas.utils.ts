@@ -188,7 +188,7 @@ export namespace utils {
     /** 自动触发下一个结果集查询 */
     export function triggerNextResults(trigger: IResultsTrigger): void {
         // 离线模式下不支持
-        if (ibas.config.get(ibas.BORepositoryApplication.CONFIG_ITEM_OFFLINE_MODE, false)) {
+        if (ibas.config.get(ibas.CONFIG_ITEM_OFFLINE_MODE, false)) {
             return;
         }
         if (ibas.objects.isNull(trigger) || ibas.objects.isNull(trigger.listener)) {

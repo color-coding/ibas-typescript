@@ -31,6 +31,7 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements s
         boRepository.converter = this.createConverter();
         return boRepository;
     }
+
 	/**
 	 * 用户登录
 	 * @param listener 登录监听者
@@ -40,8 +41,7 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements s
         if (ibas.objects.isNull(remoteRepository)) {
             throw new Error(ibas.i18n.prop("msg_invalid_parameter", "remoteRepository"));
         }
-        this.token = undefined;
-        let method = ibas.strings.format("userConnect?user={0}&password={1}", caller.user, caller.password);
+        let method: string = ibas.strings.format("userConnect?user={0}&password={1}", caller.user, caller.password);
         remoteRepository.callRemoteMethod(method, undefined, caller);
     }
 
@@ -54,8 +54,9 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements s
         if (ibas.objects.isNull(remoteRepository)) {
             throw new Error(ibas.i18n.prop("msg_invalid_parameter", "remoteRepository"));
         }
-        this.token = undefined;
-        let method = ibas.strings.format("fetchUserModules?user={0}", caller.user);
+        let method: string =
+            ibas.strings.format("fetchUserModules?user={0}&platform={1}&token={2}",
+                caller.user, caller.platform, this.token);
         remoteRepository.callRemoteMethod(method, undefined, caller);
     }
 
@@ -68,8 +69,9 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements s
         if (ibas.objects.isNull(remoteRepository)) {
             throw new Error(ibas.i18n.prop("msg_invalid_parameter", "remoteRepository"));
         }
-        this.token = undefined;
-        let method = ibas.strings.format("fetchUserPrivileges?user={0}", caller.user);
+        let method: string =
+            ibas.strings.format("fetchUserPrivileges?user={0}&platform={1}&token={2}",
+                caller.user, caller.platform, this.token);
         remoteRepository.callRemoteMethod(method, undefined, caller);
     }
 
@@ -82,8 +84,9 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements s
         if (ibas.objects.isNull(remoteRepository)) {
             throw new Error(ibas.i18n.prop("msg_invalid_parameter", "remoteRepository"));
         }
-        this.token = undefined;
-        let method = ibas.strings.format("fetchUserQueries?user={0}", caller.user);
+        let method: string =
+            ibas.strings.format("fetchUserQueries?user={0}&queryId={1}&token={2}",
+                caller.user, caller.queryId, this.token);
         remoteRepository.callRemoteMethod(method, undefined, caller);
     }
 
@@ -104,8 +107,9 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements s
         if (ibas.objects.isNull(remoteRepository)) {
             throw new Error(ibas.i18n.prop("msg_invalid_parameter", "remoteRepository"));
         }
-        this.token = undefined;
-        let method = ibas.strings.format("fetchBOInfos?boName={0}", caller.boName);
+        let method: string =
+            ibas.strings.format("fetchBOInfos?boName={0}&token={1}",
+                caller.boName, this.token);
         remoteRepository.callRemoteMethod(method, undefined, caller);
     }
 }
@@ -120,7 +124,7 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
         // 重新获取离线状态
         let name: string = super.constructor.name;
         // 获取此仓库离线状态
-        this.offline = ibas.config.get(ibas.BORepositoryApplication.CONFIG_ITEM_OFFLINE_MODE + "|" + name, this.offline);
+        this.offline = ibas.config.get(ibas.CONFIG_ITEM_OFFLINE_MODE + "|" + name, this.offline);
     }
     /**
      * 创建此模块的后端与前端数据的转换者
@@ -134,8 +138,8 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
 	 * @param caller 登录者
 	 */
     connect(caller: sys.ConnectCaller): void {
-        let criteria = new ibas.Criteria();
-        let condition = criteria.conditions.create();
+        let criteria: ibas.ICriteria = new ibas.Criteria();
+        let condition: ibas.ICondition = criteria.conditions.create();
         condition.alias = "code";
         condition.value = caller.user;
         condition = criteria.conditions.create();
@@ -144,9 +148,9 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
 
         let fetchCaller: ibas.FetchCaller<bo.User> = {
             criteria: criteria,
-            onCompleted(opRsltFetch): void {
+            onCompleted(opRsltFetch: ibas.IOperationResult<bo.User>): void {
                 // 没有实现查询应用，手动过滤下
-                let opRslt = new ibas.OperationResult();
+                let opRslt: ibas.IOperationResult<any> = new ibas.OperationResult();
                 opRslt.resultCode = -1;
                 opRslt.message = ibas.i18n.prop("sys_shell_user_and_password_not_match");
                 for (let item of opRsltFetch.resultObjects) {
@@ -171,7 +175,7 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
     fetchUserModules(caller: sys.UserMethodsCaller<sys.IUserModule>): void {
         let fetchCaller: ibas.FetchCaller<bo.UserModule> = {
             criteria: null,
-            onCompleted(opRslt): void {
+            onCompleted(opRslt: ibas.IOperationResult<bo.UserModule>): void {
                 caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
             }
         };
@@ -185,7 +189,7 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
     fetchUserPrivileges(caller: sys.UserMethodsCaller<sys.IUserPrivilege>): void {
         let fetchCaller: ibas.FetchCaller<bo.UserPrivilege> = {
             criteria: null,
-            onCompleted(opRslt): void {
+            onCompleted(opRslt: ibas.IOperationResult<bo.UserPrivilege>): void {
                 caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
             }
         };
@@ -196,16 +200,16 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
      * @param caller 监听者
      */
     fetchUserQueries(caller: sys.UserQueriesCaller): void {
-        let criteria = new ibas.Criteria();
-        let condition = criteria.conditions.create();
+        let criteria: ibas.ICriteria = new ibas.Criteria();
+        let condition: ibas.ICondition = criteria.conditions.create();
         condition.alias = "id";
         condition.value = caller.queryId;
 
         let fetchCaller: ibas.FetchCaller<bo.UserQuery> = {
             criteria: null,
-            onCompleted(opRsltFetch): void {
+            onCompleted(opRsltFetch: ibas.IOperationResult<bo.UserQuery>): void {
                 // 没有实现查询应用，手动过滤下
-                let opRslt = new ibas.OperationResult<bo.UserQuery>();
+                let opRslt: ibas.IOperationResult<bo.UserQuery> = new ibas.OperationResult<bo.UserQuery>();
                 for (let item of opRsltFetch.resultObjects) {
                     if (item.id !== caller.queryId) {
                         continue;
@@ -222,16 +226,16 @@ export class BORepositoryShellOffLine extends BORepositoryShell {
 	 * @param caller 监听者
 	 */
     fetchBOInfos(caller: sys.BOInfoCaller): void {
-        let criteria = new ibas.Criteria();
-        let condition = criteria.conditions.create();
+        let criteria: ibas.ICriteria = new ibas.Criteria();
+        let condition: ibas.ICondition = criteria.conditions.create();
         condition.alias = "name";
         condition.value = caller.boName;
 
         let fetchCaller: ibas.FetchCaller<bo.BOInfo> = {
             criteria: null,
-            onCompleted(opRsltFetch): void {
+            onCompleted(opRsltFetch: ibas.IOperationResult<bo.BOInfo>): void {
                 // 没有实现查询应用，手动过滤下
-                let opRslt = new ibas.OperationResult<bo.BOInfo>();
+                let opRslt: ibas.IOperationResult<bo.BOInfo> = new ibas.OperationResult<bo.BOInfo>();
                 for (let item of opRsltFetch.resultObjects) {
                     if (item.name !== caller.boName) {
                         continue;
