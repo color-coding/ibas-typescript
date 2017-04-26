@@ -9,7 +9,7 @@
 /// <reference path="../../3rdparty/index.d.ts" />
 import {
     i18n, logger, emMessageLevel, IOperationResult, objects, config, strings, requires, url,
-    ModuleConsole, IModuleConsole, IModuleFunction, IApplication, enums,emPlantform,
+    ModuleConsole, IModuleConsole, IModuleFunction, IApplication, enums, emPlantform,
     IView, IBarView, IBarApplication, IViewShower, AbstractApplication, IMessgesCaller,
     emMessageType, emPrivilegeSource, emAuthoriseType, emMessageAction, variablesManager,
     ResidentApplication, BOApplication, BOChooseApplication, BOListApplication,
@@ -227,6 +227,12 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
                         i18n.prop("msg_invalid_module_console_instance", objects.isNull(module.name) ? module.id : module.name)
                     );
                 }
+                if (console.id !== module.id) {
+                    // 加载的控制台不符
+                    throw new Error(
+                        i18n.prop("msg_invalid_module_console_instance", objects.isNull(module.name) ? module.id : module.name)
+                    );
+                }
                 // 有效模块控制台
                 console.addListener(function (): void {
                     // 显示模块
@@ -259,7 +265,7 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
                 console.viewShower = that;
                 console.run();
             } catch (error) {
-                that.view.showStatusMessage(emMessageType.ERROR, error);
+                that.view.showStatusMessage(emMessageType.ERROR, error.message);
             }
         }, function (): void {
             // 模块加载失败

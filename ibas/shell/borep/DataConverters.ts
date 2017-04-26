@@ -79,7 +79,9 @@ export class DataConverter4Shell implements ibas.IDataConverter {
             boInfo.code = data.code;
             boInfo.name = data.Name;
             boInfo.type = data.Type;
+            boInfo.properties = new Array<bo.BOPropertyInfo>();
             for (let item of data.Properties) {
+                item.type = bo.BOPropertyInfo.name;
                 boInfo.properties.push(this.parsing(item, null));
             }
             return boInfo;

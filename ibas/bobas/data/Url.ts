@@ -21,7 +21,7 @@ export module url {
     /** 正常化地址 */
     export function normalize(value: string): string {
         if (objects.isNull(value)) {
-            return null;
+            return CURRENT_URL_SIGN;
         }
         let url: string;
         if (value.startsWith(ROOT_URL_SIGN)) {

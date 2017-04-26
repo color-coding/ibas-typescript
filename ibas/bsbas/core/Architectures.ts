@@ -65,7 +65,7 @@ export abstract class AbstractApplication<T extends IView> extends Element imple
     }
     /** 当前平台 */
     protected get plantform(): emPlantform {
-        return config.get(CONFIG_ITEM_PLANTFORM, emPlantform.DESKTOP, emPlantform);
+        return config.get(CONFIG_ITEM_PLANTFORM, emPlantform.COMBINATION, emPlantform);
     }
     /** 视图显示者 */
     viewShower: IViewShower;
@@ -155,7 +155,7 @@ export abstract class ModuleConsole extends Module implements IModuleConsole {
     }
     /** 当前平台 */
     get plantform(): emPlantform {
-        return config.get(CONFIG_ITEM_PLANTFORM, emPlantform.DESKTOP, emPlantform);
+        return config.get(CONFIG_ITEM_PLANTFORM, emPlantform.COMBINATION, emPlantform);
     }
     /** 图标 */
     icon: string;
