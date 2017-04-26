@@ -10,18 +10,25 @@
  * 模块索引文件，此文件集中导出类
  */
 /// <reference path="../../3rdparty/jquery.d.ts" />
-import { emMessageLevel, objects, strings, url } from "../data/index";
+import { emMessageLevel } from "../data/Enums";
+import { objects } from "../data/Data";
+import { strings } from "../data/Strings";
+import { url } from "../data/Url";
+import { ArrayList } from "../data/Common";
 import { config } from "../configuration/index";
 import { logger } from "../messages/index";
 /** 多语言 */
 export class I18N {
-
+    /** 默认语言编码 */
+    private DEFAULT_LANGUAGE_CODE: string = "en_US";
+    /** 配置项目-语言编码 */
     static CONFIG_ITEM_LANGUAGE_CODE: string = "language";
 
     private _language: string;
+    /** 语言 */
     get language(): string {
         if (strings.isEmpty(this._language)) {
-            this._language = config.get(I18N.CONFIG_ITEM_LANGUAGE_CODE, "zh_CN");
+            this._language = config.get(I18N.CONFIG_ITEM_LANGUAGE_CODE, this.DEFAULT_LANGUAGE_CODE);
         }
         return this._language;
     }
@@ -48,7 +55,7 @@ export class I18N {
         return strings.format("[{0}]", key);
     }
 
-    private languageFiles: Array<string> = new Array<string>();
+    private languageFiles: ArrayList<string> = new ArrayList<string>();
     /** 重新加载已加载 */
     reload(): void {
         for (let item of this.languageFiles) {
@@ -60,46 +67,63 @@ export class I18N {
         if (objects.isNull(address)) {
             return;
         }
-        if (!address.startsWith("http")) {
-            if (address.startsWith(url.ROOT_URL_SIGN)) {
-                // 补齐地址，根目录
-                address = window.document.location.origin + "/" + address.slice(url.ROOT_URL_SIGN.length, address.length);
-            }
+        address = url.normalize(address);
+        if (!this.languageFiles.contain(address)) {
+            this.languageFiles.add(address);
         }
-        if (address.indexOf("{0}") > 0) {
-            // 加载文件为模板
-            let has = false;
-            for (let item of this.languageFiles) {
-                if (item === address) {
-                    has = true;
-                    break;
+        let loader: LanguageLoader = new LanguageLoader();
+        let caller: ILanguageLoaderCaller = {
+            address: address,
+            onCompleted(data: any): void {
+                if (objects.isNull(that.items)) { that.items = new Map<string, string>(); }
+                for (let name in data) {
+                    if (data[name] !== undefined) {
+                        that.items.set(name, data[name]);
+                    }
                 }
             }
-            if (!has) {
-                // 记录到列表
-                this.languageFiles.push(address.valueOf());
+        };
+        // 加载默认语言
+        loader.load(caller);
+        // 加载指定语言
+        if (this.language !== this.DEFAULT_LANGUAGE_CODE) {
+            let index: number = caller.address.lastIndexOf(".");
+            if (index > 0) {
+                caller.address = caller.address.substring(0, index + 1) + this.language + caller.address.substring(index);
+                loader.load(caller);
             }
-            address = strings.format(address, this.language);
         }
+    }
+}
+/** 语言加载调用者 */
+interface ILanguageLoaderCaller {
+    /** 加载地址 */
+    address: string;
+    /** 加载完成通知 */
+    onCompleted(datas: any): void;
+}
+/** 语言加载者 */
+class LanguageLoader {
+    /** 加载 */
+    load(caller: ILanguageLoaderCaller): void {
         var JQryAjxSetting: JQueryAjaxSettings = {
-            url: address,
+            url: caller.address,
             type: "GET",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             async: false,
             cache: true,
             error: function (xhr: JQueryXHR, status: string, error: string): void {
-                logger.log(emMessageLevel.ERROR, "i18n: get language file [{2}] faild [{0} - {1}].", status, error, address);
+                logger.log(emMessageLevel.ERROR, "i18n: get language file [{2}] faild [{0} - {1}].", status, error, caller.address);
+                caller.onCompleted({});
             },
             success: function (data: any): void {
-                logger.log(emMessageLevel.DEBUG, "i18n: get language file [{0}] sucessful.", address);
-                if (data !== undefined && data !== null) {
-                    if (objects.isNull(that.items)) { that.items = new Map<string, string>(); }
-                    for (let name in data) {
-                        if (data[name] !== undefined) {
-                            that.items.set(name, data[name]);
-                        }
-                    }
+                logger.log(emMessageLevel.DEBUG, "i18n: get language file [{0}] sucessful.", caller.address);
+                if (!objects.isNull(data)) {
+                    caller.onCompleted(data);
+
+                } else {
+                    caller.onCompleted({});
                 }
             },
         };

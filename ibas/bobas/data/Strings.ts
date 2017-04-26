@@ -29,7 +29,7 @@ export module strings {
      * @param args 替换字符
      */
     export function format(format: string, ...args: any[]): string {
-        let result = format;
+        let result: string = format;
         if (args.length > 0) {
             // 存在替代字符
             if (args.length === 1 && Array.isArray(args[0])) {
@@ -37,14 +37,14 @@ export module strings {
                 args = args[0];
                 for (let key in args) {
                     if (args[key] !== undefined) {
-                        let reg = new RegExp("\\{" + key + "\\}", "g");
+                        let reg: RegExp = new RegExp("\\{" + key + "\\}", "g");
                         result = result.replace(reg, args[key]);
                     }
                 }
             } else {
-                for (let i = 0; i < args.length; i++) {
+                for (let i: number = 0; i < args.length; i++) {
                     if (args[i] !== undefined) {
-                        let reg = new RegExp("\\{" + i + "\\}", "g");
+                        let reg: RegExp = new RegExp("\\{" + i + "\\}", "g");
                         result = result.replace(reg, args[i]);
                     }
                 }
@@ -58,10 +58,10 @@ export module strings {
      * @param value 查询的字符
      */
     export function count(content: string, value: string): number {
-        let count = 0;
+        let count: number = 0;
         if (content === undefined || content === null) { return count; }
         if (value === undefined || value === null) { return count; }
-        let pos = content.indexOf(value, 0);
+        let pos: number = content.indexOf(value, 0);
         while (pos >= 0) {
             count++;
             pos = content.indexOf(value, pos + 1);
@@ -79,7 +79,7 @@ export module strings {
         if (search === undefined || search === null) { throw new Error("search is invalid."); }
         if (replace === undefined || replace === null) { throw new Error("replace is invalid."); }
 
-        let pos = content.indexOf(search);
+        let pos: number = content.indexOf(search);
         while (pos >= 0) {
             content = content.replace(search, replace);
             pos = content.indexOf(search);

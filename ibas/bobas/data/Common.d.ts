@@ -42,6 +42,11 @@ export interface List<T> extends Array<T> {
      * 最后一个或默认
      */
     lastOrDefault(): T;
+    /**
+     * 是否包含元素
+     * @param item 元素
+     */
+    contain(item: T): boolean;
 }
 
 
