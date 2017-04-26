@@ -186,6 +186,9 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
         // 模块入口地址
         let address: string = module.address;
         address = url.normalize(address);
+        if (!address.endsWith("/")) {
+            address += "/";
+        }
         let that: this = this;
         let indexName: string = module.index;
         if (objects.isNull(indexName) || indexName === "") {
@@ -246,6 +249,8 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
                         }
                     }
                 });
+                // 设置模块根地址
+                console.rootUrl = address;
                 // 设置仓库地址
                 if (!objects.isNull(module.repository)) {
                     let done: boolean = console.setRepository(module.repository);

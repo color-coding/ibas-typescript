@@ -20,8 +20,8 @@ export module url {
     export const CURRENT_URL_SIGN: string = "./";
     /** 正常化地址 */
     export function normalize(value: string): string {
-        if (objects.isNull(value)) {
-            return CURRENT_URL_SIGN;
+        if (objects.isNull(value) || value.length === 0) {
+            value = ROOT_URL_SIGN;
         }
         let url: string;
         if (value.startsWith(ROOT_URL_SIGN)) {

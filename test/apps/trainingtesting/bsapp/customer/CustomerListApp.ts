@@ -157,7 +157,7 @@ export class CustomerListApp extends ibas.BOListApplication<ICustomerListView, b
                                     }
                                 }
                             });
-                            this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_ui_data_deleting", beSaved));
+                            that.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_ui_data_deleting", beSaved));
                         };
                         that.busy(true);
                         // 开始保存

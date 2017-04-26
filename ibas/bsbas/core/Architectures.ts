@@ -153,12 +153,14 @@ export abstract class ModuleConsole extends Module implements IModuleConsole {
     constructor() {
         super();
     }
+    /** 图标 */
+    icon: string;
+    /** 根地址 */
+    rootUrl:string;
     /** 当前平台 */
     get plantform(): emPlantform {
         return config.get(CONFIG_ITEM_PLANTFORM, emPlantform.COMBINATION, emPlantform);
     }
-    /** 图标 */
-    icon: string;
     /** 功能集合 */
     functions(): IModuleFunction[] {
         let list: Array<IModuleFunction> = new Array<IModuleFunction>();

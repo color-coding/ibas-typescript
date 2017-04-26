@@ -1,13 +1,13 @@
 [
   {
-    "id": "edd25576-d1d8-4cab-87fa-52c834668524",
+    "id": "e6424319-a311-440e-bc89-a825f82d5847",
     "name": "TrainingTesting",
     "category": "",
     "address": ".../../../test/apps/trainingtesting/",
     "repository": ".../../../test/repository"
   },
   {
-    "id": "edd25576-d1d8-4cab-87fa-52c834668525",
+    "id": "e6424319-a311-440e-bc89-a825f82d5848",
     "name": "TrainingTestingOthers",
     "category": "",
     "index": "index.others",

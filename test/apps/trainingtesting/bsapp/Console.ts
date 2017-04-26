@@ -18,8 +18,6 @@ export class Console extends ibas.ModuleConsole {
     static CONSOLE_ID: string = "e6424319-a311-440e-bc89-a825f82d5847";
     /** 模块-名称 */
     static CONSOLE_NAME: string = "TrainingTesting";
-    /** 根文件名称 */
-    static ROOT_FILE_NAME: string = "trainingtesting/index";
     /** 构造函数 */
     constructor() {
         super();
@@ -49,19 +47,17 @@ export class Console extends ibas.ModuleConsole {
     }
     /** 运行 */
     run(): void {
-        // 获取根地址
-        let rootUrl: string = ibas.url.rootUrl(Console.ROOT_FILE_NAME);
         // 加载语言-框架默认
-        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/trainingtesting.json", rootUrl));
-        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/material.json", rootUrl));
-        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/customer.json", rootUrl));
-        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/salesorder.json", rootUrl));
+        ibas.i18n.load(this.rootUrl + "resources/languages/trainingtesting.json");
+        ibas.i18n.load(this.rootUrl + "resources/languages/bo/material.json");
+        ibas.i18n.load(this.rootUrl + "resources/languages/bo/customer.json");
+        ibas.i18n.load(this.rootUrl + "resources/languages/bo/salesorder.json");
         // 设置资源属性
         this.description = ibas.i18n.prop(this.name.toLowerCase());
         this.icon = ibas.i18n.prop(this.name.toLowerCase() + "_icon");
         // 先加载ui导航
         let uiModules: string[] = [];
-        if (!ibas.config.get(ibas.ModuleConsole.CONFIG_ITEM_DISABLE_PLATFORM_VIEW, false)
+        if (!ibas.config.get(ibas.CONFIG_ITEM_DISABLE_PLATFORM_VIEW, false)
             && this.plantform === ibas.emPlantform.PHONE) {
             // 使用m类型视图
             uiModules.push("../bsui/m/Navigation");
@@ -113,10 +109,8 @@ export class ConsoleOthers extends ibas.ModuleConsole {
     }
     /** 运行 */
     run(): void {
-        // 获取根地址
-        let rootUrl: string = ibas.url.rootUrl(Console.ROOT_FILE_NAME);
         // 加载语言-框架默认
-        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/trainingtestingothers.json", rootUrl));
+        ibas.i18n.load(this.rootUrl + "resources/languages/trainingtestingothers.json");
         // 设置资源属性
         this.description = ibas.i18n.prop(this.name.toLowerCase());
         // 先加载ui导航

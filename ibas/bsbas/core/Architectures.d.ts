@@ -148,6 +148,8 @@ export interface IModuleConsole extends IModule {
     icon: string;
     /** 初始化完成 */
     isInitialized: boolean;
+    /** 根地址 */
+    rootUrl:string;
     /** 功能集合 */
     functions(): IModuleFunction[];
     /** 默认功能 */
