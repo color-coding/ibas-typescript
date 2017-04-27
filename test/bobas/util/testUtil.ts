@@ -13,9 +13,9 @@ import * as bobas from "../../../ibas/bobas/index";
 console.log(bobas.uuid.random());
 // 测试配置项
 console.log(bobas.strings.format("debug enabled is {0}",
-    bobas.config.get(bobas.config.CONFIG_ITEM_DEBUG_MODE, false)));
+    bobas.config.get(bobas.CONFIG_ITEM_DEBUG_MODE, false)));
 console.log(bobas.strings.format("message level is {0}",
-    bobas.config.get(bobas.Logger.CONFIG_ITEM_MESSAGES_LEVEL, bobas.emMessageLevel.FATAL, bobas.emMessageLevel)));
+    bobas.config.get(bobas.CONFIG_ITEM_MESSAGES_LEVEL, bobas.emMessageLevel.FATAL, bobas.emMessageLevel)));
 // 测试读取资源文件
 console.log(bobas.i18n.prop("msg_hello_world"));
 bobas.i18n.load(bobas.url.rootUrl(undefined) + "/../resources/languages/test.zh_CN.json");

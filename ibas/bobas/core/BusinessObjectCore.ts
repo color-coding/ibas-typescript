@@ -94,7 +94,6 @@ export abstract class TrackableBase extends Bindable implements ITrackable {
         this.isDirty = true;
         this.isDeleted = false;
         this.isLoading = false;
-        this.isSavable = true;
     }
 
     private _new: boolean;
@@ -139,17 +138,6 @@ export abstract class TrackableBase extends Bindable implements ITrackable {
     }
     set isLoading(value: boolean) {
         this._loading = value;
-    }
-
-    private _savable: boolean;
-    /**
-     * 是否有效
-     */
-    get isSavable(): boolean {
-        return this._savable;
-    }
-    set isSavable(value: boolean) {
-        this._savable = value;
     }
 
     private _vaild: boolean;

@@ -57,10 +57,6 @@ export interface ITrackable {
      */
     readonly isDeleted: boolean;
     /**
-     * 是否能够保存
-     */
-    readonly isSavable: boolean;
-    /**
      * 是否有效
      */
     readonly isVaild: boolean;

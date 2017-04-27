@@ -13,8 +13,8 @@
     "defaultPassword": "1q2w3e",
     "defalutServiceIcon": "sap-icon://e-care",
     "defalutModuleIcon": "sap-icon://nutrition-activity",
-    "repositoryAddress|BORepositoryShellOffline": ".../../../test/repository",
-    "repositoryAddress|BORepositoryShell": "http://localhost:8080/initialfantasy/services/rest/datas"
+    "repositoryAddress|BORepositoryShell": "http://localhost:8080/initialfantasy/services/rest/datas",
+    "repositoryAddress|BORepositoryShellOffline": ".../../../test/repository"
   },
   "languages": [
     "zh_CN",

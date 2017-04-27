@@ -189,20 +189,28 @@ export class KeyValue {
  * 文件数据
  */
 export class FileData {
-
     private FileName: string;
+    /** 文件名称 */
     get fileName(): string {
         return this.FileName;
     }
     set fileName(value: string) {
         this.FileName = value;
     }
-
     private Location: string;
+    /** 位置 */
     get location(): string {
         return this.Location;
     }
     set location(value: string) {
         this.Location = value;
+    }
+    private OriginalName: string;
+    /** 原始名 */
+    get originalName(): string {
+        return this.OriginalName;
+    }
+    set originalName(value: string) {
+        this.OriginalName = value;
     }
 }

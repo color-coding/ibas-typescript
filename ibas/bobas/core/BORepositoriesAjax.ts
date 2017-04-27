@@ -180,7 +180,8 @@ export class BORepositoryAjax extends BORepository implements IRemoteRepository 
      */
     fetch<P>(boName: string, caller: FetchCaller<P>): void {
         let method: string = "fetch" + boName;
-        this.callRemoteMethod(method, this.converter.convert(caller.criteria, method), caller);
+        let data: string = JSON.stringify(this.converter.convert(caller.criteria, method));
+        this.callRemoteMethod(method, data, caller);
     }
     /**
      * 保存数据
@@ -189,7 +190,8 @@ export class BORepositoryAjax extends BORepository implements IRemoteRepository 
      */
     save<P>(boName: string, caller: SaveCaller<P>): void {
         let method: string = "save" + boName;
-        this.callRemoteMethod(method, this.converter.convert(caller.beSaved, method), caller);
+        let data: string = JSON.stringify(this.converter.convert(caller.beSaved, method));
+        this.callRemoteMethod(method, data, caller);
     }
 
     /**
@@ -204,7 +206,7 @@ export class BORepositoryAjax extends BORepository implements IRemoteRepository 
         let ajxSetting: JQueryAjaxSettings = this.createAjaxSettings(method, data);
         // 补充发生错误的事件
         ajxSetting.error = function (jqXHR: JQueryXHR, textStatus: string, errorThrown: string): void {
-            let opRslt = new OperationResult();
+            let opRslt: OperationResult<any> = new OperationResult();
             opRslt.resultCode = 10000 + jqXHR.status;
             opRslt.message = strings.format("{0} - {1}", textStatus, i18n.prop("msg_network_error"));
             logger.log(emMessageLevel.ERROR,

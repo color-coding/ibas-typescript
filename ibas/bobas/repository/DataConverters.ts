@@ -7,10 +7,10 @@
  */
 
 import {
-    emMessageLevel, emConditionOperation, emConditionRelationship, emSortType, objects,
-    ICriteria, Criteria, ICondition, Condition, ISort, Sort, IChildCriteria, ChildCriteria,
-    IOperationResult, OperationResult, OperationInformation, dates, enums,
-    emApprovalStatus, emBOStatus, emDocumentStatus, emYesNo
+    objects, Criteria, Condition, Sort, ChildCriteria, OperationResult,
+    dates, enums, OperationMessages, FileData, OperationInformation, List,
+    emApprovalStatus, emBOStatus, emDocumentStatus, emYesNo, ArrayList,
+    emMessageLevel, emConditionOperation, emConditionRelationship, emSortType,
 } from "../data/index";
 import {
     IBusinessObject, IDataConverter, BusinessObjectBase, BusinessObjectListBase,
@@ -18,10 +18,302 @@ import {
 } from "../core/index";
 import { i18n } from "../i18n/index";
 import { logger } from "../messages/index";
+import * as ibas4j from "./DataDeclarations.d";
 
-/**
- * 数据转换者基类
- */
+/** 数据转换，ibas4java */
+export abstract class DataConverter4j implements IDataConverter {
+    /**
+     * 转换业务对象数据
+     * @param data 本地类型
+     * @param sign 特殊标记
+     * @returns 目标类型
+     */
+    convert(data: any, sign: string): any {
+        if (objects.instanceOf(data, OperationResult)) {
+            let newData: OperationResult<any> = data;
+            let resultObjects: any[] = [];
+            for (let item of newData.resultObjects) {
+                resultObjects.push(this.convert(item, null));
+            }
+            let informations: ibas4j.OperationInformation[] = [];
+            for (let item of newData.informations) {
+                informations.push(this.convert(item, null));
+            }
+            let remote: ibas4j.OperationResult = {
+                type: data.constructor.name,
+                SignID: newData.signID,
+                Time: dates.toString(newData.time),
+                UserSign: newData.userSign,
+                ResultCode: newData.resultCode,
+                Message: newData.message,
+                ResultObjects: resultObjects,
+                Informations: informations
+            };
+            return remote;
+        } else if (objects.instanceOf(data, OperationInformation)) {
+            let newData: OperationInformation = data;
+            let remote: ibas4j.OperationInformation = {
+                type: data.constructor.name,
+                Name: newData.name,
+                Tag: newData.tag,
+                Contents: newData.contents,
+            };
+            return remote;
+        } else if (objects.instanceOf(data, OperationMessages)) {
+            let newData: OperationMessages = data;
+            let remote: ibas4j.OperationMessages = {
+                type: data.constructor.name,
+                SignID: newData.signID,
+                UserSign: newData.userSign,
+                Time: dates.toString(newData.time),
+                ResultCode: newData.resultCode,
+                Message: newData.message,
+            };
+            return remote;
+        } else if (objects.instanceOf(data, Criteria)) {
+            let newData: Criteria = data;
+            let conditions: ibas4j.Condition[] = [];
+            for (let item of newData.conditions) {
+                conditions.push(this.convert(item, null));
+            }
+            let sorts: ibas4j.Sort[] = [];
+            for (let item of newData.sorts) {
+                sorts.push(this.convert(item, null));
+            }
+            let childCriteria: ibas4j.ChildCriteria[] = [];
+            for (let item of newData.childCriterias) {
+                childCriteria.push(this.convert(item, null));
+            }
+            let remote: ibas4j.Criteria = {
+                type: data.constructor.name,
+                BOCode: newData.boCode,
+                Result: newData.result,
+                NoChilds: newData.noChilds,
+                Remarks: newData.remarks,
+                Conditions: conditions,
+                ChildCriterias: childCriteria,
+                Sorts: sorts
+            };
+            return remote;
+        } else if (objects.instanceOf(data, ChildCriteria)) {
+            let newData: ChildCriteria = data;
+            let conditions: ibas4j.Condition[] = [];
+            for (let item of newData.conditions) {
+                conditions.push(this.convert(item, null));
+            }
+            let sorts: ibas4j.Sort[] = [];
+            for (let item of newData.sorts) {
+                sorts.push(this.convert(item, null));
+            }
+            let childCriteria: ibas4j.ChildCriteria[] = [];
+            for (let item of newData.childCriterias) {
+                childCriteria.push(this.convert(item, null));
+            }
+            let remote: ibas4j.ChildCriteria = {
+                type: data.constructor.name,
+                BOCode: newData.boCode,
+                Result: newData.result,
+                NoChilds: newData.noChilds,
+                Remarks: newData.remarks,
+                PropertyPath: newData.propertyPath,
+                OnlyHasChilds: newData.onlyHasChilds,
+                Conditions: conditions,
+                ChildCriterias: childCriteria,
+                Sorts: sorts
+            };
+            return remote;
+        } else if (objects.instanceOf(data, Condition)) {
+            let newData: Condition = data;
+            let remote: ibas4j.Condition = {
+                type: data.constructor.name,
+                Alias: newData.alias,
+                BracketClose: newData.bracketClose,
+                BracketOpen: newData.bracketOpen,
+                ComparedAlias: newData.comparedAlias,
+                Value: newData.value,
+                Operation: enums.toString(emConditionOperation, newData.operation),
+                Relationship: enums.toString(emConditionRelationship, newData.relationship),
+                Remarks: newData.remarks,
+            };
+            return remote;
+        } else if (objects.instanceOf(data, Sort)) {
+            let newData: Sort = data;
+            let remote: ibas4j.Sort = {
+                type: data.constructor.name,
+                Alias: newData.alias,
+                SortType: enums.toString(emSortType, newData.sortType),
+            };
+            return remote;
+        } else if (objects.instanceOf(data, FileData)) {
+            let newData: FileData = data;
+            let remote: ibas4j.FileData = {
+                type: data.constructor.name,
+                FileName: newData.fileName,
+                Location: newData.location,
+                OriginalName: newData.originalName
+            };
+            return remote;
+        } else if (!objects.isNull(this.boConverter)) {
+            // 尝试业务对象转换
+            return this.boConverter.convert(data);
+        } else {
+            throw new Error(i18n.prop("msg_unable_to_convert_data", objects.getName(objects.getType(data))));
+        }
+    }
+    /**
+     * 解析业务对象数据
+     * @param data 目标类型
+     * @param sign 特殊标记
+     * @returns 本地类型
+     */
+    parsing(data: any, sign: string): any {
+        if (data.type === OperationResult.name) {
+            let remote: ibas4j.OperationResult = data;
+            let newData: OperationResult<any> = new OperationResult();
+            newData.signID = remote.SignID;
+            newData.time = dates.valueOf(remote.Time);
+            newData.userSign = remote.UserSign;
+            newData.resultCode = remote.ResultCode;
+            newData.message = remote.Message;
+            for (let item of remote.ResultObjects) {
+                newData.resultObjects.add(this.parsing(item, null));
+            }
+            for (let item of remote.Informations) {
+                item.type = OperationInformation.name;
+                newData.informations.add(this.parsing(item, null));
+            }
+            return newData;
+        } else if (data.type === OperationInformation.name) {
+            let remote: ibas4j.OperationInformation = data;
+            let newData: OperationInformation = new OperationInformation();
+            newData.name = remote.Name;
+            newData.tag = remote.Tag;
+            newData.contents = remote.Contents;
+            return newData;
+        } else if (data.type === OperationMessages.name) {
+            let remote: ibas4j.OperationMessages = data;
+            let newData: OperationMessages = new OperationMessages();
+            newData.signID = remote.SignID;
+            newData.userSign = remote.UserSign;
+            newData.time = dates.valueOf(remote.Time);
+            newData.resultCode = remote.ResultCode;
+            return newData;
+        } else if (data.type === Criteria.name) {
+            let remote: ibas4j.Criteria = data;
+            let newData: Criteria = new Criteria();
+            newData.boCode = remote.BOCode;
+            newData.result = remote.Result;
+            newData.noChilds = remote.NoChilds;
+            newData.remarks = remote.Remarks;
+            for (let item of remote.Conditions) {
+                item.type = Condition.name;
+                newData.conditions.add(this.parsing(item, null));
+            }
+            for (let item of remote.ChildCriterias) {
+                item.type = ChildCriteria.name;
+                newData.childCriterias.add(this.parsing(item, null));
+            }
+            for (let item of remote.Sorts) {
+                item.type = Sort.name;
+                newData.sorts.add(this.parsing(item, null));
+            }
+            return newData;
+        } else if (data.type === ChildCriteria.name) {
+            let remote: ibas4j.ChildCriteria = data;
+            let newData: ChildCriteria = new ChildCriteria();
+            newData.boCode = remote.BOCode;
+            newData.result = remote.Result;
+            newData.noChilds = remote.NoChilds;
+            newData.remarks = remote.Remarks;
+            newData.onlyHasChilds = remote.OnlyHasChilds;
+            newData.propertyPath = remote.PropertyPath;
+            for (let item of remote.Conditions) {
+                item.type = Condition.name;
+                newData.conditions.add(this.parsing(item, null));
+            }
+            for (let item of remote.ChildCriterias) {
+                item.type = ChildCriteria.name;
+                newData.childCriterias.add(this.parsing(item, null));
+            }
+            for (let item of remote.Sorts) {
+                item.type = Sort.name;
+                newData.sorts.add(this.parsing(item, null));
+            }
+            return newData;
+        } else if (data.type === Condition.name) {
+            let remote: ibas4j.Condition = data;
+            let newData: Condition = new Condition();
+            newData.alias = remote.Alias;
+            newData.bracketClose = remote.BracketClose;
+            newData.bracketOpen = remote.BracketOpen;
+            newData.comparedAlias = remote.ComparedAlias;
+            newData.value = remote.Value;
+            newData.operation = enums.valueOf(emConditionOperation, remote.Operation);
+            newData.relationship = enums.valueOf(emConditionRelationship, remote.Relationship);
+            newData.remarks = remote.Remarks;
+            return newData;
+        } else if (data.type === Sort.name) {
+            let remote: ibas4j.Sort = data;
+            let newData: Sort = new Sort();
+            newData.alias = remote.Alias;
+            newData.sortType = enums.valueOf(emSortType, remote.SortType);
+            return newData;
+        } else if (data.type === FileData.name) {
+            let remote: ibas4j.FileData = data;
+            let newData: FileData = new FileData();
+            newData.fileName = remote.FileName;
+            newData.location = remote.Location;
+            newData.originalName = remote.OriginalName;
+            return newData;
+        } else if (!objects.isNull(this.boConverter)) {
+            // 尝试业务对象解析
+            return this.boConverter.parsing(data);
+        } else {
+            throw new Error(i18n.prop("msg_unable_to_parse_data", objects.isNull(data.type) ? "unknown" : data.type));
+        }
+    }
+
+    private _boConverter: IBOConverter<IBusinessObject, any>;
+    protected get boConverter(): IBOConverter<IBusinessObject, any> {
+        if (objects.isNull(this._boConverter)) {
+            this._boConverter = this.createConverter();
+        }
+        return this._boConverter;
+    }
+    /** 创建业务对象转换者 */
+    protected abstract createConverter(): IBOConverter<IBusinessObject, any>;
+}
+/** 属性映射 */
+export class PropertyMap {
+    constructor(local: string, remote: string) {
+        this.localProperty = local;
+        this.remoteProperty = remote;
+    }
+    /** 本地属性 */
+    localProperty: string;
+    /** 远程属性 */
+    remoteProperty: string;
+}
+/** 属性映射 */
+export class PropertyMaps extends ArrayList<PropertyMap> {
+    localProperty(property: string): string {
+        for (let item of this) {
+            if (item.remoteProperty === property) {
+                return item.localProperty;
+            }
+        }
+        return property;
+    }
+    remoteProperty(property: string): string {
+        for (let item of this) {
+            if (item.localProperty === property) {
+                return item.remoteProperty;
+            }
+        }
+        return property;
+    }
+}
+/** 业务对象的数据转换 */
 export abstract class BOConverter implements IBOConverter<IBusinessObject, any> {
     /** 远程对象，类型属性名称 */
     static REMOTE_OBJECT_TYPE_PROPERTY_NAME: string = "type";
@@ -34,6 +326,19 @@ export abstract class BOConverter implements IBOConverter<IBusinessObject, any> 
         data[BOConverter.REMOTE_OBJECT_TYPE_PROPERTY_NAME] = type;
     }
 
+    private _propertyMaps: PropertyMaps;
+
+    protected get propertyMaps(): PropertyMaps {
+        if (objects.isNull(this._propertyMaps)) {
+            this._propertyMaps = new PropertyMaps;
+            this._propertyMaps.add(new PropertyMap("_new", "isNew"));
+            this._propertyMaps.add(new PropertyMap("_dirty", "isDirty"));
+            this._propertyMaps.add(new PropertyMap("_deleted", "isDeleted"));
+            this._propertyMaps.add(new PropertyMap("_loading", undefined));// 忽略属性
+            this._propertyMaps.add(new PropertyMap("_listeners", undefined));// 忽略属性
+        }
+        return this._propertyMaps;
+    }
     /**
      * 解析远程数据
      * @param datas 远程数据
@@ -80,7 +385,7 @@ export abstract class BOConverter implements IBOConverter<IBusinessObject, any> 
             }
             // 首字母改为小写
             let sValue: any = source[sName];
-            let tName: string = sName;
+            let tName: string = this.propertyMaps.localProperty(sName);
             if (objects.isNull(tName)) {
                 continue;
             }
@@ -146,14 +451,14 @@ export abstract class BOConverter implements IBOConverter<IBusinessObject, any> 
                 continue;
             }
             let value: any = source[sName];
-            let name: string = sName;
+            let name: string = this.propertyMaps.remoteProperty(sName);
             if (objects.isNull(name)) {
                 // 没有解析出映射关系，继续下一个属性
                 continue;
             }
             if (value instanceof Array) {
                 // 此属性是数组
-                let newValue = [];
+                let newValue: Array<any> = [];
                 for (let item of value) {
                     newValue.push(this.convertProperties(item, {}));
                 }
@@ -215,7 +520,26 @@ export abstract class BOConverter implements IBOConverter<IBusinessObject, any> 
      * @param value 值
      * @returns 转换的值
      */
-    protected abstract convertData(boName: string, property: string, value: any): any;
+    protected convertData(boName: string, property: string, value: any): any {
+        if (typeof value === "number") {
+            // 枚举类型
+            if (property === "DocumentStatus" || property === "LineStatus") {
+                return enums.toString(emDocumentStatus, value);
+            } else if (property === "Canceled" || property === "Referenced"
+                || property === "Transfered" || property === "Activated" || property === "Deleted") {
+                return enums.toString(emYesNo, value);
+            } else if (property === "Status") {
+                return enums.toString(emBOStatus, value);
+            } else if (property === "ApprovalStatus") {
+                return enums.toString(emApprovalStatus, value);
+            }
+        } else if (value instanceof Date) {
+            // 日期类型
+            return dates.toString(value);
+        }
+        // 不做处理，原始返回
+        return value;
+    }
     /**
      * 自定义解析
      * @param data 远程数据
@@ -223,265 +547,3 @@ export abstract class BOConverter implements IBOConverter<IBusinessObject, any> 
      */
     protected abstract customParsing(data: any): IBusinessObject;
 }
-
-/**
- * 数据转换，ibas-java-后台服务
- */
-export abstract class DataConverter4ibas implements IDataConverter {
-
-    /**
-     * 转为远程数据
-     * @param data
-     */
-    convert(data: any): string {
-        let remote: any = null;
-        if (objects.instanceOf(data, Criteria)) {
-            remote = (new CriteriaConverter()).convert(data);
-        } else {
-            remote = this.createConverter().convert(data);
-        }
-        return JSON.stringify(remote);
-    }
-
-    /**
-     * 解析远程数据
-     * @param datas 远程数据
-     * @returns 操作结果数据
-     */
-    parsing(data: any): IOperationResult<any> {
-        return (new OperationResultConverter(this.createConverter())).parsing(data);
-    }
-
-    /**
-     * 创建业务对象转换者
-     */
-    protected abstract createConverter(): BOConverter;
-}
-
-/**
- * 查询转换者
- */
-class CriteriaConverter implements IBOConverter<ICriteria, any> {
-
-    /**
-     * 转为目标对象
-     * @param data 本地对象
-     */
-    convert(data: Criteria): any {
-        if (!(objects.instanceOf(data, Criteria))) {
-            return data;
-        }
-        return this.convertCriteria(data);
-    }
-
-    /**
-     * 解析远程数据
-     * @param datas 远程数据
-     * @returns 操作结果数据
-     */
-    parsing(data: any): ICriteria {
-        return this.parsingCriteria(data);
-    }
-
-    convertCriteria(data: ICriteria): any {
-        let newData: any = {
-            "BOCode": "",
-            "ChildCriterias": [],
-            "Conditions": [],
-            "NoChilds": false,
-            "Remarks": "",
-            "ResultCount": -1,
-            "Sorts": []
-        };
-        newData.BOCode = data.boCode;
-        for (let item of data.childCriterias) {
-            newData.ChildCriterias.push(this.convertChildCriteria(item));
-        }
-        for (let item of data.conditions) {
-            newData.Conditions.push(this.convertCondition(item));
-        }
-        newData.NoChilds = data.noChilds;
-        newData.Remarks = data.remarks;
-        newData.ResultCount = data.result;
-        for (let item of data.sorts) {
-            newData.Sorts.push(this.convertSort(item));
-        }
-        return newData;
-    }
-
-    convertChildCriteria(data: IChildCriteria): any {
-        let newData = this.convertCriteria(data);
-        newData.FatherMustHasResluts = data.onlyHasChilds;
-        newData.PropertyPath = data.propertyPath;
-        return newData;
-    }
-
-    convertCondition(data: ICondition): any {
-        let newData = {
-            "Alias": "",
-            "BracketClose": 0,
-            "BracketOpen": 0,
-            "ComparedAlias": "",
-            "Value": "",
-            "Operation": "",
-            "Relationship": "",
-            "Remarks": ""
-        };
-        newData.Alias = data.alias;
-        newData.BracketClose = data.bracketClose;
-        newData.BracketOpen = data.bracketOpen;
-        newData.ComparedAlias = data.comparedAlias;
-        newData.Value = data.value;
-        newData.Operation = enums.toString(emConditionOperation, data.operation);
-        newData.Relationship = enums.toString(emConditionRelationship, data.relationship);
-        newData.Remarks = data.remarks;
-        return newData;
-    }
-
-    convertSort(data: ISort): any {
-        let newData = {
-            "Alias": "",
-            "SortType": ""
-        };
-        newData.Alias = data.alias;
-        newData.SortType = enums.toString(emSortType, data.sortType);
-        return newData;
-    }
-
-    parsingCriteria(data: any): ICriteria {
-        let newData = new Criteria();
-        this.setCriteriaValues(newData, data);
-        return newData;
-    }
-
-    private setCriteriaValues(criteria: ICriteria, data: any) {
-        criteria.boCode = data.BusinessObjectCode;
-        for (let item of data.ChildCriterias) {
-            criteria.childCriterias.add(this.parsingChildCriteria(item));
-        }
-        for (let item of data.Conditions) {
-            criteria.conditions.add(this.parsingCondition(item));
-        }
-        criteria.noChilds = data.NotLoadedChildren;
-        criteria.remarks = data.Remarks;
-        criteria.result = data.ResultCount;
-        for (let item of data.Sorts) {
-            criteria.sorts.add(this.parsingSort(item));
-        }
-    }
-
-    parsingChildCriteria(data: any): IChildCriteria {
-        let newData = new ChildCriteria();
-        this.setCriteriaValues(newData, data);
-        newData.onlyHasChilds = data.FatherMustHasResluts;
-        newData.propertyPath = data.PropertyPath;
-        return newData;
-    }
-
-    parsingCondition(data: any): ICondition {
-        let newData = new Condition();
-        newData.alias = data.Alias;
-        newData.bracketClose = data.BracketCloseNum;
-        newData.bracketOpen = data.BracketOpenNum;
-        newData.comparedAlias = data.ComparedAlias;
-        newData.value = data.Value;
-        newData.operation = enums.valueOf(emConditionOperation, data.Operation);
-        newData.relationship = enums.valueOf(emConditionRelationship, data.Relationship);
-        newData.remarks = data.Remarks;
-        return newData;
-    }
-
-    parsingSort(data: any): ISort {
-        let newData = new Sort();
-        newData.alias = data.Alias;
-        newData.sortType = enums.valueOf(emSortType, data.SortType);
-        return newData;
-    }
-
-}
-
-/**
- * 操作结果转换者
- */
-class OperationResultConverter implements IBOConverter<IOperationResult<any>, any> {
-
-    constructor(converter: BOConverter) {
-        this.boConverter = converter;
-    }
-
-    protected boConverter: BOConverter;
-
-    /**
-     * 转换数据
-     * @param data 当前类型数据
-     * @returns 转换的数据
-     */
-    convert(data: IOperationResult<any>): string {
-        let opRslt: any = {
-            "type": "",
-            "Message": "",
-            "ResultCode": 0,
-            "SignID": "",
-            "UserSign": "",
-            "Time": "",
-            "Informations": [],
-            "ResultObjects": []
-        }
-        opRslt.type = "OperationResult";
-        opRslt.SignID = data.signID;
-        opRslt.Time = dates.toString(data.time);
-        opRslt.UserSign = data.userSign;
-        opRslt.ResultCode = data.resultCode;
-        opRslt.Message = data.message;
-        for (let item of data.resultObjects) {
-            opRslt.ResultObjects.push(this.boConverter.convert(item));
-        }
-        for (let item of data.informations) {
-            let info: any = {
-                "Name": "",
-                "Tag": "",
-                "Contents": ""
-            }
-            info.Name = item.name;
-            info.Tag = item.tag;
-            info.Contents = item.contents;
-            opRslt.Informations.push(info);
-        }
-        return JSON.stringify(opRslt);
-    }
-
-    /**
-     * 解析远程数据
-     * @param datas 远程数据
-     * @returns 操作结果数据
-     */
-    parsing(data: any): IOperationResult<any> {
-        let opRslt: IOperationResult<any> = new OperationResult();
-        if (data.type !== undefined && data.type === "OperationResult") {
-            // 可识别的类型
-            opRslt.signID = data.SignID;
-            opRslt.time = dates.valueOf(data.Time);
-            opRslt.userSign = data.UserSign;
-            opRslt.resultCode = data.ResultCode;
-            opRslt.message = data.Message;
-            for (let item of data.ResultObjects) {
-                opRslt.resultObjects.add(this.boConverter.parsing(item));
-            }
-            for (let item of data.Informations) {
-                let info = new OperationInformation();
-                info.name = item.Name;
-                info.tag = item.Tag;
-                info.contents = item.Contents;
-                opRslt.informations.add(info);
-            }
-        } else {
-            // 不可识别的类型，直接返回
-            opRslt.resultCode = 0;
-            opRslt.message = i18n.prop("msg_unrecognized_data");
-            opRslt.resultObjects.add(data);
-        }
-        return opRslt;
-    }
-}
-
-

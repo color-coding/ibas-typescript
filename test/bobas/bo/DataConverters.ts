@@ -13,7 +13,7 @@ import { SalesOrder, SalesOrderItem } from "./SalesOrder";
 /**
  * Test 模块的数据转换者
  */
-export class DataConverter4Test extends bobas.DataConverter4ibas {
+export class DataConverter4Test extends bobas.DataConverter4j{
 
     /**
      * 创建业务对象转换者

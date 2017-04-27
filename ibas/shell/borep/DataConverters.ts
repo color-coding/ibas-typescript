@@ -12,7 +12,11 @@ import * as bo from "./bo/Systems";
 /**
  * Shel 模块的数据转换者
  */
-export class DataConverter4Shell implements ibas.IDataConverter {
+export class DataConverter4Shell extends ibas.DataConverter4j {
+
+    createConverter(): ibas.IBOConverter<ibas.IBusinessObject, any> {
+        return null;
+    }
     /**
      * 转换数据
      * @param data 当前类型数据
@@ -29,25 +33,7 @@ export class DataConverter4Shell implements ibas.IDataConverter {
      * @returns 当前类型数据
      */
     parsing(data: any, sign: string): any {
-        if (data.type === ibas.OperationResult.name) {
-            let opRslt: ibas.IOperationResult<any> = new ibas.OperationResult();
-            opRslt.signID = data.SignID;
-            opRslt.time = ibas.dates.valueOf(data.Time);
-            opRslt.userSign = data.UserSign;
-            opRslt.resultCode = data.ResultCode;
-            opRslt.message = data.Message;
-            for (let item of data.ResultObjects) {
-                opRslt.resultObjects.add(this.parsing(item, null));
-            }
-            for (let item of data.Informations) {
-                let info: ibas.OperationInformation = new ibas.OperationInformation();
-                info.name = item.Name;
-                info.tag = item.Tag;
-                info.contents = item.Contents;
-                opRslt.informations.add(info);
-            }
-            return opRslt;
-        } else if (data.type === bo.User.name) {
+        if (data.type === bo.User.name) {
             let user: bo.User = new bo.User();
             user.id = data.Id;
             user.code = data.Code;
@@ -92,7 +78,7 @@ export class DataConverter4Shell implements ibas.IDataConverter {
             propertyInfo.description = data.Description;
             return propertyInfo;
         } else {
-            throw new Error(ibas.i18n.prop("msg_invaild_mapping_type", data.type));
+            return super.parsing(data, sign);
         }
     }
 }
