@@ -10,7 +10,8 @@
  * 模块索引文件，此文件集中导出类
  */
 /// <reference path="../../3rdparty/index.d.ts" />
-import { strings } from "../data/index";
+import { strings, emMessageLevel } from "../data/index";
+import { ILogger } from "../messages/Logger.d"; // 仅引用声明，避免嵌套引用
 
 /** 配置项目-调试模式 */
 export const CONFIG_ITEM_DEBUG_MODE: string = "debug";
@@ -35,10 +36,10 @@ export class Configuration {
             async: false,
             cache: false,
             error: function (xhr: JQueryXHR, status: string, error: string): void {
-                console.warn(strings.format("config: get config file [{2}] faild [{0} - {1}].", status, error, address));
+                console.warn(strings.format("config: load file [{2}] faild [{0} - {1}].", status, error, address));
             },
             success: function (data: any): void {
-                console.log(strings.format("config: get config file [{0}] successful.", address));
+                console.log(strings.format("config: load file [{0}] successful.", address));
                 if (data !== undefined && data !== null) {
                     if (data.appSettings !== undefined && data.appSettings !== null) {
                         let setting: any = data.appSettings;
@@ -122,7 +123,24 @@ export class Configuration {
                 return defalut;
             }
         }
-        console.warn(strings.format("unable to get valid value for [{0}].", key));
+        // 记录不能获取到的配置
+        this.log(emMessageLevel.DEBUG, strings.format("config: unable to get value for [{0}].", key));
         return undefined;
+    }
+
+    private log(level: emMessageLevel, message: string): void {
+        if ((<any>window).ibas !== undefined && (<any>window).ibas !== null
+            && (<any>window).ibas.logger !== undefined && (<any>window).ibas.logger !== null) {
+            let logger: ILogger = <ILogger>(<any>window).ibas.logger;
+            logger.log(level, message);
+        } else {
+            if (level === emMessageLevel.WARN) {
+                console.warn(message);
+            } if (level === emMessageLevel.ERROR) {
+                console.error(message);
+            } else {
+                console.log(message);
+            }
+        }
     }
 }

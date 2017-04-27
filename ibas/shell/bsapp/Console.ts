@@ -9,7 +9,7 @@
 /// <reference path="../../3rdparty/require.d.ts" />
 import * as sys from "ibas/bsbas/systems/index";
 import * as ibas from "ibas/index";
-import { BORepositoryShell, BORepositoryShellOffLine } from "../borep/BORepositories";
+import { BORepositoryShell, BORepositoryShellOffline } from "../borep/BORepositories";
 import { CentersFunc, MainApp, LoginApp, CenterApp, AboutApp, HelpApp, QueryPanel, SuggestionApp } from "./centers/index";
 
 
@@ -48,7 +48,7 @@ export class SystemsFactory implements sys.ISystemsFactory {
             ibas.CONFIG_ITEM_OFFLINE_MODE + "|" + BORepositoryShell.name, offline);
         if (offline) {
             // 当前处于离线模式
-            return new BORepositoryShellOffLine();
+            return new BORepositoryShellOffline();
         }
         return new BORepositoryShell();
     }
