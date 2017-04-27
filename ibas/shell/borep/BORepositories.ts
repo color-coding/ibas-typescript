@@ -117,7 +117,7 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements s
 /**
  * 业务仓库应用
  */
-export class BORepositoryShellOffLine extends BORepositoryShell {
+export class BORepositoryShellOffline extends BORepositoryShell {
 
     constructor() {
         super();
