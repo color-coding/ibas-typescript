@@ -11,3 +11,4 @@ export * from "./OthersFunc";
 export * from "./DemoResidentApp";
 export * from "./DemoUrlApp";
 export * from "./DemoService";
+export * from "./DemoMapApp";

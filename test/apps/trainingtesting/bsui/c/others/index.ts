@@ -10,3 +10,4 @@
 export * from "./DemoUrlView";
 export * from "./DemoServiceView";
 export * from "./DemoResidentView";
+export * from "./DemoMapView";

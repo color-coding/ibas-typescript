@@ -452,7 +452,10 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             container.destroyContent();
             container.addContent(new sap.ui.core.HTML("",
                 {
-                    content: html
+                    content: html,
+                    preferDOM: true,
+                    sanitizeContent: false,
+                    visible: true,
                 }));
         } else {
             // 外部打开

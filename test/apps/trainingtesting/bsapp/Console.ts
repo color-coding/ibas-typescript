@@ -10,7 +10,7 @@ import * as ibas from "ibas/index";
 import { MaterialFunc, MaterialChooseServiceMapping, MaterialLinkServiceMapping } from "./material/index";
 import { CustomerFunc, CustomerChooseServiceMapping, CustomerLinkServiceMapping } from "./customer/index";
 import { SalesOrderFunc, SalesOrderChooseServiceMapping, SalesOrderLinkServiceMapping } from "./salesorder/index";
-import { DemoUrlFunc, DemoTabFunc, DemoResidentApp, DemoServiceMapping } from "./others/index";
+import { DemoUrlFunc, DemoTabFunc, DemoResidentApp, DemoServiceMapping, DemoMapFunc } from "./others/index";
 
 /** 模块控制台 */
 export class Console extends ibas.ModuleConsole {
@@ -101,6 +101,7 @@ export class ConsoleOthers extends ibas.ModuleConsole {
         // 注册功能
         this.register(new DemoUrlFunc());
         this.register(new DemoTabFunc());
+        this.register(new DemoMapFunc());
         // 注册服务应用
         this.register(new DemoServiceMapping());
         // 注册常驻应用

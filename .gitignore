@@ -36,4 +36,4 @@ Web.config
 !ibas/3rdparty/*.js
 !openui5/typings/*.ts
 !openui5/typings/*.json
-!/test/apps/trainingtesting/
+!test/apps/trainingtesting/
