@@ -8,7 +8,7 @@
 
 import * as sys from "ibas/bsbas/systems/index";
 import * as ibas from "ibas/index";
-import { DataConverter4Shell, DataConverter4Offline } from "./DataConverters";
+import { DataConverter4Shell } from "./DataConverters";
 import * as bo from "./bo/Systems";
 
 /**
@@ -130,7 +130,7 @@ export class BORepositoryShellOffline extends BORepositoryShell {
      * 创建此模块的后端与前端数据的转换者
      */
     protected createConverter(): ibas.IDataConverter {
-        return new DataConverter4Offline();
+        return new DataConverter4Shell();
     }
 
 	/**

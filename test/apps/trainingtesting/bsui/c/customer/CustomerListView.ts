@@ -117,6 +117,9 @@ export class CustomerListView extends ibas.BOListView implements ICustomerListVi
                         press: function (event: any): void {
                             that.fireViewEvents(that.callServicesEvent, {
                                 displayServices(services: ibas.IServiceAgent[]): void {
+                                    if (ibas.objects.isNull(services) || services.length === 0) {
+                                        return;
+                                    }
                                     let popover: sap.m.Popover = new sap.m.Popover("", {
                                         showHeader: false,
                                         placement: sap.m.PlacementType.Bottom,

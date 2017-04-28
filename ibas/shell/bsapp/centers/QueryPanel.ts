@@ -35,7 +35,7 @@ export class QueryPanel extends sys.QueryPanel<IQueryPanelView>  {
         this.editQuery = <UserQuery>this.currentQuery();
         if (ibas.objects.isNull(this.editQuery)) {
             this.editQuery = new UserQuery();
-            this.editQuery.id = this.id;
+            this.editQuery.id = this.listener.queryId;
             this.editQuery.name = ibas.i18n.prop("sys_shell_ui_data_new") + ibas.i18n.prop("sys_query_panel");
             this.editQuery.order = 1;
             this.queries.add(this.editQuery);

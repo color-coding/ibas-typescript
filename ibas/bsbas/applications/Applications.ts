@@ -245,8 +245,12 @@ export abstract class BOApplicationWithServices<T extends IBOViewWithServices> e
                 services.push(service);
             }
         }
-        // 显示可用服务
-        shower.displayServices(services);
+        if (services.length > 0) {
+            // 显示可用服务
+            shower.displayServices(services);
+        } else {
+            this.proceeding(emMessageType.WARNING, i18n.prop("msg_application_no_services", this.description));
+        }
     }
     /** 获取服务的契约 */
     protected abstract getServiceProxies(): IServiceProxy<IServiceContract>[];

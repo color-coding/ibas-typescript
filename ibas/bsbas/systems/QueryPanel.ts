@@ -113,13 +113,15 @@ export abstract class QueryPanel<T extends IQueryPanelView> extends BarApplicati
     search(): void {
         this.busy(true);
         let criteria: ICriteria = this.currentCriteria();
+        // 克隆新的，防止被污染
+        criteria = criteria.clone();
         // 修正查询数量
         if (objects.isNull(criteria.result) || criteria.result < 1) {
             criteria.result = config.get(CONFIG_ITEM_CRITERIA_RESULT_COUNT, 30);
         }
         // 给查询条件赋值
         for (let item of criteria.conditions) {
-            if (objects.isNull(item.value)) {
+            if (objects.isNull(item.value) || item.value.length === 0) {
                 item.value = this.view.searchContent;
             }
         }

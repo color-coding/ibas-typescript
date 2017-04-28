@@ -1,31 +1,30 @@
 [
   {
-    "id": "e6424319-a311-440e-bc89-a825f82d5847",
-    "name": "TrainingTesting",
-    "category": "",
-    "address": ".../../../test/apps/trainingtesting/",
-    "repository": ".../../../test/repository"
+    "Id": "e6424319-a311-440e-bc89-a825f82d5847",
+    "Name": "TrainingTesting",
+    "Category": "",
+    "Address": ".../../../test/apps/trainingtesting/",
+    "Repository": "http://localhost:8080/trainingtesting/services/rest/data"
   },
   {
-    "id": "e6424319-a311-440e-bc89-a825f82d5848",
-    "name": "TrainingTestingOthers",
-    "category": "",
-    "index": "index.others",
-    "address": ".../../../test/apps/trainingtesting/",
-    "repository": ".../../../test/repository"
+    "Id": "e6424319-a311-440e-bc89-a825f82d5848",
+    "Name": "TrainingTestingOthers",
+    "Category": "",
+    "Index": "index.others",
+    "Address": ".../../../test/apps/trainingtesting/"
   },
   {
-    "id": "c2b31c06-20d8-44a2-bb34-17f47ed01859",
-    "name": "InitialFantasy",
-    "category": "",
-    "address": ".../../../test/apps/initialfantasy/",
-    "repository": ".../../../test/repository"
+    "Id": "c2b31c06-20d8-44a2-bb34-17f47ed01859",
+    "Name": "InitialFantasy",
+    "Category": "",
+    "Address": ".../../../test/apps/initialfantasy/",
+    "Repository": ".../../../test/repository"
   },
   {
-    "id": "cbd4ef0f-ee88-4ea7-96c7-13f974026b58",
-    "name": "ImportExport",
-    "category": "",
-    "address": ".../../../test/apps/importexport/",
-    "repository": ".../../../test/repository"
+    "Id": "cbd4ef0f-ee88-4ea7-96c7-13f974026b58",
+    "Name": "ImportExport",
+    "Category": "",
+    "Address": ".../../../test/apps/importexport/",
+    "Repository": ".../../../test/repository"
   }
 ]

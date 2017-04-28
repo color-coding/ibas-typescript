@@ -1,57 +1,57 @@
 [
     {
-        "code": "CC_TT_MATERIALS",
-        "name": "Material",
-        "type": "MasterData",
-        "properties": [
+        "Code": "CC_TT_MATERIALS",
+        "Name": "Material",
+        "Type": "MasterData",
+        "Properties": [
             {
-                "property": "Code",
-                "description": "编码",
-                "searched": true
+                "Property": "Code",
+                "Description": "编码",
+                "Searched": true
             },
             {
-                "property": "Name",
-                "description": "名称",
-                "searched": true
+                "Property": "Name",
+                "Description": "名称",
+                "Searched": true
             }
         ]
     },
     {
-        "code": "CC_TT_CUSTOMER",
-        "name": "Customer",
-        "type": "MasterData",
-        "properties": [
+        "Code": "CC_TT_CUSTOMER",
+        "Name": "Customer",
+        "Type": "MasterData",
+        "Properties": [
             {
-                "property": "Code",
-                "description": "编码",
-                "searched": true
+                "Property": "Code",
+                "Description": "编码",
+                "Searched": true
             },
             {
-                "property": "Name",
-                "description": "名称",
-                "searched": true
+                "Property": "Name",
+                "Description": "名称",
+                "Searched": true
             }
         ]
     },
     {
-        "code": "CC_TT_SALESORDER",
-        "name": "SalesOrder",
-        "type": "Document",
-        "properties": [
+        "Code": "CC_TT_SALESORDER",
+        "Name": "SalesOrder",
+        "Type": "Document",
+        "Properties": [
             {
-                "property": "DocEntry",
-                "description": "凭证编号",
-                "searched": true
+                "Property": "DocEntry",
+                "Description": "凭证编号",
+                "Searched": true
             },
             {
-                "property": "CustomerCode",
-                "description": "客户编码",
-                "searched": true
+                "Property": "CustomerCode",
+                "Description": "客户编码",
+                "Searched": true
             },
             {
-                "property": "CustomerName",
-                "description": "客户名称",
-                "searched": true
+                "Property": "CustomerName",
+                "Description": "客户名称",
+                "Searched": true
             }
         ]
     }

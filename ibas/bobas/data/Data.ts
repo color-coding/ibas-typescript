@@ -192,8 +192,7 @@ export module enums {
      * @param value 值
      */
     export function toString(type: any, value: any): string {
-        if (typeof value === "number") {
-            // 值是数值类型
+        if (type.hasOwnProperty(value)) {
             return type[value];
         }
         return value;

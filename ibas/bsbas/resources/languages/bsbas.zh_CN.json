@@ -40,5 +40,6 @@
     "msg_application_view_was_displayed": "应用[{0}]的视图已经显示",
     "msg_whether_to_delete": "请确认是否删除？",
     "msg_whether_to_exit": "请确认是退出？",
-    "msg_not_provided_display_service_method": "没有提供显示[{0}]服务的方法"
+    "msg_not_provided_display_service_method": "没有提供显示[{0}]服务的方法",
+    "msg_application_no_services": "应用[{0}]没有匹配的服务"
 }

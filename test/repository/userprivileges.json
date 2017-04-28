@@ -1,12 +1,12 @@
 [
   {
-    "source": "APPLICATION",
-    "target": "//b77d974d-57a0-4373-884e-b1ec43471c5a",
-    "value": "NONE"
+    "Source": "APPLICATION",
+    "Target": "//b77d974d-57a0-4373-884e-b1ec43471c5a",
+    "Value": "NONE"
   },
   {
-    "source": "BUSINESS_OBJECT",
-    "target": "//DEMO",
-    "value": "READ"
+    "Source": "BUSINESS_OBJECT",
+    "Target": "//DEMO",
+    "Value": "READ"
   }
 ]

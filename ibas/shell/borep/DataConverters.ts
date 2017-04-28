@@ -8,6 +8,7 @@
 
 import * as ibas from "ibas/index";
 import * as bo from "./bo/Systems";
+import * as shell from "./DataDeclarations.d";
 
 /**
  * Shel 模块的数据转换者
@@ -23,8 +24,78 @@ export class DataConverter4Shell extends ibas.DataConverter4j {
      * @param sign 操作标记
      * @returns 转换的数据
      */
-    convert(data: any, sign: string): string {
-        return data;
+    convert(data: any, sign: string): any {
+        if (ibas.objects.instanceOf(data, bo.User)) {
+            let newData: bo.User = data;
+            let remote: shell.User = {
+                type: bo.User.name,
+                Id: newData.id,
+                Code: newData.code,
+                Name: newData.name,
+                Super: newData.super,
+                Password: newData.password
+            };
+            return remote;
+        } else if (ibas.objects.instanceOf(data, bo.UserModule)) {
+            let newData: bo.UserModule = data;
+            let remote: shell.UserModule = {
+                type: bo.UserModule.name,
+                Id: newData.id,
+                Name: newData.name,
+                Repository: newData.repository,
+                Address: newData.address,
+                Category: newData.category
+            };
+            return remote;
+        } else if (ibas.objects.instanceOf(data, bo.UserPrivilege)) {
+            let newData: bo.UserPrivilege = data;
+            let remote: shell.UserPrivilege = {
+                type: bo.UserPrivilege.name,
+                Source: ibas.enums.toString(ibas.emPrivilegeSource, newData.source),
+                Target: newData.target,
+                Value: ibas.enums.toString(ibas.emAuthoriseType, newData.value)
+            };
+            return remote;
+        } else if (ibas.objects.instanceOf(data, bo.UserQuery)) {
+            let newData: bo.UserQuery = data;
+            let rCriteria: any = undefined;
+            if (!ibas.objects.isNull(newData.criteria)) {
+                rCriteria = this.convert(newData.criteria, null);
+            }
+            let remote: shell.UserQuery = {
+                type: bo.UserQuery.name,
+                Id: newData.id,
+                Name: newData.name,
+                Order: newData.order,
+                Criteria: JSON.stringify(rCriteria)
+            };
+            return remote;
+        } else if (ibas.objects.instanceOf(data, bo.BOInfo)) {
+            let newData: bo.BOInfo = data;
+            let properties: shell.BOPropertyInfo[] = [];
+            for (let item of newData.properties) {
+                properties.push(this.convert(item, null));
+            }
+            let remote: shell.BOInfo = {
+                type: bo.BOInfo.name,
+                Code: newData.code,
+                Name: newData.name,
+                Type: newData.type,
+                Properties: properties
+            };
+            return remote;
+        } else if (ibas.objects.instanceOf(data, bo.BOPropertyInfo)) {
+            let newData: bo.BOPropertyInfo = data;
+            let remote: shell.BOPropertyInfo = {
+                type: bo.BOPropertyInfo.name,
+                Property: newData.property,
+                Searched: newData.searched,
+                Description: newData.description
+            };
+            return remote;
+        } else {
+            return super.convert(data, sign);
+        }
     }
     /**
      * 解析数据
@@ -34,119 +105,69 @@ export class DataConverter4Shell extends ibas.DataConverter4j {
      */
     parsing(data: any, sign: string): any {
         if (data.type === bo.User.name) {
-            let user: bo.User = new bo.User();
-            user.id = data.Id;
-            user.code = data.Code;
-            user.name = data.Name;
-            user.super = data.super;
-            return user;
+            let remote: shell.User = data;
+            let newData: bo.User = new bo.User();
+            newData.id = remote.Id;
+            newData.code = remote.Code;
+            newData.name = remote.Name;
+            newData.super = remote.Super;
+            newData.password = remote.Password;
+            return newData;
         } else if (data.type === bo.UserModule.name) {
-            let userModule: bo.UserModule = new bo.UserModule();
-            userModule.id = data.Id;
-            userModule.name = data.Name;
-            userModule.repository = data.Repository;
-            userModule.address = data.Address;
-            userModule.category = data.Category;
-            return userModule;
+            let remote: shell.UserModule = data;
+            let newData: bo.UserModule = new bo.UserModule();
+            newData.id = remote.Id;
+            newData.name = remote.Name;
+            newData.repository = remote.Repository;
+            newData.address = remote.Address;
+            newData.category = remote.Category;
+            return newData;
         } else if (data.type === bo.UserPrivilege.name) {
-            let userPrivilege: bo.UserPrivilege = new bo.UserPrivilege();
-            userPrivilege.source = data.Source;
-            userPrivilege.target = data.Target;
-            userPrivilege.value = data.Value;
-            return userPrivilege;
+            let remote: shell.UserPrivilege = data;
+            let newData: bo.UserPrivilege = new bo.UserPrivilege();
+            newData.source = ibas.enums.valueOf(ibas.emPrivilegeSource, remote.Source);
+            newData.target = remote.Target;
+            newData.value = ibas.enums.valueOf(ibas.emAuthoriseType, remote.Value);
+            return newData;
         } else if (data.type === bo.UserQuery.name) {
-            let userQuery: bo.UserQuery = new bo.UserQuery();
-            userQuery.id = data.Id;
-            userQuery.name = data.Name;
-            userQuery.criteria = null;
-            return userQuery;
-        } else if (data.type === bo.BOInfo.name) {
-            let boInfo: bo.BOInfo = new bo.BOInfo();
-            boInfo.code = data.code;
-            boInfo.name = data.Name;
-            boInfo.type = data.Type;
-            boInfo.properties = new Array<bo.BOPropertyInfo>();
-            for (let item of data.Properties) {
-                item.type = bo.BOPropertyInfo.name;
-                boInfo.properties.push(this.parsing(item, null));
+            let remote: shell.UserQuery = data;
+            let newData: bo.UserQuery = new bo.UserQuery();
+            newData.id = remote.Id;
+            newData.name = remote.Name;
+            newData.order = remote.Order;
+            if (!ibas.objects.isNull(remote.Criteria) || remote.Criteria.length > 0) {
+                let jCriteria: any = JSON.parse(remote.Criteria);
+                if (!ibas.objects.isNull(jCriteria)) {
+                    jCriteria.type = ibas.Criteria.name;
+                    newData.criteria = this.parsing(jCriteria, null);
+                }
             }
-            return boInfo;
+            return newData;
+        } else if (data.type === bo.BOInfo.name) {
+            let remote: shell.BOInfo = data;
+            let newData: bo.BOInfo = new bo.BOInfo();
+            newData.code = remote.Code;
+            newData.name = remote.Name;
+            newData.type = remote.Type;
+            newData.properties = new Array<bo.BOPropertyInfo>();
+            for (let item of remote.Properties) {
+                item.type = bo.BOPropertyInfo.name;
+                newData.properties.push(this.parsing(item, null));
+            }
+            return newData;
         } else if (data.type === bo.BOPropertyInfo.name) {
-            let propertyInfo: bo.BOPropertyInfo = new bo.BOPropertyInfo();
-            propertyInfo.property = data.Property;
-            propertyInfo.searched = data.Searched;
-            propertyInfo.description = data.Description;
-            return propertyInfo;
+            let remote: shell.BOPropertyInfo = data;
+            let newData: bo.BOPropertyInfo = new bo.BOPropertyInfo();
+            newData.property = remote.Property;
+            newData.searched = remote.Searched;
+            newData.description = remote.Description;
+            return newData;
+        } else if (sign === "saveUserQuery") {
+            // 此方法返回值，没有标记类型
+            data.type = ibas.OperationMessages.name;
+            return super.parsing(data, sign);
         } else {
             return super.parsing(data, sign);
         }
-    }
-}
-/**
- * 离线的数据转换者
- */
-export class DataConverter4Offline implements ibas.IDataConverter {
-    /**
-     * 转换数据
-     * @param data 当前类型数据
-     * @param sign 操作标记
-     * @returns 转换的数据
-     */
-    convert(data: any, sign: string): string {
-        return data;
-    }
-    /**
-     * 解析数据
-     * @param data 原始数据
-     * @param sign 操作标记
-     * @returns 当前类型数据
-     */
-    parsing(data: any, sign: string): any {
-        if (sign === "users.json") {
-            let user: bo.User = new bo.User();
-            user.id = data.id;
-            user.code = data.user;
-            user.name = data.name;
-            user.password = data.password;
-            user.super = data.super;
-            return user;
-        } else if (sign === "usermodules.json") {
-            let module: bo.UserModule = new bo.UserModule();
-            module.id = data.id;
-            module.name = data.name;
-            module.index = data.index;
-            module.category = data.category;
-            module.address = data.address;
-            module.repository = data.repository;
-            return module;
-        } else if (sign === "userprivileges.json") {
-            let privilege: bo.UserPrivilege = new bo.UserPrivilege();
-            privilege.source = ibas.enums.valueOf(ibas.emPrivilegeSource, data.source);
-            privilege.target = data.target;
-            privilege.value = ibas.enums.valueOf(ibas.emAuthoriseType, data.value);
-            return privilege;
-        } else if (sign === "userqueries.json") {
-            let query: bo.UserQuery = new bo.UserQuery();
-            query.id = data.id;
-            query.name = data.name;
-            query.order = data.order;
-            query.criteria = new ibas.Criteria();// 此处没有处理转换
-            return query;
-        } else if (sign === "boinfos.json") {
-            let boInfo: bo.BOInfo = new bo.BOInfo();
-            boInfo.code = data.code;
-            boInfo.name = data.name;
-            boInfo.type = data.type;
-            boInfo.properties = new Array();
-            for (let pItem of data.properties) {
-                let propertyInfo: bo.BOPropertyInfo = new bo.BOPropertyInfo();
-                propertyInfo.property = pItem.property;
-                propertyInfo.description = pItem.description;
-                propertyInfo.searched = pItem.searched;
-                boInfo.properties.push(propertyInfo);
-            }
-            return boInfo;
-        }
-        return data;
     }
 }

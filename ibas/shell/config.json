@@ -3,7 +3,7 @@
     "debug": true,
     "language": "zh_CN",
     "offline": true,
-    "offline|BORepositoryShell": true,
+    "offline|BORepositoryShell": false,
     "helpUrl": "http://www.baidu.com",
     "fullScreen": false,
     "statusDelay": 2,
@@ -13,8 +13,9 @@
     "defaultPassword": "1q2w3e",
     "defalutServiceIcon": "sap-icon://e-care",
     "defalutModuleIcon": "sap-icon://nutrition-activity",
-    "repositoryAddress|BORepositoryShell": "http://localhost:8080/initialfantasy/services/rest/datas",
-    "repositoryAddress|BORepositoryShellOffline": ".../../../test/repository"
+    "repositoryAddress|BORepositoryShell": "http://localhost:8080/initialfantasy/services/rest/data",
+    "repositoryAddress|BORepositoryShellOffline": ".../../../test/repository",
+    "repositoryAddress|BORepositoryTrainingTestingOffline": ".../../../test/repository"
   },
   "languages": [
     "zh_CN",
