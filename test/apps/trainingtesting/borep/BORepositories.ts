@@ -9,34 +9,28 @@
 import * as ibas from "ibas/index";
 import * as bo from "./bo/index";
 import { IBORepositoryTrainingTesting } from "../api/index";
-import { DataConverterOnline, DataConverterOffline } from "./DataConverters";
+import { DataConverter4tt } from "./DataConverters";
 
 /** 培训&测试 业务仓库 */
 export class BORepositoryTrainingTesting extends ibas.BORepositoryApplication implements IBORepositoryTrainingTesting {
 
     /** 创建此模块的后端与前端数据的转换者 */
     protected createConverter(): ibas.IDataConverter {
-        if (this.offline) {
-            // 离线状态
-            return new DataConverterOffline();
-        } else {
-            return new DataConverterOnline();
-
-        }
+        return new DataConverter4tt();
     }
 
     /**
      * 查询 物料主数据
      * @param fetcher 查询者
      */
-    fetchMaterial(fetcher: ibas.FetchCaller<bo.Material>):void {
+    fetchMaterial(fetcher: ibas.FetchCaller<bo.Material>): void {
         super.fetch(bo.Material.name, fetcher);
     }
     /**
      * 保存 物料主数据
      * @param saver 保存者
      */
-    saveMaterial(saver: ibas.SaveCaller<bo.Material>):void {
+    saveMaterial(saver: ibas.SaveCaller<bo.Material>): void {
         super.save(bo.Material.name, saver);
     }
 
@@ -44,14 +38,14 @@ export class BORepositoryTrainingTesting extends ibas.BORepositoryApplication im
      * 查询 客户主数据
      * @param fetcher 查询者
      */
-    fetchCustomer(fetcher: ibas.FetchCaller<bo.Customer>):void {
+    fetchCustomer(fetcher: ibas.FetchCaller<bo.Customer>): void {
         super.fetch(bo.Customer.name, fetcher);
     }
     /**
      * 保存 客户主数据
      * @param saver 保存者
      */
-    saveCustomer(saver: ibas.SaveCaller<bo.Customer>):void {
+    saveCustomer(saver: ibas.SaveCaller<bo.Customer>): void {
         super.save(bo.Customer.name, saver);
     }
 
@@ -59,14 +53,14 @@ export class BORepositoryTrainingTesting extends ibas.BORepositoryApplication im
      * 查询 销售订单
      * @param fetcher 查询者
      */
-    fetchSalesOrder(fetcher: ibas.FetchCaller<bo.SalesOrder>):void {
+    fetchSalesOrder(fetcher: ibas.FetchCaller<bo.SalesOrder>): void {
         super.fetch(bo.SalesOrder.name, fetcher);
     }
     /**
      * 保存 销售订单
      * @param saver 保存者
      */
-    saveSalesOrder(saver: ibas.SaveCaller<bo.SalesOrder>):void {
+    saveSalesOrder(saver: ibas.SaveCaller<bo.SalesOrder>): void {
         super.save(bo.SalesOrder.name, saver);
     }
 

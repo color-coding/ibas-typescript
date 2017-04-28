@@ -136,9 +136,17 @@ export class BOFileRepositoryAjax extends FileRepositoryAjax implements IBORepos
                     for (let item of opRslt.resultObjects) {
                         if (item instanceof Array) {
                             for (let subItem of item) {
+                                if (subItem.type === undefined) {
+                                    // 添加对象类型
+                                    subItem.type = boName;
+                                }
                                 datas.push(that.converter.parsing(subItem, fileName));
                             }
                         } else {
+                            if (item.type === undefined) {
+                                // 添加对象类型
+                                item.type = boName;
+                            }
                             datas.push(that.converter.parsing(item, fileName));
                         }
                     }

@@ -4280,7 +4280,7 @@
         "isDeleted": false,
         "isNew": false,
         "ApprovalStatus": "UNAFFECTED",
-        "Canceled": "NO",
+        "Canceled": "YES",
         "CreateTime": 0,
         "CreateUserSign": 0,
         "CustomerCode": "C30000",

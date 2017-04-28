@@ -135,7 +135,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             showNavButton: true,
         });
         // 回退钮
-        this.form.setShowNavButton(true);
+        this.form.setShowNavButton(false);
         this.form.attachNavButtonPress(null, this.destroyCurrentView, this);
         // 全屏钮
         let icon: string = "sap-icon://full-screen";

@@ -821,7 +821,6 @@ export class SalesOrderItem extends BODocumentLine<SalesOrderItem> implements IS
         this.setProperty(SalesOrderItem.PROPERTY_WAREHOUSE_NAME, value);
     }
 
-
     /** 初始化数据 */
     protected init(): void {
     }

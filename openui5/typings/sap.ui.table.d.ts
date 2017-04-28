@@ -21,11 +21,19 @@ declare namespace sap {
                 getColumns(): sap.ui.table.Column[];
                 getVisibleRowCount(): number;
                 getFirstVisibleRow(): number;
-                setFirstVisibleRow(row: number): sap.ui.table.Table
+                setFirstVisibleRow(row: number): sap.ui.table.Table;
+                setEditable(bEditable: boolean): sap.ui.table.Table;
+                getExtension(): sap.ui.core.Control[];
+                getRows(): sap.ui.table.Row[];
             }
             export class Column extends sap.ui.core.Control {
                 constructor(mSettings?: any);
                 constructor(sId: string, mSettings?: any);
+            }
+            export class Row extends sap.ui.core.Control {
+                constructor(mSettings?: any);
+                constructor(sId: string, mSettings?: any);
+                getCells(): sap.ui.core.Control[];
             }
         }
     }

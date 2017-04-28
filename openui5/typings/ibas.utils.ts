@@ -8,6 +8,10 @@
 import * as ibas from "ibas/index";
 
 export namespace utils {
+    /** 配置项目-列表表格可视行数 */
+    export const CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT: string = "tableRow|List";
+    /** 配置项目-子项表格可视行数 */
+    export const CONFIG_ITEM_ITEM_TABLE_VISIBLE_ROW_COUNT: string = "tableRow|Item";
     /**
      * 创建下拉框可选项
      * @param data 枚举类型
@@ -219,5 +223,58 @@ export namespace utils {
                 }
             }
         });
+    }
+    /** 改变控件编辑状态 */
+    export function changeControlEditable(ctrl: sap.ui.core.Control, editable: boolean): void {
+        if (ctrl instanceof sap.m.InputBase) {
+            ctrl.setEditable(editable);
+        } else if (ctrl instanceof sap.m.Select) {
+            ctrl.setEnabled(editable);
+        } else if (ctrl instanceof sap.m.Button) {
+            ctrl.setEnabled(editable);
+        } else if (ctrl instanceof sap.ui.table.Table) {
+            ctrl.setEditable(editable);
+            for (let row of ctrl.getRows()) {
+                for (let cell of row.getCells()) {
+                    this.changeControlEditable(cell, editable);
+                }
+            }
+            for (let item of ctrl.getExtension()) {
+                this.changeControlEditable(item, editable);
+            }
+        } else if (ctrl instanceof sap.m.Toolbar || ctrl instanceof sap.m.OverflowToolbar) {
+            for (let item of ctrl.getContent()) {
+                this.changeControlEditable(item, editable);
+            }
+        }
+    }
+    /** 改变窗体内控件编辑状态 */
+    export function changeFormEditable(form: sap.ui.layout.form.SimpleForm, editable: boolean): void {
+        if (ibas.objects.isNull(form)) {
+            return;
+        }
+        for (let item of form.getContent()) {
+            this.changeControlEditable(item, editable);
+        }
+    }
+    /** 改变工具条保存状态 */
+    export function changeToolbarSavable(toolbar: sap.m.Toolbar, savable: boolean): void {
+        for (let item of toolbar.getContent()) {
+            if (item instanceof sap.m.Button) {
+                if (item.getIcon() === "sap-icon://save") {
+                    item.setEnabled(savable);
+                }
+            }
+        }
+    }
+    /** 改变工具条删除状态 */
+    export function changeToolbarDeletable(toolbar: sap.m.Toolbar, deletable: boolean): void {
+        for (let item of toolbar.getContent()) {
+            if (item instanceof sap.m.Button) {
+                if (item.getIcon() === "sap-icon://delete") {
+                    item.setEnabled(deletable);
+                }
+            }
+        }
     }
 }

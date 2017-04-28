@@ -59,7 +59,7 @@ export class SalesOrderChooseView extends ibas.BOChooseView implements ISalesOrd
         let that = this;
         this.table = new sap.ui.table.Table("", {
             enableSelectAll: false,
-            visibleRowCount: 15,
+            visibleRowCount: ibas.config.get(utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 15),
             rows: "{/}",
             columns: [
                 new sap.ui.table.Column("", {
