@@ -3,7 +3,7 @@
     "debug": true,
     "language": "zh_CN",
     "offline": true,
-    "offline|BORepositoryShell": false,
+    "offline|BORepositoryShell": true,
     "helpUrl": "http://www.baidu.com",
     "fullScreen": false,
     "statusDelay": 2,
