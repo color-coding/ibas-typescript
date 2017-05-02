@@ -15,12 +15,10 @@ import { IMaterialChooseView } from "../../../bsapp/material/index";
  * 视图-Material
  */
 export class MaterialChooseView extends ibas.BOChooseView implements IMaterialChooseView {
-
     /** 返回查询的对象 */
     get queryTarget(): any {
         return bo.Material;
     }
-
     /** 绘制工具条 */
     darwBars(): any {
         let that = this;
@@ -40,7 +38,7 @@ export class MaterialChooseView extends ibas.BOChooseView implements IMaterialCh
                 press: function (): void {
                     that.fireViewEvents(that.chooseDataEvent,
                         // 获取表格选中的对象
-                        utils.getTableSelecteds<bo.Customer>(that.table)
+                        utils.getTableSelecteds<bo.Material>(that.table)
                     );
                 }
             }),
@@ -60,7 +58,7 @@ export class MaterialChooseView extends ibas.BOChooseView implements IMaterialCh
         this.table = new sap.ui.table.Table("", {
             enableSelectAll: false,
             visibleRowCount: ibas.config.get(utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 15),
-            rows: "{/}",
+            rows: "{/rows}",
             columns: [
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_material_code"),
@@ -125,7 +123,7 @@ export class MaterialChooseView extends ibas.BOChooseView implements IMaterialCh
         }
         if (!done) {
             // 没有显示数据
-            this.table.setModel(new sap.ui.model.json.JSONModel(datas));
+            this.table.setModel(new sap.ui.model.json.JSONModel({rows: datas}));
         }
         this.table.setBusy(false);
     }

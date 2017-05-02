@@ -94,7 +94,7 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
             }),
             enableSelectAll: false,
             visibleRowCount: ibas.config.get(utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 10),
-            rows: "{/}",
+            rows: "{/rows}",
             columns: [
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_salesorderitem_lineid"),
@@ -189,8 +189,7 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
     }
     private page: sap.m.Page;
     private form: sap.ui.layout.form.SimpleForm;
-    private tableSalesOrderItem: sap.ui.table.Table;
-    /** 改变窗体状态 */
+    /** 改变视图状态 */
     private changeViewStatus(data: bo.SalesOrder): void {
         if (ibas.objects.isNull(data)) {
             return;
@@ -201,7 +200,7 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
                 utils.changeToolbarDeletable(<sap.m.Toolbar>this.page.getSubHeader(), false);
             }
         }
-        // 不可编辑：已批准，关闭，取消
+        // 不可编辑：已批准，
         if (data.approvalStatus === ibas.emApprovalStatus.APPROVED
             || data.documentStatus === ibas.emDocumentStatus.CLOSED
             || data.canceled === ibas.emYesNo.YES) {
@@ -212,6 +211,8 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
             utils.changeFormEditable(this.form, false);
         }
     }
+    private tableSalesOrderItem: sap.ui.table.Table;
+
     /** 显示数据 */
     showSalesOrder(data: bo.SalesOrder): void {
         this.form.setModel(new sap.ui.model.json.JSONModel(data));
@@ -222,7 +223,7 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
     }
     /** 显示数据 */
     showSalesOrderItems(datas: bo.SalesOrderItem[]): void {
-        this.tableSalesOrderItem.setModel(new sap.ui.model.json.JSONModel(datas));
+        this.tableSalesOrderItem.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
         // 监听属性改变，并更新控件
         utils.refreshModelChanged(this.tableSalesOrderItem, datas);
     }

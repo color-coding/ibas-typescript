@@ -15,7 +15,6 @@ import { ICustomerListView } from "../../../bsapp/customer/index";
  * 视图-Customer
  */
 export class CustomerListView extends ibas.BOListView implements ICustomerListView {
-
     /** 返回查询的对象 */
     get queryTarget(): any {
         return bo.Customer;
@@ -24,7 +23,6 @@ export class CustomerListView extends ibas.BOListView implements ICustomerListVi
     editDataEvent: Function;
     /** 删除数据事件，参数：删除对象集合 */
     deleteDataEvent: Function;
-
     /** 绘制视图 */
     darw(): any {
         let that = this;
@@ -33,7 +31,7 @@ export class CustomerListView extends ibas.BOListView implements ICustomerListVi
             enableSelectAll: false,
             visibleRowCount: ibas.config.get(utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 15),
             visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Interactive,
-            rows: "{/}",
+            rows: "{/rows}",
             columns: [
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_customer_code"),
@@ -97,7 +95,7 @@ export class CustomerListView extends ibas.BOListView implements ICustomerListVi
                             );
                         }
                     }),
-                    // new sap.m.ToolbarSeparator(""),
+                    // new sap.m.ToolbarSeparator(""),// 加了后面不显示？
                     new sap.m.Button("", {
                         text: ibas.i18n.prop("sys_shell_ui_data_delete"),
                         type: sap.m.ButtonType.Transparent,
@@ -188,7 +186,7 @@ export class CustomerListView extends ibas.BOListView implements ICustomerListVi
         }
         if (!done) {
             // 没有显示数据
-            this.table.setModel(new sap.ui.model.json.JSONModel(datas));
+            this.table.setModel(new sap.ui.model.json.JSONModel({rows: datas}));
         }
         this.table.setBusy(false);
     }

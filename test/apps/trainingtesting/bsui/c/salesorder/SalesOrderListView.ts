@@ -15,7 +15,6 @@ import { ISalesOrderListView } from "../../../bsapp/salesorder/index";
  * 视图-SalesOrder
  */
 export class SalesOrderListView extends ibas.BOListView implements ISalesOrderListView {
-
     /** 返回查询的对象 */
     get queryTarget(): any {
         return bo.SalesOrder;
@@ -24,7 +23,6 @@ export class SalesOrderListView extends ibas.BOListView implements ISalesOrderLi
     editDataEvent: Function;
     /** 删除数据事件，参数：删除对象集合 */
     deleteDataEvent: Function;
-
     /** 绘制视图 */
     darw(): any {
         let that = this;
@@ -33,7 +31,7 @@ export class SalesOrderListView extends ibas.BOListView implements ISalesOrderLi
             enableSelectAll: false,
             visibleRowCount: ibas.config.get(utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 15),
             visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Interactive,
-            rows: "{/}",
+            rows: "{/rows}",
             columns: [
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_salesorder_docentry"),
@@ -123,11 +121,11 @@ export class SalesOrderListView extends ibas.BOListView implements ISalesOrderLi
                         press: function (): void {
                             that.fireViewEvents(that.editDataEvent,
                                 // 获取表格选中的对象
-                                utils.getTableSelecteds<bo.Customer>(that.table).firstOrDefault()
+                                utils.getTableSelecteds<bo.SalesOrder>(that.table).firstOrDefault()
                             );
                         }
                     }),
-                    // new sap.m.ToolbarSpacer(""),
+                    // new sap.m.ToolbarSeparator(""),// 加了后面不显示？
                     new sap.m.Button("", {
                         text: ibas.i18n.prop("sys_shell_ui_data_delete"),
                         type: sap.m.ButtonType.Transparent,
@@ -218,7 +216,7 @@ export class SalesOrderListView extends ibas.BOListView implements ISalesOrderLi
         }
         if (!done) {
             // 没有显示数据
-            this.table.setModel(new sap.ui.model.json.JSONModel(datas));
+            this.table.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
         }
         this.table.setBusy(false);
     }

@@ -15,12 +15,10 @@ import { ICustomerChooseView } from "../../../bsapp/customer/index";
  * 视图-Customer
  */
 export class CustomerChooseView extends ibas.BOChooseView implements ICustomerChooseView {
-
     /** 返回查询的对象 */
     get queryTarget(): any {
         return bo.Customer;
     }
-
     /** 绘制工具条 */
     darwBars(): any {
         let that = this;
@@ -60,7 +58,7 @@ export class CustomerChooseView extends ibas.BOChooseView implements ICustomerCh
         this.table = new sap.ui.table.Table("", {
             enableSelectAll: false,
             visibleRowCount: ibas.config.get(utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 15),
-            rows: "{/}",
+            rows: "{/rows}",
             columns: [
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_customer_code"),
@@ -125,7 +123,7 @@ export class CustomerChooseView extends ibas.BOChooseView implements ICustomerCh
         }
         if (!done) {
             // 没有显示数据
-            this.table.setModel(new sap.ui.model.json.JSONModel(datas));
+            this.table.setModel(new sap.ui.model.json.JSONModel({rows: datas}));
         }
         this.table.setBusy(false);
     }

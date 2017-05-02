@@ -56,13 +56,13 @@ export class MaterialEditView extends ibas.BOEditView implements IMaterialEditVi
     }
     private page: sap.m.Page;
     private form: sap.ui.layout.form.SimpleForm;
-    /** 改变窗体状态 */
+    /** 改变视图状态 */
     private changeViewStatus(data: bo.Material): void {
         if (ibas.objects.isNull(data)) {
             return;
         }
-        // 新建/已引用时：禁用删除，
-        if (data.isNew || data.referenced === ibas.emYesNo.YES) {
+        // 新建时：禁用删除，
+        if (data.isNew) {
             if (this.page.getSubHeader() instanceof sap.m.Toolbar) {
                 utils.changeToolbarDeletable(<sap.m.Toolbar>this.page.getSubHeader(), false);
             }

@@ -56,13 +56,13 @@ export class CustomerEditView extends ibas.BOEditView implements ICustomerEditVi
     }
     private page: sap.m.Page;
     private form: sap.ui.layout.form.SimpleForm;
-    /** 改变窗体状态 */
+    /** 改变视图状态 */
     private changeViewStatus(data: bo.Customer): void {
         if (ibas.objects.isNull(data)) {
             return;
         }
-        // 新建/已引用时：禁用删除，
-        if (data.isNew || data.referenced === ibas.emYesNo.YES) {
+        // 新建时：禁用删除，
+        if (data.isNew) {
             if (this.page.getSubHeader() instanceof sap.m.Toolbar) {
                 utils.changeToolbarDeletable(<sap.m.Toolbar>this.page.getSubHeader(), false);
             }
@@ -76,6 +76,7 @@ export class CustomerEditView extends ibas.BOEditView implements ICustomerEditVi
             utils.changeFormEditable(this.form, false);
         }
     }
+
     /** 显示数据 */
     showCustomer(data: bo.Customer): void {
         this.form.setModel(new sap.ui.model.json.JSONModel(data));
