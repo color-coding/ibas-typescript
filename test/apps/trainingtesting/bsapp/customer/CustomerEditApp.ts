@@ -32,6 +32,7 @@ export class CustomerEditApp extends ibas.BOEditApplication<ICustomerEditView, b
         super.registerView();
         // 其他事件
         this.view.deleteDataEvent = this.deleteData;
+        this.view.createDataEvent = this.createData;
     }
     /** 视图显示后 */
     protected viewShowed(): void {
@@ -106,6 +107,38 @@ export class CustomerEditApp extends ibas.BOEditApplication<ICustomerEditView, b
             }
         });
     }
+    /** 新建数据，参数1：是否克隆 */
+    protected createData(clone: boolean): void {
+        let that = this;
+        let createData: Function = function (): void {
+            if (clone) {
+                // 克隆对象
+                that.editData = that.editData.clone();
+                that.proceeding(ibas.emMessageType.WARNING, ibas.i18n.prop("sys_shell_data_cloned_new"));
+                that.viewShowed();
+            } else {
+                // 新建对象
+                that.editData = new bo.Customer();
+                that.proceeding(ibas.emMessageType.WARNING, ibas.i18n.prop("sys_shell_data_created_new"));
+                that.viewShowed();
+            }
+        };
+        if (that.editData.isDirty) {
+            this.messages({
+                type: ibas.emMessageType.QUESTION,
+                title: ibas.i18n.prop(this.name),
+                message: ibas.i18n.prop("sys_data_not_saved_whether_to_continue"),
+                actions: [ibas.emMessageAction.YES, ibas.emMessageAction.NO],
+                onCompleted(action: ibas.emMessageAction): void {
+                    if (action === ibas.emMessageAction.YES) {
+                        createData();
+                    }
+                }
+            });
+        } else {
+            createData();
+        }
+    }
 }
 /** 视图-客户主数据 */
 export interface ICustomerEditView extends ibas.IBOEditView {
@@ -113,4 +146,6 @@ export interface ICustomerEditView extends ibas.IBOEditView {
     showCustomer(data: bo.Customer): void;
     /** 删除数据事件 */
     deleteDataEvent: Function;
+    /** 新建数据事件，参数1：是否克隆 */
+    createDataEvent: Function;
 }

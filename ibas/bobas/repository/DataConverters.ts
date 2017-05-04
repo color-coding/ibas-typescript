@@ -11,6 +11,7 @@ import {
     dates, enums, OperationMessages, FileData, OperationInformation, List,
     emApprovalStatus, emBOStatus, emDocumentStatus, emYesNo, ArrayList,
     emMessageLevel, emConditionOperation, emConditionRelationship, emSortType,
+    DataTable, DataTableColumn, DataTableRow,
 } from "../data/index";
 import {
     IBusinessObject, IDataConverter, BusinessObjectBase, BusinessObjectListBase,
@@ -264,6 +265,34 @@ export abstract class DataConverter4j implements IDataConverter {
             newData.fileName = remote.FileName;
             newData.location = remote.Location;
             newData.originalName = remote.OriginalName;
+            return newData;
+        } else if (data.type === DataTable.name) {
+            let remote: ibas4j.DataTable = data;
+            let newData: DataTable = new DataTable();
+            newData.name = remote.Name;
+            newData.description = remote.Description;
+            for (let item of remote.Columns) {
+                item.type = DataTableColumn.name;
+                newData.columns.add(this.parsing(item, null));
+            }
+            for (let item of remote.Rows) {
+                item.type = DataTableRow.name;
+                newData.rows.add(this.parsing(item, null));
+            }
+            return newData;
+        } else if (data.type === DataTableColumn.name) {
+            let remote: ibas4j.DataTableColumn = data;
+            let newData: DataTableColumn = new DataTableColumn();
+            newData.name = remote.Name;
+            newData.description = remote.Description;
+            newData.dataType = remote.DataType;
+            return newData;
+        } else if (data.type === DataTableRow.name) {
+            let remote: ibas4j.DataTableRow = data;
+            let newData: DataTableRow = new DataTableRow();
+            for (let item of remote.Cells) {
+                newData.cells.add(item);
+            }
             return newData;
         } else if (!objects.isNull(this.boConverter)) {
             // 尝试业务对象解析

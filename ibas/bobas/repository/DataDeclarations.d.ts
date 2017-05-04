@@ -101,3 +101,28 @@ export interface FileData extends DataDeclaration {
     /** 原始名称 */
     OriginalName: string;
 }
+/** 数据表 */
+export interface DataTable extends DataDeclaration {
+    /** 名称 */
+    Name: string;
+    /** 描述 */
+    Description: string;
+    /** 列 */
+    Columns: DataTableColumn[];
+    /** 行 */
+    Rows: DataTableRow[];
+}
+/** 数据表-列 */
+export interface DataTableColumn extends DataDeclaration {
+    /** 名称 */
+    Name: string;
+    /** 描述 */
+    Description: string;
+    /** 数据类型 */
+    DataType: string;
+}
+/** 数据表-行 */
+export interface DataTableRow extends DataDeclaration {
+    /** 值 */
+    Cells: string[];
+}

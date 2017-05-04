@@ -25,6 +25,7 @@ declare namespace sap {
                 setEditable(bEditable: boolean): sap.ui.table.Table;
                 getExtension(): sap.ui.core.Control[];
                 getRows(): sap.ui.table.Row[];
+                addColumn(oColumn: Column): sap.ui.table.Table;
             }
             export class Column extends sap.ui.core.Control {
                 constructor(mSettings?: any);
