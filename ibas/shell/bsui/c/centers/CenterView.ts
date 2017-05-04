@@ -111,11 +111,6 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         this.header.addContent(this.userBar);
         this.navigation = new sap.tnt.SideNavigation();
         this.navigation.setItem(new sap.tnt.NavigationList());
-        this.page = new sap.tnt.ToolPage();
-        this.page.setHeader(this.header);
-        this.page.setSideContent(this.navigation);
-        this.page.setSideExpanded(false);
-        this.page.addMainContent(this.form);
         // 消息历史框
         this.messageHistory = new sap.m.MessagePopover("", {
             initiallyExpanded: false,
@@ -132,10 +127,11 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                 })],
         }));
         this.form = new sap.m.Page("", {
-            showNavButton: true,
+            enableScrolling: false,
+            showNavButton: false,
         });
         // 回退钮
-        this.form.setShowNavButton(false);
+        // this.form.setShowNavButton(true);
         this.form.attachNavButtonPress(null, this.destroyCurrentView, this);
         // 全屏钮
         let icon: string = "sap-icon://full-screen";
@@ -178,6 +174,10 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             width: "auto"
         });
         this.form.setFooter(this.statusBar);
+        this.page = new sap.tnt.ToolPage();
+        this.page.setHeader(this.header);
+        this.page.setSideContent(this.navigation);
+        this.page.setSideExpanded(false);
         this.page.addMainContent(this.form);
         this.id = this.page.getId();
         return this.page;
