@@ -26,7 +26,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
     /** 页面功能导航，左 */
     private navigation: sap.tnt.SideNavigation;
     /** 状态消息条 */
-    private statusBar: sap.m.OverflowToolbar;
+    private statusBar: sap.m.Toolbar;
     /** 消息历史框 */
     private messageHistory: sap.m.MessagePopover;
     /** 窗体显示 */
@@ -171,7 +171,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                 that.destroyCurrentView();
             }
         }));
-        // this.form.setFloatingFooter(true); // 浮起状态条
+        this.form.setFloatingFooter(true); // 浮起状态条
         this.statusBar = new sap.m.OverflowToolbar("", {
             design: sap.m.ToolbarDesign.Transparent,
             height: "auto",

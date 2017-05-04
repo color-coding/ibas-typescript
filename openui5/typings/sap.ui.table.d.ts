@@ -36,6 +36,11 @@ declare namespace sap {
                 constructor(sId: string, mSettings?: any);
                 getCells(): sap.ui.core.Control[];
             }
+            export class AnalyticalTable extends Table {
+                constructor(mSettings?: any);
+                constructor(sId: string, mSettings?: any);
+
+            }
         }
     }
 }
