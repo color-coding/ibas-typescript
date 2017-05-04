@@ -45,7 +45,7 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
             // 显示自身视图时
             if (!objects.isNull(this.viewShower)) {
                 if (objects.isNull(this.view)) {
-                    throw new Error(i18n.prop("msg_invalid_view", this.name));
+                    throw new Error(i18n.prop("sys_invalid_view", this.name));
                 }
                 if (!objects.isNull(this.description)) {
                     this.view.title = this.description;
@@ -55,7 +55,7 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
                 this.viewShower.show(this.view);
                 this.afterViewShow();
             } else {
-                throw new Error(i18n.prop("msg_invalid_view_shower", this.name));
+                throw new Error(i18n.prop("sys_invalid_view_shower", this.name));
             }
         } else {
             // 显示应用视图时
@@ -65,7 +65,7 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
     /** 视图显示后 */
     private afterViewShow(): void {
         if (objects.isNull(this.view)) {
-            throw new Error(i18n.prop("msg_invalid_view", this.name));
+            throw new Error(i18n.prop("sys_invalid_view", this.name));
         }
         this.view.isDisplayed = true;
         this.viewShowed();
@@ -123,7 +123,7 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
         logger.log(emMessageLevel.DEBUG, "center: initializing user [{0} - {1}]'s modules.", user.id, user.code);
         this.view.showStatusMessage(
             emMessageType.INFORMATION,
-            i18n.prop("msg_initialize_user_modules", user.code, user.name)
+            i18n.prop("sys_initialize_user_modules", user.code, user.name)
         );
         let that: this = this;
         let boRep: IBORepositorySystem = Factories.systemsFactory.createRepository();
@@ -138,7 +138,7 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
                     for (let module of opRslt.resultObjects) {
                         that.view.showStatusMessage(
                             emMessageType.INFORMATION,
-                            i18n.prop("msg_initialize_modules", module.id, module.name)
+                            i18n.prop("sys_initialize_modules", module.id, module.name)
                         );
                         that.initModuleConsole(module);
                     }
@@ -206,34 +206,34 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
                 if (objects.isNull(moduleIndex)) {
                     // 模块的索引文件加载不成功，或返回值不正确
                     throw new Error(
-                        i18n.prop("msg_invalid_module_index", objects.isNull(module.name) ? module.id : module.name)
+                        i18n.prop("sys_invalid_module_index", objects.isNull(module.name) ? module.id : module.name)
                     );
                 }
                 // 模块加载成功
                 if (objects.isNull(moduleIndex)) {
                     // 模块的索引文件加载不成功，或返回值不正确
                     throw new Error(
-                        i18n.prop("msg_invalid_module_index", objects.isNull(module.name) ? module.id : module.name)
+                        i18n.prop("sys_invalid_module_index", objects.isNull(module.name) ? module.id : module.name)
                     );
                 }
                 let consoleClass: any = moduleIndex.default;
                 if (objects.isNull(consoleClass) || !objects.isAssignableFrom(consoleClass, ModuleConsole)) {
                     // 模块的控制台无效
                     throw new Error(
-                        i18n.prop("msg_invalid_module_console", objects.isNull(module.name) ? module.id : module.name)
+                        i18n.prop("sys_invalid_module_console", objects.isNull(module.name) ? module.id : module.name)
                     );
                 }
                 let console: ModuleConsole = new consoleClass();
                 if (!(objects.instanceOf(console, ModuleConsole))) {
                     // 控制台实例无效
                     throw new Error(
-                        i18n.prop("msg_invalid_module_console_instance", objects.isNull(module.name) ? module.id : module.name)
+                        i18n.prop("sys_invalid_module_console_instance", objects.isNull(module.name) ? module.id : module.name)
                     );
                 }
                 if (console.id !== module.id) {
                     // 加载的控制台不符
                     throw new Error(
-                        i18n.prop("msg_invalid_module_console_instance", objects.isNull(module.name) ? module.id : module.name)
+                        i18n.prop("sys_invalid_module_console_instance", objects.isNull(module.name) ? module.id : module.name)
                     );
                 }
                 // 有效模块控制台
@@ -276,7 +276,7 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
             // 模块加载失败
             that.view.showStatusMessage(
                 emMessageType.ERROR,
-                i18n.prop("msg_invalid_module_index", objects.isNull(module.name) ? module.id : module.name));
+                i18n.prop("sys_invalid_module_index", objects.isNull(module.name) ? module.id : module.name));
         });
     }
 
@@ -349,7 +349,7 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
         this.messages({
             type: emMessageType.QUESTION,
             title: i18n.prop(this.name),
-            message: i18n.prop("msg_whether_to_exit"),
+            message: i18n.prop("sys_whether_to_exit"),
             actions: [emMessageAction.YES, emMessageAction.NO],
             onCompleted(action: emMessageAction): void {
                 if (action === emMessageAction.YES) {
@@ -383,7 +383,7 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
         if (!objects.isNull(view.application)) {
             if (!this.canRun(view.application)) {
                 throw new Error(
-                    i18n.prop("msg_application_not_allowed_run",
+                    i18n.prop("sys_application_not_allowed_run",
                         objects.isNull(view.application.description) ? view.application.name : view.application.description));
             }
         }

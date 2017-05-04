@@ -27,11 +27,11 @@ export abstract class Application<T extends IView> extends AbstractApplication<T
     show(): void {
         if (!objects.isNull(this.viewShower)) {
             if (objects.isNull(this.view)) {
-                throw new Error(i18n.prop("msg_invalid_view", this.name));
+                throw new Error(i18n.prop("sys_invalid_view", this.name));
             }
             if (this.view.isDisplayed) {
                 // 已显示的视图不在显示
-                this.proceeding(emMessageType.WARNING, i18n.prop("msg_application_view_was_displayed", this.name));
+                this.proceeding(emMessageType.WARNING, i18n.prop("sys_application_view_was_displayed", this.name));
                 return;
             }
             if (!objects.isNull(this.description)) {
@@ -52,13 +52,13 @@ export abstract class Application<T extends IView> extends AbstractApplication<T
                     });
             }
         } else {
-            throw new Error(i18n.prop("msg_invalid_view_shower", this.name));
+            throw new Error(i18n.prop("sys_invalid_view_shower", this.name));
         }
     }
     /** 视图显示后 */
     private afterViewShow(): void {
         if (objects.isNull(this.view)) {
-            throw new Error(i18n.prop("msg_invalid_view", this.name));
+            throw new Error(i18n.prop("sys_invalid_view", this.name));
         }
         this.view.isDisplayed = true;
         logger.log(emMessageLevel.DEBUG, "app: [{0} - {1}]'s view displayed.", this.id, this.name);
@@ -94,7 +94,7 @@ export abstract class Application<T extends IView> extends AbstractApplication<T
         if (!objects.isNull(this.viewShower)) {
             this.viewShower.busy(this.view, busy, msg);
         } else {
-            throw new Error(i18n.prop("msg_invalid_view_shower", this.name));
+            throw new Error(i18n.prop("sys_invalid_view_shower", this.name));
         }
     }
     /** 设置消息 */
@@ -114,7 +114,7 @@ export abstract class Application<T extends IView> extends AbstractApplication<T
         if (!objects.isNull(this.viewShower)) {
             this.viewShower.proceeding(this.view, type, msg);
         } else {
-            throw new Error(i18n.prop("msg_invalid_view_shower", this.name));
+            throw new Error(i18n.prop("sys_invalid_view_shower", this.name));
         }
     }
     /**
@@ -162,7 +162,7 @@ export abstract class Application<T extends IView> extends AbstractApplication<T
         if (!objects.isNull(this.viewShower)) {
             this.viewShower.messages(caller);
         } else {
-            throw new Error(i18n.prop("msg_invalid_view_shower", this.name));
+            throw new Error(i18n.prop("sys_invalid_view_shower", this.name));
         }
     }
 }
@@ -235,7 +235,7 @@ export abstract class BOApplicationWithServices<T extends IBOViewWithServices> e
             shower = (<IServicesShower><any>this.view);
         }
         if (objects.isNull(shower) || shower.displayServices === undefined) {
-            this.proceeding(emMessageType.WARNING, i18n.prop("msg_not_provided_display_service_method", this.description));
+            this.proceeding(emMessageType.WARNING, i18n.prop("sys_not_provided_display_service_method", this.description));
             return;
         }
         // 获取服务
@@ -249,7 +249,7 @@ export abstract class BOApplicationWithServices<T extends IBOViewWithServices> e
             // 显示可用服务
             shower.displayServices(services);
         } else {
-            this.proceeding(emMessageType.WARNING, i18n.prop("msg_application_no_services", this.description));
+            this.proceeding(emMessageType.WARNING, i18n.prop("sys_application_no_services", this.description));
         }
     }
     /** 获取服务的契约 */

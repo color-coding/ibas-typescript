@@ -30,7 +30,7 @@ export namespace utils {
         let blank: boolean = arguments[1];
         let map = new Map<string, string>();
         if (blank) {
-            map.set("", ibas.i18n.prop("sys_shell_ui_please_chooose_data", ""));
+            map.set("", ibas.i18n.prop("sys_shell_please_chooose_data", ""));
         }
         for (let item in data) {
             if (ibas.objects.isNull(item)) {

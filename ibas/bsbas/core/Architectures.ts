@@ -76,11 +76,11 @@ export abstract class AbstractApplication<T extends IView> extends Element imple
     get view(): T {
         if (objects.isNull(this._view)) {
             if (objects.isNull(this.navigation)) {
-                throw new Error(i18n.prop("msg_invalid_view_navigation", this.id));
+                throw new Error(i18n.prop("sys_invalid_view_navigation", this.id));
             }
             this._view = <T>this.navigation.create(this);
             if (objects.isNull(this._view)) {
-                throw new Error(i18n.prop("msg_invalid_view", this.id));
+                throw new Error(i18n.prop("sys_invalid_view", this.id));
             }
             this._view.application = this;
             this.registerView();
@@ -133,7 +133,7 @@ export abstract class View implements IView {
      */
     protected fireViewEvents(event: Function, ...pars: any[]): void {
         if (typeof event !== "function") {
-            throw new Error(i18n.prop("msg_invalid_parameter", "event"));
+            throw new Error(i18n.prop("sys_invalid_parameter", "event"));
         }
         event.apply(this.application, pars);
     }
@@ -296,11 +296,11 @@ export abstract class ViewNavigation implements IViewNavigation {
             id = data.id;
         }
         if (objects.isNull(id)) {
-            throw new Error(i18n.prop("msg_invalid_parameter", "view id"));
+            throw new Error(i18n.prop("sys_invalid_parameter", "view id"));
         }
         let view: IView = this.newView(id);
         if (objects.isNull(view)) {
-            throw new Error(i18n.prop("msg_invalid_view", id));
+            throw new Error(i18n.prop("sys_invalid_view", id));
         }
         view.id = strings.format("{0} - {1}", id, uuid.random());
         return view;

@@ -45,7 +45,7 @@ export class FileRepositoryAjax extends FileRepository implements IRemoteReposit
         // 补充发生错误的事件
         ajxSetting.error = function (jqXHR: JQueryXHR, textStatus: string, errorThrown: string): void {
             opRslt.resultCode = 10000 + jqXHR.status;
-            opRslt.message = strings.format("{0} - {1}", textStatus, i18n.prop("msg_network_error"));
+            opRslt.message = strings.format("{0} - {1}", textStatus, i18n.prop("sys_network_error"));
             logger.log(emMessageLevel.ERROR,
                 "repository: call method [{2}] faild, {0} - {1}.", textStatus, errorThrown, ajxSetting.url);
             caller.onCompleted.call(objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
@@ -76,7 +76,7 @@ export class FileRepositoryAjax extends FileRepository implements IRemoteReposit
      */
     protected createAjaxSettings(fileName: string, caller: LoadFileCaller): JQueryAjaxSettings {
         if (objects.isNull(this.address)) {
-            throw new Error(i18n.prop("msg_invalid_parameter", "address"));
+            throw new Error(i18n.prop("sys_invalid_parameter", "address"));
         }
         let methodUrl: string = this.address;
         if (!methodUrl.endsWith("/")) {
@@ -173,7 +173,7 @@ export class BORepositoryAjax extends BORepository implements IRemoteRepository 
     private _converter: IDataConverter;
     get converter(): IDataConverter {
         if (objects.isNull(this._converter)) {
-            throw new Error(i18n.prop("msg_invalid_data_converter"));
+            throw new Error(i18n.prop("sys_invalid_data_converter"));
         }
         return this._converter;
     }
@@ -216,7 +216,7 @@ export class BORepositoryAjax extends BORepository implements IRemoteRepository 
         ajxSetting.error = function (jqXHR: JQueryXHR, textStatus: string, errorThrown: string): void {
             let opRslt: OperationResult<any> = new OperationResult();
             opRslt.resultCode = 10000 + jqXHR.status;
-            opRslt.message = strings.format("{0} - {1}", textStatus, i18n.prop("msg_network_error"));
+            opRslt.message = strings.format("{0} - {1}", textStatus, i18n.prop("sys_network_error"));
             logger.log(emMessageLevel.ERROR,
                 "repository: call method [{2}] faild, {0} - {1}.", textStatus, errorThrown, ajxSetting.url);
             caller.onCompleted.call(objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
@@ -225,7 +225,7 @@ export class BORepositoryAjax extends BORepository implements IRemoteRepository 
         ajxSetting.success = function (data: any, textStatus: string, jqXHR: JQueryXHR): void {
             let opRslt: any = that.converter.parsing(data, method);
             if (objects.isNull(opRslt)) {
-                throw new Error(i18n.prop("msg_data_converter_parsing_faild"));
+                throw new Error(i18n.prop("sys_data_converter_parsing_faild"));
             }
             logger.log(emMessageLevel.DEBUG,
                 "repository: call method [{2}] sucessful, {0} - {1}.", opRslt.resultCode, opRslt.message, ajxSetting.url);
@@ -243,7 +243,7 @@ export class BORepositoryAjax extends BORepository implements IRemoteRepository 
      */
     protected createAjaxSettings(method: string, data: string): JQueryAjaxSettings {
         if (objects.isNull(this.address)) {
-            throw new Error(i18n.prop("msg_invalid_parameter", "address"));
+            throw new Error(i18n.prop("sys_invalid_parameter", "address"));
         }
         let methodUrl: string = this.address;
         if (!methodUrl.endsWith("/")) {

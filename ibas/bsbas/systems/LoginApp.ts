@@ -7,8 +7,8 @@
  */
 
 import {
-    logger, emMessageLevel, IOperationResult, objects, i18n,
-    Application, config, CONFIG_ITEM_USER_TOKEN
+    logger, emMessageLevel, IOperationResult, objects, i18n, strings,
+    Application, config, CONFIG_ITEM_USER_TOKEN, CONFIG_ITEM_COMPANY
 } from "ibas/index";
 import { ILoginView, ILoginApp, ICenterApp, IUser, IBORepositorySystem } from "./Systems.d";
 import { Factories } from "./Factories";
@@ -37,7 +37,7 @@ export class LoginApp<T extends ILoginView> extends Application<T> implements IL
     }
     /** 登录系统 */
     private login(): void {
-        this.busy(true, i18n.prop("msg_logging_system"));
+        this.busy(true, i18n.prop("sys_logging_system"));
         logger.log(emMessageLevel.DEBUG, "app: user [{0}] login system.", this.view.user);
         let boRepository: IBORepositorySystem = Factories.systemsFactory.createRepository();
         boRepository.connect({
@@ -56,6 +56,15 @@ export class LoginApp<T extends ILoginView> extends Application<T> implements IL
                     let user: IUser = opRslt.resultObjects.firstOrDefault();
                     // 设置默认用户口令
                     config.set(CONFIG_ITEM_USER_TOKEN, opRslt.userSign);
+                    // 更新配置项目
+                    for (let item of opRslt.informations) {
+                        if (strings.equalsIgnoreCase(item.tag, "CONFIG_ITEM")) {
+                            if (strings.equalsIgnoreCase(item.name, CONFIG_ITEM_COMPANY)) {
+                                // 设置公司代码
+                                config.set(CONFIG_ITEM_COMPANY, item.contents);
+                            }
+                        }
+                    }
                     // 启动系统中心
                     let centerApp: ICenterApp = Factories.systemsFactory.createCenterApp();
                     centerApp.viewShower = this.viewShower;

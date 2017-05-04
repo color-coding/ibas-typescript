@@ -42,6 +42,13 @@ export abstract class BusinessObject<T extends IBusinessObject> extends Business
     /** 构造 */
     constructor() {
         super();
+        // 注册属性改变监听
+        let that = this;
+        this.registerListener({
+            propertyChanged(name: string): void {
+                that.onPropertyChanged(name);
+            }
+        });
     }
     /** 获取查询 */
     abstract criteria(): ICriteria;
@@ -53,7 +60,7 @@ export abstract class BusinessObject<T extends IBusinessObject> extends Business
     }
     /** 克隆对象 */
     clone(): T {
-        let newBO = objects.clone<T>(<T><any>this);
+        let newBO: T = objects.clone<T>(<T><any>this);
         // 设置为新对象
         newBO.markNew(true);
         // 重置部分属性值
@@ -65,6 +72,10 @@ export abstract class BusinessObject<T extends IBusinessObject> extends Business
         }
         newBO.isLoading = false;
         return newBO;
+    }
+    /** 属性改变时 */
+    protected onPropertyChanged(name: string): void {
+        // 属性改变时调用，可重载此函数加入业务逻辑
     }
 }
 

@@ -61,7 +61,7 @@ export class QueryPanelView extends cQueryPanelView implements IQueryPanelView {
                             items: [
                                 new sap.m.Label("", {
                                     width: "100px",
-                                    text: ibas.i18n.prop("sys_shell_ui_query_condition_relationship")
+                                    text: ibas.i18n.prop("sys_shell_query_condition_relationship")
                                 }),
                                 new sap.m.Select("", {
                                     width: "auto",
@@ -74,7 +74,7 @@ export class QueryPanelView extends cQueryPanelView implements IQueryPanelView {
                             items: [
                                 new sap.m.Label("", {
                                     width: "100px",
-                                    text: ibas.i18n.prop("sys_shell_ui_query_condition_bracketopen")
+                                    text: ibas.i18n.prop("sys_shell_query_condition_bracketopen")
                                 }),
                                 new sap.m.Select("", {
                                     width: "auto",
@@ -87,7 +87,7 @@ export class QueryPanelView extends cQueryPanelView implements IQueryPanelView {
                             items: [
                                 new sap.m.Label("", {
                                     width: "100px",
-                                    text: ibas.i18n.prop("sys_shell_ui_query_condition_alias")
+                                    text: ibas.i18n.prop("sys_shell_query_condition_alias")
                                 }),
                                 new sap.m.Select("", {
                                     width: "auto",
@@ -100,7 +100,7 @@ export class QueryPanelView extends cQueryPanelView implements IQueryPanelView {
                             items: [
                                 new sap.m.Label("", {
                                     width: "100px",
-                                    text: ibas.i18n.prop("sys_shell_ui_query_condition_operation")
+                                    text: ibas.i18n.prop("sys_shell_query_condition_operation")
                                 }),
                                 new sap.m.Select("", {
                                     width: "auto",
@@ -113,7 +113,7 @@ export class QueryPanelView extends cQueryPanelView implements IQueryPanelView {
                             items: [
                                 new sap.m.Label("", {
                                     width: "100px",
-                                    text: ibas.i18n.prop("sys_shell_ui_query_condition_value")
+                                    text: ibas.i18n.prop("sys_shell_query_condition_value")
                                 }),
                                 new sap.m.Input("", {
                                     width: "auto",
@@ -125,7 +125,7 @@ export class QueryPanelView extends cQueryPanelView implements IQueryPanelView {
                             items: [
                                 new sap.m.Label("", {
                                     width: "100px",
-                                    text: ibas.i18n.prop("sys_shell_ui_query_condition_bracketclose")
+                                    text: ibas.i18n.prop("sys_shell_query_condition_bracketclose")
                                 }),
                                 new sap.m.Select("", {
                                     width: "auto",
@@ -145,7 +145,7 @@ export class QueryPanelView extends cQueryPanelView implements IQueryPanelView {
         let that = this;
         return [
             new sap.m.Button("", {
-                text: ibas.i18n.prop("sys_shell_ui_data_add"),
+                text: ibas.i18n.prop("sys_shell_data_add"),
                 type: sap.m.ButtonType.Transparent,
                 // icon: "sap-icon://create",
                 press: function (): void {
@@ -153,7 +153,7 @@ export class QueryPanelView extends cQueryPanelView implements IQueryPanelView {
                 }
             }),
             new sap.m.Button("", {
-                text: ibas.i18n.prop("sys_shell_ui_exit"),
+                text: ibas.i18n.prop("sys_shell_exit"),
                 type: sap.m.ButtonType.Transparent,
                 // icon: "sap-icon://inspect-down",
                 press: function (): void {
@@ -161,7 +161,7 @@ export class QueryPanelView extends cQueryPanelView implements IQueryPanelView {
                 }
             }),
             new sap.m.Button("", {
-                text: ibas.i18n.prop("sys_shell_ui_data_save"),
+                text: ibas.i18n.prop("sys_shell_data_save"),
                 type: sap.m.ButtonType.Transparent,
                 // icon: "sap-icon://accept",
                 press: function (): void {
@@ -169,7 +169,7 @@ export class QueryPanelView extends cQueryPanelView implements IQueryPanelView {
                 }
             }),
             new sap.m.Button("", {
-                text: ibas.i18n.prop("sys_shell_ui_data_delete"),
+                text: ibas.i18n.prop("sys_shell_data_delete"),
                 type: sap.m.ButtonType.Transparent,
                 // icon: "sap-icon://create",
                 press: function (): void {

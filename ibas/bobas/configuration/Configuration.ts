@@ -15,6 +15,8 @@ import { ILogger } from "../messages/Logger.d"; // 仅引用声明，避免嵌�
 
 /** 配置项目-调试模式 */
 export const CONFIG_ITEM_DEBUG_MODE: string = "debug";
+/** 配置项目-公司代码 */
+export const CONFIG_ITEM_COMPANY: string = "company";
 /** 默认配置文件名称 */
 export const CONFIG_FILE_NAME: string = "config.json";
 /**
@@ -142,5 +144,36 @@ export class Configuration {
                 console.log(message);
             }
         }
+    }
+
+    private variableMap: Map<string, string>;
+    /** 替换字符串中的配置项，配置项示例：${Company} */
+    applyVariables(value: string): string {
+        if (value !== null && value.indexOf("${") >= 0) {
+            if (this.variableMap == null) {
+                this.variableMap = new Map<string, string>();
+            }
+            if (this.variableMap.has(value)) {
+                return this.variableMap.get(value);
+            }
+            let reg: RegExp = new RegExp("\\$\\{([\\!a-zA-Z].*?)\\}");
+            let results: RegExpExecArray = reg.exec(value);
+            if (results !== null) {
+                for (let item of results) {
+                    if (!item.startsWith("${") || !item.endsWith("}")) {
+                        // 正则写不对，麻痹的不搞了
+                        continue;
+                    }
+                    let key: string = item.replace("${", "").replace("}", "");
+                    // 首字母小写
+                    key = key.substring(0, 1).toLowerCase() + key.substring(1);
+                    let cValue: any = this.get(key);
+                    if (cValue !== undefined && cValue !== null) {
+                        return value.replace(item, cValue);
+                    }
+                }
+            }
+        }
+        return value;
     }
 }

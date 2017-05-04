@@ -157,7 +157,7 @@ export abstract class DataConverter4j implements IDataConverter {
             // 尝试业务对象转换
             return this.boConverter.convert(data);
         } else {
-            throw new Error(i18n.prop("msg_unable_to_convert_data", objects.getName(objects.getType(data))));
+            throw new Error(i18n.prop("sys_unable_to_convert_data", objects.getName(objects.getType(data))));
         }
     }
     /**
@@ -269,7 +269,7 @@ export abstract class DataConverter4j implements IDataConverter {
             // 尝试业务对象解析
             return this.boConverter.parsing(data);
         } else {
-            throw new Error(i18n.prop("msg_unable_to_parse_data", objects.isNull(data.type) ? "unknown" : data.type));
+            throw new Error(i18n.prop("sys_unable_to_parse_data", objects.isNull(data.type) ? "unknown" : data.type));
         }
     }
 
@@ -350,11 +350,11 @@ export abstract class BOConverter implements IBOConverter<IBusinessObject, any> 
             // 创建对象实例
             let tType: any = boFactory.classOf(dType);
             if (objects.isNull(tType)) {
-                throw new Error(i18n.prop("msg_invaild_mapping_type", dType));
+                throw new Error(i18n.prop("sys_invaild_mapping_type", dType));
             }
             let newData: any = new tType;
             if (objects.isNull(newData)) {
-                throw new Error(i18n.prop("msg_cannot_create_mapping_type_instance", dType));
+                throw new Error(i18n.prop("sys_cannot_create_mapping_type_instance", dType));
             }
             logger.log(emMessageLevel.DEBUG, "converter: {0} mapped {1}.", dType, tType.name);
             this.parsingProperties(data, newData);
@@ -369,7 +369,7 @@ export abstract class BOConverter implements IBOConverter<IBusinessObject, any> 
             return newData;
         }
         // 没处理，直接返回
-        logger.log(emMessageLevel.WARN, i18n.prop("msg_not_parsed_data", dType));
+        logger.log(emMessageLevel.WARN, i18n.prop("sys_not_parsed_data", dType));
         return data;
     }
 
@@ -418,7 +418,7 @@ export abstract class BOConverter implements IBOConverter<IBusinessObject, any> 
                 let newValue: string = this.parsingData(boName, tName, sValue);
                 if (objects.isNull(newValue)) {
                     let msg: string = boName + " - " + tName;
-                    logger.log(emMessageLevel.WARN, i18n.prop("msg_not_parsed_data", msg));
+                    logger.log(emMessageLevel.WARN, i18n.prop("sys_not_parsed_data", msg));
                 } else {
                     sValue = newValue;
                 }
@@ -473,7 +473,7 @@ export abstract class BOConverter implements IBOConverter<IBusinessObject, any> 
                 let newValue: any = this.convertData(source.constructor.name, sName, value);
                 if (objects.isNull(newValue)) {
                     let msg: string = source.constructor.name + " - " + name;
-                    logger.log(emMessageLevel.WARN, i18n.prop("msg_not_converted_data", msg));
+                    logger.log(emMessageLevel.WARN, i18n.prop("sys_not_converted_data", msg));
                 } else {
                     value = newValue;
                 }

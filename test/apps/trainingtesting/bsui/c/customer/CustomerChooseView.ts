@@ -24,7 +24,7 @@ export class CustomerChooseView extends ibas.BOChooseView implements ICustomerCh
         let that = this;
         return [
             new sap.m.Button("", {
-                text: ibas.i18n.prop("sys_shell_ui_data_new"),
+                text: ibas.i18n.prop("sys_shell_data_new"),
                 type: sap.m.ButtonType.Transparent,
                 // icon: "sap-icon://create",
                 press: function (): void {
@@ -32,7 +32,7 @@ export class CustomerChooseView extends ibas.BOChooseView implements ICustomerCh
                 }
             }),
             new sap.m.Button("", {
-                text: ibas.i18n.prop("sys_shell_ui_data_choose"),
+                text: ibas.i18n.prop("sys_shell_data_choose"),
                 type: sap.m.ButtonType.Transparent,
                 // icon: "sap-icon://accept",
                 press: function (): void {
@@ -43,7 +43,7 @@ export class CustomerChooseView extends ibas.BOChooseView implements ICustomerCh
                 }
             }),
             new sap.m.Button("", {
-                text: ibas.i18n.prop("sys_shell_ui_exit"),
+                text: ibas.i18n.prop("sys_shell_exit"),
                 type: sap.m.ButtonType.Transparent,
                 // icon: "sap-icon://inspect-down",
                 press: function (): void {

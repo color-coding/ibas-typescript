@@ -37,7 +37,7 @@ export class SalesOrderViewView extends ibas.BOViewView implements ISalesOrderVi
             subHeader: new sap.m.Bar("", {
                 contentLeft: [
                     new sap.m.Button("", {
-                        text: ibas.i18n.prop("sys_shell_ui_data_edit"),
+                        text: ibas.i18n.prop("sys_shell_data_edit"),
                         type: sap.m.ButtonType.Transparent,
                         icon: "sap-icon://edit",
                         press: function (): void {

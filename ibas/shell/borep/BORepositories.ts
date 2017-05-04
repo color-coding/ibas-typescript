@@ -39,7 +39,7 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements s
     connect(caller: sys.ConnectCaller): void {
         let remoteRepository: ibas.IRemoteRepository = this.createRemoteRepository();
         if (ibas.objects.isNull(remoteRepository)) {
-            throw new Error(ibas.i18n.prop("msg_invalid_parameter", "remoteRepository"));
+            throw new Error(ibas.i18n.prop("sys_invalid_parameter", "remoteRepository"));
         }
         let method: string = ibas.strings.format("userConnect?user={0}&password={1}", caller.user, caller.password);
         remoteRepository.callRemoteMethod(method, undefined, caller);
@@ -52,7 +52,7 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements s
     fetchUserModules(caller: sys.UserMethodsCaller<sys.IUserModule>): void {
         let remoteRepository: ibas.IRemoteRepository = this.createRemoteRepository();
         if (ibas.objects.isNull(remoteRepository)) {
-            throw new Error(ibas.i18n.prop("msg_invalid_parameter", "remoteRepository"));
+            throw new Error(ibas.i18n.prop("sys_invalid_parameter", "remoteRepository"));
         }
         let method: string =
             ibas.strings.format("fetchUserModules?user={0}&platform={1}&token={2}",
@@ -67,7 +67,7 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements s
     fetchUserPrivileges(caller: sys.UserMethodsCaller<sys.IUserPrivilege>): void {
         let remoteRepository: ibas.IRemoteRepository = this.createRemoteRepository();
         if (ibas.objects.isNull(remoteRepository)) {
-            throw new Error(ibas.i18n.prop("msg_invalid_parameter", "remoteRepository"));
+            throw new Error(ibas.i18n.prop("sys_invalid_parameter", "remoteRepository"));
         }
         let method: string =
             ibas.strings.format("fetchUserPrivileges?user={0}&platform={1}&token={2}",
@@ -82,7 +82,7 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements s
     fetchUserQueries(caller: sys.UserQueriesCaller): void {
         let remoteRepository: ibas.IRemoteRepository = this.createRemoteRepository();
         if (ibas.objects.isNull(remoteRepository)) {
-            throw new Error(ibas.i18n.prop("msg_invalid_parameter", "remoteRepository"));
+            throw new Error(ibas.i18n.prop("sys_invalid_parameter", "remoteRepository"));
         }
         let method: string =
             ibas.strings.format("fetchUserQueries?user={0}&queryId={1}&token={2}",
@@ -105,7 +105,7 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements s
     fetchBOInfos(caller: sys.BOInfoCaller): void {
         let remoteRepository: ibas.IRemoteRepository = this.createRemoteRepository();
         if (ibas.objects.isNull(remoteRepository)) {
-            throw new Error(ibas.i18n.prop("msg_invalid_parameter", "remoteRepository"));
+            throw new Error(ibas.i18n.prop("sys_invalid_parameter", "remoteRepository"));
         }
         let method: string =
             ibas.strings.format("fetchBOInfos?boName={0}&token={1}",
@@ -159,6 +159,7 @@ export class BORepositoryShellOffline extends BORepositoryShell {
                         opRslt.resultCode = 0;
                         opRslt.message = "ok.";
                         opRslt.resultObjects.add(item);
+                        opRslt.userSign = ibas.uuid.random();
                         break;
                     }
                 }

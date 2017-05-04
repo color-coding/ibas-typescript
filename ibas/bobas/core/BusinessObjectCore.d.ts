@@ -12,6 +12,8 @@ import { List, ICriteria } from "../data/index";
  * 属性改变监听者
  */
 export interface PropertyChangedListener {
+    /** 调用者，this指向 */
+    caller?: any;
     /** 标记 */
     id?: string;
     /**

@@ -182,10 +182,10 @@ export class ServicesManager {
     /** 运行选择服务 */
     runChooseService<D>(caller: IBOChooseServiceCaller<D>): void {
         if (objects.isNull(caller)) {
-            throw new Error(i18n.prop("msg_invalid_parameter", "caller"));
+            throw new Error(i18n.prop("sys_invalid_parameter", "caller"));
         }
         if (objects.isNull(caller.boCode)) {
-            throw new Error(i18n.prop("msg_invalid_parameter", "caller.boCode"));
+            throw new Error(i18n.prop("sys_invalid_parameter", "caller.boCode"));
         }
         let proxy: IServiceProxy<IServiceContract> = new BOChooseServiceProxy(caller);
         for (let service of this.getServices(proxy)) {
@@ -200,13 +200,13 @@ export class ServicesManager {
     /** 运行连接服务 */
     runLinkService(caller: IBOLinkServiceCaller): void {
         if (objects.isNull(caller)) {
-            throw new Error(i18n.prop("msg_invalid_parameter", "caller"));
+            throw new Error(i18n.prop("sys_invalid_parameter", "caller"));
         }
         if (objects.isNull(caller.boCode)) {
-            throw new Error(i18n.prop("msg_invalid_parameter", "caller.boCode"));
+            throw new Error(i18n.prop("sys_invalid_parameter", "caller.boCode"));
         }
         if (objects.isNull(caller.linkValue)) {
-            throw new Error(i18n.prop("msg_invalid_parameter", "caller.linkValue"));
+            throw new Error(i18n.prop("sys_invalid_parameter", "caller.linkValue"));
         }
         let proxy: IServiceProxy<IServiceContract> = new BOLinkServiceProxy(caller);
         for (let service of this.getServices(proxy)) {

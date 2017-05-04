@@ -122,18 +122,18 @@ export abstract class BORepositoryApplication {
     protected fetch<P>(boName: string, caller: FetchCaller<P>): void {
         let boRepository: IBORepositoryReadonly = this.createReadonlyRepository();
         if (objects.isNull(boRepository)) {
-            throw new Error(i18n.prop("msg_invalid_parameter", "boRepository"));
+            throw new Error(i18n.prop("sys_invalid_parameter", "boRepository"));
         }
         boRepository.fetch(boName, caller);
     }
     /** 保存业务对象 */
     protected save<P>(boName: string, caller: SaveCaller<P>): void {
         if (this.offline) {
-            throw new Error(i18n.prop("msg_operation_not_allowed_on_offline"));
+            throw new Error(i18n.prop("sys_operation_not_allowed_on_offline"));
         }
         let boRepository: IBORepository = this.createRepository();
         if (objects.isNull(boRepository)) {
-            throw new Error(i18n.prop("msg_invalid_parameter", "boRepository"));
+            throw new Error(i18n.prop("sys_invalid_parameter", "boRepository"));
         }
         boRepository.save(boName, caller);
     }

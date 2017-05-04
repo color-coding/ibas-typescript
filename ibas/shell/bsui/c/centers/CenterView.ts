@@ -79,7 +79,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                         placement: sap.m.PlacementType.Bottom,
                         content: [
                             new sap.m.Button({
-                                text: ibas.i18n.prop("sys_shell_ui_help"),
+                                text: ibas.i18n.prop("sys_shell_help"),
                                 type: sap.m.ButtonType.Transparent,
                                 press: function (): void {
                                     that.fireViewEvents(that.helpEvent);
@@ -87,7 +87,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                                 }
                             }),
                             new sap.m.Button({
-                                text: ibas.i18n.prop("sys_shell_ui_about"),
+                                text: ibas.i18n.prop("sys_shell_about"),
                                 type: sap.m.ButtonType.Transparent,
                                 press: function (): void {
                                     that.fireViewEvents(that.aboutEvent);
@@ -95,7 +95,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                                 }
                             }),
                             new sap.m.Button({
-                                text: ibas.i18n.prop("sys_shell_ui_logout"),
+                                text: ibas.i18n.prop("sys_shell_logout"),
                                 type: sap.m.ButtonType.Transparent,
                                 press: function (): void {
                                     that.fireViewEvents(that.closeEvent);
@@ -124,7 +124,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         this.navigation.setFixedItem(new sap.tnt.NavigationList("", {
             items: [
                 new sap.tnt.NavigationListItem("", {
-                    text: ibas.i18n.prop("sys_shell_ui_messages_history"),
+                    text: ibas.i18n.prop("sys_shell_messages_history"),
                     icon: "sap-icon://message-popup",
                     select: function (event: any): void {
                         that.messageHistory.openBy(event.getSource());
@@ -165,7 +165,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         // 退出钮
         this.form.addHeaderContent(new sap.m.Button("", {
             icon: "sap-icon://inspect-down",
-            tooltip: ibas.i18n.prop("sys_shell_ui_close_view"),
+            tooltip: ibas.i18n.prop("sys_shell_close_view"),
             type: sap.m.ButtonType.Transparent,
             press: function (): void {
                 that.destroyCurrentView();

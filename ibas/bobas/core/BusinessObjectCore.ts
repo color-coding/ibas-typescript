@@ -236,8 +236,18 @@ export abstract class BusinessObjectBase<T extends IBusinessObject> extends Trac
      * 设置属性值
      */
     setProperty<P>(property: string, value: P): void {
-        this[property] = value;
-        this.firePropertyChanged(property);
+        if (this.isLoading) {
+            // 读取状态，直接赋值
+            this[property] = value;
+        } else {
+            let oldValue: any = this[property];
+            this[property] = value;
+            if (oldValue !== value) {
+                // 值发生变化触发属性改变
+                this.firePropertyChanged(property);
+            }
+
+        }
     }
 
     /**
@@ -468,7 +478,7 @@ export class BOFactory implements IBOFactory {
         }
         let name: string = objects.getName(bo);
         if (objects.isNull(name)) {
-            throw new Error(i18n.prop("msg_unrecognized_data"));
+            throw new Error(i18n.prop("sys_unrecognized_data"));
         }
         this.boMap.set(name, bo);
     }
@@ -477,13 +487,13 @@ export class BOFactory implements IBOFactory {
         if (this.boMap.has(name)) {
             return this.boMap.get(name);
         }
-        throw new Error(i18n.prop("msg_bo_not_registered", name));
+        throw new Error(i18n.prop("sys_bo_not_registered", name));
     }
     /** 创建对象实例，参数1：对象名称 */
     create<B extends IBusinessObject>(name: string): B {
         let bo: any = this.classOf(name);
         if (objects.isNull(bo) && objects.isAssignableFrom(bo, BusinessObjectBase)) {
-            throw new Error(i18n.prop("msg_bo_type_invalid", name));
+            throw new Error(i18n.prop("sys_bo_type_invalid", name));
         }
         let instance: any = new bo;
         return <B>instance;

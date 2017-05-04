@@ -75,13 +75,13 @@ export class LoginView extends ibas.BOView implements sys.ILoginView {
             type: "Password"
         });
         this.languages = new sap.m.Select("", {
-            placeholder: ibas.i18n.prop("sys_shell_ui_chooose_language"),
+            placeholder: ibas.i18n.prop("sys_shell_chooose_language"),
             change: function (): void {
                 that.fireViewEvents(that.changeLanguageEvent);
             }
         });
         this.butLogin = new sap.m.Button("", {
-            text: ibas.i18n.prop("sys_shell_ui_login"),
+            text: ibas.i18n.prop("sys_shell_login"),
             press: function (): void {
                 that.fireViewEvents(that.loginEvent);
             }
@@ -93,13 +93,13 @@ export class LoginView extends ibas.BOView implements sys.ILoginView {
                     new sap.m.Label("", {
                         text: "ibas",
                     }),
-                    new sap.m.Label("", { text: ibas.i18n.prop("sys_shell_ui_user") }),
+                    new sap.m.Label("", { text: ibas.i18n.prop("sys_shell_user") }),
                     this.txtUser,
-                    new sap.m.Label("", { text: ibas.i18n.prop("sys_shell_ui_password") }),
+                    new sap.m.Label("", { text: ibas.i18n.prop("sys_shell_password") }),
                     this.txtPassword,
-                    new sap.m.Label("", { text: ibas.i18n.prop("sys_shell_ui_language") }),
+                    new sap.m.Label("", { text: ibas.i18n.prop("sys_shell_language") }),
                     this.languages,
-                    new sap.m.Label("", { text: ibas.i18n.prop("sys_shell_ui_plantform") }),
+                    new sap.m.Label("", { text: ibas.i18n.prop("sys_shell_plantform") }),
                     new sap.m.Select("", {
                         enabled: false,
                         items: utils.createComboBoxItems(ibas.emPlantform),
