@@ -89,7 +89,10 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
                         type: sap.m.ButtonType.Transparent,
                         icon: "sap-icon://less",
                         press: function (): void {
-                            that.fireViewEvents(that.removeSalesOrderItemEvent);
+                            that.fireViewEvents(that.removeSalesOrderItemEvent,
+                                // 获取表格选中的对象
+                                utils.getTableSelecteds<bo.SalesOrderItem>(that.tableSalesOrderItem)
+                            );
                         }
                     })
                 ]

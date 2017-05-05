@@ -41,20 +41,49 @@ export class SalesOrderEditApp extends ibas.BOEditApplication<ISalesOrderEditVie
     /** 视图显示后 */
     protected viewShowed(): void {
         // 视图加载完成
+        if (ibas.objects.isNull(this.editData)) {
+            // 创建编辑对象实例
+            this.editData = new bo.SalesOrder();
+            this.proceeding(ibas.emMessageType.WARNING, ibas.i18n.prop("sys_shell_data_created_new"));
+        }
         this.view.showSalesOrder(this.editData);
         this.view.showSalesOrderItems(this.editData.salesOrderItems.filterDeleted());
     }
     /** 运行,覆盖原方法 */
     run(...args: any[]): void {
-        // 尝试设置编辑对象
-        if (!ibas.objects.isNull(args) && args.length === 1 && ibas.objects.instanceOf(args[0], bo.SalesOrder)) {
-            this.editData = args[0];
-        }
-        // 创建编辑对象实例
-        if (ibas.objects.isNull(this.editData)) {
-            this.editData = new bo.SalesOrder();
-            this.proceeding(ibas.emMessageType.WARNING, ibas.i18n.prop("sys_shell_data_created_new"));
-
+        let that = this;
+        if (ibas.objects.instanceOf(arguments[0], bo.SalesOrder)) {
+            // 尝试重新查询编辑对象
+            let criteria: ibas.ICriteria = arguments[0].criteria();
+            if (!ibas.objects.isNull(criteria) && criteria.conditions.length > 0) {
+                // 有效的查询对象查询
+                let boRepository: BORepositoryTrainingTesting = new BORepositoryTrainingTesting();
+                boRepository.fetchSalesOrder({
+                    criteria: criteria,
+                    onCompleted(opRslt: ibas.IOperationResult<bo.SalesOrder>): void {
+                        let data: bo.SalesOrder;
+                        if (opRslt.resultCode === 0) {
+                            data = opRslt.resultObjects.firstOrDefault();
+                        }
+                        if (ibas.objects.instanceOf(data, bo.SalesOrder)) {
+                            // 查询到了有效数据
+                            that.editData = data;
+                            that.show();
+                        } else {
+                            // 数据重新检索无效
+                            that.messages({
+                                type: ibas.emMessageType.WARNING,
+                                message: ibas.i18n.prop("sys_shell_data_deleted_and_created"),
+                                onCompleted(): void {
+                                    that.show();
+                                }
+                            });
+                        }
+                    }
+                });
+                // 开始查询数据
+                return;
+            }
         }
         super.run();
     }
@@ -74,10 +103,10 @@ export class SalesOrderEditApp extends ibas.BOEditApplication<ISalesOrderEditVie
                             throw new Error(opRslt.message);
                         }
                         if (opRslt.resultObjects.length === 0) {
+                            // 删除成功，释放当前对象
                             that.messages(ibas.emMessageType.SUCCESS,
                                 ibas.i18n.prop("sys_shell_data_delete") + ibas.i18n.prop("sys_shell_sucessful"));
-                            // 创建新的对象
-                            that.editData = new bo.SalesOrder();
+                            that.editData = undefined;
                         } else {
                             // 替换编辑对象
                             that.editData = opRslt.resultObjects.firstOrDefault();
@@ -151,11 +180,28 @@ export class SalesOrderEditApp extends ibas.BOEditApplication<ISalesOrderEditVie
         this.view.showSalesOrderItems(this.editData.salesOrderItems.filterDeleted());
     }
     /** 删除销售订单-行事件 */
-    removeSalesOrderItem(item: bo.SalesOrderItem): void {
-        if (this.editData.salesOrderItems.indexOf(item) >= 0) {
-            this.editData.salesOrderItems.remove(item);
-            this.view.showSalesOrderItems(this.editData.salesOrderItems.filterDeleted());
+    removeSalesOrderItem(items: bo.SalesOrderItem[]): void {
+        // 非数组，转为数组
+        if (!(items instanceof Array)) {
+            items = [items];
         }
+        if (items.length === 0) {
+            return;
+        }
+        // 移除项目
+        for (let item of items) {
+            if (this.editData.salesOrderItems.indexOf(item) >= 0) {
+                if (item.isNew) {
+                    // 新建的移除集合
+                    this.editData.salesOrderItems.remove(item);
+                } else {
+                    // 非新建标记删除
+                    item.delete();
+                }
+            }
+        }
+        // 仅显示没有标记删除的
+        this.view.showSalesOrderItems(this.editData.salesOrderItems.filterDeleted());
     }
 
     /** 选择销售订单客户事件 */

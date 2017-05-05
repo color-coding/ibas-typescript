@@ -14,7 +14,7 @@ import { BORepositoryTrainingTesting } from "../../borep/BORepositories";
 export class MaterialEditApp extends ibas.BOEditApplication<IMaterialEditView, bo.Material> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "b943f687-d0ef-4cd4-853f-ac546ead6b9f";
+    static APPLICATION_ID: string = "f617ea1e-bccc-47d2-9c84-f85d26bd5b21";
     /** 应用名称 */
     static APPLICATION_NAME: string = "trainingtesting_app_material_edit";
     /** 业务对象编码 */
@@ -37,19 +37,48 @@ export class MaterialEditApp extends ibas.BOEditApplication<IMaterialEditView, b
     /** 视图显示后 */
     protected viewShowed(): void {
         // 视图加载完成
+        if (ibas.objects.isNull(this.editData)) {
+            // 创建编辑对象实例
+            this.editData = new bo.Material();
+            this.proceeding(ibas.emMessageType.WARNING, ibas.i18n.prop("sys_shell_data_created_new"));
+        }
         this.view.showMaterial(this.editData);
     }
     /** 运行,覆盖原方法 */
     run(...args: any[]): void {
-        // 尝试设置编辑对象
-        if (!ibas.objects.isNull(args) && args.length === 1 && ibas.objects.instanceOf(args[0], bo.Material)) {
-            this.editData = args[0];
-        }
-        // 创建编辑对象实例
-        if (ibas.objects.isNull(this.editData)) {
-            this.editData = new bo.Material();
-            this.proceeding(ibas.emMessageType.WARNING, ibas.i18n.prop("sys_shell_data_created_new"));
-
+        let that = this;
+        if (ibas.objects.instanceOf(arguments[0], bo.Material)) {
+            // 尝试重新查询编辑对象
+            let criteria: ibas.ICriteria = arguments[0].criteria();
+            if (!ibas.objects.isNull(criteria) && criteria.conditions.length > 0) {
+                // 有效的查询对象查询
+                let boRepository: BORepositoryTrainingTesting = new BORepositoryTrainingTesting();
+                boRepository.fetchMaterial({
+                    criteria: criteria,
+                    onCompleted(opRslt: ibas.IOperationResult<bo.Material>): void {
+                        let data: bo.Material;
+                        if (opRslt.resultCode === 0) {
+                            data = opRslt.resultObjects.firstOrDefault();
+                        }
+                        if (ibas.objects.instanceOf(data, bo.Material)) {
+                            // 查询到了有效数据
+                            that.editData = data;
+                            that.show();
+                        } else {
+                            // 数据重新检索无效
+                            that.messages({
+                                type: ibas.emMessageType.WARNING,
+                                message: ibas.i18n.prop("sys_shell_data_deleted_and_created"),
+                                onCompleted(): void {
+                                    that.show();
+                                }
+                            });
+                        }
+                    }
+                });
+                // 开始查询数据
+                return;
+            }
         }
         super.run();
     }
@@ -69,10 +98,10 @@ export class MaterialEditApp extends ibas.BOEditApplication<IMaterialEditView, b
                             throw new Error(opRslt.message);
                         }
                         if (opRslt.resultObjects.length === 0) {
+                            // 删除成功，释放当前对象
                             that.messages(ibas.emMessageType.SUCCESS,
                                 ibas.i18n.prop("sys_shell_data_delete") + ibas.i18n.prop("sys_shell_sucessful"));
-                            // 创建新的对象
-                            that.editData = new bo.Material();
+                            that.editData = undefined;
                         } else {
                             // 替换编辑对象
                             that.editData = opRslt.resultObjects.firstOrDefault();

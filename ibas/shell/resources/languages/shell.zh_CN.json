@@ -33,6 +33,8 @@
     "sys_shell_data_delete_error": "删除[{0}]失败，{1}",
     "sys_shell_data_created_new": "创建了新的对象",
     "sys_shell_data_cloned_new": "复制了新的对象",
+    "sys_shell_data_deleted": "数据已被删除",
+    "sys_shell_data_deleted_and_created": "数据已被删除，即将创建新的实例",
     "sys_shell_upload": "上传",
     "sys_shell_download": "下载",
     "sys_shell_sucessful": "操作成功",
