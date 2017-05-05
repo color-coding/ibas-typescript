@@ -225,20 +225,31 @@ export module enums {
         return dValue;
     }
 }
-
+/**
+ * 日期
+ */
 export module dates {
 
     /**
      * 解析日期，支持以下格式
      * yyyy/MM/dd'T'HH:mm:ss
      * yyyy-MM-dd'T'HH:mm:ss
+     * yyyy/MM/ddTHH:mm:ss
+     * yyyy-MM-ddTHH:mm:ss
+     * yyyy-MM-dd HH:mm:ss
+     * yyyy/MM/dd HH:mm:ss
      * @param value 日期字符
      * @returns 日期
      */
     export function valueOf(value: string): Date {
+        if (objects.isNull(value) || value.length === 0) {
+            return undefined;
+        }
         let spTime: string = "T";
         if (value.indexOf("'T'") > 0) {
             spTime = "'T'";
+        } else if (value.indexOf(" ") > 0) {
+            spTime = " ";
         }
         let tmps: string[] = value.split(spTime);
         let date: string = tmps[0];
@@ -305,6 +316,9 @@ export module dates {
      */
     export function toString(): string {
         let value: Date = arguments[0];
+        if (objects.isNull(value) || !(value instanceof Date)) {
+            return "";
+        }
         let format: string =
             DATA_PART_YEAR + DATA_SEPARATOR +
             DATA_PART_MONTH + DATA_SEPARATOR +
@@ -329,5 +343,29 @@ export module dates {
         format = format.replace(DATA_PART_MINUTE, strings.fill(minute, DATA_PART_MINUTE.length, "0"));
         format = format.replace(DATA_PART_SECOND, strings.fill(second, DATA_PART_SECOND.length, "0"));
         return format;
+    }
+}
+/**
+ * 数字
+ */
+export module numbers {
+    /** 转为整数 */
+    export function toInt(data: any): number {
+        let value: number = parseInt(data, 0);
+        if (isNaN(value)) {
+            return 0;
+        } else {
+            return value;
+        }
+
+    }
+    /**  转为小数 */
+    export function toFloat(data: any): number {
+        let value: number = parseFloat(data);
+        if (isNaN(value)) {
+            return 0.0;
+        } else {
+            return value;
+        }
     }
 }

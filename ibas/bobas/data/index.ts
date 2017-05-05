@@ -20,4 +20,5 @@ export * from "./Enums";
 export * from "./Data";
 export * from "./Strings";
 export * from "./Url";
+export * from "./DataTable";
 
