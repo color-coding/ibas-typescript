@@ -83,8 +83,6 @@ export class ConsoleOthers extends ibas.ModuleConsole {
     static CONSOLE_ID: string = "e6424319-a311-440e-bc89-a825f82d5848";
     /** 模块-名称 */
     static CONSOLE_NAME: string = "TrainingTestingOthers";
-    /** 根文件名称 */
-    static ROOT_FILE_NAME: string = "trainingtesting/index";
     /** 构造函数 */
     constructor() {
         super();

@@ -38,6 +38,8 @@ export interface UserModule extends DataDeclaration {
     Address: string;
     /** 仓库地址 */
     Repository: string;
+    /** 入口索引 */
+    Index: string;
 }
 /** 操作消息 */
 export interface UserPrivilege extends DataDeclaration {

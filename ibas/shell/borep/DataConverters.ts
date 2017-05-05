@@ -44,7 +44,8 @@ export class DataConverter4Shell extends ibas.DataConverter4j {
                 Name: newData.name,
                 Repository: newData.repository,
                 Address: newData.address,
-                Category: newData.category
+                Category: newData.category,
+                Index: newData.index
             };
             return remote;
         } else if (ibas.objects.instanceOf(data, bo.UserPrivilege)) {
@@ -121,6 +122,7 @@ export class DataConverter4Shell extends ibas.DataConverter4j {
             newData.repository = remote.Repository;
             newData.address = remote.Address;
             newData.category = remote.Category;
+            newData.index = remote.Index;
             return newData;
         } else if (data.type === bo.UserPrivilege.name) {
             let remote: shell.UserPrivilege = data;

@@ -176,7 +176,7 @@ export class CustomerListView extends ibas.BOListView implements ICustomerListVi
         if (!ibas.objects.isNull(model)) {
             // 已存在绑定数据，添加新的
             let hDatas: bo.Customer[] = (<any>model).getData();
-            if (!ibas.objects.isNull(hDatas)) {
+            if (!ibas.objects.isNull(hDatas) && hDatas instanceof Array) {
                 for (let item of datas) {
                     hDatas.push(item);
                 }
