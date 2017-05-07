@@ -119,4 +119,19 @@ export module strings {
         }
         return newValue;
     }
+    /**
+     * 转为字符类型
+     * @param value 值
+     */
+    export function valueOf(value: any): string {
+        if (value === undefined || value === null) {
+            return "";
+        } else if (typeof value === "string") {
+            return value;
+        } else if (typeof value === "number") {
+            return String(value);
+        } else {
+            return value.toString();
+        }
+    }
 }
