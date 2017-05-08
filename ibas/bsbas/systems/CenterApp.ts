@@ -286,15 +286,23 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
             return;
         }
         if (this.functionMap.has(id)) {
-            let func: IModuleFunction = this.functionMap.get(id);
-            let app: IApplication<IView> = func.default();
-            if (objects.isNull(app.navigation)) {
-                app.navigation = func.navigation;
+            try {
+                let func: IModuleFunction = this.functionMap.get(id);
+                let app: IApplication<IView> = func.default();
+                if (objects.isNull(app.navigation)) {
+                    app.navigation = func.navigation;
+                }
+                if (objects.isNull(app.viewShower)) {
+                    app.viewShower = this;
+                }
+                app.run();
+
+            } catch (error) {
+                this.messages({
+                    type: emMessageType.ERROR,
+                    message: config.get(CONFIG_ITEM_DEBUG_MODE, false) ? error.stack : error.message
+                });
             }
-            if (objects.isNull(app.viewShower)) {
-                app.viewShower = this;
-            }
-            app.run();
         }
     }
 
