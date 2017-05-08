@@ -17,7 +17,7 @@ import {
 */
 export interface IBusinessObjects<T extends IBusinessObject, P extends IBusinessObject> extends IBusinessObjectList<T> {
     /** 过滤删除的项目 */
-    filterDeleted(): List<T>;
+    filterDeleted(): T[];
 }
 
 /**
