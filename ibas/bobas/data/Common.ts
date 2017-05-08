@@ -85,23 +85,71 @@ export class ArrayList<T> extends Array<T> implements List<T> {
             this.remove(this[index]);
         }
     }
-
+    /**
+     * 返回符合条件的数组
+     */
+    where(lambda: Function): T[] {
+        let values: Array<T> = new Array<T>();
+        if (lambda instanceof Function) {
+            for (let item of this) {
+                if (lambda(item)) {
+                    values.push(item);
+                }
+            }
+        }
+        return values;
+    }
+    /**
+     * 第一个或默认
+     */
+    firstOrDefault(): T;
+    /**
+     * 第一个或默认
+     */
+    firstOrDefault(lambda: Function): T;
     /**
      * 第一个或默认
      */
     firstOrDefault(): T {
-        if (this.length > 0) {
-            return this[0];
+        let lambda: Function = arguments[0];
+        if (lambda instanceof Function) {
+            for (let index: number = 0; index < this.length; index++) {
+                let item: T = this[index];
+                if (lambda(item)) {
+                    return item;
+                }
+            }
+        } else {
+            if (this.length > 0) {
+                return this[0];
+            }
         }
         return null;
     }
-
+    /**
+     * 最后一个或默认
+     */
+    lastOrDefault(): T;
+    /**
+     * 最后一个或默认
+     */
+    lastOrDefault(lambda: Function): T;
     /**
      * 最后一个或默认
      */
     lastOrDefault(): T {
-        if (this.length > 0) {
-            return this[this.length - 1];
+        let lambda: Function = arguments[0];
+        if (lambda instanceof Function) {
+            for (let index: number = this.length - 1; index >= 0; index--) {
+                let item: T = this[index];
+                if (lambda(item)) {
+                    return item;
+                }
+            }
+        } else {
+            if (this.length > 0) {
+                return this[this.length - 1];
+            }
         }
         return null;
     }

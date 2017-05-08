@@ -141,18 +141,12 @@ export abstract class BusinessObjects<T extends IBusinessObject, P extends IBusi
         }
     }
     /** 过滤删除的项目 */
-    filterDeleted(): List<T> {
-        let list: ArrayList<T> = new ArrayList<T>();
-        for (let item of this) {
-            if (objects.isNull(item)) {
-                continue;
+    filterDeleted(): T[] {
+        return super.where((item: T) => {
+            if (!item.isDeleted) {
+                return true;
             }
-            if (item.isDeleted) {
-                continue;
-            }
-            list.add(item);
-        }
-        return list;
+        });
     }
 }
 

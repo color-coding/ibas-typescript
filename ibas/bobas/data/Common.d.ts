@@ -20,28 +20,36 @@ export interface List<T> extends Array<T> {
      * @param items 项目数组
      */
     add(items: T[]);
-
     /**
      * 移出项目
      * @param item 项目
      */
     remove(item: T);
-
     /**
      * 移出项目
      * @param index 项目索引
      */
     removeAt(index: number);
-
+    /**
+     * 第一个或默认
+     */
+    where(lambda: Function): T[];
     /**
      * 第一个或默认
      */
     firstOrDefault(): T;
-
+    /**
+     * 第一个或默认
+     */
+    firstOrDefault(lambda: Function): T;
     /**
      * 最后一个或默认
      */
     lastOrDefault(): T;
+    /**
+     * 最后一个或默认
+     */
+    lastOrDefault(lambda: Function): T;
     /**
      * 是否包含元素
      * @param item 元素
