@@ -227,13 +227,13 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             this.statusDelay = ibas.config.get(CONFIG_ITEM_STATUS_MESSAGES_DELAY, 0) * 1000;
         }
         if (this.statusDelay > 0) {
-            let that: this = this;
+            let that = this;
             setTimeout(function (): void {
                 if (messageStrip) {
                     messageStrip.destroy(true);
                     that.statusBar.destroyContent();
                     that.form.setFooter(null);
-                    let popMessage = new sap.m.MessagePopoverItem("", {
+                    let popMessage: sap.m.MessagePopoverItem = new sap.m.MessagePopoverItem("", {
                         type: messageStrip.getType(),
                         title: messageStrip.getText(),
                         counter: that.messageHistory.getItems().length,
@@ -275,12 +275,13 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         nvItem.setExpanded(false);
         let showFunctions: Function = function (): void {
             for (let funItem of module.functions()) {
+                let newGroup: boolean = false;
                 let mdNVItem: sap.tnt.NavigationListItem = nvItem;
                 if (ibas.config.get(CONFIG_ITEM_GROUP_FUNCTONS, false)
                     && !ibas.objects.isNull(funItem.category) && funItem.category.length > 0) {
                     // 菜单分组
                     for (let item of nvItem.getItems()) {
-                        if (item.getId() === funItem.category) {
+                        if (item.getKey() === ibas.strings.format("{0}_{1}", module.name, funItem.category)) {
                             mdNVItem = item;
                             break;
                         }
@@ -290,7 +291,10 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                         mdNVItem = new sap.tnt.NavigationListItem();
                         mdNVItem.setKey(ibas.strings.format("{0}_{1}", module.name, funItem.category));
                         mdNVItem.setText(ibas.i18n.prop(funItem.category));
-                        nvItem.addItem(mdNVItem);
+                        mdNVItem.setEnabled(true);
+                        mdNVItem.setExpanded(false);
+                        mdNVItem.setHasExpander(true);
+                        newGroup = true;
                     }
                 }
                 let subNvItem: sap.tnt.NavigationListItem = new sap.tnt.NavigationListItem();
@@ -300,6 +304,9 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                     that.fireViewEvents(that.activateFunctionsEvent, funItem.id);
                 });
                 mdNVItem.addItem(subNvItem);
+                if (newGroup) {
+                    nvItem.addItem(mdNVItem);
+                }
             }
         };
         if (module.isInitialized) {
@@ -369,7 +376,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                     tabContainer = new sap.m.TabContainer("", {
                         itemClose: function (oControlEvent: any): void {
                             // 删除页签
-                            let key = oControlEvent.getParameters().item.getKey();
+                            let key: any = oControlEvent.getParameters().item.getKey();
                             let cView: ibas.IView;
                             for (let item of that.viewQueue.keys()) {
                                 if (item.id === key) {
@@ -399,7 +406,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                     showHeader: false,
                     showSubHeader: false,
                 });
-                let containerItem = new sap.m.TabContainerItem("", {
+                let containerItem: sap.m.TabContainerItem = new sap.m.TabContainerItem("", {
                     name: view.title,
                     key: view.id,
                     modified: false,
@@ -726,6 +733,13 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                             }
                         }
                         item.removeItem(tabItem);
+                    }
+                    if (item.getItems().length === 0) {
+                        let destroyTabContainer: Function = function (): void {
+                            item.destroy(true);
+                        };
+                        // 延迟处理
+                        setTimeout(destroyTabContainer, 2);
                     }
                     continue;
                 }
