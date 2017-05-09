@@ -15,6 +15,8 @@ import { utils } from "../../../../../openui5/typings/ibas.utils";
 export const CONFIG_ITEM_STATUS_MESSAGES_DELAY: string = "statusDelay";
 /** 配置项目-全屏模式 */
 export const CONFIG_ITEM_FULL_SCREEN: string = "fullScreen";
+/** 配置项目-功能分组 */
+export const CONFIG_ITEM_GROUP_FUNCTONS: string = "groupFunctions";
 /**
  * 视图-中心
  */
@@ -150,11 +152,13 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                     // that.page.setSideContent(null);
                     that.form.setFloatingFooter(true);
                     this.setIcon("sap-icon://exit-full-screen");
+                    ibas.config.set(CONFIG_ITEM_FULL_SCREEN, true);
                 } else {
                     that.page.setHeader(that.header);
                     // that.page.setSideContent(that.navigation);
                     that.form.setFloatingFooter(false);
                     this.setIcon("sap-icon://full-screen");
+                    ibas.config.set(CONFIG_ITEM_FULL_SCREEN, false);
                 }
             }
         }));
@@ -270,14 +274,32 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         nvItem.setEnabled(true);
         nvItem.setExpanded(false);
         let showFunctions: Function = function (): void {
-            for (let item of module.functions()) {
+            for (let funItem of module.functions()) {
+                let mdNVItem: sap.tnt.NavigationListItem = nvItem;
+                if (ibas.config.get(CONFIG_ITEM_GROUP_FUNCTONS, false)
+                    && !ibas.objects.isNull(funItem.category) && funItem.category.length > 0) {
+                    // 菜单分组
+                    for (let item of nvItem.getItems()) {
+                        if (item.getId() === funItem.category) {
+                            mdNVItem = item;
+                            break;
+                        }
+                    }
+                    if (mdNVItem === nvItem) {
+                        // 不存在分组，新建一个
+                        mdNVItem = new sap.tnt.NavigationListItem();
+                        mdNVItem.setKey(ibas.strings.format("{0}_{1}", module.name, funItem.category));
+                        mdNVItem.setText(ibas.i18n.prop(funItem.category));
+                        nvItem.addItem(mdNVItem);
+                    }
+                }
                 let subNvItem: sap.tnt.NavigationListItem = new sap.tnt.NavigationListItem();
-                subNvItem.setKey(item.name);
-                subNvItem.setText(item.description);
+                subNvItem.setKey(funItem.name);
+                subNvItem.setText(funItem.description);
                 subNvItem.attachSelect(null, function (): void {
-                    that.fireViewEvents(that.activateFunctionsEvent, item.id);
+                    that.fireViewEvents(that.activateFunctionsEvent, funItem.id);
                 });
-                nvItem.addItem(subNvItem);
+                mdNVItem.addItem(subNvItem);
             }
         };
         if (module.isInitialized) {
@@ -377,8 +399,6 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                     showHeader: false,
                     showSubHeader: false,
                 });
-                // 修正viewid
-                view.id = container.getId();
                 let containerItem = new sap.m.TabContainerItem("", {
                     name: view.title,
                     key: view.id,
@@ -681,13 +701,32 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                 } else if (item instanceof sap.m.TabContainer) {
                     // 页签直接消毁
                     for (let tabItem of item.getItems()) {
+                        if (item.getSelectedItem() !== tabItem.getId()) {
+                            continue;
+                        }
                         for (let view of this.viewQueue.keys()) {
                             if (view.id === tabItem.getKey()) {
                                 beDestory.push(view);
                             }
                         }
+                        for (let pageItem of tabItem.getContent()) {
+                            for (let view of this.viewQueue.keys()) {
+                                if (view.id === pageItem.getId()) {
+                                    beDestory.push(view);
+                                }
+                            }
+                            if (pageItem instanceof sap.m.Page) {
+                                for (let psItem of pageItem.getContent()) {
+                                    for (let view of this.viewQueue.keys()) {
+                                        if (view.id === psItem.getId()) {
+                                            beDestory.push(view);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        item.removeItem(tabItem);
                     }
-                    item.destroy(true);
                     continue;
                 }
                 for (let view of this.viewQueue.keys()) {
