@@ -1,5 +1,6 @@
 {
     "sys_shell_name": "ibas",
+    "sys_shell_copyright": "copyright © 2016-2017 color-coding studio",
     "sys_shell_func_centers": "系统中心",
     "sys_shell_invalid_ui": "无效的UI",
     "sys_shell_user": "用户",
