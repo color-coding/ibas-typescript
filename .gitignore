@@ -12,6 +12,8 @@ ibas-typescript
 *.map
 *.tmp
 *.publishproj
+*.sln
+.project
 Web.config
 /.vs/
 /.vscode/
