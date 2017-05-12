@@ -29,7 +29,7 @@
                     // 加载成功
                     let shellRequire = ibas.requires.create({
                         context: ibas.requires.naming("shell"),
-                        baseUrl: "./"
+                        baseUrl: "./",
                     }, ["ibas/bsbas/systems"]);
                     shellRequire(["index"], function (index) {
                     }, requireError);
