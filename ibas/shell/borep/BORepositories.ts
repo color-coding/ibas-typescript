@@ -42,11 +42,7 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements s
             throw new Error(ibas.i18n.prop("sys_invalid_parameter", "remoteRepository"));
         }
         require(["../../3rdparty/crypto-js"], function (cryptoJS: CryptoJS.Hashes): void {
-            let key: string = ibas.config.get("UserLoginKey", "cc!iBAS==>*7788~");
-            let aesUser: CryptoJS.WordArray = cryptoJS.AES.encrypt(caller.user, key);
-            let aesPassword: CryptoJS.WordArray = cryptoJS.AES.encrypt(caller.password, key);
-            console.warn(cryptoJS.AES.decrypt(aesUser, key).toString());
-            let method: string = ibas.strings.format("userConnect?user={0}&password={1}", aesUser.toString(), aesPassword.toString());
+            let method: string = ibas.strings.format("userConnect?user={0}&password={1}", caller.user, cryptoJS.MD5(caller.password));
             remoteRepository.callRemoteMethod(method, undefined, caller);
         });
     }
