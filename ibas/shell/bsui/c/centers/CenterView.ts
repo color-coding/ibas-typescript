@@ -17,6 +17,9 @@ export const CONFIG_ITEM_STATUS_MESSAGES_DELAY: string = "statusDelay";
 export const CONFIG_ITEM_FULL_SCREEN: string = "fullScreen";
 /** 配置项目-功能分组 */
 export const CONFIG_ITEM_GROUP_FUNCTONS: string = "groupFunctions";
+/** 配置项目-自动激活的功能 */
+export const CONFIG_ITEM_AUTO_ACTIVETED_FUNCTION: string = "autoFunction";
+
 /**
  * 视图-中心
  */
@@ -306,6 +309,12 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                 mdNVItem.addItem(subNvItem);
                 if (newGroup) {
                     nvItem.addItem(mdNVItem);
+                }
+                // 自动激活功能
+                if (funItem.id === ibas.config.get(CONFIG_ITEM_AUTO_ACTIVETED_FUNCTION)) {
+                    setTimeout(function (): void {
+                        that.fireViewEvents(that.activateFunctionsEvent, funItem.id);
+                    }, 30);
                 }
             }
         };

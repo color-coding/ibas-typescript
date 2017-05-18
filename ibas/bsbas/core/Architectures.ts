@@ -43,7 +43,7 @@ export class Module extends Element implements IModule {
     }
     /** 注册功能 */
     protected register(item: IFunction): void {
-        if (objects.isNull(item)) { return; };
+        if (objects.isNull(item)) { return; }
         if (objects.isNull(this._functions)) {
             this._functions = new ArrayList<IFunction>();
         }
@@ -126,7 +126,7 @@ export abstract class View implements IView {
     abstract darw(): any;
     /** 关闭视图 */
     closeEvent: Function;
-    /**  
+    /**
      * 触发视图事件
      * @param event 触发的事件
      * @param pars 参数
@@ -156,7 +156,7 @@ export abstract class ModuleConsole extends Module implements IModuleConsole {
     /** 图标 */
     icon: string;
     /** 根地址 */
-    rootUrl:string;
+    rootUrl: string;
     /** 当前平台 */
     get plantform(): emPlantform {
         return config.get(CONFIG_ITEM_PLANTFORM, emPlantform.COMBINATION, emPlantform);
@@ -238,7 +238,9 @@ export abstract class ModuleConsole extends Module implements IModuleConsole {
         let item: any = arguments[0];
         if (item instanceof ModuleFunction) {
             // 注册模块功能
-            item.id = uuid.random();
+            if (objects.isNull(item.id)) {
+                item.id = uuid.random();
+            }
             item.navigation = this.navigation();
             super.register(item);
         } else if (item instanceof AbstractFunction) {
