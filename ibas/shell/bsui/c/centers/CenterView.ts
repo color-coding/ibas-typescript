@@ -277,6 +277,8 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         nvItem.setEnabled(true);
         nvItem.setExpanded(false);
         let showFunctions: Function = function (): void {
+            /** 自动激活的功能 */
+            let autoActivetedFunction: string = ibas.config.get(CONFIG_ITEM_AUTO_ACTIVETED_FUNCTION);
             for (let funItem of module.functions()) {
                 let newGroup: boolean = false;
                 let mdNVItem: sap.tnt.NavigationListItem = nvItem;
@@ -311,7 +313,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                     nvItem.addItem(mdNVItem);
                 }
                 // 自动激活功能
-                if (funItem.id === ibas.config.get(CONFIG_ITEM_AUTO_ACTIVETED_FUNCTION)) {
+                if (funItem.id === autoActivetedFunction) {
                     setTimeout(function (): void {
                         that.fireViewEvents(that.activateFunctionsEvent, funItem.id);
                     }, 30);
