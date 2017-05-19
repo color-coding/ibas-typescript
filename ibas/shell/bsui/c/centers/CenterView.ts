@@ -230,7 +230,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             this.statusDelay = ibas.config.get(CONFIG_ITEM_STATUS_MESSAGES_DELAY, 0) * 1000;
         }
         if (this.statusDelay > 0) {
-            let that = this;
+            let that: this = this;
             setTimeout(function (): void {
                 if (messageStrip) {
                     messageStrip.destroy(true);
@@ -381,7 +381,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                     }
                 }
                 if (ibas.objects.isNull(tabContainer)) {
-                    let that = this;
+                    let that: this = this;
                     tabContainer = new sap.m.TabContainer("", {
                         itemClose: function (oControlEvent: any): void {
                             // 删除页签
@@ -550,7 +550,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
     }
     /** 显示工具条视图 */
     showBarView(view: ibas.BOBarView): void {
-        let that = this;
+        let that: this = this;
         let popover: sap.m.Popover = new sap.m.Popover("", {
             showHeader: false,
             placement: sap.m.PlacementType.Bottom,

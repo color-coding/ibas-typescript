@@ -43,7 +43,7 @@ export abstract class BusinessObject<T extends IBusinessObject> extends Business
     constructor() {
         super();
         // 注册属性改变监听
-        let that = this;
+        let that: this = this;
         this.registerListener({
             propertyChanged(name: string): void {
                 that.onPropertyChanged(name);

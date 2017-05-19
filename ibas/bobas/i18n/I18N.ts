@@ -64,7 +64,7 @@ export class I18N {
         }
     }
     load(address: string): void {
-        let that = this;
+        let that: this = this;
         if (objects.isNull(address)) {
             return;
         }

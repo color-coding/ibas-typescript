@@ -22,7 +22,7 @@ export class QueryPanelView extends cQueryPanelView implements IQueryPanelView {
     private list: sap.m.List;
     /** 显示查询条件 */
     showQueryConditions(datas: ibas.ICondition[]): void {
-        let that = this;
+        let that: this = this;
         if (ibas.objects.isNull(this.list)) {
             // 尚未初始化表格
             this.list = new sap.m.List("", {
@@ -142,7 +142,7 @@ export class QueryPanelView extends cQueryPanelView implements IQueryPanelView {
 
     /** 绘制工具条 */
     darwBars(): any {
-        let that = this;
+        let that: this = this;
         return [
             new sap.m.Button("", {
                 text: ibas.i18n.prop("sys_shell_data_add"),

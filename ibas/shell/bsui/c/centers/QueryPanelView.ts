@@ -101,7 +101,7 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
         if (ibas.objects.isNull(this.table)) {
             // 尚未初始化表格
             if (!ibas.objects.isNull(this.boName)) {
-                let that = this;
+                let that: this = this;
                 let boRepository: sys.IBORepositorySystem = sys.Factories.systemsFactory.createRepository();
                 boRepository.fetchBOInfos({
                     boName: this.boName,
@@ -129,7 +129,7 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
     }
     /** 绘制工具条 */
     darwBars(): any {
-        let that = this;
+        let that: this = this;
         return [
             new sap.m.Button("", {
                 text: ibas.i18n.prop("sys_shell_data_delete"),
@@ -193,7 +193,7 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
         return items;
     }
     private createTable(properies: sys.IBOPropertyInfo[]): sap.ui.table.Table {
-        let that = this;
+        let that: this = this;
         let table: sap.ui.table.Table = new sap.ui.table.Table("", {
             extension: new sap.m.Toolbar("", {
                 content: [
@@ -294,7 +294,7 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
             this.table = null;
         }
         this.boName = null;
-        let that = this;
+        let that: this = this;
         this.form = new sap.ui.layout.VerticalLayout("", {
             width: "100%",
             content: [

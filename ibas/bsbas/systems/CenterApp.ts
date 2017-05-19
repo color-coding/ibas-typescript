@@ -353,7 +353,7 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
     }
     /** 关闭视图 */
     close(): void {
-        let that = this;
+        let that: this = this;
         this.messages({
             type: emMessageType.QUESTION,
             title: i18n.prop(this.name),

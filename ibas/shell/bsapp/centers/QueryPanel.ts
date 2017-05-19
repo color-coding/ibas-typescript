@@ -67,7 +67,7 @@ export class QueryPanel extends sys.QueryPanel<IQueryPanelView>  {
     private editQuery: UserQuery;
 
     private deleteQuery(): void {
-        let that = this;
+        let that: this = this;
         this.messages({
             type: ibas.emMessageType.QUESTION,
             title: ibas.i18n.prop(this.name),
@@ -84,7 +84,7 @@ export class QueryPanel extends sys.QueryPanel<IQueryPanelView>  {
     }
     private saveQuery(): void {
         try {
-            let that = this;
+            let that: this = this;
             let boRepository: BORepositoryShell = new BORepositoryShell();
             boRepository.saveUserQuery({
                 beSaved: this.editQuery,

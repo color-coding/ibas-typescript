@@ -51,6 +51,6 @@ export class SuggestionView extends ibas.BOResidentView implements sys.ISuggesti
                             });
                     });
             }
-        })
+        });
     }
 }

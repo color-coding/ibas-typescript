@@ -48,7 +48,7 @@ export abstract class QueryPanel<T extends IQueryPanelView> extends BarApplicati
             callBack = function (): void { };
         }
         let boRepository: IBORepositorySystem = Factories.systemsFactory.createRepository();
-        let that = this;
+        let that: this = this;
         boRepository.fetchUserQueries({
             user: variablesManager.getValue(VARIABLE_NAME_USER_CODE),
             queryId: this.listener.queryId,
@@ -162,7 +162,7 @@ export abstract class QueryPanel<T extends IQueryPanelView> extends BarApplicati
             }
         }
         // 没有查询条件，尝试从注册信息添加
-        let that = this;
+        let that: this = this;
         if (criteria.conditions.length === 0 && !objects.isNull(this.listener.queryTarget)) {
             let boName: string = this.targetName;
             if (!objects.isNull(boName)) {

@@ -39,7 +39,7 @@ export class FileRepositoryAjax extends FileRepository implements IRemoteReposit
      * @param caller 调用者
      */
     callRemoteMethod(method: string, data: string, caller: MethodCaller): void {
-        let that = this;
+        let that: this = this;
         let ajxSetting: JQueryAjaxSettings = this.createAjaxSettings(method, caller);
         let opRslt: OperationResult<any> = new OperationResult();
         // 补充发生错误的事件
@@ -128,7 +128,7 @@ export class BOFileRepositoryAjax extends FileRepositoryAjax implements IBORepos
      */
     fetch<P>(boName: string, caller: FetchCaller<P>): void {
         let fileName: string = strings.format("{0}s.json", boName).toLowerCase();
-        let that = this;
+        let that: this = this;
         let loadFileCaller: LoadFileCaller = {
             onCompleted(opRslt: IOperationResult<any>): void {
                 if (!objects.isNull(that.converter)) {
@@ -210,7 +210,7 @@ export class BORepositoryAjax extends BORepository implements IRemoteRepository 
      * @param caller 方法监听
      */
     callRemoteMethod(method: string, data: string, caller: MethodCaller): void {
-        let that = this;
+        let that: this = this;
         let ajxSetting: JQueryAjaxSettings = this.createAjaxSettings(method, data);
         // 补充发生错误的事件
         ajxSetting.error = function (jqXHR: JQueryXHR, textStatus: string, errorThrown: string): void {
