@@ -245,38 +245,38 @@ export interface BOInfoCaller extends MethodCaller {
 export interface IBORepositorySystem {
 	/**
 	 * 用户登录
-	 * @param caller 监听者
+	 * @param caller 调用者
 	 */
 	connect(caller: ConnectCaller): void;
 
 	/**
 	 * 查询用户模块
-	 * @param caller 监听者
+	 * @param caller 调用者
 	 */
 	fetchUserModules(caller: UserMethodsCaller<IUserModule>): void;
 
 	/**
 	 * 查询用户权限
-	 * @param caller 监听者
+	 * @param caller 调用者
 	 */
 	fetchUserPrivileges(caller: UserMethodsCaller<IUserPrivilege>): void;
 
 	/**
 	 * 查询用户查询
-	 * @param caller 监听者
+	 * @param caller 调用者
 	 */
 	fetchUserQueries(caller: UserQueriesCaller): void;
 
 	/**
 	 * 保存用户查询
 	 * 当被保存的查询没有条件时则认为是删除
-	 * @param caller 监听者
+	 * @param caller 调用者
 	 */
 	saveUserQuery(caller: SaveCaller<IUserQuery>): void;
 
 	/**
 	 * 业务对象信息查询
-	 * @param caller 监听者
+	 * @param caller 调用者
 	 */
 	fetchBOInfos(caller: BOInfoCaller): void;
 }

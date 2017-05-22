@@ -34,7 +34,7 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements s
 
 	/**
 	 * 用户登录
-	 * @param listener 登录监听者
+	 * @param caller 登录调用者
 	 */
     connect(caller: sys.ConnectCaller): void {
         let remoteRepository: ibas.IRemoteRepository = this.createRemoteRepository();
@@ -44,12 +44,18 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements s
         require(["../../3rdparty/crypto-js"], function (cryptoJS: CryptoJS.Hashes): void {
             let method: string = ibas.strings.format("userConnect?user={0}&password={1}", caller.user, cryptoJS.MD5(caller.password));
             remoteRepository.callRemoteMethod(method, undefined, caller);
+        }, function (error: RequireError): void {
+            // 加载js库失败
+            let opRslt: ibas.IOperationResult<any> = new ibas.OperationResult();
+            opRslt.resultCode = -901;
+            opRslt.message = error.message;
+            caller.onCompleted(opRslt);
         });
     }
 
 	/**
 	 * 查询用户模块
-	 * @param listener 用户检索监听者
+	 * @param caller 用户检索调用者
 	 */
     fetchUserModules(caller: sys.UserMethodsCaller<sys.IUserModule>): void {
         let remoteRepository: ibas.IRemoteRepository = this.createRemoteRepository();
@@ -64,7 +70,7 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements s
 
 	/**
 	 * 查询用户角色权限
-	 * @param listener 用户检索监听者
+	 * @param caller 用户检索调用者
 	 */
     fetchUserPrivileges(caller: sys.UserMethodsCaller<sys.IUserPrivilege>): void {
         let remoteRepository: ibas.IRemoteRepository = this.createRemoteRepository();
@@ -79,7 +85,7 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements s
 
     /**
      * 查询用户查询
-     * @param caller 监听者
+     * @param caller 调用者
      */
     fetchUserQueries(caller: sys.UserQueriesCaller): void {
         let remoteRepository: ibas.IRemoteRepository = this.createRemoteRepository();
@@ -94,7 +100,7 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements s
 
 	/**
 	 * 保存用户查询
-	 * @param caller 监听者
+	 * @param caller 调用者
 	 */
     saveUserQuery(caller: ibas.SaveCaller<sys.IUserQuery>): void {
         this.save("UserQuery", caller);
@@ -102,7 +108,7 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements s
 
 	/**
 	 * 业务对象信息查询
-	 * @param caller 监听者
+	 * @param caller 调用者
 	 */
     fetchBOInfos(caller: sys.BOInfoCaller): void {
         let remoteRepository: ibas.IRemoteRepository = this.createRemoteRepository();
@@ -200,7 +206,7 @@ export class BORepositoryShellOffline extends BORepositoryShell {
     }
     /**
      * 查询用户查询
-     * @param caller 监听者
+     * @param caller 调用者
      */
     fetchUserQueries(caller: sys.UserQueriesCaller): void {
         let criteria: ibas.ICriteria = new ibas.Criteria();
@@ -226,7 +232,7 @@ export class BORepositoryShellOffline extends BORepositoryShell {
     }
 	/**
 	 * 业务对象信息查询
-	 * @param caller 监听者
+	 * @param caller 调用者
 	 */
     fetchBOInfos(caller: sys.BOInfoCaller): void {
         let criteria: ibas.ICriteria = new ibas.Criteria();
