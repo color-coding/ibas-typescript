@@ -471,16 +471,39 @@ export abstract class BusinessObjectListBase<T extends IBusinessObject>
 /** 业务对象工厂 */
 export class BOFactory implements IBOFactory {
     private boMap: Map<string, any> = new Map();
+    /**
+     * 注册业务对象
+     * @param name 检索值
+     * @param type 注册类型
+     */
+    register(key: string, type: any): void;
+    /**
+     * 注册业务对象
+     * @param type 注册类型
+     */
+    register(type: any): void;
     /** 注册对象 */
-    register(bo: any): void {
+    register(): void {
+        let bo: any, name: string;
+        if (arguments.length === 1) {
+            bo = arguments[0];
+            name = objects.getName(bo);
+        } else if (arguments.length === 2) {
+            name = arguments[0];
+            bo = arguments[1];
+        }
         if (objects.isNull(bo)) {
             return;
         }
-        let name: string = objects.getName(bo);
         if (objects.isNull(name)) {
             throw new Error(i18n.prop("sys_unrecognized_data"));
         }
         this.boMap.set(name, bo);
+        if (name !== objects.getName(bo)) {
+            // 名称与类型名称不同，再注册一次
+            this.boMap.set(objects.getName(bo), bo);
+        }
+
     }
     /** 获取对象类型，参数1：对象名称 */
     classOf(name: string): any {
@@ -490,7 +513,7 @@ export class BOFactory implements IBOFactory {
         throw new Error(i18n.prop("sys_bo_not_registered", name));
     }
     /** 创建对象实例，参数1：对象名称 */
-    create<B extends IBusinessObject>(name: string): B {
+    create<B>(name: string): B {
         let bo: any = this.classOf(name);
         if (objects.isNull(bo) && objects.isAssignableFrom(bo, BusinessObjectBase)) {
             throw new Error(i18n.prop("sys_bo_type_invalid", name));

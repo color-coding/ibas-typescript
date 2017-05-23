@@ -198,6 +198,7 @@ export abstract class DataConverter4j implements IDataConverter {
             newData.userSign = remote.UserSign;
             newData.time = dates.valueOf(remote.Time);
             newData.resultCode = remote.ResultCode;
+            newData.message = remote.Message;
             return newData;
         } else if (data.type === Criteria.name) {
             let remote: ibas4j.Criteria = data;
