@@ -106,6 +106,7 @@ export class LoginView extends ibas.BOView implements sys.ILoginView {
                 }),
                 new sap.m.Button("", {
                     text: ibas.i18n.prop("sys_shell_login"),
+                    type: sap.m.ButtonType.Accept,
                     press: function (): void {
                         that.fireViewEvents(that.loginEvent);
                     }

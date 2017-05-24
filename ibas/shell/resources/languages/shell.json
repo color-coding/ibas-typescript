@@ -2,5 +2,7 @@
     "sys_shell_name": "ibas",
     "sys_shell_user": "User",
     "sys_shell_password": "Password",
-    "sys_shell_login": "Login"
+    "sys_shell_login": "Login",
+    "sys_shell_language": "Language",
+    "sys_shell_plantform": "Plantform"
 }
