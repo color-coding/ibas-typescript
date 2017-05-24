@@ -26,7 +26,7 @@ export default class Navigation extends ibas.ViewNavigation {
                 view = new ui.MainView();
                 break;
             case app.LoginApp.APPLICATION_ID:
-                view = new ui.LoginView();
+                view = new ui.BigLoginView();
                 break;
             case app.CenterApp.APPLICATION_ID:
                 view = new ui.CenterView();

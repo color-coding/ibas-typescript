@@ -62,76 +62,63 @@ export class LoginView extends ibas.BOView implements sys.ILoginView {
     /** 绘制视图 */
     darw(): any {
         let that: this = this;
-        this.form = new sap.ui.layout.form.SimpleForm("",
-            {
-                layout: sap.ui.layout.form.SimpleFormLayout.ResponsiveGridLayout,
-                emptySpanXL: -1,
-                emptySpanL: 3,
-                emptySpanM: 2,
-                emptySpanS: 1,
-                // labelSpanL: 8,
-                // labelSpanM: 4,
-                // labelSpanS: 24,
-                // columnsXL: -1,
-                // columnsL: 1,
-                // columnsM: 1,
-                adjustLabelSpan: false,
-                content: [
-                    new sap.m.Title("", {
-                        text: ibas.i18n.prop("sys_shell_name") ,
-                        level: sap.ui.core.TitleLevel.H1,
-                        titleStyle: sap.ui.core.TitleLevel.H1,
-                        textAlign: sap.ui.core.TextAlign.End
-                    }),
-                    new sap.m.Label("", {
-                        text: ibas.i18n.prop("sys_shell_user")
-                    }),
-                    new sap.m.Input(LoginView.UI_LOGIN_USER, {
-                        value: ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE, false)
-                            ? ibas.config.get(CONFIG_ITEM_DEFAULT_USER)
-                            : "",
-                    }),
-                    new sap.m.Label("", {
-                        text: ibas.i18n.prop("sys_shell_password")
-                    }),
-                    new sap.m.Input(LoginView.UI_LOGIN_PASSWORD, {
-                        value: ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE, false)
-                            ? ibas.config.get(CONFIG_ITEM_DEFAULT_PASSWORD)
-                            : "",
-                        type: "Password"
-                    }),
-                    new sap.m.Label("", {
-                        text: ibas.i18n.prop("sys_shell_language")
-                    }),
-                    new sap.m.Select(LoginView.UI_LOGIN_LANGUAGE, {
-                        placeholder: ibas.i18n.prop("sys_shell_chooose_language"),
-                        change: function (): void {
-                            that.fireViewEvents(that.changeLanguageEvent);
-                        }
-                    }),
-                    new sap.m.Label("", {
-                        text: ibas.i18n.prop("sys_shell_plantform")
-                    }),
-                    new sap.m.Select("", {
-                        enabled: false,
-                        items: utils.createComboBoxItems(ibas.emPlantform),
-                        selectedKey: ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM)
-                    }),
-                    new sap.m.Button("", {
-                        text: ibas.i18n.prop("sys_shell_login"),
-                        press: function (): void {
-                            that.fireViewEvents(that.loginEvent);
-                        }
-                    }),
-                    new sap.m.Label("", {}),
-                    new sap.m.Title("", {
-                        text: ibas.i18n.prop("sys_shell_copyright"),
-                        level: sap.ui.core.TitleLevel.H6,
-                        titleStyle: sap.ui.core.TitleLevel.H6,
-                        textAlign: sap.ui.core.TextAlign.End
-                    })
-                ]
-            });
+        this.form = new sap.ui.layout.form.SimpleForm("", {
+            content: [
+                new sap.m.Title("", {
+                    text: ibas.i18n.prop("sys_shell_name"),
+                    level: sap.ui.core.TitleLevel.H1,
+                    titleStyle: sap.ui.core.TitleLevel.H1,
+                    textAlign: sap.ui.core.TextAlign.Center,
+                }),
+                new sap.m.Label("", {
+                    text: ibas.i18n.prop("sys_shell_user")
+                }),
+                new sap.m.Input(LoginView.UI_LOGIN_USER, {
+                    value: ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE, false)
+                        ? ibas.config.get(CONFIG_ITEM_DEFAULT_USER)
+                        : "",
+                }),
+                new sap.m.Label("", {
+                    text: ibas.i18n.prop("sys_shell_password")
+                }),
+                new sap.m.Input(LoginView.UI_LOGIN_PASSWORD, {
+                    value: ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE, false)
+                        ? ibas.config.get(CONFIG_ITEM_DEFAULT_PASSWORD)
+                        : "",
+                    type: "Password"
+                }),
+                new sap.m.Label("", {
+                    text: ibas.i18n.prop("sys_shell_language")
+                }),
+                new sap.m.Select(LoginView.UI_LOGIN_LANGUAGE, {
+                    placeholder: ibas.i18n.prop("sys_shell_chooose_language"),
+                    change: function (): void {
+                        that.fireViewEvents(that.changeLanguageEvent);
+                    }
+                }),
+                new sap.m.Label("", {
+                    text: ibas.i18n.prop("sys_shell_plantform")
+                }),
+                new sap.m.Select("", {
+                    enabled: false,
+                    items: utils.createComboBoxItems(ibas.emPlantform),
+                    selectedKey: ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM)
+                }),
+                new sap.m.Button("", {
+                    text: ibas.i18n.prop("sys_shell_login"),
+                    press: function (): void {
+                        that.fireViewEvents(that.loginEvent);
+                    }
+                }),
+                new sap.m.Label("", {}),
+                new sap.m.Title("", {
+                    text: ibas.i18n.prop("sys_shell_copyright"),
+                    level: sap.ui.core.TitleLevel.H6,
+                    titleStyle: sap.ui.core.TitleLevel.H6,
+                    textAlign: sap.ui.core.TextAlign.End
+                })
+            ]
+        });
         // 重新赋值id
         this.id = this.form.getId();
         // 键盘按钮按下
@@ -164,4 +151,67 @@ export class LoginView extends ibas.BOView implements sys.ILoginView {
         return this.getContorl(LoginView.UI_LOGIN_LANGUAGE);
     }
 
+}
+/**
+ * 视图-登陆
+ */
+export class BigLoginView extends LoginView {
+
+    /** 绘制视图 */
+    darw(): any {
+        let form: sap.ui.core.Control = super.darw();
+        let splitter: sap.ui.layout.Splitter = new sap.ui.layout.Splitter("", {
+            orientation: sap.ui.core.Orientation.Vertical,
+            contentAreas: [
+                // 头部空白
+                new sap.ui.layout.Splitter("", {
+                    layoutData: new sap.ui.layout.SplitterLayoutData("", {
+                        resizable: false,
+                        size: "15%",
+                    }),
+                }),
+                new sap.ui.layout.Splitter("", {
+                    layoutData: new sap.ui.layout.SplitterLayoutData("", {
+                        resizable: false,
+                        size: "80%",
+                    }),
+                    contentAreas: [
+                        new sap.ui.layout.Splitter("", {
+                            layoutData: new sap.ui.layout.SplitterLayoutData("", {
+                                resizable: false,
+                                size: "auto",
+                            }),
+                        }),
+                        new sap.ui.layout.Splitter("", {
+                            layoutData: new sap.ui.layout.SplitterLayoutData("", {
+                                resizable: false,
+                                size: "460px",
+                            }),
+                            contentAreas: [
+                                new sap.ui.layout.Splitter("", {
+                                    layoutData: new sap.ui.layout.SplitterLayoutData("", {
+                                        resizable: false,
+                                        size: "auto",
+                                    }),
+                                    orientation: sap.ui.core.Orientation.Vertical,
+                                    contentAreas: [
+                                        form
+                                    ]
+                                }),
+                            ]
+                        }),
+                        new sap.ui.layout.Splitter("", {
+                            layoutData: new sap.ui.layout.SplitterLayoutData("", {
+                                resizable: false,
+                                size: "auto",
+                            }),
+                        }),
+                    ]
+                }),
+            ]
+        });
+        // 重新赋值id
+        this.id = splitter.getId();
+        return splitter;
+    }
 }
