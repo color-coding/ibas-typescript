@@ -7,7 +7,7 @@
  */
 
 import {
-    objects, ICriteria, Criteria, ICondition, i18n, IOperationResult,
+    objects, ICriteria, Criteria, ICondition, i18n, IOperationResult, criterias,
     config, ISort, emSortType, emConditionOperation, ArrayList, BarApplication,
     emMessageType, variablesManager, VariablesManager, BODocument, BOMasterData, BOSimple,
     BODocumentLine, BOMasterDataLine, BOSimpleLine, VARIABLE_NAME_USER_CODE,
@@ -16,8 +16,6 @@ import {
 import { IQueryPanelView, IQueryPanel, IUseQueryPanel, IUserQuery, IBORepositorySystem, IBOInfo } from "./Systems.d";
 import { Factories } from "./Factories";
 
-/** 查询结果集数量 */
-export const CONFIG_ITEM_CRITERIA_RESULT_COUNT: string = "criteriaResultCount";
 /**
  * 查询面板
  */
@@ -40,12 +38,16 @@ export abstract class QueryPanel<T extends IQueryPanelView> extends BarApplicati
         this.view.searchEvent = this.search;
     }
     /** 视图显示后 */
-    protected viewShowed(): void { }
+    protected viewShowed(): void {
+        // 视图显示后
+    }
     /** 运行 参数，初始化回调 */
     run(): void {
         let callBack: any = arguments[0];
         if (!(callBack instanceof Function)) {
-            callBack = function (): void { };
+            callBack = function (): void {
+                // 回掉方法
+            };
         }
         let boRepository: IBORepositorySystem = Factories.systemsFactory.createRepository();
         let that: this = this;
@@ -116,49 +118,13 @@ export abstract class QueryPanel<T extends IQueryPanelView> extends BarApplicati
         // 克隆新的，防止被污染
         criteria = criteria.clone();
         // 修正查询数量
-        if (objects.isNull(criteria.result) || criteria.result < 1) {
-            criteria.result = config.get(CONFIG_ITEM_CRITERIA_RESULT_COUNT, 30);
-        }
+        criterias.resultCount(criteria);
+        // 根据目标类型，修正排序条件
+        criterias.sorts(criteria, this.listener.queryTarget);
         // 给查询条件赋值
         for (let item of criteria.conditions) {
             if (objects.isNull(item.value) || item.value.length === 0) {
                 item.value = this.view.searchContent;
-            }
-        }
-        // 没有排序条件，尝试添加
-        if (criteria.sorts.length === 0) {
-            if (!objects.isNull(this.listener.queryTarget)) {
-                if (objects.isAssignableFrom(this.listener.queryTarget, BODocument)
-                    || objects.isAssignableFrom(this.listener.queryTarget, BOMasterData)) {
-                    let sort: ISort = criteria.sorts.create();
-                    sort.alias = BO_PROPERTY_NAME_DOCENTRY;
-                    sort.sortType = emSortType.DESCENDING;
-                } else if (objects.isAssignableFrom(this.listener.queryTarget, BOSimple)) {
-                    let sort: ISort = criteria.sorts.create();
-                    sort.alias = BO_PROPERTY_NAME_OBJECTKEY;
-                    sort.sortType = emSortType.DESCENDING;
-                } else if (objects.isAssignableFrom(this.listener.queryTarget, BODocumentLine)) {
-                    let sort: ISort = criteria.sorts.create();
-                    sort.alias = BO_PROPERTY_NAME_DOCENTRY;
-                    sort.sortType = emSortType.DESCENDING;
-                    sort = criteria.sorts.create();
-                    sort.alias = BO_PROPERTY_NAME_LINEID;
-                    sort.sortType = emSortType.ASCENDING;
-                } else if (objects.isAssignableFrom(this.listener.queryTarget, BOMasterDataLine)) {
-                    let sort: ISort = criteria.sorts.create();
-                    sort.alias = BO_PROPERTY_NAME_CODE;
-                    sort.sortType = emSortType.DESCENDING;
-                    sort = criteria.sorts.create();
-                    sort.alias = BO_PROPERTY_NAME_LINEID;
-                    sort.sortType = emSortType.ASCENDING;
-                } else if (objects.isAssignableFrom(this.listener.queryTarget, BOSimpleLine)) {
-                    let sort: ISort = criteria.sorts.create();
-                    sort.alias = BO_PROPERTY_NAME_OBJECTKEY;
-                    sort.sortType = emSortType.DESCENDING;
-                    sort = criteria.sorts.create();
-                    sort.alias = BO_PROPERTY_NAME_LINEID;
-                    sort.sortType = emSortType.ASCENDING;
-                }
             }
         }
         // 没有查询条件，尝试从注册信息添加
@@ -166,7 +132,7 @@ export abstract class QueryPanel<T extends IQueryPanelView> extends BarApplicati
         if (criteria.conditions.length === 0 && !objects.isNull(this.listener.queryTarget)) {
             let boName: string = this.targetName;
             if (!objects.isNull(boName)) {
-                let boRepository = Factories.systemsFactory.createRepository();
+                let boRepository: IBORepositorySystem = Factories.systemsFactory.createRepository();
                 boRepository.fetchBOInfos({
                     boCode: null,
                     boName: boName,

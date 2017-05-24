@@ -15,6 +15,7 @@ import { objects } from "./Data";
 import { ArrayList, StringBuilder } from "./Common";
 import { emConditionOperation, emConditionRelationship, emSortType } from "./Enums";
 import { ICriteria, ICondition, IConditions, ISort, ISorts, IChildCriteria, IChildCriterias } from "./Criteria.d";
+import { config } from "../configuration/index";
 
 /**
  * 查询
@@ -138,7 +139,7 @@ export class Criteria implements ICriteria {
                 rChars = rChars + char;
             }
             return rChars;
-        }
+        };
         let builder: StringBuilder = new StringBuilder();
         builder.append("{");
         for (let item of this.conditions) {
@@ -655,5 +656,69 @@ export class ChildCriterias extends ArrayList<IChildCriteria> implements IChildC
         let item: IChildCriteria = new ChildCriteria();
         this.add(item);
         return item;
+    }
+}
+/** 查询结果集数量 */
+export const CONFIG_ITEM_CRITERIA_RESULT_COUNT: string = "resultCount";
+/**
+ * 查询方法
+ */
+export module criterias {
+    /**
+     * 检查-排序字段
+     * @param criteria 待处理查询
+     */
+    export function resultCount(criteria: ICriteria): ICriteria {
+        if (objects.isNull(criteria)) {
+            return criteria;
+        }
+        if (objects.isNull(criteria.result) || criteria.result < 1) {
+            criteria.result = config.get(CONFIG_ITEM_CRITERIA_RESULT_COUNT, 30);
+        }
+        return criteria;
+    }
+    /**
+     * 检查-排序字段
+     * @param criteria 待处理查询
+     * @param target 查询目标类型
+     */
+    export function sorts(criteria: ICriteria, target: any): ICriteria {
+        if (objects.isNull(criteria) || objects.isNull(target)) {
+            return criteria;
+        }
+        if (criteria.sorts.length === 0) {
+            if (objects.isAssignableFrom(target, BODocument)
+                || objects.isAssignableFrom(target, BOMasterData)) {
+                let sort: ISort = criteria.sorts.create();
+                sort.alias = BO_PROPERTY_NAME_DOCENTRY;
+                sort.sortType = emSortType.DESCENDING;
+            } else if (objects.isAssignableFrom(target, BOSimple)) {
+                let sort: ISort = criteria.sorts.create();
+                sort.alias = BO_PROPERTY_NAME_OBJECTKEY;
+                sort.sortType = emSortType.DESCENDING;
+            } else if (objects.isAssignableFrom(target, BODocumentLine)) {
+                let sort: ISort = criteria.sorts.create();
+                sort.alias = BO_PROPERTY_NAME_DOCENTRY;
+                sort.sortType = emSortType.DESCENDING;
+                sort = criteria.sorts.create();
+                sort.alias = BO_PROPERTY_NAME_LINEID;
+                sort.sortType = emSortType.ASCENDING;
+            } else if (objects.isAssignableFrom(target, BOMasterDataLine)) {
+                let sort: ISort = criteria.sorts.create();
+                sort.alias = BO_PROPERTY_NAME_CODE;
+                sort.sortType = emSortType.DESCENDING;
+                sort = criteria.sorts.create();
+                sort.alias = BO_PROPERTY_NAME_LINEID;
+                sort.sortType = emSortType.ASCENDING;
+            } else if (objects.isAssignableFrom(target, BOSimpleLine)) {
+                let sort: ISort = criteria.sorts.create();
+                sort.alias = BO_PROPERTY_NAME_OBJECTKEY;
+                sort.sortType = emSortType.DESCENDING;
+                sort = criteria.sorts.create();
+                sort.alias = BO_PROPERTY_NAME_LINEID;
+                sort.sortType = emSortType.ASCENDING;
+            }
+        }
+        return criteria;
     }
 }

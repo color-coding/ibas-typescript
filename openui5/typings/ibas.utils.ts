@@ -1,7 +1,9 @@
-// Type definitions for OpenUI5 1.40
-// Project: http://openui5.org/
-// Definitions by: niuren.zhu <niuren.zhu@icloud.com>
-// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
+/**
+ * Type definitions for OpenUI5 1.40
+ * Project: http://openui5.org/
+ * Definitions by: niuren.zhu <niuren.zhu@icloud.com>
+ * Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
+ */
 
 /// <reference path="./index.d.ts" />
 /// <reference path="../../ibas/index.ts" />
@@ -28,7 +30,7 @@ export namespace utils {
         // 首先获取枚举内容
         let data: any = arguments[0];
         let blank: boolean = arguments[1];
-        let map = new Map<string, string>();
+        let map: Map<string, string> = new Map<string, string>();
         if (blank) {
             map.set("", ibas.i18n.prop("sys_shell_please_chooose_data", ""));
         }
@@ -47,7 +49,7 @@ export namespace utils {
             map.set(key, text);
         }
         // 转换枚举内容
-        let items = new Array<sap.ui.core.Item>();
+        let items: Array<sap.ui.core.Item> = new Array<sap.ui.core.Item>();
         for (let item of map) {
             let key: any = item[0];
             items.push(new sap.ui.core.Item("", {
@@ -62,7 +64,7 @@ export namespace utils {
         let selecteds: ibas.List<T> = new ibas.ArrayList<T>();
         var idxs: any[] = table.getSelectedIndices();
         if (idxs.length > 0) {
-            for (var i = 0; i < idxs.length; i++) {
+            for (var i: number = 0; i < idxs.length; i++) {
                 selecteds.push(table.getContextByIndex(idxs[i]).getObject());
             }
         }
@@ -122,7 +124,7 @@ export namespace utils {
                 default:
                     return sap.m.MessageBox.Action.OK;
             }
-        }
+        };
         if (data instanceof Array) {
             let values: any = [];
             for (let item of data) {

@@ -140,7 +140,7 @@ export class ServicesManager {
     }
     /** 获取服务代理 */
     getServiceProxy(id: string): IServiceProxy<IServiceContract> {
-        let mappping = this.getServiceMapping(id);
+        let mappping: IServiceMapping = this.getServiceMapping(id);
         if (objects.isNull(mappping)) {
             return null;
         }

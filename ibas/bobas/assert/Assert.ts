@@ -28,7 +28,7 @@ export module assert {
      * @param pars 参数
      */
     export function equals(): void {
-        let message: string, unexpected: any, actual: any
+        let message: string, unexpected: any, actual: any;
         if (arguments.length === 2) {
             message = "assertion failure: not equals.";
             unexpected = arguments[0];

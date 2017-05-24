@@ -28,7 +28,7 @@ export abstract class BORepositoryReadonly implements IBORepositoryReadonly {
      * @param boName 业务对象名称
      * @param caller 查询监听者
      */
-    abstract fetch<P>(boName: string, caller: FetchCaller<P>);
+    abstract fetch<P>(boName: string, caller: FetchCaller<P>): void;
 
 }
 /** 只读业务仓库 */
@@ -38,7 +38,7 @@ export abstract class BORepository extends BORepositoryReadonly implements IBORe
      * @param boName 业务对象名称
      * @param caller 保存监听者
      */
-    abstract save<P>(boName: string, caller: SaveCaller<P>);
+    abstract save<P>(boName: string, caller: SaveCaller<P>): void;
 }
 /** 文件仓库 */
 export abstract class FileRepository implements IFileRepository {
@@ -47,5 +47,5 @@ export abstract class FileRepository implements IFileRepository {
      * @param fileName 文件名称
      * @param caller 监听者
      */
-    abstract loadFile(fileName: string, caller: LoadFileCaller);
+    abstract loadFile(fileName: string, caller: LoadFileCaller): void;
 }

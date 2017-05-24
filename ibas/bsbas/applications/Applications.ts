@@ -81,9 +81,9 @@ export abstract class Application<T extends IView> extends AbstractApplication<T
 
     }
     /** 设置忙状态 */
-    protected busy(busy: boolean): void
+    protected busy(busy: boolean): void;
     /** 设置忙状态 */
-    protected busy(busy: boolean, msg: string): void
+    protected busy(busy: boolean, msg: string): void;
     /** 设置忙状态 */
     protected busy(): void {
         if (!this.isViewShowed()) {
@@ -98,9 +98,9 @@ export abstract class Application<T extends IView> extends AbstractApplication<T
         }
     }
     /** 设置消息 */
-    protected proceeding(msg: string): void
+    protected proceeding(msg: string): void;
     /** 设置消息 */
-    protected proceeding(type: emMessageType, msg: string): void
+    protected proceeding(type: emMessageType, msg: string): void;
     /** 设置消息 */
     protected proceeding(): void {
         let type: emMessageType = emMessageType.INFORMATION;

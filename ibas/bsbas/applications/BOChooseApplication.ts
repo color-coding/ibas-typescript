@@ -6,7 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { objects, ArrayList, Criteria, Condition, emConditionOperation } from "../../bobas/index";
+import { objects, ArrayList, Criteria, Condition, emConditionOperation, criterias, boFactory } from "../../bobas/index";
 import { IBOChooseView } from "./Applications.d";
 import { BOQueryApplication } from "./Applications";
 import { IBOChooseService, IBOChooseServiceContract } from "../services/index";
@@ -65,6 +65,14 @@ export abstract class BOChooseService<T extends IBOChooseView, D> extends BOChoo
                         }
                     }
                 }
+                // 修正查询数量
+                criterias.resultCount(criteria);
+                // 根据对象类型，修正排序条件
+                let boType: any = boFactory.classOf(contract.boCode);
+                if (!objects.isNull(boType)) {
+                    // 获取到有效对象
+                    criterias.sorts(criteria, boType);
+                }
                 // 存在查询，则直接触发查询事件
                 if (!objects.isNull(criteria) && criteria.conditions.length > 0) {
                     this.fetchData(criteria);
@@ -85,7 +93,7 @@ export abstract class BOChooseService<T extends IBOChooseView, D> extends BOChoo
             return;
         }
         // 转换返回类型
-        let list = new ArrayList();
+        let list: ArrayList<D> = new ArrayList<D>();
         if (selecteds instanceof Array) {
             // 当是数组时
             for (let item of selecteds) {
