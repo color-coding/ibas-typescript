@@ -211,6 +211,14 @@ export namespace utils {
                 let data: any = model.getData();
                 if (!ibas.objects.isNull(data)) {
                     let dataCount: number = data.length;
+                    if (dataCount === undefined) {
+                        // 存在绑定的对象路径问题
+                        dataCount = data.rows.length;
+                        if (dataCount !== undefined) {
+                            // 此路径存在数据
+                            data = data.rows;
+                        }
+                    }
                     let visibleRow: number = this.getVisibleRowCount();
                     if (dataCount > 0 && dataCount > visibleRow) {
                         let firstRow: number = this.getFirstVisibleRow(); // 当前页的第一行

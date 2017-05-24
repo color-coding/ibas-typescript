@@ -47,7 +47,7 @@ export interface Criteria extends DataDeclaration {
     /** 业务对象编码 */
     BOCode: string;
     /** 查询结果数量 */
-    Result: number;
+    ResultCount: number;
     /** 不加载子项 */
     NoChilds: boolean;
     /** 备注 */

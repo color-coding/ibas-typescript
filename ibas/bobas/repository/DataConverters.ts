@@ -88,7 +88,7 @@ export abstract class DataConverter4j implements IDataConverter {
             let remote: ibas4j.Criteria = {
                 type: data.constructor.name,
                 BOCode: newData.boCode,
-                Result: newData.result,
+                ResultCount: newData.result,
                 NoChilds: newData.noChilds,
                 Remarks: newData.remarks,
                 Conditions: conditions,
@@ -113,7 +113,7 @@ export abstract class DataConverter4j implements IDataConverter {
             let remote: ibas4j.ChildCriteria = {
                 type: data.constructor.name,
                 BOCode: newData.boCode,
-                Result: newData.result,
+                ResultCount: newData.result,
                 NoChilds: newData.noChilds,
                 Remarks: newData.remarks,
                 PropertyPath: newData.propertyPath,
@@ -204,7 +204,7 @@ export abstract class DataConverter4j implements IDataConverter {
             let remote: ibas4j.Criteria = data;
             let newData: Criteria = new Criteria();
             newData.boCode = remote.BOCode;
-            newData.result = remote.Result;
+            newData.result = remote.ResultCount;
             newData.noChilds = remote.NoChilds;
             newData.remarks = remote.Remarks;
             for (let item of remote.Conditions) {
@@ -224,7 +224,7 @@ export abstract class DataConverter4j implements IDataConverter {
             let remote: ibas4j.ChildCriteria = data;
             let newData: ChildCriteria = new ChildCriteria();
             newData.boCode = remote.BOCode;
-            newData.result = remote.Result;
+            newData.result = remote.ResultCount;
             newData.noChilds = remote.NoChilds;
             newData.remarks = remote.Remarks;
             newData.onlyHasChilds = remote.OnlyHasChilds;

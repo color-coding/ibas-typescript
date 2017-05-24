@@ -75,7 +75,13 @@ export abstract class BOChooseService<T extends IBOChooseView, D> extends BOChoo
                 }
                 // 存在查询，则直接触发查询事件
                 if (!objects.isNull(criteria) && criteria.conditions.length > 0) {
-                    this.fetchData(criteria);
+                    let view: IBOChooseView = <IBOChooseView>this.view;
+                    if (view.query instanceof Function) {
+                        // 视图存在查询方法，则调用此方法
+                        view.query(criteria);
+                    } else {
+                        this.fetchData(criteria);
+                    }
                     // 进入查询，不在执行后部分
                     return;
                 }
