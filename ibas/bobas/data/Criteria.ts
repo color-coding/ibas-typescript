@@ -8,7 +8,7 @@
 
 import {
     BO_PROPERTY_NAME_DOCENTRY, BO_PROPERTY_NAME_OBJECTKEY, BO_PROPERTY_NAME_CODE, BO_PROPERTY_NAME_LINEID,
-    BusinessObject, BODocument, BODocumentLine, BOMasterData, BOMasterDataLine,
+    BusinessObject, BODocument, BODocumentLine, BOMasterData, BOMasterDataLine, BO_PROPERTY_NAME_NAME,
     BOSimple, BOSimpleLine
 } from "../bo/index";
 import { objects } from "./Data";
@@ -717,6 +717,61 @@ export module criterias {
                 sort = criteria.sorts.create();
                 sort.alias = BO_PROPERTY_NAME_LINEID;
                 sort.sortType = emSortType.ASCENDING;
+            }
+        }
+        return criteria;
+    }
+    /**
+     * 检查-查询字段
+     * @param criteria 待处理查询
+     * @param target 查询目标类型
+     * @param search 查询内容
+     */
+    export function conditions(criteria: ICriteria, target: any, search: string): ICriteria;
+    /**
+     * 检查-查询字段
+     * @param criteria 待处理查询
+     * @param target 查询目标类型
+     * @param search 查询内容
+     * @param operation 查询方式
+     */
+    export function conditions(criteria: ICriteria, target: any, search: string, operation: emConditionOperation): ICriteria;
+
+    export function conditions(): ICriteria {
+        let criteria: ICriteria, target: any, search: string, operation: emConditionOperation;
+        criteria = arguments[0];
+        target = arguments[1];
+        search = arguments[2];
+        operation = arguments[3];
+        if (objects.isNull(criteria) || objects.isNull(search) || objects.isNull(target)) {
+            return criteria;
+        }
+        // 默认like查询
+        if (objects.isNull(operation)) {
+            operation = emConditionOperation.CONTAIN;
+        }
+        if (criteria.conditions.length === 0) {
+            // 添加主键查询
+            if (objects.isAssignableFrom(target, BODocument)) {
+                let condition: ICondition = criteria.conditions.create();
+                condition.alias = BO_PROPERTY_NAME_DOCENTRY;
+                condition.operation = operation;
+                condition.value = search;
+            } else if (objects.isAssignableFrom(target, BOMasterData)) {
+                let condition: ICondition = criteria.conditions.create();
+                condition.alias = BO_PROPERTY_NAME_CODE;
+                condition.operation = operation;
+                condition.value = search;
+                condition = criteria.conditions.create();
+                condition.relationship = emConditionRelationship.OR;
+                condition.alias = BO_PROPERTY_NAME_NAME;
+                condition.operation = operation;
+                condition.value = search;
+            } else if (objects.isAssignableFrom(target, BOSimple)) {
+                let condition: ICondition = criteria.conditions.create();
+                condition.alias = BO_PROPERTY_NAME_OBJECTKEY;
+                condition.operation = operation;
+                condition.value = search;
             }
         }
         return criteria;

@@ -22,6 +22,8 @@ import {
 export const BO_PROPERTY_NAME_DOCENTRY: string = "docEntry";
 /** 业务对象属性名称-Code */
 export const BO_PROPERTY_NAME_CODE: string = "code";
+/** 业务对象属性名称-Name */
+export const BO_PROPERTY_NAME_NAME: string = "name";
 /** 业务对象属性名称-ObjectKey */
 export const BO_PROPERTY_NAME_OBJECTKEY: string = "objectKey";
 /** 业务对象属性名称-LineId */

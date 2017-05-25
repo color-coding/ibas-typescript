@@ -137,20 +137,24 @@ export abstract class QueryPanel<T extends IQueryPanelView> extends BarApplicati
                     boCode: null,
                     boName: boName,
                     onCompleted(opRslt: IOperationResult<IBOInfo>): void {
-                        if (opRslt.resultCode === 0) {
-                            for (let boItem of opRslt.resultObjects) {
-                                for (let boProperty of boItem.properties) {
-                                    if (!boProperty.searched) {
-                                        continue;
-                                    }
-                                    let condition: ICondition = criteria.conditions.create();
-                                    condition.alias = boProperty.property;
-                                    condition.value = that.view.searchContent;
-                                    condition.operation = emConditionOperation.CONTAIN;
-                                }
-                            }
-                        } else {
+                        if (opRslt.resultCode !== 0) {
                             that.messages(emMessageType.WARNING, opRslt.message);
+                        }
+                        // 检索到了查询字段
+                        for (let boItem of opRslt.resultObjects) {
+                            for (let boProperty of boItem.properties) {
+                                if (!boProperty.searched) {
+                                    continue;
+                                }
+                                let condition: ICondition = criteria.conditions.create();
+                                condition.alias = boProperty.property;
+                                condition.value = that.view.searchContent;
+                                condition.operation = emConditionOperation.CONTAIN;
+                            }
+                        }
+                        // 没有查询字段，则查询主键
+                        if (criteria.conditions.length === 0) {
+                            criterias.conditions(criteria, that.listener.queryTarget, that.view.searchContent);
                         }
                         that.fireQuery(criteria);
                     }
