@@ -327,7 +327,19 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             // 未初始化完成，等待完成后显示
             module.addListener(showFunctions);
         }
-        nvList.addItem(nvItem);
+        // 计算模块位置并添加
+        let index: number = 0;
+        for (let item of nvList.getItems()) {
+            if (nvItem.getKey().localeCompare(item.getKey()) < 0) {
+                break;
+            }
+            index++;
+        }
+        if (index > 0) {
+            nvList.addItem(nvItem);
+        } else {
+            nvList.insertItem(nvItem, index);
+        }
     }
     /** 设置忙状态 */
     busyView(view: ibas.IView, busy: boolean, msg: string): any {
