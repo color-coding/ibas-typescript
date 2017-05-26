@@ -27,22 +27,23 @@ export class AboutView extends ibas.BOView implements sys.IAboutView {
             columnsM: 1,
             content: []
         });
-        this.id = this.form.getId();
-        return this.form;
+        let page: sap.m.Page = new sap.m.Page("", {
+            showHeader: false,
+            enableScrolling: true,
+            content: [this.form]
+        });
+        this.id = page.getId();
+        return page;
     }
     private form: sap.ui.layout.form.SimpleForm;
     /** 显示版本 */
     showVersions(version: any): void {
         this.form.addContent(new sap.ui.core.Title("", { text: "Shell" }));
-        this.form.addContent(new sap.m.Label("", { text: "name" }));
-        this.form.addContent(new sap.m.Text("", { text: version.name }));
-        this.form.addContent(new sap.m.Label("", { text: "version" }));
+        this.form.addContent(new sap.m.Label("", { text: version.name }));
         this.form.addContent(new sap.m.Text("", { text: version.version }));
         this.form.addContent(new sap.ui.core.Title("", { text: "Libraries" }));
         for (let item of version.libraries) {
-            this.form.addContent(new sap.m.Label("", { text: "name" }));
-            this.form.addContent(new sap.m.Text("", { text: item.name }));
-            this.form.addContent(new sap.m.Label("", { text: "version" }));
+            this.form.addContent(new sap.m.Label("", { text: item.name }));
             this.form.addContent(new sap.m.Text("", { text: item.version }));
         }
         this.form.addContent(new sap.ui.core.Title("", { text: "Authors" }));

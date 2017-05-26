@@ -159,7 +159,6 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                 } else {
                     that.page.setHeader(that.header);
                     // that.page.setSideContent(that.navigation);
-                    that.form.setFloatingFooter(false);
                     this.setIcon("sap-icon://full-screen");
                     ibas.config.set(CONFIG_ITEM_FULL_SCREEN, false);
                 }
@@ -189,6 +188,8 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         this.id = this.page.getId();
         return this.page;
     }
+    private messageTime: number;
+    private messageStrip: sap.m.MessageStrip;
 	/**
 	 * 显示状态消息
 	 * @param type 消息类型
@@ -208,43 +209,54 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         } else if (type === ibas.emMessageType.INFORMATION) {
             uiType = sap.ui.core.MessageType.Information;
         }
-        let messageStrip: sap.m.MessageStrip = new sap.m.MessageStrip(
-            "",
-            {
+        // 延迟清除消息
+        let that: this = this;
+        if (ibas.objects.isNull(this.statusDelay)) {
+            this.statusDelay = ibas.config.get(CONFIG_ITEM_STATUS_MESSAGES_DELAY, 0) * 1000;
+            if (this.statusDelay > 0) {
+                setInterval(function (): void {
+                    if (Date.now() > that.messageTime) {
+                        if (!ibas.objects.isNull(that.messageStrip)) {
+                            that.messageStrip.close();
+                        }
+                    }
+                }, this.statusDelay);
+            }
+        }
+        if (ibas.objects.isNull(this.messageStrip)) {
+            this.messageStrip = new sap.m.MessageStrip("", {
                 text: message,
                 type: uiType,
                 customIcon: uiIcon,
                 showIcon: true,
-                showCloseButton: true
-            });
-        this.form.setFooter(this.statusBar);
-        // 清理已有的
-        this.statusBar.destroyContent();
-        // 添加新的
-        this.statusBar.addContent(new sap.ui.layout.VerticalLayout("", {
-            width: "100%",
-            content: [messageStrip]
-        }));
-        // 延迟清除消息
-        if (ibas.objects.isNull(this.statusDelay)) {
-            this.statusDelay = ibas.config.get(CONFIG_ITEM_STATUS_MESSAGES_DELAY, 0) * 1000;
-        }
-        if (this.statusDelay > 0) {
-            let that: this = this;
-            setTimeout(function (): void {
-                if (messageStrip) {
-                    messageStrip.destroy(true);
+                showCloseButton: this.statusDelay > 0 ? false : true,
+                close(): void {
+                    that.messageStrip = null;
                     that.statusBar.destroyContent();
                     that.form.setFooter(null);
-                    let popMessage: sap.m.MessagePopoverItem = new sap.m.MessagePopoverItem("", {
-                        type: messageStrip.getType(),
-                        title: messageStrip.getText(),
-                        counter: that.messageHistory.getItems().length,
-                    });
-                    that.messageHistory.addItem(popMessage);
                 }
-            }, this.statusDelay);
+            });
+            // 清理已有的
+            this.statusBar.destroyContent();
+            // 添加新的
+            this.statusBar.addContent(new sap.ui.layout.VerticalLayout("", {
+                width: "100%",
+                content: [this.messageStrip]
+            }));
+            this.form.setFooter(this.statusBar);
+        } else {
+            // 更新显示内容
+            this.messageStrip.setText(message);
+            this.messageStrip.setType(uiType);
+            this.messageStrip.setCustomIcon(uiIcon);
         }
+        // 记录消息时间
+        this.messageTime = Date.now() + this.statusDelay;
+        // 记录历史
+        this.messageHistory.addItem(new sap.m.MessagePopoverItem("", {
+            type: uiType,
+            title: message,
+        }));
     }
     /** 对话消息 */
     showMessageBox(caller: ibas.IMessgesCaller): void {

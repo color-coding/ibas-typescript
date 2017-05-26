@@ -1,14 +1,7 @@
 {
 	"name": "ibas-shell",
 	"version": "0.1.0",
-	"libraries": [{
-			"name": "jquery",
-			"version": "3.1.1"
-		},
-		{
-			"name": "requirejs",
-			"version": "2.3.2"
-		},
+	"libraries": [
 		{
 			"name": "ibas.bobas",
 			"version": "0.1.0"
@@ -18,8 +11,24 @@
 			"version": "0.1.0"
 		},
 		{
+			"name": "jquery",
+			"version": "3.1.1"
+		},
+		{
+			"name": "requirejs",
+			"version": "2.3.2"
+		},
+		{
 			"name": "openui5",
-			"version": "1.44.6"
+			"version": "1.44.x"
+		},
+		{
+			"name": "cryptojs",
+			"version": "3.1.9"
+		},
+		{
+			"name": "spin.js",
+			"version": "2.3.2"
 		}
 	]
 }
