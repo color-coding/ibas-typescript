@@ -40,7 +40,7 @@ export class CustomerViewApp extends ibas.BOViewService<ICustomerViewView> {
     }
     /** 编辑数据，参数：目标数据 */
     protected editData(): void {
-        let app = new CustomerEditApp();
+        let app: CustomerEditApp = new CustomerEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run(this.viewData);
@@ -58,7 +58,7 @@ export class CustomerViewApp extends ibas.BOViewService<ICustomerViewView> {
     /** 查询数据 */
     protected fetchData(criteria: ibas.ICriteria | string): void {
         this.busy(true);
-        let that = this;
+        let that: this = this;
         if (typeof criteria === "string") {
             criteria = new ibas.Criteria();
             // 添加查询条件

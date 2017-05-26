@@ -18,13 +18,35 @@
     "Name": "InitialFantasy",
     "Category": "",
     "Address": ".../../../test/apps/initialfantasy/",
-    "Repository": ".../../../test/repository"
+    "Repository": "http://localhost:8080/initialfantasy/services/rest/data"
   },
   {
     "Id": "cbd4ef0f-ee88-4ea7-96c7-13f974026b58",
     "Name": "ImportExport",
     "Category": "",
     "Address": ".../../../test/apps/importexport/",
-    "Repository": ".../../../test/repository"
+    "Repository": "http://localhost:8080/importexport/services/rest/data"
+  },
+  {
+    "Id": "0dda2ecb-af63-4a3d-b087-aa3dda8179b4",
+    "Name": "ReportAnalysis",
+    "Category": "",
+    "Address": ".../../../test/apps/reportanalysis/",
+    "Repository": "http://localhost:8080/reportanalysis/services/rest/data"
+  },
+  {
+    "Id": "0dda2ecb-af63-4a3d-b087-aa3dda8179b5",
+    "Name": "ReportAnalysisUsers",
+    "Category": "",
+    "Address": ".../../../test/apps/ReportAnalysis/",
+    "Repository": "http://localhost:8080/reportanalysis/services/rest/data",
+    "Index": "index.users"
+  },
+  {
+    "Id": "c4d3da42-0a53-480b-98fe-bf551a9581c7",
+    "Name": "BusinessObjectsEnterprise",
+    "Category": "",
+    "Address": ".../../../test/apps/businessobjectsenterprise/",
+    "Repository": "http://localhost:8080/businessobjectsenterprise/services/rest/data"
   }
 ]

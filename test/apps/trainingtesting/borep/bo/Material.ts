@@ -21,14 +21,15 @@ import {
     BOSimpleLine,
 } from "ibas/index";
 import {
-    IMaterial
+    IMaterial,
+    BO_CODE_MATERIAL
 } from "../../api/index";
 
 /** 物料主数据 */
 export class Material extends BOMasterData<Material> implements IMaterial {
 
     /** 业务对象编码 */
-    static BUSINESS_OBJECT_CODE: string = "CC_TT_MATERIALS";
+    static BUSINESS_OBJECT_CODE: string = BO_CODE_MATERIAL;
     /** 构造函数 */
     constructor() {
         super();

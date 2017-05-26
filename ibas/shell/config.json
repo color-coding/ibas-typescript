@@ -3,7 +3,7 @@
     "company": "CC",
     "debug": true,
     "language": "zh_CN",
-    "offline": true,
+    "offline": false,
     "offline|BORepositoryShell": true,
     "helpUrl": "http://www.baidu.com",
     "fullScreen": false,

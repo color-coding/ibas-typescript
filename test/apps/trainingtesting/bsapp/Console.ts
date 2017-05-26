@@ -122,7 +122,7 @@ export class ConsoleOthers extends ibas.ModuleConsole {
             // 使用c类型视图
             uiModules.push("../bsui/c/Navigation");
         }
-        let that = this;
+        let that: this = this;
         require(uiModules, function (ui: any): void {
             // 设置导航
             that._navigation = new ui.default();

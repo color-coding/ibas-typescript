@@ -25,7 +25,7 @@ export class SalesOrderListView extends ibas.BOListView implements ISalesOrderLi
     deleteDataEvent: Function;
     /** 绘制视图 */
     darw(): any {
-        let that = this;
+        let that: this = this;
         this.form = new sap.ui.layout.form.SimpleForm("");
         this.table = new sap.ui.table.Table("", {
             enableSelectAll: false,

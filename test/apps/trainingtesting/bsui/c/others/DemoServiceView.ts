@@ -15,7 +15,7 @@ import { IDemoServiceView } from "../../../bsapp/others/index";
  */
 export class DemoServiceView extends ibas.BODialogView implements IDemoServiceView {
     darwBars(): any {
-        let that = this;
+        let that: this = this;
         return [
             new sap.m.Button("", {
                 text: ibas.i18n.prop("sys_shell_exit"),

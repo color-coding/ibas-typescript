@@ -23,14 +23,15 @@ import {
 import {
     ISalesOrder,
     ISalesOrderItem,
-    ISalesOrderItems
+    ISalesOrderItems,
+    BO_CODE_SALESORDER
 } from "../../api/index";
 
 /** 销售订单 */
 export class SalesOrder extends BODocument<SalesOrder> implements ISalesOrder {
 
     /** 业务对象编码 */
-    static BUSINESS_OBJECT_CODE: string = "CC_TT_SALESORDER";
+    static BUSINESS_OBJECT_CODE: string = BO_CODE_SALESORDER;
     /** 构造函数 */
     constructor() {
         super();

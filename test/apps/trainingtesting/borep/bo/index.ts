@@ -14,8 +14,8 @@ export * from "./SalesOrder";
 // 注册业务对象到工厂
 import * as ibas from "ibas/index";
 import { Material } from "./Material";
-ibas.boFactory.register(Material);
+ibas.boFactory.register(Material.BUSINESS_OBJECT_CODE, Material);
 import { Customer } from "./Customer";
-ibas.boFactory.register(Customer);
+ibas.boFactory.register(Customer.BUSINESS_OBJECT_CODE, Customer);
 import { SalesOrder } from "./SalesOrder";
-ibas.boFactory.register(SalesOrder);
+ibas.boFactory.register(SalesOrder.BUSINESS_OBJECT_CODE, SalesOrder);

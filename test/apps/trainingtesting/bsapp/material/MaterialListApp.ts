@@ -44,8 +44,8 @@ export class MaterialListApp extends ibas.BOListApplication<IMaterialListView, b
     protected fetchData(criteria: ibas.ICriteria): void {
         try {
             this.busy(true);
-            let that = this;
-            let boRepository = new BORepositoryTrainingTesting();
+            let that: this = this;
+            let boRepository: BORepositoryTrainingTesting = new BORepositoryTrainingTesting();
             boRepository.fetchMaterial({
                 criteria: criteria,
                 onCompleted(opRslt: ibas.IOperationResult<bo.Material>): void {
@@ -67,7 +67,7 @@ export class MaterialListApp extends ibas.BOListApplication<IMaterialListView, b
     }
     /** 新建数据 */
     protected newData(): void {
-        let app = new MaterialEditApp();
+        let app: MaterialEditApp = new MaterialEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run();
@@ -81,7 +81,7 @@ export class MaterialListApp extends ibas.BOListApplication<IMaterialListView, b
             ));
             return;
         }
-        let app = new MaterialViewApp();
+        let app: MaterialViewApp = new MaterialViewApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run(data);
@@ -96,7 +96,7 @@ export class MaterialListApp extends ibas.BOListApplication<IMaterialListView, b
             ));
             return;
         }
-        let app = new MaterialEditApp();
+        let app: MaterialEditApp = new MaterialEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run(data);
@@ -123,7 +123,7 @@ export class MaterialListApp extends ibas.BOListApplication<IMaterialListView, b
         if (beDeleteds.length === 0) {
             return;
         }
-        let that = this;
+        let that: this = this;
         this.messages({
             type: ibas.emMessageType.QUESTION,
             title: ibas.i18n.prop(this.name),

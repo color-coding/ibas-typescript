@@ -21,7 +21,7 @@ export class MaterialChooseView extends ibas.BOChooseView implements IMaterialCh
     }
     /** 绘制工具条 */
     darwBars(): any {
-        let that = this;
+        let that: this = this;
         return [
             new sap.m.Button("", {
                 text: ibas.i18n.prop("sys_shell_data_new"),
@@ -50,11 +50,11 @@ export class MaterialChooseView extends ibas.BOChooseView implements IMaterialCh
                     that.fireViewEvents(that.closeEvent);
                 }
             }),
-        ]
+        ];
     }
     /** 绘制视图 */
     darw(): any {
-        let that = this;
+        let that: this = this;
         this.table = new sap.ui.table.Table("", {
             enableSelectAll: false,
             visibleRowCount: ibas.config.get(utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 15),

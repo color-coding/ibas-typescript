@@ -41,7 +41,7 @@ export class MaterialChooseApp extends ibas.BOChooseService<IMaterialChooseView,
     protected fetchData(criteria: ibas.ICriteria): void {
         try {
             this.busy(true);
-            let that = this;
+            let that: this = this;
             let boRepository: BORepositoryTrainingTesting = new BORepositoryTrainingTesting();
             boRepository.fetchMaterial({
                 criteria: criteria,
@@ -77,7 +77,7 @@ export class MaterialChooseApp extends ibas.BOChooseService<IMaterialChooseView,
         // 关闭自身
         this.destroy();
         // 调用编辑应用
-        let app = new MaterialEditApp();
+        let app: MaterialEditApp = new MaterialEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run();

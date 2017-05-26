@@ -8,7 +8,7 @@
 
 import * as ibas from "ibas/index";
 import * as bo from "./bo/index";
-import { IBORepositoryTrainingTesting } from "../api/index";
+import { IBORepositoryTrainingTesting, BO_REPOSITORY_TRAININGTESTING} from "../api/index";
 import { DataConverter4tt } from "./DataConverters";
 
 /** 培训&测试 业务仓库 */
@@ -64,4 +64,7 @@ export class BORepositoryTrainingTesting extends ibas.BORepositoryApplication im
         super.save(bo.SalesOrder.name, saver);
     }
 
+
 }
+// 注册业务对象仓库到工厂
+ibas.boFactory.register(BO_REPOSITORY_TRAININGTESTING, BORepositoryTrainingTesting);

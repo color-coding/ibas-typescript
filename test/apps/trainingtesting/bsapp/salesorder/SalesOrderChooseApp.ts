@@ -41,7 +41,7 @@ export class SalesOrderChooseApp extends ibas.BOChooseService<ISalesOrderChooseV
     protected fetchData(criteria: ibas.ICriteria): void {
         try {
             this.busy(true);
-            let that = this;
+            let that: this = this;
             let boRepository: BORepositoryTrainingTesting = new BORepositoryTrainingTesting();
             boRepository.fetchSalesOrder({
                 criteria: criteria,
@@ -77,7 +77,7 @@ export class SalesOrderChooseApp extends ibas.BOChooseService<ISalesOrderChooseV
         // 关闭自身
         this.destroy();
         // 调用编辑应用
-        let app = new SalesOrderEditApp();
+        let app: SalesOrderEditApp = new SalesOrderEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run();

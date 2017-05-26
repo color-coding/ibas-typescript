@@ -21,14 +21,15 @@ import {
     BOSimpleLine,
 } from "ibas/index";
 import {
-    ICustomer
+    ICustomer,
+    BO_CODE_CUSTOMER
 } from "../../api/index";
 
 /** 客户主数据 */
 export class Customer extends BOMasterData<Customer> implements ICustomer {
 
     /** 业务对象编码 */
-    static BUSINESS_OBJECT_CODE: string = "CC_TT_CUSTOMER";
+    static BUSINESS_OBJECT_CODE: string = BO_CODE_CUSTOMER;
     /** 构造函数 */
     constructor() {
         super();

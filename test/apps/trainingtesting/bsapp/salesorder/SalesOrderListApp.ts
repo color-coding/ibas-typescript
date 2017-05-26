@@ -44,8 +44,8 @@ export class SalesOrderListApp extends ibas.BOListApplication<ISalesOrderListVie
     protected fetchData(criteria: ibas.ICriteria): void {
         try {
             this.busy(true);
-            let that = this;
-            let boRepository = new BORepositoryTrainingTesting();
+            let that: this = this;
+            let boRepository: BORepositoryTrainingTesting = new BORepositoryTrainingTesting();
             boRepository.fetchSalesOrder({
                 criteria: criteria,
                 onCompleted(opRslt: ibas.IOperationResult<bo.SalesOrder>): void {
@@ -67,7 +67,7 @@ export class SalesOrderListApp extends ibas.BOListApplication<ISalesOrderListVie
     }
     /** 新建数据 */
     protected newData(): void {
-        let app = new SalesOrderEditApp();
+        let app: SalesOrderEditApp = new SalesOrderEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run();
@@ -81,7 +81,7 @@ export class SalesOrderListApp extends ibas.BOListApplication<ISalesOrderListVie
             ));
             return;
         }
-        let app = new SalesOrderViewApp();
+        let app: SalesOrderViewApp = new SalesOrderViewApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run(data);
@@ -96,7 +96,7 @@ export class SalesOrderListApp extends ibas.BOListApplication<ISalesOrderListVie
             ));
             return;
         }
-        let app = new SalesOrderEditApp();
+        let app: SalesOrderEditApp = new SalesOrderEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run(data);
@@ -123,7 +123,7 @@ export class SalesOrderListApp extends ibas.BOListApplication<ISalesOrderListVie
         if (beDeleteds.length === 0) {
             return;
         }
-        let that = this;
+        let that: this = this;
         this.messages({
             type: ibas.emMessageType.QUESTION,
             title: ibas.i18n.prop(this.name),

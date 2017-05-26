@@ -51,7 +51,7 @@ export class SalesOrderEditApp extends ibas.BOEditApplication<ISalesOrderEditVie
     }
     /** 运行,覆盖原方法 */
     run(...args: any[]): void {
-        let that = this;
+        let that: this = this;
         if (ibas.objects.instanceOf(arguments[0], bo.SalesOrder)) {
             // 尝试重新查询编辑对象
             let criteria: ibas.ICriteria = arguments[0].criteria();
@@ -92,7 +92,7 @@ export class SalesOrderEditApp extends ibas.BOEditApplication<ISalesOrderEditVie
     /** 保存数据 */
     protected saveData(): void {
         try {
-            let that = this;
+            let that: this = this;
             let boRepository: BORepositoryTrainingTesting = new BORepositoryTrainingTesting();
             boRepository.saveSalesOrder({
                 beSaved: this.editData,
@@ -128,7 +128,7 @@ export class SalesOrderEditApp extends ibas.BOEditApplication<ISalesOrderEditVie
     }
     /** 删除数据 */
     protected deleteData(): void {
-        let that = this;
+        let that: this = this;
         this.messages({
             type: ibas.emMessageType.QUESTION,
             title: ibas.i18n.prop(this.name),
@@ -144,7 +144,7 @@ export class SalesOrderEditApp extends ibas.BOEditApplication<ISalesOrderEditVie
     }
     /** 新建数据，参数1：是否克隆 */
     protected createData(clone: boolean): void {
-        let that = this;
+        let that: this = this;
         let createData: Function = function (): void {
             if (clone) {
                 // 克隆对象
@@ -206,7 +206,7 @@ export class SalesOrderEditApp extends ibas.BOEditApplication<ISalesOrderEditVie
 
     /** 选择销售订单客户事件 */
     chooseSalesOrderCustomer(): void {
-        let that = this;
+        let that: this = this;
         ibas.servicesManager.runChooseService<bo.Customer>({
             boCode: bo.Customer.BUSINESS_OBJECT_CODE,
             criteria: [
@@ -220,7 +220,7 @@ export class SalesOrderEditApp extends ibas.BOEditApplication<ISalesOrderEditVie
     }
     /** 选择销售订单行物料事件 */
     chooseSalesOrderItemMaterial(caller: bo.SalesOrderItem): void {
-        let that = this;
+        let that: this = this;
         ibas.servicesManager.runChooseService<bo.Material>({
             caller: caller,
             boCode: bo.Material.BUSINESS_OBJECT_CODE,
@@ -230,7 +230,7 @@ export class SalesOrderEditApp extends ibas.BOEditApplication<ISalesOrderEditVie
             onCompleted(selecteds: ibas.List<bo.Material>): void {
                 // 获取触发的对象
                 let index: number = that.editData.salesOrderItems.indexOf(caller);
-                let item = that.editData.salesOrderItems[index];
+                let item: bo.SalesOrderItem = that.editData.salesOrderItems[index];
                 // 选择返回数量多余触发数量时,自动创建新的项目
                 let created: boolean = false;
                 for (let selected of selecteds) {

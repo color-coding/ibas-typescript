@@ -22,3 +22,5 @@ REM 直接指定地址了，懒得写活了
 mklink /d initialfantasy "%WORK_FOLDER%ibas.initialfantasy\ibas.initialfantasy.service\src\main\webapp"
 mklink /d importexport "%WORK_FOLDER%ibas.importexport\ibas.importexport.service\src\main\webapp"
 mklink /d reportanalysis "%WORK_FOLDER%ibas.reportanalysis\ibas.reportanalysis.service\src\main\webapp"
+mklink /d businessobjectsenterprise "%WORK_FOLDER%ibas.reportanalysis\ibas.businessobjectsenterprise.service\src\main\webapp"
+mklink /d documents "%WORK_FOLDER%ibas.documents\ibas.documents.service\src\main\webapp"
