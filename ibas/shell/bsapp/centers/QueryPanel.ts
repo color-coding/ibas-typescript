@@ -84,6 +84,7 @@ export class QueryPanel extends sys.QueryPanel<IQueryPanelView>  {
     }
     private saveQuery(): void {
         try {
+            this.editQuery.user = ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE);
             let that: this = this;
             let boRepository: BORepositoryShell = new BORepositoryShell();
             boRepository.saveUserQuery({

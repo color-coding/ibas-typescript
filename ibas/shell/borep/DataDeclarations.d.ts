@@ -60,6 +60,8 @@ export interface UserQuery extends DataDeclaration {
     Criteria: string;
     /** 顺序 */
     Order: number;
+    /** 用户 */
+    User: string;
 }
 /** 查询条件 */
 export interface BOInfo extends DataDeclaration {

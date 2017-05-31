@@ -66,6 +66,8 @@ export class UserQuery implements sys.IUserQuery {
 	order: number;
 	/** 查询目标 */
 	target: string;
+	/** 用户 */
+	user: string;
 }
 /** 业务对象信息 */
 export class BOInfo implements sys.IBOInfo {

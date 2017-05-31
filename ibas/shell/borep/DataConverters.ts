@@ -68,6 +68,7 @@ export class DataConverter4Shell extends ibas.DataConverter4j {
                 Id: newData.id,
                 Name: newData.name,
                 Order: newData.order,
+                User: newData.user,
                 Criteria: JSON.stringify(rCriteria)
             };
             return remote;
