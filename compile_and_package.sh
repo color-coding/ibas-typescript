@@ -29,9 +29,9 @@ if [ -e ${WORK_FOLDER}/target/*.war ]
 then
   cp -r ${WORK_FOLDER}/target/*.war ${WORK_FOLDER}/release >>$LOGFILE
 fi
-if [ -e ${WORK_FOLDER}/target/ ]
+if [ -d ${WORK_FOLDER}/target ]
 then
-  rm -rf ${WORK_FOLDER}/target/ >>$LOGFILE
+  rm -rf ${WORK_FOLDER}/target >>$LOGFILE
 fi 
 
 echo --编译完成，更多信息请查看[compile_and_package_log_${OPNAME}.txt]
