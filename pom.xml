@@ -19,6 +19,7 @@
         <plugins>
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
+                <version>3.0.2</version>
                 <executions>
                     <execution>
                         <id>copy-resources</id>
@@ -55,6 +56,7 @@
                             <excludes>
                                 <exclude>**/*.ts</exclude>
                                 <exclude>**/keeps.txt</exclude>
+                                <exclude>**/tsconfig.json</exclude>
                             </excludes>
                         </resource>
                         <resource>
@@ -64,6 +66,7 @@
                             <excludes>
                                 <exclude>**/*.ts</exclude>
                                 <exclude>**/keeps.txt</exclude>
+                                <exclude>**/tsconfig.json</exclude>
                             </excludes>
                         </resource>
                     </webResources>

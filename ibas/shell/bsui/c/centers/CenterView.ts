@@ -51,6 +51,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
     /** 绘制视图 */
     darw(): any {
         let that: this = this;
+        this.page = new sap.tnt.ToolPage();
         this.header = new sap.tnt.ToolHeader("");
         // 收缩菜单钮
         this.header.addContent(new sap.m.Button("", {
@@ -144,6 +145,8 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             && ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM) !== ibas.emPlantform.PHONE) {
             this.page.setHeader(null);
             icon = "sap-icon://exit-full-screen";
+        } else {
+            this.page.setHeader(this.header);
         }
         this.form.addHeaderContent(new sap.m.Button("", {
             icon: icon,
@@ -180,8 +183,6 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             width: "auto"
         });
         this.form.setFooter(this.statusBar);
-        this.page = new sap.tnt.ToolPage();
-        this.page.setHeader(this.header);
         this.page.setSideContent(this.navigation);
         this.page.setSideExpanded(false);
         this.page.addMainContent(this.form);

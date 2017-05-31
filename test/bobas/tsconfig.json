@@ -7,10 +7,10 @@
         "baseUrl": "./",
         "paths": {
             "ibas/index": [
-                "../ibas/index"
+                "../../ibas/index"
             ],
             "openui5/typings/ibas.utils": [
-                "../openui5/typings/ibas.utils"
+                "../../openui5/typings/ibas.utils"
             ]
         }
     }
