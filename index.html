@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <title>ibas apps</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8" />
+    <script type="text/javascript" src="./ibas/3rdparty/spin.js"></script>
+    <script type="text/javascript" src="./ibas/3rdparty/jquery.js"></script>
+    <script type="text/javascript" src="./ibas/3rdparty/require.js"></script>
+    <script type="text/javascript">
+        // 显示消息
+        let requireError = function (error) {
+            console.error(error);
+            alert("应用加载失败，请联系管理员或尝试使用其他浏览器。");
+        };
+        let loadEntry = function () {
+            // 加载ibas
+            let require = requirejs.config({
+                baseUrl: "./"
+            });
+            require(["ibas/index"], function (ibas) {
+                // 加载成功，创建壳加载
+                let sysRequire = ibas.requires.create({
+                    baseUrl: "./"
+                }, []);
+                // 加载应用系统
+                sysRequire(["ibas/bsbas/systems/index"], function () {
+                    // 加载成功
+                    let shellRequire = ibas.requires.create({
+                        context: ibas.requires.naming("shell"),
+                        baseUrl: "./ibas/shell"
+                    }, ["ibas/bsbas/systems"]);
+                    shellRequire(["index"], function (index) {
+                    }, requireError);
+                }, requireError);
+            }, requireError);
+        }
+        let loadUI5 = function (url) {
+            // 加载opopenui5库
+            let domScript = document.createElement('script');
+            domScript.src = url;
+            domScript.setAttribute("id", "sap-ui-bootstrap");
+            domScript.setAttribute("data-sap-ui-bindingSyntax", "complex");
+            domScript.setAttribute("data-sap-ui-theme", "sap_belize");
+            domScript.setAttribute("data-sap-ui-libs", "sap.m, sap.ui.layout, sap.tnt, sap.uxap ,sap.ui.table");
+            domScript.setAttribute("data-sap-ui-preload", "async"); // 异步加载预加载库
+            domScript.onload = domScript.onreadystatechange = function () {
+                if (!this.readyState || 'loaded' === this.readyState || 'complete' === this.readyState) {
+                    // openui5初始化完成，
+                    sap.ui.getCore().attachInit(function () {
+                        loadEntry();
+                    });
+                }
+            }
+            document.getElementsByTagName('head')[0].appendChild(domScript);
+        }
+        $.ajax({
+            type: 'GET',
+            url: document.location.href + "./openui5/resources/sap-ui-version.json",
+            success: function () {
+                // 本地库存在，则加载本地
+                loadUI5(document.location.href + "./openui5/resources/sap-ui-core.js");
+            },
+            error: function () {
+                // 本地库不存在，则加载远程
+                loadUI5("https://openui5.hana.ondemand.com/resources/sap-ui-core.js");
+            }
+        });
+    </script>
+</head>
+
+<body class="sapUiBody" id="content">
+    <div id="spinner"></div>
+    <script type="text/javascript">
+        var opts = {
+            lines: 13 // The number of lines to draw
+            , length: 28 // The length of each line
+            , width: 14 // The line thickness
+            , radius: 42 // The radius of the inner circle
+            , scale: 0.25 // Scales overall size of the spinner
+            , corners: 1 // Corner roundness (0..1)
+            , color: '#000' // #rgb or #rrggbb or array of colors
+            , opacity: 0.25 // Opacity of the lines
+            , rotate: 0 // The rotation offset
+            , direction: 1 // 1: clockwise, -1: counterclockwise
+            , speed: 1 // Rounds per second
+            , trail: 60 // Afterglow percentage
+            , fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
+            , zIndex: 2e9 // The z-index (defaults to 2000000000)
+            , className: 'spinner' // The CSS class to assign to the spinner
+            , top: '50%' // Top position relative to parent
+            , left: '50%' // Left position relative to parent
+            , shadow: false // Whether to render a shadow
+            , hwaccel: false // Whether to use hardware acceleration
+            , position: 'absolute' // Element positioning
+        };
+        var target = document.getElementById('spinner');
+        var spinner = new Spinner(opts).spin(target);
+    </script>
+</body>
+
+</html>

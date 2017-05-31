@@ -4,6 +4,7 @@
 
 # release folder
 /release/
+/target/
 /out/
 
 # ide files & folder

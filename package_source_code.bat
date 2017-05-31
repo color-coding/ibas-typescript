@@ -10,7 +10,7 @@ echo     3. 脚本会打包当前目录源码到out/SourceCode.zip。
 echo ****************************************************************************
 REM 设置参数变量
 SET WORK_FOLDER=%~dp0
-SET RELEASE_FOLDER=%WORK_FOLDER%out\
+SET RELEASE_FOLDER=%WORK_FOLDER%release\
 SET PACKAGE_TYPE=zip
 SET FILE_NAME=SourceCode.%PACKAGE_TYPE%
 
@@ -18,7 +18,7 @@ echo --当前工作的目录是[%WORK_FOLDER%]
 if not exist "%RELEASE_FOLDER%" mkdir "%RELEASE_FOLDER%"
 if exist "%RELEASE_FOLDER%%FILE_NAME%" del /q "%RELEASE_FOLDER%%FILE_NAME%"
 
-7z a -t%PACKAGE_TYPE% "%RELEASE_FOLDER%%FILE_NAME%" * -x!*.%PACKAGE_TYPE% -xr!out -xr!.git -xr!.settings -xr!tomcat -xr!.vs* -xr!*.config -xr!*.publishproj
+7z a -t%PACKAGE_TYPE% "%RELEASE_FOLDER%%FILE_NAME%" * -x!*.%PACKAGE_TYPE% -xr!out -xr!release -xr!target -xr!.git -xr!.settings -xr!tomcat -xr!.vs* -xr!*.config -xr!*.publishproj
 
 if exist "%RELEASE_FOLDER%%FILE_NAME%" (
   echo --打包成功

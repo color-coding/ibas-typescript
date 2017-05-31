@@ -1,0 +1,11 @@
+{
+  "appSettings": {
+    "company": "CC",
+    "debug": false,
+    "language": "zh_CN",
+    "offline": false,
+    "offline|BORepositoryShell": false,
+    "helpUrl": "http://www.baidu.com",
+    "repositoryAddress|BORepositoryShell": "http://localhost:8080/initialfantasy/services/rest/data",
+  }
+}
