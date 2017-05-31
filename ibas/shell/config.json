@@ -6,7 +6,7 @@
     "offline": true,
     "offline|BORepositoryShell": true,
     "helpUrl": "http://www.baidu.com",
-    "fullScreen": true,
+    "fullScreen": false,
     "statusDelay": 2,
     "disablePlatformView": false,
     "sharedLibraries": "openui5/typings,",
