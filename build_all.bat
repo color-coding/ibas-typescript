@@ -32,11 +32,16 @@ if exist "%WORK_FOLDER%\tomcat\webapps\ts" rd "%WORK_FOLDER%\tomcat\webapps\ts"
 for /f %%l in ('dir /s /b "%WORK_FOLDER%tsconfig.json"') DO (
   SET FOLDER=%%~dpl
   echo --开始编译：!FOLDER!
+  if not exist !FOLDER!keeps.txt (
+REM echo ---清理目录：!FOLDER!
+    del /s !FOLDER!*.js >nul
+  )
 REM 不存在keeps.txt文件时，清理已存在js
-  for /f %%m in ('dir /b /a:d "!FOLDER!"') DO (
+  for /f %%m in ('dir /b /s /a:d "!FOLDER!"') DO (
     SET FOLDER_SUB=!FOLDER!%%m\
+    echo !FOLDER_SUB!
     if not exist !FOLDER_SUB!keeps.txt (
-      echo ---清理目录：!FOLDER_SUB!
+REM  echo ---清理目录：!FOLDER_SUB!
       del /s !FOLDER_SUB!*.js >nul
     )
   )
