@@ -6,7 +6,10 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { objects, ArrayList, Criteria, Condition, emConditionOperation, criterias, boFactory, emMessageLevel, logger } from "../../bobas/index";
+import {
+    objects, ArrayList, Criteria, Condition, emConditionOperation,
+    criterias, boFactory, emMessageLevel, logger
+} from "../../bobas/index";
 import { IBOChooseView } from "./Applications.d";
 import { BOQueryApplication } from "./Applications";
 import { IBOChooseService, IBOChooseServiceContract } from "../services/index";

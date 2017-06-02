@@ -8,9 +8,9 @@
 
 import {
     List, ArrayList, objects, i18n, strings, uuid,
-    config, logger, emMessageLevel,
+    config, logger, emMessageLevel, CONFIG_ITEM_DEBUG_MODE,
 } from "../../bobas/index";
-import { emPlantform } from "../data/index";
+import { emPlantform, emMessageType } from "../data/index";
 import {
     IElement, IModule, IFunction, IApplication, IView,
     IModuleConsole, IViewShower, IViewNavigation, IModuleFunction,
@@ -135,7 +135,15 @@ export abstract class View implements IView {
         if (typeof event !== "function") {
             throw new Error(i18n.prop("sys_invalid_parameter", "event"));
         }
-        event.apply(this.application, pars);
+        try {
+            event.apply(this.application, pars);
+        } catch (error) {
+            this.application.viewShower.messages({
+                title: this.application.description,
+                type: emMessageType.ERROR,
+                message: config.get(CONFIG_ITEM_DEBUG_MODE, false) ? error.stack : error.message
+            });
+        }
     }
     /** 按钮按下时 */
     onKeyDown(event: KeyboardEvent): void {

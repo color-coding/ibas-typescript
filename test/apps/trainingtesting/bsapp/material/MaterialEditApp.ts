@@ -86,40 +86,36 @@ export class MaterialEditApp extends ibas.BOEditApplication<IMaterialEditView, b
     protected editData: bo.Material;
     /** 保存数据 */
     protected saveData(): void {
-        try {
-            let that: this = this;
-            let boRepository: BORepositoryTrainingTesting = new BORepositoryTrainingTesting();
-            boRepository.saveMaterial({
-                beSaved: this.editData,
-                onCompleted(opRslt: ibas.IOperationResult<bo.Material>): void {
-                    try {
-                        that.busy(false);
-                        if (opRslt.resultCode !== 0) {
-                            throw new Error(opRslt.message);
-                        }
-                        if (opRslt.resultObjects.length === 0) {
-                            // 删除成功，释放当前对象
-                            that.messages(ibas.emMessageType.SUCCESS,
-                                ibas.i18n.prop("sys_shell_data_delete") + ibas.i18n.prop("sys_shell_sucessful"));
-                            that.editData = undefined;
-                        } else {
-                            // 替换编辑对象
-                            that.editData = opRslt.resultObjects.firstOrDefault();
-                            that.messages(ibas.emMessageType.SUCCESS,
-                                ibas.i18n.prop("sys_shell_data_save") + ibas.i18n.prop("sys_shell_sucessful"));
-                        }
-                        // 刷新当前视图
-                        that.viewShowed();
-                    } catch (error) {
-                        that.messages(error);
+        let that: this = this;
+        let boRepository: BORepositoryTrainingTesting = new BORepositoryTrainingTesting();
+        boRepository.saveMaterial({
+            beSaved: this.editData,
+            onCompleted(opRslt: ibas.IOperationResult<bo.Material>): void {
+                try {
+                    that.busy(false);
+                    if (opRslt.resultCode !== 0) {
+                        throw new Error(opRslt.message);
                     }
+                    if (opRslt.resultObjects.length === 0) {
+                        // 删除成功，释放当前对象
+                        that.messages(ibas.emMessageType.SUCCESS,
+                            ibas.i18n.prop("sys_shell_data_delete") + ibas.i18n.prop("sys_shell_sucessful"));
+                        that.editData = undefined;
+                    } else {
+                        // 替换编辑对象
+                        that.editData = opRslt.resultObjects.firstOrDefault();
+                        that.messages(ibas.emMessageType.SUCCESS,
+                            ibas.i18n.prop("sys_shell_data_save") + ibas.i18n.prop("sys_shell_sucessful"));
+                    }
+                    // 刷新当前视图
+                    that.viewShowed();
+                } catch (error) {
+                    that.messages(error);
                 }
-            });
-            this.busy(true);
-            this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_saving_data"));
-        } catch (error) {
-            this.messages(error);
-        }
+            }
+        });
+        this.busy(true);
+        this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_saving_data"));
     }
     /** 删除数据 */
     protected deleteData(): void {

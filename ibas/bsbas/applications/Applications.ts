@@ -43,13 +43,11 @@ export abstract class Application<T extends IView> extends AbstractApplication<T
                 this.viewShower.show(this.view);
                 this.afterViewShow();
             } catch (error) {
-                let title: string = this.description;
-                this.viewShower.messages(
-                    {
-                        title: title,
-                        type: emMessageType.ERROR,
-                        message: config.get(CONFIG_ITEM_DEBUG_MODE, false) ? error.stack : error.message
-                    });
+                this.viewShower.messages({
+                    title: this.description,
+                    type: emMessageType.ERROR,
+                    message: config.get(CONFIG_ITEM_DEBUG_MODE, false) ? error.stack : error.message
+                });
             }
         } else {
             throw new Error(i18n.prop("sys_invalid_view_shower", this.name));
