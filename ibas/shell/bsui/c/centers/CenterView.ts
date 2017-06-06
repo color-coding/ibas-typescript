@@ -120,7 +120,6 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         // 消息历史框
         this.messageHistory = new sap.m.MessagePopover("", {
             initiallyExpanded: false,
-
         });
         this.navigation.setFixedItem(new sap.tnt.NavigationList("", {
             items: [
@@ -130,7 +129,8 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                     select: function (event: any): void {
                         that.messageHistory.openBy(event.getSource());
                     }
-                })],
+                })
+            ],
         }));
         this.form = new sap.m.Page("", {
             enableScrolling: false,
@@ -424,23 +424,39 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                     tabContainer = new sap.m.TabContainer("", {
                         itemClose: function (oControlEvent: any): void {
                             // 删除页签
-                            let key: any = oControlEvent.getParameters().item.getKey();
                             let cView: ibas.IView;
-                            for (let item of that.viewQueue.keys()) {
-                                if (item.id === key) {
-                                    cView = item;
-                                    break;
+                            let tabItem: sap.m.TabContainerItem = oControlEvent.getParameters().item;
+                            for (let pageItem of tabItem.getContent()) {
+                                for (let view of that.viewQueue.keys()) {
+                                    if (view.id === pageItem.getId()) {
+                                        cView = view;
+                                        break;
+                                    }
+                                }
+                                if (pageItem instanceof sap.m.Page) {
+                                    for (let psItem of pageItem.getContent()) {
+                                        for (let view of that.viewQueue.keys()) {
+                                            if (view.id === psItem.getId()) {
+                                                cView = view;
+                                                break;
+                                            }
+                                        }
+                                    }
                                 }
                             }
                             if (!ibas.objects.isNull(cView)) {
                                 that.destroyView(cView);
+                            }
+                            if (this.getItems().length <= 1) {
+                                that.form.setShowHeader(true);
+                                setTimeout(that.destroyCurrentView(), 500);
                             }
                         }
                     });
                     for (let item of this.form.getContent()) {
                         this.form.removeContent(item);
                     }
-                    this.form.setShowHeader(true);
+                    this.form.setShowHeader(false);
                     this.form.setSubHeader(null);
                     this.form.setTitle(null);
                     this.form.addContent(tabContainer);
@@ -525,13 +541,12 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             }
             container.destroySubHeader();
             container.destroyContent();
-            container.addContent(new sap.ui.core.HTML("",
-                {
-                    content: html,
-                    preferDOM: true,
-                    sanitizeContent: false,
-                    visible: true,
-                }));
+            container.addContent(new sap.ui.core.HTML("", {
+                content: html,
+                preferDOM: true,
+                sanitizeContent: false,
+                visible: true,
+            }));
         } else {
             // 外部打开
             window.open(view.url);
