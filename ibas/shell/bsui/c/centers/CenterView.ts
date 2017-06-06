@@ -79,36 +79,35 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                 priority: sap.m.OverflowToolbarPriority.NeverOverflow
             }),
             press: function (event: any): void {
-                let popover: sap.m.Popover = new sap.m.Popover(
-                    "", {
-                        showHeader: false,
-                        placement: sap.m.PlacementType.Bottom,
-                        content: [
-                            new sap.m.Button({
-                                text: ibas.i18n.prop("sys_shell_help"),
-                                type: sap.m.ButtonType.Transparent,
-                                press: function (): void {
-                                    that.fireViewEvents(that.helpEvent);
-                                    popover.close();
-                                }
-                            }),
-                            new sap.m.Button({
-                                text: ibas.i18n.prop("sys_shell_about"),
-                                type: sap.m.ButtonType.Transparent,
-                                press: function (): void {
-                                    that.fireViewEvents(that.aboutEvent);
-                                    popover.close();
-                                }
-                            }),
-                            new sap.m.Button({
-                                text: ibas.i18n.prop("sys_shell_logout"),
-                                type: sap.m.ButtonType.Transparent,
-                                press: function (): void {
-                                    that.fireViewEvents(that.closeEvent);
-                                }
-                            })
-                        ]
-                    }
+                let popover: sap.m.Popover = new sap.m.Popover("", {
+                    showHeader: false,
+                    placement: sap.m.PlacementType.Bottom,
+                    content: [
+                        new sap.m.Button({
+                            text: ibas.i18n.prop("sys_shell_help"),
+                            type: sap.m.ButtonType.Transparent,
+                            press: function (): void {
+                                that.fireViewEvents(that.helpEvent);
+                                popover.close();
+                            }
+                        }),
+                        new sap.m.Button({
+                            text: ibas.i18n.prop("sys_shell_about"),
+                            type: sap.m.ButtonType.Transparent,
+                            press: function (): void {
+                                that.fireViewEvents(that.aboutEvent);
+                                popover.close();
+                            }
+                        }),
+                        new sap.m.Button({
+                            text: ibas.i18n.prop("sys_shell_logout"),
+                            type: sap.m.ButtonType.Transparent,
+                            press: function (): void {
+                                that.fireViewEvents(that.closeEvent);
+                            }
+                        })
+                    ]
+                }
                 );
                 (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
                 popover.openBy(event.getSource(), true);
@@ -448,8 +447,11 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                                 that.destroyView(cView);
                             }
                             if (this.getItems().length <= 1) {
-                                that.form.setShowHeader(true);
-                                setTimeout(that.destroyCurrentView(), 500);
+                                // 最后页签，延迟消耗页签控件
+                                setTimeout(() => {
+                                    that.form.setShowHeader(true);
+                                    that.destroyCurrentView();
+                                }, 300);
                             }
                         }
                     });
@@ -505,7 +507,6 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
     }
     /** 显示一般视图 */
     showCommonView(view: ibas.View, container: sap.m.Page): void {
-        // this.form.destroyContent();
         // 优先使用缓存中视图数据
         let viewContent: any;
         if (this.viewQueue.has(view)) {
@@ -539,14 +540,21 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             if (ibas.objects.isNull(this.page.getHeader())) {
                 container.setShowHeader(false);
             }
-            container.destroySubHeader();
-            container.destroyContent();
-            container.addContent(new sap.ui.core.HTML("", {
-                content: html,
-                preferDOM: true,
-                sanitizeContent: false,
-                visible: true,
-            }));
+            let viewContent: any;
+            if (this.viewQueue.has(view)) {
+                viewContent = this.viewQueue.get(view);
+            }
+            if (ibas.objects.isNull(viewContent)) {
+                viewContent = new sap.ui.core.HTML("", {
+                    content: html,
+                    preferDOM: true,
+                    sanitizeContent: false,
+                    visible: true,
+                });
+                view.id = viewContent.getId();
+            }
+            container.addContent(viewContent);
+            this.viewQueue.set(view, viewContent);
         } else {
             // 外部打开
             window.open(view.url);

@@ -33,7 +33,7 @@ export class DemoUrlApp extends ibas.Application<IDemoUrlView> {
     }
     /** 运行 */
     run(): void {
-        this.view.url = "http://csp.b1plus.cn/web/csp/index.html";
+        this.view.url = "http://www.bing.com";
         this.view.isInside = true;
         super.run();
     }
