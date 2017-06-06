@@ -109,7 +109,10 @@ export abstract class AbstractApplication<T extends IView> extends Element imple
     /** 清理资源（视图关闭并取消引用） */
     destroy(): void {
         this.close();
-        this._view = null;
+        if (!objects.isNull(this._view)) {
+            this._view.onClosed();
+            this._view = null;
+        }
     }
 }
 /** 视图 */
@@ -149,6 +152,14 @@ export abstract class View implements IView {
     onKeyDown(event: KeyboardEvent): void {
         // 可重载
         logger.log(emMessageLevel.DEBUG, "view: key [{0}] down at [{1}].", event.keyCode, this.id);
+    }
+    /** 显示之后 */
+    onDisplayed(): void {
+        // 重载要回调
+    }
+    /** 关闭之后 */
+    onClosed(): void {
+        // 重载要回调
     }
 }
 /** 配置项目-默认模块图标 */

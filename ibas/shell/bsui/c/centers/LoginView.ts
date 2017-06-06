@@ -122,8 +122,15 @@ export class LoginView extends ibas.BOView implements sys.ILoginView {
         });
         // 重新赋值id
         this.id = this.form.getId();
+        return this.form;
+    }
+    private keyDownListener: EventListener;
+    /** 显示之后 */
+    onDisplayed(): void {
+        super.onDisplayed();
+        let that: this = this;
         // 键盘按钮按下
-        document.onkeydown = function (event: any): void {
+        this.keyDownListener = function (event: any): void {
             if (ibas.objects.isNull(event)) {
                 return;
             }
@@ -131,7 +138,12 @@ export class LoginView extends ibas.BOView implements sys.ILoginView {
                 that.fireViewEvents(that.loginEvent);
             }
         };
-        return this.form;
+        document.addEventListener("keydown", this.keyDownListener, false);
+    }
+    /** 关闭之后 */
+    onClosed(): void {
+        super.onClosed();
+        document.removeEventListener("keydown", this.keyDownListener, false);
     }
     private form: sap.ui.layout.form.SimpleForm;
     private getContorl(name: string): any {
@@ -151,7 +163,6 @@ export class LoginView extends ibas.BOView implements sys.ILoginView {
     private get sltLanguages(): sap.m.Select {
         return this.getContorl(LoginView.UI_LOGIN_LANGUAGE);
     }
-
 }
 /**
  * 视图-登陆

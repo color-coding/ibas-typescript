@@ -59,6 +59,8 @@ export abstract class Application<T extends IView> extends AbstractApplication<T
             throw new Error(i18n.prop("sys_invalid_view", this.name));
         }
         this.view.isDisplayed = true;
+        // 延迟100毫秒激活显示函数
+        setTimeout(this.view.onDisplayed(), 100);
         logger.log(emMessageLevel.DEBUG, "app: [{0} - {1}]'s view displayed.", this.id, this.name);
         this.viewShowed();
     }

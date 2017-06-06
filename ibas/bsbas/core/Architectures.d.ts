@@ -74,6 +74,10 @@ export interface IView {
     closeEvent: Function;
     /** 键盘按钮按下 */
     onKeyDown(event: KeyboardEvent): void;
+    /** 显示之后 */
+    onDisplayed(): void;
+    /** 关闭之后 */
+    onClosed(): void;
 }
 /**
  * 应用-视图
@@ -149,7 +153,7 @@ export interface IModuleConsole extends IModule {
     /** 初始化完成 */
     isInitialized: boolean;
     /** 根地址 */
-    rootUrl:string;
+    rootUrl: string;
     /** 功能集合 */
     functions(): IModuleFunction[];
     /** 默认功能 */

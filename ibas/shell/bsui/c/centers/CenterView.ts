@@ -289,6 +289,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             icon: module.icon,
             expanded: false,
             select(): void {
+                // 模块菜单激活，打开第一个子项
                 let item: sap.tnt.NavigationListItem = this.getItems()[0];
                 if (!ibas.objects.isNull(item)) {
                     item.fireSelect();
@@ -366,16 +367,20 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         let ui: sap.ui.core.Element = sap.ui.getCore().byId(view.id);
         if (!ibas.objects.isNull(ui) && ui instanceof sap.ui.core.Control) {
             // 视图自身可设置忙状态
-            ui.setBusy(busy);
+            if (ui.getBusy() !== busy) {
+                ui.setBusy(busy);
+            }
         } else {
             // 视图不能设置忙状态，使用全局对话框
             if (busy) {
                 if (ibas.objects.isNull(this.busyDialog)) {
                     this.busyDialog = new sap.m.BusyDialog("");
                 }
-                this.busyDialog.setTitle(view.title);
-                this.busyDialog.setText(msg);
-                this.busyDialog.open();
+                if (!this.busyDialog.getVisible()) {
+                    this.busyDialog.setTitle(view.title);
+                    this.busyDialog.setText(msg);
+                    this.busyDialog.open();
+                }
             } else {
                 if (!ibas.objects.isNull(this.busyDialog)) {
                     this.busyDialog.close();
