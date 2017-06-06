@@ -41,6 +41,10 @@ declare namespace sap {
                 constructor(sId: string, mSettings?: any);
 
             }
+            export class TreeTable extends Table {
+                constructor(mSettings?: any);
+                constructor(sId: string, mSettings?: any);
+            }
         }
     }
 }
