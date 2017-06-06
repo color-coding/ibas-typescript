@@ -283,12 +283,18 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
     showModule(module: ibas.IModuleConsole): void {
         let that: this = this;
         let nvList: sap.tnt.NavigationList = this.navigation.getItem();
-        let nvItem: sap.tnt.NavigationListItem = new sap.tnt.NavigationListItem();
-        nvItem.setKey(module.name);
-        nvItem.setText(module.description);
-        nvItem.setIcon(module.icon);
-        nvItem.setEnabled(true);
-        nvItem.setExpanded(false);
+        let nvItem: sap.tnt.NavigationListItem = new sap.tnt.NavigationListItem("", {
+            key: module.name,
+            text: module.description,
+            icon: module.icon,
+            expanded: false,
+            select(): void {
+                let item: sap.tnt.NavigationListItem = this.getItems()[0];
+                if (!ibas.objects.isNull(item)) {
+                    item.fireSelect();
+                }
+            }
+        });
         let showFunctions: Function = function (): void {
             /** 自动激活的功能 */
             let autoActivetedFunction: string = ibas.config.get(CONFIG_ITEM_AUTO_ACTIVETED_FUNCTION);
@@ -306,20 +312,21 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                     }
                     if (mdNVItem === nvItem) {
                         // 不存在分组，新建一个
-                        mdNVItem = new sap.tnt.NavigationListItem();
-                        mdNVItem.setKey(ibas.strings.format("{0}_{1}", module.name, funItem.category));
-                        mdNVItem.setText(ibas.i18n.prop(funItem.category));
-                        mdNVItem.setEnabled(true);
-                        mdNVItem.setExpanded(false);
-                        mdNVItem.setHasExpander(true);
+                        mdNVItem = new sap.tnt.NavigationListItem("", {
+                            key: ibas.strings.format("{0}_{1}", module.name, funItem.category),
+                            text: ibas.i18n.prop(funItem.category),
+                            expanded: false,
+                            hasExpander: true,
+                        });
                         newGroup = true;
                     }
                 }
-                let subNvItem: sap.tnt.NavigationListItem = new sap.tnt.NavigationListItem();
-                subNvItem.setKey(funItem.name);
-                subNvItem.setText(funItem.description);
-                subNvItem.attachSelect(null, function (): void {
-                    that.fireViewEvents(that.activateFunctionsEvent, funItem.id);
+                let subNvItem: sap.tnt.NavigationListItem = new sap.tnt.NavigationListItem("", {
+                    key: funItem.name,
+                    text: funItem.description,
+                    select(): void {
+                        that.fireViewEvents(that.activateFunctionsEvent, funItem.id);
+                    }
                 });
                 mdNVItem.addItem(subNvItem);
                 if (newGroup) {
@@ -329,7 +336,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                 if (funItem.id === autoActivetedFunction) {
                     setTimeout(function (): void {
                         that.fireViewEvents(that.activateFunctionsEvent, funItem.id);
-                    }, 30);
+                    }, that.statusDelay && that.statusDelay > 0 ? that.statusDelay * 1.2 : 3000);
                 }
             }
         };
