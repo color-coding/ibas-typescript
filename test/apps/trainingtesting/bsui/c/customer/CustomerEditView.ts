@@ -29,33 +29,37 @@ export class CustomerEditView extends ibas.BOEditView implements ICustomerEditVi
                 new sap.ui.core.Title("", { text: ibas.i18n.prop("trainingtesting_basis_information") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_customer_code") }),
                 new sap.m.Input("", {
-                    value: "{/code}",
                     type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/code"
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_customer_name") }),
                 new sap.m.Input("", {
-                    value: "{/name}",
                     type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/name"
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_customer_activated") }),
                 new sap.m.Select("", {
                     items: utils.createComboBoxItems(ibas.emYesNo)
                 }).bindProperty("selectedKey", {
-                    path: "{/activated}",
+                    path: "/activated",
                     type: "sap.ui.model.type.Integer"
                 }),
                 new sap.ui.core.Title("", { text: ibas.i18n.prop("trainingtesting_other_information") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_customer_docentry") }),
                 new sap.m.Input("", {
-                    value: "{/docEntry}",
                     enabled: false,
                     type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/docEntry"
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_customer_objectcode") }),
                 new sap.m.Input("", {
-                    value: "{/objectCode}",
                     enabled: false,
                     type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/objectCode"
                 }),
             ]
         });
