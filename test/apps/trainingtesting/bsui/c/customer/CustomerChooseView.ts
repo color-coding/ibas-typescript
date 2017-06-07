@@ -79,10 +79,7 @@ export class CustomerChooseView extends ibas.BOChooseView implements ICustomerCh
                     template: new sap.m.Text("", {
                         wrapping: false
                     }).bindProperty("text", {
-                        path: "name",
-                        formatter(data: any): any {
-                            return ibas.enums.describe(ibas.emDocumentStatus, data);
-                        }
+                        path: "name"
                     })
                 }),
             ]
@@ -123,7 +120,7 @@ export class CustomerChooseView extends ibas.BOChooseView implements ICustomerCh
         }
         if (!done) {
             // 没有显示数据
-            this.table.setModel(new sap.ui.model.json.JSONModel({rows: datas}));
+            this.table.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
         }
         this.table.setBusy(false);
     }

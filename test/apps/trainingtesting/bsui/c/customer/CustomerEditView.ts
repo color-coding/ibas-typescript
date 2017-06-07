@@ -26,6 +26,37 @@ export class CustomerEditView extends ibas.BOEditView implements ICustomerEditVi
         let that: this = this;
         this.form = new sap.ui.layout.form.SimpleForm("", {
             content: [
+                new sap.ui.core.Title("", { text: ibas.i18n.prop("trainingtesting_basis_information") }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_customer_code") }),
+                new sap.m.Input("", {
+                    value: "{/code}",
+                    type: sap.m.InputType.Text
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_customer_name") }),
+                new sap.m.Input("", {
+                    value: "{/name}",
+                    type: sap.m.InputType.Text
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_customer_activated") }),
+                new sap.m.Select("", {
+                    items: utils.createComboBoxItems(ibas.emYesNo)
+                }).bindProperty("selectedKey", {
+                    path: "{/activated}",
+                    type: "sap.ui.model.type.Integer"
+                }),
+                new sap.ui.core.Title("", { text: ibas.i18n.prop("trainingtesting_other_information") }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_customer_docentry") }),
+                new sap.m.Input("", {
+                    value: "{/docEntry}",
+                    enabled: false,
+                    type: sap.m.InputType.Text
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_customer_objectcode") }),
+                new sap.m.Input("", {
+                    value: "{/objectCode}",
+                    enabled: false,
+                    type: sap.m.InputType.Text
+                }),
             ]
         });
         this.page = new sap.m.Page("", {

@@ -34,7 +34,7 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
         let that: this = this;
         this.form = new sap.ui.layout.form.SimpleForm("", {
             content: [
-                new sap.ui.core.Title("", { text: "Customer" }),
+                new sap.ui.core.Title("", { text: ibas.i18n.prop("trainingtesting_basis_information") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_customercode") }),
                 new sap.m.Input("", {
                     showValueHelp: true,
@@ -50,7 +50,7 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
                 }).bindProperty("dateValue", {
                     path: "{/documentDate}"
                 }),
-                new sap.ui.core.Title("", { text: "Document" }),
+                new sap.ui.core.Title("", { text: ibas.i18n.prop("trainingtesting_other_information") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_docentry") }),
                 new sap.m.Input("", {
                     value: "{/docEntry}",

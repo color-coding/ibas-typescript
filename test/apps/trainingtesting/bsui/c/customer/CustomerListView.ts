@@ -52,10 +52,7 @@ export class CustomerListView extends ibas.BOListView implements ICustomerListVi
                     template: new sap.m.Text("", {
                         wrapping: false
                     }).bindProperty("text", {
-                        path: "name",
-                        formatter(data: any): any {
-                            return ibas.enums.describe(ibas.emDocumentStatus, data);
-                        }
+                        path: "name"
                     })
                 }),
             ]
@@ -186,7 +183,7 @@ export class CustomerListView extends ibas.BOListView implements ICustomerListVi
         }
         if (!done) {
             // 没有显示数据
-            this.table.setModel(new sap.ui.model.json.JSONModel({rows: datas}));
+            this.table.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
         }
         this.table.setBusy(false);
     }

@@ -39,7 +39,7 @@ export class MaterialListView extends ibas.BOListView implements IMaterialListVi
                         wrapping: false,
                         press(event: any): void {
                             ibas.servicesManager.runLinkService({
-                                boCode: bo.Customer.BUSINESS_OBJECT_CODE,
+                                boCode: bo.Material.BUSINESS_OBJECT_CODE,
                                 linkValue: event.getSource().getText()
                             });
                         }
@@ -53,9 +53,6 @@ export class MaterialListView extends ibas.BOListView implements IMaterialListVi
                         wrapping: false
                     }).bindProperty("text", {
                         path: "name",
-                        formatter(data: any): any {
-                            return ibas.enums.describe(ibas.emDocumentStatus, data);
-                        }
                     })
                 }),
             ]
@@ -186,7 +183,7 @@ export class MaterialListView extends ibas.BOListView implements IMaterialListVi
         }
         if (!done) {
             // 没有显示数据
-            this.table.setModel(new sap.ui.model.json.JSONModel({rows: datas}));
+            this.table.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
         }
         this.table.setBusy(false);
     }

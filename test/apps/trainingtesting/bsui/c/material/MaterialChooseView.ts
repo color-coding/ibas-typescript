@@ -66,7 +66,7 @@ export class MaterialChooseView extends ibas.BOChooseView implements IMaterialCh
                         wrapping: false,
                         press(event: any): void {
                             ibas.servicesManager.runLinkService({
-                                boCode: bo.Customer.BUSINESS_OBJECT_CODE,
+                                boCode: bo.Material.BUSINESS_OBJECT_CODE,
                                 linkValue: event.getSource().getText()
                             });
                         }
@@ -80,9 +80,6 @@ export class MaterialChooseView extends ibas.BOChooseView implements IMaterialCh
                         wrapping: false
                     }).bindProperty("text", {
                         path: "name",
-                        formatter(data: any): any {
-                            return ibas.enums.describe(ibas.emDocumentStatus, data);
-                        }
                     })
                 }),
             ]
@@ -123,7 +120,7 @@ export class MaterialChooseView extends ibas.BOChooseView implements IMaterialCh
         }
         if (!done) {
             // 没有显示数据
-            this.table.setModel(new sap.ui.model.json.JSONModel({rows: datas}));
+            this.table.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
         }
         this.table.setBusy(false);
     }
