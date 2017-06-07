@@ -42,13 +42,13 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
                         that.fireViewEvents(that.chooseSalesOrderCustomerEvent);
                     }
                 }).bindProperty("value", {
-                    path: "/customerCode"
+                    path: "{/customerCode}"
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_documentdate") }),
                 new sap.m.DatePicker("", {
                     valueFormat: "yyyy-MM-dd",
                 }).bindProperty("dateValue", {
-                    path: "/documentDate"
+                    path: "{/documentDate}"
                 }),
                 new sap.ui.core.Title("", { text: "Document" }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_docentry") }),
@@ -60,14 +60,14 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
                 new sap.m.Select("", {
                     items: utils.createComboBoxItems(ibas.emDocumentStatus)
                 }).bindProperty("selectedKey", {
-                    path: "/documentStatus",
+                    path: "{/documentStatus}",
                     type: "sap.ui.model.type.Integer"
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_canceled") }),
                 new sap.m.Select("", {
                     items: utils.createComboBoxItems(ibas.emYesNo)
                 }).bindProperty("selectedKey", {
-                    path: "canceled",
+                    path: "{/canceled}",
                     type: "sap.ui.model.type.Integer"
                 })
             ]
