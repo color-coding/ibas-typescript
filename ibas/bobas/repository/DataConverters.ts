@@ -11,7 +11,7 @@ import {
     dates, enums, OperationMessages, FileData, OperationInformation, List,
     emApprovalStatus, emBOStatus, emDocumentStatus, emYesNo, ArrayList,
     emMessageLevel, emConditionOperation, emConditionRelationship, emSortType,
-    DataTable, DataTableColumn, DataTableRow,
+    DataTable, DataTableColumn, DataTableRow, KeyText, KeyValue
 } from "../data/index";
 import {
     IBusinessObject, IDataConverter, BusinessObjectBase, BusinessObjectListBase,
@@ -154,6 +154,22 @@ export abstract class DataConverter4j implements IDataConverter {
                 OriginalName: newData.originalName
             };
             return remote;
+        } else if (objects.instanceOf(data, KeyText)) {
+            let newData: KeyText = data;
+            let remote: ibas4j.KeyText = {
+                type: data.constructor.name,
+                Key: newData.key,
+                Text: newData.text,
+            };
+            return remote;
+        } else if (objects.instanceOf(data, KeyValue)) {
+            let newData: KeyValue = data;
+            let remote: ibas4j.KeyValue = {
+                type: data.constructor.name,
+                Key: newData.key,
+                Value: newData.value,
+            };
+            return remote;
         } else if (!objects.isNull(this.boConverter)) {
             // 尝试业务对象转换
             return this.boConverter.convert(data);
@@ -294,6 +310,18 @@ export abstract class DataConverter4j implements IDataConverter {
             for (let item of remote.Cells) {
                 newData.cells.add(item);
             }
+            return newData;
+        } else if (data.type === KeyText.name) {
+            let remote: ibas4j.KeyText = data;
+            let newData: KeyText = new KeyText();
+            newData.key = remote.Key;
+            newData.text = remote.Text;
+            return newData;
+        } else if (data.type === KeyValue.name) {
+            let remote: ibas4j.KeyValue = data;
+            let newData: KeyValue = new KeyValue();
+            newData.key = remote.Key;
+            newData.value = remote.Value;
             return newData;
         } else if (!objects.isNull(this.boConverter)) {
             // 尝试业务对象解析

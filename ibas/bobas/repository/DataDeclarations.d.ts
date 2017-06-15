@@ -126,3 +126,17 @@ export interface DataTableRow extends DataDeclaration {
     /** 值 */
     Cells: string[];
 }
+/** 键值 */
+export interface KeyValue extends DataDeclaration {
+    /** 键 */
+    Key: string;
+    /** 值 */
+    Value: any;
+}
+/** 键描述 */
+export interface KeyText extends DataDeclaration {
+    /** 键 */
+    Key: string;
+    /** 值 */
+    Text: string;
+}

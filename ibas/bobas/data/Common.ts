@@ -211,7 +211,6 @@ export class StringBuilder {
         return str;
     }
 }
-
 /**
  * 键值
  */
@@ -232,6 +231,27 @@ export class KeyValue {
     key: string;
     /** 值 */
     value: any;
+}
+/**
+ * 键描述
+ */
+export class KeyText {
+    constructor();
+    constructor(value: string);
+    constructor(key: string, text: string);
+    constructor() {
+        if (arguments[0] !== undefined) {
+            this.key = arguments[0];
+            this.text = arguments[0];
+        }
+        if (arguments[1] !== undefined) {
+            this.text = arguments[1];
+        }
+    }
+    /** 键 */
+    key: string;
+    /** 描述 */
+    text: string;
 }
 /**
  * 文件数据
