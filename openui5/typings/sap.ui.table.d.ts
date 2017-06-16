@@ -12,6 +12,11 @@ declare namespace sap {
                 Fixed,
                 Interactive
             }
+            export enum SelectionMode {
+                MultiToggle,
+                None,
+                Single
+            }
             export class Table extends sap.ui.core.Control {
                 constructor(mSettings?: any);
                 constructor(sId: string, mSettings?: any);

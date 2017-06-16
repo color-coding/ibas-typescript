@@ -33,7 +33,7 @@ export default class ViewShowerDefault implements ibas.IViewShower {
             || viewContent instanceof sap.ui.core.Control) {
             let app: sap.ui.core.Element = sap.ui.getCore().byId("ibas-app");
             if (app instanceof sap.m.App) {
-                let page = app.getInitialPage();
+                let page: any = app.getInitialPage();
                 if (page instanceof sap.ui.core.Control) {
                     page.destroy(true);
                 }

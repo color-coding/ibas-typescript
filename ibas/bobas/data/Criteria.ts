@@ -374,6 +374,8 @@ export class Condition implements ICondition {
 
     constructor(alias: string, operation: emConditionOperation);
     constructor(alias: string, operation: emConditionOperation, value: string);
+    constructor(alias: string, operation: emConditionOperation, value: number);
+    constructor(alias: string, operation: emConditionOperation, value: Date);
     constructor();
     constructor() {
         this.alias = "";

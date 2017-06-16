@@ -229,7 +229,20 @@ export module enums {
  * 日期
  */
 export module dates {
-
+    /**
+     * 当前时间
+     */
+    export function now(): Date {
+        return new Date(Date.now());
+    }
+    /**
+     * 当前日期
+     */
+    export function today(): Date {
+        let date: Date = now();
+        // 月份从0开始
+        return new Date(strings.format("{0}-{1}-{2}", date.getFullYear(), date.getMonth() + 1, date.getDate()));
+    }
     /**
      * 解析日期，支持以下格式
      * yyyy/MM/dd'T'HH:mm:ss
@@ -284,7 +297,8 @@ export module dates {
                 second = Number.parseInt(tmps[2]);
             }
         }
-        return new Date(year, month, day, hour, minute, second);
+        // 月份从0开始
+        return new Date(year, month - 1, day, hour, minute, second);
     }
 
     const DATA_SEPARATOR: string = "-";
@@ -337,7 +351,7 @@ export module dates {
             minute: number = value.getMinutes(),
             second: number = value.getSeconds();
         format = format.replace(DATA_PART_YEAR, strings.fill(year, DATA_PART_YEAR.length, "0"));
-        format = format.replace(DATA_PART_MONTH, strings.fill(month, DATA_PART_MONTH.length, "0"));
+        format = format.replace(DATA_PART_MONTH, strings.fill(month + 1, DATA_PART_MONTH.length, "0"));
         format = format.replace(DATA_PART_DAY, strings.fill(day, DATA_PART_DAY.length, "0"));
         format = format.replace(DATA_PART_HOUR, strings.fill(hour, DATA_PART_HOUR.length, "0"));
         format = format.replace(DATA_PART_MINUTE, strings.fill(minute, DATA_PART_MINUTE.length, "0"));

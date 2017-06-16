@@ -39,6 +39,14 @@ export class VariablesManager {
         }
         this.variables.set(variable.key, variable);
     }
+    /** 获取所有变量 */
+    all(): KeyValue[] {
+        let values: Array<KeyValue> = new Array<KeyValue>();
+        for (let item of this.variables.values()) {
+            values.push(item);
+        }
+        return values;
+    }
     /** 获取变量 */
     get(key: string): KeyValue {
         if (objects.isNull(this.variables)) {
