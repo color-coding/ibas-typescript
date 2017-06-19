@@ -6,12 +6,12 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { objects } from "./Data";
+import { objects } from "./Datas";
 
 /**
  * 地址
  */
-export module url {
+export module urls {
     /** 跟地址标记 */
     export const ROOT_URL_SIGN: string = ".../";
     /** 上级标记 */

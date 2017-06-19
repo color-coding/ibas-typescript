@@ -11,9 +11,9 @@
  */
 /// <reference path="../../3rdparty/jquery.d.ts" />
 import { emMessageLevel } from "../data/Enums";
-import { objects } from "../data/Data";
+import { objects } from "../data/Datas";
 import { strings } from "../data/Strings";
-import { url } from "../data/Url";
+import { urls } from "../data/Urls";
 import { ArrayList } from "../data/Common";
 import { config } from "../configuration/index";
 import { logger } from "../messages/index";
@@ -68,7 +68,7 @@ export class I18N {
         if (objects.isNull(address)) {
             return;
         }
-        address = url.normalize(address);
+        address = urls.normalize(address);
         if (!this.languageFiles.contain(address)) {
             this.languageFiles.add(address);
         }

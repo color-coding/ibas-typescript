@@ -7,7 +7,7 @@
  */
 
 import { ArrayList } from "./Common";
-import { dates, numbers } from "./Data";
+import { dates, numbers } from "./Datas";
 
 
 /** 数据表 */

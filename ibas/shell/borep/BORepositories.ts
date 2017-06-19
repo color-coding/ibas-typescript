@@ -167,7 +167,7 @@ export class BORepositoryShellOffline extends BORepositoryShell {
                         opRslt.resultCode = 0;
                         opRslt.message = "ok.";
                         opRslt.resultObjects.add(item);
-                        opRslt.userSign = ibas.uuid.random();
+                        opRslt.userSign = ibas.uuids.random();
                         break;
                     }
                 }

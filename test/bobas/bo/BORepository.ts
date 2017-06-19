@@ -27,7 +27,7 @@ export class BORepositoryTest extends bobas.BORepositoryApplication {
                 parsing(data: any): any {
                     return data;
                 }
-            }
+            };
         }
         return new DataConverter4Test();
     }

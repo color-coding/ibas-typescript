@@ -10,7 +10,7 @@
 import * as bobas from "../../../ibas/bobas/index";
 
 // 测试唯一标记uuid
-console.log(bobas.uuid.random());
+console.log(bobas.uuids.random());
 // 测试配置项
 console.log(bobas.strings.format("debug enabled is {0}",
     bobas.config.get(bobas.CONFIG_ITEM_DEBUG_MODE, false)));
@@ -18,7 +18,7 @@ console.log(bobas.strings.format("message level is {0}",
     bobas.config.get(bobas.CONFIG_ITEM_MESSAGES_LEVEL, bobas.emMessageLevel.FATAL, bobas.emMessageLevel)));
 // 测试读取资源文件
 console.log(bobas.i18n.prop("sys_hello_world"));
-bobas.i18n.load(bobas.url.rootUrl(undefined) + "/../resources/languages/test.zh_CN.json");
+bobas.i18n.load(bobas.urls.rootUrl(undefined) + "/../resources/languages/test.zh_CN.json");
 console.log(bobas.i18n.prop("sys_hello_world"));
 // 测试日志
 bobas.logger.log(bobas.emMessageLevel.FATAL, "a fatal error", "test");
@@ -60,7 +60,7 @@ console.log(bobas.strings.format("I'm {2}.", "niuren.zhu", "coding", "some one")
 bobas.assert.equals("string.count faild.", bobas.strings.count("I'm niuren.zhu.", "zhu"), 1);
 bobas.assert.equals("string.count faild.", bobas.strings.count("I'm niuren.zhu.", "."), 2);
 // 测试地址处理
-bobas.assert.equals("string.count faild.", bobas.url.normalize(".../test/util/.././../testUtil.html"), document.location.href);
+bobas.assert.equals("string.count faild.", bobas.urls.normalize(".../test/util/.././../testUtil.html"), document.location.href);
 // 测试字符串构造器
 let builder: bobas.StringBuilder = new bobas.StringBuilder();
 builder.append("I");
@@ -72,7 +72,7 @@ builder.append(".");
 console.log(builder.toString());
 // 测试文件仓库
 let fileRepository = new bobas.FileRepositoryAjax();
-fileRepository.address = bobas.url.rootUrl(undefined) + "/../../repository";
+fileRepository.address = bobas.urls.rootUrl(undefined) + "/../../repository";
 fileRepository.loadFile("salesorders.json", {
     onCompleted(opRslt): void {
         console.log(opRslt.message);

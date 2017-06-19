@@ -7,7 +7,7 @@
  */
 
 import {
-    List, ArrayList, objects, i18n, strings, uuid,
+    List, ArrayList, objects, i18n, strings, uuids,
     config, logger, emMessageLevel, CONFIG_ITEM_DEBUG_MODE,
 } from "../../bobas/index";
 import { emPlantform, emMessageType } from "../data/index";
@@ -258,7 +258,7 @@ export abstract class ModuleConsole extends Module implements IModuleConsole {
         if (item instanceof ModuleFunction) {
             // 注册模块功能
             if (objects.isNull(item.id)) {
-                item.id = uuid.random();
+                item.id = uuids.random();
             }
             item.navigation = this.navigation();
             super.register(item);
@@ -323,7 +323,7 @@ export abstract class ViewNavigation implements IViewNavigation {
         if (objects.isNull(view)) {
             throw new Error(i18n.prop("sys_invalid_view", id));
         }
-        view.id = strings.format("{0} - {1}", id, uuid.random());
+        view.id = strings.format("{0} - {1}", id, uuids.random());
         return view;
     }
 

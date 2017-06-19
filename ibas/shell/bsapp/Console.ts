@@ -86,7 +86,7 @@ export class Console extends ibas.ModuleConsole {
     /** 运行 */
     run(): void {
         // 获取壳根地址
-        let rootUrl: string = ibas.url.rootUrl(Console.ROOT_FILE_NAME);
+        let rootUrl: string = ibas.urls.rootUrl(Console.ROOT_FILE_NAME);
         // 加载配置-壳
         ibas.config.load(ibas.strings.format("{0}/{1}", rootUrl, ibas.CONFIG_FILE_NAME));
         // 加载语言-壳
@@ -95,7 +95,7 @@ export class Console extends ibas.ModuleConsole {
         this.description = ibas.i18n.prop(this.name);
         this.icon = ibas.strings.format("{0}/resources/images/logo_small.png", rootUrl);
         // 加载网站配置文件
-        let siteUrl: string = ibas.url.rootUrl(undefined);
+        let siteUrl: string = ibas.urls.rootUrl(undefined);
         if (siteUrl !== rootUrl) {
             // 网站与壳地址不同，加载网站配置
             ibas.config.load(ibas.strings.format("{0}/{1}", siteUrl, ibas.CONFIG_FILE_NAME));

@@ -22,7 +22,7 @@ export class LoginApp extends sys.LoginApp<ILoginView> {
     protected viewShowed(): void {
         super.viewShowed();
         // 获取支持的语言列表
-        let address: string = ibas.url.normalize(".../config.json");
+        let address: string = ibas.urls.normalize(".../config.json");
         let that: this = this;
         var JQryAjxSetting: JQueryAjaxSettings = {
             url: address,

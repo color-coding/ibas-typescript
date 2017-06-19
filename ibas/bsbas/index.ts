@@ -7,7 +7,7 @@
  */
 
 // 模块索引文件，此文件集中导出类
-import { CONFIG_FILE_NAME, config, strings, i18n, url } from "../bobas/index";
+import { CONFIG_FILE_NAME, config, strings, i18n, urls } from "../bobas/index";
 /** 应用系统库（bsbas）文件名称 */
 export const LIBRARY_BSBAS_ROOT_FILE_NAME: string = "/bsbas/index";
 /** 框架初始化 */
@@ -24,7 +24,7 @@ let init: Function = function (): void {
             author: "niuren.zhu"
         };
 
-        let rootUrl: string = url.rootUrl(LIBRARY_BSBAS_ROOT_FILE_NAME);
+        let rootUrl: string = urls.rootUrl(LIBRARY_BSBAS_ROOT_FILE_NAME);
         // 加载配置-框架默认
         config.load(strings.format("{0}/{1}", rootUrl, CONFIG_FILE_NAME));
         // 加载语言-框架默认

@@ -17,8 +17,8 @@ export * from "./Criteria";
 export * from "./OperationResult.d";
 export * from "./OperationResult";
 export * from "./Enums";
-export * from "./Data";
+export * from "./Datas";
 export * from "./Strings";
-export * from "./Url";
+export * from "./Urls";
 export * from "./DataTable";
 

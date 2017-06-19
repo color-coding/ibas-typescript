@@ -8,7 +8,7 @@
 
 /// <reference path="../../3rdparty/index.d.ts" />
 import {
-    i18n, logger, emMessageLevel, IOperationResult, objects, config, strings, requires, url,
+    i18n, logger, emMessageLevel, IOperationResult, objects, config, strings, requires, urls,
     ModuleConsole, IModuleConsole, IModuleFunction, IApplication, enums, emPlantform,
     IView, IBarView, IBarApplication, IViewShower, AbstractApplication, IMessgesCaller,
     emMessageType, emPrivilegeSource, emAuthoriseType, emMessageAction, variablesManager,
@@ -185,7 +185,7 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
     protected initModuleConsole(module: IUserModule): void {
         // 模块入口地址
         let address: string = module.address;
-        address = url.normalize(address);
+        address = urls.normalize(address);
         if (!address.endsWith("/")) {
             address += "/";
         }
@@ -256,7 +256,7 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
                     let done: boolean = console.setRepository(module.repository);
                     // 注册模块业务仓库默认地址，创建实例时默认取此地址
                     if (!objects.isNull(console.name) && done) {
-                        module.repository = url.normalize(module.repository);
+                        module.repository = urls.normalize(module.repository);
                         let repositoryName: string = strings.format(MODULE_REPOSITORY_NAME_TEMPLATE, console.name);
                         let configName: string = strings.format(
                             CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS

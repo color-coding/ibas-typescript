@@ -1,10 +1,10 @@
 ﻿/**
-* @license
-* Copyright color-coding studio. All Rights Reserved.
-*
-* Use of this source code is governed by an Apache License, Version 2.0
-* that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
-*/
+ * @license
+ * Copyright color-coding studio. All Rights Reserved.
+ *
+ * Use of this source code is governed by an Apache License, Version 2.0
+ * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
+ */
 
 import * as bobas from "../../../ibas/bobas/index";
 import { SalesOrder } from "./SalesOrder";
@@ -119,7 +119,7 @@ boRepository.saveSalesOrder({
 });
 // 测试离线仓库
 boRepository.offline = true;
-boRepository.address = bobas.url.rootUrl(undefined) + "/../../repository";
+boRepository.address = bobas.urls.rootUrl(undefined) + "/../../repository";
 boRepository.fetchSalesOrder({
     criteria: criteria,
     onCompleted(opRslt: bobas.IOperationResult<SalesOrder>): void {

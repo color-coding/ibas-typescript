@@ -7,7 +7,7 @@
  */
 
 import {
-    objects, strings, emMessageLevel, url
+    objects, strings, emMessageLevel, urls
 } from "../data/index";
 import {
     FetchCaller, SaveCaller, IBORepository, IBORepositoryReadonly,
@@ -56,7 +56,7 @@ export abstract class BORepositoryApplication {
             address = config.get(strings.format(CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS, name));
         }
         if (!objects.isNull(address)) {
-            address = url.normalize(address);
+            address = urls.normalize(address);
             this.address = address;
             logger.log(emMessageLevel.DEBUG, "repository: [{0}] using address [{1}].", name, address);
         }

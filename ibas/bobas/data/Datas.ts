@@ -153,7 +153,7 @@ export module objects {
 /**
  * 唯一标识
  */
-export module uuid {
+export module uuids {
     export function random(): string {
         function s4(): string {
             return Math.floor((1 + Math.random()) * 0x10000)

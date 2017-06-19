@@ -13,7 +13,7 @@ import { SalesOrder, SalesOrderItem } from "./SalesOrder";
 /**
  * Test 模块的数据转换者
  */
-export class DataConverter4Test extends bobas.DataConverter4j{
+export class DataConverter4Test extends bobas.DataConverter4j {
 
     /**
      * 创建业务对象转换者
@@ -60,7 +60,7 @@ export class TestBOConverter extends bobas.BOConverter {
      * @param property 属性名称
      * @param value 值
      * @returns 解析的值
-    */
+     */
     protected parsingData(boName: string, property: string, value: any): any {
         if (1 > 2) {
             // 特殊处理，否则使用默认
