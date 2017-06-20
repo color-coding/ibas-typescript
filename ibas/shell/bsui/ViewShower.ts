@@ -83,8 +83,7 @@ export default class ViewShowerDefault implements ibas.IViewShower {
     messages(caller: ibas.IMessgesCaller): void {
         jQuery.sap.require("sap.m.MessageBox");
         sap.m.MessageBox.show(
-            caller.message,
-            {
+            caller.message, {
                 icon: utils.toMessageBoxIcon(caller.type),
                 title: ibas.i18n.prop("sys_shell_name"),
                 actions: utils.toMessageBoxAction(caller.actions),
