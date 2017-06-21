@@ -30,8 +30,6 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
     private header: sap.tnt.ToolHeader;
     /** 页面功能导航，左 */
     private navigation: sap.tnt.SideNavigation;
-    /** 状态消息条 */
-    private statusBar: sap.m.Toolbar;
     /** 消息历史框 */
     private messageHistory: sap.m.MessagePopover;
     /** 窗体显示 */
@@ -40,8 +38,6 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
     private userBar: sap.m.Button;
     /** 忙对话框 */
     private busyDialog: sap.m.BusyDialog;
-    /** 状态消息延迟时间（毫秒） */
-    private statusDelay?: number;
     /** 激活帮助 */
     helpEvent: Function;
     /** 激活关于 */
@@ -175,21 +171,12 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                 that.destroyCurrentView();
             }
         }));
-        this.form.setFloatingFooter(true); // 浮起状态条
-        this.statusBar = new sap.m.OverflowToolbar("", {
-            design: sap.m.ToolbarDesign.Transparent,
-            height: "auto",
-            width: "auto"
-        });
-        this.form.setFooter(this.statusBar);
         this.page.setSideContent(this.navigation);
         this.page.setSideExpanded(false);
         this.page.addMainContent(this.form);
         this.id = this.page.getId();
         return this.page;
     }
-    private messageTime: number;
-    private messageStrip: sap.m.MessageStrip;
 	/**
 	 * 显示状态消息
 	 * @param type 消息类型
@@ -211,52 +198,27 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         }
         // 延迟清除消息
         let that: this = this;
-        if (ibas.objects.isNull(this.statusDelay)) {
-            this.statusDelay = ibas.config.get(CONFIG_ITEM_STATUS_MESSAGES_DELAY, 0) * 1000;
-            if (this.statusDelay > 0) {
-                setInterval(function (): void {
-                    if (Date.now() > that.messageTime) {
-                        if (!ibas.objects.isNull(that.messageStrip)) {
-                            that.messageStrip.close();
-                        }
-                    }
-                }, this.statusDelay);
-            }
-        }
-        if (ibas.objects.isNull(this.messageStrip)) {
-            this.messageStrip = new sap.m.MessageStrip("", {
-                text: message,
-                type: uiType,
-                customIcon: uiIcon,
-                showIcon: true,
-                showCloseButton: this.statusDelay > 0 ? false : true,
-                close(): void {
-                    that.messageStrip = null;
-                    that.statusBar.destroyContent();
-                    that.form.setFooter(null);
-                }
-            });
-            // 清理已有的
-            this.statusBar.destroyContent();
-            // 添加新的
-            this.statusBar.addContent(new sap.ui.layout.VerticalLayout("", {
-                width: "100%",
-                content: [this.messageStrip]
-            }));
-            this.form.setFooter(this.statusBar);
-        } else {
-            // 更新显示内容
-            this.messageStrip.setText(message);
-            this.messageStrip.setType(uiType);
-            this.messageStrip.setCustomIcon(uiIcon);
-        }
-        // 记录消息时间
-        this.messageTime = Date.now() + this.statusDelay;
-        // 记录历史
-        this.messageHistory.addItem(new sap.m.MessagePopoverItem("", {
-            type: uiType,
-            title: message,
-        }));
+        let duration: number = ibas.config.get(CONFIG_ITEM_STATUS_MESSAGES_DELAY, 0) * 1000;
+        sap.m.MessageToast.show(message, {
+            duration: duration,
+            width: "auto",
+            my: sap.ui.core.Popup.Dock.CenterBottom,
+            at: sap.ui.core.Popup.Dock.CenterBottom,
+            of: window,
+            offset: "0 0",
+            collision: "fit fit",
+            onClose(): void {
+                // 记录历史
+                that.messageHistory.addItem(new sap.m.MessagePopoverItem("", {
+                    type: uiType,
+                    title: message,
+                }));
+            },
+            autoClose: true,
+            animationTimingFunction: "linear",
+            animationDuration: 1000,
+            closeOnBrowserNavigation: true
+        });
     }
     /** 对话消息 */
     showMessageBox(caller: ibas.IMessgesCaller): void {
@@ -334,9 +296,10 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                 }
                 // 自动激活功能
                 if (funItem.id === autoActivetedFunction) {
+                    let duration: number = ibas.config.get(CONFIG_ITEM_STATUS_MESSAGES_DELAY, 0) * 1000;
                     setTimeout(function (): void {
                         that.fireViewEvents(that.activateFunctionsEvent, funItem.id);
-                    }, that.statusDelay && that.statusDelay > 0 ? that.statusDelay * 1.2 : 3000);
+                    }, duration > 0 ? duration * 1.2 : 3000);
                 }
             }
         };
