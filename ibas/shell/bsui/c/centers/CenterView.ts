@@ -400,6 +400,18 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                 view.id = container.getId();
                 // 缓存视图
                 this.viewQueue.set(view, container);
+            } else {
+                // 待显示的视图是页签一部分，则显示完整页签
+                if (container.getParent() instanceof sap.m.TabContainerItem) {
+                    let parent: any = container.getParent();
+                    if (parent.getParent() instanceof sap.m.TabContainer) {
+                        for (let item of this.mainPage.getMainContents()) {
+                            this.mainPage.removeMainContent(item);
+                        }
+                        this.mainPage.addMainContent(<sap.m.TabContainer>parent.getParent());
+                        return;
+                    }
+                }
             }
             // 主窗体加载
             if (ibas.objects.instanceOf(view, ibas.TabView)) {
