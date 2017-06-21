@@ -54,7 +54,7 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_docentry") }),
                 new sap.m.Input("", {
                     type: sap.m.InputType.Number
-                }).bindProperty("dateValue", {
+                }).bindProperty("value", {
                     path: "/docEntry"
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_documentstatus") }),
