@@ -81,9 +81,12 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
     /** 运行 */
     run(): void {
         this.show();
-        let user: IUser = arguments[0];
+        this.currentUser = arguments[0];
         // 初始化
-        this.init(user);
+        let that: this = this;
+        setTimeout(function (): void {
+            that.init();
+        }, 300);
     }
     /** 视图显示后 */
     protected viewShowed(): void {
@@ -108,29 +111,29 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
         app.viewShower = this;
         app.run();
     }
+    /** 当前用户 */
+    private currentUser: IUser;
     /** 初始化用户相关 */
-    private init(user: IUser): void {
-        if (objects.isNull(user)) {
+    private init(): void {
+        if (objects.isNull(this.currentUser)) {
             return;
         }
         // 注册运行变量
-        variablesManager.register(VARIABLE_NAME_USER_ID, user.id);
-        variablesManager.register(VARIABLE_NAME_USER_CODE, user.code);
-        variablesManager.register(VARIABLE_NAME_USER_NAME, user.name);
+        variablesManager.register(VARIABLE_NAME_USER_ID, this.currentUser.id);
+        variablesManager.register(VARIABLE_NAME_USER_CODE, this.currentUser.code);
+        variablesManager.register(VARIABLE_NAME_USER_NAME, this.currentUser.name);
         // 显示当前用户
-        this.view.showUser(user);
+        this.view.showUser(this.currentUser);
         // 加载用户相关
-        logger.log(emMessageLevel.DEBUG, "center: initializing user [{0} - {1}]'s modules.", user.id, user.code);
-        /*
+        logger.log(emMessageLevel.DEBUG, "center: initializing user [{0} - {1}]'s modules.", this.currentUser.id, this.currentUser.code);
         this.view.showStatusMessage(
             emMessageType.INFORMATION,
-            i18n.prop("sys_initialize_user_modules", user.code, user.name)
+            i18n.prop("sys_initialize_user_modules", this.currentUser.code, this.currentUser.name)
         );
-         */
         let that: this = this;
         let boRep: IBORepositorySystem = Factories.systemsFactory.createRepository();
         boRep.fetchUserModules({
-            user: user.code,
+            user: this.currentUser.code,
             platform: enums.toString(emPlantform, this.plantform),
             onCompleted: function (opRslt: IOperationResult<IUserModule>): void {
                 try {
@@ -153,7 +156,7 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
             }
         });
         boRep.fetchUserPrivileges({
-            user: user.code,
+            user: this.currentUser.code,
             platform: enums.toString(emPlantform, this.plantform),
             onCompleted: function (opRslt: IOperationResult<IUserPrivilege>): void {
                 try {
