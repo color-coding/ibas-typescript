@@ -2,7 +2,6 @@
 // Project: http://openui5.org/
 // Definitions by: Lukas May <https://www.dscsag.com/>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped 
-
 ///// <reference types="jquery" />
 /// <reference path="../../ibas/3rdparty/jquery.d.ts" />
 

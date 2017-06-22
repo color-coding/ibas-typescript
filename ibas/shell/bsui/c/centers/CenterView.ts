@@ -32,6 +32,10 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
     private navigation: sap.tnt.SideNavigation;
     /** 消息历史框 */
     private messageHistory: sap.m.MessagePopover;
+    /** 消息框 */
+    private messagePopover: sap.m.Popover;
+    /** 消息钮 */
+    private messageButton: sap.tnt.NavigationListItem;
     /** 用户信息条 */
     private userBar: sap.m.Button;
     /** 忙对话框 */
@@ -101,8 +105,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                             }
                         })
                     ]
-                }
-                );
+                });
                 (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
                 popover.openBy(event.getSource(), true);
             }
@@ -114,16 +117,27 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         // 消息历史框
         this.messageHistory = new sap.m.MessagePopover("", {
             initiallyExpanded: false,
+            placement: sap.m.VerticalPlacementType.Top,
         });
+        // 消息历史钮
+        this.messageButton = new sap.tnt.NavigationListItem("", {
+            text: ibas.i18n.prop("sys_shell_messages_history"),
+            icon: "sap-icon://message-popup",
+            select: function (event: any): void {
+                that.messageHistory.openBy(event.getSource());
+            }
+        });
+        // 消息条
+        this.messagePopover = new sap.m.Popover("", {
+            contentWidth: "auto",
+            showHeader: false,
+            placement: sap.m.PlacementType.HorizontalPreferredRight,
+        });
+        (<any>this.messagePopover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
+        // 固定菜单
         this.navigation.setFixedItem(new sap.tnt.NavigationList("", {
             items: [
-                new sap.tnt.NavigationListItem("", {
-                    text: ibas.i18n.prop("sys_shell_messages_history"),
-                    icon: "sap-icon://message-popup",
-                    select: function (event: any): void {
-                        that.messageHistory.openBy(event.getSource());
-                    }
-                })
+                this.messageButton,
             ],
         }));
         this.mainPage.setSideContent(this.navigation);
@@ -182,14 +196,17 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         }));
         return form;
     }
+    /** 状态消息延迟时间（毫秒） */
+    private statusDelay?: number;
+    private messageTime: number;
 	/**
 	 * 显示状态消息
 	 * @param type 消息类型
 	 * @param message 消息内容
 	 */
     showStatusMessage(type: ibas.emMessageType, message: string): void {
+        let that: this = this;
         let uiType: sap.ui.core.MessageType = sap.ui.core.MessageType.None;
-        let uiIcon: any = undefined;
         if (type === ibas.emMessageType.ERROR) {
             uiType = sap.ui.core.MessageType.Error;
         } else if (type === ibas.emMessageType.QUESTION) {
@@ -201,29 +218,37 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         } else if (type === ibas.emMessageType.INFORMATION) {
             uiType = sap.ui.core.MessageType.Information;
         }
+        // 特殊字符处理
+        message = message.replace("{", "(").replace("}", ")");
+        this.messagePopover.destroyContent();
+        this.messagePopover.addContent(
+            new sap.m.MessageStrip("", {
+                width: "100%",
+                text: message,
+                type: uiType,
+                showIcon: true,
+                showCloseButton: false
+            })
+        );
+        this.messageTime = ibas.dates.now().getTime();
+        this.messageHistory.addItem(new sap.m.MessagePopoverItem("", {
+            type: uiType,
+            title: message,
+        }));
+        if (!this.messagePopover.isOpen() && this.isDisplayed) {
+            this.messagePopover.openBy(this.messageButton, true);
+        }
         // 延迟清除消息
-        let that: this = this;
-        let duration: number = ibas.config.get(CONFIG_ITEM_STATUS_MESSAGES_DELAY, 0) * 1000;
-        sap.m.MessageToast.show(message, {
-            duration: duration,
-            width: "auto",
-            my: sap.ui.core.Popup.Dock.CenterBottom,
-            at: sap.ui.core.Popup.Dock.CenterBottom,
-            of: window,
-            offset: "0 0",
-            collision: "fit fit",
-            onClose(): void {
-                // 记录历史
-                that.messageHistory.addItem(new sap.m.MessagePopoverItem("", {
-                    type: uiType,
-                    title: message,
-                }));
-            },
-            autoClose: true,
-            animationTimingFunction: "linear",
-            animationDuration: 1000,
-            closeOnBrowserNavigation: true
-        });
+        if (ibas.objects.isNull(this.statusDelay)) {
+            this.statusDelay = ibas.config.get(CONFIG_ITEM_STATUS_MESSAGES_DELAY, 0) * 1000;
+        }
+        setTimeout(function (): void {
+            if (ibas.dates.now().getTime() >= that.messageTime + that.statusDelay) {
+                if (that.messagePopover.isOpen() && that.isDisplayed) {
+                    that.messagePopover.close();
+                }
+            }
+        }, this.statusDelay);
     }
     /** 对话消息 */
     showMessageBox(caller: ibas.IMessgesCaller): void {

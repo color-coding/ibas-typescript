@@ -121,10 +121,12 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
         this.view.showUser(user);
         // 加载用户相关
         logger.log(emMessageLevel.DEBUG, "center: initializing user [{0} - {1}]'s modules.", user.id, user.code);
+        /*
         this.view.showStatusMessage(
             emMessageType.INFORMATION,
             i18n.prop("sys_initialize_user_modules", user.code, user.name)
         );
+         */
         let that: this = this;
         let boRep: IBORepositorySystem = Factories.systemsFactory.createRepository();
         boRep.fetchUserModules({
