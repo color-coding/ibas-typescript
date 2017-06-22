@@ -59,6 +59,7 @@ export class LoginView extends ibas.BOView implements sys.ILoginView {
     private static UI_LOGIN_USER: string = "login_user";
     private static UI_LOGIN_PASSWORD: string = "login_password";
     private static UI_LOGIN_LANGUAGE: string = "login_language";
+    private static UI_LOGIN_PLANTFORM: string = "login_plantform";
     /** 绘制视图 */
     darw(): any {
         let that: this = this;
@@ -96,13 +97,18 @@ export class LoginView extends ibas.BOView implements sys.ILoginView {
                         that.fireViewEvents(that.changeLanguageEvent);
                     }
                 }),
-                new sap.m.Label("", {
+                new sap.m.Label(LoginView.UI_LOGIN_PLANTFORM, {
                     text: ibas.i18n.prop("sys_shell_plantform")
                 }),
                 new sap.m.Select("", {
-                    enabled: false,
+                    enabled: ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE, false) ? true : false,
                     items: utils.createComboBoxItems(ibas.emPlantform),
-                    selectedKey: ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM)
+                    selectedKey: ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM),
+                    change: function (): void {
+                        ibas.config.set(ibas.CONFIG_ITEM_PLANTFORM,
+                            parseInt(this.getSelectedKey(), 0)
+                        );
+                    }
                 }),
                 new sap.m.Button("", {
                     text: ibas.i18n.prop("sys_shell_login"),
@@ -162,6 +168,9 @@ export class LoginView extends ibas.BOView implements sys.ILoginView {
     }
     private get sltLanguages(): sap.m.Select {
         return this.getContorl(LoginView.UI_LOGIN_LANGUAGE);
+    }
+    private get sltPlantform(): sap.m.Select {
+        return this.getContorl(LoginView.UI_LOGIN_PLANTFORM);
     }
 }
 /**

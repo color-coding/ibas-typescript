@@ -6,7 +6,7 @@
     "offline": false,
     "offline|BORepositoryShell": false,
     "helpUrl": "http://www.baidu.com",
-    "repositoryAddress|BORepositoryShell": "http://localhost:8080/initialfantasy/services/rest/data"
+    "repositoryAddress|BORepositoryShell": ".../initialfantasy/services/rest/data"
   },
   "languages": [
     "zh_CN",
