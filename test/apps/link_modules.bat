@@ -24,3 +24,4 @@ mklink /d importexport "%WORK_FOLDER%ibas.importexport\ibas.importexport.service
 mklink /d reportanalysis "%WORK_FOLDER%ibas.reportanalysis\ibas.reportanalysis.service\src\main\webapp"
 mklink /d businessobjectsenterprise "%WORK_FOLDER%ibas.reportanalysis\ibas.businessobjectsenterprise.service\src\main\webapp"
 mklink /d documents "%WORK_FOLDER%ibas.documents\ibas.documents.service\src\main\webapp"
+mklink /d businessone "%WORK_FOLDER%ibas.businessone\ibas.businessone.service\src\main\webapp"

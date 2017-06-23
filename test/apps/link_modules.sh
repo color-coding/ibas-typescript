@@ -24,3 +24,4 @@ ln -sd ${WORK_FOLDER}/ibas.importexport/ibas.importexport.service/src/main/webap
 ln -sd ${WORK_FOLDER}/ibas.reportanalysis/ibas.reportanalysis.service/src/main/webapp reportanalysis
 ln -sd ${WORK_FOLDER}/ibas.reportanalysis/ibas.businessobjectsenterprise.service/src/main/webapp businessobjectsenterprise
 ln -sd ${WORK_FOLDER}/ibas.documents/ibas.documents.service/src/main/webapp documents
+ln -sd ${WORK_FOLDER}/ibas.businessone/ibas.businessone.service/src/main/webapp businessone
