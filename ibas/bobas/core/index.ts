@@ -18,12 +18,4 @@ export * from "./BORepositoriesAjax";
 
 /** 创建业务对象工厂实例 */
 import { BOFactory } from "./BusinessObjectCore";
-export const boFactory: BOFactory = function (): BOFactory {
-    if ((<any>window).ibas === undefined) {
-        (<any>window).ibas = {};
-    }
-    if ((<any>window).ibas.boFactory === undefined) {
-        (<any>window).ibas.boFactory = new BOFactory();
-    }
-    return (<any>window).ibas.boFactory;
-}();
+export const boFactory: BOFactory = new BOFactory();

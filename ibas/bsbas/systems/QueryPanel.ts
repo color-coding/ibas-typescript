@@ -82,9 +82,14 @@ export abstract class QueryPanel<T extends IQueryPanelView> extends BarApplicati
         let boName: any = null;
         if (!objects.isNull(this.listener.queryTarget)) {
             boName = this.listener.queryTarget;
-            if (!objects.isNull(boName) && typeof boName !== "string" && !objects.isNull(boName.name)) {
-                // 如果目标是对象，则使用其名称
-                boName = boName.name;
+            if (!objects.isNull(boName) && typeof boName !== "string") {
+                if (!objects.isNull(boName.BUSINESS_OBJECT_CODE)) {
+                    // 如果目标是对象，则尝试使用其编码
+                    boName = config.applyVariables(boName.BUSINESS_OBJECT_CODE);
+                } else if (!objects.isNull(boName.name)) {
+                    // 如果目标是对象，则尝试使用其名称
+                    boName = boName.name;
+                }
             }
         }
         return boName;

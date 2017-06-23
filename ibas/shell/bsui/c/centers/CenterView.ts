@@ -568,6 +568,16 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                 , view.url);
             if (ibas.objects.isNull(this.mainPage.getHeader())) {
                 container.setShowHeader(false);
+            } else {
+                // 添加外部打开钮
+                container.insertHeaderContent(new sap.m.Button("", {
+                    icon: "sap-icon://forward",
+                    tooltip: ibas.i18n.prop("sys_shell_jump"),
+                    type: sap.m.ButtonType.Transparent,
+                    press: function (): void {
+                        window.open(view.url);
+                    }
+                }),0);
             }
             let viewContent: any = new sap.ui.core.HTML("", {
                 content: html,

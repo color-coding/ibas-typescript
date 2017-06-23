@@ -470,7 +470,18 @@ export abstract class BusinessObjectListBase<T extends IBusinessObject>
 }
 /** 业务对象工厂 */
 export class BOFactory implements IBOFactory {
-    private boMap: Map<string, any> = new Map();
+    /** 全局 */
+    private globalMap: Map<string, any> = function (): Map<string, any> {
+        if ((<any>window).ibas === undefined) {
+            (<any>window).ibas = {};
+        }
+        if ((<any>window).ibas.boMap === undefined) {
+            (<any>window).ibas.boMap = new Map();
+        }
+        return (<any>window).ibas.boMap;
+    }();
+    /** 模块 */
+    private modularMap: Map<string, any> = new Map();
     /**
      * 注册业务对象
      * @param name 检索值
@@ -486,29 +497,42 @@ export class BOFactory implements IBOFactory {
     register(): void {
         let bo: any, name: string;
         if (arguments.length === 1) {
+            // 没有提供名称，则注册到模块
             bo = arguments[0];
+            if (objects.isNull(bo)) {
+                return;
+            }
             name = objects.getName(bo);
+            if (objects.isNull(name)) {
+                throw new Error(i18n.prop("sys_unrecognized_data"));
+            }
+            this.modularMap.set(name, bo);
         } else if (arguments.length === 2) {
-            name = arguments[0];
+            // 提供名称，则注册到全局
             bo = arguments[1];
+            if (objects.isNull(bo)) {
+                return;
+            }
+            name = arguments[0];
+            if (objects.isNull(name)) {
+                throw new Error(i18n.prop("sys_unrecognized_data"));
+            }
+            this.globalMap.set(name, bo);
+            name = objects.getName(bo);
+            if (!objects.isNull(name)) {
+                /** 模块再注册次 */
+                this.modularMap.set(name, bo);
+            }
         }
-        if (objects.isNull(bo)) {
-            return;
-        }
-        if (objects.isNull(name)) {
-            throw new Error(i18n.prop("sys_unrecognized_data"));
-        }
-        this.boMap.set(name, bo);
-        if (name !== objects.getName(bo)) {
-            // 名称与类型名称不同，再注册一次
-            this.boMap.set(objects.getName(bo), bo);
-        }
-
     }
     /** 获取对象类型，参数1：对象名称 */
     classOf(name: string): any {
-        if (this.boMap.has(name)) {
-            return this.boMap.get(name);
+        if (this.modularMap.has(name)) {
+            // 优先使用模块注册对象
+            return this.modularMap.get(name);
+        } else if (this.globalMap.has(name)) {
+            // 使用全局注册对象
+            return this.globalMap.get(name);
         }
         throw new Error(i18n.prop("sys_bo_not_registered", name));
     }
