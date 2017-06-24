@@ -577,7 +577,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                     press: function (): void {
                         window.open(view.url);
                     }
-                }),0);
+                }), 0);
             }
             let viewContent: any = new sap.ui.core.HTML("", {
                 content: html,
@@ -589,6 +589,17 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             container.addContent(viewContent);
         } else {
             // 外部打开
+            let viewContent: any = new sap.m.MessagePage("", {
+                text: ibas.i18n.prop("sys_shell_url_new_window_opened"),
+               // description: "",
+               // title: "",
+                showHeader: false,
+                showNavButton: false,
+                icon: "sap-icon://documents",
+                textDirection: sap.ui.core.TextDirection.Inherit
+            });
+            view.id = viewContent.getId();
+            container.addContent(viewContent);
             window.open(view.url);
         }
     }

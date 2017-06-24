@@ -32,7 +32,6 @@ let getWindowHeight: Function = function (tab: boolean): number {
  * 视图-demo
  */
 export class DemoUrlView extends ibas.UrlView implements IDemoUrlView {
-
     /** 绘制视图 */
     darw(): any {
         return null;

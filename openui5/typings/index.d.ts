@@ -9,3 +9,4 @@
 /// <reference path="./sap.tnt.d.ts" />
 /// <reference path="./sap.uxap.d.ts" />
 /// <reference path="./sap.ui.table.d.ts" />
+/// <reference path="./sap.ui.codeeditor.d.ts" />
