@@ -31,10 +31,12 @@ export class DemoUrlApp extends ibas.Application<IDemoUrlView> {
     protected viewShowed(): void {
         //
     }
+    static INSIDE_OPENED: boolean = true;
     /** 运行 */
     run(): void {
+        DemoUrlApp.INSIDE_OPENED = !DemoUrlApp.INSIDE_OPENED;
         this.view.url = "http://www.bing.com";
-        this.view.isInside = false;
+        this.view.isInside = DemoUrlApp.INSIDE_OPENED;
         super.run();
     }
 }
