@@ -19,6 +19,8 @@ export const CONFIG_ITEM_FULL_SCREEN: string = "fullScreen";
 export const CONFIG_ITEM_GROUP_FUNCTONS: string = "groupFunctions";
 /** 配置项目-自动激活的功能 */
 export const CONFIG_ITEM_AUTO_ACTIVETED_FUNCTION: string = "autoFunction";
+/** 配置项目-欢迎页面地址 */
+export const CONFIG_ITEM_WELCOME_PAGE_URL: string = "welcomeUrl";
 
 /**
  * 视图-中心
@@ -143,6 +145,8 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         this.mainPage.setSideContent(this.navigation);
         this.mainPage.setSideExpanded(false);
         this.id = this.mainPage.getId();
+        // 创建欢迎页
+        this.mainPage.addMainContent(this.drawWelcomePage());
         return this.mainPage;
     }
     /**
@@ -195,6 +199,22 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             }
         }));
         return form;
+    }
+    /** 创建欢迎页 */
+    private drawWelcomePage(): sap.ui.core.Control {
+        let viewContent: any = new sap.m.MessagePage("", {
+            text: ibas.i18n.prop("sys_shell_welcome_page", ibas.i18n.prop("sys_shell_name")),
+            customDescription: new sap.m.Link("", {
+                text: ibas.config.get(CONFIG_ITEM_WELCOME_PAGE_URL)
+            }),
+            description: "",
+            // title: "",
+            showHeader: false,
+            showNavButton: false,
+            icon: "sap-icon://globe",
+            textDirection: sap.ui.core.TextDirection.Inherit
+        });
+        return viewContent;
     }
     /** 状态消息延迟时间（毫秒） */
     private statusDelay?: number;
@@ -591,8 +611,8 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             // 外部打开
             let viewContent: any = new sap.m.MessagePage("", {
                 text: ibas.i18n.prop("sys_shell_url_new_window_opened"),
-               // description: "",
-               // title: "",
+                description: "",
+                // title: "",
                 showHeader: false,
                 showNavButton: false,
                 icon: "sap-icon://documents",
