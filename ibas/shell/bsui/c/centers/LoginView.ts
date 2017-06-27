@@ -130,26 +130,14 @@ export class LoginView extends ibas.BOView implements sys.ILoginView {
         this.id = this.form.getId();
         return this.form;
     }
-    private keyDownListener: EventListener;
-    /** 显示之后 */
-    onDisplayed(): void {
-        super.onDisplayed();
-        let that: this = this;
-        // 键盘按钮按下
-        this.keyDownListener = function (event: any): void {
-            if (ibas.objects.isNull(event)) {
-                return;
-            }
-            if (event.keyCode === 13) {
-                that.fireViewEvents(that.loginEvent);
-            }
-        };
-        document.addEventListener("keydown", this.keyDownListener, false);
-    }
-    /** 关闭之后 */
-    onClosed(): void {
-        super.onClosed();
-        document.removeEventListener("keydown", this.keyDownListener, false);
+    /** 按钮按下时 */
+    onKeyDown(event: KeyboardEvent): void {
+        if (ibas.objects.isNull(event)) {
+            return;
+        }
+        if (event.keyCode === 13) {
+            this.fireViewEvents(this.loginEvent);
+        }
     }
     private form: sap.ui.layout.form.SimpleForm;
     private getContorl(name: string): any {

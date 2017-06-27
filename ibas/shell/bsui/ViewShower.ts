@@ -20,8 +20,29 @@ export default class ViewShowerDefault implements ibas.IViewShower {
         if (sap.ui.Device.system.phone) {
             ibas.config.set(ibas.CONFIG_ITEM_PLANTFORM, ibas.emPlantform.PHONE);
         }
+        // 键盘按钮按下
+        let that: this = this;
+        document.addEventListener("keydown", function (event: any): void {
+            if (ibas.objects.isNull(event)) {
+                return;
+            }
+            that.onKeyDown(event);
+        }, false);
     }
 
+    /** 按钮按下时 */
+    private onKeyDown(event: KeyboardEvent): void {
+        if (!ibas.objects.isNull(this.busyDialog)) {
+            return;
+        }
+        if (ibas.objects.isNull(this.currentView)) {
+            return;
+        }
+        if (this.currentView.isDisplayed) {
+            this.currentView.onKeyDown(event);
+        }
+    }
+    private currentView: ibas.IView;
     /** 显示视图 */
     show(view: ibas.IView): void {
         let viewContent: any = view.darw();
@@ -39,6 +60,7 @@ export default class ViewShowerDefault implements ibas.IViewShower {
                 }
                 app.addPage(viewContent);
                 app.setInitialPage(viewContent);
+                this.currentView = view;
             }
         } else {
             throw new Error(ibas.i18n.prop("sys_shell_invalid_ui"));
@@ -49,10 +71,14 @@ export default class ViewShowerDefault implements ibas.IViewShower {
         let ui: sap.ui.core.Element = sap.ui.getCore().byId(view.id);
         if (!ibas.objects.isNull(ui)) {
             ui.destroy(true);
+            if (this.currentView === view) {
+                this.currentView = undefined;
+            }
         }
         // 销毁忙对话框
         if (!ibas.objects.isNull(this.busyDialog)) {
             this.busyDialog.destroy(true);
+            this.busyDialog = undefined;
         }
     }
     /** 忙对话框 */
@@ -69,6 +95,8 @@ export default class ViewShowerDefault implements ibas.IViewShower {
         } else {
             if (!ibas.objects.isNull(this.busyDialog)) {
                 this.busyDialog.close();
+                this.busyDialog.destroy(true);
+                this.busyDialog = undefined;
             }
         }
     }
@@ -81,6 +109,7 @@ export default class ViewShowerDefault implements ibas.IViewShower {
     }
     /** 对话消息 */
     messages(caller: ibas.IMessgesCaller): void {
+        let cView: ibas.IView = this.currentView;
         jQuery.sap.require("sap.m.MessageBox");
         sap.m.MessageBox.show(
             caller.message, {
@@ -91,8 +120,17 @@ export default class ViewShowerDefault implements ibas.IViewShower {
                     if (!ibas.objects.isNull(caller.onCompleted)) {
                         caller.onCompleted(utils.toMessageAction(oAction));
                     }
+                    if (!ibas.objects.isNull(cView) && !cView.isDisplayed) {
+                        cView.isDisplayed = true;
+                    }
                 }
             }
         );
+        if (!ibas.objects.isNull(cView) && cView.isDisplayed) {
+            // 出现消息框，设置当前视图非显示状态
+            cView.isDisplayed = false;
+        } else {
+            cView = undefined;
+        }
     }
 }
