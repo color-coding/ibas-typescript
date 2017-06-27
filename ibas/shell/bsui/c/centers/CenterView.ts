@@ -211,7 +211,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             // title: "",
             showHeader: false,
             showNavButton: false,
-            icon: "sap-icon://globe",
+            icon: ibas.i18n.prop("sys_shell_welcome_image"),
             textDirection: sap.ui.core.TextDirection.Inherit
         });
         return viewContent;
