@@ -9,6 +9,7 @@
 import * as ibas from "ibas/index";
 import * as bo from "../../borep/bo/index";
 import { BORepositoryTrainingTesting } from "../../borep/BORepositories";
+import { DataConverter4tt } from "../../borep/DataConverters";
 import { SalesOrderEditApp } from "./SalesOrderEditApp";
 
 /** 查看应用-销售订单 */
@@ -85,7 +86,8 @@ export class SalesOrderViewApp extends ibas.BOViewService<ISalesOrderViewView> {
     protected getServiceProxies(): ibas.IServiceProxy<ibas.IServiceContract>[] {
         return [
             new ibas.BOServiceProxy({
-                data: this.viewData
+                data: this.viewData,
+                converter: new DataConverter4tt()
             })
         ];
     }

@@ -197,4 +197,8 @@ export class MaterialListView extends ibas.BOListView implements IMaterialListVi
         this.table.setFirstVisibleRow(0);
         this.table.setModel(null);
     }
+    /** 获取选择的数据 */
+    getSelecteds(): bo.Material[] {
+        return utils.getTableSelecteds<bo.Material>(this.table);
+    }
 }

@@ -197,4 +197,8 @@ export class CustomerListView extends ibas.BOListView implements ICustomerListVi
         this.table.setFirstVisibleRow(0);
         this.table.setModel(null);
     }
+    /** 获取选择的数据 */
+    getSelecteds(): bo.Customer[] {
+        return utils.getTableSelecteds<bo.Customer>(this.table);
+    }
 }

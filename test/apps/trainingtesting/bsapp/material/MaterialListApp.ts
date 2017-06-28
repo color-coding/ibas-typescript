@@ -9,6 +9,7 @@
 import * as ibas from "ibas/index";
 import * as bo from "../../borep/bo/index";
 import { BORepositoryTrainingTesting } from "../../borep/BORepositories";
+import { DataConverter4tt } from "../../borep/DataConverters";
 import { MaterialViewApp } from "./MaterialViewApp";
 import { MaterialEditApp } from "./MaterialEditApp";
 
@@ -168,7 +169,12 @@ export class MaterialListApp extends ibas.BOListApplication<IMaterialListView, b
     }
     /** 获取服务的契约 */
     protected getServiceProxies(): ibas.IServiceProxy<ibas.IServiceContract>[] {
-        return [];
+        return [
+            new ibas.BOListServiceProxy({
+                data: this.view.getSelecteds(),
+                converter: new DataConverter4tt()
+            })
+        ];
     }
 }
 /** 视图-物料主数据 */
@@ -179,4 +185,6 @@ export interface IMaterialListView extends ibas.IBOListView {
     deleteDataEvent: Function;
     /** 显示数据 */
     showData(datas: bo.Material[]): void;
+    /** 获取选择的数据 */
+    getSelecteds(): bo.Material[];
 }

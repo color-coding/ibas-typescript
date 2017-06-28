@@ -9,6 +9,7 @@
 import * as ibas from "ibas/index";
 import * as bo from "../../borep/bo/index";
 import { BORepositoryTrainingTesting } from "../../borep/BORepositories";
+import { DataConverter4tt } from "../../borep/DataConverters";
 import { CustomerViewApp } from "./CustomerViewApp";
 import { CustomerEditApp } from "./CustomerEditApp";
 
@@ -168,7 +169,12 @@ export class CustomerListApp extends ibas.BOListApplication<ICustomerListView, b
     }
     /** 获取服务的契约 */
     protected getServiceProxies(): ibas.IServiceProxy<ibas.IServiceContract>[] {
-        return [];
+        return [
+            new ibas.BOListServiceProxy({
+                data: this.view.getSelecteds(),
+                converter: new DataConverter4tt()
+            })
+        ];
     }
 }
 /** 视图-客户主数据 */
@@ -179,4 +185,6 @@ export interface ICustomerListView extends ibas.IBOListView {
     deleteDataEvent: Function;
     /** 显示数据 */
     showData(datas: bo.Customer[]): void;
+    /** 获取选择的数据 */
+    getSelecteds(): bo.Customer[];
 }

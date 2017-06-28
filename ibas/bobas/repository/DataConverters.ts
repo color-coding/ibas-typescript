@@ -371,17 +371,17 @@ export class PropertyMaps extends ArrayList<PropertyMap> {
         return property;
     }
 }
+/** 远程对象，类型属性名称 */
+export const REMOTE_OBJECT_TYPE_PROPERTY_NAME: string = "type";
 /** 业务对象的数据转换 */
 export abstract class BOConverter implements IBOConverter<IBusinessObject, any> {
-    /** 远程对象，类型属性名称 */
-    static REMOTE_OBJECT_TYPE_PROPERTY_NAME: string = "type";
     /** 获取对象类型 */
     protected getTypeName(data: any): string {
-        return data[BOConverter.REMOTE_OBJECT_TYPE_PROPERTY_NAME];
+        return data[REMOTE_OBJECT_TYPE_PROPERTY_NAME];
     }
     /** 设置对象类型 */
     protected setTypeName(data: any, type: string): void {
-        data[BOConverter.REMOTE_OBJECT_TYPE_PROPERTY_NAME] = type;
+        data[REMOTE_OBJECT_TYPE_PROPERTY_NAME] = type;
     }
 
     private _propertyMaps: PropertyMaps;

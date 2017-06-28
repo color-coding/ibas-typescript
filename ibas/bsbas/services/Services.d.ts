@@ -5,7 +5,7 @@
  * Use of this source code is governed by an Apache License, Version 2.0
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
-import { IBusinessObject, ICriteria, KeyValue, List, ICondition } from "../../bobas/index";
+import { IBusinessObject, ICriteria, KeyValue, List, ICondition, IDataConverter } from "../../bobas/index";
 import { IElement, IViewShower, IViewNavigation } from "../core/index";
 
 /**
@@ -70,11 +70,15 @@ export interface IDataServiceContract extends IServiceContract {
 export interface IBOServiceContract extends IDataServiceContract {
     /** 业务对象 */
     data: IBusinessObject;
+    /** 数据转换者 */
+    converter?: IDataConverter;
 }
 /** 业务对象列表服务的契约 */
 export interface IBOListServiceContract extends IDataServiceContract {
     /** 业务对象 */
     data: IBusinessObject[];
+    /** 数据转换者 */
+    converter?: IDataConverter;
 }
 /** 业务对象连接服务的契约 */
 export interface IBOLinkServiceContract extends IServiceContract {
