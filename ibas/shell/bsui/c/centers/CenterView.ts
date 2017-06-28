@@ -307,17 +307,18 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                 }
             }
         });
-        let showFunctions: Function = function (): void {
+        nvList.addItem(nvItem);
+        let showFunctions: Function = function (mModule: ibas.IModuleConsole): void {
             /** 自动激活的功能 */
             let autoActivetedFunction: string = ibas.config.get(CONFIG_ITEM_AUTO_ACTIVETED_FUNCTION);
-            for (let funItem of module.functions()) {
+            for (let funItem of mModule.functions()) {
                 let newGroup: boolean = false;
                 let mdNVItem: sap.tnt.NavigationListItem = nvItem;
                 if (ibas.config.get(CONFIG_ITEM_GROUP_FUNCTONS, false)
                     && !ibas.objects.isNull(funItem.category) && funItem.category.length > 0) {
                     // 菜单分组
                     for (let item of nvItem.getItems()) {
-                        if (item.getKey() === ibas.strings.format("{0}_{1}", module.name, funItem.category)) {
+                        if (item.getKey() === ibas.strings.format("{0}_{1}", mModule.name, funItem.category)) {
                             mdNVItem = item;
                             break;
                         }
@@ -325,7 +326,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                     if (mdNVItem === nvItem) {
                         // 不存在分组，新建一个
                         mdNVItem = new sap.tnt.NavigationListItem("", {
-                            key: ibas.strings.format("{0}_{1}", module.name, funItem.category),
+                            key: ibas.strings.format("{0}_{1}", mModule.name, funItem.category),
                             text: ibas.i18n.prop(funItem.category),
                             expanded: false,
                             hasExpander: true,
@@ -355,25 +356,41 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         };
         if (module.isInitialized) {
             // 已初始化完成
-            showFunctions();
+            showFunctions(module);
         } else {
             // 未初始化完成，等待完成后显示
             module.addListener(showFunctions);
         }
-        // 计算模块位置并添加
-        let index: number = 0;
-        for (let item of nvList.getItems()) {
-            if (nvItem.getKey().localeCompare(item.getKey()) < 0) {
-                break;
-            }
-            index++;
+        // 延迟排序模块
+        if (ibas.objects.isNull(this.statusDelay)) {
+            this.statusDelay = ibas.config.get(CONFIG_ITEM_STATUS_MESSAGES_DELAY, 0) * 1000;
         }
-        if (index > 0) {
-            nvList.addItem(nvItem);
+        // 计算模块位置并添加
+        if (ibas.objects.isNull(this.moduleTime)) {
+            this.moduleTime = ibas.dates.now().getTime();
+            setTimeout(function (): void {
+                if (ibas.dates.now().getTime() >= that.messageTime + that.statusDelay / 2) {
+                    that.messageTime = ibas.dates.now().getTime();
+                    that.showStatusMessage(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_sorting_modules"));
+                    let items: ibas.ArrayList<any> = new ibas.ArrayList<any>();
+                    items.add(nvList.getItems());
+                    items = items.sort((c, b): number => {
+                        return c.getKey().localeCompare(b.getKey());
+                    });
+                    nvList.removeAllItems();
+                    for (let item of items) {
+                        nvList.addItem(item);
+                    }
+                    // 重置
+                    delete (that.moduleTime);
+                }
+            }, this.statusDelay / 2);
         } else {
-            nvList.insertItem(nvItem, index);
+            this.moduleTime = ibas.dates.now().getTime();
         }
     }
+    /** 模块时间 */
+    private moduleTime: number;
     /** 设置忙状态 */
     busyView(view: ibas.IView, busy: boolean, msg: string): any {
         let ui: sap.ui.core.Element = sap.ui.getCore().byId(view.id);

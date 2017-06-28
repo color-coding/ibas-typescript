@@ -170,7 +170,7 @@ export class SalesOrderListApp extends ibas.BOListApplication<ISalesOrderListVie
     protected getServiceProxies(): ibas.IServiceProxy<ibas.IServiceContract>[] {
         return [
             new ibas.BOListServiceProxy({
-                data: this.view.getSeletecteds()
+                data: this.view.getSelecteds()
             })
         ];
     }
@@ -182,7 +182,7 @@ export interface ISalesOrderListView extends ibas.IBOListView {
     /** 删除数据事件，参数：删除对象集合 */
     deleteDataEvent: Function;
     /** 获取选择的数据 */
-    getSeletecteds(): bo.SalesOrder[];
+    getSelecteds(): bo.SalesOrder[];
     /** 显示数据 */
     showData(datas: bo.SalesOrder[]): void;
 }

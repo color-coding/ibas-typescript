@@ -48,5 +48,20 @@
     "Category": "",
     "Address": ".../../../test/apps/businessobjectsenterprise/",
     "Repository": "http://localhost:8080/businessobjectsenterprise/services/rest/data"
+  },
+  {
+    "Id": "d89c3bd0-8dab-4f62-8439-0b8a39c66bf2",
+    "Name": "BusinessOne",
+    "Category": "",
+    "Address": ".../../../test/apps/businessone/",
+    "Repository": "http://localhost:8080/businessone/services/rest/data"
+  },
+  {
+    "Id": "4d8b5b7d-b1ae-418b-abc8-67d70ae8c36e",
+    "Name": "BusinessOneUsers",
+    "Category": "",
+    "Address": ".../../../test/apps/businessone/",
+    "Repository": "http://localhost:8080/businessone/services/rest/data",
+    "Index": "index.users"
   }
 ]
