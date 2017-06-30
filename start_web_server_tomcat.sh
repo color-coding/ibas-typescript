@@ -17,10 +17,10 @@ TOMCAT_START_SCRIPT=${TOMCAT_FOLDER}/bin/startup.sh
 if [ -e "${TOMCAT_FOLDER}" ]
 then
 # 检查程序是否映射
-  if [ ! -e "${TOMCAT_APPS_FOLDER}/ts" ]
+  if [ ! -e "${TOMCAT_APPS_FOLDER}/ROOT" ]
   then
-  echo "${TOMCAT_APPS_FOLDER}/ts"
-    ln -s -d "${WORK_FOLDER}" "${TOMCAT_APPS_FOLDER}/ts"
+  echo "${TOMCAT_APPS_FOLDER}/ROOT"
+    ln -s -d "${WORK_FOLDER}" "${TOMCAT_APPS_FOLDER}/ROOT"
   fi
   "${TOMCAT_START_SCRIPT}"
 else
