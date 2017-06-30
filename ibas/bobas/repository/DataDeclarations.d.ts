@@ -13,6 +13,11 @@ export interface DataDeclaration {
     /** 数据类型 */
     type: string;
 }
+/** 字符串 */
+export interface String extends DataDeclaration {
+    /** 值 */
+    value: string
+}
 /** 操作消息 */
 export interface OperationMessages extends DataDeclaration {
     /** 结果标识 */

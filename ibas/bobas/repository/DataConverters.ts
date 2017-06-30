@@ -184,7 +184,10 @@ export abstract class DataConverter4j implements IDataConverter {
      * @returns 本地类型
      */
     parsing(data: any, sign: string): any {
-        if (data.type === OperationResult.name) {
+        if (data.type === "string") {
+            let remote: ibas4j.String = data;
+            return remote.value;
+        } else if (data.type === OperationResult.name) {
             let remote: ibas4j.OperationResult = data;
             let newData: OperationResult<any> = new OperationResult();
             newData.signID = remote.SignID;
