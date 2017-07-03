@@ -35,7 +35,7 @@
     "sys_invalid_module_console_instance": "模块[{0}]的控制台实例无效",
     "sys_logging_system": "正在登录系统",
     "sys_initialize_user_modules": "初始化用户[{0} - {1}]的模块",
-    "sys_initialize_modules": "初始化模块[{0} - {1}]",
+    "sys_initialize_modules": "初始化模块[{1} - {0}]",
     "sys_application_not_allowed_run": "没有权限运行应用[{0}]",
     "sys_application_view_was_displayed": "应用[{0}]的视图已经显示",
     "sys_whether_to_delete": "请确认是否删除？",

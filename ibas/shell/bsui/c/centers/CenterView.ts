@@ -251,10 +251,10 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             })
         );
         this.messageTime = ibas.dates.now().getTime();
-        this.messageHistory.addItem(new sap.m.MessagePopoverItem("", {
+        this.messageHistory.insertItem(new sap.m.MessagePopoverItem("", {
             type: uiType,
             title: message,
-        }));
+        }), 0);
         if (!this.messagePopover.isOpen() && this.isDisplayed) {
             this.messagePopover.openBy(this.messageButton, true);
         }
