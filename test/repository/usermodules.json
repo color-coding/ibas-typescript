@@ -63,5 +63,12 @@
     "Address": ".../../../test/apps/businessone/",
     "Repository": "http://localhost:8080/businessone/services/rest/data",
     "Index": "index.users"
+  },
+  {
+    "Id": "bad47859-3d74-4b2b-975a-48c635406be4",
+    "Name": "Materials",
+    "Category": "",
+    "Address": ".../../../test/apps/materials/",
+    "Repository": "http://localhost:8080/materials/services/rest/data"
   }
 ]
