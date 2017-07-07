@@ -23,6 +23,8 @@ export const CONFIG_ITEM_AUTO_ACTIVETED_FUNCTION: string = "autoFunction";
 export const CONFIG_ITEM_WELCOME_PAGE_URL: string = "welcomeUrl";
 /** 配置项目-收缩功能列表 */
 export const CONFIG_ITEM_SHRINK_FUNCTION_LIST: string = "shrinkFunction";
+/** 配置项目-最大消息数 */
+export const CONFIG_ITEM_MAX_MESSAGES_COUNT: string = "messgesCount";
 
 /**
  * 视图-中心
@@ -220,6 +222,9 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
     }
     /** 状态消息延迟时间（毫秒） */
     private statusDelay?: number;
+    /** 消息数量 */
+    private messageCount?: number;
+    /** 消息时间戳 */
     private messageTime: number;
 	/**
 	 * 显示状态消息
@@ -257,6 +262,15 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             type: uiType,
             title: message,
         }), 0);
+        // 清除超出的历史消息
+        if (ibas.objects.isNull(this.messageCount)) {
+            this.messageCount = ibas.config.get(CONFIG_ITEM_MAX_MESSAGES_COUNT, 5);
+        }
+        if (this.messageHistory.getItems().length > this.messageCount) {
+            for (var index: number = this.messageHistory.getItems().length - 1; index < this.messageCount; index--) {
+                this.messageHistory.removeItem(index);
+            }
+        }
         if (!this.messagePopover.isOpen() && this.isDisplayed) {
             this.messagePopover.openBy(this.messageButton, true);
         }
