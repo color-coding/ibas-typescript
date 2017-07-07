@@ -21,6 +21,8 @@ export const CONFIG_ITEM_GROUP_FUNCTONS: string = "groupFunctions";
 export const CONFIG_ITEM_AUTO_ACTIVETED_FUNCTION: string = "autoFunction";
 /** 配置项目-欢迎页面地址 */
 export const CONFIG_ITEM_WELCOME_PAGE_URL: string = "welcomeUrl";
+/** 配置项目-收缩功能列表 */
+export const CONFIG_ITEM_SHRINK_FUNCTION_LIST: string = "shrinkFunction";
 
 /**
  * 视图-中心
@@ -51,7 +53,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
     /** 绘制视图 */
     darw(): any {
         let that: this = this;
-        this.mainPage = new sap.tnt.ToolPage();
+        this.mainPage = new sap.tnt.ToolPage("");
         this.mainHeader = new sap.tnt.ToolHeader("");
         // 收缩菜单钮
         this.mainHeader.addContent(new sap.m.Button("", {
@@ -143,7 +145,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             ],
         }));
         this.mainPage.setSideContent(this.navigation);
-        this.mainPage.setSideExpanded(false);
+        this.mainPage.setSideExpanded(!ibas.config.get(CONFIG_ITEM_SHRINK_FUNCTION_LIST, true));
         this.id = this.mainPage.getId();
         // 创建欢迎页
         this.mainPage.addMainContent(this.drawWelcomePage());

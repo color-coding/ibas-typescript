@@ -23,6 +23,9 @@ import {
 } from "./Systems.d";
 import { Factories } from "./Factories";
 
+/** 配置项目-隐藏无功能模块 */
+export const CONFIG_ITEM_HIDE_NO_FUNCTION_MODULE: string = "hideModule";
+
 /** 应用-中心 */
 export abstract class CenterApp<T extends ICenterView> extends AbstractApplication<T> implements ICenterApp, IViewShower {
 
@@ -243,10 +246,16 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
                 }
                 // 有效模块控制台
                 console.addListener(function (): void {
-                    // 显示模块
-                    that.view.showModule(console);
-                    // 注册模块功能
-                    that.registerFunctions(console);
+                    if (console.functions().length > 0
+                        && config.get(CONFIG_ITEM_HIDE_NO_FUNCTION_MODULE, true)) {
+                        // 显示模块
+                        that.view.showModule(console);
+                        // 注册模块功能
+                        that.registerFunctions(console);
+                    } else {
+                        logger.log(emMessageLevel.DEBUG,
+                            "center: hide no functions module [{1}|{0}].", console.id, console.name);
+                    }
                     // 显示常驻应用
                     for (let app of console.applications()) {
                         if (objects.instanceOf(app, ResidentApplication)) {

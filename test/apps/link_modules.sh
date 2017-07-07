@@ -20,9 +20,10 @@ fi
 
 # 直接指定地址了，懒得写活了
 ln -sd ${WORK_FOLDER}/ibas.initialfantasy/ibas.initialfantasy.service/src/main/webapp initialfantasy
+ln -sd ${WORK_FOLDER}/ibas.integration/ibas.integration.service/src/main/webapp integration
 ln -sd ${WORK_FOLDER}/ibas.importexport/ibas.importexport.service/src/main/webapp importexport
+ln -sd ${WORK_FOLDER}/ibas.documents/ibas.documents.service/src/main/webapp documents
 ln -sd ${WORK_FOLDER}/ibas.reportanalysis/ibas.reportanalysis.service/src/main/webapp reportanalysis
 ln -sd ${WORK_FOLDER}/ibas.reportanalysis/ibas.businessobjectsenterprise.service/src/main/webapp businessobjectsenterprise
-ln -sd ${WORK_FOLDER}/ibas.documents/ibas.documents.service/src/main/webapp documents
 ln -sd ${WORK_FOLDER}/ibas.businessone/ibas.businessone.service/src/main/webapp businessone
 ln -sd ${WORK_FOLDER}/ibas.materials/ibas.materials.service/src/main/webapp materials

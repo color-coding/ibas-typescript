@@ -65,6 +65,13 @@
     "Index": "index.users"
   },
   {
+    "Id": "568e7e6d-a67a-46a8-93b9-7bc896b1c2b7",
+    "Name": "Integration",
+    "Category": "",
+    "Address": ".../../../test/apps/integration/",
+    "Repository": "http://localhost:8080/integration/services/rest/data"
+  },
+  {
     "Id": "bad47859-3d74-4b2b-975a-48c635406be4",
     "Name": "Materials",
     "Category": "",
