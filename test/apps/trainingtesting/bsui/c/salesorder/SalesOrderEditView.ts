@@ -28,6 +28,8 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
     chooseSalesOrderCustomerEvent: Function;
     /** 选择销售订单行物料事件 */
     chooseSalesOrderItemMaterialEvent: Function;
+    /** 选择销售订单行仓库事件 */
+    chooseSalesOrderItemWarehouseEvent: Function;
 
     /** 绘制视图 */
     darw(): any {
@@ -133,6 +135,21 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
                         }
                     }).bindProperty("value", {
                         path: "itemCode"
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_salesorderitem_warehouse"),
+                    template: new sap.m.Input("", {
+                        width: "100%",
+                        showValueHelp: true,
+                        valueHelpRequest: function (): void {
+                            that.fireViewEvents(that.chooseSalesOrderItemWarehouseEvent,
+                                // 获取当前对象
+                                this.getBindingContext().getObject()
+                            );
+                        }
+                    }).bindProperty("value", {
+                        path: "Warehouse"
                     })
                 }),
                 new sap.ui.table.Column("", {

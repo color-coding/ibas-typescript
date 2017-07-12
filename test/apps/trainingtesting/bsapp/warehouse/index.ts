@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @license
  * Copyright color-coding studio. All Rights Reserved.
  *
@@ -7,7 +7,8 @@
  */
 
 // 模块索引文件，此文件集中导出类
-export * from "./Material.d";
-export * from "./Customer.d";
-export * from "./SalesOrder.d";
-export * from "./Warehouse.d";
+export * from "./WarehouseFunc";
+export * from "./WarehouseListApp";
+export * from "./WarehouseChooseApp";
+export * from "./WarehouseViewApp";
+export * from "./WarehouseEditApp";

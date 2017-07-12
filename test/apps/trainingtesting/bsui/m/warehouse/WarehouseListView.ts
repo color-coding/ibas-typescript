@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @license
  * Copyright color-coding studio. All Rights Reserved.
  *
@@ -6,8 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-// 模块索引文件，此文件集中导出类
-export * from "./Material.d";
-export * from "./Customer.d";
-export * from "./SalesOrder.d";
-export * from "./Warehouse.d";
+import * as ibas from "ibas/index";
+import { utils } from "openui5/typings/ibas.utils";
+import * as bo from "../../../borep/bo/index";
+import { IWarehouseListView } from "../../../bsapp/warehouse/index";
