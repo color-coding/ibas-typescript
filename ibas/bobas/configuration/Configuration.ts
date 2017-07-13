@@ -19,6 +19,8 @@ export const CONFIG_ITEM_DEBUG_MODE: string = "debug";
 export const CONFIG_ITEM_COMPANY: string = "company";
 /** 默认配置文件名称 */
 export const CONFIG_FILE_NAME: string = "config.json";
+/** 配置项目-运行时版本 */
+export const CONFIG_ITEM_RUNTIME_VERSION: string = "runtimeVersion";
 /**
  * 配置
  */

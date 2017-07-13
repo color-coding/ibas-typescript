@@ -15,10 +15,17 @@
             console.error(error);
             alert("应用加载失败，请联系管理员或尝试使用其他浏览器。");
         };
+        // 加载入口
         let loadEntry = function () {
             // 加载ibas
+            window.ibas = {
+                runtime: (new Date()).getTime()
+            };
             let require = requirejs.config({
-                baseUrl: "./"
+                baseUrl: "./",
+                urlArgs: function (id, url) {
+                    return (url.indexOf('?') === -1 ? '?' : '&') + "_=" + window.ibas.runtime;
+                }
             });
             require(["ibas/index"], function (ibas) {
                 // 加载成功，创建壳加载
