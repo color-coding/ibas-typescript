@@ -55,14 +55,11 @@ export module requires {
                 }
             }
             // 运行时版本
-            if (!conf.config.get(conf.CONFIG_ITEM_DEBUG_MODE, false)) {
-                // 非调试模式
-                let rtVersion: string = conf.config.get(conf.CONFIG_ITEM_RUNTIME_VERSION);
-                if (!(objects.isNull(rtVersion))) {
-                    config.urlArgs = function (id: string, url: string): string {
-                        return (url.indexOf("?") === -1 ? "?" : "&") + "_=" + rtVersion;
-                    };
-                }
+            let rtVersion: string = conf.config.get(conf.CONFIG_ITEM_RUNTIME_VERSION);
+            if (!(objects.isNull(rtVersion))) {
+                config.urlArgs = function (id: string, url: string): string {
+                    return (url.indexOf("?") === -1 ? "?" : "&") + "_=" + rtVersion;
+                };
             }
             // 设置路径
             config.paths = {};
