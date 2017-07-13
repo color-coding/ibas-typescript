@@ -90,6 +90,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                         new sap.m.Button({
                             text: ibas.i18n.prop("sys_shell_help"),
                             type: sap.m.ButtonType.Transparent,
+                            icon: "sap-icon://sys-help",
                             press: function (): void {
                                 that.fireViewEvents(that.helpEvent);
                                 popover.close();
@@ -98,6 +99,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                         new sap.m.Button({
                             text: ibas.i18n.prop("sys_shell_about"),
                             type: sap.m.ButtonType.Transparent,
+                            icon: "sap-icon://world",
                             press: function (): void {
                                 that.fireViewEvents(that.aboutEvent);
                                 popover.close();
@@ -106,6 +108,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                         new sap.m.Button({
                             text: ibas.i18n.prop("sys_shell_logout"),
                             type: sap.m.ButtonType.Transparent,
+                            icon: "sap-icon://system-exit",
                             press: function (): void {
                                 that.fireViewEvents(that.closeEvent);
                             }
