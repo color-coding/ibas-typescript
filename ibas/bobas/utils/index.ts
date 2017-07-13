@@ -60,7 +60,7 @@ export module requires {
                 let script: HTMLScriptElement = scripts[index];
                 if (script.src !== undefined && script.src !== null && script.src.length !== 0) {
                     let scriptUrl: string = script.src;
-                    if (scriptUrl.indexOf("?")) {
+                    if (scriptUrl.indexOf("?") > 0) {
                         // 去除参数部分
                         scriptUrl = scriptUrl.substring(0, scriptUrl.indexOf("?"));
                     }
