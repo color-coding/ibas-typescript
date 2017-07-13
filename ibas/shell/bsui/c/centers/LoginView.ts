@@ -101,7 +101,7 @@ export class LoginView extends ibas.BOView implements sys.ILoginView {
                     text: ibas.i18n.prop("sys_shell_plantform")
                 }),
                 new sap.m.Select("", {
-                    enabled: ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE, false) ? true : false,
+                    // enabled: ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE, false) ? true : false,
                     items: utils.createComboBoxItems(ibas.emPlantform),
                     selectedKey: ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM),
                     change: function (): void {
