@@ -89,6 +89,10 @@ export module urls {
                         }
                     }
                 }
+                if (url.indexOf("?") > 0) {
+                    // 去除参数部分
+                    url = url.substring(0, url.indexOf("?"));
+                }
                 if (url.endsWith(fileName)) {
                     root = url.substring(0, url.lastIndexOf("/"));
                     break;

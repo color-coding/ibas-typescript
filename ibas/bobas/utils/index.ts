@@ -7,7 +7,7 @@
  */
 
 import { ArrayList } from "../data/index";
-import * as cnf from "../configuration/index";
+import * as conf from "../configuration/index";
 /**  */
 export module requires {
     /** 模块间共享的类库名称，逗号分隔 */
@@ -42,7 +42,7 @@ export module requires {
                 names.push(library);
             }
             // 加载共享类库配置项
-            let libraries: any = cnf.config.get(CONFIG_ITEM_SHARED_LIBRARIES);
+            let libraries: any = conf.config.get(CONFIG_ITEM_SHARED_LIBRARIES);
             if (libraries !== undefined) {
                 for (let item of libraries.toString().split(",")) {
                     if (item === undefined || item === null || item.length === 0) {
@@ -59,12 +59,17 @@ export module requires {
             for (let index: number = 0; index < scripts.length; index++) {
                 let script: HTMLScriptElement = scripts[index];
                 if (script.src !== undefined && script.src !== null && script.src.length !== 0) {
+                    let scriptUrl: string = script.src;
+                    if (scriptUrl.indexOf("?")) {
+                        // 去除参数部分
+                        scriptUrl = scriptUrl.substring(0, scriptUrl.indexOf("?"));
+                    }
                     for (let name of names) {
                         if (name.endsWith(".js")) {
                             // 指定了js文件
-                            if (script.src.endsWith(name)) {
+                            if (scriptUrl.endsWith(name)) {
                                 config.paths[name.substring(0, name.lastIndexOf(".js"))]
-                                    = script.src.substring(0, script.src.lastIndexOf(".js"));
+                                    = scriptUrl.substring(0, scriptUrl.lastIndexOf(".js"));
                                 break;
                             }
                         } else {
@@ -75,10 +80,10 @@ export module requires {
                             if (!name.endsWith("/")) {
                                 name = name + "/";
                             }
-                            if (script.src.indexOf(name) > 0 && script.src.endsWith(".js")) {
-                                name = script.src.substring(script.src.indexOf(name) + 1);
+                            if (scriptUrl.indexOf(name) > 0 && scriptUrl.endsWith(".js")) {
+                                name = scriptUrl.substring(scriptUrl.indexOf(name) + 1);
                                 name = name.substring(0, name.lastIndexOf(".js"));
-                                config.paths[name] = script.src.substring(0, script.src.lastIndexOf(".js"));
+                                config.paths[name] = scriptUrl.substring(0, scriptUrl.lastIndexOf(".js"));
                                 break;
                             }
                         }
