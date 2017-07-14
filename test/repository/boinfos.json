@@ -1,10 +1,8 @@
-[
-    {
+[{
         "Code": "CC_TT_MATERIALS",
         "Name": "Material",
         "Type": "MasterData",
-        "Properties": [
-            {
+        "Properties": [{
                 "Property": "Code",
                 "Description": "编码",
                 "Searched": true
@@ -20,8 +18,7 @@
         "Code": "CC_TT_CUSTOMER",
         "Name": "Customer",
         "Type": "MasterData",
-        "Properties": [
-            {
+        "Properties": [{
                 "Property": "Code",
                 "Description": "编码",
                 "Searched": true
@@ -37,8 +34,7 @@
         "Code": "CC_TT_SALESORDER",
         "Name": "SalesOrder",
         "Type": "Document",
-        "Properties": [
-            {
+        "Properties": [{
                 "Property": "DocEntry",
                 "Description": "凭证编号",
                 "Searched": true
@@ -51,6 +47,22 @@
             {
                 "Property": "CustomerName",
                 "Description": "客户名称",
+                "Searched": true
+            }
+        ]
+    },
+    {
+        "Code": "CC_TT_WAREHOUSE",
+        "Name": "Warehouse",
+        "Type": "MasterData",
+        "Properties": [{
+                "Property": "Code",
+                "Description": "编码",
+                "Searched": true
+            },
+            {
+                "Property": "Name",
+                "Description": "名称",
                 "Searched": true
             }
         ]

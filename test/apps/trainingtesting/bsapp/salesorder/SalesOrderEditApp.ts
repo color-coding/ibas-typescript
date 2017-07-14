@@ -37,6 +37,7 @@ export class SalesOrderEditApp extends ibas.BOEditApplication<ISalesOrderEditVie
         this.view.removeSalesOrderItemEvent = this.removeSalesOrderItem;
         this.view.chooseSalesOrderCustomerEvent = this.chooseSalesOrderCustomer;
         this.view.chooseSalesOrderItemMaterialEvent = this.chooseSalesOrderItemMaterial;
+        this.view.chooseSalesOrderItemWarehouseEvent=this.chooseSalesOrderItemWarehouseEvent;
     }
     /** 视图显示后 */
     protected viewShowed(): void {
@@ -246,6 +247,37 @@ export class SalesOrderEditApp extends ibas.BOEditApplication<ISalesOrderEditVie
         });
 
     }
+    /** 选择销售订单行仓库事件 */
+    chooseSalesOrderItemWarehouseEvent(caller: bo.SalesOrderItem): void {
+        let that: this = this;
+        ibas.servicesManager.runChooseService<bo.Warehouse>({
+            caller: caller,
+            boCode: bo.Warehouse.BUSINESS_OBJECT_CODE,
+            criteria: [
+                new ibas.Condition(bo.Warehouse.PROPERTY_ACTIVATED_NAME, ibas.emConditionOperation.EQUAL, "Y")
+            ],
+            onCompleted(selecteds: ibas.List<bo.Warehouse>): void {
+                // 获取触发的对象
+                let index: number = that.editData.salesOrderItems.indexOf(caller);
+                let item: bo.SalesOrderItem = that.editData.salesOrderItems[index];
+                // 选择返回数量多余触发数量时,自动创建新的项目
+                let created: boolean = false;
+                for (let selected of selecteds) {
+                    if (ibas.objects.isNull(item)) {
+                        item = that.editData.salesOrderItems.create();
+                        created = true;
+                    }
+                    item.warehouse = selected.code;
+                    item = null;
+                }
+                if (created) {
+                    // 创建了新的行项目
+                    that.view.showSalesOrderItems(that.editData.salesOrderItems.filterDeleted());
+                }
+            }
+        });
+
+    }
 }
 /** 视图-销售订单 */
 export interface ISalesOrderEditView extends ibas.IBOEditView {
@@ -265,4 +297,6 @@ export interface ISalesOrderEditView extends ibas.IBOEditView {
     chooseSalesOrderCustomerEvent: Function;
     /** 选择销售订单行物料事件 */
     chooseSalesOrderItemMaterialEvent: Function;
+    /** 选择销售订单行仓库事件 */
+    chooseSalesOrderItemWarehouseEvent: Function;
 }

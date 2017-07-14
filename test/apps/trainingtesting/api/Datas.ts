@@ -18,3 +18,5 @@ export const BO_CODE_MATERIAL: string = "CC_TT_MATERIALS";
 export const BO_CODE_CUSTOMER: string = "CC_TT_CUSTOMER";
 /** 业务对象编码-销售订单 */
 export const BO_CODE_SALESORDER: string = "CC_TT_SALESORDER";
+/** 业务对象编码-仓库 */
+export const BO_CODE_WAREHOUSE: string = "CC_TT_WAREHOUSE";

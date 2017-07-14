@@ -47,6 +47,16 @@ export interface IBORepositoryTrainingTesting {
      * @param saver 保存者
      */
     saveSalesOrder(saver: SaveCaller<bo.ISalesOrder>);
+    /**
+     * 查询 仓库
+     * @param fetcher 查询者
+     */
+    fetchWarehouse(fetcher: FetchCaller<bo.IWarehouse>);
+    /**
+     * 保存 仓库
+     * @param saver 保存者
+     */
+    saveWarehouse(saver: SaveCaller<bo.IWarehouse>);    
 
 
 }

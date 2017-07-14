@@ -11,6 +11,7 @@ import { MaterialFunc, MaterialChooseServiceMapping, MaterialLinkServiceMapping 
 import { CustomerFunc, CustomerChooseServiceMapping, CustomerLinkServiceMapping } from "./customer/index";
 import { SalesOrderFunc, SalesOrderChooseServiceMapping, SalesOrderLinkServiceMapping } from "./salesorder/index";
 import { DemoUrlFunc, DemoTabFunc, DemoResidentApp, DemoServiceMapping, DemoMapFunc } from "./others/index";
+import { WarehouseFunc, WarehouseChooseServiceMapping, WarehouseLinkServiceMapping } from "./warehouse/index";
 
 /** 模块控制台 */
 export class Console extends ibas.ModuleConsole {
@@ -35,6 +36,7 @@ export class Console extends ibas.ModuleConsole {
         this.register(new MaterialFunc());
         this.register(new CustomerFunc());
         this.register(new SalesOrderFunc());
+        this.register(new WarehouseFunc());
         // 注册服务应用
         this.register(new MaterialChooseServiceMapping());
         this.register(new MaterialLinkServiceMapping());
@@ -42,6 +44,8 @@ export class Console extends ibas.ModuleConsole {
         this.register(new CustomerLinkServiceMapping());
         this.register(new SalesOrderChooseServiceMapping());
         this.register(new SalesOrderLinkServiceMapping());
+        this.register(new WarehouseChooseServiceMapping());
+        this.register(new WarehouseLinkServiceMapping());
         // 注册常驻应用
 
     }
@@ -52,6 +56,7 @@ export class Console extends ibas.ModuleConsole {
         ibas.i18n.load(this.rootUrl + "resources/languages/bo/material.json");
         ibas.i18n.load(this.rootUrl + "resources/languages/bo/customer.json");
         ibas.i18n.load(this.rootUrl + "resources/languages/bo/salesorder.json");
+        ibas.i18n.load(this.rootUrl + "resources/languages/bo/warehouse.json");
         // 设置资源属性
         this.description = ibas.i18n.prop(this.name.toLowerCase());
         this.icon = ibas.i18n.prop(this.name.toLowerCase() + "_icon");

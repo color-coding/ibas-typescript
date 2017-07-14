@@ -10,12 +10,13 @@ import * as ibas from "ibas/index";
 import * as materialApps from "../../bsapp/material/index";
 import * as customerApps from "../../bsapp/customer/index";
 import * as salesorderApps from "../../bsapp/salesorder/index";
+import * as othersApps from "../../bsapp/others/index";
+import * as warehouseApps from "../../bsapp/warehouse/index";
 import * as materialViews from "./material/index";
 import * as customerViews from "./customer/index";
 import * as salesorderViews from "./salesorder/index";
-import * as othersApps from "../../bsapp/others/index";
 import * as othersViews from "./others/index";
-
+import * as warehouseViews from "./warehouse/index";
 /**
  * 视图导航
  */
@@ -79,6 +80,18 @@ export default class Navigation extends ibas.ViewNavigation {
             case othersApps.DemoMapApp.APPLICATION_ID:
                 view = new othersViews.DemoMapView();
                 break;
+            case warehouseApps.WarehouseListApp.APPLICATION_ID:
+                view = new warehouseViews.WarehouseListView();
+                break;
+            case warehouseApps.WarehouseChooseApp.APPLICATION_ID:
+                view = new warehouseViews.WarehouseChooseView();
+                break;
+            case warehouseApps.WarehouseViewApp.APPLICATION_ID:
+                view = new warehouseViews.WarehouseViewView();
+                break;
+            case warehouseApps.WarehouseEditApp.APPLICATION_ID:
+                view = new warehouseViews.WarehouseEditView();
+                break;    
             default:
                 break;
         }

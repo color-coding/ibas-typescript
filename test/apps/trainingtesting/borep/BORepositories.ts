@@ -64,6 +64,20 @@ export class BORepositoryTrainingTesting extends ibas.BORepositoryApplication im
         super.save(bo.SalesOrder.name, saver);
     }
 
+    /**
+     * 查询 仓库
+     * @param fetcher 查询者
+     */
+    fetchWarehouse(fetcher: ibas.FetchCaller<bo.Warehouse>): void {
+        super.fetch(bo.Warehouse.name, fetcher);
+    }
+    /**
+     * 保存 仓库
+     * @param saver 保存者
+     */
+    saveWarehouse(saver: ibas.SaveCaller<bo.Warehouse>): void {
+        super.save(bo.Warehouse.name, saver);
+    }
 
 }
 // 注册业务对象仓库到工厂
