@@ -218,20 +218,20 @@ export class Criteria implements ICriteria {
     protected boCriteria(bo: BusinessObject<any>, operation: emConditionOperation): ICriteria {
         let boCriteria: ICriteria = null;
         // 判断BO类型，添加下个集合条件，尽量使用数值字段
-        if (objects.isAssignableFrom(bo, BODocument)
-            || objects.isAssignableFrom(bo, BOMasterData)) {
+        if (objects.instanceOf(bo, BODocument)
+            || objects.instanceOf(bo, BOMasterData)) {
             boCriteria = new Criteria();
             let condition: ICondition = boCriteria.conditions.create();
             condition.alias = BO_PROPERTY_NAME_DOCENTRY;
             condition.value = bo[BO_PROPERTY_NAME_DOCENTRY];
             condition.operation = operation;
-        } else if (objects.isAssignableFrom(bo, BOSimple)) {
+        } else if (objects.instanceOf(bo, BOSimple)) {
             boCriteria = new Criteria();
             let condition: ICondition = boCriteria.conditions.create();
             condition.alias = BO_PROPERTY_NAME_OBJECTKEY;
             condition.value = bo[BO_PROPERTY_NAME_OBJECTKEY];
             condition.operation = operation;
-        } else if (objects.isAssignableFrom(bo, BODocumentLine)) {
+        } else if (objects.instanceOf(bo, BODocumentLine)) {
             boCriteria = new Criteria();
             // 父项相等时
             let condition: ICondition = boCriteria.conditions.create();
@@ -249,7 +249,7 @@ export class Criteria implements ICriteria {
             condition.alias = BO_PROPERTY_NAME_DOCENTRY;
             condition.value = bo[BO_PROPERTY_NAME_DOCENTRY];
             condition.operation = operation;
-        } else if (objects.isAssignableFrom(bo, BOMasterDataLine)) {
+        } else if (objects.instanceOf(bo, BOMasterDataLine)) {
             boCriteria = new Criteria();
             // 父项相等时
             let condition: ICondition = boCriteria.conditions.create();
@@ -267,7 +267,7 @@ export class Criteria implements ICriteria {
             condition.alias = BO_PROPERTY_NAME_CODE;
             condition.value = bo[BO_PROPERTY_NAME_CODE];
             condition.operation = operation;
-        } else if (objects.isAssignableFrom(bo, BOSimpleLine)) {
+        } else if (objects.instanceOf(bo, BOSimpleLine)) {
             boCriteria = new Criteria();
             // 父项相等时
             let condition: ICondition = boCriteria.conditions.create();

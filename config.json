@@ -3,8 +3,8 @@
     "company": "CC",
     "debug": false,
     "language": "zh_CN",
-    "offline": false,
-    "offline|BORepositoryShell": false,
+    "offline": true,
+    "offline|BORepositoryShell": true,
     "helpUrl": "http://www.baidu.com",
     "repositoryAddress|BORepositoryShell": ".../initialfantasy/services/rest/data"
   },

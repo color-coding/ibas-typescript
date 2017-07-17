@@ -212,7 +212,9 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         let viewContent: any = new sap.m.MessagePage("", {
             text: ibas.i18n.prop("sys_shell_welcome_page", ibas.i18n.prop("sys_shell_name")),
             customDescription: new sap.m.Link("", {
-                text: ibas.config.get(CONFIG_ITEM_WELCOME_PAGE_URL)
+                target: "_blank",
+                text: ibas.config.get(CONFIG_ITEM_WELCOME_PAGE_URL),
+                href: ibas.config.get(CONFIG_ITEM_WELCOME_PAGE_URL)
             }),
             description: "",
             // title: "",
