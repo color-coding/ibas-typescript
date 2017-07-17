@@ -60,9 +60,9 @@ export enum emPrivilegeSource {
 }
 /** 权限值 */
 export enum emAuthoriseType {
-    /** 没权限 */
+    /** 全部权限 */
     ALL,
-    /** 读取权限 */
+    /** 只取权限 */
     READ,
     /** 没有权限 */
     NONE
