@@ -594,19 +594,29 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
     /** 显示工具条视图 */
     showBarView(view: ibas.BOBarView): void {
         let that: this = this;
-        let popover: sap.m.Popover = new sap.m.Popover("", {
-            showHeader: false,
-            placement: sap.m.PlacementType.Bottom,
-            afterClose(event: any): void {
-                // 设置视图未显示
+        let form: any = view.darw();
+        if (form instanceof sap.m.QuickView) {
+            // 快速视图
+            form.attachAfterClose(null, function (): void {
                 view.isDisplayed = false;
-            },
-            content: [
-                view.darw()
-            ]
-        });
-        (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
-        popover.openBy(view.darwBar(), true);
+            });
+            form.openBy(view.darwBar());
+        } else {
+            // 弹出层
+            let popover: sap.m.Popover = new sap.m.Popover("", {
+                showHeader: false,
+                placement: sap.m.PlacementType.Bottom,
+                afterClose(event: any): void {
+                    // 设置视图未显示
+                    view.isDisplayed = false;
+                },
+                content: [
+                    view.darw()
+                ]
+            });
+            (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
+            popover.openBy(view.darwBar(), true);
+        }
     }
     /** 显示常驻视图 */
     showResidentView(view: ibas.IBarView): void {
