@@ -323,7 +323,7 @@ export abstract class ViewNavigation implements IViewNavigation {
         if (objects.isNull(view)) {
             throw new Error(i18n.prop("sys_invalid_view", id));
         }
-        view.id = strings.format("{0} - {1}", id, uuids.random());
+        view.id = strings.format("{0}_{1}", id, uuids.random());
         return view;
     }
 
