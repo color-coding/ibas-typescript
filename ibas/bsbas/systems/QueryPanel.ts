@@ -10,7 +10,7 @@ import {
     objects, ICriteria, Criteria, ICondition, i18n, IOperationResult, criterias,
     config, ISort, emSortType, emConditionOperation, ArrayList, BarApplication,
     emMessageType, variablesManager, VariablesManager, BODocument, BOMasterData, BOSimple,
-    BODocumentLine, BOMasterDataLine, BOSimpleLine, VARIABLE_NAME_USER_CODE,
+    BODocumentLine, BOMasterDataLine, BOSimpleLine, VARIABLE_NAME_USER_CODE,emConditionRelationship,
     BO_PROPERTY_NAME_CODE, BO_PROPERTY_NAME_DOCENTRY, BO_PROPERTY_NAME_LINEID, BO_PROPERTY_NAME_OBJECTKEY
 } from "ibas/index";
 import { IQueryPanelView, IQueryPanel, IUseQueryPanel, IUserQuery, IBORepositorySystem, IBOInfo } from "./Systems.d";
@@ -155,6 +155,8 @@ export abstract class QueryPanel<T extends IQueryPanelView> extends BarApplicati
                                 condition.alias = boProperty.property;
                                 condition.value = that.view.searchContent;
                                 condition.operation = emConditionOperation.CONTAIN;
+                                // 修正查询关系为或
+                                condition.relationship = emConditionRelationship.OR;
                             }
                         }
                         // 没有查询字段，则查询主键
