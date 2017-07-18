@@ -1,0 +1,28 @@
+{
+  "name": "ibas-ts",
+  "version": "1.0.0",
+  "description": "ibas应用系统",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "start": "tsc && concurrently \"npm run tsc:w\" \"npm run lite\"",
+    "lite": "lite-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GSGSS/ibas-typescript.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GSGSS/ibas-typescript/issues"
+  },
+  "homepage": "https://github.com/GSGSS/ibas-typescript#readme",
+  "devDependencies": {
+    "concurrently": "^2.2.0",
+    "lite-server": "^2.3.0"
+  }
+}

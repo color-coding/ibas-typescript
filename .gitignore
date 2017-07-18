@@ -33,7 +33,7 @@ Web.config
 /others/
 /upload/
 /test/apps/
-
+/node_modules/
 
 # exceptions
 !ibas/3rdparty/*.js
