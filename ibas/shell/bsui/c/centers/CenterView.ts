@@ -732,7 +732,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         if (ibas.objects.isNull(view)) { return; }
         if (view instanceof CenterView) {
             // 自身销毁，从浏览器缓存刷新页面
-            window.location.reload(false);
+            window.location.replace(document.location.origin + document.location.pathname);
             return;
         } else {
             let ui: sap.ui.core.Element = sap.ui.getCore().byId(view.id);
