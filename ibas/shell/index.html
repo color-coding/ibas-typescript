@@ -13,15 +13,12 @@
     <script type="text/javascript" src="../3rdparty/require.js"></script>
     <script type="text/javascript">
         (function () {
-            var root = document.location.href;
-            root = root.substring(0, root.lastIndexOf("/") + 1);
+            var root = document.location.origin;
+            root = root + document.location.pathname.substring(0, document.location.pathname.lastIndexOf("/") + 1);
             var uiLoder = new OpenUI5();
             uiLoder.load(root + "../../openui5/", function () {
                 var ibasLoder = new ibas();
                 ibasLoder.load(root + "../../ibas/");
-                delete root;
-                delete uiLoder;
-                delete ibasLoder;
             });
         }());
     </script>
