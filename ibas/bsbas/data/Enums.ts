@@ -67,3 +67,10 @@ export enum emAuthoriseType {
     /** 没有权限 */
     NONE
 }
+/** 权限值 */
+export enum emChooseType {
+    /** 单选 */
+    single,
+    /** 多选 */
+    multi
+}

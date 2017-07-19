@@ -13,7 +13,7 @@ import {
 import { IBOChooseView } from "./Applications.d";
 import { BOQueryApplication } from "./Applications";
 import { IBOChooseService, IBOChooseServiceContract } from "../services/index";
-
+import { emChooseType } from "../data/index";
 /**
  * 业务对象选择应用
  */
@@ -83,6 +83,11 @@ export abstract class BOChooseService<T extends IBOChooseView, D> extends BOChoo
                 // 存在查询，则直接触发查询事件
                 if (!objects.isNull(criteria) && criteria.conditions.length > 0) {
                     let view: IBOChooseView = <IBOChooseView>this.view;
+                    view.getChooseType=function(){
+                        if(contract.chooseType!==emChooseType.multi&&contract.chooseType===emChooseType.single)
+                            return emChooseType.single
+                        return contract.chooseType;
+                    }
                     if (view.query instanceof Function) {
                         // 视图存在查询方法，则调用此方法
                         view.query(criteria);

@@ -11,3 +11,5 @@ export * from "./CustomerListView";
 export * from "./CustomerChooseView";
 export * from "./CustomerViewView";
 export * from "./CustomerEditView";
+
+export * from "./CustomerChooseNewView";

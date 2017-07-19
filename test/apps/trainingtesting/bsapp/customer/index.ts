@@ -12,3 +12,5 @@ export * from "./CustomerListApp";
 export * from "./CustomerChooseApp";
 export * from "./CustomerViewApp";
 export * from "./CustomerEditApp";
+
+export * from "./CustomerChooseNewApp";

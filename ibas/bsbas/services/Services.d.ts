@@ -7,7 +7,7 @@
  */
 import { IBusinessObject, ICriteria, KeyValue, List, ICondition, IDataConverter } from "../../bobas/index";
 import { IElement, IViewShower, IViewNavigation } from "../core/index";
-
+import { emChooseType } from "../index";
 /**
  * 应用服务
  */
@@ -58,6 +58,8 @@ export interface IServicesShower {
 }
 /** 服务的契约 */
 export interface IServiceContract {
+    //选择类型
+    chooseType?: emChooseType;
     /** 完成 */
     onCompleted?: Function;
 }
@@ -89,6 +91,7 @@ export interface IBOLinkServiceContract extends IServiceContract {
 }
 /** 业务对象选择服务的契约 */
 export interface IBOChooseServiceContract extends IServiceContract {
+
     /** 业务对象编码 */
     boCode: string;
     /** 条件 */

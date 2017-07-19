@@ -11,3 +11,6 @@ export * from "./SalesOrderListView";
 export * from "./SalesOrderChooseView";
 export * from "./SalesOrderViewView";
 export * from "./SalesOrderEditView";
+
+export * from "./SalesOrderListNewView";
+export * from "./SalesOrderEditNewView";

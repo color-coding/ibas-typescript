@@ -26,7 +26,7 @@ export class SalesOrderListView extends ibas.BOListView implements ISalesOrderLi
     /** 绘制视图 */
     darw(): any {
         let that: this = this;
-        this.form = new sap.ui.layout.form.SimpleForm("");
+        this.form = new sap.ui.layout.VerticalLayout("");
         this.table = new sap.ui.table.Table("", {
             enableSelectAll: false,
             visibleRowCount: ibas.config.get(utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 15),
@@ -91,10 +91,11 @@ export class SalesOrderListView extends ibas.BOListView implements ISalesOrderLi
             ]
         });
         this.form.addContent(this.table);
+
         this.page = new sap.m.Page("", {
             showHeader: false,
-            subHeader: new sap.m.Bar("", {
-                contentLeft: [
+            subHeader: new sap.m.Toolbar("", {
+                content: [
                     new sap.m.Button("", {
                         text: ibas.i18n.prop("sys_shell_data_new"),
                         type: sap.m.ButtonType.Transparent,
@@ -137,8 +138,7 @@ export class SalesOrderListView extends ibas.BOListView implements ISalesOrderLi
                             );
                         }
                     }),
-                ],
-                contentRight: [
+                    new sap.m.ToolbarSpacer(""),
                     new sap.m.Button("", {
                         type: sap.m.ButtonType.Transparent,
                         icon: "sap-icon://action",
@@ -169,7 +169,8 @@ export class SalesOrderListView extends ibas.BOListView implements ISalesOrderLi
                             });
                         }
                     })
-                ]
+                ],
+
             }),
             content: [this.form]
         });
@@ -197,7 +198,7 @@ export class SalesOrderListView extends ibas.BOListView implements ISalesOrderLi
         this.page.setShowHeader(true);
     }
     private page: sap.m.Page;
-    private form: sap.ui.layout.form.SimpleForm;
+    private form: sap.ui.layout.VerticalLayout;
     private table: sap.ui.table.Table;
     /** 显示数据 */
     showData(datas: bo.SalesOrder[]): void {

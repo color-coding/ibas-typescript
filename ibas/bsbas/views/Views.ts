@@ -73,6 +73,8 @@ export abstract class BOListView extends BOQueryView implements IBOListView {
 }
 /** 业务对象选择视图 */
 export abstract class BOChooseView extends BOQueryDialogView implements IBOChooseView {
+     /** 选择类型 单选/多选 */
+    getChooseType:Function;
     /** 新建数据事件 */
     newDataEvent: Function;
     /** 选择数据事件，参数：选择数据 */

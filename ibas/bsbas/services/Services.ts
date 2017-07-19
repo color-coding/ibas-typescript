@@ -16,6 +16,7 @@ import {
     IBOLinkServiceContract, IBOChooseServiceContract,
     IBOLinkServiceCaller,
 } from "./Services.d";
+import { emChooseType } from "../index";
 
 /** 配置项目-默认服务图片 */
 export const CONFIG_ITEM_DEFALUT_SERVICE_ICON: string = "defalutServiceIcon";

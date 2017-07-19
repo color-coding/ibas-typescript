@@ -8,8 +8,9 @@
 // 业务对象应用的相关说明文件
 
 import { List, IBusinessObject } from "../../bobas/index";
-import { IView, IBarView } from "../core/index";
+import { IView, IBarView} from "../core/index";
 import { IUseQueryPanel } from "../systems/index";
+import { emChooseType } from "../index";
 
 /**
  * 业务对象应用-视图
@@ -34,6 +35,8 @@ export interface IBOQueryView extends IBOView, IUseQueryPanel {
  * 业务对象应用-选择视图
  */
 export interface IBOChooseView extends IBOQueryView {
+     /** 选择类型 单选/多选 */
+    getChooseType:Function;
     /** 选择数据事件，参数：选择数据 */
     chooseDataEvent: Function;
     /** 新建数据事件 */

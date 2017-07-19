@@ -7,11 +7,10 @@
  */
 
 import * as ibas from "ibas/index";
-import { MaterialFunc, MaterialChooseServiceMapping, MaterialLinkServiceMapping } from "./material/index";
-import { CustomerFunc, CustomerChooseServiceMapping, CustomerLinkServiceMapping } from "./customer/index";
-import { SalesOrderFunc, SalesOrderChooseServiceMapping, SalesOrderLinkServiceMapping } from "./salesorder/index";
+import { MaterialFunc, MaterialChooseServiceMapping,MaterialChooseServiceNewMapping,MaterialLinkServiceMapping } from "./material/index";
+import { CustomerFunc, CustomerChooseServiceMapping,CustomerChooseNewServiceMapping, CustomerLinkServiceMapping } from "./customer/index";
+import { SalesOrderFunc, SalesOrderNewFunc,SalesOrderChooseServiceMapping, SalesOrderLinkServiceMapping } from "./salesorder/index";
 import { DemoUrlFunc, DemoTabFunc, DemoResidentApp, DemoServiceMapping, DemoMapFunc } from "./others/index";
-
 /** 模块控制台 */
 export class Console extends ibas.ModuleConsole {
     /** 模块-标识 */
@@ -35,6 +34,7 @@ export class Console extends ibas.ModuleConsole {
         this.register(new MaterialFunc());
         this.register(new CustomerFunc());
         this.register(new SalesOrderFunc());
+        this.register(new SalesOrderNewFunc());
         // 注册服务应用
         this.register(new MaterialChooseServiceMapping());
         this.register(new MaterialLinkServiceMapping());
@@ -42,6 +42,9 @@ export class Console extends ibas.ModuleConsole {
         this.register(new CustomerLinkServiceMapping());
         this.register(new SalesOrderChooseServiceMapping());
         this.register(new SalesOrderLinkServiceMapping());
+
+        this.register(new CustomerChooseNewServiceMapping());
+        this.register(new MaterialChooseServiceNewMapping());
         // 注册常驻应用
 
     }
@@ -60,7 +63,7 @@ export class Console extends ibas.ModuleConsole {
         if (!ibas.config.get(ibas.CONFIG_ITEM_DISABLE_PLATFORM_VIEW, false)
             && this.plantform === ibas.emPlantform.PHONE) {
             // 使用m类型视图
-            uiModules.push("../bsui/m/Navigation");
+            uiModules.push("../bsui/c/Navigation");
         } else {
             // 使用c类型视图
             uiModules.push("../bsui/c/Navigation");
@@ -117,7 +120,7 @@ export class ConsoleOthers extends ibas.ModuleConsole {
         if (!ibas.config.get(ibas.CONFIG_ITEM_DISABLE_PLATFORM_VIEW, false)
             && this.plantform === ibas.emPlantform.PHONE) {
             // 使用m类型视图
-            uiModules.push("../bsui/m/Navigation");
+            uiModules.push("../bsui/c/Navigation");
         } else {
             // 使用c类型视图
             uiModules.push("../bsui/c/Navigation");

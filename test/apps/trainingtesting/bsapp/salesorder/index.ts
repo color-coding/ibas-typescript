@@ -12,3 +12,8 @@ export * from "./SalesOrderListApp";
 export * from "./SalesOrderChooseApp";
 export * from "./SalesOrderViewApp";
 export * from "./SalesOrderEditApp";
+
+
+export * from "./SalesOrderNewFunc";
+export * from "./SalesOrderListNewApp";
+export * from "./SalesOrderEditNewApp";

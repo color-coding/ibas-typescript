@@ -11,3 +11,5 @@ export * from "./MaterialListView";
 export * from "./MaterialChooseView";
 export * from "./MaterialViewView";
 export * from "./MaterialEditView";
+
+export * from "./MaterialChooseNewView";

@@ -187,10 +187,11 @@ export namespace utils {
     /** 结果集触发者 */
     export interface IResultsTrigger {
         /** 监听对象 */
-        listener: sap.ui.table.Table;
+        listener: sap.ui.table.Table | sap.m.Table;
         /** 触发方法 */
         next(data: any): void;
     }
+
     /** 自动触发下一个结果集查询 */
     export function triggerNextResults(trigger: IResultsTrigger): void {
         // 离线模式下不支持
@@ -219,9 +220,17 @@ export namespace utils {
                             data = data.rows;
                         }
                     }
-                    let visibleRow: number = this.getVisibleRowCount();
+                    let visibleRow: number = 0;
+                    if (this instanceof sap.ui.table.Table)
+                        visibleRow = this.getVisibleRowCount();
+                    else
+                        visibleRow = this.getGrowingThreshold();
                     if (dataCount > 0 && dataCount > visibleRow) {
                         let firstRow: number = this.getFirstVisibleRow(); // 当前页的第一行
+                        if (this instanceof sap.ui.table.Table)
+                            firstRow = this.getVisibleRowCount();
+                        else
+                            firstRow = this.getGrowingThreshold();
                         let lastPageCount: number = dataCount % visibleRow; // 最后一页行数
                         if ((lastPageCount > 0 && firstRow === (dataCount - lastPageCount))
                             || (lastPageCount === 0 && firstRow === (dataCount - visibleRow))) {
@@ -259,7 +268,7 @@ export namespace utils {
         }
     }
     /** 改变窗体内控件编辑状态 */
-    export function changeFormEditable(form: sap.ui.layout.form.SimpleForm, editable: boolean): void {
+    export function changeFormEditable(form: sap.ui.layout.VerticalLayout, editable: boolean): void {
         if (ibas.objects.isNull(form)) {
             return;
         }

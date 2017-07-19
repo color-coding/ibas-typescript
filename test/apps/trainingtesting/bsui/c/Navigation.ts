@@ -79,6 +79,18 @@ export default class Navigation extends ibas.ViewNavigation {
             case othersApps.DemoMapApp.APPLICATION_ID:
                 view = new othersViews.DemoMapView();
                 break;
+            case salesorderApps.SalesOrderListNewApp.APPLICATION_ID:
+                view = new salesorderViews.SalesOrderListNewView();
+                break;
+            case salesorderApps.SalesOrderEditNewApp.APPLICATION_ID:
+                view = new salesorderViews.SalesOrderEditNewView();
+                break;
+            case customerApps.CustomerChooseNewApp.APPLICATION_ID:
+                view = new customerViews.CustomerChooseNewView();
+                break;
+            case materialApps.MaterialChooseNewApp.APPLICATION_ID:
+                view = new materialViews.MaterialChooseNewView();
+                break;
             default:
                 break;
         }
