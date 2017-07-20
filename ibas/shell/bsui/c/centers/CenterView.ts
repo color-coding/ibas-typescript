@@ -42,8 +42,6 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
     private messagePopover: sap.m.Popover;
     /** 消息钮 */
     private messageButton: sap.tnt.NavigationListItem;
-    /** 用户信息条 */
-    private userBar: sap.m.Button;
     /** 忙对话框 */
     private busyDialog: sap.m.BusyDialog;
     /** 激活帮助 */
@@ -56,70 +54,75 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
     darw(): any {
         let that: this = this;
         this.mainPage = new sap.tnt.ToolPage("");
-        this.mainHeader = new sap.tnt.ToolHeader("");
-        // 收缩菜单钮
-        this.mainHeader.addContent(new sap.m.Button("", {
-            icon: "sap-icon://menu2",
-            type: sap.m.ButtonType.Transparent,
-            layoutData: new sap.m.OverflowToolbarLayoutData("", {
-                priority: sap.m.OverflowToolbarPriority.NeverOverflow
-            }),
-            press: function (): void {
-                that.mainPage.setSideExpanded(!that.mainPage.getSideExpanded());
-            }
-        }));
-        this.mainHeader.addContent(new sap.m.ToolbarSpacer("", { width: "20px" }));
-        this.mainHeader.addContent(new sap.tnt.ToolHeaderUtilitySeparator(""));
-        this.mainHeader.addContent(new sap.m.ToolbarSpacer("", {
-            layoutData: new sap.m.OverflowToolbarLayoutData("", {
-                priority: sap.m.OverflowToolbarPriority.NeverOverflow,
-                minWidth: "20px"
-            })
-        }));
-        // 用户钮
-        this.userBar = new sap.m.Button("", {
-            type: sap.m.ButtonType.Transparent,
-            layoutData: new sap.m.OverflowToolbarLayoutData("", {
-                priority: sap.m.OverflowToolbarPriority.NeverOverflow
-            }),
-            press: function (event: any): void {
-                let popover: sap.m.Popover = new sap.m.Popover("", {
-                    showHeader: false,
-                    placement: sap.m.PlacementType.Bottom,
-                    content: [
-                        new sap.m.Button({
-                            text: ibas.i18n.prop("sys_shell_help"),
-                            type: sap.m.ButtonType.Transparent,
-                            icon: "sap-icon://sys-help",
-                            press: function (): void {
-                                that.fireViewEvents(that.helpEvent);
-                                popover.close();
-                            }
-                        }),
-                        new sap.m.Button({
-                            text: ibas.i18n.prop("sys_shell_about"),
-                            type: sap.m.ButtonType.Transparent,
-                            icon: "sap-icon://world",
-                            press: function (): void {
-                                that.fireViewEvents(that.aboutEvent);
-                                popover.close();
-                            }
-                        }),
-                        new sap.m.Button({
-                            text: ibas.i18n.prop("sys_shell_logout"),
-                            type: sap.m.ButtonType.Transparent,
-                            icon: "sap-icon://system-exit",
-                            press: function (): void {
-                                that.fireViewEvents(that.closeEvent);
-                            }
-                        })
-                    ]
-                });
-                (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
-                popover.openBy(event.getSource(), true);
-            }
+        this.mainHeader = new sap.tnt.ToolHeader("", {
+            content: [
+                // 收缩菜单钮
+                new sap.m.Button("", {
+                    icon: "sap-icon://menu2",
+                    type: sap.m.ButtonType.Transparent,
+                    layoutData: new sap.m.OverflowToolbarLayoutData("", {
+                        priority: sap.m.OverflowToolbarPriority.NeverOverflow
+                    }),
+                    press: function (): void {
+                        that.mainPage.setSideExpanded(!that.mainPage.getSideExpanded());
+                    }
+                }),
+                // 分隔符
+                new sap.m.ToolbarSpacer("", { width: "20px" }),
+                new sap.tnt.ToolHeaderUtilitySeparator(""),
+                new sap.m.ToolbarSpacer("", {
+                    layoutData: new sap.m.OverflowToolbarLayoutData("", {
+                        priority: sap.m.OverflowToolbarPriority.NeverOverflow,
+                        minWidth: "20px"
+                    })
+                }),
+                // 系统服务
+                new sap.m.Button("", {
+                    icon: "sap-icon://official-service",
+                    width : "50px",
+                    type: sap.m.ButtonType.Transparent,
+                    layoutData: new sap.m.OverflowToolbarLayoutData("", {
+                        priority: sap.m.OverflowToolbarPriority.NeverOverflow
+                    }),
+                    press: function (event: any): void {
+                        let popover: sap.m.Popover = new sap.m.Popover("", {
+                            showHeader: false,
+                            placement: sap.m.PlacementType.Bottom,
+                            content: [
+                                new sap.m.Button({
+                                    text: ibas.i18n.prop("sys_shell_help"),
+                                    type: sap.m.ButtonType.Transparent,
+                                    icon: "sap-icon://sys-help",
+                                    press: function (): void {
+                                        that.fireViewEvents(that.helpEvent);
+                                        popover.close();
+                                    }
+                                }),
+                                new sap.m.Button({
+                                    text: ibas.i18n.prop("sys_shell_about"),
+                                    type: sap.m.ButtonType.Transparent,
+                                    icon: "sap-icon://world",
+                                    press: function (): void {
+                                        that.fireViewEvents(that.aboutEvent);
+                                        popover.close();
+                                    }
+                                }),
+                                new sap.m.Button({
+                                    text: ibas.i18n.prop("sys_shell_logout"),
+                                    type: sap.m.ButtonType.Transparent,
+                                    icon: "sap-icon://system-exit",
+                                    press: function (): void {
+                                        that.fireViewEvents(that.closeEvent);
+                                    }
+                                })
+                            ]
+                        });
+                        (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
+                        popover.openBy(event.getSource(), true);
+                    }
+                }),
+            ]
         });
-        this.mainHeader.addContent(this.userBar);
         this.mainPage.setHeader(this.mainHeader);
         this.navigation = new sap.tnt.SideNavigation();
         this.navigation.setItem(new sap.tnt.NavigationList());
@@ -438,16 +441,6 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                     this.busyDialog.close();
                 }
             }
-        }
-    }
-    /** 显示用户信息 */
-    showUser(user: sys.IUser): void {
-        if (!ibas.objects.isNull(user.name)) {
-            this.userBar.setText(user.name);
-        } else if (!ibas.objects.isNull(user.code)) {
-            this.userBar.setText(user.code);
-        } else {
-            this.userBar.setText(ibas.i18n.prop("sys_shell_unknown_user"));
         }
     }
     private viewQueue: Map<ibas.IView, sap.m.Page> = new Map<ibas.IView, sap.m.Page>();

@@ -125,8 +125,6 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
         variablesManager.register(VARIABLE_NAME_USER_ID, this.currentUser.id);
         variablesManager.register(VARIABLE_NAME_USER_CODE, this.currentUser.code);
         variablesManager.register(VARIABLE_NAME_USER_NAME, this.currentUser.name);
-        // 显示当前用户
-        this.view.showUser(this.currentUser);
         // 加载用户相关
         logger.log(emMessageLevel.DEBUG, "center: initializing user [{0} - {1}]'s modules.", this.currentUser.id, this.currentUser.code);
         this.view.showStatusMessage(

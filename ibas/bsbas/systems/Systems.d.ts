@@ -56,24 +56,12 @@ export interface ICenterView extends IView {
 	showView(view: IView): void;
 	/** 设置忙状态 */
 	busyView(view: IView, busy: boolean, msg: string): any;
-	/**
-	 * 显示状态消息
-	 * @param type 消息类型
-	 * @param message 消息内容
-	 */
+	/** 显示状态消息 */
 	showStatusMessage(type: emMessageType, message: string): void;
-	/**
-	 * 显示消息对话框
-	 * @param caller 消息调用者
-	 */
+	/** 显示消息对话框	*/
 	showMessageBox(caller: IMessgesCaller): void;
-	/**
-	 * 显示模块
-	 * @param console 模块控制台
-	 */
+	/** 显示模块 */
 	showModule(console: IModuleConsole): void;
-	/** 显示用户信息 */
-	showUser(user: IUser): void;
 	/** 显示常驻视图 */
 	showResidentView(view: IBarView): void;
 }
