@@ -247,7 +247,8 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
                 // 有效模块控制台
                 console.addListener(function (): void {
                     if (console.functions().length > 0
-                        && config.get(CONFIG_ITEM_HIDE_NO_FUNCTION_MODULE, true)) {
+                        && config.get(CONFIG_ITEM_HIDE_NO_FUNCTION_MODULE, true)
+                        && module.authorise === emAuthoriseType.ALL) {
                         // 显示模块
                         that.view.showModule(console);
                         // 注册模块功能

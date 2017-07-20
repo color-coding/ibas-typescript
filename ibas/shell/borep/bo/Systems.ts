@@ -40,6 +40,8 @@ export class UserModule implements sys.IUserModule {
 	address: string;
 	/** 仓库地址 */
 	repository: string;
+	/** 权限 */
+	authorise:  ibas.emAuthoriseType;
 }
 /**
  * 用户权限

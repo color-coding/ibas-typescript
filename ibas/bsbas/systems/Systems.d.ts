@@ -151,6 +151,8 @@ export interface IUserModule {
 	address: string;
 	/** 仓库地址 */
 	repository: string;
+	/** 权限 */
+	authorise: emAuthoriseType;
 }
 /** 用户权限 */
 export interface IUserPrivilege {
