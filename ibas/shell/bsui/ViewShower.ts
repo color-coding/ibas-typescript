@@ -33,7 +33,12 @@ export default class ViewShowerDefault implements ibas.IViewShower {
             if (ibas.objects.isNull(event)) {
                 return;
             }
+            if (event.newURL.indexOf(ibas.URL_HASH_SIGN_VIEWS) < 0) {
+                return;
+            }
             that.onHashChange(event);
+            // 事件操作完成，取消hash值
+            window.location.hash = "";
         }, false);
     }
     /** 按钮按下时 */
@@ -54,9 +59,6 @@ export default class ViewShowerDefault implements ibas.IViewShower {
             return;
         }
         if (ibas.objects.isNull(this.currentView)) {
-            return;
-        }
-        if (event.newURL.indexOf(ibas.URL_HASH_SIGN_VIEWS) < 0) {
             return;
         }
         if (this.currentView.isDisplayed) {

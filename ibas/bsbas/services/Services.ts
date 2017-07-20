@@ -19,6 +19,8 @@ import {
 
 /** 配置项目-默认服务图片 */
 export const CONFIG_ITEM_DEFALUT_SERVICE_ICON: string = "defalutServiceIcon";
+/** 地址hash值标记-服务 */
+export const URL_HASH_SIGN_SERVICES: string = "#/services/";
 
 /** 服务映射 */
 export abstract class ServiceMapping implements IServiceMapping {
@@ -116,6 +118,48 @@ export class ApplicationServiceProxy extends ServiceProxy<IApplicationServiceCon
 }
 /** 服务管理员 */
 export class ServicesManager {
+    constructor() {
+        let that: this = this;
+        // 哈希值变化
+        window.addEventListener("hashchange", function (event: any): void {
+            if (event === undefined || event === null) {
+                return;
+            }
+            if (event.newURL.indexOf(URL_HASH_SIGN_SERVICES) < 0) {
+                return;
+            }
+            that.onHashChange(event);
+            // 事件操作完成，取消hash值
+            window.location.hash = "";
+        }, false);
+    }
+    /** Hash改变，即地址栏#数据改变 */
+    protected onHashChange(event: HashChangeEvent): void {
+        try {
+            let url: string = event.newURL.substring(
+                event.newURL.indexOf(URL_HASH_SIGN_SERVICES) + URL_HASH_SIGN_SERVICES.length);
+            let serviceId: string = url.substring(0, url.indexOf("/"));
+            let mapping: IServiceMapping = this.getServiceMapping(serviceId);
+            if (!objects.isNull(mapping)) {
+                let service: IService<IDataServiceContract> = mapping.create();
+                if (!objects.isNull(service)) {
+                    let method: string = url.substring(url.indexOf("/") + 1);
+                    logger.log(emMessageLevel.DEBUG,
+                        "services: call service [{0}-{1}], hash value [{2}] ", mapping.description, mapping.id, method);
+                    // 运行服务
+                    if (objects.instanceOf(service, Application)) {
+                        (<Application<IView>>service).viewShower = mapping.viewShower;
+                        (<Application<IView>>service).navigation = mapping.navigation;
+                    }
+                    service.run({
+                        data: method
+                    });
+                }
+            }
+        } catch (error) {
+            logger.log(error);
+        }
+    }
     /** 服务映射 */
     private mappings: Map<string, IServiceMapping>;
     /** 注册服务映射 */
