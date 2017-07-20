@@ -591,6 +591,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             this.showQueryPanel(<ibas.BOQueryView><any>view, queryView);
         }
     }
+    private barViewQueue: Map<ibas.IView, sap.m.Page> = new Map<ibas.IView, sap.m.Page>();
     /** 显示工具条视图 */
     showBarView(view: ibas.BOBarView): void {
         let that: this = this;
@@ -598,7 +599,9 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         if (form instanceof sap.m.QuickView) {
             // 快速视图
             form.attachAfterClose(null, function (): void {
+                // 设置视图未显示
                 view.isDisplayed = false;
+                that.barViewQueue.delete(view);
             });
             form.openBy(view.darwBar());
         } else {
@@ -609,22 +612,25 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                 afterClose(event: any): void {
                     // 设置视图未显示
                     view.isDisplayed = false;
+                    that.barViewQueue.delete(view);
                 },
-                content: [
-                    view.darw()
-                ]
+                content: [form]
             });
             (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
             popover.openBy(view.darwBar(), true);
         }
+        view.id = form.getId();
+        // 记录视图到列表
+        this.barViewQueue.set(view, form);
     }
     /** 显示常驻视图 */
     showResidentView(view: ibas.IBarView): void {
         let bar: any = view.darwBar();
-        if (!ibas.objects.isNull(bar)) {
+        if (!ibas.objects.isNull(bar) && bar instanceof sap.ui.core.Control) {
             this.mainHeader.insertContent(bar, this.mainHeader.getContent().length - 1);
             // 触发工具条显示完成事件
             view.barShowedEvent.apply(view.application);
+            view.id = bar.getId();
         }
     }
     /** 显示地址视图 */
@@ -788,6 +794,34 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                 lastView = item;
             }
             this.showView(lastView);
+        }
+    }
+    /** 地址栏哈希值变化 */
+    onHashChange(event: HashChangeEvent): void {
+        if (ibas.objects.isNull(event) || event.newURL.indexOf(ibas.URL_HASH_SIGN_VIEWS) < 0) {
+            return;
+        }
+        let url: string = event.newURL.substring(event.newURL.indexOf(ibas.URL_HASH_SIGN_VIEWS) + ibas.URL_HASH_SIGN_VIEWS.length);
+        let viewId: string = url.substring(0, url.indexOf("/"));
+        // 普通视图匹配
+        for (let view of this.viewQueue.keys()) {
+            if (view.id === viewId) {
+                // 通知视图事件
+                view.onHashChange(event);
+                // 事件操作完成，取消hash值
+                window.location.hash = "#";
+                return;
+            }
+        }
+        // 常驻视图匹配
+        for (let view of this.barViewQueue.keys()) {
+            if (view.id === viewId) {
+                // 通知视图事件
+                view.onHashChange(event);
+                // 事件操作完成，取消hash值
+                window.location.hash = "#";
+                return;
+            }
         }
     }
 }

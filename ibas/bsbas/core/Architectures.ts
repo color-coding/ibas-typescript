@@ -115,6 +115,8 @@ export abstract class AbstractApplication<T extends IView> extends Element imple
         }
     }
 }
+/** 地址hash值标记-视图 */
+export const URL_HASH_SIGN_VIEWS: string = "#/views/";
 /** 视图 */
 export abstract class View implements IView {
     /** 应用 */
@@ -148,11 +150,6 @@ export abstract class View implements IView {
             });
         }
     }
-    /** 按钮按下时 */
-    onKeyDown(event: KeyboardEvent): void {
-        // 可重载
-        logger.log(emMessageLevel.DEBUG, "view: key [{0}] down at [{1}].", event.keyCode, this.id);
-    }
     /** 显示之后 */
     onDisplayed(): void {
         // 重载要回调
@@ -160,6 +157,16 @@ export abstract class View implements IView {
     /** 关闭之后 */
     onClosed(): void {
         // 重载要回调
+    }
+    /** 按钮按下时 */
+    onKeyDown(event: KeyboardEvent): void {
+        // 可重载
+        logger.log(emMessageLevel.DEBUG, "view: key [{0}] down at [{1}].", event.keyCode, this.id);
+    }
+    /** 地址栏哈希值变化 */
+    onHashChange(event: HashChangeEvent): void {
+        // 可重载
+        logger.log(emMessageLevel.DEBUG, "view: hash change to [{0}] at [{1}].", event.newURL, this.id);
     }
 }
 /** 配置项目-默认模块图标 */
