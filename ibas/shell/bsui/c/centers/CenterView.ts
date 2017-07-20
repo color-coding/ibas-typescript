@@ -808,8 +808,6 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             if (view.id === viewId) {
                 // 通知视图事件
                 view.onHashChange(event);
-                // 事件操作完成，取消hash值
-                window.location.hash = "#";
                 return;
             }
         }
@@ -818,8 +816,6 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             if (view.id === viewId) {
                 // 通知视图事件
                 view.onHashChange(event);
-                // 事件操作完成，取消hash值
-                window.location.hash = "#";
                 return;
             }
         }
