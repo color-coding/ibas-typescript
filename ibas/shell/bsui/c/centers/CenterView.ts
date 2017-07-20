@@ -90,6 +90,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                         new sap.m.Button({
                             text: ibas.i18n.prop("sys_shell_help"),
                             type: sap.m.ButtonType.Transparent,
+                            icon: "sap-icon://sys-help",
                             press: function (): void {
                                 that.fireViewEvents(that.helpEvent);
                                 popover.close();
@@ -98,6 +99,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                         new sap.m.Button({
                             text: ibas.i18n.prop("sys_shell_about"),
                             type: sap.m.ButtonType.Transparent,
+                            icon: "sap-icon://world",
                             press: function (): void {
                                 that.fireViewEvents(that.aboutEvent);
                                 popover.close();
@@ -106,6 +108,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                         new sap.m.Button({
                             text: ibas.i18n.prop("sys_shell_logout"),
                             type: sap.m.ButtonType.Transparent,
+                            icon: "sap-icon://system-exit",
                             press: function (): void {
                                 that.fireViewEvents(that.closeEvent);
                             }
@@ -209,7 +212,9 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         let viewContent: any = new sap.m.MessagePage("", {
             text: ibas.i18n.prop("sys_shell_welcome_page", ibas.i18n.prop("sys_shell_name")),
             customDescription: new sap.m.Link("", {
-                text: ibas.config.get(CONFIG_ITEM_WELCOME_PAGE_URL)
+                target: "_blank",
+                text: ibas.config.get(CONFIG_ITEM_WELCOME_PAGE_URL),
+                href: ibas.config.get(CONFIG_ITEM_WELCOME_PAGE_URL)
             }),
             description: "",
             // title: "",
@@ -586,30 +591,46 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             this.showQueryPanel(<ibas.BOQueryView><any>view, queryView);
         }
     }
+    private barViewQueue: Map<ibas.IView, sap.m.Page> = new Map<ibas.IView, sap.m.Page>();
     /** 显示工具条视图 */
     showBarView(view: ibas.BOBarView): void {
         let that: this = this;
-        let popover: sap.m.Popover = new sap.m.Popover("", {
-            showHeader: false,
-            placement: sap.m.PlacementType.Bottom,
-            afterClose(event: any): void {
+        let form: any = view.darw();
+        if (form instanceof sap.m.QuickView) {
+            // 快速视图
+            form.attachAfterClose(null, function (): void {
                 // 设置视图未显示
                 view.isDisplayed = false;
-            },
-            content: [
-                view.darw()
-            ]
-        });
-        (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
-        popover.openBy(view.darwBar(), true);
+                that.barViewQueue.delete(view);
+            });
+            form.openBy(view.darwBar());
+        } else {
+            // 弹出层
+            let popover: sap.m.Popover = new sap.m.Popover("", {
+                showHeader: false,
+                placement: sap.m.PlacementType.Bottom,
+                afterClose(event: any): void {
+                    // 设置视图未显示
+                    view.isDisplayed = false;
+                    that.barViewQueue.delete(view);
+                },
+                content: [form]
+            });
+            (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
+            popover.openBy(view.darwBar(), true);
+        }
+        view.id = form.getId();
+        // 记录视图到列表
+        this.barViewQueue.set(view, form);
     }
     /** 显示常驻视图 */
     showResidentView(view: ibas.IBarView): void {
         let bar: any = view.darwBar();
-        if (!ibas.objects.isNull(bar)) {
+        if (!ibas.objects.isNull(bar) && bar instanceof sap.ui.core.Control) {
             this.mainHeader.insertContent(bar, this.mainHeader.getContent().length - 1);
             // 触发工具条显示完成事件
             view.barShowedEvent.apply(view.application);
+            view.id = bar.getId();
         }
     }
     /** 显示地址视图 */
@@ -717,7 +738,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         if (ibas.objects.isNull(view)) { return; }
         if (view instanceof CenterView) {
             // 自身销毁，从浏览器缓存刷新页面
-            window.location.reload(false);
+            document.location.replace(document.location.origin + document.location.pathname);
             return;
         } else {
             let ui: sap.ui.core.Element = sap.ui.getCore().byId(view.id);
@@ -773,6 +794,30 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                 lastView = item;
             }
             this.showView(lastView);
+        }
+    }
+    /** 地址栏哈希值变化 */
+    onHashChange(event: HashChangeEvent): void {
+        if (ibas.objects.isNull(event) || event.newURL.indexOf(ibas.URL_HASH_SIGN_VIEWS) < 0) {
+            return;
+        }
+        let url: string = event.newURL.substring(event.newURL.indexOf(ibas.URL_HASH_SIGN_VIEWS) + ibas.URL_HASH_SIGN_VIEWS.length);
+        let viewId: string = url.substring(0, url.indexOf("/"));
+        // 普通视图匹配
+        for (let view of this.viewQueue.keys()) {
+            if (view.id === viewId) {
+                // 通知视图事件
+                view.onHashChange(event);
+                return;
+            }
+        }
+        // 常驻视图匹配
+        for (let view of this.barViewQueue.keys()) {
+            if (view.id === viewId) {
+                // 通知视图事件
+                view.onHashChange(event);
+                return;
+            }
         }
     }
 }

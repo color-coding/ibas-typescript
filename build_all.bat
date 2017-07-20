@@ -28,7 +28,7 @@ if "%OPTIONS%" neq "" (
   echo 命令：!COMMOND!
 )
 REM 过滤符号链接目录
-if exist "%WORK_FOLDER%\tomcat\webapps\ROOT" rd "%WORK_FOLDER%\tomcat\webapps\ROOT"
+if exist "%WORK_FOLDER%\tomcat\webapps\ROOT" rd /s /q "%WORK_FOLDER%\tomcat\webapps\ROOT"
 for /f %%l in ('dir /s /b "%WORK_FOLDER%tsconfig.json"') DO (
   SET FOLDER=%%~dpl
   echo --开始编译：!FOLDER!

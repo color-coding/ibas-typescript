@@ -26,7 +26,7 @@ export module urls {
         let url: string;
         if (value.startsWith(ROOT_URL_SIGN)) {
             // 存在根目录标记，则取文档地址作为根
-            url = document.location.href;
+            url = document.location.origin + document.location.pathname;
             // 去除文档.html
             let last: number = url.lastIndexOf(".");
             if (last > 0 && url.lastIndexOf("/", last) <= last) {
@@ -64,7 +64,7 @@ export module urls {
     export function rootUrl(type: string): string {
         if (type === undefined || type === null) {
             // 未提供类型，则返回文档地址
-            let url: string = window.document.location.href;
+            let url: string = document.location.origin + document.location.pathname;
             return url.substring(0, url.lastIndexOf("/"));
         }
         let fileName: string = type;
@@ -83,11 +83,15 @@ export module urls {
                     } else {
                         if (objects.isNull(script.baseURI)) {
                             // 有的浏览器，不存在此属性
-                            url = normalize(window.document.location.href + script.src);
+                            url = normalize(window.document.location.origin + script.src);
                         } else {
                             url = normalize(script.baseURI + script.src);
                         }
                     }
+                }
+                if (url.indexOf("?") > 0) {
+                    // 去除参数部分
+                    url = url.substring(0, url.indexOf("?"));
                 }
                 if (url.endsWith(fileName)) {
                     root = url.substring(0, url.lastIndexOf("/"));

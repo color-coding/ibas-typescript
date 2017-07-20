@@ -6,7 +6,7 @@
     "offline": false,
     "offline|BORepositoryShell": false,
     "helpUrl": "http://www.baidu.com",
-    "welcomeUrl": "http://colorcoding.org/ibas/welcome",
+    "welcomeUrl": "https://colorcoding.org/ibas/welcome",
     "fullScreen": false,
     "statusDelay": 2,
     "disablePlatformView": false,

@@ -72,12 +72,14 @@ export interface IView {
     isDisplayed: boolean;
     /** 关闭视图 */
     closeEvent: Function;
-    /** 键盘按钮按下 */
-    onKeyDown(event: KeyboardEvent): void;
     /** 显示之后 */
     onDisplayed(): void;
     /** 关闭之后 */
     onClosed(): void;
+    /** 键盘按钮按下 */
+    onKeyDown(event: KeyboardEvent): void;
+    /** 地址栏哈希值变化 */
+    onHashChange(event: HashChangeEvent): void;
 }
 /**
  * 应用-视图

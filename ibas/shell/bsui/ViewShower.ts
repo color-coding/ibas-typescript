@@ -20,16 +20,27 @@ export default class ViewShowerDefault implements ibas.IViewShower {
         if (sap.ui.Device.system.phone) {
             ibas.config.set(ibas.CONFIG_ITEM_PLANTFORM, ibas.emPlantform.PHONE);
         }
-        // 键盘按钮按下
         let that: this = this;
+        // 键盘按钮按下
         document.addEventListener("keydown", function (event: any): void {
             if (ibas.objects.isNull(event)) {
                 return;
             }
             that.onKeyDown(event);
         }, false);
+        // 哈希值变化
+        window.addEventListener("hashchange", function (event: any): void {
+            if (ibas.objects.isNull(event)) {
+                return;
+            }
+            if (event.newURL.indexOf(ibas.URL_HASH_SIGN_VIEWS) < 0) {
+                return;
+            }
+            that.onHashChange(event);
+            // 事件操作完成，取消hash值
+            window.location.hash = "";
+        }, false);
     }
-
     /** 按钮按下时 */
     private onKeyDown(event: KeyboardEvent): void {
         if (!ibas.objects.isNull(this.busyDialog)) {
@@ -40,6 +51,18 @@ export default class ViewShowerDefault implements ibas.IViewShower {
         }
         if (this.currentView.isDisplayed) {
             this.currentView.onKeyDown(event);
+        }
+    }
+    /** Hash改变，即地址栏#数据改变 */
+    private onHashChange(event: HashChangeEvent): void {
+        if (!ibas.objects.isNull(this.busyDialog)) {
+            return;
+        }
+        if (ibas.objects.isNull(this.currentView)) {
+            return;
+        }
+        if (this.currentView.isDisplayed) {
+            this.currentView.onHashChange(event);
         }
     }
     private currentView: ibas.IView;

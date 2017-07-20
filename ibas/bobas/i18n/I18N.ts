@@ -15,7 +15,7 @@ import { objects } from "../data/Datas";
 import { strings } from "../data/Strings";
 import { urls } from "../data/Urls";
 import { ArrayList } from "../data/Common";
-import { config } from "../configuration/index";
+import { config, CONFIG_ITEM_RUNTIME_VERSION } from "../configuration/index";
 import { logger } from "../messages/index";
 
 /** 配置项目-语言编码 */
@@ -71,6 +71,11 @@ export class I18N {
         address = urls.normalize(address);
         if (!this.languageFiles.contain(address)) {
             this.languageFiles.add(address);
+        }
+        // 设置运行时版本
+        let rtVersion: string = config.get(CONFIG_ITEM_RUNTIME_VERSION);
+        if (!objects.isNull(rtVersion)) {
+            address = address + (address.indexOf("?") === -1 ? "?" : "&") + "_=" + rtVersion;
         }
         let loader: LanguageLoader = new LanguageLoader();
         let caller: ILanguageLoaderCaller = {
