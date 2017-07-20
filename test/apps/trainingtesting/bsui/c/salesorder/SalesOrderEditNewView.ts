@@ -37,6 +37,7 @@ export class SalesOrderEditNewView extends ibas.BOEditView implements ISalesOrde
     /** 绘制视图 */
     darw(): any {
         let that: this = this;
+        var a="1";
         this.viewTopForm = new sap.ui.layout.form.SimpleForm("", {
             editable: true,
             layout: sap.ui.layout.form.SimpleFormLayout.ResponsiveGridLayout,
