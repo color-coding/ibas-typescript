@@ -13,6 +13,5 @@ export * from "./CenterApp";
 export * from "./LoginApp";
 export * from "./AboutApp";
 export * from "./HelpApp";
-export * from "./SuggestionApp";
 export * from "./QueryPanel";
 export * from "./Factories";

@@ -98,11 +98,6 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
     /** 视图显示后 */
     protected viewShowed(): void {
         // 显示常驻应用
-        // 显示建议应用
-        let app: IBarApplication<IBarView> = Factories.systemsFactory.createSuggestionApp();
-        app.navigation = this.navigation;
-        app.viewShower = this;
-        this.view.showResidentView(app.view);
     }
     /** 帮助 */
     private help(): void {

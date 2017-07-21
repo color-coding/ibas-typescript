@@ -27,3 +27,4 @@ ln -sd ${WORK_FOLDER}/ibas.reportanalysis/ibas.reportanalysis.service/src/main/w
 ln -sd ${WORK_FOLDER}/ibas.reportanalysis/ibas.businessobjectsenterprise.service/src/main/webapp businessobjectsenterprise
 ln -sd ${WORK_FOLDER}/ibas.businessone/ibas.businessone.service/src/main/webapp businessone
 ln -sd ${WORK_FOLDER}/ibas.materials/ibas.materials.service/src/main/webapp materials
+ln -sd ${WORK_FOLDER}/ibas.tucao/ibas.tucao.service/src/main/webapp tucao

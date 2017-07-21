@@ -40,9 +40,6 @@ export default class Navigation extends ibas.ViewNavigation {
             case app.QueryPanel.APPLICATION_ID:
                 view = new ui.QueryPanelView();
                 break;
-            case app.SuggestionApp.APPLICATION_ID:
-                view = new ui.SuggestionView();
-                break;
             default:
                 break;
         }

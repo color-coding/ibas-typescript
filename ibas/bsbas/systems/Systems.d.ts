@@ -77,13 +77,6 @@ export interface IMainView extends IView {
 export interface IMainApp extends IApplication<IMainView> {
 
 }
-/** 建议-视图 */
-export interface ISuggestionView extends IBarView {
-}
-/** 建议-应用 */
-export interface ISuggestionApp extends IApplication<ISuggestionView> {
-
-}
 /** 查询面板-应用 */
 export interface IQueryPanel<T extends IQueryPanelView> extends IApplication<T> {
 	/** 运行 参数，初始化回调 */
@@ -282,8 +275,6 @@ export interface ISystemsFactory {
 	createAboutApp(): IAboutApp;
 	/** 创建帮助应用 */
 	createHelpApp(): IHelpApp;
-	/** 创建建议应用 */
-	createSuggestionApp(): ISuggestionApp;
 	/** 创建仓库 */
 	createRepository(): IBORepositorySystem;
 	/** 创建查询面板 */
