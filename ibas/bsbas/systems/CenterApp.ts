@@ -83,13 +83,17 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
     }
     /** 运行 */
     run(): void {
-        this.show();
         this.currentUser = arguments[0];
+        // 注册运行变量
+        variablesManager.register(VARIABLE_NAME_USER_ID, this.currentUser.id);
+        variablesManager.register(VARIABLE_NAME_USER_CODE, this.currentUser.code);
+        variablesManager.register(VARIABLE_NAME_USER_NAME, this.currentUser.name);
         // 初始化
         let that: this = this;
         setTimeout(function (): void {
             that.init();
         }, 300);
+        this.show();
     }
     /** 视图显示后 */
     protected viewShowed(): void {
@@ -121,10 +125,6 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
         if (objects.isNull(this.currentUser)) {
             return;
         }
-        // 注册运行变量
-        variablesManager.register(VARIABLE_NAME_USER_ID, this.currentUser.id);
-        variablesManager.register(VARIABLE_NAME_USER_CODE, this.currentUser.code);
-        variablesManager.register(VARIABLE_NAME_USER_NAME, this.currentUser.name);
         // 加载用户相关
         logger.log(emMessageLevel.DEBUG, "center: initializing user [{0} - {1}]'s modules.", this.currentUser.id, this.currentUser.code);
         this.view.showStatusMessage(

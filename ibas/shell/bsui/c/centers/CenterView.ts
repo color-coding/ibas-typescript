@@ -79,7 +79,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                 // 系统服务
                 new sap.m.Button("", {
                     icon: "sap-icon://official-service",
-                    width : "50px",
+                    width: "50px",
                     type: sap.m.ButtonType.Transparent,
                     layoutData: new sap.m.OverflowToolbarLayoutData("", {
                         priority: sap.m.OverflowToolbarPriority.NeverOverflow
@@ -212,8 +212,15 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
     }
     /** 创建欢迎页 */
     private drawWelcomePage(): sap.ui.core.Control {
+        let name: string = ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_NAME);
+        if (ibas.objects.isNull(name)) {
+            name = ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE);
+        }
+        if (ibas.objects.isNull(name)) {
+            name = ibas.i18n.prop("sys_shell_unknown_user");
+        }
         let viewContent: any = new sap.m.MessagePage("", {
-            text: ibas.i18n.prop("sys_shell_welcome_page", ibas.i18n.prop("sys_shell_name")),
+            text: ibas.i18n.prop("sys_shell_welcome_page", name, ibas.i18n.prop("sys_shell_name")),
             customDescription: new sap.m.Link("", {
                 target: "_blank",
                 text: ibas.config.get(CONFIG_ITEM_WELCOME_PAGE_URL),
