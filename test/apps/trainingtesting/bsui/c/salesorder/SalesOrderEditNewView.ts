@@ -68,9 +68,10 @@ export class SalesOrderEditNewView extends ibas.BOEditView implements ISalesOrde
                 }),
                 new sap.ui.core.Title("", { text: ibas.i18n.prop("trainingtesting_other_information") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_docentry") }),
-                new sap.m.Input("").bindProperty("value", {
-                    path: "/docEntry",
+                new sap.m.Input("",{
                     type: sap.m.InputType.Number
+                }).bindProperty("value", {
+                    path: "/docEntry",
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_documentstatus") }),
                 new sap.m.Select("", {
