@@ -13,6 +13,7 @@ import {
 import { IBOChooseView } from "./Applications.d";
 import { BOQueryApplication } from "./Applications";
 import { IBOChooseService, IBOChooseServiceContract } from "../services/index";
+import { emChooseType, } from "../data/index";
 
 /**
  * 业务对象选择应用
@@ -43,8 +44,14 @@ export abstract class BOChooseService<T extends IBOChooseView, D> extends BOChoo
         if (!objects.isNull(args) && args.length === 1) {
             // 判断是否为选择契约
             let contract: IBOChooseServiceContract = args[0];
+            // 设置选择类型
+            let chooseType: emChooseType = contract.chooseType;
+            if (objects.isNull(chooseType)) {
+                chooseType = emChooseType.multiple;
+            }
+            this.view.chooseType = chooseType;
+            // 选择契约且为此应用
             if (!objects.isNull(contract.boCode) && contract.boCode === this.boCode) {
-                // 选择契约且为此应用
                 this.onCompleted = contract.onCompleted;
                 // 分析查询条件
                 let criteria: Criteria;

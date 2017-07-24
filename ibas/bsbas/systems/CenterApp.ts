@@ -184,6 +184,10 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
 
     /** 初始化模块控制台 */
     protected initModuleConsole(module: IUserModule): void {
+        // 补充模块初始值
+        if (objects.isNull(module.authorise)) {
+            module.authorise = emAuthoriseType.ALL;
+        }
         // 模块入口地址
         let address: string = module.address;
         address = urls.normalize(address);

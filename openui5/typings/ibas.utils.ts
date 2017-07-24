@@ -287,4 +287,15 @@ export namespace utils {
             }
         }
     }
+    /** 转换选择类型  */
+    export function toSelectionMode(data: ibas.emChooseType): any {
+        switch (data) {
+            case ibas.emChooseType.single:
+                return sap.ui.table.SelectionMode.Single;
+            case ibas.emChooseType.multiple:
+                return sap.ui.table.SelectionMode.MultiToggle;
+            default:
+                return sap.ui.table.SelectionMode.None;
+        }
+    }
 }
