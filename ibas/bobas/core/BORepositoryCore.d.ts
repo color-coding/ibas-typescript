@@ -58,6 +58,13 @@ export interface LoadFileCaller extends MethodCaller {
     dataType?: string;
 }
 /**
+ * 上传文件调用者
+ */
+export interface UploadFileCaller extends MethodCaller {
+    /** 文件上传数据 */
+    fileData: FormData;
+}
+/**
  * 业务对象仓库，只读
  */
 export interface IBORepositoryReadonly {
@@ -97,7 +104,7 @@ export interface IRemoteRepository {
      * @param data 数据
      * @param caller 调用者
      */
-    callRemoteMethod(method: string, data: string, caller: MethodCaller): void;
+    callRemoteMethod(method: string, data: any, caller: MethodCaller): void;
 }
 /**
  * 文件仓库
@@ -106,9 +113,20 @@ export interface IFileRepository {
     /**
      * 加载文件
      * @param fileName 文件名称
-     * @param caller 监听者
+     * @param caller 调用者
      */
     loadFile(fileName: string, caller: LoadFileCaller);
+}
+/**
+ * 文件上传仓库
+ */
+export interface IFileRepositoryUpload {
+    /**
+     * 上传文件
+     * @param method 方法地址
+     * @param caller 调用者
+     */
+    uploadFile(method: string, caller: UploadFileCaller);
 }
 /**
  * 数据转换者
