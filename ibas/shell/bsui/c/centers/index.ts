@@ -11,5 +11,4 @@ export * from "./LoginView";
 export * from "./AboutView";
 export * from "./HelpView";
 export * from "./CenterView";
-export * from "./SuggestionView";
 export * from "./QueryPanelView";

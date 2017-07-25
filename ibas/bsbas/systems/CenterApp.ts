@@ -83,22 +83,21 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
     }
     /** 运行 */
     run(): void {
-        this.show();
         this.currentUser = arguments[0];
+        // 注册运行变量
+        variablesManager.register(VARIABLE_NAME_USER_ID, this.currentUser.id);
+        variablesManager.register(VARIABLE_NAME_USER_CODE, this.currentUser.code);
+        variablesManager.register(VARIABLE_NAME_USER_NAME, this.currentUser.name);
         // 初始化
         let that: this = this;
         setTimeout(function (): void {
             that.init();
         }, 300);
+        this.show();
     }
     /** 视图显示后 */
     protected viewShowed(): void {
         // 显示常驻应用
-        // 显示建议应用
-        let app: IBarApplication<IBarView> = Factories.systemsFactory.createSuggestionApp();
-        app.navigation = this.navigation;
-        app.viewShower = this;
-        this.view.showResidentView(app.view);
     }
     /** 帮助 */
     private help(): void {
@@ -121,12 +120,6 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
         if (objects.isNull(this.currentUser)) {
             return;
         }
-        // 注册运行变量
-        variablesManager.register(VARIABLE_NAME_USER_ID, this.currentUser.id);
-        variablesManager.register(VARIABLE_NAME_USER_CODE, this.currentUser.code);
-        variablesManager.register(VARIABLE_NAME_USER_NAME, this.currentUser.name);
-        // 显示当前用户
-        this.view.showUser(this.currentUser);
         // 加载用户相关
         logger.log(emMessageLevel.DEBUG, "center: initializing user [{0} - {1}]'s modules.", this.currentUser.id, this.currentUser.code);
         this.view.showStatusMessage(
@@ -191,6 +184,10 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
 
     /** 初始化模块控制台 */
     protected initModuleConsole(module: IUserModule): void {
+        // 补充模块初始值
+        if (objects.isNull(module.authorise)) {
+            module.authorise = emAuthoriseType.ALL;
+        }
         // 模块入口地址
         let address: string = module.address;
         address = urls.normalize(address);
@@ -247,7 +244,8 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
                 // 有效模块控制台
                 console.addListener(function (): void {
                     if (console.functions().length > 0
-                        && config.get(CONFIG_ITEM_HIDE_NO_FUNCTION_MODULE, true)) {
+                        && config.get(CONFIG_ITEM_HIDE_NO_FUNCTION_MODULE, true)
+                        && module.authorise === emAuthoriseType.ALL) {
                         // 显示模块
                         that.view.showModule(console);
                         // 注册模块功能

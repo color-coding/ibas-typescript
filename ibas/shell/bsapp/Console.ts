@@ -10,7 +10,7 @@
 import * as sys from "ibas/bsbas/systems/index";
 import * as ibas from "ibas/index";
 import { BORepositoryShell, BORepositoryShellOffline } from "../borep/BORepositories";
-import { CentersFunc, MainApp, LoginApp, CenterApp, AboutApp, HelpApp, QueryPanel, SuggestionApp } from "./centers/index";
+import { CentersFunc, MainApp, LoginApp, CenterApp, AboutApp, HelpApp, QueryPanel } from "./centers/index";
 
 
 /** 系统工厂 */
@@ -34,10 +34,6 @@ export class SystemsFactory implements sys.ISystemsFactory {
     /** 创建帮助应用 */
     createHelpApp(): sys.IHelpApp {
         return new HelpApp();
-    }
-    /** 创建建议应用 */
-    createSuggestionApp(): sys.ISuggestionApp {
-        return new SuggestionApp();
     }
     /** 创建仓库 */
     createRepository(): sys.IBORepositorySystem {

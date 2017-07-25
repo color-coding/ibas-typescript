@@ -18,12 +18,33 @@ if "%WORK_FOLDER%"=="" SET WORK_FOLDER=%STARTUP_FOLDER%..\..\..\
 REM 若工作目录最后字符不是“\”则补齐
 if "%WORK_FOLDER:~-1%" neq "\" SET WORK_FOLDER=%WORK_FOLDER%\
 
-REM 直接指定地址了，懒得写活了
-mklink /d initialfantasy "%WORK_FOLDER%ibas.initialfantasy\ibas.initialfantasy.service\src\main\webapp"
-mklink /d integration "%WORK_FOLDER%ibas.integration\ibas.integration.service\src\main\webapp"
-mklink /d importexport "%WORK_FOLDER%ibas.importexport\ibas.importexport.service\src\main\webapp"
-mklink /d documents "%WORK_FOLDER%ibas.documents\ibas.documents.service\src\main\webapp"
-mklink /d reportanalysis "%WORK_FOLDER%ibas.reportanalysis\ibas.reportanalysis.service\src\main\webapp"
-mklink /d businessobjectsenterprise "%WORK_FOLDER%ibas.reportanalysis\ibas.businessobjectsenterprise.service\src\main\webapp"
-mklink /d businessone "%WORK_FOLDER%ibas.businessone\ibas.businessone.service\src\main\webapp"
-mklink /d materials "%WORK_FOLDER%ibas.materials\ibas.materials.service\src\main\webapp"
+cd /d %WORK_FOLDER%
+set WORK_FOLDER=%CD%
+echo --工作目录：%WORK_FOLDER%
+for /f %%l in ('dir /ad /b ibas.*') do (
+  set MODULE_FOLDER=!WORK_FOLDER!\%%l
+  cd /d !MODULE_FOLDER!
+  echo ----模块目录：!MODULE_FOLDER!
+  for /f %%m in ('dir /s /ad /b webapp') do (
+    set APP_FOLDER=%%m
+    echo ------应用目录：!APP_FOLDER!
+REM 取模块名称字符，ibas.businessone.service\src\main\webapp
+    call :MODULE_NAME !APP_FOLDER:~0,-24! !START_INDEX!
+    if not exist %STARTUP_FOLDER%!MODULE_NAME! mklink /d %STARTUP_FOLDER%!MODULE_NAME! "!APP_FOLDER!"
+  )
+  cd /d %WORK_FOLDER%
+)
+cd /d %STARTUP_FOLDER%
+goto :EOF
+REM 函数，获取模块名称（参数1：字符串）；MODULE_NAME返回值
+:MODULE_NAME
+  SET STR=%1
+  SET VALUE=
+  SET MODULE_NAME=
+:LABEL
+  set VALUE=%STR:~-1%
+  if %VALUE%==. goto :EOF
+  SET MODULE_NAME=%VALUE%%MODULE_NAME%
+  set STR=%STR:~0,-1%
+  if defined STR goto :LABEL
+goto :EOF

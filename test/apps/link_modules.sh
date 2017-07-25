@@ -18,12 +18,22 @@ then
   WORK_FOLDER=${STARTUP_FOLDER}/../../..
 fi
 
-# 直接指定地址了，懒得写活了
-ln -sd ${WORK_FOLDER}/ibas.initialfantasy/ibas.initialfantasy.service/src/main/webapp initialfantasy
-ln -sd ${WORK_FOLDER}/ibas.integration/ibas.integration.service/src/main/webapp integration
-ln -sd ${WORK_FOLDER}/ibas.importexport/ibas.importexport.service/src/main/webapp importexport
-ln -sd ${WORK_FOLDER}/ibas.documents/ibas.documents.service/src/main/webapp documents
-ln -sd ${WORK_FOLDER}/ibas.reportanalysis/ibas.reportanalysis.service/src/main/webapp reportanalysis
-ln -sd ${WORK_FOLDER}/ibas.reportanalysis/ibas.businessobjectsenterprise.service/src/main/webapp businessobjectsenterprise
-ln -sd ${WORK_FOLDER}/ibas.businessone/ibas.businessone.service/src/main/webapp businessone
-ln -sd ${WORK_FOLDER}/ibas.materials/ibas.materials.service/src/main/webapp materials
+cd ${WORK_FOLDER}
+WORK_FOLDER=`pwd`
+echo --工作目录：${WORK_FOLDER}
+for folder in `ls -l ${WORK_FOLDER} | awk '/ibas\./ {print $NF}'`
+do
+  echo ----模块目录：${folder}
+  for app in `find ${folder} -type d -name webapp`
+  do
+    echo ------应用目录：${app}
+        module_name=${app##*/ibas.}
+        module_name=${module_name%%.service/src/main/webapp*}
+        if [ ! -e "${STARTUP_FOLDER}/${module_name}" ]
+        then
+            cd ${STARTUP_FOLDER}
+            ln -sd "${WORK_FOLDER}/${app}" ${module_name}
+            cd ${WORK_FOLDER}
+        fi;
+  done
+done

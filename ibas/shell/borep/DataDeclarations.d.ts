@@ -40,6 +40,8 @@ export interface UserModule extends DataDeclaration {
     Repository: string;
     /** 入口索引 */
     Index: string;
+	/** 权限 */
+	Authorise: string;
 }
 /** 操作消息 */
 export interface UserPrivilege extends DataDeclaration {

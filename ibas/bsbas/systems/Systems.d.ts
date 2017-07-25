@@ -56,24 +56,12 @@ export interface ICenterView extends IView {
 	showView(view: IView): void;
 	/** 设置忙状态 */
 	busyView(view: IView, busy: boolean, msg: string): any;
-	/**
-	 * 显示状态消息
-	 * @param type 消息类型
-	 * @param message 消息内容
-	 */
+	/** 显示状态消息 */
 	showStatusMessage(type: emMessageType, message: string): void;
-	/**
-	 * 显示消息对话框
-	 * @param caller 消息调用者
-	 */
+	/** 显示消息对话框	*/
 	showMessageBox(caller: IMessgesCaller): void;
-	/**
-	 * 显示模块
-	 * @param console 模块控制台
-	 */
+	/** 显示模块 */
 	showModule(console: IModuleConsole): void;
-	/** 显示用户信息 */
-	showUser(user: IUser): void;
 	/** 显示常驻视图 */
 	showResidentView(view: IBarView): void;
 }
@@ -87,13 +75,6 @@ export interface IMainView extends IView {
 }
 /** 登陆-应用 */
 export interface IMainApp extends IApplication<IMainView> {
-
-}
-/** 建议-视图 */
-export interface ISuggestionView extends IBarView {
-}
-/** 建议-应用 */
-export interface ISuggestionApp extends IApplication<ISuggestionView> {
 
 }
 /** 查询面板-应用 */
@@ -151,6 +132,8 @@ export interface IUserModule {
 	address: string;
 	/** 仓库地址 */
 	repository: string;
+	/** 权限 */
+	authorise: emAuthoriseType;
 }
 /** 用户权限 */
 export interface IUserPrivilege {
@@ -292,8 +275,6 @@ export interface ISystemsFactory {
 	createAboutApp(): IAboutApp;
 	/** 创建帮助应用 */
 	createHelpApp(): IHelpApp;
-	/** 创建建议应用 */
-	createSuggestionApp(): ISuggestionApp;
 	/** 创建仓库 */
 	createRepository(): IBORepositorySystem;
 	/** 创建查询面板 */

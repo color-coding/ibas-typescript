@@ -205,6 +205,7 @@ export class SalesOrderEditApp extends ibas.BOEditApplication<ISalesOrderEditVie
         let that: this = this;
         ibas.servicesManager.runChooseService<bo.Customer>({
             boCode: bo.Customer.BUSINESS_OBJECT_CODE,
+            chooseType: ibas.emChooseType.single,
             criteria: [
                 new ibas.Condition(bo.Customer.PROPERTY_ACTIVATED_NAME, ibas.emConditionOperation.EQUAL, "Y")
             ],

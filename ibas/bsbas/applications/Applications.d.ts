@@ -10,6 +10,7 @@
 import { List, IBusinessObject } from "../../bobas/index";
 import { IView, IBarView } from "../core/index";
 import { IUseQueryPanel } from "../systems/index";
+import { emChooseType } from "../data/index";
 
 /**
  * 业务对象应用-视图
@@ -38,6 +39,8 @@ export interface IBOChooseView extends IBOQueryView {
     chooseDataEvent: Function;
     /** 新建数据事件 */
     newDataEvent: Function;
+    /** 选择类型 */
+    chooseType: emChooseType;
 }
 /**
  * 业务对象应用-列表视图

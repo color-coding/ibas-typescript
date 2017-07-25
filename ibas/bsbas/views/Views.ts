@@ -6,12 +6,13 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { ICriteria } from "../../bobas/index";
+import { ICriteria,objects } from "../../bobas/index";
 import { View, IUrlView, IView, IBarView, } from "../core/index";
 import {
     IBOView, IBOListView, IBOQueryView, IBOChooseView,
     IBOEditView, IBOViewView, IResidentView, IShortcutView
 } from "../applications/index";
+import { emChooseType } from "../data/index";
 import {
     IEmbeddedQueryPanel
 } from "../systems/index";
@@ -77,6 +78,8 @@ export abstract class BOChooseView extends BOQueryDialogView implements IBOChoos
     newDataEvent: Function;
     /** 选择数据事件，参数：选择数据 */
     chooseDataEvent: Function;
+    /** 选择类型 */
+    chooseType: emChooseType;
 }
 /** 业务对象查看视图 */
 export abstract class BOViewView extends BOView implements IBOViewView {

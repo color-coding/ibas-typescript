@@ -33,16 +33,6 @@ for folder in `find ${WORK_FOLDER} -type f -name tsconfig.json`
 do
   folder=${folder%\/*}
   echo --开始编译：${folder}
-# 不存在keeps.txt文件时，清理已存在js
-  for folder_sub in `find ${folder} -type d`
-  do
-    if [ ! -e "${folder_sub}/keeps.txt" ]
-    then
-      cd ${folder_sub}
-      rm -f *.js;
-    fi
-    cd ${folder}
-  done
 # 运行编译命令
   if [ "${OPTIONS}" != "" ]
   then
