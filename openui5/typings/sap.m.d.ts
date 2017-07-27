@@ -26857,7 +26857,7 @@ declare namespace sap {
      * either type a value directly into the control or choose from the list of existing items.
      * @resource sap/m/MultiComboBox.js
     */
-    export abstract class MultiComboBox extends sap.m.ComboBoxBase {
+    export class MultiComboBox extends sap.m.ComboBoxBase {
 
 
       /**
