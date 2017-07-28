@@ -10,3 +10,11 @@ import * as ibas from "ibas/index";
 import { utils } from "openui5/typings/ibas.utils";
 import * as bo from "../../../borep/bo/index";
 import { ISalesOrderListView } from "../../../bsapp/salesorder/index";
+import { SalesOrderListView as cSalesOrderListView } from "../../c/salesorder/index";
+
+/**
+ * 视图-SalesOrder
+ */
+export class SalesOrderListView extends cSalesOrderListView { 
+
+}

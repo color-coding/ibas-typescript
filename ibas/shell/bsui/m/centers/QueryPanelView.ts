@@ -26,11 +26,13 @@ export class QueryPanelView extends cQueryPanelView implements IQueryPanelView {
         if (ibas.objects.isNull(this.list)) {
             // 尚未初始化表格
             this.list = new sap.m.List("", {
-                inset: true,
+                inset: false,
+                growing: true,
                 mode: sap.m.ListMode.Delete,
-                delete: function (oControlEvent): void {
-                    that.fireViewEvents(that.removeQueryConditionEvent, oControlEvent.getParameters().listItem.getModel().getData());
-                }
+                swipeDirection: sap.m.SwipeDirection.LeftToRight,
+                delete: function (event: any): void {
+                    that.fireViewEvents(that.removeQueryConditionEvent, event.getParameters().listItem.getModel().getData());
+                },
             });
             this.form.addContent(this.list);
             // 获取列描述
@@ -41,7 +43,7 @@ export class QueryPanelView extends cQueryPanelView implements IQueryPanelView {
                     boCode: null,
                     onCompleted(opRslt: ibas.IOperationResult<sys.IBOInfo>): void {
                         let boInfo: sys.IBOInfo = opRslt.resultObjects.firstOrDefault();
-                        if (ibas.objects.isNull(boInfo)) {
+                        if (!ibas.objects.isNull(boInfo)) {
                             that.properies = boInfo.properties;
                         }
                         // 查询完列，回调显示数据
@@ -54,88 +56,102 @@ export class QueryPanelView extends cQueryPanelView implements IQueryPanelView {
             }
         } else {
             this.list.destroyItems();
+            let labWidth: string = "90px";
+            let valWidth: string = "180px";
             for (let data of datas) {
-                this.list.addItem(new sap.m.CustomListItem("", {
+                let listItem: sap.m.CustomListItem = new sap.m.CustomListItem("", {
                     content: [
                         new sap.m.HBox("", {
                             items: [
                                 new sap.m.Label("", {
-                                    width: "100px",
+                                    width: labWidth,
                                     text: ibas.i18n.prop("sys_shell_query_condition_relationship")
                                 }),
                                 new sap.m.Select("", {
-                                    width: "auto",
-                                    selectedKey: "{relationship}",
-                                    items: utils.createComboBoxItems(ibas.emConditionRelationship)
+                                    width: valWidth,
+                                    items: utils.createComboBoxItems(ibas.emConditionRelationship),
+                                }).bindProperty("selectedKey", {
+                                    path: "/relationship",
+                                    type: "sap.ui.model.type.Integer"
                                 }),
                             ]
                         }),
                         new sap.m.HBox("", {
                             items: [
                                 new sap.m.Label("", {
-                                    width: "100px",
+                                    width: labWidth,
                                     text: ibas.i18n.prop("sys_shell_query_condition_bracketopen")
                                 }),
                                 new sap.m.Select("", {
-                                    width: "auto",
-                                    selectedKey: "{bracketOpen}",
+                                    width: valWidth,
                                     items: this.getCharListItem("(")
+                                }).bindProperty("selectedKey", {
+                                    path: "/bracketOpen",
+                                    type: "sap.ui.model.type.Integer"
                                 }),
                             ]
                         }),
                         new sap.m.HBox("", {
                             items: [
                                 new sap.m.Label("", {
-                                    width: "100px",
+                                    width: labWidth,
                                     text: ibas.i18n.prop("sys_shell_query_condition_alias")
                                 }),
                                 new sap.m.Select("", {
-                                    width: "auto",
-                                    selectedKey: "{alias}",
+                                    width: valWidth,
                                     items: this.getPropertyListItem(this.properies)
+                                }).bindProperty("selectedKey", {
+                                    path: "/alias",
                                 }),
                             ]
                         }),
                         new sap.m.HBox("", {
                             items: [
                                 new sap.m.Label("", {
-                                    width: "100px",
+                                    width: labWidth,
                                     text: ibas.i18n.prop("sys_shell_query_condition_operation")
                                 }),
                                 new sap.m.Select("", {
-                                    width: "auto",
-                                    selectedKey: "{operation}",
+                                    width: valWidth,
                                     items: utils.createComboBoxItems(ibas.emConditionOperation)
+                                }).bindProperty("selectedKey", {
+                                    path: "/operation",
+                                    type: "sap.ui.model.type.Integer"
                                 }),
                             ]
                         }),
                         new sap.m.HBox("", {
                             items: [
                                 new sap.m.Label("", {
-                                    width: "100px",
+                                    width: labWidth,
                                     text: ibas.i18n.prop("sys_shell_query_condition_value")
                                 }),
                                 new sap.m.Input("", {
-                                    width: "auto",
-                                    value: "{value}"
+                                    width: valWidth,
+                                }).bindProperty("value", {
+                                    path: "/value"
                                 }),
                             ]
                         }),
                         new sap.m.HBox("", {
                             items: [
                                 new sap.m.Label("", {
-                                    width: "100px",
+                                    width: labWidth,
                                     text: ibas.i18n.prop("sys_shell_query_condition_bracketclose")
                                 }),
                                 new sap.m.Select("", {
-                                    width: "auto",
-                                    selectedKey: "{bracketClose}",
+                                    width: valWidth,
                                     items: this.getCharListItem(")")
-                                })
+                                }).bindProperty("selectedKey", {
+                                    path: "/bracketClose",
+                                    type: "sap.ui.model.type.Integer"
+                                }),
                             ]
                         })
                     ]
-                }));
+                });
+                listItem.setModel(new sap.ui.model.json.JSONModel(data));
+                this.list.addItem(listItem);
             }
         }
     }
@@ -177,5 +193,44 @@ export class QueryPanelView extends cQueryPanelView implements IQueryPanelView {
                 }
             }),
         ];
+    }
+    /** 绘制视图 */
+    darw(): any {
+        if (this.form != null) {
+            this.form.destroy(true);
+            this.form = null;
+        }
+        if (this.list != null) {
+            this.list.destroy(true);
+            this.list = null;
+        }
+        this.boName = null;
+        let that: this = this;
+        this.form = new sap.ui.layout.VerticalLayout("", {
+            width: "100%",
+            content: [
+                new sap.m.Toolbar("", {
+                    content: [
+                        new sap.m.Label("", {
+                            text: ibas.i18n.prop("sys_shell_query_name"),
+                        }),
+                        new sap.m.Input("", {
+                        }).bindProperty("value", {
+                            path: "/name"
+                        }),
+                        new sap.m.ToolbarSpacer("", { width: "15px" }),
+                        new sap.m.RatingIndicator("", {
+                            maxValue: 5,
+                            tooltip: ibas.i18n.prop("sys_shell_query_order"),
+                        }).bindProperty("value", {
+                            path: "/order"
+                        }),
+                        new sap.m.ToolbarSpacer("", { width: "5px" })
+                    ]
+                })
+            ]
+        });
+        this.id = this.form.getId();
+        return this.form;
     }
 }
