@@ -20,6 +20,12 @@ export class SalesOrderEditNewView extends ibas.BOEditView implements ISalesOrde
     private viewTopForm: sap.ui.layout.form.SimpleForm;
     private viewBottomForm: sap.ui.layout.form.SimpleForm;
     private tableSalesOrderItem: sap.m.Table;
+    private segmentedButton: sap.m.SegmentedButton;
+    private progressIndicator: sap.m.ProgressIndicator;
+    private testLayout: sap.ui.layout.VerticalLayout;
+    private testWizardLayout: sap.ui.layout.VerticalLayout;
+    private wizard: sap.m.Wizard;
+    private popover: sap.m.Popover;
 
     /** 删除数据事件 */
     deleteDataEvent: Function;
@@ -58,33 +64,35 @@ export class SalesOrderEditNewView extends ibas.BOEditView implements ISalesOrde
                         that.fireViewEvents(that.chooseSalesOrderCustomerEvent);
                     }
                 }).bindProperty("value", {
-                    path: "/customerCode"
+                    path: "customerCode"
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_documentdate") }),
                 new sap.m.DatePicker("", {
                     valueFormat: "yyyy-MM-dd",
                 }).bindProperty("dateValue", {
-                    path: "/documentDate"
+                    path: "documentDate"
                 }),
                 new sap.ui.core.Title("", { text: ibas.i18n.prop("trainingtesting_other_information") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_docentry") }),
-                new sap.m.Input("",{
+                new sap.m.Input("", {
                     type: sap.m.InputType.Number
                 }).bindProperty("value", {
-                    path: "/docEntry",
+                    path: "docEntry",
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_documentstatus") }),
                 new sap.m.Select("", {
+                    showSecondaryValues: true,
                     items: utils.createComboBoxItems(ibas.emDocumentStatus)
                 }).bindProperty("selectedKey", {
-                    path: "/documentStatus",
+                    path: "documentStatus",
                     type: "sap.ui.model.type.Integer"
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_canceled") }),
                 new sap.m.Select("", {
+                    showSecondaryValues: true,
                     items: utils.createComboBoxItems(ibas.emYesNo)
                 }).bindProperty("selectedKey", {
-                    path: "/canceled",
+                    path: "canceled",
                     type: "sap.ui.model.type.Integer"
                 })
             ]
@@ -106,12 +114,12 @@ export class SalesOrderEditNewView extends ibas.BOEditView implements ISalesOrde
                 }).bindProperty("value", {
                     path: "/remarks"
                 }),
-                new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_salesorderitem_linetotal") }),
+                new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_salesorder_documenttotal") }),
                 new sap.m.Input("", {
                     width: "100px",
                     type: sap.m.InputType.Number
                 }).bindProperty("value", {
-                    path: "/linetotal"
+                    path: "/DocumentTotal"
                 })
             ]
         });
@@ -258,7 +266,7 @@ export class SalesOrderEditNewView extends ibas.BOEditView implements ISalesOrde
                 );
             }
         });
-        var list_item_edit: sap.m.ColumnListItem = new sap.m.ColumnListItem("", {
+        let list_item_edit: sap.m.ColumnListItem = new sap.m.ColumnListItem("", {
             type: sap.m.ListType.Active,
             cells: [
                 new sap.m.Select("", {
@@ -313,11 +321,188 @@ export class SalesOrderEditNewView extends ibas.BOEditView implements ISalesOrde
             })
         };
         rebindTable(list_item_read);
+        //salesorde层----------------------------------------------------------------------------------------
         this.mainLayout = new sap.ui.layout.VerticalLayout("", {
             content: [
                 this.viewTopForm,
                 this.tableSalesOrderItem,
                 this.viewBottomForm
+            ]
+        });
+
+        //segmentedButton事例--------------------------------------------------------------------------------
+        that.segmentedButton = new sap.m.SegmentedButton("", {
+            select: function (oEvent) {
+                alert(this.getSelectedKey());
+                alert(maskInput.getValue());
+            }
+        });
+        let segmentedButtonItem: sap.m.SegmentedButtonItem = new sap.m.SegmentedButtonItem("", {
+            width: "auto",
+            text: "{itemCode}|{itemDescription}",
+            key: "{itemCode}"
+        });
+        that.segmentedButton.bindItems({
+            path: "/rows",
+            template: segmentedButtonItem,
+        });
+        //---------------------------------------------------------------------------------------------------
+        //启止日期事例----------------------------------------------------------------------------------------
+        let dateRangeSelection: sap.m.DateRangeSelection = new sap.m.DateRangeSelection("", {
+            dateValue: "{DeliveryDate}",
+            secondDateValue: "{PostingDate}"
+        });
+        //---------------------------------------------------------------------------------------------------
+        //输入格式事例----------------------------------------------------------------------------------------
+        let maskInput: sap.m.MaskInput = new sap.m.MaskInput("", {
+            mask: "Phone:___-____-____",
+            placeholderSymbol: "-",
+            rules: [
+                new sap.m.MaskInputRule("", {
+                    maskFormatSymbol: "_",
+                    regex: "[0-9]"
+                })
+            ],
+            value: "{Phone}"
+        });
+        //---------------------------------------------------------------------------------------------------
+        //进度条事例------------------------------------------------------------------------------------------
+        that.progressIndicator = new sap.m.ProgressIndicator("", {
+            percentValue: "0",
+            displayValue: "0%",
+            showValue: true,
+            state: sap.ui.core.ValueState.Success,
+        });
+        let runProgressbtn: sap.m.Button = new sap.m.Button("", {
+            text: "start progress indicator",
+            press: function (oEvent) {
+                that.progressIndicator.setPercentValue(0);
+                let intervalFunc = function () {
+                    let value: number = that.progressIndicator.getPercentValue();
+                    that.progressIndicator.setPercentValue(value + 1);
+                    that.progressIndicator.setDisplayValue(ibas.strings.format("{0}%", that.progressIndicator.getPercentValue()));
+                    if (that.progressIndicator.getPercentValue() === 100) {
+                        clearInterval(interval);
+                    }
+                };
+                let interval: any = setInterval(intervalFunc, 100);
+            }
+        });
+        //---------------------------------------------------------------------------------------------------
+        //Popover弹出层------------------------------------------------------------------------------------------
+        that.popover = new sap.m.Popover("", {
+            title: "{DocEntry}",
+            contentWidth: "300px",
+            contentHeight: "500px",
+            content: [
+                new sap.ui.layout.form.SimpleForm("", {
+                    editable: true,
+                    layout: sap.ui.layout.form.SimpleFormLayout.ResponsiveGridLayout,
+                    singleContainerFullSize: false,
+                    adjustLabelSpan: false,
+                    labelSpanL: 2,
+                    labelSpanM: 2,
+                    labelSpanS: 12,
+                    columnsXL: 2,
+                    columnsL: 2,
+                    columnsM: 1,
+                    columnsS: 1,
+                    content: [
+                        new sap.ui.core.Title("", { text: ibas.i18n.prop("trainingtesting_basis_information") }),
+                        new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_customercode") }),
+                        new sap.m.Input("", {
+                            showValueHelp: true,
+                            valueHelpRequest: function (): void {
+                                that.fireViewEvents(that.chooseSalesOrderCustomerEvent);
+                            }
+                        }).bindProperty("value", {
+                            path: "customerCode"
+                        }),
+                        new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_documentdate") }),
+                        new sap.m.DatePicker("", {
+                            valueFormat: "yyyy-MM-dd",
+                        }).bindProperty("dateValue", {
+                            path: "documentDate"
+                        }),
+                        new sap.ui.core.Title("", { text: ibas.i18n.prop("trainingtesting_other_information") }),
+                        new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_docentry") }),
+                        new sap.m.Input("", {
+                            type: sap.m.InputType.Number
+                        }).bindProperty("value", {
+                            path: "docEntry",
+                        }),
+                        new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_documentstatus") }),
+                        new sap.m.Select("", {
+                            showSecondaryValues: true,
+                            items: utils.createComboBoxItems(ibas.emDocumentStatus)
+                        }).bindProperty("selectedKey", {
+                            path: "documentStatus",
+                            type: "sap.ui.model.type.Integer"
+                        }),
+                        new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_canceled") }),
+                        new sap.m.Select("", {
+                            showSecondaryValues: true,
+                            items: utils.createComboBoxItems(ibas.emYesNo)
+                        }).bindProperty("selectedKey", {
+                            path: "canceled",
+                            type: "sap.ui.model.type.Integer"
+                        })
+                    ]
+                })
+            ],
+            footer: new sap.m.Toolbar({
+                content: [
+                    new sap.m.ToolbarSpacer(""),
+                    new sap.m.Button("", {
+                        text: "退出",
+                        type: sap.m.ButtonType.Transparent,
+                        icon: "sap-icon://close",
+                        press: function (): void {
+                            that.popover.close();
+                        }
+                    }),
+                ]
+            })
+        });
+        let popoverBtn: sap.m.Button = new sap.m.Button({
+            text: "订单详情",
+            press: function (oEvent) {
+                that.popover.openBy(this, true);
+            }
+        });
+        //demo层---------------------------------------------------------------------------------------------
+        this.testLayout = new sap.ui.layout.VerticalLayout("", {
+            content: [
+                that.segmentedButton,
+                dateRangeSelection,
+                maskInput,
+                that.progressIndicator,
+                runProgressbtn,
+                popoverBtn,
+            ]
+        });
+
+        this.wizard = new sap.m.Wizard("", {
+            showNextButton: false,
+            //enableBranching:true,//此属性设置未true，用户可以根据条件确认下一步骤，未选择条件之前不显示下一步骤流程
+            height: "100%",
+        });
+
+        let testTabContainer: sap.m.TabContainer = new sap.m.TabContainer("", {
+            items: [
+                new sap.m.TabContainerItem("", {
+                    name: "salesOrder",
+                    content: this.mainLayout,
+                    modified: true
+                }),
+                new sap.m.TabContainerItem("", {
+                    name: "Demo",
+                    content: this.testLayout
+                }),
+                new sap.m.TabContainerItem("", {
+                    name: "wizardDemo",
+                    content: this.wizard
+                }),
             ]
         });
         this.page = new sap.m.Page("", {
@@ -377,7 +562,7 @@ export class SalesOrderEditNewView extends ibas.BOEditView implements ISalesOrde
                     }),
                 ]
             }),
-            content: [this.mainLayout]
+            content: [testTabContainer]
         });
         this.id = this.page.getId();
         return this.page;
@@ -408,6 +593,14 @@ export class SalesOrderEditNewView extends ibas.BOEditView implements ISalesOrde
     /** 显示数据 */
     showSalesOrder(data: bo.SalesOrder): void {
         this.mainLayout.setModel(new sap.ui.model.json.JSONModel(data));
+        this.mainLayout.bindObject("/");
+        this.testLayout.setModel(new sap.ui.model.json.JSONModel(data));
+        this.testLayout.bindObject("/");
+        this.popover.setModel(new sap.ui.model.json.JSONModel(data));
+        this.popover.bindObject("/");
+
+        this.showWizard(data);
+
         // 监听属性改变，并更新控件
         utils.refreshModelChanged(this.mainLayout, data);
         // 改变视图状态
@@ -416,7 +609,406 @@ export class SalesOrderEditNewView extends ibas.BOEditView implements ISalesOrde
     /** 显示数据 */
     showSalesOrderItems(datas: bo.SalesOrderItem[]): void {
         this.tableSalesOrderItem.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
+        this.segmentedButton.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
         // 监听属性改变，并更新控件
         utils.refreshModelChanged(this.tableSalesOrderItem, datas);
+    }
+    showWizard(datas: bo.SalesOrder): void {
+        let that: this = this;
+        //stepone选择促销类型步骤
+        let typeButton: sap.m.SegmentedButton = new sap.m.SegmentedButton("", {
+            items: [
+                new sap.m.SegmentedButtonItem("", {
+                    width: "auto",
+                    text: "满减",
+                    key: "1",
+                    press: function (oEvent) {
+                        stepTwoButtonLayout.removeAllContent();
+                        stepTwoButtonLayout.addContent(reductionButton);
+                        that.wizard.nextStep();
+                    }
+                }),
+                new sap.m.SegmentedButtonItem("", {
+                    width: "auto",
+                    text: "买赠",
+                    key: "2"
+                }),
+                new sap.m.SegmentedButtonItem("", {
+                    width: "auto",
+                    text: "折扣",
+                    key: "3"
+                }),
+                new sap.m.SegmentedButtonItem("", {
+                    width: "auto",
+                    text: "其它",
+                    key: "4"
+                }),
+            ],
+            select: function (oEvent) {
+                //alert(this.getSelectedKey());
+                switch (this.getSelectedKey()) {
+                    case "1":
+                        stepTwoButtonLayout.removeAllContent();
+                        stepTwoButtonLayout.addContent(reductionButton);
+                        break;
+                    case "2":
+                        stepTwoButtonLayout.removeAllContent();
+                        stepTwoButtonLayout.addContent(buyButton);
+                        break;
+                    case "3":
+                        stepTwoButtonLayout.removeAllContent();
+                        stepTwoButtonLayout.addContent(buyButton);
+                        break;
+                    case "4":
+                        stepTwoButtonLayout.removeAllContent();
+                        stepTwoButtonLayout.addContent(buyButton);
+                        break;
+                    default:
+                        break;
+                }
+                that.wizard.nextStep();
+            }
+        });
+        let stepOne: sap.m.WizardStep = new sap.m.WizardStep("", {
+            title: "选择促销类型",
+            width: "100%",
+            height: "100%",
+            content: [
+                typeButton
+            ]
+        });
+        this.wizard.addStep(stepOne);
+        //满减促销类型
+        let reductionButton: sap.m.SegmentedButton = new sap.m.SegmentedButton("", {
+            items: [
+                new sap.m.SegmentedButtonItem("", {
+                    width: "auto",
+                    text: "单一产品满减",
+                    key: "5"
+                }),
+                new sap.m.SegmentedButtonItem("", {
+                    width: "auto",
+                    text: "多产品满减",
+                    key: "6"
+                }),
+                new sap.m.SegmentedButtonItem("", {
+                    width: "auto",
+                    text: "同一类型产品满减",
+                    key: "7"
+                }),
+            ],
+            select: function (oEvent) {
+                //alert(this.getSelectedKey());
+                that.wizard.nextStep();
+            }
+        });
+        let buyButton: sap.m.SegmentedButton = new sap.m.SegmentedButton("", {
+            items: [
+                new sap.m.SegmentedButtonItem("", {
+                    width: "auto",
+                    text: "单一产品买赠",
+                    key: "8"
+                }),
+                new sap.m.SegmentedButtonItem("", {
+                    width: "auto",
+                    text: "多产品买赠",
+                    key: "9"
+                }),
+                new sap.m.SegmentedButtonItem("", {
+                    width: "auto",
+                    text: "同类型产品买赠",
+                    key: "10"
+                }),
+            ],
+            select: function (oEvent) {
+                that.wizard.nextStep();
+            }
+        });
+
+        let stepTwoButtonLayout: sap.ui.layout.VerticalLayout = new sap.ui.layout.VerticalLayout("", {
+            content: [
+
+            ]
+        });
+        let stepTwoLayout: sap.ui.layout.VerticalLayout = new sap.ui.layout.VerticalLayout("", {
+            content: [
+                stepTwoButtonLayout,
+                new sap.m.Button({
+                    text: "上一步",
+                    press: function (oEvent) {
+                        that.wizard.previousStep();
+                    }
+                })
+            ]
+        });
+        let stepTwo: sap.m.WizardStep = new sap.m.WizardStep("", {
+            title: "选择细分促销类型",
+            width: "100%",
+            height: "100%",
+            content: [
+                stepTwoLayout
+            ]
+        });
+        this.wizard.addStep(stepTwo);
+        let setRules = new sap.ui.layout.form.SimpleForm("", {
+            editable: true,
+            layout: sap.ui.layout.form.SimpleFormLayout.ResponsiveGridLayout,
+            singleContainerFullSize: false,
+            adjustLabelSpan: false,
+            labelSpanL: 2,
+            labelSpanM: 2,
+            labelSpanS: 12,
+            columnsXL: 2,
+            columnsL: 2,
+            columnsM: 1,
+            columnsS: 1,
+            content: [
+                new sap.m.Label("", { text: "选择产品" }),
+                new sap.m.Input("", {
+                    showValueHelp: true,
+                    valueHelpRequest: function (): void {
+
+                    }
+                }),
+                new sap.m.Label("", { text: "够买数量" }),
+                new sap.m.Input("", {
+                    type: sap.m.InputType.Number
+                }),
+                new sap.m.Label("", { text: "赠送数量" }),
+                new sap.m.Input("", {
+                    type: sap.m.InputType.Number
+                }),
+            ]
+        });
+        let stepThree: sap.m.WizardStep = new sap.m.WizardStep("", {
+            title: "设置活动规则",
+            width: "100%",
+            height: "100%",
+            content: [
+                setRules,
+                new sap.m.Button({
+                    text: "上一步",
+                    press: function (oEvent) {
+                        that.wizard.previousStep();
+                    }
+                }),
+                new sap.m.Button({
+                    text: "下一步",
+                    press: function (oEvent) {
+                        that.application.viewShower.messages({
+                            type: ibas.emMessageType.QUESTION,
+                            title: "提示",
+                            message: "是否继续添加规则？",
+                            actions: [ibas.emMessageAction.YES, ibas.emMessageAction.NO],
+                            onCompleted(action: ibas.emMessageAction): void {
+                                if (action === ibas.emMessageAction.YES) {
+                                    try {
+                                        for (var i = 0; i < that.wizard.getSteps().length; i++) {
+                                            that.wizard.previousStep();
+                                        }
+                                    } catch (error) {
+
+                                    }
+                                } else {
+                                    that.wizard.nextStep();
+                                }
+                            }
+                        });
+                    }
+                }),
+            ]
+        });
+
+        this.wizard.addStep(stepThree);
+
+        let conditionTable = new sap.m.Table("", {
+            inset: false,
+            growing: true,
+            growingThreshold: ibas.config.get(utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 5),
+            growingScrollToLoad: true,
+            visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Auto,
+            mode: sap.m.ListMode.Delete,
+            selectionMode: sap.ui.table.SelectionMode.None,
+            columns: [
+                new sap.m.Column("", {
+                    demandPopin: true,
+                    header: new sap.m.Label("", {
+                        width: "12em",
+                        text: "产品"
+                    })
+                }),
+                new sap.m.Column("", {
+                    demandPopin: true,
+                    minScreenWidth: "Tablet",
+                    header: new sap.m.Label("", {
+                        text: "条件"
+                    })
+                }),
+                new sap.m.Column("", {
+                    demandPopin: true,
+                    minScreenWidth: "Tablet",
+                    header: new sap.m.Label("", {
+                        text: "值"
+                    })
+                }),
+            ],
+            delete: function (oEvent): void {
+
+            }
+        });
+
+        conditionTable.addItem(new sap.m.ColumnListItem("", {
+            type: sap.m.ListType.Active,
+            cells: [
+                new sap.m.Label("", {
+                    wrapping: false,
+                    text: "产品编码"
+                }),
+                new sap.m.Label("", {
+                    wrapping: false,
+                    text: "等于"
+                }),
+                new sap.m.Label("", {
+                    wrapping: false,
+                    text: "P00001"
+                })
+            ]
+        }));
+        conditionTable.addItem(new sap.m.ColumnListItem("", {
+            type: sap.m.ListType.Active,
+            cells: [
+                new sap.m.Label("", {
+                    wrapping: false,
+                    text: "产品名称",
+                }),
+                new sap.m.Label("", {
+                    wrapping: false,
+                    text: "等于"
+                }),
+                new sap.m.Label("", {
+                    wrapping: false,
+                    text: "海尔"
+                })
+            ]
+        }));
+
+        let setConditions = new sap.ui.layout.form.SimpleForm("", {
+            editable: true,
+            layout: sap.ui.layout.form.SimpleFormLayout.ResponsiveGridLayout,
+            singleContainerFullSize: false,
+            adjustLabelSpan: false,
+            labelSpanL: 2,
+            labelSpanM: 2,
+            labelSpanS: 12,
+            columnsXL: 2,
+            columnsL: 2,
+            columnsM: 1,
+            columnsS: 1,
+            content: [
+                new sap.ui.core.Title("", { text: "编辑条件" }),
+                new sap.m.Label("", { text: "产品" }),
+                new sap.m.Input("", {
+                    showValueHelp: true,
+                    valueHelpRequest: function (): void {
+
+                    }
+                }),
+                new sap.m.Label("", { text: "条件" }),
+                new sap.m.Select("", {
+                }),
+                new sap.m.Label("", { text: "值" }),
+                new sap.m.Input("", {
+                    type: sap.m.InputType.Number
+                }),
+                new sap.m.Label("", {}),
+                new sap.m.Button({
+                    text: "添加",
+                    press: function (oEvent) {
+
+                    }
+                }),
+                new sap.ui.core.Title("", { text: "已有条件" }),
+                conditionTable
+            ]
+        });
+
+        let stepFour: sap.m.WizardStep = new sap.m.WizardStep("", {
+            title: "设置活动条件",
+            width: "100%",
+            height: "100%",
+            content: [
+                setConditions,
+                new sap.m.Button({
+                    text: "上一步",
+                    press: function (oEvent) {
+                        that.wizard.previousStep();
+                    }
+                }),
+                new sap.m.Button({
+                    text: "下一步",
+                    press: function (oEvent) {
+                        that.wizard.nextStep();
+                    }
+                }),
+            ]
+        });
+
+        this.wizard.addStep(stepFour);
+
+        let setBaseUp = new sap.ui.layout.form.SimpleForm("", {
+            editable: true,
+            layout: sap.ui.layout.form.SimpleFormLayout.ResponsiveGridLayout,
+            singleContainerFullSize: false,
+            adjustLabelSpan: false,
+            labelSpanL: 2,
+            labelSpanM: 2,
+            labelSpanS: 12,
+            columnsXL: 2,
+            columnsL: 2,
+            columnsM: 1,
+            columnsS: 1,
+            content: [
+                new sap.m.Label("", { text: "活动编码" }),
+                new sap.m.Input("", {
+                }),
+                new sap.m.Label("", { text: "活动名称" }),
+                new sap.m.Input("", {
+                }),
+                new sap.m.Label("", { text: "起止日期" }),
+                new sap.m.DateRangeSelection("", {
+
+                }),
+                new sap.m.Label("", { text: "是否可用" }),
+                new sap.m.Switch("", {
+                    customTextOn: "是",
+                    customTextOff: "否"
+                })
+            ]
+        });
+
+        let stepFive: sap.m.WizardStep = new sap.m.WizardStep("", {
+            title: "当前活动基础设置",
+            width: "100%",
+            height: "100%",
+            content: [
+                setBaseUp,
+                new sap.m.Button({
+                    text: "上一步",
+                    press: function (oEvent) {
+                        that.wizard.previousStep();
+                    }
+                }),
+                new sap.m.Button({
+                    text: "完成",
+                    press: function (oEvent) {
+                        for (var i = 0; i < that.wizard.getSteps().length; i++) {
+                            that.wizard.previousStep();
+                        }
+                    }
+                }),
+            ]
+        });
+
+        this.wizard.addStep(stepFive);
     }
 }

@@ -26,7 +26,7 @@ export namespace utils {
      */
     export function createComboBoxItems(data: any, blank: boolean): sap.ui.core.Item[];
     /** 创建下拉框可选项 */
-    export function createComboBoxItems(): sap.ui.core.Item[] {
+    export function createComboBoxItems(): sap.ui.core.ListItem[] {
         // 首先获取枚举内容
         let data: any = arguments[0];
         let blank: boolean = arguments[1];
@@ -49,12 +49,13 @@ export namespace utils {
             map.set(key, text);
         }
         // 转换枚举内容
-        let items: Array<sap.ui.core.Item> = new Array<sap.ui.core.Item>();
+        let items: Array<sap.ui.core.ListItem> = new Array<sap.ui.core.ListItem>();
         for (let item of map) {
             let key: any = item[0];
-            items.push(new sap.ui.core.Item("", {
+            items.push(new sap.ui.core.ListItem("", {
                 key: key,
-                text: ibas.enums.describe(data, item[1])
+                text: ibas.enums.describe(data, item[1]),
+                additionalText:key
             }));
         }
         return items;

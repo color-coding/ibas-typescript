@@ -2780,6 +2780,11 @@ declare namespace sap {
          * Get the binding context of this object
          */
         getBindingContext(): sap.ui.model.Context;
+        /**
+        * neil.zhou
+        * Get the selected key
+        */
+        getSelectedKey(): any;
 
         /**
          * Returns the binding infos for the given property or aggregation. The binding info contains
