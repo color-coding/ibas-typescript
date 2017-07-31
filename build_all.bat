@@ -19,6 +19,7 @@ REM 判断是否传工作目录，没有则是启动目录
 if "%WORK_FOLDER%"=="" SET WORK_FOLDER=%STARTUP_FOLDER%
 REM 若工作目录最后字符不是“\”则补齐
 if "%WORK_FOLDER:~-1%" neq "\" SET WORK_FOLDER=%WORK_FOLDER%\
+echo --工作的目录：%WORK_FOLDER%
 REM 其他参数
 SET OPTIONS=%~2
 REM 构建命令
