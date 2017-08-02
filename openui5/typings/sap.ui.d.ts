@@ -9859,7 +9859,6 @@ declare namespace sap {
          * neil.zhou
         */
         getBindingContext(): sap.ui.model.Context;
-
         /**
          * Gets content of aggregation <code>content</code>.Content that is displayed in the UIArea.
         */

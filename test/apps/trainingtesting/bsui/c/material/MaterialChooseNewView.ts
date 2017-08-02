@@ -181,7 +181,7 @@ export class MaterialChooseNewView extends ibas.BOChooseView implements IMateria
         // 清除历史数据
         if (this.isDisplayed) {
             this.table.setBusy(true);
-            this.table.setFirstVisibleRow(0);
+            //this.table.setFirstVisibleRow(0);
             this.table.setModel(null);
         }
     }

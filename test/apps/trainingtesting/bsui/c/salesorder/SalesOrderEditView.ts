@@ -151,7 +151,9 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
                 ]
             }),
             enableSelectAll: false,
+            selectionMode :sap.ui.table.SelectionMode.None,
             visibleRowCount: ibas.config.get(utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 10),
+            rowActionCount: 1,
             rows: "{/rows}",
             columns: [
                 new sap.ui.table.Column("", {
@@ -214,7 +216,19 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
                         path: "lineTotal"
                     })
                 })
-            ]
+            ],
+            rowActionTemplate: new sap.ui.table.RowAction({
+                items: [
+                    new sap.ui.table.RowActionItem({
+                        type: "Delete",
+                        press: function (oEvent) {
+                            that.fireViewEvents(that.removeSalesOrderItemEvent,
+                                this.getBindingContext().getObject()
+                            );
+                        },
+                    }),
+                ]
+            })
         });
         this.mainLayout = new sap.ui.layout.VerticalLayout("", {
             content: [

@@ -30,6 +30,8 @@ export class SalesOrderListView extends ibas.BOListView implements ISalesOrderLi
         this.table = new sap.ui.table.Table("", {
             enableSelectAll: false,
             visibleRowCount: ibas.config.get(utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 15),
+            rowActionCount: 2,
+            selectionMode: sap.ui.table.SelectionMode.None,
             visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Interactive,
             rows: "{/rows}",
             columns: [
@@ -88,8 +90,43 @@ export class SalesOrderListView extends ibas.BOListView implements ISalesOrderLi
                         }
                     })
                 })
-            ]
+            ],
+            rowActionTemplate: new sap.ui.table.RowAction({
+                items: [
+                    new sap.ui.table.RowActionItem({
+                        type: "Delete",
+                        text: "删除",
+                        press: function (oEvent) {
+                            let selecteds: ibas.List<bo.SalesOrder> = new ibas.ArrayList<bo.SalesOrder>();
+                            selecteds.push(this.getBindingContext().getObject());
+                            that.fireViewEvents(that.deleteDataEvent,
+                                selecteds
+                            );
+                        },
+                    }),
+                    new sap.ui.table.RowActionItem({
+                        icon: "sap-icon://display",
+                        text: "查看",
+                        press: function (oEvent) {
+                            that.fireViewEvents(that.viewDataEvent,
+                                this.getBindingContext().getObject()
+                            );
+                        },
+                    }),
+                    new sap.ui.table.RowActionItem({
+                        icon: "sap-icon://edit",
+                        text: "编辑",
+                        press: function (oEvent) {
+                            that.fireViewEvents(that.editDataEvent,
+                                this.getBindingContext().getObject()
+                            );
+                        },
+                    }),
+
+                ]
+            })
         });
+
         this.form.addContent(this.table);
 
         this.page = new sap.m.Page("", {

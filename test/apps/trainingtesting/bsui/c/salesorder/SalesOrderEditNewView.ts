@@ -59,6 +59,8 @@ export class SalesOrderEditNewView extends ibas.BOEditView implements ISalesOrde
                 new sap.ui.core.Title("", { text: ibas.i18n.prop("trainingtesting_basis_information") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_customercode") }),
                 new sap.m.Input("", {
+                    placeholder:ibas.i18n.prop("bo_salesorder_customercode"),
+                    tooltip:ibas.i18n.prop("bo_salesorder_customercode"),
                     showValueHelp: true,
                     valueHelpRequest: function (): void {
                         that.fireViewEvents(that.chooseSalesOrderCustomerEvent);
@@ -222,7 +224,7 @@ export class SalesOrderEditNewView extends ibas.BOEditView implements ISalesOrde
             }
         });
         let list_item_read: sap.m.ColumnListItem = new sap.m.ColumnListItem("", {
-            type: sap.m.ListType.Active,
+            type: sap.m.ListType.DetailAndActive,
             //highlight:sap.ui.core.MessageType.Information,
             cells: [
                 new sap.m.Text("", {
@@ -261,9 +263,7 @@ export class SalesOrderEditNewView extends ibas.BOEditView implements ISalesOrde
                 }),
             ],
             detailPress: function (oEvent): void {
-                that.fireViewEvents(that.editDataEvent,
-                    oEvent.getSource().getBindingContext().getObject()
-                );
+
             }
         });
         let list_item_edit: sap.m.ColumnListItem = new sap.m.ColumnListItem("", {
@@ -326,7 +326,7 @@ export class SalesOrderEditNewView extends ibas.BOEditView implements ISalesOrde
             content: [
                 this.viewTopForm,
                 this.tableSalesOrderItem,
-                this.viewBottomForm
+                this.viewBottomForm,
             ]
         });
 
@@ -335,7 +335,7 @@ export class SalesOrderEditNewView extends ibas.BOEditView implements ISalesOrde
             select: function (oEvent) {
                 alert(this.getSelectedKey());
                 alert(maskInput.getValue());
-            }
+            },
         });
         let segmentedButtonItem: sap.m.SegmentedButtonItem = new sap.m.SegmentedButtonItem("", {
             width: "auto",
@@ -684,7 +684,10 @@ export class SalesOrderEditNewView extends ibas.BOEditView implements ISalesOrde
                 new sap.m.SegmentedButtonItem("", {
                     width: "auto",
                     text: "单一产品满减",
-                    key: "5"
+                    key: "5",
+                     press: function (oEvent) {
+                        that.wizard.nextStep();
+                    }
                 }),
                 new sap.m.SegmentedButtonItem("", {
                     width: "auto",

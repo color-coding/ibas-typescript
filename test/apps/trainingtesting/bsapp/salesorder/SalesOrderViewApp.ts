@@ -21,8 +21,8 @@ export class SalesOrderViewApp extends ibas.BOViewService<ISalesOrderViewView> {
     static APPLICATION_NAME: string = "trainingtesting_app_salesorder_view";
     /** 业务对象编码 */
     static BUSINESS_OBJECT_CODE: string = bo.SalesOrder.BUSINESS_OBJECT_CODE;
-    /** 构造函数 */
-    constructor() {
+   /** 构造函数 */
+    constructor(openType?:string) {
         super();
         this.id = SalesOrderViewApp.APPLICATION_ID;
         this.name = SalesOrderViewApp.APPLICATION_NAME;
