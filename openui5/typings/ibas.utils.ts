@@ -18,15 +18,15 @@ export namespace utils {
      * 创建下拉框可选项
      * @param data 枚举类型
      */
-    export function createComboBoxItems(data: any): sap.ui.core.Item[];
+    export function createComboBoxItems(data: any): sap.ui.core.ListItem[];
     /**
      * 创建下拉框可选项
      * @param data 枚举类型
      * @param blank 是否创建空白项
      */
-    export function createComboBoxItems(data: any, blank: boolean): sap.ui.core.Item[];
+    export function createComboBoxItems(data: any, blank: boolean): sap.ui.core.ListItem[];
     /** 创建下拉框可选项 */
-    export function createComboBoxItems(): sap.ui.core.Item[] {
+    export function createComboBoxItems(): sap.ui.core.ListItem[] {
         // 首先获取枚举内容
         let data: any = arguments[0];
         let blank: boolean = arguments[1];
@@ -49,12 +49,13 @@ export namespace utils {
             map.set(key, text);
         }
         // 转换枚举内容
-        let items: Array<sap.ui.core.Item> = new Array<sap.ui.core.Item>();
+        let items: Array<sap.ui.core.ListItem> = new Array<sap.ui.core.ListItem>();
         for (let item of map) {
             let key: any = item[0];
-            items.push(new sap.ui.core.Item("", {
+            items.push(new sap.ui.core.ListItem("", {
                 key: key,
-                text: ibas.enums.describe(data, item[1])
+                text: ibas.enums.describe(data, item[1]),
+                additionalText: key
             }));
         }
         return items;
@@ -259,12 +260,24 @@ export namespace utils {
         }
     }
     /** 改变窗体内控件编辑状态 */
-    export function changeFormEditable(form: sap.ui.layout.form.SimpleForm, editable: boolean): void {
+    export function changeFormEditable(form: sap.ui.layout.form.SimpleForm, editable: boolean): void;
+    /** 改变窗体内控件编辑状态 */
+    export function changeFormEditable(form: sap.ui.layout.VerticalLayout, editable: boolean): void;
+    /** 改变窗体内控件编辑状态 */
+    export function changeFormEditable(): void {
+        let form: any = arguments[0];
         if (ibas.objects.isNull(form)) {
             return;
         }
-        for (let item of form.getContent()) {
-            this.changeControlEditable(item, editable);
+        let editable: boolean = arguments[1];
+        if (form instanceof sap.ui.layout.form.SimpleForm) {
+            for (let item of form.getContent()) {
+                this.changeControlEditable(item, editable);
+            }
+        } else if (form instanceof sap.ui.layout.VerticalLayout) {
+            for (let item of form.getContent()) {
+                this.changeControlEditable(item, editable);
+            }
         }
     }
     /** 改变工具条保存状态 */

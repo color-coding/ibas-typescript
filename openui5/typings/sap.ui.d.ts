@@ -194,7 +194,7 @@ declare namespace sap {
     function htmlview(sId: string, vView: any): sap.ui.core.mvc.HTMLView;
     //  Defines OR instantiates an HTML-based Fragment.
     function jsfragment(sFragmentName: string, oController?: any): sap.ui.core.Fragment;
-    function jsfragment(sId: string, sFragmentName: string, oController?:any): sap.ui.core.Fragment;
+    function jsfragment(sId: string, sFragmentName: string, oController?: any): sap.ui.core.Fragment;
     //  Creates a JSON view of the given name and id.
     function jsonview(vView: any): sap.ui.core.mvc.View;
     function jsonview(sId: string, vView: any): sap.ui.core.mvc.View;
@@ -36277,6 +36277,30 @@ declare namespace sap {
          * @returns Reference to <code>this</code> in order to allow method chaining
         */
         setWidth(sWidth: any): sap.ui.unified.CalendarMonthInterval;
+        /**
+         * Implement in inheriting classes
+         * @param sPath the path to where to read the object
+         * @param oContext the context with which the path should be resolved
+         * @param mParameters additional model specific parameters
+        */
+        getObject(sPath?: string, oContext?: any, mParameters?: any): void;
+
+        /**
+         * Get the selected key
+        */
+        getSelectedKey(): any;
+        /**
+         * Provide getBindingContext, as UIArea can be parent of an element.
+        */
+        getBindingContext(): sap.ui.model.Context;
+
+        /**
+         * Implement in inheriting classes
+         * @param sPath the path to where to read the object
+         * @param oContext the context with which the path should be resolved
+         * @param mParameters additional model specific parameters
+        */
+        getObject(sPath?: string, oContext?: any, mParameters?: any): void;
       }
       /**
        * Represents a parameter for the FileUploader which is rendered as a hidden inputfield.
