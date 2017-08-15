@@ -17,6 +17,11 @@ declare namespace sap {
                 None,
                 Single
             }
+            export enum SelectionBehavior {
+                Row,
+                RowOnly,
+                RowSelector
+            }
             export class Table extends sap.ui.core.Control {
                 constructor(mSettings?: any);
                 constructor(sId: string, mSettings?: any);
