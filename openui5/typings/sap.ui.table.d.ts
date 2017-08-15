@@ -36,6 +36,7 @@ declare namespace sap {
             export class Column extends sap.ui.core.Control {
                 constructor(mSettings?: any);
                 constructor(sId: string, mSettings?: any);
+                setTemplate(oTemplate: sap.ui.core.Control): Column;
             }
             export class Row extends sap.ui.core.Control {
                 constructor(mSettings?: any);
