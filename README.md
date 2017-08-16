@@ -40,6 +40,11 @@ build_all.bat/sh                   用于编译ts文件，build_all.bat .\ -w �
 start_web_server_iis.bat           启动IIS Express服务，需要提前安装。
 start_web_server_tomcat.bat/sh     启动tomcat服务，请自行下载tomcat并解压到此目录，详见脚本说明。
 ~~~
+* 入口说明
+~~~
+ibas/shell/index.html              使用缓存的入口，一般用于调试。
+index.html                         不使用缓存的入口，一般用于生产环境。
+~~~
 
 ## 鸣谢 | Thanks
 [牛加人等于朱](http://baike.baidu.com/view/1769.htm "NiurenZhu")<br>
