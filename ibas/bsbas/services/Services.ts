@@ -8,6 +8,7 @@
 
 import { objects, config, i18n, logger, emMessageLevel } from "../../bobas/index";
 import { AbstractApplication as Application, IViewShower, IViewNavigation, IView } from "../core/index";
+import { hashManager } from "../utils/index"
 import {
     IServiceContract, IServiceProxy, IService,
     IBOServiceContract, IApplicationServiceContract,
@@ -129,9 +130,8 @@ export class ServicesManager {
                 return;
             }
             that.onHashChange(event);
-            // 事件操作完成，取消hash值
-            window.location.hash = "";
         }, false);
+        hashManager.registerListener({ hashSign: URL_HASH_SIGN_SERVICES, onHashChange: this.onHashChange, env: this });
     }
     /** Hash改变，即地址栏#数据改变 */
     protected onHashChange(event: HashChangeEvent): void {
@@ -151,6 +151,7 @@ export class ServicesManager {
                         (<Application<IView>>service).viewShower = mapping.viewShower;
                         (<Application<IView>>service).navigation = mapping.navigation;
                     }
+                    hashManager.setCurrentHashActivated(true);
                     service.run({
                         data: method
                     });
