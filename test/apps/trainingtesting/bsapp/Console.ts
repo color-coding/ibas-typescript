@@ -129,15 +129,15 @@ export class ConsoleOthers extends ibas.ModuleConsole {
             that._navigation = new ui.default();
             // 调用初始化
             that.initialize();
-            //加载百度地址资源
-            domScript = document.createElement('script');
-            domScript.src = "http://api.map.baidu.com/getscript?v=2.0&ak=0tAfPNP8bYG9ZUUkkvgu8Fv48ng9uFfl&services=&t=20170803155555";
-            document.getElementsByTagName('head')[0].appendChild(domScript);
-            var domScript = document.createElement('script');
-            domScript.src = "http://api.map.baidu.com/api?v=2.0&ak=0tAfPNP8bYG9ZUUkkvgu8Fv48ng9uFfl";
-            document.getElementsByTagName('head')[0].appendChild(domScript);
-        });
 
+        });
+         //加载百度地址资源 网络资源不用一载
+         domScript = document.createElement('script');
+         domScript.src = "http://api.map.baidu.com/getscript?v=2.0&ak=0tAfPNP8bYG9ZUUkkvgu8Fv48ng9uFfl&services=&t=20170803155555";
+         document.getElementsByTagName('head')[0].appendChild(domScript);
+         var domScript = document.createElement('script');
+         domScript.src = "http://api.map.baidu.com/api?v=2.0&ak=0tAfPNP8bYG9ZUUkkvgu8Fv48ng9uFfl";
+         document.getElementsByTagName('head')[0].appendChild(domScript);
         // 保留基类方法
         super.run();
     }
