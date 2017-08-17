@@ -22191,15 +22191,8 @@ declare namespace sap {
          * @param mParameters additional model specific parameters (optional)
          * @returns the context object
         */
-        getObject(sPath: String, mParameters?: any): any;
-         /** neil.zhou
-         * Gets the (model dependent) object the context points to or the object with the given relative
-         * binding path
-         * @param sPath the binding path
-         * @param mParameters additional model specific parameters (optional)
-         * @returns the context object
-        */
-        getObject():any;
+        getObject(sPath?: String, mParameters?: any): any;
+
         /**
          * Getter for path of the context itself or a subpath
          * @param sPath the binding path
