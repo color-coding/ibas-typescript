@@ -48,7 +48,7 @@ declare namespace sap {
      * provides it to the original requestor of the module. Whenever the moduleis requested again, the same
      * value will be returned (modules are executed only once).<i>Example:</i><br>The following example
      * defines a module "SomeClass", but doesn't hard code the module name.If stored in a file
-     * 'sap/mylib/SomeClass.js', it can be requested as 'sap/mylib/SomeClass'.<pre> 
+     * 'sap/mylib/SomeClass.js', it can be requested as 'sap/mylib/SomeClass'.<pre>
      * sap.ui.define(['./Helper', 'sap/m/Bar'], function(Helper,Bar) {    // create a new class    var
      * SomeClass = function();    // add methods to its prototype    SomeClass.prototype.foo = function() {
      *        // use a function from the dependency 'Helper' in the same package (e.g. 'sap/mylib/Helper' )
@@ -88,7 +88,7 @@ declare namespace sap {
      * they might observe with the current implementation.For example, callers of
      * <code>sap.ui.define</code> must not use the module value immediatelyafter invoking
      * <code>sap.ui.define</code>:<pre>  // COUNTER EXAMPLE HOW __NOT__ TO DO IT  // define a class
-     * Something as AMD module  sap.ui.define('Something', [], function() {    var Something = function(); 
+     * Something as AMD module  sap.ui.define('Something', [], function() {    var Something = function();
      *   return Something;  });  // DON'T DO THAT!  // accessing the class _synchronously_ after
      * sap.ui.define was called  new Something();</pre>Applications that need to ensure synchronous module
      * definition or synchronous loading of dependencies<b>MUST</b> use the old {@link jQuery.sap.declare}
@@ -115,8 +115,8 @@ declare namespace sap {
      * fully support UI5 apps that rely on global names for such modules.Example:<pre>  // module
      * 'Something' wants to use third party library 'URI.js'  // It is packaged by UI5 as non-UI5-module
      * 'sap/ui/thirdparty/URI'  sap.ui.define('Something', ['sap/ui/thirdparty/URI'],
-     * function(URIModuleValue) {    new URIModuleValue(); // fails as module value is undefined   
-     * //global URI // (optional) declare usage of global name so that static code checks don't complain   
+     * function(URIModuleValue) {    new URIModuleValue(); // fails as module value is undefined
+     * //global URI // (optional) declare usage of global name so that static code checks don't complain
      * new URI(); // access to global name 'URI' works    ...  });</pre><b>Differences to
      * requireJS</b><br>The current implementation of <code>sap.ui.define</code> differs from
      * <code>requireJS</code>or other AMD loaders in several aspects:<ul><li>the name
@@ -257,7 +257,7 @@ declare namespace sap {
      * controller.Note that Fragments may require a Controller to be given and certain methods to be
      * available.The Fragment types "XML", "JS" and "HTML" are available by default; additional Fragment
      * types can be implementedand added using the sap.ui.core.Fragment.registerType() function.Advanced
-     * usage:To instantiate a Fragment and give further configuration options, call this method as:   
+     * usage:To instantiate a Fragment and give further configuration options, call this method as:
      * sap.ui.fragment(oFragmentConfig, [oController]);The oFragmentConfig object can have the following
      * properties:- "fragmentName": the name of the Fragment, as above- "fragmentContent": the definition
      * of the Fragment content itself. When this property is given, any given name is ignored.        The
@@ -289,14 +289,14 @@ declare namespace sap {
      * specified then the version info of the individuallibrary will be returned.In case of the version
      * info file is not available an error will occur whencalling this function.
      * @param mOptions name of the library (e.g. "sap.ui.core") or a object map (see below)
-     * @returns the full version info, the library specific one,                                  
-     * undefined (if library is not listed or there was an error and "failOnError" is set to "false")      
+     * @returns the full version info, the library specific one,
+     * undefined (if library is not listed or there was an error and "failOnError" is set to "false")
      *                             or a Promise which resolves with one of them
     */
     function getVersionInfo(mOptions: string | any): any | any | JQueryPromise<any>;
 
     /**
-     * Instantiates an HTML-based Fragment.To instantiate a Fragment, call this method as:  
+     * Instantiates an HTML-based Fragment.To instantiate a Fragment, call this method as:
      * sap.ui.htmlfragment([sId], sFragmentName, [oController]);The Fragment instance ID is optional
      * (generated if not given) and will be used as prefix for the ID of allcontained controls. The
      * sFragmentName must correspond to an HTML Fragment which can be loadedvia the module system
@@ -332,7 +332,7 @@ declare namespace sap {
     function htmlview(sId: string, vView: string | any): sap.ui.core.mvc.HTMLView | any;
 
     /**
-     * Defines OR instantiates an HTML-based Fragment.To define a JS Fragment, call this method as:  
+     * Defines OR instantiates an HTML-based Fragment.To define a JS Fragment, call this method as:
      * sap.ui.jsfragment(sName, oFragmentDefinition)Where:- "sName" is the name by which this fragment can
      * be found and instantiated. If defined in its own file,   in order to be found by the module loading
      * system, the file location and name must correspond to sName   (path + file name must be:
@@ -484,7 +484,7 @@ declare namespace sap {
      * Displays the control tree with the given root inside the area of the givenDOM reference (or inside
      * the DOM node with the given ID) or in the given Control.Example:<pre>  &lt;div
      * id="SAPUI5UiArea">&lt;/div>  &lt;script type="text/javascript">    var oRoot = new
-     * sap.ui.commons.Label();    oRoot.setText("Hello world!");    sap.ui.setRoot("SAPUI5UiArea", oRoot); 
+     * sap.ui.commons.Label();    oRoot.setText("Hello world!");    sap.ui.setRoot("SAPUI5UiArea", oRoot);
      * &lt;/script></pre><p>This is a shortcut for <code>sap.ui.getCore().setRoot()</code>.Internally, if a
      * string is given that does not identify an UIArea or a controlthen implicitly a new
      * <code>UIArea</code> is created for the given DOM referenceand the given control is added.
@@ -499,7 +499,7 @@ declare namespace sap {
      * value of this type attributematches an registered type then the content of this DOM element will
      * beused to create a new <code>Template</code> instance.If you want to lookup all kind of existing and
      * known templates and parse themdirectly you can simply call:<pre>  sap.ui.template();</pre>To parse a
-     * concrete DOM element you can do so by using this function in thefollowing way:<pre> 
+     * concrete DOM element you can do so by using this function in thefollowing way:<pre>
      * sap.ui.template("theTemplateId");</pre>Or you can pass the reference to a DOM element and use this
      * DOM element asa source for the template:<pre>  sap.ui.template(oDomRef);</pre>The last option to use
      * this function is to pass the information via aconfiguration object. This configuration object can be
@@ -573,7 +573,7 @@ declare namespace sap {
     function view(sId: string, vView?: string | any): sap.ui.core.mvc.View;
 
     /**
-     * Instantiates an XML-based Fragment.To instantiate a Fragment, call this method as:  
+     * Instantiates an XML-based Fragment.To instantiate a Fragment, call this method as:
      * sap.ui.xmlfragment([sId], sFragmentName, [oController]);The Fragment instance ID is optional
      * (generated if not given) and will be used as prefix for the ID of allcontained controls. The
      * sFragmentName must correspond to an XML Fragment which can be loadedvia the module system
@@ -626,7 +626,7 @@ declare namespace sap {
         /**
          * Creates a mocked server. This helps to mock all or some backend calls, e.g. for OData/JSON Models or
          * simple XHR calls, withoutchanging the application code. This class can also be used for qunit tests.
-         * @param sId id for the new server object; generated automatically if no non-empty id is given    
+         * @param sId id for the new server object; generated automatically if no non-empty id is given
          * Note: this can be omitted, no matter whether <code>mSettings</code> will be given or not!
          * @param mSettings optional map/JSON-object with initial property values, aggregated objects etc. for
          * the new object
@@ -767,16 +767,16 @@ declare namespace sap {
 
           /**
            * Takes the inputed 2D list 'aData' and returns an equivalent object. Each row of data is expected
-           * tobe a property-value pair. To create nested objects, add extra columns to the data. E.g.<pre> [  
-           * ['Name', 'Alice'],   ['Mass', '135 lbs'],   ['Telephone Number', 'Home', '123-456-7890'],  
+           * tobe a property-value pair. To create nested objects, add extra columns to the data. E.g.<pre> [
+           * ['Name', 'Alice'],   ['Mass', '135 lbs'],   ['Telephone Number', 'Home', '123-456-7890'],
            * ['Telephone Number', 'Work', '123-456-0987'] ]</pre>For each data row, the right-most element
            * becomes a property value, and everything else is a propertyname. The property names get normalized
-           * according to the strategy defined by the parameter 'oNorm'.E.g. using camelCase strategy<pre>  {   
+           * according to the strategy defined by the parameter 'oNorm'.E.g. using camelCase strategy<pre>  {
            * name: 'Alice',    mass: '135 lbs',    telephoneNumber: {      home: '123-456-7890',      work:
            * '123-456-0987'    }  }</pre>
            * @param aData the input data to be converted
-           * @param oNorm the normalization function to use to normalize property                                
-           *             names. Can also be a string with values 'titleCase', 'pascalCase',                      
+           * @param oNorm the normalization function to use to normalize property
+           *             names. Can also be a string with values 'titleCase', 'pascalCase',
            *                       'camelCase', 'hyphenated' or 'none'.
            * @returns - an object equivalent to the input data, with property names normalized
           */
@@ -785,14 +785,14 @@ declare namespace sap {
           /**
            * Takes the inputed 2D list 'aData' and returns an equivalent list of objects. The data is expected
            * tohave a header row, with each subsequent row being an entity, and each column being a property of
-           * thatentity. E.g.<pre>  [    ["Their Name",  "Their Age"],    ["Alice",       "16"],    ["Bob",      
+           * thatentity. E.g.<pre>  [    ["Their Name",  "Their Age"],    ["Alice",       "16"],    ["Bob",
            *   "22"]  ]</pre>The data's column headers become the returned objects' property names. The property
            * names get normalizedaccording to the strategy defined by the parameter 'oNorm'. E.g. using
-           * hyphenation strategy this is returned:<pre>  [    {their-name: "Alice", their-age: "16"},   
+           * hyphenation strategy this is returned:<pre>  [    {their-name: "Alice", their-age: "16"},
            * {their-name: "Bob", their-age: "22"}  ]</pre>
            * @param aData the input data to be converted, with a header row
-           * @param oNorm the normalization function to use to normalize property                                
-           *             names. Can also be a String with values 'titleCase', 'pascalCase',                      
+           * @param oNorm the normalization function to use to normalize property
+           *             names. Can also be a String with values 'titleCase', 'pascalCase',
            *                       'camelCase', 'hyphenated' or 'none'.
            * @returns - a list of objects equivalent to the input data, with property names normalized
           */
@@ -809,7 +809,7 @@ declare namespace sap {
             /**
              * e.g. "First Name" -> "first-name"
              * @param sString the string to normalize
-             * @returns the input string trimmed, changed to lower case and with space between words               
+             * @returns the input string trimmed, changed to lower case and with space between words
              *   replaced by a hyphen ('-')
             */
             function hyphenated(sString: string): string;
@@ -900,13 +900,13 @@ declare namespace sap {
           /**
            * Registers a step definition.
            * @param rRegex the regular expression that matches the feature file step (with leading 'Given',
-           * 'When',                         'Then' or 'But' removed). E.g. if the feature file has the step     
+           * 'When',                         'Then' or 'But' removed). E.g. if the feature file has the step
            *                    "Then I should be served a coffee" it will truncated to "I should be served a
            * coffee"                         and tested against 'rRegex' to check for a match. The simple regular
            * expression                         /^I should be served a coffee$/i would match this text. The
            * regular                         expression can specify capturing groups, which will be passed as
            * parameters to 'fnFunc'.
-           * @param fnFunc the function to execute in the event that the regular expression matches. Receives    
+           * @param fnFunc the function to execute in the event that the regular expression matches. Receives
            *                       regular expression capturing groups as parameters in the same order that they
            * are                           specified in the regular expression. If a data table is specified for
            * the step, it                           will be passed as an additional final parameter. At execution
@@ -928,7 +928,7 @@ declare namespace sap {
            * can add it here. For example:You wrote a control with the namespace my.Control it renders two
            * buttons and you want the press action to press the second one by default.<pre><code>    new
            * my.Control("myId");</code></pre>It contains two button tags in its dom.When you render your control
-           * it creates the following dom:<pre><code>    <div id="myId">        <button id="myId-firstButton"/>  
+           * it creates the following dom:<pre><code>    <div id="myId">        <button id="myId-firstButton"/>
            *      <button id="myId-secondButton"/>    </div></code></pre>Then you may add a control adapter like
            * this<pre><code>    Press.controlAdapters["my.control"] = "secondButton" //This can be used by
            * setting the Target Property of an action    // Example usage    new Press(); // executes on second
@@ -941,11 +941,11 @@ declare namespace sap {
           /**
            * The Press action is used to simulate a press interaction on a Control's dom ref.This will work out
            * of the box for most of the controls (even custom controls).Here is a List of supported controls
-           * (some controls will trigger the press on a specific region):<ul>    <li>sap.m.Button</li>   
-           * <li>sap.m.Link</li>    <li>sap.m.StandardListItem</li>    <li>sap.m.IconTabFilter</li>   
-           * <li>sap.m.SearchField - Search Button</li>    <li>sap.m.Page - Back Button</li>   
+           * (some controls will trigger the press on a specific region):<ul>    <li>sap.m.Button</li>
+           * <li>sap.m.Link</li>    <li>sap.m.StandardListItem</li>    <li>sap.m.IconTabFilter</li>
+           * <li>sap.m.SearchField - Search Button</li>    <li>sap.m.Page - Back Button</li>
            * <li>sap.m.semantic.FullscreenPage - Back Button</li>    <li>sap.m.semantic.DetailPage - Back
-           * Button</li>    <li>sap.m.List - More Button</li>    <li>sap.m.Table - More Button</li>   
+           * Button</li>    <li>sap.m.List - More Button</li>    <li>sap.m.Table - More Button</li>
            * <li>sap.m.StandardTile</li></ul>
           */
           constructor();
@@ -1023,7 +1023,7 @@ declare namespace sap {
           /**
            * The EnterText action is used to simulate a user entering texts to inputs.EnterText will be executed
            * on a control's focus dom ref.Supported controls are (for other controls this action still might
-           * work):<ul>    <li>sap.m.Input</li>    <li>sap.m.SearchField</li>   
+           * work):<ul>    <li>sap.m.Input</li>    <li>sap.m.SearchField</li>
            * <li>sap.m.TextArea</li></ul>Accepts an object literal <code>mSettings</code> that defines
            * initialproperty values, aggregated and associated objects as well as event handlers.See {@link
            * sap.ui.base.ManagedObject#constructor} for a general description of the syntax of the settings
@@ -1202,9 +1202,9 @@ declare namespace sap {
          * control will be filtered out by this matcher when:<ul>    <li>        There are unfinished
          * XMLHttpRequests (globally).        That means, the Opa can wait for pending requests to finish that
          * would probably update the UI.        Also detects sinon.FakeXMLHttpRequests that are not responded
-         * yet.    </li>    <li>        The control is invisible (using the visible matcher)    </li>    <li>  
+         * yet.    </li>    <li>        The control is invisible (using the visible matcher)    </li>    <li>
          *      The control is hidden behind a dialog    </li>    <li>        The control is in a navigating
-         * nav container    </li>    <li>        The control or its parents are busy    </li>    <li>       
+         * nav container    </li>    <li>        The control or its parents are busy    </li>    <li>
          * The control or its parents are not enabled    </li>    <li>        The UIArea of the control needs
          * new rendering    </li></ul>
          * @resource sap/ui/test/matchers/Interactable.js
@@ -1495,7 +1495,7 @@ declare namespace sap {
          * the global configuration of Opa.All of the global values can be overwritten in an individual waitFor
          * call.The default values are:<ul>		<li>arrangements: A new Opa instance</li>		<li>actions: A new Opa
          * instance</li>		<li>assertions: A new Opa instance</li>		<li>timeout : 15 seconds, is increased to 5
-         * minutes if running in debug mode e.g. with URL parameter sap-ui-debug=true</li>	
+         * minutes if running in debug mode e.g. with URL parameter sap-ui-debug=true</li>
          * <li>pollingInterval: 400 milliseconds</li></ul>You can either directly manipulate the config, or
          * extend it using {@link sap.ui.test.Opa#.extendConfig}
         */
@@ -1529,14 +1529,14 @@ declare namespace sap {
         extendConfig(): void;
 
         /**
-         * Extends and overwrites default values of the {@link sap.ui.test.Opa#.config}.Sample usage:<pre>   
+         * Extends and overwrites default values of the {@link sap.ui.test.Opa#.config}.Sample usage:<pre>
          * <code>        var oOpa = new Opa();        // this statement will  will time out after 15 seconds
          * and poll every 400ms.        // those two values come from the defaults of {@link
          * sap.ui.test.Opa#.config}.        oOpa.waitFor({        });        // All wait for statements added
-         * after this will take other defaults        Opa.extendConfig({            timeout: 10,           
+         * after this will take other defaults        Opa.extendConfig({            timeout: 10,
          * pollingInterval: 100        });        // this statement will time out after 10 seconds and poll
          * every 100 ms        oOpa.waitFor({        });        // this statement will time out after 20
-         * seconds and poll every 100 ms        oOpa.waitFor({            timeout: 20;        });   
+         * seconds and poll every 100 ms        oOpa.waitFor({            timeout: 20;        });
          * </code></pre>
          * @since 1.40
          * @param options The values to be added to the existing config
@@ -1562,7 +1562,7 @@ declare namespace sap {
          * Reset Opa.config to its default values.All of the global values can be overwritten in an individual
          * waitFor call.The default values are:<ul>		<li>arrangements: A new Opa instance</li>		<li>actions: A
          * new Opa instance</li>		<li>assertions: A new Opa instance</li>		<li>timeout : 15 seconds, is
-         * increased to 5 minutes if running in debug mode e.g. with URL parameter sap-ui-debug=true</li>	
+         * increased to 5 minutes if running in debug mode e.g. with URL parameter sap-ui-debug=true</li>
          * <li>pollingInterval: 400 milliseconds</li></ul>
          * @since 1.25
         */
@@ -1614,7 +1614,7 @@ declare namespace sap {
          * and help to structure your tests.
          * @since 1.25
          * @param mPageObjects undefined
-         * @returns mPageObject The created page object. It will look like this:<pre><code> { 
+         * @returns mPageObject The created page object. It will look like this:<pre><code> {
          * &lt;your-page-object-name&gt; : {      actions: // an instance of baseClass or Opa5 with all the
          * actions defined above      assertions: // an instance of baseClass or Opa5 with all the assertions
          * defined above  } }</code></pre>
@@ -1632,16 +1632,16 @@ declare namespace sap {
          * usecase:<pre>    <code>        // Every waitFor will append this namespace in front of your viewName
          *        Opa5.extendConfig({           viewNamespace: "namespace.of.my.views."        });        var
          * oOpa = new Opa5();        // Looks for a control with the id "myButton" in a View with the name
-         * "namespace.of.my.views.Detail"        oOpa.waitFor({             id: "myButton",            
+         * "namespace.of.my.views.Detail"        oOpa.waitFor({             id: "myButton",
          * viewName: "Detail"        });        // Looks for a control with the id "myList" in a View with the
-         * name "namespace.of.my.views.Master"        oOpa.waitFor({             id: "myList",            
+         * name "namespace.of.my.views.Master"        oOpa.waitFor({             id: "myList",
          * viewName: "Master"        });    </code></pre>Sample usage:<pre>    <code>        var oOpa = new
-         * Opa5();        // this statement will  will time out after 15 seconds and poll every 400ms.       
+         * Opa5();        // this statement will  will time out after 15 seconds and poll every 400ms.
          * // those two values come from the defaults of {@link sap.ui.test.Opa#.config}.        oOpa.waitFor({
-         *        });        // All wait for statements added after this will take other defaults       
+         *        });        // All wait for statements added after this will take other defaults
          * Opa5.extendConfig({            timeout: 10,            pollingInterval: 100        });        //
          * this statement will time out after 10 seconds and poll every 100 ms        oOpa.waitFor({        });
-         *        // this statement will time out after 20 seconds and poll every 100 ms        oOpa.waitFor({ 
+         *        // this statement will time out after 20 seconds and poll every 100 ms        oOpa.waitFor({
          *           timeout: 20;        });    </code></pre>
          * @since 1.40
          * @param options The values to be added to the existing config
@@ -1815,7 +1815,7 @@ declare namespace sap {
          * Tries to find a control depending on the options provided.
          * @param oOptions a map of options used to describe the control you are looking for.
          * @returns <ul>    <li>an array of found Controls depending on the options</li>    <li>an empty array
-         * if no id was given</li>    <li>the found control/element when an id as a string is specified</li>   
+         * if no id was given</li>    <li>the found control/element when an id as a string is specified</li>
          * <li>null if an id as string was specified</li></ul>
         */
         getMatchingControls(oOptions: any): sap.ui.core.Element | sap.ui.core.Element[] | any;
@@ -2062,7 +2062,7 @@ declare namespace sap {
        * pool and the <code>init</code> method is called on thisobject.When no longer needed, any borrowed
        * object should be returned tothe pool by calling {@link #returnObject}. At that point in time,the
        * reset method is called on the object and the object is added to thelist of free objects.See {@link
-       * sap.ui.base.Poolable} for a description of the contract for poolable objects.Example:<pre> 
+       * sap.ui.base.Poolable} for a description of the contract for poolable objects.Example:<pre>
        * this.oEventPool = new sap.ui.base.ObjectPool(sap.ui.base.Event);  var oEvent =
        * this.oEventPool.borrowObject(iEventId, mParameters);</pre>
        * @resource sap/ui/base/ObjectPool.js
@@ -2334,11 +2334,11 @@ declare namespace sap {
          * k);</code></li><li><code>objectBindings : <i>object</i></code>  a map of binding paths keyed by the
          * corresponding model name.  Each entry with key <i>k</i> in this object has the same effect as a call
          * <code>this.bindObject(objectBindings[k], k);</code></li></ul>
-         * @param sId id for the new managed object; generated automatically if no non-empty id is given    
+         * @param sId id for the new managed object; generated automatically if no non-empty id is given
          * Note: this can be omitted, no matter whether <code>mSettings</code> will be given or not!
          * @param mSettings Optional map/JSON-object with initial property values, aggregated objects etc. for
          * the new object
-         * @param oScope Scope object for resolving string based type and formatter references in bindings.    
+         * @param oScope Scope object for resolving string based type and formatter references in bindings.
          * When a scope object is given, <code>mSettings</code> cannot be omitted, at least <code>null</code>
          * or an empty object literal must be given.
         */
@@ -2538,7 +2538,7 @@ declare namespace sap {
          * by reference </li><li>all property and aggregation bindings (if cloneBindings is true); the pure
          * binding infos (path, model name) are    cloned, but all other information like template control or
          * factory function,    data type or formatter function are copied by reference. The bindings
-         * themselves    are created anew as they are specific for the combination (object, property, model).  
+         * themselves    are created anew as they are specific for the combination (object, property, model).
          *  As a result, any later changes to a binding of the original object are not reflected    in the
          * clone, but changes to e.g the type or template etc. are.</li></ul>Each clone is created by first
          * collecting the above mentioned settings and then creatinga new instance with the normal constructor
@@ -3280,7 +3280,7 @@ declare namespace sap {
            * Attach event-handler <code>fnFunction</code> to the 'close' event of this
            * <code>sap.ui.core.ws.WebSocket</code>.<br>
            * @param oData The object, that should be passed along with the event-object when firing the event.
-           * @param fnFunction The function to call, when the event occurs. This function will be called on the  
+           * @param fnFunction The function to call, when the event occurs. This function will be called on the
            *         oListener-instance (if present) or in a 'static way'.
            * @param oListener Object on which to call the given function. If empty, this WebSocket is used.
            * @returns <code>this</code> to allow method chaining
@@ -3291,7 +3291,7 @@ declare namespace sap {
            * Attach event-handler <code>fnFunction</code> to the 'error' event of this
            * <code>sap.ui.core.ws.WebSocket</code>.<br>
            * @param oData The object, that should be passed along with the event-object when firing the event.
-           * @param fnFunction The function to call, when the event occurs. This function will be called on the  
+           * @param fnFunction The function to call, when the event occurs. This function will be called on the
            *         oListener-instance (if present) or in a 'static way'.
            * @param oListener Object on which to call the given function. If empty, this WebSocket is used.
            * @returns <code>this</code> to allow method chaining
@@ -3302,7 +3302,7 @@ declare namespace sap {
            * Attach event-handler <code>fnFunction</code> to the 'message' event of this
            * <code>sap.ui.core.ws.WebSocket</code>.<br>
            * @param oData The object, that should be passed along with the event-object when firing the event.
-           * @param fnFunction The function to call, when the event occurs. This function will be called on the  
+           * @param fnFunction The function to call, when the event occurs. This function will be called on the
            *         oListener-instance (if present) or in a 'static way'.
            * @param oListener Object on which to call the given function. If empty, this WebSocket is used.
            * @returns <code>this</code> to allow method chaining
@@ -3313,7 +3313,7 @@ declare namespace sap {
            * Attach event-handler <code>fnFunction</code> to the 'open' event of this
            * <code>sap.ui.core.ws.WebSocket</code>.<br>
            * @param oData The object, that should be passed along with the event-object when firing the event.
-           * @param fnFunction The function to call, when the event occurs. This function will be called on the  
+           * @param fnFunction The function to call, when the event occurs. This function will be called on the
            *         oListener-instance (if present) or in a 'static way'.
            * @param oListener Object on which to call the given function. If empty, this WebSocket is used.
            * @returns <code>this</code> to allow method chaining
@@ -3796,7 +3796,7 @@ declare namespace sap {
            * Inserts a content into the aggregation <code>content</code>.
            * @param oContent the content to insert; if empty, nothing is inserted
            * @param iIndex the <code>0</code>-based index the content should be inserted at; for             a
-           * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value           
+           * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value
            *  greater than the current size of the aggregation, the content is inserted at             the last
            * position
            * @returns Reference to <code>this</code> in order to allow method chaining
@@ -4172,21 +4172,21 @@ declare namespace sap {
            * resolves. These objects are object literals defining themethods and properties of the controller in
            * a similar way as {@link sap.ui.controller}.<b>Example for a callback module definition
            * (sync):</b><pre>sap.ui.define("my/custom/sync/ExtensionProvider", ['jquery.sap.global'],
-           * function(jQuery) {  var ExtensionProvider = function() {}; 
+           * function(jQuery) {  var ExtensionProvider = function() {};
            * ExtensionProvider.prototype.getControllerExtensions = function(sControllerName, sComponentId,
            * bAsync) {    if (!bAsync && sControllerName == "my.own.Controller") {      // IMPORTANT: only return
            * extensions for a specific controller      return [{        onInit: function() {          // Do
-           * something here...        },        onAfterRendering: function() {          // Do something here...  
-           *      },        onButtonClick: function(oEvent) {          // Handle the button click event        } 
+           * something here...        },        onAfterRendering: function() {          // Do something here...
+           *      },        onButtonClick: function(oEvent) {          // Handle the button click event        }
            *     }    }];  };  return ExtensionProvider;}, true);</pre><b>Example for a callback module
            * definition (async):</b><pre>sap.ui.define("my/custom/async/ExtensionProvider",
-           * ['jquery.sap.global'], function(jQuery) {  var ExtensionProvider = function() {}; 
+           * ['jquery.sap.global'], function(jQuery) {  var ExtensionProvider = function() {};
            * ExtensionProvider.prototype.getControllerExtensions = function(sControllerName, sComponentId,
            * bAsync) {    if (bAsync && sControllerName == "my.own.Controller") {      // IMPORTANT:      // only
            * return a Promise for a specific controller since it      // requires the View/Controller and its
-           * parents to run in async      // mode!      return new Promise(function(fnResolve, fnReject) {       
-           * fnResolve([{          onInit: function() {            // Do something here...          },         
-           * onAfterRendering: function() {            // Do something here...          },         
+           * parents to run in async      // mode!      return new Promise(function(fnResolve, fnReject) {
+           * fnResolve([{          onInit: function() {            // Do something here...          },
+           * onAfterRendering: function() {            // Do something here...          },
            * onButtonClick: function(oEvent) {            // Handle the button click event          }        }]);
            *      }    };  };  return ExtensionProvider;}, true);</pre>The lifecycle functions
            * <code>onInit</code>, <code>onExit</code>,<code>onBeforeRendering</code> and
@@ -4433,7 +4433,7 @@ declare namespace sap {
            * Inserts a attribute into the aggregation <code>attributes</code>.
            * @param oAttribute the attribute to insert; if empty, nothing is inserted
            * @param iIndex the <code>0</code>-based index the attribute should be inserted at; for             a
-           * negative value of <code>iIndex</code>, the attribute is inserted at position 0; for a value         
+           * negative value of <code>iIndex</code>, the attribute is inserted at position 0; for a value
            *    greater than the current size of the aggregation, the attribute is inserted at             the
            * last position
            * @returns Reference to <code>this</code> in order to allow method chaining
@@ -4444,7 +4444,7 @@ declare namespace sap {
            * Inserts a element into the aggregation <code>elements</code>.
            * @param oElement the element to insert; if empty, nothing is inserted
            * @param iIndex the <code>0</code>-based index the element should be inserted at; for             a
-           * negative value of <code>iIndex</code>, the element is inserted at position 0; for a value           
+           * negative value of <code>iIndex</code>, the element is inserted at position 0; for a value
            *  greater than the current size of the aggregation, the element is inserted at             the last
            * position
            * @returns Reference to <code>this</code> in order to allow method chaining
@@ -5037,7 +5037,7 @@ declare namespace sap {
             /**
              * Returns the absolute path related to the current formatter call.
              * @param iPart index of part in case of the root formatter of a composite binding  (since 1.31.0)
-             * @returns the absolute path related to the current formatter call, or (since 1.31.0) 
+             * @returns the absolute path related to the current formatter call, or (since 1.31.0)
              * <code>undefined</code> in case of a root formatter if no <code>iPart</code> is  given or if
              * <code>iPart</code> is out of range
             */
@@ -5174,7 +5174,7 @@ declare namespace sap {
            * Inserts a column into the aggregation <code>columns</code>.
            * @param oColumn the column to insert; if empty, nothing is inserted
            * @param iIndex the <code>0</code>-based index the column should be inserted at; for             a
-           * negative value of <code>iIndex</code>, the column is inserted at position 0; for a value            
+           * negative value of <code>iIndex</code>, the column is inserted at position 0; for a value
            * greater than the current size of the aggregation, the column is inserted at             the last
            * position
            * @returns Reference to <code>this</code> in order to allow method chaining
@@ -5185,7 +5185,7 @@ declare namespace sap {
            * Inserts a row into the aggregation <code>rows</code>.
            * @param oRow the row to insert; if empty, nothing is inserted
            * @param iIndex the <code>0</code>-based index the row should be inserted at; for             a
-           * negative value of <code>iIndex</code>, the row is inserted at position 0; for a value            
+           * negative value of <code>iIndex</code>, the row is inserted at position 0; for a value
            * greater than the current size of the aggregation, the row is inserted at             the last
            * position
            * @returns Reference to <code>this</code> in order to allow method chaining
@@ -5307,7 +5307,7 @@ declare namespace sap {
            * Inserts a cell into the aggregation <code>cells</code>.
            * @param oCell the cell to insert; if empty, nothing is inserted
            * @param iIndex the <code>0</code>-based index the cell should be inserted at; for             a
-           * negative value of <code>iIndex</code>, the cell is inserted at position 0; for a value            
+           * negative value of <code>iIndex</code>, the cell is inserted at position 0; for a value
            * greater than the current size of the aggregation, the cell is inserted at             the last
            * position
            * @returns Reference to <code>this</code> in order to allow method chaining
@@ -5499,7 +5499,7 @@ declare namespace sap {
            * aggregated and associated objects as well as event handlers.See {@link
            * sap.ui.base.ManagedObject#constructor} for a general description of the syntax of the settings
            * object.
-           * @param sId id for the new server object; generated automatically if no non-empty id is given    
+           * @param sId id for the new server object; generated automatically if no non-empty id is given
            * Note: this can be omitted, no matter whether <code>mSettings</code> will be given or not!
            * @param mSettings optional map/JSON-object with initial property values, aggregated objects etc. for
            * the new object
@@ -6105,11 +6105,11 @@ declare namespace sap {
          * A service provides a specific functionality. A service instance can be obtainedby a {@link
          * sap.ui.core.service.ServiceFactory ServiceFactory} or at a Componentvia {@link
          * sap.ui.core.Component#getService getService} function.This class is the abstract base class for
-         * services and needs to be extended:<pre>sap.ui.define("my/Service", [ 
+         * services and needs to be extended:<pre>sap.ui.define("my/Service", [
          * "sap/ui/core/service/Service"], function(Service) {  return Service.extend("my.Service", {    init:
          * function() {      // handle init lifecycle    },    exit: function() {      // handle exit lifecycle
          *    },    doSomething: function() {      // some functionality    } });});</pre>A service instance
-         * will have a service context:<pre>{  "scopeObject": oComponent, // the Component instance 
+         * will have a service context:<pre>{  "scopeObject": oComponent, // the Component instance
          * "scopeType": "component"   // the stereotype of the scopeObject}</pre>The service context can be
          * retrieved with the function <code>getContext</code>.This function is private to the service instance
          * and will not be exposed viathe service interface.For consumers of the service it is recommended to
@@ -6142,7 +6142,7 @@ declare namespace sap {
 
 
           /**
-           * Returns the context of the service:<pre>{  "scopeObject": oComponent, // the Component instance 
+           * Returns the context of the service:<pre>{  "scopeObject": oComponent, // the Component instance
            * "scopeType": "component"   // the stereotype of the scopeObject}</pre>This function is not available
            * on the service interface.
            * @returns the context of the service
@@ -6177,18 +6177,18 @@ declare namespace sap {
          * needs to be registered in a central{@link sap.ui.core.service.ServiceFactoryRegistry service factory
          * registry}.Consumers of services require the service factory to create service instances.The service
          * factory base class can be used in a generic way to act as afactory for any
-         * service:<pre>sap.ui.require([  "sap/ui/core/service/ServiceFactoryRegistry", 
+         * service:<pre>sap.ui.require([  "sap/ui/core/service/ServiceFactoryRegistry",
          * "sap/ui/core/service/ServiceFactory",  "my/Service"], function(ServiceFactoryRegistry,
          * ServiceFactory, MyService) {  ServiceFactoryRegistry.register(new
          * ServiceFactory(MService));});</pre>Additionally a concrete service factory can be implemented by
          * extending theservice factory base class if additional functionality is needed whencreating new
-         * instances for a specific context:<pre>sap.ui.define("my/ServiceFactory", [ 
+         * instances for a specific context:<pre>sap.ui.define("my/ServiceFactory", [
          * "sap/ui/core/service/ServiceFactoryRegistry",  "sap/ui/core/service/ServiceFactory",  "my/Service"],
          * function(ServiceFactoryRegistry, ServiceFactory, MyService) {  return
-         * ServiceFactory.extend("my.ServiceFactory", {    createInstance: function(oServiceContext) {     
+         * ServiceFactory.extend("my.ServiceFactory", {    createInstance: function(oServiceContext) {
          * return Promise.resolve(new MyService(oServiceContext));    }  });});</pre>Another option for the
          * usage of the service factory is to provide astructured object with information about the service
-         * which willcreate an anonymous service internally:<pre>sap.ui.define("my/ServiceFactory", [ 
+         * which willcreate an anonymous service internally:<pre>sap.ui.define("my/ServiceFactory", [
          * "sap/ui/core/service/ServiceFactoryRegistry",  "sap/ui/core/service/ServiceFactory",  "my/Service"],
          * function(ServiceFactoryRegistry, ServiceFactory, MyService) {  return new ServiceFactory({    init:
          * function() { ... },    exit: function() { ... },    doSomething: function() { ... }  });});</pre>As
@@ -6379,7 +6379,7 @@ declare namespace sap {
            * Attach event-handler <code>fnFunction</code> to the 'messageChange' event of this
            * <code>sap.ui.core.message.MessageProcessor</code>.<br/>
            * @param oData The object, that should be passed along with the event-object when firing the event.
-           * @param fnFunction The function to call, when the event occurs. This function will be called on the  
+           * @param fnFunction The function to call, when the event occurs. This function will be called on the
            *         oListener-instance (if present) or in a 'static way'.
            * @param oListener Object on which to call the given function. If empty, this MessageProcessor is
            * used.
@@ -6546,7 +6546,7 @@ declare namespace sap {
            * <code>sap.ui.core.routing.Route</code>.<br/>
            * @since 1.25.1
            * @param oData The object, that should be passed along with the event-object when firing the event.
-           * @param fnFunction The function to call, when the event occurs. This function will be called on the  
+           * @param fnFunction The function to call, when the event occurs. This function will be called on the
            *         oListener-instance (if present) or in a 'static way'.
            * @param oListener Object on which to call the given function. If empty, this Model is used.
            * @returns <code>this</code> to allow method chaining
@@ -6558,7 +6558,7 @@ declare namespace sap {
            * <code>sap.ui.core.routing.Route</code>.<br/>
            * @since 1.25.1
            * @param oData The object, that should be passed along with the event-object when firing the event.
-           * @param fnFunction The function to call, when the event occurs. This function will be called on the  
+           * @param fnFunction The function to call, when the event occurs. This function will be called on the
            *         oListener-instance (if present) or in a 'static way'.
            * @param oListener Object on which to call the given function. If empty, this Model is used.
            * @returns <code>this</code> to allow method chaining
@@ -6698,21 +6698,21 @@ declare namespace sap {
            * @param oRoutes may contain many Route configurations as {@link
            * sap.ui.core.routing.Route#constructor}.<br/>Each of the routes contained in the array/object will be
            * added to the router.<br/>One way of defining routes is an array:<pre>[    //Will create a route
-           * called 'firstRouter' you can later use this name in navTo to navigate to this route    {       
+           * called 'firstRouter' you can later use this name in navTo to navigate to this route    {
            * name: "firstRoute"        pattern : "usefulPattern"    },    //Will create a route called
            * 'anotherRoute'    {        name: "anotherRoute"        pattern : "anotherPattern"    }]</pre>The
            * alternative way of defining routes is an Object.If you choose this way, the name attribute is the
            * name of the property.<pre>{    //Will create a route called 'firstRouter' you can later use this
-           * name in navTo to navigate to this route    firstRoute : {        pattern : "usefulPattern"    },   
-           * //Will create a route called 'anotherRoute'    anotherRoute : {        pattern : "anotherPattern"   
+           * name in navTo to navigate to this route    firstRoute : {        pattern : "usefulPattern"    },
+           * //Will create a route called 'anotherRoute'    anotherRoute : {        pattern : "anotherPattern"
            * }}</pre>The values that may be provided are the same as in {@link
            * sap.ui.core.routing.Route#constructor}
            * @param oConfig Default values for route configuration - also takes the same parameters as {@link
            * sap.ui.core.routing.Target#constructor}.<br/>This config will be used for routes and for targets,
            * used in the router<br/>Eg: if the config object specifies :<pre><code>{    viewType :
            * "XML"}</code></pre>The targets look like this:<pre>{    xmlTarget : {        ...    },    jsTarget :
-           * {        viewType : "JS"        ...    }}</pre>Then the effective config will look like this:<pre>{ 
-           *   xmlTarget : {        viewType : "XML"        ...    },    jsTarget : {        viewType : "JS"     
+           * {        viewType : "JS"        ...    }}</pre>Then the effective config will look like this:<pre>{
+           *   xmlTarget : {        viewType : "XML"        ...    },    jsTarget : {        viewType : "JS"
            *   ...    }}</pre>Since the xmlTarget does not specify its viewType, XML is taken from the config
            * object. The jsTarget is specifying it, so the viewType will be JS.
            * @param oOwner the Component of all the views that will be created by this Router,<br/>will get
@@ -6723,14 +6723,14 @@ declare namespace sap {
            * create and display views. Since 1.28 the route should only contain routing relevant
            * properties.<br/><b>Example:</b><pre><code>    new Router(    // Routes    [        {            //
            * no view creation related properties are in the route            name: "startRoute",            //no
-           * hash            pattern: "",            // you can find this target in the targetConfig           
-           * target: "welcome"        }    ],    // Default values shared by routes and Targets    {       
+           * hash            pattern: "",            // you can find this target in the targetConfig
+           * target: "welcome"        }    ],    // Default values shared by routes and Targets    {
            * viewNamespace: "my.application.namespace",        viewType: "XML"    },    // You should only use
            * this constructor when you are not using a router with a component.    // Please use the metadata of
            * a component to define your routes and targets.    // The documentation can be found here: {@link
            * sap.ui.core.UIComponent#.extend}.    null,    // Target config    {         //same name as in the
            * route called 'startRoute'         welcome: {             // All properties for creating and placing
-           * a view go here or in the config             viewName: "Welcome",             controlId: "app",      
+           * a view go here or in the config             viewName: "Welcome",             controlId: "app",
            *       controlAggregation: "pages"         }    })</code></pre>
           */
           constructor(oRoutes: any | any[], oConfig?: any, oOwner?: sap.ui.core.UIComponent, oTargetsConfig?: any);
@@ -6751,7 +6751,7 @@ declare namespace sap {
            * <code>sap.ui.core.routing.Router</code>.<br/>The event will get fired, if none of the routes of the
            * routes is matching. <br/>
            * @param oData The object, that should be passed along with the event-object when firing the event.
-           * @param fnFunction The function to call, when the event occurs. This function will be called on the  
+           * @param fnFunction The function to call, when the event occurs. This function will be called on the
            *         oListener-instance (if present) or in a 'static way'.
            * @param oListener Object on which to call the given function. If empty, this Model is used.
            * @returns <code>this</code> to allow method chaining
@@ -6762,7 +6762,7 @@ declare namespace sap {
            * Attach event-handler <code>fnFunction</code> to the 'routeMatched' event of this
            * <code>sap.ui.core.routing.Router</code>.<br/>
            * @param oData The object, that should be passed along with the event-object when firing the event.
-           * @param fnFunction The function to call, when the event occurs. This function will be called on the  
+           * @param fnFunction The function to call, when the event occurs. This function will be called on the
            *         oListener-instance (if present) or in a 'static way'.
            * @param oListener Object on which to call the given function. If empty, this Model is used.
            * @returns <code>this</code> to allow method chaining
@@ -6774,7 +6774,7 @@ declare namespace sap {
            * <code>sap.ui.core.routing.Router</code>.<br/>This event is similar to route matched. But it will
            * only fire for the route that has a matching pattern, not for its parent Routes <br/>
            * @param oData The object, that should be passed along with the event-object when firing the event.
-           * @param fnFunction The function to call, when the event occurs. This function will be called on the  
+           * @param fnFunction The function to call, when the event occurs. This function will be called on the
            *         oListener-instance (if present) or in a 'static way'.
            * @param oListener Object on which to call the given function. If empty, this Model is used.
            * @returns <code>this</code> to allow method chaining
@@ -7210,7 +7210,7 @@ declare namespace sap {
            * containing all parameters from the <code>array</code> is returned</li></ul><p>The returned key-value
            * maps are a copy so changing values in the map does not have any effect</p>
            * @param vName the (array with) CSS parameter name(s)
-           * @param oElement Element / control instance to take into account when looking for a parameter value. 
+           * @param oElement Element / control instance to take into account when looking for a parameter value.
            *                         This can make a difference when a parameter value is overridden in a theme
            * scope set via a CSS class.
            * @returns the CSS parameter value(s)
@@ -8568,10 +8568,10 @@ declare namespace sap {
          * Gets current value of property <code>preferDOM</code>.Whether existing DOM content is preferred over
          * the given content string.There are two scenarios where this flag is relevant (when set to
          * true):<ul><li>for the initial rendering: when an HTML control is added to an UIArea for the first
-         * time    and if the root node of that UIArea contained DOM content with the same id as the HTML   
-         * control, then that content will be used for rendering instead of any specified string   
+         * time    and if the root node of that UIArea contained DOM content with the same id as the HTML
+         * control, then that content will be used for rendering instead of any specified string
          * content</li><li>any follow-up rendering: when an HTML control is rendered for the second or any
-         * later    time and the preferDOM flag is set, then the DOM from the first rendering is preserved   
+         * later    time and the preferDOM flag is set, then the DOM from the first rendering is preserved
          * and not replaced by the string content</li></ul>As preserving the existing DOM is the most common
          * use case of the HTML control, the default value is true.Default value is <code>true</code>.
          * @returns Value of property <code>preferDOM</code>
@@ -8624,10 +8624,10 @@ declare namespace sap {
          * Sets a new value for property <code>preferDOM</code>.Whether existing DOM content is preferred over
          * the given content string.There are two scenarios where this flag is relevant (when set to
          * true):<ul><li>for the initial rendering: when an HTML control is added to an UIArea for the first
-         * time    and if the root node of that UIArea contained DOM content with the same id as the HTML   
-         * control, then that content will be used for rendering instead of any specified string   
+         * time    and if the root node of that UIArea contained DOM content with the same id as the HTML
+         * control, then that content will be used for rendering instead of any specified string
          * content</li><li>any follow-up rendering: when an HTML control is rendered for the second or any
-         * later    time and the preferDOM flag is set, then the DOM from the first rendering is preserved   
+         * later    time and the preferDOM flag is set, then the DOM from the first rendering is preserved
          * and not replaced by the string content</li></ul>As preserving the existing DOM is the most common
          * use case of the HTML control, the default value is true.When called with a value of
          * <code>null</code> or <code>undefined</code>, the default value of the property will be
@@ -8688,7 +8688,7 @@ declare namespace sap {
          * setThemePath, so the theme location is then known.sThemeBaseUrl is a single URL to specify the
          * default location of all theme files. This URL is the base folder below which the control library
          * foldersare located. E.g. if the CSS files are not located relative to the root location of UI5, but
-         * instead they are at locations like  
+         * instead they are at locations like
          * http://my.server/myapp/resources/sap/ui/core/themes/my_theme/library.cssthen the URL that needs to
          * be given is:   http://my.server/myapp/resourcesAll theme resources are then loaded from below this
          * folder - except if for a certain library a different location has been registered.If the theme
@@ -8710,7 +8710,7 @@ declare namespace sap {
          * Attach event-handler <code>fnFunction</code> to the 'formatError' event of
          * <code>sap.ui.core.Core</code>.<br/>Please note that this event is a bubbling event and may already
          * be canceled before reaching the core.<br/>
-         * @param fnFunction The function to call, when the event occurs. This function will be called on the  
+         * @param fnFunction The function to call, when the event occurs. This function will be called on the
          *         oListener-instance (if present) or in a 'static way'.
          * @param oListener Object on which to call the given function. If empty, this Model is used.
          * @returns <code>this</code> to allow method chaining
@@ -8753,7 +8753,7 @@ declare namespace sap {
          * <code>sap.ui.core.Core</code>.<br/>Please note that this event is a bubbling event and may already
          * be canceled before reaching the core.<br/>
          * @param oData The object, that should be passed along with the event-object when firing the event
-         * @param fnFunction The function to call, when the event occurs. This function will be called on the  
+         * @param fnFunction The function to call, when the event occurs. This function will be called on the
          *         oListener-instance (if present) or in a 'static way'.
          * @param oListener Object on which to call the given function. If empty, this Model is used.
          * @returns <code>this</code> to allow method chaining
@@ -8765,7 +8765,7 @@ declare namespace sap {
          * <code>sap.ui.core.Core</code>.<br/>Please note that this event is a bubbling event and may already
          * be canceled before reaching the core.<br/>
          * @param oData The object, that should be passed along with the event-object when firing the event
-         * @param fnFunction The function to call, when the event occurs. This function will be called on the  
+         * @param fnFunction The function to call, when the event occurs. This function will be called on the
          *         oListener-instance (if present) or in a 'static way'.
          * @param oListener Object on which to call the given function. If empty, this Model is used.
          * @returns <code>this</code> to allow method chaining
@@ -8777,7 +8777,7 @@ declare namespace sap {
          * <code>sap.ui.core.Core</code>.<br/>Please note that this event is a bubbling event and may already
          * be canceled before reaching the core.<br/>
          * @param oData The object, that should be passed along with the event-object when firing the event
-         * @param fnFunction The function to call, when the event occurs. This function will be called on the  
+         * @param fnFunction The function to call, when the event occurs. This function will be called on the
          *         oListener-instance (if present) or in a 'static way'.
          * @param oListener Object on which to call the given function. If empty, this Model is used.
          * @returns <code>this</code> to allow method chaining
@@ -9231,7 +9231,7 @@ declare namespace sap {
         /**
          * Defines the root directory from below which UI5 should load the theme with the given name.Optionally
          * allows restricting the setting to parts of a theme covering specific control
-         * libraries.Example:<code>  core.setThemeRoot("my_theme", "http://mythemeserver.com/allThemes"); 
+         * libraries.Example:<code>  core.setThemeRoot("my_theme", "http://mythemeserver.com/allThemes");
          * core.applyTheme("my_theme");</code>will cause the following file to be
          * loaded:<code>http://mythemeserver.com/allThemes/sap/ui/core/themes/my_theme/library.css</code>(and
          * the respective files for all used control libraries, like
@@ -9914,7 +9914,7 @@ declare namespace sap {
          * Inserts a content into the aggregation <code>content</code>.
          * @param oContent the content to insert; if empty, nothing is inserted
          * @param iIndex the <code>0</code>-based index the content should be inserted at; for             a
-         * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value           
+         * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value
          *  greater than the current size of the aggregation, the content is inserted at             the last
          * position
          * @returns Reference to <code>this</code> in order to allow method chaining
@@ -9925,7 +9925,7 @@ declare namespace sap {
          * Inserts a dependent into the aggregation <code>dependents</code>.
          * @param oDependent the dependent to insert; if empty, nothing is inserted
          * @param iIndex the <code>0</code>-based index the dependent should be inserted at; for             a
-         * negative value of <code>iIndex</code>, the dependent is inserted at position 0; for a value         
+         * negative value of <code>iIndex</code>, the dependent is inserted at position 0; for a value
          *    greater than the current size of the aggregation, the dependent is inserted at             the
          * last position
          * @returns Reference to <code>this</code> in order to allow method chaining
@@ -10174,7 +10174,7 @@ declare namespace sap {
         /**
          * Attaches custom data to an Element or retrieves attached data.Usage:   data("myKey", myData)attaches
          * myData (which can be any JS data type, e.g. a number, a string, an object, or a function) to this
-         * element, under the given key "myKey". If the key already exists,the value will be updated.  
+         * element, under the given key "myKey". If the key already exists,the value will be updated.
          * data("myKey", myData, writeToDom)attaches myData to this element, under the given key "myKey" and
          * (if writeToDom is true) writes key and value to the HTML. If the key already exists,the value will
          * be updated. While oValue can be any JS data type to be attached, it must be a string to be also
@@ -10194,11 +10194,11 @@ declare namespace sap {
          * object should contain the following information    <ul>    <li>name {string} name of the property
          * (redundant to map key)    <li>type {string} type of the property    <li>[defaultValue] {any} default
          * value of the property. Can be omitted    </ul><li>aggregations: a map of aggregation info objects,
-         * mapped by the aggregation name    Info object should contain the following information    <ul>   
+         * mapped by the aggregation name    Info object should contain the following information    <ul>
          * <li>name {string} name of the aggregation, singular for 0..1, plural for 0..n    <li>type {string}
          * type of the aggregated controls/elements    <li>multiple {boolean}    <li>singularName {string}
          * singular name for 0..n aggregations    </ul><li>associations: a map of association info objects,
-         * mapped by the association name    Info object should contain the following information    <ul>   
+         * mapped by the association name    Info object should contain the following information    <ul>
          * <li>name {string} name of the association, singular for 0..1, plural for 0..n    <li>type {string}
          * type of the associated controls/elements    <li>multiple {boolean}    <li>singularName {string}
          * singular name for 0..n associations    </ul><li>events: map from event names to event names</ul>
@@ -10408,7 +10408,7 @@ declare namespace sap {
          * Inserts a customData into the aggregation <code>customData</code>.
          * @param oCustomData the customData to insert; if empty, nothing is inserted
          * @param iIndex the <code>0</code>-based index the customData should be inserted at; for             a
-         * negative value of <code>iIndex</code>, the customData is inserted at position 0; for a value        
+         * negative value of <code>iIndex</code>, the customData is inserted at position 0; for a value
          *     greater than the current size of the aggregation, the customData is inserted at             the
          * last position
          * @returns Reference to <code>this</code> in order to allow method chaining
@@ -10420,7 +10420,7 @@ declare namespace sap {
          * @since 1.19
          * @param oDependent the dependent to insert; if empty, nothing is inserted
          * @param iIndex the <code>0</code>-based index the dependent should be inserted at; for             a
-         * negative value of <code>iIndex</code>, the dependent is inserted at position 0; for a value         
+         * negative value of <code>iIndex</code>, the dependent is inserted at position 0; for a value
          *    greater than the current size of the aggregation, the dependent is inserted at             the
          * last position
          * @returns Reference to <code>this</code> in order to allow method chaining
@@ -10538,7 +10538,7 @@ declare namespace sap {
          * "None".See  {@link sap.ui.core.Message.compareByType}
          * @param oOther message to compare with this one
          * @returns returns <code>0</code> if both messages are at        the same level. <code>-1</code> if
-         * <code>this</code>        message has a lower level. <code>1</code> if <code>this</code>       
+         * <code>this</code>        message has a lower level. <code>1</code> if <code>this</code>
          * message has a higher level.
         */
         compareByType(oOther: typeof sap.ui.core.Message): number;
@@ -10549,7 +10549,7 @@ declare namespace sap {
          * @param oMessage1 first message to compare
          * @param oMessage2 second message to compare
          * @returns returns <code>0</code> if both messages are at        the same level. <code>-1</code> if
-         * <code>this</code>        message has a lower level. <code>1</code> if <code>this</code>       
+         * <code>this</code>        message has a lower level. <code>1</code> if <code>this</code>
          * message has a higher level.
         */
         compareByType(oMessage1: typeof sap.ui.core.Message, oMessage2: typeof sap.ui.core.Message): number;
@@ -10672,7 +10672,7 @@ declare namespace sap {
          * initialproperty values, aggregated and associated objects as well as event handlers.See {@link
          * sap.ui.base.ManagedObject#constructor} for a general description of the syntax of the settings
          * object.
-         * @param sId optional id for the new control; generated automatically if no non-empty id is given    
+         * @param sId optional id for the new control; generated automatically if no non-empty id is given
          * Note: this can be omitted, no matter whether <code>mSettings</code> will be given or not!
          * @param mSettings optional map/JSON-object with initial settings for the new control
         */
@@ -10697,6 +10697,8 @@ declare namespace sap {
          * @returns Returns <code>this</code> to allow method chaining
         */
         addStyleClass(): sap.ui.core.Control;
+
+        addStyleClass(sClassName:string): sap.ui.core.Control;
 
         /**
          * Defines whether the user can select text inside this control.Defaults to <code>true</code> as long
@@ -10802,10 +10804,10 @@ declare namespace sap {
          * control.Applications must not call this hook method directly, it is called by the
          * framework.Subclasses of Control should implement this hook to provide any necessary accessibility
          * information:<pre>MyControl.prototype.getAccessibilityInfo = function() {   return {     role:
-         * "textbox",      // String which represents the WAI-ARIA role which is implemented by the control.   
+         * "textbox",      // String which represents the WAI-ARIA role which is implemented by the control.
          *  type: "date input",   // String which represents the control type (Must be a translated text).
          * Might correlate with                           // the role.     description: "value", // String
-         * which describes the most relevant control state (e.g. the inputs value). Must be a                  
+         * which describes the most relevant control state (e.g. the inputs value). Must be a
          *         // translated text.                           // Note: The type and the enabled/editable
          * state must not be handled here.     focusable: true,      // Boolean which describes whether the
          * control can get the focus.     enabled: true,        // Boolean which describes whether the control
@@ -10814,8 +10816,8 @@ declare namespace sap {
          * If not relevant it must not be set or                           // <code>null</code> can be
          * provided.     children: []          // Array of accessibility info objects of children of the given
          * control (e.g. when the control is a layout).                           // Note: Children should only
-         * be provided when it is helpful to understand the accessibility context                           // 
-         *      (e.g. a form control must not provide details of its internals (fields, labels, ...) but a     
+         * be provided when it is helpful to understand the accessibility context                           //
+         *      (e.g. a form control must not provide details of its internals (fields, labels, ...) but a
          *                      //       layout should).   };};</pre>Note: The returned object provides the
          * accessibility state of the control at the point in time when this function is called.
          * @since 1.37.0
@@ -11193,8 +11195,8 @@ declare namespace sap {
 
         /**
          * Returns the configuration of a manifest section or the value for aspecific path. If no key is
-         * specified, the return value is null.Example:<code>  {    "sap.ui5": {      "dependencies": {       
-         * "libs": {          "sap.m": {}        },        "components": {          "my.component.a": {}       
+         * specified, the return value is null.Example:<code>  {    "sap.ui5": {      "dependencies": {
+         * "libs": {          "sap.m": {}        },        "components": {          "my.component.a": {}
          * }      }  });</code>The configuration above can be accessed in the following ways:<ul><li><b>By
          * section/namespace</b>: <code>oManifest.getEntry("sap.ui5")</code></li><li><b>By path</b>:
          * <code>oManifest.getEntry("/sap.ui5/dependencies/libs")</code></li></ul>By section/namespace returns
@@ -11233,7 +11235,7 @@ declare namespace sap {
         load(mOptions: any): sap.ui.core.Manifest | JQueryPromise<any>;
       }
       /**
-       * Provides eventing capabilities for applications like firing events and attaching or detaching event 
+       * Provides eventing capabilities for applications like firing events and attaching or detaching event
        *      handlers for events which are notified when events are fired.
        * @resource sap/ui/core/EventBus.js
       */
@@ -11280,7 +11282,7 @@ declare namespace sap {
          * @param sEventId The identifier of the event to listen for
          * @param fnFunction The handler function to call when the event occurs. This function will be called
          * in the context of the                      <code>oListener</code> instance (if present) or on the
-         * event bus instance. The channel is provided as first argument of the handler, and                   
+         * event bus instance. The channel is provided as first argument of the handler, and
          *   the event identifier is provided as the second argument. The parameter map carried by the event is
          * provided as the third argument (if present).                      Handlers must not change the
          * content of this map.
@@ -11303,7 +11305,7 @@ declare namespace sap {
          * @param sEventId The identifier of the event to listen for
          * @param fnFunction The handler function to call when the event occurs. This function will be called
          * in the context of the                      <code>oListener</code> instance (if present) or on the
-         * event bus instance. The channel is provided as first argument of the handler, and                   
+         * event bus instance. The channel is provided as first argument of the handler, and
          *   the event identifier is provided as the second argument. The parameter map carried by the event is
          * provided as the third argument (if present).                      Handlers must not change the
          * content of this map.
@@ -11389,8 +11391,8 @@ declare namespace sap {
 
         /**
          * Returns the configuration of a manifest section or the value for aspecific path. If no section or
-         * key is specified, the return value is null.Example:<code>  {    "sap.ui5": {      "dependencies": { 
-         *       "libs": {          "sap.m": {}        },        "components": {          "my.component.a": {} 
+         * key is specified, the return value is null.Example:<code>  {    "sap.ui5": {      "dependencies": {
+         *       "libs": {          "sap.m": {}        },        "components": {          "my.component.a": {}
          *       }      }  });</code>The configuration above can be accessed in the following
          * ways:<ul><li><b>By section/namespace</b>:
          * <code>oComponent.getManifestEntry("sap.ui5")</code></li><li><b>By path</b>:
@@ -11461,7 +11463,7 @@ declare namespace sap {
         /**
          * Returns a service interface for the {@link sap.ui.core.service.Service Service}declared in the
          * descriptor for components (manifest.json). The declaration needsto be done in the
-         * <code>sap.ui5/services</code> section as follows:<pre>{  [...]  "sap.ui5": {    "services": {     
+         * <code>sap.ui5/services</code> section as follows:<pre>{  [...]  "sap.ui5": {    "services": {
          * "myLocalServiceAlias": {        "factoryName": "my.ServiceFactory",        ["optional": true]      }
          *    }  }  [...]}</pre>The service declaration is used to define a mapping between the localalias for
          * the service that can be used in the Component and the name ofthe service factory which will be used
@@ -11479,7 +11481,7 @@ declare namespace sap {
          * sap.ui.core.service.ServiceFactoryRegistry Service Factory Registry}or the service declaration in
          * the descriptor for components (manifest.json)is missing the Promise will reject.This is an example
          * of how the <code>getService</code> function can be
-         * used:<pre>oComponent.getService("myLocalServiceAlias").then(function(oService) { 
+         * used:<pre>oComponent.getService("myLocalServiceAlias").then(function(oService) {
          * oService.doSomething();}).catch(function(oError) {  jQuery.sap.log.error(oError);});</pre>
          * @since 1.37.0
          * @param sLocalServiceAlias Local service alias as defined in the manifest.json
@@ -12766,8 +12768,8 @@ declare namespace sap {
          * not apply anymore this child must be cleaned up correctly (e.g deregistering eventhandlers, ...).The
          * following example shows how renderControl and cleanupControlWithoutRendering shouldbe used:render =
          * function(rm, ctrl){  //...  var aAggregatedControls = //...  for(var i=0;
-         * i<aAgrregatedControls.length; i++){  	if(//... some filter expression){       
-         * rm.renderControl(aAggregatedControls[i]);     }else{       
+         * i<aAgrregatedControls.length; i++){  	if(//... some filter expression){
+         * rm.renderControl(aAggregatedControls[i]);     }else{
          * rm.cleanupControlWithoutRendering(aAggregatedControls[i]);     }  }  //...}Note:The method does not
          * remove DOM of the given control. The callee of this method has to take over theresponsibility to
          * cleanup the DOM of the control afterwards.For parents which are rendered with the normal mechanism
@@ -13171,12 +13173,12 @@ declare namespace sap {
          * have been specified via the URL parameter<code>sap-language</code>. That parameter by definition
          * represents a SAP logon language code('ABAP language'). Most but not all of these language codes are
          * valid ISO639 two-letter languagesand as such are valid BCP47 language tags. For better BCP47
-         * compliance, the frameworkmaps the following non-BCP47 SAP logon codes to a BCP47 substitute:<pre>  
-         * "ZH"  -->  "zh-Hans"         // script 'Hans' added to distinguish it from zh-Hant   "ZF"  --> 
-         * "zh-Hant"         // ZF ist not a valid ISO639 code, use the compliant language + script 'Hant'		 " 
-         *   "1Q"  -->  "en-US-x-saptrc"  // special language code for supportability (tracing),               
+         * compliance, the frameworkmaps the following non-BCP47 SAP logon codes to a BCP47 substitute:<pre>
+         * "ZH"  -->  "zh-Hans"         // script 'Hans' added to distinguish it from zh-Hant   "ZF"  -->
+         * "zh-Hant"         // ZF ist not a valid ISO639 code, use the compliant language + script 'Hant'		 "
+         *   "1Q"  -->  "en-US-x-saptrc"  // special language code for supportability (tracing),
          *                    represented as en-US with a priate extension   "2Q"  -->  "en-US-x-sappsd"  //
-         * special language code for supportability (pseudo translation),                                  
+         * special language code for supportability (pseudo translation),
          * represented as en-US with a priate extension</pre>
          * @returns The language string as configured
         */
@@ -13311,7 +13313,7 @@ declare namespace sap {
          * <code>localizationChanged</code> event:<ul><li>date and number data types that are used in property
          * bindings or composite    bindings in existing Elements, Controls, UIAreas or
          * Components</li><li>ResourceModels currently assigned to the Core, an UIArea, Component,    Element
-         * or Control</li><li>Elements or Controls that implement the <code>onlocalizationChanged</code> hook  
+         * or Control</li><li>Elements or Controls that implement the <code>onlocalizationChanged</code> hook
          *  (note the lowercase 'l' in onlocalizationChanged)</ul>It furthermore derives the RTL mode from the
          * new language, if no explicit RTLmode has been set. If the RTL mode changes, the following additional
          * actions will be taken:<ul><li>the URLs of already loaded library theme files will be
@@ -13434,9 +13436,9 @@ declare namespace sap {
 
         /**
          * Returns the custom Component configuration entry with the specified key (this must be a JSON
-         * object).If no key is specified, the return value is null.Example:<code> 
-         * sap.ui.core.Component.extend("sample.Component", {      metadata: {          "my.custom.config" : { 
-         *             "property1" : true,              "property2" : "Something else"          }      } 
+         * object).If no key is specified, the return value is null.Example:<code>
+         * sap.ui.core.Component.extend("sample.Component", {      metadata: {          "my.custom.config" : {
+         *             "property1" : true,              "property2" : "Something else"          }      }
          * });</code>The configuration above can be accessed via
          * <code>sample.Component.getMetadata().getCustomEntry("my.custom.config")</code>.
          * @param sKey Key of the custom configuration (must be prefixed with a namespace)
@@ -13487,8 +13489,8 @@ declare namespace sap {
 
         /**
          * Returns the configuration of a manifest section or the value for aspecific path. If no section or
-         * key is specified, the return value is null.Example:<code>  {    "sap.ui5": {      "dependencies": { 
-         *       "libs": {          "sap.m": {}        },        "components": {          "my.component.a": {} 
+         * key is specified, the return value is null.Example:<code>  {    "sap.ui5": {      "dependencies": {
+         *       "libs": {          "sap.m": {}        },        "components": {          "my.component.a": {}
          *       }      }  });</code>The configuration above can be accessed in the following
          * ways:<ul><li><b>By section/namespace</b>:
          * <code>oComponent.getMetadata().getManifestEntry("sap.ui5")</code></li><li><b>By path</b>:
@@ -13624,7 +13626,7 @@ declare namespace sap {
         /**
          * Inserts a multipleLayoutData into the aggregation <code>multipleLayoutData</code>.
          * @param oMultipleLayoutData the multipleLayoutData to insert; if empty, nothing is inserted
-         * @param iIndex the <code>0</code>-based index the multipleLayoutData should be inserted at; for      
+         * @param iIndex the <code>0</code>-based index the multipleLayoutData should be inserted at; for
          *       a negative value of <code>iIndex</code>, the multipleLayoutData is inserted at position 0; for
          * a value             greater than the current size of the aggregation, the multipleLayoutData is
          * inserted at             the last position
@@ -14639,7 +14641,7 @@ declare namespace sap {
            * binding points to one specific entry in the binding's  collection. A property binding does not have
            * a context, you can access its value via  {@link sap.ui.model.odata.v4.ODataPropertyBinding#getValue
            * getValue}.  Applications can access model data only via a context, either synchronously with the
-           * risk  that the values are not available yet ({@link #getProperty} and {@link #getObject}) or 
+           * risk  that the values are not available yet ({@link #getProperty} and {@link #getObject}) or
            * asynchronously ({@link #requestProperty} and {@link #requestObject}).
            * @resource sap/ui/model/odata/v4/Context.js
           */
@@ -14690,7 +14692,7 @@ declare namespace sap {
             /**
              * Returns the context's index within the binding's collection.
              * @since 1.39.0
-             * @returns The context's index within the binding's collection or <code>undefined</code> if the 
+             * @returns The context's index within the binding's collection or <code>undefined</code> if the
              * context does not belong to a list binding.
             */
             getIndex(): number;
@@ -14763,7 +14765,7 @@ declare namespace sap {
            * Model implementation for OData V4.  Every resource path (relative to the service root URL, no query
            * options) according to  "4 Resource Path" in specification "OData Version 4.0 Part 2: URL
            * Conventions" is  a valid data binding path within this model if a leading slash is added; for
-           * example  "/" + "EMPLOYEES('A%2FB%26C')" to access an entity instance with key "A/B&C". Note that 
+           * example  "/" + "EMPLOYEES('A%2FB%26C')" to access an entity instance with key "A/B&C". Note that
            * appropriate URI encoding is necessary. "4.5.1 Addressing Actions" needs an operation  binding, see
            * {@link sap.ui.model.odata.v4.ODataContextBinding}.  Note that the OData V4 model has its own {@link
            * sap.ui.model.odata.v4.Context} class.  The model does not support any public events; attaching an
@@ -14789,7 +14791,7 @@ declare namespace sap {
              * @since 1.37.0
              * @param sPath The binding path in the model; must not end with a slash
              * @param oContext The context which is required as base for a relative path
-             * @param mParameters Map of binding parameters which can be OData query options as specified in 
+             * @param mParameters Map of binding parameters which can be OData query options as specified in
              * "OData Version 4.0 Part 2: URL Conventions" or the binding-specific parameters "$$groupId"  and
              * "$$updateGroupId".  Note: If parameters are provided for a relative binding path, the binding
              * accesses data  with its own service requests instead of using its parent binding.  The following
@@ -14817,7 +14819,7 @@ declare namespace sap {
              * sap.ui.model.odata.v4.ODataListBinding#filter} to replace them. Static filters,  as defined in the
              * '$filter' binding parameter, are always combined with the dynamic  filters using a logical
              * <code>AND</code>.  Supported since 1.39.0.
-             * @param mParameters Map of binding parameters which can be OData query options as specified in 
+             * @param mParameters Map of binding parameters which can be OData query options as specified in
              * "OData Version 4.0 Part 2: URL Conventions" or the binding-specific parameters "$$groupId"  and
              * "$$updateGroupId".  Note: If parameters are provided for a relative binding path, the binding
              * accesses data  with its own service requests instead of using its parent binding.  The following
@@ -14837,7 +14839,7 @@ declare namespace sap {
              * @since 1.37.0
              * @param sPath The binding path in the model; must not be empty or end with a slash
              * @param oContext The context which is required as base for a relative path
-             * @param mParameters Map of binding parameters which can be OData query options as specified in 
+             * @param mParameters Map of binding parameters which can be OData query options as specified in
              * "OData Version 4.0 Part 2: URL Conventions" or the binding-specific parameters "$$groupId"  and
              * "$$updateGroupId".  Note: Binding parameters may only be provided for absolute binding paths as only
              * those  lead to a data service request.  All "5.2 Custom Query Options" are allowed except for those
@@ -14915,7 +14917,7 @@ declare namespace sap {
              * the lastcall determines the model's data; it is <b>independent</b>of the order of calls to {@link
              * #submitBatch} with the given group ID.
              * @since 1.37.0
-             * @param sGroupId The group ID to be used for refresh; valid values are <code>undefined</code>, 
+             * @param sGroupId The group ID to be used for refresh; valid values are <code>undefined</code>,
              * <code>'$auto'</code>, <code>'$direct'</code> or application group IDs as specified in  {@link
              * #submitBatch}
             */
@@ -14929,7 +14931,7 @@ declare namespace sap {
              * elementbinding.
              * @since 1.37.0
              * @param oEntityContext A context in this model which must point to a non-contained OData entity
-             * @returns A promise which is resolved with the canonical path (e.g. "/EMPLOYEES(ID='1')") in case of 
+             * @returns A promise which is resolved with the canonical path (e.g. "/EMPLOYEES(ID='1')") in case of
              * success, or rejected with an instance of <code>Error</code> in case of failure, e.g. when  the given
              * context does not point to an entity
             */
@@ -14939,8 +14941,8 @@ declare namespace sap {
              * Resets all property changes associated with the given application group ID which have notyet been
              * submitted via {@link #submitBatch}.
              * @since 1.39.0
-             * @param sGroupId The application group ID, which is a non-empty string consisting of alphanumeric 
-             * characters from the basic Latin alphabet, including the underscore. If it is 
+             * @param sGroupId The application group ID, which is a non-empty string consisting of alphanumeric
+             * characters from the basic Latin alphabet, including the underscore. If it is
              * <code>undefined</code>, the model's <code>updateGroupId</code> is used. Note that the  default
              * <code>updateGroupId</code> is "$auto", which is invalid here.
             */
@@ -14955,9 +14957,9 @@ declare namespace sap {
             /**
              * Submits the requests associated with the given application group ID in one batch request.
              * @since 1.37.0
-             * @param sGroupId The application group ID, which is a non-empty string consisting of alphanumeric 
+             * @param sGroupId The application group ID, which is a non-empty string consisting of alphanumeric
              * characters from the basic Latin alphabet, including the underscore.
-             * @returns A promise on the outcome of the HTTP request resolving with <code>undefined</code>; it is 
+             * @returns A promise on the outcome of the HTTP request resolving with <code>undefined</code>; it is
              * rejected with an error if the batch request itself fails
             */
             submitBatch(sGroupId: string): JQueryPromise<any>;
@@ -15014,9 +15016,9 @@ declare namespace sap {
             /**
              * Returns the OData meta data model context corresponding to the given OData data model path.
              * @since 1.37.0
-             * @param sPath An absolute data path within the OData data model, for example 
+             * @param sPath An absolute data path within the OData data model, for example
              * "/EMPLOYEES/0/ENTRYDATE"
-             * @returns The corresponding meta data context within the OData meta data model, for example with 
+             * @returns The corresponding meta data context within the OData meta data model, for example with
              * meta data path "/EMPLOYEES/ENTRYDATE"
             */
             getMetaContext(sPath: string): sap.ui.model.Context;
@@ -15055,7 +15057,7 @@ declare namespace sap {
              * #requestUI5Type requestUI5Type} for asynchronous access.
              * @since 1.37.0
              * @param sPath An absolute path to an OData property within the OData data model
-             * @returns The corresponding UI5 type from <code>sap.ui.model.odata.type</code>, if all required meta 
+             * @returns The corresponding UI5 type from <code>sap.ui.model.odata.type</code>, if all required meta
              * data to calculate this type is already available; if no specific type can be determined, a  warning
              * is logged and <code>sap.ui.model.odata.type.Raw</code> is used
             */
@@ -15144,7 +15146,7 @@ declare namespace sap {
              * represents an OData simple identifier needs special preparations. The sameapplies to the empty
              * segment after a trailing slash.<ol><li> If the current object has a "$Action", "$Function" or
              * "$Type" property, it is used for   scope lookup first. This way, "/EMPLOYEES/ENTRYDATE" addresses
-             * the same object as   "/EMPLOYEES/$Type/ENTRYDATE", namely the "ENTRYDATE" child of the entity type  
+             * the same object as   "/EMPLOYEES/$Type/ENTRYDATE", namely the "ENTRYDATE" child of the entity type
              * corresponding to the "EMPLOYEES" child of the entity container. The other cases jump from   an
              * action or function import to the corresponding action or function overloads.<li> Else if the segment
              * is the first one within its path, the last schema child addressed   via scope lookup is used instead
@@ -15184,8 +15186,8 @@ declare namespace sap {
              * #getUI5Type getUI5Type} for synchronous access.
              * @since 1.37.0
              * @param sPath An absolute path to an OData property within the OData data model
-             * @returns A promise that gets resolved with the corresponding UI5 type from 
-             * <code>sap.ui.model.odata.type</code> or rejected with an error; if no specific type can be 
+             * @returns A promise that gets resolved with the corresponding UI5 type from
+             * <code>sap.ui.model.odata.type</code> or rejected with an error; if no specific type can be
              * determined, a warning is logged and <code>sap.ui.model.odata.type.Raw</code> is used
             */
             requestUI5Type(sPath: string): JQueryPromise<any>;
@@ -15225,7 +15227,7 @@ declare namespace sap {
              * @param vFilters The dynamic application filters to be used initially. Call {@link #filter} to
              * replace them.  Static filters, as defined in the '$filter' binding parameter, are always combined
              * with the  dynamic filters using a logical <code>AND</code>.  Supported since 1.39.0.
-             * @param mParameters Map of binding parameters which can be OData query options as specified in 
+             * @param mParameters Map of binding parameters which can be OData query options as specified in
              * "OData Version 4.0 Part 2: URL Conventions" or the binding-specific parameters "$$groupId"  and
              * "$$updateGroupId".  Note: If parameters are provided for a relative binding path, the binding
              * accesses data  with its own service requests instead of using its parent binding.  The following
@@ -15254,7 +15256,7 @@ declare namespace sap {
              * @param vFilters The dynamic filters to be used; replaces the dynamic filters given in  {@link
              * sap.ui.model.odata.v4.ODataModel#bindList}.  The filter executed on the list is created from the
              * following parts, which are combined  with a logical 'and':  <ul>  <li> dynamic filters of type
-             * sap.ui.model.FilterType.Application  <li> dynamic filters of type sap.ui.model.FilterType.Control 
+             * sap.ui.model.FilterType.Application  <li> dynamic filters of type sap.ui.model.FilterType.Control
              * <li> the static filters, as defined in the '$filter' binding parameter  </ul>
              * @param sFilterType The filter type to use
              * @returns <code>this</code> to facilitate method chaining
@@ -15275,7 +15277,7 @@ declare namespace sap {
              * @param iMaximumPrefetchSize The maximum number of contexts to read before and after the given range;
              * with this,  controls can prefetch data that is likely to be needed soon, e.g. when scrolling down in
              * a  table. Negative values will be treated as 0.
-             * @returns The array of already created contexts with the first entry containing the context for 
+             * @returns The array of already created contexts with the first entry containing the context for
              * <code>iStart</code>
             */
             getContexts(iStart: number, iLength?: number, iMaximumPrefetchSize?: number): sap.ui.model.odata.v4.Context[];
@@ -15404,15 +15406,15 @@ declare namespace sap {
            * you call {@link #execute}. {@link #refresh}  is always ignored for actions and action imports. For
            * function imports, it is ignored if  {@link #execute} has not yet been called. Afterwards it results
            * in another call of the  function with the parameter values of the last execute.  The binding
-           * parameter for bound actions may be given in the binding path, for example 
+           * parameter for bound actions may be given in the binding path, for example
            * <code>/TEAMS(Team_Id='TEAM_01')/tea_busi.AcChangeManagerOfTeam(...)</code>. This can be  used if the
            * exact instance is known in advance. If you use a relative binding instead, the  operation path is a
-           * concatenation of the parent context's canonical path and the deferred  binding's path. 
+           * concatenation of the parent context's canonical path and the deferred  binding's path.
            * <b>Example</b>: You have a table with a list binding to <code>/TEAMS</code>. In each row  you have a
-           * button to change the team's manager, with the relative binding 
+           * button to change the team's manager, with the relative binding
            * <code>tea_busi.AcChangeManagerOfTeam(...)</code>. Then the parent context for such a button  refers
            * to an instance of TEAMS, so its canonical path is  <code>/TEAMS(ID='<i>TeamID</i>')</code> and the
-           * resulting path for the action is 
+           * resulting path for the action is
            * <code>/TEAMS(ID='<i>TeamID</i>')/tea_busi.AcChangeManagerOfTeam</code>.  This also works if the
            * relative path of the deferred operation binding starts with a  navigation property. Then this
            * navigation property will be part of the operation's  resource path, which is still valid.  A
@@ -15434,7 +15436,7 @@ declare namespace sap {
              * @param oModel The OData V4 model
              * @param sPath The binding path in the model; must not end with a slash
              * @param oContext The context which is required as base for a relative path
-             * @param mParameters Map of binding parameters which can be OData query options as specified in 
+             * @param mParameters Map of binding parameters which can be OData query options as specified in
              * "OData Version 4.0 Part 2: URL Conventions" or the binding-specific parameters "$$groupId"  and
              * "$$updateGroupId".  Note: If parameters are provided for a relative binding path, the binding
              * accesses data  with its own service requests instead of using its parent binding.  The following
@@ -15466,7 +15468,7 @@ declare namespace sap {
              * binding is  used, see {@link sap.ui.model.odata.v4.ODataContextBinding#constructor}.  Valid values
              * are <code>undefined</code>, <code>'$auto'</code>, <code>'$direct'</code> or  application group IDs
              * as specified in {@link sap.ui.model.odata.v4.ODataModel#submitBatch}.
-             * @returns A promise that is resolved without data when the operation call succeeded, or rejected 
+             * @returns A promise that is resolved without data when the operation call succeeded, or rejected
              * with an instance of <code>Error</code> in case of failure.
             */
             execute(sGroupId: string): JQueryPromise<any>;
@@ -15564,7 +15566,7 @@ declare namespace sap {
              * @param oModel The OData V4 model
              * @param sPath The binding path in the model; must not be empty or end with a slash
              * @param oContext The context which is required as base for a relative path
-             * @param mParameters Map of binding parameters which can be OData query options as specified in 
+             * @param mParameters Map of binding parameters which can be OData query options as specified in
              * "OData Version 4.0 Part 2: URL Conventions" or the binding-specific parameters "$$groupId"  and
              * "$$updateGroupId".  Note: Binding parameters may only be provided for absolute binding paths as only
              * those  lead to a data service request.  All "5.2 Custom Query Options" are allowed except for those
@@ -15627,7 +15629,7 @@ declare namespace sap {
              * change event if the type has changed.
              * @param oType The type for this binding
              * @param sInternalType The internal type of the element property which owns this binding, for example
-             * "any",  "boolean", "float", "int", "string"; see {@link sap.ui.model.odata.type} for more 
+             * "any",  "boolean", "float", "int", "string"; see {@link sap.ui.model.odata.type} for more
              * information
             */
             setType(oType: sap.ui.model.Type, sInternalType: string): void;
@@ -15702,7 +15704,7 @@ declare namespace sap {
              * by calling the getServiceMetadata() method.
              * @param vUrl Either one URL as string or an array or URL strings
              * @returns The Promise to load the given URL(s), resolved if all URLs have been loaded, rejected if at
-             * least one fails to load.					 If this promise resolves it returns the following parameters:					
+             * least one fails to load.					 If this promise resolves it returns the following parameters:
              * annotations: The annotation object					 entitySets: An array of EntitySet objects containing the
              * newly merged EntitySets from a $metadata requests.								 the structure is the same as in the
              * metadata object reached by the getServiceMetadata() method.								 For non $metadata requests the
@@ -15724,7 +15726,7 @@ declare namespace sap {
              * Attach event-handler <code>fnFunction</code> to the 'annotationsFailed' event of this
              * <code>sap.ui.model.odata.v2.ODataModel</code>.
              * @param oData The object, that should be passed along with the event-object when firing the event.
-             * @param fnFunction The function to call, when the event occurs. This function will be called on the  
+             * @param fnFunction The function to call, when the event occurs. This function will be called on the
              *         oListener-instance (if present) or in a 'static way'.
              * @param oListener Object on which to call the given function. If empty, the global context (window)
              * is used.
@@ -15736,7 +15738,7 @@ declare namespace sap {
              * Attach event-handler <code>fnFunction</code> to the 'annotationsLoaded' event of this
              * <code>sap.ui.model.odata.v2.ODataModel</code>.
              * @param oData The object, that should be passed along with the event-object when firing the event.
-             * @param fnFunction The function to call, when the event occurs. This function will be called on the  
+             * @param fnFunction The function to call, when the event occurs. This function will be called on the
              *         oListener-instance (if present) or in a 'static way'.
              * @param oListener Object on which to call the given function. If empty, the global context (window)
              * is used.
@@ -15748,7 +15750,7 @@ declare namespace sap {
              * Attach event-handler <code>fnFunction</code> to the 'batchRequestCompleted' event of this
              * <code>sap.ui.model.odata.v2.ODataModel</code>.
              * @param oData The object, that should be passed along with the event-object when firing the event.
-             * @param fnFunction The function to call, when the event occurs. This function will be called on the  
+             * @param fnFunction The function to call, when the event occurs. This function will be called on the
              *         oListener-instance (if present) or in a 'static way'.
              * @param oListener Object on which to call the given function. If empty, the global context (window)
              * is used.
@@ -15760,7 +15762,7 @@ declare namespace sap {
              * Attach event-handler <code>fnFunction</code> to the 'batchRequestFailed' event of this
              * <code>sap.ui.model.odata.v2.ODataModel</code>.<br/>
              * @param oData The object, that should be passed along with the event-object when firing the event.
-             * @param fnFunction The function to call, when the event occurs. This function will be called on the  
+             * @param fnFunction The function to call, when the event occurs. This function will be called on the
              *         oListener-instance (if present) or in a 'static way'.
              * @param oListener Object on which to call the given function. If empty, this Model is used.
              * @returns <code>this</code> to allow method chaining
@@ -15771,7 +15773,7 @@ declare namespace sap {
              * Attach event-handler <code>fnFunction</code> to the 'requestSent' event of this
              * <code>sap.ui.model.odata.v2.ODataModel</code>.
              * @param oData The object, that should be passed along with the event-object when firing the event.
-             * @param fnFunction The function to call, when the event occurs. This function will be called on the  
+             * @param fnFunction The function to call, when the event occurs. This function will be called on the
              *         oListener-instance (if present) or in a 'static way'.
              * @param oListener Object on which to call the given function. If empty, the global context (window)
              * is used.
@@ -15783,7 +15785,7 @@ declare namespace sap {
              * Attach event-handler <code>fnFunction</code> to the 'metadataFailed' event of this
              * <code>sap.ui.model.odata.v2.ODataModel</code>.
              * @param oData The object, that should be passed along with the event-object when firing the event.
-             * @param fnFunction The function to call, when the event occurs. This function will be called on the  
+             * @param fnFunction The function to call, when the event occurs. This function will be called on the
              *         oListener-instance (if present) or in a 'static way'.
              * @param oListener Object on which to call the given function. If empty, the global context (window)
              * is used.
@@ -15795,7 +15797,7 @@ declare namespace sap {
              * Attach event-handler <code>fnFunction</code> to the 'metadataLoaded' event of this
              * <code>sap.ui.model.odata.v2.ODataModel</code>.
              * @param oData The object, that should be passed along with the event-object when firing the event.
-             * @param fnFunction The function to call, when the event occurs. This function will be called on the  
+             * @param fnFunction The function to call, when the event occurs. This function will be called on the
              *         oListener-instance (if present) or in a 'static way'.
              * @param oListener Object on which to call the given function. If empty, the global context (window)
              * is used.
@@ -16456,7 +16458,7 @@ declare namespace sap {
              * @param iStartIndex the start index of the requested contexts
              * @param iLength the requested amount of contexts. If none given, the default value is the size limit
              * of the underlying												 sap.ui.model.odata.v2.ODataModel instance.
-             * @param iThreshold the number of entities which should be retrieved in addition to the given length.	
+             * @param iThreshold the number of entities which should be retrieved in addition to the given length.
              * 		  A higher threshold reduces the number of backend requests, yet these request blow up in size,
              * since more data is loaded.
              * @returns an array containing the contexts for the entities returned by the backend, might be fewer
@@ -16530,7 +16532,7 @@ declare namespace sap {
              * successfully (loaded,) parsed and merged.The parameter <code>result</code> will be set on the event
              * argument and contains an array of Errors in the order in whichthe sources had been added.
              * @param oData The object, that should be passed along with the event-object when firing the event.
-             * @param fnFunction The event callback. This function will be called in the context of the oListener  
+             * @param fnFunction The event callback. This function will be called in the context of the oListener
              *     object if given as the next argument.
              * @param oListener Object to use as context of the callback. If empty, the global context is used.
              * @returns <code>this</code>-reference to allow method chaining
@@ -16541,11 +16543,11 @@ declare namespace sap {
              * Attaches the given callback to the <code>error</code> event, which is fired whenever a source cannot
              * be loaded, parsed ormerged into the annotation data.The following parameters will be set on the
              * event object that is given to the callback function:  <code>source</code> - A map containing the
-             * properties <code>type</code> - containing either "url" or "xml" - and <code>data</code> containing  
+             * properties <code>type</code> - containing either "url" or "xml" - and <code>data</code> containing
              *           the data given as source, either an URL or an XML string depending on how the source was
              * added.  <code>error</code>  - An Error object describing the problem that occurred
              * @param oData The object, that should be passed along with the event-object when firing the event.
-             * @param fnFunction The event callback. This function will be called in the context of the oListener  
+             * @param fnFunction The event callback. This function will be called in the context of the oListener
              *     object if given as the next argument.
              * @param oListener Object to use as context of the callback. If empty, the global context is used.
              * @returns <code>this</code>-reference to allow method chaining
@@ -16558,7 +16560,7 @@ declare namespace sap {
              * <code>result</code> will be set on the event argument and contains an array of Errors in the order
              * in whichthe sources had been added.
              * @param oData The object, that should be passed along with the event-object when firing the event.
-             * @param fnFunction The event callback. This function will be called in the context of the oListener  
+             * @param fnFunction The event callback. This function will be called in the context of the oListener
              *     object if given as the next argument.
              * @param oListener Object to use as context of the callback. If empty, the global context is used.
              * @returns <code>this</code>-reference to allow method chaining
@@ -16571,7 +16573,7 @@ declare namespace sap {
              * <code>result</code> will be set on the event argument and contains an array of all loaded sources as
              * wellas Errors in the order in which they had been added.
              * @param oData The object, that should be passed along with the event-object when firing the event.
-             * @param fnFunction The event callback. This function will be called in the context of the oListener  
+             * @param fnFunction The event callback. This function will be called in the context of the oListener
              *     object if given as the next argument.
              * @param oListener Object to use as context of the callback. If empty, the global context is used.
              * @returns <code>this</code>-reference to allow method chaining
@@ -16585,7 +16587,7 @@ declare namespace sap {
              * on the event argument and contains an array of all loaded sources as wellas Errors in the order in
              * which they had been added.
              * @param oData The object, that should be passed along with the event-object when firing the event.
-             * @param fnFunction The event callback. This function will be called in the context of the oListener  
+             * @param fnFunction The event callback. This function will be called in the context of the oListener
              *     object if given as the next argument.
              * @param oListener Object to use as context of the callback. If empty, the global context is used.
              * @returns <code>this</code>-reference to allow method chaining
@@ -16600,7 +16602,7 @@ declare namespace sap {
              * <code>data</code> containing             the data given as source, either an URL or an XML string
              * depending on how the source was added.
              * @param oData The object, that should be passed along with the event-object when firing the event.
-             * @param fnFunction The event callback. This function will be called in the context of the oListener  
+             * @param fnFunction The event callback. This function will be called in the context of the oListener
              *     object if given as the next argument.
              * @param oListener Object to use as context of the callback. If empty, the global context is used.
              * @returns <code>this</code>-reference to allow method chaining.
@@ -16902,7 +16904,7 @@ declare namespace sap {
              * @param iValue the value in model representation to be formatted
              * @param sTargetType the target type; may be "any", "int", "float" or "string".  See {@link
              * sap.ui.model.odata.type} for more information.
-             * @returns the formatted output value in the target type; <code>undefined</code> or <code>null</code> 
+             * @returns the formatted output value in the target type; <code>undefined</code> or <code>null</code>
              * are formatted to <code>null</code>
             */
             formatValue(iValue: number, sTargetType: string): number | string;
@@ -16916,7 +16918,7 @@ declare namespace sap {
             /**
              * Parses the given value, which is expected to be of the given source type, to an Int innumber
              * representation.
-             * @param vValue the value to be parsed. The empty string and <code>null</code> are parsed to 
+             * @param vValue the value to be parsed. The empty string and <code>null</code> are parsed to
              * <code>null</code>.
              * @param sSourceType the source type (the expected type of <code>vValue</code>); may be "float", "int"
              * or  "string".  See {@link sap.ui.model.odata.type} for more information.
@@ -16995,7 +16997,7 @@ declare namespace sap {
              * @param sValue the value to be formatted
              * @param sTargetType the target type; may be "any" or "string".  See {@link sap.ui.model.odata.type}
              * for more information.
-             * @returns the formatted output value in the target type; <code>undefined</code> or <code>null</code> 
+             * @returns the formatted output value in the target type; <code>undefined</code> or <code>null</code>
              * are formatted to <code>null</code>
             */
             formatValue(sValue: string, sTargetType: string): string;
@@ -17054,7 +17056,7 @@ declare namespace sap {
              * @param oValue the value in model representation to be formatted.
              * @param sTargetType the target type; may be "any" or "string".  See {@link sap.ui.model.odata.type}
              * for more information.
-             * @returns the formatted output value in the target type; <code>undefined</code> or <code>null</code> 
+             * @returns the formatted output value in the target type; <code>undefined</code> or <code>null</code>
              * are formatted to <code>null</code>
             */
             formatValue(oValue: any, sTargetType: string): string;
@@ -17074,7 +17076,7 @@ declare namespace sap {
             /**
              * Parses the given value, which is expected to be of the given type, to a time object.
              * @param sValue the value to be parsed, maps <code>""</code> to <code>null</code>
-             * @param sSourceType the source type (the expected type of <code>sValue</code>); must be "string". 
+             * @param sSourceType the source type (the expected type of <code>sValue</code>); must be "string".
              * See {@link sap.ui.model.odata.type} for more information.
              * @returns the parsed value as described in {@link #formatValue formatValue}
             */
@@ -17113,7 +17115,7 @@ declare namespace sap {
              * @param sValue the value to be formatted
              * @param sTargetType the target type; may be "any" or "string".  See {@link sap.ui.model.odata.type}
              * for more information.
-             * @returns the formatted output value in the target type; <code>undefined</code> or <code>null</code> 
+             * @returns the formatted output value in the target type; <code>undefined</code> or <code>null</code>
              * are formatted to <code>null</code>
             */
             formatValue(sValue: string, sTargetType: string): string;
@@ -17133,7 +17135,7 @@ declare namespace sap {
             /**
              * Parses the given value to a GUID.
              * @param sValue the value to be parsed, maps <code>""</code> to <code>null</code>
-             * @param sSourceType the source type (the expected type of <code>sValue</code>); must be "string". 
+             * @param sSourceType the source type (the expected type of <code>sValue</code>); must be "string".
              * See {@link sap.ui.model.odata.type} for more information.
              * @returns the parsed value
             */
@@ -17212,7 +17214,7 @@ declare namespace sap {
              * @param sValue the value to be formatted, which is represented as a string in the model
              * @param sTargetType the target type; may be "any", "float", "int" or "string".  See {@link
              * sap.ui.model.odata.type} for more information.
-             * @returns the formatted output value in the target type; <code>undefined</code> or <code>null</code> 
+             * @returns the formatted output value in the target type; <code>undefined</code> or <code>null</code>
              * are formatted to <code>null</code>
             */
             formatValue(sValue: string, sTargetType: string): number | string;
@@ -17232,7 +17234,7 @@ declare namespace sap {
             /**
              * Parses the given value, which is expected to be of the given type, to an Int64 in<code>string</code>
              * representation.
-             * @param vValue the value to be parsed; the empty string and <code>null</code> are parsed to 
+             * @param vValue the value to be parsed; the empty string and <code>null</code> are parsed to
              * <code>null</code>
              * @param sSourceType the source type (the expected type of <code>vValue</code>); may be "float", "int"
              * or  "string".  See {@link sap.ui.model.odata.type} for more information.
@@ -17356,7 +17358,7 @@ declare namespace sap {
              * @param vValue the value to be formatted, which is represented as a number in the model
              * @param sTargetType the target type; may be "any", "float", "int", "string".  See {@link
              * sap.ui.model.odata.type} for more information.
-             * @returns the formatted output value in the target type; <code>undefined</code> or <code>null</code> 
+             * @returns the formatted output value in the target type; <code>undefined</code> or <code>null</code>
              * are formatted to <code>null</code>
             */
             formatValue(vValue: number | string, sTargetType: string): number | string;
@@ -17377,7 +17379,7 @@ declare namespace sap {
              * Parses the given value, which is expected to be of the given type, to an Edm.Double
              * in<code>number</code> representation.
              * @since 1.29.0
-             * @param vValue the value to be parsed; the empty string and <code>null</code> are parsed to 
+             * @param vValue the value to be parsed; the empty string and <code>null</code> are parsed to
              * <code>null</code>; note that there is no way to enter <code>Infinity</code> or  <code>NaN</code>
              * values
              * @param sSourceType the source type (the expected type of <code>vValue</code>); may be "float", "int"
@@ -17420,7 +17422,7 @@ declare namespace sap {
              * @param vValue the value to be formatted, which is represented as a number in the model
              * @param sTargetType the target type; may be "any", "float", "int", "string".  See {@link
              * sap.ui.model.odata.type} for more information.
-             * @returns the formatted output value in the target type; <code>undefined</code> or <code>null</code> 
+             * @returns the formatted output value in the target type; <code>undefined</code> or <code>null</code>
              * are formatted to <code>null</code>
             */
             formatValue(vValue: string | number, sTargetType: string): number | string;
@@ -17441,7 +17443,7 @@ declare namespace sap {
              * Parses the given value, which is expected to be of the given type, to an Edm.Single
              * in<code>number</code> representation.
              * @since 1.29.0
-             * @param vValue the value to be parsed; the empty string and <code>null</code> are parsed to 
+             * @param vValue the value to be parsed; the empty string and <code>null</code> are parsed to
              * <code>null</code>; note that there is no way to enter <code>Infinity</code> or  <code>NaN</code>
              * values
              * @param sSourceType the source type (the expected type of <code>vValue</code>); may be "float", "int"
@@ -17486,7 +17488,7 @@ declare namespace sap {
              * @param sValue the value to be formatted
              * @param sTargetType the target type; may be "any", "boolean", "float", "int" or "string".  See {@link
              * sap.ui.model.odata.type} for more information.
-             * @returns the formatted output value in the target type; <code>undefined</code> is always formatted 
+             * @returns the formatted output value in the target type; <code>undefined</code> is always formatted
              * to <code>null</code>; <code>null</code> is formatted to "" if the target type is "string".
             */
             formatValue(sValue: string, sTargetType: string): string | number | boolean;
@@ -17549,7 +17551,7 @@ declare namespace sap {
              * @param sTargetType the target type; may be "any", "boolean" or "string". If it is "string", the
              * result is  "Yes" or "No" in the current {@link sap.ui.core.Configuration#getLanguage language}.  See
              * {@link sap.ui.model.odata.type} for more information.
-             * @returns the formatted output value in the target type; <code>undefined</code> or <code>null</code> 
+             * @returns the formatted output value in the target type; <code>undefined</code> or <code>null</code>
              * are formatted to <code>null</code>
             */
             formatValue(bValue: boolean, sTargetType: string): boolean | string;
@@ -17568,7 +17570,7 @@ declare namespace sap {
 
             /**
              * Parses the given value from the given type to a boolean.
-             * @param vValue the value to be parsed; the empty string and <code>null</code> are parsed to 
+             * @param vValue the value to be parsed; the empty string and <code>null</code> are parsed to
              * <code>null</code>
              * @param sSourceType the source type (the expected type of <code>vValue</code>); may be "boolean" or
              * "string".  See {@link sap.ui.model.odata.type} for more information.
@@ -17612,7 +17614,7 @@ declare namespace sap {
              * @param sValue the value to be formatted, which is represented as a string in the model
              * @param sTargetType the target type; may be "any", "float", "int" or "string".  See {@link
              * sap.ui.model.odata.type} for more information.
-             * @returns the formatted output value in the target type; <code>undefined</code> or <code>null</code> 
+             * @returns the formatted output value in the target type; <code>undefined</code> or <code>null</code>
              * are formatted to <code>null</code>
             */
             formatValue(sValue: string, sTargetType: string): number | string;
@@ -17632,7 +17634,7 @@ declare namespace sap {
             /**
              * Parses the given value, which is expected to be of the given type, to a decimal
              * in<code>string</code> representation.
-             * @param vValue the value to be parsed; the empty string and <code>null</code> are parsed to 
+             * @param vValue the value to be parsed; the empty string and <code>null</code> are parsed to
              * <code>null</code>
              * @param sSourceType the source type (the expected type of <code>vValue</code>); may be "float", "int"
              * or  "string".  See {@link sap.ui.model.odata.type} for more information.
@@ -17684,7 +17686,7 @@ declare namespace sap {
             getName(): string;
           }
           /**
-           * This class represents the OData V4 primitive type {@link 
+           * This class represents the OData V4 primitive type {@link
            * s/complete/part3-csdl/odata-v4.0-errata02-os-part3-csdl-complete.html#_The_edm:Documentation_Element
            *  <code>Edm.TimeOfDay</code>}.  In {@link sap.ui.model.odata.v4.ODataModel} this type is represented
            * as a  <code>string</code>.
@@ -17710,7 +17712,7 @@ declare namespace sap {
              * @param sValue The value to be formatted, which is represented as a string in the model
              * @param sTargetType The target type, may be "any" or "string"; see {@link sap.ui.model.odata.type}
              * for more  information
-             * @returns The formatted output value in the target type; <code>undefined</code> or <code>null</code> 
+             * @returns The formatted output value in the target type; <code>undefined</code> or <code>null</code>
              * are formatted to <code>null</code>
             */
             formatValue(sValue: string, sTargetType: string): string;
@@ -17811,11 +17813,11 @@ declare namespace sap {
             /**
              * Formats the given value to the given target type.
              * @since 1.27.0
-             * @param oValue The value to be formatted, which is represented in the model as a <code>Date</code> 
+             * @param oValue The value to be formatted, which is represented in the model as a <code>Date</code>
              * instance (OData V2)
              * @param sTargetType The target type, may be "any" or "string"; see {@link sap.ui.model.odata.type}
              * for more  information
-             * @returns The formatted output value in the target type; <code>undefined</code> or <code>null</code> 
+             * @returns The formatted output value in the target type; <code>undefined</code> or <code>null</code>
              * are formatted to <code>null</code>
             */
             formatValue(oValue: Date, sTargetType: string): Date | string;
@@ -17829,7 +17831,7 @@ declare namespace sap {
             /**
              * Parses the given value to a <code>Date</code> instance (OData V2).
              * @since 1.27.0
-             * @param sValue The value to be parsed; the empty string and <code>null</code> are parsed to 
+             * @param sValue The value to be parsed; the empty string and <code>null</code> are parsed to
              * <code>null</code>
              * @param sSourceType The source type (the expected type of <code>sValue</code>), must be "string"; see
              *  {@link sap.ui.model.odata.type} for more information
@@ -17845,8 +17847,8 @@ declare namespace sap {
             validateValue(oValue: Date): void;
           }
           /**
-           * This class represents the OData primitive type <a 
-           * href="http://www.odata.org/documentation/odata-version-2-0/overview#AbstractTypeSystem"> 
+           * This class represents the OData primitive type <a
+           * href="http://www.odata.org/documentation/odata-version-2-0/overview#AbstractTypeSystem">
            * <code>Edm.DateTimeOffset</code></a>.  In {@link sap.ui.model.odata.v2.ODataModel} this type is
            * represented as a  <code>Date</code> instance in local time. In {@link
            * sap.ui.model.odata.v4.ODataModel} this  type is represented as a <code>string</code> like
@@ -17869,12 +17871,12 @@ declare namespace sap {
             /**
              * Formats the given value to the given target type.
              * @since 1.27.0
-             * @param vValue The value to be formatted, which is represented in the model as a <code>Date</code> 
+             * @param vValue The value to be formatted, which is represented in the model as a <code>Date</code>
              * instance (OData V2) or as a string like "2014-11-27T13:47:26Z" (OData V4); both  representations are
              * accepted independent of the model's OData version
              * @param sTargetType The target type, may be "any" or "string"; see {@link sap.ui.model.odata.type}
              * for more  information
-             * @returns The formatted output value in the target type; <code>undefined</code> or <code>null</code> 
+             * @returns The formatted output value in the target type; <code>undefined</code> or <code>null</code>
              * are formatted to <code>null</code>
             */
             formatValue(vValue: Date | string, sTargetType: string): Date | string;
@@ -17889,7 +17891,7 @@ declare namespace sap {
              * Parses the given value to a <code>Date</code> instance (OData V2) or a string
              * like"2014-11-27T13:47:26Z" (OData V4), depending on the model's OData version.
              * @since 1.27.0
-             * @param sValue The value to be parsed; the empty string and <code>null</code> are parsed to 
+             * @param sValue The value to be parsed; the empty string and <code>null</code> are parsed to
              * <code>null</code>
              * @param sSourceType The source type (the expected type of <code>sValue</code>), must be "string"; see
              *  {@link sap.ui.model.odata.type} for more information
@@ -17957,7 +17959,7 @@ declare namespace sap {
            * @param bAsDecimal if <code>true</code>, the string values <code>vValue1</code> and
            * <code>vValue2</code> are  compared as a decimal number (only sign, integer and fraction digits; no
            * exponential  format). Otherwise they are recognized by looking at their types.
-           * @returns the result of the compare: <code>0</code> if the values are equal, <code>-1</code> if the 
+           * @returns the result of the compare: <code>0</code> if the values are equal, <code>-1</code> if the
            * first value is smaller, <code>1</code> if the first value is larger, <code>NaN</code> if  they
            * cannot be compared
           */
@@ -17977,7 +17979,7 @@ declare namespace sap {
            * Returns a comparator function optimized for the given EDM type.
            * @since 1.29.1
            * @param sEdmType the EDM type
-           * @returns the comparator function taking two values of the given type and returning <code>0</code> 
+           * @returns the comparator function taking two values of the given type and returning <code>0</code>
            * if the values are equal, <code>-1</code> if the first value is smaller, <code>1</code> if  the first
            * value is larger and <code>NaN</code> if they cannot be compared (e.g. one value  is
            * <code>null</code> or <code>undefined</code>)
@@ -18056,7 +18058,7 @@ declare namespace sap {
            * Creates a property setting (which is either a constant value or a binding infoobject) from the given
            * parts and from the optional root formatter function.Each part can have one of the following
            * types:<ul>  <li><code>boolean</code>, <code>number</code>, <code>undefined</code>: The part is  a
-           * constant value.  <li><code>string</code>: The part is a data binding expression with complex 
+           * constant value.  <li><code>string</code>: The part is a data binding expression with complex
            * binding syntax (for example, as created by {@link #.format format}) and is parsed  accordingly to
            * create either a constant value or a binding info object. Proper  backslash escaping must be used for
            * constant values with curly braces.  <li><code>object</code>: The part is a binding info object if it
@@ -18075,14 +18077,14 @@ declare namespace sap {
            * values}oSupplierContext =
            * oMetaModel.getMetaContext("/ProductSet('HT-1021')/ToSupplier");oValueContext =
            * oMetaModel.createBindingContext("com.sap.vocabularies.UI.v1.DataPoint/Value",
-           * oSupplierContext);vPropertySetting =  sap.ui.model.odata.AnnotationHelper.createPropertySetting([   
+           * oSupplierContext);vPropertySetting =  sap.ui.model.odata.AnnotationHelper.createPropertySetting([
            * sap.ui.model.odata.AnnotationHelper.format(oValueContext),    "{path : 'meta>Value', formatter :
            * 'sap.ui.model.odata.AnnotationHelper.simplePath'}",    "{:= 'Mr. ' + ${/FirstName} + ' ' +
            * ${/LastName}}",    "hello, world!",    42], myRootFormatter);oControl.applySettings({"someProperty"
            * : vPropertySetting});</pre>
            * @since 1.31.0
            * @param vParts array of parts
-           * @param fnRootFormatter root formatter function; default: <code>Array.prototype.join(., " ")</code> 
+           * @param fnRootFormatter root formatter function; default: <code>Array.prototype.join(., " ")</code>
            * in case of multiple parts, just like  {@link sap.ui.model.CompositeBinding#getExternalValue
            * getExternalValue}
            * @returns constant value or binding info object for a property as expected by  {@link
@@ -18093,16 +18095,16 @@ declare namespace sap {
           /**
            * A formatter function to be used in a complex binding inside an XML template viewin order to
            * interpret OData V4 annotations. It knows about<ul>  <li> the "14.4 Constant Expressions" for
-           * "edm:Bool", "edm:Date",  "edm:DateTimeOffset", "edm:Decimal", "edm:Float", "edm:Guid", "edm:Int", 
-           * "edm:TimeOfDay".  <li> the constant "14.4.11 Expression edm:String": This is turned into a fixed 
-           * text (e.g. <code>"Width"</code>) or into a data binding expression (e.g. <code> 
+           * "edm:Bool", "edm:Date",  "edm:DateTimeOffset", "edm:Decimal", "edm:Float", "edm:Guid", "edm:Int",
+           * "edm:TimeOfDay".  <li> the constant "14.4.11 Expression edm:String": This is turned into a fixed
+           * text (e.g. <code>"Width"</code>) or into a data binding expression (e.g. <code>
            * ervices/schema/0/entityType/1/com.sap.vocabularies.UI.v1.FieldGroup#Dimensions/Data/0/Label/String}"
            *  </code>). Data binding expressions are used in case XML template processing has  been started with
            * the setting <code>bindTexts : true</code>. The purpose is to  reference translatable texts from
            * OData V4 annotations, especially for XML  template processing at design time. Since 1.31.0, string
            * constants that contain a  simple binding <code>"{@i18n>...}"</code> to the hard-coded model name
-           * "@i18n"  with arbitrary path are not turned into a fixed text, but kept as a data binding 
-           * expression; this allows local annotation files to refer to a resource bundle for 
+           * "@i18n"  with arbitrary path are not turned into a fixed text, but kept as a data binding
+           * expression; this allows local annotation files to refer to a resource bundle for
            * internationalization.  <li> the dynamic "14.5.1 Comparison and Logical Operators": These are turned
            * into  expression bindings to perform the operations at run-time.  <li> the dynamic "14.5.3
            * Expression edm:Apply":  <ul>    <li> "14.5.3.1.1 Function odata.concat": This is turned into a data
@@ -18112,27 +18114,27 @@ declare namespace sap {
            * run-time.    <li> Apply functions may be nested arbitrarily.  </ul>  <li> the dynamic "14.5.6
            * Expression edm:If": This is turned into an expression  binding to be evaluated at run-time. The
            * expression is a conditional expression  like <code>"{=condition ? expression1 :
-           * expression2}"</code>.  <li> the dynamic "14.5.10 Expression edm:Null": This is turned into a 
+           * expression2}"</code>.  <li> the dynamic "14.5.10 Expression edm:Null": This is turned into a
            * <code>null</code> value. In <code>odata.concat</code> it is ignored.  <li> the dynamic "14.5.12
            * Expression edm:Path" and "14.5.13 Expression  edm:PropertyPath": This is turned into a data binding
-           * relative to an entity,  including type information and constraints as available from meta data, 
+           * relative to an entity,  including type information and constraints as available from meta data,
            * e.g. <code>"{path : 'Name', type : 'sap.ui.model.odata.type.String',  constraints :
            * {'maxLength':'255'}}"</code>.  Depending on the used type, some additional constraints of this type
-           * are set:  <ul>    <li>Edm.DateTime: The "displayFormat" constraint is set to the value of the   
+           * are set:  <ul>    <li>Edm.DateTime: The "displayFormat" constraint is set to the value of the
            * "sap:display-format" annotation of the referenced property.    <li>Edm.Decimal: The "precision" and
            * "scale" constraints are set to the values    of the corresponding attributes of the referenced
            * property.    <li>Edm.String: The "maxLength" constraint is set to the value of the    corresponding
            * attribute of the referenced property and the "isDigitSequence"    constraint is set to the value of
-           * the    "com.sap.vocabularies.Common.v1.IsDigitSequence" annotation of the referenced    property. 
+           * the    "com.sap.vocabularies.Common.v1.IsDigitSequence" annotation of the referenced    property.
            * </ul></ul>Unsupported or incorrect values are turned into a string nevertheless, but indicatedas
            * such. Proper escaping is used to make sure that data binding syntax is notcorrupted. An error
            * describing the problem is logged to the console in such a case.Example:<pre>&lt;Text text="{path:
            * 'meta>Value', formatter: 'sap.ui.model.odata.AnnotationHelper.format'}" /></pre>
            * @param oInterface the callback interface related to the current formatter call
-           * @param vRawValue the raw value from the meta model, which is embedded within an entity set or 
+           * @param vRawValue the raw value from the meta model, which is embedded within an entity set or
            * entity type:  <ul>  <li>if this function is used as formatter the value  is provided by the
-           * framework</li>  <li>if this function is called directly, provide the parameter only if it is 
-           * already calculated</li>  <li>if the parameter is omitted, it is calculated automatically through 
+           * framework</li>  <li>if this function is called directly, provide the parameter only if it is
+           * already calculated</li>  <li>if the parameter is omitted, it is calculated automatically through
            * <code>oInterface.getObject("")</code></li>  </ul>
            * @returns the resulting string value to write into the processed XML
           */
@@ -18146,16 +18148,16 @@ declare namespace sap {
            * edm:PropertyPath"</li></ul>It returns a binding expression for a navigation path in an OData model,
            * starting atan entity.Currently supports navigation properties. Term casts and annotations
            * ofnavigation properties terminate the navigation path.Examples:<pre>&lt;template:if test="{path:
-           * 'facet>Target', formatter: 'sap.ui.model.odata.AnnotationHelper.getNavigationPath'}">   
+           * 'facet>Target', formatter: 'sap.ui.model.odata.AnnotationHelper.getNavigationPath'}">
            * &lt;form:SimpleForm binding="{path: 'facet>Target', formatter:
            * 'sap.ui.model.odata.AnnotationHelper.getNavigationPath'}" />&lt;/template:if></pre>
            * @param oInterface the callback interface related to the current formatter call
-           * @param vRawValue the raw value from the meta model, e.g. <code>{AnnotationPath : 
+           * @param vRawValue the raw value from the meta model, e.g. <code>{AnnotationPath :
            * "ToSupplier/@com.sap.vocabularies.Communication.v1.Address"}</code> or <code>  {AnnotationPath :
            * "@com.sap.vocabularies.UI.v1.FieldGroup#Dimensions"}</code>;  embedded within an entity set or
            * entity type;  <ul>  <li>if this function is used as formatter the value  is provided by the
-           * framework</li>  <li>if this function is called directly, provide the parameter only if it is 
-           * already calculated</li>  <li>if the parameter is omitted, it is calculated automatically through 
+           * framework</li>  <li>if this function is called directly, provide the parameter only if it is
+           * already calculated</li>  <li>if the parameter is omitted, it is calculated automatically through
            * <code>oInterface.getObject("")</code></li>  </ul>
            * @returns the resulting string value to write into the processed XML, e.g. "{ToSupplier}"  or "{}"
            * (in case no navigation is needed); returns "" in case the navigation path  cannot be determined
@@ -18168,11 +18170,11 @@ declare namespace sap {
            * to the entity set with the given name or to the one determinedby the last navigation property.
            * Supports the following dynamic expressions:<ul><li>"14.5.2 Expression
            * edm:AnnotationPath"</li><li>"14.5.11 Expression edm:NavigationPropertyPath"</li><li>"14.5.12
-           * Expression edm:Path"</li><li>"14.5.13 Expression edm:PropertyPath"</li></ul>Example:<pre> 
+           * Expression edm:Path"</li><li>"14.5.13 Expression edm:PropertyPath"</li></ul>Example:<pre>
            * &lt;template:with path="facet>Target" helper="sap.ui.model.odata.AnnotationHelper.gotoEntitySet"
            * var="entitySet"/>  &lt;template:with path="associationSetEnd>entitySet"
            * helper="sap.ui.model.odata.AnnotationHelper.gotoEntitySet" var="entitySet"/></pre>
-           * @param oContext a context which must point to a simple string or to an annotation (or annotation 
+           * @param oContext a context which must point to a simple string or to an annotation (or annotation
            * property) of type <code>Edm.AnnotationPath</code>,  <code>Edm.NavigationPropertyPath</code>,
            * <code>Edm.Path</code>, or  <code>Edm.PropertyPath</code> embedded within an entity set or entity
            * type;  the context's model must be an {@link sap.ui.model.odata.ODataMetaModel}
@@ -18202,10 +18204,10 @@ declare namespace sap {
            * DataFieldForAction within anOData meta model;the helper function is then called on the "Action"
            * property of that data field(which holds an object with the qualified name of the function import in
            * the<code>String</code> property) and in turn the path of that function importis assigned to the
-           * variable "function".<pre>  &lt;template:with path="dataField>Action" 
+           * variable "function".<pre>  &lt;template:with path="dataField>Action"
            * helper="sap.ui.model.odata.AnnotationHelper.gotoFunctionImport" var="function"></pre>
            * @since 1.29.1
-           * @param oContext a context which must point to an object with a <code>String</code> property, which 
+           * @param oContext a context which must point to an object with a <code>String</code> property, which
            * holds the qualified name of the function import;  the context's model must be an {@link
            * sap.ui.model.odata.ODataMetaModel}
            * @returns the path to the function import with the given qualified name,  or <code>undefined</code>
@@ -18225,12 +18227,12 @@ declare namespace sap {
            * path.Examples:<pre>&lt;template:if test="{path: 'facet>Target', formatter:
            * 'sap.ui.model.odata.AnnotationHelper.isMultiple'}"></pre>
            * @param oInterface the callback interface related to the current formatter call
-           * @param vRawValue the raw value from the meta model, e.g. <code>{AnnotationPath : 
+           * @param vRawValue the raw value from the meta model, e.g. <code>{AnnotationPath :
            * "ToSupplier/@com.sap.vocabularies.Communication.v1.Address"}</code> or <code>  {AnnotationPath :
            * "@com.sap.vocabularies.UI.v1.FieldGroup#Dimensions"}</code>;  embedded within an entity set or
            * entity type;  <ul>  <li>if this function is used as formatter the value  is provided by the
-           * framework</li>  <li>if this function is called directly, provide the parameter only if it is 
-           * already calculated</li>  <li>if the parameter is omitted, it is calculated automatically through 
+           * framework</li>  <li>if this function is called directly, provide the parameter only if it is
+           * already calculated</li>  <li>if the parameter is omitted, it is calculated automatically through
            * <code>oInterface.getObject("")</code></li>  </ul>
            * @returns <code>"true"</code> if the navigation path ends with an association end with   multiplicity
            * "*", <code>""</code> in case the navigation path cannot be   determined, <code>"false"</code>
@@ -18244,7 +18246,7 @@ declare namespace sap {
            * edm:Path" or"14.5.13 Expression edm:PropertyPath".Currently supports navigation properties and term
            * casts.Example:<pre>  &lt;template:with path="meta>Value"
            * helper="sap.ui.model.odata.AnnotationHelper.resolvePath" var="target"></pre>
-           * @param oContext a context which must point to an annotation or annotation property of type 
+           * @param oContext a context which must point to an annotation or annotation property of type
            * <code>Edm.AnnotationPath</code>, <code>Edm.NavigationPropertyPath</code>,  <code>Edm.Path</code> or
            * <code>Edm.PropertyPath</code>, embedded within an entity  set or entity type;  the context's model
            * must be an {@link sap.ui.model.odata.ODataMetaModel}
@@ -18262,10 +18264,10 @@ declare namespace sap {
            * binding is required toallow for proper escaping of the path.Example:<pre>  &lt;sfi:SmartField
            * value="{path: 'meta>Value', formatter: 'sap.ui.model.odata.AnnotationHelper.simplePath'}"/></pre>
            * @param oInterface the callback interface related to the current formatter call
-           * @param vRawValue the raw value from the meta model, which is embedded within an entity set or 
+           * @param vRawValue the raw value from the meta model, which is embedded within an entity set or
            * entity type:  <ul>  <li>if this function is used as formatter the value  is provided by the
-           * framework</li>  <li>if this function is called directly, provide the parameter only if it is 
-           * already calculated</li>  <li>if the parameter is omitted, it is calculated automatically through 
+           * framework</li>  <li>if this function is called directly, provide the parameter only if it is
+           * already calculated</li>  <li>if the parameter is omitted, it is calculated automatically through
            * <code>oInterface.getObject("")</code></li>  </ul>
            * @returns the resulting string value to write into the processed XML
           */
@@ -18326,7 +18328,7 @@ declare namespace sap {
            * by calling the getServiceMetadata() method.
            * @param vUrl Either one URL as string or an array or URL strings
            * @returns The Promise to load the given URL(s), resolved if all URLs have been loaded, rejected if at
-           * least one fails to load.					 If this promise resolves it returns the following parameters:					
+           * least one fails to load.					 If this promise resolves it returns the following parameters:
            * annotations: The annotation object					 entitySets: An array of EntitySet objects containing the
            * newly merged EntitySets from a $metadata requests.								 the structure is the same as in the
            * metadata object reached by the getServiceMetadata() method.								 For non $metadata requests the
@@ -18368,7 +18370,7 @@ declare namespace sap {
            * Attach event-handler <code>fnFunction</code> to the 'annotationsFailed' event of this
            * <code>sap.ui.model.odata.ODataModel</code>.
            * @param oData The object, that should be passed along with the event-object when firing the event.
-           * @param fnFunction The function to call, when the event occurs. This function will be called on the  
+           * @param fnFunction The function to call, when the event occurs. This function will be called on the
            *         oListener-instance (if present) or in a 'static way'.
            * @param oListener Object on which to call the given function. If empty, the global context (window)
            * is used.
@@ -18380,7 +18382,7 @@ declare namespace sap {
            * Attach event-handler <code>fnFunction</code> to the 'annotationsLoaded' event of this
            * <code>sap.ui.model.odata.ODataModel</code>.
            * @param oData The object, that should be passed along with the event-object when firing the event.
-           * @param fnFunction The function to call, when the event occurs. This function will be called on the  
+           * @param fnFunction The function to call, when the event occurs. This function will be called on the
            *         oListener-instance (if present) or in a 'static way'.
            * @param oListener Object on which to call the given function. If empty, the global context (window)
            * is used.
@@ -18392,7 +18394,7 @@ declare namespace sap {
            * Attach event-handler <code>fnFunction</code> to the 'metadataFailed' event of this
            * <code>sap.ui.model.odata.ODataModel</code>.
            * @param oData The object, that should be passed along with the event-object when firing the event.
-           * @param fnFunction The function to call, when the event occurs. This function will be called on the  
+           * @param fnFunction The function to call, when the event occurs. This function will be called on the
            *         oListener-instance (if present) or in a 'static way'.
            * @param oListener Object on which to call the given function. If empty, the global context (window)
            * is used.
@@ -18404,7 +18406,7 @@ declare namespace sap {
            * Attach event-handler <code>fnFunction</code> to the 'metadataLoaded' event of this
            * <code>sap.ui.model.odata.ODataModel</code>.
            * @param oData The object, that should be passed along with the event-object when firing the event.
-           * @param fnFunction The function to call, when the event occurs. This function will be called on the  
+           * @param fnFunction The function to call, when the event occurs. This function will be called on the
            *         oListener-instance (if present) or in a 'static way'.
            * @param oListener Object on which to call the given function. If empty, the global context (window)
            * is used.
@@ -18788,7 +18790,7 @@ declare namespace sap {
            * returned.Note: No data will be stored in the model.
            * @param fnSuccess a callback function which is called when the batch request has           					 been
            * successfully sent. Note: There might have errors occured in the single batch operations. These
-           * errors can be accessed in the           aErrorResponses parameter in the callback handler.          
+           * errors can be accessed in the           aErrorResponses parameter in the callback handler.
            * The handler can have the           	                 following parameters: oData, oResponse and
            * aErrorResponses.
            * @param fnError a callback function which is called when the batch request failed. The handler can
@@ -18854,7 +18856,7 @@ declare namespace sap {
            * Attach event-handler <code>fnFunction</code> to the 'failed' event of this
            * <code>sap.ui.model.odata.ODataMetadata</code>.
            * @param oData The object, that should be passed along with the event-object when firing the event.
-           * @param fnFunction The function to call, when the event occurs. This function will be called on the  
+           * @param fnFunction The function to call, when the event occurs. This function will be called on the
            *         oListener-instance (if present) or in a 'static way'.
            * @param oListener Object on which to call the given function. If empty, the global context (window)
            * is used.
@@ -18866,7 +18868,7 @@ declare namespace sap {
            * Attach event-handler <code>fnFunction</code> to the 'loaded' event of this
            * <code>sap.ui.model.odata.ODataMetadata</code>.
            * @param oData The object, that should be passed along with the event-object when firing the event.
-           * @param fnFunction The function to call, when the event occurs. This function will be called on the  
+           * @param fnFunction The function to call, when the event occurs. This function will be called on the
            *         oListener-instance (if present) or in a 'static way'.
            * @param oListener Object on which to call the given function. If empty, the global context (window)
            * is used.
@@ -18959,7 +18961,7 @@ declare namespace sap {
          * namespace are lifted upfrom the <code>extensions</code> array and transformed from objects into
          * simple propertieswith an "sap:" prefix for their name. Note that this happens in addition, thus
          * thefollowing example shows both representations. This way, such annotations can be addressedvia a
-         * simple relative path instead of searching an array.<pre>		{			"name" : "BusinessPartnerID",		
+         * simple relative path instead of searching an array.<pre>		{			"name" : "BusinessPartnerID",
          * "extensions" : [{				"name" : "label",				"value" : "Bus. Part. ID",				"namespace" :
          * "http://www.sap.com/Protocols/SAPData"			}],			"sap:label" : "Bus. Part. ID"		}</pre>As of 1.29.0,
          * the corresponding vocabulary-based annotations for the following"<a
@@ -18984,8 +18986,8 @@ declare namespace sap {
          * "received", "sender" and "subject" (mapped to V4
          * annotation<code>com.sap.vocabularies.Communication.v1.Message</code>);</li><li>"completed", "due",
          * "percent-complete" and "priority" (mapped to V4
-         * annotation<code>com.sap.vocabularies.Communication.v1.Task</code>).</li></ul></ul>For example:<pre>	
-         * {			"name" : "BusinessPartnerID",			...			"sap:label" : "Bus. Part. ID",		
+         * annotation<code>com.sap.vocabularies.Communication.v1.Task</code>).</li></ul></ul>For example:<pre>
+         * {			"name" : "BusinessPartnerID",			...			"sap:label" : "Bus. Part. ID",
          * "com.sap.vocabularies.Common.v1.Label" : {				"String" : "Bus. Part. ID"			}		}</pre>This model is
          * read-only and thus only supports{@link sap.ui.model.BindingMode.OneTime OneTime} binding mode. No
          * events({@link sap.ui.model.Model#event:parseError parseError},{@link
@@ -19027,11 +19029,11 @@ declare namespace sap {
 
           /**
            * Returns the OData meta model context corresponding to the given OData model path.
-           * @param sPath an absolute path pointing to an entity or property, e.g. 
+           * @param sPath an absolute path pointing to an entity or property, e.g.
            * "/ProductSet(1)/ToSupplier/BusinessPartnerID"; this equals the  <a
            * href="http://www.odata.org/documentation/odata-version-2-0/uri-conventions#ResourcePath">  resource
            * path</a> component of a URI according to OData V2 URI conventions
-           * @returns the context for the corresponding meta data object, i.e. an entity type or its property, 
+           * @returns the context for the corresponding meta data object, i.e. an entity type or its property,
            * or <code>null</code> in case no path is given
           */
           getMetaContext(sPath: string): sap.ui.model.Context;
@@ -19065,7 +19067,7 @@ declare namespace sap {
            * indicated.
            * @param sQualifiedName a qualified name, e.g. "ACME.Address"
            * @param bAsPath determines whether the complex type is returned as a path or as an object
-           * @returns (the path to) the complex type with the given qualified name; <code>undefined</code> (for 
+           * @returns (the path to) the complex type with the given qualified name; <code>undefined</code> (for
            * a path) or <code>null</code> (for an object) if no such type is found
           */
           getODataComplexType(sQualifiedName: string, bAsPath?: boolean): any | string;
@@ -19073,7 +19075,7 @@ declare namespace sap {
           /**
            * Returns the OData default entity container.
            * @param bAsPath determines whether the entity container is returned as a path or as an object
-           * @returns (the path to) the default entity container; <code>undefined</code> (for a path) or 
+           * @returns (the path to) the default entity container; <code>undefined</code> (for a path) or
            * <code>null</code> (for an object) if no such container is found
           */
           getODataEntityContainer(bAsPath: boolean): any | string;
@@ -19082,7 +19084,7 @@ declare namespace sap {
            * Returns the OData entity set with the given simple name from the default entity container.
            * @param sName a simple name, e.g. "ProductSet"
            * @param bAsPath determines whether the entity set is returned as a path or as an object
-           * @returns (the path to) the entity set with the given simple name; <code>undefined</code> (for a 
+           * @returns (the path to) the entity set with the given simple name; <code>undefined</code> (for a
            * path) or <code>null</code> (for an object) if no such set is found
           */
           getODataEntitySet(sName: string, bAsPath?: boolean): any | string;
@@ -19092,7 +19094,7 @@ declare namespace sap {
            * indicated.
            * @param sQualifiedName a qualified name, e.g. "ACME.Product"
            * @param bAsPath determines whether the entity type is returned as a path or as an object
-           * @returns (the path to) the entity type with the given qualified name; <code>undefined</code> (for a 
+           * @returns (the path to) the entity type with the given qualified name; <code>undefined</code> (for a
            * path) or <code>null</code> (for an object) if no such type is found
           */
           getODataEntityType(sQualifiedName: string, bAsPath?: boolean): any | string;
@@ -19103,7 +19105,7 @@ declare namespace sap {
            * @since 1.29.0
            * @param sName a simple or qualified name, e.g. "Save" or "MyService.Entities/Save"
            * @param bAsPath determines whether the function import is returned as a path or as an object
-           * @returns (the path to) the function import with the given simple name; <code>undefined</code> (for 
+           * @returns (the path to) the function import with the given simple name; <code>undefined</code> (for
            * a path) or <code>null</code> (for an object) if no such function import is found
           */
           getODataFunctionImport(sName: string, bAsPath?: boolean): any | string;
@@ -19133,7 +19135,7 @@ declare namespace sap {
            * (e.g.  <code>["Address", "Street"]</code>) in order to drill-down into complex types;  <b>BEWARE</b>
            * that this array is modified by removing each part which is understood!
            * @param bAsPath determines whether the property is returned as a path or as an object
-           * @returns (the path to) the last OData property found; <code>undefined</code> (for a path) or 
+           * @returns (the path to) the last OData property found; <code>undefined</code> (for a path) or
            * <code>null</code> (for an object) if no property was found at all
           */
           getODataProperty(oType: any, vName: string | string[], bAsPath?: boolean): any | string;
@@ -19148,7 +19150,7 @@ declare namespace sap {
            * @since 1.29.1
            * @param oPropertyContext a model context for a structural property of an entity type or a complex
            * type, as  returned by {@link #getMetaContext getMetaContext}
-           * @returns a Promise that gets resolved as soon as the value lists as well as the required model 
+           * @returns a Promise that gets resolved as soon as the value lists as well as the required model
            * elements have been loaded
           */
           getODataValueLists(oPropertyContext: sap.ui.model.Context): JQueryPromise<any>;
@@ -19265,7 +19267,7 @@ declare namespace sap {
            * Attach event-handler <code>fnFunction</code> to the 'failed' event of this
            * <code>sap.ui.model.odata.ODataAnnotations</code>.
            * @param oData The object, that should be passed along with the event-object when firing the event.
-           * @param fnFunction The function to call, when the event occurs. This function will be called on the  
+           * @param fnFunction The function to call, when the event occurs. This function will be called on the
            *         oListener-instance (if present) or in a 'static way'.
            * @param oListener Object on which to call the given function. If empty, the global context (window)
            * is used.
@@ -19277,7 +19279,7 @@ declare namespace sap {
            * Attach event-handler <code>fnFunction</code> to the 'loaded' event of this
            * <code>sap.ui.model.odata.ODataAnnotations</code>.
            * @param oData The object, that should be passed along with the event-object when firing the event.
-           * @param fnFunction The function to call, when the event occurs. This function will be called on the  
+           * @param fnFunction The function to call, when the event occurs. This function will be called on the
            *         oListener-instance (if present) or in a 'static way'.
            * @param oListener Object on which to call the given function. If empty, the global context (window)
            * is used.
@@ -19647,12 +19649,12 @@ declare namespace sap {
 
             /**
              * Create a representation of the analytical semantics of OData service metadata
-             * @param oModelReference An instance of ReferenceByURI, ReferenceByModel or          
+             * @param oModelReference An instance of ReferenceByURI, ReferenceByModel or
              * ReferenceWithWorkaround for locating the OData service.
              * @param mParameter Additional parameters for controlling the model construction. Currently supported
              * are:           <li> sAnnotationJSONDoc - A JSON document providing extra annotations to the elements
              * of the                structure of the given service           </li>           <li> modelVersion -
-             * Parameter to define which ODataModel version should be used, in you use               
+             * Parameter to define which ODataModel version should be used, in you use
              * 'odata4analytics.Model.ReferenceByURI': 1 (default), 2                see also:
              * AnalyticalVersionInfo constants           </li>
             */
@@ -19864,7 +19866,7 @@ declare namespace sap {
             /**
              * Get all attributes of this dimension
              * @returns An object with individual JS properties for each         attribute of this dimension. The
-             * JS object properties all are         objects of type odata4analytics.DimensionAttribute. The        
+             * JS object properties all are         objects of type odata4analytics.DimensionAttribute. The
              * names of the JS object properties are given by the OData entity         type property names
              * representing the dimension attribute keys.
             */
@@ -19878,7 +19880,7 @@ declare namespace sap {
 
             /**
              * Get associated hierarchy
-             * @returns The hierarchy object or null if there is none. It can         be an instance of class      
+             * @returns The hierarchy object or null if there is none. It can         be an instance of class
              *   odata4analytics.RecursiveHierarchy (TODO later: or a         leveled hierarchy). Use methods
              * isLeveledHierarchy and         isRecursiveHierarchy to determine object type.
             */
@@ -19968,7 +19970,7 @@ declare namespace sap {
             /**
              * Get names of properties in this entity set that can be updated
              * @returns An object with individual JS properties for each         updatable property. For testing
-             * whether propertyName is the name         of an updatable property, use        
+             * whether propertyName is the name         of an updatable property, use
              * <code>getUpdatablePropertyNameSet()[propertyName]</code>. The         included JS object properties
              * are all set to true.
             */
@@ -20050,7 +20052,7 @@ declare namespace sap {
             /**
              * Get properties for which filter restrictions have been specified
              * @returns Object with (JavaScript) properties, one for each         (OData entity type) property. The
-             * property value is from         odata4analytics.EntityType.propertyFilterRestriction and        
+             * property value is from         odata4analytics.EntityType.propertyFilterRestriction and
              * indicates the filter restriction for this property.
             */
             getPropertiesWithFilterRestrictions(): any;
@@ -20149,7 +20151,7 @@ declare namespace sap {
              * Find measure by property name
              * @param sName Property name
              * @returns The measure object to which         the given property name is related, because the
-             * property holds         the raw measure value or its formatted value. If no such measure        
+             * property holds         the raw measure value or its formatted value. If no such measure
              * exists, null is returned.
             */
             findMeasureByPropertyName(sName: string): sap.ui.model.analytics.odata4analytics.Measure;
@@ -20163,7 +20165,7 @@ declare namespace sap {
             /**
              * Get all dimensions included in this query result
              * @returns An object with individual JS properties for each         dimension included in the query
-             * result. The JS object properties         all are objects of type odata4analytics.Dimension. The     
+             * result. The JS object properties         all are objects of type odata4analytics.Dimension. The
              *    names of the JS object properties are given by the OData entity         type property names
              * representing the dimension keys.
             */
@@ -20178,7 +20180,7 @@ declare namespace sap {
             /**
              * Get all measures included in this query result
              * @returns An object with individual JS properties for each         measure included in the query
-             * result. The JS object properties         all are objects of type odata4analytics.Measure. The       
+             * result. The JS object properties         all are objects of type odata4analytics.Measure. The
              *  names of the JS object properties are given by the OData entity         type property names
              * representing the measure raw values.
             */
@@ -20211,7 +20213,7 @@ declare namespace sap {
 
             /**
              * Get the parameterization of this query result
-             * @returns The object for the         parameterization or null if the query result is not        
+             * @returns The object for the         parameterization or null if the query result is not
              * parameterized
             */
             getParameterization(): sap.ui.model.analytics.odata4analytics.Parameterization;
@@ -20409,7 +20411,7 @@ declare namespace sap {
             /**
              * Get all parameters included in this parameterization
              * @returns An object with individual JS properties for each         parameter included in the query
-             * result. The JS object properties         all are objects of type odata4analytics.Parameter. The     
+             * result. The JS object properties         all are objects of type odata4analytics.Parameter. The
              *    names of the JS object properties are given by the OData entity         type property names
              * representing the parameter keys.
             */
@@ -20519,7 +20521,7 @@ declare namespace sap {
 
             /**
              * Add one or more dimensions to the aggregation level
-             * @param aDimensionName Array of dimension names to be added to the already defined          
+             * @param aDimensionName Array of dimension names to be added to the already defined
              * aggregation level.
             */
             addToAggregationLevel(aDimensionName: any): void;
@@ -20532,7 +20534,7 @@ declare namespace sap {
 
             /**
              * Get details about a dimensions included in the aggregation level
-             * @param sDImensionName Name of a dimension included in the aggregation level of this          
+             * @param sDImensionName Name of a dimension included in the aggregation level of this
              * request, for which details shall be returned
              * @returns An object with three properties named key and text,         both with Boolean values
              * indicating whether the key and text of         this dimension are included in this request. The
@@ -20625,9 +20627,9 @@ declare namespace sap {
              * the currently set measures.
              * @param sMeasureName Name of the measure for which the settings get applied.           Specify null
              * to apply the settings to all currently set           measures.
-             * @param bIncludeRawValue Indicator whether or not to include the raw value in the query          
+             * @param bIncludeRawValue Indicator whether or not to include the raw value in the query
              * result. Pass null to keep current setting.
-             * @param bIncludeFormattedValue Indicator whether or not to include the formatted value (if          
+             * @param bIncludeFormattedValue Indicator whether or not to include the formatted value (if
              * available) in the query result. Pass null to keep current           setting.
              * @param bIncludeUnit Indicator whether or not to include the unit (if available) in           the
              * query result. Pass null to keep current setting.
@@ -20671,7 +20673,7 @@ declare namespace sap {
              * Set the parameterization request required for interactions with the queryresult of parameterized
              * queries. This method provides an alternative wayto assign a parameterization request to a query
              * result request.
-             * @param oParameterizationRequest Request object for interactions with the parameterization of        
+             * @param oParameterizationRequest Request object for interactions with the parameterization of
              *   this query
             */
             setParameterizationRequest(oParameterizationRequest: any): void;
@@ -20679,14 +20681,14 @@ declare namespace sap {
             /**
              * Set further options to be applied for the OData request to fetch thequery result
              * @param bIncludeEntityKey Indicates whether or not the entity key           should be returned for
-             * every entry in the query result.           Default is not to include it. Pass null to keep current  
+             * every entry in the query result.           Default is not to include it. Pass null to keep current
              *         setting.
              * @param bIncludeCount Indicates whether or not the result shall           include a count for the
              * returned entities. Default is not to           include it. Pass null to keep current setting.
              * @param bReturnNoEntities Indicates whether or not the result shall           be empty. This will
              * translate to $top=0 in the OData request and override           any setting done with
              * setResultPageBoundaries. The default is not to           suppress entities in the result. Pass null
-             * to keep current setting.           The main use case for this option is to create a request         
+             * to keep current setting.           The main use case for this option is to create a request
              *  with $inlinecount returning an entity count.
             */
             setRequestOptions(bIncludeEntityKey: Boolean, bIncludeCount: Boolean, bReturnNoEntities: Boolean): void;
@@ -20894,7 +20896,7 @@ declare namespace sap {
              * @param oDimension Description of a dimension
              * @param oParameterizationRequest (optional) Request object for           interactions with the
              * parameterization of the query result or (not           yet supported) master data entity set Such an
-             * object is required           if the entity set holding the dimension members includes          
+             * object is required           if the entity set holding the dimension members includes
              * parameters.
              * @param bUseMasterData (optional) Indicates use of master data for           determining the
              * dimension members.
@@ -20959,7 +20961,7 @@ declare namespace sap {
             /**
              * Set the parameterization request required for retrieving dimensionmembers directly from the query
              * result, if it is parameterized.
-             * @param oParameterizationRequest Request object for interactions with the parameterization of        
+             * @param oParameterizationRequest Request object for interactions with the parameterization of
              *   this query result
             */
             setParameterizationRequest(oParameterizationRequest: any): void;
@@ -21553,7 +21555,7 @@ declare namespace sap {
          * Attach event-handler <code>fnFunction</code> to the 'parseError' event of this
          * <code>sap.ui.model.Model</code>.<br/>
          * @param oData The object, that should be passed along with the event-object when firing the event.
-         * @param fnFunction The function to call, when the event occurs. This function will be called on the  
+         * @param fnFunction The function to call, when the event occurs. This function will be called on the
          *         oListener-instance (if present) or in a 'static way'.
          * @param oListener Object on which to call the given function. If empty, the global context (window)
          * is used.
@@ -21565,7 +21567,7 @@ declare namespace sap {
          * Attach event-handler <code>fnFunction</code> to the 'propertyChange' event of this
          * <code>sap.ui.model.Model</code>.
          * @param oData The object, that should be passed along with the event-object when firing the event.
-         * @param fnFunction The function to call, when the event occurs. This function will be called on the  
+         * @param fnFunction The function to call, when the event occurs. This function will be called on the
          *         oListener-instance (if present) or in a 'static way'.
          * @param oListener Object on which to call the given function. If empty, the global context (window)
          * is used.
@@ -21577,7 +21579,7 @@ declare namespace sap {
          * Attach event-handler <code>fnFunction</code> to the 'requestCompleted' event of this
          * <code>sap.ui.model.Model</code>.
          * @param oData The object, that should be passed along with the event-object when firing the event.
-         * @param fnFunction The function to call, when the event occurs. This function will be called on the  
+         * @param fnFunction The function to call, when the event occurs. This function will be called on the
          *         oListener-instance (if present) or in a 'static way'.
          * @param oListener Object on which to call the given function. If empty, the global context (window)
          * is used.
@@ -21589,7 +21591,7 @@ declare namespace sap {
          * Attach event-handler <code>fnFunction</code> to the 'requestFailed' event of this
          * <code>sap.ui.model.Model</code>.<br/>
          * @param oData The object, that should be passed along with the event-object when firing the event.
-         * @param fnFunction The function to call, when the event occurs. This function will be called on the  
+         * @param fnFunction The function to call, when the event occurs. This function will be called on the
          *         oListener-instance (if present) or in a 'static way'.
          * @param oListener Object on which to call the given function. If empty, this Model is used.
          * @returns <code>this</code> to allow method chaining
@@ -21600,7 +21602,7 @@ declare namespace sap {
          * Attach event-handler <code>fnFunction</code> to the 'requestSent' event of this
          * <code>sap.ui.model.Model</code>.
          * @param oData The object, that should be passed along with the event-object when firing the event.
-         * @param fnFunction The function to call, when the event occurs. This function will be called on the  
+         * @param fnFunction The function to call, when the event occurs. This function will be called on the
          *         oListener-instance (if present) or in a 'static way'.
          * @param oListener Object on which to call the given function. If empty, the global context (window)
          * is used.
@@ -21652,7 +21654,7 @@ declare namespace sap {
          * @param oContext the context which should be used to create the new binding context
          * @param mParameters the parameters used to create the new binding context
          * @param fnCallBack the function which should be called after the binding context has been created
-         * @param bReload force reload even if data is already available. For server side models this should   
+         * @param bReload force reload even if data is already available. For server side models this should
          *               refetch the data from the server
          * @returns the binding context, if it could be created synchronously
         */
@@ -21901,12 +21903,12 @@ declare namespace sap {
          * @param sPath the binding path used for sorting
          * @param bDescending whether the sort order should be descending
          * @param vGroup configure grouping of the content, can either be true to enable grouping       based
-         * on the raw model property value, or a function which calculates the group value out of the      
-         * context (e.g. oContext.getProperty("date").getYear() for year grouping). The control needs to      
-         * implement the grouping behaviour for the aggregation which you want to group. In case a function    
-         *   is provided it must either return a primitive type value as the group key or an object containing 
+         * on the raw model property value, or a function which calculates the group value out of the
+         * context (e.g. oContext.getProperty("date").getYear() for year grouping). The control needs to
+         * implement the grouping behaviour for the aggregation which you want to group. In case a function
+         *   is provided it must either return a primitive type value as the group key or an object containing
          *      a "key" property an may contain additional properties needed for group visualization.
-         * @param fnComparator a custom comparator function, which is used for clientside sorting instead      
+         * @param fnComparator a custom comparator function, which is used for clientside sorting instead
          * of the default comparator method.
         */
         constructor(sPath: String, bDescending?: boolean, vGroup?: boolean | any, fnComparator?: any);
@@ -22190,7 +22192,6 @@ declare namespace sap {
          * @returns the context object
         */
         getObject(sPath: String, mParameters?: any): any;
-
         /**
          * Getter for path of the context itself or a subpath
          * @param sPath the binding path
@@ -22235,17 +22236,17 @@ declare namespace sap {
        * aMessages = oDataState.getChanges().messages;       if (aMessages) {           for (var i = 0; i
        * &lt; aMessages.length; i++) {               console.log(aMessages.message);           }       }    }
        *    //sample implementation to handle laundering state    myControl.prototype.refreshDataState =
-       * function(oDataState) {       var bLaundering = oDataState.getChanges().laundering || false;      
-       * this.setBusy(bLaundering);    }    //sample implementation to handle dirty state   
+       * function(oDataState) {       var bLaundering = oDataState.getChanges().laundering || false;
+       * this.setBusy(bLaundering);    }    //sample implementation to handle dirty state
        * myControl.prototype.refreshDataState = function(oDataState) {       if (oDataState.isDirty())
        * console.log("Control " + this.getId() + " is now dirty");    }</pre>Using the {@link #getProperty
-       * getProperty} method the control can read the properties of the data state. The properties are<ul>   
-       * <li><code>value</code> The value formatted by the formatter of the binding   
+       * getProperty} method the control can read the properties of the data state. The properties are<ul>
+       * <li><code>value</code> The value formatted by the formatter of the binding
        * <li><code>originalValue</code> The original value of the model formatted by the formatter of the
        * binding    <li><code>invalidValue</code> The control value that was tried to be applied to the model
        * but was rejected by a type validation    <li><code>modelMessages</code> The messages that were
-       * applied to the binding by the <code>sap.ui.model.MessageModel</code>   
-       * <li><code>controlMessages</code> The messages that were applied due to type validation errors   
+       * applied to the binding by the <code>sap.ui.model.MessageModel</code>
+       * <li><code>controlMessages</code> The messages that were applied due to type validation errors
        * <li><code>messages</code> All messages of the data state     <li><code>dirty</code> true if the
        * value was not yet confirmed by the server</ul>
        * @resource sap/ui/model/DataState.js
@@ -22799,7 +22800,7 @@ declare namespace sap {
          * Attach event-handler <code>fnFunction</code> to the 'selectionChanged' event of this
          * <code>sap.ui.model.SelectionModel</code>.<br/>
          * @param oData The object, that should be passed along with the event-object when firing the event.
-         * @param fnFunction The function to call, when the event occurs. This function will be called on the  
+         * @param fnFunction The function to call, when the event occurs. This function will be called on the
          *         oListener-instance (if present) or in a 'static way'.
          * @param oListener Object on which to call the given function. If empty, this Model is used.
          * @returns <code>this</code> to allow method chaining
@@ -23226,7 +23227,7 @@ declare namespace sap {
          * <code>sap.ui.model.SelectionModel</code>.<br/>Event is fired if the selection of tree nodes is
          * changed in any way.
          * @param oData The object, that should be passed along with the event-object when firing the event.
-         * @param fnFunction The function to call, when the event occurs. This function will be called on the  
+         * @param fnFunction The function to call, when the event occurs. This function will be called on the
          *         oListener-instance (if present) or in a 'static way'.
          * @param oListener Object on which to call the given function. If empty, this Model is used.
          * @returns <code>this</code> to allow method chaining
@@ -23271,17 +23272,17 @@ declare namespace sap {
        * aMessages = oDataState.getChanges().messages;       if (aMessages) {           for (var i = 0; i
        * &lt; aMessages.length; i++) {               console.log(aMessages.message);           }       }    }
        *    //sample implementation to handle laundering state    myControl.prototype.refreshDataState =
-       * function(oDataState) {       var bLaundering = oDataState.getChanges().laundering || false;      
-       * this.setBusy(bLaundering);    }    //sample implementation to handle dirty state   
+       * function(oDataState) {       var bLaundering = oDataState.getChanges().laundering || false;
+       * this.setBusy(bLaundering);    }    //sample implementation to handle dirty state
        * myControl.prototype.refreshDataState = function(oDataState) {       if (oDataState.isDirty())
        * console.log("Control " + this.getId() + " is now dirty");    }</pre>Using the {@link #getProperty
-       * getProperty} method the control can read the properties of the data state. The properties are<ul>   
-       * <li><code>value</code> The value formatted by the formatter of the binding   
+       * getProperty} method the control can read the properties of the data state. The properties are<ul>
+       * <li><code>value</code> The value formatted by the formatter of the binding
        * <li><code>originalValue</code> The original value of the model formatted by the formatter of the
        * binding    <li><code>invalidValue</code> The control value that was tried to be applied to the model
        * but was rejected by a type validation    <li><code>modelMessages</code> The messages that were
-       * applied to the binding by the <code>sap.ui.model.MessageModel</code>   
-       * <li><code>controlMessages</code> The messages that were applied due to type validation errors   
+       * applied to the binding by the <code>sap.ui.model.MessageModel</code>
+       * <li><code>controlMessages</code> The messages that were applied due to type validation errors
        * <li><code>messages</code> All messages of the data state     <li><code>dirty</code> true if the
        * value was not yet confirmed by the server</ul>
        * @resource sap/ui/model/CompositeDataState.js
@@ -23529,8 +23530,8 @@ declare namespace sap {
          * @param oListener The object that wants to be notified when the event occurs (<code>this</code>
          * context within the                       handler function). If it is not specified, the handler
          * function is called in the context of the <code>window</code>.
-         * @param sName The name of the range set to listen to. The range set must be initialized beforehand   
-         *              ({@link sap.ui.Device.media.html#initRangeSet}). If no name is provided, the           
+         * @param sName The name of the range set to listen to. The range set must be initialized beforehand
+         *              ({@link sap.ui.Device.media.html#initRangeSet}). If no name is provided, the
          *      {@link sap.ui.Device.media.RANGESETS.SAP_STANDARD default range set} is used.
         */
         function attachHandler(fnFunction: any, oListener: any, sName: String): void;
@@ -23540,7 +23541,7 @@ declare namespace sap {
          * parameters must match those used for registration with {@link #attachHandler} beforehand.
          * @param fnFunction The handler function to detach from the event
          * @param oListener The object that wanted to be notified when the event occurred
-         * @param sName The name of the range set to listen to. If no name is provided, the                 
+         * @param sName The name of the range set to listen to. If no name is provided, the
          * {@link sap.ui.Device.media.RANGESETS.SAP_STANDARD default range set} is used.
         */
         function detachHandler(fnFunction: any, oListener: any, sName: String): void;
@@ -23580,13 +23581,13 @@ declare namespace sap {
          * sap.ui.Device.media.RANGESETS predefined} or custom one.                  The name must be a valid
          * id and consist only of letters and numeric digits.
          * @param aRangeBorders The range borders
-         * @param sUnit The unit which should be used for the values given in <code>aRangeBorders</code>.      
+         * @param sUnit The unit which should be used for the values given in <code>aRangeBorders</code>.
          *              The allowed values are <code>"px"</code> (default), <code>"em"</code> or
          * <code>"rem"</code>
          * @param aRangeNames The names of the ranges. The names must be a valid id and consist only of letters
          * and digits. If names            are specified, CSS classes are also added to the document root as
          * described above. This behavior can be            switched off explicitly by using
-         * <code>bSuppressClasses</code>. <b>Note:</b> <code>aRangeBorders</code> with <code>n</code> entries  
+         * <code>bSuppressClasses</code>. <b>Note:</b> <code>aRangeBorders</code> with <code>n</code> entries
          *          define <code>n+1</code> ranges. Therefore <code>n+1</code> names must be provided.
          * @param bSuppressClasses Whether or not writing of CSS classes to the document root should be
          * suppressed when            <code>aRangeNames</code> are provided
@@ -24088,9 +24089,9 @@ declare namespace sap {
           /**
            * Inserts a formContainer into the aggregation <code>formContainers</code>.
            * @param oFormContainer the formContainer to insert; if empty, nothing is inserted
-           * @param iIndex the <code>0</code>-based index the formContainer should be inserted at; for           
-           *  a negative value of <code>iIndex</code>, the formContainer is inserted at position 0; for a value  
-           *           greater than the current size of the aggregation, the formContainer is inserted at        
+           * @param iIndex the <code>0</code>-based index the formContainer should be inserted at; for
+           *  a negative value of <code>iIndex</code>, the formContainer is inserted at position 0; for a value
+           *           greater than the current size of the aggregation, the formContainer is inserted at
            *     the last position
            * @returns Reference to <code>this</code> in order to allow method chaining
           */
@@ -24526,7 +24527,7 @@ declare namespace sap {
            * Inserts a content into the aggregation <code>content</code>.
            * @param oContent the content to insert; if empty, nothing is inserted
            * @param iIndex the <code>0</code>-based index the content should be inserted at; for             a
-           * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value           
+           * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value
            *  greater than the current size of the aggregation, the content is inserted at             the last
            * position
            * @returns Reference to <code>this</code> in order to allow method chaining
@@ -25056,7 +25057,7 @@ declare namespace sap {
            * Inserts a field into the aggregation <code>fields</code>.
            * @param oField the field to insert; if empty, nothing is inserted
            * @param iIndex the <code>0</code>-based index the field should be inserted at; for             a
-           * negative value of <code>iIndex</code>, the field is inserted at position 0; for a value            
+           * negative value of <code>iIndex</code>, the field is inserted at position 0; for a value
            * greater than the current size of the aggregation, the field is inserted at             the last
            * position
            * @returns Reference to <code>this</code> in order to allow method chaining
@@ -25220,9 +25221,9 @@ declare namespace sap {
           /**
            * Inserts a formElement into the aggregation <code>formElements</code>.
            * @param oFormElement the formElement to insert; if empty, nothing is inserted
-           * @param iIndex the <code>0</code>-based index the formElement should be inserted at; for            
-           * a negative value of <code>iIndex</code>, the formElement is inserted at position 0; for a value     
-           *        greater than the current size of the aggregation, the formElement is inserted at            
+           * @param iIndex the <code>0</code>-based index the formElement should be inserted at; for
+           * a negative value of <code>iIndex</code>, the formElement is inserted at position 0; for a value
+           *        greater than the current size of the aggregation, the formElement is inserted at
            * the last position
            * @returns Reference to <code>this</code> in order to allow method chaining
           */
@@ -25969,7 +25970,7 @@ declare namespace sap {
          * Inserts a content into the aggregation <code>content</code>.
          * @param oContent the content to insert; if empty, nothing is inserted
          * @param iIndex the <code>0</code>-based index the content should be inserted at; for             a
-         * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value           
+         * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value
          *  greater than the current size of the aggregation, the content is inserted at             the last
          * position
          * @returns Reference to <code>this</code> in order to allow method chaining
@@ -26175,7 +26176,7 @@ declare namespace sap {
          * Inserts a fixContent into the aggregation <code>fixContent</code>.
          * @param oFixContent the fixContent to insert; if empty, nothing is inserted
          * @param iIndex the <code>0</code>-based index the fixContent should be inserted at; for             a
-         * negative value of <code>iIndex</code>, the fixContent is inserted at position 0; for a value        
+         * negative value of <code>iIndex</code>, the fixContent is inserted at position 0; for a value
          *     greater than the current size of the aggregation, the fixContent is inserted at             the
          * last position
          * @returns Reference to <code>this</code> in order to allow method chaining
@@ -26968,9 +26969,9 @@ declare namespace sap {
         /**
          * Inserts a contentArea into the aggregation <code>contentAreas</code>.
          * @param oContentArea the contentArea to insert; if empty, nothing is inserted
-         * @param iIndex the <code>0</code>-based index the contentArea should be inserted at; for            
-         * a negative value of <code>iIndex</code>, the contentArea is inserted at position 0; for a value     
-         *        greater than the current size of the aggregation, the contentArea is inserted at            
+         * @param iIndex the <code>0</code>-based index the contentArea should be inserted at; for
+         * a negative value of <code>iIndex</code>, the contentArea is inserted at position 0; for a value
+         *        greater than the current size of the aggregation, the contentArea is inserted at
          * the last position
          * @returns Reference to <code>this</code> in order to allow method chaining
         */
@@ -27176,7 +27177,7 @@ declare namespace sap {
          * Inserts a content into the aggregation <code>content</code>.
          * @param oContent the content to insert; if empty, nothing is inserted
          * @param iIndex the <code>0</code>-based index the content should be inserted at; for             a
-         * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value           
+         * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value
          *  greater than the current size of the aggregation, the content is inserted at             the last
          * position
          * @returns Reference to <code>this</code> in order to allow method chaining
@@ -27271,7 +27272,7 @@ declare namespace sap {
          * Inserts a pane into the aggregation <code>panes</code>.
          * @param oPane the pane to insert; if empty, nothing is inserted
          * @param iIndex the <code>0</code>-based index the pane should be inserted at; for             a
-         * negative value of <code>iIndex</code>, the pane is inserted at position 0; for a value            
+         * negative value of <code>iIndex</code>, the pane is inserted at position 0; for a value
          * greater than the current size of the aggregation, the pane is inserted at             the last
          * position
          * @returns Reference to <code>this</code> in order to allow method chaining
@@ -27307,7 +27308,7 @@ declare namespace sap {
         setOrientation(sOrientation: sap.ui.core.Orientation): sap.ui.layout.PaneContainer;
       }
       /**
-       * The BlockLayoutRow is used as an aggregation to the BlockLayout. It aggregates Block Layout 
+       * The BlockLayoutRow is used as an aggregation to the BlockLayout. It aggregates Block Layout
        * cells.The BlockLayoutRow has 2 rendering modes - scrollable and non scrollable.
        * @resource sap/ui/layout/BlockLayoutRow.js
       */
@@ -27371,7 +27372,7 @@ declare namespace sap {
          * Inserts a content into the aggregation <code>content</code>.
          * @param oContent the content to insert; if empty, nothing is inserted
          * @param iIndex the <code>0</code>-based index the content should be inserted at; for             a
-         * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value           
+         * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value
          *  greater than the current size of the aggregation, the content is inserted at             the last
          * position
          * @returns Reference to <code>this</code> in order to allow method chaining
@@ -27477,7 +27478,7 @@ declare namespace sap {
          * Inserts a content into the aggregation <code>content</code>.
          * @param oContent the content to insert; if empty, nothing is inserted
          * @param iIndex the <code>0</code>-based index the content should be inserted at; for             a
-         * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value           
+         * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value
          *  greater than the current size of the aggregation, the content is inserted at             the last
          * position
          * @returns Reference to <code>this</code> in order to allow method chaining
@@ -27601,7 +27602,7 @@ declare namespace sap {
          * Inserts a content into the aggregation <code>content</code>.
          * @param oContent the content to insert; if empty, nothing is inserted
          * @param iIndex the <code>0</code>-based index the content should be inserted at; for             a
-         * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value           
+         * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value
          *  greater than the current size of the aggregation, the content is inserted at             the last
          * position
          * @returns Reference to <code>this</code> in order to allow method chaining
@@ -27718,7 +27719,7 @@ declare namespace sap {
          * Inserts a content into the aggregation <code>content</code>.
          * @param oContent the content to insert; if empty, nothing is inserted
          * @param iIndex the <code>0</code>-based index the content should be inserted at; for             a
-         * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value           
+         * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value
          *  greater than the current size of the aggregation, the content is inserted at             the last
          * position
          * @returns Reference to <code>this</code> in order to allow method chaining
@@ -27930,9 +27931,9 @@ declare namespace sap {
         /**
          * Inserts a mainContent into the aggregation <code>mainContent</code>.
          * @param oMainContent the mainContent to insert; if empty, nothing is inserted
-         * @param iIndex the <code>0</code>-based index the mainContent should be inserted at; for            
-         * a negative value of <code>iIndex</code>, the mainContent is inserted at position 0; for a value     
-         *        greater than the current size of the aggregation, the mainContent is inserted at            
+         * @param iIndex the <code>0</code>-based index the mainContent should be inserted at; for
+         * a negative value of <code>iIndex</code>, the mainContent is inserted at position 0; for a value
+         *        greater than the current size of the aggregation, the mainContent is inserted at
          * the last position
          * @returns Reference to <code>this</code> in order to allow method chaining
         */
@@ -27941,9 +27942,9 @@ declare namespace sap {
         /**
          * Inserts a sideContent into the aggregation <code>sideContent</code>.
          * @param oSideContent the sideContent to insert; if empty, nothing is inserted
-         * @param iIndex the <code>0</code>-based index the sideContent should be inserted at; for            
-         * a negative value of <code>iIndex</code>, the sideContent is inserted at position 0; for a value     
-         *        greater than the current size of the aggregation, the sideContent is inserted at            
+         * @param iIndex the <code>0</code>-based index the sideContent should be inserted at; for
+         * a negative value of <code>iIndex</code>, the sideContent is inserted at position 0; for a value
+         *        greater than the current size of the aggregation, the sideContent is inserted at
          * the last position
          * @returns Reference to <code>this</code> in order to allow method chaining
         */
@@ -28763,9 +28764,9 @@ declare namespace sap {
            * Inserts a disabledDate into the aggregation <code>disabledDates</code>.
            * @since 1.38.0
            * @param oDisabledDate the disabledDate to insert; if empty, nothing is inserted
-           * @param iIndex the <code>0</code>-based index the disabledDate should be inserted at; for            
-           * a negative value of <code>iIndex</code>, the disabledDate is inserted at position 0; for a value    
-           *         greater than the current size of the aggregation, the disabledDate is inserted at           
+           * @param iIndex the <code>0</code>-based index the disabledDate should be inserted at; for
+           * a negative value of <code>iIndex</code>, the disabledDate is inserted at position 0; for a value
+           *         greater than the current size of the aggregation, the disabledDate is inserted at
            *  the last position
            * @returns Reference to <code>this</code> in order to allow method chaining
           */
@@ -28774,9 +28775,9 @@ declare namespace sap {
           /**
            * Inserts a selectedDate into the aggregation <code>selectedDates</code>.
            * @param oSelectedDate the selectedDate to insert; if empty, nothing is inserted
-           * @param iIndex the <code>0</code>-based index the selectedDate should be inserted at; for            
-           * a negative value of <code>iIndex</code>, the selectedDate is inserted at position 0; for a value    
-           *         greater than the current size of the aggregation, the selectedDate is inserted at           
+           * @param iIndex the <code>0</code>-based index the selectedDate should be inserted at; for
+           * a negative value of <code>iIndex</code>, the selectedDate is inserted at position 0; for a value
+           *         greater than the current size of the aggregation, the selectedDate is inserted at
            *  the last position
            * @returns Reference to <code>this</code> in order to allow method chaining
           */
@@ -28785,9 +28786,9 @@ declare namespace sap {
           /**
            * Inserts a specialDate into the aggregation <code>specialDates</code>.
            * @param oSpecialDate the specialDate to insert; if empty, nothing is inserted
-           * @param iIndex the <code>0</code>-based index the specialDate should be inserted at; for            
-           * a negative value of <code>iIndex</code>, the specialDate is inserted at position 0; for a value     
-           *        greater than the current size of the aggregation, the specialDate is inserted at            
+           * @param iIndex the <code>0</code>-based index the specialDate should be inserted at; for
+           * a negative value of <code>iIndex</code>, the specialDate is inserted at position 0; for a value
+           *        greater than the current size of the aggregation, the specialDate is inserted at
            * the last position
            * @returns Reference to <code>this</code> in order to allow method chaining
           */
@@ -29617,9 +29618,9 @@ declare namespace sap {
           /**
            * Inserts a selectedDate into the aggregation <code>selectedDates</code>.
            * @param oSelectedDate the selectedDate to insert; if empty, nothing is inserted
-           * @param iIndex the <code>0</code>-based index the selectedDate should be inserted at; for            
-           * a negative value of <code>iIndex</code>, the selectedDate is inserted at position 0; for a value    
-           *         greater than the current size of the aggregation, the selectedDate is inserted at           
+           * @param iIndex the <code>0</code>-based index the selectedDate should be inserted at; for
+           * a negative value of <code>iIndex</code>, the selectedDate is inserted at position 0; for a value
+           *         greater than the current size of the aggregation, the selectedDate is inserted at
            *  the last position
            * @returns Reference to <code>this</code> in order to allow method chaining
           */
@@ -29628,9 +29629,9 @@ declare namespace sap {
           /**
            * Inserts a specialDate into the aggregation <code>specialDates</code>.
            * @param oSpecialDate the specialDate to insert; if empty, nothing is inserted
-           * @param iIndex the <code>0</code>-based index the specialDate should be inserted at; for            
-           * a negative value of <code>iIndex</code>, the specialDate is inserted at position 0; for a value     
-           *        greater than the current size of the aggregation, the specialDate is inserted at            
+           * @param iIndex the <code>0</code>-based index the specialDate should be inserted at; for
+           * a negative value of <code>iIndex</code>, the specialDate is inserted at position 0; for a value
+           *        greater than the current size of the aggregation, the specialDate is inserted at
            * the last position
            * @returns Reference to <code>this</code> in order to allow method chaining
           */
@@ -30104,9 +30105,9 @@ declare namespace sap {
           /**
            * Inserts a selectedDate into the aggregation <code>selectedDates</code>.
            * @param oSelectedDate the selectedDate to insert; if empty, nothing is inserted
-           * @param iIndex the <code>0</code>-based index the selectedDate should be inserted at; for            
-           * a negative value of <code>iIndex</code>, the selectedDate is inserted at position 0; for a value    
-           *         greater than the current size of the aggregation, the selectedDate is inserted at           
+           * @param iIndex the <code>0</code>-based index the selectedDate should be inserted at; for
+           * a negative value of <code>iIndex</code>, the selectedDate is inserted at position 0; for a value
+           *         greater than the current size of the aggregation, the selectedDate is inserted at
            *  the last position
            * @returns Reference to <code>this</code> in order to allow method chaining
           */
@@ -30115,9 +30116,9 @@ declare namespace sap {
           /**
            * Inserts a specialDate into the aggregation <code>specialDates</code>.
            * @param oSpecialDate the specialDate to insert; if empty, nothing is inserted
-           * @param iIndex the <code>0</code>-based index the specialDate should be inserted at; for            
-           * a negative value of <code>iIndex</code>, the specialDate is inserted at position 0; for a value     
-           *        greater than the current size of the aggregation, the specialDate is inserted at            
+           * @param iIndex the <code>0</code>-based index the specialDate should be inserted at; for
+           * a negative value of <code>iIndex</code>, the specialDate is inserted at position 0; for a value
+           *        greater than the current size of the aggregation, the specialDate is inserted at
            * the last position
            * @returns Reference to <code>this</code> in order to allow method chaining
           */
@@ -30775,7 +30776,7 @@ declare namespace sap {
          * Inserts a item into the aggregation <code>items</code>.
          * @param oItem the item to insert; if empty, nothing is inserted
          * @param iIndex the <code>0</code>-based index the item should be inserted at; for             a
-         * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value            
+         * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value
          * greater than the current size of the aggregation, the item is inserted at             the last
          * position
          * @returns Reference to <code>this</code> in order to allow method chaining
@@ -31079,9 +31080,9 @@ declare namespace sap {
         /**
          * Inserts a curtainContent into the aggregation <code>curtainContent</code>.
          * @param oCurtainContent the curtainContent to insert; if empty, nothing is inserted
-         * @param iIndex the <code>0</code>-based index the curtainContent should be inserted at; for          
+         * @param iIndex the <code>0</code>-based index the curtainContent should be inserted at; for
          *   a negative value of <code>iIndex</code>, the curtainContent is inserted at position 0; for a value
-         *             greater than the current size of the aggregation, the curtainContent is inserted at     
+         *             greater than the current size of the aggregation, the curtainContent is inserted at
          *        the last position
          * @returns Reference to <code>this</code> in order to allow method chaining
         */
@@ -31090,7 +31091,7 @@ declare namespace sap {
         /**
          * Inserts a curtainPaneContent into the aggregation <code>curtainPaneContent</code>.
          * @param oCurtainPaneContent the curtainPaneContent to insert; if empty, nothing is inserted
-         * @param iIndex the <code>0</code>-based index the curtainPaneContent should be inserted at; for      
+         * @param iIndex the <code>0</code>-based index the curtainPaneContent should be inserted at; for
          *       a negative value of <code>iIndex</code>, the curtainPaneContent is inserted at position 0; for
          * a value             greater than the current size of the aggregation, the curtainPaneContent is
          * inserted at             the last position
@@ -31101,9 +31102,9 @@ declare namespace sap {
         /**
          * Inserts a headEndItem into the aggregation <code>headEndItems</code>.
          * @param oHeadEndItem the headEndItem to insert; if empty, nothing is inserted
-         * @param iIndex the <code>0</code>-based index the headEndItem should be inserted at; for            
-         * a negative value of <code>iIndex</code>, the headEndItem is inserted at position 0; for a value     
-         *        greater than the current size of the aggregation, the headEndItem is inserted at            
+         * @param iIndex the <code>0</code>-based index the headEndItem should be inserted at; for
+         * a negative value of <code>iIndex</code>, the headEndItem is inserted at position 0; for a value
+         *        greater than the current size of the aggregation, the headEndItem is inserted at
          * the last position
          * @returns Reference to <code>this</code> in order to allow method chaining
         */
@@ -31113,7 +31114,7 @@ declare namespace sap {
          * Inserts a headItem into the aggregation <code>headItems</code>.
          * @param oHeadItem the headItem to insert; if empty, nothing is inserted
          * @param iIndex the <code>0</code>-based index the headItem should be inserted at; for             a
-         * negative value of <code>iIndex</code>, the headItem is inserted at position 0; for a value          
+         * negative value of <code>iIndex</code>, the headItem is inserted at position 0; for a value
          *   greater than the current size of the aggregation, the headItem is inserted at             the last
          * position
          * @returns Reference to <code>this</code> in order to allow method chaining
@@ -31718,9 +31719,9 @@ declare namespace sap {
          * Inserts a disabledDate into the aggregation <code>disabledDates</code>.
          * @since 1.38.0
          * @param oDisabledDate the disabledDate to insert; if empty, nothing is inserted
-         * @param iIndex the <code>0</code>-based index the disabledDate should be inserted at; for            
-         * a negative value of <code>iIndex</code>, the disabledDate is inserted at position 0; for a value    
-         *         greater than the current size of the aggregation, the disabledDate is inserted at           
+         * @param iIndex the <code>0</code>-based index the disabledDate should be inserted at; for
+         * a negative value of <code>iIndex</code>, the disabledDate is inserted at position 0; for a value
+         *         greater than the current size of the aggregation, the disabledDate is inserted at
          *  the last position
          * @returns Reference to <code>this</code> in order to allow method chaining
         */
@@ -31729,9 +31730,9 @@ declare namespace sap {
         /**
          * Inserts a selectedDate into the aggregation <code>selectedDates</code>.
          * @param oSelectedDate the selectedDate to insert; if empty, nothing is inserted
-         * @param iIndex the <code>0</code>-based index the selectedDate should be inserted at; for            
-         * a negative value of <code>iIndex</code>, the selectedDate is inserted at position 0; for a value    
-         *         greater than the current size of the aggregation, the selectedDate is inserted at           
+         * @param iIndex the <code>0</code>-based index the selectedDate should be inserted at; for
+         * a negative value of <code>iIndex</code>, the selectedDate is inserted at position 0; for a value
+         *         greater than the current size of the aggregation, the selectedDate is inserted at
          *  the last position
          * @returns Reference to <code>this</code> in order to allow method chaining
         */
@@ -31741,9 +31742,9 @@ declare namespace sap {
          * Inserts a specialDate into the aggregation <code>specialDates</code>.
          * @since 1.24.0
          * @param oSpecialDate the specialDate to insert; if empty, nothing is inserted
-         * @param iIndex the <code>0</code>-based index the specialDate should be inserted at; for            
-         * a negative value of <code>iIndex</code>, the specialDate is inserted at position 0; for a value     
-         *        greater than the current size of the aggregation, the specialDate is inserted at            
+         * @param iIndex the <code>0</code>-based index the specialDate should be inserted at; for
+         * a negative value of <code>iIndex</code>, the specialDate is inserted at position 0; for a value
+         *        greater than the current size of the aggregation, the specialDate is inserted at
          * the last position
          * @returns Reference to <code>this</code> in order to allow method chaining
         */
@@ -32392,9 +32393,9 @@ declare namespace sap {
         /**
          * Inserts a appointment into the aggregation <code>appointments</code>.
          * @param oAppointment the appointment to insert; if empty, nothing is inserted
-         * @param iIndex the <code>0</code>-based index the appointment should be inserted at; for            
-         * a negative value of <code>iIndex</code>, the appointment is inserted at position 0; for a value     
-         *        greater than the current size of the aggregation, the appointment is inserted at            
+         * @param iIndex the <code>0</code>-based index the appointment should be inserted at; for
+         * a negative value of <code>iIndex</code>, the appointment is inserted at position 0; for a value
+         *        greater than the current size of the aggregation, the appointment is inserted at
          * the last position
          * @returns Reference to <code>this</code> in order to allow method chaining
         */
@@ -32403,9 +32404,9 @@ declare namespace sap {
         /**
          * Inserts a intervalHeader into the aggregation <code>intervalHeaders</code>.
          * @param oIntervalHeader the intervalHeader to insert; if empty, nothing is inserted
-         * @param iIndex the <code>0</code>-based index the intervalHeader should be inserted at; for          
+         * @param iIndex the <code>0</code>-based index the intervalHeader should be inserted at; for
          *   a negative value of <code>iIndex</code>, the intervalHeader is inserted at position 0; for a value
-         *             greater than the current size of the aggregation, the intervalHeader is inserted at     
+         *             greater than the current size of the aggregation, the intervalHeader is inserted at
          *        the last position
          * @returns Reference to <code>this</code> in order to allow method chaining
         */
@@ -32740,7 +32741,7 @@ declare namespace sap {
          * Inserts a content into the aggregation <code>content</code>.
          * @param oContent the content to insert; if empty, nothing is inserted
          * @param iIndex the <code>0</code>-based index the content should be inserted at; for             a
-         * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value           
+         * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value
          *  greater than the current size of the aggregation, the content is inserted at             the last
          * position
          * @returns Reference to <code>this</code> in order to allow method chaining
@@ -32750,9 +32751,9 @@ declare namespace sap {
         /**
          * Inserts a paneContent into the aggregation <code>paneContent</code>.
          * @param oPaneContent the paneContent to insert; if empty, nothing is inserted
-         * @param iIndex the <code>0</code>-based index the paneContent should be inserted at; for            
-         * a negative value of <code>iIndex</code>, the paneContent is inserted at position 0; for a value     
-         *        greater than the current size of the aggregation, the paneContent is inserted at            
+         * @param iIndex the <code>0</code>-based index the paneContent should be inserted at; for
+         * a negative value of <code>iIndex</code>, the paneContent is inserted at position 0; for a value
+         *        greater than the current size of the aggregation, the paneContent is inserted at
          * the last position
          * @returns Reference to <code>this</code> in order to allow method chaining
         */
@@ -32944,7 +32945,7 @@ declare namespace sap {
          * Inserts a content into the aggregation <code>content</code>.
          * @param oContent the content to insert; if empty, nothing is inserted
          * @param iIndex the <code>0</code>-based index the content should be inserted at; for             a
-         * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value           
+         * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value
          *  greater than the current size of the aggregation, the content is inserted at             the last
          * position
          * @returns Reference to <code>this</code> in order to allow method chaining
@@ -33826,7 +33827,7 @@ declare namespace sap {
         /**
          * Inserts a headerParameter into the aggregation <code>headerParameters</code>.
          * @param oHeaderParameter the headerParameter to insert; if empty, nothing is inserted
-         * @param iIndex the <code>0</code>-based index the headerParameter should be inserted at; for         
+         * @param iIndex the <code>0</code>-based index the headerParameter should be inserted at; for
          *    a negative value of <code>iIndex</code>, the headerParameter is inserted at position 0; for a
          * value             greater than the current size of the aggregation, the headerParameter is inserted
          * at             the last position
@@ -33839,7 +33840,7 @@ declare namespace sap {
          * @since 1.12.2
          * @param oParameter the parameter to insert; if empty, nothing is inserted
          * @param iIndex the <code>0</code>-based index the parameter should be inserted at; for             a
-         * negative value of <code>iIndex</code>, the parameter is inserted at position 0; for a value         
+         * negative value of <code>iIndex</code>, the parameter is inserted at position 0; for a value
          *    greater than the current size of the aggregation, the parameter is inserted at             the
          * last position
          * @returns Reference to <code>this</code> in order to allow method chaining
@@ -34450,7 +34451,7 @@ declare namespace sap {
          * Inserts a item into the aggregation <code>items</code>.
          * @param oItem the item to insert; if empty, nothing is inserted
          * @param iIndex the <code>0</code>-based index the item should be inserted at; for             a
-         * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value            
+         * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value
          * greater than the current size of the aggregation, the item is inserted at             the last
          * position
          * @returns Reference to <code>this</code> in order to allow method chaining
@@ -34591,7 +34592,7 @@ declare namespace sap {
          * Inserts a content into the aggregation <code>content</code>.
          * @param oContent the content to insert; if empty, nothing is inserted
          * @param iIndex the <code>0</code>-based index the content should be inserted at; for             a
-         * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value           
+         * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value
          *  greater than the current size of the aggregation, the content is inserted at             the last
          * position
          * @returns Reference to <code>this</code> in order to allow method chaining
@@ -34601,7 +34602,7 @@ declare namespace sap {
         /**
          * Inserts a secondaryContent into the aggregation <code>secondaryContent</code>.
          * @param oSecondaryContent the secondaryContent to insert; if empty, nothing is inserted
-         * @param iIndex the <code>0</code>-based index the secondaryContent should be inserted at; for        
+         * @param iIndex the <code>0</code>-based index the secondaryContent should be inserted at; for
          *     a negative value of <code>iIndex</code>, the secondaryContent is inserted at position 0; for a
          * value             greater than the current size of the aggregation, the secondaryContent is inserted
          * at             the last position
@@ -34778,7 +34779,7 @@ declare namespace sap {
          * Inserts a content1 into the aggregation <code>content1</code>.
          * @param oContent1 the content1 to insert; if empty, nothing is inserted
          * @param iIndex the <code>0</code>-based index the content1 should be inserted at; for             a
-         * negative value of <code>iIndex</code>, the content1 is inserted at position 0; for a value          
+         * negative value of <code>iIndex</code>, the content1 is inserted at position 0; for a value
          *   greater than the current size of the aggregation, the content1 is inserted at             the last
          * position
          * @returns Reference to <code>this</code> in order to allow method chaining
@@ -34789,7 +34790,7 @@ declare namespace sap {
          * Inserts a content2 into the aggregation <code>content2</code>.
          * @param oContent2 the content2 to insert; if empty, nothing is inserted
          * @param iIndex the <code>0</code>-based index the content2 should be inserted at; for             a
-         * negative value of <code>iIndex</code>, the content2 is inserted at position 0; for a value          
+         * negative value of <code>iIndex</code>, the content2 is inserted at position 0; for a value
          *   greater than the current size of the aggregation, the content2 is inserted at             the last
          * position
          * @returns Reference to <code>this</code> in order to allow method chaining
@@ -35574,9 +35575,9 @@ declare namespace sap {
         /**
          * Inserts a selectedDate into the aggregation <code>selectedDates</code>.
          * @param oSelectedDate the selectedDate to insert; if empty, nothing is inserted
-         * @param iIndex the <code>0</code>-based index the selectedDate should be inserted at; for            
-         * a negative value of <code>iIndex</code>, the selectedDate is inserted at position 0; for a value    
-         *         greater than the current size of the aggregation, the selectedDate is inserted at           
+         * @param iIndex the <code>0</code>-based index the selectedDate should be inserted at; for
+         * a negative value of <code>iIndex</code>, the selectedDate is inserted at position 0; for a value
+         *         greater than the current size of the aggregation, the selectedDate is inserted at
          *  the last position
          * @returns Reference to <code>this</code> in order to allow method chaining
         */
@@ -35585,9 +35586,9 @@ declare namespace sap {
         /**
          * Inserts a specialDate into the aggregation <code>specialDates</code>.
          * @param oSpecialDate the specialDate to insert; if empty, nothing is inserted
-         * @param iIndex the <code>0</code>-based index the specialDate should be inserted at; for            
-         * a negative value of <code>iIndex</code>, the specialDate is inserted at position 0; for a value     
-         *        greater than the current size of the aggregation, the specialDate is inserted at            
+         * @param iIndex the <code>0</code>-based index the specialDate should be inserted at; for
+         * a negative value of <code>iIndex</code>, the specialDate is inserted at position 0; for a value
+         *        greater than the current size of the aggregation, the specialDate is inserted at
          * the last position
          * @returns Reference to <code>this</code> in order to allow method chaining
         */
@@ -36127,9 +36128,9 @@ declare namespace sap {
         /**
          * Inserts a selectedDate into the aggregation <code>selectedDates</code>.
          * @param oSelectedDate the selectedDate to insert; if empty, nothing is inserted
-         * @param iIndex the <code>0</code>-based index the selectedDate should be inserted at; for            
-         * a negative value of <code>iIndex</code>, the selectedDate is inserted at position 0; for a value    
-         *         greater than the current size of the aggregation, the selectedDate is inserted at           
+         * @param iIndex the <code>0</code>-based index the selectedDate should be inserted at; for
+         * a negative value of <code>iIndex</code>, the selectedDate is inserted at position 0; for a value
+         *         greater than the current size of the aggregation, the selectedDate is inserted at
          *  the last position
          * @returns Reference to <code>this</code> in order to allow method chaining
         */
@@ -36138,9 +36139,9 @@ declare namespace sap {
         /**
          * Inserts a specialDate into the aggregation <code>specialDates</code>.
          * @param oSpecialDate the specialDate to insert; if empty, nothing is inserted
-         * @param iIndex the <code>0</code>-based index the specialDate should be inserted at; for            
-         * a negative value of <code>iIndex</code>, the specialDate is inserted at position 0; for a value     
-         *        greater than the current size of the aggregation, the specialDate is inserted at            
+         * @param iIndex the <code>0</code>-based index the specialDate should be inserted at; for
+         * a negative value of <code>iIndex</code>, the specialDate is inserted at position 0; for a value
+         *        greater than the current size of the aggregation, the specialDate is inserted at
          * the last position
          * @returns Reference to <code>this</code> in order to allow method chaining
         */
