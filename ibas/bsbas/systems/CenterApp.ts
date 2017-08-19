@@ -327,10 +327,7 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
                 }
                 // 设置视图显示者
                 console.viewShower = that;
-
-                console.run(); //加载当前模块
-
-
+                console.run();
             } catch (error) {
                 that.view.showStatusMessage(emMessageType.ERROR, error.message);
             }
