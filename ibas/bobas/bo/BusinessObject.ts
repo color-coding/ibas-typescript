@@ -93,7 +93,17 @@ export abstract class BusinessObjects<T extends IBusinessObject, P extends IBusi
      */
     constructor(parent: P) {
         super();
-        if (objects.isNull(parent)) {
+        if (!objects.isNull(parent)) {
+            let that: this = this;
+            if (objects.instanceOf(parent, BusinessObjectBase)) {
+                if (!objects.isNull((<any>parent).registerListener)) {
+                    (<any>parent).registerListener({
+                        propertyChanged(name: string): void {
+                            that.onParentPropertyChanged(name);
+                        }
+                    })
+                }
+            }
             this.parent = parent;
         }
     }
@@ -107,7 +117,14 @@ export abstract class BusinessObjects<T extends IBusinessObject, P extends IBusi
     protected set parent(value: P) {
         this._parent = value;
     }
-
+    /** 父项属性改变时 */
+    protected onParentPropertyChanged(name: string): void {
+        // 父项属性改变时调用，可重载此函数加入业务逻辑
+    }
+    /** 子项属性改变时 */
+    protected onChildItemParentPropertyChanged(item: T, name: string): void {
+        // 子项属性改变时调用，可重载此函数加入业务逻辑
+    }
     /**
      * 添加项目后
      * @param item 项目
@@ -140,6 +157,17 @@ export abstract class BusinessObjects<T extends IBusinessObject, P extends IBusi
                 }
             }
             item.setProperty(BO_PROPERTY_NAME_LINEID, max);
+        }
+        let that: this = this;
+        if (objects.instanceOf(item, BusinessObjectBase)) {
+            if (!objects.isNull((<any>item).registerListener)) {
+                (<any>item).registerListener({
+                    caller: item,
+                    propertyChanged(name: string): void { //方法中this指向caller
+                        that.onChildItemParentPropertyChanged(this, name);
+                    }
+                })
+            }
         }
     }
     /** 过滤删除的项目 */
