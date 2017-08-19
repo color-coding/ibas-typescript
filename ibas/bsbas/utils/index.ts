@@ -5,17 +5,17 @@
  * Use of this source code is governed by an Apache License, Version 2.0
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
-import { HashManager } from "./hash";
-export * from "./hash";
-export * from "./hash.d";
+export * from "./hashEventManager";
+export * from "./hashEventManager.d";
 
+import { HashEventManager } from "./hashEventManager";
 /** Hash管理员实例 */
-export const hashManager: HashManager = function (): HashManager {
+export const hashEventManager: HashEventManager = function (): HashEventManager {
     if ((<any>window).ibas === undefined) {
         (<any>window).ibas = {};
     }
-    if ((<any>window).ibas.hashManager === undefined) {
-        (<any>window).ibas.hashManager = new HashManager();
+    if ((<any>window).ibas.hashEventManager === undefined) {
+        (<any>window).ibas.hashEventManager = new HashEventManager();
     }
-    return (<any>window).ibas.hashManager;
+    return (<any>window).ibas.hashEventManager;
 }();
