@@ -32,6 +32,7 @@ let init: Function = function (): void {
     }
 }; init();
 // 此模块内容
+export * from "./utils/index";
 export * from "./data/index";
 export * from "./core/index";
 export * from "./applications/index";

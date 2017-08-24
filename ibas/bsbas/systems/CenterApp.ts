@@ -15,7 +15,8 @@ import {
     ResidentApplication, BOApplication, BOChooseApplication, BOListApplication,
     BOViewApplication, BOEditApplication, IBOView,
     MODULE_REPOSITORY_NAME_TEMPLATE, CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS,
-    VARIABLE_NAME_USER_ID, VARIABLE_NAME_USER_CODE, VARIABLE_NAME_USER_NAME, CONFIG_ITEM_DEBUG_MODE
+    VARIABLE_NAME_USER_ID, VARIABLE_NAME_USER_CODE, VARIABLE_NAME_USER_NAME, CONFIG_ITEM_DEBUG_MODE,
+    hashEventManager, URL_HASH_SIGN_FUNCTIONS
 } from "ibas/index";
 import {
     ICenterView, ICenterApp, IBORepositorySystem,
@@ -174,8 +175,44 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
     private functionMap: Map<string, IModuleFunction>;
     /** 注册运行的功能 */
     protected registerFunctions(module: IModuleConsole): void {
+        var that: this = this;
         if (objects.isNull(this.functionMap)) {
             this.functionMap = new Map<string, IModuleFunction>();
+            hashEventManager.registerListener({
+                hashSign: URL_HASH_SIGN_FUNCTIONS, caller: this,
+                onHashChange: (event: HashChangeEvent): void => {
+                    try {
+                        let url: string = event.newURL.substring(
+                            event.newURL.indexOf(URL_HASH_SIGN_FUNCTIONS) + URL_HASH_SIGN_FUNCTIONS.length);
+                        let index = url.indexOf("/") < 0 ? url.length : url.indexOf("/");
+                        let functionId: string = url.substring(0, index);
+                        if (objects.isNull(this.functionMap)) {
+                            return;
+                        }
+                        if (this.functionMap.has(functionId)) {
+                            try {
+                                let func: IModuleFunction = this.functionMap.get(functionId);
+                                let app: IApplication<IView> = func.default();
+                                if (objects.isNull(app)) return;
+                                if (objects.isNull(app.navigation)) {
+                                    app.navigation = func.navigation;
+                                }
+                                if (objects.isNull(app.viewShower)) {
+                                    app.viewShower = this;
+                                }
+                                app.run();
+                            } catch (error) {
+                                this.messages({
+                                    type: emMessageType.ERROR,
+                                    message: config.get(CONFIG_ITEM_DEBUG_MODE, false) ? error.stack : error.message
+                                });
+                            }
+                        }
+                    } catch (error) {
+                        logger.log(error);
+                    }
+                }
+            });
         }
         for (let item of module.functions()) {
             this.functionMap.set(item.id, item);
@@ -250,6 +287,16 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
                         that.view.showModule(console);
                         // 注册模块功能
                         that.registerFunctions(console);
+                        //如当前模块包含Hash指向的功能,激活
+                        let hashCategory = hashEventManager.getCurrentHashValueCategoryAndId();
+                        if (hashCategory.category == URL_HASH_SIGN_FUNCTIONS) {
+                            for (let item of console.functions()) {
+                                if (strings.equals(item.id, hashCategory.Id)) {
+                                    hashEventManager.fireHashChange();
+                                    break;
+                                }
+                            }
+                        }
                     } else {
                         logger.log(emMessageLevel.DEBUG,
                             "center: hide no functions module [{1}|{0}].", console.id, console.name);
@@ -294,28 +341,7 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
 
     /** 视图事件-激活功能 */
     private activateFunctions(id: string): void {
-        if (objects.isNull(this.functionMap)) {
-            return;
-        }
-        if (this.functionMap.has(id)) {
-            try {
-                let func: IModuleFunction = this.functionMap.get(id);
-                let app: IApplication<IView> = func.default();
-                if (objects.isNull(app.navigation)) {
-                    app.navigation = func.navigation;
-                }
-                if (objects.isNull(app.viewShower)) {
-                    app.viewShower = this;
-                }
-                app.run();
-
-            } catch (error) {
-                this.messages({
-                    type: emMessageType.ERROR,
-                    message: config.get(CONFIG_ITEM_DEBUG_MODE, false) ? error.stack : error.message
-                });
-            }
-        }
+        hashEventManager.changeHash(strings.format("{0}{1}", URL_HASH_SIGN_FUNCTIONS, id));
     }
 
     /** 用户权限 */
@@ -374,6 +400,7 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
             onCompleted(action: emMessageAction): void {
                 if (action === emMessageAction.YES) {
                     that.view.destroyView(that.view);
+                    window.location.hash = "";
                 }
             }
         });
