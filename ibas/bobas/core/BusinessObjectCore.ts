@@ -78,7 +78,11 @@ export abstract class Bindable implements IBindable {
             property = property[0].toLowerCase() + property.substring(1);
         }
         for (let item of this._listeners) {
-            item.propertyChanged(property);
+            if (objects.isNull(item.caller)) {
+                item.propertyChanged(property);
+            } else {
+                item.propertyChanged.apply(item.caller, [property]);
+            }
         }
     }
 }
