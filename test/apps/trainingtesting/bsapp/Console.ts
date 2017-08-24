@@ -10,7 +10,7 @@ import * as ibas from "ibas/index";
 import { MaterialFunc, MaterialChooseServiceMapping, MaterialLinkServiceMapping } from "./material/index";
 import { CustomerFunc, CustomerChooseServiceMapping, CustomerLinkServiceMapping } from "./customer/index";
 import { SalesOrderFunc, SalesOrderChooseServiceMapping, SalesOrderLinkServiceMapping } from "./salesorder/index";
-import { DemoUrlFunc, DemoTabFunc, DemoResidentApp, DemoServiceMapping, DemoMapFunc ,PageDemoFunc} from "./others/index";
+import { DemoUrlFunc, DemoTabFunc, DemoResidentApp, DemoServiceMapping, DemoMapFunc } from "./others/index";
 
 /** 模块控制台 */
 export class Console extends ibas.ModuleConsole {
@@ -131,13 +131,6 @@ export class ConsoleOthers extends ibas.ModuleConsole {
             that.initialize();
 
         });
-         //加载百度地址资源 网络资源不用一载
-         domScript = document.createElement('script');
-         domScript.src = "http://api.map.baidu.com/getscript?v=2.0&ak=0tAfPNP8bYG9ZUUkkvgu8Fv48ng9uFfl&services=&t=20170803155555";
-         document.getElementsByTagName('head')[0].appendChild(domScript);
-         var domScript = document.createElement('script');
-         domScript.src = "http://api.map.baidu.com/api?v=2.0&ak=0tAfPNP8bYG9ZUUkkvgu8Fv48ng9uFfl";
-         document.getElementsByTagName('head')[0].appendChild(domScript);
         // 保留基类方法
         super.run();
     }
