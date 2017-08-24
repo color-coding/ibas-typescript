@@ -100,7 +100,6 @@ export class ConsoleOthers extends ibas.ModuleConsole {
         this.register(new DemoUrlFunc());
         this.register(new DemoTabFunc());
         this.register(new DemoMapFunc());
-        this.register(new PageDemoFunc());
         // 注册服务应用
         this.register(new DemoServiceMapping());
         // 注册常驻应用
@@ -129,7 +128,6 @@ export class ConsoleOthers extends ibas.ModuleConsole {
             that._navigation = new ui.default();
             // 调用初始化
             that.initialize();
-
         });
         // 保留基类方法
         super.run();
