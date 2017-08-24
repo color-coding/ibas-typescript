@@ -9,82 +9,59 @@
 import * as ibas from "ibas/index";
 import { utils } from "openui5/typings/ibas.utils";
 import { IDemoMapView } from "../../../bsapp/others/index";
-declare var BMap;
-declare var BMAP_ANCHOR_TOP_LEFT ;
-declare var BMAP_ANCHOR_TOP_RIGHT ;
+
+declare let BMap: any;
+declare let BMAP_ANCHOR_TOP_LEFT: any;
+declare let BMAP_ANCHOR_TOP_RIGHT: any;
 /**
  * 视图-地图
  */
 export class DemoMapView extends ibas.View implements IDemoMapView {
     /** 绘制视图 */
     darw(): any {
-        let lngtxt:sap.m.Input=new sap.m.Input("");
-        let lattxt:sap.m.Input=new sap.m.Input("");
+        this.txtLng = new sap.m.Input("");
+        this.txtLat = new sap.m.Input("");
+        let that: this = this;
         let page: sap.m.Page = new sap.m.Page("", {
             showHeader: false,
             subHeader: new sap.m.Toolbar("", {
                 content: [
-                    new sap.m.Button("", {
-                        text: "加载地图",
+                    new sap.m.MenuButton("", {
+                        text: "Baidu",
                         type: sap.m.ButtonType.Transparent,
-                        icon: "sap-icon://synchronize",
-                        press: function (event: any): void {
-                            var map = new BMap.Map('map');
-                            var point = new BMap.Point(116.404, 38.915);
-
-                            map.centerAndZoom(point, 14);
-                            var pt = new BMap.Point(116.404, 39.913);
-                            //var myIcon = new BMap.Icon("http://developer.baidu.com/map/jsdemo/img/fox.gif", new BMap.Size(300, 157));
-                            //var marker = new BMap.Marker(pt, { icon: myIcon });
-                            var marker = new BMap.Marker(pt);
-                            marker.enableDragging()
-                            map.addOverlay(marker);
-                            map.enableScrollWheelZoom(true);
-
-                            marker.addEventListener("click",attribute);
-                            function attribute(e){
-                                var p = e.target;
-                                lngtxt.setValue(p.getPosition().lng);
-                                lattxt.setValue(p.getPosition().lat);
-                                //alert("marker的位置是" + p.getPosition().lng + "," + p.getPosition().lat);
+                        icon: "sap-icon://map",
+                        buttonMode: sap.m.MenuButtonMode.Split,
+                        defaultAction: function (): void {
+                            that.loadBaiduMap();
+                        },
+                        width: "auto",
+                        menu: new sap.m.Menu("", {
+                            items: [
+                                new sap.m.MenuItem("", {
+                                    text: "Baidu",
+                                    icon: "sap-icon://map",
+                                }),
+                                new sap.m.MenuItem("", {
+                                    text: "Gaode",
+                                    icon: "sap-icon://map",
+                                }),
+                                new sap.m.MenuItem("", {
+                                    text: "Google",
+                                    icon: "sap-icon://map",
+                                }),
+                            ],
+                            itemSelected: function (event: any): void {
+                                let item: any = event.getParameter("item");
+                                if (item instanceof sap.m.MenuItem) {
+                                    if (item.getText() === "Baidu") {
+                                        that.loadBaiduMap();
+                                    }
+                                }
                             }
-
-                            var top_left_control = new BMap.ScaleControl({anchor: BMAP_ANCHOR_TOP_LEFT});// 左上角，添加比例尺
-                            var top_left_navigation = new BMap.NavigationControl({anchor: BMAP_ANCHOR_TOP_LEFT});  //左上角，添加默认缩放平移控件
-                            map.addControl(top_left_control);
-                            map.addControl(top_left_navigation);
-
-                            var size = new BMap.Size(10, 20);
-
-                            map.addControl(new BMap.CityListControl({
-                                anchor: BMAP_ANCHOR_TOP_RIGHT,
-                                offset: size,
-                                // 切换城市之间事件
-                                // onChangeBefore: function(){
-                                //    alert('before');
-                                // },
-                                // 切换城市之后事件
-                                // onChangeAfter:function(){
-                                //   alert('after');
-                                // }
-                            }));
-
-                            var geolocation = new BMap.Geolocation();
-                            geolocation.getCurrentPosition(function(r){
-                                if(this.getStatus() == 0){
-                                    var mk = new BMap.Marker(r.point);
-                                    map.addOverlay(mk);
-                                    map.panTo(r.point);
-                                    //alert('您的位置：'+r.point.lng+','+r.point.lat);
-                                }
-                                else {
-                                    alert('failed'+this.getStatus());
-                                }
-                            },{enableHighAccuracy: true})
-                        }
+                        })
                     }),
-                    lngtxt,
-                    lattxt
+                    this.txtLng,
+                    this.txtLat,
                 ],
 
             }),
@@ -94,7 +71,82 @@ export class DemoMapView extends ibas.View implements IDemoMapView {
                 })
             ]
         });
+        return page;
+    }
 
-        return page
+    private txtLng: sap.m.Input;
+    private txtLat: sap.m.Input;
+
+    private loadBaiduMap(): void {
+        let that: this = this;
+        let mapLibraries: string[] = new Array();
+        mapLibraries.push("http://api.map.baidu.com/getscript?v=2.0&ak=0tAfPNP8bYG9ZUUkkvgu8Fv48ng9uFfl&services=&t=20170803155555");
+        mapLibraries.push("http://api.map.baidu.com/api?v=2.0&ak=0tAfPNP8bYG9ZUUkkvgu8Fv48ng9uFfl");
+        require(mapLibraries, function (ui: any): void {
+            let map: any = new BMap.Map("map");
+            let point: any = new BMap.Point(116.404, 38.915);
+
+            map.centerAndZoom(point, 14);
+            let pt: any = new BMap.Point(116.404, 39.913);
+            // let myIcon: any = new BMap.Icon(fox.gif", new BMap.Size(300, 157));
+            // let marker: any = new BMap.Marker(pt, { icon: myIcon });
+            let marker: any = new BMap.Marker(pt);
+            marker.enableDragging();
+            map.addOverlay(marker);
+            map.enableScrollWheelZoom(true);
+
+            marker.addEventListener("click", function (e: any): void {
+                let p: any = e.target;
+                that.txtLng.setValue(p.getPosition().lng);
+                that.txtLat.setValue(p.getPosition().lat);
+            });
+            // 左上角，添加比例尺
+            let top_left_control: any = new BMap.ScaleControl({ anchor: BMAP_ANCHOR_TOP_LEFT });
+            // 左上角，添加默认缩放平移控件
+            let top_left_navigation: any = new BMap.NavigationControl({ anchor: BMAP_ANCHOR_TOP_LEFT });
+            map.addControl(top_left_control);
+            map.addControl(top_left_navigation);
+
+            let size: any = new BMap.Size(10, 20);
+
+            map.addControl(new BMap.CityListControl({
+                anchor: BMAP_ANCHOR_TOP_RIGHT,
+                offset: size,
+                // 切换城市之间事件
+                onChangeBefore: function (): void {
+                    that.application.viewShower.proceeding(
+                        that,
+                        ibas.emMessageType.WARNING,
+                        "before city change."
+                    );
+                },
+                // 切换城市之后事件
+                onChangeAfter: function (): void {
+                    that.application.viewShower.proceeding(
+                        that,
+                        ibas.emMessageType.WARNING,
+                        "city changed."
+                    );
+                }
+            }));
+            let geolocation: any = new BMap.Geolocation();
+            geolocation.getCurrentPosition(
+                function (r: any): void {
+                    if (this.getStatus() === 0) {
+                        let mk: any = new BMap.Marker(r.point);
+                        map.addOverlay(mk);
+                        map.panTo(r.point);
+                        that.txtLat.setValue(r.point.lat);
+                        that.txtLng.setValue(r.point.lng);
+                    } else {
+                        that.application.viewShower.messages({
+                            message: this.getStatus(),
+                            type: ibas.emMessageType.ERROR
+                        });
+                    }
+                }, {
+                    enableHighAccuracy: true
+                });
+        });
     }
 }
