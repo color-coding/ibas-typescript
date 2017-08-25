@@ -2774,7 +2774,7 @@ declare namespace sap {
          * @param sModelName the name of the model or <code>undefined</code>
          * @returns oContext The binding context of this object
         */
-        getBindingContext(sModelName: string): sap.ui.model.Context;
+        getBindingContext(sModelName?: string): sap.ui.model.Context;
 
         /**
          * Returns the binding infos for the given property or aggregation. The binding info contains
@@ -22191,7 +22191,8 @@ declare namespace sap {
          * @param mParameters additional model specific parameters (optional)
          * @returns the context object
         */
-        getObject(sPath: String, mParameters?: any): any;
+        getObject(sPath?: String, mParameters?: any): any;
+
         /**
          * Getter for path of the context itself or a subpath
          * @param sPath the binding path
