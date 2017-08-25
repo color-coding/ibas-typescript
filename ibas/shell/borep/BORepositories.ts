@@ -41,16 +41,23 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements s
         if (ibas.objects.isNull(remoteRepository)) {
             throw new Error(ibas.i18n.prop("sys_invalid_parameter", "remoteRepository"));
         }
-        require(["../../3rdparty/crypto-js"], function (cryptoJS: CryptoJS.Hashes): void {
-            let method: string = ibas.strings.format("userConnect?user={0}&password={1}", caller.user, cryptoJS.MD5(caller.password));
+        if (!ibas.objects.isNull(caller.token)) {
+            let method: string = ibas.strings.format("userConnect?token={0}", caller.token);
             remoteRepository.callRemoteMethod(method, undefined, caller);
-        }, function (error: RequireError): void {
-            // 加载js库失败
-            let opRslt: ibas.IOperationResult<any> = new ibas.OperationResult();
-            opRslt.resultCode = -901;
-            opRslt.message = error.message;
-            caller.onCompleted(opRslt);
-        });
+        } else if (ibas.objects.isNull(caller.user) || ibas.objects.isNull(caller.password)) {
+            throw new Error(ibas.i18n.prop("msg_if_user_name_and_password_not_match"));
+        } else {
+            require(["../../3rdparty/crypto-js"], function (cryptoJS: CryptoJS.Hashes): void {
+                let method: string = ibas.strings.format("userConnect?user={0}&password={1}", caller.user, cryptoJS.MD5(caller.password));
+                remoteRepository.callRemoteMethod(method, undefined, caller);
+            }, function (error: RequireError): void {
+                // 加载js库失败
+                let opRslt: ibas.IOperationResult<any> = new ibas.OperationResult();
+                opRslt.resultCode = -901;
+                opRslt.message = error.message;
+                caller.onCompleted(opRslt);
+            });
+        }
     }
 
 	/**

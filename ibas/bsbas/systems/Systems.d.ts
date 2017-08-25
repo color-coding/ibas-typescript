@@ -180,9 +180,11 @@ export interface IBOPropertyInfo {
  */
 export interface ConnectCaller extends MethodCaller {
 	/** 用户 */
-	user: string;
+	user?: string;
 	/** 密码 */
-	password: string;
+	password?: string;
+	/** Token */
+	token?: string;
     /**
      * 调用完成
      * @param opRslt 结果
