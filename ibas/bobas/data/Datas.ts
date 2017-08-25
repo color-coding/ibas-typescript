@@ -118,6 +118,9 @@ export module objects {
             if (objects.isNull(name)) {
                 continue;
             }
+            if (name.startsWith("_")) {
+                continue;
+            }
             let value: any = data[name];
             if (value instanceof Array) {
                 let nValue: any = newData[name];
