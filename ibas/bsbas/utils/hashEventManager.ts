@@ -6,7 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 import { strings, objects, logger, emMessageLevel } from "../../bobas/index";
-import { IHashChangeListener, IHashCategory } from "./hashEventManager.d";
+import { IHashChangeListener, IHashCategoryAndID } from "./hashEventManager.d";
 export class HashEventManager {
     constructor() {
         let that: this = this;
@@ -79,8 +79,8 @@ export class HashEventManager {
      * 获取当前哈希值的类别和Id（服务、功能、视图）
      * @return
      */
-    getCurrentHashValueCategoryAndId(): IHashCategory {
-        let hashCategory: IHashCategory = { Id: "", category: "" };
+    currentHashCategoryAndID(): IHashCategoryAndID {
+        let hashCategoryAndID: IHashCategoryAndID = { id: "", category: "" };
         let keys: IterableIterator<string> = this._listeners.keys();
         while (true) {
             let key: string = keys.next().value;
@@ -91,12 +91,12 @@ export class HashEventManager {
             if (currentHashValue.startsWith(key)) {
                 let url: string = currentHashValue.substring(key.length);
                 let index: number = url.indexOf("/") < 0 ? url.length : url.indexOf("/");
-                hashCategory.Id = url.substring(0, index);
-                hashCategory.category = key;
+                hashCategoryAndID.id = url.substring(0, index);
+                hashCategoryAndID.category = key;
                 break;
             }
         }
-        return hashCategory;
+        return hashCategoryAndID;
     }
 }
 function hashChangeEvent(newURL?: string): HashChangeEvent {
