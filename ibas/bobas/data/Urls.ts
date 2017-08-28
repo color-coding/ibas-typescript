@@ -101,5 +101,17 @@ export module urls {
         }
         return root;
     }
+    /**
+     * 获取地址栏中的指定查询参数值
+     * @param name 指定参数名称
+     */
+    export function getQueryString(name: string): string {
+        var reg: RegExp = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r: RegExpMatchArray = window.location.search.substr(1).match(reg);
+        if (r !== null) {
+            return (<any>window).unescape(r[2]);
+        }
+        return null;
+    }
 
 }

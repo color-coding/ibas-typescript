@@ -15,6 +15,32 @@ export namespace utils {
     /** 配置项目-子项表格可视行数 */
     export const CONFIG_ITEM_ITEM_TABLE_VISIBLE_ROW_COUNT: string = "tableRow|Item";
     /**
+     * 获取枚举类型map
+     * @param data 枚举类型
+     */
+    export function getEnumMap(data: any): Map<string, string>;
+    /** 获取枚举类型map */
+    export function getEnumMap(): Map<string, string> {
+        // 首先获取枚举内容
+        let data: any = arguments[0];
+        let map: Map<string, string> = new Map<string, string>();
+        for (let item in data) {
+            if (ibas.objects.isNull(item)) {
+                continue;
+            }
+            let key: any = item;
+            let text: any = data[key];
+            if (typeof item !== "string" || typeof text !== "string") {
+                continue;
+            }
+            if (map.has(text)) {
+                continue;
+            }
+            map.set(key, text);
+        }
+        return map;
+    }
+    /**
      * 创建下拉框可选项
      * @param data 枚举类型
      */
@@ -34,20 +60,7 @@ export namespace utils {
         if (blank) {
             map.set("", ibas.i18n.prop("sys_shell_please_chooose_data", ""));
         }
-        for (let item in data) {
-            if (ibas.objects.isNull(item)) {
-                continue;
-            }
-            let key: any = item;
-            let text: any = data[key];
-            if (typeof item !== "string" || typeof text !== "string") {
-                continue;
-            }
-            if (map.has(text)) {
-                continue;
-            }
-            map.set(key, text);
-        }
+        map = getEnumMap(data);
         // 转换枚举内容
         let items: Array<sap.ui.core.ListItem> = new Array<sap.ui.core.ListItem>();
         for (let item of map) {
@@ -56,6 +69,29 @@ export namespace utils {
                 key: key,
                 text: ibas.enums.describe(data, item[1]),
                 additionalText: key
+            }));
+        }
+        return items;
+    }
+    /**
+     * 创建SegmentedButtonItem
+     * @param data 枚举类型
+     */
+    export function createSegmentedButtonItems(data: any): sap.m.SegmentedButtonItem[];
+    /** 创建SegmentedButtonItem */
+    export function createSegmentedButtonItems(): sap.m.SegmentedButtonItem[] {
+        // 首先获取枚举内容
+        let data: any = arguments[0];
+        let map: Map<string, string> = new Map<string, string>();
+        map = getEnumMap(data);
+        // 转换枚举内容
+        let items: Array<sap.m.SegmentedButtonItem> = new Array<sap.m.SegmentedButtonItem>();
+        for (let item of map) {
+            let key: any = item[0];
+            items.push(new sap.m.SegmentedButtonItem("", {
+                width: "auto",
+                key: key,
+                text: ibas.enums.describe(data, item[1]),
             }));
         }
         return items;

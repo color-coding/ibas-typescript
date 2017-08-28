@@ -8,7 +8,8 @@
 
 import {
     logger, emMessageLevel, IOperationResult, objects, i18n, strings,
-    Application, config, CONFIG_ITEM_USER_TOKEN, CONFIG_ITEM_COMPANY
+    Application, config, CONFIG_ITEM_USER_TOKEN, CONFIG_ITEM_COMPANY,
+    emMessageType, CONFIG_ITEM_DEBUG_MODE, CONFIG_ITEM_PLANTFORM, urls, IMessgesCaller
 } from "ibas/index";
 import { ILoginView, ILoginApp, ICenterApp, IUser, IBORepositorySystem } from "./Systems.d";
 import { Factories } from "./Factories";
@@ -26,6 +27,63 @@ export class LoginApp<T extends ILoginView> extends Application<T> implements IL
         this.id = LoginApp.APPLICATION_ID;
         this.name = LoginApp.APPLICATION_NAME;
         this.description = i18n.prop(this.name);
+    }
+    /** 运行 */
+    run(...args: any[]): void {
+        let userToken: string = urls.getQueryString(CONFIG_ITEM_USER_TOKEN);
+        if (!!userToken) {
+            let plantform: string = urls.getQueryString(CONFIG_ITEM_PLANTFORM);
+            config.set(CONFIG_ITEM_PLANTFORM,
+                isNaN(parseInt(plantform, 0)) ? 0 : parseInt(plantform, 0)
+            );
+            logger.log(emMessageLevel.DEBUG, "app: user login system,token is [{0}].", userToken);
+            let boRepository: IBORepositorySystem = Factories.systemsFactory.createRepository();
+            boRepository.connect({
+                caller: this, // 设置调用者，则onCompleted修正this
+                token: userToken,
+                onCompleted: function (opRslt: IOperationResult<IUser>): void {
+                    try {
+                        this.busy(false);
+                        if (objects.isNull(opRslt)) {
+                            throw new Error();
+                        }
+                        if (opRslt.resultCode !== 0) {
+                            throw new Error(opRslt.message);
+                        }
+                        let user: IUser = opRslt.resultObjects.firstOrDefault();
+                        // 设置默认用户口令
+                        config.set(CONFIG_ITEM_USER_TOKEN, opRslt.userSign);
+                        // 更新配置项目
+                        for (let item of opRslt.informations) {
+                            if (strings.equalsIgnoreCase(item.tag, "CONFIG_ITEM")) {
+                                if (strings.equalsIgnoreCase(item.name, CONFIG_ITEM_COMPANY)) {
+                                    // 设置公司代码
+                                    config.set(CONFIG_ITEM_COMPANY, item.contents);
+                                }
+                            }
+                        }
+                        // 启动系统中心
+                        let centerApp: ICenterApp = Factories.systemsFactory.createCenterApp();
+                        centerApp.viewShower = this.viewShower;
+                        centerApp.navigation = this.navigation;
+                        centerApp.run(user);
+                    } catch (error) {
+                        let that: any = this;
+                        let caller: IMessgesCaller = {
+                            title: i18n.prop(this.name),
+                            type: emMessageType.ERROR,
+                            message: config.get(CONFIG_ITEM_DEBUG_MODE, false) ? error.stack : error.message,
+                            onCompleted: function (): void {
+                                that.show();
+                            }
+                        };
+                        this.messages(caller);
+                    }
+                }
+            });
+        } else {
+            super.run(args);
+        }
     }
     /** 注册视图 */
     protected registerView(): void {
