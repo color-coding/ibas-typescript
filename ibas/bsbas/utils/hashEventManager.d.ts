@@ -16,10 +16,10 @@ export interface IHashChangeListener {
     caller: any;
 }
 /**
- * 哈希类别
+ * 哈希类别和ID
  */
-export interface IHashCategory {
-    Id: string;
+export interface IHashCategoryAndID {
+    id: string;
     /** 类别 */
     category: string;
 }

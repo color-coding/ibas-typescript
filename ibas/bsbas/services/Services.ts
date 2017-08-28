@@ -8,7 +8,7 @@
 
 import { strings, objects, config, i18n, logger, emMessageLevel } from "../../bobas/index";
 import { AbstractApplication as Application, IViewShower, IViewNavigation, IView } from "../core/index";
-import { hashEventManager } from "../utils/index"
+import { hashEventManager, IHashCategoryAndID } from "../utils/index";
 import {
     IServiceContract, IServiceProxy, IService,
     IBOServiceContract, IApplicationServiceContract,
@@ -149,7 +149,7 @@ export class ServicesManager {
                     logger.log(error);
                 }
             }
-        })
+        });
     }
     /** 服务映射 */
     private mappings: Map<string, IServiceMapping>;
@@ -162,10 +162,10 @@ export class ServicesManager {
             this.mappings = new Map();
         }
         this.mappings.set(mapping.id, mapping);
-        //如当前注册的服务为Hash指向的服务,激活
-        let hashCategory = hashEventManager.getCurrentHashValueCategoryAndId();
-        if (hashCategory.category == URL_HASH_SIGN_SERVICES
-            && strings.equals(mapping.id, hashCategory.Id)) {
+        // 如当前注册的服务为Hash指向的服务,激活
+        let hashCategory: IHashCategoryAndID = hashEventManager.currentHashCategoryAndID();
+        if (hashCategory.category === URL_HASH_SIGN_SERVICES
+            && strings.equals(mapping.id, hashCategory.id)) {
             hashEventManager.fireHashChange();
         }
     }

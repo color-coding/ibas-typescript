@@ -16,7 +16,7 @@ import {
     BOViewApplication, BOEditApplication, IBOView,
     MODULE_REPOSITORY_NAME_TEMPLATE, CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS,
     VARIABLE_NAME_USER_ID, VARIABLE_NAME_USER_CODE, VARIABLE_NAME_USER_NAME, CONFIG_ITEM_DEBUG_MODE,
-    hashEventManager, URL_HASH_SIGN_FUNCTIONS
+    hashEventManager, URL_HASH_SIGN_FUNCTIONS, IHashCategoryAndID
 } from "ibas/index";
 import {
     ICenterView, ICenterApp, IBORepositorySystem,
@@ -184,7 +184,7 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
                     try {
                         let url: string = event.newURL.substring(
                             event.newURL.indexOf(URL_HASH_SIGN_FUNCTIONS) + URL_HASH_SIGN_FUNCTIONS.length);
-                        let index = url.indexOf("/") < 0 ? url.length : url.indexOf("/");
+                        let index: number = url.indexOf("/") < 0 ? url.length : url.indexOf("/");
                         let functionId: string = url.substring(0, index);
                         if (objects.isNull(this.functionMap)) {
                             return;
@@ -193,7 +193,9 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
                             try {
                                 let func: IModuleFunction = this.functionMap.get(functionId);
                                 let app: IApplication<IView> = func.default();
-                                if (objects.isNull(app)) return;
+                                if (objects.isNull(app)) {
+                                    return;
+                                }
                                 if (objects.isNull(app.navigation)) {
                                     app.navigation = func.navigation;
                                 }
@@ -287,11 +289,11 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
                         that.view.showModule(console);
                         // 注册模块功能
                         that.registerFunctions(console);
-                        //如当前模块包含Hash指向的功能,激活
-                        let hashCategory = hashEventManager.getCurrentHashValueCategoryAndId();
-                        if (hashCategory.category == URL_HASH_SIGN_FUNCTIONS) {
+                        // 如当前模块包含Hash指向的功能,激活
+                        let hashCategory: IHashCategoryAndID = hashEventManager.currentHashCategoryAndID();
+                        if (hashCategory.category === URL_HASH_SIGN_FUNCTIONS) {
                             for (let item of console.functions()) {
-                                if (strings.equals(item.id, hashCategory.Id)) {
+                                if (strings.equals(item.id, hashCategory.id)) {
                                     hashEventManager.fireHashChange();
                                     break;
                                 }

@@ -9,7 +9,7 @@
 import {
     logger, emMessageLevel, IOperationResult, objects, i18n, strings,
     Application, config, CONFIG_ITEM_USER_TOKEN, CONFIG_ITEM_COMPANY,
-    emMessageType, CONFIG_ITEM_DEBUG_MODE, CONFIG_ITEM_PLANTFORM, urls, IMessgesCaller
+    emMessageType, CONFIG_ITEM_DEBUG_MODE, CONFIG_ITEM_PLANTFORM, urls, IMessgesCaller, KeyText
 } from "ibas/index";
 import { ILoginView, ILoginApp, ICenterApp, IUser, IBORepositorySystem } from "./Systems.d";
 import { Factories } from "./Factories";
@@ -30,9 +30,14 @@ export class LoginApp<T extends ILoginView> extends Application<T> implements IL
     }
     /** 运行 */
     run(...args: any[]): void {
-        let userToken: string = urls.getQueryString(CONFIG_ITEM_USER_TOKEN);
-        if (!!userToken) {
-            let plantform: string = urls.getQueryString(CONFIG_ITEM_PLANTFORM);
+        let userTokenParam: KeyText = urls.param(CONFIG_ITEM_USER_TOKEN);
+        if (!objects.isNull(userTokenParam)) {
+            let userToken: string = userTokenParam.text;
+            let plantformParam: KeyText = urls.param(CONFIG_ITEM_PLANTFORM);
+            let plantform: string = "";
+            if (!objects.isNull(plantformParam)) {
+                plantform = plantformParam.text;
+            }
             config.set(CONFIG_ITEM_PLANTFORM,
                 isNaN(parseInt(plantform, 0)) ? 0 : parseInt(plantform, 0)
             );
@@ -81,6 +86,8 @@ export class LoginApp<T extends ILoginView> extends Application<T> implements IL
                     }
                 }
             });
+            // 发送登录连接请求后,清除地址栏中的查询参数信息,并且不保留浏览器历史记录
+            window.history.replaceState(null, null, window.location.pathname + window.location.hash);
         } else {
             super.run(args);
         }
