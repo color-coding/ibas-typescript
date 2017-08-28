@@ -7,11 +7,11 @@
  */
 
 import {
-    objects, List, ArrayList, ICriteria, Criteria, ICondition,
+    strings, objects, List, ArrayList, ICriteria, Criteria, ICondition,
     StringBuilder
 } from "../data/index";
 import {
-    IBusinessObject, BusinessObjectBase, BusinessObjectListBase
+    IBusinessObject, BusinessObjectBase, BusinessObjectListBase, PropertyChangedListener, Bindable
 } from "../core/index";
 import {
     IBusinessObjects, IBODocument, IBODocumentLine, IBOMasterData, IBOMasterDataLine, IBOSimple, IBOSimpleLine
@@ -30,6 +30,10 @@ export const BO_PROPERTY_NAME_OBJECTKEY: string = "objectKey";
 export const BO_PROPERTY_NAME_LINEID: string = "lineId";
 /** 业务对象属性名称-objectCode */
 export const BO_PROPERTY_NAME_OBJECTCODE: string = "objectCode";
+/** 业务对象属性名称-documentStatus */
+export const BO_PROPERTY_NAME_DOCUMENTSTATUS: string = "documentStatus";
+/** 业务对象属性名称-lineStatus */
+export const BO_PROPERTY_NAME_LINESTATUS: string = "lineStatus";
 /** 需要被重置的属性名称 */
 export const NEED_BE_RESET_PROPERTIES: string[] = ["_listeners",
     "createDate", "createTime", "updateDate", "updateTime", "logInst", "createUserSign", "updateUserSign",
@@ -93,19 +97,30 @@ export abstract class BusinessObjects<T extends IBusinessObject, P extends IBusi
      */
     constructor(parent: P) {
         super();
-        if (!objects.isNull(parent)) {
-            let that: this = this;
-            if (objects.instanceOf(parent, BusinessObjectBase)) {
-                if (!objects.isNull((<any>parent).registerListener)) {
-                    (<any>parent).registerListener({
-                        propertyChanged(name: string): void {
-                            that.onParentPropertyChanged(name);
-                        }
-                    })
+        this._listener = {
+            caller: this,
+            propertyChanged(name: string): void {
+                // this指向业务对象集合基类,arguments[1]指向触发事件的BO
+                let bo: any = arguments[1];
+                if (objects.isNull(bo)) {
+                    return;
+                }
+                if (this.parent === bo) {
+                    this.onParentPropertyChanged(name);
+                } else {
+                    this.onChildPropertyChanged(bo, name);
                 }
             }
+        };
+        if (!objects.isNull(parent)) {
             this.parent = parent;
         }
+    }
+
+    private _listener: PropertyChangedListener;
+
+    protected get listener(): PropertyChangedListener {
+        return this._listener;
     }
 
     private _parent: P;
@@ -115,11 +130,74 @@ export abstract class BusinessObjects<T extends IBusinessObject, P extends IBusi
     }
 
     protected set parent(value: P) {
+        if (objects.instanceOf(this.parent, Bindable)) {
+            (<any>this.parent).removeListener(this.listener);
+        }
         this._parent = value;
+        if (objects.instanceOf(this.parent, Bindable)) {
+            (<any>this.parent).registerListener(this.listener);
+        }
     }
     /** 父项属性改变时 */
     protected onParentPropertyChanged(name: string): void {
         // 父项属性改变时调用，可重载此函数加入业务逻辑
+        if (strings.equalsIgnoreCase(name, BO_PROPERTY_NAME_OBJECTKEY)) {
+            if (objects.instanceOf(this.parent, BOSimple)
+                || objects.instanceOf(this.parent, BOSimpleLine)) {
+                // 简单对象
+                for (let item of this) {
+                    if (objects.instanceOf(item, BOSimple)
+                        || objects.instanceOf(item, BOSimpleLine)) {
+                        item.setProperty(BO_PROPERTY_NAME_OBJECTKEY, this.parent.getProperty(BO_PROPERTY_NAME_OBJECTKEY));
+                    }
+                }
+
+            }
+        } else if (strings.equalsIgnoreCase(name, BO_PROPERTY_NAME_CODE)) {
+            if (objects.instanceOf(this.parent, BOMasterData)
+                || objects.instanceOf(this.parent, BOMasterDataLine)) {
+                // 主数据
+                for (let item of this) {
+                    if (objects.instanceOf(item, BOMasterData)
+                        || objects.instanceOf(item, BOMasterDataLine)) {
+                        item.setProperty(BO_PROPERTY_NAME_CODE, this.parent.getProperty(BO_PROPERTY_NAME_CODE));
+                    }
+                }
+            }
+        } else if (strings.equalsIgnoreCase(name, BO_PROPERTY_NAME_DOCENTRY)) {
+            if (objects.instanceOf(this.parent, BODocument)
+                || objects.instanceOf(this.parent, BODocumentLine)) {
+                // 单据
+                for (let item of this) {
+                    if (objects.instanceOf(item, BODocument)
+                        || objects.instanceOf(item, BODocumentLine)) {
+                        item.setProperty(BO_PROPERTY_NAME_DOCENTRY, this.parent.getProperty(BO_PROPERTY_NAME_DOCENTRY));
+                    }
+                }
+            }
+        } else if (strings.equalsIgnoreCase(name, BO_PROPERTY_NAME_DOCUMENTSTATUS)) {
+            if (objects.instanceOf(this.parent, BODocument)) {
+                // 单据
+                for (let item of this) {
+                    if (objects.instanceOf(item, BODocument)) {
+                        item.setProperty(BO_PROPERTY_NAME_DOCUMENTSTATUS, this.parent.getProperty(BO_PROPERTY_NAME_DOCUMENTSTATUS));
+                    } else if (objects.instanceOf(item, BODocumentLine)) {
+                        item.setProperty(BO_PROPERTY_NAME_LINESTATUS, this.parent.getProperty(BO_PROPERTY_NAME_DOCUMENTSTATUS));
+                    }
+                }
+            }
+        } else if (strings.equalsIgnoreCase(name, BO_PROPERTY_NAME_LINESTATUS)) {
+            if (objects.instanceOf(this.parent, BODocumentLine)) {
+                // 单据
+                for (let item of this) {
+                    if (objects.instanceOf(item, BODocument)) {
+                        item.setProperty(BO_PROPERTY_NAME_DOCUMENTSTATUS, this.parent.getProperty(BO_PROPERTY_NAME_LINESTATUS));
+                    } else if (objects.instanceOf(item, BODocumentLine)) {
+                        item.setProperty(BO_PROPERTY_NAME_LINESTATUS, this.parent.getProperty(BO_PROPERTY_NAME_LINESTATUS));
+                    }
+                }
+            }
+        }
     }
     /** 子项属性改变时 */
     protected onChildPropertyChanged(item: T, name: string): void {
@@ -158,16 +236,26 @@ export abstract class BusinessObjects<T extends IBusinessObject, P extends IBusi
             }
             item.setProperty(BO_PROPERTY_NAME_LINEID, max);
         }
-        let that: this = this;
-        if (objects.instanceOf(item, BusinessObjectBase)) {
-            if (!objects.isNull((<any>item).registerListener)) {
-                (<any>item).registerListener({
-                    caller: item,
-                    propertyChanged(name: string): void { //方法中this指向caller
-                        that.onChildPropertyChanged(this, name);
-                    }
-                })
+        // 处理单据状态
+        if (objects.instanceOf(item, BODocumentLine)) {
+            if (objects.instanceOf(this.parent, BODocument)) {
+                item.setProperty(BO_PROPERTY_NAME_LINESTATUS, this.parent.getProperty(BO_PROPERTY_NAME_DOCUMENTSTATUS));
+            } else if (objects.instanceOf(this.parent, BODocumentLine)) {
+                item.setProperty(BO_PROPERTY_NAME_LINESTATUS, this.parent.getProperty(BO_PROPERTY_NAME_LINESTATUS));
             }
+        }
+        let that: this = this;
+        if (objects.instanceOf(item, Bindable)) {
+            (<any>item).registerListener(this.listener);
+        }
+    }
+    /**
+     * 移出项目后
+     * @param item 项目
+     */
+    protected afterRemove(item: T): void {
+        if (objects.instanceOf(item, Bindable)) {
+            (<any>item).removeListener(this.listener);
         }
     }
     /** 过滤删除的项目 */

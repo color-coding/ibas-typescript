@@ -52,7 +52,7 @@ export class HashEventManager {
     }
     /**
      * 修改当前地址栏hash值
-     * @param newHash 
+     * @param newHash
      */
     changeHash(newHash: string): void {
         if (strings.equalsIgnoreCase(window.location.hash, newHash)) {
@@ -64,31 +64,33 @@ export class HashEventManager {
     }
     /**
      * 替换当前地址栏hash值,但是不增加历史记录
-     * @param newHash 新的Hash值 
+     * @param newHash 新的Hash值
      * @param isTriggerEvent 是否触发onHashChange事件,默认为true
      */
     replaceHash(newHash: string, isTriggerEvent: boolean = true): void {
         window.history.replaceState(null, null, newHash);
         logger.log(emMessageLevel.DEBUG,
             "hashs: redirect to '{0}'", newHash);
-        if (isTriggerEvent != false) {
+        if (isTriggerEvent !== false) {
             this.fireHashChange();
         }
     }
     /**
      * 获取当前哈希值的类别和Id（服务、功能、视图）
-     * @return 
+     * @return
      */
     getCurrentHashValueCategoryAndId(): IHashCategory {
         let hashCategory: IHashCategory = { Id: "", category: "" };
-        let keys = this._listeners.keys();
+        let keys: IterableIterator<string> = this._listeners.keys();
         while (true) {
             let key: string = keys.next().value;
-            if (objects.isNull(key)) break;
-            let currentHashValue = window.location.hash;
+            if (objects.isNull(key)) {
+                break;
+            }
+            let currentHashValue: string = window.location.hash;
             if (currentHashValue.startsWith(key)) {
                 let url: string = currentHashValue.substring(key.length);
-                let index = url.indexOf("/") < 0 ? url.length : url.indexOf("/");
+                let index: number = url.indexOf("/") < 0 ? url.length : url.indexOf("/");
                 hashCategory.Id = url.substring(0, index);
                 hashCategory.category = key;
                 break;
