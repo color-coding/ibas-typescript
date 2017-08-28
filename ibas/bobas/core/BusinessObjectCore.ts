@@ -81,7 +81,7 @@ export abstract class Bindable implements IBindable {
             if (objects.isNull(item.caller)) {
                 item.propertyChanged(property);
             } else {
-                item.propertyChanged.apply(item.caller, [property]);
+                item.propertyChanged.apply(item.caller, [property, this]);
             }
         }
     }
@@ -386,7 +386,7 @@ export abstract class BusinessObjectBase<T extends IBusinessObject> extends Trac
     }
     /** 移出监听实现 */
     removeListener(): void {
-        super.removeListener(<any>arguments);
+        super.removeListener(arguments[0]);
         let recursive: boolean = arguments[0];
         if (recursive === true) {
             for (let item of this.getChildBOs()) {

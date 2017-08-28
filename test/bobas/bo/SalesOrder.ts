@@ -7,7 +7,7 @@
  */
 
 import {
-    BusinessObject, BusinessObjects,BODocument,BODocumentLine,
+    BusinessObject, BusinessObjects, BODocument, BODocumentLine,
     emYesNo, emDocumentStatus, emBOStatus, emApprovalStatus
 } from "../../../ibas/bobas/index";
 import { User } from "./User";
@@ -965,5 +965,19 @@ export class SalesOrderItems extends BusinessObjects<SalesOrderItem, SalesOrder>
         let item: SalesOrderItem = new SalesOrderItem();
         this.add(item);
         return item;
+    }
+    /** 子项属性改变时 */
+    protected onChildPropertyChanged(item: SalesOrderItem, name: string): void {
+        super.onChildPropertyChanged(item, name);
+        if (name.toLowerCase() === SalesOrderItem.PROPERTY_LINETOTAL_NAME.toLowerCase()) {
+            let total: number = 0;
+            for (let salesOrderItem of this.filterDeleted()) {
+                if (!salesOrderItem.lineTotal) {
+                    salesOrderItem.lineTotal = 0;
+                }
+                total += salesOrderItem.lineTotal;
+            }
+            this.parent.documentTotal = total;
+        }
     }
 }
