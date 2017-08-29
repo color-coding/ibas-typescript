@@ -16,7 +16,7 @@ import {
     BOViewApplication, BOEditApplication, IBOView,
     MODULE_REPOSITORY_NAME_TEMPLATE, CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS,
     VARIABLE_NAME_USER_ID, VARIABLE_NAME_USER_CODE, VARIABLE_NAME_USER_NAME, CONFIG_ITEM_DEBUG_MODE,
-    hashEventManager, URL_HASH_SIGN_FUNCTIONS
+    hashEventManager, URL_HASH_SIGN_FUNCTIONS, IHashInfo
 } from "ibas/index";
 import {
     ICenterView, ICenterApp, IBORepositorySystem,
@@ -179,30 +179,32 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
         if (objects.isNull(this.functionMap)) {
             this.functionMap = new Map<string, IModuleFunction>();
             hashEventManager.registerListener({
-                hashSign: URL_HASH_SIGN_FUNCTIONS, caller: this,
-                onHashChange: (event: HashChangeEvent): void => {
+                hashSign: URL_HASH_SIGN_FUNCTIONS,
+                onHashChange: (event: any): void => {
                     try {
                         let url: string = event.newURL.substring(
                             event.newURL.indexOf(URL_HASH_SIGN_FUNCTIONS) + URL_HASH_SIGN_FUNCTIONS.length);
-                        let index = url.indexOf("/") < 0 ? url.length : url.indexOf("/");
+                        let index: number = url.indexOf("/") < 0 ? url.length : url.indexOf("/");
                         let functionId: string = url.substring(0, index);
-                        if (objects.isNull(this.functionMap)) {
+                        if (objects.isNull(that.functionMap)) {
                             return;
                         }
-                        if (this.functionMap.has(functionId)) {
+                        if (that.functionMap.has(functionId)) {
                             try {
-                                let func: IModuleFunction = this.functionMap.get(functionId);
+                                let func: IModuleFunction = that.functionMap.get(functionId);
                                 let app: IApplication<IView> = func.default();
-                                if (objects.isNull(app)) return;
+                                if (objects.isNull(app)) {
+                                    return;
+                                }
                                 if (objects.isNull(app.navigation)) {
                                     app.navigation = func.navigation;
                                 }
                                 if (objects.isNull(app.viewShower)) {
-                                    app.viewShower = this;
+                                    app.viewShower = that;
                                 }
                                 app.run();
                             } catch (error) {
-                                this.messages({
+                                that.messages({
                                     type: emMessageType.ERROR,
                                     message: config.get(CONFIG_ITEM_DEBUG_MODE, false) ? error.stack : error.message
                                 });
@@ -287,12 +289,12 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
                         that.view.showModule(console);
                         // 注册模块功能
                         that.registerFunctions(console);
-                        //如当前模块包含Hash指向的功能,激活
-                        let hashCategory = hashEventManager.getCurrentHashValueCategoryAndId();
-                        if (hashCategory.category == URL_HASH_SIGN_FUNCTIONS) {
+                        // 如当前模块包含Hash指向的功能,激活
+                        let hashInfo: IHashInfo = hashEventManager.currentHashInfo();
+                        if (hashInfo.category === URL_HASH_SIGN_FUNCTIONS) {
                             for (let item of console.functions()) {
-                                if (strings.equals(item.id, hashCategory.Id)) {
-                                    hashEventManager.fireHashChange();
+                                if (strings.equals(item.id, hashInfo.id)) {
+                                    hashEventManager.fireHashChanged();
                                     break;
                                 }
                             }

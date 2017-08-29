@@ -8,18 +8,16 @@
 /**
  * HashChange监听者
  */
-export interface IHashChangeListener {
+export interface IHashChangedListener {
     hashSign: string;
     /** Hash改变，即地址栏#数据改变 */
     onHashChange(event: HashChangeEvent)
-    /** 调用者，this指向 */
-    caller: any;
 }
 /**
- * 哈希类别
+ * 哈希代表的信息
  */
-export interface IHashCategory {
-    Id: string;
+export interface IHashInfo {
+    id: string;
     /** 类别 */
     category: string;
 }
