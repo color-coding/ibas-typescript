@@ -8,7 +8,7 @@
 
 import { strings, objects, config, i18n, logger, emMessageLevel } from "../../bobas/index";
 import { AbstractApplication as Application, IViewShower, IViewNavigation, IView } from "../core/index";
-import { hashEventManager, IHashCategoryAndID } from "../utils/index";
+import { hashEventManager, IHashInfo } from "../utils/index";
 import {
     IServiceContract, IServiceProxy, IService,
     IBOServiceContract, IApplicationServiceContract,
@@ -122,13 +122,13 @@ export class ServicesManager {
     constructor() {
         let that: this = this;
         hashEventManager.registerListener({
-            hashSign: URL_HASH_SIGN_SERVICES, caller: this,
-            onHashChange: (event: HashChangeEvent): void => {
+            hashSign: URL_HASH_SIGN_SERVICES,
+            onHashChange: (event: any): void => {
                 try {
                     let url: string = event.newURL.substring(
                         event.newURL.indexOf(URL_HASH_SIGN_SERVICES) + URL_HASH_SIGN_SERVICES.length);
                     let serviceId: string = url.substring(0, url.indexOf("/"));
-                    let mapping: IServiceMapping = this.getServiceMapping(serviceId);
+                    let mapping: IServiceMapping = that.getServiceMapping(serviceId);
                     if (!objects.isNull(mapping)) {
                         let service: IService<IDataServiceContract> = mapping.create();
                         if (!objects.isNull(service)) {
@@ -163,10 +163,10 @@ export class ServicesManager {
         }
         this.mappings.set(mapping.id, mapping);
         // 如当前注册的服务为Hash指向的服务,激活
-        let hashCategory: IHashCategoryAndID = hashEventManager.currentHashCategoryAndID();
-        if (hashCategory.category === URL_HASH_SIGN_SERVICES
-            && strings.equals(mapping.id, hashCategory.id)) {
-            hashEventManager.fireHashChange();
+        let hashInfo: IHashInfo = hashEventManager.currentHashInfo();
+        if (hashInfo.category === URL_HASH_SIGN_SERVICES
+            && strings.equals(mapping.id, hashInfo.id)) {
+            hashEventManager.fireHashChanged();
         }
     }
     /** 获取服务映射 */

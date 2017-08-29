@@ -123,13 +123,12 @@ export module urls {
      * @param name 指定参数名称
      */
     export function param(name: string): KeyText {
-        let reg: RegExp = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-        let r: RegExpMatchArray = window.location.search.substr(1).match(reg);
-        if (r !== null) {
-            return new KeyText(name,
-                (<any>window).unescape(r[2]));
-        }
-        return null;
+        let params: List<KeyText> = this.params();
+        return params.firstOrDefault((param: KeyText) => {
+            if (param.key === name) {
+                return true;
+            }
+        });
     }
 
 }
