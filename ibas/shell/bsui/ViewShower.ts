@@ -30,19 +30,19 @@ export default class ViewShowerDefault implements ibas.IViewShower {
         }, false);
         // 哈希值变化
         ibas.hashEventManager.registerListener({
-            hashSign: ibas.URL_HASH_SIGN_VIEWS, caller: this,
+            hashSign: ibas.URL_HASH_SIGN_VIEWS,
             onHashChange: (event: HashChangeEvent): void => {
-                if (!ibas.objects.isNull(this.busyDialog)) {
+                if (!ibas.objects.isNull(that.busyDialog)) {
                     return;
                 }
-                if (ibas.objects.isNull(this.currentView)) {
+                if (ibas.objects.isNull(that.currentView)) {
                     return;
                 }
-                if (this.currentView.isDisplayed) {
-                    this.currentView.onHashChange(event);
+                if (that.currentView.isDisplayed) {
+                    that.currentView.onHashChange(event);
                 }
             }
-        })
+        });
     }
     /** 按钮按下时 */
     private onKeyDown(event: KeyboardEvent): void {
