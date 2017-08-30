@@ -43,7 +43,7 @@ export class LoginApp<T extends ILoginView> extends Application<T> implements IL
             );
             logger.log(emMessageLevel.DEBUG, "app: user login system,token is [{0}].", userToken);
             let boRepository: IBORepositorySystem = Factories.systemsFactory.createRepository();
-            boRepository.connect({
+            boRepository.tokenConnect({
                 caller: this, // 设置调用者，则onCompleted修正this
                 token: userToken,
                 onCompleted: function (opRslt: IOperationResult<IUser>): void {
@@ -105,7 +105,7 @@ export class LoginApp<T extends ILoginView> extends Application<T> implements IL
         this.busy(true, i18n.prop("sys_logging_system"));
         logger.log(emMessageLevel.DEBUG, "app: user [{0}] login system.", this.view.user);
         let boRepository: IBORepositorySystem = Factories.systemsFactory.createRepository();
-        boRepository.connect({
+        boRepository.userConnect({
             caller: this, // 设置调用者，则onCompleted修正this
             user: this.view.user,
             password: this.view.password,

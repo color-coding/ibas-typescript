@@ -33,31 +33,36 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements s
     }
 
 	/**
-	 * 用户登录
-	 * @param caller 登录调用者
+	 * 用户密码登录
+	 * @param caller 用户密码登录调用者
 	 */
-    connect(caller: sys.ConnectCaller): void {
+    userConnect(caller: sys.UserConnectCaller): void {
         let remoteRepository: ibas.IRemoteRepository = this.createRemoteRepository();
         if (ibas.objects.isNull(remoteRepository)) {
             throw new Error(ibas.i18n.prop("sys_invalid_parameter", "remoteRepository"));
         }
-        if (!ibas.objects.isNull(caller.token)) {
-            let method: string = ibas.strings.format("userConnect?token={0}", caller.token);
+        require(["../../3rdparty/crypto-js"], function (cryptoJS: CryptoJS.Hashes): void {
+            let method: string = ibas.strings.format("userConnect?user={0}&password={1}", caller.user, cryptoJS.MD5(caller.password));
             remoteRepository.callRemoteMethod(method, undefined, caller);
-        } else if (ibas.objects.isNull(caller.user) || ibas.objects.isNull(caller.password)) {
-            throw new Error(ibas.i18n.prop("msg_if_user_name_and_password_not_match"));
-        } else {
-            require(["../../3rdparty/crypto-js"], function (cryptoJS: CryptoJS.Hashes): void {
-                let method: string = ibas.strings.format("userConnect?user={0}&password={1}", caller.user, cryptoJS.MD5(caller.password));
-                remoteRepository.callRemoteMethod(method, undefined, caller);
-            }, function (error: RequireError): void {
-                // 加载js库失败
-                let opRslt: ibas.IOperationResult<any> = new ibas.OperationResult();
-                opRslt.resultCode = -901;
-                opRslt.message = error.message;
-                caller.onCompleted(opRslt);
-            });
+        }, function (error: RequireError): void {
+            // 加载js库失败
+            let opRslt: ibas.IOperationResult<any> = new ibas.OperationResult();
+            opRslt.resultCode = -901;
+            opRslt.message = error.message;
+            caller.onCompleted(opRslt);
+        });
+    }
+    /**
+     * 用户口令登录
+     * @param caller 用户口令登录调用者
+     */
+    tokenConnect(caller: sys.TokenConnectCaller): void {
+        let remoteRepository: ibas.IRemoteRepository = this.createRemoteRepository();
+        if (ibas.objects.isNull(remoteRepository)) {
+            throw new Error(ibas.i18n.prop("sys_invalid_parameter", "remoteRepository"));
         }
+        let method: string = ibas.strings.format("tokenConnect?token={0}", caller.token);
+        remoteRepository.callRemoteMethod(method, undefined, caller);
     }
 
 	/**
@@ -152,7 +157,7 @@ export class BORepositoryShellOffline extends BORepositoryShell {
 	 * 用户登录
 	 * @param caller 登录者
 	 */
-    connect(caller: sys.ConnectCaller): void {
+    userConnect(caller: sys.UserConnectCaller): void {
         let criteria: ibas.ICriteria = new ibas.Criteria();
         let condition: ibas.ICondition = criteria.conditions.create();
         condition.alias = "code";
@@ -182,6 +187,17 @@ export class BORepositoryShellOffline extends BORepositoryShell {
             }
         };
         this.fetch("User", fetchCaller);
+    }
+    /**
+     * 用户口令登录
+     * @param caller 用户口令登录者
+     */
+    tokenConnect(caller: sys.TokenConnectCaller): void {
+        // 离线模式不支持用户口令登录
+        let opRslt: ibas.IOperationResult<any> = new ibas.OperationResult();
+        opRslt.resultCode = -1;
+        opRslt.message = ibas.i18n.prop("sys_shell_user_and_password_not_match");
+        caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
     }
 
 	/**

@@ -179,17 +179,27 @@ export interface IBOPropertyInfo {
  * 登录调用者
  */
 export interface ConnectCaller extends MethodCaller {
-	/** 用户 */
-	user?: string;
-	/** 密码 */
-	password?: string;
-	/** Token */
-	token?: string;
     /**
      * 调用完成
      * @param opRslt 结果
      */
 	onCompleted(opRslt: IOperationResult<IUser>);
+}
+/**
+ * 用户密码登录调用者
+ */
+export interface UserConnectCaller extends ConnectCaller {
+	/** 用户 */
+	user: string;
+	/** 密码 */
+	password: string;
+}
+/**
+ * 用户口令登录调用者
+ */
+export interface TokenConnectCaller extends ConnectCaller {
+	/** 口令 */
+	token: string;
 }
 /**
  * 用户相关调用者
@@ -229,10 +239,15 @@ export interface BOInfoCaller extends MethodCaller {
 /** 系统仓库 */
 export interface IBORepositorySystem {
 	/**
-	 * 用户登录
+	 * 用户密码登录
 	 * @param caller 调用者
 	 */
-	connect(caller: ConnectCaller): void;
+	userConnect(caller: UserConnectCaller): void;
+	/**
+	 * 用户口令登录
+	 * @param caller 调用者
+	 */
+	tokenConnect(caller: TokenConnectCaller): void;
 
 	/**
 	 * 查询用户模块
