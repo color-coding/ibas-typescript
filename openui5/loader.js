@@ -37,6 +37,17 @@
         if (root === undefined || root === null) {
             root = "";
         }
+        // 解决方法缺失
+        if (typeof String.prototype.startsWith != 'function') {
+            String.prototype.startsWith = function (prefix) {
+                return this.slice(0, prefix.length) === prefix;
+            };
+        }
+        if (typeof String.prototype.endsWith != 'function') {
+            String.prototype.endsWith = function (suffix) {
+                return this.indexOf(suffix, this.length - suffix.length) !== -1;
+            };
+        }
         if (!root.endsWith("/resources/sap-ui-core.js")) {
             // 没有提供根目录，则判断加载本地还是远程
             if ($ === undefined || $ === null) {
