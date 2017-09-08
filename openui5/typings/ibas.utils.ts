@@ -14,6 +14,24 @@ export namespace utils {
     export const CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT: string = "tableRow|List";
     /** 配置项目-子项表格可视行数 */
     export const CONFIG_ITEM_ITEM_TABLE_VISIBLE_ROW_COUNT: string = "tableRow|Item";
+    var mapLanguage: Map<string, string> = new Map();
+    /** 转换语言编码 */
+    export function toLanguageCode(data: string): string {
+        if (ibas.objects.isNull(data)) {
+            return data;
+        }
+        if (mapLanguage.size === 0) {
+            // 正反
+            mapLanguage.set("zh_CN", "zh-CN");
+            mapLanguage.set("en_US", "en");
+            mapLanguage.set("zh-CN", "zh_CN");
+            mapLanguage.set("en", "en_US");
+        }
+        if (mapLanguage.has(data)) {
+            return mapLanguage.get(data);
+        }
+        return data;
+    }
     /**
      * 获取枚举类型map
      * @param data 枚举类型

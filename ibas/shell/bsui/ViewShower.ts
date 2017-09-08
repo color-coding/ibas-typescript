@@ -43,6 +43,13 @@ export default class ViewShowerDefault implements ibas.IViewShower {
                 }
             }
         });
+        // 语言变化监听
+        ibas.i18n.language = utils.toLanguageCode(sap.ui.getCore().getConfiguration().getLanguage());
+        ibas.i18n.registerListener({
+            onLanguageChanged(language: string): void {
+                sap.ui.getCore().getConfiguration().setLanguage(utils.toLanguageCode(language));
+            }
+        });
     }
     /** 按钮按下时 */
     private onKeyDown(event: KeyboardEvent): void {
@@ -71,6 +78,8 @@ export default class ViewShowerDefault implements ibas.IViewShower {
                 let page: any = app.getInitialPage();
                 if (page instanceof sap.ui.core.Control) {
                     page.destroy(true);
+                } else if (typeof page === "string") {
+                    app.setInitialPage(undefined);
                 }
                 app.addPage(viewContent);
                 app.setInitialPage(viewContent);
