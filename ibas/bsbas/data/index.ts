@@ -12,3 +12,12 @@
 
 export * from "./Enums";
 
+
+/** 配置项目-格式-日期 */
+export const CONFIG_ITEM_FORMAT_DATE: string = "format|Date";
+/** 配置项目-格式-时间 */
+export const CONFIG_ITEM_FORMAT_TIME: string = "format|Time";
+/** 配置项目-格式-日期时间 */
+export const CONFIG_ITEM_FORMAT_DATETIME: string = "format|DateTime";
+/** 配置项目-格式-小数位数 */
+export const CONFIG_ITEM_FORMAT_DECIMAL_PLACES: string = "format|DecimalPlaces";

@@ -33,6 +33,7 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
     darw(): any {
         let that: this = this;
         this.form = new sap.ui.layout.form.SimpleForm("", {
+            editable: true,
             content: [
                 new sap.ui.core.Title("", { text: ibas.i18n.prop("trainingtesting_basis_information") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_customercode") }),
@@ -46,7 +47,8 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_documentdate") }),
                 new sap.m.DatePicker("", {
-                    valueFormat: "yyyy-MM-dd",
+                    valueFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE),
+                    displayFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE),
                 }).bindProperty("dateValue", {
                     path: "/documentDate"
                 }),
@@ -141,7 +143,7 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
                         width: "100%",
                         type: sap.m.InputType.Number
                     }).bindProperty("value", {
-                        path: "price"
+                        path: "price",
                     })
                 }),
                 new sap.ui.table.Column("", {
