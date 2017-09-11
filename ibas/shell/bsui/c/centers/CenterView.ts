@@ -625,7 +625,12 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                 },
                 content: [form]
             });
-            (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
+            // 设置视图紧凑
+            if (ibas.config.get(CONFIG_ITEM_COMPACT_SCREEN, false)) {
+                popover.addStyleClass("sapUiSizeCompact sapMOTAPopover sapTntToolHeaderPopover");
+            } else {
+                popover.addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
+            }
             popover.openBy(view.darwBar(), true);
         }
         view.id = form.getId();
