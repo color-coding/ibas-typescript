@@ -10,6 +10,8 @@
 import * as ibas from "ibas/index";
 import { utils } from "../../../openui5/typings/ibas.utils";
 
+/** 配置项目-紧缩屏幕 */
+export const CONFIG_ITEM_COMPACT_SCREEN: string = "compactScreen";
 /**
  * 视图-显示者-默认
  */
@@ -50,6 +52,21 @@ export default class ViewShowerDefault implements ibas.IViewShower {
                 sap.ui.getCore().getConfiguration().setLanguage(utils.toLanguageCode(language));
             }
         });
+        // 监听配置变化
+        ibas.config.registerListener({
+            onConfigurationChanged(name: string, value: any): void {
+                if (name === ibas.CONFIG_ITEM_PLANTFORM) {
+                    // 平台配置变化
+                    if (value === ibas.emPlantform.DESKTOP) {
+                        // 桌面平台，使用紧凑视图
+                        ibas.config.set(CONFIG_ITEM_COMPACT_SCREEN, true);
+                    } else {
+                        // 使用舒适视图
+                        ibas.config.set(CONFIG_ITEM_COMPACT_SCREEN, false);
+                    }
+                }
+            }
+        });
     }
     /** 按钮按下时 */
     private onKeyDown(event: KeyboardEvent): void {
@@ -73,6 +90,10 @@ export default class ViewShowerDefault implements ibas.IViewShower {
             viewContent.placeAt("content");
         } else if (viewContent instanceof sap.tnt.ToolPage
             || viewContent instanceof sap.ui.core.Control) {
+            if (ibas.config.get(CONFIG_ITEM_COMPACT_SCREEN, false)) {
+                viewContent.addStyleClass("sapUiSizeCompact");
+                // viewContent.addStyleClass("sapUiSizeCozy");
+            }
             let app: sap.ui.core.Element = sap.ui.getCore().byId("ibas-app");
             if (app instanceof sap.m.App) {
                 let page: any = app.getInitialPage();
@@ -111,6 +132,9 @@ export default class ViewShowerDefault implements ibas.IViewShower {
         if (busy) {
             if (ibas.objects.isNull(this.busyDialog)) {
                 this.busyDialog = new sap.m.BusyDialog("");
+                if (ibas.config.get(CONFIG_ITEM_COMPACT_SCREEN, false)) {
+                    this.busyDialog.addStyleClass("sapUiSizeCompact");
+                }
             }
             this.busyDialog.setTitle(view.title);
             this.busyDialog.setText(msg);

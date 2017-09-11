@@ -108,6 +108,8 @@ export class LoginView extends ibas.BOView implements sys.ILoginView {
                         ibas.config.set(ibas.CONFIG_ITEM_PLANTFORM,
                             parseInt(this.getSelectedKey(), 0)
                         );
+                        that.fireViewEvents(that.closeEvent);
+                        that.application.show();
                     }
                 }),
                 new sap.m.Button("", {

@@ -25,6 +25,8 @@ export const CONFIG_ITEM_WELCOME_PAGE_URL: string = "welcomeUrl";
 export const CONFIG_ITEM_SHRINK_FUNCTION_LIST: string = "shrinkFunction";
 /** 配置项目-最大消息数 */
 export const CONFIG_ITEM_MAX_MESSAGES_COUNT: string = "messgesCount";
+/** 配置项目-紧缩屏幕 */
+export const CONFIG_ITEM_COMPACT_SCREEN: string = "compactScreen";
 
 /**
  * 视图-中心
@@ -437,6 +439,9 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             if (busy) {
                 if (ibas.objects.isNull(this.busyDialog)) {
                     this.busyDialog = new sap.m.BusyDialog("");
+                    if (ibas.config.get(CONFIG_ITEM_COMPACT_SCREEN, false)) {
+                        this.busyDialog.addStyleClass("sapUiSizeCompact");
+                    }
                 }
                 if (!this.busyDialog.getVisible()) {
                     this.busyDialog.setTitle(view.title);
@@ -575,6 +580,10 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             },
             buttons: [view.darwBars()]
         });
+        // 设置视图紧凑
+        if (ibas.config.get(CONFIG_ITEM_COMPACT_SCREEN, false)) {
+            dialog.addStyleClass("sapUiSizeCompact");
+        }
         // 修改id号
         view.id = dialog.getId();
         dialog.open();

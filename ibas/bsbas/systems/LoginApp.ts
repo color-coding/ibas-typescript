@@ -94,6 +94,7 @@ export class LoginApp<T extends ILoginView> extends Application<T> implements IL
     }
     /** 注册视图 */
     protected registerView(): void {
+        super.registerView();
         this.view.loginEvent = this.login;
     }
     /** 视图显示后 */
