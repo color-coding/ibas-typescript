@@ -47,7 +47,7 @@ export abstract class BOChooseService<T extends IBOChooseView, D> extends BOChoo
             // 设置选择类型
             let chooseType: emChooseType = contract.chooseType;
             if (objects.isNull(chooseType)) {
-                chooseType = emChooseType.multiple;
+                chooseType = emChooseType.MULTIPLE;
             }
             this.view.chooseType = chooseType;
             // 选择契约且为此应用

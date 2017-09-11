@@ -7,6 +7,8 @@
  */
 
 import { objects } from "./Datas";
+import { KeyText, ArrayList } from "./Common";
+import { List } from "./Common.d";
 
 /**
  * 地址
@@ -100,6 +102,33 @@ export module urls {
             }
         }
         return root;
+    }
+    /**
+     * 获取地址栏中的所有查询参数
+     */
+    export function params(): List<KeyText> {
+        let params: List<KeyText> = new ArrayList<KeyText>();
+        let items: string[] = window.location.search.substr(1).split("&");
+        for (let item of items) {
+            let keyText: string[] = item.split("=");
+            if (keyText.length === 2) {
+                params.add(new KeyText(keyText[0],
+                    (<any>window).unescape(keyText[1])));
+            }
+        }
+        return params;
+    }
+    /**
+     * 获取地址栏中的指定查询参数
+     * @param name 指定参数名称
+     */
+    export function param(name: string): KeyText {
+        let params: List<KeyText> = this.params();
+        return params.firstOrDefault((param: KeyText) => {
+            if (param.key === name) {
+                return true;
+            }
+        });
     }
 
 }

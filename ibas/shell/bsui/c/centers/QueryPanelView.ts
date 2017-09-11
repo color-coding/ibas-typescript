@@ -16,6 +16,30 @@ import { UserQuery } from "../../../borep/bo/Systems";
  * 视图-查询面板
  */
 export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView {
+    /** 查询 */
+    searchEvent: Function;
+    /** 删除查询 */
+    deleteQueryEvent: Function;
+    /** 保存查询 */
+    saveQueryEvent: Function;
+    /** 添加查询条件 */
+    addQueryConditionEvent: Function;
+    /** 移出查询 */
+    removeQueryConditionEvent: Function;
+    /** 查询内容 */
+    get searchContent(): string {
+        return this.search.getValue();
+    }
+    set searchContent(value: string) {
+        this.search.setValue(value);
+    }
+    /** 查询内容 */
+    get usingQuery(): string {
+        return this.baseOn.getSelectedKey();
+    }
+    set usingQuery(value: string) {
+        this.baseOn.setSelectedKey(value);
+    }
     /** 绘制工具条视图 */
     darwBar(): any {
         if (ibas.objects.isNull(this.bar)) {
@@ -53,30 +77,6 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
     private search: sap.m.SearchField;
     private config: sap.m.Button;
     private baseOn: sap.m.Select;
-    /** 查询 */
-    searchEvent: Function;
-    /** 删除查询 */
-    deleteQueryEvent: Function;
-    /** 保存查询 */
-    saveQueryEvent: Function;
-    /** 添加查询条件 */
-    addQueryConditionEvent: Function;
-    /** 移出查询 */
-    removeQueryConditionEvent: Function;
-    /** 查询内容 */
-    get searchContent(): string {
-        return this.search.getValue();
-    }
-    set searchContent(value: string) {
-        this.search.setValue(value);
-    }
-    /** 查询内容 */
-    get usingQuery(): string {
-        return this.baseOn.getSelectedKey();
-    }
-    set usingQuery(value: string) {
-        this.baseOn.setSelectedKey(value);
-    }
     /** 显示可用查询 */
     showQueries(datas: ibas.KeyValue[]): void {
         this.baseOn.removeAllItems();
@@ -223,59 +223,63 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("sys_shell_query_condition_relationship"),
                     width: "100px",
-                    autoResizable: true,
                     template: new sap.m.Select("", {
                         width: "100%",
-                        selectedKey: "{relationship}",
                         items: utils.createComboBoxItems(ibas.emConditionRelationship)
+                    }).bindProperty("selectedKey", {
+                        path: "/relationship",
+                        type: "sap.ui.model.type.Integer"
                     })
                 }),
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("sys_shell_query_condition_bracketopen"),
                     width: "100px",
-                    autoResizable: true,
                     template: new sap.m.Select("", {
                         width: "100%",
-                        selectedKey: "{bracketOpen}",
                         items: this.getCharListItem("(")
+                    }).bindProperty("selectedKey", {
+                        path: "/bracketOpen",
+                        type: "sap.ui.model.type.Integer"
                     })
                 }),
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("sys_shell_query_condition_alias"),
                     width: "200px",
-                    autoResizable: true,
                     template: new sap.m.Select("", {
                         width: "100%",
-                        selectedKey: "{alias}",
                         items: this.getPropertyListItem(properies)
+                    }).bindProperty("selectedKey", {
+                        path: "/alias",
                     })
                 }),
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("sys_shell_query_condition_operation"),
                     width: "140px",
-                    autoResizable: true,
                     template: new sap.m.Select("", {
                         width: "100%",
-                        selectedKey: "{operation}",
                         items: utils.createComboBoxItems(ibas.emConditionOperation)
+                    }).bindProperty("selectedKey", {
+                        path: "/operation",
+                        type: "sap.ui.model.type.Integer"
                     })
                 }),
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("sys_shell_query_condition_value"),
                     width: "120px",
-                    autoResizable: true,
                     template: new sap.m.Input("", {
-                        value: "{value}"
-                    })
+                    }).bindProperty("value", {
+                        path: "/value"
+                    }),
                 }),
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("sys_shell_query_condition_bracketclose"),
                     width: "100px",
-                    autoResizable: true,
                     template: new sap.m.Select("", {
                         width: "100%",
-                        selectedKey: "{bracketClose}",
                         items: this.getCharListItem(")")
+                    }).bindProperty("selectedKey", {
+                        path: "/bracketClose",
+                        type: "sap.ui.model.type.Integer"
                     })
                 })
             ]
@@ -304,13 +308,15 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
                             text: ibas.i18n.prop("sys_shell_query_name"),
                         }),
                         new sap.m.Input("", {
-                            value: "{/name}"
+                        }).bindProperty("value", {
+                            path: "/name"
                         }),
                         new sap.m.ToolbarSpacer("", { width: "15px" }),
                         new sap.m.RatingIndicator("", {
                             maxValue: 5,
                             tooltip: ibas.i18n.prop("sys_shell_query_order"),
-                            value: "{/order}"
+                        }).bindProperty("value", {
+                            path: "/order"
                         }),
                         new sap.m.ToolbarSpacer("", { width: "5px" })
                     ]

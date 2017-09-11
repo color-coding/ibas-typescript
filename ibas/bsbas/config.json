@@ -1,7 +1,11 @@
 {
-  "remark":"此文件内容可能会被后加载配置覆盖",
+  "remark": "此文件内容可能会被后加载配置覆盖",
   "appSettings": {
     "language": "zh_CN",
-    "msgLevel": "info"
+    "msgLevel": "info",
+    "format|Date": "yyyy-MM-dd",
+    "format|Time": "hh:mm",
+    "format|DateTime": "yyyy-MM-dd hh:mm",
+    "format|DecimalPlaces": 6
   }
 }

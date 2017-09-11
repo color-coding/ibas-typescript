@@ -97,7 +97,7 @@ export class Console extends ibas.ModuleConsole {
             ibas.config.load(ibas.strings.format("{0}/{1}", siteUrl, ibas.CONFIG_FILE_NAME));
         }
         // 加载视图显示者
-        let that: Console = this;
+        let that: this = this;
         require(["../bsui/ViewShower"], function (ViewShower: any): void {
             // 设置视图显示者
             that.viewShower = new ViewShower.default();

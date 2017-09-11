@@ -9,5 +9,6 @@
   "trainingtestingothers_app_resident": "应用-常驻",
   "trainingtestingothers_app_service": "应用-服务",
   "trainingtestingothers_app_map": "应用-地图",
+  "trainingtestingothers_map_location": "位置{0}-{1}",
   "trainingtestingothers_closing_delimiter": "----结束----"
 }

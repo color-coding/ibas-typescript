@@ -17,6 +17,11 @@ declare namespace sap {
                 None,
                 Single
             }
+            export enum SelectionBehavior {
+                Row,
+                RowOnly,
+                RowSelector
+            }
             export class Table extends sap.ui.core.Control {
                 constructor(mSettings?: any);
                 constructor(sId: string, mSettings?: any);
@@ -31,10 +36,12 @@ declare namespace sap {
                 getExtension(): sap.ui.core.Control[];
                 getRows(): sap.ui.table.Row[];
                 addColumn(oColumn: Column): sap.ui.table.Table;
+                setRowActionCount(iVisibleRowCount?: number): void;
             }
             export class Column extends sap.ui.core.Control {
                 constructor(mSettings?: any);
                 constructor(sId: string, mSettings?: any);
+                setTemplate(oTemplate: sap.ui.core.Control): Column;
             }
             export class Row extends sap.ui.core.Control {
                 constructor(mSettings?: any);
@@ -44,9 +51,16 @@ declare namespace sap {
             export class AnalyticalTable extends Table {
                 constructor(mSettings?: any);
                 constructor(sId: string, mSettings?: any);
-
             }
             export class TreeTable extends Table {
+                constructor(mSettings?: any);
+                constructor(sId: string, mSettings?: any);
+            }
+            export class RowAction extends sap.ui.core.Control {
+                constructor(mSettings?: any);
+                constructor(sId: string, mSettings?: any);
+            }
+            export class RowActionItem extends sap.ui.core.Control {
                 constructor(mSettings?: any);
                 constructor(sId: string, mSettings?: any);
             }

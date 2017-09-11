@@ -11,7 +11,7 @@ echo '    4. 参数2，tsc命令的其他参数，如：-w，表示监听文件�
 echo '****************************************************************************'
 # 设置参数变量
 # 启动目录
-STARTUP_FOLDER=`pwd`
+STARTUP_FOLDER=$(cd `dirname $0`; pwd)
 # 工作目录默认第一个参数
 WORK_FOLDER=$1
 # 修正相对目录为启动目录
@@ -24,6 +24,7 @@ if [ "${WORK_FOLDER}" == "" ]
 then
   WORK_FOLDER=${STARTUP_FOLDER}
 fi
+echo --工作的目录：${WORK_FOLDER}
 # 其他参数
 OPTIONS=$2
 COMMOND=tsc

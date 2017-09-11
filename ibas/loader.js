@@ -23,7 +23,6 @@
     "use strict"
     var ibas = function () { };
     var requireError = function (error) {
-        console.error(error);
         alert("应用加载失败，请联系管理员或尝试使用其他浏览器。");
     };
     ibas.prototype.load = function () {
@@ -33,6 +32,17 @@
         }
         if (root === undefined || root === null) {
             throw new Error("please provide root url.");
+        }
+        // 解决方法缺失
+        if (typeof String.prototype.startsWith != 'function') {
+            String.prototype.startsWith = function (prefix) {
+                return this.slice(0, prefix.length) === prefix;
+            };
+        }
+        if (typeof String.prototype.endsWith != 'function') {
+            String.prototype.endsWith = function (suffix) {
+                return this.indexOf(suffix, this.length - suffix.length) !== -1;
+            };
         }
         if (!root.endsWith("/")) {
             root = root + "/";

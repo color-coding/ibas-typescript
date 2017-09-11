@@ -101,21 +101,21 @@ declare namespace sap {
          * @param oRoutes may contain many Route configurations as {@link
          * sap.ui.core.routing.Route#constructor}.<br/>Each of the routes contained in the array/object will be
          * added to the router.<br/>One way of defining routes is an array:<pre>[    //Will create a route
-         * called 'firstRouter' you can later use this name in navTo to navigate to this route    {       
+         * called 'firstRouter' you can later use this name in navTo to navigate to this route    {
          * name: "firstRoute"        pattern : "usefulPattern"    },    //Will create a route called
          * 'anotherRoute'    {        name: "anotherRoute"        pattern : "anotherPattern"    }]</pre>The
          * alternative way of defining routes is an Object.<br/>If you choose this way, the name attribute is
          * the name of the property.<pre>{    //Will create a route called 'firstRouter' you can later use this
-         * name in navTo to navigate to this route    firstRoute : {        pattern : "usefulPattern"    },   
-         * //Will create a route called 'anotherRoute'    anotherRoute : {        pattern : "anotherPattern"   
+         * name in navTo to navigate to this route    firstRoute : {        pattern : "usefulPattern"    },
+         * //Will create a route called 'anotherRoute'    anotherRoute : {        pattern : "anotherPattern"
          * }}</pre>The values that may be provided are the same as in {@link
          * sap.ui.core.routing.Route#constructor}
          * @param oConfig Default values for route configuration - also takes the same parameters as {@link
          * sap.ui.core.routing.Target#constructor}.<br/>This config will be used for routes and for targets,
          * used in the router<br/>Eg: if the config object specifies :<pre><code>{ viewType : "XML"
-         * }</code></pre>The targets look like this:<pre>{    xmlTarget : {        ...    },    jsTarget : {   
-         *     viewType : "JS"        ...    }}</pre>Then the effective config will look like this:<pre>{   
-         * xmlTarget : {        viewType : "XML"        ...    },    jsTarget : {        viewType : "JS"       
+         * }</code></pre>The targets look like this:<pre>{    xmlTarget : {        ...    },    jsTarget : {
+         *     viewType : "JS"        ...    }}</pre>Then the effective config will look like this:<pre>{
+         * xmlTarget : {        viewType : "XML"        ...    },    jsTarget : {        viewType : "JS"
          * ...    }}</pre>Since the xmlTarget does not specify its viewType, XML is taken from the config
          * object. The jsTarget is specifying it, so the viewType will be JS.<br/>
          * @param oOwner the Component of all the views that will be created by this Router,<br/>will get
@@ -124,15 +124,15 @@ declare namespace sap {
          * @param oTargetsConfig the target configuration, see {@link sap.m.routing.Targets#constructor}
          * documentation (the options object).<br/>You should use Targets to create and display views. The
          * route should only contain routing relevant properties.<br/><b>Example:</b><pre><code>    new Router(
-         *    // Routes    [        {            // no view creation related properties are in the route       
+         *    // Routes    [        {            // no view creation related properties are in the route
          *     name: "startRoute",            //no hash            pattern: "",            // you can find this
          * target in the targetConfig            target: "welcome"        }    ],    // Default values shared
-         * by routes and Targets    {        viewNamespace: "my.application.namespace",        viewType: "XML" 
-         *   },    // You should only use this constructor when you are not using a router with a component.   
+         * by routes and Targets    {        viewNamespace: "my.application.namespace",        viewType: "XML"
+         *   },    // You should only use this constructor when you are not using a router with a component.
          * // Please use the metadata of a component to define your routes and targets.    // The documentation
-         * can be found here: {@link sap.ui.core.UIComponent#.extend}.    null,    // Target config    {       
+         * can be found here: {@link sap.ui.core.UIComponent#.extend}.    null,    // Target config    {
          *  //same name as in the route called 'startRoute'         welcome: {             // All properties
-         * for creating and placing a view go here or in the config             viewName: "Welcome",           
+         * for creating and placing a view go here or in the config             viewName: "Welcome",
          *  controlId: "app",             controlAggregation: "pages"         }    })</code></pre>
         */
         constructor(oRoutes: any | any[], oConfig?: any, oOwner?: sap.ui.core.UIComponent, oTargetsConfig?: any);
@@ -225,7 +225,7 @@ declare namespace sap {
         setCloseDialogs(bCloseDialogs: boolean): sap.m.routing.TargetHandler;
       }
       /**
-       * This class will attach to the Events of a provided router and add the views created by it to a 
+       * This class will attach to the Events of a provided router and add the views created by it to a
        * {@link sap.m.SplitContainer} or a {@link sap.m.NavContainer} Control, if this is the target control
        * of the route.</br>If the targetControl is no {@link sap.m.SplitContainer} or a {@link
        * sap.m.NavContainer}, It will only close the dialogs, according to the property value.</br></br>When
@@ -1379,9 +1379,9 @@ declare namespace sap {
        * semantics.<br>For example, a semantic button of type {@link sap.m.semantic.PositiveAction} will be
        * positioned in the right side of the footer, and in logically correct sequence order with respect to
        * any other included semantic controls.<br>The full list of what we internally define for semantic
-       * content is: <ul>     <li>Visual properties (e.g. AddAction will be styled as an icon button)</li>   
+       * content is: <ul>     <li>Visual properties (e.g. AddAction will be styled as an icon button)</li>
        *  <li>Position in the page (UX guidelines specify that some buttons should be in the header only,
-       * while others are in the footer or the "share" menu, so we do the correct positioning)</li>    
+       * while others are in the footer or the "share" menu, so we do the correct positioning)</li>
        * <li>Sequence order (UX guidelines define a specific sequence order of semantic controls with respect
        * to each other)</li>     <li>Default localized tooltip for icon-only buttons</li>     <li>Overflow
        * behavior (UX quidelines define which buttons are allowed to go to the overflow of the toolbar when
@@ -1600,7 +1600,7 @@ declare namespace sap {
          * Inserts a content into the aggregation <code>content</code>.
          * @param oContent the content to insert; if empty, nothing is inserted
          * @param iIndex the <code>0</code>-based index the content should be inserted at; for             a
-         * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value           
+         * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value
          *  greater than the current size of the aggregation, the content is inserted at             the last
          * position
          * @returns Reference to <code>this</code> in order to allow method chaining
@@ -1610,7 +1610,7 @@ declare namespace sap {
         /**
          * Inserts a customFooterContent into the aggregation <code>customFooterContent</code>.
          * @param oCustomFooterContent the customFooterContent to insert; if empty, nothing is inserted
-         * @param iIndex the <code>0</code>-based index the customFooterContent should be inserted at; for     
+         * @param iIndex the <code>0</code>-based index the customFooterContent should be inserted at; for
          *        a negative value of <code>iIndex</code>, the customFooterContent is inserted at position 0;
          * for a value             greater than the current size of the aggregation, the customFooterContent is
          * inserted at             the last position
@@ -1621,7 +1621,7 @@ declare namespace sap {
         /**
          * Inserts a customHeaderContent into the aggregation <code>customHeaderContent</code>.
          * @param oCustomHeaderContent the customHeaderContent to insert; if empty, nothing is inserted
-         * @param iIndex the <code>0</code>-based index the customHeaderContent should be inserted at; for     
+         * @param iIndex the <code>0</code>-based index the customHeaderContent should be inserted at; for
          *        a negative value of <code>iIndex</code>, the customHeaderContent is inserted at position 0;
          * for a value             greater than the current size of the aggregation, the customHeaderContent is
          * inserted at             the last position
@@ -1806,7 +1806,7 @@ declare namespace sap {
         /**
          * Inserts a customShareMenuContent into the aggregation <code>customShareMenuContent</code>.
          * @param oCustomShareMenuContent the customShareMenuContent to insert; if empty, nothing is inserted
-         * @param iIndex the <code>0</code>-based index the customShareMenuContent should be inserted at; for  
+         * @param iIndex the <code>0</code>-based index the customShareMenuContent should be inserted at; for
          *           a negative value of <code>iIndex</code>, the customShareMenuContent is inserted at
          * position 0; for a value             greater than the current size of the aggregation, the
          * customShareMenuContent is inserted at             the last position
@@ -2565,7 +2565,7 @@ declare namespace sap {
          * Inserts a item into the aggregation <code>items</code>.
          * @param oItem the item to insert; if empty, nothing is inserted
          * @param iIndex the <code>0</code>-based index the item should be inserted at; for             a
-         * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value            
+         * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value
          * greater than the current size of the aggregation, the item is inserted at             the last
          * position
          * @returns Reference to <code>this</code> in order to allow method chaining
@@ -2957,10 +2957,10 @@ declare namespace sap {
 
       /**
        * Displays an alert dialog with the given message and an OK button (no
-       * icons).<pre>sap.m.MessageBox.alert("This message should appear in the alert", {    title: "Alert",  
-       *                                    // default    onClose: null,                                     
+       * icons).<pre>sap.m.MessageBox.alert("This message should appear in the alert", {    title: "Alert",
+       *                                    // default    onClose: null,
        *  // default    styleClass: ""                                       // default    initialFocus: null
-       *                                   // default    textDirection: sap.ui.core.TextDirection.Inherit    
+       *                                   // default    textDirection: sap.ui.core.TextDirection.Inherit
        * // default});</pre>If a callback is given, it is called after the alert dialog has been closedby the
        * user via the OK button. The callback is called with the following signature:<pre>  function
        * (oAction)</pre>where <code>oAction</code> can be either sap.m.MessageBox.Action.OK when the alert
@@ -2979,7 +2979,7 @@ declare namespace sap {
        * button. If a callback is given, it is called after the confirmation boxhas been closed by the user
        * with one of the buttons.<pre>sap.m.MessageBox.confirm("This message should appear in the
        * confirmation", {    title: "Confirm",                                    // default    onClose: null
-       *                                        // default    styleClass: ""                                 
+       *                                        // default    styleClass: ""
        *      // default    initialFocus: null                                   // default    textDirection:
        * sap.ui.core.TextDirection.Inherit     // default    });</pre>The callback is called with the
        * following signature<pre>  function(oAction)</pre>where oAction is set by one of the following three
@@ -2997,9 +2997,9 @@ declare namespace sap {
       /**
        * Displays an error dialog with the given message, an ERROR icon, a CLOSE button..If a callback is
        * given, it is called after the error boxhas been closed by the user with one of the
-       * buttons.<pre>sap.m.MessageBox.error("This message should appear in the error message box", {   
-       * title: "Error",                                      // default    onClose: null                    
-       *                    // default    styleClass: ""                                       // default   
+       * buttons.<pre>sap.m.MessageBox.error("This message should appear in the error message box", {
+       * title: "Error",                                      // default    onClose: null
+       *                    // default    styleClass: ""                                       // default
        * initialFocus: null                                   // default    textDirection:
        * sap.ui.core.TextDirection.Inherit     // default    });</pre>The callback is called with the
        * following signature<pre>  function (oAction)</pre>The error dialog opened by this method is
@@ -3016,7 +3016,7 @@ declare namespace sap {
        * Displays an information dialog with the given message, an INFO icon, an OK button.If a callback is
        * given, it is called after the info boxhas been closed by the user with one of the
        * buttons.<pre>sap.m.MessageBox.information("This message should appear in the information message
-       * box", {    title: "Information",                                // default    onClose: null         
+       * box", {    title: "Information",                                // default    onClose: null
        *                               // default    styleClass: ""                                       //
        * default    initialFocus: null                                   // default    textDirection:
        * sap.ui.core.TextDirection.Inherit     // default    });</pre>The callback is called with the
@@ -3036,10 +3036,10 @@ declare namespace sap {
        * function is invoked when given.The only mandatory parameter is <code>vMessage</code>. Either a
        * string with the corresponding text or evena layout control could be
        * provided.<pre>sap.m.MessageBox.show("This message should appear in the message box", {    icon:
-       * sap.m.MessageBox.Icon.NONE,                    // default    title: "",                             
-       *              // default    actions: sap.m.MessageBox.Action.OK                  // default   
-       * onClose: null                                        // default    styleClass: ""                   
-       *                    // default    initialFocus: null                                   // default   
+       * sap.m.MessageBox.Icon.NONE,                    // default    title: "",
+       *              // default    actions: sap.m.MessageBox.Action.OK                  // default
+       * onClose: null                                        // default    styleClass: ""
+       *                    // default    initialFocus: null                                   // default
        * textDirection: sap.ui.core.TextDirection.Inherit     // default});</pre>The created dialog is
        * executed asynchronously. When it has been created and registered for rendering,this function returns
        * without waiting for a user reaction.When applications have to react on the users choice, they have
@@ -3056,9 +3056,9 @@ declare namespace sap {
       /**
        * Displays a success dialog with the given message, a SUCCESS icon, an OK button.If a callback is
        * given, it is called after the success boxhas been closed by the user with one of the
-       * buttons.<pre>sap.m.MessageBox.success("This message should appear in the success message box", {   
-       * title: "Success",                                    // default    onClose: null                    
-       *                    // default    styleClass: ""                                       // default   
+       * buttons.<pre>sap.m.MessageBox.success("This message should appear in the success message box", {
+       * title: "Success",                                    // default    onClose: null
+       *                    // default    styleClass: ""                                       // default
        * initialFocus: null                                   // default    textDirection:
        * sap.ui.core.TextDirection.Inherit     // default    });</pre>The callback is called with the
        * following signature<pre>  function(oAction)</pre>The success dialog opened by this method is
@@ -3074,9 +3074,9 @@ declare namespace sap {
       /**
        * Displays a warning dialog with the given message, a WARNING icon, an OK button.If a callback is
        * given, it is called after the warning boxhas been closed by the user with one of the
-       * buttons.<pre>sap.m.MessageBox.warning("This message should appear in the warning message box", {   
-       * title: "Warning",                                    // default    onClose: null                    
-       *                    // default    styleClass: ""                                       // default   
+       * buttons.<pre>sap.m.MessageBox.warning("This message should appear in the warning message box", {
+       * title: "Warning",                                    // default    onClose: null
+       *                    // default    styleClass: ""                                       // default
        * initialFocus: null                                   // default    textDirection:
        * sap.ui.core.TextDirection.Inherit     // default    });</pre>The callback is called with the
        * following signature				 *<pre>  function (oAction)</pre>The warning dialog opened by this method is
@@ -3612,9 +3612,9 @@ declare namespace sap {
       /**
        * Inserts a contentLeft into the aggregation <code>contentLeft</code>.
        * @param oContentLeft the contentLeft to insert; if empty, nothing is inserted
-       * @param iIndex the <code>0</code>-based index the contentLeft should be inserted at; for            
-       * a negative value of <code>iIndex</code>, the contentLeft is inserted at position 0; for a value     
-       *        greater than the current size of the aggregation, the contentLeft is inserted at            
+       * @param iIndex the <code>0</code>-based index the contentLeft should be inserted at; for
+       * a negative value of <code>iIndex</code>, the contentLeft is inserted at position 0; for a value
+       *        greater than the current size of the aggregation, the contentLeft is inserted at
        * the last position
        * @returns Reference to <code>this</code> in order to allow method chaining
       */
@@ -3623,9 +3623,9 @@ declare namespace sap {
       /**
        * Inserts a contentMiddle into the aggregation <code>contentMiddle</code>.
        * @param oContentMiddle the contentMiddle to insert; if empty, nothing is inserted
-       * @param iIndex the <code>0</code>-based index the contentMiddle should be inserted at; for           
-       *  a negative value of <code>iIndex</code>, the contentMiddle is inserted at position 0; for a value  
-       *           greater than the current size of the aggregation, the contentMiddle is inserted at        
+       * @param iIndex the <code>0</code>-based index the contentMiddle should be inserted at; for
+       *  a negative value of <code>iIndex</code>, the contentMiddle is inserted at position 0; for a value
+       *           greater than the current size of the aggregation, the contentMiddle is inserted at
        *     the last position
        * @returns Reference to <code>this</code> in order to allow method chaining
       */
@@ -3634,9 +3634,9 @@ declare namespace sap {
       /**
        * Inserts a contentRight into the aggregation <code>contentRight</code>.
        * @param oContentRight the contentRight to insert; if empty, nothing is inserted
-       * @param iIndex the <code>0</code>-based index the contentRight should be inserted at; for            
-       * a negative value of <code>iIndex</code>, the contentRight is inserted at position 0; for a value    
-       *         greater than the current size of the aggregation, the contentRight is inserted at           
+       * @param iIndex the <code>0</code>-based index the contentRight should be inserted at; for
+       * a negative value of <code>iIndex</code>, the contentRight is inserted at position 0; for a value
+       *         greater than the current size of the aggregation, the contentRight is inserted at
        *  the last position
        * @returns Reference to <code>this</code> in order to allow method chaining
       */
@@ -4100,7 +4100,7 @@ declare namespace sap {
        * Inserts a content into the aggregation <code>content</code>.
        * @param oContent the content to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the content should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value           
+       * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value
        *  greater than the current size of the aggregation, the content is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -4110,9 +4110,9 @@ declare namespace sap {
       /**
        * Inserts a headerContent into the aggregation <code>headerContent</code>.
        * @param oHeaderContent the headerContent to insert; if empty, nothing is inserted
-       * @param iIndex the <code>0</code>-based index the headerContent should be inserted at; for           
-       *  a negative value of <code>iIndex</code>, the headerContent is inserted at position 0; for a value  
-       *           greater than the current size of the aggregation, the headerContent is inserted at        
+       * @param iIndex the <code>0</code>-based index the headerContent should be inserted at; for
+       *  a negative value of <code>iIndex</code>, the headerContent is inserted at position 0; for a value
+       *           greater than the current size of the aggregation, the headerContent is inserted at
        *     the last position
        * @returns Reference to <code>this</code> in order to allow method chaining
       */
@@ -4483,7 +4483,7 @@ declare namespace sap {
        * Inserts a item into the aggregation <code>items</code>.
        * @param oItem the item to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the item should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value            
+       * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value
        * greater than the current size of the aggregation, the item is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -4591,7 +4591,7 @@ declare namespace sap {
        * Inserts a column into the aggregation <code>columns</code>.
        * @param oColumn the column to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the column should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the column is inserted at position 0; for a value            
+       * negative value of <code>iIndex</code>, the column is inserted at position 0; for a value
        * greater than the current size of the aggregation, the column is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -5439,7 +5439,7 @@ declare namespace sap {
        * Inserts a content into the aggregation <code>content</code>.
        * @param oContent the content to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the content should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value           
+       * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value
        *  greater than the current size of the aggregation, the content is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -5792,7 +5792,7 @@ declare namespace sap {
        * Inserts a column into the aggregation <code>columns</code>.
        * @param oColumn the column to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the column should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the column is inserted at position 0; for a value            
+       * negative value of <code>iIndex</code>, the column is inserted at position 0; for a value
        * greater than the current size of the aggregation, the column is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -6613,7 +6613,7 @@ declare namespace sap {
        * Inserts a suggestionColumn into the aggregation <code>suggestionColumns</code>.
        * @since 1.21.1
        * @param oSuggestionColumn the suggestionColumn to insert; if empty, nothing is inserted
-       * @param iIndex the <code>0</code>-based index the suggestionColumn should be inserted at; for        
+       * @param iIndex the <code>0</code>-based index the suggestionColumn should be inserted at; for
        *     a negative value of <code>iIndex</code>, the suggestionColumn is inserted at position 0; for a
        * value             greater than the current size of the aggregation, the suggestionColumn is inserted
        * at             the last position
@@ -6625,9 +6625,9 @@ declare namespace sap {
        * Inserts a suggestionItem into the aggregation <code>suggestionItems</code>.
        * @since 1.16.1
        * @param oSuggestionItem the suggestionItem to insert; if empty, nothing is inserted
-       * @param iIndex the <code>0</code>-based index the suggestionItem should be inserted at; for          
+       * @param iIndex the <code>0</code>-based index the suggestionItem should be inserted at; for
        *   a negative value of <code>iIndex</code>, the suggestionItem is inserted at position 0; for a value
-       *             greater than the current size of the aggregation, the suggestionItem is inserted at     
+       *             greater than the current size of the aggregation, the suggestionItem is inserted at
        *        the last position
        * @returns Reference to <code>this</code> in order to allow method chaining
       */
@@ -6637,9 +6637,9 @@ declare namespace sap {
        * Inserts a suggestionRow into the aggregation <code>suggestionRows</code>.
        * @since 1.21.1
        * @param oSuggestionRow the suggestionRow to insert; if empty, nothing is inserted
-       * @param iIndex the <code>0</code>-based index the suggestionRow should be inserted at; for           
-       *  a negative value of <code>iIndex</code>, the suggestionRow is inserted at position 0; for a value  
-       *           greater than the current size of the aggregation, the suggestionRow is inserted at        
+       * @param iIndex the <code>0</code>-based index the suggestionRow should be inserted at; for
+       *  a negative value of <code>iIndex</code>, the suggestionRow is inserted at position 0; for a value
+       *           greater than the current size of the aggregation, the suggestionRow is inserted at
        *     the last position
        * @returns Reference to <code>this</code> in order to allow method chaining
       */
@@ -8933,7 +8933,7 @@ declare namespace sap {
        * @since 1.21.1
        * @param oButton the button to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the button should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the button is inserted at position 0; for a value            
+       * negative value of <code>iIndex</code>, the button is inserted at position 0; for a value
        * greater than the current size of the aggregation, the button is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -8944,7 +8944,7 @@ declare namespace sap {
        * Inserts a content into the aggregation <code>content</code>.
        * @param oContent the content to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the content should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value           
+       * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value
        *  greater than the current size of the aggregation, the content is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -9532,7 +9532,7 @@ declare namespace sap {
        * Inserts an item into the aggregation named <code>items</code>.
        * @param oItem The item to be inserted; if empty, nothing is inserted.
        * @param iIndex The <code>0</code>-based index the item should be inserted at; for            a
-       * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value           
+       * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value
        * greater than the current size of the aggregation, the item is inserted at the last position.
        * @returns <code>this</code> to allow method chaining.
       */
@@ -10976,7 +10976,7 @@ declare namespace sap {
        * Inserts a content into the aggregation <code>content</code>.
        * @param oContent the content to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the content should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value           
+       * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value
        *  greater than the current size of the aggregation, the content is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -11431,7 +11431,7 @@ declare namespace sap {
        * Inserts a item into the aggregation <code>items</code>.
        * @param oItem the item to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the item should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value            
+       * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value
        * greater than the current size of the aggregation, the item is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -11756,7 +11756,7 @@ declare namespace sap {
        * Inserts a content into the aggregation <code>content</code>.
        * @param oContent the content to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the content should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value           
+       * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value
        *  greater than the current size of the aggregation, the content is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -12646,7 +12646,7 @@ declare namespace sap {
        * Inserts a item into the aggregation <code>items</code>.
        * @param oItem the item to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the item should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value            
+       * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value
        * greater than the current size of the aggregation, the item is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -13881,7 +13881,7 @@ declare namespace sap {
        * Inserts a page into the aggregation <code>pages</code>.
        * @param oPage the page to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the page should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the page is inserted at position 0; for a value            
+       * negative value of <code>iIndex</code>, the page is inserted at position 0; for a value
        * greater than the current size of the aggregation, the page is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -14421,7 +14421,7 @@ declare namespace sap {
        * Inserts a item into the aggregation <code>items</code>.
        * @param oItem the item to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the item should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value            
+       * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value
        * greater than the current size of the aggregation, the item is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -15224,7 +15224,7 @@ declare namespace sap {
        * Inserts a rule into the aggregation <code>rules</code>.
        * @param oRule the rule to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the rule should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the rule is inserted at position 0; for a value            
+       * negative value of <code>iIndex</code>, the rule is inserted at position 0; for a value
        * greater than the current size of the aggregation, the rule is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -15428,7 +15428,7 @@ declare namespace sap {
        * @since 1.26.0
        * @param oItem the item to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the item should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value            
+       * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value
        * greater than the current size of the aggregation, the item is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -15612,7 +15612,7 @@ declare namespace sap {
        * Inserts a tile into the aggregation <code>tiles</code>.
        * @param oTile the tile to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the tile should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the tile is inserted at position 0; for a value            
+       * negative value of <code>iIndex</code>, the tile is inserted at position 0; for a value
        * greater than the current size of the aggregation, the tile is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -16014,7 +16014,7 @@ declare namespace sap {
        * Inserts a token into the aggregation <code>tokens</code>.
        * @param oToken the token to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the token should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the token is inserted at position 0; for a value            
+       * negative value of <code>iIndex</code>, the token is inserted at position 0; for a value
        * greater than the current size of the aggregation, the token is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -16833,7 +16833,7 @@ declare namespace sap {
        * Inserts a item into the aggregation <code>items</code>.
        * @param oItem the item to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the item should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value            
+       * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value
        * greater than the current size of the aggregation, the item is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -17175,7 +17175,7 @@ declare namespace sap {
        * @since 1.26.0
        * @param oPanel the panel to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the panel should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the panel is inserted at position 0; for a value            
+       * negative value of <code>iIndex</code>, the panel is inserted at position 0; for a value
        * greater than the current size of the aggregation, the panel is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -17746,7 +17746,7 @@ declare namespace sap {
        * Inserts a content into the aggregation <code>content</code>.
        * @param oContent the content to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the content should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value           
+       * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value
        *  greater than the current size of the aggregation, the content is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -17757,7 +17757,7 @@ declare namespace sap {
        * Inserts a item into the aggregation <code>items</code>.
        * @param oItem the item to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the item should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value            
+       * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value
        * greater than the current size of the aggregation, the item is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -18202,7 +18202,7 @@ declare namespace sap {
        * Inserts a token into the aggregation <code>tokens</code>.
        * @param oToken the token to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the token should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the token is inserted at position 0; for a value            
+       * negative value of <code>iIndex</code>, the token is inserted at position 0; for a value
        * greater than the current size of the aggregation, the token is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -18461,7 +18461,7 @@ declare namespace sap {
        * @since 1.38.5
        * @param oSpecialDate the specialDate to insert; if empty, nothing is inserted
        * @param iIndex the 0-based index the <code>specialDate</code> should be inserted at;             for
-       * a negative value of <code>iIndex</code>, the <code>specialDate</code> is inserted at position 0;    
+       * a negative value of <code>iIndex</code>, the <code>specialDate</code> is inserted at position 0;
        *         for a value greater than the current size of the aggregation, the <code>specialDate</code>
        * is inserted at the last position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -18752,7 +18752,7 @@ declare namespace sap {
        * Inserts a content into the aggregation <code>content</code>.
        * @param oContent the content to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the content should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value           
+       * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value
        *  greater than the current size of the aggregation, the content is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -19670,7 +19670,7 @@ declare namespace sap {
        * Inserts a button into the aggregation <code>buttons</code>.
        * @param oButton the button to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the button should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the button is inserted at position 0; for a value            
+       * negative value of <code>iIndex</code>, the button is inserted at position 0; for a value
        * greater than the current size of the aggregation, the button is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -19828,7 +19828,7 @@ declare namespace sap {
        * @since 1.34
        * @param oLink the link to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the link should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the link is inserted at position 0; for a value            
+       * negative value of <code>iIndex</code>, the link is inserted at position 0; for a value
        * greater than the current size of the aggregation, the link is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -20318,7 +20318,7 @@ declare namespace sap {
        * Inserts a list into the aggregation <code>lists</code>.
        * @param oList the list to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the list should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the list is inserted at position 0; for a value            
+       * negative value of <code>iIndex</code>, the list is inserted at position 0; for a value
        * greater than the current size of the aggregation, the list is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -20674,9 +20674,9 @@ declare namespace sap {
        * Inserts a suggestionItem into the aggregation <code>suggestionItems</code>.
        * @since 1.34
        * @param oSuggestionItem the suggestionItem to insert; if empty, nothing is inserted
-       * @param iIndex the <code>0</code>-based index the suggestionItem should be inserted at; for          
+       * @param iIndex the <code>0</code>-based index the suggestionItem should be inserted at; for
        *   a negative value of <code>iIndex</code>, the suggestionItem is inserted at position 0; for a value
-       *             greater than the current size of the aggregation, the suggestionItem is inserted at     
+       *             greater than the current size of the aggregation, the suggestionItem is inserted at
        *        the last position
        * @returns Reference to <code>this</code> in order to allow method chaining
       */
@@ -21124,9 +21124,9 @@ declare namespace sap {
       /**
        * Inserts a tileContent into the aggregation <code>tileContent</code>.
        * @param oTileContent the tileContent to insert; if empty, nothing is inserted
-       * @param iIndex the <code>0</code>-based index the tileContent should be inserted at; for            
-       * a negative value of <code>iIndex</code>, the tileContent is inserted at position 0; for a value     
-       *        greater than the current size of the aggregation, the tileContent is inserted at            
+       * @param iIndex the <code>0</code>-based index the tileContent should be inserted at; for
+       * a negative value of <code>iIndex</code>, the tileContent is inserted at position 0; for a value
+       *        greater than the current size of the aggregation, the tileContent is inserted at
        * the last position
        * @returns Reference to <code>this</code> in order to allow method chaining
       */
@@ -21974,7 +21974,7 @@ declare namespace sap {
        * method chaining) if called on a particular NavContainer instance.
        * @param sName The name of the transition. This name can be used by the application to choose this
        * transition when navigating "to()" or "back()": the "transitionName" parameter of "NavContainer.to()"
-       * corresponds to this name, the back() navigation will automatically use the same transition.       
+       * corresponds to this name, the back() navigation will automatically use the same transition.
        * Make sure to only use names that will not collide with transitions which may be added to the
        * NavContainer later. A suggestion is to use the prefix "c_" or "_" for your custom transitions to
        * ensure this.
@@ -22044,7 +22044,7 @@ declare namespace sap {
        * contain this data object as "backData" property. (The original data from the "to()" navigation will
        * still be available as "data" property.)        In scenarios where the entity triggering the
        * navigation can or should not directly initialize the target page, it can fill this object and the
-       * target page itself (or a listener on it) can take over the initialization, using the given data.    
+       * target page itself (or a listener on it) can take over the initialization, using the given data.
        *    For back navigation this can be used e.g. when returning from a detail page to transfer any
        * settings done there.        When the "transitionParameters" object is used, this "data" object must
        * also be given (either as object or as null) in order to have a proper parameter order.
@@ -22052,7 +22052,7 @@ declare namespace sap {
        * information to the transition function, like the DOM element which triggered the transition or the
        * desired transition duration.        The animation type can NOT be selected here - it is always the
        * inverse of the "to" navigation.        In order to use the "transitionParameters" property, the
-       * "data" property must be used (at least "null" must be given) for a proper parameter order.       
+       * "data" property must be used (at least "null" must be given) for a proper parameter order.
        * NOTE: it depends on the transition function how the object should be structured and which parameters
        * are actually used to influence the transition.
       */
@@ -22077,8 +22077,8 @@ declare namespace sap {
        * object as "backData" property.        When the "transitionParameters" object is used, this "data"
        * object must also be given (either as object or as null) in order to have a proper parameter order.
        * @param oTransitionParameters This optional object can give additional information to the transition
-       * function, like the DOM element which triggered the transition or the desired transition duration.   
-       *     The animation type can NOT be selected here - it is always the inverse of the "to" navigation.  
+       * function, like the DOM element which triggered the transition or the desired transition duration.
+       *     The animation type can NOT be selected here - it is always the inverse of the "to" navigation.
        *      In order to use the "transitionParameters" property, the "data" property must be used (at least
        * "null" must be given) for a proper parameter order.        NOTE: it depends on the transition
        * function how the object should be structured and which parameters are actually used to influence the
@@ -22102,8 +22102,8 @@ declare namespace sap {
        * object as "backData" property.        When the "transitionParameters" object is used, this "data"
        * object must also be given (either as object or as null) in order to have a proper parameter order.
        * @param oTransitionParameters This optional object can give additional information to the transition
-       * function, like the DOM element which triggered the transition or the desired transition duration.   
-       *     The animation type can NOT be selected here - it is always the inverse of the "to" navigation.  
+       * function, like the DOM element which triggered the transition or the desired transition duration.
+       *     The animation type can NOT be selected here - it is always the inverse of the "to" navigation.
        *      In order to use the "transitionParameters" property, the "data" property must be used (at least
        * "null" must be given) for a proper parameter order.        NOTE: it depends on the transition
        * function how the object should be structured and which parameters are actually used to influence the
@@ -22290,7 +22290,7 @@ declare namespace sap {
        * Inserts a page into the aggregation <code>pages</code>.
        * @param oPage the page to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the page should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the page is inserted at position 0; for a value            
+       * negative value of <code>iIndex</code>, the page is inserted at position 0; for a value
        * greater than the current size of the aggregation, the page is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -22603,7 +22603,7 @@ declare namespace sap {
        * Inserts an item into the aggregation named <code>items</code>.
        * @param oItem The item to be inserted; if empty, nothing is inserted.
        * @param iIndex The <code>0</code>-based index the item should be inserted at; for            a
-       * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value           
+       * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value
        * greater than the current size of the aggregation, the item is inserted at the last position.
        * @returns <code>this</code> to allow method chaining.
       */
@@ -22936,6 +22936,9 @@ declare namespace sap {
        * @returns Reference to <code>this</code> in order to allow method chaining
       */
       setVisible(bVisible: boolean): sap.m.ListItemBase;
+
+      getBindingContext():sap.ui.model.Context;
+
     }
     /**
      * The ActionSelect control provides a list of predefined items that allows end users to choose options
@@ -23955,7 +23958,7 @@ declare namespace sap {
        * Inserts a item into the aggregation <code>items</code>.
        * @param oItem the item to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the item should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value            
+       * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value
        * greater than the current size of the aggregation, the item is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -24920,7 +24923,7 @@ declare namespace sap {
        * elements of the <code>ObjectHeader</code>.<br>Set this property to <code>true</code> if your
        * application uses a full-screen layout (as opposed to a master-detail or other split-screen
        * layout).<br><b>Note</b>: Only applied if the <code>responsive</code> property is also set to
-       * <code>true</code>.If set to <code>true</code>, the following situations apply:<ul>               
+       * <code>true</code>.If set to <code>true</code>, the following situations apply:<ul>
        * <li>On desktop, 1-3 attributes/statuses - positioned as a third block on the right side of the
        * Title/Number group</li>                <li>On desktop, 4+ attributes/statuses - 4 columns below the
        * Title/Number</li>                <li>On tablet (portrait mode), always in 2 columns below the
@@ -25197,7 +25200,7 @@ declare namespace sap {
        * Inserts a additionalNumber into the aggregation <code>additionalNumbers</code>.
        * @since 1.38.0
        * @param oAdditionalNumber the additionalNumber to insert; if empty, nothing is inserted
-       * @param iIndex the <code>0</code>-based index the additionalNumber should be inserted at; for        
+       * @param iIndex the <code>0</code>-based index the additionalNumber should be inserted at; for
        *     a negative value of <code>iIndex</code>, the additionalNumber is inserted at position 0; for a
        * value             greater than the current size of the aggregation, the additionalNumber is inserted
        * at             the last position
@@ -25209,7 +25212,7 @@ declare namespace sap {
        * Inserts a attribute into the aggregation <code>attributes</code>.
        * @param oAttribute the attribute to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the attribute should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the attribute is inserted at position 0; for a value         
+       * negative value of <code>iIndex</code>, the attribute is inserted at position 0; for a value
        *    greater than the current size of the aggregation, the attribute is inserted at             the
        * last position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -25221,7 +25224,7 @@ declare namespace sap {
        * @since 1.16.0
        * @param oStatus the status to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the status should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the status is inserted at position 0; for a value            
+       * negative value of <code>iIndex</code>, the status is inserted at position 0; for a value
        * greater than the current size of the aggregation, the status is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -25332,16 +25335,16 @@ declare namespace sap {
        * a full-screen layout (as opposed to a master-detail or other split-screen layout).<br><b>Note</b>:
        * Only applied if the <code>responsive</code> property is also set to <code>true</code>.If set to
        * <code>true</code>, the following situations apply:<ul>                <li>On desktop, 1-3
-       * attributes/statuses - positioned as a third block on the right side of the Title/Number group</li>  
-       *              <li>On desktop, 4+ attributes/statuses - 4 columns below the Title/Number</li>         
-       *       <li>On tablet (portrait mode), always in 2 columns below the Title/Number</li>               
-       * <li>On tablet (landscape mode), 1-2 attributes/statuses - 2 columns below the Title/Number</li>     
+       * attributes/statuses - positioned as a third block on the right side of the Title/Number group</li>
+       *              <li>On desktop, 4+ attributes/statuses - 4 columns below the Title/Number</li>
+       *       <li>On tablet (portrait mode), always in 2 columns below the Title/Number</li>
+       * <li>On tablet (landscape mode), 1-2 attributes/statuses - 2 columns below the Title/Number</li>
        *           <li>On tablet (landscape mode), 3+ attributes/statuses - 3 columns below the
        * Title/Number</li></ul>On phone, the attributes and statuses are always positioned in 1 column below
        * the Title/Number of the <code>ObjectHeader</code>.<br>If set to <code>false</code>, the attributes
        * and statuses are being positioned below the Title/Number of the <code>ObjectHeader</code> in 2 or 3
        * columns depending on their number:<ul>               <li>On desktop, 1-4 attributes/statuses - 2
-       * columns</li>               <li>On desktop, 5+ attributes/statuses - 3 columns</li>              
+       * columns</li>               <li>On desktop, 5+ attributes/statuses - 3 columns</li>
        * <li>On tablet, always in 2 columns</li></ul>When called with a value of <code>null</code> or
        * <code>undefined</code>, the default value of the property will be restored.Default value is
        * <code>false</code>.
@@ -26099,7 +26102,7 @@ declare namespace sap {
        * <code>boolean</code>Determines whether this was a back navigation.</li><li><code>isBackToTop</code>
        * of type <code>boolean</code>Determines whether this was a navigation to the root
        * page.</li><li><code>isBackToPage</code> of type <code>boolean</code>Determines whether this was a
-       * navigation to a specific page.</li><li><code>direction</code> of type <code>string</code>Determines 
+       * navigation to a specific page.</li><li><code>direction</code> of type <code>string</code>Determines
        * how the navigation was triggered, possible values are"to", "back", "backToPage", and
        * "backToTop".</li><li><code>isTopPage</code> of type <code>boolean</code>Determines whether this is a
        * navigation to the top page.</li></ul>
@@ -26155,7 +26158,7 @@ declare namespace sap {
        * Inserts a page into the aggregation <code>pages</code>.
        * @param oPage the page to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the page should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the page is inserted at position 0; for a value            
+       * negative value of <code>iIndex</code>, the page is inserted at position 0; for a value
        * greater than the current size of the aggregation, the page is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -26806,7 +26809,7 @@ declare namespace sap {
        * Inserts a content into the aggregation <code>content</code>.
        * @param oContent the content to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the content should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value           
+       * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value
        *  greater than the current size of the aggregation, the content is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -26857,7 +26860,7 @@ declare namespace sap {
      * either type a value directly into the control or choose from the list of existing items.
      * @resource sap/m/MultiComboBox.js
     */
-    export abstract class MultiComboBox extends sap.m.ComboBoxBase {
+    export class MultiComboBox extends sap.m.ComboBoxBase {
 
 
       /**
@@ -26999,7 +27002,7 @@ declare namespace sap {
 
       /**
        * Retrieves the selected item objects from the association named <code>selectedItems</code>.
-       * @returns Array of sap.ui.core.Item instances. The current target of the <code>selectedItems</code>  
+       * @returns Array of sap.ui.core.Item instances. The current target of the <code>selectedItems</code>
        *       association.
       */
       getSelectedItems(): sap.ui.core.Item[];
@@ -27016,7 +27019,7 @@ declare namespace sap {
        * Inserts an item into the aggregation named <code>items</code>.
        * @param oItem The item to insert; if empty, nothing is inserted.
        * @param iIndex The <code>0</code>-based index the item should be inserted at; for            a
-       * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value           
+       * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value
        * greater than the current size of the aggregation, the item is inserted at            the last
        * position.
        * @returns <code>this</code> to allow method chaining.
@@ -27275,7 +27278,7 @@ declare namespace sap {
        * @since 1.26
        * @param oSortItem the sortItem to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the sortItem should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the sortItem is inserted at position 0; for a value          
+       * negative value of <code>iIndex</code>, the sortItem is inserted at position 0; for a value
        *   greater than the current size of the aggregation, the sortItem is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -27477,7 +27480,7 @@ declare namespace sap {
        * Inserts a item into the aggregation <code>items</code>.
        * @param oItem the item to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the item should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value            
+       * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value
        * greater than the current size of the aggregation, the item is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -28038,7 +28041,7 @@ declare namespace sap {
        * @since 1.15.0
        * @param oContent the content to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the content should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value           
+       * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value
        *  greater than the current size of the aggregation, the content is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -28246,7 +28249,7 @@ declare namespace sap {
        * Inserts a group into the aggregation <code>groups</code>.
        * @param oGroup the group to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the group should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the group is inserted at position 0; for a value            
+       * negative value of <code>iIndex</code>, the group is inserted at position 0; for a value
        * greater than the current size of the aggregation, the group is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -28712,7 +28715,7 @@ declare namespace sap {
        * Inserts a item into the aggregation <code>items</code>.
        * @param oItem the item to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the item should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value            
+       * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value
        * greater than the current size of the aggregation, the item is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -29264,7 +29267,7 @@ declare namespace sap {
        * Inserts a content into the aggregation <code>content</code>.
        * @param oContent the content to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the content should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value           
+       * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value
        *  greater than the current size of the aggregation, the content is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -29601,7 +29604,7 @@ declare namespace sap {
        * @since 1.26
        * @param oGroupItem the groupItem to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the groupItem should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the groupItem is inserted at position 0; for a value         
+       * negative value of <code>iIndex</code>, the groupItem is inserted at position 0; for a value
        *    greater than the current size of the aggregation, the groupItem is inserted at             the
        * last position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -29797,7 +29800,7 @@ declare namespace sap {
        * Inserts a cell into the aggregation <code>cells</code>.
        * @param oCell the cell to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the cell should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the cell is inserted at position 0; for a value            
+       * negative value of <code>iIndex</code>, the cell is inserted at position 0; for a value
        * greater than the current size of the aggregation, the cell is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -30118,7 +30121,7 @@ declare namespace sap {
        * Inserts a attribute into the aggregation <code>attributes</code>.
        * @param oAttribute the attribute to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the attribute should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the attribute is inserted at position 0; for a value         
+       * negative value of <code>iIndex</code>, the attribute is inserted at position 0; for a value
        *    greater than the current size of the aggregation, the attribute is inserted at             the
        * last position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -30432,7 +30435,7 @@ declare namespace sap {
        * Inserts a element into the aggregation <code>elements</code>.
        * @param oElement the element to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the element should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the element is inserted at position 0; for a value           
+       * negative value of <code>iIndex</code>, the element is inserted at position 0; for a value
        *  greater than the current size of the aggregation, the element is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -30677,8 +30680,8 @@ declare namespace sap {
        * transitionParameters object is used, this data object must also be given (either as object or as
        * null) in order to have a proper parameter order.
        * @param oTransitionParameter This optional object can give additional information to the transition
-       * function, like the DOM element, which triggered the transition or the desired transition duration.  
-       *      The animation type can NOT be selected here - it is always the inverse of the "to" navigation. 
+       * function, like the DOM element, which triggered the transition or the desired transition duration.
+       *      The animation type can NOT be selected here - it is always the inverse of the "to" navigation.
        *       In order to use the transitionParameters property, the data property must be used (at least
        * "null" must be given) for a proper parameter order.        NOTE: it depends on the transition
        * function how the object should be structured and which parameters are actually used to influence the
@@ -30698,8 +30701,8 @@ declare namespace sap {
        * there.        When the transitionParameters object is used, this data object must also be given
        * (either as object or as null) in order to have a proper parameter order.
        * @param oTransitionParameter This optional object can give additional information to the transition
-       * function, like the DOM element, which triggered the transition or the desired transition duration.  
-       *      The animation type can NOT be selected here - it is always the inverse of the "to" navigation. 
+       * function, like the DOM element, which triggered the transition or the desired transition duration.
+       *      The animation type can NOT be selected here - it is always the inverse of the "to" navigation.
        *       In order to use the transitionParameters property, the data property must be used (at least
        * "null" must be given) for a proper parameter order.        NOTE: it depends on the transition
        * function how the object should be structured and which parameters are actually used to influence the
@@ -30729,8 +30732,8 @@ declare namespace sap {
        * there.        When the transitionParameters object is used, this data object must also be given
        * (either as object or as null) in order to have a proper parameter order.
        * @param oTransitionParameters This optional object can give additional information to the transition
-       * function, like the DOM element, which triggered the transition or the desired transition duration.  
-       *      The animation type can NOT be selected here - it is always the inverse of the "to" navigation. 
+       * function, like the DOM element, which triggered the transition or the desired transition duration.
+       *      The animation type can NOT be selected here - it is always the inverse of the "to" navigation.
        *       In order to use the transitionParameters property, the data property must be used (at least
        * "null" must be given) for a proper parameter order.        NOTE: it depends on the transition
        * function how the object should be structured and which parameters are actually used to influence the
@@ -30752,8 +30755,8 @@ declare namespace sap {
        * transitionParameters object is used, this data object must also be given (either as object or as
        * null) in order to have a proper parameter order.
        * @param oTransitionParameter This optional object can give additional information to the transition
-       * function, like the DOM element, which triggered the transition or the desired transition duration.  
-       *      The animation type can NOT be selected here - it is always the inverse of the "to" navigation. 
+       * function, like the DOM element, which triggered the transition or the desired transition duration.
+       *      The animation type can NOT be selected here - it is always the inverse of the "to" navigation.
        *       In order to use the transitionParameters property, the data property must be used (at least
        * "null" must be given) for a proper parameter order.        NOTE: it depends on the transition
        * function how the object should be structured and which parameters are actually used to influence the
@@ -30771,12 +30774,12 @@ declare namespace sap {
        * "data" property.)        In scenarios where the entity triggering the navigation can or should not
        * directly initialize the target page, it can fill this object and the target page itself (or a
        * listener on it) can take over the initialization, using the given data.        For back navigation
-       * this can be used e.g. when returning from a detail page to transfer any settings done there.       
+       * this can be used e.g. when returning from a detail page to transfer any settings done there.
        * When the "transitionParameters" object is used, this "data" object must also be given (either as
        * object or as null) in order to have a proper parameter order.
        * @param oTransitionParameter This optional object can give additional information to the transition
-       * function, like the DOM element which triggered the transition or the desired transition duration.   
-       *     The animation type can NOT be selected here - it is always the inverse of the "to" navigation.  
+       * function, like the DOM element which triggered the transition or the desired transition duration.
+       *     The animation type can NOT be selected here - it is always the inverse of the "to" navigation.
        *      In order to use the transitionParameters property, the data property must be used (at least
        * "null" must be given) for a proper parameter order.        NOTE: it depends on the transition
        * function how the object should be structured and which parameters are actually used to influence the
@@ -31215,7 +31218,7 @@ declare namespace sap {
        * Inserts a detailPage into the aggregation <code>detailPages</code>.
        * @param oDetailPage the detailPage to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the detailPage should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the detailPage is inserted at position 0; for a value        
+       * negative value of <code>iIndex</code>, the detailPage is inserted at position 0; for a value
        *     greater than the current size of the aggregation, the detailPage is inserted at             the
        * last position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -31226,7 +31229,7 @@ declare namespace sap {
        * Inserts a masterPage into the aggregation <code>masterPages</code>.
        * @param oMasterPage the masterPage to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the masterPage should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the masterPage is inserted at position 0; for a value        
+       * negative value of <code>iIndex</code>, the masterPage is inserted at position 0; for a value
        *     greater than the current size of the aggregation, the masterPage is inserted at             the
        * last position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -31662,7 +31665,7 @@ declare namespace sap {
        * Inserts a content into the aggregation <code>content</code>.
        * @param oContent the content to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the content should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value           
+       * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value
        *  greater than the current size of the aggregation, the content is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -32080,7 +32083,7 @@ declare namespace sap {
        * Getter for the exclude operations.
        * @since 1.26
        * @param the type for which the operations are defined
-       * @returns array of operations [<code>sap.m.P13nConditionOperation.BT</code>,        
+       * @returns array of operations [<code>sap.m.P13nConditionOperation.BT</code>,
        * <code>sap.m.P13nConditionOperation.EQ</code>]
       */
       getExcludeOperations(the: string): any[];
@@ -32095,7 +32098,7 @@ declare namespace sap {
        * Getter for the include operations.
        * @since 1.26
        * @param the type for which the operations are defined
-       * @returns array of operations [<code>sap.m.P13nConditionOperation.BT</code>,        
+       * @returns array of operations [<code>sap.m.P13nConditionOperation.BT</code>,
        * <code>sap.m.P13nConditionOperation.EQ</code>]
       */
       getIncludeOperations(the: string): any;
@@ -32145,7 +32148,7 @@ declare namespace sap {
        * @since 1.26
        * @param oFilterItem the filterItem to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the filterItem should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the filterItem is inserted at position 0; for a value        
+       * negative value of <code>iIndex</code>, the filterItem is inserted at position 0; for a value
        *     greater than the current size of the aggregation, the filterItem is inserted at             the
        * last position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -32203,7 +32206,7 @@ declare namespace sap {
       /**
        * Setter for the supported exclude operations array.
        * @since 1.26
-       * @param array of operations [<code>sap.m.P13nConditionOperation.BT</code>,      
+       * @param array of operations [<code>sap.m.P13nConditionOperation.BT</code>,
        * <code>sap.m.P13nConditionOperation.EQ</code>]
        * @param the type for which the operations are defined
       */
@@ -32212,7 +32215,7 @@ declare namespace sap {
       /**
        * Setter for the supported Include operations array.
        * @since 1.26
-       * @param array of operations [<code>sap.m.P13nConditionOperation.BT</code>,      
+       * @param array of operations [<code>sap.m.P13nConditionOperation.BT</code>,
        * <code>sap.m.P13nConditionOperation.EQ</code>]
        * @param the type for which the operations are defined
       */
@@ -33191,7 +33194,7 @@ declare namespace sap {
        * Inserts a button into the aggregation <code>buttons</code>.
        * @param oButton the button to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the button should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the button is inserted at position 0; for a value            
+       * negative value of <code>iIndex</code>, the button is inserted at position 0; for a value
        * greater than the current size of the aggregation, the button is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -33203,7 +33206,7 @@ declare namespace sap {
        * @since 1.28
        * @param oItem the item to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the item should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value            
+       * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value
        * greater than the current size of the aggregation, the item is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -34102,7 +34105,7 @@ declare namespace sap {
        * Inserts a row into the aggregation <code>rows</code>.
        * @param oRow the row to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the row should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the row is inserted at position 0; for a value            
+       * negative value of <code>iIndex</code>, the row is inserted at position 0; for a value
        * greater than the current size of the aggregation, the row is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -34112,9 +34115,9 @@ declare namespace sap {
       /**
        * Inserts a specialDate into the aggregation <code>specialDates</code>.
        * @param oSpecialDate the specialDate to insert; if empty, nothing is inserted
-       * @param iIndex the <code>0</code>-based index the specialDate should be inserted at; for            
-       * a negative value of <code>iIndex</code>, the specialDate is inserted at position 0; for a value     
-       *        greater than the current size of the aggregation, the specialDate is inserted at            
+       * @param iIndex the <code>0</code>-based index the specialDate should be inserted at; for
+       * a negative value of <code>iIndex</code>, the specialDate is inserted at position 0; for a value
+       *        greater than the current size of the aggregation, the specialDate is inserted at
        * the last position
        * @returns Reference to <code>this</code> in order to allow method chaining
       */
@@ -34123,9 +34126,9 @@ declare namespace sap {
       /**
        * Inserts a toolbarContent into the aggregation <code>toolbarContent</code>.
        * @param oToolbarContent the toolbarContent to insert; if empty, nothing is inserted
-       * @param iIndex the <code>0</code>-based index the toolbarContent should be inserted at; for          
+       * @param iIndex the <code>0</code>-based index the toolbarContent should be inserted at; for
        *   a negative value of <code>iIndex</code>, the toolbarContent is inserted at position 0; for a value
-       *             greater than the current size of the aggregation, the toolbarContent is inserted at     
+       *             greater than the current size of the aggregation, the toolbarContent is inserted at
        *        the last position
        * @returns Reference to <code>this</code> in order to allow method chaining
       */
@@ -34135,7 +34138,7 @@ declare namespace sap {
        * Inserts a view into the aggregation <code>views</code>.
        * @param oView the view to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the view should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the view is inserted at position 0; for a value            
+       * negative value of <code>iIndex</code>, the view is inserted at position 0; for a value
        * greater than the current size of the aggregation, the view is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -34483,7 +34486,7 @@ declare namespace sap {
        * Inserts a content into the aggregation <code>content</code>.
        * @param oContent the content to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the content should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value           
+       * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value
        *  greater than the current size of the aggregation, the content is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -36254,7 +36257,7 @@ declare namespace sap {
       /**
        * Inserts a headerParameter into the aggregation <code>headerParameters</code>.
        * @param oHeaderParameter the headerParameter to insert; if empty, nothing is inserted
-       * @param iIndex the <code>0</code>-based index the headerParameter should be inserted at; for         
+       * @param iIndex the <code>0</code>-based index the headerParameter should be inserted at; for
        *    a negative value of <code>iIndex</code>, the headerParameter is inserted at position 0; for a
        * value             greater than the current size of the aggregation, the headerParameter is inserted
        * at             the last position
@@ -36266,7 +36269,7 @@ declare namespace sap {
        * Inserts a item into the aggregation <code>items</code>.
        * @param oItem the item to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the item should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value            
+       * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value
        * greater than the current size of the aggregation, the item is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -36277,7 +36280,7 @@ declare namespace sap {
        * Inserts a parameter into the aggregation <code>parameters</code>.
        * @param oParameter the parameter to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the parameter should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the parameter is inserted at position 0; for a value         
+       * negative value of <code>iIndex</code>, the parameter is inserted at position 0; for a value
        *    greater than the current size of the aggregation, the parameter is inserted at             the
        * last position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -37355,7 +37358,7 @@ declare namespace sap {
        * Inserts a column into the aggregation <code>columns</code>.
        * @param oColumn the column to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the column should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the column is inserted at position 0; for a value            
+       * negative value of <code>iIndex</code>, the column is inserted at position 0; for a value
        * greater than the current size of the aggregation, the column is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -37366,7 +37369,7 @@ declare namespace sap {
        * Inserts a item into the aggregation <code>items</code>.
        * @param oItem the item to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the item should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value            
+       * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value
        * greater than the current size of the aggregation, the item is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -37956,7 +37959,7 @@ declare namespace sap {
        * Inserts a content into the aggregation <code>content</code>.
        * @param oContent the content to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the content should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value           
+       * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value
        *  greater than the current size of the aggregation, the content is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -38628,7 +38631,7 @@ declare namespace sap {
        * @since 1.30
        * @param oCustomTab the customTab to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the customTab should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the customTab is inserted at position 0; for a value         
+       * negative value of <code>iIndex</code>, the customTab is inserted at position 0; for a value
        *    greater than the current size of the aggregation, the customTab is inserted at             the
        * last position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -38640,7 +38643,7 @@ declare namespace sap {
        * @since 1.16
        * @param oFilterItem the filterItem to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the filterItem should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the filterItem is inserted at position 0; for a value        
+       * negative value of <code>iIndex</code>, the filterItem is inserted at position 0; for a value
        *     greater than the current size of the aggregation, the filterItem is inserted at             the
        * last position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -38652,7 +38655,7 @@ declare namespace sap {
        * @since 1.16
        * @param oGroupItem the groupItem to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the groupItem should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the groupItem is inserted at position 0; for a value         
+       * negative value of <code>iIndex</code>, the groupItem is inserted at position 0; for a value
        *    greater than the current size of the aggregation, the groupItem is inserted at             the
        * last position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -38663,7 +38666,7 @@ declare namespace sap {
        * Inserts a presetFilterItem into the aggregation <code>presetFilterItems</code>.
        * @since 1.16
        * @param oPresetFilterItem the presetFilterItem to insert; if empty, nothing is inserted
-       * @param iIndex the <code>0</code>-based index the presetFilterItem should be inserted at; for        
+       * @param iIndex the <code>0</code>-based index the presetFilterItem should be inserted at; for
        *     a negative value of <code>iIndex</code>, the presetFilterItem is inserted at position 0; for a
        * value             greater than the current size of the aggregation, the presetFilterItem is inserted
        * at             the last position
@@ -38676,7 +38679,7 @@ declare namespace sap {
        * @since 1.16
        * @param oSortItem the sortItem to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the sortItem should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the sortItem is inserted at position 0; for a value          
+       * negative value of <code>iIndex</code>, the sortItem is inserted at position 0; for a value
        *   greater than the current size of the aggregation, the sortItem is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -39900,7 +39903,7 @@ declare namespace sap {
        * Inserts a availableChartType into the aggregation <code>availableChartTypes</code>.
        * @since 1.34.0
        * @param oAvailableChartType the availableChartType to insert; if empty, nothing is inserted
-       * @param iIndex the <code>0</code>-based index the availableChartType should be inserted at; for      
+       * @param iIndex the <code>0</code>-based index the availableChartType should be inserted at; for
        *       a negative value of <code>iIndex</code>, the availableChartType is inserted at position 0; for
        * a value             greater than the current size of the aggregation, the availableChartType is
        * inserted at             the last position
@@ -39912,9 +39915,9 @@ declare namespace sap {
        * Inserts a dimMeasureItem into the aggregation <code>dimMeasureItems</code>.
        * @since 1.34.0
        * @param oDimMeasureItem the dimMeasureItem to insert; if empty, nothing is inserted
-       * @param iIndex the <code>0</code>-based index the dimMeasureItem should be inserted at; for          
+       * @param iIndex the <code>0</code>-based index the dimMeasureItem should be inserted at; for
        *   a negative value of <code>iIndex</code>, the dimMeasureItem is inserted at position 0; for a value
-       *             greater than the current size of the aggregation, the dimMeasureItem is inserted at     
+       *             greater than the current size of the aggregation, the dimMeasureItem is inserted at
        *        the last position
        * @returns Reference to <code>this</code> in order to allow method chaining
       */
@@ -40320,9 +40323,9 @@ declare namespace sap {
       /**
        * Inserts a appointment into the aggregation <code>appointments</code>.
        * @param oAppointment the appointment to insert; if empty, nothing is inserted
-       * @param iIndex the <code>0</code>-based index the appointment should be inserted at; for            
-       * a negative value of <code>iIndex</code>, the appointment is inserted at position 0; for a value     
-       *        greater than the current size of the aggregation, the appointment is inserted at            
+       * @param iIndex the <code>0</code>-based index the appointment should be inserted at; for
+       * a negative value of <code>iIndex</code>, the appointment is inserted at position 0; for a value
+       *        greater than the current size of the aggregation, the appointment is inserted at
        * the last position
        * @returns Reference to <code>this</code> in order to allow method chaining
       */
@@ -40331,9 +40334,9 @@ declare namespace sap {
       /**
        * Inserts a intervalHeader into the aggregation <code>intervalHeaders</code>.
        * @param oIntervalHeader the intervalHeader to insert; if empty, nothing is inserted
-       * @param iIndex the <code>0</code>-based index the intervalHeader should be inserted at; for          
+       * @param iIndex the <code>0</code>-based index the intervalHeader should be inserted at; for
        *   a negative value of <code>iIndex</code>, the intervalHeader is inserted at position 0; for a value
-       *             greater than the current size of the aggregation, the intervalHeader is inserted at     
+       *             greater than the current size of the aggregation, the intervalHeader is inserted at
        *        the last position
        * @returns Reference to <code>this</code> in order to allow method chaining
       */
@@ -40606,7 +40609,7 @@ declare namespace sap {
        * Inserts a button into the aggregation <code>buttons</code>.
        * @param oButton the button to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the button should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the button is inserted at position 0; for a value            
+       * negative value of <code>iIndex</code>, the button is inserted at position 0; for a value
        * greater than the current size of the aggregation, the button is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -40878,10 +40881,10 @@ declare namespace sap {
        * corresponding controller's init method.For example<pre><code> onInit: function () {		// set explored
        * app's demo model on this sample		var oModel = new
        * JSONModel(jQuery.sap.getModulePath("sap.ui.demo.mock", "/products.json"));		var oGroupingModel = new
-       * JSONModel({ hasGrouping: false});		this.getView().setModel(oModel);	
+       * JSONModel({ hasGrouping: false});		this.getView().setModel(oModel);
        * this.getView().setModel(oGroupingModel, 'Grouping');		// init and activate controller		this._oTPC =
        * new TablePersoController({			table: this.getView().byId("productsTable"),			//specify the first part
-       * of persistence ids e.g. 'demoApp-productsTable-dimensionsCol'			componentName: "demoApp",		
+       * of persistence ids e.g. 'demoApp-productsTable-dimensionsCol'			componentName: "demoApp",
        * persoService: DemoPersoService,		}).activate();	}</code></pre>
        * @returns the TablePersoController instance.
       */
@@ -41461,7 +41464,7 @@ declare namespace sap {
        * @since 1.30
        * @param oAttribute the attribute to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the attribute should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the attribute is inserted at position 0; for a value         
+       * negative value of <code>iIndex</code>, the attribute is inserted at position 0; for a value
        *    greater than the current size of the aggregation, the attribute is inserted at             the
        * last position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -41473,7 +41476,7 @@ declare namespace sap {
        * @since 1.40
        * @param oMarker the marker to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the marker should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the marker is inserted at position 0; for a value            
+       * negative value of <code>iIndex</code>, the marker is inserted at position 0; for a value
        * greater than the current size of the aggregation, the marker is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -41485,7 +41488,7 @@ declare namespace sap {
        * @since 1.30
        * @param oStatus the status to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the status should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the status is inserted at position 0; for a value            
+       * negative value of <code>iIndex</code>, the status is inserted at position 0; for a value
        * greater than the current size of the aggregation, the status is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -41769,7 +41772,7 @@ declare namespace sap {
        * Inserts a item into the aggregation <code>items</code>.
        * @param oItem the item to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the item should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value            
+       * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value
        * greater than the current size of the aggregation, the item is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -42057,7 +42060,7 @@ declare namespace sap {
        * Inserts a content into the aggregation <code>content</code>.
        * @param oContent the content to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the content should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value           
+       * negative value of <code>iIndex</code>, the content is inserted at position 0; for a value
        *  greater than the current size of the aggregation, the content is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining
@@ -42276,7 +42279,7 @@ declare namespace sap {
        * Inserts a item into the aggregation <code>items</code>.
        * @param oItem the item to insert; if empty, nothing is inserted
        * @param iIndex the <code>0</code>-based index the item should be inserted at; for             a
-       * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value            
+       * negative value of <code>iIndex</code>, the item is inserted at position 0; for a value
        * greater than the current size of the aggregation, the item is inserted at             the last
        * position
        * @returns Reference to <code>this</code> in order to allow method chaining

@@ -19,8 +19,8 @@ then
 # 检查程序是否映射
   if [ ! -e "${TOMCAT_APPS_FOLDER}/ROOT" ]
   then
-  echo "${TOMCAT_APPS_FOLDER}/ROOT"
-    ln -s -d "${WORK_FOLDER}" "${TOMCAT_APPS_FOLDER}/ROOT"
+    echo "${TOMCAT_APPS_FOLDER}/ROOT"
+    ln -s "${WORK_FOLDER}" "${TOMCAT_APPS_FOLDER}/ROOT"
   fi
   "${TOMCAT_START_SCRIPT}"
 else

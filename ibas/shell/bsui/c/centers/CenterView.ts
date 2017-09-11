@@ -78,7 +78,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                 }),
                 // 系统服务
                 new sap.m.Button("", {
-                    icon: "sap-icon://official-service",
+                    icon: ibas.config.get(ibas.CONFIG_ITEM_OFFLINE_MODE) ? "sap-icon://appear-offline" : "sap-icon://donut-chart",
                     width: "50px",
                     type: sap.m.ButtonType.Transparent,
                     layoutData: new sap.m.OverflowToolbarLayoutData("", {

@@ -50,6 +50,8 @@ export class Module extends Element implements IModule {
         this._functions.add(item);
     }
 }
+/** 地址hash值标记-功能 */
+export const URL_HASH_SIGN_FUNCTIONS: string = "#/functions/";
 /** 模块-功能 */
 export abstract class AbstractFunction extends Element implements IFunction {
     constructor() {

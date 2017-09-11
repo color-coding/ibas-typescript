@@ -25,6 +25,7 @@ export class CustomerEditView extends ibas.BOEditView implements ICustomerEditVi
     darw(): any {
         let that: this = this;
         this.form = new sap.ui.layout.form.SimpleForm("", {
+            editable: true,
             content: [
                 new sap.ui.core.Title("", { text: ibas.i18n.prop("trainingtesting_basis_information") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_customer_code") }),

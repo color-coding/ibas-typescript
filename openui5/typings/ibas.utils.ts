@@ -14,26 +14,34 @@ export namespace utils {
     export const CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT: string = "tableRow|List";
     /** 配置项目-子项表格可视行数 */
     export const CONFIG_ITEM_ITEM_TABLE_VISIBLE_ROW_COUNT: string = "tableRow|Item";
+    var mapLanguage: Map<string, string> = new Map();
+    /** 转换语言编码 */
+    export function toLanguageCode(data: string): string {
+        if (ibas.objects.isNull(data)) {
+            return data;
+        }
+        if (mapLanguage.size === 0) {
+            // 正反
+            mapLanguage.set("zh_CN", "zh-CN");
+            mapLanguage.set("en_US", "en");
+            mapLanguage.set("zh-CN", "zh_CN");
+            mapLanguage.set("en", "en_US");
+        }
+        if (mapLanguage.has(data)) {
+            return mapLanguage.get(data);
+        }
+        return data;
+    }
     /**
-     * 创建下拉框可选项
+     * 获取枚举类型map
      * @param data 枚举类型
      */
-    export function createComboBoxItems(data: any): sap.ui.core.Item[];
-    /**
-     * 创建下拉框可选项
-     * @param data 枚举类型
-     * @param blank 是否创建空白项
-     */
-    export function createComboBoxItems(data: any, blank: boolean): sap.ui.core.Item[];
-    /** 创建下拉框可选项 */
-    export function createComboBoxItems(): sap.ui.core.Item[] {
+    export function getEnumMap(data: any): Map<string, string>;
+    /** 获取枚举类型map */
+    export function getEnumMap(): Map<string, string> {
         // 首先获取枚举内容
         let data: any = arguments[0];
-        let blank: boolean = arguments[1];
         let map: Map<string, string> = new Map<string, string>();
-        if (blank) {
-            map.set("", ibas.i18n.prop("sys_shell_please_chooose_data", ""));
-        }
         for (let item in data) {
             if (ibas.objects.isNull(item)) {
                 continue;
@@ -48,13 +56,60 @@ export namespace utils {
             }
             map.set(key, text);
         }
+        return map;
+    }
+    /**
+     * 创建下拉框可选项
+     * @param data 枚举类型
+     */
+    export function createComboBoxItems(data: any): sap.ui.core.ListItem[];
+    /**
+     * 创建下拉框可选项
+     * @param data 枚举类型
+     * @param blank 是否创建空白项
+     */
+    export function createComboBoxItems(data: any, blank: boolean): sap.ui.core.ListItem[];
+    /** 创建下拉框可选项 */
+    export function createComboBoxItems(): sap.ui.core.ListItem[] {
+        // 首先获取枚举内容
+        let data: any = arguments[0];
+        let blank: boolean = arguments[1];
+        let map: Map<string, string> = new Map<string, string>();
+        if (blank) {
+            map.set("", ibas.i18n.prop("sys_shell_please_chooose_data", ""));
+        }
+        map = getEnumMap(data);
         // 转换枚举内容
-        let items: Array<sap.ui.core.Item> = new Array<sap.ui.core.Item>();
+        let items: Array<sap.ui.core.ListItem> = new Array<sap.ui.core.ListItem>();
         for (let item of map) {
             let key: any = item[0];
-            items.push(new sap.ui.core.Item("", {
+            items.push(new sap.ui.core.ListItem("", {
                 key: key,
-                text: ibas.enums.describe(data, item[1])
+                text: ibas.enums.describe(data, item[1]),
+                additionalText: key
+            }));
+        }
+        return items;
+    }
+    /**
+     * 创建SegmentedButtonItem
+     * @param data 枚举类型
+     */
+    export function createSegmentedButtonItems(data: any): sap.m.SegmentedButtonItem[];
+    /** 创建SegmentedButtonItem */
+    export function createSegmentedButtonItems(): sap.m.SegmentedButtonItem[] {
+        // 首先获取枚举内容
+        let data: any = arguments[0];
+        let map: Map<string, string> = new Map<string, string>();
+        map = getEnumMap(data);
+        // 转换枚举内容
+        let items: Array<sap.m.SegmentedButtonItem> = new Array<sap.m.SegmentedButtonItem>();
+        for (let item of map) {
+            let key: any = item[0];
+            items.push(new sap.m.SegmentedButtonItem("", {
+                width: "auto",
+                key: key,
+                text: ibas.enums.describe(data, item[1]),
             }));
         }
         return items;
@@ -259,12 +314,24 @@ export namespace utils {
         }
     }
     /** 改变窗体内控件编辑状态 */
-    export function changeFormEditable(form: sap.ui.layout.form.SimpleForm, editable: boolean): void {
+    export function changeFormEditable(form: sap.ui.layout.form.SimpleForm, editable: boolean): void;
+    /** 改变窗体内控件编辑状态 */
+    export function changeFormEditable(form: sap.ui.layout.VerticalLayout, editable: boolean): void;
+    /** 改变窗体内控件编辑状态 */
+    export function changeFormEditable(): void {
+        let form: any = arguments[0];
         if (ibas.objects.isNull(form)) {
             return;
         }
-        for (let item of form.getContent()) {
-            this.changeControlEditable(item, editable);
+        let editable: boolean = arguments[1];
+        if (form instanceof sap.ui.layout.form.SimpleForm) {
+            for (let item of form.getContent()) {
+                this.changeControlEditable(item, editable);
+            }
+        } else if (form instanceof sap.ui.layout.VerticalLayout) {
+            for (let item of form.getContent()) {
+                this.changeControlEditable(item, editable);
+            }
         }
     }
     /** 改变工具条保存状态 */
@@ -290,9 +357,9 @@ export namespace utils {
     /** 转换选择类型  */
     export function toSelectionMode(data: ibas.emChooseType): any {
         switch (data) {
-            case ibas.emChooseType.single:
+            case ibas.emChooseType.SINGLE:
                 return sap.ui.table.SelectionMode.Single;
-            case ibas.emChooseType.multiple:
+            case ibas.emChooseType.MULTIPLE:
                 return sap.ui.table.SelectionMode.MultiToggle;
             default:
                 return sap.ui.table.SelectionMode.None;

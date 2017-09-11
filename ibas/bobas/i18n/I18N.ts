@@ -34,8 +34,37 @@ export class I18N {
         return this._language;
     }
     set language(value: string) {
-        this._language = value;
+        if (this._language !== value) {
+            this._language = value;
+            this.fireLanguageChanged();
+        }
+    }
+
+    private _listeners: ArrayList<ILanguageChangedListener>;
+    /**
+     * 注册监听事件
+     * @param listener 监听者
+     */
+    registerListener(listener: ILanguageChangedListener): void {
+        if (objects.isNull(listener)) {
+            return;
+        }
+        if (objects.isNull(this._listeners)) {
+            this._listeners = new ArrayList<ILanguageChangedListener>();
+        }
+        this._listeners.add(listener);
+    }
+    /** 触发语言改变事件 */
+    protected fireLanguageChanged(): void {
+        if (!objects.isNull(this._language)) {
+            logger.log(emMessageLevel.INFO, "i18n: language change to [{0}].", this._language);
+        }
         this.reload();
+        if (!objects.isNull(this._listeners)) {
+            for (let item of this._listeners) {
+                item.onLanguageChanged(this._language);
+            }
+        }
     }
 
     private items: Map<string, string>;
@@ -100,6 +129,11 @@ export class I18N {
             }
         }
     }
+}
+/** 语言变化监听者 */
+export interface ILanguageChangedListener {
+    /** 语言变化 */
+    onLanguageChanged(value: string): void;
 }
 /** 语言加载调用者 */
 interface ILanguageLoaderCaller {
