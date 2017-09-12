@@ -65,6 +65,8 @@ export class Configuration {
      */
     set(key: string, value: any): void {
         this.items.set(key, value);
+        // 触发值改变事件
+        this.fireConfigurationChanged(key, value);
     }
     /**
      * 获取配置
@@ -178,4 +180,34 @@ export class Configuration {
         }
         return value;
     }
+
+    private _listeners: Array<IConfigurationChangedListener>;
+    /**
+     * 注册监听事件
+     * @param listener 监听者
+     */
+    registerListener(listener: IConfigurationChangedListener): void {
+        if (listener === undefined || listener === null) {
+            return;
+        }
+        if (this._listeners === undefined || this._listeners === null) {
+            this._listeners = new Array<IConfigurationChangedListener>();
+        }
+        this._listeners.push(listener);
+    }
+    /** 触发语言改变事件 */
+    protected fireConfigurationChanged(name: string, value: any): void {
+        if (this._listeners === undefined || this._listeners === null) {
+            return;
+        }
+        for (let item of this._listeners) {
+            item.onConfigurationChanged(name, value);
+        }
+    }
+}
+
+/** 配置变化监听者 */
+export interface IConfigurationChangedListener {
+    /** 配置变化 */
+    onConfigurationChanged(name: string, value: any): void;
 }
