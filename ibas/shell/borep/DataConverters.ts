@@ -93,6 +93,7 @@ export class DataConverter4Shell extends ibas.DataConverter4j {
                 type: bo.BOPropertyInfo.name,
                 Property: newData.property,
                 Searched: newData.searched,
+                Editable: newData.editable,
                 Description: newData.description
             };
             return remote;
@@ -166,6 +167,7 @@ export class DataConverter4Shell extends ibas.DataConverter4j {
             newData.property = remote.Property;
             newData.searched = remote.Searched;
             newData.description = remote.Description;
+            newData.editable = remote.Editable;
             return newData;
         } else if (sign === "saveUserQuery") {
             // 此方法返回值，没有标记类型

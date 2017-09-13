@@ -90,4 +90,6 @@ export class BOPropertyInfo implements sys.IBOPropertyInfo {
 	description: string;
 	/** 查询 */
 	searched: boolean;
+    /** 编辑 */
+    editable: boolean;
 }
