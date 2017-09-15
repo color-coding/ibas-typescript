@@ -115,16 +115,16 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
                             that.table = that.createTable(boInfo.properties);
                             that.form.addContent(that.table);
                         }
-                        that.table.setModel(new sap.ui.model.json.JSONModel(datas));
+                        that.table.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
                     }
                 });
             } else {
                 this.table = this.createTable([]);
                 this.form.addContent(this.table);
-                this.table.setModel(new sap.ui.model.json.JSONModel(datas));
+                this.table.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
             }
         } else {
-            this.table.setModel(new sap.ui.model.json.JSONModel(datas));
+            this.table.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
         }
     }
     /** 绘制工具条 */
@@ -218,7 +218,7 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
             }),
             visibleRowCount: 5,
             enableSelectAll: false,
-            rows: "{/}",
+            rows: "{/rows}",
             columns: [
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("sys_shell_query_condition_relationship"),
@@ -227,7 +227,7 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
                         width: "100%",
                         items: utils.createComboBoxItems(ibas.emConditionRelationship)
                     }).bindProperty("selectedKey", {
-                        path: "/relationship",
+                        path: "relationship",
                         type: "sap.ui.model.type.Integer"
                     })
                 }),
@@ -238,7 +238,7 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
                         width: "100%",
                         items: this.getCharListItem("(")
                     }).bindProperty("selectedKey", {
-                        path: "/bracketOpen",
+                        path: "bracketOpen",
                         type: "sap.ui.model.type.Integer"
                     })
                 }),
@@ -249,7 +249,7 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
                         width: "100%",
                         items: this.getPropertyListItem(properies)
                     }).bindProperty("selectedKey", {
-                        path: "/alias",
+                        path: "alias",
                     })
                 }),
                 new sap.ui.table.Column("", {
@@ -259,7 +259,7 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
                         width: "100%",
                         items: utils.createComboBoxItems(ibas.emConditionOperation)
                     }).bindProperty("selectedKey", {
-                        path: "/operation",
+                        path: "operation",
                         type: "sap.ui.model.type.Integer"
                     })
                 }),
@@ -268,7 +268,7 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
                     width: "120px",
                     template: new sap.m.Input("", {
                     }).bindProperty("value", {
-                        path: "/value"
+                        path: "value"
                     }),
                 }),
                 new sap.ui.table.Column("", {
@@ -278,7 +278,7 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
                         width: "100%",
                         items: this.getCharListItem(")")
                     }).bindProperty("selectedKey", {
-                        path: "/bracketClose",
+                        path: "bracketClose",
                         type: "sap.ui.model.type.Integer"
                     })
                 })
