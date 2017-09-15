@@ -205,10 +205,10 @@ export class SalesOrderListView extends ibas.BOListView implements ISalesOrderLi
         let model: sap.ui.model.Model = this.table.getModel(undefined);
         if (!ibas.objects.isNull(model)) {
             // 已存在绑定数据，添加新的
-            let hDatas: bo.SalesOrder[] = (<any>model).getData();
-            if (!ibas.objects.isNull(hDatas) && hDatas instanceof Array) {
+            let hDatas: any = (<any>model).getData();
+            if (!ibas.objects.isNull(hDatas) && hDatas.rows instanceof Array) {
                 for (let item of datas) {
-                    hDatas.push(item);
+                    hDatas.rows.push(item);
                 }
                 model.refresh(false);
                 done = true;
