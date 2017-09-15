@@ -22410,7 +22410,13 @@ declare namespace sap {
         */
         constructor(oFormatOptions: any, oConstraints?: any);
 
-
+        /**
+         * Constructor for a new SimpleType.
+         * @param oFormatOptions options as supported by concrete subclasses
+         * @param oConstraints constraints as supported by concrete subclasses
+         * neil.zhou
+        */
+        constructor(oFormatOptions?: any, oConstraints?: any);
 
 
         /**
