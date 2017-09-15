@@ -25,101 +25,101 @@ export class Criteria implements ICriteria {
     /**
      * 业务对象编码
      */
-    private _boCode: string;
+    private BOCode: string;
 
     get boCode(): string {
-        return this._boCode;
+        return this.BOCode;
     }
 
     set boCode(value: string) {
-        this._boCode = value;
+        this.BOCode = value;
     }
 
     /**
      * 查询结果数量
      */
-    private _result: number;
+    private Result: number;
 
     get result(): number {
-        return this._result;
+        return this.Result;
     }
 
     set result(value: number) {
-        this._result = value;
+        this.Result = value;
     }
 
     /**
      * 不加载子项
      */
-    private _noChilds: boolean;
+    private NoChilds: boolean;
 
     get noChilds(): boolean {
-        return this._noChilds;
+        return this.NoChilds;
     }
 
     set noChilds(value: boolean) {
-        this._noChilds = value;
+        this.NoChilds = value;
     }
 
     /**
      * 备注
      */
-    private _remarks: string;
+    private Remarks: string;
 
     get remarks(): string {
-        return this._remarks;
+        return this.Remarks;
     }
 
     set remarks(value: string) {
-        this._remarks = value;
+        this.Remarks = value;
     }
 
     /**
      * 查询条件集合
      */
-    private _conditions: IConditions;
+    private Conditions: IConditions;
 
     get conditions(): IConditions {
-        if (objects.isNull(this._conditions)) {
-            this._conditions = new Conditions();
+        if (objects.isNull(this.Conditions)) {
+            this.Conditions = new Conditions();
         }
-        return this._conditions;
+        return this.Conditions;
     }
 
     set conditions(value: IConditions) {
-        this._conditions = value;
+        this.Conditions = value;
     }
 
     /**
      * 排序字段集合
      */
-    private _sorts: ISorts;
+    private Sorts: ISorts;
 
     get sorts(): ISorts {
-        if (objects.isNull(this._sorts)) {
-            this._sorts = new Sorts();
+        if (objects.isNull(this.Sorts)) {
+            this.Sorts = new Sorts();
         }
-        return this._sorts;
+        return this.Sorts;
     }
 
     set sorts(value: ISorts) {
-        this._sorts = value;
+        this.Sorts = value;
     }
 
     /**
      * 子查询集合
      */
-    private _childCriterias: IChildCriterias;
+    private ChildCriterias: IChildCriterias;
 
     get childCriterias(): IChildCriterias {
-        if (objects.isNull(this._childCriterias)) {
-            this._childCriterias = new ChildCriterias();
+        if (objects.isNull(this.ChildCriterias)) {
+            this.ChildCriterias = new ChildCriterias();
         }
-        return this._childCriterias;
+        return this.ChildCriterias;
     }
 
     set childCriterias(value: IChildCriterias) {
-        this._childCriterias = value;
+        this.ChildCriterias = value;
     }
 
     /**
@@ -397,98 +397,98 @@ export class Condition implements ICondition {
     /**
      * 获取-条件字段（属性）名
      */
-    private _alias: string;
+    private Alias: string;
 
     get alias(): string {
-        return this._alias;
+        return this.Alias;
     }
 
     set alias(value: string) {
-        this._alias = value;
+        this.Alias = value;
     }
     /**
      * 几个闭括号"）"
      */
-    private _bracketClose: number;
+    private BracketClose: number;
 
     get bracketClose(): number {
-        return this._bracketClose;
+        return this.BracketClose;
     }
 
     set bracketClose(value: number) {
-        this._bracketClose = value;
+        this.BracketClose = value;
     }
     /**
      * 几个开括号"（"
      */
-    private _bracketOpen: number;
+    private BracketOpen: number;
 
     get bracketOpen(): number {
-        return this._bracketOpen;
+        return this.BracketOpen;
     }
 
     set bracketOpen(value: number) {
-        this._bracketOpen = value;
+        this.BracketOpen = value;
     }
     /**
      * 比较的字段（属性）名
      */
-    private _comparedAlias: string;
+    private ComparedAlias: string;
 
     get comparedAlias(): string {
-        return this._comparedAlias;
+        return this.ComparedAlias;
     }
 
     set comparedAlias(value: string) {
-        this._comparedAlias = value;
+        this.ComparedAlias = value;
     }
     /**
      * 比较的值
      */
-    private _value: string;
+    private Value: string;
 
     get value(): string {
-        return this._value;
+        return this.Value;
     }
 
     set value(value: string) {
-        this._value = value;
+        this.Value = value;
     }
     /**
      * 比较方法
      */
-    private _operation: emConditionOperation;
+    private Operation: emConditionOperation;
 
     get operation(): emConditionOperation {
-        return this._operation;
+        return this.Operation;
     }
 
     set operation(value: emConditionOperation) {
-        this._operation = value;
+        this.Operation = value;
     }
     /**
      * 和后续条件关系
      */
-    private _relationship: emConditionRelationship;
+    private Relationship: emConditionRelationship;
 
     get relationship(): emConditionRelationship {
-        return this._relationship;
+        return this.Relationship;
     }
 
     set relationship(value: emConditionRelationship) {
-        this._relationship = value;
+        this.Relationship = value;
     }
     /**
      * 获取-备注
      */
-    private _remarks: string;
+    private Remarks: string;
 
     get remarks(): string {
-        return this._remarks;
+        return this.Remarks;
     }
 
     set remarks(value: string) {
-        this._remarks = value;
+        this.Remarks = value;
     }
 
     /**
@@ -568,26 +568,26 @@ export class Sort implements ISort {
     /**
      * 排序的字段（属性）名
      */
-    private _alias: string;
+    private Alias: string;
 
     get alias(): string {
-        return this._alias;
+        return this.Alias;
     }
 
     set alias(value: string) {
-        this._alias = value;
+        this.Alias = value;
     }
     /**
      * 排序方式
      */
-    private _sortType: emSortType;
+    private SortType: emSortType;
 
     get sortType(): emSortType {
-        return this._sortType;
+        return this.SortType;
     }
 
     set sortType(value: emSortType) {
-        this._sortType = value;
+        this.SortType = value;
     }
     /**
      * 转换为字符串
@@ -623,27 +623,27 @@ export class ChildCriteria extends Criteria implements IChildCriteria {
     /**
      * 获取-属性路径
      */
-    private _propertyPath: string;
+    private PropertyPath: string;
 
     get propertyPath(): string {
-        return this._propertyPath;
+        return this.PropertyPath;
     }
 
     set propertyPath(value: string) {
-        this._propertyPath = value;
+        this.PropertyPath = value;
     }
 
     /**
      * 仅返回存在子项的
      */
-    private _onlyHasChilds: boolean;
+    private OnlyHasChilds: boolean;
 
     get onlyHasChilds(): boolean {
-        return this._onlyHasChilds;
+        return this.OnlyHasChilds;
     }
 
     set onlyHasChilds(value: boolean) {
-        this._onlyHasChilds = value;
+        this.OnlyHasChilds = value;
     }
 }
 

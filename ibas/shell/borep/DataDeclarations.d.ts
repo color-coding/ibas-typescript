@@ -84,4 +84,6 @@ export interface BOPropertyInfo extends DataDeclaration {
     Description: string;
     /** 查询 */
     Searched: boolean;
+    /** 可编辑 */
+    Editable: boolean;
 }
