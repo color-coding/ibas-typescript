@@ -263,13 +263,6 @@ export namespace utils {
             return;
         }
         // 绑定触发一次的事件
-        trigger.listener.attachEvent("swipe", undefined, function (oEvent: any): void {
-            if (this.getBusy()) {
-                // 忙状态不监听
-                return;
-            }
-        });
-        // 绑定触发一次的事件
         trigger.listener.attachEvent("updateFinished", undefined, function (oEvent: any): void {
             if (this.getBusy()) {
                 // 忙状态不监听
