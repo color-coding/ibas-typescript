@@ -246,6 +246,50 @@ export namespace utils {
         /** 触发方法 */
         next(data: any): void;
     }
+    /** 结果集触发者---List */
+    export interface IListResultsTrigger {
+        /** 监听对象 */
+        listener: sap.m.List;
+        /** 触发方法 */
+        next(data: any): void;
+    }
+    /** 自动触发下一个结果集查询 */
+    export function triggerListNextResults(trigger: IListResultsTrigger): void {
+        // 离线模式下不支持
+        if (ibas.config.get(ibas.CONFIG_ITEM_OFFLINE_MODE, false)) {
+            return;
+        }
+        if (ibas.objects.isNull(trigger) || ibas.objects.isNull(trigger.listener)) {
+            return;
+        }
+        // 绑定触发一次的事件
+        trigger.listener.attachEvent("updateFinished", undefined, function (oEvent: any): void {
+            if (this.getBusy()) {
+                // 忙状态不监听
+                return;
+            }
+            let model: any = this.getModel(undefined);
+            if (!ibas.objects.isNull(model)) {
+                let data: any = model.getData();
+                if (!ibas.objects.isNull(data)) {
+                    // var linesCountEachTime= this.getGrowingThreshold();//获取每次显示的行数
+                    if (this.getGrowingInfo().total === this.getGrowingInfo().actual) {
+                        if (data !== undefined && data !== null) {
+                            var modelData: any = data.rows; // 与绑定对象的路径有关
+                            var dataCount: any = modelData.length;
+                            var visibleRow: any = this.getGrowingThreshold(); // 当前显示条数
+                            if (dataCount <= 0 || dataCount < visibleRow) {
+                                return;
+                            }
+                            // 调用事件
+                            this.setBusy(true);
+                            trigger.next.call(trigger.next, modelData[modelData.length - 1]);
+                        }
+                    }
+                }
+            }
+        });
+    }
     /** 自动触发下一个结果集查询 */
     export function triggerNextResults(trigger: IResultsTrigger): void {
         // 离线模式下不支持

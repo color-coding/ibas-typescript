@@ -16,6 +16,8 @@ ibas-typescript
 *.sln
 .project
 Web.config
+bs-config.json
+package.json
 /.vs/
 /.vscode/
 /.metadata/
@@ -33,8 +35,8 @@ Web.config
 /others/
 /upload/
 /test/apps/
-
-
+/node_modules/
+/test/repository/*.json
 # exceptions
 !ibas/3rdparty/*.js
 !openui5/typings/*.ts
