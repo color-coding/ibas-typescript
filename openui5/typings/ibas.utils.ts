@@ -282,7 +282,7 @@ export namespace utils {
                     // var linesCountEachTime= this.getGrowingThreshold();//获取每次显示的行数
                     if (this.getGrowingInfo().total === this.getGrowingInfo().actual) {
                         if (data !== undefined && data !== null) {
-                            var modelData: any = data.modelData; // 与绑定对象的路径有关
+                            var modelData: any = data.rows; // 与绑定对象的路径有关
                             var dataCount: any = modelData.length;
                             var visibleRow: any = this.getGrowingThreshold(); // 当前显示条数
                             if (dataCount <= 0 || dataCount < visibleRow) {
