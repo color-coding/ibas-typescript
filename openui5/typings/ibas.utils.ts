@@ -370,7 +370,7 @@ export namespace utils {
  * 界面数据验证
  */
 export namespace validation {
-    // uI 触发错误验证
+    /** uI 触发错误验证 */
     sap.ui.getCore().attachValidationError("", (oEvent: any): void => {
         let control: any = oEvent.getParameter("element");
         if (control && control.setValueState) {
@@ -378,15 +378,74 @@ export namespace validation {
             control.setValueState("Error");
         }
     });
-    // uI触发正确验证
+    /** 触发正确验证 */
     sap.ui.getCore().attachValidationSuccess("", (oEvent: any): void => {
         let control: any = oEvent.getParameter("element");
         if (control && control.setValueState) {
             control.setValueState("None");
         }
     });
+    /** 触发控件UI效果 @ control:控件实例 */
+    export function fireValidationError(control: sap.ui.core.Control): void {
+        if (control !== null && control !== undefined) {
+            let arg: any = {
+                element: control
+            };
+            sap.ui.getCore().fireValidationError(arg);
+        }
+    }
+    /** 判断是否为空 */
+    export function isNotEmpty(value: any): Boolean {
+        return (value !== null && value !== undefined && value !== "");
+    }
+    /** 判断是否为0 */
+    export function isIntEqZero(value: any): Boolean {
+        return value === 0;
+    }
+    /** 判断是否大于0 */
+    export function isIntGtZero(value: any): Boolean {
+        return value > 0;
+    }
+    /** 判断是否大于等于0 */
+    export function isIntGteZero(value: any): Boolean {
+        return value >= 0;
+    }
+    /** 判断是否Email地址 */
+    export function isEmail(value: any): Boolean {
+        if (value === null || value === "") {
+            return false;
+        }
+        let result: any = value.match(/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/);
+        if (result === null) {
+            return false;
+        }
+        return true;
+    }
+    /** 判断数值类型，包括整数和浮点数 */
+    export function isNumber(value: any): Boolean {
+        if (value === null || value === "") {
+            return false;
+        }
+        let result: any = value.match(/^[-\+]?\d+(\.\d+)?$/);
+        if (result === null) {
+            return false;
+        }
+        return true;
+    }
+    /** 只能输入数字[0-9] */
+    export function isDigits(value: any): Boolean {
+        if (value === null || value === "") {
+            return false;
+        }
+        let result: any = value.match(/^\d+$/);
+        if (result === null) {
+            return false;
+        }
+        return true;
+    }
+
     /**
-     * 判断是否为空
+     * 判断是否为空 - extends SimpleType
      */
     export class IsNotEmpty extends sap.ui.model.SimpleType {
         formatValue(oValue: any): any {
@@ -396,16 +455,13 @@ export namespace validation {
             return oValue;
         }
         validateValue(oValue: any): any {
-            if (!this.isNotEmpty(oValue)) {
+            if (!validation.isNotEmpty(oValue)) {
                 throw new sap.ui.model.ValidateException(oValue);
             }
         }
-        isNotEmpty(value: any): Boolean {
-            return (value !== null && value !== undefined && value !== "");
-        }
     }
     /**
-     * 判断是否为0
+     * 判断是否为0 - extends SimpleType
      */
     export class IsIntEqZero extends sap.ui.model.SimpleType {
         formatValue(oValue: any): any {
@@ -415,16 +471,14 @@ export namespace validation {
             return oValue;
         }
         validateValue(oValue: any): any {
-            if (!this.isIntEqZero(oValue)) {
+            if (!validation.isIntEqZero(oValue)) {
                 throw new sap.ui.model.ValidateException(oValue);
             }
         }
-        isIntEqZero(value: any): Boolean {
-            return value === 0;
-        }
+
     }
     /**
-     * 判断是否大于0
+     * 判断是否大于0 - extends SimpleType
      */
     export class IsIntGtZero extends sap.ui.model.SimpleType {
         formatValue(oValue: any): any {
@@ -434,16 +488,14 @@ export namespace validation {
             return oValue;
         }
         validateValue(oValue: any): any {
-            if (!this.isIntGtZero(oValue)) {
+            if (!validation.isIntGtZero(oValue)) {
                 throw new sap.ui.model.ValidateException(oValue);
             }
         }
-        isIntGtZero(value: any): Boolean {
-            return value > 0;
-        }
+
     }
     /**
-     * 判断是否大于等于0
+     * 判断是否大于等于0 - extends SimpleType
      */
     export class IsIntGteZero extends sap.ui.model.SimpleType {
         formatValue(oValue: any): any {
@@ -453,16 +505,14 @@ export namespace validation {
             return oValue;
         }
         validateValue(oValue: any): any {
-            if (!this.isIntGteZero(oValue)) {
+            if (!validation.isIntGteZero(oValue)) {
                 throw new sap.ui.model.ValidateException(oValue);
             }
         }
-        isIntGteZero(value: any): Boolean {
-            return value >= 0;
-        }
+
     }
     /**
-     * 判断是否Email地址
+     * 判断是否Email地址 - extends SimpleType
      */
     export class IsEmail extends sap.ui.model.SimpleType {
         formatValue(oValue: any): any {
@@ -472,23 +522,14 @@ export namespace validation {
             return oValue;
         }
         validateValue(oValue: any): any {
-            if (!this.isEmail(oValue)) {
+            if (!validation.isEmail(oValue)) {
                 throw new sap.ui.model.ValidateException(oValue);
             }
         }
-        isEmail(value: any): Boolean {
-            if (value === null || value === "") {
-                return false;
-            }
-            let result: any = value.match(/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/);
-            if (result === null) {
-                return false;
-            }
-            return true;
-        }
+
     }
     /**
-     * 判断数值类型，包括整数和浮点数
+     * 判断数值类型，包括整数和浮点数 - extends SimpleType
      */
     export class IsNumber extends sap.ui.model.SimpleType {
         formatValue(oValue: any): any {
@@ -498,23 +539,14 @@ export namespace validation {
             return oValue;
         }
         validateValue(oValue: any): any {
-            if (!this.isNumber(oValue)) {
+            if (!validation.isNumber(oValue)) {
                 throw new sap.ui.model.ValidateException(oValue);
             }
         }
-        isNumber(value: any): Boolean {
-            if (value === null || value === "") {
-                return false;
-            }
-            let result: any = value.match(/^[-\+]?\d+(\.\d+)?$/);
-            if (result === null) {
-                return false;
-            }
-            return true;
-        }
+
     }
     /**
-     * 只能输入数字[0-9]
+     * 只能输入数字[0-9] - extends SimpleType
      */
     export class IsDigits extends sap.ui.model.SimpleType {
         formatValue(oValue: any): any {
@@ -524,19 +556,10 @@ export namespace validation {
             return oValue;
         }
         validateValue(oValue: any): any {
-            if (!this.isDigits(oValue)) {
+            if (!validation.isDigits(oValue)) {
                 throw new sap.ui.model.ValidateException(oValue);
             }
         }
-        isDigits(value: any): Boolean {
-            if (value === null || value === "") {
-                return false;
-            }
-            let result: any = value.match(/^\d+$/);
-            if (result === null) {
-                return false;
-            }
-            return true;
-        }
+
     }
 }
