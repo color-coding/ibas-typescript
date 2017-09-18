@@ -16,7 +16,6 @@ SET TOMCAT_START_SCRIPT=%TOMCAT_FOLDER%bin\startup.bat
 
 if exist %TOMCAT_FOLDER% (
 REM ºÏ≤È≥Ã–Ú «∑Ò”≥…‰
-
   if not exist "%TOMCAT_APPS_FOLDER%ROOT" (
     mklink /d "%TOMCAT_APPS_FOLDER%ROOT" "%WORK_FOLDER%"
   )
