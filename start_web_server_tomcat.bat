@@ -17,9 +17,9 @@ SET TOMCAT_START_SCRIPT=%TOMCAT_FOLDER%bin\startup.bat
 if exist %TOMCAT_FOLDER% (
 REM 检查程序是否映射
 
-if not exist "%TOMCAT_APPS_FOLDER%ROOT" (
-  mklink /d "%TOMCAT_APPS_FOLDER%ROOT" "%WORK_FOLDER%"
-)
+ if not exist "%TOMCAT_APPS_FOLDER%ROOT" (
+   mklink /d "%TOMCAT_APPS_FOLDER%ROOT" "%WORK_FOLDER%"
+ )
 REM 启动tomcat
   cd "%TOMCAT_FOLDER%"
   call "%TOMCAT_START_SCRIPT%"
