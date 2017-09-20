@@ -114,6 +114,26 @@ export namespace utils {
         }
         return items;
     }
+    /** 获取表格或者列表选中的对象 */
+    export function getSelecteds<T>(Container: sap.m.List | sap.ui.table.Table): ibas.List<T> {
+        let selecteds: ibas.List<T> = new ibas.ArrayList<T>();
+        if (Container instanceof (sap.m.List)) {
+            let Contexts: any[] = Container.getSelectedContexts(undefined);
+            if (Contexts.length > 0) {
+                for (let i: number = 0; i < Contexts.length; i++) {
+                    selecteds.push(Contexts[i].getObject());
+                }
+            }
+        } else if (Container instanceof (sap.ui.table.Table)) {
+            let idxs: any[] = Container.getSelectedIndices();
+            if (idxs.length > 0) {
+                for (let i: number = 0; i < idxs.length; i++) {
+                    selecteds.push(Container.getContextByIndex(idxs[i]).getObject());
+                }
+            }
+        }
+        return selecteds;
+    }
     /** 获取表格选中的对象 */
     export function getTableSelecteds<T>(table: sap.ui.table.Table): ibas.List<T> {
         let selecteds: ibas.List<T> = new ibas.ArrayList<T>();
