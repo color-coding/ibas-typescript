@@ -114,6 +114,26 @@ export namespace utils {
         }
         return items;
     }
+    /** 获取表格或者列表选中的对象 */
+    export function getSelecteds<T>(Container: sap.m.List | sap.ui.table.Table): ibas.List<T> {
+        let selecteds: ibas.List<T> = new ibas.ArrayList<T>();
+        if (Container instanceof (sap.m.List)) {
+            let Contexts: any[] = Container.getSelectedContexts(undefined);
+            if (Contexts.length > 0) {
+                for (let i: number = 0; i < Contexts.length; i++) {
+                    selecteds.push(Contexts[i].getObject());
+                }
+            }
+        } else if (Container instanceof (sap.ui.table.Table)) {
+            let idxs: any[] = Container.getSelectedIndices();
+            if (idxs.length > 0) {
+                for (let i: number = 0; i < idxs.length; i++) {
+                    selecteds.push(Container.getContextByIndex(idxs[i]).getObject());
+                }
+            }
+        }
+        return selecteds;
+    }
     /** 获取表格选中的对象 */
     export function getTableSelecteds<T>(table: sap.ui.table.Table): ibas.List<T> {
         let selecteds: ibas.List<T> = new ibas.ArrayList<T>();
@@ -239,10 +259,10 @@ export namespace utils {
             }
         }
     }
-    /** 结果集触发者 */
+     /** 结果集触发者 */
     export interface IResultsTrigger {
         /** 监听对象 */
-        listener: sap.ui.table.Table;
+        listener: sap.ui.table.Table | sap.m.List;
         /** 触发方法 */
         next(data: any): void;
     }
@@ -255,39 +275,69 @@ export namespace utils {
         if (ibas.objects.isNull(trigger) || ibas.objects.isNull(trigger.listener)) {
             return;
         }
-        // 绑定触发一次的事件
-        trigger.listener.attachEvent("_rowsUpdated", undefined, function (oEvent: any): void {
-            if (this.getBusy()) {
-                // 忙状态不监听
-                return;
-            }
-            let model: any = this.getModel(undefined);
-            if (!ibas.objects.isNull(model)) {
-                let data: any = model.getData();
-                if (!ibas.objects.isNull(data)) {
-                    let dataCount: number = data.length;
-                    if (dataCount === undefined) {
-                        // 存在绑定的对象路径问题
-                        dataCount = data.rows.length;
-                        if (dataCount !== undefined) {
-                            // 此路径存在数据
-                            data = data.rows;
-                        }
-                    }
-                    let visibleRow: number = this.getVisibleRowCount();
-                    if (dataCount > 0 && dataCount > visibleRow) {
-                        let firstRow: number = this.getFirstVisibleRow(); // 当前页的第一行
-                        let lastPageCount: number = dataCount % visibleRow; // 最后一页行数
-                        if ((lastPageCount > 0 && firstRow === (dataCount - lastPageCount))
-                            || (lastPageCount === 0 && firstRow === (dataCount - visibleRow))) {
-                            // 调用事件
-                            this.setBusy(true);
-                            trigger.next.call(trigger.next, data[data.length - 1]);
+        if (trigger.listener instanceof (sap.m.List)) {
+            // 绑定触发一次的事件
+            trigger.listener.attachEvent("updateFinished", undefined, function (oEvent: any): void {
+                if (this.getBusy()) {
+                    // 忙状态不监听
+                    return;
+                }
+                let model: any = this.getModel(undefined);
+                if (!ibas.objects.isNull(model)) {
+                    let data: any = model.getData();
+                    if (!ibas.objects.isNull(data)) {
+                        if (this.getGrowingInfo().total === this.getGrowingInfo().actual) {
+                            if (data !== undefined && data !== null) {
+                                let modelData: any = data.rows; // 与绑定对象的路径有关
+                                let dataCount: number = modelData.length;
+                                let visibleRow: number = this.getGrowingThreshold(); // 当前显示条数
+                                if (dataCount <= 0 || dataCount < visibleRow) {
+                                    return;
+                                }
+                                // 调用事件
+                                this.setBusy(true);
+                                trigger.next.call(trigger.next, modelData[modelData.length - 1]);
+                            }
                         }
                     }
                 }
-            }
-        });
+            });
+        } else if (trigger.listener instanceof (sap.ui.table.Table)) {
+            trigger.listener.attachEvent("_rowsUpdated", undefined, function (oEvent: any): void {
+                if (this.getBusy()) {
+                    // 忙状态不监听
+                    return;
+                }
+                let model: any = this.getModel(undefined);
+                if (!ibas.objects.isNull(model)) {
+                    let data: any = model.getData();
+                    if (!ibas.objects.isNull(data)) {
+                        let dataCount: number = data.length;
+                        if (dataCount === undefined) {
+                            // 存在绑定的对象路径问题
+                            dataCount = data.rows.length;
+                            if (dataCount !== undefined) {
+                                // 此路径存在数据
+                                data = data.rows;
+                            }
+                        }
+                        let visibleRow: number = this.getVisibleRowCount();
+                        if (dataCount > 0 && dataCount > visibleRow) {
+                            let firstRow: number = this.getFirstVisibleRow(); // 当前页的第一行
+                            let lastPageCount: number = dataCount % visibleRow; // 最后一页行数
+                            if ((lastPageCount > 0 && firstRow === (dataCount - lastPageCount))
+                                || (lastPageCount === 0 && firstRow === (dataCount - visibleRow))) {
+                                // 调用事件
+                                this.setBusy(true);
+                                trigger.next.call(trigger.next, data[data.length - 1]);
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        // 绑定触发一次的事件
+
     }
     /** 改变控件编辑状态 */
     export function changeControlEditable(ctrl: sap.ui.core.Control, editable: boolean): void {
