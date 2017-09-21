@@ -115,20 +115,20 @@ export namespace utils {
         return items;
     }
     /** 获取表格或者列表选中的对象 */
-    export function getSelecteds<T>(Container: sap.m.List | sap.ui.table.Table): ibas.List<T> {
+    export function getSelecteds<T>(container: sap.m.List | sap.ui.table.Table): ibas.List<T> {
         let selecteds: ibas.List<T> = new ibas.ArrayList<T>();
-        if (Container instanceof (sap.m.List)) {
-            let Contexts: any[] = Container.getSelectedContexts(undefined);
+        if (container instanceof (sap.m.List)) {
+            let Contexts: any[] = container.getSelectedContexts(undefined);
             if (Contexts.length > 0) {
                 for (let i: number = 0; i < Contexts.length; i++) {
                     selecteds.push(Contexts[i].getObject());
                 }
             }
-        } else if (Container instanceof (sap.ui.table.Table)) {
-            let idxs: any[] = Container.getSelectedIndices();
+        } else if (container instanceof (sap.ui.table.Table)) {
+            let idxs: any[] = container.getSelectedIndices();
             if (idxs.length > 0) {
                 for (let i: number = 0; i < idxs.length; i++) {
-                    selecteds.push(Container.getContextByIndex(idxs[i]).getObject());
+                    selecteds.push(container.getContextByIndex(idxs[i]).getObject());
                 }
             }
         }
@@ -259,7 +259,7 @@ export namespace utils {
             }
         }
     }
-     /** 结果集触发者 */
+    /** 结果集触发者 */
     export interface IResultsTrigger {
         /** 监听对象 */
         listener: sap.ui.table.Table | sap.m.List;
