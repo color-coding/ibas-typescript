@@ -42,5 +42,8 @@
     "sys_whether_to_exit": "请确认是退出？",
     "sys_data_not_saved_whether_to_continue": "数据未保存，是否继续？",
     "sys_not_provided_display_service_method": "没有提供显示[{0}]服务的方法",
-    "sys_application_no_services": "应用[{0}]没有匹配的服务"
+    "sys_application_no_services": "应用[{0}]没有匹配的服务",
+    "sys_not_provided_timing_method ":"定时器工作方法未指定",
+    "sys_Interval_not_registered ":"定时器[{0}]未注册}",
+    "sys_Interval_working ":"定时器[{0}]已存在}"
 }
