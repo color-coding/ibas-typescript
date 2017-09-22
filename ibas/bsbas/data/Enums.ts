@@ -74,3 +74,10 @@ export enum emChooseType {
     /** 多选 */
     MULTIPLE
 }
+/** 定时器运行方式 */
+export enum emTimingMode {
+    /** 单次运行 */
+    SINGLE,
+    /** 间隔运行 */
+    INTERVAL
+}
