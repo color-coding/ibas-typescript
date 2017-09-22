@@ -13,9 +13,6 @@ export class Timing {
         this.name = timingName;
         this.TimingMode = tMode;
         this.timeInterval = Timing.TIMEINTERVAL;
-        this.runFunction = function (): void {
-            throw new Error(i18n.prop("sys_not_provided_timing_method"));
-        };
     }
     /**
      * 定时器名称
@@ -41,6 +38,9 @@ export class Timing {
      * 定时器开启
      */
     public start(): void {
+        if(this.runFunction===undefined ) {
+            throw new Error(i18n.prop("sys_not_provided_timing_method"));
+        }
         switch (this.TimingMode) {
             case emTimingMode.INTERVAL:
                 if (Timing.systemIntervals.has(name)) {
