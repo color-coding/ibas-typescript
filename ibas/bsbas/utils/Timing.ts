@@ -22,7 +22,7 @@ export class Timing {
      */
     public name: string;
     /**
-     * 定时器运行间隔
+     * 定时器运行间隔(毫秒)
      */
     public timeInterval: number;
     /**
@@ -44,7 +44,7 @@ export class Timing {
         switch (this.TimingMode) {
             case emTimingMode.INTERVAL:
                 if (Timing.systemIntervals.has(name)) {
-                    throw new Error(i18n.prop("sys_Interval_not_registered", name));
+                    throw new Error(i18n.prop("sys_Interval_working", name));
                 }
                 this.intervalpid = setInterval(this.runFunction, this.timeInterval);
                 Timing.systemIntervals.set(this.name, this);
