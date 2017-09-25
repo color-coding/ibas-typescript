@@ -19,5 +19,9 @@ export const CONFIG_ITEM_FORMAT_DATE: string = "format|Date";
 export const CONFIG_ITEM_FORMAT_TIME: string = "format|Time";
 /** 配置项目-格式-日期时间 */
 export const CONFIG_ITEM_FORMAT_DATETIME: string = "format|DateTime";
-/** 配置项目-格式-小数位数 */
-export const CONFIG_ITEM_FORMAT_DECIMAL_PLACES: string = "format|DecimalPlaces";
+/** 配置项目-小数位 */
+export const CONFIG_ITEM_DECIMAL_PLACES: string = "decimalPlaces";
+/** 配置项目-小数位-价格 */
+export const CONFIG_ITEM_DECIMAL_PLACES_PRICE: string = "decimalPlaces|Price";
+/** 配置项目-小数位-数量 */
+export const CONFIG_ITEM_DECIMAL_PLACES_QUANTITY: string = "decimalPlaces|Quantity";

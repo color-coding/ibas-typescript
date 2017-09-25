@@ -6,6 +6,8 @@
     "format|Date": "yyyy-MM-dd",
     "format|Time": "hh:mm",
     "format|DateTime": "yyyy-MM-dd hh:mm",
-    "format|DecimalPlaces": 6
+    "decimalPlaces": 6,
+    "decimalPlaces|Price": 6,
+    "decimalPlaces|Quantity": 6
   }
 }
