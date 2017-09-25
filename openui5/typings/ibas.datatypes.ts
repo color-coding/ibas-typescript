@@ -3,8 +3,6 @@
  * Project: http://openui5.org/
  * Definitions by: neil.zhou
  */
-/// <reference path="./index.d.ts" />
-/// <reference path="../../ibas/index.ts" />
 import * as ibas from "ibas/index";
 /**
  * 基础验证方法
@@ -58,12 +56,52 @@ export namespace validation {
     /**
      * 是否价格类型
      */
-    export function isPrice(value: any): Boolean {
+    export function isPrice(value: any, decimalDigits: number): Boolean {
         if (value === null || value === "" || value === undefined) {
             return true;
         }
-        // 获取配制文件中小数位数
-        let decimalDigits: any = ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DECIMAL_PLACES, 6);
+        if (decimalDigits === undefined || decimalDigits === null) {
+            // 获取配制文件中小数位数
+            decimalDigits = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES, 6);
+        }
+        let rValue: any = "^(([1-9]\d*)|(([0-9]{1}|[1-9]+)\.[0-9]{1," + decimalDigits + "}))$";
+        let pValue: any = new RegExp(rValue);
+        let result: any = value.match(pValue);
+        if (result === null) {
+            return true;
+        }
+        return true;
+    }
+    /**
+     * 小数类型
+     */
+    export function isDecimal(value: any, decimalDigits: number): Boolean {
+        if (value === null || value === "" || value === undefined) {
+            return true;
+        }
+        if (decimalDigits === undefined || decimalDigits === null) {
+            // 获取配制文件中小数位数
+            decimalDigits = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES, 6);
+        }
+        let rValue: any = "^(([1-9]\d*)|(([0-9]{1}|[1-9]+)\.[0-9]{1," + decimalDigits + "}))$";
+        let pValue: any = new RegExp(rValue);
+        let result: any = value.match(pValue);
+        if (result === null) {
+            return true;
+        }
+        return true;
+    }
+    /**
+     * 数量类型
+     */
+    export function isQuantity(value: any, decimalDigits: number): Boolean {
+        if (value === null || value === "" || value === undefined) {
+            return true;
+        }
+        if (decimalDigits === undefined || decimalDigits === null) {
+            // 获取配制文件中小数位数
+            decimalDigits = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES, 6);
+        }
         let rValue: any = "^(([1-9]\d*)|(([0-9]{1}|[1-9]+)\.[0-9]{1," + decimalDigits + "}))$";
         let pValue: any = new RegExp(rValue);
         let result: any = value.match(pValue);
@@ -185,7 +223,7 @@ export namespace validation {
     /**
      * 匹配密码，以字母开头，长度在6-12之间，只能包含字符、数字和下划线。
      */
-    export function isPwd(value: any): Boolean {
+    export function isPassword(value: any): Boolean {
         if (value === null || value === "" || value === undefined) {
             return true;
         }
@@ -198,7 +236,7 @@ export namespace validation {
     /**
      * 匹配身份证号码
      */
-    export function isCardCode(value: any): Boolean {
+    export function isPersonalID(value: any): Boolean {
         if (value === null || value === "" || value === undefined) {
             return true;
         }
@@ -259,18 +297,8 @@ export namespace validation {
         return true;
     }
     /**
-     * 字符验证，只能包含中文、英文、数字、下划线等字符
+     * 日期
      */
-    export function isStringCheck(value: any): Boolean {
-        if (value === null || value === "" || value === undefined) {
-            return true;
-        }
-        let result: any = value.match(/^[a-zA-Z0-9\u4e00-\u9fa5-_]+$/);
-        if (result === null) {
-            return false;
-        }
-        return true;
-    }
     export function isDate(value: any): Boolean {
         if (value === null || value === "" || value === undefined) {
             return true;
@@ -308,19 +336,7 @@ sap.ui.getCore().attachValidationSuccess("", (oEvent: any): void => {
         control.setValueState("None");
     }
 });
-/**
- * 触发控件UI效果 @ control:控件实例
- */
-export function fireValidationError(control: sap.ui.core.Control, message?: String): sap.ui.core.Core {
-    if (control !== null && control !== undefined) {
-        let arg: any = {
-            element: control,
-            message: message,
-        };
-        return sap.ui.getCore().fireValidationError(arg);
-    }
-}
-export class ValidateResults {
+export class ValidateResult {
     status: Boolean;
     errorMess: String;
 }
@@ -356,21 +372,30 @@ export class SimpleType extends sap.ui.model.SimpleType {
     parseValue(oValue: any): any {
         return oValue;
     }
-    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResults {
-        let results: ValidateResults = new ValidateResults();
+    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
+        let results: ValidateResult = new ValidateResult();
         results.status = true;
         if (this.notEmpty && !validation.isNotEmpty(oValue)) {
             results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_msg_not_empty_error", this.AttributeDesc);
-            fireValidationError(control, results.errorMess);
+            results.errorMess = ibas.i18n.prop("data_types_not_empty_error_msg", this.AttributeDesc);
+            this.fireValidationError(control, results.errorMess);
             return results;
         }
         return results;
     }
     validateValue(oValue: any): any {
-        let results: ValidateResults = this.callValidate(oValue);
+        let results: ValidateResult = this.callValidate(oValue);
         if (!results.status) {
             throw new sap.ui.model.ValidateException(results.errorMess);
+        }
+    }
+    fireValidationError(control: sap.ui.core.Control, message?: String): sap.ui.core.Core {
+        if (control !== null && control !== undefined) {
+            let arg: any = {
+                element: control,
+                message: message,
+            };
+            return sap.ui.getCore().fireValidationError(arg);
         }
     }
 }
@@ -400,32 +425,32 @@ export class Numeric extends SimpleType {
             this.maxValue = settings.maxValue;
         }
     }
-    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResults {
+    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
         super.callValidate(oValue, control);
-        let results: ValidateResults = new ValidateResults();
+        let results: ValidateResult = new ValidateResult();
         results.status = true;
         if (!validation.isNumeric(oValue)) {
             results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_msg_numeric_error");
-            fireValidationError(control, results.errorMess);
+            results.errorMess = ibas.i18n.prop("data_types_numeric_error_msg");
+            this.fireValidationError(control, results.errorMess);
         }
         if (validation.isNotEmpty(oValue) && this.minValue !== undefined && !(oValue > this.minValue)) {
             results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_msg_numeric_minvalue_error", this.AttributeDesc,
+            results.errorMess = ibas.i18n.prop("data_types_numeric_minvalue_error_msg", this.AttributeDesc,
                 this.minValue.toString());
-            fireValidationError(control, results.errorMess);
+            this.fireValidationError(control, results.errorMess);
         }
         if (validation.isNotEmpty(oValue) && this.maxValue !== undefined && !(oValue < this.maxValue)) {
             results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_msg_numeric_maxvalue_error", this.AttributeDesc,
+            results.errorMess = ibas.i18n.prop("data_types_numeric_maxvalue_error_msg", this.AttributeDesc,
                 this.maxValue);
-            fireValidationError(control, results.errorMess);
+            this.fireValidationError(control, results.errorMess);
         }
         return results;
     }
     validateValue(oValue: any): any {
         super.validateValue(oValue);
-        let results: ValidateResults = this.callValidate(oValue);
+        let results: ValidateResult = this.callValidate(oValue);
         if (!results.status) {
             throw new sap.ui.model.ValidateException(results.errorMess);
         }
@@ -434,7 +459,7 @@ export class Numeric extends SimpleType {
 /**
  * Decimal类型 - extends validation.Numeric
  */
-export class Decimal extends Numeric {
+export class Decimal extends SimpleType {
     protected decimalDigits: number = undefined;
     constructor(settings?: {
         notEmpty?: Boolean,
@@ -452,21 +477,21 @@ export class Decimal extends Numeric {
             this.decimalDigits = settings.decimalDigits;
         }
     }
-    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResults {
+    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
         super.callValidate(oValue, control);
-        let results: ValidateResults = new ValidateResults();
+        let results: ValidateResult = new ValidateResult();
         results.status = true;
-        if (this.decimalDigits !== undefined && !validation.isDecimalDigits(oValue, this.decimalDigits)) {
+        if (!validation.isDecimal(oValue, this.decimalDigits)) {
             results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_msg_decimal_decimaldigits_error", this.AttributeDesc,
+            results.errorMess = ibas.i18n.prop("data_types_decimal_decimaldigits_error_msg", this.AttributeDesc,
                 this.decimalDigits);
-            fireValidationError(control, results.errorMess);
+            this.fireValidationError(control, results.errorMess);
         }
         return results;
     }
     validateValue(oValue: any): any {
         super.validateValue(oValue);
-        let results: ValidateResults = this.callValidate(oValue);
+        let results: ValidateResult = this.callValidate(oValue);
         if (!results.status) {
             throw new sap.ui.model.ValidateException(results.errorMess);
         }
@@ -481,20 +506,20 @@ export class Alphanumeric extends SimpleType {
  * Date类型  - extends SimpleType
  */
 export class DateTime extends SimpleType {
-    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResults {
+    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
         super.callValidate(oValue, control);
-        let results: ValidateResults = new ValidateResults();
+        let results: ValidateResult = new ValidateResult();
         results.status = true;
         if (!validation.isDate(oValue)) {
             results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_msg_datetime_error", this.AttributeDesc);
-            fireValidationError(control, results.errorMess);
+            results.errorMess = ibas.i18n.prop("data_types_datetime_error_msg", this.AttributeDesc);
+            this.fireValidationError(control, results.errorMess);
         }
         return results;
     }
     validateValue(oValue: any): any {
         super.validateValue(oValue);
-        let results: ValidateResults = this.callValidate(oValue);
+        let results: ValidateResult = this.callValidate(oValue);
         if (!results.status) {
             throw new sap.ui.model.ValidateException(results.errorMess);
         }
@@ -508,23 +533,23 @@ export class Time extends Numeric {
 /**
  * Price类型 - extends validation.Numeric
  */
-export class Price extends Numeric {
-    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResults {
+export class Price extends Decimal {
+    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
         super.callValidate(oValue, control);
-        let results: ValidateResults = new ValidateResults();
+        let results: ValidateResult = new ValidateResult();
         results.status = true;
-        if (!validation.isPrice(oValue)) {
-            let decimalDigits: any = ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DECIMAL_PLACES, 6);
+        if (!validation.isPrice(oValue, this.decimalDigits)) {
+            let decimalDigits: any = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES_PRICE, 6);
             results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_msg_decimal_decimaldigits_error", this.AttributeDesc,
+            results.errorMess = ibas.i18n.prop("data_types_decimal_decimaldigits_error_msg", this.AttributeDesc,
                 decimalDigits.toString());
-            fireValidationError(control, results.errorMess);
+            this.fireValidationError(control, results.errorMess);
         }
         return results;
     }
     validateValue(oValue: any): any {
         super.validateValue(oValue);
-        let results: ValidateResults = this.callValidate(oValue);
+        let results: ValidateResult = this.callValidate(oValue);
         if (!results.status) {
             throw new sap.ui.model.ValidateException(results.errorMess);
         }
@@ -533,21 +558,23 @@ export class Price extends Numeric {
 /**
  * Quantity类型 - extends validation.Numeric
  */
-export class Quantity extends Numeric {
-    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResults {
+export class Quantity extends Decimal {
+    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
         super.callValidate(oValue, control);
-        let results: ValidateResults = new ValidateResults();
+        let results: ValidateResult = new ValidateResult();
         results.status = true;
-        if (!validation.isGtZero(oValue)) {
+        if (!validation.isQuantity(oValue, this.decimalDigits)) {
+            let decimalDigits: any = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES_QUANTITY, 6);
             results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_msg_quantity_gtzero_error");
-            fireValidationError(control, results.errorMess);
+            results.errorMess = ibas.i18n.prop("data_types_decimal_decimaldigits_error_msg", this.AttributeDesc,
+                decimalDigits.toString());
+            this.fireValidationError(control, results.errorMess);
         }
         return results;
     }
     validateValue(oValue: any): any {
         super.validateValue(oValue);
-        let results: ValidateResults = this.callValidate(oValue);
+        let results: ValidateResult = this.callValidate(oValue);
         if (!results.status) {
             throw new sap.ui.model.ValidateException(results.errorMess);
         }
@@ -557,20 +584,20 @@ export class Quantity extends Numeric {
  * Email类型 - extends SimpleType
  */
 export class Email extends Alphanumeric {
-    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResults {
+    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
         super.callValidate(oValue, control);
-        let results: ValidateResults = new ValidateResults();
+        let results: ValidateResult = new ValidateResult();
         results.status = true;
         if (!validation.isEmail(oValue)) {
             results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_msg_email_error");
-            fireValidationError(control, results.errorMess);
+            results.errorMess = ibas.i18n.prop("data_types_email_error_msg");
+            this.fireValidationError(control, results.errorMess);
         }
         return results;
     }
     validateValue(oValue: any): any {
         super.validateValue(oValue);
-        let results: ValidateResults = this.callValidate(oValue);
+        let results: ValidateResult = this.callValidate(oValue);
         if (!results.status) {
             throw new sap.ui.model.ValidateException(results.errorMess);
         }
@@ -580,20 +607,20 @@ export class Email extends Alphanumeric {
  * Phone类型 - extends SimpleType
  */
 export class Phone extends Alphanumeric {
-    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResults {
+    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
         super.callValidate(oValue, control);
-        let results: ValidateResults = new ValidateResults();
+        let results: ValidateResult = new ValidateResult();
         results.status = true;
         if (!validation.isTel(oValue)) {
             results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_msg_phone_error");
-            fireValidationError(control, results.errorMess);
+            results.errorMess = ibas.i18n.prop("data_types_phone_error_msg");
+            this.fireValidationError(control, results.errorMess);
         }
         return results;
     }
     validateValue(oValue: any): any {
         super.validateValue(oValue);
-        let results: ValidateResults = this.callValidate(oValue);
+        let results: ValidateResult = this.callValidate(oValue);
         if (!results.status) {
             throw new sap.ui.model.ValidateException(results.errorMess);
         }
@@ -612,17 +639,17 @@ export class Link extends Alphanumeric {
 /**
  * Measurement类型 - extends SimpleType
  */
-export class Measurement extends Quantity {
+export class Measurement extends Decimal {
 }
 /**
  * Sum类型 - extends validation.Price
  */
-export class Sum extends Price {
+export class Sum extends Decimal {
 }
 /**
  * Percentage类型  - extends SimpleType
  */
-export class Percentage extends SimpleType {
+export class Percentage extends Decimal {
 }
 /**
  * Rate类型  - extends SimpleType
@@ -642,7 +669,7 @@ export class Bytes extends SimpleType {
 /**
  * Memo类型  - extends SimpleType
  */
-export class Memo extends Alphanumeric {
+export class Memo extends SimpleType {
 }
 
 // 其它验证 =====================================================================================
@@ -650,20 +677,20 @@ export class Memo extends Alphanumeric {
  * 匹配移动电话类型 - extends SimpleType
  */
 export class Mobile extends SimpleType {
-    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResults {
+    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
         super.callValidate(oValue, control);
-        let results: ValidateResults = new ValidateResults();
+        let results: ValidateResult = new ValidateResult();
         results.status = true;
         if (!validation.isMobile(oValue)) {
             results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_msg_phone_error");
-            fireValidationError(control, results.errorMess);
+            results.errorMess = ibas.i18n.prop("data_types_phone_error_msg");
+            this.fireValidationError(control, results.errorMess);
         }
         return results;
     }
     validateValue(oValue: any): any {
         super.validateValue(oValue);
-        let results: ValidateResults = this.callValidate(oValue);
+        let results: ValidateResult = this.callValidate(oValue);
         if (!results.status) {
             throw new sap.ui.model.ValidateException(results.errorMess);
         }
@@ -673,43 +700,20 @@ export class Mobile extends SimpleType {
  * 联系电话(手机/电话皆可)验证 - extends SimpleType
  */
 export class Telphone extends SimpleType {
-    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResults {
+    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
         super.callValidate(oValue, control);
-        let results: ValidateResults = new ValidateResults();
+        let results: ValidateResult = new ValidateResult();
         results.status = true;
         if (!validation.isTel(oValue)) {
             results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_msg_phone_error");
-            fireValidationError(control, results.errorMess);
+            results.errorMess = ibas.i18n.prop("data_types_phone_error_msg");
+            this.fireValidationError(control, results.errorMess);
         }
         return results;
     }
     validateValue(oValue: any): any {
         super.validateValue(oValue);
-        let results: ValidateResults = this.callValidate(oValue);
-        if (!results.status) {
-            throw new sap.ui.model.ValidateException(results.errorMess);
-        }
-    }
-}
-/**
- * 匹配英文 - extends SimpleType
- */
-export class English extends SimpleType {
-    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResults {
-        super.callValidate(oValue, control);
-        let results: ValidateResults = new ValidateResults();
-        results.status = true;
-        if (!validation.isEnglish(oValue)) {
-            results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_msg_english_error");
-            fireValidationError(control, results.errorMess);
-        }
-        return results;
-    }
-    validateValue(oValue: any): any {
-        super.validateValue(oValue);
-        let results: ValidateResults = this.callValidate(oValue);
+        let results: ValidateResult = this.callValidate(oValue);
         if (!results.status) {
             throw new sap.ui.model.ValidateException(results.errorMess);
         }
@@ -719,20 +723,20 @@ export class English extends SimpleType {
  * 匹配邮编 - extends SimpleType
  */
 export class ZipCode extends SimpleType {
-    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResults {
+    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
         super.callValidate(oValue, control);
-        let results: ValidateResults = new ValidateResults();
+        let results: ValidateResult = new ValidateResult();
         results.status = true;
         if (!validation.isZipCode(oValue)) {
             results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_msg_zip_code_error");
-            fireValidationError(control, results.errorMess);
+            results.errorMess = ibas.i18n.prop("data_types_zip_code_error_msg");
+            this.fireValidationError(control, results.errorMess);
         }
         return results;
     }
     validateValue(oValue: any): any {
         super.validateValue(oValue);
-        let results: ValidateResults = this.callValidate(oValue);
+        let results: ValidateResult = this.callValidate(oValue);
         if (!results.status) {
             throw new sap.ui.model.ValidateException(results.errorMess);
         }
@@ -742,20 +746,20 @@ export class ZipCode extends SimpleType {
  * 匹配URL地址 - extends SimpleType
  */
 export class Url extends SimpleType {
-    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResults {
+    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
         super.callValidate(oValue, control);
-        let results: ValidateResults = new ValidateResults();
+        let results: ValidateResult = new ValidateResult();
         results.status = true;
         if (!validation.isUrl(oValue)) {
             results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_msg_url_error");
-            fireValidationError(control, results.errorMess);
+            results.errorMess = ibas.i18n.prop("data_types_url_error_msg");
+            this.fireValidationError(control, results.errorMess);
         }
         return results;
     }
     validateValue(oValue: any): any {
         super.validateValue(oValue);
-        let results: ValidateResults = this.callValidate(oValue);
+        let results: ValidateResult = this.callValidate(oValue);
         if (!results.status) {
             throw new sap.ui.model.ValidateException(results.errorMess);
         }
@@ -765,20 +769,20 @@ export class Url extends SimpleType {
  * 匹配密码，以字母开头，长度在6-12之间，只能包含字符、数字和下划线  - extends SimpleType
  */
 export class Password extends SimpleType {
-    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResults {
+    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
         super.callValidate(oValue, control);
-        let results: ValidateResults = new ValidateResults();
+        let results: ValidateResult = new ValidateResult();
         results.status = true;
-        if (!validation.isPwd(oValue)) {
+        if (!validation.isPassword(oValue)) {
             results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_msg_password_error");
-            fireValidationError(control, results.errorMess);
+            results.errorMess = ibas.i18n.prop("data_types_password_error_msg");
+            this.fireValidationError(control, results.errorMess);
         }
         return results;
     }
     validateValue(oValue: any): any {
         super.validateValue(oValue);
-        let results: ValidateResults = this.callValidate(oValue);
+        let results: ValidateResult = this.callValidate(oValue);
         if (!results.status) {
             throw new sap.ui.model.ValidateException(results.errorMess);
         }
@@ -787,44 +791,21 @@ export class Password extends SimpleType {
 /**
  * 匹配身份证号码 - extends SimpleType
  */
-export class CardCode extends SimpleType {
-    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResults {
+export class PersonalID extends SimpleType {
+    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
         super.callValidate(oValue, control);
-        let results: ValidateResults = new ValidateResults();
+        let results: ValidateResult = new ValidateResult();
         results.status = true;
-        if (!validation.isCardCode(oValue)) {
+        if (!validation.isPersonalID(oValue)) {
             results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_msg_cardcode_error");
-            fireValidationError(control, results.errorMess);
+            results.errorMess = ibas.i18n.prop("data_types_PersonalID_error_msg");
+            this.fireValidationError(control, results.errorMess);
         }
         return results;
     }
     validateValue(oValue: any): any {
         super.validateValue(oValue);
-        let results: ValidateResults = this.callValidate(oValue);
-        if (!results.status) {
-            throw new sap.ui.model.ValidateException(results.errorMess);
-        }
-    }
-}
-/**
- * 字符验证，只能包含中文、英文、数字、下划线等字符 - extends SimpleType
- */
-export class StringCheck extends SimpleType {
-    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResults {
-        super.callValidate(oValue, control);
-        let results: ValidateResults = new ValidateResults();
-        results.status = true;
-        if (!validation.isStringCheck(oValue)) {
-            results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_msg_stringcheck_error", this.AttributeDesc);
-            fireValidationError(control, results.errorMess);
-        }
-        return results;
-    }
-    validateValue(oValue: any): any {
-        super.validateValue(oValue);
-        let results: ValidateResults = this.callValidate(oValue);
+        let results: ValidateResult = this.callValidate(oValue);
         if (!results.status) {
             throw new sap.ui.model.ValidateException(results.errorMess);
         }
