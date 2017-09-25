@@ -1,0 +1,14 @@
+{
+    "data_types_msg_not_empty_error": "{0} Can't be empty",
+    "data_types_msg_zip_code_error":"The postal code format is not correct",
+    "data_types_msg_url_error":"URL format is not correct",
+    "data_types_msg_password_error":"Password must begin with a letter, the length between 6 and 12, can only contain characters, Numbers, and underscores",
+    "data_types_msg_personalid_error":"Id card number format is not correct",
+    "data_types_msg_numeric_error":"Please enter the Numbers",
+    "data_types_msg_numeric_minvalue_error":"{0} Must be greater than {1}",
+    "data_types_msg_numeric_maxvalue_error":"{0} Must be smaller than {1}",
+    "data_types_msg_decimal_decimaldigits_error":"{0} Decimal digits is not greater than  {1}",
+    "data_types_msg_datetime_error":"{0} Date format is not correct",
+    "data_types_msg_email_error":"Enail The format is not correct",
+    "data_types_msg_phone_error":"The phone format is not correct"
+}

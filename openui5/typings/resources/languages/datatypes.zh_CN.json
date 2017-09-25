@@ -1,0 +1,14 @@
+{
+    "data_types_msg_not_empty_error": "{0} 不能为空",
+    "data_types_msg_zip_code_error":"邮政编码格式不正确",
+    "data_types_msg_url_error":"URL格式不正确",
+    "data_types_msg_password_error":"密码必须以字母开头，长度在6-12之间，只能包含字符、数字和下划线",
+    "data_types_msg_personalid_error":"身份证号码格式不正确",
+    "data_types_msg_numeric_error":"请输入数字",
+    "data_types_msg_numeric_minvalue_error":"{0} 必须大于 {1}",
+    "data_types_msg_numeric_maxvalue_error":"{0} 必须大于 {1}",
+    "data_types_msg_decimal_decimaldigits_error":"{0} 小数位数不能大于 {1} 位",
+    "data_types_msg_datetime_error":"{0} 日期格式不正确",
+    "data_types_msg_email_error":"Enail格式不正确",
+    "data_types_msg_phone_error":"电话格式不正确"
+}
