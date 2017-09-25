@@ -9,15 +9,15 @@ import * as ibas from "ibas/index";
  */
 export namespace validation {
     /**
-     * 判断是否为空
+     * 是否为空
      */
-    export function isNotEmpty(value: any): Boolean {
+    export function isNotEmpty(value: any): boolean {
         return (value !== null && value !== undefined && value !== "");
     }
     /**
-     * 是否数值类型
+     * 是否数字类型
      */
-    export function isNumeric(value: any): Boolean {
+    export function isNumeric(value: any): boolean {
         if (value === null || value === "" || value === undefined) {
             return true;
         }
@@ -28,9 +28,28 @@ export namespace validation {
         return true;
     }
     /**
+     * 是否小数类型
+     */
+    export function isDecimal(value: any, decimalPlaces: number): boolean {
+        if (value === null || value === "" || value === undefined) {
+            return true;
+        }
+        if (decimalPlaces === undefined || decimalPlaces === null || decimalPlaces < 0) {
+            // 获取配制文件中小数位数
+            decimalPlaces = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES, 6);
+        }
+        let rValue: any = "^(([1-9]\d*)|(([0-9]{1}|[1-9]+)\.[0-9]{1," + decimalPlaces + "}))$";
+        let pValue: any = new RegExp(rValue);
+        let result: any = value.match(pValue);
+        if (result === null) {
+            return true;
+        }
+        return true;
+    }
+    /**
      * 是否字母和数字
      */
-    export function isAlphanumeric(value: any): Boolean {
+    export function isAlphanumeric(value: any): boolean {
         if (value === null || value === "" || value === undefined) {
             return true;
         }
@@ -43,7 +62,7 @@ export namespace validation {
     /**
      * 是否Email地址
      */
-    export function isEmail(value: any): Boolean {
+    export function isEmail(value: any): boolean {
         if (value === null || value === "" || value === undefined) {
             return true;
         }
@@ -54,99 +73,9 @@ export namespace validation {
         return true;
     }
     /**
-     * 是否价格类型
-     */
-    export function isPrice(value: any, decimalDigits: number): Boolean {
-        if (value === null || value === "" || value === undefined) {
-            return true;
-        }
-        if (decimalDigits === undefined || decimalDigits === null) {
-            // 获取配制文件中小数位数
-            decimalDigits = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES, 6);
-        }
-        let rValue: any = "^(([1-9]\d*)|(([0-9]{1}|[1-9]+)\.[0-9]{1," + decimalDigits + "}))$";
-        let pValue: any = new RegExp(rValue);
-        let result: any = value.match(pValue);
-        if (result === null) {
-            return true;
-        }
-        return true;
-    }
-    /**
-     * 小数类型
-     */
-    export function isDecimal(value: any, decimalDigits: number): Boolean {
-        if (value === null || value === "" || value === undefined) {
-            return true;
-        }
-        if (decimalDigits === undefined || decimalDigits === null) {
-            // 获取配制文件中小数位数
-            decimalDigits = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES, 6);
-        }
-        let rValue: any = "^(([1-9]\d*)|(([0-9]{1}|[1-9]+)\.[0-9]{1," + decimalDigits + "}))$";
-        let pValue: any = new RegExp(rValue);
-        let result: any = value.match(pValue);
-        if (result === null) {
-            return true;
-        }
-        return true;
-    }
-    /**
-     * 数量类型
-     */
-    export function isQuantity(value: any, decimalDigits: number): Boolean {
-        if (value === null || value === "" || value === undefined) {
-            return true;
-        }
-        if (decimalDigits === undefined || decimalDigits === null) {
-            // 获取配制文件中小数位数
-            decimalDigits = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES, 6);
-        }
-        let rValue: any = "^(([1-9]\d*)|(([0-9]{1}|[1-9]+)\.[0-9]{1," + decimalDigits + "}))$";
-        let pValue: any = new RegExp(rValue);
-        let result: any = value.match(pValue);
-        if (result === null) {
-            return true;
-        }
-        return true;
-    }
-    /**
-     * 自定义小数位数
-     */
-    export function isDecimalDigits(value: any, decimalDigits: number): Boolean {
-        if (value === null || value === "" || value === undefined) {
-            return true;
-        }
-        let rValue: any = "^(([1-9]\d*)|(([0-9]{1}|[1-9]+)\.[0-9]{1," + decimalDigits + "}))$";
-        let pValue: any = new RegExp(rValue);
-        let result: any = value.match(pValue);
-        if (result === null) {
-            return false;
-        }
-        return true;
-    }
-    /**
-     * 是否大于0
-     */
-    export function isGtZero(value: any): Boolean {
-        if (value === null || value === "" || value === undefined) {
-            return true;
-        }
-        return value > 0;
-    }
-    /**
-     * 是否大于等于0
-     */
-    export function isGteZero(value: any): Boolean {
-        if (value === null || value === "" || value === undefined) {
-            return true;
-        }
-        return value >= 0;
-    }
-    /**
      * 是否电话类型
      */
-    export function isPhone(value: any): Boolean {
+    export function isPhone(value: any): boolean {
         if (value === null || value === "" || value === undefined) {
             return true;
         }
@@ -159,7 +88,7 @@ export namespace validation {
     /**
      * 匹配移动电话类型
      */
-    export function isMobile(value: any): Boolean {
+    export function isMobile(value: any): boolean {
         if (value === null || value === "" || value === undefined) {
             return true;
         }
@@ -172,7 +101,7 @@ export namespace validation {
     /**
      * 联系电话(手机/电话皆可)验证
      */
-    export function isTel(value: any): Boolean {
+    export function isTelephone(value: any): boolean {
         if (value === null || value === "" || value === undefined) {
             return true;
         }
@@ -184,7 +113,7 @@ export namespace validation {
     /**
      * 匹配英文
      */
-    export function isEnglish(value: any): Boolean {
+    export function isEnglish(value: any): boolean {
         if (value === null || value === "" || value === undefined) {
             return true;
         }
@@ -197,7 +126,7 @@ export namespace validation {
     /**
      * 匹配邮编
      */
-    export function isZipCode(value: any): Boolean {
+    export function isZipCode(value: any): boolean {
         if (value === null || value === "" || value === undefined) {
             return true;
         }
@@ -210,7 +139,7 @@ export namespace validation {
     /**
      * 匹配URL地址
      */
-    export function isUrl(value: any): Boolean {
+    export function isUrl(value: any): boolean {
         if (value === null || value === "" || value === undefined) {
             return true;
         }
@@ -223,7 +152,7 @@ export namespace validation {
     /**
      * 匹配密码，以字母开头，长度在6-12之间，只能包含字符、数字和下划线。
      */
-    export function isPassword(value: any): Boolean {
+    export function isPassword(value: any): boolean {
         if (value === null || value === "" || value === undefined) {
             return true;
         }
@@ -236,7 +165,7 @@ export namespace validation {
     /**
      * 匹配身份证号码
      */
-    export function isPersonalID(value: any): Boolean {
+    export function isPersonalID(value: any): boolean {
         if (value === null || value === "" || value === undefined) {
             return true;
         }
@@ -256,10 +185,10 @@ export namespace validation {
             let B: any;
             if (len === 15) {
                 D = new Date("19" + a[3] + "/" + a[4] + "/" + a[5]);
-                B = D.getYear().toString() === a[3] && (D.getMonth() + 1) === Number(a[4]) && D.getDate() === Number(a[5]);
+                B = D.getYear().tostring() === a[3] && (D.getMonth() + 1) === Number(a[4]) && D.getDate() === Number(a[5]);
             } else {
                 D = new Date(a[3] + "/" + a[4] + "/" + a[5]);
-                B = D.getFullYear().toString() === a[3] && (D.getMonth() + 1) === Number(a[4]) && D.getDate() === Number(a[5]);
+                B = D.getFullYear().tostring() === a[3] && (D.getMonth() + 1) === Number(a[4]) && D.getDate() === Number(a[5]);
             }
             if (!B) {
                 return false;
@@ -273,7 +202,7 @@ export namespace validation {
     /**
      * 匹配汉字
      */
-    export function isChinese(value: any): Boolean {
+    export function isChinese(value: any): boolean {
         if (value === null || value === "" || value === undefined) {
             return true;
         }
@@ -286,7 +215,7 @@ export namespace validation {
     /**
      * 匹配中文字符(包括汉字和字符)
      */
-    export function isChineseChar(value: any): Boolean {
+    export function isChineseChar(value: any): boolean {
         if (value === null || value === "" || value === undefined) {
             return true;
         }
@@ -299,7 +228,7 @@ export namespace validation {
     /**
      * 日期
      */
-    export function isDate(value: any): Boolean {
+    export function isDate(value: any): boolean {
         if (value === null || value === "" || value === undefined) {
             return true;
         }
@@ -318,7 +247,7 @@ export namespace validation {
  */
 sap.ui.getCore().attachValidationError("", (oEvent: any): void => {
     let control: any = oEvent.getParameter("element");
-    let message: String = oEvent.getParameter("message");
+    let message: string = oEvent.getParameter("message");
     if (control && control.setValueState) {
         control.setValueState("Error");
         if (message) {
@@ -337,35 +266,37 @@ sap.ui.getCore().attachValidationSuccess("", (oEvent: any): void => {
     }
 });
 export class ValidateResult {
-    status: Boolean;
-    errorMess: String;
+    status: boolean;
+    message: string;
 }
 /**
- * 对sap.ui.model.SimpleType的扩展,所有验证实现类可继承此类
+ * 数据类型设置
  */
-export class SimpleType extends sap.ui.model.SimpleType {
-    protected notEmpty: Boolean = false;
-    protected AttributeDesc: String = "";
-    constructor(settings?: {
-        /* 是否不允许为空 */
-        notEmpty?: Boolean,
-        /* 绑定属性的描述 */
-        AttributeDesc?: String,
-        /* 验证方法 */
-        validateValue?(oValue: any): Function
-    }) {
+export interface IDataTypeSetting {
+    /* 是否不允许为空 */
+    notEmpty?: boolean;
+    /* 绑定属性的描述 */
+    description?: string;
+    /* 验证方法 */
+    validateValue?(oValue: any): Function;
+}
+/**
+ * 数据类型基类
+ */
+export abstract class DataType extends sap.ui.model.SimpleType {
+    constructor(settings?: IDataTypeSetting) {
         super();
-        if (settings === undefined || settings === null) {
+        if (ibas.objects.isNull(settings)) {
             return;
         }
         this.notEmpty = settings.notEmpty;
-        if (settings.AttributeDesc !== null && settings.AttributeDesc !== undefined) {
-            this.AttributeDesc = settings.AttributeDesc;
-        }
-        if ((settings.validateValue !== null && settings.validateValue !== undefined) && settings.validateValue instanceof Function) {
+        this.description = settings.description;
+        if (settings.validateValue instanceof Function) {
             this.validateValue = settings.validateValue;
         }
     }
+    notEmpty: boolean = false;
+    description: string = "";
     formatValue(oValue: any): any {
         return oValue;
     }
@@ -373,23 +304,23 @@ export class SimpleType extends sap.ui.model.SimpleType {
         return oValue;
     }
     callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
-        let results: ValidateResult = new ValidateResult();
-        results.status = true;
+        let result: ValidateResult = new ValidateResult();
+        result.status = true;
         if (this.notEmpty && !validation.isNotEmpty(oValue)) {
-            results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_not_empty_error_msg", this.AttributeDesc);
-            this.fireValidationError(control, results.errorMess);
-            return results;
+            result.status = false;
+            result.message = ibas.i18n.prop("data_types_msg_not_empty_error", this.description);
+            this.fireValidationError(control, result.message);
+            return result;
         }
-        return results;
+        return result;
     }
     validateValue(oValue: any): any {
-        let results: ValidateResult = this.callValidate(oValue);
-        if (!results.status) {
-            throw new sap.ui.model.ValidateException(results.errorMess);
+        let result: ValidateResult = this.callValidate(oValue);
+        if (!result.status) {
+            throw new sap.ui.model.ValidateException(result.message);
         }
     }
-    fireValidationError(control: sap.ui.core.Control, message?: String): sap.ui.core.Core {
+    fireValidationError(control: sap.ui.core.Control, message?: string): sap.ui.core.Core {
         if (control !== null && control !== undefined) {
             let arg: any = {
                 element: control,
@@ -400,414 +331,448 @@ export class SimpleType extends sap.ui.model.SimpleType {
     }
 }
 
-// ibas数据类型验证==========================================================================================
 /**
- * Numeric类型 - extends SimpleType
+ * 数字类型设置
  */
-export class Numeric extends SimpleType {
-    protected minValue: number = undefined;
-    protected maxValue: number = undefined;
-    constructor(settings?: {
-        notEmpty?: Boolean,
-        minValue?: number,
-        maxValue?: number,
-        bindingAttribute?: String,
-        validateValue?(oValue: any): Function
-    }) {
+export interface INumericSetting extends IDataTypeSetting {
+    /** 最小值 */
+    minValue?: number;
+    /** 最大值 */
+    maxValue?: number;
+}
+/**
+ * 数字类型
+ */
+export class Numeric extends DataType {
+    constructor(settings?: INumericSetting) {
         super(settings);
-        if (settings === undefined || settings === null) {
+        if (ibas.objects.isNull(settings)) {
             return;
         }
-        if (settings.minValue !== null && settings.minValue !== undefined) {
-            this.minValue = settings.minValue;
-        }
-        if (settings.maxValue !== null && settings.maxValue !== undefined) {
-            this.maxValue = settings.maxValue;
-        }
+        this.minValue = settings.minValue;
+        this.maxValue = settings.maxValue;
     }
+    minValue: number = undefined;
+    maxValue: number = undefined;
     callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
         super.callValidate(oValue, control);
-        let results: ValidateResult = new ValidateResult();
-        results.status = true;
+        let result: ValidateResult = new ValidateResult();
+        result.status = true;
         if (!validation.isNumeric(oValue)) {
-            results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_numeric_error_msg");
-            this.fireValidationError(control, results.errorMess);
+            result.status = false;
+            result.message = ibas.i18n.prop("data_types_msg_numeric_error");
+            this.fireValidationError(control, result.message);
         }
         if (validation.isNotEmpty(oValue) && this.minValue !== undefined && !(oValue > this.minValue)) {
-            results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_numeric_minvalue_error_msg", this.AttributeDesc,
-                this.minValue.toString());
-            this.fireValidationError(control, results.errorMess);
+            result.status = false;
+            result.message = ibas.i18n.prop("data_types_msg_numeric_minvalue_error", this.description,
+                this.minValue);
+            this.fireValidationError(control, result.message);
         }
         if (validation.isNotEmpty(oValue) && this.maxValue !== undefined && !(oValue < this.maxValue)) {
-            results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_numeric_maxvalue_error_msg", this.AttributeDesc,
+            result.status = false;
+            result.message = ibas.i18n.prop("data_types_msg_numeric_maxvalue_error", this.description,
                 this.maxValue);
-            this.fireValidationError(control, results.errorMess);
+            this.fireValidationError(control, result.message);
         }
-        return results;
+        return result;
     }
     validateValue(oValue: any): any {
         super.validateValue(oValue);
-        let results: ValidateResult = this.callValidate(oValue);
-        if (!results.status) {
-            throw new sap.ui.model.ValidateException(results.errorMess);
+        let result: ValidateResult = this.callValidate(oValue);
+        if (!result.status) {
+            throw new sap.ui.model.ValidateException(result.message);
         }
     }
 }
 /**
- * Decimal类型 - extends validation.Numeric
+ * 小数类型设置
  */
-export class Decimal extends SimpleType {
-    protected decimalDigits: number = undefined;
-    constructor(settings?: {
-        notEmpty?: Boolean,
-        minValue?: number,
-        maxValue?: number,
-        decimalDigits?: number,
-        bindingAttribute?: String,
-        validateValue?(oValue: any): Function
-    }) {
+export interface IDecimalSetting extends IDataTypeSetting {
+    /** 最小值 */
+    minValue?: number;
+    /** 最大值 */
+    maxValue?: number;
+    /** 小数位 */
+    decimalPlaces?: number;
+}
+/**
+ * 小数类型
+ */
+export class Decimal extends DataType {
+    constructor(settings?: IDecimalSetting) {
         super(settings);
-        if (settings === undefined || settings === null) {
+        if (ibas.objects.isNull(settings)) {
             return;
         }
-        if (settings.decimalDigits !== null && settings.decimalDigits !== undefined) {
-            this.decimalDigits = settings.decimalDigits;
+        this.decimalPlaces = settings.decimalPlaces;
+        if (ibas.objects.isNull(this.decimalPlaces)) {
+            this.decimalPlaces = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES, 6);
         }
     }
+    minValue: number = undefined;
+    maxValue: number = undefined;
+    decimalPlaces: number = undefined;
     callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
         super.callValidate(oValue, control);
-        let results: ValidateResult = new ValidateResult();
-        results.status = true;
-        if (!validation.isDecimal(oValue, this.decimalDigits)) {
-            results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_decimal_decimaldigits_error_msg", this.AttributeDesc,
-                this.decimalDigits);
-            this.fireValidationError(control, results.errorMess);
+        let result: ValidateResult = new ValidateResult();
+        result.status = true;
+        if (!validation.isDecimal(oValue, this.decimalPlaces)) {
+            result.status = false;
+            result.message = ibas.i18n.prop("data_types_msg_decimal_decimalPlaces_error", this.description,
+                this.decimalPlaces);
+            this.fireValidationError(control, result.message);
         }
-        return results;
+        return result;
     }
     validateValue(oValue: any): any {
         super.validateValue(oValue);
-        let results: ValidateResult = this.callValidate(oValue);
-        if (!results.status) {
-            throw new sap.ui.model.ValidateException(results.errorMess);
+        let result: ValidateResult = this.callValidate(oValue);
+        if (!result.status) {
+            throw new sap.ui.model.ValidateException(result.message);
         }
     }
 }
 /**
- * Alphanumeric类型 - extends SimpleType
+ * 字母数字类型
  */
-export class Alphanumeric extends SimpleType {
+export class Alphanumeric extends DataType {
 }
 /**
- * Date类型  - extends SimpleType
+ * 日期类型设置
  */
-export class DateTime extends SimpleType {
+export interface IDateTimeSetting extends IDataTypeSetting {
+    /** 格式 */
+    format?: string;
+}
+/**
+ * 日期类型
+ */
+export class DateTime extends DataType {
+    constructor(settings?: IDateTimeSetting) {
+        super(settings);
+        if (ibas.objects.isNull(settings)) {
+            return;
+        }
+        this.format = settings.format;
+    }
+    format?: string;
     callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
         super.callValidate(oValue, control);
-        let results: ValidateResult = new ValidateResult();
-        results.status = true;
+        let result: ValidateResult = new ValidateResult();
+        result.status = true;
         if (!validation.isDate(oValue)) {
-            results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_datetime_error_msg", this.AttributeDesc);
-            this.fireValidationError(control, results.errorMess);
+            result.status = false;
+            result.message = ibas.i18n.prop("data_types_msg_datetime_error", this.description);
+            this.fireValidationError(control, result.message);
         }
-        return results;
+        return result;
     }
     validateValue(oValue: any): any {
         super.validateValue(oValue);
-        let results: ValidateResult = this.callValidate(oValue);
-        if (!results.status) {
-            throw new sap.ui.model.ValidateException(results.errorMess);
+        let result: ValidateResult = this.callValidate(oValue);
+        if (!result.status) {
+            throw new sap.ui.model.ValidateException(result.message);
         }
     }
 }
 /**
- * Time类型  - extends SimpleType
+ * 时间类型设置
+ */
+export interface ITimeSetting extends IDataTypeSetting {
+    /** 格式 */
+    format?: string;
+}
+/**
+ * 时间类型
  */
 export class Time extends Numeric {
+    constructor(settings?: ITimeSetting) {
+        super(settings);
+        if (ibas.objects.isNull(settings)) {
+            return;
+        }
+        this.format = settings.format;
+    }
+    format?: string;
 }
 /**
- * Price类型 - extends validation.Numeric
+ * 价格类型
  */
 export class Price extends Decimal {
-    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
-        super.callValidate(oValue, control);
-        let results: ValidateResult = new ValidateResult();
-        results.status = true;
-        if (!validation.isPrice(oValue, this.decimalDigits)) {
-            let decimalDigits: any = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES_PRICE, 6);
-            results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_decimal_decimaldigits_error_msg", this.AttributeDesc,
-                decimalDigits.toString());
-            this.fireValidationError(control, results.errorMess);
-        }
-        return results;
-    }
-    validateValue(oValue: any): any {
-        super.validateValue(oValue);
-        let results: ValidateResult = this.callValidate(oValue);
-        if (!results.status) {
-            throw new sap.ui.model.ValidateException(results.errorMess);
+    constructor(settings?: IDecimalSetting) {
+        super(settings);
+        // 取此类型小数位设置
+        let tmp: number = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES_PRICE);
+        if (!ibas.objects.isNull(tmp)) {
+            this.decimalPlaces = tmp;
         }
     }
 }
 /**
- * Quantity类型 - extends validation.Numeric
+ * 数量类型
  */
 export class Quantity extends Decimal {
-    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
-        super.callValidate(oValue, control);
-        let results: ValidateResult = new ValidateResult();
-        results.status = true;
-        if (!validation.isQuantity(oValue, this.decimalDigits)) {
-            let decimalDigits: any = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES_QUANTITY, 6);
-            results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_decimal_decimaldigits_error_msg", this.AttributeDesc,
-                decimalDigits.toString());
-            this.fireValidationError(control, results.errorMess);
-        }
-        return results;
-    }
-    validateValue(oValue: any): any {
-        super.validateValue(oValue);
-        let results: ValidateResult = this.callValidate(oValue);
-        if (!results.status) {
-            throw new sap.ui.model.ValidateException(results.errorMess);
+    constructor(settings?: IDecimalSetting) {
+        super(settings);
+        // 取此类型小数位设置
+        let tmp: number = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES_QUANTITY);
+        if (!ibas.objects.isNull(tmp)) {
+            this.decimalPlaces = tmp;
         }
     }
 }
 /**
- * Email类型 - extends SimpleType
+ * 率类型
  */
-export class Email extends Alphanumeric {
-    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
-        super.callValidate(oValue, control);
-        let results: ValidateResult = new ValidateResult();
-        results.status = true;
-        if (!validation.isEmail(oValue)) {
-            results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_email_error_msg");
-            this.fireValidationError(control, results.errorMess);
-        }
-        return results;
-    }
-    validateValue(oValue: any): any {
-        super.validateValue(oValue);
-        let results: ValidateResult = this.callValidate(oValue);
-        if (!results.status) {
-            throw new sap.ui.model.ValidateException(results.errorMess);
+export class Rate extends Decimal {
+    constructor(settings?: IDecimalSetting) {
+        super(settings);
+        // 取此类型小数位设置
+        let tmp: number = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES_RATE);
+        if (!ibas.objects.isNull(tmp)) {
+            this.decimalPlaces = tmp;
         }
     }
 }
 /**
- * Phone类型 - extends SimpleType
- */
-export class Phone extends Alphanumeric {
-    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
-        super.callValidate(oValue, control);
-        let results: ValidateResult = new ValidateResult();
-        results.status = true;
-        if (!validation.isTel(oValue)) {
-            results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_phone_error_msg");
-            this.fireValidationError(control, results.errorMess);
-        }
-        return results;
-    }
-    validateValue(oValue: any): any {
-        super.validateValue(oValue);
-        let results: ValidateResult = this.callValidate(oValue);
-        if (!results.status) {
-            throw new sap.ui.model.ValidateException(results.errorMess);
-        }
-    }
-}
-/**
- * Image类型 - extends SimpleType
- */
-export class Image extends SimpleType {
-}
-/**
- * Link类型 - extends SimpleType
- */
-export class Link extends Alphanumeric {
-}
-/**
- * Measurement类型 - extends SimpleType
- */
-export class Measurement extends Decimal {
-}
-/**
- * Sum类型 - extends validation.Price
+ * 总计类型
  */
 export class Sum extends Decimal {
+    constructor(settings?: IDecimalSetting) {
+        super(settings);
+        // 取此类型小数位设置
+        let tmp: number = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES_SUM);
+        if (!ibas.objects.isNull(tmp)) {
+            this.decimalPlaces = tmp;
+        }
+    }
 }
 /**
- * Percentage类型  - extends SimpleType
+ * 单位数量类型
+ */
+export class Measurement extends Decimal {
+    constructor(settings?: IDecimalSetting) {
+        super(settings);
+        // 取此类型小数位设置
+        let tmp: number = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES_MEASUREMENT);
+        if (!ibas.objects.isNull(tmp)) {
+            this.decimalPlaces = tmp;
+        }
+    }
+}
+/**
+ * Percentage类型
  */
 export class Percentage extends Decimal {
 }
 /**
- * Rate类型  - extends SimpleType
+ * 邮箱类型
  */
-export class Rate extends SimpleType {
+export class Email extends Alphanumeric {
+    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
+        super.callValidate(oValue, control);
+        let result: ValidateResult = new ValidateResult();
+        result.status = true;
+        if (!validation.isEmail(oValue)) {
+            result.status = false;
+            result.message = ibas.i18n.prop("data_types_msg_email_error");
+            this.fireValidationError(control, result.message);
+        }
+        return result;
+    }
+    validateValue(oValue: any): any {
+        super.validateValue(oValue);
+        let result: ValidateResult = this.callValidate(oValue);
+        if (!result.status) {
+            throw new sap.ui.model.ValidateException(result.message);
+        }
+    }
 }
 /**
- * Address类型  - extends SimpleType
+ * 电话类型
+ */
+export class Phone extends Alphanumeric {
+    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
+        super.callValidate(oValue, control);
+        let result: ValidateResult = new ValidateResult();
+        result.status = true;
+        if (!validation.isTelephone(oValue)) {
+            result.status = false;
+            result.message = ibas.i18n.prop("data_types_msg_phone_error");
+            this.fireValidationError(control, result.message);
+        }
+        return result;
+    }
+    validateValue(oValue: any): any {
+        super.validateValue(oValue);
+        let result: ValidateResult = this.callValidate(oValue);
+        if (!result.status) {
+            throw new sap.ui.model.ValidateException(result.message);
+        }
+    }
+}
+/**
+ * 连接类型
+ */
+export class Link extends Alphanumeric {
+}
+/**
+ * 地址类型
  */
 export class Address extends Alphanumeric {
 }
 /**
- * Bytes类型  - extends SimpleType
+ * 图片类型
  */
-export class Bytes extends SimpleType {
+export class Image extends DataType {
 }
 /**
- * Memo类型  - extends SimpleType
+ * Bytes类型
  */
-export class Memo extends SimpleType {
+export class Bytes extends DataType {
 }
-
-// 其它验证 =====================================================================================
 /**
- * 匹配移动电话类型 - extends SimpleType
+ * Memo类型
  */
-export class Mobile extends SimpleType {
+export class Memo extends DataType {
+}
+/**
+ * 移动电话类型
+ */
+export class Mobile extends Alphanumeric {
     callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
         super.callValidate(oValue, control);
-        let results: ValidateResult = new ValidateResult();
-        results.status = true;
+        let result: ValidateResult = new ValidateResult();
+        result.status = true;
         if (!validation.isMobile(oValue)) {
-            results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_phone_error_msg");
-            this.fireValidationError(control, results.errorMess);
+            result.status = false;
+            result.message = ibas.i18n.prop("data_types_msg_phone_error");
+            this.fireValidationError(control, result.message);
         }
-        return results;
+        return result;
     }
     validateValue(oValue: any): any {
         super.validateValue(oValue);
-        let results: ValidateResult = this.callValidate(oValue);
-        if (!results.status) {
-            throw new sap.ui.model.ValidateException(results.errorMess);
+        let result: ValidateResult = this.callValidate(oValue);
+        if (!result.status) {
+            throw new sap.ui.model.ValidateException(result.message);
         }
     }
 }
 /**
- * 联系电话(手机/电话皆可)验证 - extends SimpleType
+ * 联系电话类型(手机/电话)
  */
-export class Telphone extends SimpleType {
+export class Telphone extends Alphanumeric {
     callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
         super.callValidate(oValue, control);
-        let results: ValidateResult = new ValidateResult();
-        results.status = true;
-        if (!validation.isTel(oValue)) {
-            results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_phone_error_msg");
-            this.fireValidationError(control, results.errorMess);
+        let result: ValidateResult = new ValidateResult();
+        result.status = true;
+        if (!validation.isTelephone(oValue)) {
+            result.status = false;
+            result.message = ibas.i18n.prop("data_types_msg_phone_error");
+            this.fireValidationError(control, result.message);
         }
-        return results;
+        return result;
     }
     validateValue(oValue: any): any {
         super.validateValue(oValue);
-        let results: ValidateResult = this.callValidate(oValue);
-        if (!results.status) {
-            throw new sap.ui.model.ValidateException(results.errorMess);
+        let result: ValidateResult = this.callValidate(oValue);
+        if (!result.status) {
+            throw new sap.ui.model.ValidateException(result.message);
         }
     }
 }
 /**
- * 匹配邮编 - extends SimpleType
+ * 邮编类型
  */
-export class ZipCode extends SimpleType {
+export class ZipCode extends Alphanumeric {
     callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
         super.callValidate(oValue, control);
-        let results: ValidateResult = new ValidateResult();
-        results.status = true;
+        let result: ValidateResult = new ValidateResult();
+        result.status = true;
         if (!validation.isZipCode(oValue)) {
-            results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_zip_code_error_msg");
-            this.fireValidationError(control, results.errorMess);
+            result.status = false;
+            result.message = ibas.i18n.prop("data_types_msg_zip_code_error");
+            this.fireValidationError(control, result.message);
         }
-        return results;
+        return result;
     }
     validateValue(oValue: any): any {
         super.validateValue(oValue);
-        let results: ValidateResult = this.callValidate(oValue);
-        if (!results.status) {
-            throw new sap.ui.model.ValidateException(results.errorMess);
+        let result: ValidateResult = this.callValidate(oValue);
+        if (!result.status) {
+            throw new sap.ui.model.ValidateException(result.message);
         }
     }
 }
 /**
- * 匹配URL地址 - extends SimpleType
+ * URL地址类型
  */
-export class Url extends SimpleType {
+export class Url extends Alphanumeric {
     callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
         super.callValidate(oValue, control);
-        let results: ValidateResult = new ValidateResult();
-        results.status = true;
+        let result: ValidateResult = new ValidateResult();
+        result.status = true;
         if (!validation.isUrl(oValue)) {
-            results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_url_error_msg");
-            this.fireValidationError(control, results.errorMess);
+            result.status = false;
+            result.message = ibas.i18n.prop("data_types_msg_url_error");
+            this.fireValidationError(control, result.message);
         }
-        return results;
+        return result;
     }
     validateValue(oValue: any): any {
         super.validateValue(oValue);
-        let results: ValidateResult = this.callValidate(oValue);
-        if (!results.status) {
-            throw new sap.ui.model.ValidateException(results.errorMess);
+        let result: ValidateResult = this.callValidate(oValue);
+        if (!result.status) {
+            throw new sap.ui.model.ValidateException(result.message);
         }
     }
 }
 /**
- * 匹配密码，以字母开头，长度在6-12之间，只能包含字符、数字和下划线  - extends SimpleType
+ * 密码类型
+ * 以字母开头，长度在6-12之间，只能包含字符、数字和下划线
  */
-export class Password extends SimpleType {
+export class Password extends Alphanumeric {
     callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
         super.callValidate(oValue, control);
-        let results: ValidateResult = new ValidateResult();
-        results.status = true;
+        let result: ValidateResult = new ValidateResult();
+        result.status = true;
         if (!validation.isPassword(oValue)) {
-            results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_password_error_msg");
-            this.fireValidationError(control, results.errorMess);
+            result.status = false;
+            result.message = ibas.i18n.prop("data_types_msg_password_error");
+            this.fireValidationError(control, result.message);
         }
-        return results;
+        return result;
     }
     validateValue(oValue: any): any {
         super.validateValue(oValue);
-        let results: ValidateResult = this.callValidate(oValue);
-        if (!results.status) {
-            throw new sap.ui.model.ValidateException(results.errorMess);
+        let result: ValidateResult = this.callValidate(oValue);
+        if (!result.status) {
+            throw new sap.ui.model.ValidateException(result.message);
         }
     }
 }
 /**
- * 匹配身份证号码 - extends SimpleType
+ * 身份证号码类型
  */
-export class PersonalID extends SimpleType {
+export class PersonalID extends Alphanumeric {
     callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
         super.callValidate(oValue, control);
-        let results: ValidateResult = new ValidateResult();
-        results.status = true;
+        let result: ValidateResult = new ValidateResult();
+        result.status = true;
         if (!validation.isPersonalID(oValue)) {
-            results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_PersonalID_error_msg");
-            this.fireValidationError(control, results.errorMess);
+            result.status = false;
+            result.message = ibas.i18n.prop("data_types_msg_PersonalID_error");
+            this.fireValidationError(control, result.message);
         }
-        return results;
+        return result;
     }
     validateValue(oValue: any): any {
         super.validateValue(oValue);
-        let results: ValidateResult = this.callValidate(oValue);
-        if (!results.status) {
-            throw new sap.ui.model.ValidateException(results.errorMess);
+        let result: ValidateResult = this.callValidate(oValue);
+        if (!result.status) {
+            throw new sap.ui.model.ValidateException(result.message);
         }
     }
 }

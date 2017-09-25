@@ -25,3 +25,9 @@ export const CONFIG_ITEM_DECIMAL_PLACES: string = "decimalPlaces";
 export const CONFIG_ITEM_DECIMAL_PLACES_PRICE: string = "decimalPlaces|Price";
 /** 配置项目-小数位-数量 */
 export const CONFIG_ITEM_DECIMAL_PLACES_QUANTITY: string = "decimalPlaces|Quantity";
+/** 配置项目-小数位-率 */
+export const CONFIG_ITEM_DECIMAL_PLACES_RATE: string = "decimalPlaces|Rate";
+/** 配置项目-小数位-总计 */
+export const CONFIG_ITEM_DECIMAL_PLACES_SUM: string = "decimalPlaces|Sum";
+/** 配置项目-小数位-单位数量 */
+export const CONFIG_ITEM_DECIMAL_PLACES_MEASUREMENT: string = "decimalPlaces|Measurement";
