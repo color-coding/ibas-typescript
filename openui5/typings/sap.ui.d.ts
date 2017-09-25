@@ -10698,7 +10698,7 @@ declare namespace sap {
         */
         addStyleClass(): sap.ui.core.Control;
 
-        addStyleClass(sClassName:string): sap.ui.core.Control;
+        addStyleClass(sClassName: string): sap.ui.core.Control;
 
         /**
          * Defines whether the user can select text inside this control.Defaults to <code>true</code> as long
@@ -14189,6 +14189,13 @@ declare namespace sap {
        * thedefined constraints for a type.
       */
       function ValidateException(): void;
+      /**
+        * ValidateException classThis exception is thrown, when a validation error occurs while checking
+        * thedefined constraints for a type.
+        * @param message
+      */
+      function ValidateException(message: String): void;
+
       namespace xml {
         /**
          * Model implementation for XML format
@@ -22403,7 +22410,13 @@ declare namespace sap {
         */
         constructor(oFormatOptions: any, oConstraints?: any);
 
-
+        /**
+         * Constructor for a new SimpleType.
+         * @param oFormatOptions options as supported by concrete subclasses
+         * @param oConstraints constraints as supported by concrete subclasses
+         * neil.zhou
+        */
+        constructor(oFormatOptions?: any, oConstraints?: any);
 
 
         /**
