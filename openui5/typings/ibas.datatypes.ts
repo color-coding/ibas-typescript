@@ -3,6 +3,8 @@
  * Project: http://openui5.org/
  * Definitions by: neil.zhou
  */
+/// <reference path="./index.d.ts" />
+/// <reference path="../../ibas/index.ts" />
 import * as ibas from "ibas/index";
 /**
  * 基础验证方法
@@ -309,11 +311,11 @@ sap.ui.getCore().attachValidationSuccess("", (oEvent: any): void => {
 /**
  * 触发控件UI效果 @ control:控件实例
  */
-export function fireValidationError(control: sap.ui.core.Control,message?:String): sap.ui.core.Core {
+export function fireValidationError(control: sap.ui.core.Control, message?: String): sap.ui.core.Core {
     if (control !== null && control !== undefined) {
         let arg: any = {
             element: control,
-            message:message,
+            message: message,
         };
         return sap.ui.getCore().fireValidationError(arg);
     }
@@ -359,8 +361,8 @@ export class SimpleType extends sap.ui.model.SimpleType {
         results.status = true;
         if (this.notEmpty && !validation.isNotEmpty(oValue)) {
             results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_not_empty_error_msg", this.AttributeDesc);
-            fireValidationError(control,results.errorMess);
+            results.errorMess = ibas.i18n.prop("data_types_msg_not_empty_error", this.AttributeDesc);
+            fireValidationError(control, results.errorMess);
             return results;
         }
         return results;
@@ -404,20 +406,20 @@ export class Numeric extends SimpleType {
         results.status = true;
         if (!validation.isNumeric(oValue)) {
             results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_numeric_error_msg");
-            fireValidationError(control,results.errorMess);
+            results.errorMess = ibas.i18n.prop("data_types_msg_numeric_error");
+            fireValidationError(control, results.errorMess);
         }
         if (validation.isNotEmpty(oValue) && this.minValue !== undefined && !(oValue > this.minValue)) {
             results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_numeric_minvalue_error_msg", this.AttributeDesc,
+            results.errorMess = ibas.i18n.prop("data_types_msg_numeric_minvalue_error", this.AttributeDesc,
                 this.minValue.toString());
-            fireValidationError(control,results.errorMess);
+            fireValidationError(control, results.errorMess);
         }
         if (validation.isNotEmpty(oValue) && this.maxValue !== undefined && !(oValue < this.maxValue)) {
             results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_numeric_maxvalue_error_msg", this.AttributeDesc,
+            results.errorMess = ibas.i18n.prop("data_types_msg_numeric_maxvalue_error", this.AttributeDesc,
                 this.maxValue);
-            fireValidationError(control,results.errorMess);
+            fireValidationError(control, results.errorMess);
         }
         return results;
     }
@@ -456,9 +458,9 @@ export class Decimal extends Numeric {
         results.status = true;
         if (this.decimalDigits !== undefined && !validation.isDecimalDigits(oValue, this.decimalDigits)) {
             results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_decimal_decimaldigits_error_msg", this.AttributeDesc,
+            results.errorMess = ibas.i18n.prop("data_types_msg_decimal_decimaldigits_error", this.AttributeDesc,
                 this.decimalDigits);
-                fireValidationError(control,results.errorMess);
+            fireValidationError(control, results.errorMess);
         }
         return results;
     }
@@ -485,8 +487,8 @@ export class DateTime extends SimpleType {
         results.status = true;
         if (!validation.isDate(oValue)) {
             results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_datetime_error_msg", this.AttributeDesc);
-            fireValidationError(control,results.errorMess);
+            results.errorMess = ibas.i18n.prop("data_types_msg_datetime_error", this.AttributeDesc);
+            fireValidationError(control, results.errorMess);
         }
         return results;
     }
@@ -514,9 +516,9 @@ export class Price extends Numeric {
         if (!validation.isPrice(oValue)) {
             let decimalDigits: any = ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DECIMAL_PLACES, 6);
             results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_decimal_decimaldigits_error_msg", this.AttributeDesc,
+            results.errorMess = ibas.i18n.prop("data_types_msg_decimal_decimaldigits_error", this.AttributeDesc,
                 decimalDigits.toString());
-                fireValidationError(control,results.errorMess);
+            fireValidationError(control, results.errorMess);
         }
         return results;
     }
@@ -538,8 +540,8 @@ export class Quantity extends Numeric {
         results.status = true;
         if (!validation.isGtZero(oValue)) {
             results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_quantity_gtzero_error_msg");
-            fireValidationError(control,results.errorMess);
+            results.errorMess = ibas.i18n.prop("data_types_msg_quantity_gtzero_error");
+            fireValidationError(control, results.errorMess);
         }
         return results;
     }
@@ -561,8 +563,8 @@ export class Email extends Alphanumeric {
         results.status = true;
         if (!validation.isEmail(oValue)) {
             results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_email_error_msg");
-            fireValidationError(control,results.errorMess);
+            results.errorMess = ibas.i18n.prop("data_types_msg_email_error");
+            fireValidationError(control, results.errorMess);
         }
         return results;
     }
@@ -584,8 +586,8 @@ export class Phone extends Alphanumeric {
         results.status = true;
         if (!validation.isTel(oValue)) {
             results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_phone_error_msg");
-            fireValidationError(control,results.errorMess);
+            results.errorMess = ibas.i18n.prop("data_types_msg_phone_error");
+            fireValidationError(control, results.errorMess);
         }
         return results;
     }
@@ -654,8 +656,8 @@ export class Mobile extends SimpleType {
         results.status = true;
         if (!validation.isMobile(oValue)) {
             results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_phone_error_msg");
-            fireValidationError(control,results.errorMess);
+            results.errorMess = ibas.i18n.prop("data_types_msg_phone_error");
+            fireValidationError(control, results.errorMess);
         }
         return results;
     }
@@ -677,8 +679,8 @@ export class Telphone extends SimpleType {
         results.status = true;
         if (!validation.isTel(oValue)) {
             results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_phone_error_msg");
-            fireValidationError(control,results.errorMess);
+            results.errorMess = ibas.i18n.prop("data_types_msg_phone_error");
+            fireValidationError(control, results.errorMess);
         }
         return results;
     }
@@ -700,8 +702,8 @@ export class English extends SimpleType {
         results.status = true;
         if (!validation.isEnglish(oValue)) {
             results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_english_error_msg");
-            fireValidationError(control,results.errorMess);
+            results.errorMess = ibas.i18n.prop("data_types_msg_english_error");
+            fireValidationError(control, results.errorMess);
         }
         return results;
     }
@@ -723,8 +725,8 @@ export class ZipCode extends SimpleType {
         results.status = true;
         if (!validation.isZipCode(oValue)) {
             results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_zip_code_error_msg");
-            fireValidationError(control,results.errorMess);
+            results.errorMess = ibas.i18n.prop("data_types_msg_zip_code_error");
+            fireValidationError(control, results.errorMess);
         }
         return results;
     }
@@ -746,8 +748,8 @@ export class Url extends SimpleType {
         results.status = true;
         if (!validation.isUrl(oValue)) {
             results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_url_error_msg");
-            fireValidationError(control,results.errorMess);
+            results.errorMess = ibas.i18n.prop("data_types_msg_url_error");
+            fireValidationError(control, results.errorMess);
         }
         return results;
     }
@@ -769,8 +771,8 @@ export class Password extends SimpleType {
         results.status = true;
         if (!validation.isPwd(oValue)) {
             results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_password_error_msg");
-            fireValidationError(control,results.errorMess);
+            results.errorMess = ibas.i18n.prop("data_types_msg_password_error");
+            fireValidationError(control, results.errorMess);
         }
         return results;
     }
@@ -792,8 +794,8 @@ export class CardCode extends SimpleType {
         results.status = true;
         if (!validation.isCardCode(oValue)) {
             results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_cardcode_error_msg");
-            fireValidationError(control,results.errorMess);
+            results.errorMess = ibas.i18n.prop("data_types_msg_cardcode_error");
+            fireValidationError(control, results.errorMess);
         }
         return results;
     }
@@ -815,8 +817,8 @@ export class StringCheck extends SimpleType {
         results.status = true;
         if (!validation.isStringCheck(oValue)) {
             results.status = false;
-            results.errorMess = ibas.i18n.prop("data_types_stringcheck_error_msg", this.AttributeDesc);
-            fireValidationError(control,results.errorMess);
+            results.errorMess = ibas.i18n.prop("data_types_msg_stringcheck_error", this.AttributeDesc);
+            fireValidationError(control, results.errorMess);
         }
         return results;
     }

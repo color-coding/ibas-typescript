@@ -1,25 +1,14 @@
 {
     "compilerOptions": {
         "module": "amd",
-        "lib": [
-            "es6",
-            "dom"
-        ],
-        "noImplicitAny": true,
-        "noImplicitThis": true,
-        "strictNullChecks": false,
-        "baseUrl": "../",
-        "typeRoots": [
-            "../../"
-        ],
-        "types": [],
-        "noEmit": true,
-        "forceConsistentCasingInFileNames": true
-    },
-    "files": [
-        "index.d.ts",
-        "jquery.sap.d.ts",
-        "sap.m.d.ts",
-        "sap.ui.d.ts"
-    ]
+        "target": "es6",
+        "noImplicitAny": false,
+        "removeComments": true,
+        "baseUrl": "./",
+        "paths": {
+            "ibas/index": [
+                "../../ibas/index"
+            ]
+        }
+    }
 }
