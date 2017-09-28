@@ -23,16 +23,17 @@ then
 fi
 mkdir -p ${WORK_FOLDER}/release/
 echo --开始编译
-mvn clean package -f ${WORK_FOLDER} >>$LOGFILE
-
-if [ -e ${WORK_FOLDER}/target/*.war ]
+if [ -e ${WORK_FOLDER}/pom.xml ]
 then
-  cp -r ${WORK_FOLDER}/target/*.war ${WORK_FOLDER}/release >>$LOGFILE
+  mvn clean package -f ${WORK_FOLDER}/pom.xml >>$LOGFILE
+  if [ -e ${WORK_FOLDER}/target/*.war ]
+  then
+    cp -r ${WORK_FOLDER}/target/*.war ${WORK_FOLDER}/release >>$LOGFILE
+  fi
+  if [ -d ${WORK_FOLDER}/target ]
+  then
+    rm -rf ${WORK_FOLDER}/target >>$LOGFILE
+  fi
 fi
-if [ -d ${WORK_FOLDER}/target ]
-then
-  rm -rf ${WORK_FOLDER}/target >>$LOGFILE
-fi 
-
 
 echo --编译完成，更多信息请查看[compile_packages_log_${OPNAME}.txt]
