@@ -23,9 +23,10 @@ echo --清除项目缓存
 if exist %WORK_FOLDER%release\ rd /s /q %WORK_FOLDER%release\
 if not exist %WORK_FOLDER%release md %WORK_FOLDER%release
 echo --开始编译
-call "%MAVEN_HOME%\bin\mvn" clean package >>%LOGFILE%
-
-if exist %WORK_FOLDER%\target\*.war copy /y %WORK_FOLDER%\target\*.war %WORK_FOLDER%release\ >>%LOGFILE%
-if exist %WORK_FOLDER%\target\ rd /s /q %WORK_FOLDER%\target\ >>%LOGFILE%
+if exist %WORK_FOLDER%pom.xml (
+  call "%MAVEN_HOME%\bin\mvn" clean package -f %WORK_FOLDER%pom.xml >>%LOGFILE%
+  if exist %WORK_FOLDER%\target\*.war copy /y %WORK_FOLDER%\target\*.war %WORK_FOLDER%release\ >>%LOGFILE%
+  if exist %WORK_FOLDER%\target\ rd /s /q %WORK_FOLDER%\target\ >>%LOGFILE%
+)
 
 echo --编译完成，更多信息请查看[compile_packages_log_%OPNAME%.txt]
