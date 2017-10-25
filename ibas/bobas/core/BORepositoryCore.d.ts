@@ -7,7 +7,7 @@
  */
 
 import {
-    objects, ArrayList, IOperationResult, ICriteria
+    objects, ArrayList, IOperationResult, ICriteria, ICondition
 } from "../data/index";
 import { IBusinessObject, IBusinessObjectList } from "./BusinessObjectCore.d";
 
@@ -29,7 +29,7 @@ export interface MethodCaller {
  */
 export interface FetchCaller<P> extends MethodCaller {
     /** 查询条件 */
-    criteria: ICriteria;
+    criteria: ICriteria | ICondition[];
     /**
      * 调用完成
      * @param opRslt 结果

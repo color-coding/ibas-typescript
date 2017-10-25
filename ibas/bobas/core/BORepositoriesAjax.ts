@@ -8,7 +8,7 @@
 
 /// <reference path="../../3rdparty/index.d.ts" />
 import {
-    objects, strings, emMessageLevel, OperationResult, IOperationResult, ArrayList
+    objects, strings, emMessageLevel, OperationResult, IOperationResult, ArrayList, Criteria, Condition
 } from "../data/index";
 import { i18n } from "../i18n/index";
 import { logger } from "../messages/index";
@@ -189,6 +189,18 @@ export class BORepositoryAjax extends BORepository implements IRemoteRepository 
      */
     fetch<P>(boName: string, caller: FetchCaller<P>): void {
         let method: string = "fetch" + boName;
+        if (caller.criteria instanceof Array) {
+            // 替换查询条件数组
+            let criteria: Criteria = new Criteria();
+            for (let item of caller.criteria) {
+                if (objects.instanceOf(item, Condition)) {
+                    criteria.conditions.add(item);
+                } else {
+                    throw new Error(i18n.prop("sys_invalid_parameter", "criteria"));
+                }
+            }
+            caller.criteria = criteria;
+        }
         let data: string = JSON.stringify(this.converter.convert(caller.criteria, method));
         this.callRemoteMethod(method, data, caller);
     }
