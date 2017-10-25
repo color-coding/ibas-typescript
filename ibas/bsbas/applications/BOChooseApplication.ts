@@ -55,8 +55,8 @@ export abstract class BOChooseService<T extends IBOChooseView, D> extends BOChoo
                 this.onCompleted = contract.onCompleted;
                 // 分析查询条件
                 let criteria: Criteria;
-                if (contract.criteria instanceof Criteria) {
-                    criteria = contract.criteria;
+                if (objects.instanceOf(contract.criteria, Criteria)) {
+                    criteria = <any>contract.criteria;
                 } else if (contract.criteria instanceof Array) {
                     criteria = new Criteria();
                     for (let item of contract.criteria) {
