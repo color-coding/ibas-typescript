@@ -23,6 +23,8 @@ export class User implements sys.IUser {
 	super: boolean;
 	/** 密码 */
 	password: string;
+	/* 归属 */
+	belong: string;
 }
 /**
  * 用户模块

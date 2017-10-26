@@ -33,7 +33,8 @@ export class DataConverter4Shell extends ibas.DataConverter4j {
                 Code: newData.code,
                 Name: newData.name,
                 Super: newData.super,
-                Password: newData.password
+                Password: newData.password,
+                Belong: newData.belong
             };
             return remote;
         } else if (ibas.objects.instanceOf(data, bo.UserModule)) {
@@ -116,6 +117,7 @@ export class DataConverter4Shell extends ibas.DataConverter4j {
             newData.name = remote.Name;
             newData.super = remote.Super;
             newData.password = remote.Password;
+            newData.belong = remote.Belong;
             return newData;
         } else if (data.type === bo.UserModule.name) {
             let remote: shell.UserModule = data;
