@@ -9,7 +9,7 @@
 import { objects } from "./Datas";
 import { List } from "./Common.d";
 import { ArrayList } from "./Common";
-import { IOperationInformation, IOperationMessages, IOperationResult } from "./OperationResult.d";
+import { IOperationInformation, IOperationMessage, IOperationResult } from "./OperationResult.d";
 
 /**
  * 操作信息
@@ -56,7 +56,7 @@ export class OperationInformation implements IOperationInformation {
 /**
  * 操作消息
  */
-export class OperationMessages implements IOperationMessages {
+export class OperationMessage implements IOperationMessage {
     constructor() {
         this.resultCode = 0;
         this.message = "success";
@@ -132,7 +132,7 @@ export class OperationMessages implements IOperationMessages {
 /**
  * 操作消息结果
  */
-export class OperationResult<P> extends OperationMessages implements IOperationResult<P> {
+export class OperationResult<P> extends OperationMessage implements IOperationResult<P> {
     /**
      * 返回对象
      */

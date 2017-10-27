@@ -7,7 +7,7 @@
  */
 
 import {
-	List, IBusinessObject, IOperationMessages, IOperationResult, ICriteria,
+	List, IBusinessObject, IOperationMessage, IOperationResult, ICriteria,
 	MethodCaller, SaveCaller, IView, IUrlView, IModule, IApplication,
 	IModuleConsole, IModuleFunction, IViewShower, IBarView, IMessgesCaller,
 	emMessageType, emPrivilegeSource, emAuthoriseType, emPlantform

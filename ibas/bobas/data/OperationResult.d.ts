@@ -11,7 +11,7 @@ import { List } from "./Common.d";
 /**
  * 操作消息
  */
-export interface IOperationMessages {
+export interface IOperationMessage {
     /**
      * 结果标识
      */
@@ -41,7 +41,7 @@ export interface IOperationMessages {
 /**
  * 操作结果
  */
-export interface IOperationResult<P> extends IOperationMessages {
+export interface IOperationResult<P> extends IOperationMessage {
     /**
      * 返回对象
      * 

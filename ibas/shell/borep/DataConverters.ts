@@ -173,7 +173,7 @@ export class DataConverter4Shell extends ibas.DataConverter4j {
             return newData;
         } else if (sign === "saveUserQuery") {
             // 此方法返回值，没有标记类型
-            data.type = ibas.OperationMessages.name;
+            data.type = ibas.OperationMessage.name;
             return super.parsing(data, sign);
         } else {
             return super.parsing(data, sign);
