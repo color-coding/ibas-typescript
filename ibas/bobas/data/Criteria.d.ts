@@ -16,9 +16,9 @@ import { emConditionOperation, emConditionRelationship, emSortType } from "./Enu
 export interface ICriteria {
 
     /**
-     * 业务对象编码
+     * 业务对象
      */
-    boCode: string;
+    businessObject: string;
 
     /**
      *查询结果数量

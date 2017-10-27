@@ -45,7 +45,7 @@ export class QueryPanel extends sys.QueryPanel<IQueryPanelView>  {
         this.editQuery.target = this.targetName;
         if (ibas.objects.isNull(this.editQuery.criteria)) {
             this.editQuery.criteria = new ibas.Criteria();
-            this.editQuery.criteria.boCode = this.editQuery.target;
+            this.editQuery.criteria.businessObject = this.editQuery.target;
         }
         this.view.showQuery(this.editQuery);
         this.view.showQueryConditions(this.editQuery.criteria.conditions);

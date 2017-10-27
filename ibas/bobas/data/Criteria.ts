@@ -23,16 +23,16 @@ import { config } from "../configuration/index";
 export class Criteria implements ICriteria {
 
     /**
-     * 业务对象编码
+     * 业务对象
      */
-    private BOCode: string;
+    private BusinessObject: string;
 
-    get boCode(): string {
-        return this.BOCode;
+    get businessObject(): string {
+        return this.BusinessObject;
     }
 
-    set boCode(value: string) {
-        this.BOCode = value;
+    set businessObject(value: string) {
+        this.BusinessObject = value;
     }
 
     /**

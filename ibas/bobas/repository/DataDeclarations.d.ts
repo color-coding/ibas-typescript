@@ -49,8 +49,8 @@ export interface OperationInformation extends DataDeclaration {
 }
 /** 查询 */
 export interface Criteria extends DataDeclaration {
-    /** 业务对象编码 */
-    BOCode: string;
+    /** 业务对象 */
+    BusinessObject: string;
     /** 查询结果数量 */
     ResultCount: number;
     /** 不加载子项 */
