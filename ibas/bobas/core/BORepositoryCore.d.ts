@@ -65,6 +65,13 @@ export interface UploadFileCaller extends MethodCaller {
     fileData: FormData;
 }
 /**
+ * 下载文件调用者
+ */
+export interface DownloadFileCaller extends MethodCaller {
+    /** 文件下载数据 */
+    criteria: ICriteria;
+}
+/**
  * 业务对象仓库，只读
  */
 export interface IBORepositoryReadonly {
@@ -127,6 +134,17 @@ export interface IFileRepositoryUpload {
      * @param caller 调用者
      */
     uploadFile(method: string, caller: UploadFileCaller);
+}
+/**
+ * 文件上传仓库
+ */
+export interface IFileRepositoryDownload {
+    /**
+     * 上传文件
+     * @param method 方法地址
+     * @param caller 调用者
+     */
+    downloadFile(method: string, caller: DownloadFileCaller);
 }
 /**
  * 数据转换者

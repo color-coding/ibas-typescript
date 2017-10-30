@@ -9,7 +9,7 @@
 import {
     IBORepositoryReadonly, IBORepository, IFileRepository,
     UploadFileCaller, LoadFileCaller, FetchCaller, SaveCaller,
-    IFileRepositoryUpload
+    IFileRepositoryUpload, IFileRepositoryDownload, DownloadFileCaller
 } from "./BORepositoryCore.d";
 
 /** 只读业务仓库 */
@@ -50,7 +50,7 @@ export abstract class FileRepository implements IFileRepository {
      */
     abstract loadFile(fileName: string, caller: LoadFileCaller): void;
 }
-/** 文件仓库 */
+/** 文件仓库-上传 */
 export abstract class FileRepositoryUpload implements IFileRepositoryUpload {
     /**
      * 上传文件
@@ -58,4 +58,13 @@ export abstract class FileRepositoryUpload implements IFileRepositoryUpload {
      * @param caller 调用者
      */
     abstract uploadFile(method: string, caller: UploadFileCaller): void;
+}
+/** 文件仓库-下载 */
+export abstract class FileRepositoryDownload implements IFileRepositoryDownload {
+    /**
+     * 下载文件
+     * @param method 方法地址
+     * @param caller 调用者
+     */
+    abstract downloadFile(method: string, caller: DownloadFileCaller): void;
 }

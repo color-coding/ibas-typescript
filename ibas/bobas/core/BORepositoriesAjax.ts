@@ -14,9 +14,10 @@ import { i18n } from "../i18n/index";
 import { logger } from "../messages/index";
 import {
     MethodCaller, FetchCaller, SaveCaller, LoadFileCaller, UploadFileCaller,
-    IRemoteRepository, IDataConverter, IBORepositoryReadonly, IFileRepository, IFileRepositoryUpload
+    IRemoteRepository, IDataConverter, IBORepositoryReadonly, IFileRepository,
+    IFileRepositoryUpload, IFileRepositoryDownload, DownloadFileCaller
 } from "./BORepositoryCore.d";
-import { FileRepository, FileRepositoryUpload, BORepository } from "./BORepositoryCore";
+import { FileRepository, FileRepositoryUpload, BORepository, FileRepositoryDownload } from "./BORepositoryCore";
 
 
 /** 远程文件只读仓库 */
@@ -384,5 +385,109 @@ export class FileRepositoryUploadAjax extends FileRepositoryUpload implements IF
      */
     uploadFile(method: string, caller: UploadFileCaller): void {
         this.callRemoteMethod(method, caller.fileData, caller);
+    }
+}
+/** 文件上传仓库 */
+export class FileRepositoryDownloadAjax extends FileRepositoryDownload implements IFileRepositoryDownload {
+    /**
+     * 远程服务地址
+     */
+    private _address: string;
+    get address(): string {
+        return this._address;
+    }
+    set address(value: string) {
+        this._address = value;
+    }
+    /**
+     * 访问口令
+     */
+    private _token: string;
+    get token(): string {
+        return this._token;
+    }
+    set token(value: string) {
+        this._token = value;
+    }
+    /** 数据转换者 */
+    private _converter: IDataConverter;
+    get converter(): IDataConverter {
+        if (objects.isNull(this._converter)) {
+            throw new Error(i18n.prop("sys_invalid_data_converter"));
+        }
+        return this._converter;
+    }
+    set converter(value: IDataConverter) {
+        this._converter = value;
+    }
+    /**
+     * 调用远程方法
+     * @param method 方法地址
+     * @param data 数据
+     * @param caller 调用者
+     */
+    callRemoteMethod(method: string, data: any, caller: MethodCaller): void {
+        let that: this = this;
+        let ajxSetting: JQueryAjaxSettings = this.createAjaxSettings(method, data);
+        let opRslt: OperationResult<any> = new OperationResult();
+        // 补充发生错误的事件
+        ajxSetting.error = function (jqXHR: JQueryXHR, textStatus: string, errorThrown: string): void {
+            opRslt.resultCode = 10000 + jqXHR.status;
+            opRslt.message = strings.format("{0} - {1}", textStatus, i18n.prop("sys_network_error"));
+            logger.log(emMessageLevel.ERROR,
+                "repository: call method [{2}] faild, {0} - {1}.", textStatus, errorThrown, ajxSetting.url);
+            caller.onCompleted.call(objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
+        };
+        // 补充成功的事件
+        ajxSetting.success = function (data: any, textStatus: string, jqXHR: JQueryXHR): void {
+            let opRslt: any = that.converter.parsing(data, method);
+            logger.log(emMessageLevel.DEBUG,
+                "repository: call method [{2}] sucessful, {0} - {1}.", textStatus, opRslt.message, ajxSetting.url);
+            caller.onCompleted.call(objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
+        };
+        // 调用远程方法
+        logger.log(emMessageLevel.DEBUG, "repository: calling method [{0}].", ajxSetting.url);
+        jQuery.ajax(ajxSetting);
+    }
+    /**
+     * 创建调用参数，可重载
+     * @param fileName 文件名
+     * @param dataType 返回的数据类型
+     */
+    protected createAjaxSettings(method: string, data: FormData): JQueryAjaxSettings {
+        if (objects.isNull(this.address)) {
+            throw new Error(i18n.prop("sys_invalid_parameter", "address"));
+        }
+        let methodUrl: string = this.address;
+        if (!methodUrl.endsWith("/")) {
+            methodUrl = methodUrl + "/";
+        }
+        methodUrl = methodUrl + method;
+        if (!objects.isNull(this.token) && methodUrl.indexOf("token=") < 0) {
+            if (methodUrl.indexOf("?") >= 0) {
+                methodUrl = methodUrl + "&";
+            } else {
+                methodUrl = methodUrl + "?";
+            }
+            methodUrl = methodUrl + strings.format("token={0}", this.token);
+        }
+        let ajxSetting: JQueryAjaxSettings = {
+            url: methodUrl,
+            type: "POST",
+            data: data,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false
+        };
+        return ajxSetting;
+    }
+    /**
+     * 上传文件
+     * @param method 方法地址
+     * @param caller 调用者
+     */
+    downloadFile(method: string, caller: DownloadFileCaller): void {
+        this.callRemoteMethod(method, caller.criteria, caller);
     }
 }
