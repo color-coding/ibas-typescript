@@ -268,6 +268,11 @@ export class FileRepositoryUploadAjax extends RemoteRepositoryAjax implements IF
 }
 /** 文件上传仓库 */
 export class FileRepositoryDownloadAjax extends RemoteRepositoryAjax implements IFileRepositoryDownload {
+    constructor() {
+        super();
+        // 关闭自动解析数据
+        this.autoParsing = false;
+    }
     /**
      * 创建调用参数，可重载
      * @param fileName 文件名
@@ -280,16 +285,30 @@ export class FileRepositoryDownloadAjax extends RemoteRepositoryAjax implements 
             type: "POST",
             data: data,
             async: true,
+            dataType: "blob",
+            contentType: "application/json; charset=utf-8",
         };
         return ajaxSetting;
     }
     /**
-     * 上传文件
+     * 下载文件
      * @param method 方法地址
      * @param caller 调用者
      */
     download(method: string, caller: DownloadFileCaller): void {
+        let methodCaller: MethodCaller = {
+            onCompleted(data: any): void {
+                let opRslt: IOperationResult<any> = null;
+                if (data instanceof OperationResult) {
+                    opRslt = data;
+                } else {
+                    opRslt = new OperationResult();
+                    opRslt.resultObjects.add(data);
+                }
+                caller.onCompleted.call(objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
+            }
+        };
         let data: string = JSON.stringify(this.converter.convert(caller.criteria, method));
-        this.callRemoteMethod(method, data, caller);
+        this.callRemoteMethod(method, data, methodCaller);
     }
 }
