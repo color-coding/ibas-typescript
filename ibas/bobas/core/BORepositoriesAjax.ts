@@ -25,7 +25,8 @@ import {
 
 /** 远程仓库 */
 export abstract class RemoteRepositoryAjax extends RemoteRepository implements IRemoteRepository {
-
+    /** 自动解析数据 */
+    autoParsing: boolean = true;
     /**
      * 远程方法调用
      * 特殊调用参数可重载createAjaxSettings方法
@@ -50,13 +51,19 @@ export abstract class RemoteRepositoryAjax extends RemoteRepository implements I
         };
         // 补充成功的事件
         ajaxSetting.success = function (data: any, textStatus: string, jqXHR: JQueryXHR): void {
-            let opRslt: any = that.converter.parsing(data, method);
-            if (objects.isNull(opRslt)) {
-                throw new Error(i18n.prop("sys_data_converter_parsing_faild"));
+            if (that.autoParsing) {
+                let opRslt: any = that.converter.parsing(data, method);
+                if (objects.isNull(opRslt)) {
+                    throw new Error(i18n.prop("sys_data_converter_parsing_faild"));
+                }
+                logger.log(emMessageLevel.DEBUG,
+                    "repository: call method [{2}] sucessful, {0} - {1}.", opRslt.resultCode, opRslt.message, ajaxSetting.url);
+                caller.onCompleted.call(objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
+            } else {
+                logger.log(emMessageLevel.DEBUG,
+                    "repository: call method [{1}] sucessful, {0}.", textStatus, ajaxSetting.url);
+                caller.onCompleted.call(objects.isNull(caller.caller) ? caller : caller.caller, data);
             }
-            logger.log(emMessageLevel.DEBUG,
-                "repository: call method [{2}] sucessful, {0} - {1}.", opRslt.resultCode, opRslt.message, ajaxSetting.url);
-            caller.onCompleted.call(objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
         };
         // 调用远程方法
         logger.log(emMessageLevel.DEBUG, "repository: calling method [{0}].", ajaxSetting.url);
@@ -135,7 +142,7 @@ export class BORepositoryAjax extends RemoteRepositoryAjax implements IBOReposit
      */
     protected createAjaxSettings(method: string, data: string): JQueryAjaxSettings {
         let methodUrl: string = this.methodUrl(method);
-        let ajxSetting: JQueryAjaxSettings = {
+        let ajaxSetting: JQueryAjaxSettings = {
             url: methodUrl,
             type: "POST",
             contentType: "application/json; charset=utf-8",
@@ -143,11 +150,17 @@ export class BORepositoryAjax extends RemoteRepositoryAjax implements IBOReposit
             async: true,
             data: data
         };
-        return ajxSetting;
+        return ajaxSetting;
     }
 }
 /** 远程文件只读仓库 */
 export class FileRepositoryAjax extends RemoteRepositoryAjax implements IFileRepository {
+
+    constructor() {
+        super();
+        // 关闭自动解析数据
+        this.autoParsing = false;
+    }
     /**
      * 创建调用参数，可重载
      * @param fileName 文件名
@@ -164,14 +177,14 @@ export class FileRepositoryAjax extends RemoteRepositoryAjax implements IFileRep
         if (!objects.isNull(caller.dataType)) {
             dataType = caller.dataType;
         }
-        let ajxSetting: JQueryAjaxSettings = {
+        let ajaxSetting: JQueryAjaxSettings = {
             url: methodUrl,
             type: type,
             contentType: contentType,
             dataType: dataType,
             async: true
         };
-        return ajxSetting;
+        return ajaxSetting;
     }
     /**
      * 加载文件
@@ -193,66 +206,35 @@ export class BOFileRepositoryAjax extends FileRepositoryAjax implements IBORepos
         let fileName: string = strings.format("{0}s.json", boName).toLowerCase();
         let that: this = this;
         let loadFileCaller: LoadFileCaller = {
-            onCompleted(opRslt: IOperationResult<any>): void {
+            onCompleted(data: any): void {
+                let opRslt: IOperationResult<any> = new OperationResult();
                 if (!objects.isNull(that.converter)) {
-                    let datas: ArrayList<any> = new ArrayList();
-                    for (let item of opRslt.resultObjects) {
-                        if (item instanceof Array) {
-                            for (let subItem of item) {
-                                if (subItem.type === undefined) {
-                                    // 添加对象类型
-                                    subItem.type = boName;
-                                }
-                                datas.push(that.converter.parsing(subItem, fileName));
-                            }
-                        } else {
+                    if (data instanceof Array) {
+                        for (let item of data) {
                             if (item.type === undefined) {
-                                // 添加对象类型
                                 item.type = boName;
                             }
-                            datas.push(that.converter.parsing(item, fileName));
+                            opRslt.resultObjects.add(that.converter.parsing(item, fileName));
                         }
+                    } else {
+                        if (data.type === undefined) {
+                            data.type = boName;
+                        }
+                        opRslt.resultObjects.add(that.converter.parsing(data, fileName));
                     }
-                    // 替换为转换后的数据
-                    opRslt.resultObjects = datas;
+                } else {
+                    if (data instanceof Array) {
+                        for (let item of data) {
+                            opRslt.resultObjects.add(data);
+                        }
+                    } else {
+                        opRslt.resultObjects.add(data);
+                    }
                 }
                 caller.onCompleted.call(objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
             }
         };
         this.load(fileName, loadFileCaller);
-    }
-    // 需要与set成对出现
-    get converter(): IDataConverter {
-        return super.converter;
-    }
-    // 转换者方法包一层，添加一些预处理
-    set converter(value: IDataConverter) {
-        if (!objects.isNull(value)) {
-            let adpter: IDataConverter = {
-                convert: value.convert,
-                parsing(data: any, sign: string): any {
-                    let type: string = sign;
-                    if (type.endsWith("s.json")) {
-                        type = type.substring(0, type.length - "s.json".length);
-                    }
-                    if (data instanceof Array) {
-                        for (let item of data) {
-                            if (item.type === undefined) {
-                                item.type = type;
-                            }
-                        }
-                    } else {
-                        if (data.type === undefined) {
-                            data.type = type;
-                        }
-                    }
-                    value.parsing(data, sign);
-                }
-            };
-            super.converter = adpter;
-        } else {
-            super.converter = value;
-        }
     }
 }
 /** 文件上传仓库 */
@@ -264,7 +246,7 @@ export class FileRepositoryUploadAjax extends RemoteRepositoryAjax implements IF
      */
     protected createAjaxSettings(method: string, data: FormData): JQueryAjaxSettings {
         let methodUrl: string = this.methodUrl(method);
-        let ajxSetting: JQueryAjaxSettings = {
+        let ajaxSetting: JQueryAjaxSettings = {
             url: methodUrl,
             type: "POST",
             data: data,
@@ -273,7 +255,7 @@ export class FileRepositoryUploadAjax extends RemoteRepositoryAjax implements IF
             contentType: false,
             processData: false
         };
-        return ajxSetting;
+        return ajaxSetting;
     }
     /**
      * 上传文件
@@ -293,13 +275,13 @@ export class FileRepositoryDownloadAjax extends RemoteRepositoryAjax implements 
      */
     protected createAjaxSettings(method: string, data: string): JQueryAjaxSettings {
         let methodUrl: string = this.methodUrl(method);
-        let ajxSetting: JQueryAjaxSettings = {
+        let ajaxSetting: JQueryAjaxSettings = {
             url: methodUrl,
             type: "POST",
             data: data,
             async: true,
         };
-        return ajxSetting;
+        return ajaxSetting;
     }
     /**
      * 上传文件
