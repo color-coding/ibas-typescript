@@ -7,64 +7,39 @@
  */
 
 import {
-    IBORepositoryReadonly, IBORepository, IFileRepository,
-    UploadFileCaller, LoadFileCaller, FetchCaller, SaveCaller,
-    IFileRepositoryUpload, IFileRepositoryDownload, DownloadFileCaller
+    IRemoteRepository, MethodCaller, IDataConverter,
 } from "./BORepositoryCore.d";
 
-/** 只读业务仓库 */
-export abstract class BORepositoryReadonly implements IBORepositoryReadonly {
-    /**
-     * 访问口令
-     */
+/** 远程仓库 */
+export abstract class RemoteRepository implements IRemoteRepository {
+    /** 远程服务地址 */
+    private _address: string;
+    get address(): string {
+        return this._address;
+    }
+    set address(value: string) {
+        this._address = value;
+    }
+    /** 访问口令 */
     private _token: string;
     get token(): string {
         return this._token;
     }
     set token(value: string) {
         this._token = value;
+    }    /** 数据转换者 */
+    private _converter: IDataConverter;
+    get converter(): IDataConverter {
+        return this._converter;
+    }
+    set converter(value: IDataConverter) {
+        this._converter = value;
     }
     /**
-     * 查询数据
-     * @param boName 业务对象名称
-     * @param caller 查询监听者
-     */
-    abstract fetch<P>(boName: string, caller: FetchCaller<P>): void;
-
-}
-/** 只读业务仓库 */
-export abstract class BORepository extends BORepositoryReadonly implements IBORepository {
-    /**
-     * 保存数据
-     * @param boName 业务对象名称
-     * @param caller 保存监听者
-     */
-    abstract save<P>(boName: string, caller: SaveCaller<P>): void;
-}
-/** 只读文件仓库 */
-export abstract class FileRepository implements IFileRepository {
-    /**
-     * 加载文件
-     * @param fileName 文件名称
-     * @param caller 调用者
-     */
-    abstract loadFile(fileName: string, caller: LoadFileCaller): void;
-}
-/** 文件仓库-上传 */
-export abstract class FileRepositoryUpload implements IFileRepositoryUpload {
-    /**
-     * 上传文件
+     * 调用远程方法
      * @param method 方法地址
+     * @param data 数据
      * @param caller 调用者
      */
-    abstract uploadFile(method: string, caller: UploadFileCaller): void;
-}
-/** 文件仓库-下载 */
-export abstract class FileRepositoryDownload implements IFileRepositoryDownload {
-    /**
-     * 下载文件
-     * @param method 方法地址
-     * @param caller 调用者
-     */
-    abstract downloadFile(method: string, caller: DownloadFileCaller): void;
+    abstract callRemoteMethod(method: string, data: any, caller: MethodCaller): void;
 }

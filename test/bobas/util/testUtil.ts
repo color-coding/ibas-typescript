@@ -26,18 +26,18 @@ bobas.logger.log(bobas.emMessageLevel.ERROR, "a error", "test");
 bobas.logger.log(bobas.emMessageLevel.WARN, "a warning", "test");
 bobas.logger.log(bobas.emMessageLevel.DEBUG, "a debug", "test");
 bobas.logger.log(bobas.emMessageLevel.INFO, "a information", "test");
-let message = new bobas.Message();
+let message: bobas.Message = new bobas.Message();
 message.level = bobas.emMessageLevel.WARN;
 message.content = "a object message";
 bobas.logger.log(message);
 // 枚举值操作
 console.log(bobas.strings.format("Enum string {0}.", bobas.emMessageLevel[bobas.emMessageLevel.DEBUG]));
-let eValue = bobas.enums.valueOf(bobas.emYesNo, "yes");
+let eValue: number = bobas.enums.valueOf(bobas.emYesNo, "yes");
 bobas.assert.equals("converter parsingEnums faild.", bobas.emYesNo.YES, eValue);
 eValue = bobas.enums.valueOf(bobas.emConditionOperation, "NOT_EQUAL");
 bobas.assert.equals("converter parsingEnums faild.", bobas.emConditionOperation.NOT_EQUAL, eValue);
 // 测试日期类型
-let dValue = bobas.dates.valueOf("2017-03-14'T'23:59:59");
+let dValue: Date = bobas.dates.valueOf("2017-03-14'T'23:59:59");
 bobas.assert.equals("converter parsingDate faild.", dValue, new Date(2017, 3, 14, 23, 59, 59));
 dValue = bobas.dates.valueOf("2017/3/14'T'23:59:59");
 bobas.assert.equals("converter parsingDate faild.", dValue, new Date(2017, 3, 14, 23, 59, 59));
@@ -45,7 +45,7 @@ dValue = bobas.dates.valueOf("2017/3/14");
 bobas.assert.equals("converter parsingDate faild.", dValue, new Date(2017, 3, 14));
 dValue = bobas.dates.valueOf("2017-3-14");
 bobas.assert.equals("converter parsingDate faild.", dValue, new Date(2017, 3, 14));
-let sValue = bobas.dates.toString(new Date(2017, 3, 14, 23, 59, 59));
+let sValue: string = bobas.dates.toString(new Date(2017, 3, 14, 23, 59, 59));
 bobas.assert.equals("converter convertDate faild.", sValue, "2017-3-14T23:59:59");
 dValue = bobas.dates.valueOf("2017/3/14T23:59:59");
 bobas.assert.equals("converter parsingDate faild.", dValue, new Date(2017, 3, 14, 23, 59, 59))
@@ -71,10 +71,10 @@ builder.appendFormat("{1}.{0}", "zhu", "niuren");
 builder.append(".");
 console.log(builder.toString());
 // 测试文件仓库
-let fileRepository = new bobas.FileRepositoryAjax();
+let fileRepository: bobas.FileRepositoryAjax = new bobas.FileRepositoryAjax();
 fileRepository.address = bobas.urls.rootUrl(undefined) + "/../../repository";
-fileRepository.loadFile("salesorders.json", {
-    onCompleted(opRslt): void {
+fileRepository.load("salesorders.json", {
+    onCompleted(opRslt: bobas.IOperationResult<any>): void {
         console.log(opRslt.message);
     }
 });

@@ -49,36 +49,9 @@ export interface SaveCaller<P> extends MethodCaller {
     onCompleted(opRslt: IOperationResult<P>);
 }
 /**
- * 加载文件调用者
- */
-export interface LoadFileCaller extends MethodCaller {
-    /** 协议类型 */
-    contentType?: string;
-    /** 数据类型 */
-    dataType?: string;
-}
-/**
- * 上传文件调用者
- */
-export interface UploadFileCaller extends MethodCaller {
-    /** 文件上传数据 */
-    fileData: FormData;
-}
-/**
- * 下载文件调用者
- */
-export interface DownloadFileCaller extends MethodCaller {
-    /** 文件下载数据 */
-    criteria: ICriteria;
-}
-/**
  * 业务对象仓库，只读
  */
 export interface IBORepositoryReadonly {
-    /**
-     * 访问口令
-     */
-    token: string;
     /**
      * 查询数据
      * @param boName 业务对象名称
@@ -106,12 +79,29 @@ export interface IRemoteRepository {
      */
     address: string;
     /**
+     * 访问口令
+     */
+    token: string;
+    /**
+     * 数据转换者
+     */
+    converter: IDataConverter
+    /**
      * 调用远程方法
      * @param method 方法地址
      * @param data 数据
      * @param caller 调用者
      */
     callRemoteMethod(method: string, data: any, caller: MethodCaller): void;
+}
+/**
+ * 加载文件调用者
+ */
+export interface LoadFileCaller extends MethodCaller {
+    /** 协议类型 */
+    contentType?: string;
+    /** 数据类型 */
+    dataType?: string;
 }
 /**
  * 文件仓库
@@ -122,7 +112,14 @@ export interface IFileRepository {
      * @param fileName 文件名称
      * @param caller 调用者
      */
-    loadFile(fileName: string, caller: LoadFileCaller);
+    load(fileName: string, caller: LoadFileCaller);
+}
+/**
+ * 上传文件调用者
+ */
+export interface UploadFileCaller extends MethodCaller {
+    /** 文件上传数据 */
+    fileData: FormData;
 }
 /**
  * 文件上传仓库
@@ -133,7 +130,14 @@ export interface IFileRepositoryUpload {
      * @param method 方法地址
      * @param caller 调用者
      */
-    uploadFile(method: string, caller: UploadFileCaller);
+    upload(method: string, caller: UploadFileCaller);
+}
+/**
+ * 下载文件调用者
+ */
+export interface DownloadFileCaller extends MethodCaller {
+    /** 下载条件 */
+    criteria: ICriteria;
 }
 /**
  * 文件上传仓库
@@ -144,7 +148,7 @@ export interface IFileRepositoryDownload {
      * @param method 方法地址
      * @param caller 调用者
      */
-    downloadFile(method: string, caller: DownloadFileCaller);
+    download(method: string, caller: DownloadFileCaller);
 }
 /**
  * 数据转换者
