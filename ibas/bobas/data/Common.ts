@@ -164,6 +164,15 @@ export class ArrayList<T> extends Array<T> implements List<T> {
         }
         return false;
     }
+    /**
+     * 清除所有元素
+     */
+    clear(): void {
+        // 清除数组
+        while (this.length > 0) {
+            this.pop();
+        }
+    }
 }
 /**
  * 字符串构建器

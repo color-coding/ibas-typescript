@@ -55,6 +55,10 @@ export interface List<T> extends Array<T> {
      * @param item 元素
      */
     contain(item: T): boolean;
+    /**
+     * 清理所有元素
+     */
+    clear(): void;
 }
 
 
