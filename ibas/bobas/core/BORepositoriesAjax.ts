@@ -9,7 +9,7 @@
 /// <reference path="../../3rdparty/index.d.ts" />
 import {
     objects, strings, emMessageLevel, OperationResult, IOperationResult, ArrayList,
-    Criteria, Condition, ICriteria, StringBuilder
+    Criteria, Condition, ICriteria,
 } from "../data/index";
 import { i18n } from "../i18n/index";
 import { logger } from "../messages/index";
@@ -38,7 +38,7 @@ export abstract class RemoteRepositoryAjax extends RemoteRepository implements I
         let that: this = this;
         let ajaxSetting: JQueryAjaxSettings = this.createAjaxSettings(method, data);
         if (objects.isNull(ajaxSetting)) {
-            throw new Error(i18n.prop("sys_invalid_parameter", "ajax setting"));
+            throw new Error(i18n.prop("sys_invalid_parameter", "AjaxSetting"));
         }
         // 补充发生错误的事件
         ajaxSetting.error = function (jqXHR: JQueryXHR, textStatus: string, errorThrown: string): void {
@@ -68,31 +68,6 @@ export abstract class RemoteRepositoryAjax extends RemoteRepository implements I
         // 调用远程方法
         logger.log(emMessageLevel.DEBUG, "repository: calling method [{0}].", ajaxSetting.url);
         jQuery.ajax(ajaxSetting);
-    }
-
-    /**
-     * 返回方法地址
-     * @param method 方法名称
-     */
-    protected methodUrl(method: string): string {
-        if (objects.isNull(this.address)) {
-            throw new Error(i18n.prop("sys_invalid_parameter", "address"));
-        }
-        let methodUrl: StringBuilder = new StringBuilder();
-        methodUrl.append(this.address);
-        if (!this.address.endsWith("/")) {
-            methodUrl.append("/");
-        }
-        methodUrl.append(method);
-        if (!objects.isNull(this.token) && method.indexOf("token=") < 0) {
-            if (method.indexOf("?") >= 0) {
-                methodUrl.append("&");
-            } else {
-                methodUrl.append("?");
-            }
-            methodUrl.append(strings.format("token={0}", this.token));
-        }
-        return methodUrl.toString();
     }
     /**
      * 创建调用参数，可重载
@@ -266,29 +241,61 @@ export class FileRepositoryUploadAjax extends RemoteRepositoryAjax implements IF
         this.callRemoteMethod(method, caller.fileData, caller);
     }
 }
+/** 远程仓库 */
+export abstract class RemoteRepositoryXhr extends RemoteRepository {
+    /** 自动解析数据 */
+    autoParsing: boolean = true;
+    /**
+     * 远程方法调用
+     * 特殊调用参数可重载createAjaxSettings方法
+     * @param method 方法名称
+     * @param data 数据
+     * @param caller 方法监听
+     */
+    callRemoteMethod(method: string, data: any, caller: MethodCaller): void {
+        let request: XMLHttpRequest = this.createHttpRequest(method, data);
+        if (objects.isNull(request)) {
+            throw new Error(i18n.prop("sys_invalid_parameter", "HttpRequest"));
+        }
+        let that: this = this;
+        request.onreadystatechange = function (): void {
+            if (this.readyState === 4) {
+                let opRslt: IOperationResult<any> = new OperationResult();
+                // 响应完成
+                if ((this.status >= 200 && this.status < 300) || this.status === 304) {
+                    // 成功
+                    if (that.autoParsing) {
+                        let opRslt: any = that.converter.parsing(this.response, method);
+                        if (objects.isNull(opRslt)) {
+                            throw new Error(i18n.prop("sys_data_converter_parsing_faild"));
+                        }
+                        logger.log(emMessageLevel.DEBUG,
+                            "repository: call method [{2}] sucessful, {0} - {1}.", opRslt.resultCode, opRslt.message, this.responseURL);
+                        caller.onCompleted.call(objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
+                    } else {
+                        logger.log(emMessageLevel.DEBUG,
+                            "repository: call method [{1}] sucessful, {0}.", this.statusText, this.responseURL);
+                        caller.onCompleted.call(objects.isNull(caller.caller) ? caller : caller.caller, this.response);
+                    }
+                } else {
+                    // 出错了
+                    opRslt.resultCode = 10000 + this.status;
+                    opRslt.message = strings.format("{0} - {1}", this.statusText, i18n.prop("sys_network_error"));
+                    logger.log(emMessageLevel.ERROR,
+                        "repository: call method [{2}] faild, {0} - {1}.", this.status, this.statusText, this.responseURL);
+                    caller.onCompleted.call(objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
+                }
+            }
+        };
+        request.send(data);
+    }
+    protected abstract createHttpRequest(method: string, data: any): XMLHttpRequest;
+}
 /** 文件上传仓库 */
-export class FileRepositoryDownloadAjax extends RemoteRepositoryAjax implements IFileRepositoryDownload {
+export class FileRepositoryDownloadAjax extends RemoteRepositoryXhr implements IFileRepositoryDownload {
     constructor() {
         super();
-        // 关闭自动解析数据
         this.autoParsing = false;
-    }
-    /**
-     * 创建调用参数，可重载
-     * @param fileName 文件名
-     * @param dataType 返回的数据类型
-     */
-    protected createAjaxSettings(method: string, data: string): JQueryAjaxSettings {
-        let methodUrl: string = this.methodUrl(method);
-        let ajaxSetting: JQueryAjaxSettings = {
-            url: methodUrl,
-            type: "POST",
-            data: data,
-            async: true,
-            dataType: "blob",
-            contentType: "application/json; charset=utf-8",
-        };
-        return ajaxSetting;
     }
     /**
      * 下载文件
@@ -310,5 +317,13 @@ export class FileRepositoryDownloadAjax extends RemoteRepositoryAjax implements 
         };
         let data: string = JSON.stringify(this.converter.convert(caller.criteria, method));
         this.callRemoteMethod(method, data, methodCaller);
+    }
+    protected createHttpRequest(method: string, data: any): XMLHttpRequest {
+        let methodUrl: string = this.methodUrl(method);
+        let xhr: XMLHttpRequest = new XMLHttpRequest();
+        xhr.open("POST", methodUrl, true);
+        xhr.responseType = "blob";
+        xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+        return xhr;
     }
 }
