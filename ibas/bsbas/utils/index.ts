@@ -9,6 +9,7 @@ export * from "./HashEventManager";
 export * from "./HashEventManager.d";
 export * from "./KeyboardEventManager";
 export * from "./KeyboardEventManager.d";
+export * from "./Files";
 
 import { HashEventManager } from "./HashEventManager";
 import { KeyboardEventManager } from "./KeyboardEventManager";
