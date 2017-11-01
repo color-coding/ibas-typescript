@@ -55,12 +55,22 @@ declare namespace sap {
             export class TreeTable extends Table {
                 constructor(mSettings?: any);
                 constructor(sId: string, mSettings?: any);
+                collapse(iRowIndex: number): sap.ui.table.TreeTable;
+                collapseAll(): sap.ui.table.TreeTable;
+                expandToLevel(iLevel: number): sap.ui.table.TreeTable;
+                getRowActionCount():number;
+                setRowActionCount(iRowActionCount: number): sap.ui.table.TreeTable;
+                getSelectedIndex():number;
             }
             export class RowAction extends sap.ui.core.Control {
                 constructor(mSettings?: any);
                 constructor(sId: string, mSettings?: any);
             }
-            export class RowActionItem extends sap.ui.core.Control {
+            export class RowActionItem extends sap.ui.core.Element {
+                constructor(mSettings?: any);
+                constructor(sId: string, mSettings?: any);
+            }
+            export class RowSettings extends sap.ui.core.Element {
                 constructor(mSettings?: any);
                 constructor(sId: string, mSettings?: any);
             }
