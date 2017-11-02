@@ -578,7 +578,21 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                 horizontalScrolling: true,
                 verticalScrolling: true,
                 content: [view.darw()],
-                buttons: [view.darwBars()]
+                buttons: [
+                    new sap.m.Button("", {
+                        text: ibas.i18n.prop("sys_shell_confirm"),
+                        press(): void {
+                            view.confirm();
+                        }
+                    }),
+                    new sap.m.Button("", {
+                        text: ibas.i18n.prop("sys_shell_exit"),
+                        press(): void {
+                            if (view.closeEvent instanceof Function) {
+                                view.closeEvent.apply(view.application);
+                            }
+                        }
+                    })]
             });
         }
         // 添加关闭事件
@@ -824,7 +838,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         }
     }
     /** 地址栏哈希值变化 */
-    onHashChange(event: HashChangeEvent): void {
+    onHashChanged(event: HashChangeEvent): void {
         if (ibas.objects.isNull(event) || event.newURL.indexOf(ibas.URL_HASH_SIGN_VIEWS) < 0) {
             return;
         }
@@ -834,7 +848,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         for (let view of this.viewQueue.keys()) {
             if (view.id === viewId) {
                 // 通知视图事件
-                view.onHashChange(event);
+                view.onHashChanged(event);
                 return;
             }
         }
@@ -842,7 +856,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         for (let view of this.barViewQueue.keys()) {
             if (view.id === viewId) {
                 // 通知视图事件
-                view.onHashChange(event);
+                view.onHashChanged(event);
                 return;
             }
         }

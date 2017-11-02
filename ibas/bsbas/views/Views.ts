@@ -6,7 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { ICriteria,objects } from "../../bobas/index";
+import { ICriteria, objects } from "../../bobas/index";
 import { View, IUrlView, IView, IBarView, } from "../core/index";
 import {
     IBOView, IBOListView, IBOQueryView, IBOChooseView,
@@ -29,8 +29,10 @@ export abstract class BOView extends View implements IBOView {
 }
 /** 业务对象查询视图 */
 export abstract class BODialogView extends BOView {
-    /** 绘制工具条 */
-    abstract darwBars(): any;
+    /** 确认 */
+    confirm(): void {
+        // 确认方法，可重载
+    }
 }
 /** 业务对象查询视图 */
 export abstract class BOQueryView extends BOView implements IBOQueryView {
