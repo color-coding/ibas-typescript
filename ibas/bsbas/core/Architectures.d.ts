@@ -79,7 +79,7 @@ export interface IView {
     /** 键盘按钮按下 */
     onKeyDown(event: KeyboardEvent): void;
     /** 地址栏哈希值变化 */
-    onHashChange(event: HashChangeEvent): void;
+    onHashChanged(event: HashChangeEvent): void;
 }
 /**
  * 应用-视图

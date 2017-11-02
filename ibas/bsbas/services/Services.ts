@@ -123,7 +123,7 @@ export class ServicesManager {
         let that: this = this;
         hashEventManager.registerListener({
             hashSign: URL_HASH_SIGN_SERVICES,
-            onHashChange: (event: any): void => {
+            onHashChanged: (event: any): void => {
                 try {
                     let url: string = event.newURL.substring(
                         event.newURL.indexOf(URL_HASH_SIGN_SERVICES) + URL_HASH_SIGN_SERVICES.length);

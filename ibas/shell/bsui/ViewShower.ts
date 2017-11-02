@@ -40,7 +40,7 @@ export default class ViewShowerDefault implements ibas.IViewShower {
         // 哈希值变化
         ibas.hashEventManager.registerListener({
             hashSign: ibas.URL_HASH_SIGN_VIEWS,
-            onHashChange: (event: HashChangeEvent): void => {
+            onHashChanged: (event: HashChangeEvent): void => {
                 if (!ibas.objects.isNull(that.busyDialog)) {
                     return;
                 }
@@ -48,7 +48,7 @@ export default class ViewShowerDefault implements ibas.IViewShower {
                     return;
                 }
                 if (that.currentView.isDisplayed) {
-                    that.currentView.onHashChange(event);
+                    that.currentView.onHashChanged(event);
                 }
             }
         });
