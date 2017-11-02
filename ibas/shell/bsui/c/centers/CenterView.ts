@@ -563,22 +563,28 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         } else if (!ibas.objects.isNull(view.id)) {
             title = view.id;
         }
-        let that: this = this;
-        let dialog: sap.m.Dialog = new sap.m.Dialog("", {
-            title: title,
-            type: sap.m.DialogType.Standard,
-            state: sap.ui.core.ValueState.None,
-            // resizable: true,
-            // draggable: true,
-            stretchOnPhone: true,
-            horizontalScrolling: true,
-            verticalScrolling: true,
-            content: [view.darw()],
-            afterClose: function (): void {
-                // 设置视图未显示
-                view.isDisplayed = false;
-            },
-            buttons: [view.darwBars()]
+        let form: any = view.darw();
+        let dialog: sap.m.Dialog = null;
+        if (form instanceof sap.m.Dialog) {
+            dialog = form;
+        } else {
+            dialog = new sap.m.Dialog("", {
+                title: title,
+                type: sap.m.DialogType.Standard,
+                state: sap.ui.core.ValueState.None,
+                // resizable: true,
+                // draggable: true,
+                stretchOnPhone: true,
+                horizontalScrolling: true,
+                verticalScrolling: true,
+                content: [view.darw()],
+                buttons: [view.darwBars()]
+            });
+        }
+        // 添加关闭事件
+        dialog.attachAfterClose(null, function (): void {
+            // 设置视图未显示
+            view.isDisplayed = false;
         });
         // 设置视图紧凑
         if (ibas.config.get(CONFIG_ITEM_COMPACT_SCREEN, false)) {
@@ -615,15 +621,22 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             form.openBy(view.darwBar());
         } else {
             // 弹出层
-            let popover: sap.m.Popover = new sap.m.Popover("", {
-                showHeader: false,
-                placement: sap.m.PlacementType.Bottom,
-                afterClose(event: any): void {
-                    // 设置视图未显示
-                    view.isDisplayed = false;
-                    that.barViewQueue.delete(view);
-                },
-                content: [form]
+            let popover: sap.m.ResponsivePopover;
+            if (form instanceof sap.m.ResponsivePopover) {
+                popover = form;
+            } else {
+                popover = new sap.m.ResponsivePopover("", {
+                    showHeader: false,
+                    placement: sap.m.PlacementType.Bottom,
+                    content: [form]
+                });
+            }
+            // 添加关闭事件
+            popover.attachAfterClose(null, function (): void {
+                // 设置视图未显示
+                view.isDisplayed = false;
+                that.barViewQueue.delete(view);
+                popover.destroy(false);
             });
             // 设置视图紧凑
             if (ibas.config.get(CONFIG_ITEM_COMPACT_SCREEN, false)) {
@@ -631,7 +644,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             } else {
                 popover.addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
             }
-            popover.openBy(view.darwBar(), true);
+            popover.openBy(view.darwBar());
         }
         view.id = form.getId();
         // 记录视图到列表
