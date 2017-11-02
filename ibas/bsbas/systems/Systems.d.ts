@@ -204,7 +204,7 @@ export interface TokenConnectCaller extends ConnectCaller {
 /**
  * 用户相关调用者
  */
-export interface UserMethodsCaller<P> extends MethodCaller {
+export interface UserMethodCaller<P> extends MethodCaller {
 	/** 用户 */
 	user: string;
 	/** 平台 */
@@ -218,7 +218,7 @@ export interface UserMethodsCaller<P> extends MethodCaller {
 /**
  * 用户查询调用者
  */
-export interface UserQueriesCaller extends UserMethodsCaller<IUserQuery> {
+export interface UserQueriesCaller extends UserMethodCaller<IUserQuery> {
 	/** 查询标识 */
 	queryId: string;
 }
@@ -253,13 +253,13 @@ export interface IBORepositorySystem {
 	 * 查询用户模块
 	 * @param caller 调用者
 	 */
-	fetchUserModules(caller: UserMethodsCaller<IUserModule>): void;
+	fetchUserModules(caller: UserMethodCaller<IUserModule>): void;
 
 	/**
 	 * 查询用户权限
 	 * @param caller 调用者
 	 */
-	fetchUserPrivileges(caller: UserMethodsCaller<IUserPrivilege>): void;
+	fetchUserPrivileges(caller: UserMethodCaller<IUserPrivilege>): void;
 
 	/**
 	 * 查询用户查询
