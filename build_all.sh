@@ -30,7 +30,7 @@ OPTIONS=$2
 COMMOND=tsc
 
 # 遍历当前目录存在tsconfig.json则执行tsc
-for folder in `find ${WORK_FOLDER} -type f -name tsconfig.json`
+for folder in `find -L ${WORK_FOLDER} -type f -name tsconfig.json`
 do
   folder=${folder%\/*}
   echo --开始编译：${folder}
