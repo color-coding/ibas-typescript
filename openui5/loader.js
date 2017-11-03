@@ -82,6 +82,25 @@
                 if (!this.readyState || 'loaded' === this.readyState || 'complete' === this.readyState) {
                     // openui5初始化完成，
                     sap.ui.getCore().attachInit(callBack);
+					// ui 触发错误验证
+                    sap.ui.getCore().attachValidationError('', (oEvent) => {
+                        let control = oEvent.getParameter('element')
+                        let message = oEvent.getParameter('message')
+                        if (control && control.setValueState) {
+                            control.setValueState('Error')
+                            if (message) {
+                                control.setValueStateText(message)
+                            }
+                            control.focus()
+                        }
+                    })
+                    // ui 触发正确验证
+                    sap.ui.getCore().attachValidationSuccess('', (oEvent) => {
+                        let control = oEvent.getParameter('element')
+                        if (control && control.setValueState) {
+                            control.setValueState('None')
+                        }
+                    })
                 }
             }
             document.getElementsByTagName('head')[0].appendChild(domScript);
