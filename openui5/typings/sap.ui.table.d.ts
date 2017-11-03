@@ -37,6 +37,7 @@ declare namespace sap {
                 getRows(): sap.ui.table.Row[];
                 addColumn(oColumn: Column): sap.ui.table.Table;
                 setRowActionCount(iVisibleRowCount?: number): void;
+                setRowActionTemplate(oRowActionTemplate): sap.ui.table.Table
             }
             export class Column extends sap.ui.core.Control {
                 constructor(mSettings?: any);
