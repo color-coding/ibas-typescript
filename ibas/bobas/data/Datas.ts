@@ -376,21 +376,21 @@ export module dates {
      */
     export function difference(type: emDifferenceType, minuend: Date, value: Date): number {
         if (!objects.isNull(minuend) && !objects.isNull(value)) {
-            let diff = minuend.getTime() - value.getTime();
+            let diff: number = minuend.getTime() - value.getTime();
+            diff = Math.abs(diff / 1000);
             if (type === emDifferenceType.SECOND) {
-                diff = Math.abs(diff / 1000);
                 return diff;
             }
+            diff = Math.abs(diff / 60);
             if (type === emDifferenceType.MINUTE) {
-                diff = Math.abs(diff / 60);
                 return diff;
             }
+            diff = Math.abs(diff / 60);
             if (type === emDifferenceType.HOUR) {
-                diff = Math.abs(diff / 60);
                 return diff;
             }
+            diff = Math.abs(diff / 24);
             if (type === emDifferenceType.DAY) {
-                diff = Math.abs(diff / 24);
                 return diff;
             }
         }
