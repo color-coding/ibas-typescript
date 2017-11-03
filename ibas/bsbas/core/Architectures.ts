@@ -166,7 +166,7 @@ export abstract class View implements IView {
         logger.log(emMessageLevel.DEBUG, "view: key [{0}] down at [{1}].", event.keyCode, this.id);
     }
     /** 地址栏哈希值变化 */
-    onHashChange(event: HashChangeEvent): void {
+    onHashChanged(event: HashChangeEvent): void {
         // 可重载
         logger.log(emMessageLevel.DEBUG, "view: hash change to [{0}] at [{1}].", event.newURL, this.id);
     }

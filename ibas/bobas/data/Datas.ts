@@ -361,6 +361,41 @@ export module dates {
         format = format.replace(DATA_PART_SECOND, strings.fill(second, DATA_PART_SECOND.length, "0"));
         return format;
     }
+
+    export enum emDifferenceType {
+        DAY,
+        HOUR,
+        MINUTE,
+        SECOND
+    }
+    /**
+     * 计算时间差
+     * @param type 计算类型
+     * @param minuend 被减数
+     * @param value 减数
+     */
+    export function difference(type: emDifferenceType, minuend: Date, value: Date): number {
+        if (!objects.isNull(minuend) && !objects.isNull(value)) {
+            let diff: number = minuend.getTime() - value.getTime();
+            diff = Math.abs(diff / 1000);
+            if (type === emDifferenceType.SECOND) {
+                return diff;
+            }
+            diff = Math.abs(diff / 60);
+            if (type === emDifferenceType.MINUTE) {
+                return diff;
+            }
+            diff = Math.abs(diff / 60);
+            if (type === emDifferenceType.HOUR) {
+                return diff;
+            }
+            diff = Math.abs(diff / 24);
+            if (type === emDifferenceType.DAY) {
+                return diff;
+            }
+        }
+        return NaN;
+    }
 }
 /**
  * 数字

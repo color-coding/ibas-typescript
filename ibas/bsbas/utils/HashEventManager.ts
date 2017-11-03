@@ -50,7 +50,7 @@ export class HashEventManager {
             if (event.newURL.indexOf(listener.hashSign) < 0) {
                 continue;
             }
-            listener.onHashChange(event);
+            listener.onHashChanged(event);
         }
     }
     /**
@@ -68,7 +68,7 @@ export class HashEventManager {
     /**
      * 替换当前地址栏hash值,但是不增加历史记录
      * @param newHash 新的Hash值
-     * @param isTriggerEvent 是否触发onHashChange事件,默认为true
+     * @param isTriggerEvent 是否触发onHashChanged事件,默认为true
      */
     replaceHash(newHash: string, isTriggerEvent: boolean = true): void {
         window.history.replaceState(null, null, newHash);

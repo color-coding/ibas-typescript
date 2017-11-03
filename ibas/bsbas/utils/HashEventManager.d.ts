@@ -11,7 +11,7 @@
 export interface IHashChangedListener {
     hashSign: string;
     /** Hash改变，即地址栏#数据改变 */
-    onHashChange(event: HashChangeEvent)
+    onHashChanged(event: HashChangeEvent)
 }
 /**
  * 哈希代表的信息
