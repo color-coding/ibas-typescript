@@ -12,6 +12,10 @@
 
 export * from "./Enums";
 
+/** 系统用户-标记 */
+export const SYSTEM_USER_ID: number = -9;
+/** 位置用户-标记 */
+export const UNKNOWN_USER_ID: number = -1;
 
 /** 配置项目-格式-日期 */
 export const CONFIG_ITEM_FORMAT_DATE: string = "format|Date";

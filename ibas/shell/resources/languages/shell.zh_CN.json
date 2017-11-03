@@ -49,6 +49,8 @@
     "sys_shell_reset": "重置",
     "sys_shell_confirm": "确认",
     "sys_shell_jump": "跳转",
+    "sys_shell_user_system": "系统用户",
+    "sys_shell_user_unknown": "未知用户",
     "sys_shell_url_new_window_opened": "网址已在新窗口打开",
     "sys_shell_welcome_page": "{0}，欢迎来到【{1}】",
     "sys_shell_welcome_image": "sap-icon://hello-world",
