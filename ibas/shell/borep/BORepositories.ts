@@ -69,7 +69,7 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements s
 	 * 查询用户模块
 	 * @param caller 用户检索调用者
 	 */
-    fetchUserModules(caller: sys.UserMethodsCaller<sys.IUserModule>): void {
+    fetchUserModules(caller: sys.UserMethodCaller<sys.IUserModule>): void {
         let remoteRepository: ibas.IRemoteRepository = this.createRemoteRepository();
         if (ibas.objects.isNull(remoteRepository)) {
             throw new Error(ibas.i18n.prop("sys_invalid_parameter", "remoteRepository"));
@@ -84,7 +84,7 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements s
 	 * 查询用户角色权限
 	 * @param caller 用户检索调用者
 	 */
-    fetchUserPrivileges(caller: sys.UserMethodsCaller<sys.IUserPrivilege>): void {
+    fetchUserPrivileges(caller: sys.UserMethodCaller<sys.IUserPrivilege>): void {
         let remoteRepository: ibas.IRemoteRepository = this.createRemoteRepository();
         if (ibas.objects.isNull(remoteRepository)) {
             throw new Error(ibas.i18n.prop("sys_invalid_parameter", "remoteRepository"));
@@ -204,7 +204,7 @@ export class BORepositoryShellOffline extends BORepositoryShell {
 	 * 查询用户模块
 	 * @param caller 用户检索者
 	 */
-    fetchUserModules(caller: sys.UserMethodsCaller<sys.IUserModule>): void {
+    fetchUserModules(caller: sys.UserMethodCaller<sys.IUserModule>): void {
         let fetchCaller: ibas.FetchCaller<bo.UserModule> = {
             criteria: null,
             onCompleted(opRslt: ibas.IOperationResult<bo.UserModule>): void {
@@ -218,7 +218,7 @@ export class BORepositoryShellOffline extends BORepositoryShell {
 	 * 查询用户角色权限
 	 * @param caller 用户检索者
 	 */
-    fetchUserPrivileges(caller: sys.UserMethodsCaller<sys.IUserPrivilege>): void {
+    fetchUserPrivileges(caller: sys.UserMethodCaller<sys.IUserPrivilege>): void {
         let fetchCaller: ibas.FetchCaller<bo.UserPrivilege> = {
             criteria: null,
             onCompleted(opRslt: ibas.IOperationResult<bo.UserPrivilege>): void {

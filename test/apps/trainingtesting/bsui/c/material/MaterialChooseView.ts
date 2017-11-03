@@ -19,39 +19,6 @@ export class MaterialChooseView extends ibas.BOChooseView implements IMaterialCh
     get queryTarget(): any {
         return bo.Material;
     }
-    /** 绘制工具条 */
-    darwBars(): any {
-        let that: this = this;
-        return [
-            new sap.m.Button("", {
-                text: ibas.i18n.prop("sys_shell_data_new"),
-                type: sap.m.ButtonType.Transparent,
-                // icon: "sap-icon://create",
-                press: function (): void {
-                    that.fireViewEvents(that.newDataEvent);
-                }
-            }),
-            new sap.m.Button("", {
-                text: ibas.i18n.prop("sys_shell_data_choose"),
-                type: sap.m.ButtonType.Transparent,
-                // icon: "sap-icon://accept",
-                press: function (): void {
-                    that.fireViewEvents(that.chooseDataEvent,
-                        // 获取表格选中的对象
-                        utils.getTableSelecteds<bo.Material>(that.table)
-                    );
-                }
-            }),
-            new sap.m.Button("", {
-                text: ibas.i18n.prop("sys_shell_exit"),
-                type: sap.m.ButtonType.Transparent,
-                // icon: "sap-icon://inspect-down",
-                press: function (): void {
-                    that.fireViewEvents(that.closeEvent);
-                }
-            }),
-        ];
-    }
     /** 绘制视图 */
     darw(): any {
         let that: this = this;
@@ -101,7 +68,44 @@ export class MaterialChooseView extends ibas.BOChooseView implements IMaterialCh
                 that.fireViewEvents(that.fetchDataEvent, criteria);
             }
         });
-        return this.table;
+        return new sap.m.Dialog("", {
+            title: this.title,
+            type: sap.m.DialogType.Standard,
+            state: sap.ui.core.ValueState.None,
+            stretchOnPhone: true,
+            horizontalScrolling: true,
+            verticalScrolling: true,
+            content: [this.table],
+            buttons: [
+                new sap.m.Button("", {
+                    text: ibas.i18n.prop("sys_shell_data_new"),
+                    type: sap.m.ButtonType.Transparent,
+                    // icon: "sap-icon://create",
+                    press: function (): void {
+                        that.fireViewEvents(that.newDataEvent);
+                    }
+                }),
+                new sap.m.Button("", {
+                    text: ibas.i18n.prop("sys_shell_data_choose"),
+                    type: sap.m.ButtonType.Transparent,
+                    // icon: "sap-icon://accept",
+                    press: function (): void {
+                        that.fireViewEvents(that.chooseDataEvent,
+                            // 获取表格选中的对象
+                            utils.getTableSelecteds<bo.Material>(that.table)
+                        );
+                    }
+                }),
+                new sap.m.Button("", {
+                    text: ibas.i18n.prop("sys_shell_exit"),
+                    type: sap.m.ButtonType.Transparent,
+                    // icon: "sap-icon://inspect-down",
+                    press: function (): void {
+                        that.fireViewEvents(that.closeEvent);
+                    }
+                }),
+            ]
+        });
     }
     private table: sap.ui.table.Table;
     /** 显示数据 */
