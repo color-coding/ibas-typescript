@@ -8,7 +8,7 @@
 /// <reference path="./index.d.ts" />
 /// <reference path="../../ibas/index.ts" />
 import * as ibas from "ibas/index";
-import { dataTypes } from "./ibas.datatypes";
+import * as dataTypes from "./ibas.datatypes";
 export * from "./ibas.datatypes";
 export namespace utils {
     /** 配置项目-列表表格可视行数 */
@@ -417,71 +417,77 @@ export namespace utils {
         }
     }
     /**
-     * 调用容器中所有控件验证
-     * @param control 控件实例
+     * 验证控件绑定属性是否合法
+     * @param controls
      */
-    export function fireCurrentContainerValidation(control: any): dataTypes.ValidateResult {
-        let validateResult: dataTypes.ValidateResult = new dataTypes.ValidateResult();
-        validateResult.status = true;
-        /** 遍历Contents子集 */
-        function TraversingContents(ctrl: any): void {
-            for (let content of ctrl.getContent().reverse()) {
-                if (!content.getContent || !(content.getContent instanceof Function)) {
-                    start(content);
-                } else {
-                    TraversingContents(content);
+    export function validateControlBoundProperty(control: sap.ui.core.Control[]): dataTypes.ValidateResult;
+    /**
+     * 验证控件绑定属性是否合法
+     * @param control
+     */
+    export function validateControlBoundProperty(controls: sap.ui.core.Control): dataTypes.ValidateResult;
+    /**
+     * 验证控件绑定属性是否合法
+     * @param table
+     */
+    export function validateControlBoundProperty(table: sap.ui.table.Table): dataTypes.ValidateResult;
+    /**
+     * 验证控件绑定属性是否合法
+     * @param wizard
+     */
+    export function validateControlBoundProperty(wizard: sap.m.Wizard): dataTypes.ValidateResult;
+    /**
+     * 验证控件绑定属性是否合法
+     */
+    export function validateControlBoundProperty(): dataTypes.ValidateResult {
+        function traverseContents(control: sap.ui.core.Control): sap.ui.core.Control[];
+        function traverseContents(control: sap.ui.core.Control): sap.ui.core.Control;
+        /** 遍历展开控件内容 */
+        function traverseContents(): any {
+            let control: any = arguments[0];
+            let controls: sap.ui.core.Control[] = [];
+            if (ibas.objects.isNull(control)) {
+                return null;
+            }
+            if (control.getContent instanceof Function) {
+                for (let content of control.getContent().reverse()) {
+                    controls.push(content);
                 }
-            }
-        }
-        /** 遍历ui.Table */
-        function TraversingTable(table: sap.ui.table.Table): void {
-            if (!table) {
-                return;
-            }
-            for (let row of table.getRows().reverse()) {
-                for (let cell of row.getCells()) {
-                    fireControlValidation(cell);
+            } else if (control instanceof sap.ui.table.Table) {
+                for (let row of control.getRows().reverse()) {
+                    for (let cell of row.getCells()) {
+                        controls.push(cell);
+                    }
                 }
-            }
-        }
-        /** 遍历steps子集 */
-        function TraversingSteps(ctrl: any): void {
-            for (let step of ctrl.getSteps().reverse()) {
-                start(step);
-            }
-        }
-        /** 调用控件验证 */
-        function fireControlValidation(ctrl: any): void {
-            let bindingInfoType: dataTypes.DataType = getControlBindingInfoType(ctrl);
-            if (!!bindingInfoType) {
-                let validationValue: any = getValidationValue(ctrl);
-                let vResult: dataTypes.ValidateResult = bindingInfoType.callValidate(validationValue, ctrl);
-                if (!vResult.status) {
-                    validateResult.message = vResult.message;
-                    validateResult.status = vResult.status;
+            } else if (control instanceof sap.m.Wizard) {
+                for (let step of control.getSteps().reverse()) {
+                    controls.push(step);
                 }
+            } else {
+                return control;
             }
+            return controls;
         }
         /** 获取控件验证值 */
-        function getValidationValue(ctrl: any): any {
-            if (ctrl instanceof sap.m.Input || ctrl instanceof sap.m.DatePicker) {
-                return ctrl.getValue();
+        function getValidationValue(control: sap.ui.core.Control): any {
+            if (control instanceof sap.m.Input || control instanceof sap.m.DatePicker) {
+                return control.getValue();
             }
-            if (ctrl instanceof sap.m.Select) {
-                return ctrl.getSelectedKey();
+            if (control instanceof sap.m.Select) {
+                return control.getSelectedKey();
             }
-            if (ctrl instanceof sap.m.DateRangeSelection || ctrl instanceof sap.m.TimePicker) {
-                return ctrl.getDateValue();
+            if (control instanceof sap.m.DateRangeSelection || control instanceof sap.m.TimePicker) {
+                return control.getDateValue();
             }
             return null;
         }
-        /** 获取控件验证类型 */
-        function getControlBindingInfoType(ctrl: any): dataTypes.DataType {
+        /** 检查控件验证类型 */
+        function checkControlBindingInfoType(control: sap.ui.core.Control): dataTypes.DataType {
             let bindingInfo: any = null;
             /** 获取值类型,根据不同控件的绑定值添加 */
             let bindingTypes: Array<string> = ["value", "dateValue", "secondDateValue", "selectedKey"];
             for (let type of bindingTypes) {
-                let info: any = ctrl.getBindingInfo(type);
+                let info: any = control.getBindingInfo(type);
                 if (!!info && !!info.type && info.type.callValidate instanceof Function) {
                     bindingInfo = info;
                     break;
@@ -489,19 +495,39 @@ export namespace utils {
             }
             return !!bindingInfo ? bindingInfo.type : null;
         }
-        /** 开始容器验证 */
-        function start(ctrl: any): void {
-            if (ctrl.getContent instanceof Function) {
-                TraversingContents(ctrl);
-            } else if (ctrl instanceof sap.ui.table.Table) {
-                TraversingTable(ctrl);
-            } else if (ctrl instanceof sap.m.Wizard) {
-                TraversingSteps(ctrl);
+        let validateResult: dataTypes.ValidateResult = new dataTypes.ValidateResult();
+        validateResult.status = true;
+        let argument: any = arguments[0];
+        let controls: sap.ui.core.Control[] = [];
+        if (ibas.objects.isNull(argument)) {
+            return validateResult;
+        }
+        if (argument instanceof Array) {
+            controls = argument;
+        } else {
+            controls = [argument];
+        }
+        for (let control of controls) {
+            let content: any = traverseContents(control);
+            if (content instanceof Array) {
+                let stepResult: dataTypes.ValidateResult = validateControlBoundProperty(content);
+                if (!stepResult.status) {
+                    validateResult.message = stepResult.message;
+                    validateResult.status = stepResult.status;
+                }
             } else {
-                fireControlValidation(ctrl);
+                let bindingInfoType: dataTypes.DataType = checkControlBindingInfoType(content);
+                if (!!bindingInfoType) {
+                    let validationValue: any = getValidationValue(content);
+                    let vResult: dataTypes.ValidateResult = bindingInfoType.callValidate(validationValue, control);
+                    if (!vResult.status) {
+                        validateResult.message = vResult.message;
+                        validateResult.status = vResult.status;
+                    }
+                }
             }
         }
-        start(control);
         return validateResult;
     }
+
 }
