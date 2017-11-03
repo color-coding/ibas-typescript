@@ -10,7 +10,7 @@ import {
     objects, ICriteria, Criteria, ICondition, i18n, IOperationResult, criterias,
     config, ISort, emSortType, emConditionOperation, ArrayList, BarApplication,
     emMessageType, variablesManager, VariablesManager, BODocument, BOMasterData, BOSimple,
-    BODocumentLine, BOMasterDataLine, BOSimpleLine, VARIABLE_NAME_USER_CODE,emConditionRelationship,
+    BODocumentLine, BOMasterDataLine, BOSimpleLine, VARIABLE_NAME_USER_CODE, emConditionRelationship,
     BO_PROPERTY_NAME_CODE, BO_PROPERTY_NAME_DOCENTRY, BO_PROPERTY_NAME_LINEID, BO_PROPERTY_NAME_OBJECTKEY
 } from "ibas/index";
 import { IQueryPanelView, IQueryPanel, IUseQueryPanel, IUserQuery, IBORepositorySystem, IBOInfo } from "./Systems.d";
@@ -49,26 +49,37 @@ export abstract class QueryPanel<T extends IQueryPanelView> extends BarApplicati
                 // 回掉方法
             };
         }
-        let boRepository: IBORepositorySystem = Factories.systemsFactory.createRepository();
-        let that: this = this;
-        boRepository.fetchUserQueries({
-            user: variablesManager.getValue(VARIABLE_NAME_USER_CODE),
-            queryId: this.listener.queryId,
-            onCompleted: function (opRslt: IOperationResult<IUserQuery>): void {
-                try {
-                    if (opRslt.resultCode !== 0) {
-                        throw new Error(opRslt.message);
+        if (!objects.isNull(this.listener) && !objects.isNull(this.listener.usingCriteria)) {
+            this.queries = new ArrayList<IUserQuery>();
+            this.queries.add({
+                id: this.listener.queryId,
+                name: i18n.prop("sys_query_exclusive"),
+                criteria: this.listener.usingCriteria,
+                order: 0,
+            });
+            this.init(callBack);
+        } else {
+            let that: this = this;
+            let boRepository: IBORepositorySystem = Factories.systemsFactory.createRepository();
+            boRepository.fetchUserQueries({
+                user: variablesManager.getValue(VARIABLE_NAME_USER_CODE),
+                queryId: this.listener.queryId,
+                onCompleted: function (opRslt: IOperationResult<IUserQuery>): void {
+                    try {
+                        if (opRslt.resultCode !== 0) {
+                            throw new Error(opRslt.message);
+                        }
+                        that.queries = new ArrayList<IUserQuery>();
+                        for (let item of opRslt.resultObjects) {
+                            that.queries.add(item);
+                        }
+                        that.init(callBack);
+                    } catch (error) {
+                        that.messages(error);
                     }
-                    that.queries = new ArrayList<IUserQuery>();
-                    for (let item of opRslt.resultObjects) {
-                        that.queries.add(item);
-                    }
-                    that.init(callBack);
-                } catch (error) {
-                    that.messages(error);
                 }
-            }
-        });
+            });
+        }
     }
     /** 初始化 */
     protected abstract init(callBack: Function): void;

@@ -40,10 +40,17 @@ export abstract class BOQueryView extends BOView implements IBOQueryView {
     get queryId(): string {
         return this.application.id;
     }
+    /** 使用的查询 */
+    get usingCriteria(): ICriteria {
+        return this.lastCriteria;
+    }
+    /** 上一次使用的查询 */
+    protected lastCriteria: ICriteria;
     /** 查询数据事件，参数：查询条件 ICriteria */
     fetchDataEvent: Function;
     /** 查询数据 */
     query(criteria: ICriteria): void {
+        this.lastCriteria = criteria;
         this.fireViewEvents(this.fetchDataEvent, criteria);
     }
 }
@@ -53,10 +60,17 @@ export abstract class BOQueryDialogView extends BODialogView implements IBOQuery
     get queryId(): string {
         return this.application.id;
     }
+    /** 使用的查询 */
+    get usingCriteria(): ICriteria {
+        return this.lastCriteria;
+    }
+    /** 上一次使用的查询 */
+    protected lastCriteria: ICriteria;
     /** 查询数据事件，参数：查询条件 ICriteria */
     fetchDataEvent: Function;
     /** 查询数据 */
     query(criteria: ICriteria): void {
+        this.lastCriteria = criteria;
         this.fireViewEvents(this.fetchDataEvent, criteria);
     }
 }

@@ -187,15 +187,16 @@ export class CustomerListView extends ibas.BOListView implements ICustomerListVi
         }
         this.table.setBusy(false);
     }
-    private lastCriteria: ibas.ICriteria;
+
     /** 记录上次查询条件，表格滚动时自动触发 */
     query(criteria: ibas.ICriteria): void {
         super.query(criteria);
-        this.lastCriteria = criteria;
         // 清除历史数据
-        this.table.setBusy(true);
-        this.table.setFirstVisibleRow(0);
-        this.table.setModel(null);
+        if (this.isDisplayed) {
+            this.table.setBusy(true);
+            this.table.setFirstVisibleRow(0);
+            this.table.setModel(null);
+        }
     }
     /** 获取选择的数据 */
     getSelecteds(): bo.Customer[] {

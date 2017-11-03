@@ -99,6 +99,8 @@ export interface IUseQueryPanel {
 	readonly queryId: string;
 	/** 查询目标 */
 	readonly queryTarget?: any;
+	/** 使用的查询 */
+	readonly usingCriteria?: ICriteria;
 	/** 查询数据 */
 	query(criteria: ICriteria): void;
 }

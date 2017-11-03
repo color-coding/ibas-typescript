@@ -33,6 +33,16 @@ export class SalesOrderChooseApp extends ibas.BOChooseService<ISalesOrderChooseV
         super.registerView();
         // 其他事件
     }
+    /** 启动应用 */
+    run(...args: any[]): void {
+        let criteria: ibas.ICriteria = arguments[0];
+        if (ibas.objects.instanceOf(criteria, ibas.Criteria)) {
+            // 传入了查询，则使用
+            this.view.query(criteria);
+        } else {
+            super.run();
+        }
+    }
     /** 视图显示后 */
     protected viewShowed(): void {
         // 视图加载完成

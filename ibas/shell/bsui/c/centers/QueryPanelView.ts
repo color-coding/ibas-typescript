@@ -127,36 +127,6 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
             this.table.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
         }
     }
-    /** 绘制工具条 */
-    darwBars(): any {
-        let that: this = this;
-        return [
-            new sap.m.Button("", {
-                text: ibas.i18n.prop("sys_shell_data_delete"),
-                type: sap.m.ButtonType.Transparent,
-                // icon: "sap-icon://create",
-                press: function (): void {
-                    that.fireViewEvents(that.deleteQueryEvent);
-                }
-            }),
-            new sap.m.Button("", {
-                text: ibas.i18n.prop("sys_shell_data_save"),
-                type: sap.m.ButtonType.Transparent,
-                // icon: "sap-icon://accept",
-                press: function (): void {
-                    that.fireViewEvents(that.saveQueryEvent);
-                }
-            }),
-            new sap.m.Button("", {
-                text: ibas.i18n.prop("sys_shell_exit"),
-                type: sap.m.ButtonType.Transparent,
-                // icon: "sap-icon://inspect-down",
-                press: function (): void {
-                    that.fireViewEvents(that.closeEvent);
-                }
-            }),
-        ];
-    }
     protected getCharListItem(char: string): sap.ui.core.ListItem[] {
         // 获取重复的字符
         let count: number = 4;
@@ -323,7 +293,40 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
                 })
             ]
         });
-        this.id = this.form.getId();
-        return this.form;
+        return new sap.m.Dialog("", {
+            title: this.title,
+            type: sap.m.DialogType.Standard,
+            state: sap.ui.core.ValueState.None,
+            stretchOnPhone: true,
+            horizontalScrolling: true,
+            verticalScrolling: true,
+            content: [this.form],
+            buttons: [
+                new sap.m.Button("", {
+                    text: ibas.i18n.prop("sys_shell_data_delete"),
+                    type: sap.m.ButtonType.Transparent,
+                    // icon: "sap-icon://create",
+                    press: function (): void {
+                        that.fireViewEvents(that.deleteQueryEvent);
+                    }
+                }),
+                new sap.m.Button("", {
+                    text: ibas.i18n.prop("sys_shell_data_save"),
+                    type: sap.m.ButtonType.Transparent,
+                    // icon: "sap-icon://accept",
+                    press: function (): void {
+                        that.fireViewEvents(that.saveQueryEvent);
+                    }
+                }),
+                new sap.m.Button("", {
+                    text: ibas.i18n.prop("sys_shell_exit"),
+                    type: sap.m.ButtonType.Transparent,
+                    // icon: "sap-icon://inspect-down",
+                    press: function (): void {
+                        that.fireViewEvents(that.closeEvent);
+                    }
+                }),
+            ]
+        });
     }
 }
