@@ -9,7 +9,6 @@
 /// <reference path="../../ibas/index.ts" />
 import * as ibas from "ibas/index";
 import * as dataTypes from "./ibas.datatypes";
-export * from "./ibas.datatypes";
 export namespace utils {
     /** 配置项目-列表表格可视行数 */
     export const CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT: string = "tableRow|List";
