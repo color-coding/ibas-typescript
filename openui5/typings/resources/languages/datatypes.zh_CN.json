@@ -7,6 +7,7 @@
     "data_types_msg_numeric_error": "请输入数字",
     "data_types_msg_numeric_minvalue_error": "{0} 必须大于 {1}",
     "data_types_msg_numeric_maxvalue_error": "{0} 必须大于 {1}",
+    "data_types_msg_decimal_error": "请输入数字",
     "data_types_msg_decimal_decimalPlaces_error": "{0} 小数位数不能大于 {1} 位",
     "data_types_msg_datetime_error": "{0} 日期格式不正确",
     "data_types_msg_time_error": "{0} 时间格式不正确",

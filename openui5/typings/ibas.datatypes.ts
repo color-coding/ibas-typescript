@@ -173,6 +173,11 @@ export class Decimal extends DataType {
     }
     callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
         let result: ValidateResult = super.callValidate(oValue, control);
+        if (isNaN(oValue)) {
+            result.status = false;
+            result.message = ibas.i18n.prop("data_types_msg_decimal_error");
+            this.fireValidationError(control, result.message);
+        }
         if (!validation.isDecimal(oValue, this.decimalPlaces)) {
             result.status = false;
             result.message = ibas.i18n.prop("data_types_msg_decimal_decimalPlaces_error", this.description,
