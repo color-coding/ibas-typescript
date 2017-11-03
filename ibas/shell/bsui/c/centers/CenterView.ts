@@ -838,6 +838,10 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             }
             this.showView(lastView);
         }
+        if (this.mainPage.getMainContents().length === 0) {
+            // 页面没有内容时，显示欢迎
+            this.mainPage.addMainContent(this.drawWelcomePage());
+        }
     }
     /** 地址栏哈希值变化 */
     onHashChanged(event: HashChangeEvent): void {
