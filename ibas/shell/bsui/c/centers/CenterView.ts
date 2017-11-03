@@ -631,6 +631,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                 // 设置视图未显示
                 view.isDisplayed = false;
                 that.barViewQueue.delete(view);
+                that.destroyView(view);
             });
             form.openBy(view.darwBar());
         } else {
@@ -828,6 +829,8 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                 showLast = true;
             }
         }
+        // 清除哈希值
+        window.history.pushState(null, null, "#");
         // 显示最后视图
         if (showLast && this.viewQueue.size > 0) {
             let lastView: ibas.IView;
