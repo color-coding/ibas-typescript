@@ -6,25 +6,24 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-; (function (root, factory) {
+;
+(function(root, factory) {
     if (typeof exports === "object") {
         // CommonJS
         module.exports = exports = factory();
-    }
-    else if (typeof define === "function" && define.amd) {
+    } else if (typeof define === "function" && define.amd) {
         // AMD
         define([], factory);
-    }
-    else {
+    } else {
         // Global (browser)
         root.OpenUI5 = factory();
     }
-}(this, function () {
+}(this, function() {
     var OPENUI5_OFFICIAL_URL = "https://openui5.hana.ondemand.com/resources/sap-ui-core.js";
     // 构造
-    var OpenUI5 = function () { };
+    var OpenUI5 = function() {};
     // 加载库
-    OpenUI5.prototype.load = function () {
+    OpenUI5.prototype.load = function() {
         var root, callBack;
         if (typeof arguments[0] === "string") {
             root = arguments[0];
@@ -39,12 +38,12 @@
         }
         // 解决方法缺失
         if (typeof String.prototype.startsWith != 'function') {
-            String.prototype.startsWith = function (prefix) {
+            String.prototype.startsWith = function(prefix) {
                 return this.slice(0, prefix.length) === prefix;
             };
         }
         if (typeof String.prototype.endsWith != 'function') {
-            String.prototype.endsWith = function (suffix) {
+            String.prototype.endsWith = function(suffix) {
                 return this.indexOf(suffix, this.length - suffix.length) !== -1;
             };
         }
@@ -60,11 +59,11 @@
             $.ajax({
                 type: 'GET',
                 url: root + "./resources/sap-ui-version.json",
-                success: function () {
+                success: function() {
                     // 本地库存在，则加载本地
                     that.load(root + "./resources/sap-ui-core.js", callBack);
                 },
-                error: function () {
+                error: function() {
                     // 本地库不存在，则加载远程
                     that.load(OPENUI5_OFFICIAL_URL, callBack);
                 }
@@ -78,10 +77,29 @@
             domScript.setAttribute("data-sap-ui-theme", "sap_belize");
             domScript.setAttribute("data-sap-ui-libs", "sap.m, sap.ui.layout, sap.tnt, sap.uxap ,sap.ui.table");
             domScript.setAttribute("data-sap-ui-preload", "async"); // 异步加载预加载库
-            domScript.onload = domScript.onreadystatechange = function () {
+            domScript.onload = domScript.onreadystatechange = function() {
                 if (!this.readyState || 'loaded' === this.readyState || 'complete' === this.readyState) {
                     // openui5初始化完成，
                     sap.ui.getCore().attachInit(callBack);
+                    // ui 触发错误验证
+                    sap.ui.getCore().attachValidationError('', (oEvent) => {
+                        let control = oEvent.getParameter('element')
+                        let message = oEvent.getParameter('message')
+                        if (control && control.setValueState) {
+                            control.setValueState('Error')
+                            if (message) {
+                                control.setValueStateText(message)
+                            }
+                            control.focus()
+                        }
+                    });
+                    // ui 触发正确验证
+                    sap.ui.getCore().attachValidationSuccess('', (oEvent) => {
+                        let control = oEvent.getParameter('element')
+                        if (control && control.setValueState) {
+                            control.setValueState('None')
+                        }
+                    });
                 }
             }
             document.getElementsByTagName('head')[0].appendChild(domScript);

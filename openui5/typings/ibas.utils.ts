@@ -8,7 +8,7 @@
 /// <reference path="./index.d.ts" />
 /// <reference path="../../ibas/index.ts" />
 import * as ibas from "ibas/index";
-
+import * as dataTypes from "./ibas.datatypes";
 export namespace utils {
     /** 配置项目-列表表格可视行数 */
     export const CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT: string = "tableRow|List";
@@ -415,4 +415,118 @@ export namespace utils {
                 return sap.ui.table.SelectionMode.None;
         }
     }
+    /**
+     * 验证控件绑定属性是否合法
+     * @param controls
+     */
+    export function validateControlBoundProperty(control: sap.ui.core.Control[]): dataTypes.ValidateResult;
+    /**
+     * 验证控件绑定属性是否合法
+     * @param control
+     */
+    export function validateControlBoundProperty(controls: sap.ui.core.Control): dataTypes.ValidateResult;
+    /**
+     * 验证控件绑定属性是否合法
+     * @param table
+     */
+    export function validateControlBoundProperty(table: sap.ui.table.Table): dataTypes.ValidateResult;
+    /**
+     * 验证控件绑定属性是否合法
+     * @param wizard
+     */
+    export function validateControlBoundProperty(wizard: sap.m.Wizard): dataTypes.ValidateResult;
+    /**
+     * 验证控件绑定属性是否合法
+     */
+    export function validateControlBoundProperty(): dataTypes.ValidateResult {
+        function traverseContents(control: sap.ui.core.Control): sap.ui.core.Control[];
+        function traverseContents(control: sap.ui.core.Control): sap.ui.core.Control;
+        /** 遍历展开控件内容 */
+        function traverseContents(): any {
+            let control: any = arguments[0];
+            let controls: sap.ui.core.Control[] = [];
+            if (ibas.objects.isNull(control)) {
+                return null;
+            }
+            if (control.getContent instanceof Function) {
+                for (let content of control.getContent().reverse()) {
+                    controls.push(content);
+                }
+            } else if (control instanceof sap.ui.table.Table) {
+                for (let row of control.getRows().reverse()) {
+                    for (let cell of row.getCells()) {
+                        controls.push(cell);
+                    }
+                }
+            } else if (control instanceof sap.m.Wizard) {
+                for (let step of control.getSteps().reverse()) {
+                    controls.push(step);
+                }
+            } else {
+                return control;
+            }
+            return controls;
+        }
+        /** 获取控件验证值 */
+        function getValidationValue(control: sap.ui.core.Control): any {
+            if (control instanceof sap.m.Input || control instanceof sap.m.DatePicker) {
+                return control.getValue();
+            }
+            if (control instanceof sap.m.Select) {
+                return control.getSelectedKey();
+            }
+            if (control instanceof sap.m.DateRangeSelection || control instanceof sap.m.TimePicker) {
+                return control.getDateValue();
+            }
+            return null;
+        }
+        /** 检查控件验证类型 */
+        function checkControlBindingInfoType(control: sap.ui.core.Control): dataTypes.DataType {
+            let bindingInfo: any = null;
+            /** 获取值类型,根据不同控件的绑定值添加 */
+            let bindingTypes: Array<string> = ["value", "dateValue", "secondDateValue", "selectedKey"];
+            for (let type of bindingTypes) {
+                let info: any = control.getBindingInfo(type);
+                if (!!info && !!info.type && info.type.callValidate instanceof Function) {
+                    bindingInfo = info;
+                    break;
+                }
+            }
+            return !!bindingInfo ? bindingInfo.type : null;
+        }
+        let validateResult: dataTypes.ValidateResult = new dataTypes.ValidateResult();
+        validateResult.status = true;
+        let argument: any = arguments[0];
+        let controls: sap.ui.core.Control[] = [];
+        if (ibas.objects.isNull(argument)) {
+            return validateResult;
+        }
+        if (argument instanceof Array) {
+            controls = argument;
+        } else {
+            controls = [argument];
+        }
+        for (let control of controls) {
+            let content: any = traverseContents(control);
+            if (content instanceof Array) {
+                let stepResult: dataTypes.ValidateResult = validateControlBoundProperty(content);
+                if (!stepResult.status) {
+                    validateResult.message = stepResult.message;
+                    validateResult.status = stepResult.status;
+                }
+            } else {
+                let bindingInfoType: dataTypes.DataType = checkControlBindingInfoType(content);
+                if (!!bindingInfoType) {
+                    let validationValue: any = getValidationValue(content);
+                    let vResult: dataTypes.ValidateResult = bindingInfoType.callValidate(validationValue, control);
+                    if (!vResult.status) {
+                        validateResult.message = vResult.message;
+                        validateResult.status = vResult.status;
+                    }
+                }
+            }
+        }
+        return validateResult;
+    }
+
 }
