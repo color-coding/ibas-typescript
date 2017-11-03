@@ -8,7 +8,8 @@
 /// <reference path="./index.d.ts" />
 /// <reference path="../../ibas/index.ts" />
 import * as ibas from "ibas/index";
-
+import { dataTypes } from "./ibas.datatypes";
+export * from "./ibas.datatypes";
 export namespace utils {
     /** 配置项目-列表表格可视行数 */
     export const CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT: string = "tableRow|List";
@@ -414,5 +415,93 @@ export namespace utils {
             default:
                 return sap.ui.table.SelectionMode.None;
         }
+    }
+    /**
+     * 调用容器中所有控件验证
+     * @param control 控件实例
+     */
+    export function fireCurrentContainerValidation(control: any): dataTypes.ValidateResult {
+        let validateResult: dataTypes.ValidateResult = new dataTypes.ValidateResult();
+        validateResult.status = true;
+        /** 遍历Contents子集 */
+        function TraversingContents(ctrl: any): void {
+            for (let content of ctrl.getContent().reverse()) {
+                if (!content.getContent || !(content.getContent instanceof Function)) {
+                    start(content);
+                } else {
+                    TraversingContents(content);
+                }
+            }
+        }
+        /** 遍历ui.Table */
+        function TraversingTable(table: sap.ui.table.Table): void {
+            if (!table) {
+                return;
+            }
+            for (let row of table.getRows().reverse()) {
+                for (let cell of row.getCells()) {
+                    fireControlValidation(cell);
+                }
+            }
+        }
+        /** 遍历steps子集 */
+        function TraversingSteps(ctrl: any): void {
+            for (let step of ctrl.getSteps().reverse()) {
+                start(step);
+            }
+        }
+        /** 调用控件验证 */
+        function fireControlValidation(ctrl: any): void {
+            let bindingInfoType: dataTypes.DataType = getControlBindingInfoType(ctrl);
+            if (!!bindingInfoType) {
+                let validationValue: any = getValidationValue(ctrl);
+                let vResult: dataTypes.ValidateResult = bindingInfoType.callValidate(validationValue, ctrl);
+                if (!vResult.status) {
+                    validateResult.message = vResult.message;
+                    validateResult.status = vResult.status;
+                }
+            }
+        }
+        /** 获取控件验证值 */
+        function getValidationValue(ctrl: any): any {
+            if (ctrl instanceof sap.m.Input || ctrl instanceof sap.m.DatePicker) {
+                return ctrl.getValue();
+            }
+            if (ctrl instanceof sap.m.Select) {
+                return ctrl.getSelectedKey();
+            }
+            if (ctrl instanceof sap.m.DateRangeSelection || ctrl instanceof sap.m.TimePicker) {
+                return ctrl.getDateValue();
+            }
+            return null;
+        }
+        /** 获取控件验证类型 */
+        function getControlBindingInfoType(ctrl: any): dataTypes.DataType {
+            let bindingInfo: any = null;
+            /** 获取值类型,根据不同控件的绑定值添加 */
+            let bindingTypes: Array<string> = ["value", "dateValue", "secondDateValue", "selectedKey"];
+            for (let type of bindingTypes) {
+                let info: any = ctrl.getBindingInfo(type);
+                if (!!info && !!info.type && info.type.callValidate instanceof Function) {
+                    bindingInfo = info;
+                    break;
+                }
+            }
+            return !!bindingInfo ? bindingInfo.type : null;
+        }
+        /** 开始容器验证 */
+        function start(ctrl: any): void {
+            if (ctrl.getContent instanceof Function) {
+                TraversingContents(ctrl);
+            } else if (ctrl instanceof sap.ui.table.Table) {
+                TraversingTable(ctrl);
+            } else if (ctrl instanceof sap.m.Wizard) {
+                TraversingSteps(ctrl);
+            } else {
+                fireControlValidation(ctrl);
+            }
+        }
+        start(control);
+        return validateResult;
     }
 }
