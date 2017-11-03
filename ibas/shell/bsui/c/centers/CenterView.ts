@@ -636,18 +636,6 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             form.openBy(view.darwBar());
         } else {
             // 弹出层
-<<<<<<< HEAD
-            let popover: sap.m.Popover = new sap.m.Popover("", {
-                showHeader: false,
-                placement: sap.m.PlacementType.Bottom,
-                afterClose(event: any): void {
-                    // 设置视图未显示
-                    view.isDisplayed = false;
-                    that.barViewQueue.delete(view);
-                    that.destroyView(view);
-                },
-                content: [form]
-=======
             let popover: sap.m.ResponsivePopover;
             if (form instanceof sap.m.ResponsivePopover) {
                 popover = form;
@@ -664,7 +652,6 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                 view.isDisplayed = false;
                 that.barViewQueue.delete(view);
                 popover.destroy(false);
->>>>>>> upstream/master
             });
             // 设置视图紧凑
             if (ibas.config.get(CONFIG_ITEM_COMPACT_SCREEN, false)) {
