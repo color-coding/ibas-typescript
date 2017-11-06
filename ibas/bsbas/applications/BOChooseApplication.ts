@@ -50,55 +50,52 @@ export abstract class BOChooseService<T extends IBOChooseView, D> extends BOChoo
                 chooseType = emChooseType.MULTIPLE;
             }
             this.view.chooseType = chooseType;
-            // 选择契约且为此应用
-            if (!objects.isNull(contract.boCode) && contract.boCode === this.boCode) {
-                this.onCompleted = contract.onCompleted;
-                // 分析查询条件
-                let criteria: Criteria;
-                if (objects.instanceOf(contract.criteria, Criteria)) {
-                    criteria = <any>contract.criteria;
-                } else if (contract.criteria instanceof Array) {
-                    criteria = new Criteria();
-                    for (let item of contract.criteria) {
-                        if (item instanceof Condition) {
-                            // 过滤无效查询条件
-                            if (objects.isNull(item.alias) || item.alias.length === 0) {
-                                continue;
-                            }
-                            if (item.operation === emConditionOperation.IS_NULL
-                                || item.operation === emConditionOperation.NOT_NULL
-                                || !objects.isNull(item.value)
-                                || (!objects.isNull(item.comparedAlias) && item.comparedAlias.length > 0)
-                            ) {
-                                criteria.conditions.add(item);
-                            }
+            this.onCompleted = contract.onCompleted;
+            // 分析查询条件
+            let criteria: Criteria;
+            if (objects.instanceOf(contract.criteria, Criteria)) {
+                criteria = <any>contract.criteria;
+            } else if (contract.criteria instanceof Array) {
+                criteria = new Criteria();
+                for (let item of contract.criteria) {
+                    if (item instanceof Condition) {
+                        // 过滤无效查询条件
+                        if (objects.isNull(item.alias) || item.alias.length === 0) {
+                            continue;
+                        }
+                        if (item.operation === emConditionOperation.IS_NULL
+                            || item.operation === emConditionOperation.NOT_NULL
+                            || !objects.isNull(item.value)
+                            || (!objects.isNull(item.comparedAlias) && item.comparedAlias.length > 0)
+                        ) {
+                            criteria.conditions.add(item);
                         }
                     }
                 }
-                // 修正查询数量
-                criterias.resultCount(criteria);
-                // 根据对象类型，修正排序条件
-                try {
-                    let boType: any = boFactory.classOf(contract.boCode);
-                    if (!objects.isNull(boType)) {
-                        // 获取到有效对象
-                        criterias.sorts(criteria, boType);
-                    }
-                } catch (error) {
-                    logger.log(emMessageLevel.WARN, "bo choose: not found [{0}]'s class.", contract.boCode);
+            }
+            // 修正查询数量
+            criterias.resultCount(criteria);
+            // 根据对象类型，修正排序条件
+            try {
+                let boType: any = boFactory.classOf(contract.boCode);
+                if (!objects.isNull(boType)) {
+                    // 获取到有效对象
+                    criterias.sorts(criteria, boType);
                 }
-                // 存在查询，则直接触发查询事件
-                if (!objects.isNull(criteria) && criteria.conditions.length > 0) {
-                    let view: IBOChooseView = <IBOChooseView>this.view;
-                    if (view.query instanceof Function) {
-                        // 视图存在查询方法，则调用此方法
-                        view.query(criteria);
-                    } else {
-                        this.fetchData(criteria);
-                    }
-                    // 进入查询，不在执行后部分
-                    return;
+            } catch (error) {
+                logger.log(emMessageLevel.WARN, "bo choose: not found [{0}]'s class.", contract.boCode);
+            }
+            // 存在查询，则直接触发查询事件
+            if (!objects.isNull(criteria) && criteria.conditions.length > 0) {
+                let view: IBOChooseView = <IBOChooseView>this.view;
+                if (view.query instanceof Function) {
+                    // 视图存在查询方法，则调用此方法
+                    view.query(criteria);
+                } else {
+                    this.fetchData(criteria);
                 }
+                // 进入查询，不在执行后部分
+                return;
             }
         }
         super.run(args);
