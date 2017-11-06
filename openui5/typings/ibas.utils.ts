@@ -517,7 +517,8 @@ export namespace utils {
             } else {
                 let bindingInfoType: dataTypes.DataType = checkControlBindingInfoType(content);
                 if (!!bindingInfoType) {
-                    let validationValue: any = getValidationValue(content);
+                    let validationValue: any = getValidationValue(content);  // 界面值
+                    validationValue = bindingInfoType.parseValue(validationValue); // 转为BO中属性值
                     let vResult: dataTypes.ValidateResult = bindingInfoType.callValidate(validationValue, control);
                     if (!vResult.status) {
                         validateResult.message = vResult.message;

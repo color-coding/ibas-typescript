@@ -8,9 +8,9 @@
 
 import * as ibas from "ibas/index";
 import { utils } from "openui5/typings/ibas.utils";
+import * as dataTypes from "openui5/typings/ibas.datatypes";
 import * as bo from "../../../borep/bo/index";
 import { ISalesOrderEditView } from "../../../bsapp/salesorder/index";
-
 /**
  * 视图-SalesOrder
  */
@@ -43,14 +43,55 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
                         that.fireViewEvents(that.chooseSalesOrderCustomerEvent);
                     }
                 }).bindProperty("value", {
-                    path: "/customerCode"
+                    path: "/customerCode",
+                    type: new dataTypes.Alphanumeric({
+                        notEmpty: true,
+                        description: ibas.i18n.prop("bo_salesorder_customercode")
+                    })
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_documentdate") }),
                 new sap.m.DatePicker("", {
                     valueFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE),
                     displayFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE),
                 }).bindProperty("dateValue", {
-                    path: "/documentDate"
+                    path: "/documentDate",
+                    type: new dataTypes.DateTime({
+                        description: ibas.i18n.prop("bo_salesorder_documentdate")
+                    })
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_createtime") }),
+                new sap.m.TimePicker("", {
+                }).bindProperty("dateValue", {
+                    path: "/createTime",
+                    type: new dataTypes.Time({
+                        description: ibas.i18n.prop("bo_salesorder_createtime")
+                    })
+                }),
+                new sap.m.Label("", { text: "整数" }),
+                new sap.m.Input("", {
+                }).bindProperty("value", {
+                    path: "/updateTime",
+                    type: new dataTypes.Numeric({
+                        description: ibas.i18n.prop("bo_salesorder_createtime")
+                    })
+                }),
+                new sap.m.Label("", { text: "小数,保留2位小数" }),
+                new sap.m.Input("", {
+                }).bindProperty("value", {
+                    path: "/documentTotal",
+                    type: new dataTypes.Sum({
+                        decimalPlaces: 2,
+                        description: ibas.i18n.prop("bo_salesorder_documenttotal")
+                    })
+                }),
+                new sap.m.Label("", { text: "百分数,保留3位小数" }),
+                new sap.m.Input("", {
+                }).bindProperty("value", {
+                    path: "/documentRate",
+                    type: new dataTypes.Percentage({
+                        decimalPlaces: 3,
+                        description: ibas.i18n.prop("bo_salesorder_documentrate")
+                    })
                 }),
                 new sap.ui.core.Title("", { text: ibas.i18n.prop("trainingtesting_other_information") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_docentry") }),
@@ -176,6 +217,11 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
                         type: sap.m.ButtonType.Transparent,
                         icon: "sap-icon://save",
                         press: function (): void {
+                            let validateResult: dataTypes.ValidateResult = utils.validateControlBoundProperty(that.page);
+                            if (!validateResult.status) {
+                                // alert(validateResult.message);
+                                return;
+                            }
                             that.fireViewEvents(that.saveDataEvent);
                         }
                     }),
