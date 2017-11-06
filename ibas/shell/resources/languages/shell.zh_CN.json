@@ -40,6 +40,7 @@
     "sys_shell_uploading_file": "文件上传中，请稍后",
     "sys_shell_download": "下载",
     "sys_shell_downloading_file": "文件下载中，请稍后",
+    "sys_shell_browse": "浏览",
     "sys_shell_sucessful": "操作成功",
     "sys_shell_done": "操作完成",
     "sys_shell_exit": "退出",
