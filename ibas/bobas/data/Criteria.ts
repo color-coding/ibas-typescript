@@ -12,6 +12,7 @@ import {
     BOSimple, BOSimpleLine
 } from "../bo/index";
 import { objects } from "./Datas";
+import { strings } from "./Strings";
 import { ArrayList, StringBuilder } from "./Common";
 import { emConditionOperation, emConditionRelationship, emSortType } from "./Enums";
 import { ICriteria, ICondition, IConditions, ISort, ISorts, IChildCriteria, IChildCriterias } from "./Criteria.d";
@@ -745,7 +746,7 @@ export module criterias {
         target = arguments[1];
         search = arguments[2];
         operation = arguments[3];
-        if (objects.isNull(criteria) || objects.isNull(search) || objects.isNull(target)) {
+        if (objects.isNull(criteria) || strings.isEmpty(search) || objects.isNull(target)) {
             return criteria;
         }
         // 默认like查询

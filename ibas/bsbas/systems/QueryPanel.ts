@@ -8,7 +8,7 @@
 
 import {
     objects, ICriteria, Criteria, ICondition, i18n, IOperationResult, criterias,
-    config, ISort, emSortType, emConditionOperation, ArrayList, BarApplication,
+    config, ISort, emSortType, emConditionOperation, ArrayList, BarApplication, strings,
     emMessageType, variablesManager, VariablesManager, BODocument, BOMasterData, BOSimple,
     BODocumentLine, BOMasterDataLine, BOSimpleLine, VARIABLE_NAME_USER_CODE, emConditionRelationship,
     BO_PROPERTY_NAME_CODE, BO_PROPERTY_NAME_DOCENTRY, BO_PROPERTY_NAME_LINEID, BO_PROPERTY_NAME_OBJECTKEY
@@ -139,13 +139,13 @@ export abstract class QueryPanel<T extends IQueryPanelView> extends BarApplicati
         criterias.sorts(criteria, this.listener.queryTarget);
         // 给查询条件赋值
         for (let item of criteria.conditions) {
-            if (objects.isNull(item.value) || item.value.length === 0) {
+            if (strings.isEmpty(item.value)) {
                 item.value = this.view.searchContent;
             }
         }
-        // 没有查询条件，尝试从注册信息添加
+        // 没有查询条件且有查询内容，尝试从注册信息添加
         let that: this = this;
-        if (criteria.conditions.length === 0 && !objects.isNull(this.listener.queryTarget)) {
+        if (criteria.conditions.length === 0 && !objects.isNull(this.listener.queryTarget) && !strings.isEmpty(this.view.searchContent)) {
             let boName: string = this.targetName;
             if (!objects.isNull(boName)) {
                 let boRepository: IBORepositorySystem = Factories.systemsFactory.createRepository();
