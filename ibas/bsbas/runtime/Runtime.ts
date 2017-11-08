@@ -8,7 +8,9 @@
 
 // 模块索引文件，此文件集中导出类
 
-import { KeyValue, objects } from "../../bobas/index";
+import { KeyValue, objects, i18n, List, ArrayList } from "../../bobas/index";
+import { IModule } from "../core/index";
+import { IUser } from "../systems/index";
 
 /** 变量-用户ID */
 export const VARIABLE_NAME_USER_ID: string = "${USER_ID}";
@@ -26,24 +28,34 @@ export const VARIABLE_NAME_USER_TOKEN: string = "${USER_TOKEN}";
 export class VariablesManager {
     /** 运行中的变量 */
     private variables: Map<string, KeyValue>;
+    /** 注册系统观察者 */
+    register(watcher: ISystemWatcher): void;
     /** 注册变量 */
     register(variable: KeyValue): void;
     /** 注册变量 */
     register(key: string, value: any): void;
     /** 注册变量 */
     register(): void {
-        if (objects.isNull(this.variables)) {
-            this.variables = new Map();
-        }
         let variable: KeyValue;
         if (arguments.length === 1) {
-            variable = arguments[0];
+            if (objects.instanceOf(arguments[0], KeyValue)) {
+                variable = arguments[0];
+            } else if (arguments[0].user instanceof Function &&
+                arguments[0].modules instanceof Function) {
+                // 系统观察者
+                this.watcher = arguments[0];
+            }
         } else if (arguments.length === 2) {
             variable = new KeyValue();
             variable.key = arguments[0];
             variable.value = arguments[1];
         }
-        this.variables.set(variable.key, variable);
+        if (!objects.isNull(variable)) {
+            if (objects.isNull(this.variables)) {
+                this.variables = new Map();
+            }
+            this.variables.set(variable.key, variable);
+        }
     }
     /** 获取所有变量 */
     all(): KeyValue[] {
@@ -71,4 +83,33 @@ export class VariablesManager {
         }
         return value.value;
     }
+    /** 系统用户 */
+    private watcher: ISystemWatcher;
+    getWatcher(): ISystemWatcher {
+        if (objects.isNull(this.watcher)) {
+            return {
+                modules(): List<IModule> {
+                    return new ArrayList();
+                },
+                user(): IUser {
+                    return {
+                        id: undefined,
+                        name: undefined,
+                        code: undefined,
+                        super: false,
+                        token: undefined,
+                        belong: undefined,
+                    };
+                }
+            };
+        }
+        return this.watcher;
+    }
+}
+/** 系统运行状态观察者 */
+export interface ISystemWatcher {
+    /** 运行的模块 */
+    modules(): List<IModule>;
+    /** 系统用户 */
+    user(): IUser;
 }

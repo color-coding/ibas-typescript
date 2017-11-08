@@ -13,7 +13,7 @@ import {
     IView, IBarView, IBarApplication, IViewShower, AbstractApplication, IMessgesCaller,
     emMessageType, emPrivilegeSource, emAuthoriseType, emMessageAction, variablesManager,
     ResidentApplication, BOApplication, BOChooseApplication, BOListApplication,
-    BOViewApplication, BOEditApplication, IBOView,
+    BOViewApplication, BOEditApplication, IBOView, ISystemWatcher, IModule, ArrayList, List,
     MODULE_REPOSITORY_NAME_TEMPLATE, CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS,
     VARIABLE_NAME_USER_ID, VARIABLE_NAME_USER_CODE, VARIABLE_NAME_USER_NAME, VARIABLE_NAME_USER_SUPER,
     VARIABLE_NAME_USER_BELONG, VARIABLE_NAME_USER_TOKEN, CONFIG_ITEM_DEBUG_MODE,
@@ -99,6 +99,26 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
             that.init();
         }, 300);
         this.show();
+        // 注册系统观察者
+        variablesManager.register({
+            user(): IUser {
+                return that.currentUser;
+            },
+            modules(): List<IModule> {
+                let modules: ArrayList<IModule> = new ArrayList();
+                for (let item of that.functionMap.values()) {
+                    let tmp: any = modules.firstOrDefault((c: IModule) => {
+                        if (item.module === c || item.module.id === c.id) {
+                            return true;
+                        }
+                    });
+                    if (objects.isNull(tmp)) {
+                        modules.add(item.module);
+                    }
+                }
+                return modules;
+            }
+        });
     }
     /** 视图显示后 */
     protected viewShowed(): void {
@@ -175,53 +195,69 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
                 }
             }
         });
+        // 哈希值监控
+        hashEventManager.registerListener({
+            hashSign: URL_HASH_SIGN_FUNCTIONS,
+            onHashChanged: (event: any): void => {
+                try {
+                    let url: string = event.newURL.substring(
+                        event.newURL.indexOf(URL_HASH_SIGN_FUNCTIONS) + URL_HASH_SIGN_FUNCTIONS.length);
+                    let index: number = url.indexOf("/") < 0 ? url.length : url.indexOf("/");
+                    let functionId: string = url.substring(0, index);
+                    if (objects.isNull(that.functionMap)) {
+                        return;
+                    }
+                    if (that.functionMap.has(functionId)) {
+                        try {
+                            let func: IModuleFunction = that.functionMap.get(functionId);
+                            let app: IApplication<IView> = func.default();
+                            if (objects.isNull(app)) {
+                                return;
+                            }
+                            if (objects.isNull(app.navigation)) {
+                                app.navigation = func.navigation;
+                            }
+                            if (objects.isNull(app.viewShower)) {
+                                app.viewShower = that;
+                            }
+                            app.run();
+                        } catch (error) {
+                            that.messages({
+                                type: emMessageType.ERROR,
+                                message: config.get(CONFIG_ITEM_DEBUG_MODE, false) ? error.stack : error.message
+                            });
+                        }
+                    }
+                } catch (error) {
+                    logger.log(error);
+                }
+            }
+        });
     }
     private functionMap: Map<string, IModuleFunction>;
     /** 注册运行的功能 */
     protected registerFunctions(module: IModuleConsole): void {
-        var that: this = this;
         if (objects.isNull(this.functionMap)) {
             this.functionMap = new Map<string, IModuleFunction>();
-            hashEventManager.registerListener({
-                hashSign: URL_HASH_SIGN_FUNCTIONS,
-                onHashChanged: (event: any): void => {
-                    try {
-                        let url: string = event.newURL.substring(
-                            event.newURL.indexOf(URL_HASH_SIGN_FUNCTIONS) + URL_HASH_SIGN_FUNCTIONS.length);
-                        let index: number = url.indexOf("/") < 0 ? url.length : url.indexOf("/");
-                        let functionId: string = url.substring(0, index);
-                        if (objects.isNull(that.functionMap)) {
-                            return;
-                        }
-                        if (that.functionMap.has(functionId)) {
-                            try {
-                                let func: IModuleFunction = that.functionMap.get(functionId);
-                                let app: IApplication<IView> = func.default();
-                                if (objects.isNull(app)) {
-                                    return;
-                                }
-                                if (objects.isNull(app.navigation)) {
-                                    app.navigation = func.navigation;
-                                }
-                                if (objects.isNull(app.viewShower)) {
-                                    app.viewShower = that;
-                                }
-                                app.run();
-                            } catch (error) {
-                                that.messages({
-                                    type: emMessageType.ERROR,
-                                    message: config.get(CONFIG_ITEM_DEBUG_MODE, false) ? error.stack : error.message
-                                });
-                            }
-                        }
-                    } catch (error) {
-                        logger.log(error);
-                    }
-                }
-            });
         }
         for (let item of module.functions()) {
-            this.functionMap.set(item.id, item);
+            // 权限控制，没权限的不能激活菜单
+            let tmp: any = this.userPrivileges.firstOrDefault((c: IUserPrivilege) => {
+                if (c.source === emPrivilegeSource.APPLICATION && c.target === item.id) {
+                    if (c.value !== emAuthoriseType.ALL) {
+                        return true;
+                    }
+                }
+                return false;
+            });
+            if (!objects.isNull(tmp)) {
+                item.activated = false;
+                logger.log(emMessageLevel.DEBUG, "center: disabled function [{0} - {1}].", item.description, item.id);
+            }
+            if (item.activated) {
+                // 没权限，不激活功能
+                this.functionMap.set(item.id, item);
+            }
         }
     }
 
@@ -289,10 +325,10 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
                     if (console.functions().length > 0
                         && config.get(CONFIG_ITEM_HIDE_NO_FUNCTION_MODULE, true)
                         && module.authorise === emAuthoriseType.ALL) {
-                        // 显示模块
-                        that.view.showModule(console);
                         // 注册模块功能
                         that.registerFunctions(console);
+                        // 显示模块
+                        that.view.showModule(console);
                         // 如当前模块包含Hash指向的功能,激活
                         let hashInfo: IHashInfo = hashEventManager.currentHashInfo();
                         if (hashInfo.category === URL_HASH_SIGN_FUNCTIONS) {
@@ -351,7 +387,7 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
     }
 
     /** 用户权限 */
-    private userPrivileges: Array<IUserPrivilege>;
+    private userPrivileges: ArrayList<IUserPrivilege>;
     /** 判断是否可以运行应用 */
     protected canRun(app: IApplication<IView>): boolean {
         let run: boolean = true;

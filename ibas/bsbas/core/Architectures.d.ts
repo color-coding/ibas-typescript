@@ -24,6 +24,8 @@ export interface IElement {
  * 模块
  */
 export interface IModule extends IElement {
+    /** 版本 */
+    version: string;
     /** 功能集合 */
     functions(): IFunction[];
 }
@@ -169,10 +171,14 @@ export interface IModuleConsole extends IModule {
  * 模块-功能
  */
 export interface IModuleFunction extends IFunction {
+    /** 所属模块 */
+    module: IModule;
     /** 图标 */
     icon: string;
     /** 视图导航 */
     navigation: IViewNavigation;
+    /** 激活的 */
+    activated: boolean;
     /** 默认应用 */
     default(): IApplication<IView>;
 }

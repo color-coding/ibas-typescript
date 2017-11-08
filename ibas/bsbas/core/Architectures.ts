@@ -33,6 +33,8 @@ export class Module extends Element implements IModule {
     constructor() {
         super();
     }
+    /** 版本 */
+    version: string;
     private _functions: List<IFunction>;
     /** 功能集合 */
     functions(): IFunction[] {
@@ -189,10 +191,15 @@ export abstract class ModuleConsole extends Module implements IModuleConsole {
     get plantform(): emPlantform {
         return config.get(CONFIG_ITEM_PLANTFORM, emPlantform.COMBINATION, emPlantform);
     }
-    /** 功能集合 */
+    /** 功能集合，仅激活的 */
     functions(): IModuleFunction[] {
         let list: Array<IModuleFunction> = new Array<IModuleFunction>();
         for (let item of super.functions()) {
+            if (objects.instanceOf(item, ModuleFunction)) {
+                if (!(<ModuleFunction>item).activated) {
+                    continue;
+                }
+            }
             list.push(<IModuleFunction>item);
         }
         return list;
@@ -270,6 +277,8 @@ export abstract class ModuleConsole extends Module implements IModuleConsole {
                 item.id = uuids.random();
             }
             item.navigation = this.navigation();
+            item.module = this;
+            item.activated = true;
             super.register(item);
         } else if (item instanceof AbstractFunction) {
             // 注册功能
@@ -296,10 +305,14 @@ export abstract class ModuleConsole extends Module implements IModuleConsole {
 }
 /** 模块控制台 */
 export abstract class ModuleFunction extends AbstractFunction implements IModuleFunction {
+    /** 所属模块 */
+    module: IModule;
     /** 图标 */
     icon: string;
     /** 创建视图导航 */
     navigation: IViewNavigation;
+    /** 激活的 */
+    activated: boolean;
     /** 默认功能 */
     abstract default(): IApplication<IView>;
 }
