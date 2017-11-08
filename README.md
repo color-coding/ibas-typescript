@@ -48,5 +48,6 @@ index.html                         不使用缓存的入口，一般用于生产
 
 ## 鸣谢 | Thanks
 [牛加人等于朱](http://baike.baidu.com/view/1769.htm "NiurenZhu")<br>
+[小昌昌](http://baike.baidu.com/view/1831.htm "cyitianyou")<br>
 [DefinitelyTyped](http://definitelytyped.org/ "TypeScript Definition")<br>
 [Color-Coding](http://colorcoding.org/ "咔啦工作室")<br>
