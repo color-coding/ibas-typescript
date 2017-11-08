@@ -11,6 +11,15 @@
  */
 export module strings {
     /**
+     * 转为字符串
+     */
+    export function toString(content: any): string {
+        if (content === undefined || content === null) {
+            return "";
+        }
+        return content.toString();
+    }
+    /**
      * 是否为空
      * @param object 判断对象
      */
