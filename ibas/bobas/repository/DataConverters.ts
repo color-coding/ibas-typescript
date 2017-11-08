@@ -71,31 +71,6 @@ export abstract class DataConverter4j implements IDataConverter {
                 Message: newData.message,
             };
             return remote;
-        } else if (objects.instanceOf(data, Criteria)) {
-            let newData: Criteria = data;
-            let conditions: ibas4j.Condition[] = [];
-            for (let item of newData.conditions) {
-                conditions.push(this.convert(item, null));
-            }
-            let sorts: ibas4j.Sort[] = [];
-            for (let item of newData.sorts) {
-                sorts.push(this.convert(item, null));
-            }
-            let childCriteria: ibas4j.ChildCriteria[] = [];
-            for (let item of newData.childCriterias) {
-                childCriteria.push(this.convert(item, null));
-            }
-            let remote: ibas4j.Criteria = {
-                type: data.constructor.name,
-                BusinessObject: newData.businessObject,
-                ResultCount: newData.result,
-                NoChilds: newData.noChilds,
-                Remarks: newData.remarks,
-                Conditions: conditions,
-                ChildCriterias: childCriteria,
-                Sorts: sorts
-            };
-            return remote;
         } else if (objects.instanceOf(data, ChildCriteria)) {
             let newData: ChildCriteria = data;
             let conditions: ibas4j.Condition[] = [];
@@ -118,6 +93,31 @@ export abstract class DataConverter4j implements IDataConverter {
                 Remarks: newData.remarks,
                 PropertyPath: newData.propertyPath,
                 OnlyHasChilds: newData.onlyHasChilds,
+                Conditions: conditions,
+                ChildCriterias: childCriteria,
+                Sorts: sorts
+            };
+            return remote;
+        } else if (objects.instanceOf(data, Criteria)) {
+            let newData: Criteria = data;
+            let conditions: ibas4j.Condition[] = [];
+            for (let item of newData.conditions) {
+                conditions.push(this.convert(item, null));
+            }
+            let sorts: ibas4j.Sort[] = [];
+            for (let item of newData.sorts) {
+                sorts.push(this.convert(item, null));
+            }
+            let childCriteria: ibas4j.ChildCriteria[] = [];
+            for (let item of newData.childCriterias) {
+                childCriteria.push(this.convert(item, null));
+            }
+            let remote: ibas4j.Criteria = {
+                type: data.constructor.name,
+                BusinessObject: newData.businessObject,
+                ResultCount: newData.result,
+                NoChilds: newData.noChilds,
+                Remarks: newData.remarks,
                 Conditions: conditions,
                 ChildCriterias: childCriteria,
                 Sorts: sorts
@@ -219,13 +219,15 @@ export abstract class DataConverter4j implements IDataConverter {
             newData.resultCode = remote.ResultCode;
             newData.message = remote.Message;
             return newData;
-        } else if (data.type === Criteria.name) {
-            let remote: ibas4j.Criteria = data;
-            let newData: Criteria = new Criteria();
+        } else if (data.type === ChildCriteria.name) {
+            let remote: ibas4j.ChildCriteria = data;
+            let newData: ChildCriteria = new ChildCriteria();
             newData.businessObject = remote.BusinessObject;
             newData.result = remote.ResultCount;
             newData.noChilds = remote.NoChilds;
             newData.remarks = remote.Remarks;
+            newData.onlyHasChilds = remote.OnlyHasChilds;
+            newData.propertyPath = remote.PropertyPath;
             for (let item of remote.Conditions) {
                 item.type = Condition.name;
                 newData.conditions.add(this.parsing(item, null));
@@ -239,15 +241,13 @@ export abstract class DataConverter4j implements IDataConverter {
                 newData.sorts.add(this.parsing(item, null));
             }
             return newData;
-        } else if (data.type === ChildCriteria.name) {
-            let remote: ibas4j.ChildCriteria = data;
-            let newData: ChildCriteria = new ChildCriteria();
+        } else if (data.type === Criteria.name) {
+            let remote: ibas4j.Criteria = data;
+            let newData: Criteria = new Criteria();
             newData.businessObject = remote.BusinessObject;
             newData.result = remote.ResultCount;
             newData.noChilds = remote.NoChilds;
             newData.remarks = remote.Remarks;
-            newData.onlyHasChilds = remote.OnlyHasChilds;
-            newData.propertyPath = remote.PropertyPath;
             for (let item of remote.Conditions) {
                 item.type = Condition.name;
                 newData.conditions.add(this.parsing(item, null));
