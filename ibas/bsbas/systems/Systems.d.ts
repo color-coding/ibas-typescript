@@ -119,6 +119,10 @@ export interface IUser {
 	name: string;
 	/** 超级用户 */
 	super: boolean;
+	/** 口令 */
+	token: string;
+	/* 归属 */
+	belong: string;
 }
 /** 用户模块 */
 export interface IUserModule {

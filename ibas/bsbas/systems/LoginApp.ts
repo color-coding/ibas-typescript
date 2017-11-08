@@ -57,7 +57,7 @@ export class LoginApp<T extends ILoginView> extends Application<T> implements IL
                         }
                         let user: IUser = opRslt.resultObjects.firstOrDefault();
                         // 设置默认用户口令
-                        config.set(CONFIG_ITEM_USER_TOKEN, opRslt.userSign);
+                        config.set(CONFIG_ITEM_USER_TOKEN, user.token);
                         // 更新配置项目
                         for (let item of opRslt.informations) {
                             if (strings.equalsIgnoreCase(item.tag, "CONFIG_ITEM")) {
@@ -121,7 +121,7 @@ export class LoginApp<T extends ILoginView> extends Application<T> implements IL
                     }
                     let user: IUser = opRslt.resultObjects.firstOrDefault();
                     // 设置默认用户口令
-                    config.set(CONFIG_ITEM_USER_TOKEN, opRslt.userSign);
+                    config.set(CONFIG_ITEM_USER_TOKEN, user.token);
                     // 更新配置项目
                     for (let item of opRslt.informations) {
                         if (strings.equalsIgnoreCase(item.tag, "CONFIG_ITEM")) {

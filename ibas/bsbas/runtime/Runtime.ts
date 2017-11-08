@@ -16,6 +16,12 @@ export const VARIABLE_NAME_USER_ID: string = "${USER_ID}";
 export const VARIABLE_NAME_USER_CODE: string = "${USER_CODE}";
 /** 变量-用户名称 */
 export const VARIABLE_NAME_USER_NAME: string = "${USER_NAME}";
+/** 变量-是否超级用户 */
+export const VARIABLE_NAME_USER_SUPER: string = "${USER_SUPER}";
+/** 变量-用户归属 */
+export const VARIABLE_NAME_USER_BELONG: string = "${USER_BELONG}";
+/** 变量-用户口令 */
+export const VARIABLE_NAME_USER_TOKEN: string = "${USER_TOKEN}";
 /** 变量管理员 */
 export class VariablesManager {
     /** 运行中的变量 */

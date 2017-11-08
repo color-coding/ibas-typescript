@@ -21,8 +21,8 @@ export class User implements sys.IUser {
 	name: string;
 	/** 超级用户 */
 	super: boolean;
-	/** 密码 */
-	password: string;
+	/** 口令 */
+	token: string;
 	/* 归属 */
 	belong: string;
 }
@@ -43,7 +43,7 @@ export class UserModule implements sys.IUserModule {
 	/** 仓库地址 */
 	repository: string;
 	/** 权限 */
-	authorise:  ibas.emAuthoriseType;
+	authorise: ibas.emAuthoriseType;
 }
 /**
  * 用户权限
@@ -92,6 +92,6 @@ export class BOPropertyInfo implements sys.IBOPropertyInfo {
 	description: string;
 	/** 查询 */
 	searched: boolean;
-    /** 编辑 */
-    editable: boolean;
+	/** 编辑 */
+	editable: boolean;
 }

@@ -15,7 +15,8 @@ import {
     ResidentApplication, BOApplication, BOChooseApplication, BOListApplication,
     BOViewApplication, BOEditApplication, IBOView,
     MODULE_REPOSITORY_NAME_TEMPLATE, CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS,
-    VARIABLE_NAME_USER_ID, VARIABLE_NAME_USER_CODE, VARIABLE_NAME_USER_NAME, CONFIG_ITEM_DEBUG_MODE,
+    VARIABLE_NAME_USER_ID, VARIABLE_NAME_USER_CODE, VARIABLE_NAME_USER_NAME, VARIABLE_NAME_USER_SUPER,
+    VARIABLE_NAME_USER_BELONG, VARIABLE_NAME_USER_TOKEN, CONFIG_ITEM_DEBUG_MODE,
     hashEventManager, URL_HASH_SIGN_FUNCTIONS, IHashInfo
 } from "ibas/index";
 import {
@@ -89,6 +90,9 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
         variablesManager.register(VARIABLE_NAME_USER_ID, this.currentUser.id);
         variablesManager.register(VARIABLE_NAME_USER_CODE, this.currentUser.code);
         variablesManager.register(VARIABLE_NAME_USER_NAME, this.currentUser.name);
+        variablesManager.register(VARIABLE_NAME_USER_SUPER, this.currentUser.super);
+        variablesManager.register(VARIABLE_NAME_USER_BELONG, this.currentUser.belong);
+        variablesManager.register(VARIABLE_NAME_USER_TOKEN, this.currentUser.token);
         // 初始化
         let that: this = this;
         setTimeout(function (): void {

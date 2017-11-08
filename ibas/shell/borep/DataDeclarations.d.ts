@@ -23,8 +23,8 @@ export interface User extends DataDeclaration {
     Name: string;
     /** 超级用户 */
     Super: boolean;
-    /** 密码 */
-    Password: string;
+    /** 口令 */
+    Token: string;
     /** 归属 */
     Belong: string;
 }
@@ -42,8 +42,8 @@ export interface UserModule extends DataDeclaration {
     Repository: string;
     /** 入口索引 */
     Index: string;
-	/** 权限 */
-	Authorise: string;
+    /** 权限 */
+    Authorise: string;
 }
 /** 操作消息 */
 export interface UserPrivilege extends DataDeclaration {

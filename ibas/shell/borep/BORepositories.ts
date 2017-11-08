@@ -163,7 +163,7 @@ export class BORepositoryShellOffline extends BORepositoryShell {
         condition.alias = "code";
         condition.value = caller.user;
         condition = criteria.conditions.create();
-        condition.alias = "password";
+        condition.alias = "token";
         condition.value = caller.password;
 
         let fetchCaller: ibas.FetchCaller<bo.User> = {
@@ -175,7 +175,7 @@ export class BORepositoryShellOffline extends BORepositoryShell {
                 opRslt.message = ibas.i18n.prop("sys_shell_user_and_password_not_match");
                 for (let item of opRsltFetch.resultObjects) {
                     if (item.code === caller.user
-                        && item.password === caller.password) {
+                        && (item.token === caller.password || (<any>item).password === caller.password)) {
                         opRslt.resultCode = 0;
                         opRslt.message = "ok.";
                         opRslt.resultObjects.add(item);
