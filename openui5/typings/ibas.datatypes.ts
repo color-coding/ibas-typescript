@@ -69,7 +69,7 @@ export class Alphanumeric extends DataType {
         this.notEmpty = settings.notEmpty;
     }
     notEmpty: boolean = false;
-    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
+    callValidate(oValue: string, control?: sap.ui.core.Control): ValidateResult {
         let result: ValidateResult = new ValidateResult();
         result.status = true;
         if (this.notEmpty && !validation.isNotEmpty(oValue)) {
@@ -105,10 +105,10 @@ export class Numeric extends DataType {
         }
         return oValue.toString();
     }
-    parseValue(oValue: any): any {
+    parseValue(oValue: any): number {
         return Number.parseInt(oValue);
     }
-    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
+    callValidate(oValue: number, control?: sap.ui.core.Control): ValidateResult {
         let result: ValidateResult = super.callValidate(oValue, control);
         if (!validation.isNumeric(oValue)) {
             result.status = false;
@@ -129,7 +129,7 @@ export class Numeric extends DataType {
         }
         return result;
     }
-    validateValue(oValue: any): any {
+    validateValue(oValue: number): any {
         super.validateValue(oValue);
         let result: ValidateResult = this.callValidate(oValue);
         if (!result.status) {
@@ -158,20 +158,20 @@ export class Decimal extends DataType {
     minValue: number = undefined;
     maxValue: number = undefined;
     decimalPlaces: number = undefined;
-    formatValue(oValue: any): any {
+    formatValue(oValue: any): string {
         if (ibas.objects.isNull(oValue)) {
             return "";
         }
         return oValue.toFixed(this.decimalPlaces);
     }
-    parseValue(oValue: any): any {
+    parseValue(oValue: any): number {
         if (ibas.objects.isNull(this.decimalPlaces)) {
             return Number.parseFloat(oValue);
         }
         let pow: number = Math.pow(10, this.decimalPlaces);
         return Math.round(Number.parseFloat(oValue) * pow) / pow;
     }
-    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
+    callValidate(oValue: number, control?: sap.ui.core.Control): ValidateResult {
         let result: ValidateResult = super.callValidate(oValue, control);
         if (isNaN(oValue)) {
             result.status = false;
@@ -186,7 +186,7 @@ export class Decimal extends DataType {
         }
         return result;
     }
-    validateValue(oValue: any): any {
+    validateValue(oValue: number): any {
         super.validateValue(oValue);
         let result: ValidateResult = this.callValidate(oValue);
         if (!result.status) {
@@ -210,17 +210,19 @@ export class DateTime extends DataType {
         this.format = settings.format;
     }
     format?: string;
-    formatValue(oValue: any): any {
-        let format: string = this.format;
-        if (ibas.objects.isNull(format)) {
-            format = ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE, "yyyy-MM-dd");
+    formatValue(oValue: any): Date {
+        if (ibas.objects.instanceOf(oValue, Date)) {
+            return oValue;
         }
-        return ibas.dates.toString(oValue, format);
+        return null;
     }
-    parseValue(oValue: any): any {
+    parseValue(oValue: any): Date {
+        if (ibas.objects.instanceOf(oValue, Date)) {
+            return oValue;
+        }
         return ibas.dates.valueOf(oValue);
     }
-    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
+    callValidate(oValue: Date, control?: sap.ui.core.Control): ValidateResult {
         let result: ValidateResult = super.callValidate(oValue, control);
         if (!validation.isDate(oValue)) {
             result.status = false;
@@ -229,7 +231,7 @@ export class DateTime extends DataType {
         }
         return result;
     }
-    validateValue(oValue: any): any {
+    validateValue(oValue: Date): any {
         super.validateValue(oValue);
         let result: ValidateResult = this.callValidate(oValue);
         if (!result.status) {
@@ -253,7 +255,7 @@ export class Time extends DataType {
         this.format = settings.format;
     }
     format?: string;
-    formatValue(oValue: any): any {
+    formatValue(oValue: any): Date {
         if (validation.isTime(oValue)) {
             let time: number = oValue;
             let hour: number = time / 100;
@@ -264,13 +266,13 @@ export class Time extends DataType {
         }
         return oValue;
     }
-    parseValue(oValue: any): any {
+    parseValue(oValue: any): number {
         if (ibas.objects.instanceOf(oValue, Date)) {
             return oValue.getHours() * 100 + oValue.getMinutes();
         }
         return 0;
     }
-    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
+    callValidate(oValue: number, control?: sap.ui.core.Control): ValidateResult {
         let result: ValidateResult = super.callValidate(oValue, control);
         if (ibas.objects.instanceOf(oValue, Date)) {
             return result;
@@ -282,7 +284,7 @@ export class Time extends DataType {
         }
         return result;
     }
-    validateValue(oValue: any): any {
+    validateValue(oValue: number): any {
         super.validateValue(oValue);
         let result: ValidateResult = this.callValidate(oValue);
         if (!result.status) {
@@ -386,6 +388,46 @@ export class Percentage extends Decimal {
     constructor(settings?: IDecimalSetting) {
         super(settings);
     }
+    formatValue(oValue: any): string {
+        if (ibas.objects.isNull(oValue) || typeof oValue !== "number") {
+            return "";
+        }
+        let value: number = oValue;
+        let result: string = "";
+        // 保留小数位
+        if (!ibas.objects.isNull(this.decimalPlaces)) {
+            let pow: number = Math.pow(10, this.decimalPlaces);
+            value = Math.round(value * pow) / pow;
+            value = value * 100;
+            if (this.decimalPlaces >= 2) {
+                result = value.toFixed(this.decimalPlaces - 2);
+            } else {
+                result = value.toFixed();
+            }
+        } else {
+            value = value * 100;
+            result = value.toFixed();
+        }
+        return result + "%";
+    }
+    parseValue(oValue: any): number {
+        let isPercentage: boolean = false;
+        let value: string = oValue;
+        let result: number = null;
+        if (oValue.endsWith("%")) {
+            isPercentage = true;
+            value = oValue.substring(0, oValue.length - 1);
+        }
+        result = Number.parseFloat(value);
+        if (isPercentage) {
+            result = result / 100.0;
+        }
+        if (!ibas.objects.isNull(this.decimalPlaces)) {
+            let pow: number = Math.pow(10, this.decimalPlaces);
+            result = Math.round(result * pow) / pow;
+        }
+        return result;
+    }
 }
 /**
  * 邮箱类型
@@ -398,7 +440,7 @@ export class Email extends Alphanumeric {
     constructor(settings?: IAlphanumericSetting) {
         super(settings);
     }
-    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
+    callValidate(oValue: string, control?: sap.ui.core.Control): ValidateResult {
         let result: ValidateResult = super.callValidate(oValue, control);
         if (!validation.isEmail(oValue)) {
             result.status = false;
@@ -407,7 +449,7 @@ export class Email extends Alphanumeric {
         }
         return result;
     }
-    validateValue(oValue: any): any {
+    validateValue(oValue: string): any {
         super.validateValue(oValue);
         let result: ValidateResult = this.callValidate(oValue);
         if (!result.status) {
@@ -426,7 +468,7 @@ export class Phone extends Alphanumeric {
     constructor(settings?: IAlphanumericSetting) {
         super(settings);
     }
-    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
+    callValidate(oValue: string, control?: sap.ui.core.Control): ValidateResult {
         let result: ValidateResult = super.callValidate(oValue, control);
         if (!validation.isTelephone(oValue)) {
             result.status = false;
@@ -435,7 +477,7 @@ export class Phone extends Alphanumeric {
         }
         return result;
     }
-    validateValue(oValue: any): any {
+    validateValue(oValue: string): any {
         super.validateValue(oValue);
         let result: ValidateResult = this.callValidate(oValue);
         if (!result.status) {
@@ -493,7 +535,7 @@ export class Mobile extends Alphanumeric {
     constructor(settings?: IAlphanumericSetting) {
         super(settings);
     }
-    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
+    callValidate(oValue: string, control?: sap.ui.core.Control): ValidateResult {
         let result: ValidateResult = super.callValidate(oValue, control);
         if (!validation.isMobile(oValue)) {
             result.status = false;
@@ -502,7 +544,7 @@ export class Mobile extends Alphanumeric {
         }
         return result;
     }
-    validateValue(oValue: any): any {
+    validateValue(oValue: string): any {
         super.validateValue(oValue);
         let result: ValidateResult = this.callValidate(oValue);
         if (!result.status) {
@@ -521,7 +563,7 @@ export class Telphone extends Alphanumeric {
     constructor(settings?: IAlphanumericSetting) {
         super(settings);
     }
-    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
+    callValidate(oValue: string, control?: sap.ui.core.Control): ValidateResult {
         let result: ValidateResult = super.callValidate(oValue, control);
         if (!validation.isTelephone(oValue)) {
             result.status = false;
@@ -530,7 +572,7 @@ export class Telphone extends Alphanumeric {
         }
         return result;
     }
-    validateValue(oValue: any): any {
+    validateValue(oValue: string): any {
         super.validateValue(oValue);
         let result: ValidateResult = this.callValidate(oValue);
         if (!result.status) {
@@ -549,7 +591,7 @@ export class ZipCode extends Alphanumeric {
     constructor(settings?: IAlphanumericSetting) {
         super(settings);
     }
-    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
+    callValidate(oValue: string, control?: sap.ui.core.Control): ValidateResult {
         let result: ValidateResult = super.callValidate(oValue, control);
         if (!validation.isZipCode(oValue)) {
             result.status = false;
@@ -558,7 +600,7 @@ export class ZipCode extends Alphanumeric {
         }
         return result;
     }
-    validateValue(oValue: any): any {
+    validateValue(oValue: string): any {
         super.validateValue(oValue);
         let result: ValidateResult = this.callValidate(oValue);
         if (!result.status) {
@@ -577,7 +619,7 @@ export class Url extends Alphanumeric {
     constructor(settings?: IAlphanumericSetting) {
         super(settings);
     }
-    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
+    callValidate(oValue: string, control?: sap.ui.core.Control): ValidateResult {
         let result: ValidateResult = super.callValidate(oValue, control);
         if (!validation.isUrl(oValue)) {
             result.status = false;
@@ -586,7 +628,7 @@ export class Url extends Alphanumeric {
         }
         return result;
     }
-    validateValue(oValue: any): any {
+    validateValue(oValue: string): any {
         super.validateValue(oValue);
         let result: ValidateResult = this.callValidate(oValue);
         if (!result.status) {
@@ -606,7 +648,7 @@ export class Password extends Alphanumeric {
     constructor(settings?: IAlphanumericSetting) {
         super(settings);
     }
-    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
+    callValidate(oValue: string, control?: sap.ui.core.Control): ValidateResult {
         let result: ValidateResult = super.callValidate(oValue, control);
         if (!validation.isPassword(oValue)) {
             result.status = false;
@@ -615,7 +657,7 @@ export class Password extends Alphanumeric {
         }
         return result;
     }
-    validateValue(oValue: any): any {
+    validateValue(oValue: string): any {
         super.validateValue(oValue);
         let result: ValidateResult = this.callValidate(oValue);
         if (!result.status) {
@@ -634,7 +676,7 @@ export class PersonalID extends Alphanumeric {
     constructor(settings?: IAlphanumericSetting) {
         super(settings);
     }
-    callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
+    callValidate(oValue: string, control?: sap.ui.core.Control): ValidateResult {
         let result: ValidateResult = super.callValidate(oValue, control);
         if (!validation.isPersonalID(oValue)) {
             result.status = false;
@@ -643,7 +685,7 @@ export class PersonalID extends Alphanumeric {
         }
         return result;
     }
-    validateValue(oValue: any): any {
+    validateValue(oValue: string): any {
         super.validateValue(oValue);
         let result: ValidateResult = this.callValidate(oValue);
         if (!result.status) {
