@@ -780,3 +780,19 @@ export module criterias {
         return criteria;
     }
 }
+/**
+ * 检索条件项目：文件夹。如：documents，条件仅可等于，其他忽略。
+ */
+export const CRITERIA_CONDITION_ALIAS_FOLDER: string = "FileFolder";
+/**
+ * 检索条件项目：包含子文件夹。如： emYesNo.Yes，条件仅可等于，其他忽略。
+ */
+export const CRITERIA_CONDITION_ALIAS_INCLUDE_SUBFOLDER: string = "IncludeSubfolder";
+/**
+ * 检索条件项目：文件名称。如：ibas.*.jar，条件仅可等于，其他忽略。
+ */
+export const CRITERIA_CONDITION_ALIAS_FILE_NAME: string = "FileName";
+/**
+ * 检索条件项目：最后修改时间（文件时间）。如：1479965348，条件可等于，大小等于。
+ */
+export const CRITERIA_CONDITION_ALIAS_MODIFIED_TIME: string = "ModifiedTime";
