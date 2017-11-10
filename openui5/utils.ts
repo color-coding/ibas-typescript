@@ -487,7 +487,7 @@ export namespace utils {
             let bindingTypes: Array<string> = ["value", "dateValue", "secondDateValue", "selectedKey"];
             for (let type of bindingTypes) {
                 let info: any = control.getBindingInfo(type);
-                if (!!info && !!info.type && info.type.callValidate instanceof Function) {
+                if (!!info && !!info.type && info.type.validate instanceof Function) {
                     bindingInfo = info;
                     break;
                 }
