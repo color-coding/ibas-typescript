@@ -27,6 +27,8 @@ export interface User extends DataDeclaration {
     Token: string;
     /** 归属 */
     Belong: string;
+    /** 密码 */
+    Password?: string;
 }
 /** 用户应用模块 */
 export interface UserModule extends DataDeclaration {

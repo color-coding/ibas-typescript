@@ -116,7 +116,7 @@ export class DataConverter4Shell extends ibas.DataConverter4j {
             newData.code = remote.Code;
             newData.name = remote.Name;
             newData.super = remote.Super;
-            newData.token = remote.Token;
+            newData.token = remote.Token !== undefined ? remote.Token : remote.Password;
             newData.belong = remote.Belong;
             return newData;
         } else if (data.type === bo.UserModule.name) {
