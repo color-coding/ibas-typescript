@@ -15,8 +15,8 @@ export abstract class DataType extends sap.ui.model.SimpleType {
             return;
         }
         this.description = settings.description;
-        if (settings.validateValue instanceof Function) {
-            this.validateValue = settings.validateValue;
+        if (settings.callValidate instanceof Function) {
+            this.callValidate = settings.callValidate;
         }
         if (settings.formatValue instanceof Function) {
             this.formatValue = settings.formatValue;
@@ -1005,7 +1005,7 @@ interface IDataTypeSetting {
     /* 绑定属性的描述 */
     description?: string;
     /* 验证方法 */
-    validateValue?(oValue: any): Function;
+    callValidate?(oValue: any, control?: sap.ui.core.Control): ValidateResult;
     /* BO字段值到界面值的转换 */
     formatValue?(oValue: any): Function;
     /* 界面值到BO字段值的转换 */
