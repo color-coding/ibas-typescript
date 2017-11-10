@@ -6,9 +6,8 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-/// <reference path="../../../openui5/typings/index.d.ts" />
 import * as ibas from "ibas/index";
-import { utils } from "../../../openui5/typings/ibas.utils";
+import * as openui5 from "../../../openui5/index";
 
 /** 配置项目-紧缩屏幕 */
 export const CONFIG_ITEM_COMPACT_SCREEN: string = "compactScreen";
@@ -53,10 +52,10 @@ export default class ViewShowerDefault implements ibas.IViewShower {
             }
         });
         // 语言变化监听
-        ibas.i18n.language = utils.toLanguageCode(sap.ui.getCore().getConfiguration().getLanguage());
+        ibas.i18n.language = openui5.utils.toLanguageCode(sap.ui.getCore().getConfiguration().getLanguage());
         ibas.i18n.registerListener({
             onLanguageChanged(language: string): void {
-                sap.ui.getCore().getConfiguration().setLanguage(utils.toLanguageCode(language));
+                sap.ui.getCore().getConfiguration().setLanguage(openui5.utils.toLanguageCode(language));
             }
         });
         // 监听配置变化
@@ -177,12 +176,12 @@ export default class ViewShowerDefault implements ibas.IViewShower {
         jQuery.sap.require("sap.m.MessageBox");
         sap.m.MessageBox.show(
             caller.message, {
-                icon: utils.toMessageBoxIcon(caller.type),
+                icon: openui5.utils.toMessageBoxIcon(caller.type),
                 title: ibas.i18n.prop("sys_shell_name"),
-                actions: utils.toMessageBoxAction(caller.actions),
+                actions: openui5.utils.toMessageBoxAction(caller.actions),
                 onClose(oAction: any): void {
                     if (!ibas.objects.isNull(caller.onCompleted)) {
-                        caller.onCompleted(utils.toMessageAction(oAction));
+                        caller.onCompleted(openui5.utils.toMessageAction(oAction));
                     }
                     if (!ibas.objects.isNull(cView) && !cView.isDisplayed) {
                         cView.isDisplayed = true;

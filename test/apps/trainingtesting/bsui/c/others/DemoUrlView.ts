@@ -7,7 +7,7 @@
  */
 
 import * as ibas from "ibas/index";
-import { utils } from "openui5/typings/ibas.utils";
+import * as openui5 from "openui5/index";
 import { IDemoUrlView } from "../../../bsapp/others/index";
 /** 配置项目-全屏模式 */
 export const CONFIG_ITEM_FULL_SCREEN: string = "fullScreen";

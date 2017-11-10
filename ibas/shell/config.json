@@ -11,7 +11,7 @@
     "compactScreen": false,
     "statusDelay": 2,
     "disablePlatformView": false,
-    "sharedLibraries": "openui5/typings,",
+    "sharedLibraries": "openui5/index,",
     "defaultUser": "admin",
     "defaultPassword": "1q2w3e",
     "defalutServiceIcon": "sap-icon://e-care",

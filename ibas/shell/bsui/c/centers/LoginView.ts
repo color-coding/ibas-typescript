@@ -6,10 +6,9 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-/// <reference path="../../../../../openui5/typings/index.d.ts" />
 import * as ibas from "ibas/index";
 import * as sys from "ibas/bsbas/systems/index";
-import { utils } from "../../../../../openui5/typings/ibas.utils";
+import * as openui5 from "../../../../../openui5/index";
 
 /** 配置项目-默认用户 */
 export const CONFIG_ITEM_DEFAULT_USER: string = "defaultUser";
@@ -102,7 +101,7 @@ export class LoginView extends ibas.BOView implements sys.ILoginView {
                 }),
                 new sap.m.Select("", {
                     // enabled: ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE, false) ? true : false,
-                    items: utils.createComboBoxItems(ibas.emPlantform),
+                    items: openui5.utils.createComboBoxItems(ibas.emPlantform),
                     selectedKey: ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM),
                     change: function (): void {
                         ibas.config.set(ibas.CONFIG_ITEM_PLANTFORM,

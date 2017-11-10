@@ -9,7 +9,7 @@
             "ibas/index": [
                 "../../ibas/index"
             ],
-            "openui5/typings/ibas.utils": [
+            "openui5/index": [
                 "../../openui5/typings/ibas.utils"
             ]
         }

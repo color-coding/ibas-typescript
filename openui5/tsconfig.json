@@ -7,7 +7,7 @@
         "baseUrl": "./",
         "paths": {
             "ibas/index": [
-                "../../ibas/index"
+                "../ibas/index"
             ]
         }
     }

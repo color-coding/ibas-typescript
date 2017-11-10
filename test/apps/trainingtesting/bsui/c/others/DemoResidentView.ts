@@ -7,7 +7,7 @@
  */
 
 import * as ibas from "ibas/index";
-import { utils } from "openui5/typings/ibas.utils";
+import * as openui5 from "openui5/index";
 import { IDemoResidentView } from "../../../bsapp/others/index";
 
 /**

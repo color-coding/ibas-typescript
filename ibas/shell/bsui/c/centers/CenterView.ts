@@ -6,10 +6,9 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-/// <reference path="../../../../../openui5/typings/index.d.ts" />
 import * as ibas from "ibas/index";
 import * as sys from "ibas/bsbas/systems/index";
-import { utils } from "../../../../../openui5/typings/ibas.utils";
+import * as openui5 from "../../../../../openui5/index";
 
 /** 配置项目-状态消息延迟时间 */
 export const CONFIG_ITEM_STATUS_MESSAGES_DELAY: string = "statusDelay";
@@ -309,12 +308,12 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         sap.m.MessageBox.show(
             caller.message,
             {
-                icon: utils.toMessageBoxIcon(caller.type),
+                icon: openui5.utils.toMessageBoxIcon(caller.type),
                 title: caller.title,
-                actions: utils.toMessageBoxAction(caller.actions),
+                actions: openui5.utils.toMessageBoxAction(caller.actions),
                 onClose(oAction: any): void {
                     if (!ibas.objects.isNull(caller.onCompleted)) {
-                        caller.onCompleted(utils.toMessageAction(oAction));
+                        caller.onCompleted(openui5.utils.toMessageAction(oAction));
                     }
                 }
             }

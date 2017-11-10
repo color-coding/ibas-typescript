@@ -5,10 +5,10 @@
  * Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
  */
 
-/// <reference path="./index.d.ts" />
-/// <reference path="../../ibas/index.ts" />
+/// <reference path="./types/index.d.ts" />
 import * as ibas from "ibas/index";
-import * as dataTypes from "./ibas.datatypes";
+import { datatype } from "./datatypes";
+
 export namespace utils {
     /** 配置项目-列表表格可视行数 */
     export const CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT: string = "tableRow|List";
@@ -419,26 +419,26 @@ export namespace utils {
      * 验证控件绑定属性是否合法
      * @param controls
      */
-    export function validateControlBoundProperty(control: sap.ui.core.Control[]): dataTypes.ValidateResult;
+    export function validateControlBoundProperty(control: sap.ui.core.Control[]): datatype.ValidateResult;
     /**
      * 验证控件绑定属性是否合法
      * @param control
      */
-    export function validateControlBoundProperty(controls: sap.ui.core.Control): dataTypes.ValidateResult;
+    export function validateControlBoundProperty(controls: sap.ui.core.Control): datatype.ValidateResult;
     /**
      * 验证控件绑定属性是否合法
      * @param table
      */
-    export function validateControlBoundProperty(table: sap.ui.table.Table): dataTypes.ValidateResult;
+    export function validateControlBoundProperty(table: sap.ui.table.Table): datatype.ValidateResult;
     /**
      * 验证控件绑定属性是否合法
      * @param wizard
      */
-    export function validateControlBoundProperty(wizard: sap.m.Wizard): dataTypes.ValidateResult;
+    export function validateControlBoundProperty(wizard: sap.m.Wizard): datatype.ValidateResult;
     /**
      * 验证控件绑定属性是否合法
      */
-    export function validateControlBoundProperty(): dataTypes.ValidateResult {
+    export function validateControlBoundProperty(): datatype.ValidateResult {
         function traverseContents(control: sap.ui.core.Control): sap.ui.core.Control[];
         function traverseContents(control: sap.ui.core.Control): sap.ui.core.Control;
         /** 遍历展开控件内容 */
@@ -481,7 +481,7 @@ export namespace utils {
             return null;
         }
         /** 检查控件验证类型 */
-        function checkControlBindingInfoType(control: sap.ui.core.Control): dataTypes.DataType {
+        function checkControlBindingInfoType(control: sap.ui.core.Control): datatype.DataType {
             let bindingInfo: any = null;
             /** 获取值类型,根据不同控件的绑定值添加 */
             let bindingTypes: Array<string> = ["value", "dateValue", "secondDateValue", "selectedKey"];
@@ -494,7 +494,7 @@ export namespace utils {
             }
             return !!bindingInfo ? bindingInfo.type : null;
         }
-        let validateResult: dataTypes.ValidateResult = new dataTypes.ValidateResult();
+        let validateResult: datatype.ValidateResult = new datatype.ValidateResult();
         validateResult.status = true;
         let argument: any = arguments[0];
         let controls: sap.ui.core.Control[] = [];
@@ -509,17 +509,17 @@ export namespace utils {
         for (let control of controls) {
             let content: any = traverseContents(control);
             if (content instanceof Array) {
-                let stepResult: dataTypes.ValidateResult = validateControlBoundProperty(content);
+                let stepResult: datatype.ValidateResult = validateControlBoundProperty(content);
                 if (!stepResult.status) {
                     validateResult.message = stepResult.message;
                     validateResult.status = stepResult.status;
                 }
             } else {
-                let bindingInfoType: dataTypes.DataType = checkControlBindingInfoType(content);
+                let bindingInfoType: datatype.DataType = checkControlBindingInfoType(content);
                 if (!!bindingInfoType) {
                     let validationValue: any = getValidationValue(content);  // 界面值
                     validationValue = bindingInfoType.parseValue(validationValue); // 转为BO中属性值
-                    let vResult: dataTypes.ValidateResult = bindingInfoType.callValidate(validationValue, control);
+                    let vResult: datatype.ValidateResult = bindingInfoType.callValidate(validationValue, control);
                     if (!vResult.status) {
                         validateResult.message = vResult.message;
                         validateResult.status = vResult.status;

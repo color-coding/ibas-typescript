@@ -6,10 +6,9 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-/// <reference path="../../../../../openui5/typings/index.d.ts" />
 import * as ibas from "ibas/index";
 import * as sys from "ibas/bsbas/systems/index";
-import { utils } from "../../../../../openui5/typings/ibas.utils";
+import * as openui5 from "../../../../../openui5/index";
 import { QueryPanelView as cQueryPanelView } from "../../c/centers/index";
 import { IQueryPanelView } from "../../../bsapp/centers/QueryPanel";
 
@@ -69,7 +68,7 @@ export class QueryPanelView extends cQueryPanelView implements IQueryPanelView {
                                 }),
                                 new sap.m.Select("", {
                                     width: valWidth,
-                                    items: utils.createComboBoxItems(ibas.emConditionRelationship),
+                                    items: openui5.utils.createComboBoxItems(ibas.emConditionRelationship),
                                 }).bindProperty("selectedKey", {
                                     path: "/relationship",
                                     type: "sap.ui.model.type.Integer"
@@ -113,7 +112,7 @@ export class QueryPanelView extends cQueryPanelView implements IQueryPanelView {
                                 }),
                                 new sap.m.Select("", {
                                     width: valWidth,
-                                    items: utils.createComboBoxItems(ibas.emConditionOperation)
+                                    items: openui5.utils.createComboBoxItems(ibas.emConditionOperation)
                                 }).bindProperty("selectedKey", {
                                     path: "/operation",
                                     type: "sap.ui.model.type.Integer"
