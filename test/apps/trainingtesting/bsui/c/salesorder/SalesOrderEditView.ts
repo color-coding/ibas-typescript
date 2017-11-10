@@ -49,6 +49,32 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
                         description: ibas.i18n.prop("bo_salesorder_customercode")
                     })
                 }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_customername") }),
+                new sap.m.Input("", {
+                }).bindProperty("value", {
+                    path: "/customerName",
+                    type: new dataTypes.Alphanumeric({
+                        description: ibas.i18n.prop("bo_salesorder_customercode"),
+                        callValidate(oValue: string): dataTypes.ValidateResult {
+                            let result: dataTypes.ValidateResult = new dataTypes.ValidateResult();
+                            result.status = true;
+                            if (!oValue.endsWith("公司")) {
+                                result.status = false;
+                                result.message = "客户名称需要以[公司]结尾";
+                            }
+                            return result;
+                        }
+                    })
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_reference1") }),
+                new sap.m.Input("", {
+                }).bindProperty("value", {
+                    path: "/reference1",
+                    type: new dataTypes.Email({
+                        notEmpty: true,
+                        description: ibas.i18n.prop("bo_salesorder_reference1")
+                    })
+                }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_documentdate") }),
                 new sap.m.DatePicker("", {
                     valueFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE),

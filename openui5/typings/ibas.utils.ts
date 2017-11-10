@@ -523,6 +523,7 @@ export namespace utils {
                     if (!vResult.status) {
                         validateResult.message = vResult.message;
                         validateResult.status = vResult.status;
+                        bindingInfoType.fireValidationError(control, validateResult.message);
                     }
                 }
             }
