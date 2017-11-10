@@ -2828,7 +2828,7 @@ declare namespace sap {
          * @param sName name of the model to be retrieved
          * @returns oModel
         */
-        getModel(sName: string | any): sap.ui.model.Model;
+        getModel(sName?: string | any): sap.ui.model.Model;
 
         /**
          * Get the object binding object for a specific model
