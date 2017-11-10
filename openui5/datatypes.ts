@@ -18,8 +18,8 @@ export namespace datatype {
                 return;
             }
             this.description = settings.description;
-            if (settings.validateValue instanceof Function) {
-                this.validateValue = settings.validateValue;
+            if (settings.validate instanceof Function) {
+                this.validate = settings.validate;
             }
             if (settings.formatValue instanceof Function) {
                 this.formatValue = settings.formatValue;
@@ -35,13 +35,13 @@ export namespace datatype {
         parseValue(oValue: any): any {
             return oValue;
         }
-        callValidate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
+        validate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
             let result: ValidateResult = new ValidateResult();
             result.status = true;
             return result;
         }
         validateValue(oValue: any): any {
-            let result: ValidateResult = this.callValidate(oValue);
+            let result: ValidateResult = this.validate(oValue);
             if (!result.status) {
                 throw new sap.ui.model.ValidateException(result.message);
             }
@@ -72,7 +72,7 @@ export namespace datatype {
             this.notEmpty = settings.notEmpty;
         }
         notEmpty: boolean = false;
-        callValidate(oValue: string, control?: sap.ui.core.Control): ValidateResult {
+        validate(oValue: string, control?: sap.ui.core.Control): ValidateResult {
             let result: ValidateResult = new ValidateResult();
             result.status = true;
             if (this.notEmpty && !validation.isNotEmpty(oValue)) {
@@ -111,8 +111,8 @@ export namespace datatype {
         parseValue(oValue: any): number {
             return Number.parseInt(oValue);
         }
-        callValidate(oValue: number, control?: sap.ui.core.Control): ValidateResult {
-            let result: ValidateResult = super.callValidate(oValue, control);
+        validate(oValue: number, control?: sap.ui.core.Control): ValidateResult {
+            let result: ValidateResult = super.validate(oValue, control);
             if (!validation.isNumeric(oValue)) {
                 result.status = false;
                 result.message = ibas.i18n.prop("data_types_msg_numeric_error");
@@ -134,7 +134,7 @@ export namespace datatype {
         }
         validateValue(oValue: number): any {
             super.validateValue(oValue);
-            let result: ValidateResult = this.callValidate(oValue);
+            let result: ValidateResult = this.validate(oValue);
             if (!result.status) {
                 throw new sap.ui.model.ValidateException(result.message);
             }
@@ -174,8 +174,8 @@ export namespace datatype {
             let pow: number = Math.pow(10, this.decimalPlaces);
             return Math.round(Number.parseFloat(oValue) * pow) / pow;
         }
-        callValidate(oValue: number, control?: sap.ui.core.Control): ValidateResult {
-            let result: ValidateResult = super.callValidate(oValue, control);
+        validate(oValue: number, control?: sap.ui.core.Control): ValidateResult {
+            let result: ValidateResult = super.validate(oValue, control);
             if (isNaN(oValue)) {
                 result.status = false;
                 result.message = ibas.i18n.prop("data_types_msg_decimal_error");
@@ -191,7 +191,7 @@ export namespace datatype {
         }
         validateValue(oValue: number): any {
             super.validateValue(oValue);
-            let result: ValidateResult = this.callValidate(oValue);
+            let result: ValidateResult = this.validate(oValue);
             if (!result.status) {
                 throw new sap.ui.model.ValidateException(result.message);
             }
@@ -225,8 +225,8 @@ export namespace datatype {
             }
             return ibas.dates.valueOf(oValue);
         }
-        callValidate(oValue: Date, control?: sap.ui.core.Control): ValidateResult {
-            let result: ValidateResult = super.callValidate(oValue, control);
+        validate(oValue: Date, control?: sap.ui.core.Control): ValidateResult {
+            let result: ValidateResult = super.validate(oValue, control);
             if (!validation.isDate(oValue)) {
                 result.status = false;
                 result.message = ibas.i18n.prop("data_types_msg_datetime_error", this.description);
@@ -236,7 +236,7 @@ export namespace datatype {
         }
         validateValue(oValue: Date): any {
             super.validateValue(oValue);
-            let result: ValidateResult = this.callValidate(oValue);
+            let result: ValidateResult = this.validate(oValue);
             if (!result.status) {
                 throw new sap.ui.model.ValidateException(result.message);
             }
@@ -275,8 +275,8 @@ export namespace datatype {
             }
             return 0;
         }
-        callValidate(oValue: number, control?: sap.ui.core.Control): ValidateResult {
-            let result: ValidateResult = super.callValidate(oValue, control);
+        validate(oValue: number, control?: sap.ui.core.Control): ValidateResult {
+            let result: ValidateResult = super.validate(oValue, control);
             if (ibas.objects.instanceOf(oValue, Date)) {
                 return result;
             }
@@ -289,7 +289,7 @@ export namespace datatype {
         }
         validateValue(oValue: number): any {
             super.validateValue(oValue);
-            let result: ValidateResult = this.callValidate(oValue);
+            let result: ValidateResult = this.validate(oValue);
             if (!result.status) {
                 throw new sap.ui.model.ValidateException(result.message);
             }
@@ -443,8 +443,8 @@ export namespace datatype {
         constructor(settings?: IAlphanumericSetting) {
             super(settings);
         }
-        callValidate(oValue: string, control?: sap.ui.core.Control): ValidateResult {
-            let result: ValidateResult = super.callValidate(oValue, control);
+        validate(oValue: string, control?: sap.ui.core.Control): ValidateResult {
+            let result: ValidateResult = super.validate(oValue, control);
             if (!validation.isEmail(oValue)) {
                 result.status = false;
                 result.message = ibas.i18n.prop("data_types_msg_email_error");
@@ -454,7 +454,7 @@ export namespace datatype {
         }
         validateValue(oValue: string): any {
             super.validateValue(oValue);
-            let result: ValidateResult = this.callValidate(oValue);
+            let result: ValidateResult = this.validate(oValue);
             if (!result.status) {
                 throw new sap.ui.model.ValidateException(result.message);
             }
@@ -471,8 +471,8 @@ export namespace datatype {
         constructor(settings?: IAlphanumericSetting) {
             super(settings);
         }
-        callValidate(oValue: string, control?: sap.ui.core.Control): ValidateResult {
-            let result: ValidateResult = super.callValidate(oValue, control);
+        validate(oValue: string, control?: sap.ui.core.Control): ValidateResult {
+            let result: ValidateResult = super.validate(oValue, control);
             if (!validation.isTelephone(oValue)) {
                 result.status = false;
                 result.message = ibas.i18n.prop("data_types_msg_phone_error");
@@ -482,7 +482,7 @@ export namespace datatype {
         }
         validateValue(oValue: string): any {
             super.validateValue(oValue);
-            let result: ValidateResult = this.callValidate(oValue);
+            let result: ValidateResult = this.validate(oValue);
             if (!result.status) {
                 throw new sap.ui.model.ValidateException(result.message);
             }
@@ -538,8 +538,8 @@ export namespace datatype {
         constructor(settings?: IAlphanumericSetting) {
             super(settings);
         }
-        callValidate(oValue: string, control?: sap.ui.core.Control): ValidateResult {
-            let result: ValidateResult = super.callValidate(oValue, control);
+        validate(oValue: string, control?: sap.ui.core.Control): ValidateResult {
+            let result: ValidateResult = super.validate(oValue, control);
             if (!validation.isMobile(oValue)) {
                 result.status = false;
                 result.message = ibas.i18n.prop("data_types_msg_phone_error");
@@ -549,7 +549,7 @@ export namespace datatype {
         }
         validateValue(oValue: string): any {
             super.validateValue(oValue);
-            let result: ValidateResult = this.callValidate(oValue);
+            let result: ValidateResult = this.validate(oValue);
             if (!result.status) {
                 throw new sap.ui.model.ValidateException(result.message);
             }
@@ -566,8 +566,8 @@ export namespace datatype {
         constructor(settings?: IAlphanumericSetting) {
             super(settings);
         }
-        callValidate(oValue: string, control?: sap.ui.core.Control): ValidateResult {
-            let result: ValidateResult = super.callValidate(oValue, control);
+        validate(oValue: string, control?: sap.ui.core.Control): ValidateResult {
+            let result: ValidateResult = super.validate(oValue, control);
             if (!validation.isTelephone(oValue)) {
                 result.status = false;
                 result.message = ibas.i18n.prop("data_types_msg_phone_error");
@@ -577,7 +577,7 @@ export namespace datatype {
         }
         validateValue(oValue: string): any {
             super.validateValue(oValue);
-            let result: ValidateResult = this.callValidate(oValue);
+            let result: ValidateResult = this.validate(oValue);
             if (!result.status) {
                 throw new sap.ui.model.ValidateException(result.message);
             }
@@ -594,8 +594,8 @@ export namespace datatype {
         constructor(settings?: IAlphanumericSetting) {
             super(settings);
         }
-        callValidate(oValue: string, control?: sap.ui.core.Control): ValidateResult {
-            let result: ValidateResult = super.callValidate(oValue, control);
+        validate(oValue: string, control?: sap.ui.core.Control): ValidateResult {
+            let result: ValidateResult = super.validate(oValue, control);
             if (!validation.isZipCode(oValue)) {
                 result.status = false;
                 result.message = ibas.i18n.prop("data_types_msg_zip_code_error");
@@ -605,7 +605,7 @@ export namespace datatype {
         }
         validateValue(oValue: string): any {
             super.validateValue(oValue);
-            let result: ValidateResult = this.callValidate(oValue);
+            let result: ValidateResult = this.validate(oValue);
             if (!result.status) {
                 throw new sap.ui.model.ValidateException(result.message);
             }
@@ -622,8 +622,8 @@ export namespace datatype {
         constructor(settings?: IAlphanumericSetting) {
             super(settings);
         }
-        callValidate(oValue: string, control?: sap.ui.core.Control): ValidateResult {
-            let result: ValidateResult = super.callValidate(oValue, control);
+        validate(oValue: string, control?: sap.ui.core.Control): ValidateResult {
+            let result: ValidateResult = super.validate(oValue, control);
             if (!validation.isUrl(oValue)) {
                 result.status = false;
                 result.message = ibas.i18n.prop("data_types_msg_url_error");
@@ -633,7 +633,7 @@ export namespace datatype {
         }
         validateValue(oValue: string): any {
             super.validateValue(oValue);
-            let result: ValidateResult = this.callValidate(oValue);
+            let result: ValidateResult = this.validate(oValue);
             if (!result.status) {
                 throw new sap.ui.model.ValidateException(result.message);
             }
@@ -651,8 +651,8 @@ export namespace datatype {
         constructor(settings?: IAlphanumericSetting) {
             super(settings);
         }
-        callValidate(oValue: string, control?: sap.ui.core.Control): ValidateResult {
-            let result: ValidateResult = super.callValidate(oValue, control);
+        validate(oValue: string, control?: sap.ui.core.Control): ValidateResult {
+            let result: ValidateResult = super.validate(oValue, control);
             if (!validation.isPassword(oValue)) {
                 result.status = false;
                 result.message = ibas.i18n.prop("data_types_msg_password_error");
@@ -662,7 +662,7 @@ export namespace datatype {
         }
         validateValue(oValue: string): any {
             super.validateValue(oValue);
-            let result: ValidateResult = this.callValidate(oValue);
+            let result: ValidateResult = this.validate(oValue);
             if (!result.status) {
                 throw new sap.ui.model.ValidateException(result.message);
             }
@@ -679,8 +679,8 @@ export namespace datatype {
         constructor(settings?: IAlphanumericSetting) {
             super(settings);
         }
-        callValidate(oValue: string, control?: sap.ui.core.Control): ValidateResult {
-            let result: ValidateResult = super.callValidate(oValue, control);
+        validate(oValue: string, control?: sap.ui.core.Control): ValidateResult {
+            let result: ValidateResult = super.validate(oValue, control);
             if (!validation.isPersonalID(oValue)) {
                 result.status = false;
                 result.message = ibas.i18n.prop("data_types_msg_personalid_error");
@@ -690,7 +690,7 @@ export namespace datatype {
         }
         validateValue(oValue: string): any {
             super.validateValue(oValue);
-            let result: ValidateResult = this.callValidate(oValue);
+            let result: ValidateResult = this.validate(oValue);
             if (!result.status) {
                 throw new sap.ui.model.ValidateException(result.message);
             }
@@ -703,11 +703,11 @@ export namespace datatype {
         /* 绑定属性的描述 */
         description?: string;
         /* 验证方法 */
-        validateValue?(oValue: any): Function;
+        validate?(oValue: any): ValidateResult;
         /* BO字段值到界面值的转换 */
-        formatValue?(oValue: any): Function;
+        formatValue?(oValue: any): any;
         /* 界面值到BO字段值的转换 */
-        parseValue?(oValue: any): Function;
+        parseValue?(oValue: any): any;
     }
     /**
      * 字母数字设置

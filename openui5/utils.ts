@@ -519,10 +519,11 @@ export namespace utils {
                 if (!!bindingInfoType) {
                     let validationValue: any = getValidationValue(content);  // 界面值
                     validationValue = bindingInfoType.parseValue(validationValue); // 转为BO中属性值
-                    let vResult: datatype.ValidateResult = bindingInfoType.callValidate(validationValue, control);
+                    let vResult: datatype.ValidateResult = bindingInfoType.validate(validationValue, control);
                     if (!vResult.status) {
                         validateResult.message = vResult.message;
                         validateResult.status = vResult.status;
+                        bindingInfoType.fireValidationError(control, validateResult.message);
                     }
                 }
             }
