@@ -9,7 +9,7 @@
 import {
     objects, Criteria, Condition, Sort, ChildCriteria, OperationResult,
     dates, enums, OperationMessage, FileData, OperationInformation, List,
-    emApprovalStatus, emBOStatus, emDocumentStatus, emYesNo, ArrayList,
+    emApprovalStatus, emBOStatus, emDocumentStatus, emYesNo, ArrayList, emDirection,
     emMessageLevel, emConditionOperation, emConditionRelationship, emSortType,
     DataTable, DataTableColumn, DataTableRow, KeyText, KeyValue
 } from "../data/index";
@@ -563,12 +563,18 @@ export abstract class BOConverter implements IBOConverter<IBusinessObject, any> 
             } else if (property === "DocumentStatus" || property === "LineStatus") {
                 return enums.valueOf(emDocumentStatus, value);
             } else if (property === "Canceled" || property === "Referenced"
-                || property === "Transfered" || property === "Activated" || property === "Deleted") {
+                || property === "Transfered" || property === "Activated"
+                || property === "Deleted" || property === "SerialManagement"
+                || property === "BatchManagement" || property === "SalesItem"
+                || property === "PurchaseItem" || property === "PhantomItem"
+                || property === "InventoryItem" || property === "FixedAssets") {
                 return enums.valueOf(emYesNo, value);
             } else if (property === "Status") {
                 return enums.valueOf(emBOStatus, value);
             } else if (property === "ApprovalStatus") {
                 return enums.valueOf(emApprovalStatus, value);
+            } else if (property === "Direction") {
+                return enums.valueOf(emDirection, value);
             }
         }
         // 不做处理，原始返回
@@ -587,12 +593,18 @@ export abstract class BOConverter implements IBOConverter<IBusinessObject, any> 
             if (property === "DocumentStatus" || property === "LineStatus") {
                 return enums.toString(emDocumentStatus, value);
             } else if (property === "Canceled" || property === "Referenced"
-                || property === "Transfered" || property === "Activated" || property === "Deleted") {
+                || property === "Transfered" || property === "Activated"
+                || property === "Deleted" || property === "SerialManagement"
+                || property === "BatchManagement" || property === "SalesItem"
+                || property === "PurchaseItem" || property === "PhantomItem"
+                || property === "InventoryItem" || property === "FixedAssets") {
                 return enums.toString(emYesNo, value);
             } else if (property === "Status") {
                 return enums.toString(emBOStatus, value);
             } else if (property === "ApprovalStatus") {
                 return enums.toString(emApprovalStatus, value);
+            } else if (property === "Direction") {
+                return enums.toString(emDirection, value);
             }
         } else if (value instanceof Date) {
             // 日期类型
