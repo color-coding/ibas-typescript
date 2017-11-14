@@ -278,9 +278,14 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
         if (objects.isNull(indexName) || indexName === "") {
             indexName = "index";
         }
+        let ibas_index_url: string = require.toUrl("ibas/index");
+        if (ibas_index_url.indexOf("?") > 0) {
+            // 去除参数部分
+            ibas_index_url = ibas_index_url.substring(0, ibas_index_url.indexOf("?"));
+        }
         let moduleRequire: Function = requires.create({
             baseUrl: address,
-            map: { "*": { "css": require.toUrl("ibas/index") + "/../3rdparty/css.min.js" } },
+            map: { "*": { "css": ibas_index_url + "/../3rdparty/css.min.js" } },
             context: requires.naming(module.name)
         }, []);
         logger.log(emMessageLevel.DEBUG, "center: module [{0}] {root: [{1}], index: [{2}]}.", module.name, address, indexName);
