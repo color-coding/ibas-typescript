@@ -72,7 +72,8 @@
         require(["ibas/index"], function (ibas) {
             // 加载成功，创建壳加载
             var sysRequire = ibas.requires.create({
-                baseUrl: root
+                baseUrl: root,
+                map: { "*": { "css": require.toUrl("./ibas/3rdparty/css.min.js") } }
             }, []);
             // 加载应用系统
             sysRequire(["ibas/bsbas/systems/index"], function () {
@@ -80,6 +81,7 @@
                 var shellRequire = ibas.requires.create({
                     context: ibas.requires.naming("shell"),
                     baseUrl: root + "./ibas/shell/",
+                    map: { "*": { "css": require.toUrl("./ibas/3rdparty/css.min.js") } },
                 }, ["ibas/bsbas/systems"]);
                 shellRequire(["index"], function (index) {
                 }, requireError);
