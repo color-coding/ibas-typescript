@@ -23,7 +23,7 @@ if "%WORK_FOLDER:~-1%" neq "\" SET WORK_FOLDER=%WORK_FOLDER%\
 echo --工作的目录：%WORK_FOLDER%
 REM 启动文件夹监听
 CALL :WATCHING_TS "%WORK_FOLDER%ibas\tsconfig.json"
-CALL :WATCHING_TS "%WORK_FOLDER%openui5\typings\tsconfig.json"
+CALL :WATCHING_TS "%WORK_FOLDER%openui5\tsconfig.json"
 CALL :WATCHING_TS "%WORK_FOLDER%test\apps\tsconfig.dev.json"
 
 REM 启动web服务
