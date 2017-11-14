@@ -99,8 +99,6 @@ export module requires {
                 }
             }
         }
-        // 支持加载css
-        config.map = { "*": { "css": "/ibas/3rdparty/css.min.js" } };
         return (<any>window).require.config(config);
     }
 }
