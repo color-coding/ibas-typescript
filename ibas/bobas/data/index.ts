@@ -22,3 +22,5 @@ export * from "./Strings";
 export * from "./Urls";
 export * from "./DataTable";
 
+/** 数据分隔符（,） */
+export const DATA_SEPARATOR: string = ",";
