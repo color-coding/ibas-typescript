@@ -280,6 +280,7 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
         }
         let moduleRequire: Function = requires.create({
             baseUrl: address,
+            map: { "*": { "css": require.toUrl("ibas/index") + "/../3rdparty/css.min.js" } },
             context: requires.naming(module.name)
         }, []);
         logger.log(emMessageLevel.DEBUG, "center: module [{0}] {root: [{1}], index: [{2}]}.", module.name, address, indexName);
