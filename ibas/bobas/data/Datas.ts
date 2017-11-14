@@ -377,19 +377,19 @@ export module dates {
     export function difference(type: emDifferenceType, minuend: Date, value: Date): number {
         if (!objects.isNull(minuend) && !objects.isNull(value)) {
             let diff: number = minuend.getTime() - value.getTime();
-            diff = Math.abs(diff / 1000);
+            diff = Math.round(diff / 1000);
             if (type === emDifferenceType.SECOND) {
                 return diff;
             }
-            diff = Math.abs(diff / 60);
+            diff = Math.round(diff / 60);
             if (type === emDifferenceType.MINUTE) {
                 return diff;
             }
-            diff = Math.abs(diff / 60);
+            diff = Math.round(diff / 60);
             if (type === emDifferenceType.HOUR) {
                 return diff;
             }
-            diff = Math.abs(diff / 24);
+            diff = Math.round(diff / 24);
             if (type === emDifferenceType.DAY) {
                 return diff;
             }
