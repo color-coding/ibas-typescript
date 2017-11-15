@@ -10,6 +10,7 @@ import {
     objects, ArrayList, IOperationResult, ICriteria, ICondition
 } from "../data/index";
 import { IBusinessObject, IBusinessObjectList } from "./BusinessObjectCore.d";
+import { FileData } from "../../index";
 
 
 /**
@@ -117,9 +118,14 @@ export interface IFileRepository {
 /**
  * 上传文件调用者
  */
-export interface UploadFileCaller extends MethodCaller {
+export interface UploadFileCaller<T> extends MethodCaller {
     /** 文件上传数据 */
     fileData: FormData;
+    /**
+     * 调用完成
+     * @param opRslt 结果
+     */
+    onCompleted(opRslt: IOperationResult<T>);
 }
 /**
  * 文件上传仓库
@@ -130,7 +136,7 @@ export interface IFileRepositoryUpload {
      * @param method 方法地址
      * @param caller 调用者
      */
-    upload(method: string, caller: UploadFileCaller);
+    upload<T>(method: string, caller: UploadFileCaller<T>);
 }
 /**
  * 下载文件调用者

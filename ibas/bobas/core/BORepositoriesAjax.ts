@@ -237,7 +237,7 @@ export class FileRepositoryUploadAjax extends RemoteRepositoryAjax implements IF
      * @param method 方法地址
      * @param caller 调用者
      */
-    upload(method: string, caller: UploadFileCaller): void {
+    upload<T>(method: string, caller: UploadFileCaller<T>): void {
         this.callRemoteMethod(method, caller.fileData, caller);
     }
 }
