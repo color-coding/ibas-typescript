@@ -139,11 +139,16 @@ export interface IFileRepositoryUpload {
     upload<T>(method: string, caller: UploadFileCaller<T>);
 }
 /**
- * 下载文件调用者
+ * 下载文件调用者，T类型一般为Blob
  */
-export interface DownloadFileCaller extends MethodCaller {
+export interface DownloadFileCaller<T> extends MethodCaller {
     /** 下载条件 */
     criteria: ICriteria;
+    /**
+     * 调用完成
+     * @param opRslt 结果
+     */
+    onCompleted(opRslt: IOperationResult<T>);
 }
 /**
  * 文件上传仓库
@@ -154,7 +159,7 @@ export interface IFileRepositoryDownload {
      * @param method 方法地址
      * @param caller 调用者
      */
-    download(method: string, caller: DownloadFileCaller);
+    download<T>(method: string, caller: DownloadFileCaller<T>);
 }
 /**
  * 数据转换者

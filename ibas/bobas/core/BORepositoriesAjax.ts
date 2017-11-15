@@ -302,7 +302,7 @@ export class FileRepositoryDownloadAjax extends RemoteRepositoryXhr implements I
      * @param method 方法地址
      * @param caller 调用者
      */
-    download(method: string, caller: DownloadFileCaller): void {
+    download<T>(method: string, caller: DownloadFileCaller<T>): void {
         let methodCaller: MethodCaller = {
             onCompleted(data: any): void {
                 let opRslt: IOperationResult<any> = null;
