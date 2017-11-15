@@ -119,6 +119,9 @@ export interface IBusinessObject extends ITrackable {
      * @param value 值
      */
     setProperty<P>(property: string, value: P);
+
+    /** 输出字符串 */
+    toString(): string;
 }
 
 /**
