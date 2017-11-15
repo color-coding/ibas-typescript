@@ -22937,7 +22937,7 @@ declare namespace sap {
       */
       setVisible(bVisible: boolean): sap.m.ListItemBase;
 
-      getBindingContext():sap.ui.model.Context;
+      getBindingContext(): sap.ui.model.Context;
 
     }
     /**
@@ -42748,6 +42748,19 @@ declare namespace sap {
        * @returns Metadata object describing this class
       */
       getMetadata(): sap.ui.base.Metadata;
+    }
+    /**
+     * This control enables you to display PDF documents within your app.
+     * It can be embedded in your user interface layout, or you can set it to open in a popup dialog.
+     * @resource sap/m/PDFViewer.js
+     */
+    export class PDFViewer extends sap.ui.core.Control {
+      /**
+       * Constructor for a new UploadCollectionToolbarPlaceholder.
+       * @param sId ID for the new control, generated automatically if no ID is given
+       * @param mSettings initial settings for the new control
+      */
+      constructor(sId: string, mSettings?: any);
     }
     /**
      *   Interface for controls which are suitable as a Header, Subheader or Footer of a Page.  If the
