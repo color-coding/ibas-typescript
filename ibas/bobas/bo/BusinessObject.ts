@@ -267,6 +267,16 @@ export abstract class BusinessObjects<T extends IBusinessObject, P extends IBusi
         });
     }
 }
+/**
+ * 统一命名
+ * @param value 待重命名属性
+ */
+function naming(value: string): string {
+    if (!strings.isEmpty(value)) {
+        return value[0].toUpperCase() + value.substring(1);
+    }
+    return value;
+}
 
 /**
  * 单据对象基类
@@ -288,7 +298,7 @@ export abstract class BODocument<T extends IBODocument> extends BusinessObject<T
         builder.append(this[BO_PROPERTY_NAME_OBJECTCODE]);
         builder.append("].");
         builder.append("[");
-        builder.append(BO_PROPERTY_NAME_DOCENTRY);
+        builder.append(naming(BO_PROPERTY_NAME_DOCENTRY));
         builder.append(" ");
         builder.append("=");
         builder.append(" ");
@@ -321,7 +331,7 @@ export abstract class BODocumentLine<T extends IBODocumentLine> extends Business
         builder.append(this[BO_PROPERTY_NAME_OBJECTCODE]);
         builder.append("].");
         builder.append("[");
-        builder.append(BO_PROPERTY_NAME_DOCENTRY);
+        builder.append(naming(BO_PROPERTY_NAME_DOCENTRY));
         builder.append(" ");
         builder.append("=");
         builder.append(" ");
@@ -329,7 +339,7 @@ export abstract class BODocumentLine<T extends IBODocumentLine> extends Business
         builder.append("]");
         builder.append("&");
         builder.append("[");
-        builder.append(BO_PROPERTY_NAME_LINEID);
+        builder.append(naming(BO_PROPERTY_NAME_LINEID));
         builder.append(" ");
         builder.append("=");
         builder.append(" ");
@@ -359,7 +369,7 @@ export abstract class BOMasterData<T extends IBOMasterData> extends BusinessObje
         builder.append(this[BO_PROPERTY_NAME_OBJECTCODE]);
         builder.append("].");
         builder.append("[");
-        builder.append(BO_PROPERTY_NAME_CODE);
+        builder.append(naming(BO_PROPERTY_NAME_CODE));
         builder.append(" ");
         builder.append("=");
         builder.append(" ");
@@ -392,7 +402,7 @@ export abstract class BOMasterDataLine<T extends IBOMasterDataLine> extends Busi
         builder.append(this[BO_PROPERTY_NAME_OBJECTCODE]);
         builder.append("].");
         builder.append("[");
-        builder.append(BO_PROPERTY_NAME_CODE);
+        builder.append(naming(BO_PROPERTY_NAME_CODE));
         builder.append(" ");
         builder.append("=");
         builder.append(" ");
@@ -400,7 +410,7 @@ export abstract class BOMasterDataLine<T extends IBOMasterDataLine> extends Busi
         builder.append("]");
         builder.append("&");
         builder.append("[");
-        builder.append(BO_PROPERTY_NAME_LINEID);
+        builder.append(naming(BO_PROPERTY_NAME_LINEID));
         builder.append(" ");
         builder.append("=");
         builder.append(" ");
@@ -430,7 +440,7 @@ export abstract class BOSimple<T extends IBOSimple> extends BusinessObject<T> {
         builder.append(this[BO_PROPERTY_NAME_OBJECTCODE]);
         builder.append("].");
         builder.append("[");
-        builder.append(BO_PROPERTY_NAME_OBJECTKEY);
+        builder.append(naming(BO_PROPERTY_NAME_OBJECTKEY));
         builder.append(" ");
         builder.append("=");
         builder.append(" ");
@@ -463,7 +473,7 @@ export abstract class BOSimpleLine<T extends IBOSimpleLine> extends BusinessObje
         builder.append(this[BO_PROPERTY_NAME_OBJECTCODE]);
         builder.append("].");
         builder.append("[");
-        builder.append(BO_PROPERTY_NAME_OBJECTKEY);
+        builder.append(naming(BO_PROPERTY_NAME_OBJECTKEY));
         builder.append(" ");
         builder.append("=");
         builder.append(" ");
@@ -471,7 +481,7 @@ export abstract class BOSimpleLine<T extends IBOSimpleLine> extends BusinessObje
         builder.append("]");
         builder.append("&");
         builder.append("[");
-        builder.append(BO_PROPERTY_NAME_LINEID);
+        builder.append(naming(BO_PROPERTY_NAME_LINEID));
         builder.append(" ");
         builder.append("=");
         builder.append(" ");
