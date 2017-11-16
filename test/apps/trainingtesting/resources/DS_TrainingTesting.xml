@@ -126,7 +126,31 @@
     <Property Name="LineTotal" Description="行总计" DataType="Decimal" DataSubType="Sum" EditSize="8" Mapped="LineTotal"/>
     <Property Name="Warehouse" Description="仓库代码" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="WhsCode"/>
   </Model>
-  <BusinessObject MappedModel="SalesOrder" ShortName="${Company}_TT_SALESORDER">
-    <RelatedBO Relation="OneToMany" MappedModel="SalesOrderItem"/>
+  <Model Name="BatchItem" Description="销售订单-行-批次" ModelType="DocumentLine" Mapped="${Company}_TT_RDR2">
+    <Property Name="DocEntry" Description="编码" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="DocEntry" PrimaryKey="Yes"/>
+    <Property Name="LineId" Description="行号" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="LineId" PrimaryKey="Yes"/>
+    <Property Name="VisOrder" Description="显示顺序" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="VisOrder"/>
+    <Property Name="ObjectCode" Description="类型" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="Object"/>
+    <Property Name="DataSource" Description="数据源" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="DataSource"/>
+    <Property Name="LogInst" Description="实例号（版本）" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="LogInst"/>
+    <Property Name="Referenced" Description="已引用" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Refed"/>
+    <Property Name="Canceled" Description="取消" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Canceled"/>
+    <Property Name="Status" Description="状态" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emBOStatus" Mapped="Status"/>
+    <Property Name="LineStatus" Description="单据状态" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emDocumentStatus" Mapped="LineStatus"/>
+    <Property Name="CreateDate" Description="创建日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="CreateDate"/>
+    <Property Name="CreateTime" Description="创建时间" DataType="Date" DataSubType="Time" EditSize="8" Mapped="CreateTime"/>
+    <Property Name="UpdateDate" Description="修改日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="UpdateDate"/>
+    <Property Name="UpdateTime" Description="修改时间" DataType="Date" DataSubType="Time" EditSize="8" Mapped="UpdateTime"/>
+    <Property Name="CreateUserSign" Description="创建用户" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Creator"/>
+    <Property Name="UpdateUserSign" Description="修改用户" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Updator"/>
+    <Property Name="CreateActionId" Description="创建动作标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="CreateActId"/>
+    <Property Name="UpdateActionId" Description="更新动作标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="UpdateActId"/>
+    <Property Name="BatchCode" Description="批次编号" DataType="Alphanumeric" DataSubType="Default" EditSize="20" Mapped="BatchCode" />
+    <Property Name="Quantity" Description="数量" DataType="Decimal" DataSubType="Quantity" EditSize="8" Mapped="Quantity"/>
+  </Model>
+  <BusinessObject MappedModel="SalesOrder" ShortName="${Company}_TT_SALESORDER">    
+    <RelatedBO Relation="OneToMany" MappedModel="SalesOrderItem">
+      <RelatedBO Relation="OneToMany" MappedModel="BatchItem"/>
+    </RelatedBO>
   </BusinessObject>
 </Domain>
