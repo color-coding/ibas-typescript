@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 echo '****************************************************************************'
 echo '              link_modules.sh                                               '
 echo '                      by niuren.zhu                                         '

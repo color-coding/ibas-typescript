@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 echo '****************************************************************************'
 echo '              start_web_server_tomcat.sh                                    '
 echo '                      by niuren.zhu                                         '
