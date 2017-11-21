@@ -1,6 +1,5 @@
 {
-    "sys_shell_desktop_notification_not_supported": "当前浏览器不支持Notification API",
-    "sys_shell_desktop_notification_title": "消息",
-    "sys_shell_desktop_notification_send_error": "发送消息发生内部错误",
-    "sys_shell_please_chooose_data": "请选择{0}数据"
+    "ui5_utils_desktop_notification_not_supported": "当前浏览器不支持Notification API",
+    "ui5_utils_desktop_notification_title": "消息",
+    "ui5_utils_desktop_notification_send_error": "发送消息发生内部错误"
 }

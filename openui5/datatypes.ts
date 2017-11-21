@@ -77,7 +77,7 @@ export namespace datatype {
             result.status = true;
             if (this.notEmpty && !validation.isNotEmpty(oValue)) {
                 result.status = false;
-                result.message = ibas.i18n.prop("data_types_msg_not_empty_error", this.description);
+                result.message = ibas.i18n.prop("ui5_data_types_not_empty_error", this.description);
                 this.fireValidationError(control, result.message);
                 return result;
             }
@@ -115,18 +115,18 @@ export namespace datatype {
             let result: ValidateResult = super.validate(oValue, control);
             if (!validation.isNumeric(oValue)) {
                 result.status = false;
-                result.message = ibas.i18n.prop("data_types_msg_numeric_error");
+                result.message = ibas.i18n.prop("ui5_data_types_numeric_error");
                 this.fireValidationError(control, result.message);
             }
             if (validation.isNotEmpty(oValue) && this.minValue !== undefined && !(oValue > this.minValue)) {
                 result.status = false;
-                result.message = ibas.i18n.prop("data_types_msg_numeric_minvalue_error", this.description,
+                result.message = ibas.i18n.prop("ui5_data_types_numeric_minvalue_error", this.description,
                     this.minValue);
                 this.fireValidationError(control, result.message);
             }
             if (validation.isNotEmpty(oValue) && this.maxValue !== undefined && !(oValue < this.maxValue)) {
                 result.status = false;
-                result.message = ibas.i18n.prop("data_types_msg_numeric_maxvalue_error", this.description,
+                result.message = ibas.i18n.prop("ui5_data_types_numeric_maxvalue_error", this.description,
                     this.maxValue);
                 this.fireValidationError(control, result.message);
             }
@@ -178,12 +178,12 @@ export namespace datatype {
             let result: ValidateResult = super.validate(oValue, control);
             if (isNaN(oValue)) {
                 result.status = false;
-                result.message = ibas.i18n.prop("data_types_msg_decimal_error");
+                result.message = ibas.i18n.prop("ui5_data_types_decimal_error");
                 this.fireValidationError(control, result.message);
             }
             if (!validation.isDecimal(oValue, this.decimalPlaces)) {
                 result.status = false;
-                result.message = ibas.i18n.prop("data_types_msg_decimal_decimalPlaces_error", this.description,
+                result.message = ibas.i18n.prop("ui5_data_types_decimal_decimalPlaces_error", this.description,
                     this.decimalPlaces);
                 this.fireValidationError(control, result.message);
             }
@@ -229,7 +229,7 @@ export namespace datatype {
             let result: ValidateResult = super.validate(oValue, control);
             if (!validation.isDate(oValue)) {
                 result.status = false;
-                result.message = ibas.i18n.prop("data_types_msg_datetime_error", this.description);
+                result.message = ibas.i18n.prop("ui5_data_types_datetime_error", this.description);
                 this.fireValidationError(control, result.message);
             }
             return result;
@@ -282,7 +282,7 @@ export namespace datatype {
             }
             if (!validation.isTime(oValue)) {
                 result.status = false;
-                result.message = ibas.i18n.prop("data_types_msg_time_error", this.description);
+                result.message = ibas.i18n.prop("ui5_data_types_time_error", this.description);
                 this.fireValidationError(control, result.message);
             }
             return result;
@@ -447,7 +447,7 @@ export namespace datatype {
             let result: ValidateResult = super.validate(oValue, control);
             if (!validation.isEmail(oValue)) {
                 result.status = false;
-                result.message = ibas.i18n.prop("data_types_msg_email_error");
+                result.message = ibas.i18n.prop("ui5_data_types_email_error");
                 this.fireValidationError(control, result.message);
             }
             return result;
@@ -475,7 +475,7 @@ export namespace datatype {
             let result: ValidateResult = super.validate(oValue, control);
             if (!validation.isTelephone(oValue)) {
                 result.status = false;
-                result.message = ibas.i18n.prop("data_types_msg_phone_error");
+                result.message = ibas.i18n.prop("ui5_data_types_phone_error");
                 this.fireValidationError(control, result.message);
             }
             return result;
@@ -542,7 +542,7 @@ export namespace datatype {
             let result: ValidateResult = super.validate(oValue, control);
             if (!validation.isMobile(oValue)) {
                 result.status = false;
-                result.message = ibas.i18n.prop("data_types_msg_phone_error");
+                result.message = ibas.i18n.prop("ui5_data_types_phone_error");
                 this.fireValidationError(control, result.message);
             }
             return result;
@@ -570,7 +570,7 @@ export namespace datatype {
             let result: ValidateResult = super.validate(oValue, control);
             if (!validation.isTelephone(oValue)) {
                 result.status = false;
-                result.message = ibas.i18n.prop("data_types_msg_phone_error");
+                result.message = ibas.i18n.prop("ui5_data_types_phone_error");
                 this.fireValidationError(control, result.message);
             }
             return result;
@@ -598,7 +598,7 @@ export namespace datatype {
             let result: ValidateResult = super.validate(oValue, control);
             if (!validation.isZipCode(oValue)) {
                 result.status = false;
-                result.message = ibas.i18n.prop("data_types_msg_zip_code_error");
+                result.message = ibas.i18n.prop("ui5_data_types_zip_code_error");
                 this.fireValidationError(control, result.message);
             }
             return result;
@@ -626,7 +626,7 @@ export namespace datatype {
             let result: ValidateResult = super.validate(oValue, control);
             if (!validation.isUrl(oValue)) {
                 result.status = false;
-                result.message = ibas.i18n.prop("data_types_msg_url_error");
+                result.message = ibas.i18n.prop("ui5_data_types_url_error");
                 this.fireValidationError(control, result.message);
             }
             return result;
@@ -655,7 +655,7 @@ export namespace datatype {
             let result: ValidateResult = super.validate(oValue, control);
             if (!validation.isPassword(oValue)) {
                 result.status = false;
-                result.message = ibas.i18n.prop("data_types_msg_password_error");
+                result.message = ibas.i18n.prop("ui5_data_types_password_error");
                 this.fireValidationError(control, result.message);
             }
             return result;
@@ -683,7 +683,7 @@ export namespace datatype {
             let result: ValidateResult = super.validate(oValue, control);
             if (!validation.isPersonalID(oValue)) {
                 result.status = false;
-                result.message = ibas.i18n.prop("data_types_msg_personalid_error");
+                result.message = ibas.i18n.prop("ui5_data_types_personalid_error");
                 this.fireValidationError(control, result.message);
             }
             return result;

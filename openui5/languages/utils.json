@@ -1,6 +1,6 @@
 {
-    "sys_shell_desktop_notification_not_supported": "The current browser does not support Notification API",
-    "sys_shell_desktop_notification_title": "The message",
-    "sys_shell_desktop_notification_send_error": "Internal error sending the message",
+    "ui5_utils_desktop_notification_not_supported": "The current browser does not support Notification API",
+    "ui5_utils_desktop_notification_title": "The message",
+    "ui5_utils_desktop_notification_send_error": "Internal error sending the message",
     "sys_shell_please_chooose_data": "Please select a data {0}"
 }

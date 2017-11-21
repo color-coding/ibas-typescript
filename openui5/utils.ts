@@ -565,7 +565,7 @@ export namespace utils {
             return !!Notification;
         };
         if (!isNotificationSupported) {
-            console.log(ibas.i18n.prop("sys_shell_desktop_notification_not_supported", ""));
+            console.log(ibas.i18n.prop("ui5_utils_desktop_notification_not_supported", ""));
             return;
         }
         Notification.requestPermission(function (permission: NotificationPermission): void {
@@ -581,7 +581,7 @@ export namespace utils {
                     notificationOptions.lang = "auto";
                 }
                 if (!notificationOptions.title) {
-                    notificationOptions.title = ibas.i18n.prop("sys_shell_desktop_notification_title", "");
+                    notificationOptions.title = ibas.i18n.prop("ui5_utils_desktop_notification_title", "");
                 }
                 let notification: Notification = new Notification(notificationOptions.title, {
                     lang: notificationOptions.lang,
@@ -600,7 +600,7 @@ export namespace utils {
                 notification.onclose = notificationOptions.onClose;
                 notification.onshow = notificationOptions.onShow;
                 notification.onerror = function (oEvent?: Event): any {
-                    ibas.logger.log(ibas.i18n.prop("sys_shell_desktop_notification_send_error", ""));
+                    ibas.logger.log(ibas.i18n.prop("ui5_utils_desktop_notification_send_error", ""));
                     if (!!notificationOptions.onError) {
                         notificationOptions.onError(oEvent);
                     }

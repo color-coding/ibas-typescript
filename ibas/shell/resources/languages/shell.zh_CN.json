@@ -67,5 +67,6 @@
     "sys_shell_query_condition_operation": "比较方式",
     "sys_shell_query_condition_value": "值",
     "sys_shell_query_condition_bracketclose": "闭括号",
-    "sys_shell_whether_to_delete": "共[{0}]个对象是否删除？"
+    "sys_shell_whether_to_delete": "共[{0}]个对象是否删除？",
+    "sys_shell_please_chooose_data": "请选择{0}数据"
 }
