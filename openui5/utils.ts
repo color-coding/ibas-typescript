@@ -530,5 +530,82 @@ export namespace utils {
         }
         return validateResult;
     }
-
+    /**
+     * 桌面消息参数
+     */
+    export interface INotificationOptions {
+        /* 提示主体内容。字符串。会在标题的下面显示 */
+        body: string;
+        /* 标题 */
+        title?: string;
+        /* 默认值是auto, 可以是ltr或rtl，有点类似direction属性。表示提示主体内容的水平书写顺序 */
+        dir?: NotificationDirection;
+        /* 字符串。通知面板左侧那个图标地址 */
+        icon?: string;
+        /* 提示的语言 */
+        lang?: string;
+        /* 字符串。标记当前通知的标签 */
+        tag?: string;
+        /* 自动关闭通知时间（秒） */
+        autoCloseTime?: number;
+        /* 点击通知事件 */
+        onClick?: (oEvent?: Event) => any;
+        /* 关闭通知后触发事件 */
+        onClose?: (oEvent?: Event) => any;
+        /* 通知出错后触发事件 */
+        onError?: (oEvent?: Event) => any;
+        /* 通知显示后触发事件 */
+        onShow?: (oEvent?: Event) => any;
+    }
+    /**
+     * 发送桌面通知
+     */
+    export function sendDesktopNotification(notificationOptions: INotificationOptions): void {
+        let isNotificationSupported: Function = function (): boolean {
+            return !!Notification;
+        };
+        if (!isNotificationSupported) {
+            console.log(ibas.i18n.prop("sys_shell_desktop_notification_not_supported", ""));
+            return;
+        }
+        Notification.requestPermission(function (permission: NotificationPermission): void {
+            // 在回掉函数中判断用户的选择,在这里不用为“拒绝”选项编写代码，因为既然拒绝，就什么都不做了，也不用为默认状态编写代码，因为既然已经弹出让用户选择的选项了，就没有所谓的默认状态了。所以只需要处理用户允许的状态就可以了
+            if (permission === "granted") {
+                if (!notificationOptions.lang) {
+                    notificationOptions.lang = "utf-8";
+                }
+                if (!notificationOptions.icon) {
+                    notificationOptions.lang = "sap-icon://customer";
+                }
+                if (!notificationOptions.dir) {
+                    notificationOptions.lang = "auto";
+                }
+                if (!notificationOptions.title) {
+                    notificationOptions.title = ibas.i18n.prop("sys_shell_desktop_notification_title", "");
+                }
+                let notification: Notification = new Notification(notificationOptions.title, {
+                    lang: notificationOptions.lang,
+                    icon: notificationOptions.icon,
+                    body: notificationOptions.body,
+                    tag: notificationOptions.tag,
+                    dir: notificationOptions.dir,
+                });
+                // 自动关闭
+                if (notificationOptions.autoCloseTime > 0) {
+                    setTimeout(function (): void {
+                        notification.close();
+                    }, notificationOptions.autoCloseTime * 1000);
+                }
+                notification.onclick = notificationOptions.onClick;
+                notification.onclose = notificationOptions.onClose;
+                notification.onshow = notificationOptions.onShow;
+                notification.onerror = function (oEvent?: Event): any {
+                    console.log(ibas.i18n.prop("sys_shell_desktop_notification_send_error", ""));
+                    if (!!notificationOptions.onError) {
+                        notificationOptions.onError(oEvent);
+                    }
+                };
+            }
+        });
+    }
 }

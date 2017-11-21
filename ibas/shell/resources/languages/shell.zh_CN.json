@@ -68,5 +68,8 @@
     "sys_shell_query_condition_value": "值",
     "sys_shell_query_condition_bracketclose": "闭括号",
     "sys_shell_whether_to_delete": "共[{0}]个对象是否删除？",
-    "sys_shell_please_chooose_data": "请选择{0}数据"
+    "sys_shell_please_chooose_data": "请选择{0}数据",
+    "sys_shell_desktop_notification_not_supported": "当前浏览器不支持Notification API",
+    "sys_shell_desktop_notification_title": "消息",
+    "sys_shell_desktop_notification_send_error": "发送消息发生内部错误"
 }
