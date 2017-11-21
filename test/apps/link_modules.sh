@@ -13,7 +13,7 @@ STARTUP_FOLDER=`pwd`
 # 工作目录默认第一个参数
 WORK_FOLDER=$1
 # 未提供工作目录，则取启动目录
-if [ "${WORK_FOLDER}" == "" ]
+if [ "${WORK_FOLDER}" = "" ]
 then
   WORK_FOLDER=${STARTUP_FOLDER}/../../..
 fi
