@@ -25,6 +25,8 @@ if ((<any>window).ibas.openui5 === undefined) {
     let rootUrl: string = ibas.urls.rootUrl(LIBRARY_OPENUI5_ROOT_FILE_NAME);
     // 加载语言-框架默认
     ibas.i18n.load(ibas.strings.format("{0}/languages/datatypes.json", rootUrl));
+    // 加载语言-框架默认
+    ibas.i18n.load(ibas.strings.format("{0}/languages/utils.json", rootUrl));
 }
 export * from "./datatypes";
 export * from "./utils";

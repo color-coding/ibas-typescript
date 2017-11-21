@@ -600,7 +600,7 @@ export namespace utils {
                 notification.onclose = notificationOptions.onClose;
                 notification.onshow = notificationOptions.onShow;
                 notification.onerror = function (oEvent?: Event): any {
-                    console.log(ibas.i18n.prop("sys_shell_desktop_notification_send_error", ""));
+                    ibas.logger.log(ibas.i18n.prop("sys_shell_desktop_notification_send_error", ""));
                     if (!!notificationOptions.onError) {
                         notificationOptions.onError(oEvent);
                     }
