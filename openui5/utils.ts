@@ -254,6 +254,7 @@ export namespace utils {
                         if (!ibas.objects.isNull(model)) {
                             model.refresh(false);
                         }
+                        validateControlBoundProperty(managedObject);
                     }
                 });
             }
@@ -417,79 +418,72 @@ export namespace utils {
     }
     /**
      * 验证控件绑定属性是否合法
-     * @param controls
+     * @param managedObjects
      */
-    export function validateControlBoundProperty(control: sap.ui.core.Control[]): datatype.ValidateResult;
+    export function validateControlBoundProperty(managedObjects: sap.ui.base.ManagedObject[]): datatype.ValidateResult;
     /**
      * 验证控件绑定属性是否合法
-     * @param control
+     * @param managedObject
      */
-    export function validateControlBoundProperty(controls: sap.ui.core.Control): datatype.ValidateResult;
-    /**
-     * 验证控件绑定属性是否合法
-     * @param table
-     */
-    export function validateControlBoundProperty(table: sap.ui.table.Table): datatype.ValidateResult;
-    /**
-     * 验证控件绑定属性是否合法
-     * @param wizard
-     */
-    export function validateControlBoundProperty(wizard: sap.m.Wizard): datatype.ValidateResult;
+    export function validateControlBoundProperty(managedObject: sap.ui.base.ManagedObject): datatype.ValidateResult;
     /**
      * 验证控件绑定属性是否合法
      */
     export function validateControlBoundProperty(): datatype.ValidateResult {
-        function traverseContents(control: sap.ui.core.Control): sap.ui.core.Control[];
-        function traverseContents(control: sap.ui.core.Control): sap.ui.core.Control;
+        function traverseContents(managedObject: sap.ui.base.ManagedObject): sap.ui.base.ManagedObject[];
+        function traverseContents(managedObject: sap.ui.base.ManagedObject): sap.ui.base.ManagedObject;
         /** 遍历展开控件内容 */
         function traverseContents(): any {
-            let control: any = arguments[0];
-            let controls: sap.ui.core.Control[] = [];
-            if (ibas.objects.isNull(control)) {
+            let managedObject: any = arguments[0];
+            let managedObjects: sap.ui.base.ManagedObject[] = [];
+            if (ibas.objects.isNull(managedObject)) {
                 return null;
             }
-            if (control.getContent instanceof Function) {
-                for (let content of control.getContent().reverse()) {
-                    controls.push(content);
+            if (managedObject.getContent instanceof Function) {
+                for (let content of managedObject.getContent().reverse()) {
+                    managedObjects.push(content);
                 }
-            } else if (control instanceof sap.ui.table.Table) {
-                for (let row of control.getRows().reverse()) {
+            } else if (managedObject instanceof sap.ui.table.Table) {
+                for (let row of managedObject.getRows().reverse()) {
                     for (let cell of row.getCells()) {
-                        controls.push(cell);
+                        managedObjects.push(cell);
                     }
                 }
-            } else if (control instanceof sap.m.Wizard) {
-                for (let step of control.getSteps().reverse()) {
-                    controls.push(step);
+            } else if (managedObject instanceof sap.m.Wizard) {
+                for (let step of managedObject.getSteps().reverse()) {
+                    managedObjects.push(step);
                 }
             } else {
-                return control;
+                return managedObject;
             }
-            return controls;
+            return managedObjects;
         }
         /** 获取控件验证值 */
-        function getValidationValue(control: sap.ui.core.Control): any {
-            if (control instanceof sap.m.Input || control instanceof sap.m.DatePicker) {
-                return control.getValue();
+        function getValidationValue(managedObject: sap.ui.base.ManagedObject): any {
+            if (managedObject instanceof sap.m.Input || managedObject instanceof sap.m.DatePicker) {
+                return managedObject.getValue();
             }
-            if (control instanceof sap.m.Select) {
-                return control.getSelectedKey();
+            if (managedObject instanceof sap.m.Select) {
+                return managedObject.getSelectedKey();
             }
-            if (control instanceof sap.m.DateRangeSelection || control instanceof sap.m.TimePicker) {
-                return control.getDateValue();
+            if (managedObject instanceof sap.m.DateRangeSelection || managedObject instanceof sap.m.TimePicker) {
+                return managedObject.getDateValue();
             }
             return null;
         }
         /** 检查控件验证类型 */
-        function checkControlBindingInfoType(control: sap.ui.core.Control): datatype.DataType {
+        function checkControlBindingInfoType(managedObject: sap.ui.base.ManagedObject): datatype.DataType {
             let bindingInfo: any = null;
-            /** 获取值类型,根据不同控件的绑定值添加 */
-            let bindingTypes: Array<string> = ["value", "dateValue", "secondDateValue", "selectedKey"];
-            for (let type of bindingTypes) {
-                let info: any = control.getBindingInfo(type);
-                if (!!info && !!info.type && info.type.validate instanceof Function) {
-                    bindingInfo = info;
-                    break;
+            /** 控件当前有绑定内容才判断绑定类型 */
+            if (!!managedObject.getBindingContext()) {
+                /** 获取值类型,根据不同控件的绑定值添加 */
+                let bindingTypes: Array<string> = ["value", "dateValue", "secondDateValue", "selectedKey"];
+                for (let type of bindingTypes) {
+                    let info: any = managedObject.getBindingInfo(type);
+                    if (!!info && !!info.type && info.type.validate instanceof Function) {
+                        bindingInfo = info;
+                        break;
+                    }
                 }
             }
             return !!bindingInfo ? bindingInfo.type : null;
@@ -497,17 +491,17 @@ export namespace utils {
         let validateResult: datatype.ValidateResult = new datatype.ValidateResult();
         validateResult.status = true;
         let argument: any = arguments[0];
-        let controls: sap.ui.core.Control[] = [];
+        let managedObjects: sap.ui.base.ManagedObject[] = [];
         if (ibas.objects.isNull(argument)) {
             return validateResult;
         }
         if (argument instanceof Array) {
-            controls = argument;
+            managedObjects = argument;
         } else {
-            controls = [argument];
+            managedObjects = [argument];
         }
-        for (let control of controls) {
-            let content: any = traverseContents(control);
+        for (let managedObject of managedObjects) {
+            let content: any = traverseContents(managedObject);
             if (content instanceof Array) {
                 let stepResult: datatype.ValidateResult = validateControlBoundProperty(content);
                 if (!stepResult.status) {
@@ -519,11 +513,17 @@ export namespace utils {
                 if (!!bindingInfoType) {
                     let validationValue: any = getValidationValue(content);  // 界面值
                     validationValue = bindingInfoType.parseValue(validationValue); // 转为BO中属性值
-                    let vResult: datatype.ValidateResult = bindingInfoType.validate(validationValue, control);
+                    let vResult: datatype.ValidateResult = bindingInfoType.validate(validationValue, managedObject);
                     if (!vResult.status) {
                         validateResult.message = vResult.message;
                         validateResult.status = vResult.status;
-                        bindingInfoType.fireValidationError(control, validateResult.message);
+                        bindingInfoType.fireValidationError(managedObject, validateResult.message);
+                    } else {
+                        if (managedObject instanceof sap.ui.core.Element) {
+                            sap.ui.getCore().fireValidationSuccess({
+                                element: managedObject
+                            });
+                        }
                     }
                 }
             }

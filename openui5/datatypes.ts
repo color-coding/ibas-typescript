@@ -35,7 +35,7 @@ export namespace datatype {
         parseValue(oValue: any): any {
             return oValue;
         }
-        validate(oValue: any, control?: sap.ui.core.Control): ValidateResult {
+        validate(oValue: any, managedObject?: sap.ui.base.ManagedObject): ValidateResult {
             let result: ValidateResult = new ValidateResult();
             result.status = true;
             return result;
@@ -46,10 +46,11 @@ export namespace datatype {
                 throw new sap.ui.model.ValidateException(result.message);
             }
         }
-        fireValidationError(control: sap.ui.core.Control, message?: string): sap.ui.core.Core {
-            if (control !== null && control !== undefined) {
+        fireValidationError(managedObject: sap.ui.base.ManagedObject, message?: string): sap.ui.core.Core {
+            if (managedObject !== null && managedObject !== undefined
+                && managedObject instanceof sap.ui.core.Element) {
                 let arg: any = {
-                    element: control,
+                    element: managedObject,
                     message: message,
                 };
                 return sap.ui.getCore().fireValidationError(arg);
@@ -72,13 +73,13 @@ export namespace datatype {
             this.notEmpty = settings.notEmpty;
         }
         notEmpty: boolean = false;
-        validate(oValue: string, control?: sap.ui.core.Control): ValidateResult {
+        validate(oValue: string, managedObject?: sap.ui.base.ManagedObject): ValidateResult {
             let result: ValidateResult = new ValidateResult();
             result.status = true;
             if (this.notEmpty && !validation.isNotEmpty(oValue)) {
                 result.status = false;
                 result.message = ibas.i18n.prop("ui5_data_types_not_empty_error", this.description);
-                this.fireValidationError(control, result.message);
+                this.fireValidationError(managedObject, result.message);
                 return result;
             }
             return result;
@@ -111,24 +112,24 @@ export namespace datatype {
         parseValue(oValue: any): number {
             return Number.parseInt(oValue);
         }
-        validate(oValue: number, control?: sap.ui.core.Control): ValidateResult {
-            let result: ValidateResult = super.validate(oValue, control);
+        validate(oValue: number, managedObject?: sap.ui.base.ManagedObject): ValidateResult {
+            let result: ValidateResult = super.validate(oValue, managedObject);
             if (!validation.isNumeric(oValue)) {
                 result.status = false;
                 result.message = ibas.i18n.prop("ui5_data_types_numeric_error");
-                this.fireValidationError(control, result.message);
+                this.fireValidationError(managedObject, result.message);
             }
             if (validation.isNotEmpty(oValue) && this.minValue !== undefined && !(oValue > this.minValue)) {
                 result.status = false;
                 result.message = ibas.i18n.prop("ui5_data_types_numeric_minvalue_error", this.description,
                     this.minValue);
-                this.fireValidationError(control, result.message);
+                this.fireValidationError(managedObject, result.message);
             }
             if (validation.isNotEmpty(oValue) && this.maxValue !== undefined && !(oValue < this.maxValue)) {
                 result.status = false;
                 result.message = ibas.i18n.prop("ui5_data_types_numeric_maxvalue_error", this.description,
                     this.maxValue);
-                this.fireValidationError(control, result.message);
+                this.fireValidationError(managedObject, result.message);
             }
             return result;
         }
@@ -174,18 +175,18 @@ export namespace datatype {
             let pow: number = Math.pow(10, this.decimalPlaces);
             return Math.round(Number.parseFloat(oValue) * pow) / pow;
         }
-        validate(oValue: number, control?: sap.ui.core.Control): ValidateResult {
-            let result: ValidateResult = super.validate(oValue, control);
+        validate(oValue: number, managedObject?: sap.ui.base.ManagedObject): ValidateResult {
+            let result: ValidateResult = super.validate(oValue, managedObject);
             if (isNaN(oValue)) {
                 result.status = false;
                 result.message = ibas.i18n.prop("ui5_data_types_decimal_error");
-                this.fireValidationError(control, result.message);
+                this.fireValidationError(managedObject, result.message);
             }
             if (!validation.isDecimal(oValue, this.decimalPlaces)) {
                 result.status = false;
                 result.message = ibas.i18n.prop("ui5_data_types_decimal_decimalPlaces_error", this.description,
                     this.decimalPlaces);
-                this.fireValidationError(control, result.message);
+                this.fireValidationError(managedObject, result.message);
             }
             return result;
         }
@@ -225,12 +226,12 @@ export namespace datatype {
             }
             return ibas.dates.valueOf(oValue);
         }
-        validate(oValue: Date, control?: sap.ui.core.Control): ValidateResult {
-            let result: ValidateResult = super.validate(oValue, control);
+        validate(oValue: Date, managedObject?: sap.ui.base.ManagedObject): ValidateResult {
+            let result: ValidateResult = super.validate(oValue, managedObject);
             if (!validation.isDate(oValue)) {
                 result.status = false;
                 result.message = ibas.i18n.prop("ui5_data_types_datetime_error", this.description);
-                this.fireValidationError(control, result.message);
+                this.fireValidationError(managedObject, result.message);
             }
             return result;
         }
@@ -275,15 +276,15 @@ export namespace datatype {
             }
             return 0;
         }
-        validate(oValue: number, control?: sap.ui.core.Control): ValidateResult {
-            let result: ValidateResult = super.validate(oValue, control);
+        validate(oValue: number, managedObject?: sap.ui.base.ManagedObject): ValidateResult {
+            let result: ValidateResult = super.validate(oValue, managedObject);
             if (ibas.objects.instanceOf(oValue, Date)) {
                 return result;
             }
             if (!validation.isTime(oValue)) {
                 result.status = false;
                 result.message = ibas.i18n.prop("ui5_data_types_time_error", this.description);
-                this.fireValidationError(control, result.message);
+                this.fireValidationError(managedObject, result.message);
             }
             return result;
         }
@@ -443,12 +444,12 @@ export namespace datatype {
         constructor(settings?: IAlphanumericSetting) {
             super(settings);
         }
-        validate(oValue: string, control?: sap.ui.core.Control): ValidateResult {
-            let result: ValidateResult = super.validate(oValue, control);
+        validate(oValue: string, managedObject?: sap.ui.base.ManagedObject): ValidateResult {
+            let result: ValidateResult = super.validate(oValue, managedObject);
             if (!validation.isEmail(oValue)) {
                 result.status = false;
                 result.message = ibas.i18n.prop("ui5_data_types_email_error");
-                this.fireValidationError(control, result.message);
+                this.fireValidationError(managedObject, result.message);
             }
             return result;
         }
@@ -471,12 +472,12 @@ export namespace datatype {
         constructor(settings?: IAlphanumericSetting) {
             super(settings);
         }
-        validate(oValue: string, control?: sap.ui.core.Control): ValidateResult {
-            let result: ValidateResult = super.validate(oValue, control);
+        validate(oValue: string, managedObject?: sap.ui.base.ManagedObject): ValidateResult {
+            let result: ValidateResult = super.validate(oValue, managedObject);
             if (!validation.isTelephone(oValue)) {
                 result.status = false;
                 result.message = ibas.i18n.prop("ui5_data_types_phone_error");
-                this.fireValidationError(control, result.message);
+                this.fireValidationError(managedObject, result.message);
             }
             return result;
         }
@@ -538,12 +539,12 @@ export namespace datatype {
         constructor(settings?: IAlphanumericSetting) {
             super(settings);
         }
-        validate(oValue: string, control?: sap.ui.core.Control): ValidateResult {
-            let result: ValidateResult = super.validate(oValue, control);
+        validate(oValue: string, managedObject?: sap.ui.base.ManagedObject): ValidateResult {
+            let result: ValidateResult = super.validate(oValue, managedObject);
             if (!validation.isMobile(oValue)) {
                 result.status = false;
                 result.message = ibas.i18n.prop("ui5_data_types_phone_error");
-                this.fireValidationError(control, result.message);
+                this.fireValidationError(managedObject, result.message);
             }
             return result;
         }
@@ -566,12 +567,12 @@ export namespace datatype {
         constructor(settings?: IAlphanumericSetting) {
             super(settings);
         }
-        validate(oValue: string, control?: sap.ui.core.Control): ValidateResult {
-            let result: ValidateResult = super.validate(oValue, control);
+        validate(oValue: string, managedObject?: sap.ui.base.ManagedObject): ValidateResult {
+            let result: ValidateResult = super.validate(oValue, managedObject);
             if (!validation.isTelephone(oValue)) {
                 result.status = false;
                 result.message = ibas.i18n.prop("ui5_data_types_phone_error");
-                this.fireValidationError(control, result.message);
+                this.fireValidationError(managedObject, result.message);
             }
             return result;
         }
@@ -594,12 +595,12 @@ export namespace datatype {
         constructor(settings?: IAlphanumericSetting) {
             super(settings);
         }
-        validate(oValue: string, control?: sap.ui.core.Control): ValidateResult {
-            let result: ValidateResult = super.validate(oValue, control);
+        validate(oValue: string, managedObject?: sap.ui.base.ManagedObject): ValidateResult {
+            let result: ValidateResult = super.validate(oValue, managedObject);
             if (!validation.isZipCode(oValue)) {
                 result.status = false;
                 result.message = ibas.i18n.prop("ui5_data_types_zip_code_error");
-                this.fireValidationError(control, result.message);
+                this.fireValidationError(managedObject, result.message);
             }
             return result;
         }
@@ -622,12 +623,12 @@ export namespace datatype {
         constructor(settings?: IAlphanumericSetting) {
             super(settings);
         }
-        validate(oValue: string, control?: sap.ui.core.Control): ValidateResult {
-            let result: ValidateResult = super.validate(oValue, control);
+        validate(oValue: string, managedObject?: sap.ui.base.ManagedObject): ValidateResult {
+            let result: ValidateResult = super.validate(oValue, managedObject);
             if (!validation.isUrl(oValue)) {
                 result.status = false;
                 result.message = ibas.i18n.prop("ui5_data_types_url_error");
-                this.fireValidationError(control, result.message);
+                this.fireValidationError(managedObject, result.message);
             }
             return result;
         }
@@ -651,12 +652,12 @@ export namespace datatype {
         constructor(settings?: IAlphanumericSetting) {
             super(settings);
         }
-        validate(oValue: string, control?: sap.ui.core.Control): ValidateResult {
-            let result: ValidateResult = super.validate(oValue, control);
+        validate(oValue: string, managedObject?: sap.ui.base.ManagedObject): ValidateResult {
+            let result: ValidateResult = super.validate(oValue, managedObject);
             if (!validation.isPassword(oValue)) {
                 result.status = false;
                 result.message = ibas.i18n.prop("ui5_data_types_password_error");
-                this.fireValidationError(control, result.message);
+                this.fireValidationError(managedObject, result.message);
             }
             return result;
         }
@@ -679,12 +680,12 @@ export namespace datatype {
         constructor(settings?: IAlphanumericSetting) {
             super(settings);
         }
-        validate(oValue: string, control?: sap.ui.core.Control): ValidateResult {
-            let result: ValidateResult = super.validate(oValue, control);
+        validate(oValue: string, managedObject?: sap.ui.base.ManagedObject): ValidateResult {
+            let result: ValidateResult = super.validate(oValue, managedObject);
             if (!validation.isPersonalID(oValue)) {
                 result.status = false;
                 result.message = ibas.i18n.prop("ui5_data_types_personalid_error");
-                this.fireValidationError(control, result.message);
+                this.fireValidationError(managedObject, result.message);
             }
             return result;
         }
