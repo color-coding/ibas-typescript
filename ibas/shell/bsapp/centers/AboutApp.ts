@@ -22,30 +22,27 @@ export class AboutApp extends sys.AboutApp<IAboutView> {
     /** 视图显示后 */
     protected viewShowed(): void {
         super.viewShowed();
-        let rootUrl: string = ibas.urls.rootUrl("shell/index");
-        let address: string = ibas.urls.normalize(rootUrl + "/version.json");
-        let that: this = this;
-        var JQryAjxSetting: JQueryAjaxSettings = {
-            url: address,
-            type: "GET",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            async: false,
-            cache: false,
-            error: function (xhr: JQueryXHR, status: string, error: string): void {
-                console.warn(ibas.strings.format("about: get version file [{2}] faild [{0} - {1}].", status, error, address));
-            },
-            success: function (data: any): void {
-                console.log(ibas.strings.format("about: get version file [{0}] successful.", address));
-                if (data !== undefined && data !== null) {
-                    that.view.showVersions(data);
-                }
-            },
-        };
-        jQuery.ajax(JQryAjxSetting);
+        let versions: ibas.List<ibas.KeyText> = new ibas.ArrayList<ibas.KeyText>();
+        versions.add(new ibas.KeyText("ibas.shell", (<any>window).ibas.shell.version));
+        versions.add(new ibas.KeyText("ibas.bobas", (<any>window).ibas.bobas.version));
+        versions.add(new ibas.KeyText("ibas.bsbas", (<any>window).ibas.bsbas.version));
+        versions.add(new ibas.KeyText("ibas.shell.ui", "unknown"));
+        versions.add(new ibas.KeyText("jquery", "3.1.1"));
+        versions.add(new ibas.KeyText("requirejs", "2.3.2"));
+        versions.add(new ibas.KeyText("requirejs-css", "0.1.10"));
+        versions.add(new ibas.KeyText("cryptojs", "3.1.9"));
+        versions.add(new ibas.KeyText("spin.js", "2.3.2"));
+        let watcher: ibas.ISystemWatcher = ibas.variablesManager.getWatcher();
+        if (!ibas.objects.isNull(watcher)) {
+            for (let item of watcher.modules()) {
+                versions.add(new ibas.KeyText(item.name, item.version === undefined ? "0.0.1" : item.version));
+            }
+        }
+        this.view.showVersions(versions);
     }
 }
 /** 视图-关于 */
 export interface IAboutView extends sys.IAboutView {
-
+    /** 显示版本 */
+    showVersions(versions: ibas.List<ibas.KeyText>): void;
 }

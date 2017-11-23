@@ -25,7 +25,7 @@ let init: Function = function (): void {
     }
     if ((<any>window).ibas.bobas === undefined) {
         (<any>window).ibas.bobas = {
-            version: "0.1.0",
+            version: "0.1.2",
             author: "niuren.zhu"
         };
         let rootUrl: string = urls.rootUrl(LIBRARY_BOBAS_ROOT_FILE_NAME);

@@ -20,7 +20,7 @@ let init: Function = function (): void {
     }
     if ((<any>window).ibas.bsbas === undefined) {
         (<any>window).ibas.bsbas = {
-            version: "0.1.0",
+            version: "0.1.2",
             author: "niuren.zhu"
         };
 
