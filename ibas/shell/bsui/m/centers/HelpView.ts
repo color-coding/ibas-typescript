@@ -7,12 +7,12 @@
  */
 
 import * as ibas from "ibas/index";
-import * as sys from "ibas/bsbas/systems/index";
+import { IHelpView } from "../../../bsapp/centers/HelpApp";
 import { HelpView as cHelpView } from "../../c/centers/index";
 
 /**
  * 视图-帮助
  */
-export class HelpView extends cHelpView implements sys.IHelpView {
+export class HelpView extends cHelpView implements IHelpView {
 
 }

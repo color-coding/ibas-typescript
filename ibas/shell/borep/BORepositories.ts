@@ -172,7 +172,7 @@ export class BORepositoryShellOffline extends BORepositoryShell {
                 // 没有实现查询应用，手动过滤下
                 let opRslt: ibas.IOperationResult<any> = new ibas.OperationResult();
                 opRslt.resultCode = -1;
-                opRslt.message = ibas.i18n.prop("sys_shell_user_and_password_not_match");
+                opRslt.message = ibas.i18n.prop("shell_user_and_password_not_match");
                 for (let item of opRsltFetch.resultObjects) {
                     if (item.code === caller.user
                         && (item.token === caller.password || (<any>item).password === caller.password)) {
@@ -196,7 +196,7 @@ export class BORepositoryShellOffline extends BORepositoryShell {
         // 离线模式不支持用户口令登录
         let opRslt: ibas.IOperationResult<any> = new ibas.OperationResult();
         opRslt.resultCode = -1;
-        opRslt.message = ibas.i18n.prop("sys_shell_user_and_password_not_match");
+        opRslt.message = ibas.i18n.prop("shell_user_and_password_not_match");
         caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
     }
 

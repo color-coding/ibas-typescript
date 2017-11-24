@@ -18,7 +18,7 @@ export class DemoServiceView extends ibas.BODialogView implements IDemoServiceVi
         let that: this = this;
         return [
             new sap.m.Button("", {
-                text: ibas.i18n.prop("sys_shell_exit"),
+                text: ibas.i18n.prop("shell_exit"),
                 type: sap.m.ButtonType.Transparent,
                 // icon: "sap-icon://inspect-down",
                 press: function (): void {

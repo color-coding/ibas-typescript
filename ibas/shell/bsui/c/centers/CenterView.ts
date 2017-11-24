@@ -7,7 +7,8 @@
  */
 
 import * as ibas from "ibas/index";
-import * as sys from "ibas/bsbas/systems/index";
+import { IEmbeddedQueryPanel, IQueryPanel, IQueryPanelView, Factories } from "ibas/bsbas/systems/index";
+import { ICenterView } from "../../../bsapp/centers/CenterApp";
 import * as openui5 from "../../../../../openui5/index";
 
 /** 配置项目-状态消息延迟时间 */
@@ -30,7 +31,7 @@ export const CONFIG_ITEM_COMPACT_SCREEN: string = "compactScreen";
 /**
  * 视图-中心
  */
-export class CenterView extends ibas.BOView implements sys.ICenterView {
+export class CenterView extends ibas.BOView implements ICenterView {
     /** 主页面 */
     private mainPage: sap.tnt.ToolPage;
     /** 页面头部 */
@@ -91,7 +92,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                             placement: sap.m.PlacementType.Bottom,
                             content: [
                                 new sap.m.Button({
-                                    text: ibas.i18n.prop("sys_shell_help"),
+                                    text: ibas.i18n.prop("shell_help"),
                                     type: sap.m.ButtonType.Transparent,
                                     icon: "sap-icon://sys-help",
                                     press: function (): void {
@@ -100,7 +101,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                                     }
                                 }),
                                 new sap.m.Button({
-                                    text: ibas.i18n.prop("sys_shell_about"),
+                                    text: ibas.i18n.prop("shell_about"),
                                     type: sap.m.ButtonType.Transparent,
                                     icon: "sap-icon://world",
                                     press: function (): void {
@@ -109,7 +110,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                                     }
                                 }),
                                 new sap.m.Button({
-                                    text: ibas.i18n.prop("sys_shell_logout"),
+                                    text: ibas.i18n.prop("shell_logout"),
                                     type: sap.m.ButtonType.Transparent,
                                     icon: "sap-icon://system-exit",
                                     press: function (): void {
@@ -134,7 +135,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         });
         // 消息历史钮
         this.messageButton = new sap.tnt.NavigationListItem("", {
-            text: ibas.i18n.prop("sys_shell_messages_history"),
+            text: ibas.i18n.prop("shell_messages_history"),
             icon: "sap-icon://message-popup",
             select: function (event: any): void {
                 that.messageHistory.openBy(event.getSource());
@@ -203,7 +204,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         // 退出钮
         form.addHeaderContent(new sap.m.Button("", {
             icon: "sap-icon://inspect-down",
-            tooltip: ibas.i18n.prop("sys_shell_close_view"),
+            tooltip: ibas.i18n.prop("shell_close_view"),
             type: sap.m.ButtonType.Transparent,
             press: function (): void {
                 that.destroyCurrentView();
@@ -218,10 +219,10 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             name = ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE);
         }
         if (ibas.objects.isNull(name)) {
-            name = ibas.i18n.prop("sys_shell_unknown_user");
+            name = ibas.i18n.prop("shell_unknown_user");
         }
         let viewContent: any = new sap.m.MessagePage("", {
-            text: ibas.i18n.prop("sys_shell_welcome_page", name, ibas.i18n.prop("sys_shell_name")),
+            text: ibas.i18n.prop("shell_welcome_page", name, ibas.i18n.prop("shell_name")),
             customDescription: new sap.m.Link("", {
                 target: "_blank",
                 text: ibas.config.get(CONFIG_ITEM_WELCOME_PAGE_URL),
@@ -231,7 +232,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             // title: "",
             showHeader: false,
             showNavButton: false,
-            icon: ibas.i18n.prop("sys_shell_welcome_image"),
+            icon: ibas.i18n.prop("shell_welcome_image"),
             textDirection: sap.ui.core.TextDirection.Inherit
         });
         return viewContent;
@@ -403,7 +404,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
             setTimeout(function (): void {
                 if (ibas.dates.now().getTime() >= that.messageTime + that.statusDelay / 2) {
                     that.messageTime = ibas.dates.now().getTime();
-                    that.showStatusMessage(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_sorting_modules"));
+                    that.showStatusMessage(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_sorting_modules"));
                     let items: ibas.ArrayList<any> = new ibas.ArrayList<any>();
                     items.add(nvList.getItems());
                     items = items.sort((c, b): number => {
@@ -579,13 +580,13 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                 content: [view.darw()],
                 buttons: [
                     new sap.m.Button("", {
-                        text: ibas.i18n.prop("sys_shell_confirm"),
+                        text: ibas.i18n.prop("shell_confirm"),
                         press(): void {
                             view.confirm();
                         }
                     }),
                     new sap.m.Button("", {
-                        text: ibas.i18n.prop("sys_shell_exit"),
+                        text: ibas.i18n.prop("shell_exit"),
                         press(): void {
                             if (view.closeEvent instanceof Function) {
                                 view.closeEvent.apply(view.application);
@@ -609,7 +610,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         // 添加查询面板
         if (ibas.objects.instanceOf(view, ibas.BOQueryView)
             || ibas.objects.instanceOf(view, ibas.BOQueryDialogView)) {
-            let queryView: sys.IEmbeddedQueryPanel = {
+            let queryView: IEmbeddedQueryPanel = {
                 /** 嵌入查询面板 */
                 embedded(view: any): void {
                     dialog.setSubHeader(null);
@@ -687,7 +688,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                 // 添加外部打开钮
                 container.insertHeaderContent(new sap.m.Button("", {
                     icon: "sap-icon://forward",
-                    tooltip: ibas.i18n.prop("sys_shell_jump"),
+                    tooltip: ibas.i18n.prop("shell_jump"),
                     type: sap.m.ButtonType.Transparent,
                     press: function (): void {
                         window.open(view.url);
@@ -705,7 +706,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         } else {
             // 外部打开
             let viewContent: any = new sap.m.MessagePage("", {
-                text: ibas.i18n.prop("sys_shell_url_new_window_opened"),
+                text: ibas.i18n.prop("shell_url_new_window_opened"),
                 description: "",
                 // title: "",
                 showHeader: false,
@@ -723,7 +724,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         let viewContent: any = view.darw();
         if (ibas.objects.instanceOf(view, ibas.BOQueryView)) {
             // 添加查询面板
-            let queryView: sys.IEmbeddedQueryPanel = {
+            let queryView: IEmbeddedQueryPanel = {
                 /** 嵌入查询面板 */
                 embedded(view: any): void {
                     container.setSubHeader(null);
@@ -736,11 +737,11 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
         container.addContent(viewContent);
     }
     /** 显示查询面板 */
-    showQueryPanel(view: ibas.BOQueryView, embeddedView: sys.IEmbeddedQueryPanel): void {
-        let queryPanel: sys.IQueryPanel<sys.IQueryPanelView> = sys.Factories.systemsFactory.createQueryPanel();
+    showQueryPanel(view: ibas.BOQueryView, embeddedView: IEmbeddedQueryPanel): void {
+        let queryPanel: IQueryPanel<IQueryPanelView> = Factories.systemsFactory.createQueryPanel();
         if (ibas.objects.isNull(queryPanel)) {
             // 查询面板无效，不添加
-            this.showStatusMessage(ibas.emMessageType.ERROR, ibas.i18n.prop("sys_shell_invalid_query_panel"));
+            this.showStatusMessage(ibas.emMessageType.ERROR, ibas.i18n.prop("shell_invalid_query_panel"));
         } else {
             let that: this = this;
             // 设置视图导航
@@ -756,7 +757,7 @@ export class CenterView extends ibas.BOView implements sys.ICenterView {
                 design: sap.m.ToolbarDesign.Auto,
                 content: [
                     new sap.m.MessageStrip("", {
-                        text: ibas.i18n.prop("sys_shell_initialize_query_panel"),
+                        text: ibas.i18n.prop("shell_initialize_query_panel"),
                         type: sap.ui.core.MessageType.Warning
                     })]
             });

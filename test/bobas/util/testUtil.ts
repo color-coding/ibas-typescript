@@ -67,7 +67,7 @@ builder.append("I");
 builder.append("'");
 builder.append("m");
 builder.append(" ");
-builder.appendFormat("{1}.{0}", "zhu", "niuren");
+builder.append(bobas.strings.format("{1}.{0}", "zhu", "niuren"));
 builder.append(".");
 console.log(builder.toString());
 // 测试文件仓库

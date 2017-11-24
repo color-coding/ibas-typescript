@@ -15,8 +15,6 @@ import {
 
 /** 关于-视图 */
 export interface IAboutView extends IView {
-	/** 显示版本 */
-	showVersions(version: any): void;
 }
 /** 关于-应用 */
 export interface IAboutApp extends IApplication<IAboutView> {

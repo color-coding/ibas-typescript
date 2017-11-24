@@ -7,57 +7,67 @@
  */
 
 import * as ibas from "ibas/index";
-import * as sys from "ibas/bsbas/systems/index";
+import { IAboutView, Component } from "../../../bsapp/centers/AboutApp";
 
 /**
  * 视图-关于
  */
-export class AboutView extends ibas.BOView implements sys.IAboutView {
+export class AboutView extends ibas.BOView implements IAboutView {
     /** 绘制视图 */
     darw(): any {
-        this.form = new sap.ui.layout.form.SimpleForm("", {
-            maxContainerCols: 1,
-            layout: sap.ui.layout.form.SimpleFormLayout.ResponsiveLayout,
-        });
-        return new sap.m.Page("", {
+        this.form = new sap.m.Page("", {
             showHeader: false,
             enableScrolling: true,
             content: [this.form]
         });
+        return this.form;
     }
-    private form: sap.ui.layout.form.SimpleForm;
-    /** 显示版本 */
-    showVersions(version: ibas.List<ibas.KeyText>): void {
-        this.form.addContent(new sap.ui.core.Title("", {
-            text: "Libraries",
-        }));
-        for (let item of version) {
-            if (item.key === "ibas.shell.ui") {
-                item.key = "openui5";
-                item.text = (<any>sap.ui.getVersionInfo()).version;
+    private form: sap.m.Page;
+
+    private text(...values: string[]): string {
+        let builder: ibas.StringBuilder = new ibas.StringBuilder();
+        for (let item of values) {
+            if (ibas.strings.isEmpty(item)) {
+                continue;
             }
-            this.form.addContent(new sap.m.Label("", { text: item.key }));
-            this.form.addContent(new sap.m.Text("", { text: item.text }));
+            if (builder.length > 0) {
+                builder.append(", ");
+            }
+            builder.append(item);
         }
-        this.form.addContent(new sap.ui.core.Title("", {
-            text: "Author",
-        }));
-        this.form.addContent(new sap.m.Label("", { text: "niuren.zhu" }));
-        this.form.addContent(new sap.m.Link("", {
-            text: "niuren.zhu@icloud.com",
-            press: function (): void {
-                sap.m.URLHelper.triggerEmail(this.getText(), "hi, niuren.zhu");
-            }
-        }));
-        this.form.addContent(new sap.ui.core.Title("", {
-            text: "About",
-        }));
-        this.form.addContent(new sap.m.Text("", {
-            width: "100%",
-            textAlign: sap.ui.core.TextAlign.Right,
-            text: ibas.strings.format("{0}, {1}.",
-                ibas.i18n.prop("sys_shell_copyright"),
-                ibas.i18n.prop("sys_shell_license"))
-        }));
+        return builder.toString();
+    }
+    /** 显示库信息 */
+    showLibraries(components: ibas.List<Component>): void {
+        let list: sap.m.List = new sap.m.List("", {
+            headerText: "Libraries",
+        });
+        // 添加UI组件
+        components.add(new Component("openui5",
+            (<any>sap.ui.getVersionInfo()).version,
+            "© SAP SE, made available under Apache License 2.0",
+            "sap-icon://sap-ui5"));
+        for (let item of components) {
+            list.addItem(new sap.m.FeedListItem("", {
+                icon: item.icon ? item.icon : "sap-icon://technical-object",
+                text: this.text(item.name, item.copyright),
+                info: item.version,
+            }));
+        }
+        this.form.addContent(list);
+    }
+    /** 显示应用信息 */
+    showApplications(components: ibas.List<Component>): void {
+        let list: sap.m.List = new sap.m.List("", {
+            headerText: "Applications",
+        });
+        for (let item of components) {
+            list.addItem(new sap.m.FeedListItem("", {
+                icon: item.icon ? item.icon : ibas.config.get("defalutModuleIcon"),
+                text: this.text(item.name, item.copyright),
+                info: item.version,
+            }));
+        }
+        this.form.addContent(list);
     }
 }

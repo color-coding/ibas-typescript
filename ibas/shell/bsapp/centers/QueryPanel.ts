@@ -36,7 +36,7 @@ export class QueryPanel extends sys.QueryPanel<IQueryPanelView>  {
         if (ibas.objects.isNull(this.editQuery)) {
             this.editQuery = new UserQuery();
             this.editQuery.id = this.listener.queryId;
-            this.editQuery.name = ibas.i18n.prop("sys_shell_data_new") + ibas.i18n.prop("sys_query_panel");
+            this.editQuery.name = ibas.i18n.prop("shell_data_new") + ibas.i18n.prop("sys_query_panel");
             this.editQuery.order = 1;
             this.queries.add(this.editQuery);
             this.showQueries();
@@ -95,7 +95,7 @@ export class QueryPanel extends sys.QueryPanel<IQueryPanelView>  {
                         if (opRslt.resultCode !== 0) {
                             throw new Error(opRslt.message);
                         }
-                        that.messages(ibas.emMessageType.SUCCESS, ibas.i18n.prop("sys_shell_sucessful"));
+                        that.messages(ibas.emMessageType.SUCCESS, ibas.i18n.prop("shell_sucessful"));
                         // 操作成功，刷新数据，关闭界面
                         if (ibas.objects.isNull(that.editQuery.criteria)) {
                             // 没查询，表示删除

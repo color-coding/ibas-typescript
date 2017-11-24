@@ -7,7 +7,7 @@
  */
 
 import * as ibas from "ibas/index";
-import * as sys from "ibas/bsbas/systems/index";
+import { ILoginView } from "../../../bsapp/centers/LoginApp";
 import * as openui5 from "../../../../../openui5/index";
 
 /** 配置项目-默认用户 */
@@ -17,7 +17,7 @@ export const CONFIG_ITEM_DEFAULT_PASSWORD: string = "defaultPassword";
 /**
  * 视图-登陆
  */
-export class LoginView extends ibas.BOView implements sys.ILoginView {
+export class LoginView extends ibas.BOView implements ILoginView {
     /** 登陆 */
     loginEvent: Function;
     /** 改变语言 */
@@ -65,13 +65,13 @@ export class LoginView extends ibas.BOView implements sys.ILoginView {
         this.form = new sap.ui.layout.form.SimpleForm("", {
             content: [
                 new sap.m.Title("", {
-                    text: ibas.i18n.prop("sys_shell_name"),
+                    text: ibas.i18n.prop("shell_name"),
                     level: sap.ui.core.TitleLevel.H1,
                     titleStyle: sap.ui.core.TitleLevel.H1,
                     textAlign: sap.ui.core.TextAlign.Center,
                 }),
                 new sap.m.Label("", {
-                    text: ibas.i18n.prop("sys_shell_user")
+                    text: ibas.i18n.prop("shell_user")
                 }),
                 new sap.m.Input(LoginView.UI_LOGIN_USER, {
                     value: ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE, false)
@@ -79,7 +79,7 @@ export class LoginView extends ibas.BOView implements sys.ILoginView {
                         : "",
                 }),
                 new sap.m.Label("", {
-                    text: ibas.i18n.prop("sys_shell_password")
+                    text: ibas.i18n.prop("shell_password")
                 }),
                 new sap.m.Input(LoginView.UI_LOGIN_PASSWORD, {
                     value: ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE, false)
@@ -88,16 +88,16 @@ export class LoginView extends ibas.BOView implements sys.ILoginView {
                     type: "Password"
                 }),
                 new sap.m.Label("", {
-                    text: ibas.i18n.prop("sys_shell_language")
+                    text: ibas.i18n.prop("shell_language")
                 }),
                 new sap.m.Select(LoginView.UI_LOGIN_LANGUAGE, {
-                    placeholder: ibas.i18n.prop("sys_shell_chooose_language"),
+                    placeholder: ibas.i18n.prop("shell_chooose_language"),
                     change: function (): void {
                         that.fireViewEvents(that.changeLanguageEvent);
                     }
                 }),
                 new sap.m.Label(LoginView.UI_LOGIN_PLANTFORM, {
-                    text: ibas.i18n.prop("sys_shell_plantform")
+                    text: ibas.i18n.prop("shell_plantform")
                 }),
                 new sap.m.Select("", {
                     // enabled: ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE, false) ? true : false,
@@ -112,7 +112,7 @@ export class LoginView extends ibas.BOView implements sys.ILoginView {
                     }
                 }),
                 new sap.m.Button("", {
-                    text: ibas.i18n.prop("sys_shell_login"),
+                    text: ibas.i18n.prop("shell_login"),
                     type: sap.m.ButtonType.Accept,
                     press: function (): void {
                         that.fireViewEvents(that.loginEvent);
@@ -120,7 +120,7 @@ export class LoginView extends ibas.BOView implements sys.ILoginView {
                 }),
                 new sap.m.Label("", {}),
                 new sap.m.Title("", {
-                    text: ibas.i18n.prop("sys_shell_copyright"),
+                    text: ibas.i18n.prop("shell_copyright"),
                     level: sap.ui.core.TitleLevel.H6,
                     titleStyle: sap.ui.core.TitleLevel.H6,
                     textAlign: sap.ui.core.TextAlign.End

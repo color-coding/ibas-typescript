@@ -7,12 +7,12 @@
  */
 
 import * as ibas from "ibas/index";
-import * as sys from "ibas/bsbas/systems/index";
+import { ILoginView } from "../../../bsapp/centers/LoginApp";
 import { LoginView as cLoginView } from "../../c/centers/index";
 
 /**
  * 视图-登陆
  */
-export class LoginView extends cLoginView implements sys.ILoginView {
+export class LoginView extends cLoginView implements ILoginView {
 
 }

@@ -200,15 +200,6 @@ export class StringBuilder {
             this.values.push(str.toString());
         }
     }
-
-    /**
-     * 添加格式化字符
-     * @param format 字符格式
-     * @param args 替换字符
-     */
-    appendFormat(format: string, ...args: any[]): void {
-        this.append(strings.format(format, args));
-    }
     /**
      * 生成字符串
      */

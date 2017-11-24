@@ -7,7 +7,7 @@
  */
 
 import * as ibas from "ibas/index";
-import * as sys from "ibas/bsbas/systems/index";
+import { IBOInfo, IBOPropertyInfo, IBORepositorySystem, Factories } from "ibas/bsbas/systems/index";
 import * as openui5 from "../../../../../openui5/index";
 import { IQueryPanelView } from "../../../bsapp/centers/QueryPanel";
 import { UserQuery } from "../../../borep/bo/Systems";
@@ -50,7 +50,7 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
                 }
             });
             this.baseOn = new sap.m.Select("", {
-                placeholder: ibas.i18n.prop("sys_shell_base_on_criteria"),
+                placeholder: ibas.i18n.prop("shell_base_on_criteria"),
                 width: "55%",
                 maxWidth: "55%"
             });
@@ -102,12 +102,12 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
             // 尚未初始化表格
             if (!ibas.objects.isNull(this.boName)) {
                 let that: this = this;
-                let boRepository: sys.IBORepositorySystem = sys.Factories.systemsFactory.createRepository();
+                let boRepository: IBORepositorySystem = Factories.systemsFactory.createRepository();
                 boRepository.fetchBOInfos({
                     boName: this.boName,
                     boCode: null,
-                    onCompleted(opRslt: ibas.IOperationResult<sys.IBOInfo>): void {
-                        let boInfo: sys.IBOInfo = opRslt.resultObjects.firstOrDefault();
+                    onCompleted(opRslt: ibas.IOperationResult<IBOInfo>): void {
+                        let boInfo: IBOInfo = opRslt.resultObjects.firstOrDefault();
                         if (ibas.objects.isNull(boInfo)) {
                             that.table = that.createTable([]);
                             that.form.addContent(that.table);
@@ -146,11 +146,11 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
         return items;
     }
     private table: sap.ui.table.Table;
-    protected getPropertyListItem(properies: sys.IBOPropertyInfo[]): sap.ui.core.ListItem[] {
+    protected getPropertyListItem(properies: IBOPropertyInfo[]): sap.ui.core.ListItem[] {
         let items: Array<sap.ui.core.ListItem> = [];
         items.push(new sap.ui.core.ListItem("", {
             key: "",
-            text: ibas.i18n.prop("sys_shell_please_chooose_data", ""),
+            text: ibas.i18n.prop("shell_please_chooose_data", ""),
         }));
         if (!ibas.objects.isNull(properies)) {
             for (let property of properies) {
@@ -162,13 +162,13 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
         }
         return items;
     }
-    private createTable(properies: sys.IBOPropertyInfo[]): sap.ui.table.Table {
+    private createTable(properies: IBOPropertyInfo[]): sap.ui.table.Table {
         let that: this = this;
         let table: sap.ui.table.Table = new sap.ui.table.Table("", {
             extension: new sap.m.Toolbar("", {
                 content: [
                     new sap.m.Button("", {
-                        text: ibas.i18n.prop("sys_shell_data_add"),
+                        text: ibas.i18n.prop("shell_data_add"),
                         type: sap.m.ButtonType.Transparent,
                         icon: "sap-icon://add",
                         press: function (): void {
@@ -176,7 +176,7 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
                         }
                     }),
                     new sap.m.Button("", {
-                        text: ibas.i18n.prop("sys_shell_data_remove"),
+                        text: ibas.i18n.prop("shell_data_remove"),
                         type: sap.m.ButtonType.Transparent,
                         icon: "sap-icon://less",
                         press: function (): void {
@@ -191,7 +191,7 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
             rows: "{/rows}",
             columns: [
                 new sap.ui.table.Column("", {
-                    label: ibas.i18n.prop("sys_shell_query_condition_relationship"),
+                    label: ibas.i18n.prop("shell_query_condition_relationship"),
                     width: "100px",
                     template: new sap.m.Select("", {
                         width: "100%",
@@ -202,7 +202,7 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
                     })
                 }),
                 new sap.ui.table.Column("", {
-                    label: ibas.i18n.prop("sys_shell_query_condition_bracketopen"),
+                    label: ibas.i18n.prop("shell_query_condition_bracketopen"),
                     width: "100px",
                     template: new sap.m.Select("", {
                         width: "100%",
@@ -213,7 +213,7 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
                     })
                 }),
                 new sap.ui.table.Column("", {
-                    label: ibas.i18n.prop("sys_shell_query_condition_alias"),
+                    label: ibas.i18n.prop("shell_query_condition_alias"),
                     width: "200px",
                     template: new sap.m.Select("", {
                         width: "100%",
@@ -223,7 +223,7 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
                     })
                 }),
                 new sap.ui.table.Column("", {
-                    label: ibas.i18n.prop("sys_shell_query_condition_operation"),
+                    label: ibas.i18n.prop("shell_query_condition_operation"),
                     width: "140px",
                     template: new sap.m.Select("", {
                         width: "100%",
@@ -234,7 +234,7 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
                     })
                 }),
                 new sap.ui.table.Column("", {
-                    label: ibas.i18n.prop("sys_shell_query_condition_value"),
+                    label: ibas.i18n.prop("shell_query_condition_value"),
                     width: "120px",
                     template: new sap.m.Input("", {
                     }).bindProperty("value", {
@@ -242,7 +242,7 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
                     }),
                 }),
                 new sap.ui.table.Column("", {
-                    label: ibas.i18n.prop("sys_shell_query_condition_bracketclose"),
+                    label: ibas.i18n.prop("shell_query_condition_bracketclose"),
                     width: "100px",
                     template: new sap.m.Select("", {
                         width: "100%",
@@ -275,7 +275,7 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
                 new sap.m.Toolbar("", {
                     content: [
                         new sap.m.Label("", {
-                            text: ibas.i18n.prop("sys_shell_query_name"),
+                            text: ibas.i18n.prop("shell_query_name"),
                         }),
                         new sap.m.Input("", {
                         }).bindProperty("value", {
@@ -284,7 +284,7 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
                         new sap.m.ToolbarSpacer("", { width: "15px" }),
                         new sap.m.RatingIndicator("", {
                             maxValue: 5,
-                            tooltip: ibas.i18n.prop("sys_shell_query_order"),
+                            tooltip: ibas.i18n.prop("shell_query_order"),
                         }).bindProperty("value", {
                             path: "/order"
                         }),
@@ -303,7 +303,7 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
             content: [this.form],
             buttons: [
                 new sap.m.Button("", {
-                    text: ibas.i18n.prop("sys_shell_data_delete"),
+                    text: ibas.i18n.prop("shell_data_delete"),
                     type: sap.m.ButtonType.Transparent,
                     // icon: "sap-icon://create",
                     press: function (): void {
@@ -311,7 +311,7 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
                     }
                 }),
                 new sap.m.Button("", {
-                    text: ibas.i18n.prop("sys_shell_data_save"),
+                    text: ibas.i18n.prop("shell_data_save"),
                     type: sap.m.ButtonType.Transparent,
                     // icon: "sap-icon://accept",
                     press: function (): void {
@@ -319,7 +319,7 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
                     }
                 }),
                 new sap.m.Button("", {
-                    text: ibas.i18n.prop("sys_shell_exit"),
+                    text: ibas.i18n.prop("shell_exit"),
                     type: sap.m.ButtonType.Transparent,
                     // icon: "sap-icon://inspect-down",
                     press: function (): void {

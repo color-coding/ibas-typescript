@@ -111,7 +111,7 @@ export class SalesOrderChooseView extends ibas.BOChooseView implements ISalesOrd
             content: [this.table],
             buttons: [
                 new sap.m.Button("", {
-                    text: ibas.i18n.prop("sys_shell_data_new"),
+                    text: ibas.i18n.prop("shell_data_new"),
                     type: sap.m.ButtonType.Transparent,
                     // icon: "sap-icon://create",
                     press: function (): void {
@@ -119,7 +119,7 @@ export class SalesOrderChooseView extends ibas.BOChooseView implements ISalesOrd
                     }
                 }),
                 new sap.m.Button("", {
-                    text: ibas.i18n.prop("sys_shell_data_choose"),
+                    text: ibas.i18n.prop("shell_data_choose"),
                     type: sap.m.ButtonType.Transparent,
                     // icon: "sap-icon://accept",
                     press: function (): void {
@@ -130,7 +130,7 @@ export class SalesOrderChooseView extends ibas.BOChooseView implements ISalesOrd
                     }
                 }),
                 new sap.m.Button("", {
-                    text: ibas.i18n.prop("sys_shell_exit"),
+                    text: ibas.i18n.prop("shell_exit"),
                     type: sap.m.ButtonType.Transparent,
                     // icon: "sap-icon://inspect-down",
                     press: function (): void {

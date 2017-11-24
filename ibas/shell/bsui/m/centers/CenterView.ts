@@ -7,12 +7,12 @@
  */
 
 import * as ibas from "ibas/index";
-import * as sys from "ibas/bsbas/systems/index";
+import { ICenterView } from "../../../bsapp/centers/CenterApp";
 import { CenterView as cCenterView } from "../../c/centers/index";
 
 /**
  * 视图-中心
  */
-export class CenterView extends cCenterView implements sys.ICenterView {
+export class CenterView extends cCenterView implements ICenterView {
 
 }

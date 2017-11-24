@@ -1,8 +1,8 @@
 {
-    "sys_shell_name": "ibas",
-    "sys_shell_user": "User",
-    "sys_shell_password": "Password",
-    "sys_shell_login": "Login",
-    "sys_shell_language": "Language",
-    "sys_shell_plantform": "Plantform"
+    "shell_name": "ibas",
+    "shell_user": "User",
+    "shell_password": "Password",
+    "shell_login": "Login",
+    "shell_language": "Language",
+    "shell_plantform": "Plantform"
 }

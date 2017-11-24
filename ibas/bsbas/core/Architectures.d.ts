@@ -26,6 +26,10 @@ export interface IElement {
 export interface IModule extends IElement {
     /** 版本 */
     version: string;
+    /** 版权声明 */
+    copyright: string;
+    /** 图标 */
+    icon: string;
     /** 功能集合 */
     functions(): IFunction[];
 }
@@ -152,8 +156,6 @@ export interface IViewNavigation {
 export interface IModuleConsole extends IModule {
     /** 当前平台 */
     readonly plantform: emPlantform;
-    /** 图标 */
-    icon: string;
     /** 初始化完成 */
     isInitialized: boolean;
     /** 根地址 */

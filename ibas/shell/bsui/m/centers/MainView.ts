@@ -7,12 +7,12 @@
  */
 
 import * as ibas from "ibas/index";
-import * as sys from "ibas/bsbas/systems/index";
+import { IMainView } from "../../../bsapp/centers/MainApp";
 import { MainView as cMainView } from "../../c/centers/index";
 
 /**
  * 视图-入口
  */
-export class MainView extends cMainView implements sys.IMainView {
+export class MainView extends cMainView implements IMainView {
 
 }

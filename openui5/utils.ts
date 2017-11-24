@@ -76,7 +76,7 @@ export namespace utils {
         let blank: boolean = arguments[1];
         let map: Map<string, string> = new Map<string, string>();
         if (blank) {
-            map.set("", ibas.i18n.prop("sys_shell_please_chooose_data", ""));
+            map.set("", ibas.i18n.prop("shell_please_chooose_data", ""));
         }
         map = getEnumMap(data);
         // 转换枚举内容

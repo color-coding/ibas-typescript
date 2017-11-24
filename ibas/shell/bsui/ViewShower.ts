@@ -123,7 +123,7 @@ export default class ViewShowerDefault implements ibas.IViewShower {
                 this.currentView = view;
             }
         } else {
-            throw new Error(ibas.i18n.prop("sys_shell_invalid_ui"));
+            throw new Error(ibas.i18n.prop("shell_invalid_ui"));
         }
     }
     /** 清理资源 */
@@ -177,7 +177,7 @@ export default class ViewShowerDefault implements ibas.IViewShower {
         sap.m.MessageBox.show(
             caller.message, {
                 icon: openui5.utils.toMessageBoxIcon(caller.type),
-                title: ibas.i18n.prop("sys_shell_name"),
+                title: ibas.i18n.prop("shell_name"),
                 actions: openui5.utils.toMessageBoxAction(caller.actions),
                 onClose(oAction: any): void {
                     if (!ibas.objects.isNull(caller.onCompleted)) {
