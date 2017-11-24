@@ -66,21 +66,29 @@ export class I18N {
             }
         }
     }
-
-    private items: Map<string, string>;
+    /** 资源字典，已按前缀分类 */
+    private resources: Map<string, Map<string, string>>;
     /**
      * 输出描述
      * @param key 检索值
      * @param args 替代内容
      */
     prop(key: string, ...args: any[]): string {
-        if (objects.isNull(this.items)) {
+        if (objects.isNull(this.resources)) {
             // 没有初始化则加载
-            this.items = new Map<string, string>();
+            this.resources = new Map<string, Map<string, string>>();
             this.load(null);
         }
-        if (this.items.has(key)) {
-            return strings.format(this.items.get(key), args);
+        let value: string = null;
+        if (!strings.isEmpty(key)) {
+            let group: string = this.groupName(key);
+            let map: Map<string, string> = this.resources.get(group);
+            if (!objects.isNull(map)) {
+                value = map.get(key);
+            }
+        }
+        if (!strings.isEmpty(value)) {
+            return strings.format(value, args);
         }
         return strings.format("[{0}]", key);
     }
@@ -110,10 +118,12 @@ export class I18N {
         let caller: ILanguageLoaderCaller = {
             address: address,
             onCompleted(data: any): void {
-                if (objects.isNull(that.items)) { that.items = new Map<string, string>(); }
+                if (objects.isNull(that.resources)) {
+                    that.resources = new Map<string, Map<string, string>>();
+                }
                 for (let name in data) {
                     if (data[name] !== undefined) {
-                        that.items.set(name, data[name]);
+                        that.add(name, data[name]);
                     }
                 }
             }
@@ -128,6 +138,27 @@ export class I18N {
                 loader.load(caller);
             }
         }
+    }
+    private groupName(key: string): string {
+        let tmps: string[] = key.split("_");
+        if (tmps[0] === "bo") {
+            // 对象资源分组优化
+            return tmps[0] + "_" + tmps[1].substring(0, 1);
+        } else {
+            return tmps[0];
+        }
+    }
+    add(key: string, value: string): string {
+        if (strings.isEmpty(key)) {
+            return;
+        }
+        let group: string = this.groupName(key);
+        let map: Map<string, string> = this.resources.get(group);
+        if (objects.isNull(map)) {
+            map = new Map<string, string>();
+            this.resources.set(group, map);
+        }
+        map.set(key, value);
     }
 }
 /** 语言变化监听者 */

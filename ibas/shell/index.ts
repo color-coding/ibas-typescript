@@ -15,7 +15,7 @@ if ((<any>window).ibas === undefined) {
 }
 if ((<any>window).ibas.shell === undefined) {
     (<any>window).ibas.shell = {
-        version: "0.1.1",
+        version: Console.CONSOLE_VERSION,
         author: "niuren.zhu"
     };
     (new Console()).run();

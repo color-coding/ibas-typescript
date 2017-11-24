@@ -1,7 +1,7 @@
 {
     "shell_name": "智能业务应用系统",
-    "shell_copyright": "copyright © 2016-2017 color-coding studio",
-    "shell_license": "©color-coding studio, licensed under the Apache License, Version 2.0",
+    "shell_copyright": "© 2016-2017 color-coding studio",
+    "shell_license": "© color-coding studio, licensed under the Apache License, Version 2.0",
     "shell_icon": "sap-icon://blur",
     "shell_func_centers": "系统中心",
     "shell_invalid_ui": "无效的UI",

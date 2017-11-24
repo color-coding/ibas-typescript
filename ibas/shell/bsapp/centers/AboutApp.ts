@@ -27,11 +27,11 @@ export class AboutApp extends sys.AboutApp<IAboutView> {
         libraries.add(new Component("ibas.shell", (<any>window).ibas.shell.version, copyright, ibas.i18n.prop("shell_icon")));
         libraries.add(new Component("ibas.bobas", (<any>window).ibas.bobas.version, copyright, ibas.i18n.prop("shell_icon")));
         libraries.add(new Component("ibas.bsbas", (<any>window).ibas.bsbas.version, copyright, ibas.i18n.prop("shell_icon")));
-        libraries.add(new Component("jquery", "3.1.1", "©jQuery foundation and other contributors, released under the MIT license"));
-        libraries.add(new Component("requirejs", "2.3.2", "©jQuery foundation and other contributors, released under the MIT license"));
-        libraries.add(new Component("require-css", "0.1.10", "©Guy Bedford, released under the MIT license"));
-        libraries.add(new Component("cryptojs", "3.1.9", "©Evan Vosberg, released under the MIT license"));
-        libraries.add(new Component("spin.js", "2.3.2", "©Felix Gnass, released under the MIT license"));
+        libraries.add(new Component("jquery", "3.1.1", "© jQuery foundation and other contributors, released under the MIT license"));
+        libraries.add(new Component("requirejs", "2.3.2", "© jQuery foundation and other contributors, released under the MIT license"));
+        libraries.add(new Component("require-css", "0.1.10", "© Guy Bedford, released under the MIT license"));
+        libraries.add(new Component("cryptojs", "3.1.9", "© Evan Vosberg, released under the MIT license"));
+        libraries.add(new Component("spin.js", "2.3.2", "© Felix Gnass, released under the MIT license"));
         this.view.showLibraries(libraries);
         let applications: ibas.List<Component> = new ibas.ArrayList<Component>();
         let watcher: ibas.ISystemWatcher = ibas.variablesManager.getWatcher();
