@@ -18,11 +18,15 @@ export class Console extends ibas.ModuleConsole {
     static CONSOLE_ID: string = "e6424319-a311-440e-bc89-a825f82d5847";
     /** 模块-名称 */
     static CONSOLE_NAME: string = "TrainingTesting";
+    /** 模块-版本 */
+    static CONSOLE_VERSION: string = "0.1.0";
     /** 构造函数 */
     constructor() {
         super();
         this.id = Console.CONSOLE_ID;
         this.name = Console.CONSOLE_NAME;
+        this.version = Console.CONSOLE_VERSION;
+        this.copyright = ibas.i18n.prop("shell_license");
     }
     private _navigation: ibas.IViewNavigation;
     /** 创建视图导航 */
@@ -83,11 +87,15 @@ export class ConsoleOthers extends ibas.ModuleConsole {
     static CONSOLE_ID: string = "e6424319-a311-440e-bc89-a825f82d5848";
     /** 模块-名称 */
     static CONSOLE_NAME: string = "TrainingTestingOthers";
+    /** 模块-版本 */
+    static CONSOLE_VERSION: string = "0.1.0";
     /** 构造函数 */
     constructor() {
         super();
         this.id = ConsoleOthers.CONSOLE_ID;
         this.name = ConsoleOthers.CONSOLE_NAME;
+        this.version = ConsoleOthers.CONSOLE_VERSION;
+        this.copyright = ibas.i18n.prop("shell_license");
     }
     private _navigation: ibas.IViewNavigation;
     /** 创建视图导航 */

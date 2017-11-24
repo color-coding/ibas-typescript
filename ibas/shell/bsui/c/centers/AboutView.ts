@@ -45,7 +45,7 @@ export class AboutView extends ibas.BOView implements IAboutView {
         // 添加UI组件
         components.add(new Component("openui5",
             (<any>sap.ui.getVersionInfo()).version,
-            "© SAP SE, made available under Apache License 2.0",
+            "©SAP SE, made available under Apache License 2.0",
             "sap-icon://sap-ui5"));
         for (let item of components) {
             list.addItem(new sap.m.FeedListItem("", {
