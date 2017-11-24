@@ -4,7 +4,7 @@
     "debug": true,
     "language": "zh_CN",
     "offline": false,
-    "offline|BORepositoryShell": true,
+    "offline|BORepositoryShell": false,
     "helpUrl": "http://www.baidu.com",
     "welcomeUrl": "https://colorcoding.org/ibas/welcome",
     "fullScreen": false,
