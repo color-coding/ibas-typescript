@@ -9,8 +9,9 @@
 import { Console } from "./bsapp/Console";
 if ((<any>window).ibas === undefined) {
     (<any>window).ibas = {
-        url: "https://github.com/color-coding/ibas-typescript",
-        author: "niuren.zhu"
+        copyright: "color-coding studio",
+        license: "Apache License, Version 2.0",
+        url: "https://colorcoding.org/"
     };
 }
 if ((<any>window).ibas.shell === undefined) {

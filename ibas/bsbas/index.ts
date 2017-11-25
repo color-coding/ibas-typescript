@@ -14,8 +14,9 @@ export const LIBRARY_BSBAS_ROOT_FILE_NAME: string = "/bsbas/index";
 let init: Function = function (): void {
     if ((<any>window).ibas === undefined) {
         (<any>window).ibas = {
-            url: "https://github.com/color-coding/ibas-typescript",
-            author: "niuren.zhu"
+            copyright: "color-coding studio",
+            license: "Apache License, Version 2.0",
+            url: "https://colorcoding.org/"
         };
     }
     if ((<any>window).ibas.bsbas === undefined) {
