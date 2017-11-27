@@ -2,10 +2,10 @@
   "appSettings": {
     "company": "CC",
     "debug": false,
+    "offline": false,
     "language": "zh_CN",
-    "offline": true,
-    "offline|BORepositoryShell": true,
-    "helpUrl": "http://www.baidu.com",
+    "offline|BORepositoryShell": false,
+    "helpUrl": "https://colorcoding.org/ibas/help",
     "repositoryAddress|BORepositoryShell": ".../initialfantasy/services/rest/data"
   },
   "languages": [
