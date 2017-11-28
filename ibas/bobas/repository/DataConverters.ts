@@ -562,7 +562,7 @@ export abstract class BOConverter implements IBOConverter<IBusinessObject, any> 
                 return dates.valueOf(value);
             } else if (property === "DocumentStatus" || property === "LineStatus") {
                 return enums.valueOf(emDocumentStatus, value);
-            } else if (property === "Canceled" || property === "Referenced"
+            } else if (property === "Canceled" || property === "Referenced" || property === "Locked"
                 || property === "Transfered" || property === "Activated" || property === "Deleted") {
                 return enums.valueOf(emYesNo, value);
             } else if (property === "Status") {
@@ -586,7 +586,7 @@ export abstract class BOConverter implements IBOConverter<IBusinessObject, any> 
             // 枚举类型
             if (property === "DocumentStatus" || property === "LineStatus") {
                 return enums.toString(emDocumentStatus, value);
-            } else if (property === "Canceled" || property === "Referenced"
+            } else if (property === "Canceled" || property === "Referenced" || property === "Locked"
                 || property === "Transfered" || property === "Activated" || property === "Deleted") {
                 return enums.toString(emYesNo, value);
             } else if (property === "Status") {
