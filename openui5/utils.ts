@@ -263,7 +263,7 @@ export namespace utils {
     /** 结果集触发者 */
     export interface IResultsTrigger {
         /** 监听对象 */
-        listener: sap.ui.table.Table | sap.m.List;
+        listener: sap.ui.table.Table | sap.m.ListBase;
         /** 触发方法 */
         next(data: any): void;
     }
