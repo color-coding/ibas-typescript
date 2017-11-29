@@ -24,9 +24,9 @@ import { config } from "../configuration/index";
 export class Criteria implements ICriteria {
 
     constructor() {
-        this.Conditions = new Conditions();
-        this.ChildCriterias = new ChildCriterias();
-        this.Sorts = new Sorts();
+        this.conditions = new Conditions();
+        this.childCriterias = new ChildCriterias();
+        this.sorts = new Sorts();
     }
     /**
      * 业务对象
@@ -86,6 +86,9 @@ export class Criteria implements ICriteria {
     private Conditions: IConditions;
 
     get conditions(): IConditions {
+        if (objects.isNull(this.Conditions)) {
+            this.Conditions = new Conditions();
+        }
         return this.Conditions;
     }
 
@@ -99,6 +102,9 @@ export class Criteria implements ICriteria {
     private Sorts: ISorts;
 
     get sorts(): ISorts {
+        if (objects.isNull(this.Sorts)) {
+            this.Sorts = new Sorts();
+        }
         return this.Sorts;
     }
 
@@ -112,6 +118,9 @@ export class Criteria implements ICriteria {
     private ChildCriterias: IChildCriterias;
 
     get childCriterias(): IChildCriterias {
+        if (objects.isNull(this.ChildCriterias)) {
+            this.ChildCriterias = new ChildCriterias();
+        }
         return this.ChildCriterias;
     }
 
