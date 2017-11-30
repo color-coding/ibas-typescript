@@ -17,12 +17,6 @@ import { ILogger } from "../messages/Logger.d"; // 仅引用声明，避免嵌�
 export const CONFIG_ITEM_DEBUG_MODE: string = "debug";
 /** 配置项目-公司代码 */
 export const CONFIG_ITEM_COMPANY: string = "company";
-/** 配置项目-审批方法 */
-export const CONFIG_ITEM_APPROVAL_WAY: string = "approvalWay";
-/** 配置项目-组织方式 */
-export const CONFIG_ITEM_ORGANIZATION_WAY: string = "organizationWay";
-/** 配置项目-权限判断方式 */
-export const CONFIG_ITEM_OWNERSHIP_WAY: string = "ownershipWay";
 /** 默认配置文件名称 */
 export const CONFIG_FILE_NAME: string = "config.json";
 /** 配置项目-运行时版本 */
