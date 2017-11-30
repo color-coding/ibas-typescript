@@ -52,6 +52,8 @@
     "shell_reset": "重置",
     "shell_confirm": "确认",
     "shell_jump": "跳转",
+    "shell_manual": "手动",
+    "shell_automatic": "自动",
     "shell_user_system": "系统用户",
     "shell_user_unknown": "未知用户",
     "shell_url_new_window_opened": "网址已在新窗口打开",

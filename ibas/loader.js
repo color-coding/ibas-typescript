@@ -25,6 +25,9 @@
     var requireError = function (error) {
         alert("应用加载失败，请联系管理员或尝试使用其他浏览器。");
     };
+    ibas.copyright = "color-coding studio";
+    ibas.license = "Apache License, Version 2.0";
+    ibas.url = "https://colorcoding.org/";
     ibas.prototype.load = function () {
         var root, noCache, require;
         if (typeof arguments[0] === "string") {
@@ -54,9 +57,7 @@
         // 加载ibas
         if (noCache) {
             // 不适用js缓存
-            window.ibas = {
-                runtime: (new Date()).getTime()
-            };
+            window.ibas.runtime = (new Date()).getTime();
             require = requirejs.config({
                 baseUrl: root,
                 urlArgs: function (id, url) {

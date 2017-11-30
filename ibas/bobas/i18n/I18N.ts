@@ -20,6 +20,8 @@ import { logger } from "../messages/index";
 
 /** 配置项目-语言编码 */
 export const CONFIG_ITEM_LANGUAGE_CODE: string = "language";
+/** 配置项目-资源分组名称 */
+export const CONFIG_ITEM_I18N_GROUP_NAMES: string = "i18nGroups";
 /** 多语言 */
 export class I18N {
     /** 默认语言编码 */
@@ -139,9 +141,25 @@ export class I18N {
             }
         }
     }
+    // 分组标记
+    private groups: ArrayList<string> = null;
     private groupName(key: string): string {
+        if (objects.isNull(this.groups)) {
+            // 初始化分组配置
+            this.groups = new ArrayList<string>();
+            let values: string = config.get(CONFIG_ITEM_I18N_GROUP_NAMES);
+            if (!strings.isEmpty(values)) {
+                for (let item of values.split(",")) {
+                    item = item.trim();
+                    if (strings.isEmpty(item)) {
+                        continue;
+                    }
+                    this.groups.add(item);
+                }
+            }
+        }
         let tmps: string[] = key.split("_");
-        if (tmps[0] === "bo") {
+        if (this.groups.contain(tmps[0])) {
             // 对象资源分组优化
             return tmps[0] + "_" + tmps[1].substring(0, 1);
         } else {

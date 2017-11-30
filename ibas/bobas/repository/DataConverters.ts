@@ -170,7 +170,13 @@ export abstract class DataConverter4j implements IDataConverter {
                 Value: newData.value,
             };
             return remote;
-        } else if (!objects.isNull(this.boConverter)) {
+        } else if (objects.instanceOf(data, Array)) {
+            let dataArray: Array<any> = new Array();
+            for (let dataItem of data) {
+                dataArray.push(this.convert(dataItem, sign));
+            }
+            return dataArray;
+        }else if (!objects.isNull(this.boConverter)) {
             // 尝试业务对象转换
             return this.boConverter.convert(data);
         } else {
@@ -562,7 +568,7 @@ export abstract class BOConverter implements IBOConverter<IBusinessObject, any> 
                 return dates.valueOf(value);
             } else if (property === "DocumentStatus" || property === "LineStatus") {
                 return enums.valueOf(emDocumentStatus, value);
-            } else if (property === "Canceled" || property === "Referenced"
+            } else if (property === "Canceled" || property === "Referenced" || property === "Locked"
                 || property === "Transfered" || property === "Activated" || property === "Deleted") {
                 return enums.valueOf(emYesNo, value);
             } else if (property === "Status") {
@@ -586,7 +592,7 @@ export abstract class BOConverter implements IBOConverter<IBusinessObject, any> 
             // 枚举类型
             if (property === "DocumentStatus" || property === "LineStatus") {
                 return enums.toString(emDocumentStatus, value);
-            } else if (property === "Canceled" || property === "Referenced"
+            } else if (property === "Canceled" || property === "Referenced" || property === "Locked"
                 || property === "Transfered" || property === "Activated" || property === "Deleted") {
                 return enums.toString(emYesNo, value);
             } else if (property === "Status") {

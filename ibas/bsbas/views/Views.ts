@@ -106,9 +106,7 @@ export abstract class BOViewView extends BOView implements IBOViewView {
 }
 /** 业务对象编辑视图 */
 export abstract class BOEditView extends BOView implements IBOEditView {
-    /** 选择数据事件，参数：选择数据 */
-    editDataEvent: Function;
-    /** 新建数据事件 */
+    /** 保存数据事件 */
     saveDataEvent: Function;
 }
 /** 业务对象工具条视图 */

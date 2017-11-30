@@ -23,6 +23,11 @@ import { config } from "../configuration/index";
  */
 export class Criteria implements ICriteria {
 
+    constructor() {
+        this.conditions = new Conditions();
+        this.childCriterias = new ChildCriterias();
+        this.sorts = new Sorts();
+    }
     /**
      * 业务对象
      */

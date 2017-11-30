@@ -84,6 +84,8 @@ console.log(criteria.toString());
 let cCriteria: bobas.ICriteria = criteria.clone();
 console.log(cCriteria.toString());
 bobas.assert.equals("clone bo instance is not change.", criteria === cCriteria, false);
+condition = cCriteria.conditions.create();
+console.log(condition.toString());
 // 远程调用业务仓库
 let boRepository: BORepositoryTest = new BORepositoryTest();
 boRepository.token = "hahaha";

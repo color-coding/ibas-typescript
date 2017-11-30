@@ -13,8 +13,9 @@ import * as ibas from "ibas/index";
 export const LIBRARY_OPENUI5_ROOT_FILE_NAME: string = "/openui5/index";
 if ((<any>window).ibas === undefined) {
     (<any>window).ibas = {
-        url: "https://github.com/color-coding/ibas-typescript",
-        author: "niuren.zhu"
+        copyright: "color-coding studio",
+        license: "Apache License, Version 2.0",
+        url: "https://colorcoding.org/"
     };
 }
 if ((<any>window).ibas.openui5 === undefined) {
