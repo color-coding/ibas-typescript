@@ -15,7 +15,7 @@ import {
     IDataServiceContract, IBOListServiceContract,
     IServiceMapping, IServiceAgent, IBOChooseServiceCaller,
     IBOLinkServiceContract, IBOChooseServiceContract,
-    IBOLinkServiceCaller,
+    IBOLinkServiceCaller, IBOLineHandleServiceCaller, IBOLineHandleServiceContract,
 } from "./Services.d";
 
 /** 配置项目-默认服务图片 */
@@ -110,6 +110,11 @@ export class BOLinkServiceProxy extends ServiceProxy<IBOLinkServiceContract> {
 }
 /** 业务对象选择服务代理 */
 export class BOChooseServiceProxy extends ServiceProxy<IBOChooseServiceContract> {
+    /** 业务对象代码 */
+    boCode: string;
+}
+/** 业务对象选择服务代理 */
+export class BOLineHandleServiceProxy extends ServiceProxy<IBOLineHandleServiceContract> {
     /** 业务对象代码 */
     boCode: string;
 }
@@ -258,5 +263,23 @@ export class ServicesManager {
             }
         }
         logger.log(emMessageLevel.WARN, "services: not found [{0}]'s link service.", caller.boCode);
+    }
+    /** 运行 行处理服务 */
+    runLineHandleService<T, D>(caller: IBOLineHandleServiceCaller<T, D>): void {
+        if (objects.isNull(caller)) {
+            throw new Error(i18n.prop("sys_invalid_parameter", "caller"));
+        }
+        if (objects.isNull(caller.boCode)) {
+            throw new Error(i18n.prop("sys_invalid_parameter", "caller.boCode"));
+        }
+        let proxy: IServiceProxy<IServiceContract> = new BOLineHandleServiceProxy(caller);
+        for (let service of this.getServices(proxy)) {
+            if (service.category === caller.boCode) {
+                // 存在业务对象选择服务
+                service.run();
+                return;
+            }
+        }
+        logger.log(emMessageLevel.WARN, "services: not found [{0}]'s choose service.", caller.boCode);
     }
 }

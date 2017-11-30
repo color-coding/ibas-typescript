@@ -7,7 +7,7 @@
  */
 import { IBusinessObject, ICriteria, KeyValue, List, ICondition, IDataConverter } from "../../bobas/index";
 import { IElement, IViewShower, IViewNavigation } from "../core/index";
-import { emChooseType} from "../data/index";
+import { emChooseType } from "../data/index";
 
 /**
  * 应用服务
@@ -97,6 +97,11 @@ export interface IBOChooseServiceContract extends IServiceContract {
     /** 条件 */
     criteria?: ICriteria | ICondition[];
 }
+/** 业务对象行处理服务的契约 */
+export interface IBOLineHandleServiceContract extends IServiceContract {
+    /** 业务对象编码 */
+    boCode: string;
+}
 /** 应用服务的契约 */
 export interface IApplicationServiceContract extends IServiceContract {
     /** 应用标记 */
@@ -123,4 +128,13 @@ export interface IBOChooseServiceCaller<D> extends IServiceCaller, IBOChooseServ
 export interface IBOLinkServiceCaller extends IServiceCaller, IBOLinkServiceContract {
     /** 调用者 */
     caller?: any
+}
+/** 业务对象行处理服务调用者 */
+export interface IBOLineHandleServiceCaller<T, D> extends IServiceCaller, IBOLineHandleServiceContract {
+    /** 调用者 - 行集合*/
+    caller: T
+    /** 处理数据 */
+    handleData?: D;
+    /** 服务调用完成 */
+    onCompleted?(callBack: D): void;
 }
