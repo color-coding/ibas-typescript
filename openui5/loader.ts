@@ -26,8 +26,10 @@ export interface ILoaderCaller {
     url: string;
     /** 是否使用缓存 */
     noCache?: boolean;
-    /** 加载完成 */
-    onCompleted?(): void;
+    /** 成功加载 */
+    onSuccess?(): void;
+    /** 发生错误 */
+    onError?(): void;
 }
 /** 加载者 */
 export default class Loader {
@@ -43,7 +45,7 @@ export default class Loader {
         domScript.onload = domScript.onreadystatechange = function (): void {
             if (!this.readyState || "loaded" === this.readyState || "complete" === this.readyState) {
                 // openui5初始化完成
-                sap.ui.getCore().attachInit(caller.onCompleted);
+                sap.ui.getCore().attachInit(caller.onSuccess);
                 // ui 触发错误验证
                 sap.ui.getCore().attachValidationError("", (oEvent) => {
                     let control: any = oEvent.getParameter("element");
@@ -86,21 +88,24 @@ export default class Loader {
                     // 本地库存在，则加载本地
                     that.append({
                         url: root + "./resources/sap-ui-core.js",
-                        onCompleted: caller.onCompleted
+                        onError: caller.onError,
+                        onSuccess: caller.onSuccess
                     });
                 },
                 error: function (): void {
                     // 本地库不存在，则加载远程
                     that.append({
                         url: OPENUI5_OFFICIAL_URL,
-                        onCompleted: caller.onCompleted
+                        onError: caller.onError,
+                        onSuccess: caller.onSuccess
                     });
                 }
             });
         } else {
             that.append({
                 url: root,
-                onCompleted: caller.onCompleted
+                onError: caller.onError,
+                onSuccess: caller.onSuccess
             });
         }
     }
@@ -122,11 +127,12 @@ export default class Loader {
             });
         }
         require(
-            ["extends/index"],
-            caller.onCompleted,
-            function (): void {
-                throw new Error("faild to load openui5 extends.");
-            }
+            [
+                "extends/sap.m.ex",
+                "extends/sap.ui.table.ex"
+            ],
+            caller.onSuccess,
+            caller.onError,
         );
     }
 }

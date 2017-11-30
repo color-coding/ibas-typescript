@@ -12,27 +12,32 @@
     <script type="text/javascript">
         require(["../../openui5/loader", "../../ibas/loader"], function (uiLoader, ibasLoader) {
             // 加载器加载成功
-            var root = document.location.origin;
-            root = root + document.location.pathname.substring(0, document.location.pathname.lastIndexOf("/") + 1);
+            var root = document.location.origin + document.location.pathname.substring(0, document.location.pathname.lastIndexOf("/") + 1);
+            var onError = function () {
+                window.location.href = root + "../diagnosis.html";
+            };
             var uiLoder = new uiLoader.default();
             // 加载UI库
             uiLoder.load({
                 url: root + "../../openui5/",
-                onCompleted() {
+                onSuccess() {
                     // 加载UI库扩展
                     uiLoder.extends({
                         url: root + "../../openui5/",
-                        onCompleted() {
+                        onSuccess() {
                             var ibasLoder = new ibasLoader.default();
                             ibasLoder.load({
-                                url: root + "../../"
+                                url: root + "../../",
+                                onError: onError
                             });
-                        }
+                        },
+                        onError: onError
                     });
-                }
+                },
+                onError: onError
             });
         }, function () {
-            alert("faild to load application.");
+            alert(arguments[0]);
         });
     </script>
 </head>

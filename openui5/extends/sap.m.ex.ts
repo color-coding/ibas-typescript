@@ -6,12 +6,14 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 /// <reference path="../types/sap.m.ex.d.ts" />
-import * as ibas from "ibas/index";
 
-sap.m.Input.extend("sap.ibas.Input", {
+sap.m.Select.extend("sap.m.ex.Select", {
     metadata: {
         properties: {},
         events: {}
     },
     renderer: {}
 });
+
+// 命名空间输出，不可删除
+export default sap.m.ex;

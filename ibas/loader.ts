@@ -31,8 +31,10 @@ export interface ILoaderCaller {
     url: string;
     /** 是否使用缓存 */
     noCache?: boolean;
-    /** 加载完成 */
-    onCompleted?(): void;
+    /** 成功加载 */
+    onSuccess?(): void;
+    /** 发生错误 */
+    onError?(): void;
 }
 /** 加载者 */
 export default class Loader {
@@ -69,11 +71,11 @@ export default class Loader {
                 }, ["ibas/bsbas/systems"]);
                 shellRequire(["index"], function (): void {
                     // 加载完成
-                    if (caller.onCompleted instanceof Function) {
-                        caller.onCompleted();
+                    if (caller.onSuccess instanceof Function) {
+                        caller.onSuccess();
                     }
-                }, caller.onCompleted);
-            }, caller.onCompleted);
-        }, caller.onCompleted);
+                }, caller.onError);
+            }, caller.onError);
+        }, caller.onError);
     }
 }

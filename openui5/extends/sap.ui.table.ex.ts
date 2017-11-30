@@ -6,4 +6,8 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 /// <reference path="../types/sap.ui.table.ex.d.ts" />
-import * as ibas from "ibas/index";
+
+
+
+// 命名空间输出，不可删除
+export default sap.ui.table.ex;
