@@ -45,7 +45,7 @@ export interface OperationInformation extends DataDeclaration {
     /** 标签 */
     Tag: string;
     /** 内容 */
-    Contents: string;
+    Content: string;
 }
 /** 查询 */
 export interface Criteria extends DataDeclaration {

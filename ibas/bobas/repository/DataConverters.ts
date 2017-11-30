@@ -57,7 +57,7 @@ export abstract class DataConverter4j implements IDataConverter {
                 type: data.constructor.name,
                 Name: newData.name,
                 Tag: newData.tag,
-                Contents: newData.contents,
+                Content: newData.content,
             };
             return remote;
         } else if (objects.instanceOf(data, OperationMessage)) {
@@ -176,7 +176,7 @@ export abstract class DataConverter4j implements IDataConverter {
                 dataArray.push(this.convert(dataItem, sign));
             }
             return dataArray;
-        }else if (!objects.isNull(this.boConverter)) {
+        } else if (!objects.isNull(this.boConverter)) {
             // 尝试业务对象转换
             return this.boConverter.convert(data);
         } else {
@@ -214,7 +214,7 @@ export abstract class DataConverter4j implements IDataConverter {
             let newData: OperationInformation = new OperationInformation();
             newData.name = remote.Name;
             newData.tag = remote.Tag;
-            newData.contents = remote.Contents;
+            newData.content = remote.Content;
             return newData;
         } else if (data.type === OperationMessage.name) {
             let remote: ibas4j.OperationMessage = data;
