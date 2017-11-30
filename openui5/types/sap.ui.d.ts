@@ -1921,12 +1921,18 @@ declare namespace sap {
       */
       export abstract class Object {
 
+        /**
+         * Creates a subclass of class sap.ui.base.Object with name sClassName and enriches it with the information contained in oClassInfo.
+         * @param sClassName name of the class to be created
+         * @param oClassInfo structured object with informations about the class
+         * @param FNMetaImpl constructor function for the metadata object. If not given, it defaults to sap.ui.base.Metadata.
+        */
+        static extend(sClassName, oClassInfo?, FNMetaImpl?): Function;
 
         /**
          * Constructor for a sap.ui.base.Object.
         */
         constructor();
-
 
 
         /**
