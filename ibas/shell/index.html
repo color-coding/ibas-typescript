@@ -6,21 +6,34 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8" />
-    <script type="text/javascript" src="../../openui5/loader.js"></script>
-    <script type="text/javascript" src="../../ibas/loader.js"></script>
     <script type="text/javascript" src="../3rdparty/spin.js"></script>
     <script type="text/javascript" src="../3rdparty/jquery.js"></script>
     <script type="text/javascript" src="../3rdparty/require.js"></script>
     <script type="text/javascript">
-        (function () {
+        require(["../../openui5/loader", "../../ibas/loader"], function (uiLoader, ibasLoader) {
+            // 加载器加载成功
             var root = document.location.origin;
             root = root + document.location.pathname.substring(0, document.location.pathname.lastIndexOf("/") + 1);
-            var uiLoder = new OpenUI5();
-            uiLoder.load(root + "../../openui5/", function () {
-                var ibasLoder = new ibas();
-                ibasLoder.load(root + "../../ibas/");
+            var uiLoder = new uiLoader.default();
+            // 加载UI库
+            uiLoder.load({
+                url: root + "../../openui5/",
+                onCompleted() {
+                    // 加载UI库扩展
+                    uiLoder.extends({
+                        url: root + "../../openui5/",
+                        onCompleted() {
+                            var ibasLoder = new ibasLoader.default();
+                            ibasLoder.load({
+                                url: root + "../../"
+                            });
+                        }
+                    });
+                }
             });
-        }());
+        }, function () {
+            alert("faild to load application.");
+        });
     </script>
 </head>
 
