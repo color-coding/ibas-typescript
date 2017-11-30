@@ -89,20 +89,20 @@ export class Configuration {
     /**
      * 获取配置
      */
-    get<T>(...args: any[]): T {
+    get<T>(): T {
         let key: string, defalut: T, type: any;
-        if (args.length === 0) {
+        if (arguments.length === 0) {
             throw new Error(strings.format("invaild param."));
         }
         // 配置项参数
-        key = args[0];
+        key = arguments[0];
         // 默认值参数
-        if (args.length > 0) {
-            defalut = args[1];
+        if (arguments.length > 0) {
+            defalut = arguments[1];
         }
         // 类型参数
-        if (args.length > 1) {
-            type = args[2];
+        if (arguments.length > 1) {
+            type = arguments[2];
         }
         let value: any;
         if (this.items.has(key)) {

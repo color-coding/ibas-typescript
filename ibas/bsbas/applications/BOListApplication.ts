@@ -7,7 +7,7 @@
  */
 
 import {
-    ICriteria
+    ICriteria, objects, Criteria, Condition, criterias, boFactory, logger
 } from "../../bobas/index";
 import { IBOListView } from "./Applications.d";
 import { BOApplicationWithServices } from "./Applications";
@@ -24,6 +24,28 @@ export abstract class BOListApplication<T extends IBOListView, D> extends BOAppl
         this.view.newDataEvent = this.newData;
         this.view.viewDataEvent = this.viewData;
         this.view.fetchDataEvent = this.fetchData;
+    }
+    /** 运行 */
+    run(...args: any[]): void {
+        if (objects.isNull(args)) {
+            return;
+        }
+        if (args.length === 1) {
+            // 分析查询条件
+            if (objects.instanceOf(args[0], Criteria)) {
+                let criteria: Criteria = args[0];
+                if (this.view.query instanceof Function) {
+                    // 视图存在查询方法，则调用此方法
+                    this.view.query(criteria);
+                } else {
+                    this.fetchData(criteria);
+                }
+                // 进入查询，不在执行后部分
+                return;
+            }
+        }
+        // 保持参数原样传递
+        super.run.apply(this, args);
     }
     /** 查询数据 */
     protected abstract fetchData(criteria: ICriteria): void;
