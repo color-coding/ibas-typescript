@@ -9,6 +9,7 @@
 import {
     logger, emMessageLevel, IOperationResult, objects, i18n, strings,
     Application, config, CONFIG_ITEM_USER_TOKEN, CONFIG_ITEM_COMPANY,
+    CONFIG_ITEM_APPROVAL_WAY, CONFIG_ITEM_ORGANIZATION_WAY, CONFIG_ITEM_OWNERSHIP_WAY,
     emMessageType, CONFIG_ITEM_DEBUG_MODE, CONFIG_ITEM_PLANTFORM, urls, IMessgesCaller, KeyText
 } from "ibas/index";
 import { ILoginView, ILoginApp, ICenterApp, IUser, IBORepositorySystem } from "./Systems.d";
@@ -63,7 +64,19 @@ export class LoginApp<T extends ILoginView> extends Application<T> implements IL
                             if (strings.equalsIgnoreCase(item.tag, "CONFIG_ITEM")) {
                                 if (strings.equalsIgnoreCase(item.name, CONFIG_ITEM_COMPANY)) {
                                     // 设置公司代码
-                                    config.set(CONFIG_ITEM_COMPANY, item.contents);
+                                    config.set(CONFIG_ITEM_COMPANY, item.content);
+                                }
+                                if (strings.equalsIgnoreCase(item.name, CONFIG_ITEM_APPROVAL_WAY)) {
+                                    // 设置审批方法
+                                    config.set(CONFIG_ITEM_APPROVAL_WAY, item.content);
+                                }
+                                if (strings.equalsIgnoreCase(item.name, CONFIG_ITEM_ORGANIZATION_WAY)) {
+                                    // 设置组织方式
+                                    config.set(CONFIG_ITEM_ORGANIZATION_WAY, item.content);
+                                }
+                                if (strings.equalsIgnoreCase(item.name, CONFIG_ITEM_OWNERSHIP_WAY)) {
+                                    // 设置权限判断方式
+                                    config.set(CONFIG_ITEM_OWNERSHIP_WAY, item.content);
                                 }
                             }
                         }
@@ -127,7 +140,19 @@ export class LoginApp<T extends ILoginView> extends Application<T> implements IL
                         if (strings.equalsIgnoreCase(item.tag, "CONFIG_ITEM")) {
                             if (strings.equalsIgnoreCase(item.name, CONFIG_ITEM_COMPANY)) {
                                 // 设置公司代码
-                                config.set(CONFIG_ITEM_COMPANY, item.contents);
+                                config.set(CONFIG_ITEM_COMPANY, item.content);
+                            }
+                            if (strings.equalsIgnoreCase(item.name, CONFIG_ITEM_APPROVAL_WAY)) {
+                                // 设置审批方法
+                                config.set(CONFIG_ITEM_APPROVAL_WAY, item.content);
+                            }
+                            if (strings.equalsIgnoreCase(item.name, CONFIG_ITEM_ORGANIZATION_WAY)) {
+                                // 设置组织方式
+                                config.set(CONFIG_ITEM_ORGANIZATION_WAY, item.content);
+                            }
+                            if (strings.equalsIgnoreCase(item.name, CONFIG_ITEM_OWNERSHIP_WAY)) {
+                                // 设置权限判断方式
+                                config.set(CONFIG_ITEM_OWNERSHIP_WAY, item.content);
                             }
                         }
                     }

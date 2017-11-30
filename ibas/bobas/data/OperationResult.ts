@@ -30,14 +30,14 @@ export class OperationInformation implements IOperationInformation {
     /**
      * 获取-内容
      */
-    private _contents: string;
+    private _content: string;
 
-    get contents(): string {
-        return this._contents;
+    get content(): string {
+        return this._content;
     }
 
-    set contents(value: string) {
-        this._contents = value;
+    set content(value: string) {
+        this._content = value;
     }
 
     /**
