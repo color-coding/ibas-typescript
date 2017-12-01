@@ -22,17 +22,18 @@
                 url: root + "./openui5/",
                 noCache: true,
                 onSuccess() {
-                    // 加载UI库扩展
-                    uiLoder.extends({
-                        url: root + "./openui5/",
+                    // 加载ibas
+                    var ibasLoder = new ibasLoader.default();
+                    ibasLoder.load({
+                        url: root + "./",
                         noCache: true,
-                        onSuccess() {
-                            var ibasLoder = new ibasLoader.default();
-                            ibasLoder.load({
-                                url: root + "./",
+                        onSuccess(){
+                            // 加载UI库扩展
+                            uiLoder.extends({
+                                url: root + "./openui5/",
                                 noCache: true,
                                 onError: onError
-                            });
+                            })
                         },
                         onError: onError
                     });
