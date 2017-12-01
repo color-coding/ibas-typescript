@@ -17,6 +17,13 @@ export const SYSTEM_USER_ID: number = -9;
 /** 位置用户-标记 */
 export const UNKNOWN_USER_ID: number = -1;
 
+/** 配置项目-审批方法 */
+export const CONFIG_ITEM_APPROVAL_WAY: string = "approvalWay";
+/** 配置项目-组织方式 */
+export const CONFIG_ITEM_ORGANIZATION_WAY: string = "organizationWay";
+/** 配置项目-权限判断方式 */
+export const CONFIG_ITEM_OWNERSHIP_WAY: string = "ownershipWay";
+
 /** 配置项目-格式-日期 */
 export const CONFIG_ITEM_FORMAT_DATE: string = "format|Date";
 /** 配置项目-格式-时间 */

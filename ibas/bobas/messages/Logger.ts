@@ -71,7 +71,7 @@ export class Logger implements ILogger {
      * 记录消息
      * @param msgPars 消息参数
      */
-    log(...msgPars: any[]): void {
+    log(): void {
         // edge不开启调试模式,不能输出消息
         if ((<any>window).Debug !== undefined && (<any>window).Debug !== null) {
             if ((<any>window).Debug.debuggerEnabled !== true) {
@@ -80,25 +80,29 @@ export class Logger implements ILogger {
         }
         let message: Message;
         let useCount: number = 0;// 使用的参数
-        if (msgPars[0] instanceof Message) {
-            message = msgPars[0];
+        if (arguments[0] instanceof Message) {
+            message = arguments[0];
             useCount++;
-        } else if (typeof (msgPars[0]) === "number") {
+        } else if (typeof (arguments[0]) === "number") {
             message = new Message();
-            message.level = msgPars[0];
+            message.level = arguments[0];
             useCount++;
-            message.content = msgPars[1];
+            message.content = arguments[1];
             useCount++;
-        } else if (typeof (msgPars[0]) === "string") {
+        } else if (typeof (arguments[0]) === "string") {
             message = new Message();
-            message.content = msgPars[0];
+            message.content = arguments[0];
             useCount++;
         } else {
             throw new Error("invalid parameters.");
         }
         // 如果参数未用完，则认为是模板输出的字符串
-        if (msgPars.length > useCount) {
-            message.content = strings.format(message.content, msgPars.slice(useCount, msgPars.length));
+        if (arguments.length > useCount) {
+            let tmpArgs: Array<any> = new Array();
+            for (let index: number = useCount; index < arguments.length; index++) {
+                tmpArgs.push(arguments[index]);
+            }
+            message.content = strings.format(message.content, tmpArgs);
         }
         if (this.level < message.level) {
             // 超过日志输出的级别

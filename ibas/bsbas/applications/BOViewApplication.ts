@@ -48,7 +48,7 @@ export abstract class BOViewService<T extends IBOViewView> extends BOViewApplica
                 this.fetchData(criteria);
             }
         }
-        super.run(args);
+        super.run.apply(this, args);
     }
     /** 查询数据 */
     protected abstract fetchData(criteria: ICriteria | string): void;
