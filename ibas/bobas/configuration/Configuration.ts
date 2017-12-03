@@ -10,7 +10,7 @@
  * 模块索引文件，此文件集中导出类
  */
 /// <reference path="../../3rdparty/index.d.ts" />
-import { strings, emMessageLevel } from "../data/index";
+import { strings, emMessageLevel, KeyValue, List, ArrayList } from "../data/index";
 import { ILogger } from "../messages/Logger.d"; // 仅引用声明，避免嵌套引用
 
 /** 配置项目-调试模式 */
@@ -133,7 +133,14 @@ export class Configuration {
         this.log(emMessageLevel.DEBUG, strings.format("config: unable to get value for [{0}].", key));
         return undefined;
     }
-
+    /** 返回配置项目 */
+    all(): List<KeyValue> {
+        let items: List<KeyValue> = new ArrayList();
+        for (let item of this.items.keys()) {
+            items.add(new KeyValue(item, this.items.get(item)));
+        }
+        return items;
+    }
     private log(level: emMessageLevel, message: string): void {
         if ((<any>window).ibas !== undefined && (<any>window).ibas !== null
             && (<any>window).ibas.logger !== undefined && (<any>window).ibas.logger !== null) {
