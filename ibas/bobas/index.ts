@@ -37,6 +37,7 @@ let init: Function = function (): void {
         }
         // 加载语言-框架默认
         i18n.load(strings.format("{0}/resources/languages/bobas.json", rootUrl));
+        i18n.load(strings.format("{0}/resources/languages/enums.json", rootUrl));
     }
 }; init();
 // 导出的类型
