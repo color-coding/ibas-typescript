@@ -21,13 +21,14 @@
             uiLoder.load({
                 url: root + "../../openui5/",
                 onSuccess() {
-                    // 加载UI库扩展
-                    uiLoder.extends({
-                        url: root + "../../openui5/",
+                    // 加载ibas
+                    var ibasLoder = new ibasLoader.default();
+                    ibasLoder.load({
+                        url: root + "../../",
                         onSuccess() {
-                            var ibasLoder = new ibasLoader.default();
-                            ibasLoder.load({
-                                url: root + "../../",
+                            // 加载UI库扩展
+                            uiLoder.extends({
+                                url: root + "../../openui5/",
                                 onError: onError
                             });
                         },
