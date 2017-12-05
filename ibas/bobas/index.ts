@@ -49,6 +49,7 @@ export * from "./core/index";
 export * from "./bo/index";
 export * from "./repository/index";
 export * from "./utils/index";
+export * from "./tasks/index";
 // 导出的测试相关类型
 export * from "./assert/index";
 export * from "./debug/index";
