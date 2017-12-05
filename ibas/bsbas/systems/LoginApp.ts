@@ -9,6 +9,7 @@
 import {
     logger, emMessageLevel, IOperationResult, objects, i18n, strings,
     Application, config, CONFIG_ITEM_USER_TOKEN, CONFIG_ITEM_COMPANY,
+    CONFIG_ITEM_APPROVAL_WAY, CONFIG_ITEM_ORGANIZATION_WAY, CONFIG_ITEM_OWNERSHIP_WAY,
     emMessageType, CONFIG_ITEM_DEBUG_MODE, CONFIG_ITEM_PLANTFORM, urls, IMessgesCaller, KeyText
 } from "ibas/index";
 import { ILoginView, ILoginApp, ICenterApp, IUser, IBORepositorySystem } from "./Systems.d";
@@ -46,50 +47,12 @@ export class LoginApp<T extends ILoginView> extends Application<T> implements IL
             boRepository.tokenConnect({
                 caller: this, // 设置调用者，则onCompleted修正this
                 token: userToken,
-                onCompleted: function (opRslt: IOperationResult<IUser>): void {
-                    try {
-                        this.busy(false);
-                        if (objects.isNull(opRslt)) {
-                            throw new Error();
-                        }
-                        if (opRslt.resultCode !== 0) {
-                            throw new Error(opRslt.message);
-                        }
-                        let user: IUser = opRslt.resultObjects.firstOrDefault();
-                        // 设置默认用户口令
-                        config.set(CONFIG_ITEM_USER_TOKEN, user.token);
-                        // 更新配置项目
-                        for (let item of opRslt.informations) {
-                            if (strings.equalsIgnoreCase(item.tag, "CONFIG_ITEM")) {
-                                if (strings.equalsIgnoreCase(item.name, CONFIG_ITEM_COMPANY)) {
-                                    // 设置公司代码
-                                    config.set(CONFIG_ITEM_COMPANY, item.contents);
-                                }
-                            }
-                        }
-                        // 启动系统中心
-                        let centerApp: ICenterApp = Factories.systemsFactory.createCenterApp();
-                        centerApp.viewShower = this.viewShower;
-                        centerApp.navigation = this.navigation;
-                        centerApp.run(user);
-                    } catch (error) {
-                        let that: any = this;
-                        let caller: IMessgesCaller = {
-                            title: i18n.prop(this.name),
-                            type: emMessageType.ERROR,
-                            message: config.get(CONFIG_ITEM_DEBUG_MODE, false) ? error.stack : error.message,
-                            onCompleted: function (): void {
-                                that.show();
-                            }
-                        };
-                        this.messages(caller);
-                    }
-                }
+                onCompleted: this.onConnectCompleted,
             });
             // 发送登录连接请求后,清除地址栏中的查询参数信息,并且不保留浏览器历史记录
             window.history.replaceState(null, null, window.location.pathname + window.location.hash);
         } else {
-            super.run(args);
+            super.run.apply(this, args);
         }
     }
     /** 注册视图 */
@@ -110,38 +73,52 @@ export class LoginApp<T extends ILoginView> extends Application<T> implements IL
             caller: this, // 设置调用者，则onCompleted修正this
             user: this.view.user,
             password: this.view.password,
-            onCompleted: function (opRslt: IOperationResult<IUser>): void {
-                try {
-                    this.busy(false);
-                    if (objects.isNull(opRslt)) {
-                        throw new Error();
+            onCompleted: this.onConnectCompleted,
+        });
+    }
+
+    private onConnectCompleted(opRslt: IOperationResult<IUser>): void {
+        try {
+            this.busy(false);
+            if (objects.isNull(opRslt)) {
+                throw new Error();
+            }
+            if (opRslt.resultCode !== 0) {
+                throw new Error(opRslt.message);
+            }
+            let user: IUser = opRslt.resultObjects.firstOrDefault();
+            // 设置默认用户口令
+            config.set(CONFIG_ITEM_USER_TOKEN, user.token);
+            // 更新配置项目
+            for (let item of opRslt.informations) {
+                if (strings.equalsIgnoreCase(item.tag, "CONFIG_ITEM")) {
+                    if (strings.equalsIgnoreCase(item.name, CONFIG_ITEM_COMPANY)) {
+                        // 设置公司代码
+                        config.set(CONFIG_ITEM_COMPANY, item.content);
                     }
-                    if (opRslt.resultCode !== 0) {
-                        throw new Error(opRslt.message);
+                    if (strings.equalsIgnoreCase(item.name, CONFIG_ITEM_APPROVAL_WAY)) {
+                        // 设置审批方法
+                        config.set(CONFIG_ITEM_APPROVAL_WAY, item.content);
                     }
-                    let user: IUser = opRslt.resultObjects.firstOrDefault();
-                    // 设置默认用户口令
-                    config.set(CONFIG_ITEM_USER_TOKEN, user.token);
-                    // 更新配置项目
-                    for (let item of opRslt.informations) {
-                        if (strings.equalsIgnoreCase(item.tag, "CONFIG_ITEM")) {
-                            if (strings.equalsIgnoreCase(item.name, CONFIG_ITEM_COMPANY)) {
-                                // 设置公司代码
-                                config.set(CONFIG_ITEM_COMPANY, item.contents);
-                            }
-                        }
+                    if (strings.equalsIgnoreCase(item.name, CONFIG_ITEM_ORGANIZATION_WAY)) {
+                        // 设置组织方式
+                        config.set(CONFIG_ITEM_ORGANIZATION_WAY, item.content);
                     }
-                    // 启动系统中心
-                    let centerApp: ICenterApp = Factories.systemsFactory.createCenterApp();
-                    centerApp.viewShower = this.viewShower;
-                    centerApp.navigation = this.navigation;
-                    centerApp.run(user);
-                    this.destroy();
-                } catch (error) {
-                    this.messages(error);
+                    if (strings.equalsIgnoreCase(item.name, CONFIG_ITEM_OWNERSHIP_WAY)) {
+                        // 设置权限判断方式
+                        config.set(CONFIG_ITEM_OWNERSHIP_WAY, item.content);
+                    }
                 }
             }
-        });
+            // 启动系统中心
+            let centerApp: ICenterApp = Factories.systemsFactory.createCenterApp();
+            centerApp.viewShower = this.viewShower;
+            centerApp.navigation = this.navigation;
+            centerApp.run(user);
+            this.destroy();
+        } catch (error) {
+            this.messages(error);
+        }
     }
 
 }

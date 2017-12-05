@@ -33,11 +33,11 @@ export class DemoUrlApp extends ibas.Application<IDemoUrlView> {
     }
     static INSIDE_OPENED: boolean = true;
     /** 运行 */
-    run(): void {
+    run(...args: any[]): void {
         DemoUrlApp.INSIDE_OPENED = !DemoUrlApp.INSIDE_OPENED;
         this.view.url = "http://www.bing.com";
         this.view.isInside = DemoUrlApp.INSIDE_OPENED;
-        super.run();
+        super.run.apply(args);
     }
 }
 /** 视图-演示 */

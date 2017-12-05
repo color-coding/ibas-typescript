@@ -41,7 +41,10 @@ export abstract class BOChooseService<T extends IBOChooseView, D> extends BOChoo
     implements IBOChooseService {
     /** 运行 */
     run(...args: any[]): void {
-        if (!objects.isNull(args) && args.length === 1) {
+        if (objects.isNull(args)) {
+            return;
+        }
+        if (args.length === 1) {
             // 判断是否为选择契约
             let contract: IBOChooseServiceContract = args[0];
             // 设置选择类型
@@ -87,10 +90,9 @@ export abstract class BOChooseService<T extends IBOChooseView, D> extends BOChoo
             }
             // 存在查询，则直接触发查询事件
             if (!objects.isNull(criteria) && criteria.conditions.length > 0) {
-                let view: IBOChooseView = <IBOChooseView>this.view;
-                if (view.query instanceof Function) {
+                if (this.view.query instanceof Function) {
                     // 视图存在查询方法，则调用此方法
-                    view.query(criteria);
+                    this.view.query(criteria);
                 } else {
                     this.fetchData(criteria);
                 }
@@ -98,7 +100,8 @@ export abstract class BOChooseService<T extends IBOChooseView, D> extends BOChoo
                 return;
             }
         }
-        super.run(args);
+        // 保持参数原样传递
+        super.run.apply(this, args);
     }
     /** 完成 */
     private onCompleted: Function;

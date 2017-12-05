@@ -66,7 +66,7 @@ export interface IOperationInformation {
     /**
      * 获取-内容
      */
-    contents: string;
+    content: string;
 
     /**
      * 获取-标签

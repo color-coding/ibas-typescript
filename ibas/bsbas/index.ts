@@ -30,6 +30,7 @@ let init: Function = function (): void {
         config.load(strings.format("{0}/{1}", rootUrl, CONFIG_FILE_NAME));
         // 加载语言-框架默认
         i18n.load(strings.format("{0}/resources/languages/bsbas.json", rootUrl));
+        i18n.load(strings.format("{0}/resources/languages/enums.json", rootUrl));
     }
 }; init();
 // 此模块内容

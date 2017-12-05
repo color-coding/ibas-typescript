@@ -52,7 +52,7 @@ export class SalesOrderViewApp extends ibas.BOViewService<ISalesOrderViewView> {
             this.viewData = args[0];
             this.show();
         } else {
-            super.run(args);
+            super.run.apply(args);
         }
     }
     private viewData: bo.SalesOrder;

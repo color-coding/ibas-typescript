@@ -10,7 +10,7 @@
  * 模块索引文件，此文件集中导出类
  */
 /// <reference path="../../3rdparty/index.d.ts" />
-import { strings, emMessageLevel } from "../data/index";
+import { strings, emMessageLevel, KeyValue, List, ArrayList } from "../data/index";
 import { ILogger } from "../messages/Logger.d"; // 仅引用声明，避免嵌套引用
 
 /** 配置项目-调试模式 */
@@ -89,20 +89,20 @@ export class Configuration {
     /**
      * 获取配置
      */
-    get<T>(...args: any[]): T {
+    get<T>(): T {
         let key: string, defalut: T, type: any;
-        if (args.length === 0) {
+        if (arguments.length === 0) {
             throw new Error(strings.format("invaild param."));
         }
         // 配置项参数
-        key = args[0];
+        key = arguments[0];
         // 默认值参数
-        if (args.length > 0) {
-            defalut = args[1];
+        if (arguments.length > 0) {
+            defalut = arguments[1];
         }
         // 类型参数
-        if (args.length > 1) {
-            type = args[2];
+        if (arguments.length > 1) {
+            type = arguments[2];
         }
         let value: any;
         if (this.items.has(key)) {
@@ -133,7 +133,14 @@ export class Configuration {
         this.log(emMessageLevel.DEBUG, strings.format("config: unable to get value for [{0}].", key));
         return undefined;
     }
-
+    /** 返回配置项目 */
+    all(): List<KeyValue> {
+        let items: List<KeyValue> = new ArrayList();
+        for (let item of this.items.keys()) {
+            items.add(new KeyValue(item, this.items.get(item)));
+        }
+        return items;
+    }
     private log(level: emMessageLevel, message: string): void {
         if ((<any>window).ibas !== undefined && (<any>window).ibas !== null
             && (<any>window).ibas.logger !== undefined && (<any>window).ibas.logger !== null) {
