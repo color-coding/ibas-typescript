@@ -1,5 +1,7 @@
 {
     "ui5_data_types_not_empty_error": "{0} 不能为空",
+    "ui5_data_types_min_length_error": "{0} 长度不能小于{1}",
+    "ui5_data_types_max_length_error": "{0} 长度不能大于{1}",
     "ui5_data_types_zip_code_error": "邮政编码格式不正确",
     "ui5_data_types_url_error": "URL格式不正确",
     "ui5_data_types_password_error": "密码必须以字母开头，长度在6-12之间，只能包含字符、数字和下划线",

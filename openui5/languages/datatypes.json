@@ -1,5 +1,7 @@
 {
     "ui5_data_types_not_empty_error": "{0} Can't be empty",
+    "ui5_data_types_min_length_error": "{0} length can not be less than {1}",
+    "ui5_data_types_max_length_error": "{0} length can not be greater than {1}",
     "ui5_data_types_zip_code_error": "The postal code format is not correct",
     "ui5_data_types_url_error": "URL format is not correct",
     "ui5_data_types_password_error": "Password must begin with a letter, the length between 6 and 12, can only contain characters, Numbers, and underscores",
