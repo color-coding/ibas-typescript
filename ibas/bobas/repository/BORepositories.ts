@@ -34,8 +34,24 @@ export const CONFIG_ITEM_REPOSITORY_USER_TOKEN: string = "userToken|{0}";
 /**
  * 业务仓库应用
  */
-export abstract class BORepositoryApplication {
-
+export interface IBORepositoryApplication {
+    /**
+     * 远程服务地址
+     */
+    address: string;
+    /**
+     * 访问口令
+     */
+    token: string;
+    /**
+     * 是否离线
+     */
+    offline: boolean;
+}
+/**
+ * 业务仓库应用
+ */
+export abstract class BORepositoryApplication implements IBORepositoryApplication {
 
     constructor() {
         // 子类名称
