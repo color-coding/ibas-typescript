@@ -207,7 +207,9 @@ class LanguageLoader {
                 caller.onCompleted({});
             },
             success: function (data: any): void {
+                /*
                 logger.log(emMessageLevel.DEBUG, "i18n: get language file [{0}] sucessful.", caller.address);
+                */
                 if (!objects.isNull(data)) {
                     caller.onCompleted(data);
 
