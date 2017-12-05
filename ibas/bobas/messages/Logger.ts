@@ -37,7 +37,6 @@ export class Logger implements ILogger {
     set language(value: emMessageLevel) {
         this._level = value;
     }
-
     /**
      * 记录消息
      * @param message
