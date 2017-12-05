@@ -130,7 +130,7 @@ export class Configuration {
             }
         }
         // 记录不能获取到的配置
-        this.log(emMessageLevel.DEBUG, strings.format("config: unable to get value for [{0}].", key));
+        // this.log(emMessageLevel.DEBUG, strings.format("config: unable to get value for [{0}].", key));
         return undefined;
     }
     /** 返回配置项目 */
