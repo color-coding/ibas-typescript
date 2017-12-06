@@ -51,7 +51,7 @@ export class CustomerViewApp extends ibas.BOViewService<ICustomerViewView> {
             this.viewData = args[0];
             this.show();
         } else {
-            super.run.apply(args);
+            super.run.apply(this, args);
         }
     }
     private viewData: bo.Customer;

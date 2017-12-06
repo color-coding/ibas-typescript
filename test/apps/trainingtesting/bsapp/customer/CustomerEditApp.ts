@@ -80,7 +80,7 @@ export class CustomerEditApp extends ibas.BOEditApplication<ICustomerEditView, b
                 return;
             }
         }
-        super.run.apply(args);
+        super.run.apply(this, args);
     }
     /** 待编辑的数据 */
     protected editData: bo.Customer;

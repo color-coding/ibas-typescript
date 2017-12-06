@@ -51,7 +51,7 @@ export class MaterialViewApp extends ibas.BOViewService<IMaterialViewView> {
             this.viewData = args[0];
             this.show();
         } else {
-            super.run.apply(args);
+            super.run.apply(this, args);
         }
     }
     private viewData: bo.Material;

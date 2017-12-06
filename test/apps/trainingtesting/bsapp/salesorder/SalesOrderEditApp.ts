@@ -85,7 +85,7 @@ export class SalesOrderEditApp extends ibas.BOEditApplication<ISalesOrderEditVie
                 return;
             }
         }
-        super.run.apply(args);
+        super.run.apply(this, args);
     }
     /** 待编辑的数据 */
     protected editData: bo.SalesOrder;
