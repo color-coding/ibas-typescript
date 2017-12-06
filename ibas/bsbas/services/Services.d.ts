@@ -101,9 +101,9 @@ export interface IBOChooseServiceContract extends IServiceContract {
 /** 应用服务的契约 */
 export interface IApplicationServiceContract extends IServiceContract {
     /** 应用标记 */
-    AppId?: string;
-    /** 服务契约代理 */
-    proxy?: any;
+    appId?: string;
+    /** 服务契约代理类型（可被new） */
+    proxy: any;
 }
 /** 服务代理 */
 export interface IServiceProxy<C extends IServiceContract> {
@@ -129,8 +129,8 @@ export interface IBOLinkServiceCaller extends IServiceCaller, IBOLinkServiceCont
 }
 /** 业务对象服务调用者 */
 export interface IApplicationServiceCaller<In, Out> extends IServiceCaller, IApplicationServiceContract {
-    /** 调用者 - 输入*/
+    /** 调用者 - 输入 */
     caller: In
-    /** 服务调用完成 - 输出*/
+    /** 服务调用完成 - 输出 */
     onCompleted?(result: Out): void;
 }

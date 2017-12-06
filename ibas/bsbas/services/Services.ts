@@ -113,11 +113,6 @@ export class BOChooseServiceProxy extends ServiceProxy<IBOChooseServiceContract>
     /** 业务对象代码 */
     boCode: string;
 }
-
-/** 应用服务代理 */
-export class ApplicationServiceProxy extends ServiceProxy<IApplicationServiceContract> {
-
-}
 /** 服务管理员 */
 export class ServicesManager {
     constructor() {
@@ -261,15 +256,14 @@ export class ServicesManager {
         logger.log(emMessageLevel.WARN, "services: not found [{0}]'s link service.", caller.boCode);
     }
     /**
-     * 运行 服务
-     * In 输入类型
-     * Out 输出类型
+     * 运行应用服务
+     * @param caller 调用者<In,Out>(<输入类型,输出类型>)
      */
     runApplicationService<In, Out>(caller: IApplicationServiceCaller<In, Out>): void {
         if (objects.isNull(caller)) {
             throw new Error(i18n.prop("sys_invalid_parameter", "caller"));
         }
-        if (objects.isNull(caller.proxy)) {
+        if (objects.isNull(caller.proxy) || !objects.isAssignableFrom(caller.proxy, ServiceProxy)) {
             throw new Error(i18n.prop("sys_invalid_parameter", "caller.proxy"));
         }
         let proxy: IServiceProxy<IServiceContract> = new caller.proxy(caller);
@@ -277,6 +271,6 @@ export class ServicesManager {
             service.run();
             return;
         }
-        logger.log(emMessageLevel.WARN, "services: not found [{0}]'s application service.", caller.proxy);
+        logger.log(emMessageLevel.WARN, "services: not found [{0}]'s application service.", objects.getName(caller.proxy));
     }
 }
