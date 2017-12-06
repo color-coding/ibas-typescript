@@ -71,14 +71,30 @@ export namespace datatype {
                 return;
             }
             this.notEmpty = settings.notEmpty;
+            this.maxLength = settings.maxLength;
+            this.minLength = settings.minLength;
         }
         notEmpty: boolean = false;
+        maxLength: number = null;
+        minLength: number = null;
         validate(oValue: string, managedObject?: sap.ui.base.ManagedObject): ValidateResult {
             let result: ValidateResult = new ValidateResult();
             result.status = true;
             if (this.notEmpty && !validation.isNotEmpty(oValue)) {
                 result.status = false;
                 result.message = ibas.i18n.prop("ui5_data_types_not_empty_error", this.description);
+                this.fireValidationError(managedObject, result.message);
+                return result;
+            }
+            if (!!this.maxLength && (!oValue || oValue.length > this.maxLength)) {
+                result.status = false;
+                result.message = ibas.i18n.prop("ui5_data_types_max_length_error", this.description, this.maxLength);
+                this.fireValidationError(managedObject, result.message);
+                return result;
+            }
+            if (!!this.minLength && (!oValue || oValue.length < this.minLength)) {
+                result.status = false;
+                result.message = ibas.i18n.prop("ui5_data_types_min_length_error", this.description, this.minLength);
                 this.fireValidationError(managedObject, result.message);
                 return result;
             }
@@ -716,6 +732,10 @@ export namespace datatype {
     interface IAlphanumericSetting extends IDataTypeSetting {
         /* 是否不允许为空 */
         notEmpty?: boolean;
+        /** 最大长度 */
+        maxLength?: number;
+        /** 最小长度 */
+        minLength?: number;
     }
     /**
      * 数字类型设置

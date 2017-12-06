@@ -18,7 +18,7 @@ console.log(bobas.strings.format("message level is {0}",
     bobas.config.get(bobas.CONFIG_ITEM_MESSAGES_LEVEL, bobas.emMessageLevel.FATAL, bobas.emMessageLevel)));
 // 测试读取资源文件
 console.log(bobas.i18n.prop("sys_hello_world"));
-bobas.i18n.load(bobas.urls.rootUrl(undefined) + "/../resources/languages/test.zh_CN.json");
+bobas.i18n.load(bobas.urls.rootUrl(undefined) + "/../resources/languages/test.json");
 console.log(bobas.i18n.prop("sys_hello_world"));
 // 测试日志
 bobas.logger.log(bobas.emMessageLevel.FATAL, "a fatal error", "test");
@@ -38,17 +38,17 @@ eValue = bobas.enums.valueOf(bobas.emConditionOperation, "NOT_EQUAL");
 bobas.assert.equals("converter parsingEnums faild.", bobas.emConditionOperation.NOT_EQUAL, eValue);
 // 测试日期类型
 let dValue: Date = bobas.dates.valueOf("2017-03-14'T'23:59:59");
-bobas.assert.equals("converter parsingDate faild.", dValue, new Date(2017, 3, 14, 23, 59, 59));
+bobas.assert.equals("converter parsingDate faild.", dValue, new Date(2017, 2, 14, 23, 59, 59));
 dValue = bobas.dates.valueOf("2017/3/14'T'23:59:59");
-bobas.assert.equals("converter parsingDate faild.", dValue, new Date(2017, 3, 14, 23, 59, 59));
+bobas.assert.equals("converter parsingDate faild.", dValue, new Date(2017, 2, 14, 23, 59, 59));
 dValue = bobas.dates.valueOf("2017/3/14");
-bobas.assert.equals("converter parsingDate faild.", dValue, new Date(2017, 3, 14));
+bobas.assert.equals("converter parsingDate faild.", dValue, new Date(2017, 2, 14));
 dValue = bobas.dates.valueOf("2017-3-14");
-bobas.assert.equals("converter parsingDate faild.", dValue, new Date(2017, 3, 14));
-let sValue: string = bobas.dates.toString(new Date(2017, 3, 14, 23, 59, 59));
-bobas.assert.equals("converter convertDate faild.", sValue, "2017-3-14T23:59:59");
+bobas.assert.equals("converter parsingDate faild.", dValue, new Date(2017, 2, 14));
+let sValue: string = bobas.dates.toString(new Date(2017, 2, 14, 23, 59, 59));
+bobas.assert.equals("converter convertDate faild.", sValue, "2017-03-14T23:59:59");
 dValue = bobas.dates.valueOf("2017/3/14T23:59:59");
-bobas.assert.equals("converter parsingDate faild.", dValue, new Date(2017, 3, 14, 23, 59, 59))
+bobas.assert.equals("converter parsingDate faild.", dValue, new Date(2017, 2, 14, 23, 59, 59))
 // 测试字符串操作
 console.log(bobas.strings.format("I'm {0}.", 100));
 console.log(bobas.strings.format("I'm {0}.", { "name": "jack" }));
@@ -78,3 +78,17 @@ fileRepository.load("salesorders.json", {
         console.log(opRslt.message);
     }
 });
+// 测试动作
+class TestAction extends bobas.Action {
+    constructor() {
+        super();
+        this.id = bobas.uuids.random();
+        //  this.name = TestAction.name;
+    }
+    protected run(): boolean {
+        this.log(bobas.emMessageLevel.WARN, "I'm Niuren.Zhu.");
+        return true;
+    }
+}
+let action: TestAction = new TestAction();
+action.do();

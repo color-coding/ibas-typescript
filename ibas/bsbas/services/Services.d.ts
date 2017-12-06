@@ -97,15 +97,21 @@ export interface IBOChooseServiceContract extends IServiceContract {
     /** 条件 */
     criteria?: ICriteria | ICondition[];
 }
+<<<<<<< HEAD
 /** 业务对象行处理服务的契约 */
 export interface IBOLineHandleServiceContract extends IServiceContract {
     /** 业务对象编码 */
     boCode: string;
 }
+=======
+
+>>>>>>> color/master
 /** 应用服务的契约 */
 export interface IApplicationServiceContract extends IServiceContract {
     /** 应用标记 */
-    AppId: string;
+    appId?: string;
+    /** 服务契约代理类型（可被new） */
+    proxy: any;
 }
 /** 服务代理 */
 export interface IServiceProxy<C extends IServiceContract> {
@@ -129,6 +135,7 @@ export interface IBOLinkServiceCaller extends IServiceCaller, IBOLinkServiceCont
     /** 调用者 */
     caller?: any
 }
+<<<<<<< HEAD
 /** 业务对象行处理服务调用者 */
 export interface IBOLineHandleServiceCaller<T, D> extends IServiceCaller, IBOLineHandleServiceContract {
     /** 调用者 - 行集合*/
@@ -137,4 +144,12 @@ export interface IBOLineHandleServiceCaller<T, D> extends IServiceCaller, IBOLin
     handleData?: D;
     /** 服务调用完成 */
     onCompleted?(callBack: D): void;
+=======
+/** 业务对象服务调用者 */
+export interface IApplicationServiceCaller<In, Out> extends IServiceCaller, IApplicationServiceContract {
+    /** 调用者 - 输入 */
+    caller: In
+    /** 服务调用完成 - 输出 */
+    onCompleted?(result: Out): void;
+>>>>>>> color/master
 }

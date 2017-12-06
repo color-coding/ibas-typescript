@@ -32,7 +32,7 @@ export class DemoService extends ibas.Application<IDemoServiceView> implements i
     }
     /** 运行,覆盖原方法 */
     run(...args: any[]): void {
-        super.run.apply(args);
+        super.run.apply(this, args);
     }
 }
 /** 服务-演示 */

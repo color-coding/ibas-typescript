@@ -45,6 +45,8 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
                     path: "/customerCode",
                     type: new openui5.datatype.Alphanumeric({
                         notEmpty: true,
+                        minLength: 2,
+                        maxLength: 8,
                         description: ibas.i18n.prop("bo_salesorder_customercode")
                     })
                 }),

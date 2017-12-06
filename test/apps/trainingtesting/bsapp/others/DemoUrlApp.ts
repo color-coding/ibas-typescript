@@ -37,7 +37,7 @@ export class DemoUrlApp extends ibas.Application<IDemoUrlView> {
         DemoUrlApp.INSIDE_OPENED = !DemoUrlApp.INSIDE_OPENED;
         this.view.url = "http://www.bing.com";
         this.view.isInside = DemoUrlApp.INSIDE_OPENED;
-        super.run.apply(args);
+        super.run.apply(this, args);
     }
 }
 /** 视图-演示 */

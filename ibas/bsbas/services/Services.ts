@@ -15,7 +15,11 @@ import {
     IDataServiceContract, IBOListServiceContract,
     IServiceMapping, IServiceAgent, IBOChooseServiceCaller,
     IBOLinkServiceContract, IBOChooseServiceContract,
+<<<<<<< HEAD
     IBOLinkServiceCaller, IBOLineHandleServiceCaller, IBOLineHandleServiceContract,
+=======
+    IBOLinkServiceCaller, IApplicationServiceCaller,
+>>>>>>> color/master
 } from "./Services.d";
 
 /** 配置项目-默认服务图片 */
@@ -113,6 +117,7 @@ export class BOChooseServiceProxy extends ServiceProxy<IBOChooseServiceContract>
     /** 业务对象代码 */
     boCode: string;
 }
+<<<<<<< HEAD
 /** 业务对象选择服务代理 */
 export class BOLineHandleServiceProxy extends ServiceProxy<IBOLineHandleServiceContract> {
     /** 业务对象代码 */
@@ -122,6 +127,8 @@ export class BOLineHandleServiceProxy extends ServiceProxy<IBOLineHandleServiceC
 export class ApplicationServiceProxy extends ServiceProxy<IApplicationServiceContract> {
 
 }
+=======
+>>>>>>> color/master
 /** 服务管理员 */
 export class ServicesManager {
     constructor() {
@@ -264,6 +271,7 @@ export class ServicesManager {
         }
         logger.log(emMessageLevel.WARN, "services: not found [{0}]'s link service.", caller.boCode);
     }
+<<<<<<< HEAD
     /** 运行 行处理服务 */
     runLineHandleService<T, D>(caller: IBOLineHandleServiceCaller<T, D>): void {
         if (objects.isNull(caller)) {
@@ -281,5 +289,24 @@ export class ServicesManager {
             }
         }
         logger.log(emMessageLevel.WARN, "services: not found [{0}]'s choose service.", caller.boCode);
+=======
+    /**
+     * 运行应用服务
+     * @param caller 调用者<In,Out>(<输入类型,输出类型>)
+     */
+    runApplicationService<In, Out>(caller: IApplicationServiceCaller<In, Out>): void {
+        if (objects.isNull(caller)) {
+            throw new Error(i18n.prop("sys_invalid_parameter", "caller"));
+        }
+        if (objects.isNull(caller.proxy) || !objects.isAssignableFrom(caller.proxy, ServiceProxy)) {
+            throw new Error(i18n.prop("sys_invalid_parameter", "caller.proxy"));
+        }
+        let proxy: IServiceProxy<IServiceContract> = new caller.proxy(caller);
+        for (let service of this.getServices(proxy)) {
+            service.run();
+            return;
+        }
+        logger.log(emMessageLevel.WARN, "services: not found [{0}]'s application service.", objects.getName(caller.proxy));
+>>>>>>> color/master
     }
 }

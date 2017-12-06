@@ -37,7 +37,6 @@ export class Logger implements ILogger {
     set language(value: emMessageLevel) {
         this._level = value;
     }
-
     /**
      * 记录消息
      * @param message
@@ -46,27 +45,16 @@ export class Logger implements ILogger {
     /**
      * 记录消息
      * @param level 消息级别
-     * @param message 内容
-     */
-    log(level: emMessageLevel, message: string): void;
-    /**
-     * 记录消息
-     * @param level 消息级别
-     * @param format 消息格式
+     * @param message 消息格式
      * @param pars 格式内容
      */
-    log(level: emMessageLevel, format: string, ...pars: any[]): void;
-    /**
-     * 记录消息
-     * @param message 内容
-     */
-    log(format: string): void;
+    log(level: emMessageLevel, message: string, ...pars: any[]): void;
     /**
      * 记录消息
      * @param message 内容
      * @param pars 格式内容
      */
-    log(format: string, ...pars: any[]): void;
+    log(message: string, ...pars: any[]): void;
     /**
      * 记录消息
      * @param msgPars 消息参数

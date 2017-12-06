@@ -13,12 +13,10 @@ import { IMessage } from "./Message.d";
  * 消息记录员
  */
 export interface ILogger {
-
     /**
      * 消息输出的级别
      */
     level: emMessageLevel;
-
     /**
      * 记录消息
      * @param message
@@ -27,25 +25,14 @@ export interface ILogger {
     /**
      * 记录消息
      * @param level 消息级别
-     * @param message 内容
-     */
-    log(level: emMessageLevel, message: string);
-    /**
-     * 记录消息
-     * @param level 消息级别
-     * @param format 消息格式
+     * @param message 消息格式
      * @param pars 格式内容
      */
-    log(level: emMessageLevel, format: string, ...pars: any[]);
-    /**
-     * 记录消息
-     * @param message 内容
-     */
-    log(format: string);
+    log(level: emMessageLevel, message: string, ...pars: any[]);
     /**
      * 记录消息
      * @param message 内容
      * @param pars 格式内容
      */
-    log(format: string, ...pars: any[]);
+    log(message: string, ...pars: any[]);
 }
