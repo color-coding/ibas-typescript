@@ -7335,6 +7335,35 @@ declare namespace sap {
       setWidth(sWidth: any): sap.m.Image;
     }
     /**
+     * A sap.m.LightBox control represents a popup containing an image and a footer.
+     * The purpose of the control is to display an image in its original size as long as this is possible.
+     * On smaller screens, images are scaled down to fit. 
+    */
+    export class LightBox extends sap.ui.core.Control {
+
+
+      /**
+       * Constructor for a new Lightbox.
+       * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+       * @param {object} [mSettings] Initial settings for the new control
+      */
+      constructor(sId: string, mSettings?: any);
+    }
+    /**
+     * Represents an item which is displayed within an sap.m.LightBox.
+     * This item holds all properties of the image as well as the title and subtitle.
+    */
+    export class LightBoxItem extends sap.ui.core.Element {
+
+
+      /**
+       * Constructor for a new LightBoxItem.
+       * @param {string} [sId] ID for the new control, generated automatically if no ID is given
+       * @param {object} [mSettings] Initial settings for the new control
+      */
+      constructor(sId: string, mSettings?: any);
+    }
+    /**
      * The Title control represents a single line of text with explicit header / title semantics.
      * @resource sap/m/Title.js
     */
