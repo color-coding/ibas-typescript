@@ -124,8 +124,8 @@ export module urls {
      */
     export function param(name: string): KeyText {
         let params: List<KeyText> = this.params();
-        return params.firstOrDefault((param: KeyText) => {
-            if (param.key === name) {
+        return params.firstOrDefault((c) => {
+            if (c.key === name) {
                 return true;
             }
         });

@@ -107,7 +107,7 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
             modules(): List<IModule> {
                 let modules: ArrayList<IModule> = new ArrayList();
                 for (let item of that.functionMap.values()) {
-                    let tmp: any = modules.firstOrDefault((c: IModule) => {
+                    let tmp: any = modules.firstOrDefault((c) => {
                         if (item.module === c || item.module.id === c.id) {
                             return true;
                         }
@@ -242,7 +242,7 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
         }
         for (let item of module.functions()) {
             // 权限控制，没权限的不能激活菜单
-            let tmp: any = this.userPrivileges.firstOrDefault((c: IUserPrivilege) => {
+            let tmp: any = this.userPrivileges.firstOrDefault((c) => {
                 if (c.source === emPrivilegeSource.APPLICATION && c.target === item.id) {
                     if (c.value !== emAuthoriseType.ALL) {
                         return true;
