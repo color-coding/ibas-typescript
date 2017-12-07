@@ -7347,15 +7347,15 @@ declare namespace sap {
        * @param {string} [sId] ID for the new control, generated automatically if no ID is given
        * @param {object} [mSettings] Initial settings for the new control
       */
-        constructor(sId: string, mSettings?: any);
+      constructor(sId: string, mSettings?: any);
       /**
        * Closes the LightBox.
       */
-        close(): sap.m.LightBox
+      close(): sap.m.LightBox
       /**
        * Opens the LightBox.
       */
-        open(): sap.m.LightBox;
+      open(): sap.m.LightBox;
     }
     /**
      * Represents an item which is displayed within an sap.m.LightBox.
