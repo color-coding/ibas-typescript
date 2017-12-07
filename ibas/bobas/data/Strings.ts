@@ -5,7 +5,7 @@
  * Use of this source code is governed by an Apache License, Version 2.0
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
-
+import { StringBuilder } from "./Common";
 /**
  * 对字符串操作的封装方法
  */
@@ -16,6 +16,15 @@ export module strings {
     export function toString(content: any): string {
         if (content === undefined || content === null) {
             return "";
+        } else if (content instanceof Array) {
+            let stringBuilder: StringBuilder = new StringBuilder();
+            for (let item of content) {
+                if (stringBuilder.length > 0) {
+                    stringBuilder.append(", ");
+                }
+                stringBuilder.append(item);
+            }
+            return stringBuilder.toString();
         }
         return content.toString();
     }
