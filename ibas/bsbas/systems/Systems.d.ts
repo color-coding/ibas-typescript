@@ -138,6 +138,8 @@ export interface IUserModule {
 	repository: string;
 	/** 权限 */
 	authorise: emAuthoriseType;
+	/** 运行时 */
+	runtime: string;
 }
 /** 用户权限 */
 export interface IUserPrivilege {

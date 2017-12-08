@@ -16,7 +16,7 @@ import {
     BOViewApplication, BOEditApplication, IBOView, ISystemWatcher, IModule, ArrayList, List,
     MODULE_REPOSITORY_NAME_TEMPLATE, CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS,
     VARIABLE_NAME_USER_ID, VARIABLE_NAME_USER_CODE, VARIABLE_NAME_USER_NAME, VARIABLE_NAME_USER_SUPER,
-    VARIABLE_NAME_USER_BELONG, VARIABLE_NAME_USER_TOKEN, CONFIG_ITEM_DEBUG_MODE,
+    VARIABLE_NAME_USER_BELONG, VARIABLE_NAME_USER_TOKEN, CONFIG_ITEM_DEBUG_MODE, CONFIG_ITEM_RUNTIME_VERSION,
     hashEventManager, URL_HASH_SIGN_FUNCTIONS, IHashInfo
 } from "ibas/index";
 import {
@@ -283,12 +283,23 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
             // 去除参数部分
             ibas_index_url = ibas_index_url.substring(0, ibas_index_url.indexOf("?"));
         }
-        let moduleRequire: Function = requires.create({
+        // require配置
+        let requireConfig: RequireConfig = {
             baseUrl: address,
             map: { "*": { "css": ibas_index_url + "/../3rdparty/require-css.min.js" } },
             context: requires.naming(module.name),
             waitSeconds: config.get(requires.CONFIG_ITEM_WAIT_SECONDS, 30)
-        }, []);
+        };
+        /*
+        if (!(objects.isNull(config.get(CONFIG_ITEM_RUNTIME_VERSION))) && !objects.isNull(module.runtime)) {
+            // 存在运行时要求
+            requireConfig.urlArgs = function (id: string, url: string): string {
+                return (url.indexOf("?") === -1 ? "?" : "&") + "_=" + module.runtime;
+            };
+        }
+        */
+        // 创建require函数
+        let moduleRequire: Function = requires.create(requireConfig, []);
         logger.log(emMessageLevel.DEBUG, "center: module [{0}] {root: [{1}], index: [{2}]}.", module.name, address, indexName);
         moduleRequire([indexName], function (moduleIndex: any): void {
             try {

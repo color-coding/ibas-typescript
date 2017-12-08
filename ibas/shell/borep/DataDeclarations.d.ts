@@ -46,6 +46,8 @@ export interface UserModule extends DataDeclaration {
     Index: string;
     /** 权限 */
     Authorise: string;
+	/** 运行时 */
+	Runtime: string;
 }
 /** 操作消息 */
 export interface UserPrivilege extends DataDeclaration {

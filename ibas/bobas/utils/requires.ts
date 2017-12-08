@@ -58,7 +58,7 @@ export module requires {
             }
             // 运行时版本
             let rtVersion: string = conf.config.get(conf.CONFIG_ITEM_RUNTIME_VERSION);
-            if (!(objects.isNull(rtVersion))) {
+            if (!(objects.isNull(rtVersion)) && config.urlArgs === undefined) {
                 config.urlArgs = function (id: string, url: string): string {
                     return (url.indexOf("?") === -1 ? "?" : "&") + "_=" + rtVersion;
                 };
