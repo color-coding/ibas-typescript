@@ -4,9 +4,8 @@
     "debug": false,
     "offline": false,
     "language": "zh_CN",
-    "offline|BORepositoryShell": false,
     "helpUrl": "https://colorcoding.org/ibas/help",
-    "repositoryAddress|BORepositoryShell": ".../initialfantasy/services/rest/data"
+    "welcomeUrl": "https://colorcoding.org/ibas/welcome"
   },
   "languages": [
     "zh_CN",
