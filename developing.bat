@@ -22,8 +22,8 @@ REM 若工作目录最后字符不是“\”则补齐
 if "%WORK_FOLDER:~-1%" neq "\" SET WORK_FOLDER=%WORK_FOLDER%\
 echo --工作的目录：%WORK_FOLDER%
 REM 启动文件夹监听
-REM CALL :WATCHING_TS "%WORK_FOLDER%ibas\tsconfig.json"
-REM CALL :WATCHING_TS "%WORK_FOLDER%openui5\tsconfig.json"
+CALL :WATCHING_TS "%WORK_FOLDER%ibas\tsconfig.json"
+CALL :WATCHING_TS "%WORK_FOLDER%openui5\tsconfig.json"
 CALL :WATCHING_TS "%WORK_FOLDER%test\apps\tsconfig.dev.json"
 
 REM 启动web服务

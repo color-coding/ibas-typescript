@@ -10,6 +10,10 @@ declare namespace sap {
             export class CodeEditor extends sap.ui.core.Control {
                 constructor(mSettings?: any);
                 constructor(sId: string, mSettings?: any);
+                getValue(): string;
+                getType(): string;
+                setValue(sValue: string): CodeEditor;
+                setType(sType: string): CodeEditor;
             }
         }
     }

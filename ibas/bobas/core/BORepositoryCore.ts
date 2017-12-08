@@ -48,17 +48,21 @@ export abstract class RemoteRepository implements IRemoteRepository {
         }
         let methodUrl: StringBuilder = new StringBuilder();
         methodUrl.append(this.address);
-        if (!this.address.endsWith("/")) {
-            methodUrl.append("/");
-        }
-        methodUrl.append(method);
-        if (!objects.isNull(this.token) && method.indexOf("token=") < 0) {
-            if (method.indexOf("?") >= 0) {
-                methodUrl.append("&");
-            } else {
-                methodUrl.append("?");
+        if (!strings.isEmpty(method)) {
+            if (!this.address.endsWith("/")) {
+                methodUrl.append("/");
             }
-            methodUrl.append(strings.format("token={0}", this.token));
+            methodUrl.append(method);
+        }
+        if (!strings.isEmpty(this.token)) {
+            if (method.indexOf("token=") < 0 && this.address.indexOf("token=") < 0) {
+                if (method.indexOf("?") >= 0) {
+                    methodUrl.append("&");
+                } else {
+                    methodUrl.append("?");
+                }
+                methodUrl.append(strings.format("token={0}", this.token));
+            }
         }
         return methodUrl.toString();
     }
