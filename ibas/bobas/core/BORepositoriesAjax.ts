@@ -301,7 +301,7 @@ export abstract class RemoteRepositoryXhr extends RemoteRepository {
     }
     protected abstract createHttpRequest(method: string, data: any): XMLHttpRequest;
 }
-/** 文件上传仓库 */
+/** 文件下载仓库 */
 export class FileRepositoryDownloadAjax extends RemoteRepositoryXhr implements IFileRepositoryDownload {
     constructor() {
         super();
