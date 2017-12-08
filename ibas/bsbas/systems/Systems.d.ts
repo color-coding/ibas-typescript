@@ -240,8 +240,12 @@ export interface BOInfoCaller extends MethodCaller {
      */
 	onCompleted(opRslt: IOperationResult<IBOInfo>);
 }
-/** 系统仓库 */
-export interface IBORepositorySystem {
+/** 登录仓库 */
+export interface IBORepositoryConnect {
+    /**
+     * 远程服务地址
+     */
+	address: string;
 	/**
 	 * 用户密码登录
 	 * @param caller 调用者
@@ -252,6 +256,9 @@ export interface IBORepositorySystem {
 	 * @param caller 调用者
 	 */
 	tokenConnect(caller: TokenConnectCaller): void;
+}
+/** 系统仓库 */
+export interface IBORepositorySystem extends IBORepositoryConnect {
 
 	/**
 	 * 查询用户模块

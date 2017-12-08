@@ -42,4 +42,6 @@ export * from "./views/index";
 // export * from "./systems/index";
 export * from "./services/index";
 export * from "./runtime/index";
-
+// 系统共享
+export { IBORepositoryConnect, UserConnectCaller, TokenConnectCaller, IUser } from "./systems/Systems.d";
+export const BO_REPOSITORY_CONNECT: string = "BORepositoryConnect";

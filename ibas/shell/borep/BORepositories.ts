@@ -8,8 +8,8 @@
 
 import * as sys from "ibas/bsbas/systems/index";
 import * as ibas from "ibas/index";
-import { DataConverter4Shell } from "./DataConverters";
 import * as bo from "./bo/Systems";
+import { DataConverter4Shell } from "./DataConverters";
 
 /**
  * 业务仓库-壳-远程
@@ -280,3 +280,5 @@ export class BORepositoryShellOffline extends BORepositoryShell {
         this.fetch("BOInfo", fetchCaller);
     }
 }
+// 注册业务对象仓库到工厂
+ibas.boFactory.register(ibas.BO_REPOSITORY_CONNECT, BORepositoryShell);
