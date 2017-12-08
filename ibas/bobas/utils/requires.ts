@@ -14,6 +14,8 @@ export module requires {
     export const CONFIG_ITEM_SHARED_LIBRARIES: string = "sharedLibraries";
     /** 加载器名称模板 */
     export const CONTEXT_NAME_TEMPLATE_IBAS: string = "ibas.{0}";
+    /** 加载等待时间 */
+    export const CONFIG_ITEM_WAIT_SECONDS: string = "waitSeconds";
     /** 命名 */
     export function naming(name: string): string {
         return CONTEXT_NAME_TEMPLATE_IBAS.replace("{0}", name);
