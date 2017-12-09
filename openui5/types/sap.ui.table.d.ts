@@ -36,8 +36,10 @@ declare namespace sap {
                 getExtension(): sap.ui.core.Control[];
                 getRows(): sap.ui.table.Row[];
                 addColumn(oColumn: Column): sap.ui.table.Table;
-                setRowActionCount(iVisibleRowCount?: number): void;
-                setRowActionTemplate(oRowActionTemplate): sap.ui.table.Table
+                setRowActionCount(iVisibleRowCount?: number): sap.ui.table.Table;
+                setRowActionTemplate(oRowActionTemplate): sap.ui.table.Table;
+                getTitle(): sap.ui.core.Control | string;
+                setTitle(title: sap.ui.core.Control | string): sap.ui.table.Table;
             }
             export class Column extends sap.ui.core.Control {
                 constructor(mSettings?: any);
@@ -59,9 +61,9 @@ declare namespace sap {
                 collapse(iRowIndex: number): sap.ui.table.TreeTable;
                 collapseAll(): sap.ui.table.TreeTable;
                 expandToLevel(iLevel: number): sap.ui.table.TreeTable;
-                getRowActionCount():number;
+                getRowActionCount(): number;
                 setRowActionCount(iRowActionCount: number): sap.ui.table.TreeTable;
-                getSelectedIndex():number;
+                getSelectedIndex(): number;
             }
             export class RowAction extends sap.ui.core.Control {
                 constructor(mSettings?: any);

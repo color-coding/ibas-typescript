@@ -9,7 +9,7 @@
 /// <reference path="../../3rdparty/index.d.ts" />
 import {
     objects, strings, emMessageLevel, OperationResult, IOperationResult, ArrayList,
-    Criteria, Condition, ICriteria,
+    Criteria, Condition, ICriteria, OperationMessage
 } from "../data/index";
 import { i18n } from "../i18n/index";
 import { logger } from "../messages/index";
@@ -54,7 +54,15 @@ export abstract class RemoteRepositoryAjax extends RemoteRepository implements I
             if (that.autoParsing) {
                 let opRslt: any = that.converter.parsing(data, method);
                 if (objects.isNull(opRslt)) {
-                    throw new Error(i18n.prop("sys_data_converter_parsing_faild"));
+                    opRslt = new OperationResult();
+                    opRslt.resultCode = 20000;
+                    opRslt.message = i18n.prop("sys_data_converter_parsing_faild");
+                    logger.log(emMessageLevel.ERROR,
+                        "repository: call method [{1}] faild, {0}", opRslt.message, ajaxSetting.url);
+                } else if (!objects.instanceOf(opRslt, OperationResult) && !objects.instanceOf(opRslt, OperationMessage)) {
+                    let tmpOpRslt = new OperationResult();
+                    tmpOpRslt.addResults(opRslt);
+                    opRslt = tmpOpRslt;
                 }
                 /*
                 logger.log(emMessageLevel.DEBUG,

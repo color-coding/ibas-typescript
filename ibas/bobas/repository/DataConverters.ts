@@ -332,6 +332,12 @@ export abstract class DataConverter4j implements IDataConverter {
             newData.key = remote.Key;
             newData.value = remote.Value;
             return newData;
+        } else if (objects.instanceOf(data, Array)) {
+            let dataArray: Array<any> = new Array();
+            for (let dataItem of data) {
+                dataArray.push(this.parsing(dataItem, sign));
+            }
+            return dataArray;
         } else if (!objects.isNull(this.boConverter)) {
             // 尝试业务对象解析
             return this.boConverter.parsing(data);

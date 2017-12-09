@@ -301,31 +301,23 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
         // 创建require函数
         let moduleRequire: Function = requires.create(requireConfig, []);
         logger.log(emMessageLevel.DEBUG, "center: module [{0}] {root: [{1}], index: [{2}]}.", module.name, address, indexName);
-        moduleRequire([indexName], function (moduleIndex: any): void {
+        moduleRequire([indexName], function (library: any): void {
             try {
                 logger.log(emMessageLevel.DEBUG, "center: got a console from [{0}].", (<any>moduleRequire).toUrl(indexName));
                 // 模块加载成功
-                if (objects.isNull(moduleIndex)) {
+                if (objects.isNull(library)) {
                     // 模块的索引文件加载不成功，或返回值不正确
                     throw new Error(
                         i18n.prop("sys_invalid_module_index", objects.isNull(module.name) ? module.id : module.name)
                     );
                 }
-                // 模块加载成功
-                if (objects.isNull(moduleIndex)) {
-                    // 模块的索引文件加载不成功，或返回值不正确
-                    throw new Error(
-                        i18n.prop("sys_invalid_module_index", objects.isNull(module.name) ? module.id : module.name)
-                    );
-                }
-                let consoleClass: any = moduleIndex.default;
-                if (objects.isNull(consoleClass) || !objects.isAssignableFrom(consoleClass, ModuleConsole)) {
+                if (objects.isNull(library.default) || !objects.isAssignableFrom(library.default, ModuleConsole)) {
                     // 模块的控制台无效
                     throw new Error(
                         i18n.prop("sys_invalid_module_console", objects.isNull(module.name) ? module.id : module.name)
                     );
                 }
-                let console: ModuleConsole = new consoleClass();
+                let console: ModuleConsole = new library.default();
                 if (!(objects.instanceOf(console, ModuleConsole))) {
                     // 控制台实例无效
                     throw new Error(

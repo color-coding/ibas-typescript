@@ -148,6 +148,22 @@ export class OperationResult<P> extends OperationMessage implements IOperationRe
     set resultObjects(value: List<P>) {
         this._resultObjects = value;
     }
+    /** 添加结果 */
+    addResults(value: P): void;
+    /** 添加结果 */
+    addResults(value: P[]): void;
+    addResults(): void {
+        if (objects.isNull(arguments[0])) {
+            return;
+        }
+        if (arguments[0] instanceof Array) {
+            for (let item of arguments[0]) {
+                this.resultObjects.add(item);
+            }
+        } else {
+            this.resultObjects.add(arguments[0]);
+        }
+    }
 
     /**
      * 操作执行信息

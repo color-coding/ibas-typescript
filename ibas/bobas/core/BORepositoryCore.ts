@@ -47,9 +47,11 @@ export abstract class RemoteRepository implements IRemoteRepository {
             throw new Error(i18n.prop("sys_invalid_parameter", "address"));
         }
         let methodUrl: StringBuilder = new StringBuilder();
-        methodUrl.append(this.address);
+        if (!strings.isEmpty(this.address)) {
+            methodUrl.append(this.address);
+        }
         if (!strings.isEmpty(method)) {
-            if (!this.address.endsWith("/")) {
+            if (!this.address.endsWith("/") && methodUrl.length > 0) {
                 methodUrl.append("/");
             }
             methodUrl.append(method);
