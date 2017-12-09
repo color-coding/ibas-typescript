@@ -40,6 +40,8 @@ declare namespace sap {
                 setRowActionTemplate(oRowActionTemplate): sap.ui.table.Table;
                 getTitle(): sap.ui.core.Control | string;
                 setTitle(title: sap.ui.core.Control | string): sap.ui.table.Table;
+                getFooter(): sap.ui.core.Control | string;
+                setFooter(footer: sap.ui.core.Control | string): sap.ui.table.Table;
             }
             export class Column extends sap.ui.core.Control {
                 constructor(mSettings?: any);

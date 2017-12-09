@@ -250,18 +250,7 @@ export class CenterView extends ibas.BOView implements ICenterView {
 	 */
     showStatusMessage(type: ibas.emMessageType, message: string): void {
         let that: this = this;
-        let uiType: sap.ui.core.MessageType = sap.ui.core.MessageType.None;
-        if (type === ibas.emMessageType.ERROR) {
-            uiType = sap.ui.core.MessageType.Error;
-        } else if (type === ibas.emMessageType.QUESTION) {
-            uiType = sap.ui.core.MessageType.Warning;
-        } else if (type === ibas.emMessageType.SUCCESS) {
-            uiType = sap.ui.core.MessageType.Success;
-        } else if (type === ibas.emMessageType.WARNING) {
-            uiType = sap.ui.core.MessageType.Warning;
-        } else if (type === ibas.emMessageType.INFORMATION) {
-            uiType = sap.ui.core.MessageType.Information;
-        }
+        let uiType: sap.ui.core.MessageType = openui5.utils.toMessageType(type);
         // 特殊字符处理
         message = message.replace("{", "(").replace("}", ")");
         this.messagePopover.destroyContent();

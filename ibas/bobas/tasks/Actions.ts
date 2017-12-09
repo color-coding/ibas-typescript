@@ -35,7 +35,7 @@ export abstract class Action {
         }
         this.config.set(key, value);
         this.log(emMessageLevel.INFO,
-            "action: [{0}] got configuration [{1} - {2}].", objects.isNull(this.name) ? this.id : this.name, key, value);
+            "new config item [{1} - {2}].", objects.isNull(this.name) ? this.id : this.name, key, value);
     }
     /**
      * 获取配置
@@ -136,8 +136,7 @@ export abstract class Action {
         try {
             done = this.run();
         } catch (error) {
-            this.log(emMessageLevel.ERROR,
-                "occurred error [{0}].", error);
+            this.log(emMessageLevel.ERROR, "occurred error [{0}].", error);
         }
         if (done) {
             // 任务完成
@@ -154,6 +153,10 @@ export abstract class Action {
         this.log(emMessageLevel.INFO,
             "action was completed at [{0}], during [{1}]s.", this.endTime.toLocaleString(),
             dates.difference(dates.emDifferenceType.SECOND, this.endTime, this.startTime));
+    }
+    /** 停止（最好重载）*/
+    stop(): void {
+        this.done();
     }
     /** 运行（需要实现） */
     protected abstract run(): boolean;

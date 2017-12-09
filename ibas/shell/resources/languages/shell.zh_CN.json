@@ -48,6 +48,7 @@
     "shell_exit": "退出",
     "shell_refresh": "刷新",
     "shell_run": "运行",
+    "shell_stop": "停止",
     "shell_back": "返回",
     "shell_reset": "重置",
     "shell_confirm": "确认",
