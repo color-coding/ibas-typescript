@@ -169,7 +169,7 @@ export abstract class View implements IView {
     /** 按钮按下时 */
     onKeyDown(event: KeyboardEvent): void {
         // 可重载
-        logger.log(emMessageLevel.DEBUG, "view: key [{0}] down at [{1}].", event.keyCode, this.id);
+        // logger.log(emMessageLevel.DEBUG, "view: key [{0}] down at [{1}].", event.keyCode, this.id);
     }
     /** 地址栏哈希值变化 */
     onHashChanged(event: HashChangeEvent): void {
