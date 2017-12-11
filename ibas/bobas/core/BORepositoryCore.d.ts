@@ -16,31 +16,26 @@ import { FileData } from "../../index";
 /**
  * 查询调用监听者
  */
-export interface MethodCaller {
+export interface MethodCaller<T> {
     /** 调用者，若设置值，则为onCompleted方法的this */
     caller?: any;
     /**
      * 调用完成
      * @param opRslt 结果
      */
-    onCompleted(opRslt: IOperationResult<any>);
+    onCompleted(opRslt: IOperationResult<T>): void;
 }
 /**
  * 查询调用者
  */
-export interface FetchCaller<P> extends MethodCaller {
+export interface FetchCaller<P> extends MethodCaller<P> {
     /** 查询条件 */
     criteria: ICriteria | ICondition[];
-    /**
-     * 调用完成
-     * @param opRslt 结果
-     */
-    onCompleted(opRslt: IOperationResult<P>);
 }
 /**
  * 保存调用者
  */
-export interface SaveCaller<P> extends MethodCaller {
+export interface SaveCaller<P> extends MethodCaller<P> {
     /** 被保存对象 */
     beSaved: P;
     /**
@@ -93,12 +88,12 @@ export interface IRemoteRepository {
      * @param data 数据
      * @param caller 调用者
      */
-    callRemoteMethod(method: string, data: any, caller: MethodCaller): void;
+    callRemoteMethod(method: string, data: any, caller: MethodCaller<any>): void;
 }
 /**
  * 加载文件调用者
  */
-export interface LoadFileCaller extends MethodCaller {
+export interface LoadFileCaller extends MethodCaller<any> {
     /** 协议类型 */
     contentType?: string;
     /** 数据类型 */
@@ -118,14 +113,9 @@ export interface IFileRepository {
 /**
  * 上传文件调用者
  */
-export interface UploadFileCaller<T> extends MethodCaller {
+export interface UploadFileCaller<T> extends MethodCaller<T> {
     /** 文件上传数据 */
     fileData: FormData;
-    /**
-     * 调用完成
-     * @param opRslt 结果
-     */
-    onCompleted(opRslt: IOperationResult<T>);
 }
 /**
  * 文件上传仓库
@@ -141,14 +131,9 @@ export interface IFileRepositoryUpload {
 /**
  * 下载文件调用者，T类型一般为Blob
  */
-export interface DownloadFileCaller<T> extends MethodCaller {
+export interface DownloadFileCaller<T> extends MethodCaller<T> {
     /** 下载条件 */
     criteria: ICriteria;
-    /**
-     * 调用完成
-     * @param opRslt 结果
-     */
-    onCompleted(opRslt: IOperationResult<T>);
 }
 /**
  * 文件上传仓库

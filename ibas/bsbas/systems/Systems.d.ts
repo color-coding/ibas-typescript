@@ -184,12 +184,7 @@ export interface IBOPropertyInfo {
 /**
  * 登录调用者
  */
-export interface ConnectCaller extends MethodCaller {
-    /**
-     * 调用完成
-     * @param opRslt 结果
-     */
-	onCompleted(opRslt: IOperationResult<IUser>);
+export interface ConnectCaller extends MethodCaller<IUser> {
 }
 /**
  * 用户密码登录调用者
@@ -210,16 +205,11 @@ export interface TokenConnectCaller extends ConnectCaller {
 /**
  * 用户相关调用者
  */
-export interface UserMethodCaller<P> extends MethodCaller {
+export interface UserMethodCaller<P> extends MethodCaller<P> {
 	/** 用户 */
 	user: string;
 	/** 平台 */
 	platform?: string;
-    /**
-     * 调用完成
-     * @param opRslt 结果
-     */
-	onCompleted(opRslt: IOperationResult<P>);
 }
 /**
  * 用户查询调用者
@@ -231,7 +221,7 @@ export interface UserQueriesCaller extends UserMethodCaller<IUserQuery> {
 /**
  * 业务对象信息调用者
  */
-export interface BOInfoCaller extends MethodCaller {
+export interface BOInfoCaller extends MethodCaller<IBOInfo> {
 	/** 业务对象名称 */
 	boName: string;
 	/** 业务对象编码 */

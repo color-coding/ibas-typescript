@@ -34,7 +34,7 @@ export abstract class RemoteRepositoryAjax extends RemoteRepository implements I
      * @param data 数据
      * @param caller 方法监听
      */
-    callRemoteMethod(method: string, data: any, caller: MethodCaller): void {
+    callRemoteMethod(method: string, data: any, caller: MethodCaller<any>): void {
         let that: this = this;
         let ajaxSetting: JQueryAjaxSettings = this.createAjaxSettings(method, data);
         if (objects.isNull(ajaxSetting)) {
@@ -60,7 +60,7 @@ export abstract class RemoteRepositoryAjax extends RemoteRepository implements I
                     logger.log(emMessageLevel.ERROR,
                         "repository: call method [{1}] faild, {0}", opRslt.message, ajaxSetting.url);
                 } else if (!objects.instanceOf(opRslt, OperationResult) && !objects.instanceOf(opRslt, OperationMessage)) {
-                    let tmpOpRslt = new OperationResult();
+                    let tmpOpRslt: OperationResult<any> = new OperationResult();
                     tmpOpRslt.addResults(opRslt);
                     opRslt = tmpOpRslt;
                 }
@@ -266,7 +266,7 @@ export abstract class RemoteRepositoryXhr extends RemoteRepository {
      * @param data 数据
      * @param caller 方法监听
      */
-    callRemoteMethod(method: string, data: any, caller: MethodCaller): void {
+    callRemoteMethod(method: string, data: any, caller: MethodCaller<any>): void {
         let request: XMLHttpRequest = this.createHttpRequest(method, data);
         if (objects.isNull(request)) {
             throw new Error(i18n.prop("sys_invalid_parameter", "HttpRequest"));
@@ -321,7 +321,7 @@ export class FileRepositoryDownloadAjax extends RemoteRepositoryXhr implements I
      * @param caller 调用者
      */
     download<T>(method: string, caller: DownloadFileCaller<T>): void {
-        let methodCaller: MethodCaller = {
+        let methodCaller: MethodCaller<any> = {
             onCompleted(data: any): void {
                 let opRslt: IOperationResult<any> = null;
                 if (data instanceof OperationResult) {

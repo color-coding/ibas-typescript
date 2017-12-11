@@ -74,5 +74,5 @@ export abstract class RemoteRepository implements IRemoteRepository {
      * @param data 数据
      * @param caller 调用者
      */
-    abstract callRemoteMethod(method: string, data: any, caller: MethodCaller): void;
+    abstract callRemoteMethod(method: string, data: any, caller: MethodCaller<any>): void;
 }
