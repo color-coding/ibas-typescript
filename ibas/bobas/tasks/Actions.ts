@@ -85,7 +85,7 @@ export abstract class Action {
             pars.push(arguments[0]);
             // 内容
             pars.push(heard + arguments[1]);
-            for (let index = 2; index < arguments.length; index++) {
+            for (let index: number = 2; index < arguments.length; index++) {
                 pars.push(arguments[index]);
             }
         } else {
@@ -93,7 +93,7 @@ export abstract class Action {
             pars.push(emMessageLevel.INFO);
             // 内容
             pars.push(heard + arguments[0]);
-            for (let index = 1; index < arguments.length; index++) {
+            for (let index: number = 1; index < arguments.length; index++) {
                 pars.push(arguments[index]);
             }
         }
@@ -154,7 +154,7 @@ export abstract class Action {
             "action was completed at [{0}], during [{1}]s.", this.endTime.toLocaleString(),
             dates.difference(dates.emDifferenceType.SECOND, this.endTime, this.startTime));
     }
-    /** 停止（最好重载）*/
+    /** 停止（最好重载） */
     stop(): void {
         this.done();
     }
