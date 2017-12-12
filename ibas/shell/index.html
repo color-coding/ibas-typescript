@@ -14,7 +14,8 @@
             // 加载器加载成功
             var root = document.location.origin + document.location.pathname.substring(0, document.location.pathname.lastIndexOf("/") + 1);
             var onError = function () {
-                window.location.href = root + "../diagnosis.html";
+                // window.location.href = root + "../diagnosis.html";
+                // 此页面不跳转诊断
             };
             // 没有成功获取加载器
             if (uiLoader === undefined || ibasLoader === undefined) {
