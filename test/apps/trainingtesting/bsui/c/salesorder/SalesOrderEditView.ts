@@ -145,7 +145,7 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
         });
         this.form.addContent(new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_salesorderitem") }));
         this.tableSalesOrderItem = new sap.ui.table.Table("", {
-            extension: new sap.m.Toolbar("", {
+            toolbar: new sap.m.Toolbar("", {
                 content: [
                     new sap.m.Button("", {
                         text: ibas.i18n.prop("shell_data_add"),
@@ -169,6 +169,7 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
                 ]
             }),
             enableSelectAll: false,
+            selectionBehavior: sap.ui.table.SelectionBehavior.Row,
             visibleRowCount: ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 10),
             rows: "{/rows}",
             columns: [

@@ -165,7 +165,7 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
     private createTable(properies: IBOPropertyInfo[]): sap.ui.table.Table {
         let that: this = this;
         let table: sap.ui.table.Table = new sap.ui.table.Table("", {
-            extension: new sap.m.Toolbar("", {
+            toolbar: new sap.m.Toolbar("", {
                 content: [
                     new sap.m.Button("", {
                         text: ibas.i18n.prop("shell_data_add"),
@@ -188,6 +188,7 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
             }),
             visibleRowCount: 5,
             enableSelectAll: false,
+            selectionBehavior: sap.ui.table.SelectionBehavior.Row,
             rows: "{/rows}",
             columns: [
                 new sap.ui.table.Column("", {

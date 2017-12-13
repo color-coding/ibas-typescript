@@ -24,6 +24,7 @@ export class CustomerChooseView extends ibas.BOChooseView implements ICustomerCh
         let that: this = this;
         this.table = new sap.ui.table.Table("", {
             enableSelectAll: false,
+            selectionBehavior: sap.ui.table.SelectionBehavior.Row,
             selectionMode: openui5.utils.toSelectionMode(this.chooseType),
             visibleRowCount: ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 15),
             rows: "{/rows}",

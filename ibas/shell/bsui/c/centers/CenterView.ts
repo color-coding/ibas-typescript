@@ -322,11 +322,8 @@ export class CenterView extends ibas.BOView implements ICenterView {
             icon: module.icon,
             expanded: false,
             select(): void {
-                // 模块菜单激活，打开第一个子项
-                let item: sap.tnt.NavigationListItem = this.getItems()[0];
-                if (!ibas.objects.isNull(item)) {
-                    item.fireSelect();
-                }
+                // 展开菜单
+                this.setExpanded(!this.getExpanded());
             }
         });
         nvList.addItem(nvItem);

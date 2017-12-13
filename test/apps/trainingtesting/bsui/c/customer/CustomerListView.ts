@@ -29,6 +29,7 @@ export class CustomerListView extends ibas.BOListView implements ICustomerListVi
         this.form = new sap.ui.layout.form.SimpleForm("");
         this.table = new sap.ui.table.Table("", {
             enableSelectAll: false,
+            selectionBehavior: sap.ui.table.SelectionBehavior.Row,
             visibleRowCount: ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 15),
             visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Interactive,
             rows: "{/rows}",
