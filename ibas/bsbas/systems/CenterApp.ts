@@ -16,7 +16,7 @@ import {
     BOViewApplication, BOEditApplication, IBOView, ISystemWatcher, IModule, ArrayList, List,
     MODULE_REPOSITORY_NAME_TEMPLATE, CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS,
     VARIABLE_NAME_USER_ID, VARIABLE_NAME_USER_CODE, VARIABLE_NAME_USER_NAME, VARIABLE_NAME_USER_SUPER,
-    VARIABLE_NAME_USER_BELONG, VARIABLE_NAME_USER_TOKEN, CONFIG_ITEM_DEBUG_MODE,
+    VARIABLE_NAME_USER_BELONG, VARIABLE_NAME_USER_TOKEN, CONFIG_ITEM_DEBUG_MODE, CONFIG_ITEM_RUNTIME_VERSION,
     hashEventManager, URL_HASH_SIGN_FUNCTIONS, IHashInfo
 } from "ibas/index";
 import {
@@ -107,7 +107,7 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
             modules(): List<IModule> {
                 let modules: ArrayList<IModule> = new ArrayList();
                 for (let item of that.functionMap.values()) {
-                    let tmp: any = modules.firstOrDefault((c: IModule) => {
+                    let tmp: any = modules.firstOrDefault((c) => {
                         if (item.module === c || item.module.id === c.id) {
                             return true;
                         }
@@ -242,7 +242,7 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
         }
         for (let item of module.functions()) {
             // 权限控制，没权限的不能激活菜单
-            let tmp: any = this.userPrivileges.firstOrDefault((c: IUserPrivilege) => {
+            let tmp: any = this.userPrivileges.firstOrDefault((c) => {
                 if (c.source === emPrivilegeSource.APPLICATION && c.target === item.id) {
                     if (c.value !== emAuthoriseType.ALL) {
                         return true;
@@ -283,37 +283,41 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
             // 去除参数部分
             ibas_index_url = ibas_index_url.substring(0, ibas_index_url.indexOf("?"));
         }
-        let moduleRequire: Function = requires.create({
+        // require配置
+        let requireConfig: RequireConfig = {
             baseUrl: address,
             map: { "*": { "css": ibas_index_url + "/../3rdparty/require-css.min.js" } },
-            context: requires.naming(module.name)
-        }, []);
+            context: requires.naming(module.name),
+            waitSeconds: config.get(requires.CONFIG_ITEM_WAIT_SECONDS, 30)
+        };
+        /*
+        if (!(objects.isNull(config.get(CONFIG_ITEM_RUNTIME_VERSION))) && !objects.isNull(module.runtime)) {
+            // 存在运行时要求
+            requireConfig.urlArgs = function (id: string, url: string): string {
+                return (url.indexOf("?") === -1 ? "?" : "&") + "_=" + module.runtime;
+            };
+        }
+        */
+        // 创建require函数
+        let moduleRequire: Function = requires.create(requireConfig, []);
         logger.log(emMessageLevel.DEBUG, "center: module [{0}] {root: [{1}], index: [{2}]}.", module.name, address, indexName);
-        moduleRequire([indexName], function (moduleIndex: any): void {
+        moduleRequire([indexName], function (library: any): void {
             try {
                 logger.log(emMessageLevel.DEBUG, "center: got a console from [{0}].", (<any>moduleRequire).toUrl(indexName));
                 // 模块加载成功
-                if (objects.isNull(moduleIndex)) {
+                if (objects.isNull(library)) {
                     // 模块的索引文件加载不成功，或返回值不正确
                     throw new Error(
                         i18n.prop("sys_invalid_module_index", objects.isNull(module.name) ? module.id : module.name)
                     );
                 }
-                // 模块加载成功
-                if (objects.isNull(moduleIndex)) {
-                    // 模块的索引文件加载不成功，或返回值不正确
-                    throw new Error(
-                        i18n.prop("sys_invalid_module_index", objects.isNull(module.name) ? module.id : module.name)
-                    );
-                }
-                let consoleClass: any = moduleIndex.default;
-                if (objects.isNull(consoleClass) || !objects.isAssignableFrom(consoleClass, ModuleConsole)) {
+                if (objects.isNull(library.default) || !objects.isAssignableFrom(library.default, ModuleConsole)) {
                     // 模块的控制台无效
                     throw new Error(
                         i18n.prop("sys_invalid_module_console", objects.isNull(module.name) ? module.id : module.name)
                     );
                 }
-                let console: ModuleConsole = new consoleClass();
+                let console: ModuleConsole = new library.default();
                 if (!(objects.instanceOf(console, ModuleConsole))) {
                     // 控制台实例无效
                     throw new Error(

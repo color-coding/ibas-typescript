@@ -33,7 +33,7 @@ export interface List<T> extends Array<T> {
     /**
      * 第一个或默认
      */
-    where(lambda: Function): T[];
+    where(lambda: (value: T) => boolean, thisArg?: any): T[];
     /**
      * 第一个或默认
      */
@@ -41,7 +41,7 @@ export interface List<T> extends Array<T> {
     /**
      * 第一个或默认
      */
-    firstOrDefault(lambda: Function): T;
+    firstOrDefault(lambda: (value: T) => boolean, thisArg?: any): T;
     /**
      * 最后一个或默认
      */
@@ -49,7 +49,7 @@ export interface List<T> extends Array<T> {
     /**
      * 最后一个或默认
      */
-    lastOrDefault(lambda: Function): T;
+    lastOrDefault(lambda: (value: T) => boolean, thisArg?: any): T;
     /**
      * 是否包含元素
      * @param item 元素

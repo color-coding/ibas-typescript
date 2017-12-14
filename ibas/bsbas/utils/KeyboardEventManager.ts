@@ -45,7 +45,7 @@ export class KeyboardEventManager {
     }
     /** 获取 */
     listener(id: string): IKeyboardEventListener {
-        let listener: IKeyboardEventListener = this.listeners().firstOrDefault((item: IKeyboardEventListener) => {
+        let listener: IKeyboardEventListener = this.listeners().firstOrDefault((item) => {
             if (item.id === id) {
                 return true;
             }

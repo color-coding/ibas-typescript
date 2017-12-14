@@ -227,6 +227,22 @@ export namespace utils {
                 return sap.m.MessageBox.Icon.NONE;
         }
     }
+    /** 转换消息类型值 */
+    export function toMessageType(type: ibas.emMessageType): sap.ui.core.MessageType {
+        let uiType: sap.ui.core.MessageType = sap.ui.core.MessageType.None;
+        if (type === ibas.emMessageType.ERROR) {
+            uiType = sap.ui.core.MessageType.Error;
+        } else if (type === ibas.emMessageType.QUESTION) {
+            uiType = sap.ui.core.MessageType.Warning;
+        } else if (type === ibas.emMessageType.SUCCESS) {
+            uiType = sap.ui.core.MessageType.Success;
+        } else if (type === ibas.emMessageType.WARNING) {
+            uiType = sap.ui.core.MessageType.Warning;
+        } else if (type === ibas.emMessageType.INFORMATION) {
+            uiType = sap.ui.core.MessageType.Information;
+        }
+        return uiType;
+    }
     /** 监听模型变化，并刷新控件 */
     export function refreshModelChanged(managedObject: sap.ui.base.ManagedObject, data: ibas.IBindable): void;
     /** 监听模型变化，并刷新控件 */

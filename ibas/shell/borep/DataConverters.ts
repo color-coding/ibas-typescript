@@ -48,6 +48,7 @@ export class DataConverter4Shell extends ibas.DataConverter4j {
                 Category: newData.category,
                 Index: newData.index,
                 Authorise: ibas.enums.toString(ibas.emAuthoriseType, newData.authorise),
+                Runtime: newData.runtime
             };
             return remote;
         } else if (ibas.objects.instanceOf(data, bo.UserPrivilege)) {
@@ -129,6 +130,7 @@ export class DataConverter4Shell extends ibas.DataConverter4j {
             newData.category = remote.Category;
             newData.index = remote.Index;
             newData.authorise = ibas.enums.valueOf(ibas.emAuthoriseType, remote.Authorise);
+            newData.runtime = remote.Runtime;
             return newData;
         } else if (data.type === bo.UserPrivilege.name) {
             let remote: shell.UserPrivilege = data;

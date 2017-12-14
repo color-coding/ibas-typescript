@@ -112,7 +112,11 @@ export abstract class Application<T extends IView> extends AbstractApplication<T
             msg = arguments[1];
         }
         if (!objects.isNull(this.viewShower)) {
-            this.viewShower.proceeding(this.view, type, msg);
+            if (this.isViewShowed()) {
+                this.viewShower.proceeding(this.view, type, msg);
+            } else {
+                this.viewShower.proceeding(undefined, type, msg);
+            }
         } else {
             throw new Error(i18n.prop("sys_invalid_view_shower", this.name));
         }

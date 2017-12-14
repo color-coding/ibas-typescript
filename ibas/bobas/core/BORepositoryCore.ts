@@ -47,18 +47,24 @@ export abstract class RemoteRepository implements IRemoteRepository {
             throw new Error(i18n.prop("sys_invalid_parameter", "address"));
         }
         let methodUrl: StringBuilder = new StringBuilder();
-        methodUrl.append(this.address);
-        if (!this.address.endsWith("/")) {
-            methodUrl.append("/");
+        if (!strings.isEmpty(this.address)) {
+            methodUrl.append(this.address);
         }
-        methodUrl.append(method);
-        if (!objects.isNull(this.token) && method.indexOf("token=") < 0) {
-            if (method.indexOf("?") >= 0) {
-                methodUrl.append("&");
-            } else {
-                methodUrl.append("?");
+        if (!strings.isEmpty(method)) {
+            if (!this.address.endsWith("/") && methodUrl.length > 0) {
+                methodUrl.append("/");
             }
-            methodUrl.append(strings.format("token={0}", this.token));
+            methodUrl.append(method);
+        }
+        if (!strings.isEmpty(this.token)) {
+            if (method.indexOf("token=") < 0 && this.address.indexOf("token=") < 0) {
+                if (method.indexOf("?") >= 0) {
+                    methodUrl.append("&");
+                } else {
+                    methodUrl.append("?");
+                }
+                methodUrl.append(strings.format("token={0}", this.token));
+            }
         }
         return methodUrl.toString();
     }
@@ -68,5 +74,5 @@ export abstract class RemoteRepository implements IRemoteRepository {
      * @param data 数据
      * @param caller 调用者
      */
-    abstract callRemoteMethod(method: string, data: any, caller: MethodCaller): void;
+    abstract callRemoteMethod(method: string, data: any, caller: MethodCaller<any>): void;
 }

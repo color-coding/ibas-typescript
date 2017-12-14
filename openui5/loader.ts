@@ -40,7 +40,7 @@ export default class Loader {
         domScript.setAttribute("id", "sap-ui-bootstrap");
         domScript.setAttribute("data-sap-ui-bindingSyntax", "complex");
         domScript.setAttribute("data-sap-ui-theme", "sap_belize");
-        domScript.setAttribute("data-sap-ui-libs", "sap.m, sap.ui.layout, sap.tnt, sap.uxap ,sap.ui.table");
+        domScript.setAttribute("data-sap-ui-libs", "sap.m, sap.tnt, sap.ui.layout, sap.ui.table");
         domScript.setAttribute("data-sap-ui-preload", "async"); // 异步加载预加载库
         domScript.onload = domScript.onreadystatechange = function (): void {
             if (!this.readyState || "loaded" === this.readyState || "complete" === this.readyState) {

@@ -88,7 +88,7 @@ export class ArrayList<T> extends Array<T> implements List<T> {
     /**
      * 返回符合条件的数组
      */
-    where(lambda: Function): T[] {
+    where(lambda: (value: T) => boolean, thisArg?: any): T[] {
         let values: Array<T> = new Array<T>();
         if (lambda instanceof Function) {
             for (let item of this) {
@@ -106,7 +106,7 @@ export class ArrayList<T> extends Array<T> implements List<T> {
     /**
      * 第一个或默认
      */
-    firstOrDefault(lambda: Function): T;
+    firstOrDefault(lambda: (value: T) => boolean, thisArg?: any): T;
     /**
      * 第一个或默认
      */
@@ -133,7 +133,7 @@ export class ArrayList<T> extends Array<T> implements List<T> {
     /**
      * 最后一个或默认
      */
-    lastOrDefault(lambda: Function): T;
+    lastOrDefault(lambda: (value: T) => boolean, thisArg?: any): T;
     /**
      * 最后一个或默认
      */
