@@ -68,7 +68,7 @@ export default class Loader {
                 var shellRequire: Require = ibas.requires.create({
                     context: ibas.requires.naming("shell"),
                     baseUrl: caller.url + "./ibas/shell/",
-                }, ["ibas/bsbas/systems"]);
+                }, []);
                 shellRequire(["index"], function (): void {
                     // 加载完成
                     if (caller.onSuccess instanceof Function) {
