@@ -16,6 +16,7 @@ import {
     IServiceMapping, IServiceAgent, IBOChooseServiceCaller,
     IBOLinkServiceContract, IBOChooseServiceContract,
     IBOLinkServiceCaller, IApplicationServiceCaller,
+    IApplicationWithResultServiceCaller,
 } from "./Services.d";
 
 /** 配置项目-默认服务图片 */
@@ -256,10 +257,10 @@ export class ServicesManager {
         logger.log(emMessageLevel.WARN, "services: not found [{0}]'s link service.", caller.boCode);
     }
     /**
-     * 运行应用服务
+     * 运行应用服务 返回结果
      * @param caller 调用者<In,Out>(<输入类型,输出类型>)
      */
-    runApplicationService<In, Out>(caller: IApplicationServiceCaller<In, Out>): void {
+    runApplicationWithResultService<In, Out>(caller: IApplicationWithResultServiceCaller<In, Out>): void {
         if (objects.isNull(caller)) {
             throw new Error(i18n.prop("sys_invalid_parameter", "caller"));
         }
@@ -273,4 +274,23 @@ export class ServicesManager {
         }
         logger.log(emMessageLevel.WARN, "services: not found [{0}]'s application service.", objects.getName(caller.proxy));
     }
+    /**
+     * 运行应用服务
+     * @param caller
+     */
+    runApplicationService<D>(caller: IApplicationServiceCaller<D>): void {
+        if (objects.isNull(caller)) {
+            throw new Error(i18n.prop("sys_invalid_parameter", "caller"));
+        }
+        if (objects.isNull(caller.proxy) || !objects.isAssignableFrom(caller.proxy, ServiceProxy)) {
+            throw new Error(i18n.prop("sys_invalid_parameter", "caller.proxy"));
+        }
+        let proxy: IServiceProxy<IServiceContract> = new caller.proxy(caller);
+        for (let service of this.getServices(proxy)) {
+            service.run();
+            return;
+        }
+        logger.log(emMessageLevel.WARN, "services: not found [{0}]'s application service.", objects.getName(caller.proxy));
+    }
+
 }

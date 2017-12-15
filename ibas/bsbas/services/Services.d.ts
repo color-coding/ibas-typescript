@@ -97,7 +97,6 @@ export interface IBOChooseServiceContract extends IServiceContract {
     /** 条件 */
     criteria?: ICriteria | ICondition[];
 }
-
 /** 应用服务的契约 */
 export interface IApplicationServiceContract extends IServiceContract {
     /** 应用标记 */
@@ -128,7 +127,13 @@ export interface IBOLinkServiceCaller extends IServiceCaller, IBOLinkServiceCont
     caller?: any
 }
 /** 业务对象服务调用者 */
-export interface IApplicationServiceCaller<In, Out> extends IServiceCaller, IApplicationServiceContract {
+export interface IApplicationServiceCaller<D> extends IServiceCaller, IApplicationServiceContract {
+    /** 调用者 */
+    caller: D
+}
+
+/** 业务对象服务调用者 (返回结果) */
+export interface IApplicationWithResultServiceCaller<In, Out> extends IServiceCaller, IApplicationServiceContract {
     /** 调用者 - 输入 */
     caller: In
     /** 服务调用完成 - 输出 */
