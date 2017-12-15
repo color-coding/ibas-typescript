@@ -52,6 +52,22 @@ export module requires {
         if (objects.isNull(names) || names.length === 0) {
             return libraries;
         }
+        let sharedNames: ArrayList<string> = new ArrayList<string>();
+        let skipNames: ArrayList<string> = new ArrayList<string>();
+        for (let item of names) {
+            if (objects.isNull(item)) {
+                continue;
+            }
+            item = item.trim();
+            if (strings.isEmpty(item)) {
+                continue;
+            }
+            if (item.startsWith("!")) {
+                skipNames.add(item.substring(1));
+            } else {
+                sharedNames.add(item);
+            }
+        }
         let scripts: NodeListOf<HTMLScriptElement> = document.getElementsByTagName("script");
         for (let index: number = 0; index < scripts.length; index++) {
             let script: HTMLScriptElement = scripts[index];
@@ -63,7 +79,16 @@ export module requires {
                 // 去除参数部分
                 scriptUrl = scriptUrl.substring(0, scriptUrl.indexOf("?"));
             }
-            for (let name of names) {
+            let skip: boolean = false;
+            for (let name of skipNames) {
+                if (scriptUrl.indexOf(name) > 0) {
+                    skip = true;
+                }
+            }
+            if (skip) {
+                continue;
+            }
+            for (let name of sharedNames) {
                 if (strings.isEmpty(name)) {
                     continue;
                 }
@@ -113,9 +138,10 @@ export module requires {
         // 加载基本共享库
         if (basisShared.size === 0) {
             for (let item of shared([
-                "ibas/bobas",
-                "ibas/bsbas",
-                "ibas/index.js"
+                "ibas/bobas/",
+                "ibas/bsbas/",
+                "ibas/index.js",
+                "ibas/bsbas/systems/"
             ])) {
                 basisShared.set(item.key, item.text);
             }

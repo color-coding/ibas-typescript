@@ -38,6 +38,7 @@
     "shell_data_cloned_new": "复制了新的对象",
     "shell_data_deleted": "数据已被删除",
     "shell_data_deleted_and_created": "数据已被删除，即将创建新的实例",
+    "shell_data_fetched_none": "没有检索到数据",
     "shell_upload": "上传",
     "shell_uploading_file": "文件上传中，请稍后",
     "shell_download": "下载",

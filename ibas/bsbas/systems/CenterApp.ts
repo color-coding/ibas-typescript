@@ -269,6 +269,12 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
         }
         // 模块入口地址
         let address: string = module.address;
+        if (strings.isEmpty(address)) {
+            // 模块地址无效，不再加载
+            this.view.showStatusMessage(emMessageType.WARNING, i18n.prop("sys_invalid_module_address", module.name));
+            logger.log(emMessageLevel.DEBUG, "center: invaild address module [{0}].", module.name);
+            return;
+        }
         address = urls.normalize(address);
         if (!address.endsWith("/")) {
             address += "/";
@@ -303,7 +309,6 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
         logger.log(emMessageLevel.DEBUG, "center: module [{0}] {root: [{1}], index: [{2}]}.", module.name, address, indexName);
         moduleRequire([indexName], function (library: any): void {
             try {
-                logger.log(emMessageLevel.DEBUG, "center: got a console from [{0}].", (<any>moduleRequire).toUrl(indexName));
                 // 模块加载成功
                 if (objects.isNull(library)) {
                     // 模块的索引文件加载不成功，或返回值不正确
@@ -330,6 +335,7 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
                         i18n.prop("sys_invalid_module_console_instance", objects.isNull(module.name) ? module.id : module.name)
                     );
                 }
+                logger.log(emMessageLevel.DEBUG, "center: got console from [{0}].", (<any>moduleRequire).toUrl(indexName));
                 // 有效模块控制台
                 console.addListener(function (): void {
                     if (console.functions().length > 0
@@ -351,7 +357,7 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
                         }
                     } else {
                         logger.log(emMessageLevel.DEBUG,
-                            "center: hide no functions module [{1}|{0}].", console.id, console.name);
+                            "center: hide no functions module [{0}].", console.name);
                     }
                     // 显示常驻应用
                     for (let app of console.applications()) {
