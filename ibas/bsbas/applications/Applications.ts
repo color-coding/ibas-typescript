@@ -11,7 +11,10 @@ import {
 } from "../../bobas/index";
 import { AbstractApplication, IView, IBarView, IMessgesCaller } from "../core/index";
 import { emMessageType } from "../data/index";
-import { IServiceAgent, IServiceContract, IServicesShower, IServiceProxy, servicesManager } from "../services/index";
+import {
+    IServiceAgent, IServiceContract, IServicesShower, IServiceProxy,
+    servicesManager, IService, IServiceCaller, ServiceProxy
+} from "../services/index";
 import { IBOView, IBOQueryView, IBOViewWithServices } from "./Applications.d";
 
 
@@ -194,6 +197,37 @@ export abstract class BarApplication<T extends IBarView> extends Application<T> 
     }
 }
 /**
+ * 服务应用
+ */
+export abstract class ServiceApplication<T extends IView, C extends IServiceContract> extends Application<T> implements IService<IServiceCaller<C>> {
+    /** 注册视图，重载需要回掉此方法 */
+    protected registerView(): void {
+        super.registerView();
+    }
+    /** 运行 */
+    run(): void;
+    /**
+     * 运行
+     * @param caller 服务调用者
+     */
+    run(caller: IServiceCaller<C>): void;
+    /** 运行 */
+    run(): void {
+        if (arguments.length === 1) {
+            // 判断是否为选择契约
+            let caller: IServiceCaller<C> = arguments[0];
+            if (objects.instanceOf(caller.proxy, ServiceProxy)) {
+                this.runService(caller.proxy.contract);
+                return;
+            }
+        }
+        // 保持参数原样传递
+        super.run.apply(this, arguments);
+    }
+    /** 运行服务 */
+    protected abstract runService(contract: C): void;
+}
+/**
  * 业务对象应用
  */
 export abstract class BOApplication<T extends IBOView> extends Application<T> {
@@ -245,7 +279,9 @@ export abstract class BOApplicationWithServices<T extends IBOViewWithServices> e
         // 获取服务
         let services: Array<IServiceAgent> = new Array<IServiceAgent>();
         for (let proxy of proxies) {
-            for (let service of servicesManager.getServices(proxy)) {
+            for (let service of servicesManager.getServices({
+                proxy: proxy
+            })) {
                 services.push(service);
             }
         }

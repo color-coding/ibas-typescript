@@ -12,7 +12,7 @@ import { emChooseType } from "../data/index";
 /**
  * 应用服务
  */
-export interface IService<C extends IServiceCaller> {
+export interface IService<C extends IServiceCaller<IServiceContract>> {
     /** 运行服务 */
     run(caller: C): void;
 }
@@ -32,14 +32,14 @@ export interface IBOLinkService extends IService<IBOLinkServiceCaller> {
 export interface IServiceMapping extends IElement {
     /** 图标 */
     icon: string;
-    /** 服务代理 */
+    /** 服务代理的类型 */
     proxy: any;
     /** 视图显示者 */
     viewShower: IViewShower;
     /** 视图导航 */
     navigation: IViewNavigation;
-    /** 创建服务并运行 */
-    create(): IService<IServiceContract>;
+    /** 创建服务实例 */
+    create(): IService<IServiceCaller<IServiceContract>>;
 }
 /**
  * 显示服务者
@@ -54,6 +54,8 @@ export interface IServicesShower {
 export interface IServiceAgent extends IElement {
     /** 图标 */
     icon: string;
+    /** 服务调用者 */
+    caller: IServiceCaller<IServiceContract>;
     /** 运行服务 */
     run(): void;
 }
@@ -91,35 +93,41 @@ export interface IBOChooseServiceContract extends IServiceContract {
     /** 条件 */
     criteria?: ICriteria | ICondition[];
 }
-/** 应用服务的契约 */
-export interface IApplicationServiceContract<T> extends IDataServiceContract<T> {
-}
 /** 服务代理 */
 export interface IServiceProxy<C extends IServiceContract> {
     /** 服务的契约 */
     contract: C;
 }
 /** 服务调用者 */
-export interface IServiceCaller {
-    /** 服务契约代理类型 */
-    proxy?: any;
+export interface IServiceCaller<C extends IServiceContract> {
+    /** 服务契约代理 */
+    proxy?: IServiceProxy<C>;
     /** 服务触发者 */
     trigger?: any;
     /** 服务类别码 */
     category?: string;
 }
 /** 业务对象选择服务调用者 */
-export interface IBOChooseServiceCaller<D> extends IServiceCaller, IBOChooseServiceContract {
+export interface IBOChooseServiceCaller<D> extends IServiceCaller<IBOChooseServiceContract>, IBOChooseServiceContract {
+    /** 服务契约代理 */
+    proxy?: IServiceProxy<IBOChooseServiceContract>;
     /** 服务调用完成 */
     onCompleted(selecteds: List<D>): void;
 }
 /** 业务对象连接服务调用者 */
-export interface IBOLinkServiceCaller extends IServiceCaller, IBOLinkServiceContract {
+export interface IBOLinkServiceCaller extends IServiceCaller<IBOLinkServiceContract>, IBOLinkServiceContract {
+    /** 服务契约代理 */
+    proxy?: IServiceProxy<IBOLinkServiceContract>;
 }
-/** 业务对象服务调用者 */
-export interface IApplicationServiceCaller<In, Out> extends IServiceCaller, IApplicationServiceContract<In> {
+/** 应用服务调用者 */
+export interface IApplicationServiceCaller<In extends IServiceContract> extends IServiceCaller<In> {
     /** 应用标记 */
     appId?: string;
-    /** 服务调用完成 - 输出 */
-    onCompleted?(result: Out): void;
+    /** 服务契约代理 */
+    proxy: IServiceProxy<In>;
+}
+/** 带结果的应用服务调用者 */
+export interface IApplicationWithResultServiceCaller<In extends IServiceContract, Out> extends IApplicationServiceCaller<In> {
+    /** 服务调用完成 - 结果 */
+    onCompleted(result: Out): void;
 }

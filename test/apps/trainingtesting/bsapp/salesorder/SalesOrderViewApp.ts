@@ -50,7 +50,7 @@ export class SalesOrderViewApp extends ibas.BOViewService<ISalesOrderViewView> {
     run(data: bo.SalesOrder): void;
     /** 运行 */
     run(): void {
-        if (!(arguments[0] instanceof bo.SalesOrder)) {
+        if (ibas.objects.instanceOf(arguments[0], bo.SalesOrder)) {
             this.viewData = arguments[0];
             this.show();
         } else {
@@ -108,7 +108,7 @@ export class SalesOrderLinkServiceMapping extends ibas.BOLinkServiceMapping {
         this.boCode = SalesOrderViewApp.BUSINESS_OBJECT_CODE;
         this.description = ibas.i18n.prop(this.name);
     }
-    /** 创建服务并运行 */
+    /** 创建服务实例 */
     create(): ibas.IService<ibas.IBOLinkServiceCaller> {
         return new SalesOrderViewApp();
     }

@@ -51,8 +51,7 @@ export abstract class BOChooseService<T extends IBOChooseView, D> extends BOChoo
         if (arguments.length === 1) {
             // 判断是否为选择契约
             let caller: IBOChooseServiceCaller<D> = arguments[0];
-            if (objects.isSame(caller.proxy, BOChooseServiceProxy)
-                || objects.isAssignableFrom(caller.proxy, BOChooseServiceProxy)) {
+            if (objects.instanceOf(caller.proxy, BOChooseServiceProxy)) {
                 // 选择服务代理或其子类
                 // 设置选择类型
                 let chooseType: emChooseType = caller.chooseType;

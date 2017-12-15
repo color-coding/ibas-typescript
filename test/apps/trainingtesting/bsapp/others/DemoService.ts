@@ -9,7 +9,7 @@
 import * as ibas from "ibas/index";
 
 /** 服务应用-演示 */
-export class DemoService extends ibas.Application<IDemoServiceView> implements ibas.IService<ibas.IServiceCaller> {
+export class DemoService extends ibas.ServiceApplication<IDemoServiceView, ibas.IServiceContract>  {
 
     /** 应用标识 */
     static APPLICATION_ID: string = "6f00f7d9-3dbc-4eff-98ad-fe67ca0cca34";
@@ -30,6 +30,10 @@ export class DemoService extends ibas.Application<IDemoServiceView> implements i
     protected viewShowed(): void {
         // 视图加载完成
     }
+    /** 运行服务 */
+    runService(contract: ibas.IServiceContract): void {
+        super.show();
+    }
 }
 /** 服务-演示 */
 export interface IDemoServiceView extends ibas.IView {
@@ -44,8 +48,8 @@ export class DemoServiceMapping extends ibas.ServiceMapping {
         this.description = ibas.i18n.prop(this.name);
         this.proxy = ibas.BOServiceProxy;
     }
-    /** 创建服务并运行 */
-    create(): ibas.IService<ibas.IServiceCaller> {
+    /** 创建服务实例 */
+    create(): ibas.IService<ibas.IServiceCaller<ibas.IServiceContract>> {
         return new DemoService();
     }
 }

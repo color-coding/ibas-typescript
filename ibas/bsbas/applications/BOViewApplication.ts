@@ -39,8 +39,7 @@ export abstract class BOViewService<T extends IBOViewView> extends BOViewApplica
         if (arguments.length === 1) {
             // 判断是否为选择契约
             let caller: IBOLinkServiceCaller = arguments[0];
-            if (objects.isSame(caller.proxy, BOLinkServiceProxy)
-                || objects.isAssignableFrom(caller.proxy, BOLinkServiceProxy)) {
+            if (objects.instanceOf(caller.proxy, BOLinkServiceProxy)) {
                 // 链接服务代理或其子类
                 if (caller.boCode === this.boCode) {
                     // 分析查询条件

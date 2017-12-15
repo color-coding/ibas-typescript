@@ -10,12 +10,12 @@ import { strings, objects, config, i18n, logger, emMessageLevel } from "../../bo
 import { AbstractApplication as Application, IViewShower, IViewNavigation, IView } from "../core/index";
 import { hashEventManager, IHashInfo } from "../utils/index";
 import {
-    IServiceContract, IServiceProxy, IService,
-    IBOServiceContract, IApplicationServiceContract,
+    IServiceContract, IServiceProxy, IService, IBOServiceContract,
     IDataServiceContract, IBOListServiceContract, IServiceAgent,
     IServiceMapping, IBOChooseServiceCaller, IServiceCaller,
     IBOLinkServiceContract, IBOChooseServiceContract,
     IBOLinkServiceCaller, IApplicationServiceCaller,
+    IApplicationWithResultServiceCaller,
 } from "./Services.d";
 
 /** 配置项目-默认服务图片 */
@@ -42,10 +42,10 @@ export abstract class ServiceMapping implements IServiceMapping {
     description: string;
     /** 图标 */
     icon: string;
-    /** 服务契约代理 */
+    /** 服务契约代理类型（非实例） */
     proxy: any;
-    /** 创建服务 */
-    abstract create(): IService<IServiceCaller>;
+    /** 创建服务实例 */
+    abstract create(): IService<IServiceCaller<IServiceContract>>;
 }
 /** 业务对象选择服务映射 */
 export abstract class BOChooseServiceMapping extends ServiceMapping {
@@ -84,20 +84,22 @@ export abstract class ApplicationServiceMapping extends ServiceMapping {
     constructor() {
         super();
     }
-    /** 重写此属性到appId */
+    /** 重写此属性到id */
     get category(): string {
-        return this.appId;
+        return this.id;
     }
     set category(value: string) {
-        this.appId = value;
+        this.id = value;
     }
-    /** 业务对象编码 */
-    appId?: string;
 }
 /** 服务代理 */
-export class ServiceProxy<C extends IServiceContract> implements IServiceProxy<C> {
-    constructor(contract: C) {
-        this.contract = contract;
+export abstract class ServiceProxy<C extends IServiceContract> implements IServiceProxy<C> {
+    constructor(contract: C);
+    constructor() {
+        if (objects.isNull(arguments[0])) {
+            throw new Error(i18n.prop("sys_invalid_parameter", "contract"));
+        }
+        this.contract = arguments[0];
     }
     /** 服务的契约 */
     contract: C;
@@ -106,19 +108,32 @@ export class ServiceProxy<C extends IServiceContract> implements IServiceProxy<C
 export class DataServiceProxy<T> extends ServiceProxy<IDataServiceContract<T>> {
 }
 /** 业务对象服务代理 */
-export class BOServiceProxy extends ServiceProxy<IBOServiceContract> {
+export class BOServiceProxy extends DataServiceProxy<IBOServiceContract> {
+    constructor(contract: IBOServiceContract);
+    constructor() {
+        super(arguments[0]);
+    }
 }
 /** 业务对象列表服务代理 */
-export class BOListServiceProxy extends ServiceProxy<IBOListServiceContract> {
+export class BOListServiceProxy extends DataServiceProxy<IBOListServiceContract> {
+    constructor(contract: IBOListServiceContract);
+    constructor() {
+        super(arguments[0]);
+    }
 }
 /** 业务对象连接服务代理 */
 export class BOLinkServiceProxy extends ServiceProxy<IBOLinkServiceContract> {
+    constructor(contract: IBOLinkServiceContract);
+    constructor() {
+        super(arguments[0]);
+    }
 }
 /** 业务对象选择服务代理 */
 export class BOChooseServiceProxy extends ServiceProxy<IBOChooseServiceContract> {
-}
-/** 应用服务代理 */
-export abstract class ApplicationServiceProxy<T> extends ServiceProxy<IApplicationServiceContract<T>> {
+    constructor(contract: IBOChooseServiceContract);
+    constructor() {
+        super(arguments[0]);
+    }
 }
 /** 服务管理员 */
 export class ServicesManager {
@@ -133,7 +148,7 @@ export class ServicesManager {
                     let serviceId: string = url.substring(0, url.indexOf("/"));
                     let mapping: IServiceMapping = that.getServiceMapping(serviceId);
                     if (!objects.isNull(mapping)) {
-                        let service: IService<IServiceCaller> = mapping.create();
+                        let service: IService<IServiceCaller<IServiceContract>> = mapping.create();
                         if (!objects.isNull(service)) {
                             let method: string = url.substring(url.indexOf("/") + 1);
                             logger.log(emMessageLevel.DEBUG,
@@ -182,20 +197,12 @@ export class ServicesManager {
         }
         return null;
     }
-    /** 获取服务代理 */
-    getServiceProxy(id: string): IServiceProxy<IServiceContract> {
-        let mappping: IServiceMapping = this.getServiceMapping(id);
-        if (objects.isNull(mappping)) {
-            return null;
-        }
-        return mappping.proxy();
-    }
     /** 获取服务 */
-    getServices(proxy: IServiceProxy<IServiceContract>): IServiceAgent[] {
+    getServices(caller: IServiceCaller<IServiceContract>): IServiceAgent[] {
         let services: Array<IServiceAgent> = new Array<IServiceAgent>();
         if (!objects.isNull(this.mappings)) {
             for (let mapping of this.mappings.values()) {
-                if (!objects.instanceOf(proxy, mapping.proxy)) {
+                if (!objects.instanceOf(caller.proxy, mapping.proxy)) {
                     continue;
                 }
                 // 创建服务
@@ -205,6 +212,7 @@ export class ServicesManager {
                     category: mapping.category,
                     description: mapping.description,
                     icon: mapping.icon,
+                    caller: caller,
                     run(): void {
                         // 创建服务
                         let service: IService<IServiceContract> = mapping.create();
@@ -214,7 +222,7 @@ export class ServicesManager {
                                 (<Application<IView>>service).viewShower = mapping.viewShower;
                                 (<Application<IView>>service).navigation = mapping.navigation;
                             }
-                            service.run(proxy.contract);
+                            service.run(caller);
                         }
                     }
                 });
@@ -227,15 +235,14 @@ export class ServicesManager {
      * @param caller 调用者
      * @returns 是否成功运行服务
      */
-    private runService(caller: IServiceCaller): boolean {
+    private runService(caller: IServiceCaller<IServiceContract>): boolean {
         if (objects.isNull(caller)) {
             throw new Error(i18n.prop("sys_invalid_parameter", "caller"));
         }
-        if (objects.isNull(caller.proxy) || !objects.isAssignableFrom(caller.proxy, ServiceProxy)) {
+        if (objects.isNull(caller.proxy) || !objects.instanceOf(caller.proxy, ServiceProxy)) {
             throw new Error(i18n.prop("sys_invalid_parameter", "caller.proxy"));
         }
-        let proxy: IServiceProxy<IServiceContract> = new caller.proxy(caller);
-        for (let service of this.getServices(proxy)) {
+        for (let service of this.getServices(caller)) {
             if (!objects.isNull(caller.category) && caller.category !== service.category) {
                 // 类别不符
                 continue;
@@ -257,7 +264,7 @@ export class ServicesManager {
         }
         if (objects.isNull(caller.proxy)) {
             // 设置代理
-            caller.proxy = BOChooseServiceProxy;
+            caller.proxy = new BOChooseServiceProxy(caller);
         }
         // 设置服务类别码
         caller.category = caller.boCode;
@@ -280,7 +287,7 @@ export class ServicesManager {
         }
         if (objects.isNull(caller.proxy)) {
             // 设置代理
-            caller.proxy = BOLinkServiceProxy;
+            caller.proxy = new BOLinkServiceProxy(caller);
         }
         // 设置服务类别码
         caller.category = caller.boCode;
@@ -292,16 +299,27 @@ export class ServicesManager {
     }
     /**
      * 运行应用服务
+     * @param caller 调用者<In>(<输入类型>)
+     */
+    runApplicationService<In>(caller: IApplicationServiceCaller<In>): void;
+    /**
+     * 运行应用服务
      * @param caller 调用者<In,Out>(<输入类型,输出类型>)
      */
-    runApplicationService<In, Out>(caller: IApplicationServiceCaller<In, Out>): void {
+    runApplicationService<In, Out>(caller: IApplicationWithResultServiceCaller<In, Out>): void;
+    /**
+     * 运行应用服务
+     * @param caller 调用者<In,Out>(<输入类型,输出类型>)
+     */
+    runApplicationService<In, Out>(): void {
+        let caller: IApplicationServiceCaller<In> = arguments[0];
         if (objects.isNull(caller)) {
             throw new Error(i18n.prop("sys_invalid_parameter", "caller"));
         }
-        if (objects.isNull(caller.proxy) || !objects.isAssignableFrom(caller.proxy, ServiceProxy)) {
+        if (objects.isNull(caller.proxy) || !objects.instanceOf(caller.proxy, ServiceProxy)) {
             throw new Error(i18n.prop("sys_invalid_parameter", "caller.proxy"));
         }
-        if (!objects.isNull(caller.appId)) {
+        if (!strings.isEmpty(caller.appId)) {
             // 设置服务类别码
             caller.category = caller.appId;
         }
