@@ -48,7 +48,7 @@ bobas.assert.equals("converter parsingDate faild.", dValue, new Date(2017, 2, 14
 let sValue: string = bobas.dates.toString(new Date(2017, 2, 14, 23, 59, 59));
 bobas.assert.equals("converter convertDate faild.", sValue, "2017-03-14T23:59:59");
 dValue = bobas.dates.valueOf("2017/3/14T23:59:59");
-bobas.assert.equals("converter parsingDate faild.", dValue, new Date(2017, 2, 14, 23, 59, 59))
+bobas.assert.equals("converter parsingDate faild.", dValue, new Date(2017, 2, 14, 23, 59, 59));
 // 测试字符串操作
 console.log(bobas.strings.format("I'm {0}.", 100));
 console.log(bobas.strings.format("I'm {0}.", { "name": "jack" }));

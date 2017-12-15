@@ -23,7 +23,8 @@ export class User extends bobas.BusinessObject<User>  {
         this._userCode = value;
     }
 
-    protected init() {
+    protected init(): void {
+        //
     }
     criteria(): bobas.ICriteria {
         let criteria: bobas.ICriteria = new bobas.Criteria();
