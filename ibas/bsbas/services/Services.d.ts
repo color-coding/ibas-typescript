@@ -12,28 +12,19 @@ import { emChooseType } from "../data/index";
 /**
  * 应用服务
  */
-export interface IService<C extends IServiceContract> {
+export interface IService<C extends IServiceCaller> {
     /** 运行服务 */
-    run(contract: C): void;
+    run(caller: C): void;
 }
 /**
  * 业务对象选择服务
  */
-export interface IBOChooseService extends IService<IBOChooseServiceContract> {
+export interface IBOChooseService<D> extends IService<IBOChooseServiceCaller<D>> {
 }
 /**
  * 业务对象选择服务
  */
-export interface IBOLinkService extends IService<IBOLinkServiceContract> {
-}
-/**
- * 应用服务代理
- */
-export interface IServiceAgent extends IElement {
-    /** 图标 */
-    icon: string;
-    /** 运行服务 */
-    run(): void;
+export interface IBOLinkService extends IService<IBOLinkServiceCaller> {
 }
 /**
  * 应用服务映射
@@ -57,27 +48,30 @@ export interface IServicesShower {
     /** 显示服务 */
     displayServices(services: IServiceAgent[]): void;
 }
+/**
+ * 应用服务代理
+ */
+export interface IServiceAgent extends IElement {
+    /** 图标 */
+    icon: string;
+    /** 运行服务 */
+    run(): void;
+}
 /** 服务的契约 */
 export interface IServiceContract {
-    /** 完成 */
-    onCompleted?: Function;
 }
 /** 业务对象服务的契约 */
-export interface IDataServiceContract extends IServiceContract {
+export interface IDataServiceContract<T> extends IServiceContract {
     /** 数据 */
-    data: any;
+    data: T;
 }
 /** 业务对象服务的契约 */
-export interface IBOServiceContract extends IDataServiceContract {
-    /** 业务对象 */
-    data: IBusinessObject;
+export interface IBOServiceContract extends IDataServiceContract<IBusinessObject> {
     /** 数据转换者 */
     converter?: IDataConverter;
 }
 /** 业务对象列表服务的契约 */
-export interface IBOListServiceContract extends IDataServiceContract {
-    /** 业务对象 */
-    data: IBusinessObject[];
+export interface IBOListServiceContract extends IDataServiceContract<IBusinessObject[]> {
     /** 数据转换者 */
     converter?: IDataConverter;
 }
@@ -97,13 +91,8 @@ export interface IBOChooseServiceContract extends IServiceContract {
     /** 条件 */
     criteria?: ICriteria | ICondition[];
 }
-
 /** 应用服务的契约 */
-export interface IApplicationServiceContract extends IServiceContract {
-    /** 应用标记 */
-    appId?: string;
-    /** 服务契约代理类型（可被new） */
-    proxy: any;
+export interface IApplicationServiceContract<T> extends IDataServiceContract<T> {
 }
 /** 服务代理 */
 export interface IServiceProxy<C extends IServiceContract> {
@@ -112,25 +101,25 @@ export interface IServiceProxy<C extends IServiceContract> {
 }
 /** 服务调用者 */
 export interface IServiceCaller {
-    /** 完成事件 */
-    onCompleted?: Function;
+    /** 服务契约代理类型 */
+    proxy?: any;
+    /** 服务触发者 */
+    trigger?: any;
+    /** 服务类别码 */
+    category?: string;
 }
 /** 业务对象选择服务调用者 */
 export interface IBOChooseServiceCaller<D> extends IServiceCaller, IBOChooseServiceContract {
-    /** 调用者 */
-    caller?: any
     /** 服务调用完成 */
     onCompleted(selecteds: List<D>): void;
 }
 /** 业务对象连接服务调用者 */
 export interface IBOLinkServiceCaller extends IServiceCaller, IBOLinkServiceContract {
-    /** 调用者 */
-    caller?: any
 }
 /** 业务对象服务调用者 */
-export interface IApplicationServiceCaller<In, Out> extends IServiceCaller, IApplicationServiceContract {
-    /** 调用者 - 输入 */
-    caller: In
+export interface IApplicationServiceCaller<In, Out> extends IServiceCaller, IApplicationServiceContract<In> {
+    /** 应用标记 */
+    appId?: string;
     /** 服务调用完成 - 输出 */
     onCompleted?(result: Out): void;
 }

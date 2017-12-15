@@ -109,7 +109,7 @@ export abstract class AbstractApplication<T extends IView> extends Element imple
     /** 注册视图 */
     protected abstract registerView(): void;
     /** 运行 */
-    abstract run(...args: any[]): void;
+    abstract run(): void;
     /** 显示视图 */
     abstract show(): void;
     /** 关闭视图 */

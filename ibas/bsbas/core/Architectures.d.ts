@@ -45,7 +45,7 @@ export interface IApplication<T extends IView> extends IElement {
     /** 应用的视图 */
     view: T;
     /** 运行 */
-    run(...args: any[]): void;
+    run(): void;
     /** 显示视图 */
     show(): void;
     /** 关闭视图 */

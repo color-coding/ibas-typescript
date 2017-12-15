@@ -30,7 +30,7 @@ export class LoginApp<T extends ILoginView> extends Application<T> implements IL
         this.description = i18n.prop(this.name);
     }
     /** 运行 */
-    run(...args: any[]): void {
+    run(): void {
         let userTokenParam: KeyText = urls.param(CONFIG_ITEM_USER_TOKEN);
         if (!objects.isNull(userTokenParam)) {
             let userToken: string = userTokenParam.text;
@@ -52,7 +52,7 @@ export class LoginApp<T extends ILoginView> extends Application<T> implements IL
             // 发送登录连接请求后,清除地址栏中的查询参数信息,并且不保留浏览器历史记录
             window.history.replaceState(null, null, window.location.pathname + window.location.hash);
         } else {
-            super.run.apply(this, args);
+            super.run.apply(this, arguments);
         }
     }
     /** 注册视图 */

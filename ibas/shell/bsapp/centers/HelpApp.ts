@@ -23,10 +23,10 @@ export class HelpApp extends sys.HelpApp<IHelpView> {
         super.viewShowed();
     }
     /** 运行 */
-    run(...args: any[]): void {
+    run(): void {
         this.view.url = ibas.config.get(sys.CONFIG_ITEM_HELP_URL);
         this.view.isInside = ibas.config.get(sys.CONFIG_ITEM_HELP_INSIDE, false);
-        super.run.apply(this, args);
+        super.run.apply(this, arguments);
     }
 
 }

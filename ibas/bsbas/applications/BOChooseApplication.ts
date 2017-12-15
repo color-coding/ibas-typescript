@@ -8,11 +8,11 @@
 
 import {
     objects, ArrayList, Criteria, Condition, emConditionOperation,
-    criterias, boFactory, emMessageLevel, logger
+    criterias, boFactory, emMessageLevel, logger, strings,
 } from "../../bobas/index";
 import { IBOChooseView } from "./Applications.d";
 import { BOQueryApplication } from "./Applications";
-import { IBOChooseService, IBOChooseServiceContract } from "../services/index";
+import { IBOChooseService, IBOChooseServiceContract, IBOChooseServiceCaller, BOChooseServiceProxy } from "../services/index";
 import { emChooseType, } from "../data/index";
 
 /**
@@ -38,70 +38,78 @@ export const CONFIG_ITEM_AUTO_CHOOSE_DATA: string = "autoChooseData";
  * 类型参数：视图，选择数据
  */
 export abstract class BOChooseService<T extends IBOChooseView, D> extends BOChooseApplication<T, D>
-    implements IBOChooseService {
+    implements IBOChooseService<D> {
     /** 运行 */
-    run(...args: any[]): void {
-        if (objects.isNull(args)) {
-            return;
-        }
-        if (args.length === 1) {
+    run(): void;
+    /**
+     * 运行
+     * @param caller 服务调用者
+     */
+    run(caller: IBOChooseServiceCaller<D>): void;
+    /** 运行 */
+    run(): void {
+        if (arguments.length === 1) {
             // 判断是否为选择契约
-            let contract: IBOChooseServiceContract = args[0];
-            // 设置选择类型
-            let chooseType: emChooseType = contract.chooseType;
-            if (objects.isNull(chooseType)) {
-                chooseType = emChooseType.MULTIPLE;
-            }
-            this.view.chooseType = chooseType;
-            this.onCompleted = contract.onCompleted;
-            // 分析查询条件
-            let criteria: Criteria;
-            if (objects.instanceOf(contract.criteria, Criteria)) {
-                criteria = <any>contract.criteria;
-            } else if (contract.criteria instanceof Array) {
-                criteria = new Criteria();
-                for (let item of contract.criteria) {
-                    if (item instanceof Condition) {
-                        // 过滤无效查询条件
-                        if (objects.isNull(item.alias) || item.alias.length === 0) {
-                            continue;
-                        }
-                        if (item.operation === emConditionOperation.IS_NULL
-                            || item.operation === emConditionOperation.NOT_NULL
-                            || !objects.isNull(item.value)
-                            || (!objects.isNull(item.comparedAlias) && item.comparedAlias.length > 0)
-                        ) {
-                            criteria.conditions.add(item);
+            let caller: IBOChooseServiceCaller<D> = arguments[0];
+            if (objects.isSame(caller.proxy, BOChooseServiceProxy)
+                || objects.isAssignableFrom(caller.proxy, BOChooseServiceProxy)) {
+                // 选择服务代理或其子类
+                // 设置选择类型
+                let chooseType: emChooseType = caller.chooseType;
+                if (objects.isNull(chooseType)) {
+                    chooseType = emChooseType.MULTIPLE;
+                }
+                this.view.chooseType = chooseType;
+                this.onCompleted = caller.onCompleted;
+                // 分析查询条件
+                let criteria: Criteria;
+                if (objects.instanceOf(caller.criteria, Criteria)) {
+                    criteria = <any>caller.criteria;
+                } else if (caller.criteria instanceof Array) {
+                    criteria = new Criteria();
+                    for (let item of caller.criteria) {
+                        if (objects.instanceOf(item, Condition)) {
+                            // 过滤无效查询条件
+                            if (strings.isEmpty(item.alias)) {
+                                continue;
+                            }
+                            if (item.operation === emConditionOperation.IS_NULL
+                                || item.operation === emConditionOperation.NOT_NULL
+                                || !objects.isNull(item.value)
+                                || (!objects.isNull(item.comparedAlias) && item.comparedAlias.length > 0)
+                            ) {
+                                criteria.conditions.add(item);
+                            }
                         }
                     }
                 }
-            }
-            // 修正查询数量
-            criterias.resultCount(criteria);
-            // 根据对象类型，修正排序条件
-            try {
-                let boType: any = boFactory.classOf(contract.boCode);
-                if (!objects.isNull(boType)) {
-                    // 获取到有效对象
-                    criterias.sorts(criteria, boType);
+                // 修正查询数量
+                criterias.resultCount(criteria);
+                // 根据对象类型，修正排序条件
+                try {
+                    let boType: any = boFactory.classOf(caller.boCode);
+                    if (!objects.isNull(boType)) {
+                        // 获取到有效对象
+                        criterias.sorts(criteria, boType);
+                    }
+                } catch (error) {
+                    logger.log(emMessageLevel.WARN, "bo choose: not found [{0}]'s class.", caller.boCode);
                 }
-            } catch (error) {
-                logger.log(emMessageLevel.WARN, "bo choose: not found [{0}]'s class.", contract.boCode);
-            }
-            // 存在查询，则直接触发查询事件
-            if (!objects.isNull(criteria) && criteria.conditions.length > 0) {
-                if (this.view.query instanceof Function) {
-                    // 视图存在查询方法，则调用此方法
-                    this.view.query(criteria);
-                } else {
-                    this.fetchData(criteria);
+                // 存在查询，则直接触发查询事件
+                if (!objects.isNull(criteria) && criteria.conditions.length > 0) {
+                    if (this.view.query instanceof Function) {
+                        // 视图存在查询方法，则调用此方法
+                        this.view.query(criteria);
+                    } else {
+                        this.fetchData(criteria);
+                    }
+                    // 进入查询，不在执行后部分
+                    return;
                 }
-                // 进入查询，不在执行后部分
-                return;
             }
         }
         // 保持参数原样传递
-        super.run.apply(this, args);
+        super.run.apply(this, arguments);
     }
     /** 完成 */
     private onCompleted: Function;

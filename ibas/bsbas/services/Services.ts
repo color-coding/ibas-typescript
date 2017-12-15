@@ -12,8 +12,8 @@ import { hashEventManager, IHashInfo } from "../utils/index";
 import {
     IServiceContract, IServiceProxy, IService,
     IBOServiceContract, IApplicationServiceContract,
-    IDataServiceContract, IBOListServiceContract,
-    IServiceMapping, IServiceAgent, IBOChooseServiceCaller,
+    IDataServiceContract, IBOListServiceContract, IServiceAgent,
+    IServiceMapping, IBOChooseServiceCaller, IServiceCaller,
     IBOLinkServiceContract, IBOChooseServiceContract,
     IBOLinkServiceCaller, IApplicationServiceCaller,
 } from "./Services.d";
@@ -45,7 +45,7 @@ export abstract class ServiceMapping implements IServiceMapping {
     /** 服务契约代理 */
     proxy: any;
     /** 创建服务 */
-    abstract create(): IService<IServiceContract>;
+    abstract create(): IService<IServiceCaller>;
 }
 /** 业务对象选择服务映射 */
 export abstract class BOChooseServiceMapping extends ServiceMapping {
@@ -62,8 +62,6 @@ export abstract class BOChooseServiceMapping extends ServiceMapping {
     }
     /** 业务对象编码 */
     boCode: string;
-    /** 创建服务 */
-    abstract create(): IService<IBOChooseServiceContract>;
 }
 /** 业务对象连接服务映射 */
 export abstract class BOLinkServiceMapping extends ServiceMapping {
@@ -80,8 +78,21 @@ export abstract class BOLinkServiceMapping extends ServiceMapping {
     }
     /** 业务对象编码 */
     boCode: string;
-    /** 创建服务 */
-    abstract create(): IService<IBOLinkServiceContract>;
+}
+/** 应用服务映射 */
+export abstract class ApplicationServiceMapping extends ServiceMapping {
+    constructor() {
+        super();
+    }
+    /** 重写此属性到appId */
+    get category(): string {
+        return this.appId;
+    }
+    set category(value: string) {
+        this.appId = value;
+    }
+    /** 业务对象编码 */
+    appId?: string;
 }
 /** 服务代理 */
 export class ServiceProxy<C extends IServiceContract> implements IServiceProxy<C> {
@@ -92,26 +103,22 @@ export class ServiceProxy<C extends IServiceContract> implements IServiceProxy<C
     contract: C;
 }
 /** 数据服务代理 */
-export class DataServiceProxy extends ServiceProxy<IDataServiceContract> {
-
+export class DataServiceProxy<T> extends ServiceProxy<IDataServiceContract<T>> {
 }
 /** 业务对象服务代理 */
 export class BOServiceProxy extends ServiceProxy<IBOServiceContract> {
-
 }
 /** 业务对象列表服务代理 */
 export class BOListServiceProxy extends ServiceProxy<IBOListServiceContract> {
-
 }
 /** 业务对象连接服务代理 */
 export class BOLinkServiceProxy extends ServiceProxy<IBOLinkServiceContract> {
-    /** 业务对象代码 */
-    boCode: string;
 }
 /** 业务对象选择服务代理 */
 export class BOChooseServiceProxy extends ServiceProxy<IBOChooseServiceContract> {
-    /** 业务对象代码 */
-    boCode: string;
+}
+/** 应用服务代理 */
+export abstract class ApplicationServiceProxy<T> extends ServiceProxy<IApplicationServiceContract<T>> {
 }
 /** 服务管理员 */
 export class ServicesManager {
@@ -119,14 +126,14 @@ export class ServicesManager {
         let that: this = this;
         hashEventManager.registerListener({
             hashSign: URL_HASH_SIGN_SERVICES,
-            onHashChanged: (event: any): void => {
+            onHashChanged(event: any): void {
                 try {
                     let url: string = event.newURL.substring(
                         event.newURL.indexOf(URL_HASH_SIGN_SERVICES) + URL_HASH_SIGN_SERVICES.length);
                     let serviceId: string = url.substring(0, url.indexOf("/"));
                     let mapping: IServiceMapping = that.getServiceMapping(serviceId);
                     if (!objects.isNull(mapping)) {
-                        let service: IService<IDataServiceContract> = mapping.create();
+                        let service: IService<IServiceCaller> = mapping.create();
                         if (!objects.isNull(service)) {
                             let method: string = url.substring(url.indexOf("/") + 1);
                             logger.log(emMessageLevel.DEBUG,
@@ -137,7 +144,7 @@ export class ServicesManager {
                                 (<Application<IView>>service).navigation = mapping.navigation;
                             }
                             service.run({
-                                data: method
+                                category: method
                             });
                         }
                     }
@@ -215,7 +222,31 @@ export class ServicesManager {
         }
         return services;
     }
-
+    /**
+     * 运行服务
+     * @param caller 调用者
+     * @returns 是否成功运行服务
+     */
+    private runService(caller: IServiceCaller): boolean {
+        if (objects.isNull(caller)) {
+            throw new Error(i18n.prop("sys_invalid_parameter", "caller"));
+        }
+        if (objects.isNull(caller.proxy) || !objects.isAssignableFrom(caller.proxy, ServiceProxy)) {
+            throw new Error(i18n.prop("sys_invalid_parameter", "caller.proxy"));
+        }
+        let proxy: IServiceProxy<IServiceContract> = new caller.proxy(caller);
+        for (let service of this.getServices(proxy)) {
+            if (!objects.isNull(caller.category) && caller.category !== service.category) {
+                // 类别不符
+                continue;
+            }
+            // 运行服务
+            service.run();
+            return true;
+        }
+        // 没有找到服务
+        return false;
+    }
     /** 运行选择服务 */
     runChooseService<D>(caller: IBOChooseServiceCaller<D>): void {
         if (objects.isNull(caller)) {
@@ -224,15 +255,17 @@ export class ServicesManager {
         if (objects.isNull(caller.boCode)) {
             throw new Error(i18n.prop("sys_invalid_parameter", "caller.boCode"));
         }
-        let proxy: IServiceProxy<IServiceContract> = new BOChooseServiceProxy(caller);
-        for (let service of this.getServices(proxy)) {
-            if (service.category === caller.boCode) {
-                // 存在业务对象选择服务
-                service.run();
-                return;
-            }
+        if (objects.isNull(caller.proxy)) {
+            // 设置代理
+            caller.proxy = BOChooseServiceProxy;
         }
-        logger.log(emMessageLevel.WARN, "services: not found [{0}]'s choose service.", caller.boCode);
+        // 设置服务类别码
+        caller.category = caller.boCode;
+        // 调用服务
+        if (!this.runService(caller)) {
+            // 服务未运行
+            logger.log(emMessageLevel.WARN, "services: not found [{0}]'s choose service.", caller.boCode);
+        }
     }
     /** 运行连接服务 */
     runLinkService(caller: IBOLinkServiceCaller): void {
@@ -245,15 +278,17 @@ export class ServicesManager {
         if (objects.isNull(caller.linkValue)) {
             throw new Error(i18n.prop("sys_invalid_parameter", "caller.linkValue"));
         }
-        let proxy: IServiceProxy<IServiceContract> = new BOLinkServiceProxy(caller);
-        for (let service of this.getServices(proxy)) {
-            if (service.category === caller.boCode) {
-                // 此连接服务
-                service.run();
-                return;
-            }
+        if (objects.isNull(caller.proxy)) {
+            // 设置代理
+            caller.proxy = BOLinkServiceProxy;
         }
-        logger.log(emMessageLevel.WARN, "services: not found [{0}]'s link service.", caller.boCode);
+        // 设置服务类别码
+        caller.category = caller.boCode;
+        // 调用服务
+        if (!this.runService(caller)) {
+            // 服务未运行
+            logger.log(emMessageLevel.WARN, "services: not found [{0}]'s choose service.", caller.boCode);
+        }
     }
     /**
      * 运行应用服务
@@ -266,11 +301,14 @@ export class ServicesManager {
         if (objects.isNull(caller.proxy) || !objects.isAssignableFrom(caller.proxy, ServiceProxy)) {
             throw new Error(i18n.prop("sys_invalid_parameter", "caller.proxy"));
         }
-        let proxy: IServiceProxy<IServiceContract> = new caller.proxy(caller);
-        for (let service of this.getServices(proxy)) {
-            service.run();
-            return;
+        if (!objects.isNull(caller.appId)) {
+            // 设置服务类别码
+            caller.category = caller.appId;
         }
-        logger.log(emMessageLevel.WARN, "services: not found [{0}]'s application service.", objects.getName(caller.proxy));
+        // 调用服务
+        if (!this.runService(caller)) {
+            // 服务未运行
+            logger.log(emMessageLevel.WARN, "services: not found [{0}]'s application service.", objects.getName(caller.proxy));
+        }
     }
 }

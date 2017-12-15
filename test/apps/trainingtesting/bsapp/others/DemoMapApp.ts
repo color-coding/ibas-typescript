@@ -32,8 +32,8 @@ export class DemoMapApp extends ibas.Application<IDemoMapView> {
         //
     }
     /** 运行 */
-    run(...args: any[]): void {
-        super.run.apply(this, args);
+    run(): void {
+        super.run.apply(this, arguments);
     }
 }
 /** 视图-地图演示 */

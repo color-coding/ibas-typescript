@@ -49,8 +49,10 @@ export class SalesOrderEditApp extends ibas.BOEditApplication<ISalesOrderEditVie
         this.view.showSalesOrder(this.editData);
         this.view.showSalesOrderItems(this.editData.salesOrderItems.filterDeleted());
     }
-    /** 运行,覆盖原方法 */
-    run(...args: any[]): void {
+    run(): void;
+    run(data: bo.SalesOrder): void;
+    /** 运行 */
+    run(): void {
         let that: this = this;
         if (ibas.objects.instanceOf(arguments[0], bo.SalesOrder)) {
             // 尝试重新查询编辑对象
@@ -85,7 +87,7 @@ export class SalesOrderEditApp extends ibas.BOEditApplication<ISalesOrderEditVie
                 return;
             }
         }
-        super.run.apply(this, args);
+        super.run.apply(this, arguments);
     }
     /** 待编辑的数据 */
     protected editData: bo.SalesOrder;
@@ -219,7 +221,6 @@ export class SalesOrderEditApp extends ibas.BOEditApplication<ISalesOrderEditVie
     chooseSalesOrderItemMaterial(caller: bo.SalesOrderItem): void {
         let that: this = this;
         ibas.servicesManager.runChooseService<bo.Material>({
-            caller: caller,
             boCode: bo.Material.BUSINESS_OBJECT_CODE,
             criteria: [
                 new ibas.Condition(bo.Material.PROPERTY_ACTIVATED_NAME, ibas.emConditionOperation.EQUAL, "Y")

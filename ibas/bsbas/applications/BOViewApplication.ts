@@ -7,10 +7,10 @@
  */
 
 
-import { objects, ArrayList, Criteria, Condition, ICriteria } from "../../bobas/index";
+import { objects, strings, ArrayList, Criteria, Condition, ICriteria } from "../../bobas/index";
 import { IBOViewView } from "./Applications.d";
 import { BOApplicationWithServices } from "./Applications";
-import { IBOLinkService, IBOLinkServiceContract } from "../services/index";
+import { IBOLinkService, IBOLinkServiceContract, IBOLinkServiceCaller, BOLinkServiceProxy } from "../services/index";
 
 
 /**
@@ -28,27 +28,45 @@ export abstract class BOViewApplication<T extends IBOViewView> extends BOApplica
  */
 export abstract class BOViewService<T extends IBOViewView> extends BOViewApplication<T> {
     /** 运行 */
-    run(...args: any[]): void {
-        if (!objects.isNull(args) && args.length === 1) {
+    run(): void;
+    /**
+     * 运行
+     * @param criteria 查询或查询条件
+     */
+    run(caller: IBOLinkServiceCaller): void;
+    /** 运行 */
+    run(): void {
+        if (arguments.length === 1) {
             // 判断是否为选择契约
-            let contract: IBOLinkServiceContract = args[0];
-            if (!objects.isNull(contract.boCode) && contract.boCode === this.boCode) {
-                // 分析查询条件
-                let criteria: Criteria | string;
-                if (contract.linkValue instanceof Array) {
-                    criteria = new Criteria();
-                    for (let item of contract.linkValue) {
-                        if (item instanceof Condition) {
-                            criteria.conditions.add(item);
+            let caller: IBOLinkServiceCaller = arguments[0];
+            if (objects.isSame(caller.proxy, BOLinkServiceProxy)
+                || objects.isAssignableFrom(caller.proxy, BOLinkServiceProxy)) {
+                // 链接服务代理或其子类
+                if (caller.boCode === this.boCode) {
+                    // 分析查询条件
+                    let criteria: Criteria | string;
+                    if (objects.instanceOf(caller.linkValue, Criteria)) {
+                        criteria = <Criteria>caller.linkValue;
+                    } else if (caller.linkValue instanceof String) {
+                        criteria = caller.linkValue;
+                    } else if (caller.linkValue instanceof Array) {
+                        criteria = new Criteria();
+                        for (let item of caller.linkValue) {
+                            if (objects.instanceOf(item, Condition)) {
+                                // 过滤无效查询条件
+                                if (strings.isEmpty(item.alias)) {
+                                    continue;
+                                }
+                                criteria.conditions.add(item);
+                            }
                         }
                     }
-                } else {
-                    criteria = <any>contract.linkValue;
+                    this.fetchData(criteria);
                 }
-                this.fetchData(criteria);
             }
         }
-        super.run.apply(this, args);
+        // 保持参数原样传递
+        super.run.apply(this, arguments);
     }
     /** 查询数据 */
     protected abstract fetchData(criteria: ICriteria | string): void;

@@ -98,7 +98,7 @@ export class CustomerChooseServiceMapping extends ibas.BOChooseServiceMapping {
         this.description = ibas.i18n.prop(this.name);
     }
     /** 创建服务并运行 */
-    create(): ibas.IService<ibas.IServiceContract> {
+    create(): ibas.IService<ibas.IBOChooseServiceCaller<bo.Customer>> {
         return new CustomerChooseApp();
     }
 }

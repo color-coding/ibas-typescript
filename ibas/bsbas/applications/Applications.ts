@@ -20,7 +20,7 @@ import { IBOView, IBOQueryView, IBOViewWithServices } from "./Applications.d";
  */
 export abstract class Application<T extends IView> extends AbstractApplication<T> {
     /** 运行 */
-    run(...args: any[]): void {
+    run(): void {
         this.show();
     }
     /** 显示视图 */
@@ -189,7 +189,7 @@ export abstract class BarApplication<T extends IBarView> extends Application<T> 
         this.show();
     }
     /** 运行 */
-    run(...args: any[]): void {
+    run(): void {
         // 不支持运行
     }
 }

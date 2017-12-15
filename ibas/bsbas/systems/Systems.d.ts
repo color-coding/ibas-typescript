@@ -67,6 +67,8 @@ export interface ICenterView extends IView {
 export interface ICenterApp extends IApplication<ICenterView> {
 	/** 运行 */
 	run(user: IUser): void;
+	/** 运行 */
+	run(): void;
 }
 /** 入口-视图 */
 export interface IMainView extends IView {
@@ -77,6 +79,8 @@ export interface IMainApp extends IApplication<IMainView> {
 }
 /** 查询面板-应用 */
 export interface IQueryPanel<T extends IQueryPanelView> extends IApplication<T> {
+	/** 运行 */
+	run(): void;
 	/** 运行 参数，初始化回调 */
 	run(callBack: Function): void;
 	/** 注册监听 */

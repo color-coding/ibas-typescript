@@ -45,13 +45,15 @@ export class MaterialViewApp extends ibas.BOViewService<IMaterialViewView> {
         app.viewShower = this.viewShower;
         app.run(this.viewData);
     }
-    /** 运行,覆盖原方法 */
-    run(...args: any[]): void {
-        if (!ibas.objects.isNull(args) && args.length === 1 && args[0] instanceof bo.Material) {
-            this.viewData = args[0];
+    run(): void;
+    run(data: bo.Material): void;
+    /** 运行 */
+    run(): void {
+        if (!(arguments[0] instanceof bo.Material)) {
+            this.viewData = arguments[0];
             this.show();
         } else {
-            super.run.apply(this, args);
+            super.run.apply(this, arguments);
         }
     }
     private viewData: bo.Material;
@@ -101,7 +103,7 @@ export class MaterialLinkServiceMapping extends ibas.BOLinkServiceMapping {
         this.description = ibas.i18n.prop(this.name);
     }
     /** 创建服务并运行 */
-    create(): ibas.IService<ibas.IServiceContract> {
+    create(): ibas.IService<ibas.IBOLinkServiceCaller> {
         return new MaterialViewApp();
     }
 }

@@ -7,7 +7,7 @@
  */
 
 import {
-    ICriteria, objects, Criteria, Condition, criterias, boFactory, logger
+    ICriteria, objects, Criteria, Condition, criterias, boFactory, logger, strings, ICondition
 } from "../../bobas/index";
 import { IBOListView } from "./Applications.d";
 import { BOApplicationWithServices } from "./Applications";
@@ -17,7 +17,6 @@ import { BOApplicationWithServices } from "./Applications";
  * 业务对象列表应用
  */
 export abstract class BOListApplication<T extends IBOListView, D> extends BOApplicationWithServices<T> {
-
     /** 注册视图，重载需要回掉此方法 */
     protected registerView(): void {
         super.registerView();
@@ -26,14 +25,32 @@ export abstract class BOListApplication<T extends IBOListView, D> extends BOAppl
         this.view.fetchDataEvent = this.fetchData;
     }
     /** 运行 */
-    run(...args: any[]): void {
-        if (objects.isNull(args)) {
-            return;
-        }
-        if (args.length === 1) {
+    run(): void;
+    /**
+     * 运行
+     * @param criteria 查询或查询条件
+     */
+    run(criteria: ICriteria | ICondition[]): void;
+    /** 运行 */
+    run(): void {
+        if (arguments.length === 1) {
             // 分析查询条件
-            if (objects.instanceOf(args[0], Criteria)) {
-                let criteria: Criteria = args[0];
+            let criteria: Criteria;
+            if (objects.instanceOf(arguments[0], Criteria)) {
+                criteria = arguments[0];
+            } else if (arguments[0] instanceof Array) {
+                criteria = new Criteria();
+                for (let item of arguments[0]) {
+                    if (objects.instanceOf(item, Condition)) {
+                        // 过滤无效查询条件
+                        if (strings.isEmpty(item.alias)) {
+                            continue;
+                        }
+                        criteria.conditions.add(item);
+                    }
+                }
+            }
+            if (!objects.isNull(criteria)) {
                 if (this.view.query instanceof Function) {
                     // 视图存在查询方法，则调用此方法
                     this.view.query(criteria);
@@ -45,7 +62,7 @@ export abstract class BOListApplication<T extends IBOListView, D> extends BOAppl
             }
         }
         // 保持参数原样传递
-        super.run.apply(this, args);
+        super.run.apply(this, arguments);
     }
     /** 查询数据 */
     protected abstract fetchData(criteria: ICriteria): void;
@@ -53,5 +70,4 @@ export abstract class BOListApplication<T extends IBOListView, D> extends BOAppl
     protected abstract newData(): void;
     /** 查看数据，参数：目标数据 */
     protected abstract viewData(data: D): void;
-
 }
