@@ -8,11 +8,15 @@
 
 import {
     objects, ArrayList, Criteria, Condition, emConditionOperation,
-    criterias, boFactory, emMessageLevel, logger, strings,
+    criterias, boFactory, emMessageLevel, logger, strings, Bindable,
+    ICriteria, ICondition
 } from "../../bobas/index";
-import { IBOChooseView } from "./Applications.d";
-import { BOQueryApplication } from "./Applications";
-import { IBOChooseService, IBOChooseServiceContract, IBOChooseServiceCaller, BOChooseServiceProxy } from "../services/index";
+import { IBOChooseView, IBOEditView, IBOListView, IBOViewView } from "./Applications.d";
+import { BOQueryApplication, BOApplication, BOApplicationWithServices } from "./Applications";
+import {
+    IBOChooseService, IBOChooseServiceContract, IBOChooseServiceCaller,
+    BOChooseServiceProxy, IBOLinkServiceCaller, BOLinkServiceProxy
+} from "../services/index";
 import { emChooseType, } from "../data/index";
 
 /**
@@ -146,4 +150,146 @@ export abstract class BOChooseService<T extends IBOChooseView, D> extends BOChoo
     protected chooseData(datas: D[]): void {
         this.fireCompleted(datas);
     }
+}
+
+/**
+ * 业务对象列表应用
+ */
+export abstract class BOListApplication<T extends IBOListView, D> extends BOApplicationWithServices<T> {
+    /** 注册视图，重载需要回掉此方法 */
+    protected registerView(): void {
+        super.registerView();
+        this.view.newDataEvent = this.newData;
+        this.view.viewDataEvent = this.viewData;
+        this.view.fetchDataEvent = this.fetchData;
+    }
+    /** 运行 */
+    run(): void;
+    /**
+     * 运行
+     * @param criteria 查询或查询条件
+     */
+    run(criteria: ICriteria | ICondition[]): void;
+    /** 运行 */
+    run(): void {
+        if (arguments.length === 1) {
+            // 分析查询条件
+            let criteria: Criteria;
+            if (objects.instanceOf(arguments[0], Criteria)) {
+                criteria = arguments[0];
+            } else if (arguments[0] instanceof Array) {
+                criteria = new Criteria();
+                for (let item of arguments[0]) {
+                    if (objects.instanceOf(item, Condition)) {
+                        // 过滤无效查询条件
+                        if (strings.isEmpty(item.alias)) {
+                            continue;
+                        }
+                        criteria.conditions.add(item);
+                    }
+                }
+            }
+            if (!objects.isNull(criteria)) {
+                if (this.view.query instanceof Function) {
+                    // 视图存在查询方法，则调用此方法
+                    this.view.query(criteria);
+                } else {
+                    this.fetchData(criteria);
+                }
+                // 进入查询，不在执行后部分
+                return;
+            }
+        }
+        // 保持参数原样传递
+        super.run.apply(this, arguments);
+    }
+    /** 查询数据 */
+    protected abstract fetchData(criteria: ICriteria): void;
+    /** 新建数据 */
+    protected abstract newData(): void;
+    /** 查看数据，参数：目标数据 */
+    protected abstract viewData(data: D): void;
+}
+
+/**
+ * 业务对象编辑应用
+ */
+export abstract class BOEditApplication<T extends IBOEditView, D> extends BOApplication<T> {
+    /** 注册视图，重载需要回掉此方法 */
+    protected registerView(): void {
+        super.registerView();
+        this.view.saveDataEvent = this.saveData;
+    }
+    /** 当前编辑的数据 */
+    protected abstract editData: D;
+    /** 选择数据，参数：数据 */
+    protected abstract saveData(): void;
+    /** 关闭视图 */
+    close(): void {
+        if (objects.instanceOf(this.editData, Bindable)) {
+            // 移出所有事件监听，防止资源不被回收
+            (<Bindable><any>this.editData).removeListener(true);
+        }
+        this.editData = undefined;
+        super.close();
+    }
+}
+
+
+/**
+ * 业务对象查看应用
+ */
+export abstract class BOViewApplication<T extends IBOViewView> extends BOApplicationWithServices<T> {
+
+    /** 注册视图，重载需要回掉此方法 */
+    protected registerView(): void {
+        super.registerView();
+    }
+}
+/**
+ * 业务对象查看应用服务
+ */
+export abstract class BOViewService<T extends IBOViewView> extends BOViewApplication<T> {
+    /** 运行 */
+    run(): void;
+    /**
+     * 运行
+     * @param criteria 查询或查询条件
+     */
+    run(caller: IBOLinkServiceCaller): void;
+    /** 运行 */
+    run(): void {
+        if (arguments.length === 1) {
+            // 判断是否为选择契约
+            let caller: IBOLinkServiceCaller = arguments[0];
+            if (objects.instanceOf(caller.proxy, BOLinkServiceProxy)) {
+                // 链接服务代理或其子类
+                if (caller.boCode === this.boCode) {
+                    // 分析查询条件
+                    let criteria: Criteria | string;
+                    if (objects.instanceOf(caller.linkValue, Criteria)) {
+                        criteria = <Criteria>caller.linkValue;
+                    } else if (caller.linkValue instanceof String) {
+                        criteria = caller.linkValue;
+                    } else if (caller.linkValue instanceof Array) {
+                        criteria = new Criteria();
+                        for (let item of caller.linkValue) {
+                            if (objects.instanceOf(item, Condition)) {
+                                // 过滤无效查询条件
+                                if (strings.isEmpty(item.alias)) {
+                                    continue;
+                                }
+                                criteria.conditions.add(item);
+                            }
+                        }
+                    }
+                    this.fetchData(criteria);
+                }
+            }
+        }
+        // 保持参数原样传递
+        super.run.apply(this, arguments);
+    }
+    /** 查询数据 */
+    protected abstract fetchData(criteria: ICriteria | string): void;
 }

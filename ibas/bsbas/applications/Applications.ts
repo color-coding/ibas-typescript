@@ -9,13 +9,13 @@
 import {
     i18n, objects, logger, emMessageLevel, ICriteria, config, CONFIG_ITEM_DEBUG_MODE
 } from "../../bobas/index";
-import { AbstractApplication, IView, IBarView, IMessgesCaller } from "../core/index";
+import { AbstractApplication, IView, IBarView, IMessgesCaller, } from "../core/index";
 import { emMessageType } from "../data/index";
 import {
     IServiceAgent, IServiceContract, IServicesShower, IServiceProxy,
     servicesManager, IService, IServiceCaller, ServiceProxy
 } from "../services/index";
-import { IBOView, IBOQueryView, IBOViewWithServices } from "./Applications.d";
+import { IBOView, IBOQueryView, IBOViewWithServices, IResidentView, IShortcutView } from "./Applications.d";
 
 
 /**
@@ -294,4 +294,26 @@ export abstract class BOApplicationWithServices<T extends IBOViewWithServices> e
     }
     /** 获取服务的契约 */
     protected abstract getServiceProxies(): IServiceProxy<IServiceContract>[];
+}
+
+/**
+ * 常驻应用
+ */
+export abstract class ResidentApplication<T extends IResidentView> extends BarApplication<T> {
+
+    /** 注册视图，重载需要回掉此方法 */
+    protected registerView(): void {
+        super.registerView();
+    }
+}
+
+/**
+ * 业务对象快捷应用
+ */
+export abstract class ShortcutApplication<T extends IShortcutView> extends BarApplication<T> {
+
+    /** 注册视图，重载需要回掉此方法 */
+    protected registerView(): void {
+        super.registerView();
+    }
 }

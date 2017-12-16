@@ -11,10 +11,5 @@
 
 export * from "./Applications.d";
 export * from "./Applications";
-export * from "./BOChooseApplication";
-export * from "./BOEditApplication";
-export * from "./BOListApplication";
-export * from "./BOViewApplication";
-export * from "./ShortcutApplication";
-export * from "./ResidentApplication";
+export * from "./BOApplications";
 

@@ -1,6 +1,7 @@
 {
   "appSettings": {
     "language": "zh_CN",
+    "i18nGroups": "bo,",
     "msgLevel": "info"
   }
 }
