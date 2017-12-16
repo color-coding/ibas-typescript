@@ -160,4 +160,6 @@ export abstract class Action {
     }
     /** 运行（需要实现） */
     protected abstract run(): boolean;
+    /** 额外的运行数据 */
+    extraData:any;
 }

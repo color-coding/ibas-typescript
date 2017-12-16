@@ -286,7 +286,11 @@ export abstract class BOApplicationWithServices<T extends IBOViewWithServices> e
             }
         }
         if (services.length > 0) {
-            // 显示可用服务
+            // 服务排序
+            services = services.sort((c, b): number => {
+                return c.name.localeCompare(b.name);
+            });
+            // 显示可用服务            
             shower.displayServices(services);
         } else {
             this.proceeding(emMessageType.WARNING, i18n.prop("sys_application_no_services", this.description));

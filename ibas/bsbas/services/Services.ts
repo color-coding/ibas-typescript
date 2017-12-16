@@ -210,7 +210,7 @@ export class ServicesManager {
                     id: mapping.id,
                     name: mapping.name,
                     category: mapping.category,
-                    description: mapping.description,
+                    description: mapping.description ? mapping.description : mapping.name,
                     icon: mapping.icon,
                     caller: caller,
                     run(): void {
