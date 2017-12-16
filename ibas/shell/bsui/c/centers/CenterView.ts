@@ -219,7 +219,7 @@ export class CenterView extends ibas.BOView implements ICenterView {
             name = ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE);
         }
         if (ibas.objects.isNull(name)) {
-            name = ibas.i18n.prop("shell_unknown_user");
+            name = ibas.i18n.prop("shell_user_unknown");
         }
         let viewContent: any = new sap.m.MessagePage("", {
             text: ibas.i18n.prop("shell_welcome_page", name, ibas.i18n.prop("shell_name")),

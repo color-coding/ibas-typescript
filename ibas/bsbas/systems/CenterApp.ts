@@ -149,7 +149,7 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
         logger.log(emMessageLevel.DEBUG, "center: initializing user [{0} - {1}]'s modules.", this.currentUser.id, this.currentUser.code);
         this.view.showStatusMessage(
             emMessageType.INFORMATION,
-            i18n.prop("sys_initialize_user_modules", this.currentUser.code, this.currentUser.name)
+            i18n.prop("sys_initialize_user_modules", strings.isEmpty(this.currentUser.name) ? this.currentUser.code : this.currentUser.name)
         );
         let that: this = this;
         let boRep: IBORepositorySystem = Factories.systemsFactory.createRepository();
@@ -164,7 +164,7 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
                     for (let module of opRslt.resultObjects) {
                         that.view.showStatusMessage(
                             emMessageType.INFORMATION,
-                            i18n.prop("sys_initialize_modules", module.id, module.name)
+                            i18n.prop("sys_initialize_module", strings.isEmpty(module.name) ? module.id : module.name)
                         );
                         that.initModuleConsole(module);
                     }
