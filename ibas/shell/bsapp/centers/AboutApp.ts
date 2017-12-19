@@ -71,6 +71,61 @@ export class Component {
     /** 图标 */
     icon: string;
 }
+/** 模块信息检查 */
+export class ModuleMonitor {
+    static RUNTIME_INFORMATION_MAX_MEMORY: string = "MAX_MEMORY";
+    static RUNTIME_INFORMATION_TOTAL_MEMORY: string = "TOTAL_MEMORY";
+    static RUNTIME_INFORMATION_FREE_MEMORY: string = "FREE_MEMORY";
+    static RUNTIME_INFORMATION_USED_MEMORY: string = "USED_MEMORY";
+    /** 观察 */
+    monitor(caller: IModuleMonitorCaller): void {
+        let name: string = ibas.strings.format(ibas.MODULE_REPOSITORY_NAME_TEMPLATE, caller.name);
+        let address: string = ibas.config.get(
+            ibas.strings.format(ibas.CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS, name));
+        if (!ibas.objects.isNull(address)) {
+            address = ibas.urls.normalize(address);
+            let index: number = address.indexOf("/services/");
+            if (index > 0) {
+                address = address.substring(0, index) + "/services/monitor/";
+                // 用户口令，先获取仓库口令
+                let token: string = ibas.config.get(ibas.strings.format(ibas.CONFIG_ITEM_REPOSITORY_USER_TOKEN, name));
+                // 没有仓库口令，则使用全局口令
+                if (ibas.strings.isEmpty(token)) {
+                    token = ibas.config.get(ibas.CONFIG_ITEM_USER_TOKEN);
+                }
+                let boRepository: RemoteRepository = new RemoteRepository();
+                boRepository.converter = new DataConverter();
+                boRepository.address = address;
+                boRepository.token = token;
+                let method: string = ibas.strings.format("diagnosing?token={0}", token);
+                boRepository.callRemoteMethod(method, undefined, caller);
+            }
+        }
+    }
+}
+class RemoteRepository extends ibas.RemoteRepositoryAjax {
+    protected createAjaxSettings(method: string, data: string): JQueryAjaxSettings {
+        let methodUrl: string = this.methodUrl(method);
+        let ajaxSetting: JQueryAjaxSettings = {
+            url: methodUrl,
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: true,
+            data: data
+        };
+        return ajaxSetting;
+    }
+}
+class DataConverter extends ibas.DataConverter4j {
+    createConverter(): ibas.IBOConverter<ibas.IBusinessObject, any> {
+        return null;
+    }
+}
+export interface IModuleMonitorCaller extends ibas.MethodCaller<any> {
+    /** 模块名称 */
+    name: string;
+}
 /** 视图-关于 */
 export interface IAboutView extends sys.IAboutView {
     /** 显示库信息 */

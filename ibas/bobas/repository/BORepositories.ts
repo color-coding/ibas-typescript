@@ -67,11 +67,11 @@ export abstract class BORepositoryApplication implements IBORepositoryApplicatio
             address = config.get(strings.format(CONFIG_ITEM_TEMPLATE_OFFLINE_REPOSITORY_ADDRESS, name));
         }
         // 没获取到离线地址，则在线地址
-        if (objects.isNull(address) || address.length === 0) {
+        if (strings.isEmpty(address)) {
             // 在线状态
             address = config.get(strings.format(CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS, name));
         }
-        if (!objects.isNull(address)) {
+        if (!strings.isEmpty(address)) {
             address = urls.normalize(address);
             this.address = address;
             logger.log(emMessageLevel.DEBUG, "repository: [{0}] using address [{1}].", name, address);
@@ -79,7 +79,7 @@ export abstract class BORepositoryApplication implements IBORepositoryApplicatio
         // 用户口令，先获取仓库口令
         this.token = config.get(strings.format(CONFIG_ITEM_REPOSITORY_USER_TOKEN, name));
         // 没有仓库口令，则使用全局口令
-        if (objects.isNull(this.token) || this.token.length === 0) {
+        if (strings.isEmpty(this.token)) {
             this.token = config.get(CONFIG_ITEM_USER_TOKEN);
         }
     }

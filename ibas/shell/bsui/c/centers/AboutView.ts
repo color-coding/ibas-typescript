@@ -7,7 +7,7 @@
  */
 
 import * as ibas from "ibas/index";
-import { IAboutView, Component } from "../../../bsapp/centers/AboutApp";
+import { IAboutView, Component, ModuleMonitor } from "../../../bsapp/centers/AboutApp";
 
 /**
  * 视图-关于
@@ -66,6 +66,32 @@ export class AboutView extends ibas.BOView implements IAboutView {
                 icon: item.icon ? item.icon : ibas.config.get("defalutModuleIcon"),
                 text: this.text(item.name, item.copyright),
                 info: item.version,
+                iconPress(oControlEvent: sap.ui.base.Event): void {
+                    // 按钮按下，查询此模块资源消耗
+                    let feedListItem: sap.m.FeedListItem = <sap.m.FeedListItem>oControlEvent.getSource();
+                    let monitor: ModuleMonitor = new ModuleMonitor();
+                    monitor.monitor({
+                        name: item.name,
+                        onCompleted(opRslt: ibas.IOperationResult<any>): void {
+                            if (opRslt.resultCode !== 0 || opRslt.informations.length === 0) {
+                                return;
+                            }
+                            let builder: ibas.StringBuilder = new ibas.StringBuilder();
+                            builder.append("memory: ");
+                            builder.append("used ");
+                            builder.append(opRslt.informations.firstOrDefault(
+                                c => ModuleMonitor.RUNTIME_INFORMATION_USED_MEMORY === c.name).content.toLowerCase());
+                            builder.append(", total ");
+                            builder.append(opRslt.informations.firstOrDefault(
+                                c => ModuleMonitor.RUNTIME_INFORMATION_TOTAL_MEMORY === c.name).content.toLowerCase());
+                            builder.append(", max ");
+                            builder.append(opRslt.informations.firstOrDefault(
+                                c => ModuleMonitor.RUNTIME_INFORMATION_MAX_MEMORY === c.name).content.toLowerCase());
+                            builder.append(".");
+                            feedListItem.setTimestamp(builder.toString());
+                        }
+                    });
+                }
             }));
         }
         this.form.addContent(list);

@@ -201,12 +201,16 @@ export abstract class DataConverter4j implements IDataConverter {
             newData.userSign = remote.UserSign;
             newData.resultCode = remote.ResultCode;
             newData.message = remote.Message;
-            for (let item of remote.ResultObjects) {
-                newData.resultObjects.add(this.parsing(item, null));
+            if (remote.ResultObjects instanceof Array) {
+                for (let item of remote.ResultObjects) {
+                    newData.resultObjects.add(this.parsing(item, null));
+                }
             }
-            for (let item of remote.Informations) {
-                item.type = OperationInformation.name;
-                newData.informations.add(this.parsing(item, null));
+            if (remote.Informations instanceof Array) {
+                for (let item of remote.Informations) {
+                    item.type = OperationInformation.name;
+                    newData.informations.add(this.parsing(item, null));
+                }
             }
             return newData;
         } else if (data.type === OperationInformation.name) {
@@ -234,17 +238,23 @@ export abstract class DataConverter4j implements IDataConverter {
             newData.remarks = remote.Remarks;
             newData.onlyHasChilds = remote.OnlyHasChilds;
             newData.propertyPath = remote.PropertyPath;
-            for (let item of remote.Conditions) {
-                item.type = Condition.name;
-                newData.conditions.add(this.parsing(item, null));
+            if (remote.Conditions instanceof Array) {
+                for (let item of remote.Conditions) {
+                    item.type = Condition.name;
+                    newData.conditions.add(this.parsing(item, null));
+                }
             }
-            for (let item of remote.ChildCriterias) {
-                item.type = ChildCriteria.name;
-                newData.childCriterias.add(this.parsing(item, null));
+            if (remote.ChildCriterias instanceof Array) {
+                for (let item of remote.ChildCriterias) {
+                    item.type = ChildCriteria.name;
+                    newData.childCriterias.add(this.parsing(item, null));
+                }
             }
-            for (let item of remote.Sorts) {
-                item.type = Sort.name;
-                newData.sorts.add(this.parsing(item, null));
+            if (remote.Sorts instanceof Array) {
+                for (let item of remote.Sorts) {
+                    item.type = Sort.name;
+                    newData.sorts.add(this.parsing(item, null));
+                }
             }
             return newData;
         } else if (data.type === Criteria.name) {
@@ -254,17 +264,23 @@ export abstract class DataConverter4j implements IDataConverter {
             newData.result = remote.ResultCount;
             newData.noChilds = remote.NoChilds;
             newData.remarks = remote.Remarks;
-            for (let item of remote.Conditions) {
-                item.type = Condition.name;
-                newData.conditions.add(this.parsing(item, null));
+            if (remote.Conditions instanceof Array) {
+                for (let item of remote.Conditions) {
+                    item.type = Condition.name;
+                    newData.conditions.add(this.parsing(item, null));
+                }
             }
-            for (let item of remote.ChildCriterias) {
-                item.type = ChildCriteria.name;
-                newData.childCriterias.add(this.parsing(item, null));
+            if (remote.ChildCriterias instanceof Array) {
+                for (let item of remote.ChildCriterias) {
+                    item.type = ChildCriteria.name;
+                    newData.childCriterias.add(this.parsing(item, null));
+                }
             }
-            for (let item of remote.Sorts) {
-                item.type = Sort.name;
-                newData.sorts.add(this.parsing(item, null));
+            if (remote.Sorts instanceof Array) {
+                for (let item of remote.Sorts) {
+                    item.type = Sort.name;
+                    newData.sorts.add(this.parsing(item, null));
+                }
             }
             return newData;
         } else if (data.type === Condition.name) {
@@ -297,13 +313,17 @@ export abstract class DataConverter4j implements IDataConverter {
             let newData: DataTable = new DataTable();
             newData.name = remote.Name;
             newData.description = remote.Description;
-            for (let item of remote.Columns) {
-                item.type = DataTableColumn.name;
-                newData.columns.add(this.parsing(item, null));
+            if (remote.Columns instanceof Array) {
+                for (let item of remote.Columns) {
+                    item.type = DataTableColumn.name;
+                    newData.columns.add(this.parsing(item, null));
+                }
             }
-            for (let item of remote.Rows) {
-                item.type = DataTableRow.name;
-                newData.rows.add(this.parsing(item, null));
+            if (remote.Rows instanceof Array) {
+                for (let item of remote.Rows) {
+                    item.type = DataTableRow.name;
+                    newData.rows.add(this.parsing(item, null));
+                }
             }
             return newData;
         } else if (data.type === DataTableColumn.name) {
@@ -316,8 +336,10 @@ export abstract class DataConverter4j implements IDataConverter {
         } else if (data.type === DataTableRow.name) {
             let remote: ibas4j.DataTableRow = data;
             let newData: DataTableRow = new DataTableRow();
-            for (let item of remote.Cells) {
-                newData.cells.add(item);
+            if (remote.Cells instanceof Array) {
+                for (let item of remote.Cells) {
+                    newData.cells.add(item);
+                }
             }
             return newData;
         } else if (data.type === KeyText.name) {
