@@ -140,6 +140,7 @@ export class DemoMapView extends ibas.View implements IDemoMapView {
                         that.txtLng.setValue(r.point.lng);
                     } else {
                         that.application.viewShower.messages({
+                            title: that.application.description,
                             message: this.getStatus(),
                             type: ibas.emMessageType.ERROR
                         });
