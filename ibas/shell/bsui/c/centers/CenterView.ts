@@ -505,7 +505,7 @@ export class CenterView extends ibas.BOView implements ICenterView {
                             let tabItem: sap.m.TabContainerItem = oControlEvent.getParameters().item;
                             for (let view of that.viewQueue.keys()) {
                                 if (view.id === tabItem.getKey()) {
-                                    that.destroyView(view);
+                                    that.destroyView(view, false);
                                 }
                             }
                             setTimeout(() => {
@@ -617,7 +617,7 @@ export class CenterView extends ibas.BOView implements ICenterView {
                 // 设置视图未显示
                 view.isDisplayed = false;
                 that.barViewQueue.delete(view);
-                that.destroyView(view);
+                that.destroyView(view, false);
             });
             form.openBy(view.darwBar());
         } else {
@@ -761,8 +761,9 @@ export class CenterView extends ibas.BOView implements ICenterView {
             });
         }
     }
+
     /** 清理资源 */
-    destroyView(view: ibas.IView): void {
+    destroyView(view: ibas.IView, showLast: boolean = true): void {
         if (ibas.objects.isNull(view)) { return; }
         if (view instanceof CenterView) {
             // 自身销毁，从浏览器缓存刷新页面
@@ -775,6 +776,9 @@ export class CenterView extends ibas.BOView implements ICenterView {
             }
             if (this.viewQueue.has(view)) {
                 this.viewQueue.delete(view);
+                if (showLast === true) {
+                    this.showLastView();
+                }
             }
         }
     }
@@ -791,7 +795,7 @@ export class CenterView extends ibas.BOView implements ICenterView {
                     }
                     for (let view of this.viewQueue.keys()) {
                         if (view.id === tab.getKey()) {
-                            this.destroyView(view);
+                            this.destroyView(view, false);
                         }
                     }
                 }
@@ -809,7 +813,7 @@ export class CenterView extends ibas.BOView implements ICenterView {
                         done = true;
                     }
                     if (done) {
-                        this.destroyView(view);
+                        this.destroyView(view, false);
                     }
                 }
                 showLast = true;
@@ -817,7 +821,13 @@ export class CenterView extends ibas.BOView implements ICenterView {
         }
         ibas.hashEventManager.changeHash("#");
         // 显示最后视图
-        if (showLast && this.viewQueue.size > 0) {
+        if (showLast) {
+            this.showLastView();
+        }
+    }
+    private showLastView(): void {
+        // 显示最后视图
+        if (this.viewQueue.size > 0) {
             let lastView: ibas.IView;
             for (let item of this.viewQueue.keys()) {
                 lastView = item;
