@@ -9,7 +9,6 @@
 /**
  * 模块索引文件，此文件集中导出类
  */
-/// <reference path="../../3rdparty/index.d.ts" />
 import { strings, emMessageLevel, KeyValue, List, ArrayList } from "../data/index";
 import { ILogger } from "../messages/Logger.d"; // 仅引用声明，避免嵌套引用
 

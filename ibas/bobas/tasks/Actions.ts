@@ -6,7 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 import { objects, emMessageLevel, dates, strings } from "../data/index";
-import { Configuration } from "../configuration/Configuration";
+import { Configuration } from "../configuration/index";
 import { Logger, ILogger } from "../messages/index";
 /**
  * 动作

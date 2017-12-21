@@ -5,9 +5,9 @@
  * Use of this source code is governed by an Apache License, Version 2.0
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
-
+/// <reference path="../../3rdparty/require.d.ts" />
 import { ArrayList, dates, strings, objects, KeyText } from "../data/index";
-import { config, CONFIG_ITEM_RUNTIME_VERSION, } from "../configuration/index";
+import { config, CONFIG_ITEM_RUNTIME_VERSION } from "../configuration/index";
 /**  */
 export module requires {
     /** 配置项目-模块间共享的类库名称，逗号分隔 */

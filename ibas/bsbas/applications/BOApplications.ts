@@ -11,13 +11,13 @@ import {
     criterias, boFactory, emMessageLevel, logger, strings, Bindable,
     ICriteria, ICondition
 } from "../../bobas/index";
-import { IBOChooseView, IBOEditView, IBOListView, IBOViewView } from "./Applications.d";
-import { BOQueryApplication, BOApplication, BOApplicationWithServices } from "./Applications";
 import {
     IBOChooseService, IBOChooseServiceContract, IBOChooseServiceCaller,
     BOChooseServiceProxy, IBOLinkServiceCaller, BOLinkServiceProxy
 } from "../services/index";
 import { emChooseType, } from "../data/index";
+import { IBOChooseView, IBOEditView, IBOListView, IBOViewView } from "./Applications.d";
+import { BOQueryApplication, BOApplication, BOApplicationWithServices } from "./Applications";
 
 /**
  * 业务对象选择应用

@@ -6,7 +6,6 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-/// <reference path="../core/BusinessObjectCore.d.ts" />
 import { IBusinessObject, IBusinessObjectList } from "../core/index";
 import {
     emDocumentStatus, emBOStatus, emYesNo, emApprovalStatus, ICriteria, List

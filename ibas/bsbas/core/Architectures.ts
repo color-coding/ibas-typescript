@@ -11,11 +11,11 @@ import {
     config, logger, emMessageLevel, CONFIG_ITEM_DEBUG_MODE,
 } from "../../bobas/index";
 import { emPlantform, emMessageType } from "../data/index";
+import { ServiceMapping, servicesManager } from "../services/index";
 import {
     IElement, IModule, IFunction, IApplication, IView,
     IModuleConsole, IViewShower, IViewNavigation, IModuleFunction,
 } from "./Architectures.d";
-import { ServiceMapping, servicesManager } from "../services/index";
 
 /** 系统元素 */
 export class Element implements IElement {

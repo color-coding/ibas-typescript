@@ -9,7 +9,6 @@
 /**
  * 模块索引文件，此文件集中导出类
  */
-/// <reference path="../../3rdparty/jquery.d.ts" />
 import { emMessageLevel } from "../data/Enums";
 import { objects } from "../data/Datas";
 import { strings } from "../data/Strings";
