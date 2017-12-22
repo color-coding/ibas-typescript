@@ -91,6 +91,11 @@ export abstract class AbstractApplication<T extends IView> extends Element imple
                 throw new Error(i18n.prop("sys_invalid_view", this.id));
             }
             this._view.application = this;
+            if (!objects.isNull(this.description)) {
+                this._view.title = this.description;
+            } else {
+                this._view.title = this.name;
+            }
             this.registerView();
         }
         return this._view;

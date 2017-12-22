@@ -60,6 +60,7 @@ export class CenterView extends ibas.BOView implements ICenterView {
             content: [
                 // 收缩菜单钮
                 new sap.m.Button("", {
+                    tooltip: ibas.i18n.prop("shell_apps_menu"),
                     icon: "sap-icon://menu2",
                     type: sap.m.ButtonType.Transparent,
                     layoutData: new sap.m.OverflowToolbarLayoutData("", {
@@ -80,6 +81,7 @@ export class CenterView extends ibas.BOView implements ICenterView {
                 }),
                 // 系统服务
                 new sap.m.Button("", {
+                    tooltip: this.title,
                     icon: ibas.config.get(ibas.CONFIG_ITEM_OFFLINE_MODE) ? "sap-icon://appear-offline" : "sap-icon://donut-chart",
                     width: "50px",
                     type: sap.m.ButtonType.Transparent,
@@ -620,6 +622,20 @@ export class CenterView extends ibas.BOView implements ICenterView {
                 that.destroyView(view, false);
             });
             form.openBy(view.darwBar());
+        } else if (form instanceof sap.m.Dialog) {
+            // 对话框视图
+            // 添加关闭事件
+            form.attachAfterClose(null, function (): void {
+                // 设置视图未显示
+                view.isDisplayed = false;
+            });
+            // 设置视图紧凑
+            if (ibas.config.get(CONFIG_ITEM_COMPACT_SCREEN, false)) {
+                form.addStyleClass("sapUiSizeCompact");
+            }
+            // 修改id号
+            view.id = form.getId();
+            form.open();
         } else {
             // 弹出层
             let popover: sap.m.ResponsivePopover;

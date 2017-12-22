@@ -37,11 +37,6 @@ export abstract class Application<T extends IView> extends AbstractApplication<T
                 this.proceeding(emMessageType.WARNING, i18n.prop("sys_application_view_was_displayed", this.name));
                 return;
             }
-            if (!objects.isNull(this.description)) {
-                this.view.title = this.description;
-            } else {
-                this.view.title = this.name;
-            }
             try {
                 this.viewShower.show(this.view);
                 this.afterViewShow();
