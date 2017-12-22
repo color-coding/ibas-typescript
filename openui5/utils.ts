@@ -476,7 +476,7 @@ export namespace utils {
         }
         /** 获取控件验证值 */
         function getValidationValue(managedObject: sap.ui.base.ManagedObject): any {
-            if (managedObject instanceof sap.m.Input || managedObject instanceof sap.m.DatePicker) {
+            if (managedObject instanceof sap.m.InputBase || managedObject instanceof sap.m.DatePicker) {
                 return managedObject.getValue();
             }
             if (managedObject instanceof sap.m.Select) {
