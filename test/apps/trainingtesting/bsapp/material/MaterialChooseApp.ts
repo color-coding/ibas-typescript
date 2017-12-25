@@ -50,7 +50,7 @@ export class MaterialChooseApp extends ibas.BOChooseService<IMaterialChooseView,
                         throw new Error(opRslt.message);
                     }
                     if (opRslt.resultObjects.length === 1
-                        && ibas.config.get(ibas.CONFIG_ITEM_AUTO_CHOOSE_DATA, true)) {
+                        && ibas.config.get(ibas.CONFIG_ITEM_AUTO_CHOOSE_DATA, true) && !that.isViewShowed()) {
                         // 仅一条数据，直接选择
                         that.chooseData(opRslt.resultObjects);
                     } else {
