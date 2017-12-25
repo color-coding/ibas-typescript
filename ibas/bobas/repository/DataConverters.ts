@@ -429,6 +429,7 @@ export abstract class BOConverter implements IBOConverter<IBusinessObject, any> 
             this._propertyMaps.add(new PropertyMap("_new", "isNew"));
             this._propertyMaps.add(new PropertyMap("_dirty", "isDirty"));
             this._propertyMaps.add(new PropertyMap("_deleted", "isDeleted"));
+            this._propertyMaps.add(new PropertyMap("_savable", "isSavable"));
             this._propertyMaps.add(new PropertyMap("_loading", undefined));// 忽略属性
             this._propertyMaps.add(new PropertyMap("_listeners", undefined));// 忽略属性
         }
