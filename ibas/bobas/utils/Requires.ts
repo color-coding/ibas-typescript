@@ -18,7 +18,7 @@ export module requires {
     export const CONFIG_ITEM_WAIT_SECONDS: string = "waitSeconds";
     /** 命名 */
     export function naming(name: string): string {
-        return CONTEXT_NAME_TEMPLATE_IBAS.replace("{0}", name);
+        return CONTEXT_NAME_TEMPLATE_IBAS.replace("{0}", name).toLowerCase();
     }
     /** 基本-共享库 */
     const basisShared: Map<string, string> = function (): Map<string, string> {

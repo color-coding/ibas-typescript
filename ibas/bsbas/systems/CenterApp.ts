@@ -296,7 +296,7 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
                         "/../3rdparty/require-css" + (config.get(CONFIG_ITEM_DEBUG_MODE, false) ? ".js" : ".min.js")
                 }
             },
-            context: requires.naming(module.name).toLowerCase(),
+            context: requires.naming(module.name),
             waitSeconds: config.get(requires.CONFIG_ITEM_WAIT_SECONDS, 30)
         };
         /*
