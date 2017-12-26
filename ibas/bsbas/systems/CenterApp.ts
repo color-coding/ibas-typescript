@@ -290,8 +290,13 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
         // require配置
         let requireConfig: RequireConfig = {
             baseUrl: address,
-            map: { "*": { "css": ibas_index_url + "/../3rdparty/require-css.min.js" } },
-            context: requires.naming(module.name),
+            map: {
+                "*": {
+                    "css": ibas_index_url +
+                        "/../3rdparty/require-css" + (config.get(CONFIG_ITEM_DEBUG_MODE, false) ? ".js" : ".min.js")
+                }
+            },
+            context: requires.naming(module.name).toLowerCase(),
             waitSeconds: config.get(requires.CONFIG_ITEM_WAIT_SECONDS, 30)
         };
         /*

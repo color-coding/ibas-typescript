@@ -41,16 +41,17 @@ export class BORepositoryShell extends ibas.BORepositoryApplication implements s
         if (ibas.objects.isNull(remoteRepository)) {
             throw new Error(ibas.i18n.prop("sys_invalid_parameter", "remoteRepository"));
         }
-        require(["../../3rdparty/crypto-js"], function (cryptoJS: CryptoJS.Hashes): void {
-            let method: string = ibas.strings.format("userConnect?user={0}&password={1}", caller.user, cryptoJS.MD5(caller.password));
-            remoteRepository.callRemoteMethod(method, undefined, caller);
-        }, function (error: RequireError): void {
-            // 加载js库失败
-            let opRslt: ibas.IOperationResult<any> = new ibas.OperationResult();
-            opRslt.resultCode = -901;
-            opRslt.message = error.message;
-            caller.onCompleted(opRslt);
-        });
+        require(["../../3rdparty/crypto-js" + (ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE, false) ? "" : ".min")],
+            function (cryptoJS: CryptoJS.Hashes): void {
+                let method: string = ibas.strings.format("userConnect?user={0}&password={1}", caller.user, cryptoJS.MD5(caller.password));
+                remoteRepository.callRemoteMethod(method, undefined, caller);
+            }, function (error: RequireError): void {
+                // 加载js库失败
+                let opRslt: ibas.IOperationResult<any> = new ibas.OperationResult();
+                opRslt.resultCode = -901;
+                opRslt.message = error.message;
+                caller.onCompleted(opRslt);
+            });
     }
     /**
      * 用户口令登录
