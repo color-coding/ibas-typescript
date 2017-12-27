@@ -4,8 +4,11 @@
     "debug": false,
     "offline": false,
     "language": "zh_CN",
-    "helpUrl": "https://colorcoding.org/ibas/help",
-    "welcomeUrl": "https://colorcoding.org/ibas/welcome"
+    "application": "智能业务应用系统",
+    "copyright": "© 2016-2017 color-coding studio",
+    "helpUrl": "http://www.avacloud.com.cn/",
+    "welcomeUrl": "https://colorcoding.org/ibas/welcome",
+    "repositoryAddress|BORepositoryShell": ".../initialfantasy/services/rest/data"
   },
   "languages": [
     "zh_CN",

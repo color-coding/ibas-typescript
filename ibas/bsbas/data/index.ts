@@ -17,6 +17,9 @@ export const SYSTEM_USER_ID: number = -9;
 /** 位置用户-标记 */
 export const UNKNOWN_USER_ID: number = -1;
 
+/** 配置项目-应用名称 */
+export const CONFIG_ITEM_APPLICATION_NAME: string = "application";
+
 /** 配置项目-审批方法 */
 export const CONFIG_ITEM_APPROVAL_WAY: string = "approvalWay";
 /** 配置项目-组织方式 */

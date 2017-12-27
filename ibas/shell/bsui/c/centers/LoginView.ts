@@ -14,6 +14,8 @@ import * as openui5 from "../../../../../openui5/index";
 export const CONFIG_ITEM_DEFAULT_USER: string = "defaultUser";
 /** 配置项目-默认用户密码 */
 export const CONFIG_ITEM_DEFAULT_PASSWORD: string = "defaultPassword";
+/** 配置项目-覆盖的版权声明 */
+export const CONFIG_ITEM_COVERED_COPYRIGHT: string = "copyright";
 /**
  * 视图-登陆
  */
@@ -61,11 +63,13 @@ export class LoginView extends ibas.BOView implements ILoginView {
     private static UI_LOGIN_PLANTFORM: string = "login_plantform";
     /** 绘制视图 */
     darw(): any {
+        // 设置应用名称
+        document.title = ibas.config.get(ibas.CONFIG_ITEM_APPLICATION_NAME, ibas.i18n.prop("shell_name"));
         let that: this = this;
         this.form = new sap.ui.layout.form.SimpleForm("", {
             content: [
                 new sap.m.Title("", {
-                    text: ibas.i18n.prop("shell_name"),
+                    text: document.title,
                     level: sap.ui.core.TitleLevel.H1,
                     titleStyle: sap.ui.core.TitleLevel.H1,
                     textAlign: sap.ui.core.TextAlign.Center,
@@ -120,7 +124,7 @@ export class LoginView extends ibas.BOView implements ILoginView {
                 }),
                 new sap.m.Label("", {}),
                 new sap.m.Title("", {
-                    text: ibas.i18n.prop("shell_copyright"),
+                    text: ibas.config.get(CONFIG_ITEM_COVERED_COPYRIGHT, ibas.i18n.prop("shell_copyright")),
                     level: sap.ui.core.TitleLevel.H6,
                     titleStyle: sap.ui.core.TitleLevel.H6,
                     textAlign: sap.ui.core.TextAlign.End
@@ -166,7 +170,6 @@ export class LoginView extends ibas.BOView implements ILoginView {
  * 视图-登陆
  */
 export class BigLoginView extends LoginView {
-
     /** 绘制视图 */
     darw(): any {
         let form: sap.ui.core.Control = super.darw();

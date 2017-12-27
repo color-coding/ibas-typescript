@@ -224,7 +224,8 @@ export class CenterView extends ibas.BOView implements ICenterView {
             name = ibas.i18n.prop("shell_user_unknown");
         }
         let viewContent: any = new sap.m.MessagePage("", {
-            text: ibas.i18n.prop("shell_welcome_page", name, ibas.i18n.prop("shell_name")),
+            text: ibas.i18n.prop("shell_welcome_page",
+                name, ibas.config.get(ibas.CONFIG_ITEM_APPLICATION_NAME, ibas.i18n.prop("shell_name"))),
             customDescription: new sap.m.Link("", {
                 target: "_blank",
                 text: ibas.config.get(CONFIG_ITEM_WELCOME_PAGE_URL),
@@ -708,6 +709,11 @@ export class CenterView extends ibas.BOView implements ICenterView {
         } else {
             // 外部打开
             let viewContent: any = new sap.m.MessagePage("", {
+                customDescription: new sap.m.Link("", {
+                    target: "_blank",
+                    text: view.url,
+                    href: view.url
+                }),
                 text: ibas.i18n.prop("shell_url_new_window_opened"),
                 description: "",
                 // title: "",
