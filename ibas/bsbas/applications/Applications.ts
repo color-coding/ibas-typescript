@@ -194,7 +194,8 @@ export abstract class BarApplication<T extends IBarView> extends Application<T> 
 /**
  * 服务应用
  */
-export abstract class ServiceApplication<T extends IView, C extends IServiceContract> extends Application<T> implements IService<IServiceCaller<C>> {
+export abstract class ServiceApplication<T extends IView, C extends IServiceContract>
+    extends Application<T> implements IService<IServiceCaller<C>> {
     /** 注册视图，重载需要回掉此方法 */
     protected registerView(): void {
         super.registerView();
@@ -285,7 +286,7 @@ export abstract class BOApplicationWithServices<T extends IBOViewWithServices> e
             services = services.sort((c, b): number => {
                 return c.name.localeCompare(b.name);
             });
-            // 显示可用服务            
+            // 显示可用服务
             shower.displayServices(services);
         } else {
             this.proceeding(emMessageType.WARNING, i18n.prop("sys_application_no_services", this.description));
