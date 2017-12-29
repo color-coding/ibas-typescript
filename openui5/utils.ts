@@ -422,7 +422,7 @@ export namespace utils {
         }
     }
     /** 转换选择类型  */
-    export function toSelectionMode(data: ibas.emChooseType): any {
+    export function toSelectionMode(data: ibas.emChooseType): sap.ui.table.SelectionMode {
         switch (data) {
             case ibas.emChooseType.SINGLE:
                 return sap.ui.table.SelectionMode.Single;
