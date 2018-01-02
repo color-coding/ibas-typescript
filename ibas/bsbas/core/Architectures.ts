@@ -123,7 +123,6 @@ export abstract class AbstractApplication<T extends IView> extends Element imple
     destroy(): void {
         this.close();
         if (!objects.isNull(this._view)) {
-            this._view.onClosed();
             this._view = null;
         }
     }

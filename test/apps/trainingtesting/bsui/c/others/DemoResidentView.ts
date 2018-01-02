@@ -11,7 +11,7 @@ import * as openui5 from "openui5/index";
 import { IDemoResidentView } from "../../../bsapp/others/index";
 
 /**
- * 视图-建议
+ * 视图-常驻
  */
 export class DemoResidentView extends ibas.BOResidentView implements IDemoResidentView {
     /** 绘制工具条视图 */

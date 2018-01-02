@@ -257,9 +257,8 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
         });
         return table;
     }
-    protected form: sap.ui.layout.VerticalLayout;
-    /** 绘制视图 */
-    darw(): any {
+    /** 关闭之后 */
+    onClosed(): void {
         if (this.form != null) {
             this.form.destroy(true);
             this.form = null;
@@ -269,39 +268,40 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
             this.table = null;
         }
         this.boName = null;
+    }
+    protected form: sap.m.Dialog;
+    /** 绘制视图 */
+    darw(): any {
         let that: this = this;
-        this.form = new sap.ui.layout.VerticalLayout("", {
-            width: "100%",
-            content: [
-                new sap.m.Toolbar("", {
-                    content: [
-                        new sap.m.Label("", {
-                            text: ibas.i18n.prop("shell_query_name"),
-                        }),
-                        new sap.m.Input("", {
-                        }).bindProperty("value", {
-                            path: "/name"
-                        }),
-                        new sap.m.ToolbarSpacer("", { width: "15px" }),
-                        new sap.m.RatingIndicator("", {
-                            maxValue: 5,
-                            tooltip: ibas.i18n.prop("shell_query_order"),
-                        }).bindProperty("value", {
-                            path: "/order"
-                        }),
-                        new sap.m.ToolbarSpacer("", { width: "5px" })
-                    ]
-                })
-            ]
-        });
-        return new sap.m.Dialog("", {
+        this.form = new sap.m.Dialog("", {
             title: this.title,
             type: sap.m.DialogType.Standard,
             state: sap.ui.core.ValueState.None,
             stretchOnPhone: true,
             horizontalScrolling: true,
             verticalScrolling: true,
-            content: [this.form],
+            subHeader: new sap.m.Toolbar("", {
+                content: [
+                    new sap.m.Label("", {
+                        text: ibas.i18n.prop("shell_query_name"),
+                    }),
+                    new sap.m.Input("", {
+                    }).bindProperty("value", {
+                        path: "/name"
+                    }),
+                    new sap.m.ToolbarSpacer("", { width: "15px" }),
+                    new sap.m.RatingIndicator("", {
+                        maxValue: 5,
+                        tooltip: ibas.i18n.prop("shell_query_order"),
+                    }).bindProperty("value", {
+                        path: "/order"
+                    }),
+                    new sap.m.ToolbarSpacer("", { width: "5px" })
+                ]
+            }),
+            content: [
+                this.table
+            ],
             buttons: [
                 new sap.m.Button("", {
                     text: ibas.i18n.prop("shell_data_delete"),
@@ -329,5 +329,6 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
                 }),
             ]
         });
+        return this.form;
     }
 }

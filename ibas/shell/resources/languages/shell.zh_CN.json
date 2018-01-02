@@ -67,6 +67,7 @@
     "shell_chooose_language": "请选择语言",
     "shell_query_name": "名称",
     "shell_query_order": "使用频率",
+    "shell_query_condition": "条件",
     "shell_query_condition_relationship": "关系",
     "shell_query_condition_bracketopen": "开括号",
     "shell_query_condition_alias": "字段",

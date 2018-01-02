@@ -260,17 +260,26 @@ export class BORepositoryShellOffline extends BORepositoryShell {
 	 */
     fetchBOInfos(caller: sys.BOInfoCaller): void {
         let criteria: ibas.ICriteria = new ibas.Criteria();
-        let condition: ibas.ICondition = criteria.conditions.create();
-        condition.alias = "name";
-        condition.value = caller.boName;
-
+        if (ibas.strings.isEmpty(caller.boCode)) {
+            let condition: ibas.ICondition = criteria.conditions.create();
+            condition.alias = "code";
+            condition.value = caller.boCode;
+        } else if (ibas.strings.isEmpty(caller.boName)) {
+            let condition: ibas.ICondition = criteria.conditions.create();
+            condition.alias = "name";
+            condition.value = caller.boName;
+        }
+        if (criteria.conditions.length === 0) {
+            // 无效的参数
+            throw new Error(ibas.i18n.prop("sys_invalid_parameter", "boCode"));
+        }
         let fetchCaller: ibas.FetchCaller<bo.BOInfo> = {
             criteria: null,
             onCompleted(opRsltFetch: ibas.IOperationResult<bo.BOInfo>): void {
                 // 没有实现查询应用，手动过滤下
                 let opRslt: ibas.IOperationResult<bo.BOInfo> = new ibas.OperationResult<bo.BOInfo>();
                 for (let item of opRsltFetch.resultObjects) {
-                    if (item.name !== caller.boName) {
+                    if (item.code !== caller.boCode) {
                         continue;
                     }
                     opRslt.resultObjects.add(item);

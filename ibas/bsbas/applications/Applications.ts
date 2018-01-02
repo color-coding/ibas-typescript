@@ -74,9 +74,9 @@ export abstract class Application<T extends IView> extends AbstractApplication<T
             if (!objects.isNull(this.viewShower)) {
                 this.viewShower.destroy(this.view);
                 this.view.isDisplayed = false;
+                this.view.onClosed();
             }
         }
-
     }
     /** 设置忙状态 */
     protected busy(busy: boolean): void;

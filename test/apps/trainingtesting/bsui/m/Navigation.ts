@@ -9,6 +9,8 @@
 import * as ibas from "ibas/index";
 import * as salesorderApps from "../../bsapp/salesorder/index";
 import * as salesorderViews from "./salesorder/index";
+import * as othersApps from "../../bsapp/others/index";
+import * as othersViews from "./others/index";
 
 /**
  * 视图导航
@@ -24,6 +26,9 @@ export default class Navigation extends ibas.ViewNavigation {
         switch (id) {
             case salesorderApps.SalesOrderListApp.APPLICATION_ID:
                 view = new salesorderViews.SalesOrderListView();
+                break;
+            case othersApps.DemoResidentApp.APPLICATION_ID:
+                view = new othersViews.DemoResidentView();
                 break;
             default:
                 break;
