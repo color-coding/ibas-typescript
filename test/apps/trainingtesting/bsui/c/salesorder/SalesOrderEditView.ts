@@ -162,7 +162,7 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
                         press: function (): void {
                             that.fireViewEvents(that.removeSalesOrderItemEvent,
                                 // 获取表格选中的对象
-                                openui5.utils.getTableSelecteds<bo.SalesOrderItem>(that.tableSalesOrderItem)
+                                openui5.utils.getSelecteds<bo.SalesOrderItem>(that.tableSalesOrderItem)
                             );
                         }
                     })

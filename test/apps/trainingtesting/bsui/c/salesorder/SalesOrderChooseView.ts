@@ -126,7 +126,7 @@ export class SalesOrderChooseView extends ibas.BOChooseView implements ISalesOrd
                     press: function (): void {
                         that.fireViewEvents(that.chooseDataEvent,
                             // 获取表格选中的对象
-                            openui5.utils.getTableSelecteds<bo.SalesOrder>(that.table)
+                            openui5.utils.getSelecteds<bo.SalesOrder>(that.table)
                         );
                     }
                 }),

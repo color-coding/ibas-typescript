@@ -78,7 +78,7 @@ export class CustomerListView extends ibas.BOListView implements ICustomerListVi
                         press: function (): void {
                             that.fireViewEvents(that.viewDataEvent,
                                 // 获取表格选中的对象
-                                openui5.utils.getTableSelecteds<bo.Customer>(that.table).firstOrDefault()
+                                openui5.utils.getSelecteds<bo.Customer>(that.table).firstOrDefault()
                             );
                         }
                     }),
@@ -89,7 +89,7 @@ export class CustomerListView extends ibas.BOListView implements ICustomerListVi
                         press: function (): void {
                             that.fireViewEvents(that.editDataEvent,
                                 // 获取表格选中的对象
-                                openui5.utils.getTableSelecteds<bo.Customer>(that.table).firstOrDefault()
+                                openui5.utils.getSelecteds<bo.Customer>(that.table).firstOrDefault()
                             );
                         }
                     }),
@@ -101,7 +101,7 @@ export class CustomerListView extends ibas.BOListView implements ICustomerListVi
                         press: function (): void {
                             that.fireViewEvents(that.deleteDataEvent,
                                 // 获取表格选中的对象
-                                openui5.utils.getTableSelecteds<bo.Customer>(that.table)
+                                openui5.utils.getSelecteds<bo.Customer>(that.table)
                             );
                         }
                     }),
@@ -200,6 +200,6 @@ export class CustomerListView extends ibas.BOListView implements ICustomerListVi
     }
     /** 获取选择的数据 */
     getSelecteds(): bo.Customer[] {
-        return openui5.utils.getTableSelecteds<bo.Customer>(this.table);
+        return openui5.utils.getSelecteds<bo.Customer>(this.table);
     }
 }

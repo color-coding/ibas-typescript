@@ -180,7 +180,7 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
                         type: sap.m.ButtonType.Transparent,
                         icon: "sap-icon://less",
                         press: function (): void {
-                            let selected: any = openui5.utils.getTableSelecteds(that.table).firstOrDefault();
+                            let selected: any = openui5.utils.getSelecteds(that.table).firstOrDefault();
                             that.fireViewEvents(that.removeQueryConditionEvent, selected);
                         }
                     })

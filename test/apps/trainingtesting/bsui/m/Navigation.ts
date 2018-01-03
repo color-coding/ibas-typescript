@@ -9,6 +9,10 @@
 import * as ibas from "ibas/index";
 import * as salesorderApps from "../../bsapp/salesorder/index";
 import * as salesorderViews from "./salesorder/index";
+import * as materialApps from "../../bsapp/material/index";
+import * as materialViews from "./material/index";
+import * as customerApps from "../../bsapp/customer/index";
+import * as customerViews from "./customer/index";
 import * as othersApps from "../../bsapp/others/index";
 import * as othersViews from "./others/index";
 
@@ -24,6 +28,12 @@ export default class Navigation extends ibas.ViewNavigation {
     protected newView(id: string): ibas.IView {
         let view: ibas.IView = null;
         switch (id) {
+            case materialApps.MaterialListApp.APPLICATION_ID:
+                view = new materialViews.MaterialListView();
+                break;
+            case customerApps.CustomerListApp.APPLICATION_ID:
+                view = new customerViews.CustomerListView();
+                break;
             case salesorderApps.SalesOrderListApp.APPLICATION_ID:
                 view = new salesorderViews.SalesOrderListView();
                 break;
