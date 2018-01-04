@@ -455,6 +455,9 @@ export namespace utils {
             if (ibas.objects.isNull(managedObject)) {
                 return null;
             }
+            if (managedObject instanceof sap.m.Panel) {
+                managedObjects.push(managedObject.getHeaderToolbar());
+            }
             if (managedObject.getContent instanceof Function) {
                 for (let content of managedObject.getContent().reverse()) {
                     managedObjects.push(content);
@@ -468,6 +471,14 @@ export namespace utils {
             } else if (managedObject instanceof sap.m.Wizard) {
                 for (let step of managedObject.getSteps().reverse()) {
                     managedObjects.push(step);
+                }
+            } else if (managedObject instanceof sap.m.ListBase) {
+                for (let listItem of managedObject.getItems().reverse()) {
+                    managedObjects.push(listItem);
+                }
+            } else if (managedObject instanceof sap.m.ColumnListItem) {
+                for (let cell of managedObject.getCells().reverse()) {
+                    managedObjects.push(cell);
                 }
             } else {
                 return managedObject;
