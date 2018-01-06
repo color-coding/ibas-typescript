@@ -153,3 +153,64 @@ export enum emDirection {
     /** 出 */
     OUT
 }
+/**
+ * 判断操作
+ */
+export enum emJudmentOperation {
+	/**
+	 * 等于
+	 */
+	EQUAL,
+	/**
+	 * 不等于
+	 */
+	NOT_EQUAL,
+	/**
+	 * 大于
+	 */
+	GRATER_THAN,
+	/**
+	 * 小于
+	 */
+	LESS_THAN,
+	/**
+	 * 大于等于
+	 */
+	GRATER_EQUAL,
+	/**
+	 * 小于等于
+	 */
+	LESS_EQUAL,
+	/**
+	 * 开始于（仅字符比较有效）
+	 */
+	BEGIN_WITH,
+	/**
+	 * 不是开始于（仅字符比较有效）
+	 */
+	NOT_BEGIN_WITH,
+	/**
+	 * 结束于（仅字符比较有效）
+	 */
+	END_WITH,
+	/**
+	 * 不是结束于（仅字符比较有效）
+	 */
+	NOT_END_WITH,
+	/**
+	 * 包括（仅字符比较有效）
+	 */
+	CONTAIN,
+	/**
+	 * 不包含（仅字符比较有效）
+	 */
+	NOT_CONTAIN,
+	/**
+	 * 与（仅布尔比较有效）
+	 */
+	AND,
+	/**
+	 * 或（仅布尔比较有效）
+	 */
+    OR,
+}

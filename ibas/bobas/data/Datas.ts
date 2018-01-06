@@ -396,6 +396,72 @@ export module dates {
         }
         return NaN;
     }
+    /**
+     * 比较大小
+     * @param left 
+     * @param right 
+     * @returns 0,相等；-1，right小；1，left小
+     */
+    export function compare(left: Date, right: Date): number {
+        if (!objects.isNull(left) && !objects.isNull(right)) {
+            let leftTime: number = left.getTime();
+            let rightTime: number = right.getTime();
+            if (leftTime === rightTime) {
+                return 0;
+            } else if (leftTime < rightTime) {
+                return 1;
+            } else if (leftTime > rightTime) {
+                return -1;
+            }
+        }
+        return NaN;
+    }
+    /**
+     * 是否相等 
+     * @param left 
+     * @param right 
+     */
+    export function equals(left: Date, right: Date): boolean {
+        let value: number = compare(left, right);
+        if (value === NaN) {
+            throw new Error(i18n.prop("sys_unrecognized_data"));
+        }
+        if (value === 0) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 左值是否晚于右值 
+     * @param left 
+     * @param right 
+     */
+    export function after(left: Date, right: Date): boolean {
+        let value: number = compare(left, right);
+        if (value === NaN) {
+            throw new Error(i18n.prop("sys_unrecognized_data"));
+        }
+        if (value < 0) {
+            return true;
+        }
+        return false;
+    }
+    /**
+     * 左值是否早于右值 
+     * @param left 
+     * @param right 
+     */
+    export function before(left: Date, right: Date): boolean {
+        let value: number = compare(left, right);
+        if (value === NaN) {
+            throw new Error(i18n.prop("sys_unrecognized_data"));
+        }
+        if (value > 0) {
+            return true;
+        }
+        return false;
+    }
 }
 /**
  * 数字
