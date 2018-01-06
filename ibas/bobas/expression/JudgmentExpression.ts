@@ -19,45 +19,43 @@ import { IJudgmentExpression } from "./Expression";
 /** 数据转换 */
 export namespace judment {
     export namespace convert {
-        export namespace valueOf {
-            export function operation(value: emConditionOperation): emJudmentOperation {
-                if (objects.isNull(value)) {
-                    throw new Error(i18n.prop("sys_invalid_parameter", "value"));
-                }
-                if (value === emConditionOperation.CONTAIN) {
-                    return emJudmentOperation.CONTAIN;
-                } else if (value === emConditionOperation.NOT_CONTAIN) {
-                    return emJudmentOperation.NOT_CONTAIN;
-                } else if (value === emConditionOperation.EQUAL) {
-                    return emJudmentOperation.EQUAL;
-                } else if (value === emConditionOperation.NOT_EQUAL) {
-                    return emJudmentOperation.NOT_EQUAL;
-                } else if (value === emConditionOperation.GRATER_EQUAL) {
-                    return emJudmentOperation.GRATER_EQUAL;
-                } else if (value === emConditionOperation.GRATER_THAN) {
-                    return emJudmentOperation.GRATER_THAN;
-                } else if (value === emConditionOperation.LESS_EQUAL) {
-                    return emJudmentOperation.LESS_EQUAL;
-                } else if (value === emConditionOperation.LESS_THAN) {
-                    return emJudmentOperation.LESS_THAN;
-                } else if (value === emConditionOperation.START) {
-                    return emJudmentOperation.BEGIN_WITH;
-                } else if (value === emConditionOperation.END) {
-                    return emJudmentOperation.END_WITH;
-                }
-                throw new Error(i18n.prop("sys_unrecognized_data"));
+        export function operation(value: emConditionOperation): emJudmentOperation {
+            if (objects.isNull(value)) {
+                throw new Error(i18n.prop("sys_invalid_parameter", "value"));
             }
-            export function relationship(value: emConditionRelationship): emJudmentOperation {
-                if (objects.isNull(value)) {
-                    throw new Error(i18n.prop("sys_invalid_parameter", "value"));
-                }
-                if (value === emConditionRelationship.AND) {
-                    return emJudmentOperation.AND;
-                } else if (value === emConditionRelationship.OR) {
-                    return emJudmentOperation.OR;
-                }
-                throw new Error(i18n.prop("sys_unrecognized_data"));
+            if (value === emConditionOperation.CONTAIN) {
+                return emJudmentOperation.CONTAIN;
+            } else if (value === emConditionOperation.NOT_CONTAIN) {
+                return emJudmentOperation.NOT_CONTAIN;
+            } else if (value === emConditionOperation.EQUAL) {
+                return emJudmentOperation.EQUAL;
+            } else if (value === emConditionOperation.NOT_EQUAL) {
+                return emJudmentOperation.NOT_EQUAL;
+            } else if (value === emConditionOperation.GRATER_EQUAL) {
+                return emJudmentOperation.GRATER_EQUAL;
+            } else if (value === emConditionOperation.GRATER_THAN) {
+                return emJudmentOperation.GRATER_THAN;
+            } else if (value === emConditionOperation.LESS_EQUAL) {
+                return emJudmentOperation.LESS_EQUAL;
+            } else if (value === emConditionOperation.LESS_THAN) {
+                return emJudmentOperation.LESS_THAN;
+            } else if (value === emConditionOperation.START) {
+                return emJudmentOperation.BEGIN_WITH;
+            } else if (value === emConditionOperation.END) {
+                return emJudmentOperation.END_WITH;
             }
+            throw new Error(i18n.prop("sys_unrecognized_data"));
+        }
+        export function relationship(value: emConditionRelationship): emJudmentOperation {
+            if (objects.isNull(value)) {
+                throw new Error(i18n.prop("sys_invalid_parameter", "value"));
+            }
+            if (value === emConditionRelationship.AND) {
+                return emJudmentOperation.AND;
+            } else if (value === emConditionRelationship.OR) {
+                return emJudmentOperation.OR;
+            }
+            throw new Error(i18n.prop("sys_unrecognized_data"));
         }
     }
     export namespace factory {
@@ -354,8 +352,25 @@ export class JudgmentExpressionEnum extends JudgmentExpression<number> {
  * 字符串值表达式比较
  */
 export class JudgmentExpressionString extends JudgmentExpression<string> {
-    result(): boolean {// 开始与
-        if (this.operation === emJudmentOperation.BEGIN_WITH) {
+    result(): boolean {
+        // 等于
+        if (this.operation === emJudmentOperation.EQUAL) {
+            // 比较左右值
+            if (this.leftValue === this.rightValue) {
+                return true;
+            }
+            return false;
+        }
+        // 不等于
+        else if (this.operation === emJudmentOperation.NOT_EQUAL) {
+            // 比较左右值
+            if (this.leftValue !== this.rightValue) {
+                return true;
+            }
+            return false;
+        }
+        // 开始与
+        else if (this.operation === emJudmentOperation.BEGIN_WITH) {
             if (objects.isNull(this.leftValue) || objects.isNull(this.rightValue)) {
                 return false;
             }

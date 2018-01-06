@@ -7,11 +7,13 @@
  */
 /// <reference path="../../3rdparty/jquery.d.ts" />
 import {
-    objects, strings, emMessageLevel, OperationResult, IOperationResult, ArrayList,
-    Criteria, Condition, ICriteria, OperationMessage
+    objects, strings, emMessageLevel, OperationResult,
+    IOperationResult, ArrayList, OperationMessage,
+    Criteria, Condition, ICriteria
 } from "../data/index";
 import { i18n } from "../i18n/index";
 import { logger } from "../messages/index";
+import { BOJudgmentLinkCondition } from "../expression/index";
 import {
     MethodCaller, FetchCaller, SaveCaller, LoadFileCaller, UploadFileCaller,
     IRemoteRepository, IDataConverter, IBORepository, IFileRepository, IBORepositoryReadonly,
@@ -191,26 +193,62 @@ export class BOFileRepositoryAjax extends FileRepositoryAjax implements IBORepos
      * @param caller 查询监听者
      */
     fetch<P>(boName: string, caller: FetchCaller<P>): void {
+        let criteria: ICriteria;
+        if (caller.criteria instanceof Array) {
+            criteria = new Criteria();
+            for (let item of caller.criteria) {
+                if (!objects.instanceOf(item, Condition)) {
+                    continue;
+                }
+                criteria.conditions.add(item);
+            }
+        } else if (objects.instanceOf(caller.criteria, Criteria)) {
+            criteria = caller.criteria;
+        }
         let fileName: string = strings.format("{0}s.json", boName).toLowerCase();
         let that: this = this;
         let loadFileCaller: LoadFileCaller = {
             onCompleted(data: any): void {
                 let opRslt: IOperationResult<any> = new OperationResult();
                 if (!objects.isNull(that.converter)) {
+                    // 设置转换方法
                     if (data instanceof Array) {
                         for (let item of data) {
                             if (item.type === undefined) {
                                 item.type = boName;
                             }
-                            opRslt.resultObjects.add(that.converter.parsing(item, fileName));
+                            let newData: any = that.converter.parsing(item, fileName);
+                            if (!objects.isNull(criteria)) {
+                                // 设置查询
+                                if (that.filter(criteria, newData)) {
+                                    opRslt.resultObjects.add(newData);
+                                }
+                                if (criteria.result > 0 && opRslt.resultObjects.length >= criteria.result) {
+                                    // 已够返回数量
+                                    break;
+                                }
+                            } else {
+                                // 未设置查询
+                                opRslt.resultObjects.add(newData);
+                            }
                         }
                     } else {
                         if (data.type === undefined) {
                             data.type = boName;
                         }
-                        opRslt.resultObjects.add(that.converter.parsing(data, fileName));
+                        let newData: any = that.converter.parsing(data, fileName);
+                        if (!objects.isNull(criteria)) {
+                            // 设置查询
+                            if (that.filter(criteria, newData)) {
+                                opRslt.resultObjects.add(newData);
+                            }
+                        } else {
+                            // 未设置查询
+                            opRslt.resultObjects.add(newData);
+                        }
                     }
                 } else {
+                    // 未设置转换方法，不能进行查询过滤
                     if (data instanceof Array) {
                         for (let item of data) {
                             opRslt.resultObjects.add(data);
@@ -223,6 +261,23 @@ export class BOFileRepositoryAjax extends FileRepositoryAjax implements IBORepos
             }
         };
         this.load(fileName, loadFileCaller);
+    }
+    /**
+     * 过滤数据
+     * @param criteria 查询
+     * @param data 数据
+     * @return true,符合条件；false，不符合条件
+     */
+    private filter(criteria: ICriteria, data: any): boolean {
+        if (objects.isNull(criteria)) {
+            return true;
+        }
+        if (criteria.conditions.length === 0) {
+            return true;
+        }
+        let judgmentLink: BOJudgmentLinkCondition = new BOJudgmentLinkCondition();
+        judgmentLink.parsingConditions(criteria.conditions);
+        return judgmentLink.judge(data);
     }
 }
 /** 文件上传仓库 */

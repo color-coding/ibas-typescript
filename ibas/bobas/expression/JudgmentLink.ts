@@ -8,6 +8,7 @@
 import {
     emJudmentOperation, StringBuilder,
     objects, dates, strings, List, ArrayList,
+    ICondition, emConditionRelationship,
 } from "../data/index";
 import { i18n } from "../i18n/index";
 import { logger } from "../messages/index";
@@ -230,5 +231,83 @@ export class JudgmentLink implements IJudgmentLink {
             }
         }
         return true;
+    }
+}
+/**
+ * 业务对象的判断链
+ */
+export class BOJudgmentLink extends JudgmentLink {
+    /** 
+     * 判断
+     * @param value 比较值
+     * @return true,满足;false,不满足
+	 * @throws 不支持的操作
+     */
+    judge(value: any): boolean {
+        // 无条件
+        if (this.judgmentItems == null) {
+            return true;
+        }
+        let jItems: ArrayList<IJudgmentLinkItem> = new ArrayList<IJudgmentLinkItem>();
+        // 设置所以条件的比较值
+        for (let item of this.judgmentItems) {
+            // 左值
+            if (item.leftOperter instanceof PropertyValueOperator) {
+                let propertyOperator: IPropertyValueOperator = <IPropertyValueOperator>item.leftOperter;
+                propertyOperator.setValue(value);
+            }
+            // 右值
+            if (item.rightOperter instanceof PropertyValueOperator) {
+                let propertyOperator: IPropertyValueOperator = <IPropertyValueOperator>item.rightOperter;
+                propertyOperator.setValue(value);
+            }
+            jItems.add(item);
+        }
+        return this.judgeLink(0, jItems);
+    }
+}
+/**
+ * 业务对象的判断链
+ */
+export class BOJudgmentLinkCondition extends BOJudgmentLink {
+    /** 解析查询条件 */
+    parsingConditions(conditions: ICondition[]): void {
+        // 判断无条件
+        if (objects.isNull(conditions) || conditions.length === 0) {
+            return;
+        }
+        let jLinkItems: ArrayList<IJudgmentLinkItem> = new ArrayList<IJudgmentLinkItem>();
+        for (let item of conditions) {
+            let jItem: JudgmentLinkItem = new JudgmentLinkItem();
+            jItem.openBracket = item.bracketOpen;
+            jItem.closeBracket = item.bracketClose;
+            if (item.relationship === emConditionRelationship.NONE) {
+                jItem.relationship = emJudmentOperation.AND;
+            } else {
+                jItem.relationship = judment.convert.relationship(item.relationship);
+            }
+            jItem.operation = judment.convert.operation(item.operation);
+            // 左边取值
+            let operator: IPropertyValueOperator = new PropertyValueOperator();
+            operator.propertyName = item.alias;
+            jItem.leftOperter = operator;
+            // 右边取值
+            if (!strings.isEmpty(item.comparedAlias)) {
+                // 与属性比较
+                operator = new PropertyValueOperator();
+                operator.propertyName = item.comparedAlias;
+                jItem.rightOperter = operator;
+            } else {
+                // 与值比较
+                let operator: IValueOperator = new ValueOperator();
+                operator.setValue(item.value);
+                jItem.rightOperter = operator;
+            }
+            jLinkItems.add(jItem);
+        }
+        if (jLinkItems.length === 0) {
+            throw new Error(i18n.prop("sys_invaild_judgment_link_conditions"));
+        }
+        super.judgmentItems = jLinkItems;
     }
 }

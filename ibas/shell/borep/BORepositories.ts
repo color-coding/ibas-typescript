@@ -170,19 +170,15 @@ export class BORepositoryShellOffline extends BORepositoryShell {
         let fetchCaller: ibas.FetchCaller<bo.User> = {
             criteria: criteria,
             onCompleted(opRsltFetch: ibas.IOperationResult<bo.User>): void {
-                // 没有实现查询应用，手动过滤下
+                let user: bo.User = opRsltFetch.resultObjects.firstOrDefault();
                 let opRslt: ibas.IOperationResult<any> = new ibas.OperationResult();
-                opRslt.resultCode = -1;
-                opRslt.message = ibas.i18n.prop("shell_user_and_password_not_match");
-                for (let item of opRsltFetch.resultObjects) {
-                    if (item.code === caller.user
-                        && (item.token === caller.password || (<any>item).password === caller.password)) {
-                        opRslt.resultCode = 0;
-                        opRslt.message = "ok.";
-                        opRslt.resultObjects.add(item);
-                        opRslt.userSign = ibas.uuids.random();
-                        break;
-                    }
+                if (ibas.objects.isNull(user)) {
+                    opRslt.resultCode = -1;
+                    opRslt.message = ibas.i18n.prop("shell_user_and_password_not_match");
+                } else {
+                    opRslt.resultCode = 0;
+                    opRslt.userSign = ibas.uuids.random();
+                    opRslt.resultObjects.add(user);
                 }
                 caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
             }
@@ -194,11 +190,28 @@ export class BORepositoryShellOffline extends BORepositoryShell {
      * @param caller 用户口令登录者
      */
     tokenConnect(caller: sys.TokenConnectCaller): void {
-        // 离线模式不支持用户口令登录
-        let opRslt: ibas.IOperationResult<any> = new ibas.OperationResult();
-        opRslt.resultCode = -1;
-        opRslt.message = ibas.i18n.prop("shell_user_and_password_not_match");
-        caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
+        let criteria: ibas.ICriteria = new ibas.Criteria();
+        let condition: ibas.ICondition = criteria.conditions.create();
+        condition.alias = "token";
+        condition.value = caller.token;
+
+        let fetchCaller: ibas.FetchCaller<bo.User> = {
+            criteria: criteria,
+            onCompleted(opRsltFetch: ibas.IOperationResult<bo.User>): void {
+                let user: bo.User = opRsltFetch.resultObjects.firstOrDefault();
+                let opRslt: ibas.IOperationResult<any> = new ibas.OperationResult();
+                if (ibas.objects.isNull(user)) {
+                    opRslt.resultCode = -1;
+                    opRslt.message = ibas.i18n.prop("shell_user_and_password_not_match");
+                } else {
+                    opRslt.resultCode = 0;
+                    opRslt.userSign = ibas.uuids.random();
+                    opRslt.resultObjects.add(user);
+                }
+                caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
+            }
+        };
+        this.fetch("User", fetchCaller);
     }
 
 	/**
@@ -239,18 +252,8 @@ export class BORepositoryShellOffline extends BORepositoryShell {
         condition.value = caller.queryId;
 
         let fetchCaller: ibas.FetchCaller<bo.UserQuery> = {
-            criteria: null,
-            onCompleted(opRsltFetch: ibas.IOperationResult<bo.UserQuery>): void {
-                // 没有实现查询应用，手动过滤下
-                let opRslt: ibas.IOperationResult<bo.UserQuery> = new ibas.OperationResult<bo.UserQuery>();
-                for (let item of opRsltFetch.resultObjects) {
-                    if (item.id !== caller.queryId) {
-                        continue;
-                    }
-                    opRslt.resultObjects.add(item);
-                }
-                caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
-            }
+            criteria: criteria,
+            onCompleted: caller.onCompleted,
         };
         this.fetch("UserQuery", fetchCaller);
     }
@@ -260,13 +263,13 @@ export class BORepositoryShellOffline extends BORepositoryShell {
 	 */
     fetchBOInfos(caller: sys.BOInfoCaller): void {
         let criteria: ibas.ICriteria = new ibas.Criteria();
-        if (ibas.strings.isEmpty(caller.boCode)) {
+        if (!ibas.strings.isEmpty(caller.boCode)) {
             let condition: ibas.ICondition = criteria.conditions.create();
             condition.alias = "code";
             condition.value = caller.boCode;
-        } else if (ibas.strings.isEmpty(caller.boName)) {
+        } else if (!ibas.strings.isEmpty(caller.boName)) {
             let condition: ibas.ICondition = criteria.conditions.create();
-            condition.alias = "name";
+            condition.alias = "code";
             condition.value = caller.boName;
         }
         if (criteria.conditions.length === 0) {
@@ -274,18 +277,8 @@ export class BORepositoryShellOffline extends BORepositoryShell {
             throw new Error(ibas.i18n.prop("sys_invalid_parameter", "boCode"));
         }
         let fetchCaller: ibas.FetchCaller<bo.BOInfo> = {
-            criteria: null,
-            onCompleted(opRsltFetch: ibas.IOperationResult<bo.BOInfo>): void {
-                // 没有实现查询应用，手动过滤下
-                let opRslt: ibas.IOperationResult<bo.BOInfo> = new ibas.OperationResult<bo.BOInfo>();
-                for (let item of opRsltFetch.resultObjects) {
-                    if (item.code !== caller.boCode) {
-                        continue;
-                    }
-                    opRslt.resultObjects.add(item);
-                }
-                caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
-            }
+            criteria: criteria,
+            onCompleted: caller.onCompleted,
         };
         this.fetch("BOInfo", fetchCaller);
     }
