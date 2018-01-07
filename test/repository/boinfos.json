@@ -52,6 +52,11 @@
                 "Property": "CustomerName",
                 "Description": "客户名称",
                 "Searched": true
+            },
+            {
+                "Property": "DocumentDate",
+                "Description": "单据日期",
+                "Searched": false
             }
         ]
     }

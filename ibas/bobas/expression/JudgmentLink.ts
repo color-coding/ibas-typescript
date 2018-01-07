@@ -14,17 +14,13 @@ import { i18n } from "../i18n/index";
 import { logger } from "../messages/index";
 import {
     IJudgmentLinkItem, IJudgmentLink, IValueOperator,
-    IPropertyValueOperator, IJudgmentExpression
+    IPropertyValueOperator, IJudgmentExpression, IValueOperatorEx,
+    IValueConverter,
 } from "./Expression.d";
 import { judment } from "./JudgmentExpression";
 
-/** 值操作 */
+/** 值操作者 */
 export class ValueOperator implements IValueOperator {
-    constructor();
-    constructor(value: any);
-    constructor() {
-        this.value = arguments[0];
-    }
     private value: any;
     /** 获取值 */
     getValue(): any {
@@ -36,36 +32,80 @@ export class ValueOperator implements IValueOperator {
     }
     /** 获取值类型 */
     valueType(): string {
-        return typeof this.getValue();
+        let name: string = typeof this.getValue();
+        if (name === "object") {
+            // 日期类型
+            name = objects.getName(objects.getType(this.getValue()));
+        }
+        return name;
     }
 }
-/** 值操作 */
-export class PropertyValueOperator implements IPropertyValueOperator {
-    constructor();
-    constructor(propertyName: string);
-    constructor() {
-        this.propertyName = arguments[0];
-    }
-    private value: any;
+/** 增强值操作者 */
+export class ValueOperatorEx extends ValueOperator implements IValueOperatorEx {
+    /** 类型转换者 */
+    converter: IValueConverter<any>;
     /** 获取值 */
     getValue(): any {
-        for (let key in this.value) {
-            if (strings.equalsIgnoreCase(key, this.propertyName)) {
-                return this.value[key];
-            }
+        if (objects.isNull(this.converter)) {
+            return super.getValue();
         }
-        return this.value;
+        return this.converter.convert(super.getValue());
     }
-    /** 设置值 */
-    setValue(value: any): void {
-        this.value = value;
-    }
-    /** 获取值类型 */
-    valueType(): string {
-        return typeof this.getValue();
-    }
+}
+/** 属性值操作者 */
+export class PropertyValueOperator extends ValueOperator implements IPropertyValueOperator {
     /** 属性名称 */
     propertyName: string;
+    /** 获取值 */
+    getValue(): any {
+        let value: any = super.getValue();
+        for (let key in value) {
+            if (strings.equalsIgnoreCase(key, this.propertyName)) {
+                return value[key];
+            }
+        }
+        return value;
+    }
+}
+export class ValueConverterString implements IValueConverter<string> {
+    convert(value: any): string {
+        return String(value);
+    }
+}
+export namespace factory {
+    export namespace converter {
+        export function create<T>(type: string): IValueConverter<T> {
+            if (strings.equalsIgnoreCase("string", type)) {
+                return <IValueConverter<T>>(<any>{
+                    convert(value: any): string {
+                        return String(value);
+                    }
+                });
+            } else if (strings.equalsIgnoreCase("boolean", type)) {
+                return <IValueConverter<T>>(<any>{
+                    convert(value: any): boolean {
+                        return Boolean(value);
+                    }
+                });
+            } else if (strings.equalsIgnoreCase("number", type)) {
+                return <IValueConverter<T>>(<any>{
+                    convert(value: any): number {
+                        return Number(value);
+                    }
+                });
+            } else if (strings.equalsIgnoreCase("date", type)) {
+                return <IValueConverter<T>>(<any>{
+                    convert(value: any): Date {
+                        if (typeof value === "string") {
+                            return dates.valueOf(value);
+                        }
+                        return undefined;
+                    }
+                });
+            }
+            throw new Error(i18n.prop("sys_unrecognized_data"));
+        }
+    }
 }
 /**
  * 判断链-项目
@@ -253,13 +293,16 @@ export class BOJudgmentLink extends JudgmentLink {
         for (let item of this.judgmentItems) {
             // 左值
             if (item.leftOperter instanceof PropertyValueOperator) {
-                let propertyOperator: IPropertyValueOperator = <IPropertyValueOperator>item.leftOperter;
-                propertyOperator.setValue(value);
+                let operator: IPropertyValueOperator = item.leftOperter;
+                operator.setValue(value);
             }
             // 右值
             if (item.rightOperter instanceof PropertyValueOperator) {
-                let propertyOperator: IPropertyValueOperator = <IPropertyValueOperator>item.rightOperter;
-                propertyOperator.setValue(value);
+                let operator: IPropertyValueOperator = item.rightOperter;
+                operator.setValue(value);
+            } else if (item.rightOperter instanceof ValueOperatorEx) {
+                let operator: IValueOperatorEx = item.rightOperter;
+                operator.converter = factory.converter.create(item.leftOperter.valueType());
             }
             jItems.add(item);
         }
@@ -299,7 +342,7 @@ export class BOJudgmentLinkCondition extends BOJudgmentLink {
                 jItem.rightOperter = operator;
             } else {
                 // 与值比较
-                let operator: IValueOperator = new ValueOperator();
+                let operator: IValueOperator = new ValueOperatorEx();
                 operator.setValue(item.value);
                 jItem.rightOperter = operator;
             }

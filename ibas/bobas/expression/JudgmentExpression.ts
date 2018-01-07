@@ -60,14 +60,16 @@ export namespace judment {
     }
     export namespace factory {
         export function create<T>(type: string): IJudgmentExpression<T> {
-            if (strings.equals("string", type)) {
+            if (strings.equalsIgnoreCase("string", type)) {
                 return <IJudgmentExpression<T>>(<any>new JudgmentExpressionString());
-            } else if (strings.equals("boolean", type)) {
+            } else if (strings.equalsIgnoreCase("boolean", type)) {
                 return <IJudgmentExpression<T>>(<any>new JudgmentExpressionBoolean());
-            } else if (strings.equals("number", type)) {
+            } else if (strings.equalsIgnoreCase("number", type)) {
                 return <IJudgmentExpression<T>>(<any>new JudgmentExpressionNumber());
-            } else if (strings.equals("date", type)) {
+            } else if (strings.equalsIgnoreCase("date", type)) {
                 return <IJudgmentExpression<T>>(<any>new JudgmentExpressionDate());
+            } else if (strings.equalsIgnoreCase("enum", type)) {
+                return <IJudgmentExpression<T>>(<any>new JudgmentExpressionEnum());
             }
             throw new Error(i18n.prop("sys_unrecognized_data"));
         }

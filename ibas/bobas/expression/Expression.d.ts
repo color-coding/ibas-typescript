@@ -42,6 +42,13 @@ export interface IJudgmentExpression<T> extends IExpression {
     operation: emJudmentOperation;
 }
 /**
+ * 值转换者
+ */
+export interface IValueConverter<T> {
+    /** 转换值 */
+    convert(value: any): T;
+}
+/**
  * 值操作者
  */
 export interface IValueOperator {
@@ -51,6 +58,13 @@ export interface IValueOperator {
     setValue(value: any): void;
     /** 获取值类型 */
     valueType(): string;
+}
+/**
+ * 增强值操作者
+ */
+export interface IValueOperatorEx extends IValueOperator {
+    /** 类型转换者 */
+    converter: IValueConverter<any>;
 }
 /**
  * 属性值操作者
