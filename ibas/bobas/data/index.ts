@@ -18,8 +18,6 @@ export * from "./OperationResult.d";
 export * from "./OperationResult";
 export * from "./Enums";
 export * from "./Datas";
-export * from "./Strings";
-export * from "./Urls";
 export * from "./DataTable";
 
 /** 数据分隔符（,） */

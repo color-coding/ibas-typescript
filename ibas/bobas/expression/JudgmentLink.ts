@@ -58,13 +58,7 @@ export class PropertyValueOperator extends ValueOperator implements IPropertyVal
     propertyName: string;
     /** 获取值 */
     getValue(): any {
-        let value: any = super.getValue();
-        for (let key in value) {
-            if (strings.equalsIgnoreCase(key, this.propertyName)) {
-                return value[key];
-            }
-        }
-        return value;
+        return objects.getPropertyValue(this.propertyName, super.getValue());
     }
 }
 export class ValueConverterString implements IValueConverter<string> {
@@ -135,7 +129,7 @@ export class JudgmentLinkItem implements IJudgmentLinkItem {
         let stringBuilder: StringBuilder = new StringBuilder();
         stringBuilder.append(this.relationship.toString());
         stringBuilder.append(" ");
-        for (let index = 0; index < this.openBracket; index++) {
+        for (let index: number = 0; index < this.openBracket; index++) {
             stringBuilder.append("(");
         }
         stringBuilder.append(this.leftOperter.toString());
@@ -143,7 +137,7 @@ export class JudgmentLinkItem implements IJudgmentLinkItem {
         stringBuilder.append(this.operation.toString());
         stringBuilder.append(" ");
         stringBuilder.append(this.rightOperter.toString());
-        for (let index = 0; index < this.closeBracket; index++) {
+        for (let index: number = 0; index < this.closeBracket; index++) {
             stringBuilder.append(")");
         }
         return stringBuilder.toString();
@@ -168,7 +162,7 @@ export class JudgmentLink implements IJudgmentLink {
         let closeCount: number = 0;
         let bracket: number = -1;
         let currentJudgmentItems: ArrayList<JudgmentLinkItem> = new ArrayList<JudgmentLinkItem>();
-        for (let index = 0; index < judgmentItems.length; index++) {
+        for (let index: number = startIndex; index < judgmentItems.length; index++) {
             let jItem: JudgmentLinkItem = judgmentItems[index];
             if (bracket === -1) {
                 bracket = jItem.openBracket;
@@ -193,11 +187,10 @@ export class JudgmentLink implements IJudgmentLink {
         return currentJudgmentItems;
     }
 
-    /** 
+    /**
      * 判断
      * @param value 比较值
      * @return true,满足;false,不满足
-	 * @throws 不支持的操作
      */
     judge(value: any): boolean {
         // 无条件
@@ -226,8 +219,8 @@ export class JudgmentLink implements IJudgmentLink {
      */
     protected judgeLink(bracket: number, judgmentItems: IJudgmentLinkItem[]): boolean {
         let currentValue: boolean = false;// 当前的结果
-        let rootJudExp: IJudgmentExpression<any> = null;
-        for (let index = 0; index < judgmentItems.length; index++) {
+        let rootJudExp: IJudgmentExpression<boolean> = null;
+        for (let index: number = 0; index < judgmentItems.length; index++) {
             let jItem: IJudgmentLinkItem = judgmentItems[index];
             if (rootJudExp !== null) {
                 rootJudExp.operation = jItem.relationship;
@@ -236,7 +229,7 @@ export class JudgmentLink implements IJudgmentLink {
             if ((jItem.openBracket !== bracket || (jItem.openBracket === bracket && index > 0))
                 && jItem.openBracket > 0) {
                 // 新的括号，先执行新括号判断
-                let nextJudgmentItems: JudgmentLinkItem[] = this.getJudgmentItems(index, judgmentItems);
+                let nextJudgmentItems: IJudgmentLinkItem[] = this.getJudgmentItems(index, judgmentItems);
                 currentValue = this.judgeLink(jItem.openBracket, nextJudgmentItems);
                 // 跳过已执行的
                 if (nextJudgmentItems.length > 0) {
@@ -244,11 +237,7 @@ export class JudgmentLink implements IJudgmentLink {
                 }
             } else {
                 // 计算当前表达式
-                let currentJudExp: IJudgmentExpression<any> = judment.factory.create(jItem.leftOperter.valueType());
-                currentJudExp.leftValue = jItem.leftOperter.getValue();
-                currentJudExp.operation = jItem.operation;
-                currentJudExp.rightValue = jItem.rightOperter.getValue();
-                currentValue = currentJudExp.result();
+                currentValue = this.createExpression(jItem).result();
             }
             if (rootJudExp === null) {
                 // 第一个表达式
@@ -272,16 +261,26 @@ export class JudgmentLink implements IJudgmentLink {
         }
         return true;
     }
+    /**
+     * 创建表达式
+     * @param judgeItem 判断项
+     */
+    protected createExpression(judgeItem: IJudgmentLinkItem): IJudgmentExpression<any> {
+        let expression: IJudgmentExpression<any> = judment.factory.create(judgeItem.leftOperter.valueType());
+        expression.leftValue = judgeItem.leftOperter.getValue();
+        expression.operation = judgeItem.operation;
+        expression.rightValue = judgeItem.rightOperter.getValue();
+        return expression;
+    }
 }
 /**
  * 业务对象的判断链
  */
 export class BOJudgmentLink extends JudgmentLink {
-    /** 
+    /**
      * 判断
      * @param value 比较值
      * @return true,满足;false,不满足
-	 * @throws 不支持的操作
      */
     judge(value: any): boolean {
         // 无条件
@@ -307,6 +306,26 @@ export class BOJudgmentLink extends JudgmentLink {
             jItems.add(item);
         }
         return this.judgeLink(0, jItems);
+    }
+    /**
+     * 创建表达式
+     * @param judgeItem 判断项
+     */
+    protected createExpression(judgeItem: IJudgmentLinkItem): IJudgmentExpression<any> {
+        if (judgeItem.operation === emJudmentOperation.BEGIN_WITH
+            || judgeItem.operation === emJudmentOperation.END_WITH
+            || judgeItem.operation === emJudmentOperation.NOT_BEGIN_WITH
+            || judgeItem.operation === emJudmentOperation.NOT_END_WITH
+            || judgeItem.operation === emJudmentOperation.CONTAIN
+            || judgeItem.operation === emJudmentOperation.NOT_CONTAIN) {
+            // 此操作均为字符串独有操作
+            let expression: IJudgmentExpression<string> = judment.factory.create("string");
+            expression.leftValue = strings.valueOf(judgeItem.leftOperter.getValue());
+            expression.operation = judgeItem.operation;
+            expression.rightValue = strings.valueOf(judgeItem.rightOperter.getValue());
+            return expression;
+        }
+        return super.createExpression(judgeItem);
     }
 }
 /**

@@ -11,8 +11,7 @@ import {
     BusinessObject, BODocument, BODocumentLine, BOMasterData, BOMasterDataLine, BO_PROPERTY_NAME_NAME,
     BOSimple, BOSimpleLine
 } from "../bo/index";
-import { objects } from "./Datas";
-import { strings } from "./Strings";
+import { objects, strings } from "./Datas";
 import { ArrayList, StringBuilder } from "./Common";
 import { emConditionOperation, emConditionRelationship, emSortType } from "./Enums";
 import { ICriteria, ICondition, IConditions, ISort, ISorts, IChildCriteria, IChildCriterias } from "./Criteria.d";

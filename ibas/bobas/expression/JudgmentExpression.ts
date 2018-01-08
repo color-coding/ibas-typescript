@@ -82,7 +82,6 @@ export namespace judment {
 export abstract class JudgmentExpression<T> implements IJudgmentExpression<T> {
     /**
      * 表达式结果
-     * 
      * @return true，成立；false，不成立
      * @throws 不支持的操作
      */
@@ -123,29 +122,26 @@ export abstract class JudgmentExpression<T> implements IJudgmentExpression<T> {
  */
 export class JudgmentExpressionBoolean extends JudgmentExpression<boolean> {
     result(): boolean {
-        // 等
         if (this.operation === emJudmentOperation.EQUAL) {
+            // 等
             if (this.leftValue === this.rightValue) {
                 return true;
             }
             return false;
-        }
-        // 不等
-        else if (this.operation === emJudmentOperation.NOT_EQUAL) {
+        } else if (this.operation === emJudmentOperation.NOT_EQUAL) {
+            // 不等
             if (this.leftValue !== this.rightValue) {
                 return true;
             }
             return false;
-        }
-        // 且
-        else if (this.operation === emJudmentOperation.AND) {
+        } else if (this.operation === emJudmentOperation.AND) {
+            // 且
             if (this.leftValue && this.rightValue) {
                 return true;
             }
             return false;
-        }
-        // 或
-        else if (this.operation === emJudmentOperation.OR) {
+        } else if (this.operation === emJudmentOperation.OR) {
+            // 或
             if (this.leftValue || this.rightValue) {
                 return true;
             }
@@ -160,8 +156,8 @@ export class JudgmentExpressionBoolean extends JudgmentExpression<boolean> {
  */
 export class JudgmentExpressionDate extends JudgmentExpression<Date> {
     result(): boolean {
-        // 等于
         if (this.operation === emJudmentOperation.EQUAL) {
+            // 等于
             // 左值为空
             if (objects.isNull(this.leftValue)) {
                 if (objects.isNull(this.rightValue)) {
@@ -174,9 +170,8 @@ export class JudgmentExpressionDate extends JudgmentExpression<Date> {
                 return true;
             }
             return false;
-        }
-        // 不等于
-        else if (this.operation === emJudmentOperation.NOT_EQUAL) {
+        } else if (this.operation === emJudmentOperation.NOT_EQUAL) {
+            // 不等于
             // 左值为空
             if (objects.isNull(this.leftValue)) {
                 if (this.rightValue !== null) {
@@ -189,9 +184,8 @@ export class JudgmentExpressionDate extends JudgmentExpression<Date> {
                 return true;
             }
             return false;
-        }
-        // 大于
-        else if (this.operation === emJudmentOperation.GRATER_THAN) {
+        } else if (this.operation === emJudmentOperation.GRATER_THAN) {
+            // 大于
             // 左值为空或右值为空
             if (objects.isNull(this.leftValue) || objects.isNull(this.rightValue)) {
                 return false;
@@ -201,9 +195,8 @@ export class JudgmentExpressionDate extends JudgmentExpression<Date> {
                 return true;
             }
             return false;
-        }
-        // 小于
-        else if (this.operation === emJudmentOperation.LESS_THAN) {
+        } else if (this.operation === emJudmentOperation.LESS_THAN) {
+            // 小于
             // 左值为空或右值为空
             if (objects.isNull(this.leftValue) || objects.isNull(this.rightValue)) {
                 return false;
@@ -213,9 +206,8 @@ export class JudgmentExpressionDate extends JudgmentExpression<Date> {
                 return true;
             }
             return false;
-        }
-        // 大于等于
-        else if (this.operation === emJudmentOperation.GRATER_EQUAL) {
+        } else if (this.operation === emJudmentOperation.GRATER_EQUAL) {
+            // 大于等于
             // 左值为空或右值为空
             if (objects.isNull(this.leftValue) || objects.isNull(this.rightValue)) {
                 return false;
@@ -225,9 +217,8 @@ export class JudgmentExpressionDate extends JudgmentExpression<Date> {
                 return true;
             }
             return false;
-        }
-        // 小于等于
-        else if (this.operation === emJudmentOperation.LESS_EQUAL) {
+        } else if (this.operation === emJudmentOperation.LESS_EQUAL) {
+            // 小于等于
             // 左值为空或右值为空
             if (objects.isNull(this.leftValue) || objects.isNull(this.rightValue)) {
                 return false;
@@ -246,8 +237,8 @@ export class JudgmentExpressionDate extends JudgmentExpression<Date> {
  */
 export class JudgmentExpressionNumber extends JudgmentExpression<number> {
     result(): boolean {
-        // 等于
         if (this.operation === emJudmentOperation.EQUAL) {
+            // 等于
             // 左值为空
             if (objects.isNull(this.leftValue)) {
                 if (objects.isNull(this.rightValue)) {
@@ -260,9 +251,8 @@ export class JudgmentExpressionNumber extends JudgmentExpression<number> {
                 return true;
             }
             return false;
-        }
-        // 不等于
-        else if (this.operation === emJudmentOperation.NOT_EQUAL) {
+        } else if (this.operation === emJudmentOperation.NOT_EQUAL) {
+            // 不等于
             // 左值为空
             if (objects.isNull(this.leftValue)) {
                 if (this.rightValue !== null) {
@@ -275,9 +265,8 @@ export class JudgmentExpressionNumber extends JudgmentExpression<number> {
                 return true;
             }
             return false;
-        }
-        // 大于
-        else if (this.operation === emJudmentOperation.GRATER_THAN) {
+        } else if (this.operation === emJudmentOperation.GRATER_THAN) {
+            // 大于
             // 左值为空或右值为空
             if (objects.isNull(this.leftValue) || objects.isNull(this.rightValue)) {
                 return false;
@@ -287,9 +276,8 @@ export class JudgmentExpressionNumber extends JudgmentExpression<number> {
                 return true;
             }
             return false;
-        }
-        // 小于
-        else if (this.operation === emJudmentOperation.LESS_THAN) {
+        } else if (this.operation === emJudmentOperation.LESS_THAN) {
+            // 小于
             // 左值为空或右值为空
             if (objects.isNull(this.leftValue) || objects.isNull(this.rightValue)) {
                 return false;
@@ -299,9 +287,8 @@ export class JudgmentExpressionNumber extends JudgmentExpression<number> {
                 return true;
             }
             return false;
-        }
-        // 大于等于
-        else if (this.operation === emJudmentOperation.GRATER_EQUAL) {
+        } else if (this.operation === emJudmentOperation.GRATER_EQUAL) {
+            // 大于等于
             // 左值为空或右值为空
             if (objects.isNull(this.leftValue) || objects.isNull(this.rightValue)) {
                 return false;
@@ -311,9 +298,8 @@ export class JudgmentExpressionNumber extends JudgmentExpression<number> {
                 return true;
             }
             return false;
-        }
-        // 小于等于
-        else if (this.operation === emJudmentOperation.LESS_EQUAL) {
+        } else if (this.operation === emJudmentOperation.LESS_EQUAL) {
+            // 小于等于
             // 左值为空或右值为空
             if (objects.isNull(this.leftValue) || objects.isNull(this.rightValue)) {
                 return false;
@@ -332,16 +318,15 @@ export class JudgmentExpressionNumber extends JudgmentExpression<number> {
  */
 export class JudgmentExpressionEnum extends JudgmentExpression<number> {
     result(): boolean {
-        // 等于
         if (this.operation === emJudmentOperation.EQUAL) {
+            // 等于
             // 比较左右值
             if (this.leftValue === this.rightValue) {
                 return true;
             }
             return false;
-        }
-        // 不等于
-        else if (this.operation === emJudmentOperation.NOT_EQUAL) {
+        } else if (this.operation === emJudmentOperation.NOT_EQUAL) {
+            // 不等于
             // 比较左右值
             if (this.leftValue !== this.rightValue) {
                 return true;
@@ -355,24 +340,22 @@ export class JudgmentExpressionEnum extends JudgmentExpression<number> {
  */
 export class JudgmentExpressionString extends JudgmentExpression<string> {
     result(): boolean {
-        // 等于
         if (this.operation === emJudmentOperation.EQUAL) {
+            // 等于
             // 比较左右值
             if (this.leftValue === this.rightValue) {
                 return true;
             }
             return false;
-        }
-        // 不等于
-        else if (this.operation === emJudmentOperation.NOT_EQUAL) {
+        } else if (this.operation === emJudmentOperation.NOT_EQUAL) {
+            // 不等于
             // 比较左右值
             if (this.leftValue !== this.rightValue) {
                 return true;
             }
             return false;
-        }
-        // 开始与
-        else if (this.operation === emJudmentOperation.BEGIN_WITH) {
+        } else if (this.operation === emJudmentOperation.BEGIN_WITH) {
+            // 开始与
             if (objects.isNull(this.leftValue) || objects.isNull(this.rightValue)) {
                 return false;
             }
@@ -380,9 +363,8 @@ export class JudgmentExpressionString extends JudgmentExpression<string> {
                 return true;
             }
             return false;
-        }
-        // 结束于
-        else if (this.operation === emJudmentOperation.END_WITH) {
+        } else if (this.operation === emJudmentOperation.END_WITH) {
+            // 结束于
             if (objects.isNull(this.leftValue) || objects.isNull(this.rightValue)) {
                 return false;
             }
@@ -390,9 +372,8 @@ export class JudgmentExpressionString extends JudgmentExpression<string> {
                 return true;
             }
             return false;
-        }
-        // 非开始于
-        else if (this.operation === emJudmentOperation.NOT_BEGIN_WITH) {
+        } else if (this.operation === emJudmentOperation.NOT_BEGIN_WITH) {
+            // 非开始于
             if (objects.isNull(this.leftValue) || objects.isNull(this.rightValue)) {
                 return false;
             }
@@ -400,9 +381,8 @@ export class JudgmentExpressionString extends JudgmentExpression<string> {
                 return true;
             }
             return false;
-        }
-        // 非结束于
-        else if (this.operation === emJudmentOperation.NOT_END_WITH) {
+        } else if (this.operation === emJudmentOperation.NOT_END_WITH) {
+            // 非结束于
             if (objects.isNull(this.leftValue) || objects.isNull(this.rightValue)) {
                 return false;
             }
@@ -410,9 +390,8 @@ export class JudgmentExpressionString extends JudgmentExpression<string> {
                 return true;
             }
             return false;
-        }
-        // 包含
-        else if (this.operation === emJudmentOperation.CONTAIN) {
+        } else if (this.operation === emJudmentOperation.CONTAIN) {
+            // 包含
             if (objects.isNull(this.leftValue) || objects.isNull(this.rightValue)) {
                 return false;
             }
@@ -420,9 +399,8 @@ export class JudgmentExpressionString extends JudgmentExpression<string> {
                 return true;
             }
             return false;
-        }
-        // 不包含
-        else if (this.operation === emJudmentOperation.NOT_CONTAIN) {
+        } else if (this.operation === emJudmentOperation.NOT_CONTAIN) {
+            // 不包含
             if (objects.isNull(this.leftValue) || objects.isNull(this.rightValue)) {
                 return false;
             }

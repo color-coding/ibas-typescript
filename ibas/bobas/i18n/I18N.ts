@@ -10,9 +10,7 @@
  * 模块索引文件，此文件集中导出类
  */
 import { emMessageLevel } from "../data/Enums";
-import { objects } from "../data/Datas";
-import { strings } from "../data/Strings";
-import { urls } from "../data/Urls";
+import { objects, strings, urls } from "../data/Datas";
 import { ArrayList } from "../data/Common";
 import { config, CONFIG_ITEM_RUNTIME_VERSION } from "../configuration/index";
 import { logger } from "../messages/index";

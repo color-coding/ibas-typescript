@@ -9,7 +9,7 @@
 import {
     objects, strings, emMessageLevel, OperationResult,
     IOperationResult, ArrayList, OperationMessage,
-    Criteria, Condition, ICriteria
+    Criteria, Condition, ICriteria, ISort, arrays,
 } from "../data/index";
 import { i18n } from "../i18n/index";
 import { logger } from "../messages/index";
@@ -213,15 +213,23 @@ export class BOFileRepositoryAjax extends FileRepositoryAjax implements IBORepos
                 if (!objects.isNull(that.converter)) {
                     // 设置转换方法
                     if (data instanceof Array) {
+                        let newDatas: Array<any> = new Array<any>();
                         for (let item of data) {
                             if (item.type === undefined) {
                                 item.type = boName;
                             }
-                            let newData: any = that.converter.parsing(item, fileName);
+                            newDatas.push(that.converter.parsing(item, fileName));
+                        }
+                        // 排序
+                        if (!objects.isNull(criteria) && criteria.sorts.length > 0) {
+                            newDatas = arrays.sort(newDatas, criteria.sorts);
+                        }
+                        // 过滤数据
+                        for (let item of newDatas) {
                             if (!objects.isNull(criteria)) {
                                 // 设置查询
-                                if (that.filter(criteria, newData)) {
-                                    opRslt.resultObjects.add(newData);
+                                if (that.filter(criteria, item)) {
+                                    opRslt.resultObjects.add(item);
                                 }
                                 if (criteria.result > 0 && opRslt.resultObjects.length >= criteria.result) {
                                     // 已够返回数量
@@ -229,7 +237,7 @@ export class BOFileRepositoryAjax extends FileRepositoryAjax implements IBORepos
                                 }
                             } else {
                                 // 未设置查询
-                                opRslt.resultObjects.add(newData);
+                                opRslt.resultObjects.add(item);
                             }
                         }
                     } else {
