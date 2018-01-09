@@ -6,9 +6,9 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 import {
-    emJudmentOperation, StringBuilder,
+    emJudmentOperation, StringBuilder, enums,
     objects, dates, strings, List, ArrayList,
-    ICondition, emConditionRelationship,
+    ICondition, emConditionRelationship, emMessageLevel,
 } from "../data/index";
 import { i18n } from "../i18n/index";
 import { logger } from "../messages/index";
@@ -127,16 +127,16 @@ export class JudgmentLinkItem implements IJudgmentLinkItem {
     /** 输出字符串 */
     toString(): string {
         let stringBuilder: StringBuilder = new StringBuilder();
-        stringBuilder.append(this.relationship.toString());
+        stringBuilder.append(enums.toString(emJudmentOperation, this.relationship));
         stringBuilder.append(" ");
         for (let index: number = 0; index < this.openBracket; index++) {
             stringBuilder.append("(");
         }
-        stringBuilder.append(this.leftOperter.toString());
+        stringBuilder.append(this.leftOperter.getValue());
         stringBuilder.append(" ");
-        stringBuilder.append(this.operation.toString());
+        stringBuilder.append(enums.toString(emJudmentOperation, this.operation.toString()));
         stringBuilder.append(" ");
-        stringBuilder.append(this.rightOperter.toString());
+        stringBuilder.append(this.rightOperter.getValue());
         for (let index: number = 0; index < this.closeBracket; index++) {
             stringBuilder.append(")");
         }
@@ -193,8 +193,12 @@ export class JudgmentLink implements IJudgmentLink {
      * @return true,满足;false,不满足
      */
     judge(value: any): boolean {
-        // 无条件
+        if (objects.isNull(value)) {
+            // 空对象，
+            return false;
+        }
         if (this.judgmentItems === null) {
+            // 无条件
             return true;
         }
         // 设置所以条件的比较值
@@ -283,8 +287,12 @@ export class BOJudgmentLink extends JudgmentLink {
      * @return true,满足;false,不满足
      */
     judge(value: any): boolean {
-        // 无条件
+        if (objects.isNull(value)) {
+            // 空对象，
+            return false;
+        }
         if (this.judgmentItems == null) {
+            // 无条件
             return true;
         }
         let jItems: ArrayList<IJudgmentLinkItem> = new ArrayList<IJudgmentLinkItem>();
@@ -305,6 +313,18 @@ export class BOJudgmentLink extends JudgmentLink {
             }
             jItems.add(item);
         }
+        let stringBuilder: StringBuilder = new StringBuilder();
+        stringBuilder.append("judgment:");
+        stringBuilder.append(" ");
+        stringBuilder.append(value.toString());
+        stringBuilder.append("\n\t");
+        for (let item of jItems) {
+            if (stringBuilder.length > 4) {
+                stringBuilder.append(" ");
+            }
+            stringBuilder.append(item.toString());
+        }
+        logger.log(emMessageLevel.DEBUG, stringBuilder.toString());
         return this.judgeLink(0, jItems);
     }
     /**

@@ -10,7 +10,7 @@ import {
     emConditionRelationship,
     emJudmentOperation,
     objects, dates, strings,
-    StringBuilder,
+    StringBuilder, enums,
 } from "../data/index";
 import { i18n } from "../i18n/index";
 import { logger } from "../messages/index";
@@ -106,11 +106,11 @@ export abstract class JudgmentExpression<T> implements IJudgmentExpression<T> {
     toString(): string {
         let builder: StringBuilder = new StringBuilder();
         builder.append("{");
-        builder.append("judgment:");
+        builder.append("expression:");
         builder.append(" ");
         builder.append(this.leftValue);
         builder.append(" ");
-        builder.append(this.operation);
+        builder.append(enums.toString(emJudmentOperation, this.operation));
         builder.append(" ");
         builder.append(this.rightValue);
         builder.append("}");
