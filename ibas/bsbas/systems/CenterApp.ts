@@ -15,7 +15,7 @@ import {
     MODULE_REPOSITORY_NAME_TEMPLATE, CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS,
     VARIABLE_NAME_USER_ID, VARIABLE_NAME_USER_CODE, VARIABLE_NAME_USER_NAME, VARIABLE_NAME_USER_SUPER,
     VARIABLE_NAME_USER_BELONG, VARIABLE_NAME_USER_TOKEN, CONFIG_ITEM_DEBUG_MODE, CONFIG_ITEM_RUNTIME_VERSION,
-    hashEventManager, URL_HASH_SIGN_FUNCTIONS, IHashInfo
+    browserEventManager, URL_HASH_SIGN_FUNCTIONS, emBrowserEventType
 } from "ibas/index";
 import {
     ICenterView, ICenterApp, IBORepositorySystem,
@@ -194,10 +194,13 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
             }
         });
         // 哈希值监控
-        hashEventManager.registerListener({
-            hashSign: URL_HASH_SIGN_FUNCTIONS,
-            onHashChanged: (event: any): void => {
+        browserEventManager.registerListener({
+            eventType: emBrowserEventType.HASHCHANGE,
+            onEventFired: (event: HashChangeEvent): void => {
                 try {
+                    if (event.newURL.indexOf(URL_HASH_SIGN_FUNCTIONS) < 0) {
+                        return;
+                    }
                     let url: string = event.newURL.substring(
                         event.newURL.indexOf(URL_HASH_SIGN_FUNCTIONS) + URL_HASH_SIGN_FUNCTIONS.length);
                     let index: number = url.indexOf("/") < 0 ? url.length : url.indexOf("/");
@@ -349,12 +352,14 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
                         // 显示模块
                         that.view.showModule(console);
                         // 如当前模块包含Hash指向的功能,激活
-                        let hashInfo: IHashInfo = hashEventManager.currentHashInfo();
-                        if (hashInfo.category === URL_HASH_SIGN_FUNCTIONS) {
+                        let currentHashValue: string = window.location.hash;
+                        if (currentHashValue.startsWith(URL_HASH_SIGN_FUNCTIONS)) {
+                            let url: string = currentHashValue.substring(URL_HASH_SIGN_FUNCTIONS.length);
+                            let index: number = url.indexOf("/") < 0 ? url.length : url.indexOf("/");
+                            let id: string = url.substring(0, index);
                             for (let item of console.functions()) {
-                                if (strings.equals(item.id, hashInfo.id)) {
-                                    hashEventManager.fireHashChanged();
-                                    break;
+                                if (strings.equals(item.id, id)) {
+                                    urls.changeHash(currentHashValue);
                                 }
                             }
                         }
@@ -402,7 +407,7 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
 
     /** 视图事件-激活功能 */
     private activateFunctions(id: string): void {
-        hashEventManager.changeHash(strings.format("{0}{1}", URL_HASH_SIGN_FUNCTIONS, id));
+        urls.changeHash(strings.format("{0}{1}", URL_HASH_SIGN_FUNCTIONS, id));
     }
 
     /** 用户权限 */

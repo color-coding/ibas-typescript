@@ -781,6 +781,19 @@ export module urls {
         });
     }
 
+    /**
+     * 修改当前地址栏hash值，并触发hashchange事件
+     * 如果当前hash值与要修改的值相同，则只触发hashchange事件
+     * @param newHash
+     */
+    export function changeHash(newHash: string): void {
+        if (strings.equalsIgnoreCase(window.location.hash, newHash)) {
+            let event: HashChangeEvent = new HashChangeEvent("hashchange", { oldURL: window.location.href, newURL: newHash });
+            window.dispatchEvent(event);
+        } else {
+            window.location.hash = newHash;
+        }
+    }
 }
 /**
  * 数组

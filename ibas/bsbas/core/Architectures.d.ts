@@ -7,7 +7,7 @@
  */
 
 import { List } from "../../bobas/index";
-import { emPlantform, emMessageType, emMessageAction } from "../data/index";
+import { emPlantform, emMessageType, emMessageAction, emTouchMoveDirection } from "../data/index";
 
 /** 系统元素 */
 export interface IElement {
@@ -86,6 +86,8 @@ export interface IView {
     onKeyDown(event: KeyboardEvent): void;
     /** 地址栏哈希值变化 */
     onHashChanged(event: HashChangeEvent): void;
+    /** 手指触控移动 */
+    onTouchMove(direction: emTouchMoveDirection, event: TouchEvent): void;
 }
 /**
  * 应用-视图
