@@ -10,7 +10,7 @@ import {
     List, ArrayList, objects, i18n, strings, uuids,
     config, logger, emMessageLevel, CONFIG_ITEM_DEBUG_MODE,
 } from "../../bobas/index";
-import { emPlantform, emMessageType } from "../data/index";
+import { emPlantform, emMessageType, emTouchMoveDirection } from "../data/index";
 import { ServiceMapping, servicesManager } from "../services/index";
 import {
     IElement, IModule, IFunction, IApplication, IView,
@@ -179,6 +179,10 @@ export abstract class View implements IView {
     onHashChanged(event: HashChangeEvent): void {
         // 可重载
         logger.log(emMessageLevel.DEBUG, "view: hash change to [{0}] at [{1}].", event.newURL, this.id);
+    }
+    /** 手指触控移动 */
+    onTouchMove(direction: emTouchMoveDirection, event: TouchEvent): void {
+        // 可重载
     }
 }
 /** 配置项目-默认模块图标 */

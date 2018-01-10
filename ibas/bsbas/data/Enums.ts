@@ -74,12 +74,16 @@ export enum emChooseType {
     /** 多选 */
     MULTIPLE
 }
-/** 键盘事件类型 */
-export enum emKeyboardEventType {
-    /** 用户按下任何键盘键（包括系统按钮，如箭头键和功能键） */
-    KEYDOWN,
-    /** 按下并放开任何字母数字键（不包括系统按钮，如箭头键和功能键） */
-    KEYPRESS,
-    /** 放开任何先前按下的键盘键 */
-    KEYUP,
+/** 手指触控移动方向 */
+export enum emTouchMoveDirection {
+    /** 上 */
+    UP,
+    /** 下 */
+    DOWN,
+    /** 左 */
+    LEFT,
+    /** 右 */
+    RIGHT,
+    /** 无 */
+    NONE
 }

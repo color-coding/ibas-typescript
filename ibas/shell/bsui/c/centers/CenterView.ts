@@ -841,7 +841,7 @@ export class CenterView extends ibas.BOView implements ICenterView {
                 showLast = true;
             }
         }
-        ibas.hashEventManager.changeHash("#");
+        ibas.urls.changeHash("#");
         // 显示最后视图
         if (showLast) {
             this.showLastView();
@@ -882,6 +882,35 @@ export class CenterView extends ibas.BOView implements ICenterView {
                 // 通知视图事件
                 view.onHashChanged(event);
                 return;
+            }
+        }
+    }
+    /** 当手指移动时 */
+    onTouchMove(direction: ibas.emTouchMoveDirection, event: TouchEvent): void {
+        for (let item of this.mainPage.getMainContents()) {
+            if (item instanceof sap.m.TabContainer) {
+                // 当前为页签控件
+                for (let tab of item.getItems()) {
+                    // 遍历页签内容
+                    if (item.getSelectedItem() !== tab) {
+                        continue;
+                    }
+                    for (let view of this.viewQueue.keys()) {
+                        if (view.id === tab.getKey()) {
+                            view.onTouchMove(direction, event);
+                        }
+                    }
+                }
+            } else {
+                let done: boolean = false;
+                for (let view of this.viewQueue.keys()) {
+                    if (view.id === item.getId()) {
+                        done = true;
+                    }
+                    if (done) {
+                        view.onTouchMove(direction, event);
+                    }
+                }
             }
         }
     }

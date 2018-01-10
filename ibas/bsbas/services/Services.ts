@@ -6,9 +6,9 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { strings, objects, config, i18n, logger, emMessageLevel } from "../../bobas/index";
+import { strings, objects, config, i18n, logger, emMessageLevel, enums, urls } from "../../bobas/index";
 import { AbstractApplication as Application, IViewShower, IViewNavigation, IView } from "../core/index";
-import { hashEventManager, IHashInfo } from "../utils/index";
+import { browserEventManager, emBrowserEventType } from "../utils/index";
 import {
     IServiceContract, IServiceProxy, IService, IBOServiceContract,
     IDataServiceContract, IBOListServiceContract, IServiceAgent,
@@ -139,10 +139,13 @@ export class BOChooseServiceProxy extends ServiceProxy<IBOChooseServiceContract>
 export class ServicesManager {
     constructor() {
         let that: this = this;
-        hashEventManager.registerListener({
-            hashSign: URL_HASH_SIGN_SERVICES,
-            onHashChanged(event: any): void {
+        browserEventManager.registerListener({
+            eventType: emBrowserEventType.HASHCHANGE,
+            onEventFired(event: HashChangeEvent): void {
                 try {
+                    if (event.newURL.indexOf(URL_HASH_SIGN_SERVICES) < 0) {
+                        return;
+                    }
                     let url: string = event.newURL.substring(
                         event.newURL.indexOf(URL_HASH_SIGN_SERVICES) + URL_HASH_SIGN_SERVICES.length);
                     let serviceId: string = url.substring(0, url.indexOf("/"));
@@ -181,10 +184,14 @@ export class ServicesManager {
         }
         this.mappings.set(mapping.id, mapping);
         // 如当前注册的服务为Hash指向的服务,激活
-        let hashInfo: IHashInfo = hashEventManager.currentHashInfo();
-        if (hashInfo.category === URL_HASH_SIGN_SERVICES
-            && strings.equals(mapping.id, hashInfo.id)) {
-            hashEventManager.fireHashChanged();
+        let currentHashValue: string = window.location.hash;
+        if (currentHashValue.startsWith(URL_HASH_SIGN_SERVICES)) {
+            let url: string = currentHashValue.substring(URL_HASH_SIGN_SERVICES.length);
+            let index: number = url.indexOf("/") < 0 ? url.length : url.indexOf("/");
+            let id: string = url.substring(0, index);
+            if (strings.equals(mapping.id, id)) {
+                urls.changeHash(currentHashValue);
+            }
         }
     }
     /** 获取服务映射 */

@@ -8,6 +8,7 @@
 
 import * as ibas from "ibas/index";
 import * as openui5 from "../../../openui5/index";
+import { emTouchMoveDirection } from "ibas/index";
 
 /** 配置项目-紧缩屏幕 */
 export const CONFIG_ITEM_COMPACT_SCREEN: string = "compactScreen";
@@ -19,8 +20,8 @@ export default class ViewShowerDefault implements ibas.IViewShower {
     constructor() {
         let that: this = this;
         // 键盘按钮按下
-        ibas.keyboardEventManager.registerListener({
-            eventType: ibas.emKeyboardEventType.KEYDOWN,
+        ibas.browserEventManager.registerListener({
+            eventType: ibas.emBrowserEventType.KEYDOWN,
             onEventFired: (event: KeyboardEvent): void => {
                 if (ibas.objects.isNull(event)) {
                     return;
@@ -37,9 +38,12 @@ export default class ViewShowerDefault implements ibas.IViewShower {
             }
         });
         // 哈希值变化
-        ibas.hashEventManager.registerListener({
-            hashSign: ibas.URL_HASH_SIGN_VIEWS,
-            onHashChanged: (event: HashChangeEvent): void => {
+        ibas.browserEventManager.registerListener({
+            eventType: ibas.emBrowserEventType.HASHCHANGE,
+            onEventFired: (event: HashChangeEvent): void => {
+                if (!event.newURL.startsWith(ibas.URL_HASH_SIGN_VIEWS)) {
+                    return;
+                }
                 if (!ibas.objects.isNull(that.busyDialog)) {
                     return;
                 }
@@ -50,6 +54,65 @@ export default class ViewShowerDefault implements ibas.IViewShower {
                     that.currentView.onHashChanged(event);
                 }
             }
+        });
+        // touch事件
+        let touch: any = {
+            target: null,
+            startPoint: null,
+            direction: ibas.emTouchMoveDirection.NONE,
+            start: function (event: TouchEvent): void {
+                touch.target = event.target;
+                touch.startPoint = event.touches[0];
+                touch.direction = ibas.emTouchMoveDirection.NONE;
+            },
+            move: function (event: TouchEvent): void {
+                if (touch.target === event.target) {
+                    if (touch.direction === ibas.emTouchMoveDirection.NONE) { // do once at start
+                        let point: Touch = event.touches[0];
+                        let offsetX: number = point.screenX - touch.startPoint.screenX;
+                        let offsetY: number = point.screenY - touch.startPoint.screenY;
+                        if (Math.abs(offsetY) > Math.abs(offsetX)) {
+                            if (offsetY > 0) {
+                                touch.direction = ibas.emTouchMoveDirection.DOWN;
+                            } else {
+                                touch.direction = ibas.emTouchMoveDirection.UP;
+                            }
+                        } else {
+                            if (offsetX > 0) {
+                                touch.direction = ibas.emTouchMoveDirection.RIGHT;
+                            } else {
+                                touch.direction = ibas.emTouchMoveDirection.LEFT;
+                            }
+                        }
+                        if (!ibas.objects.isNull(that.busyDialog)) {
+                            return;
+                        }
+                        if (ibas.objects.isNull(that.currentView)) {
+                            return;
+                        }
+                        if (that.currentView.isDisplayed) {
+                            that.currentView.onTouchMove(touch.direction, event);
+                        }
+                    }
+                }
+            },
+            end: function (event: TouchEvent): void {
+                touch.target = null;
+                touch.startPoint = null;
+                touch.direction = ibas.emTouchMoveDirection.NONE;
+            }
+        };
+        ibas.browserEventManager.registerListener({
+            eventType: ibas.emBrowserEventType.TOUCHSTART,
+            onEventFired: touch.start
+        });
+        ibas.browserEventManager.registerListener({
+            eventType: ibas.emBrowserEventType.TOUCHMOVE,
+            onEventFired: touch.move
+        });
+        ibas.browserEventManager.registerListener({
+            eventType: ibas.emBrowserEventType.TOUCHEND,
+            onEventFired: touch.end
         });
         // 语言变化监听
         ibas.i18n.language = openui5.utils.toLanguageCode(sap.ui.getCore().getConfiguration().getLanguage());
