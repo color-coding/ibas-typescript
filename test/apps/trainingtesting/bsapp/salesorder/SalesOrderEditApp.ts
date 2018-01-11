@@ -216,7 +216,7 @@ export class SalesOrderEditApp extends ibas.BOEditApplication<ISalesOrderEditVie
             boCode: bo.Customer.BUSINESS_OBJECT_CODE,
             chooseType: ibas.emChooseType.SINGLE,
             criteria: [
-                new ibas.Condition(bo.Customer.PROPERTY_ACTIVATED_NAME, ibas.emConditionOperation.EQUAL, "Y")
+                new ibas.Condition(bo.Customer.PROPERTY_ACTIVATED_NAME, ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES)
             ],
             onCompleted(selecteds: ibas.List<bo.Customer>): void {
                 that.editData.customerCode = selecteds.firstOrDefault().code;
@@ -230,7 +230,7 @@ export class SalesOrderEditApp extends ibas.BOEditApplication<ISalesOrderEditVie
         ibas.servicesManager.runChooseService<bo.Material>({
             boCode: bo.Material.BUSINESS_OBJECT_CODE,
             criteria: [
-                new ibas.Condition(bo.Material.PROPERTY_ACTIVATED_NAME, ibas.emConditionOperation.EQUAL, "Y")
+                new ibas.Condition(bo.Material.PROPERTY_ACTIVATED_NAME, ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES)
             ],
             onCompleted(selecteds: ibas.List<bo.Material>): void {
                 // 获取触发的对象
