@@ -121,6 +121,9 @@ export interface IBusinessObject extends ITrackable {
 
     /** 输出字符串 */
     toString(): string;
+
+    /** 删除 */
+    delete(): void;
 }
 
 /**

@@ -409,6 +409,8 @@ export abstract class BusinessObjectBase<T extends IBusinessObject> extends Trac
             }
         }
     }
+
+    abstract delete(): void;
 }
 
 /**
