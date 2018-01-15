@@ -22,6 +22,7 @@
     "shell_initialize_query_panel": "初始化查询面板，请稍后",
     "shell_close_view": "关闭视图",
     "shell_data_new": "新建",
+    "shell_data_create": "创建",
     "shell_data_view": "查看",
     "shell_data_edit": "编辑",
     "shell_data_delete": "删除",

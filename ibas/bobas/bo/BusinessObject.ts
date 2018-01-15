@@ -32,6 +32,12 @@ export const BO_PROPERTY_NAME_LINEID: string = "lineId";
 export const BO_PROPERTY_NAME_OBJECTCODE: string = "objectCode";
 /** 业务对象属性名称-documentStatus */
 export const BO_PROPERTY_NAME_DOCUMENTSTATUS: string = "documentStatus";
+/** 业务对象属性名称-canceled */
+export const BO_PROPERTY_NAME_CANCELED: string = "canceled";
+/** 业务对象属性名称-approvalStatus */
+export const BO_PROPERTY_NAME_APPROVALSTATUS: string = "approvalStatus";
+/** 业务对象属性名称-deleted */
+export const BO_PROPERTY_NAME_DELETED: string = "deleted";
 /** 业务对象属性名称-lineStatus */
 export const BO_PROPERTY_NAME_LINESTATUS: string = "lineStatus";
 /** 需要被重置的属性名称 */

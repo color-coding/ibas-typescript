@@ -25,7 +25,7 @@ export class HelpApp extends sys.HelpApp<IHelpView> {
     /** 运行 */
     run(): void {
         this.view.url = ibas.config.get(sys.CONFIG_ITEM_HELP_URL);
-        this.view.isInside = ibas.config.get(sys.CONFIG_ITEM_HELP_INSIDE, false);
+        this.view.isInside = ibas.config.get(sys.CONFIG_ITEM_HELP_INSIDE, true);
         super.run.apply(this, arguments);
     }
 

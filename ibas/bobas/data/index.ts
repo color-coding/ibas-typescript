@@ -20,5 +20,7 @@ export * from "./Enums";
 export * from "./Datas";
 export * from "./DataTable";
 
+/** 配置项目-默认币种 */
+export const CONFIG_ITEM_DEFAULT_CURRENCY: string = "defaultCurrency";
 /** 数据分隔符（,） */
 export const DATA_SEPARATOR: string = ",";
