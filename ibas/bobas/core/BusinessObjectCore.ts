@@ -13,6 +13,7 @@ import {
 import { objects } from "../data/Datas";
 import { ArrayList } from "../data/Common";
 import { i18n } from "../i18n/index";
+import { config } from "../configuration/index";
 
 /**
  * 可监听的对象
@@ -535,6 +536,8 @@ export class BOFactory implements IBOFactory {
             if (objects.isNull(name)) {
                 throw new Error(i18n.prop("sys_unrecognized_data"));
             }
+            // 去除变量
+            name = config.applyVariables(name);
             this.globalMap.set(name, bo);
             name = objects.getName(bo);
             if (!objects.isNull(name)) {
@@ -545,6 +548,8 @@ export class BOFactory implements IBOFactory {
     }
     /** 获取对象类型，参数1：对象名称 */
     classOf(name: string): any {
+        // 去除变量
+        name = config.applyVariables(name);
         if (this.modularMap.has(name)) {
             // 优先使用模块注册对象
             return this.modularMap.get(name);
