@@ -1,0 +1,11 @@
+{
+    "sap_m_ex_repository_type_error": "业务对象仓库类型错误",
+    "sap_m_ex_fetch_bos_null": "业务对象 {0} 没有查询结果",
+    "sap_m_ex_bocode_null": "boCode未赋值",
+    "sap_m_ex_bokey_null": "boKey未赋值",
+    "sap_m_ex_botext_null": "boText未赋值",
+    "sap_m_ex_botype_null": "对象类型不存在",
+    "sap_m_ex_boname_null": "业务对象名称不存在",
+    "sap_m_ex_criteria_null": "对象查询条件未赋值",
+    "sap_ex_closing_delimiter": "----结束----"
+}
