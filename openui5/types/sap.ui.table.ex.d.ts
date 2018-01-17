@@ -9,8 +9,9 @@ declare namespace sap {
     namespace ui {
         namespace table {
             namespace ex {
-                export class Select extends sap.m.Select {
-
+                export class Table extends sap.ui.table.Table {
+                    getSelectionType(): sap.ui.table.SelectionMode;
+                    setSelectionType(value: sap.ui.table.SelectionMode): void;
                 }
             }
         }

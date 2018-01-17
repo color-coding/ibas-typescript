@@ -28,6 +28,8 @@ if ((<any>window).ibas.openui5 === undefined) {
     ibas.i18n.load(ibas.strings.format("{0}/languages/datatypes.json", rootUrl));
     // 加载语言-框架默认
     ibas.i18n.load(ibas.strings.format("{0}/languages/utils.json", rootUrl));
+    // 加载语言-框架默认
+    ibas.i18n.load(ibas.strings.format("{0}/languages/sap.ex.json", rootUrl));
 }
 export * from "./datatypes";
 export * from "./utils";
