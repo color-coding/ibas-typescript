@@ -439,6 +439,17 @@ export namespace utils {
             }
         }
     }
+    /** 转换选择类型  */
+    export function toListMode(data: ibas.emChooseType): sap.m.ListMode {
+        switch (data) {
+            case ibas.emChooseType.SINGLE:
+                return sap.m.ListMode.SingleSelectLeft;
+            case ibas.emChooseType.MULTIPLE:
+                return sap.m.ListMode.MultiSelect;
+            default:
+                return sap.m.ListMode.None;
+        }
+    }
     /**
      * 验证控件绑定属性是否合法
      * @param managedObjects
