@@ -418,9 +418,16 @@ export namespace utils {
         }
     }
     /** 转换选择类型  */
-    export function toSelectionMode(data: ibas.emChooseType): sap.ui.table.SelectionMode {
+    export function toSelectionMode(data: ibas.emChooseType, table?: sap.ui.table.Table): sap.ui.table.SelectionMode {
         switch (data) {
             case ibas.emChooseType.SINGLE:
+                // 传入table参数,添加rowSelectionChange事件,实现复选框单选
+                if (!ibas.objects.isNull(table) && ibas.objects.instanceOf(table, sap.ui.table.Table)) {
+                    table.attachRowSelectionChange(function (oEvent: any): void {
+                        this.setSelectedIndex(this.getSelectedIndex());
+                    });
+                    return sap.ui.table.SelectionMode.MultiToggle;
+                }
                 return sap.ui.table.SelectionMode.Single;
             case ibas.emChooseType.MULTIPLE:
                 return sap.ui.table.SelectionMode.MultiToggle;
