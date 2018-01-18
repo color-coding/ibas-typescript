@@ -28,12 +28,86 @@ export class SalesOrderListView extends ibas.BOListView implements ISalesOrderLi
         let that: this = this;
         this.list = new sap.m.List("", {
             inset: false,
-            growing: false,
+            growing: true,
+            growingThreshold: ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 15),
+            growingScrollToLoad: true,
+            visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Auto,
             mode: sap.m.ListMode.None,
             swipeDirection: sap.m.SwipeDirection.RightToLeft,
-            delete: function (event: any): void {
-                //
-            },
+            swipeContent: new sap.m.FlexBox("", {
+                height: "100%",
+                alignItems: sap.m.FlexAlignItems.Start,
+                justifyContent: sap.m.FlexJustifyContent.End,
+                items: [
+                    new sap.m.SegmentedButton("", {
+                        width: "9rem",
+                        items: [
+                            new sap.m.SegmentedButtonItem("", {
+                                // text: ibas.i18n.prop("trainingtesting_data_services"),
+                                width: "3rem",
+                                icon: "sap-icon://action",
+                                press: function (event: any): void {
+                                    that.page.setShowFooter(true);
+                                    that.fireViewEvents(that.callServicesEvent, {
+                                        displayServices(services: ibas.IServiceAgent[]): void {
+                                            if (ibas.objects.isNull(services) || services.length === 0) {
+                                                return;
+                                            }
+                                            let popover: sap.m.Popover = new sap.m.Popover("", {
+                                                showHeader: false,
+                                                placement: sap.m.PlacementType.Bottom,
+                                            });
+                                            for (let service of services) {
+                                                popover.addContent(new sap.m.Button({
+                                                    text: ibas.i18n.prop(service.name),
+                                                    type: sap.m.ButtonType.Transparent,
+                                                    icon: service.icon,
+                                                    press: function (): void {
+                                                        service.run();
+                                                        popover.close();
+                                                        that.list.swipeOut(null);
+                                                    }
+                                                }));
+                                            }
+                                            popover.addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
+                                            popover.openBy(event.getSource(), true);
+                                        }
+                                    });
+                                }
+                            }),
+                            new sap.m.SegmentedButtonItem("", {
+                                // text: ibas.i18n.prop("shell_data_delete"),
+                                width: "3rem",
+                                icon: "sap-icon://delete",
+                                press(oEvent: any): void {
+                                    that.page.setShowFooter(true);
+                                    let selecteds: ibas.List<bo.SalesOrder> = new ibas.ArrayList<bo.SalesOrder>();
+                                    selecteds.push(that.list.getSwipedItem().getBindingContext().getObject());
+                                    that.fireViewEvents(that.deleteDataEvent,
+                                        selecteds
+                                    );
+                                }
+                            }),
+                            new sap.m.SegmentedButtonItem("", {
+                                // text: ibas.i18n.prop("shell_data_edit"),
+                                width: "3rem",
+                                icon: "sap-icon://edit",
+                                press(oEvent: any): void {
+                                    that.page.setShowFooter(true);
+                                    var editBo: bo.SalesOrder = that.list.getSwipedItem()
+                                        .getBindingContext().getObject();
+                                    that.fireViewEvents(that.editDataEvent,
+                                        editBo
+                                    );
+                                }
+                            })
+                        ]
+                    }),
+                ]
+            }).addStyleClass("sapUiSmallMarginTop"),
+            swipe: function (event: sap.ui.base.Event): void {
+                that.page.setShowFooter(true);
+            }
         });
         this.list.bindItems({
             path: "/rows",
@@ -76,84 +150,21 @@ export class SalesOrderListView extends ibas.BOListView implements ISalesOrderLi
         });
         this.page = new sap.m.Page("", {
             showHeader: false,
-            subHeader: new sap.m.Toolbar("", {
+            showSubHeader: false,
+            floatingFooter: true,
+            content: [this.list],
+            footer: new sap.m.Toolbar("", {
                 content: [
                     new sap.m.Button("", {
-                        // text: ibas.i18n.prop("shell_data_new"),
-                        type: sap.m.ButtonType.Transparent,
+                        width: "100%",
+                        text: ibas.i18n.prop("shell_data_new"),
                         icon: "sap-icon://create",
                         press: function (): void {
                             that.fireViewEvents(that.newDataEvent);
                         }
-                    }),
-                    new sap.m.Button("", {
-                        // text: ibas.i18n.prop("shell_data_view"),
-                        type: sap.m.ButtonType.Transparent,
-                        icon: "sap-icon://display",
-                        press: function (): void {
-                            that.fireViewEvents(that.viewDataEvent,
-                                // 获取表格选中的对象
-                                openui5.utils.getSelecteds<bo.SalesOrder>(that.list).firstOrDefault()
-                            );
-                        }
-                    }),
-                    new sap.m.Button("", {
-                        // text: ibas.i18n.prop("shell_data_edit"),
-                        type: sap.m.ButtonType.Transparent,
-                        icon: "sap-icon://edit",
-                        press: function (): void {
-                            that.fireViewEvents(that.editDataEvent,
-                                // 获取表格选中的对象
-                                openui5.utils.getSelecteds<bo.SalesOrder>(that.list).firstOrDefault()
-                            );
-                        }
-                    }),
-                    new sap.m.ToolbarSeparator(""),
-                    new sap.m.Button("", {
-                        // text: ibas.i18n.prop("shell_data_delete"),
-                        type: sap.m.ButtonType.Transparent,
-                        icon: "sap-icon://delete",
-                        press: function (): void {
-                            that.fireViewEvents(that.deleteDataEvent,
-                                // 获取表格选中的对象
-                                openui5.utils.getSelecteds<bo.SalesOrder>(that.list)
-                            );
-                        }
-                    }),
-                    new sap.m.ToolbarSpacer(""),
-                    new sap.m.Button("", {
-                        type: sap.m.ButtonType.Transparent,
-                        icon: "sap-icon://action",
-                        press: function (event: any): void {
-                            that.fireViewEvents(that.callServicesEvent, {
-                                displayServices(services: ibas.IServiceAgent[]): void {
-                                    if (ibas.objects.isNull(services) || services.length === 0) {
-                                        return;
-                                    }
-                                    let popover: sap.m.Popover = new sap.m.Popover("", {
-                                        showHeader: false,
-                                        placement: sap.m.PlacementType.Bottom,
-                                    });
-                                    for (let service of services) {
-                                        popover.addContent(new sap.m.Button({
-                                            text: ibas.i18n.prop(service.name),
-                                            type: sap.m.ButtonType.Transparent,
-                                            icon: service.icon,
-                                            press: function (): void {
-                                                service.run();
-                                                popover.close();
-                                            }
-                                        }));
-                                    }
-                                    (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
-                                    popover.openBy(event.getSource(), true);
-                                }
-                            });
-                        }
                     })
                 ]
-            }),
-            content: [this.list]
+            })
         });
         this.id = this.page.getId();
         // 添加列表自动查询事件
@@ -213,6 +224,18 @@ export class SalesOrderListView extends ibas.BOListView implements ISalesOrderLi
     }
     /** 获取选择的数据 */
     getSelecteds(): bo.SalesOrder[] {
-        return openui5.utils.getSelecteds<bo.SalesOrder>(this.list);
+        let result: bo.SalesOrder[] = [];
+        if (!ibas.objects.isNull(this.list.getSwipedItem())) {
+            result.push(this.list.getSwipedItem().getBindingContext().getObject());
+        }
+        return result;
+    }
+    /** 手指触控滑动 */
+    onTouchMove(direcction: ibas.emTouchMoveDirection, event: TouchEvent): void {
+        if (direcction === ibas.emTouchMoveDirection.UP) {
+            this.page.setShowFooter(false);
+        } else if (direcction === ibas.emTouchMoveDirection.DOWN) {
+            this.page.setShowFooter(true);
+        }
     }
 }

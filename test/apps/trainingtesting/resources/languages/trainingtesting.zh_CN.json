@@ -18,5 +18,8 @@
   "trainingtesting_app_salesorder_edit": "销售订单编辑",
   "trainingtesting_title_general": "常规信息",
   "trainingtesting_title_others": "其他信息",
+  "trainingtesting_title_status": "状态信息",
+  "trainingtesting_title_amount": "金额",
+  "trainingtesting_title_time": "日期信息",
   "trainingtesting_closing_delimiter": "----结束----"
 }
