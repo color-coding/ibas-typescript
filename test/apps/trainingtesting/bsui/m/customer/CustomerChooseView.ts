@@ -15,36 +15,6 @@ export class CustomerChooseView extends ibas.BOChooseView implements ICustomerCh
     get queryTarget(): any {
         return bo.Customer;
     }
-    /** 绘制工具条 */
-    darwBars(): any {
-        let that: this = this;
-        return [
-            // new sap.m.ToolbarSpacer(""),
-            new sap.m.Button("", {
-                width: "50%",
-                text: ibas.i18n.prop("shell_data_choose"),
-                type: sap.m.ButtonType.Transparent,
-                // icon: "sap-icon://accept",
-                press: function (): void {
-                    that.fireViewEvents(that.chooseDataEvent,
-                        // 获取表格选中的对象
-                        openui5.utils.getSelecteds<bo.Customer>(that.list)
-                    );
-                }
-            }),
-            // new sap.m.ToolbarSpacer(""),
-            new sap.m.Button("", {
-                width: "50%",
-                text: ibas.i18n.prop("shell_exit"),
-                type: sap.m.ButtonType.Transparent,
-                // icon: "sap-icon://inspect-down",
-                press: function (): void {
-                    that.fireViewEvents(that.closeEvent);
-                }
-            }),
-            // new sap.m.ToolbarSpacer(""),
-        ];
-    }
     /** 绘制视图 */
     darw(): any {
         let that: this = this;
@@ -79,7 +49,32 @@ export class CustomerChooseView extends ibas.BOChooseView implements ICustomerCh
             floatingFooter: true,
             content: [this.list],
             footer: new sap.m.Toolbar("", {
-                content: this.darwBars()
+                content: [
+                    // new sap.m.ToolbarSpacer(""),
+                    new sap.m.Button("", {
+                        width: "50%",
+                        text: ibas.i18n.prop("shell_data_choose"),
+                        type: sap.m.ButtonType.Transparent,
+                        // icon: "sap-icon://accept",
+                        press: function (): void {
+                            that.fireViewEvents(that.chooseDataEvent,
+                                // 获取表格选中的对象
+                                openui5.utils.getSelecteds<bo.Customer>(that.list)
+                            );
+                        }
+                    }),
+                    // new sap.m.ToolbarSpacer(""),
+                    new sap.m.Button("", {
+                        width: "50%",
+                        text: ibas.i18n.prop("shell_exit"),
+                        type: sap.m.ButtonType.Transparent,
+                        // icon: "sap-icon://inspect-down",
+                        press: function (): void {
+                            that.fireViewEvents(that.closeEvent);
+                        }
+                    }),
+                    // new sap.m.ToolbarSpacer(""),
+                ]
             })
         });
         this.page.setShowSubHeader(false);
@@ -107,17 +102,6 @@ export class CustomerChooseView extends ibas.BOChooseView implements ICustomerCh
             verticalScrolling: true,
             content: [this.page],
         });
-    }
-    /** 嵌入查询面板 */
-    embedded(view: any): void {
-        this.page.addHeaderContent(view);
-        this.page.setShowHeader(true);
-    }
-    confirm(): void {
-        this.fireViewEvents(this.chooseDataEvent,
-            // 获取表格选中的对象
-            openui5.utils.getSelecteds<bo.Customer>(this.list)
-        );
     }
     private page: sap.m.Page;
     private form: sap.ui.layout.VerticalLayout;
