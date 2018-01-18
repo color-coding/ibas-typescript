@@ -428,6 +428,17 @@ export namespace utils {
                 return sap.ui.table.SelectionMode.None;
         }
     }
+    /** 改变表格选择方式（复选框单选）  */
+    export function changeSelectionStyle(table: sap.ui.table.Table, chooseType: ibas.emChooseType): void {
+        if (chooseType === ibas.emChooseType.SINGLE) {
+            if (!ibas.objects.isNull(table) && ibas.objects.instanceOf(table, sap.ui.table.Table)) {
+                table.setSelectionMode(sap.ui.table.SelectionMode.MultiToggle);
+                table.attachRowSelectionChange(function (oEvent: any): void {
+                    this.setSelectedIndex(this.getSelectedIndex());
+                });
+            }
+        }
+    }
     /**
      * 验证控件绑定属性是否合法
      * @param managedObjects

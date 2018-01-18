@@ -42,7 +42,8 @@ declare namespace sap {
                 setTitle(title: sap.ui.core.Control | string): sap.ui.table.Table;
                 getFooter(): sap.ui.core.Control | string;
                 setFooter(footer: sap.ui.core.Control | string): sap.ui.table.Table;
-                attachRowSelectionChange(oData?, fnFunction?, oListener?): sap.ui.table.Table
+                attachRowSelectionChange(oData?, fnFunction?, oListener?): sap.ui.table.Table;
+                setSelectionMode(sSelectionMode: sap.ui.table.SelectionMode);
             }
             export class Column extends sap.ui.core.Control {
                 constructor(mSettings?: any);
