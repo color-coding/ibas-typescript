@@ -6,11 +6,9 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 /// <reference path="../types/sap.m.ex.d.ts" />
-
 import * as ibas from "ibas/index";
 import { utils } from "utils";
-import { ArrayList } from "ibas/index";
-
+import * as ibasEx from "./ibas.ex";
 /**
  * 枚举Select
  */
@@ -74,7 +72,7 @@ sap.m.Select.extend("sap.m.ex.BOSelect", {
      * 加载业务对象集合
      * @param selecteds 业务对象KeyText集合
      */
-    loadItems(selecteds: ArrayList<sapEX.KeyText>): void {
+    loadItems(selecteds: ibas.ArrayList<ibas.KeyText>): void {
         if (selecteds === null) {
             console.log(ibas.i18n.prop("sap_m_ex_fetch_bos_null"));
             return;
@@ -101,8 +99,8 @@ sap.m.Select.extend("sap.m.ex.BOSelect", {
      */
     async seachBO(): Promise<void> {
         let that: any = this;
-        let bokey: string = this.getBoKey();
-        let selectedkey: string = this.getSelectedKey();
+        let boKey: string = this.getBoKey();
+        let selectedKey: string = this.getSelectedKey();
         let boCode: string = this.getBoCode();
         if (ibas.strings.isEmpty(boCode)) {
             console.log(ibas.i18n.prop("sap_m_ex_bocode_null"));
@@ -115,13 +113,13 @@ sap.m.Select.extend("sap.m.ex.BOSelect", {
         }
         let boName: string = ibas.objects.getName(boType);
         let boText: string = that.getBoText();
-        let borep: any = ibas.boFactory.create(this.getRepositoryName());
+        let boRep: any = ibas.boFactory.create(this.getRepositoryName());
         let criteria: ibas.Criteria = this.getCriteria();
-        if (!ibas.objects.instanceOf(borep, ibas.BORepositoryApplication)) {
+        if (!ibas.objects.instanceOf(boRep, ibas.BORepositoryApplication)) {
             console.log(ibas.i18n.prop("sap_m_ex_repository_type_error"));
             return;
         }
-        if (ibas.strings.isEmpty(bokey)) {
+        if (ibas.strings.isEmpty(boKey)) {
             console.log(ibas.i18n.prop("sap_m_ex_bokey_null"));
             return;
         }
@@ -134,17 +132,18 @@ sap.m.Select.extend("sap.m.ex.BOSelect", {
             return;
         }
         if (ibas.strings.isEmpty(boName)) {
-            console.log(ibas.i18n.prop("sap_m_ex_criteria_null"));
+            console.log(ibas.i18n.prop("sap_m_ex_boname_null"));
             return;
         }
-        let BORep: sapEX.BORepsitory = new sapEX.BORepsitory();
-        BORep.boName = boName;
-        BORep.keyAttribute = bokey;
-        BORep.textAttribute = boText;
-        BORep.selectedkey = selectedkey;
-        BORep.repositoryName = this.getRepositoryName();
-        BORep.criteria = criteria;
-        let keyTextList: ArrayList<sapEX.KeyText> = await BORep.getKeyTextList();
+
+        let boRepEx: ibasEx.BORepsitory = new ibasEx.BORepsitory();
+        boRepEx.boName = boName;
+        boRepEx.keyAttribute = boKey;
+        boRepEx.textAttribute = boText;
+        boRepEx.selectedKey = selectedKey;
+        boRepEx.repositoryName = this.getRepositoryName();
+        boRepEx.criteria = criteria;
+        let keyTextList: ibas.ArrayList<ibas.KeyText> = await boRepEx.getKeyTextList();
         if (ibas.objects.isNull(keyTextList)) {
             console.log(ibas.i18n.prop("sap_m_ex_fetch_bos_null"));
             return;
@@ -216,7 +215,7 @@ sap.m.Input.extend("sap.m.ex.BOInput", {
      * 添加KeyText项
      * @param selected
      */
-    addKeyTextItem(selected: sapEX.KeyText): void {
+    addKeyTextItem(selected: ibas.KeyText): void {
         if (selected === null) {
             console.log(ibas.i18n.prop("sap_m_ex_fetch_bos_null"));
             return;
@@ -235,8 +234,8 @@ sap.m.Input.extend("sap.m.ex.BOInput", {
      */
     async seachBO(): Promise<void> {
         let that: any = this;
-        let bokey: string = this.getBoKey();
-        let selectedkey: string = this.getSelectedKey();
+        let boKey: string = this.getBoKey();
+        let selectedKey: string = this.getSelectedKey();
         let boCode: string = this.getBoCode();
         if (ibas.strings.isEmpty(boCode)) {
             console.log(ibas.i18n.prop("sap_m_ex_bocode_null"));
@@ -249,12 +248,12 @@ sap.m.Input.extend("sap.m.ex.BOInput", {
         }
         let boName: string = ibas.objects.getName(boType);
         let boText: string = that.getBoText();
-        let borep: any = ibas.boFactory.create(this.getRepositoryName());
-        if (!ibas.objects.instanceOf(borep, ibas.BORepositoryApplication)) {
+        let boRep: any = ibas.boFactory.create(this.getRepositoryName());
+        if (!ibas.objects.instanceOf(boRep, ibas.BORepositoryApplication)) {
             console.log(ibas.i18n.prop("sap_m_ex_repository_type_error"));
             return;
         }
-        if (ibas.strings.isEmpty(bokey)) {
+        if (ibas.strings.isEmpty(boKey)) {
             console.log(ibas.i18n.prop("sap_m_ex_bokey_null"));
             return;
         }
@@ -262,30 +261,30 @@ sap.m.Input.extend("sap.m.ex.BOInput", {
             console.log(ibas.i18n.prop("sap_m_ex_botext_null"));
             return;
         }
-        if (ibas.objects.isNull(selectedkey)) {
+        if (ibas.objects.isNull(selectedKey)) {
             return;
         }
         if (ibas.strings.isEmpty(boName)) {
-            console.log(ibas.i18n.prop("sap_m_ex_criteria_null"));
+            console.log(ibas.i18n.prop("sap_m_ex_boname_null"));
             return;
         }
-        let BORep: sapEX.BORepsitory = new sapEX.BORepsitory();
-        BORep.boName = boName;
-        BORep.keyAttribute = bokey;
-        BORep.textAttribute = boText;
-        BORep.selectedkey = selectedkey;
-        BORep.repositoryName = this.getRepositoryName();
+        let boRepEx: ibasEx.BORepsitory = new ibasEx.BORepsitory();
+        boRepEx.boName = boName;
+        boRepEx.keyAttribute = boKey;
+        boRepEx.textAttribute = boText;
+        boRepEx.selectedKey = selectedKey;
+        boRepEx.repositoryName = this.getRepositoryName();
         let criteria: ibas.ICriteria = new ibas.Criteria();
-        let cond: ibas.ICondition = criteria.conditions.create();
-        cond.alias = bokey;
-        cond.value = selectedkey;
-        BORep.criteria = criteria;
-        let keyTextList: ArrayList<sapEX.KeyText> = await BORep.getKeyTextList();
+        let condition: ibas.ICondition = criteria.conditions.create();
+        condition.alias = boKey;
+        condition.value = selectedKey;
+        boRepEx.criteria = criteria;
+        let keyTextList: ibas.ArrayList<ibas.KeyText> = await boRepEx.getKeyTextList();
         if (ibas.objects.isNull(keyTextList)) {
             console.log(ibas.i18n.prop("sap_m_ex_fetch_bos_null"));
             return;
         }
-        let keyText: sapEX.KeyText = keyTextList.firstOrDefault();
+        let keyText: ibas.KeyText = keyTextList.firstOrDefault();
         if (ibas.objects.isNull(keyText)) {
             console.log(ibas.i18n.prop("sap_m_ex_fetch_bos_null"));
             return;
@@ -432,7 +431,7 @@ sap.m.ex.DataOwnerInput.extend("sap.m.ex.TeamMembersInput", {
         }
         this.setSelectedKey(key);
     },
-    addKeyTextItem(keyText: sapEX.KeyText): void {
+    addKeyTextItem(keyText: ibas.KeyText): void {
         if (!!keyText) {
             let item: sap.ui.core.ListItem = new sap.ui.core.ListItem("", {
                 key: keyText.key,
@@ -444,39 +443,52 @@ sap.m.ex.DataOwnerInput.extend("sap.m.ex.TeamMembersInput", {
     },
     async seachBO(): Promise<void> {
         let that: any = this;
-        let bokey: string = this.getBoKey();
-        let selectedkey: string = this.getSelectedKey();
+        let boKey: string = this.getBoKey();
+        let selectedKey: string = this.getSelectedKey();
         let boCode: string = this.getBoCode();
         let boType: any = ibas.boFactory.classOf(boCode);
         let boName: string = ibas.objects.getName(boType);
         let boText: string = that.getBoText();
-        let borep: any = ibas.boFactory.create(this.getRepositoryName());
-        if (!ibas.objects.instanceOf(borep, ibas.BORepositoryApplication)) {
+        let boRep: any = ibas.boFactory.create(this.getRepositoryName());
+        if (!ibas.objects.instanceOf(boRep, ibas.BORepositoryApplication)) {
             console.log(ibas.i18n.prop("sap_m_ex_repository_type_error"));
             return;
         }
-        if (ibas.strings.isEmpty(bokey) || ibas.strings.isEmpty(selectedkey) ||
-            ibas.strings.isEmpty(boName) || ibas.strings.isEmpty(boText)) {
+        if (ibas.strings.isEmpty(boKey)) {
+            console.log(ibas.i18n.prop("sap_m_ex_bokey_null"));
             return;
         }
-        let BORep: sapEX.BORepsitory = new sapEX.BORepsitory();
-        BORep.boName = boName;
-        BORep.keyAttribute = bokey;
-        BORep.textAttribute = boText;
-        let cri: ibas.Criteria = new ibas.Criteria();
-        let cond: ibas.ICondition;
-        for (let item of selectedkey.split(ibas.DATA_SEPARATOR)) {
+        if (ibas.strings.isEmpty(boText)) {
+            console.log(ibas.i18n.prop("sap_m_ex_botext_null"));
+            return;
+        }
+        if (ibas.objects.isNull(selectedKey)) {
+            return;
+        }
+        if (ibas.strings.isEmpty(boName)) {
+            console.log(ibas.i18n.prop("sap_m_ex_boname_null"));
+            return;
+        }
+        let boRepEx: ibasEx.BORepsitory = new ibasEx.BORepsitory();
+        boRepEx.boName = boName;
+        boRepEx.keyAttribute = boKey;
+        boRepEx.textAttribute = boText;
+        let criteria: ibas.Criteria = new ibas.Criteria();
+        let condition: ibas.ICondition;
+        for (let item of selectedKey.split(ibas.DATA_SEPARATOR)) {
             if (!ibas.strings.isEmpty(item)) {
-                cond = cri.conditions.create();
-                cond.alias = bokey;
-                cond.value = item;
-                cond.relationship = ibas.emConditionRelationship.OR;
+                condition = criteria.conditions.create();
+                condition.alias = boKey;
+                condition.value = item;
+                condition.relationship = ibas.emConditionRelationship.OR;
             }
         }
-        BORep.criteria = cri;
-        BORep.repositoryName = this.getRepositoryName();
-        let keyTextList: ArrayList<sapEX.KeyText> = await BORep.getKeyTextList();
-        let keyText: sapEX.KeyText = new sapEX.KeyText();
+        boRepEx.criteria = criteria;
+        boRepEx.repositoryName = this.getRepositoryName();
+        let keyTextList: ibas.ArrayList<ibas.KeyText> = await boRepEx.getKeyTextList();
+        let keyText: ibas.KeyText = new ibas.KeyText();
+        keyText.key = "";
+        keyText.text = "";
         if (ibas.objects.isNull(keyTextList)) {
             console.log(ibas.i18n.prop("sap_m_ex_fetch_bos_null"));
             return;
@@ -543,7 +555,7 @@ sap.m.Text.extend("sap.m.ex.BOText", {
     async seachBO(): Promise<void> {
         let that: any = this;
         let boDesc: string = this.getBoDescription();
-        let bokey: string = this.getBoKey();
+        let boKey: string = this.getBoKey();
         let boCode: string = this.getBoCode();
         if (ibas.strings.isEmpty(boCode)) {
             console.log(ibas.i18n.prop("sap_m_ex_bocode_null"));
@@ -556,12 +568,12 @@ sap.m.Text.extend("sap.m.ex.BOText", {
         }
         let boName: string = ibas.objects.getName(boType);
         let boText: string = that.getBoText();
-        let borep: any = ibas.boFactory.create(this.getRepositoryName());
-        if (!ibas.objects.instanceOf(borep, ibas.BORepositoryApplication)) {
+        let boRep: any = ibas.boFactory.create(this.getRepositoryName());
+        if (!ibas.objects.instanceOf(boRep, ibas.BORepositoryApplication)) {
             console.log(ibas.i18n.prop("sap_m_ex_repository_type_error"));
             return;
         }
-        if (ibas.strings.isEmpty(bokey)) {
+        if (ibas.strings.isEmpty(boKey)) {
             console.log(ibas.i18n.prop("sap_m_ex_bokey_null"));
             return;
         }
@@ -576,23 +588,23 @@ sap.m.Text.extend("sap.m.ex.BOText", {
             console.log(ibas.i18n.prop("sap_m_ex_criteria_null"));
             return;
         }
-        let BORep: sapEX.BORepsitory = new sapEX.BORepsitory();
-        BORep.boName = boName;
-        BORep.keyAttribute = bokey;
-        BORep.textAttribute = boText;
-        BORep.selectedkey = boDesc;
-        BORep.repositoryName = this.getRepositoryName();
+        let boRepEx: ibasEx.BORepsitory = new ibasEx.BORepsitory();
+        boRepEx.boName = boName;
+        boRepEx.keyAttribute = boKey;
+        boRepEx.textAttribute = boText;
+        boRepEx.selectedKey = boDesc;
+        boRepEx.repositoryName = this.getRepositoryName();
         let criteria: ibas.ICriteria = new ibas.Criteria();
         let cond: ibas.ICondition = criteria.conditions.create();
-        cond.alias = bokey;
+        cond.alias = boKey;
         cond.value = boDesc;
-        BORep.criteria = criteria;
-        let keyTextList: ArrayList<sapEX.KeyText> = await BORep.getKeyTextList();
+        boRepEx.criteria = criteria;
+        let keyTextList: ibas.ArrayList<ibas.KeyText> = await boRepEx.getKeyTextList();
         if (ibas.objects.isNull(keyTextList)) {
             console.log(ibas.i18n.prop("sap_m_ex_fetch_bos_null"));
             return;
         }
-        let keyText: sapEX.KeyText = keyTextList.firstOrDefault();
+        let keyText: ibas.KeyText = keyTextList.firstOrDefault();
         if (ibas.objects.isNull(keyText)) {
             console.log(ibas.i18n.prop("sap_m_ex_fetch_bos_null"));
             return;
@@ -634,64 +646,5 @@ sap.m.Text.extend("sap.m.ex.BOText", {
     },
     renderer: {}
 });
-
-namespace sapEX {
-    export class KeyText {
-        key: string;
-        text: string;
-        constructor() {
-            this.key = "";
-            this.text = "";
-        }
-    }
-    export class BORepsitory {
-        keyAttribute: string;
-        textAttribute: string;
-        boName: string;
-        repositoryName: string;
-        selectedkey: string;
-        criteria: ibas.ICriteria;
-        constructor(repositoryName?: string, boName?: string, keyAttribute?: string, textAttribute?: string, criteria?: ibas.Criteria) {
-            this.repositoryName = repositoryName;
-            this.boName = boName;
-            this.keyAttribute = keyAttribute;
-            this.textAttribute = textAttribute;
-            this.criteria = criteria;
-        }
-        async getKeyTextList(): Promise<ArrayList<sapEX.KeyText>> {
-            let that: this = this;
-            let promise: Promise<ArrayList<sapEX.KeyText>> = new Promise<ArrayList<sapEX.KeyText>>(resolve => {
-                if (ibas.strings.isEmpty(that.repositoryName) || ibas.strings.isEmpty(that.boName)
-                    || ibas.strings.isEmpty(that.keyAttribute) || ibas.strings.isEmpty(that.textAttribute)
-                    || !that.criteria) {
-                    resolve(null);
-                }
-                let borep: any = ibas.boFactory.create(this.repositoryName);
-                let criteria: ibas.ICriteria = new ibas.Criteria();
-                criteria = that.criteria;
-                borep[ibas.strings.format("fetch{0}", this.boName)]({
-                    criteria: criteria,
-                    onCompleted(opRslt: ibas.IOperationResult<any>): void {
-                        if (opRslt.resultCode === 0) {
-                            let keyTextList: ArrayList<sapEX.KeyText> = new ArrayList<sapEX.KeyText>();
-                            for (let data of opRslt.resultObjects) {
-                                let keyText: sapEX.KeyText = new sapEX.KeyText();
-                                keyText.key = data.getProperty(that.keyAttribute);
-                                keyText.text = data.getProperty(that.textAttribute);
-                                keyTextList.push(keyText);
-                            }
-                            resolve(keyTextList);
-                        } else {
-                            resolve(null);
-                        }
-                    }
-                });
-            });
-            return promise;
-        }
-    }
-}
-
-
 // 命名空间输出,不可删除
 export default sap.m.ex;
