@@ -8,7 +8,7 @@
 /// <reference path="../types/sap.m.ex.d.ts" />
 import * as ibas from "ibas/index";
 import { utils } from "utils";
-import { ibasEx } from "./ibasEx";
+import * as ibasEx from "./ibas.ex";
 /**
  * 枚举Select
  */
