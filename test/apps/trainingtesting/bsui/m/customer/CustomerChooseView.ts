@@ -144,7 +144,6 @@ export class CustomerChooseView extends ibas.BOChooseView implements ICustomerCh
         }
         this.list.setBusy(false);
     }
-
     /** 记录上次查询条件，表格滚动时自动触发 */
     query(criteria: ibas.ICriteria): void {
         super.query(criteria);
@@ -155,10 +154,6 @@ export class CustomerChooseView extends ibas.BOChooseView implements ICustomerCh
             this.list.setSelectedItemById("0", true);
             this.list.setModel(null);
         }
-    }
-    /** 获取选择的数据 */
-    getSelecteds(): bo.Customer[] {
-        return null;
     }
     /** 手指触控滑动 */
     onTouchMove(direcction: ibas.emTouchMoveDirection, event: TouchEvent): void {
