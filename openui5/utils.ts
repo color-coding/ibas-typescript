@@ -439,7 +439,7 @@ export namespace utils {
             }
         }
     }
-	/** 转换选择类型  */
+    /** 转换选择类型  */
     export function toListMode(data: ibas.emChooseType): sap.m.ListMode {
         switch (data) {
             case ibas.emChooseType.SINGLE:
