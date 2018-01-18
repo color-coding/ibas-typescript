@@ -40,6 +40,11 @@ class BOConverter4tt extends ibas.BOConverter {
      * @returns 转换的值
      */
     protected convertData(boName: string, property: string, value: any): any {
+        if (boName === bo.Customer.name) {
+            if (property === bo.Customer.PROPERTY_ACTIVATED_NAME) {
+                return ibas.enums.toString(ibas.emYesNo, value);
+            }
+        }
         return super.convertData(boName, property, value);
     }
 
@@ -51,6 +56,11 @@ class BOConverter4tt extends ibas.BOConverter {
      * @returns 解析的值
      */
     protected parsingData(boName: string, property: string, value: any): any {
+        if (boName === bo.Customer.name) {
+            if (property === bo.Customer.PROPERTY_ACTIVATED_NAME) {
+                return ibas.enums.valueOf(ibas.emYesNo, value);
+            }
+        }
         return super.parsingData(boName, property, value);
     }
 }

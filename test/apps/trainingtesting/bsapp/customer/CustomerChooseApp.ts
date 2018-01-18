@@ -32,6 +32,7 @@ export class CustomerChooseApp extends ibas.BOChooseService<ICustomerChooseView,
     protected registerView(): void {
         super.registerView();
         // 其他事件
+        this.view.chooseDataEvent = this.chooseData;
     }
     /** 视图显示后 */
     protected viewShowed(): void {
