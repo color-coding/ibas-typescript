@@ -13,7 +13,7 @@ import { AbstractApplication, IView, IBarView, IMessgesCaller, } from "../core/i
 import { emMessageType } from "../data/index";
 import {
     IServiceAgent, IServiceContract, IServicesShower, IServiceProxy,
-    servicesManager, IService, IServiceCaller, ServiceProxy
+    servicesManager, IService, IServiceCaller, ServiceProxy, IServiceWithResultCaller,
 } from "../services/index";
 import { IBOView, IBOQueryView, IBOViewWithServices, IResidentView, IShortcutView } from "./Applications.d";
 
@@ -29,15 +29,15 @@ export abstract class Application<T extends IView> extends AbstractApplication<T
     /** 显示视图 */
     show(): void {
         if (!objects.isNull(this.viewShower)) {
-            if (objects.isNull(this.view)) {
-                throw new Error(i18n.prop("sys_invalid_view", this.name));
-            }
-            if (this.view.isDisplayed) {
-                // 已显示的视图不在显示
-                this.proceeding(emMessageType.WARNING, i18n.prop("sys_application_view_was_displayed", this.name));
-                return;
-            }
             try {
+                if (objects.isNull(this.view)) {
+                    throw new Error(i18n.prop("sys_invalid_view", this.name));
+                }
+                if (this.view.isDisplayed) {
+                    // 已显示的视图不在显示
+                    this.proceeding(emMessageType.WARNING, i18n.prop("sys_application_view_was_displayed", this.name));
+                    return;
+                }
                 this.viewShower.show(this.view);
                 this.afterViewShow();
             } catch (error) {
@@ -222,6 +222,59 @@ export abstract class ServiceApplication<T extends IView, C extends IServiceCont
     }
     /** 运行服务 */
     protected abstract runService(contract: C): void;
+}
+/**
+ * 服务（带结果）应用
+ */
+export abstract class ServiceWithResultApplication<T extends IView, C extends IServiceContract, D>
+    extends ServiceApplication<T, C> implements IService<IServiceWithResultCaller<C, D>> {
+    /** 注册视图，重载需要回掉此方法 */
+    protected registerView(): void {
+        super.registerView();
+    }
+    /** 运行 */
+    run(): void;
+    /**
+     * 运行
+     * @param caller 服务调用者
+     */
+    run(caller: IServiceWithResultCaller<C, D>): void;
+    /** 运行 */
+    run(): void {
+        if (arguments.length === 1) {
+            // 判断是否为选择契约
+            let caller: IServiceWithResultCaller<C, D> = arguments[0];
+            if (objects.instanceOf(caller.proxy, ServiceProxy)) {
+                this.onCompleted = caller.onCompleted;
+                this.runService(caller.proxy.contract);
+                return;
+            }
+        }
+        // 保持参数原样传递
+        super.run.apply(this, arguments);
+    }
+    /** 运行服务 */
+    protected abstract runService(contract: C): void;
+    /** 完成事件 */
+    private onCompleted: Function;
+    /** 触发完成事件 */
+    protected fireCompleted(result: D): void {
+        // 关闭视图
+        this.close();
+        if (objects.isNull(result)) {
+            return;
+        }
+        if (objects.isNull(this.onCompleted) || typeof this.onCompleted !== "function") {
+            return;
+        }
+        try {
+            // 调用完成事件
+            this.onCompleted.call(this.onCompleted, result);
+        } catch (error) {
+            // 完成事件出错
+            this.messages(error);
+        }
+    }
 }
 /**
  * 业务对象应用

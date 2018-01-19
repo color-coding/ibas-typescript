@@ -27,8 +27,8 @@ export class QueryPanelView extends cQueryPanelView implements IQueryPanelView {
             // 获取列描述
             let boRepository: IBORepositorySystem = Factories.systemsFactory.createRepository();
             boRepository.fetchBOInfos({
-                boName: null,
-                boCode: this.boName,
+                boName: this.boName,
+                boCode: null,
                 onCompleted(opRslt: ibas.IOperationResult<IBOInfo>): void {
                     let properies: IBOPropertyInfo[] = [];
                     if (opRslt.resultObjects.length > 0) {

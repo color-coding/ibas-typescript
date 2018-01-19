@@ -15,7 +15,7 @@ import {
     IServiceMapping, IBOChooseServiceCaller, IServiceCaller,
     IBOLinkServiceContract, IBOChooseServiceContract,
     IBOLinkServiceCaller, IApplicationServiceCaller,
-    IApplicationWithResultServiceCaller,
+    IApplicationServiceWithResultCaller, ICriteriaEditorServiceContract,
 } from "./Services.d";
 
 /** 配置项目-默认服务图片 */
@@ -131,6 +131,13 @@ export class BOLinkServiceProxy extends ServiceProxy<IBOLinkServiceContract> {
 /** 业务对象选择服务代理 */
 export class BOChooseServiceProxy extends ServiceProxy<IBOChooseServiceContract> {
     constructor(contract: IBOChooseServiceContract);
+    constructor() {
+        super(arguments[0]);
+    }
+}
+/** 查询编辑服务代理 */
+export class CriteriaEditorServiceProxy extends ServiceProxy<ICriteriaEditorServiceContract> {
+    constructor(contract: ICriteriaEditorServiceContract);
     constructor() {
         super(arguments[0]);
     }
@@ -313,7 +320,7 @@ export class ServicesManager {
      * 运行应用服务
      * @param caller 调用者<In,Out>(<输入类型,输出类型>)
      */
-    runApplicationService<In, Out>(caller: IApplicationWithResultServiceCaller<In, Out>): void;
+    runApplicationService<In, Out>(caller: IApplicationServiceWithResultCaller<In, Out>): void;
     /**
      * 运行应用服务
      * @param caller 调用者<In,Out>(<输入类型,输出类型>)
