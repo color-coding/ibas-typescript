@@ -61,7 +61,7 @@ export interface IBOEditView extends IBOView {
 /**
  * 业务对象应用-查看视图
  */
-export interface IBOViewView extends IBOViewWithServices {
+export interface IBOViewView extends IBOView, IBOViewWithServices {
     /** 编辑数据事件 */
     editDataEvent: Function;
 }

@@ -153,11 +153,6 @@ export class CustomerListView extends ibas.BOListView implements ICustomerListVi
         });
         return this.page;
     }
-    /** 嵌入查询面板 */
-    embedded(view: any): void {
-        this.page.addHeaderContent(view);
-        this.page.setShowHeader(true);
-    }
     private page: sap.m.Page;
     private list: sap.m.List;
     /** 显示数据 */
