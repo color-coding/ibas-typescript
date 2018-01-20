@@ -298,7 +298,7 @@ export namespace utils {
                 let model: any = this.getModel(undefined);
                 if (!ibas.objects.isNull(model)) {
                     let data: any = model.getData();
-                    if (!ibas.objects.isNull(data)) {
+                    if (!ibas.objects.isNull(data) && !ibas.objects.isNull(this.getGrowingInfo())) {
                         if (this.getGrowingInfo().total === this.getGrowingInfo().actual) {
                             if (data !== undefined && data !== null) {
                                 let modelData: any = data.rows; // 与绑定对象的路径有关
