@@ -282,6 +282,7 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
             verticalScrolling: true,
             subHeader: new sap.m.Toolbar("", {
                 content: [
+                    new sap.m.ToolbarSpacer("", { width: "5px" }),
                     new sap.m.Label("", {
                         text: ibas.i18n.prop("shell_query_name"),
                     }),

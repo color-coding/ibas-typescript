@@ -227,7 +227,13 @@ export class SalesOrderEditApp extends ibas.BOEditApplication<ISalesOrderEditVie
     /** 选择销售订单行物料事件 */
     chooseSalesOrderItemMaterial(caller: bo.SalesOrderItem): void {
         let that: this = this;
+        let chooseType: ibas.emChooseType = ibas.emChooseType.MULTIPLE;
+        if (ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM) === ibas.emPlantform.PHONE) {
+            // 手机端单选
+            chooseType = ibas.emChooseType.SINGLE;
+        }
         ibas.servicesManager.runChooseService<bo.Material>({
+            chooseType: chooseType,
             boCode: bo.Material.BUSINESS_OBJECT_CODE,
             criteria: [
                 new ibas.Condition(bo.Material.PROPERTY_ACTIVATED_NAME, ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES)
