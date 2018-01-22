@@ -79,10 +79,8 @@ export class SalesOrderListView extends ibas.BOListView implements ISalesOrderLi
                                 icon: "sap-icon://delete",
                                 press(oEvent: any): void {
                                     that.page.setShowFooter(true);
-                                    let selecteds: ibas.List<bo.SalesOrder> = new ibas.ArrayList<bo.SalesOrder>();
-                                    selecteds.push(that.list.getSwipedItem().getBindingContext().getObject());
                                     that.fireViewEvents(that.deleteDataEvent,
-                                        selecteds
+                                        openui5.utils.getSelecteds<bo.SalesOrder>(that.list)
                                     );
                                 }
                             }),
@@ -91,10 +89,8 @@ export class SalesOrderListView extends ibas.BOListView implements ISalesOrderLi
                                 icon: "sap-icon://edit",
                                 press(oEvent: any): void {
                                     that.page.setShowFooter(true);
-                                    var editBo: bo.SalesOrder = that.list.getSwipedItem()
-                                        .getBindingContext().getObject();
                                     that.fireViewEvents(that.editDataEvent,
-                                        editBo
+                                        openui5.utils.getSelecteds<bo.SalesOrder>(that.list).firstOrDefault()
                                     );
                                 }
                             })
@@ -250,11 +246,7 @@ export class SalesOrderListView extends ibas.BOListView implements ISalesOrderLi
     }
     /** 获取选择的数据 */
     getSelecteds(): bo.SalesOrder[] {
-        let result: bo.SalesOrder[] = [];
-        if (!ibas.objects.isNull(this.list.getSwipedItem())) {
-            result.push(this.list.getSwipedItem().getBindingContext().getObject());
-        }
-        return result;
+        return openui5.utils.getSelecteds<bo.SalesOrder>(this.list);
     }
     /** 手指触控滑动 */
     onTouchMove(direcction: ibas.emTouchMoveDirection, event: TouchEvent): void {
