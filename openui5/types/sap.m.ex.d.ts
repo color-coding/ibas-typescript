@@ -13,9 +13,13 @@ declare namespace sap {
                 getBoText(): any;
                 setBlank(value: Boolean): void;
                 getBlank(): Boolean;
+                setBindingValue(value: string): void;
+                getBindingValue(): string;
             }
             export class EnumSegmentedButton extends sap.m.SegmentedButton {
                 setEnumValue(value: any): void;
+                setBindingValue(value: string): void;
+                getBindingValue(): string;
             }
             export class BOInput extends sap.m.Input {
                 getBoCode(): string;
@@ -26,6 +30,8 @@ declare namespace sap {
                 setBoText(value: string): void;
                 getRepositoryName(): string;
                 setRepositoryName(value: string): void;
+                setBindingValue(value: string): void;
+                getBindingValue(): string;
             }
             export class DataOwnerInput extends BOInput {
             }
@@ -41,8 +47,8 @@ declare namespace sap {
                 setBoText(value: string): void;
                 getRepositoryName(): string;
                 setRepositoryName(value: string): void;
-                getBoDescription(): string;
-                setBoDescription(value: string): void;
+                setBindingValue(value: string): void;
+                getBindingValue(): string;
             }
             export class BOSelect extends sap.m.Select {
                 setBlank(value: Boolean): void;
@@ -55,6 +61,8 @@ declare namespace sap {
                 setBoText(value: string): void;
                 getRepositoryName(): string;
                 setRepositoryName(value: string): void;
+                setBindingValue(value: string): void;
+                getBindingValue(): string;
                 getCriteria(): any;
                 setCriteria(value: any): void;
             }

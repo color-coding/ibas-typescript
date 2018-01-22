@@ -19,6 +19,8 @@ sap.m.Select.extend("sap.m.ex.EnumSelect", {
             blank: { type: "Boolean", group: "Ex", defaultValue: false },
             /** 枚举值 */
             enumValue: { type: "any", group: "Ex" },
+            /** 绑定值 */
+            bindingValue: { type: "string", group: "Ex" },
         },
         events: {}
     },
@@ -44,6 +46,15 @@ sap.m.Select.extend("sap.m.ex.EnumSelect", {
     setBlank(value: Boolean): void {
         this.setProperty("blank", value);
     },
+    setBindingValue(value: string): void {
+        this.setProperty("bindingValue", value);
+        if (!this.getBindingInfo("selectedKey")) {
+            this.bindProperty("selectedKey", this.getBindingInfo("bindingValue"));
+        }
+    },
+    getBindingValue(): string {
+        return this.getProperty("bindingValue");
+    },
     renderer: {}
 });
 /**
@@ -62,6 +73,8 @@ sap.m.Select.extend("sap.m.ex.BOSelect", {
             repositoryName: { type: "string", group: "Ex" },
             /** 查询业务对象条件 */
             criteria: { type: "any", group: "Ex" },
+            /** 绑定值 */
+            bindingValue: { type: "string", group: "Ex" },
             /** 是否添加空项 */
             blank: { type: "Boolean", group: "Ex", defaultValue: false },
         },
@@ -190,6 +203,15 @@ sap.m.Select.extend("sap.m.ex.BOSelect", {
     setRepositoryName(value: string): void {
         this.setProperty("repositoryName", value);
     },
+    setBindingValue(value: string): void {
+        this.setProperty("bindingValue", value);
+        if (!this.getBindingInfo("selectedKey")) {
+            this.bindProperty("selectedKey", this.getBindingInfo("bindingValue"));
+        }
+    },
+    getBindingValue(): string {
+        return this.getProperty("bindingValue");
+    },
     renderer: {
     }
 });
@@ -207,6 +229,8 @@ sap.m.Input.extend("sap.m.ex.BOInput", {
             boCode: { type: "string", group: "Ex" },
             /** 业务对象仓库名称 */
             repositoryName: { type: "string", group: "Ex" },
+            /** 绑定值 */
+            bindingValue: { type: "string", group: "Ex" },
         },
         events: {
         },
@@ -316,10 +340,18 @@ sap.m.Input.extend("sap.m.ex.BOInput", {
     setRepositoryName(value: string): void {
         this.setProperty("repositoryName", value);
     },
-    setSelectedKey(value: string): void {
-        // this.setValueHelpOnly(true);
+    setBindingValue(value: string): void {
         this.setShowSuggestion(true);
         this.setShowValueHelp(true);
+        this.setProperty("bindingValue", value);
+        if (!this.getBindingInfo("selectedKey")) {
+            this.bindProperty("selectedKey", this.getBindingInfo("bindingValue"));
+        }
+    },
+    getBindingValue(): string {
+        return this.getProperty("bindingValue");
+    },
+    setSelectedKey(value: string): void {
         this.setProperty("selectedKey", value);
         if (!ibas.strings.isEmpty(value) && !ibas.objects.isNull(value)) {
             this.seachBO();
@@ -379,15 +411,6 @@ sap.m.ex.BOInput.extend("sap.m.ex.DataOwnerInput", {
     getRepositoryName(): string {
         return "BORepositoryInitialFantasy";
     },
-    renderer: {
-        writeValueHelpIcon: function (oRm: any, Control: any): void {
-            if (Control.getShowValueHelp() && Control.getEnabled() && Control.getEditable()) {
-                oRm.write("<div class='sapMInputValHelp' tabindex='-1'>");
-                oRm.renderControl(Control._getValueHelpIcon(Control));
-                oRm.write("</div>");
-            }
-        },
-    },
     _getValueHelpIcon: function (Control: any): void {
         var that: any = this;
         var IconPool: any = sap.ui.require("sap/ui/core/IconPool");
@@ -405,6 +428,15 @@ sap.m.ex.BOInput.extend("sap.m.ex.DataOwnerInput", {
             });
         }
         return this._oValueHelpIcon;
+    },
+    renderer: {
+        writeValueHelpIcon: function (oRm: any, Control: any): void {
+            if (Control.getShowValueHelp() && Control.getEnabled() && Control.getEditable()) {
+                oRm.write("<div class='sapMInputValHelp' tabindex='-1'>");
+                oRm.renderControl(Control._getValueHelpIcon(Control));
+                oRm.write("</div>");
+            }
+        },
     },
 });
 /**
@@ -513,6 +545,8 @@ sap.m.SegmentedButton.extend("sap.m.ex.EnumSegmentedButton", {
     metadata: {
         properties: {
             enumValue: { type: "any", group: "Ex" },
+            /** 绑定值 */
+            bindingValue: { type: "string", group: "Ex" },
         },
         events: {}
     },
@@ -527,6 +561,15 @@ sap.m.SegmentedButton.extend("sap.m.ex.EnumSegmentedButton", {
                 text: ibas.enums.describe(value, item[1]),
             }));
         }
+    },
+    setBindingValue(value: string): void {
+        this.setProperty("bindingValue", value);
+        if (!this.getBindingInfo("selectedKey")) {
+            this.bindProperty("selectedKey", this.getBindingInfo("bindingValue"));
+        }
+    },
+    getBindingValue(): string {
+        return this.getProperty("bindingValue");
     },
     renderer: {}
 });
@@ -545,7 +588,7 @@ sap.m.Text.extend("sap.m.ex.BOText", {
             /** 业务对象仓库名称 */
             repositoryName: { type: "string", group: "Ex" },
             /** 描述字段,绑定后触发查询对象事件（seachBO()） */
-            boDescription: { type: "any", group: "Ex" },
+            bindingValue: { type: "string", group: "Ex" },
         },
         events: {}
     },
@@ -554,7 +597,7 @@ sap.m.Text.extend("sap.m.ex.BOText", {
      */
     async seachBO(): Promise<void> {
         let that: any = this;
-        let boDesc: string = this.getBoDescription();
+        let boDesc: string = this.getBindingValue();
         let boKey: string = this.getBoKey();
         let boCode: string = this.getBoCode();
         if (ibas.strings.isEmpty(boCode)) {
@@ -635,11 +678,11 @@ sap.m.Text.extend("sap.m.ex.BOText", {
     setRepositoryName(value: string): void {
         this.setProperty("repositoryName", value);
     },
-    getBoDescription(): string {
-        return this.getProperty("boDescription");
+    getBindingValue(): string {
+        return this.getProperty("bindingValue");
     },
-    setBoDescription(value: string): void {
-        this.setProperty("boDescription", value);
+    setBindingValue(value: string): void {
+        this.setProperty("bindingValue", value);
         if (!ibas.strings.isEmpty(value)) {
             this.seachBO();
         }
