@@ -63,7 +63,14 @@ export abstract class BOChooseService<T extends IBOChooseView, D> extends BOChoo
                     chooseType = emChooseType.MULTIPLE;
                 }
                 this.view.chooseType = chooseType;
-                this.onCompleted = caller.onCompleted;
+                // 设置标题
+                if (!strings.isEmpty(caller.title)) {
+                    this.description = caller.title;
+                }
+                // 设置返回方法
+                if (typeof caller.onCompleted === "function") {
+                    this.onCompleted = caller.onCompleted;
+                }
                 // 分析查询条件
                 let criteria: Criteria;
                 if (objects.instanceOf(caller.criteria, Criteria)) {

@@ -92,6 +92,8 @@ export interface IBOChooseServiceContract extends IServiceContract {
     chooseType?: emChooseType;
     /** 条件 */
     criteria?: ICriteria | ICondition[];
+    /** 选择服务标题 */
+    title?: string;
 }
 /** 查询编辑服务契约 */
 export interface ICriteriaEditorServiceContract extends IServiceContract {

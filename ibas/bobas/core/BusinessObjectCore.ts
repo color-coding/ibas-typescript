@@ -190,7 +190,6 @@ export abstract class TrackableBase extends Bindable implements ITrackable {
      * 标记为删除
      */
     markDeleted(recursive: boolean): void {
-        this.isNew = false;
         this.isDirty = true;
         this.isDeleted = true;
     }
@@ -199,7 +198,6 @@ export abstract class TrackableBase extends Bindable implements ITrackable {
      * 对象置为脏
      */
     markDirty(recursive: boolean): void {
-        this.isNew = false;
         this.isDirty = true;
     }
 

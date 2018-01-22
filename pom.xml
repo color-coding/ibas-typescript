@@ -59,7 +59,6 @@
                             <targetPath>ibas</targetPath>
                             <excludes>
                                 <exclude>**/*.ts</exclude>
-                                <exclude>**/keeps.txt</exclude>
                                 <exclude>**/tsconfig.json</exclude>
                             </excludes>
                         </resource>
@@ -68,7 +67,6 @@
                             <targetPath>openui5</targetPath>
                             <excludes>
                                 <exclude>**/*.ts</exclude>
-                                <exclude>**/keeps.txt</exclude>
                                 <exclude>**/tsconfig.json</exclude>
                             </excludes>
                         </resource>
