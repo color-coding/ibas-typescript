@@ -43,7 +43,6 @@ export class SalesOrderListView extends ibas.BOListView implements ISalesOrderLi
                         width: "9rem",
                         items: [
                             new sap.m.SegmentedButtonItem("", {
-                                // text: ibas.i18n.prop("trainingtesting_data_services"),
                                 width: "3rem",
                                 icon: "sap-icon://action",
                                 press: function (event: any): void {
@@ -76,7 +75,6 @@ export class SalesOrderListView extends ibas.BOListView implements ISalesOrderLi
                                 }
                             }),
                             new sap.m.SegmentedButtonItem("", {
-                                // text: ibas.i18n.prop("shell_data_delete"),
                                 width: "3rem",
                                 icon: "sap-icon://delete",
                                 press(oEvent: any): void {
@@ -89,7 +87,6 @@ export class SalesOrderListView extends ibas.BOListView implements ISalesOrderLi
                                 }
                             }),
                             new sap.m.SegmentedButtonItem("", {
-                                // text: ibas.i18n.prop("shell_data_edit"),
                                 width: "3rem",
                                 icon: "sap-icon://edit",
                                 press(oEvent: any): void {
@@ -107,58 +104,90 @@ export class SalesOrderListView extends ibas.BOListView implements ISalesOrderLi
             }).addStyleClass("sapUiSmallMarginTop"),
             swipe: function (event: sap.ui.base.Event): void {
                 that.page.setShowFooter(true);
+            },
+            items: {
+                path: "/rows",
+                template: new sap.m.ObjectListItem("", {
+                    title: {
+                        path: "docEntry",
+                        formatter(data: any): any {
+                            return ibas.strings.format("# {0}", data);
+                        }
+                    },
+                    firstStatus: new sap.m.ObjectStatus("", {
+                        text: {
+                            path: "documentStatus",
+                            formatter(data: any): any {
+                                return ibas.enums.describe(ibas.emDocumentStatus, data);
+                            }
+                        }
+                    }),
+                    secondStatus: new sap.m.ObjectStatus("", {
+                        text: {
+                            path: "approvalStatus",
+                            formatter(data: any): any {
+                                return ibas.enums.describe(ibas.emApprovalStatus, data);
+                            }
+                        }
+                    }),
+                    attributes: [
+                        new sap.m.ObjectAttribute("", {
+                            text: {
+                                parts: [
+                                    {
+                                        path: "customerName"
+                                    },
+                                    {
+                                        path: "customerCode",
+                                        formatter: function (data: any): any {
+                                            if (ibas.strings.isEmpty(data)) {
+                                                return "";
+                                            }
+                                            return ibas.strings.format(" ({0})", data);
+                                        }
+                                    }
+                                ]
+                            }
+                        }),
+                        new sap.m.ObjectAttribute("", {
+                            text: {
+                                path: "documentDate",
+                                type: new sap.ui.model.type.Date("", {
+                                    pattern: "yyyy-MM-dd",
+                                })
+                            }
+                        }),
+                        new sap.m.ObjectAttribute("", {
+                            title: ibas.i18n.prop("bo_salesorder_documenttotal"),
+                            text: {
+                                parts: [
+                                    { path: "documentTotal" },
+                                    { path: "documentCurrency" }
+                                ]
+                            }
+                        })
+                    ]
+                })
             }
         });
-        this.list.bindItems({
-            path: "/rows",
-            template: new sap.m.ObjectListItem("", {
-                title: "# {docEntry}",
-                firstStatus: new sap.m.ObjectStatus("", {
-                    text: {
-                        path: "documentStatus",
-                        formatter(data: any): any {
-                            return ibas.enums.describe(ibas.emDocumentStatus, data);
-                        }
-                    }
-                }),
-                secondStatus: new sap.m.ObjectStatus("", {
-                    text: {
-                        path: "approvalStatus",
-                        formatter(data: any): any {
-                            return ibas.enums.describe(ibas.emApprovalStatus, data);
-                        }
-                    }
-                }),
-                attributes: [
-                    new sap.m.ObjectAttribute("", {
-                        text: "{customerName} ({customerCode})"
-                    }),
-                    new sap.m.ObjectAttribute("", {
-                        text: {
-                            path: "documentDate",
-                            type: new sap.ui.model.type.Date("", {
-                                pattern: "yyyy-MM-dd",
-                            })
-                        }
-                    }),
-                    new sap.m.ObjectAttribute("", {
-                        title: ibas.i18n.prop("bo_salesorder_documenttotal"),
-                        text: "{documentTotal} {documentCurrency}"
-                    })
-                ]
-            })
+        this.pullToRefresh = new sap.m.PullToRefresh("", {
+            refresh: function (event: sap.ui.base.Event): void {
+                that.fireViewEvents(that.fetchDataEvent);
+            }
         });
         this.page = new sap.m.Page("", {
             showHeader: false,
             showSubHeader: false,
             floatingFooter: true,
-            content: [this.list],
+            content: [
+                this.pullToRefresh,
+                this.list
+            ],
             footer: new sap.m.Toolbar("", {
                 content: [
                     new sap.m.Button("", {
                         width: "100%",
                         text: ibas.i18n.prop("shell_data_new"),
-                        icon: "sap-icon://create",
                         press: function (): void {
                             that.fireViewEvents(that.newDataEvent);
                         }
@@ -186,8 +215,10 @@ export class SalesOrderListView extends ibas.BOListView implements ISalesOrderLi
     }
     private page: sap.m.Page;
     private list: sap.m.List;
+    private pullToRefresh: sap.m.PullToRefresh;
     /** 显示数据 */
     showData(datas: bo.SalesOrder[]): void {
+        this.pullToRefresh.hide();
         let done: boolean = false;
         let model: sap.ui.model.Model = this.list.getModel(undefined);
         if (!ibas.objects.isNull(model)) {
