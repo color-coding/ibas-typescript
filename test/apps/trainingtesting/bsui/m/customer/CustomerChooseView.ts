@@ -24,61 +24,27 @@ export class CustomerChooseView extends ibas.BOChooseView implements ICustomerCh
             growingThreshold: ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 15),
             growingScrollToLoad: true,
             visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Auto,
-            mode: openui5.utils.toListMode(this.chooseType)
-        });
-        let list_item_object: sap.m.ObjectListItem = new sap.m.ObjectListItem("", {
-            title: "{name} ",
-            type: sap.m.ListType.Active,
-            numberUnit: "{code}",
-            attributes: [
-                new sap.m.ObjectAttribute("", {
-                }).bindProperty("text", {
-                    path: "code",
-                    formatter(data: any): any {
-                        return ibas.i18n.prop("bo_customer_code") + data;
-                    }
+            mode: openui5.utils.toListMode(this.chooseType),
+            items: {
+                path: "/rows",
+                template: new sap.m.ObjectListItem("", {
+                    title: {
+                        path: "name"
+                    },
+                    type: sap.m.ListType.Active,
+                    attributes: [
+                        new sap.m.ObjectAttribute("", {
+                            text: {
+                                path: "code",
+                                formatter(data: any): any {
+                                    return ibas.i18n.prop("bo_customer_code") + data;
+                                }
+                            }
+                        }),
+                    ],
                 }),
-            ],
+            }
         });
-        this.list.bindItems({
-            path: "/rows",
-            template: list_item_object,
-        });
-        this.page = new sap.m.Page("", {
-            showHeader: false,
-            floatingFooter: true,
-            content: [this.list],
-            footer: new sap.m.Toolbar("", {
-                content: [
-                    // new sap.m.ToolbarSpacer(""),
-                    new sap.m.Button("", {
-                        width: "50%",
-                        text: ibas.i18n.prop("shell_data_choose"),
-                        type: sap.m.ButtonType.Transparent,
-                        // icon: "sap-icon://accept",
-                        press: function (): void {
-                            that.fireViewEvents(that.chooseDataEvent,
-                                // 获取表格选中的对象
-                                openui5.utils.getSelecteds<bo.Customer>(that.list)
-                            );
-                        }
-                    }),
-                    // new sap.m.ToolbarSpacer(""),
-                    new sap.m.Button("", {
-                        width: "50%",
-                        text: ibas.i18n.prop("shell_exit"),
-                        type: sap.m.ButtonType.Transparent,
-                        // icon: "sap-icon://inspect-down",
-                        press: function (): void {
-                            that.fireViewEvents(that.closeEvent);
-                        }
-                    }),
-                    // new sap.m.ToolbarSpacer(""),
-                ]
-            })
-        });
-        this.page.setShowSubHeader(false);
-        this.id = this.page.getId();
         openui5.utils.triggerNextResults({
             listener: this.list,
             next(data: any): void {
@@ -93,21 +59,65 @@ export class CustomerChooseView extends ibas.BOChooseView implements ICustomerCh
                 that.fireViewEvents(that.fetchDataEvent, criteria);
             }
         });
-        return new sap.m.Dialog("", {
+        this.pullToRefresh = new sap.m.PullToRefresh("", {
+            refresh: function (event: sap.ui.base.Event): void {
+                that.fireViewEvents(that.fetchDataEvent);
+            }
+        });
+        this.page = new sap.m.Page("", {
+            showHeader: false,
+            showSubHeader: false,
+            floatingFooter: true,
+            content: [
+                this.pullToRefresh,
+                this.list
+            ],
+            footer: new sap.m.Toolbar("", {
+                content: [
+                    new sap.m.Button("", {
+                        width: "50%",
+                        text: ibas.i18n.prop("shell_data_choose"),
+                        type: sap.m.ButtonType.Transparent,
+                        press: function (): void {
+                            that.fireViewEvents(that.chooseDataEvent,
+                                // 获取表格选中的对象
+                                openui5.utils.getSelecteds<bo.Customer>(that.list)
+                            );
+                        }
+                    }),
+                    new sap.m.Button("", {
+                        width: "50%",
+                        text: ibas.i18n.prop("shell_exit"),
+                        type: sap.m.ButtonType.Transparent,
+                        press: function (): void {
+                            that.fireViewEvents(that.closeEvent);
+                        }
+                    }),
+                ]
+            })
+        });
+        this.dialog = new sap.m.Dialog("", {
             title: this.title,
             type: sap.m.DialogType.Standard,
             state: sap.ui.core.ValueState.None,
             stretchOnPhone: true,
             horizontalScrolling: true,
             verticalScrolling: true,
-            content: [this.page],
+            content: [
+                this.page
+            ],
         });
+        this.id = this.dialog.getId();
+        return this.dialog;
     }
+    private dialog: sap.m.Dialog;
     private page: sap.m.Page;
     private form: sap.ui.layout.VerticalLayout;
     private list: sap.m.List;
+    private pullToRefresh: sap.m.PullToRefresh;
     /** 显示数据 */
     showData(datas: bo.Customer[]): void {
+        this.pullToRefresh.hide();
         let done: boolean = false;
         let model: sap.ui.model.Model = this.list.getModel(undefined);
         if (!ibas.objects.isNull(model)) {
@@ -118,7 +128,6 @@ export class CustomerChooseView extends ibas.BOChooseView implements ICustomerCh
                     hDatas.rows.push(item);
                 }
                 model.refresh(false);
-                done = true;
                 done = true;
             }
         }
