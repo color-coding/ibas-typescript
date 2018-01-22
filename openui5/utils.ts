@@ -118,10 +118,16 @@ export namespace utils {
     export function getSelecteds<T>(container: sap.m.List | sap.ui.table.Table): ibas.List<T> {
         let selecteds: ibas.List<T> = new ibas.ArrayList<T>();
         if (container instanceof (sap.m.List)) {
-            let Contexts: any[] = container.getSelectedContexts(undefined);
-            if (Contexts.length > 0) {
-                for (let i: number = 0; i < Contexts.length; i++) {
-                    selecteds.push(Contexts[i].getObject());
+            if (container.getMode() === sap.m.ListMode.None) {
+                if (!ibas.objects.isNull(container.getSwipedItem())) {
+                    selecteds.push(container.getSwipedItem().getBindingContext().getObject());
+                }
+            } else {
+                let Contexts: any[] = container.getSelectedContexts(undefined);
+                if (Contexts.length > 0) {
+                    for (let i: number = 0; i < Contexts.length; i++) {
+                        selecteds.push(Contexts[i].getObject());
+                    }
                 }
             }
         } else if (container instanceof (sap.ui.table.Table)) {

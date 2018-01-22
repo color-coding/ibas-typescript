@@ -71,47 +71,37 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
                     }
                 }),
                 new sap.ui.core.Title("", { text: ibas.i18n.prop("trainingtesting_title_amount") }),
-                new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_documenttotal") }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_documenttotal") + "(RMB)" }),
                 new sap.m.Input("", {
-                    width: "200px",
+                    width: "100%",
                     type: sap.m.InputType.Number,
                     value: {
                         path: "documentTotal",
                     },
-                    description: "RMB"
                 }),
                 new sap.ui.core.Title("", { text: ibas.i18n.prop("trainingtesting_title_time") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_documentdate") }),
                 new sap.m.DatePicker("", {
-                    valueFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE),
-                    displayFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE),
+                    valueFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE, "yyyy-MM-dd"),
+                    displayFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE, "yyyy-MM-dd"),
                     dateValue: {
-                        path: "documentDate",
-                        type: new sap.ui.model.type.Date("", {
-                            pattern: "yyyy-MM-dd",
-                        })
+                        path: "documentDate"
                     }
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_postingdate") }),
                 new sap.m.DatePicker("", {
-                    valueFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE),
-                    displayFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE),
+                    valueFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE, "yyyy-MM-dd"),
+                    displayFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE, "yyyy-MM-dd"),
                     dateValue: {
-                        path: "postingDate",
-                        type: new sap.ui.model.type.Date("", {
-                            pattern: "yyyy-MM-dd",
-                        })
+                        path: "postingDate"
                     }
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_deliverydate") }),
                 new sap.m.DatePicker("", {
-                    valueFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE),
-                    displayFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE),
+                    valueFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE, "yyyy-MM-dd"),
+                    displayFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE, "yyyy-MM-dd"),
                     dateValue: {
-                        path: "deliveryDate",
-                        type: new sap.ui.model.type.Date("", {
-                            pattern: "yyyy-MM-dd",
-                        })
+                        path: "deliveryDate"
                     }
                 }),
                 new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_salesorder_remarks") }),
@@ -153,7 +143,8 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
                                     var deleteBo: bo.SalesOrderItem =
                                         that.salesOrderItemList.getSwipedItem().getBindingContext().getObject();
                                     that.fireViewEvents(that.removeSalesOrderItemEvent,
-                                        deleteBo
+                                        // 获取表格选中的对象
+                                        openui5.utils.getSelecteds<bo.SalesOrderItem>(that.salesOrderItemList)
                                     );
                                     that.salesOrderItemList.swipeOut(null);
                                 }
@@ -162,11 +153,9 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
                                 width: "3rem",
                                 icon: "sap-icon://edit",
                                 press(oEvent: any): void {
-                                    var editBo: bo.SalesOrderItem =
-                                        that.salesOrderItemList.getSwipedItem().getBindingContext().getObject();
-                                    that.salesOrderItemEditForm.setModel(new sap.ui.model.json.JSONModel(editBo));
-                                    that.salesOrderItemEditForm.bindObject("/");
-                                    that.toPage(that.salesOrderItemEditPage);
+                                    that.showSalesOrderItem(
+                                        openui5.utils.getSelecteds<bo.SalesOrderItem>(that.salesOrderItemList).firstOrDefault()
+                                    );
                                     that.salesOrderItemList.swipeOut(null);
                                 }
                             })
@@ -188,7 +177,13 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
                         type: sap.ui.model.type.Currency,
                         formatOptions: { showMeasure: false }
                     },
+                    numberUnit: "RMB",
                     attributes: [
+                        new sap.m.ObjectAttribute("", {
+                            text: {
+                                path: "itemDescription"
+                            }
+                        }),
                         new sap.m.ObjectAttribute("", {
                             text: {
                                 parts: [
@@ -234,9 +229,7 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
                             if (datas.length > 0) {
                                 let newItem: bo.SalesOrderItem = datas[datas.length - 1];
                                 if (!ibas.objects.isNull(newItem)) {
-                                    that.salesOrderItemEditForm.setModel(new sap.ui.model.json.JSONModel(newItem));
-                                    that.salesOrderItemEditForm.bindObject("/");
-                                    that.toPage(that.salesOrderItemEditPage);
+                                    that.showSalesOrderItem(newItem);
                                 }
                             }
                             that.salesOrderItemList.swipeOut(null);
@@ -274,13 +267,21 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
                         );
                     }
                 }),
-                new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorderitem_price") }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorderitem_itemdescription") }),
+                new sap.m.Input("", {
+                    width: "100%",
+                    enabled: false,
+                    value: {
+                        path: "itemDescription"
+                    },
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorderitem_price") + "(RMB)" }),
                 new sap.m.Input("", {
                     width: "100%",
                     value: {
                         path: "price"
                     },
-                    type: sap.m.InputType.Number
+                    type: sap.m.InputType.Number,
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorderitem_quantity") }),
                 new sap.m.Input("", {
@@ -290,13 +291,13 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
                     },
                     type: sap.m.InputType.Number
                 }),
-                new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorderitem_linetotal") }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorderitem_linetotal") + "(RMB)" }),
                 new sap.m.Input("", {
                     width: "100%",
                     value: {
                         path: "lineTotal"
                     },
-                    type: sap.m.InputType.Number,
+                    type: sap.m.InputType.Number
                 }),
             ]
         });
@@ -488,6 +489,14 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
         this.salesOrderItemList.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
         // 监听属性改变，并更新控件
         openui5.utils.refreshModelChanged(this.salesOrderItemList, datas);
+    }
+    /** 显示数据 */
+    showSalesOrderItem(data: bo.SalesOrderItem): void {
+        this.salesOrderItemEditForm.setModel(new sap.ui.model.json.JSONModel(data));
+        this.salesOrderItemEditForm.bindObject("/");
+        // 监听属性改变，并更新控件
+        openui5.utils.refreshModelChanged(this.salesOrderItemEditForm, data);
+        this.toPage(this.salesOrderItemEditPage);
     }
 
 }

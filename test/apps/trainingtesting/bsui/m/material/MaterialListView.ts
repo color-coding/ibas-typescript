@@ -31,111 +31,127 @@ export class MaterialListView extends ibas.BOListView implements IMaterialListVi
             growing: false,
             mode: sap.m.ListMode.None,
             swipeDirection: sap.m.SwipeDirection.RightToLeft,
-            delete: function (event: any): void {
-                //
-            },
-        });
-        this.list.bindItems({
-            path: "/rows",
-            template: new sap.m.ObjectListItem("", {
-                title: "{code}",
-                number: "{onOrder}",
-                numberUnit: "{uom}",
-                secondStatus: new sap.m.ObjectStatus("", {
-                    text: {
-                        path: "approvalStatus",
-                        formatter(data: any): any {
-                            return ibas.enums.describe(ibas.emApprovalStatus, data);
-                        }
-                    }
-                }),
-                attributes: [
-                    new sap.m.ObjectAttribute("", {
-                        text: "{name}"
+            swipeContent: new sap.m.FlexBox("", {
+                height: "100%",
+                alignItems: sap.m.FlexAlignItems.Start,
+                justifyContent: sap.m.FlexJustifyContent.End,
+                items: [
+                    new sap.m.SegmentedButton("", {
+                        width: "9rem",
+                        items: [
+                            new sap.m.SegmentedButtonItem("", {
+                                width: "3rem",
+                                icon: "sap-icon://action",
+                                press: function (event: any): void {
+                                    that.page.setShowFooter(true);
+                                    that.fireViewEvents(that.callServicesEvent, {
+                                        displayServices(services: ibas.IServiceAgent[]): void {
+                                            if (ibas.objects.isNull(services) || services.length === 0) {
+                                                return;
+                                            }
+                                            let popover: sap.m.Popover = new sap.m.Popover("", {
+                                                showHeader: false,
+                                                placement: sap.m.PlacementType.Bottom,
+                                            });
+                                            for (let service of services) {
+                                                popover.addContent(new sap.m.Button({
+                                                    text: ibas.i18n.prop(service.name),
+                                                    type: sap.m.ButtonType.Transparent,
+                                                    icon: service.icon,
+                                                    press: function (): void {
+                                                        service.run();
+                                                        popover.close();
+                                                        that.list.swipeOut(null);
+                                                    }
+                                                }));
+                                            }
+                                            popover.addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
+                                            popover.openBy(event.getSource(), true);
+                                        }
+                                    });
+                                }
+                            }),
+                            new sap.m.SegmentedButtonItem("", {
+                                width: "3rem",
+                                icon: "sap-icon://delete",
+                                press(oEvent: any): void {
+                                    that.page.setShowFooter(true);
+                                    that.fireViewEvents(that.deleteDataEvent,
+                                        openui5.utils.getSelecteds<bo.Material>(that.list)
+                                    );
+                                }
+                            }),
+                            new sap.m.SegmentedButtonItem("", {
+                                width: "3rem",
+                                icon: "sap-icon://edit",
+                                press(oEvent: any): void {
+                                    that.page.setShowFooter(true);
+                                    that.fireViewEvents(that.editDataEvent,
+                                        openui5.utils.getSelecteds<bo.Material>(that.list).firstOrDefault()
+                                    );
+                                }
+                            })
+                        ]
                     }),
                 ]
-            })
+            }).addStyleClass("sapUiSmallMarginTop"),
+            swipe: function (event: sap.ui.base.Event): void {
+                that.page.setShowFooter(true);
+            },
+            items: {
+                path: "/rows",
+                template: new sap.m.ObjectListItem("", {
+                    title: {
+                        path: "code"
+                    },
+                    number: {
+                        path: "onOrder"
+                    },
+                    numberUnit: {
+                        path: "uom"
+                    },
+                    secondStatus: new sap.m.ObjectStatus("", {
+                        text: {
+                            path: "approvalStatus",
+                            formatter(data: any): any {
+                                return ibas.enums.describe(ibas.emApprovalStatus, data);
+                            }
+                        }
+                    }),
+                    attributes: [
+                        new sap.m.ObjectAttribute("", {
+                            text: {
+                                path: "name"
+                            }
+                        }),
+                    ]
+                })
+            }
+        });
+        this.pullToRefresh = new sap.m.PullToRefresh("", {
+            refresh: function (event: sap.ui.base.Event): void {
+                that.fireViewEvents(that.fetchDataEvent);
+            }
         });
         this.page = new sap.m.Page("", {
             showHeader: false,
-            subHeader: new sap.m.Toolbar("", {
+            showSubHeader: false,
+            floatingFooter: true,
+            content: [
+                this.pullToRefresh,
+                this.list
+            ],
+            footer: new sap.m.Toolbar("", {
                 content: [
                     new sap.m.Button("", {
-                        // text: ibas.i18n.prop("shell_data_new"),
-                        type: sap.m.ButtonType.Transparent,
-                        icon: "sap-icon://create",
+                        width: "100%",
+                        text: ibas.i18n.prop("shell_data_new"),
                         press: function (): void {
                             that.fireViewEvents(that.newDataEvent);
                         }
-                    }),
-                    new sap.m.Button("", {
-                        // text: ibas.i18n.prop("shell_data_view"),
-                        type: sap.m.ButtonType.Transparent,
-                        icon: "sap-icon://display",
-                        press: function (): void {
-                            that.fireViewEvents(that.viewDataEvent,
-                                // 获取表格选中的对象
-                                openui5.utils.getSelecteds<bo.Material>(that.list).firstOrDefault()
-                            );
-                        }
-                    }),
-                    new sap.m.Button("", {
-                        // text: ibas.i18n.prop("shell_data_edit"),
-                        type: sap.m.ButtonType.Transparent,
-                        icon: "sap-icon://edit",
-                        press: function (): void {
-                            that.fireViewEvents(that.editDataEvent,
-                                // 获取表格选中的对象
-                                openui5.utils.getSelecteds<bo.Material>(that.list).firstOrDefault()
-                            );
-                        }
-                    }),
-                    new sap.m.ToolbarSeparator(""),
-                    new sap.m.Button("", {
-                        // text: ibas.i18n.prop("shell_data_delete"),
-                        type: sap.m.ButtonType.Transparent,
-                        icon: "sap-icon://delete",
-                        press: function (): void {
-                            that.fireViewEvents(that.deleteDataEvent,
-                                // 获取表格选中的对象
-                                openui5.utils.getSelecteds<bo.Material>(that.list)
-                            );
-                        }
-                    }),
-                    new sap.m.ToolbarSpacer(""),
-                    new sap.m.Button("", {
-                        type: sap.m.ButtonType.Transparent,
-                        icon: "sap-icon://action",
-                        press: function (event: any): void {
-                            that.fireViewEvents(that.callServicesEvent, {
-                                displayServices(services: ibas.IServiceAgent[]): void {
-                                    if (ibas.objects.isNull(services) || services.length === 0) {
-                                        return;
-                                    }
-                                    let popover: sap.m.Popover = new sap.m.Popover("", {
-                                        showHeader: false,
-                                        placement: sap.m.PlacementType.Bottom,
-                                    });
-                                    for (let service of services) {
-                                        popover.addContent(new sap.m.Button({
-                                            text: ibas.i18n.prop(service.name),
-                                            type: sap.m.ButtonType.Transparent,
-                                            icon: service.icon,
-                                            press: function (): void {
-                                                service.run();
-                                                popover.close();
-                                            }
-                                        }));
-                                    }
-                                    (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
-                                    popover.openBy(event.getSource(), true);
-                                }
-                            });
-                        }
                     })
                 ]
-            }),
-            content: [this.list]
+            })
         });
         this.id = this.page.getId();
         // 添加列表自动查询事件
@@ -157,8 +173,10 @@ export class MaterialListView extends ibas.BOListView implements IMaterialListVi
     }
     private page: sap.m.Page;
     private list: sap.m.List;
+    private pullToRefresh: sap.m.PullToRefresh;
     /** 显示数据 */
     showData(datas: bo.Material[]): void {
+        this.pullToRefresh.hide();
         let done: boolean = false;
         let model: sap.ui.model.Model = this.list.getModel(undefined);
         if (!ibas.objects.isNull(model)) {
@@ -191,5 +209,13 @@ export class MaterialListView extends ibas.BOListView implements IMaterialListVi
     /** 获取选择的数据 */
     getSelecteds(): bo.Material[] {
         return openui5.utils.getSelecteds<bo.Material>(this.list);
+    }
+    /** 手指触控滑动 */
+    onTouchMove(direcction: ibas.emTouchMoveDirection, event: TouchEvent): void {
+        if (direcction === ibas.emTouchMoveDirection.UP) {
+            this.page.setShowFooter(false);
+        } else if (direcction === ibas.emTouchMoveDirection.DOWN) {
+            this.page.setShowFooter(true);
+        }
     }
 }
