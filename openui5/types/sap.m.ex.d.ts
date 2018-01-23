@@ -32,10 +32,17 @@ declare namespace sap {
                 setRepositoryName(value: string): void;
                 setBindingValue(value: string): void;
                 getBindingValue(): string;
+                setReadOnly(value: Boolean): void;
+                getReadOnly(): Boolean;
             }
-            export class DataOwnerInput extends BOInput {
+            export class BOChooseInput extends BOInput {
+                getChooseType(): any;
+                getCriteria(): any;
+                setCriteria(value: any): void;
             }
-            export class TeamMembersInput extends BOInput {
+            export class DataOwnerInput extends BOChooseInput {
+            }
+            export class TeamMembersInput extends DataOwnerInput {
 
             }
             export class BOText extends sap.m.Text {
@@ -65,6 +72,10 @@ declare namespace sap {
                 getBindingValue(): string;
                 getCriteria(): any;
                 setCriteria(value: any): void;
+            }
+            export class SeriesSelect extends sap.m.ex.BOSelect {
+                getBoCode(): string;
+                setBoCode(value: string): void;
             }
         }
     }
