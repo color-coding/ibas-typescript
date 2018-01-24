@@ -219,8 +219,9 @@ export class SalesOrderEditApp extends ibas.BOEditApplication<ISalesOrderEditVie
                 new ibas.Condition(bo.Customer.PROPERTY_ACTIVATED_NAME, ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES)
             ],
             onCompleted(selecteds: ibas.List<bo.Customer>): void {
-                that.editData.customerCode = selecteds.firstOrDefault().code;
-                that.editData.customerName = selecteds.firstOrDefault().name;
+                let selected: bo.Customer = selecteds.firstOrDefault();
+                that.editData.customerCode = selected.code;
+                that.editData.customerName = selected.name;
             }
         });
     }
