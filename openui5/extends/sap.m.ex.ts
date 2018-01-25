@@ -9,7 +9,6 @@
 import * as ibas from "ibas/index";
 import { utils } from "utils";
 import * as ibasEx from "./ibas.ex";
-import { Criteria, KeyText } from "ibas/index";
 /**
  * 枚举Select
  */
@@ -168,11 +167,11 @@ sap.m.Select.extend("sap.m.ex.BOSelect", {
         return this.getProperty("criteria");
     },
     setCriteria(value: any): void {
-        let criteria: Criteria;
+        let criteria: ibas.Criteria;
         if (ibas.objects.instanceOf(value, ibas.Criteria)) {
             criteria = value;
         } else if (value instanceof Array) {
-            criteria = new Criteria();
+            criteria = new ibas.Criteria();
             for (let item of value) {
                 if (ibas.objects.instanceOf(item, ibas.Condition)) {
                     // 过滤无效查询条件
@@ -534,11 +533,11 @@ sap.m.ex.BOInput.extend("sap.m.ex.BOChooseInput", {
         return this.getProperty("criteria");
     },
     setCriteria(value: any): void {
-        let criteria: Criteria;
+        let criteria: ibas.Criteria;
         if (ibas.objects.instanceOf(value, ibas.Criteria)) {
             criteria = value;
         } else if (value instanceof Array) {
-            criteria = new Criteria();
+            criteria = new ibas.Criteria();
             for (let item of value) {
                 if (ibas.objects.instanceOf(item, ibas.Condition)) {
                     // 过滤无效查询条件
@@ -595,7 +594,7 @@ sap.m.ex.BOChooseInput.extend("sap.m.ex.DataOwnerInput", {
     fireChooseList: function (): void {
         let that: any = this;
         let boData: any = this.getBindingContext().getModel().getData();
-        let criteria: Criteria = this.getCriteria();
+        let criteria: ibas.Criteria = this.getCriteria();
         if (ibas.objects.isNull(criteria)) {
             criteria = new ibas.Criteria();
             let condition: ibas.ICondition = criteria.conditions.create();

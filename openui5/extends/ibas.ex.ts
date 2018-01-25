@@ -5,7 +5,6 @@
  * Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
  */
 import * as ibas from "ibas/index";
-import { ArrayList } from "ibas/index";
 export class BORepsitory {
     rootUrl: string = ibas.urls.rootUrl("/openui5/index");
     keyAttribute: string;
