@@ -9,7 +9,6 @@
 import * as ibas from "ibas/index";
 import { utils } from "utils";
 import * as ibasEx from "./ibas.ex";
-import { Criteria, KeyText } from "ibas/index";
 /**
  * 枚举Select
  */
@@ -127,7 +126,6 @@ sap.m.Select.extend("sap.m.ex.BOSelect", {
         }
         let boName: string = ibas.objects.getName(boType);
         let boText: string = that.getBoText();
-        let criteria: ibas.Criteria = this.getCriteria();
         if (ibas.strings.isEmpty(boKey)) {
             console.log(ibas.i18n.prop("sap_m_ex_bokey_null"));
             return;
@@ -136,15 +134,14 @@ sap.m.Select.extend("sap.m.ex.BOSelect", {
             console.log(ibas.i18n.prop("sap_m_ex_botext_null"));
             return;
         }
-        if (ibas.objects.isNull(criteria)) {
-            console.log(ibas.i18n.prop("sap_m_ex_criteria_null"));
-            return;
-        }
         if (ibas.strings.isEmpty(boName)) {
             console.log(ibas.i18n.prop("sap_m_ex_boname_null"));
             return;
         }
-
+        let criteria: ibas.Criteria = this.getCriteria();
+        if (ibas.objects.isNull(criteria)) {
+            criteria = new ibas.Criteria();
+        }
         let boRepEx: ibasEx.BORepsitory = new ibasEx.BORepsitory();
         boRepEx.boName = boName;
         boRepEx.keyAttribute = boKey;
@@ -170,7 +167,19 @@ sap.m.Select.extend("sap.m.ex.BOSelect", {
         return this.getProperty("criteria");
     },
     setCriteria(value: any): void {
-        this.setProperty("criteria", value);
+        let criteria: ibas.Criteria;
+        if (ibas.objects.instanceOf(value, ibas.Criteria)) {
+            criteria = value;
+        } else if (value instanceof Array) {
+            criteria = new ibas.Criteria();
+            for (let item of value) {
+                if (ibas.objects.instanceOf(item, ibas.Condition)) {
+                    // 过滤无效查询条件
+                    criteria.conditions.add(item);
+                }
+            }
+        }
+        this.setProperty("criteria", criteria);
         if (!ibas.objects.isNull(value)) {
             this.seachBO();
         }
@@ -488,10 +497,23 @@ sap.m.ex.BOInput.extend("sap.m.ex.BOChooseInput", {
             console.log(ibas.i18n.prop("sap_m_ex_boType_null"));
             return;
         }
-        let criteria: ibas.Criteria = this.getCriteria();
-        if (ibas.objects.isNull(criteria)) {
+        let criteria: ibas.Criteria;
+        if (ibas.objects.isNull(this.getCriteria())) {
             criteria = new ibas.Criteria();
+        } else {
+            criteria = this.getCriteria().clone();
+            for (let item of criteria.conditions) {
+                if (item.value.startsWith("{") && item.value.endsWith("}")) {
+                    if (!ibas.objects.isNull(this.getBindingContext()) &&
+                        !ibas.objects.isNull(this.getBindingContext().getModel()) &&
+                        !ibas.objects.isNull(this.getBindingContext().getModel().getData())) {
+                        item.value = this.getBindingContext().getModel().getData().
+                            getProperty(item.value.replace("{", "").replace("}", ""));
+                    }
+                }
+            }
         }
+
         let boData: any = this.getBindingContext().getModel().getData();
         ibas.servicesManager.runChooseService<any>({
             boCode: boType.BUSINESS_OBJECT_CODE,
@@ -511,7 +533,19 @@ sap.m.ex.BOInput.extend("sap.m.ex.BOChooseInput", {
         return this.getProperty("criteria");
     },
     setCriteria(value: any): void {
-        this.setProperty("criteria", value);
+        let criteria: ibas.Criteria;
+        if (ibas.objects.instanceOf(value, ibas.Criteria)) {
+            criteria = value;
+        } else if (value instanceof Array) {
+            criteria = new ibas.Criteria();
+            for (let item of value) {
+                if (ibas.objects.instanceOf(item, ibas.Condition)) {
+                    // 过滤无效查询条件
+                    criteria.conditions.add(item);
+                }
+            }
+        }
+        this.setProperty("criteria", criteria);
     },
     getChooseType(): ibas.emChooseType {
         return ibas.emChooseType.SINGLE;
@@ -563,6 +597,9 @@ sap.m.ex.BOChooseInput.extend("sap.m.ex.DataOwnerInput", {
         let criteria: ibas.Criteria = this.getCriteria();
         if (ibas.objects.isNull(criteria)) {
             criteria = new ibas.Criteria();
+            let condition: ibas.ICondition = criteria.conditions.create();
+            condition.alias = "Activated";
+            condition.value = "Y";
         }
         ibas.servicesManager.runChooseService<any>({
             boCode: "${Company}_SYS_USER",
