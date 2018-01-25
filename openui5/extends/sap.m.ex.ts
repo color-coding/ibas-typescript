@@ -9,6 +9,7 @@
 import * as ibas from "ibas/index";
 import { utils } from "utils";
 import * as ibasEx from "./ibas.ex";
+import { Criteria, KeyText } from "ibas/index";
 /**
  * 枚举Select
  */
@@ -126,12 +127,7 @@ sap.m.Select.extend("sap.m.ex.BOSelect", {
         }
         let boName: string = ibas.objects.getName(boType);
         let boText: string = that.getBoText();
-        let boRep: any = ibas.boFactory.create(this.getRepositoryName());
         let criteria: ibas.Criteria = this.getCriteria();
-        if (!ibas.objects.instanceOf(boRep, ibas.BORepositoryApplication)) {
-            console.log(ibas.i18n.prop("sap_m_ex_repository_type_error"));
-            return;
-        }
         if (ibas.strings.isEmpty(boKey)) {
             console.log(ibas.i18n.prop("sap_m_ex_bokey_null"));
             return;
@@ -216,6 +212,84 @@ sap.m.Select.extend("sap.m.ex.BOSelect", {
     }
 });
 /**
+ * 业务对象编码Select
+ */
+sap.m.ex.BOSelect.extend("sap.m.ex.SeriesSelect", {
+    metadata: {
+        properties: {
+            /** 业务对象编码 */
+            objectCode: { type: "string", group: "Ex" },
+        },
+        events: {
+        },
+    },
+    async seachBO(): Promise<void> {
+        let that: any = this;
+        let boKey: string = this.getBoKey();
+        let selectedKey: string = this.getSelectedKey();
+        let boText: string = that.getBoText();
+        let objectCode: string = this.getObjectCode();
+        if (ibas.strings.isEmpty(boKey)) {
+            console.log(ibas.i18n.prop("sap_m_ex_bokey_null"));
+            return;
+        }
+        if (ibas.strings.isEmpty(boText)) {
+            console.log(ibas.i18n.prop("sap_m_ex_botext_null"));
+            return;
+        }
+        if (ibas.objects.isNull(selectedKey)) {
+            return;
+        }
+        let boRepEx: ibasEx.BORepsitory = new ibasEx.BORepsitory();
+        boRepEx.boName = "BOSeriesNumbering";
+        boRepEx.keyAttribute = boKey;
+        boRepEx.textAttribute = boText;
+        boRepEx.selectedKey = selectedKey;
+        boRepEx.repositoryName = this.getRepositoryName();
+
+        let criteria: ibas.ICriteria = new ibas.Criteria();
+        let condition: ibas.ICondition = criteria.conditions.create();
+        condition.alias = "objectCode";
+        condition.value = objectCode;
+
+        boRepEx.criteria = criteria;
+        let keyTexts: ibas.ArrayList<ibas.KeyText> = await boRepEx.getKeyTextList();
+        let keyTextList: ibas.ArrayList<ibas.KeyText> = new ibas.ArrayList<ibas.KeyText>();
+        let keyText: ibas.KeyText = new ibas.KeyText();
+        keyText.key = "-1";
+        keyText.text = ibas.i18n.prop("sap_m_ex_seriesselect_manual");
+        keyTextList.add(keyText);
+        for (let item of keyTexts) {
+            keyTextList.add(item);
+        }
+        this.removeAllItems();
+        this.loadItems(keyTextList);
+    },
+    getBoKey(): string {
+        return "series";
+    },
+    getBoText(): string {
+        return "seriesName";
+    },
+    getRepositoryName(): string {
+        return "BORepositoryInitialFantasy";
+    },
+    getBlank(): Boolean {
+        return false;
+    },
+    getObjectCode(): string {
+        return this.getProperty("objectCode");
+    },
+    setObjectCode(value: string): void {
+        this.setProperty("objectCode", value);
+        if (!ibas.objects.isNull(value)) {
+            this.seachBO();
+        }
+    },
+    renderer: {
+    }
+});
+/**
  * 业务对象Input
  */
 sap.m.Input.extend("sap.m.ex.BOInput", {
@@ -231,6 +305,8 @@ sap.m.Input.extend("sap.m.ex.BOInput", {
             repositoryName: { type: "string", group: "Ex" },
             /** 绑定值 */
             bindingValue: { type: "string", group: "Ex" },
+            /** 是否只读 */
+            readOnly: { type: "boolean", group: "Ex", defaultValue: true },
         },
         events: {
         },
@@ -272,11 +348,6 @@ sap.m.Input.extend("sap.m.ex.BOInput", {
         }
         let boName: string = ibas.objects.getName(boType);
         let boText: string = that.getBoText();
-        let boRep: any = ibas.boFactory.create(this.getRepositoryName());
-        if (!ibas.objects.instanceOf(boRep, ibas.BORepositoryApplication)) {
-            console.log(ibas.i18n.prop("sap_m_ex_repository_type_error"));
-            return;
-        }
         if (ibas.strings.isEmpty(boKey)) {
             console.log(ibas.i18n.prop("sap_m_ex_bokey_null"));
             return;
@@ -315,6 +386,12 @@ sap.m.Input.extend("sap.m.ex.BOInput", {
         }
         this.removeAllSuggestionItems();
         this.addKeyTextItem(keyText);
+    },
+    getReadOnly(): Boolean {
+        return this.getProperty("readOnly");
+    },
+    setReadOnly(value: Boolean): void {
+        this.setProperty("readOnly", value);
     },
     getBoText(): string {
         return this.getProperty("boText");
@@ -358,35 +435,137 @@ sap.m.Input.extend("sap.m.ex.BOInput", {
         }
     },
     renderer: {
+        writeInnerAttributes: function (oRm: any, oControl: any): void {
+            oRm.writeAttribute("type", oControl.getType().toLowerCase());
+            if (oControl.getType() === sap.m.InputType.Number && sap.ui.getCore().getConfiguration().getRTL()) {
+                oRm.writeAttribute("dir", "ltr");
+                oRm.addStyle("text-align", "right");
+            }
+
+            if (oControl.getShowSuggestion()) {
+                oRm.writeAttribute("autocomplete", "off");
+            }
+
+            if ((!oControl.getEnabled() && oControl.getType() === "Password")
+                || (oControl.getShowSuggestion() && oControl._bUseDialog)
+                || (oControl.getValueHelpOnly() && oControl.getEnabled() || oControl.getReadOnly()
+                    && oControl.getEditable() && oControl.getShowValueHelp())) {
+                // required for JAWS reader on password fields on desktop and in other cases:
+                oRm.writeAttribute("readonly", "readonly");
+            }
+        }
     }
 });
 /**
- * 数据所有者Input
+ * 自动选择业务对象Input 继承sap.m.ex.BOInput
  */
-sap.m.ex.BOInput.extend("sap.m.ex.DataOwnerInput", {
+sap.m.ex.BOInput.extend("sap.m.ex.BOChooseInput", {
+    metadata: {
+        properties: {
+            /** 选择类型 */
+            chooseType: { type: "any", group: "Ex", default: ibas.emChooseType.SINGLE },
+            /** 查询业务对象条件 */
+            criteria: { type: "any", group: "Ex" },
+        },
+        events: {
+        },
+    },
+    fireChooseList: function (): void {
+        let that: any = this;
+        let boCode: string = this.getBoCode();
+        if (ibas.strings.isEmpty(boCode)) {
+            console.log(ibas.i18n.prop("sap_m_ex_bocode_null"));
+            return;
+        }
+        let boType: any = ibas.boFactory.classOf(boCode);
+        if (ibas.objects.isNull(boType)) {
+            console.log(ibas.i18n.prop("sap_m_ex_boType_null"));
+            return;
+        }
+        let criteria: ibas.Criteria = this.getCriteria();
+        if (ibas.objects.isNull(criteria)) {
+            criteria = new ibas.Criteria();
+        }
+        let boData: any = this.getBindingContext().getModel().getData();
+        ibas.servicesManager.runChooseService<any>({
+            boCode: boType.BUSINESS_OBJECT_CODE,
+            chooseType: that.getChooseType(),
+            criteria: criteria,
+            onCompleted(selecteds: ibas.List<any>): void {
+                that.chooseCompleted(selecteds);
+            }
+        });
+    },
+    chooseCompleted: function (selecteds: ibas.List<any>): void {
+        if (selecteds !== null && !!selecteds.firstOrDefault()) {
+            this.setSelectedKey(selecteds.firstOrDefault()[this.getBoKey()]);
+        }
+    },
+    getCriteria(): any {
+        return this.getProperty("criteria");
+    },
+    setCriteria(value: any): void {
+        this.setProperty("criteria", value);
+    },
+    getChooseType(): ibas.emChooseType {
+        return ibas.emChooseType.SINGLE;
+    },
+    _getValueHelpIcon: function (Control: any): void {
+        var that: any = this;
+        var IconPool: any = sap.ui.require("sap/ui/core/IconPool");
+        if (!this._oValueHelpIcon) {
+            var sURI: any = IconPool.getIconURI("value-help");
+            this._oValueHelpIcon = IconPool.createControlByURI({
+                src: sURI,
+                useIconTooltip: false,
+                noTabStop: true
+            });
+            this._oValueHelpIcon.addStyleClass("sapMInputValHelpInner");
+            this._oValueHelpIcon.attachPress(function (oEvent: any): void {
+                // if the property valueHelpOnly is set to true, the event is triggered in the ontap function
+                Control.fireChooseList();
+            });
+        }
+        return this._oValueHelpIcon;
+    },
+    renderer: {
+        writeValueHelpIcon: function (oRm: any, Control: any): void {
+            if (Control.getShowValueHelp() && Control.getEnabled()) {
+                oRm.write("<div class='sapMInputValHelp' tabindex='-1'>");
+                oRm.renderControl(Control._getValueHelpIcon(Control));
+                oRm.write("</div>");
+            }
+        },
+    }
+});
+/**
+ * 数据所有者Input 继承sap.m.ex.AutoBOInput
+ */
+sap.m.ex.BOChooseInput.extend("sap.m.ex.DataOwnerInput", {
+    metadata: {
+        properties: {
+        },
+        events: {
+        },
+    },
     /**
      * 点击选择按钮默认触发事件,打开用户选择页面
      */
     fireChooseList: function (): void {
         let that: any = this;
         let boData: any = this.getBindingContext().getModel().getData();
+        let criteria: ibas.Criteria = this.getCriteria();
+        if (ibas.objects.isNull(criteria)) {
+            criteria = new ibas.Criteria();
+        }
         ibas.servicesManager.runChooseService<any>({
             boCode: "${Company}_SYS_USER",
             chooseType: that.getChooseType(),
-            criteria: [
-                new ibas.Condition("Activated", ibas.emConditionOperation.EQUAL, "Y")
-            ],
+            criteria: criteria,
             onCompleted(selecteds: ibas.List<any>): void {
                 that.chooseCompleted(selecteds);
             }
         });
-    },
-    metadata: {
-        properties: {
-            chooseType: { type: "any", group: "Ex" },
-        },
-        events: {
-        },
     },
     /**
      * 选择用户后回调事件
@@ -411,32 +590,7 @@ sap.m.ex.BOInput.extend("sap.m.ex.DataOwnerInput", {
     getRepositoryName(): string {
         return "BORepositoryInitialFantasy";
     },
-    _getValueHelpIcon: function (Control: any): void {
-        var that: any = this;
-        var IconPool: any = sap.ui.require("sap/ui/core/IconPool");
-        if (!this._oValueHelpIcon) {
-            var sURI: any = IconPool.getIconURI("value-help");
-            this._oValueHelpIcon = IconPool.createControlByURI({
-                src: sURI,
-                useIconTooltip: false,
-                noTabStop: true
-            });
-            this._oValueHelpIcon.addStyleClass("sapMInputValHelpInner");
-            this._oValueHelpIcon.attachPress(function (oEvent: any): void {
-                // if the property valueHelpOnly is set to true, the event is triggered in the ontap function
-                Control.fireChooseList();
-            });
-        }
-        return this._oValueHelpIcon;
-    },
     renderer: {
-        writeValueHelpIcon: function (oRm: any, Control: any): void {
-            if (Control.getShowValueHelp() && Control.getEnabled() && Control.getEditable()) {
-                oRm.write("<div class='sapMInputValHelp' tabindex='-1'>");
-                oRm.renderControl(Control._getValueHelpIcon(Control));
-                oRm.write("</div>");
-            }
-        },
     },
 });
 /**
@@ -481,11 +635,6 @@ sap.m.ex.DataOwnerInput.extend("sap.m.ex.TeamMembersInput", {
         let boType: any = ibas.boFactory.classOf(boCode);
         let boName: string = ibas.objects.getName(boType);
         let boText: string = that.getBoText();
-        let boRep: any = ibas.boFactory.create(this.getRepositoryName());
-        if (!ibas.objects.instanceOf(boRep, ibas.BORepositoryApplication)) {
-            console.log(ibas.i18n.prop("sap_m_ex_repository_type_error"));
-            return;
-        }
         if (ibas.strings.isEmpty(boKey)) {
             console.log(ibas.i18n.prop("sap_m_ex_bokey_null"));
             return;
