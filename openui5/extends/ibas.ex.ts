@@ -5,6 +5,7 @@
  * Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
  */
 import * as ibas from "ibas/index";
+import { ArrayList } from "ibas/index";
 export class BORepsitory {
     keyAttribute: string;
     textAttribute: string;
@@ -12,6 +13,9 @@ export class BORepsitory {
     repositoryName: string;
     selectedKey: string;
     criteria: ibas.ICriteria;
+    provinces: Array<any>;
+    citys: any;
+    districts: any;
     constructor(repositoryName?: string, boName?: string, keyAttribute?: string,
         textAttribute?: string, criteria?: ibas.Criteria, selectedKey?: string) {
         this.repositoryName = repositoryName;
@@ -51,5 +55,75 @@ export class BORepsitory {
             });
         });
         return promise;
+    }
+    async getProvinces(): Promise<boolean> {
+        if (!ibas.strings.isEmpty(this.getLocalStorage("provinces"))) {
+            this.provinces = this.getLocalStorage("provinces");
+            return true;
+        }
+        let url: string = ibas.strings.format("{0}/resources/province.json", ibas.urls.rootUrl("/openui5/index"));
+        this.provinces = await this.load(url);
+        this.addLocalStorage("provinces", JSON.stringify(this.provinces));
+        if (ibas.objects.isNull(this.provinces)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    async getCitys(): Promise<boolean> {
+        if (!ibas.strings.isEmpty(this.getLocalStorage("citys"))) {
+            this.citys = this.getLocalStorage("citys");
+            return true;
+        }
+        let url: string = ibas.strings.format("{0}/resources/city.json", ibas.urls.rootUrl("/openui5/index"));
+        this.citys = await this.load(url);
+        this.addLocalStorage("citys", JSON.stringify(this.citys));
+        if (ibas.objects.isNull(this.citys)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    async getDistricts(): Promise<boolean> {
+        if (!ibas.strings.isEmpty(this.getLocalStorage("districts"))) {
+            this.districts = this.getLocalStorage("districts");
+            return true;
+        }
+        let url: string = ibas.strings.format("{0}/resources/area.json", ibas.urls.rootUrl("/openui5/index"));
+        this.districts = await this.load(url);
+        this.addLocalStorage("districts", JSON.stringify(this.districts));
+        if (ibas.objects.isNull(this.districts)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    private async load(address: string): Promise<any> {
+        let promise: Promise<any> = new Promise<any>(resolve => {
+            var JQryAjxSetting: JQueryAjaxSettings = {
+                url: address,
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                cache: false,
+                error: function (xhr: JQueryXHR, status: string, error: string): void {
+                    console.warn(ibas.strings.format("config: load file [{2}] faild [{0} - {1}].", status, error, address));
+                    resolve(null);
+                },
+                success: function (data: any): void {
+                    console.log(ibas.strings.format("config: load file [{0}] successful.", address));
+                    resolve(data);
+                },
+            };
+            jQuery.ajax(JQryAjxSetting);
+        });
+        return promise;
+    }
+    addLocalStorage(name: string, value: any): void {
+        window.localStorage.setItem(name, JSON.stringify(value));
+    }
+    getLocalStorage(name:string): any {
+        return JSON.parse(window.localStorage.getItem(name));
     }
 }
