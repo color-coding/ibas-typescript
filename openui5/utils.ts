@@ -387,6 +387,8 @@ export namespace utils {
     /** 改变窗体内控件编辑状态 */
     export function changeFormEditable(form: sap.ui.layout.VerticalLayout, editable: boolean): void;
     /** 改变窗体内控件编辑状态 */
+    export function changeFormEditable(form: sap.m.Page, editable: boolean): void;
+    /** 改变窗体内控件编辑状态 */
     export function changeFormEditable(): void {
         let form: any = arguments[0];
         if (ibas.objects.isNull(form)) {
@@ -398,6 +400,10 @@ export namespace utils {
                 this.changeControlEditable(item, editable);
             }
         } else if (form instanceof sap.ui.layout.VerticalLayout) {
+            for (let item of form.getContent()) {
+                this.changeControlEditable(item, editable);
+            }
+        } else if (form instanceof sap.m.Page) {
             for (let item of form.getContent()) {
                 this.changeControlEditable(item, editable);
             }
@@ -449,7 +455,7 @@ export namespace utils {
     export function toListMode(data: ibas.emChooseType): sap.m.ListMode {
         switch (data) {
             case ibas.emChooseType.SINGLE:
-                return sap.m.ListMode.SingleSelectLeft;
+                return sap.m.ListMode.SingleSelectMaster;
             case ibas.emChooseType.MULTIPLE:
                 return sap.m.ListMode.MultiSelect;
             default:

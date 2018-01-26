@@ -5,14 +5,13 @@
  * Use of this source code is governed by an Apache License, Version 2.0
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
-
 import * as ibas from "ibas/index";
 import * as openui5 from "openui5/index";
 import * as bo from "../../../borep/bo/index";
 import { ISalesOrderChooseView } from "../../../bsapp/salesorder/index";
 
 /**
- * 视图-SalesOrder
+ * 选择视图-销售订单
  */
 export class SalesOrderChooseView extends ibas.BOChooseView implements ISalesOrderChooseView {
     /** 返回查询的对象 */
@@ -20,7 +19,7 @@ export class SalesOrderChooseView extends ibas.BOChooseView implements ISalesOrd
         return bo.SalesOrder;
     }
     /** 绘制视图 */
-    darw(): any {
+    draw(): any {
         let that: this = this;
         this.list = new sap.m.List("", {
             inset: false,
@@ -94,6 +93,7 @@ export class SalesOrderChooseView extends ibas.BOChooseView implements ISalesOrd
                 }),
             }
         });
+        // 添加列表自动查询事件
         openui5.utils.triggerNextResults({
             listener: this.list,
             next(data: any): void {
@@ -108,17 +108,11 @@ export class SalesOrderChooseView extends ibas.BOChooseView implements ISalesOrd
                 that.fireViewEvents(that.fetchDataEvent, criteria);
             }
         });
-        this.pullToRefresh = new sap.m.PullToRefresh("", {
-            refresh: function (event: sap.ui.base.Event): void {
-                that.fireViewEvents(that.fetchDataEvent);
-            }
-        });
         this.page = new sap.m.Page("", {
             showHeader: false,
             showSubHeader: false,
             floatingFooter: true,
             content: [
-                this.pullToRefresh,
                 this.list
             ],
             footer: new sap.m.Toolbar("", {
@@ -129,8 +123,7 @@ export class SalesOrderChooseView extends ibas.BOChooseView implements ISalesOrd
                         type: sap.m.ButtonType.Transparent,
                         press: function (): void {
                             that.fireViewEvents(that.chooseDataEvent,
-                                // 获取表格选中的对象
-                                openui5.utils.getSelecteds<bo.Customer>(that.list)
+                                openui5.utils.getSelecteds<bo.SalesOrder>(that.list)
                             );
                         }
                     }),
@@ -145,7 +138,7 @@ export class SalesOrderChooseView extends ibas.BOChooseView implements ISalesOrd
                 ]
             })
         });
-        this.dialog = new sap.m.Dialog("", {
+        return new sap.m.Dialog("", {
             title: this.title,
             type: sap.m.DialogType.Standard,
             state: sap.ui.core.ValueState.None,
@@ -156,17 +149,25 @@ export class SalesOrderChooseView extends ibas.BOChooseView implements ISalesOrd
                 this.page
             ],
         });
-        this.id = this.dialog.getId();
-        return this.dialog;
     }
-    private dialog: sap.m.Dialog;
     private page: sap.m.Page;
-    private form: sap.ui.layout.VerticalLayout;
     private list: sap.m.List;
     private pullToRefresh: sap.m.PullToRefresh;
+    /** 嵌入下拉条 */
+    embeddedPuller(view: any): void {
+        if (view instanceof sap.m.PullToRefresh) {
+            if (!ibas.objects.isNull(this.page)) {
+                this.page.insertContent(view, 0);
+                this.pullToRefresh = view;
+            }
+        }
+    }
     /** 显示数据 */
     showData(datas: bo.SalesOrder[]): void {
-        this.pullToRefresh.hide();
+        if (!ibas.objects.isNull(this.pullToRefresh) && datas.length > 0) {
+            this.pullToRefresh.destroy(true);
+            this.pullToRefresh = undefined;
+        }
         let done: boolean = false;
         let model: sap.ui.model.Model = this.list.getModel(undefined);
         if (!ibas.objects.isNull(model)) {
@@ -186,23 +187,13 @@ export class SalesOrderChooseView extends ibas.BOChooseView implements ISalesOrd
         }
         this.list.setBusy(false);
     }
-
     /** 记录上次查询条件，表格滚动时自动触发 */
     query(criteria: ibas.ICriteria): void {
         super.query(criteria);
         // 清除历史数据
         if (this.isDisplayed) {
             this.list.setBusy(true);
-            this.list.setSelectedItemById("0", true);
             this.list.setModel(null);
-        }
-    }
-    /** 手指触控滑动 */
-    onTouchMove(direcction: ibas.emTouchMoveDirection, event: TouchEvent): void {
-        if (direcction === ibas.emTouchMoveDirection.UP) {
-            this.page.setShowFooter(false);
-        } else if (direcction === ibas.emTouchMoveDirection.DOWN) {
-            this.page.setShowFooter(true);
         }
     }
 }

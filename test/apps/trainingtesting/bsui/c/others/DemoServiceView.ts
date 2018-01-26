@@ -14,7 +14,7 @@ import { IDemoServiceView } from "../../../bsapp/others/index";
  * 视图-demo
  */
 export class DemoServiceView extends ibas.BODialogView implements IDemoServiceView {
-    darwBars(): any {
+    drawBars(): any {
         let that: this = this;
         return [
             new sap.m.Button("", {
@@ -28,7 +28,7 @@ export class DemoServiceView extends ibas.BODialogView implements IDemoServiceVi
         ];
     }
     /** 绘制视图 */
-    darw(): any {
+    draw(): any {
         return null;
     }
 }

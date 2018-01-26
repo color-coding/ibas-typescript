@@ -7,7 +7,7 @@
  */
 
 import * as ibas from "ibas/index";
-import { IEmbeddedQueryPanel, IQueryPanel, IQueryPanelView, Factories } from "ibas/bsbas/systems/index";
+import { IEmbeddedQueryPanel, IQueryPanel, IQueryPanelView, IUseQueryPanel, Factories } from "ibas/bsbas/systems/index";
 import { ICenterView } from "../../../bsapp/centers/CenterApp";
 import * as openui5 from "../../../../../openui5/index";
 
@@ -53,7 +53,7 @@ export class CenterView extends ibas.BOView implements ICenterView {
     /** 激活功能，参数1 string 功能ID */
     activateFunctionsEvent: Function;
     /** 绘制视图 */
-    darw(): any {
+    draw(): any {
         let that: this = this;
         this.mainPage = new sap.tnt.ToolPage("");
         this.mainHeader = new sap.tnt.ToolHeader("", {
@@ -552,7 +552,7 @@ export class CenterView extends ibas.BOView implements ICenterView {
         } else if (!ibas.objects.isNull(view.id)) {
             title = view.id;
         }
-        let form: any = view.darw();
+        let form: any = view.draw();
         let dialog: sap.m.Dialog = null;
         if (form instanceof sap.m.Dialog) {
             dialog = form;
@@ -566,7 +566,7 @@ export class CenterView extends ibas.BOView implements ICenterView {
                 stretchOnPhone: true,
                 horizontalScrolling: true,
                 verticalScrolling: true,
-                content: [view.darw()],
+                content: [view.draw()],
                 buttons: [
                     new sap.m.Button("", {
                         text: ibas.i18n.prop("shell_confirm"),
@@ -613,7 +613,7 @@ export class CenterView extends ibas.BOView implements ICenterView {
     /** 显示工具条视图 */
     showBarView(view: ibas.BOBarView): void {
         let that: this = this;
-        let form: any = view.darw();
+        let form: any = view.draw();
         if (form instanceof sap.m.QuickView) {
             // 快速视图
             form.attachAfterClose(null, function (): void {
@@ -622,7 +622,7 @@ export class CenterView extends ibas.BOView implements ICenterView {
                 that.barViewQueue.delete(view);
                 that.destroyView(view, false);
             });
-            form.openBy(view.darwBar());
+            form.openBy(view.drawBar());
         } else if (form instanceof sap.m.Dialog) {
             // 对话框视图
             // 添加关闭事件
@@ -662,7 +662,7 @@ export class CenterView extends ibas.BOView implements ICenterView {
             } else {
                 popover.addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
             }
-            popover.openBy(view.darwBar());
+            popover.openBy(view.drawBar());
         }
         view.id = form.getId();
         // 记录视图到列表
@@ -670,7 +670,7 @@ export class CenterView extends ibas.BOView implements ICenterView {
     }
     /** 显示常驻视图 */
     showResidentView(view: ibas.IBarView): void {
-        let bar: any = view.darwBar();
+        let bar: any = view.drawBar();
         if (!ibas.objects.isNull(bar) && bar instanceof sap.ui.core.Control) {
             this.mainHeader.insertContent(bar, this.mainHeader.getContent().length - 1);
             // 触发工具条显示完成事件
@@ -729,7 +729,7 @@ export class CenterView extends ibas.BOView implements ICenterView {
     }
     /** 显示一般视图 */
     showCommonView(view: ibas.View, container: sap.m.Page): void {
-        let viewContent: any = view.darw();
+        let viewContent: any = view.draw();
         if (ibas.objects.instanceOf(view, ibas.BOQueryView)) {
             // 添加查询面板
             let queryView: IEmbeddedQueryPanel = {
@@ -776,8 +776,12 @@ export class CenterView extends ibas.BOView implements ICenterView {
             queryPanel.run(function (): void {
                 // 清理提示
                 strip.destroy(true);
-                let viewContent: any = queryPanel.view.darwBar();
-                embeddedView.embedded(viewContent);
+                // 嵌入查询面板
+                embeddedView.embedded(queryPanel.view.drawBar());
+                // 嵌入刷新条
+                if (typeof (<IUseQueryPanel>view).embeddedPuller === "function") {
+                    (<IUseQueryPanel>view).embeddedPuller(queryPanel.view.drawPuller());
+                }
                 // 触发工具条显示完成事件
                 queryPanel.view.barShowedEvent.apply(queryPanel);
             });

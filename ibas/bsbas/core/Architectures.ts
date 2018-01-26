@@ -140,7 +140,7 @@ export abstract class View implements IView {
     /** 是否已显示 */
     isDisplayed: boolean;
     /** 绘制视图 */
-    abstract darw(): any;
+    abstract draw(): any;
     /** 关闭视图 */
     closeEvent: Function;
     /**

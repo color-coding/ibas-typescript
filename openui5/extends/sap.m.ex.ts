@@ -9,7 +9,6 @@
 import * as ibas from "ibas/index";
 import { utils } from "utils";
 import * as ibasEx from "./ibas.ex";
-import { Criteria, KeyText } from "ibas/index";
 /**
  * 枚举Select
  */
@@ -95,7 +94,7 @@ sap.m.Select.extend("sap.m.ex.BOSelect", {
         if (this.getBlank()) {
             this.addItem(new sap.ui.core.ListItem("", {
                 key: "",
-                text: ibas.i18n.prop("shell_please_chooose_data", ""),
+                text: ibas.i18n.prop("sap_m_ex_select_please_select", ""),
                 additionalText: ""
             }));
         }
@@ -127,7 +126,6 @@ sap.m.Select.extend("sap.m.ex.BOSelect", {
         }
         let boName: string = ibas.objects.getName(boType);
         let boText: string = that.getBoText();
-        let criteria: ibas.Criteria = this.getCriteria();
         if (ibas.strings.isEmpty(boKey)) {
             console.log(ibas.i18n.prop("sap_m_ex_bokey_null"));
             return;
@@ -136,15 +134,14 @@ sap.m.Select.extend("sap.m.ex.BOSelect", {
             console.log(ibas.i18n.prop("sap_m_ex_botext_null"));
             return;
         }
-        if (ibas.objects.isNull(criteria)) {
-            console.log(ibas.i18n.prop("sap_m_ex_criteria_null"));
-            return;
-        }
         if (ibas.strings.isEmpty(boName)) {
             console.log(ibas.i18n.prop("sap_m_ex_boname_null"));
             return;
         }
-
+        let criteria: ibas.Criteria = this.getCriteria();
+        if (ibas.objects.isNull(criteria)) {
+            criteria = new ibas.Criteria();
+        }
         let boRepEx: ibasEx.BORepsitory = new ibasEx.BORepsitory();
         boRepEx.boName = boName;
         boRepEx.keyAttribute = boKey;
@@ -170,7 +167,19 @@ sap.m.Select.extend("sap.m.ex.BOSelect", {
         return this.getProperty("criteria");
     },
     setCriteria(value: any): void {
-        this.setProperty("criteria", value);
+        let criteria: ibas.Criteria;
+        if (ibas.objects.instanceOf(value, ibas.Criteria)) {
+            criteria = value;
+        } else if (value instanceof Array) {
+            criteria = new ibas.Criteria();
+            for (let item of value) {
+                if (ibas.objects.instanceOf(item, ibas.Condition)) {
+                    // 过滤无效查询条件
+                    criteria.conditions.add(item);
+                }
+            }
+        }
+        this.setProperty("criteria", criteria);
         if (!ibas.objects.isNull(value)) {
             this.seachBO();
         }
@@ -251,6 +260,12 @@ sap.m.ex.BOSelect.extend("sap.m.ex.SeriesSelect", {
         let condition: ibas.ICondition = criteria.conditions.create();
         condition.alias = "objectCode";
         condition.value = objectCode;
+        condition = criteria.conditions.create();
+        condition.alias = "Locked";
+        condition.value = "N";
+        let sort: ibas.ISort = criteria.sorts.create();
+        sort.alias = "Series";
+        sort.sortType = ibas.emSortType.DESCENDING;
 
         boRepEx.criteria = criteria;
         let keyTexts: ibas.ArrayList<ibas.KeyText> = await boRepEx.getKeyTextList();
@@ -482,10 +497,23 @@ sap.m.ex.BOInput.extend("sap.m.ex.BOChooseInput", {
             console.log(ibas.i18n.prop("sap_m_ex_boType_null"));
             return;
         }
-        let criteria: ibas.Criteria = this.getCriteria();
-        if (ibas.objects.isNull(criteria)) {
+        let criteria: ibas.Criteria;
+        if (ibas.objects.isNull(this.getCriteria())) {
             criteria = new ibas.Criteria();
+        } else {
+            criteria = this.getCriteria().clone();
+            for (let item of criteria.conditions) {
+                if (item.value.startsWith("{") && item.value.endsWith("}")) {
+                    if (!ibas.objects.isNull(this.getBindingContext()) &&
+                        !ibas.objects.isNull(this.getBindingContext().getModel()) &&
+                        !ibas.objects.isNull(this.getBindingContext().getModel().getData())) {
+                        item.value = this.getBindingContext().getModel().getData().
+                            getProperty(item.value.replace("{", "").replace("}", ""));
+                    }
+                }
+            }
         }
+
         let boData: any = this.getBindingContext().getModel().getData();
         ibas.servicesManager.runChooseService<any>({
             boCode: boType.BUSINESS_OBJECT_CODE,
@@ -505,7 +533,19 @@ sap.m.ex.BOInput.extend("sap.m.ex.BOChooseInput", {
         return this.getProperty("criteria");
     },
     setCriteria(value: any): void {
-        this.setProperty("criteria", value);
+        let criteria: ibas.Criteria;
+        if (ibas.objects.instanceOf(value, ibas.Criteria)) {
+            criteria = value;
+        } else if (value instanceof Array) {
+            criteria = new ibas.Criteria();
+            for (let item of value) {
+                if (ibas.objects.instanceOf(item, ibas.Condition)) {
+                    // 过滤无效查询条件
+                    criteria.conditions.add(item);
+                }
+            }
+        }
+        this.setProperty("criteria", criteria);
     },
     getChooseType(): ibas.emChooseType {
         return ibas.emChooseType.SINGLE;
@@ -557,6 +597,9 @@ sap.m.ex.BOChooseInput.extend("sap.m.ex.DataOwnerInput", {
         let criteria: ibas.Criteria = this.getCriteria();
         if (ibas.objects.isNull(criteria)) {
             criteria = new ibas.Criteria();
+            let condition: ibas.ICondition = criteria.conditions.create();
+            condition.alias = "Activated";
+            condition.value = "Y";
         }
         ibas.servicesManager.runChooseService<any>({
             boCode: "${Company}_SYS_USER",
@@ -787,9 +830,9 @@ sap.m.Text.extend("sap.m.ex.BOText", {
         boRepEx.selectedKey = boDesc;
         boRepEx.repositoryName = this.getRepositoryName();
         let criteria: ibas.ICriteria = new ibas.Criteria();
-        let cond: ibas.ICondition = criteria.conditions.create();
-        cond.alias = boKey;
-        cond.value = boDesc;
+        let condition: ibas.ICondition = criteria.conditions.create();
+        condition.alias = boKey;
+        condition.value = boDesc;
         boRepEx.criteria = criteria;
         let keyTextList: ibas.ArrayList<ibas.KeyText> = await boRepEx.getKeyTextList();
         if (ibas.objects.isNull(keyTextList)) {
@@ -835,6 +878,135 @@ sap.m.Text.extend("sap.m.ex.BOText", {
         if (!ibas.strings.isEmpty(value)) {
             this.seachBO();
         }
+    },
+    renderer: {}
+});
+sap.m.FlexBox.extend("sap.m.ex.ProvincesCityDistrict", {
+    init(): void {
+        this.draw();
+    },
+    metadata: {
+        properties: {
+            /** 省 */
+            provinces: { type: "string", group: "Ex" },
+            /** 市 */
+            city: { type: "string", group: "Ex" },
+            /** 区 */
+            district: { type: "string", group: "Ex" },
+        },
+        events: {}
+    },
+    async draw(): Promise<void> {
+        let that: any = this;
+        let boRepEx: ibasEx.BORepsitory = new ibasEx.BORepsitory();
+        let provincesSelect: sap.m.Select;
+        let citySelect: sap.m.Select;
+        let districtSelect: sap.m.Select;
+        // 省改变时触发
+        let provincesChange: Function = function (): void {
+            let selectedKey: string = provincesSelect.getSelectedKey();
+            if (!!districtSelect) {
+                districtSelect.removeAllItems();
+            }
+            if (!!citySelect) {
+                citySelect.removeAllItems();
+                for (let item of boRepEx.citys[selectedKey]) {
+                    citySelect.addItem(
+                        new sap.ui.core.ListItem("", {
+                            key: item.id,
+                            text: item.name
+                        })
+                    );
+                }
+                citySelect.bindProperty("selectedKey", that.getBindingInfo("city"));
+            }
+        };
+        // 市改变时触发
+        let cityChange: Function = function (): void {
+            let selectedKey: string = citySelect.getSelectedKey();
+            if (!!districtSelect) {
+                districtSelect.removeAllItems();
+                for (let item of boRepEx.districts[selectedKey]) {
+                    districtSelect.addItem(
+                        new sap.ui.core.ListItem("", {
+                            key: item.id,
+                            text: item.name
+                        })
+                    );
+                }
+                districtSelect.bindProperty("selectedKey", that.getBindingInfo("district"));
+            }
+        };
+        // 获取省级数据
+        let provincesLoadStatus: boolean = await boRepEx.getProvinces();
+        if (provincesLoadStatus) {
+            provincesSelect = new sap.m.Select(this.getId() + "-Provinces", {
+                change: function (oEvent: any): void {
+                    provincesChange();
+                }
+            });
+            provincesSelect.removeAllItems();
+            for (let item of boRepEx.provinces) {
+                provincesSelect.addItem(
+                    new sap.ui.core.ListItem("", {
+                        key: item.id,
+                        text: item.name
+                    })
+                );
+            }
+            this.addItem(provincesSelect);
+            if (this.getBindingInfo("provinces") != null && this.getBindingInfo("provinces") !== undefined) {
+                provincesSelect.bindProperty("selectedKey", this.getBindingInfo("provinces"));
+            } else {
+                return;
+            }
+        }
+        if (this.getBindingInfo("city") != null && this.getBindingInfo("city") !== undefined) {
+            // 获取市级数据
+            let citysLoadStatus: boolean = await boRepEx.getCitys();
+            if (citysLoadStatus) {
+                citySelect = new sap.m.Select(this.getId() + "-City", {
+                    change: function (oEvent: any): void {
+                        cityChange();
+                    }
+                });
+                this.addItem(citySelect);
+                citySelect.bindProperty("selectedKey", this.getBindingInfo("city"));
+            }
+        }
+        // 获取区级数据
+        if (this.getBindingInfo("district") != null && this.getBindingInfo("district") !== undefined) {
+            let districtsLoadStatus: boolean = await boRepEx.getDistricts();
+            if (districtsLoadStatus) {
+                districtSelect = new sap.m.Select(this.getId() + "-District");
+                this.addItem(districtSelect);
+                districtSelect.bindProperty("selectedKey", this.getBindingInfo("district"));
+            }
+        }
+        if (this.getBindingInfo("city") != null && this.getBindingInfo("city") !== undefined) {
+            provincesChange();
+        }
+        if (this.getBindingInfo("district") != null && this.getBindingInfo("district") !== undefined) {
+            cityChange();
+        }
+    },
+    setProvinces(value: string): void {
+        this.setProperty("provinces", value);
+    },
+    getProvinces(): string {
+        return this.getProperty("provinces");
+    },
+    setCity(value: string): void {
+        this.setProperty("city", value);
+    },
+    getCity(): string {
+        return this.getProperty("city");
+    },
+    setDistrict(value: string): void {
+        this.setProperty("district", value);
+    },
+    getDistrict(): string {
+        return this.getProperty("district");
     },
     renderer: {}
 });

@@ -15,7 +15,7 @@ import { IDemoResidentView } from "../../../bsapp/others/index";
  */
 export class DemoResidentView extends ibas.BOResidentView implements IDemoResidentView {
     /** 绘制工具条视图 */
-    darwBar(): any {
+    drawBar(): any {
         let that: this = this;
         // 不重复创建工具条钮
         if (ibas.objects.isNull(this.bar)) {
@@ -34,7 +34,7 @@ export class DemoResidentView extends ibas.BOResidentView implements IDemoReside
     /** 激活完整视图事件 */
     showFullViewEvent: Function;
     /** 绘制视图 */
-    darw(): any {
+    draw(): any {
         let form: sap.ui.layout.VerticalLayout = new sap.ui.layout.VerticalLayout("", {
             class: "sapUiContentPadding",
             width: "100%",

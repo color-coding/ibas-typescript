@@ -14,7 +14,7 @@ import { IHelpView } from "../../../bsapp/centers/HelpApp";
  */
 export class HelpView extends ibas.UrlView implements IHelpView {
     /** 绘制视图 */
-    darw(): any {
+    draw(): any {
         return null;
     }
 

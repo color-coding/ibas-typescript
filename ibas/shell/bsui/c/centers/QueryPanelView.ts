@@ -41,7 +41,7 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
         this.baseOn.setSelectedKey(value);
     }
     /** 绘制工具条视图 */
-    darwBar(): any {
+    drawBar(): any {
         if (ibas.objects.isNull(this.bar)) {
             let that: this = this;
             this.search = new sap.m.SearchField("", {
@@ -72,6 +72,15 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
             });
         }
         return this.bar;
+    }
+    /** 绘制拉动条视图 */
+    drawPuller(): any {
+        let that: this = this;
+        return new sap.m.PullToRefresh("", {
+            refresh: function (event: sap.ui.base.Event): void {
+                that.fireViewEvents(that.searchEvent);
+            }
+        });
     }
     private bar: sap.m.Toolbar;
     private search: sap.m.SearchField;
@@ -271,7 +280,7 @@ export class QueryPanelView extends ibas.BOPanelView implements IQueryPanelView 
     }
     protected form: sap.m.Dialog;
     /** 绘制视图 */
-    darw(): any {
+    draw(): any {
         let that: this = this;
         this.form = new sap.m.Dialog("", {
             title: this.title,

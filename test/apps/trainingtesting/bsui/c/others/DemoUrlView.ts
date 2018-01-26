@@ -33,7 +33,7 @@ let getWindowHeight: Function = function (tab: boolean): number {
  */
 export class DemoUrlView extends ibas.UrlView implements IDemoUrlView {
     /** 绘制视图 */
-    darw(): any {
+    draw(): any {
         return null;
     }
 }
@@ -46,7 +46,7 @@ export class DemoTabUrlView extends ibas.TabView implements IDemoUrlView {
     /** 地址 */
     url: string;
     /** 绘制视图 */
-    darw(): any {
+    draw(): any {
         this.form = new sap.ui.layout.form.SimpleForm("", {
             content: [
             ]

@@ -18,7 +18,7 @@ declare let BMAP_ANCHOR_TOP_RIGHT: any;
  */
 export class DemoMapView extends ibas.View implements IDemoMapView {
     /** 绘制视图 */
-    darw(): any {
+    draw(): any {
         this.txtLng = new sap.m.Input("");
         this.txtLat = new sap.m.Input("");
         let that: this = this;
@@ -27,37 +27,34 @@ export class DemoMapView extends ibas.View implements IDemoMapView {
             subHeader: new sap.m.Toolbar("", {
                 content: [
                     new sap.m.MenuButton("", {
-                        text: "Baidu",
+                        text: "Map",
                         type: sap.m.ButtonType.Transparent,
                         icon: "sap-icon://map",
-                        buttonMode: sap.m.MenuButtonMode.Split,
-                        defaultAction: function (): void {
-                            that.loadBaiduMap();
-                        },
                         width: "auto",
                         menu: new sap.m.Menu("", {
                             items: [
                                 new sap.m.MenuItem("", {
                                     text: "Baidu",
                                     icon: "sap-icon://map",
+                                    press: function (): void {
+                                        that.loadBaiduMap();
+                                    }
                                 }),
                                 new sap.m.MenuItem("", {
                                     text: "Gaode",
                                     icon: "sap-icon://map",
+                                    press: function (): void {
+                                        //
+                                    }
                                 }),
                                 new sap.m.MenuItem("", {
                                     text: "Google",
                                     icon: "sap-icon://map",
+                                    press: function (): void {
+                                        //
+                                    }
                                 }),
                             ],
-                            itemSelected: function (event: any): void {
-                                let item: any = event.getParameter("item");
-                                if (item instanceof sap.m.MenuItem) {
-                                    if (item.getText() === "Baidu") {
-                                        that.loadBaiduMap();
-                                    }
-                                }
-                            }
                         })
                     }),
                     this.txtLng,

@@ -73,7 +73,7 @@ export interface IView {
     /** 名称 */
     title: string;
     /** 绘制视图 */
-    darw(): any;
+    draw(): any;
     /** 是否已显示 */
     isDisplayed: boolean;
     /** 关闭视图 */
@@ -103,7 +103,7 @@ export interface IUrlView extends IView {
  */
 export interface IBarView extends IView {
     /** 绘制工具条视图 */
-    darwBar(): any;
+    drawBar(): any;
     /** 激活完整视图事件 */
     showFullViewEvent: Function;
     /** 工具条视图显示完成事件 */
