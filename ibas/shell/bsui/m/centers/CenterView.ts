@@ -25,7 +25,7 @@ export class CenterView extends cCenterView implements ICenterView {
         } else if (!ibas.objects.isNull(view.id)) {
             title = view.id;
         }
-        let form: any = view.darw();
+        let form: any = view.draw();
         let dialog: sap.m.Dialog = null;
         if (form instanceof sap.m.Dialog) {
             dialog = form;
@@ -39,7 +39,7 @@ export class CenterView extends cCenterView implements ICenterView {
                 stretchOnPhone: true,
                 horizontalScrolling: true,
                 verticalScrolling: true,
-                content: [view.darw()],
+                content: [view.draw()],
                 buttons: [
                     new sap.m.Button("", {
                         text: ibas.i18n.prop("shell_confirm"),

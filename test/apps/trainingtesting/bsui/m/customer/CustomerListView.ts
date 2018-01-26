@@ -5,14 +5,12 @@
  * Use of this source code is governed by an Apache License, Version 2.0
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
-
 import * as ibas from "ibas/index";
 import * as openui5 from "openui5/index";
 import * as bo from "../../../borep/bo/index";
 import { ICustomerListView } from "../../../bsapp/customer/index";
-
 /**
- * 视图-Customer
+ * 列表视图-客户主数据
  */
 export class CustomerListView extends ibas.BOListView implements ICustomerListView {
     /** 返回查询的对象 */
@@ -24,7 +22,7 @@ export class CustomerListView extends ibas.BOListView implements ICustomerListVi
     /** 删除数据事件，参数：删除对象集合 */
     deleteDataEvent: Function;
     /** 绘制视图 */
-    darw(): any {
+    draw(): any {
         let that: this = this;
         this.list = new sap.m.List("", {
             inset: false,
@@ -122,17 +120,11 @@ export class CustomerListView extends ibas.BOListView implements ICustomerListVi
                 })
             }
         });
-        this.pullToRefresh = new sap.m.PullToRefresh("", {
-            refresh: function (event: sap.ui.base.Event): void {
-                that.fireViewEvents(that.fetchDataEvent);
-            }
-        });
         this.page = new sap.m.Page("", {
             showHeader: false,
             showSubHeader: false,
             floatingFooter: true,
             content: [
-                this.pullToRefresh,
                 this.list
             ],
             footer: new sap.m.Toolbar("", {
@@ -147,7 +139,6 @@ export class CustomerListView extends ibas.BOListView implements ICustomerListVi
                 ]
             })
         });
-        this.id = this.page.getId();
         // 添加列表自动查询事件
         openui5.utils.triggerNextResults({
             listener: this.list,
@@ -168,9 +159,21 @@ export class CustomerListView extends ibas.BOListView implements ICustomerListVi
     private page: sap.m.Page;
     private list: sap.m.List;
     private pullToRefresh: sap.m.PullToRefresh;
+    /** 嵌入下拉条 */
+    embeddedPuller(view: any): void {
+        if (view instanceof sap.m.PullToRefresh) {
+            if (!ibas.objects.isNull(this.page)) {
+                this.page.insertContent(view, 0);
+                this.pullToRefresh = view;
+            }
+        }
+    }
     /** 显示数据 */
     showData(datas: bo.Customer[]): void {
-        this.pullToRefresh.hide();
+        if (!ibas.objects.isNull(this.pullToRefresh) && datas.length > 0) {
+            this.pullToRefresh.destroy(true);
+            this.pullToRefresh = undefined;
+        }
         let done: boolean = false;
         let model: sap.ui.model.Model = this.list.getModel(undefined);
         if (!ibas.objects.isNull(model)) {
@@ -190,7 +193,6 @@ export class CustomerListView extends ibas.BOListView implements ICustomerListVi
         }
         this.list.setBusy(false);
     }
-
     /** 记录上次查询条件，表格滚动时自动触发 */
     query(criteria: ibas.ICriteria): void {
         super.query(criteria);
@@ -205,10 +207,10 @@ export class CustomerListView extends ibas.BOListView implements ICustomerListVi
         return openui5.utils.getSelecteds<bo.Customer>(this.list);
     }
     /** 手指触控滑动 */
-    onTouchMove(direcction: ibas.emTouchMoveDirection, event: TouchEvent): void {
-        if (direcction === ibas.emTouchMoveDirection.UP) {
+    onTouchMove(direction: ibas.emTouchMoveDirection, event: TouchEvent): void {
+        if (direction === ibas.emTouchMoveDirection.UP) {
             this.page.setShowFooter(false);
-        } else if (direcction === ibas.emTouchMoveDirection.DOWN) {
+        } else if (direction === ibas.emTouchMoveDirection.DOWN) {
             this.page.setShowFooter(true);
         }
     }

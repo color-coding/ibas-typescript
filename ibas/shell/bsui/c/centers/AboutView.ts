@@ -14,7 +14,7 @@ import { IAboutView, Component, ModuleMonitor } from "../../../bsapp/centers/Abo
  */
 export class AboutView extends ibas.BOView implements IAboutView {
     /** 绘制视图 */
-    darw(): any {
+    draw(): any {
         this.form = new sap.m.Page("", {
             showHeader: false,
             enableScrolling: true,

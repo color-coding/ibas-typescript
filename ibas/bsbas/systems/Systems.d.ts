@@ -94,6 +94,8 @@ export interface IQueryPanelView extends IBarView {
 	searchContent: string;
 	/** 使用的查询 */
 	usingQuery: string;
+	/** 绘制下拉条 */
+	drawPuller(): any;
 }
 /** 使用查询面板 */
 export interface IUseQueryPanel {
@@ -105,6 +107,8 @@ export interface IUseQueryPanel {
 	readonly usingCriteria?: ICriteria;
 	/** 查询数据 */
 	query(criteria: ICriteria): void;
+	/** 嵌入下拉条 */
+	embeddedPuller?(view: any): void;
 }
 /** 嵌入查询面板 */
 export interface IEmbeddedQueryPanel {

@@ -5,13 +5,15 @@
  * Use of this source code is governed by an Apache License, Version 2.0
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
-
 import * as ibas from "ibas/index";
 import * as openui5 from "openui5/index";
 import * as bo from "../../../borep/bo/index";
 import { ISalesOrderEditView } from "../../../bsapp/salesorder/index";
-export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEditView {
 
+/**
+ * 编辑视图-销售订单
+ */
+export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEditView {
     /** 删除数据事件 */
     deleteDataEvent: Function;
     /** 新建数据事件，参数1：是否克隆 */
@@ -24,103 +26,97 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
     chooseSalesOrderCustomerEvent: Function;
     /** 选择销售订单行物料事件 */
     chooseSalesOrderItemMaterialEvent: Function;
-    /** 选择销售订单行仓库事件 */
-    chooseSalesOrderItemWarehouseEvent: Function;
-
     /** 绘制视图 */
-    darw(): any {
+    draw(): any {
         let that: this = this;
-        this.navContainer = new sap.m.NavContainer("", {});
-        // 主表页面
-        this.salesOrderForm = new sap.ui.layout.form.SimpleForm("", {
-            editable: true,
-            content: [
-                new sap.ui.core.Title("", { text: ibas.i18n.prop("trainingtesting_title_general") }),
-                new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_customercode") }),
-                new sap.m.Input("", {
-                    value: {
-                        path: "customerCode",
-                    },
-                    showValueHelp: true,
-                    valueHelpRequest: function (): void {
-                        that.fireViewEvents(that.chooseSalesOrderCustomerEvent);
-                    }
-                }),
-                new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_customername") }),
-                new sap.m.Input("", {
-                    editable: false,
-                    value: {
-                        path: "customerName",
-                    }
-                }),
-                new sap.ui.core.Title("", { text: ibas.i18n.prop("trainingtesting_title_status") }),
-                new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_documentstatus") }),
-                new sap.m.Select("", {
-                    items: openui5.utils.createComboBoxItems(ibas.emDocumentStatus),
-                    selectedKey: {
-                        path: "documentStatus",
-                        type: "sap.ui.model.type.Integer",
-                    }
-                }),
-                new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_canceled") }),
-                new sap.m.Select("", {
-                    items: openui5.utils.createComboBoxItems(ibas.emYesNo),
-                    selectedKey: {
-                        path: "canceled",
-                        type: "sap.ui.model.type.Integer",
-                    }
-                }),
-                new sap.ui.core.Title("", { text: ibas.i18n.prop("trainingtesting_title_amount") }),
-                new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_documenttotal") + "(RMB)" }),
-                new sap.m.Input("", {
-                    width: "100%",
-                    type: sap.m.InputType.Number,
-                    value: {
-                        path: "documentTotal",
-                    },
-                }),
-                new sap.ui.core.Title("", { text: ibas.i18n.prop("trainingtesting_title_time") }),
-                new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_documentdate") }),
-                new sap.m.DatePicker("", {
-                    valueFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE, "yyyy-MM-dd"),
-                    displayFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE, "yyyy-MM-dd"),
-                    dateValue: {
-                        path: "documentDate"
-                    }
-                }),
-                new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_postingdate") }),
-                new sap.m.DatePicker("", {
-                    valueFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE, "yyyy-MM-dd"),
-                    displayFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE, "yyyy-MM-dd"),
-                    dateValue: {
-                        path: "postingDate"
-                    }
-                }),
-                new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_deliverydate") }),
-                new sap.m.DatePicker("", {
-                    valueFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE, "yyyy-MM-dd"),
-                    displayFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE, "yyyy-MM-dd"),
-                    dateValue: {
-                        path: "deliveryDate"
-                    }
-                }),
-                new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_salesorder_remarks") }),
-                new sap.m.TextArea("", {
-                    rows: 3,
-                    value: {
-                        path: "remarks"
-                    }
-                }),
-            ]
-        });
-        this.salesOrderPage = new sap.m.Page("", {
+        this.pageSalesOrder = new sap.m.Page("", {
             showHeader: false,
             showfooter: false,
-            content: [this.salesOrderForm]
+            content: [
+                new sap.ui.layout.form.SimpleForm("", {
+                    editable: true,
+                    content: [
+                        new sap.ui.core.Title("", { text: ibas.i18n.prop("trainingtesting_title_general") }),
+                        new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_customercode") }),
+                        new sap.m.Input("", {
+                            value: {
+                                path: "customerCode",
+                            },
+                            showValueHelp: true,
+                            valueHelpRequest: function (): void {
+                                that.fireViewEvents(that.chooseSalesOrderCustomerEvent);
+                            }
+                        }),
+                        new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_customername") }),
+                        new sap.m.Input("", {
+                            editable: false,
+                            value: {
+                                path: "customerName",
+                            }
+                        }),
+                        new sap.ui.core.Title("", { text: ibas.i18n.prop("trainingtesting_title_status") }),
+                        new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_documentstatus") }),
+                        new sap.m.Select("", {
+                            items: openui5.utils.createComboBoxItems(ibas.emDocumentStatus),
+                            selectedKey: {
+                                path: "documentStatus",
+                                type: "sap.ui.model.type.Integer",
+                            }
+                        }),
+                        new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_canceled") }),
+                        new sap.m.Select("", {
+                            items: openui5.utils.createComboBoxItems(ibas.emYesNo),
+                            selectedKey: {
+                                path: "canceled",
+                                type: "sap.ui.model.type.Integer",
+                            }
+                        }),
+                        new sap.ui.core.Title("", { text: ibas.i18n.prop("trainingtesting_title_amount") }),
+                        new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_documenttotal") + "(RMB)" }),
+                        new sap.m.Input("", {
+                            width: "100%",
+                            type: sap.m.InputType.Number,
+                            value: {
+                                path: "documentTotal",
+                            },
+                        }),
+                        new sap.ui.core.Title("", { text: ibas.i18n.prop("trainingtesting_title_time") }),
+                        new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_documentdate") }),
+                        new sap.m.DatePicker("", {
+                            valueFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE, "yyyy-MM-dd"),
+                            displayFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE, "yyyy-MM-dd"),
+                            dateValue: {
+                                path: "documentDate"
+                            }
+                        }),
+                        new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_postingdate") }),
+                        new sap.m.DatePicker("", {
+                            valueFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE, "yyyy-MM-dd"),
+                            displayFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE, "yyyy-MM-dd"),
+                            dateValue: {
+                                path: "postingDate"
+                            }
+                        }),
+                        new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_deliverydate") }),
+                        new sap.m.DatePicker("", {
+                            valueFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE, "yyyy-MM-dd"),
+                            displayFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE, "yyyy-MM-dd"),
+                            dateValue: {
+                                path: "deliveryDate"
+                            }
+                        }),
+                        new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_salesorder_remarks") }),
+                        new sap.m.TextArea("", {
+                            rows: 3,
+                            value: {
+                                path: "remarks"
+                            }
+                        }),
+                    ]
+                })
+            ]
         });
-        this.navContainer.addPage(this.salesOrderPage);
-        // 子项列表页
-        this.salesOrderItemList = new sap.m.List("", {
+        this.listSalesOrderItem = new sap.m.List("", {
             inset: false,
             growing: true,
             growingThreshold: ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 5),
@@ -140,13 +136,11 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
                                 width: "3rem",
                                 icon: "sap-icon://delete",
                                 press(oEvent: any): void {
-                                    var deleteBo: bo.SalesOrderItem =
-                                        that.salesOrderItemList.getSwipedItem().getBindingContext().getObject();
                                     that.fireViewEvents(that.removeSalesOrderItemEvent,
                                         // 获取表格选中的对象
-                                        openui5.utils.getSelecteds<bo.SalesOrderItem>(that.salesOrderItemList)
+                                        openui5.utils.getSelecteds<bo.SalesOrderItem>(that.listSalesOrderItem)
                                     );
-                                    that.salesOrderItemList.swipeOut(null);
+                                    that.listSalesOrderItem.swipeOut(null);
                                 }
                             }),
                             new sap.m.SegmentedButtonItem("", {
@@ -154,9 +148,9 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
                                 icon: "sap-icon://edit",
                                 press(oEvent: any): void {
                                     that.showSalesOrderItem(
-                                        openui5.utils.getSelecteds<bo.SalesOrderItem>(that.salesOrderItemList).firstOrDefault()
+                                        openui5.utils.getSelecteds<bo.SalesOrderItem>(that.listSalesOrderItem).firstOrDefault()
                                     );
-                                    that.salesOrderItemList.swipeOut(null);
+                                    that.listSalesOrderItem.swipeOut(null);
                                 }
                             })
                         ]
@@ -207,7 +201,7 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
                 }),
             }
         });
-        this.salesOrderItemListPage = new sap.m.Page("", {
+        this.pageSalesOrderItemList = new sap.m.Page("", {
             showHeader: false,
             floatingFooter: true,
             footer: new sap.m.Toolbar("", {
@@ -216,8 +210,8 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
                         text: ibas.i18n.prop("shell_back"),
                         width: "50%",
                         press: function (): void {
-                            that.toPage(that.salesOrderPage, true);
-                            that.salesOrderItemList.swipeOut(null);
+                            that.toPage(that.pageSalesOrder, true);
+                            that.listSalesOrderItem.swipeOut(null);
                         }
                     }),
                     new sap.m.Button("", {
@@ -225,83 +219,23 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
                         width: "50%",
                         press: function (): void {
                             that.fireViewEvents(that.addSalesOrderItemEvent);
-                            let datas: any = (<any>that.salesOrderItemList.getModel()).getData().rows;
+                            let datas: any = (<any>that.listSalesOrderItem.getModel()).getData().rows;
                             if (datas.length > 0) {
                                 let newItem: bo.SalesOrderItem = datas[datas.length - 1];
                                 if (!ibas.objects.isNull(newItem)) {
                                     that.showSalesOrderItem(newItem);
                                 }
                             }
-                            that.salesOrderItemList.swipeOut(null);
+                            that.listSalesOrderItem.swipeOut(null);
                         }
                     }),
                 ]
             }),
-            content: [this.salesOrderItemList]
-        });
-        this.navContainer.addPage(this.salesOrderItemListPage);
-        // 子对象编辑页
-        this.salesOrderItemEditForm = new sap.ui.layout.form.SimpleForm("", {
-            editable: true,
             content: [
-                new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorderitem_linestatus") }),
-                new sap.m.Select("", {
-                    width: "100%",
-                    items: openui5.utils.createComboBoxItems(ibas.emDocumentStatus),
-                    selectedKey: {
-                        path: "lineStatus",
-                        type: "sap.ui.model.type.Integer"
-                    }
-                }),
-                new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorderitem_itemcode") }),
-                new sap.m.Input("", {
-                    width: "100%",
-                    value: {
-                        path: "itemCode"
-                    },
-                    showValueHelp: true,
-                    valueHelpRequest: function (): void {
-                        that.fireViewEvents(that.chooseSalesOrderItemMaterialEvent,
-                            // 获取当前对象
-                            this.getBindingContext().getObject()
-                        );
-                    }
-                }),
-                new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorderitem_itemdescription") }),
-                new sap.m.Input("", {
-                    width: "100%",
-                    enabled: false,
-                    value: {
-                        path: "itemDescription"
-                    },
-                }),
-                new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorderitem_price") + "(RMB)" }),
-                new sap.m.Input("", {
-                    width: "100%",
-                    value: {
-                        path: "price"
-                    },
-                    type: sap.m.InputType.Number,
-                }),
-                new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorderitem_quantity") }),
-                new sap.m.Input("", {
-                    width: "100%",
-                    value: {
-                        path: "quantity"
-                    },
-                    type: sap.m.InputType.Number
-                }),
-                new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorderitem_linetotal") + "(RMB)" }),
-                new sap.m.Input("", {
-                    width: "100%",
-                    value: {
-                        path: "lineTotal"
-                    },
-                    type: sap.m.InputType.Number
-                }),
+                this.listSalesOrderItem,
             ]
         });
-        this.salesOrderItemEditPage = new sap.m.Page("", {
+        this.pageSalesOrderItem = new sap.m.Page("", {
             showHeader: false,
             floatingFooter: true,
             footer: new sap.m.Toolbar("", {
@@ -309,18 +243,84 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
                     // 编辑子对象完成
                     new sap.m.Button("", {
                         width: "100%",
-                        text: ibas.i18n.prop("em_finished"),
+                        text: ibas.i18n.prop("shell_confirm"),
                         type: sap.m.ButtonType.Transparent,
                         press: function (): void {
-                            that.toPage(that.salesOrderItemListPage, true);
+                            that.toPage(that.pageSalesOrderItemList, true);
                         }
                     }),
                 ]
             }),
-            content: [this.salesOrderItemEditForm]
+            content: [
+                new sap.ui.layout.form.SimpleForm("", {
+                    editable: true,
+                    content: [
+                        new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorderitem_linestatus") }),
+                        new sap.m.Select("", {
+                            width: "100%",
+                            items: openui5.utils.createComboBoxItems(ibas.emDocumentStatus),
+                            selectedKey: {
+                                path: "lineStatus",
+                                type: "sap.ui.model.type.Integer"
+                            }
+                        }),
+                        new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorderitem_itemcode") }),
+                        new sap.m.Input("", {
+                            width: "100%",
+                            value: {
+                                path: "itemCode"
+                            },
+                            showValueHelp: true,
+                            valueHelpRequest: function (): void {
+                                that.fireViewEvents(that.chooseSalesOrderItemMaterialEvent,
+                                    // 获取当前对象
+                                    this.getBindingContext().getObject()
+                                );
+                            }
+                        }),
+                        new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorderitem_itemdescription") }),
+                        new sap.m.Input("", {
+                            width: "100%",
+                            enabled: false,
+                            value: {
+                                path: "itemDescription"
+                            },
+                        }),
+                        new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorderitem_price") + "(RMB)" }),
+                        new sap.m.Input("", {
+                            width: "100%",
+                            value: {
+                                path: "price"
+                            },
+                            type: sap.m.InputType.Number,
+                        }),
+                        new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorderitem_quantity") }),
+                        new sap.m.Input("", {
+                            width: "100%",
+                            value: {
+                                path: "quantity"
+                            },
+                            type: sap.m.InputType.Number
+                        }),
+                        new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorderitem_linetotal") + "(RMB)" }),
+                        new sap.m.Input("", {
+                            width: "100%",
+                            value: {
+                                path: "lineTotal"
+                            },
+                            type: sap.m.InputType.Number
+                        }),
+                    ]
+                })
+            ]
         });
-        this.navContainer.addPage(this.salesOrderItemEditPage);
-        // 返回值
+        this.navContainer = new sap.m.NavContainer("", {
+            pages: [
+                this.pageSalesOrder,
+                this.pageSalesOrderItemList,
+                this.pageSalesOrderItemList,
+            ]
+        });
         this.page = new sap.m.Page("", {
             showHeader: false,
             subHeader: new sap.m.Toolbar("", {
@@ -342,45 +342,43 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
                         }
                     }),
                     new sap.m.ToolbarSeparator(""),
-                    new sap.m.MenuButton("", {
-                        text: ibas.i18n.prop("shell_data_new"),
-                        type: sap.m.ButtonType.Transparent,
+                    new sap.m.Button("", {
+                        text: ibas.strings.format("{0}/{1}",
+                            ibas.i18n.prop("shell_data_new"), ibas.i18n.prop("shell_data_clone")),
                         icon: "sap-icon://create",
-                        buttonMode: sap.m.MenuButtonMode.Split,
-                        defaultAction: function (): void {
-                            // 触发新建对象
-                            that.fireViewEvents(that.createDataEvent, false);
-                        },
-                        menu: new sap.m.Menu("", {
-                            items: [
-                                new sap.m.MenuItem("", {
-                                    text: ibas.i18n.prop("shell_data_new"),
-                                    icon: "sap-icon://create"
-                                }),
-                                new sap.m.MenuItem("", {
-                                    text: ibas.i18n.prop("shell_data_clone"),
-                                    icon: "sap-icon://copy"
-                                }),
-                            ],
-                            itemSelected: function (event: any): void {
-                                let item: any = event.getParameter("item");
-                                if (item instanceof sap.m.MenuItem) {
-                                    if (item.getIcon() === "sap-icon://copy") {
-                                        // 触发克隆对象
-                                        that.fireViewEvents(that.createDataEvent, true);
-                                    } else {
-                                        // 触发新建对象
-                                        that.fireViewEvents(that.createDataEvent, false);
-                                    }
+                        type: sap.m.ButtonType.Transparent,
+                        press: function (event: any): void {
+                            let popover: sap.m.Popover = new sap.m.Popover("", {
+                                showHeader: false,
+                                placement: sap.m.PlacementType.Bottom,
+                            });
+                            popover.addContent(new sap.m.Button("", {
+                                text: ibas.i18n.prop("shell_data_new"),
+                                icon: "sap-icon://create",
+                                type: sap.m.ButtonType.Transparent,
+                                press: function (): void {
+                                    that.fireViewEvents(that.createDataEvent, true);
+                                    popover.close();
                                 }
-                            }
-                        })
+                            }));
+                            popover.addContent(new sap.m.Button("", {
+                                text: ibas.i18n.prop("shell_data_clone"),
+                                icon: "sap-icon://copy",
+                                type: sap.m.ButtonType.Transparent,
+                                press: function (): void {
+                                    that.fireViewEvents(that.createDataEvent, false);
+                                    popover.close();
+                                }
+                            }));
+                            popover.addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
+                            popover.openBy(event.getSource(), true);
+                        }
                     }),
-                    new sap.m.ToolbarSpacer("", {}),
+                    new sap.m.ToolbarSpacer(""),
                     this.navButton = new sap.m.Button("", {
                         type: sap.m.ButtonType.Transparent,
                         icon: "sap-icon://overflow",
-                        press: function (): void {
+                        press: function (event: any): void {
                             let popover: sap.m.Popover = new sap.m.Popover("", {
                                 showHeader: false,
                                 placement: sap.m.PlacementType.Bottom,
@@ -388,48 +386,46 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
                             popover.addContent(new sap.m.Button({
                                 text: ibas.i18n.prop("bo_salesorderitem"),
                                 type: sap.m.ButtonType.Transparent,
-                                icon: "sap-icon://product",
+                                icon: "sap-icon://folder",
                                 press: function (): void {
-                                    that.toPage(that.salesOrderItemListPage);
+                                    that.toPage(that.pageSalesOrderItemList);
                                     popover.close();
                                 }
                             }));
                             (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
-                            popover.openBy(that.navButton, true);
+                            popover.openBy(event.getSource(), true);
                         }
                     }),
                 ]
             }),
             content: [this.navContainer]
         });
-        this.toPage(this.salesOrderPage);
-        this.id = this.page.getId();
+        this.toPage(this.pageSalesOrder);
         return this.page;
     }
 
     private page: sap.m.Page;
-    private salesOrderForm: sap.ui.layout.form.SimpleForm;
-    private salesOrderPage: sap.m.Page;
-    private salesOrderItemList: sap.m.List;
-    private salesOrderItemListPage: sap.m.Page;
-    private salesOrderItemEditForm: sap.ui.layout.form.SimpleForm;
-    private salesOrderItemEditPage: sap.m.Page;
+    private pageSalesOrder: sap.m.Page;
+    private listSalesOrderItem: sap.m.List;
+    private pageSalesOrderItemList: sap.m.Page;
+    private pageSalesOrderItem: sap.m.Page;
     private currentPage: sap.m.Page;
     private navContainer: sap.m.NavContainer;
     private navButton: sap.m.Button;
-    toPage(page: sap.m.Page, leftToRight?: boolean): void {
+    /** 切换页面 */
+    private toPage(page: sap.m.Page, leftToRight?: boolean): void {
         switch (page) {
-            case this.salesOrderPage:
+            case this.pageSalesOrder:
                 this.navButton.setVisible(true);
-                this.currentPage = this.salesOrderPage;
+                this.currentPage = this.pageSalesOrder;
                 break;
-            case this.salesOrderItemListPage:
+            case this.pageSalesOrderItemList:
                 this.navButton.setVisible(false);
-                this.currentPage = this.salesOrderItemListPage;
+                this.currentPage = this.pageSalesOrderItemList;
                 break;
-            case this.salesOrderItemEditPage:
+            case this.pageSalesOrderItem:
                 this.navButton.setVisible(false);
-                this.currentPage = this.salesOrderItemEditPage;
+                this.currentPage = this.pageSalesOrderItem;
                 break;
             default:
                 break;
@@ -443,16 +439,17 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
         }
     }
     /** 手指触控滑动 */
-    onTouchMove(direcction: ibas.emTouchMoveDirection, event: TouchEvent): void {
+    onTouchMove(direction: ibas.emTouchMoveDirection, event: TouchEvent): void {
         if (!ibas.objects.isNull(this.currentPage)
             && !ibas.objects.isNull(this.currentPage.getFooter())) {
-            if (direcction === ibas.emTouchMoveDirection.UP) {
+            if (direction === ibas.emTouchMoveDirection.UP) {
                 this.currentPage.setShowFooter(false);
-            } else if (direcction === ibas.emTouchMoveDirection.DOWN) {
+            } else if (direction === ibas.emTouchMoveDirection.DOWN) {
                 this.currentPage.setShowFooter(true);
             }
         }
     }
+
     /** 改变视图状态 */
     private changeViewStatus(data: bo.SalesOrder): void {
         if (ibas.objects.isNull(data)) {
@@ -465,38 +462,36 @@ export class SalesOrderEditView extends ibas.BOEditView implements ISalesOrderEd
             }
         }
         // 不可编辑：已批准，
-        if (data.approvalStatus === ibas.emApprovalStatus.APPROVED
-            || data.documentStatus === ibas.emDocumentStatus.CLOSED
-            || data.canceled === ibas.emYesNo.YES) {
+        if (data.approvalStatus === ibas.emApprovalStatus.APPROVED) {
             if (this.page.getSubHeader() instanceof sap.m.Toolbar) {
                 openui5.utils.changeToolbarSavable(<sap.m.Toolbar>this.page.getSubHeader(), false);
                 openui5.utils.changeToolbarDeletable(<sap.m.Toolbar>this.page.getSubHeader(), false);
             }
-            // openui5.utils.changeFormEditable(this.salesOrderForm, false);
+            openui5.utils.changeFormEditable(this.pageSalesOrder, false);
         }
     }
+
     /** 显示数据 */
     showSalesOrder(data: bo.SalesOrder): void {
-        this.salesOrderPage.setModel(new sap.ui.model.json.JSONModel(data));
-        this.salesOrderPage.bindObject("/");
+        this.pageSalesOrder.setModel(new sap.ui.model.json.JSONModel(data));
+        this.pageSalesOrder.bindObject("/");
         // 监听属性改变，并更新控件
-        openui5.utils.refreshModelChanged(this.salesOrderForm, data);
+        openui5.utils.refreshModelChanged(this.pageSalesOrder, data);
         // 改变视图状态
         this.changeViewStatus(data);
     }
-    /** 显示数据 */
+    /** 显示数据（销售订单-行） */
     showSalesOrderItems(datas: bo.SalesOrderItem[]): void {
-        this.salesOrderItemList.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
+        this.listSalesOrderItem.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
         // 监听属性改变，并更新控件
-        openui5.utils.refreshModelChanged(this.salesOrderItemList, datas);
+        openui5.utils.refreshModelChanged(this.listSalesOrderItem, datas);
     }
-    /** 显示数据 */
+    /** 显示数据行（销售订单-行） */
     showSalesOrderItem(data: bo.SalesOrderItem): void {
-        this.salesOrderItemEditForm.setModel(new sap.ui.model.json.JSONModel(data));
-        this.salesOrderItemEditForm.bindObject("/");
+        this.pageSalesOrderItem.setModel(new sap.ui.model.json.JSONModel(data));
+        this.pageSalesOrderItem.bindObject("/");
         // 监听属性改变，并更新控件
-        openui5.utils.refreshModelChanged(this.salesOrderItemEditForm, data);
-        this.toPage(this.salesOrderItemEditPage);
+        openui5.utils.refreshModelChanged(this.pageSalesOrderItem, data);
+        this.toPage(this.pageSalesOrderItem);
     }
-
 }

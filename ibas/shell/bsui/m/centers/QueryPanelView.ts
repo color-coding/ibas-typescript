@@ -189,7 +189,7 @@ export class QueryPanelView extends cQueryPanelView implements IQueryPanelView {
         }
     }
     /** 绘制视图 */
-    darw(): any {
+    draw(): any {
         let that: this = this;
         this.list = new sap.m.List("", {
             inset: false,

@@ -62,7 +62,7 @@ export class LoginView extends ibas.BOView implements ILoginView {
     private static UI_LOGIN_LANGUAGE: string = "login_language";
     private static UI_LOGIN_PLANTFORM: string = "login_plantform";
     /** 绘制视图 */
-    darw(): any {
+    draw(): any {
         // 设置应用名称
         document.title = ibas.config.get(ibas.CONFIG_ITEM_APPLICATION_NAME, ibas.i18n.prop("shell_name"));
         let that: this = this;
@@ -171,8 +171,8 @@ export class LoginView extends ibas.BOView implements ILoginView {
  */
 export class BigLoginView extends LoginView {
     /** 绘制视图 */
-    darw(): any {
-        let form: sap.ui.core.Control = super.darw();
+    draw(): any {
+        let form: sap.ui.core.Control = super.draw();
         let splitter: sap.ui.layout.Splitter = new sap.ui.layout.Splitter("", {
             orientation: sap.ui.core.Orientation.Vertical,
             contentAreas: [

@@ -14,7 +14,7 @@ import { IMainView } from "../../../bsapp/centers/MainApp";
  */
 export class MainView extends ibas.BOView implements IMainView {
     /** 绘制视图 */
-    darw(): any {
+    draw(): any {
         this.app = new sap.m.App("ibas-app");
         this.id = this.app.getId();
         return this.app;

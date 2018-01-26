@@ -20,7 +20,7 @@ export class CustomerChooseView extends ibas.BOChooseView implements ICustomerCh
         return bo.Customer;
     }
     /** 绘制视图 */
-    darw(): any {
+    draw(): any {
         let that: this = this;
         this.table = new sap.ui.table.Table("", {
             enableSelectAll: false,

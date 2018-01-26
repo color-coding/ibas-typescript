@@ -8,15 +8,15 @@
 
 import * as ibas from "ibas/index";
 import * as bo from "./bo/index";
-import { IBORepositoryTrainingTesting, BO_REPOSITORY_TRAININGTESTING} from "../api/index";
-import { DataConverter4tt } from "./DataConverters";
+import { IBORepositoryTrainingTesting, BO_REPOSITORY_TRAININGTESTING } from "../api/index";
+import { DataConverter4TT } from "./DataConverters";
 
 /** 培训&测试 业务仓库 */
 export class BORepositoryTrainingTesting extends ibas.BORepositoryApplication implements IBORepositoryTrainingTesting {
 
     /** 创建此模块的后端与前端数据的转换者 */
     protected createConverter(): ibas.IDataConverter {
-        return new DataConverter4tt();
+        return new DataConverter4TT();
     }
 
     /**

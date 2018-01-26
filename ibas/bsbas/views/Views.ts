@@ -112,7 +112,7 @@ export abstract class BOEditView extends BOView implements IBOEditView {
 /** 业务对象工具条视图 */
 export abstract class BOBarView extends BOView implements IBarView {
     /** 绘制工具条 */
-    abstract darwBar(): any;
+    abstract drawBar(): any;
     /** 激活完整视图事件 */
     showFullViewEvent: Function;
     /** 工具条视图显示完成事件 */
@@ -121,7 +121,7 @@ export abstract class BOBarView extends BOView implements IBarView {
 /** 业务对象面板视图 */
 export abstract class BOPanelView extends BODialogView implements IBarView {
     /** 绘制工具条 */
-    abstract darwBar(): any;
+    abstract drawBar(): any;
     /** 激活完整视图事件 */
     showFullViewEvent: Function;
     /** 工具条视图显示完成事件 */

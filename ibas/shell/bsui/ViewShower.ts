@@ -162,7 +162,7 @@ export default class ViewShowerDefault implements ibas.IViewShower {
     private currentView: ibas.IView;
     /** 显示视图 */
     show(view: ibas.IView): void {
-        let viewContent: any = view.darw();
+        let viewContent: any = view.draw();
         if (ibas.objects.isNull(viewContent)) {
             ibas.logger.log(ibas.emMessageLevel.WARN, "shower: empty view.");
         } else if (viewContent instanceof sap.m.App) {
