@@ -36,7 +36,7 @@
   "bo_salesorder_customercode": "客户代码",
   "bo_salesorder_customername": "客户名称",
   "bo_salesorder_documentcurrency": "单据货币",
-  "bo_salesorder_documentrate": "单据交换率",
+  "bo_salesorder_documentrate": "单据汇率",
   "bo_salesorder_documenttotal": "单据总计",
   "bo_salesorder_cycle": "周期",
   "bo_salesorder_cycleunit": "周期单位",
