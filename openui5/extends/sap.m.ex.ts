@@ -48,9 +48,7 @@ sap.m.Select.extend("sap.m.ex.EnumSelect", {
     },
     setBindingValue(value: string): void {
         this.setProperty("bindingValue", value);
-        if (!this.getBindingInfo("selectedKey")) {
-            this.bindProperty("selectedKey", this.getBindingInfo("bindingValue"));
-        }
+        this.bindProperty("selectedKey", this.getBindingInfo("bindingValue"));
     },
     getBindingValue(): string {
         return this.getProperty("bindingValue");
@@ -210,9 +208,8 @@ sap.m.Select.extend("sap.m.ex.BOSelect", {
     },
     setBindingValue(value: string): void {
         this.setProperty("bindingValue", value);
-        if (!this.getBindingInfo("selectedKey")) {
-            this.bindProperty("selectedKey", this.getBindingInfo("bindingValue"));
-        }
+        this.bindProperty("selectedKey", this.getBindingInfo("bindingValue"));
+
     },
     getBindingValue(): string {
         return this.getProperty("bindingValue");
@@ -436,9 +433,7 @@ sap.m.Input.extend("sap.m.ex.BOInput", {
         this.setShowSuggestion(true);
         this.setShowValueHelp(true);
         this.setProperty("bindingValue", value);
-        if (!this.getBindingInfo("selectedKey")) {
-            this.bindProperty("selectedKey", this.getBindingInfo("bindingValue"));
-        }
+        this.bindProperty("selectedKey", this.getBindingInfo("bindingValue"));
     },
     getBindingValue(): string {
         return this.getProperty("bindingValue");
@@ -756,9 +751,7 @@ sap.m.SegmentedButton.extend("sap.m.ex.EnumSegmentedButton", {
     },
     setBindingValue(value: string): void {
         this.setProperty("bindingValue", value);
-        if (!this.getBindingInfo("selectedKey")) {
-            this.bindProperty("selectedKey", this.getBindingInfo("bindingValue"));
-        }
+        this.bindProperty("selectedKey", this.getBindingInfo("bindingValue"));
     },
     getBindingValue(): string {
         return this.getProperty("bindingValue");

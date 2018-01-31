@@ -11,7 +11,7 @@ import {
     dates, enums, OperationMessage, FileData, OperationInformation, List,
     emApprovalStatus, emBOStatus, emDocumentStatus, emYesNo, ArrayList,
     emMessageLevel, emConditionOperation, emConditionRelationship, emSortType,
-    DataTable, DataTableColumn, DataTableRow, KeyText, KeyValue
+    DataTable, DataTableColumn, DataTableRow, KeyText, KeyValue, emDirection
 } from "../data/index";
 import {
     IBusinessObject, IDataConverter, BusinessObjectBase, BusinessObjectListBase,
@@ -604,6 +604,8 @@ export abstract class BOConverter implements IBOConverter<IBusinessObject, any> 
                 return enums.valueOf(emBOStatus, value);
             } else if (property === "ApprovalStatus") {
                 return enums.valueOf(emApprovalStatus, value);
+            } else if (property === "Direction") {
+                return enums.valueOf(emDirection, value);
             }
         }
         // 不做处理，原始返回
@@ -628,6 +630,8 @@ export abstract class BOConverter implements IBOConverter<IBusinessObject, any> 
                 return enums.toString(emBOStatus, value);
             } else if (property === "ApprovalStatus") {
                 return enums.toString(emApprovalStatus, value);
+            } else if (property === "Direction") {
+                return enums.toString(emDirection, value);
             }
         } else if (value instanceof Date) {
             // 日期类型
