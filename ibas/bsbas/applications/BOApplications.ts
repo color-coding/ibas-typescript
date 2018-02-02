@@ -55,14 +55,8 @@ export abstract class BOChooseService<T extends IBOChooseView, D> extends BOChoo
         if (arguments.length === 1) {
             // 判断是否为选择契约
             let caller: IBOChooseServiceCaller<D> = arguments[0];
+            // 选择服务代理或其子类
             if (objects.instanceOf(caller.proxy, BOChooseServiceProxy)) {
-                // 选择服务代理或其子类
-                // 设置选择类型
-                let chooseType: emChooseType = caller.chooseType;
-                if (objects.isNull(chooseType)) {
-                    chooseType = emChooseType.MULTIPLE;
-                }
-                this.view.chooseType = chooseType;
                 // 设置标题
                 if (!strings.isEmpty(caller.title)) {
                     this.description = caller.title;
@@ -71,6 +65,12 @@ export abstract class BOChooseService<T extends IBOChooseView, D> extends BOChoo
                 if (typeof caller.onCompleted === "function") {
                     this.onCompleted = caller.onCompleted;
                 }
+                // 设置选择类型
+                let chooseType: emChooseType = caller.chooseType;
+                if (objects.isNull(chooseType)) {
+                    chooseType = emChooseType.MULTIPLE;
+                }
+                this.view.chooseType = chooseType;
                 // 分析查询条件
                 let criteria: Criteria;
                 if (objects.instanceOf(caller.criteria, Criteria)) {
