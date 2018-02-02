@@ -226,8 +226,8 @@ export interface ISalesOrderItem extends IBODocumentLine {
     /** 行交货日期 */
     deliveryDate: Date;
 
-    /** 剩余未清数量 */
-    openQuantity: number;
+    /** 已清数量 */
+    closedQuantity: number;
 
     /** 单价 */
     price: number;
