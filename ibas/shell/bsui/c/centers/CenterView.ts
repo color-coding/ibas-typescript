@@ -33,7 +33,7 @@ export const CONFIG_ITEM_COMPACT_SCREEN: string = "compactScreen";
  */
 export class CenterView extends ibas.BOView implements ICenterView {
     /** 主页面 */
-    protected mainPage: sap.tnt.ToolPage;
+    private mainPage: sap.tnt.ToolPage;
     /** 页面头部 */
     private mainHeader: sap.tnt.ToolHeader;
     /** 页面功能导航，左 */
@@ -851,7 +851,7 @@ export class CenterView extends ibas.BOView implements ICenterView {
             this.showLastView();
         }
     }
-    protected showLastView(): void {
+    private showLastView(): void {
         // 显示最后视图
         if (this.viewQueue.size > 0) {
             let lastView: ibas.IView;

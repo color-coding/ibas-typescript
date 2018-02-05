@@ -88,7 +88,7 @@ import { User } from "./User";
       "LineTotal": 0,
       "LogInst": 0,
       "ObjectCode": "CC_TT_SALESORDER",
-      "OpenQuantity": 0,
+      "ClosedQuantity": 0,
       "Price": 99.99,
       "Quantity": 10,
       "Referenced": "No",
@@ -111,7 +111,7 @@ import { User } from "./User";
       "LineTotal": 0,
       "LogInst": 0,
       "ObjectCode": "CC_TT_SALESORDER",
-      "OpenQuantity": 0,
+      "ClosedQuantity": 0,
       "Price": 199.990001,
       "Quantity": 10,
       "Referenced": "No",
@@ -134,7 +134,7 @@ import { User } from "./User";
       "LineTotal": 0,
       "LogInst": 0,
       "ObjectCode": "CC_TT_SALESORDER",
-      "OpenQuantity": 0,
+      "ClosedQuantity": 0,
       "Price": 199.990001,
       "Quantity": 10,
       "Referenced": "No",
@@ -893,15 +893,15 @@ export class SalesOrderItem extends BODocumentLine<SalesOrderItem> {
         this.setProperty(SalesOrderItem.PROPERTY_DELIVERYDATE_NAME, value);
     }
 
-    /** 映射的属性名称-剩余未清数量 */
-    static PROPERTY_OPENQUANTITY_NAME: string = "OpenQuantity";
-    /** 获取-剩余未清数量 */
-    get openQuantity(): number {
-        return this.getProperty<number>(SalesOrderItem.PROPERTY_OPENQUANTITY_NAME);
+    /** 映射的属性名称-已清数量 */
+    static PROPERTY_CLOSEDQUANTITY_NAME: string = "ClosedQuantity";
+    /** 获取-已清数量 */
+    get closedQuantity(): number {
+        return this.getProperty<number>(SalesOrderItem.PROPERTY_CLOSEDQUANTITY_NAME);
     }
-    /** 设置-剩余未清数量 */
-    set openQuantity(value: number) {
-        this.setProperty(SalesOrderItem.PROPERTY_OPENQUANTITY_NAME, value);
+    /** 设置-已清数量 */
+    set closedQuantity(value: number) {
+        this.setProperty(SalesOrderItem.PROPERTY_CLOSEDQUANTITY_NAME, value);
     }
 
     /** 映射的属性名称-单价 */

@@ -66,7 +66,7 @@
   "bo_salesorderitem_itemdescription": "物料/服务描述",
   "bo_salesorderitem_quantity": "数量",
   "bo_salesorderitem_deliverydate": "行交货日期",
-  "bo_salesorderitem_openquantity": "剩余未清数量",
+  "bo_salesorderitem_openquantity": "已清数量",
   "bo_salesorderitem_price": "单价",
   "bo_salesorderitem_pricecurrency": "价格货币",
   "bo_salesorderitem_linetotal": "行总计",
