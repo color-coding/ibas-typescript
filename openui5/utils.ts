@@ -510,6 +510,10 @@ export namespace utils {
                 for (let cell of managedObject.getCells().reverse()) {
                     managedObjects.push(cell);
                 }
+            } else if (managedObject instanceof sap.m.FlexBox) {
+                for (let item of managedObject.getItems().reverse()) {
+                    managedObjects.push(item);
+                }
             } else {
                 return managedObject;
             }
