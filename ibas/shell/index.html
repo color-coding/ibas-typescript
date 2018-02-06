@@ -10,6 +10,16 @@
     <script type="text/javascript" src="../3rdparty/jquery.js"></script>
     <script type="text/javascript" src="../3rdparty/require.js"></script>
     <script type="text/javascript">
+        if ((navigator.userAgent.indexOf("x5app") >= 0) || (navigator.userAgent.indexOf("Crosswalk") >= 0)) {
+            // 如果是APP,加载Cordova插件.关于Cordova插件: http://cordova.axuer.com/docs/zh-cn/latest/guide/overview/index.html
+            require(["/cordova.js"], function() {
+                // 设备准备完毕后触发
+                document.addEventListener("deviceready", function() {
+                    // Android返回键被按下时触发,不执行任何操作
+                    document.addEventListener("backbutton", function() {}, false);
+                }, false);
+            });
+        };
         require(["../../openui5/loader", "../../ibas/loader"], function (uiLoader, ibasLoader) {
             // 加载器加载成功
             var root = document.location.origin + document.location.pathname.substring(0, document.location.pathname.lastIndexOf("/") + 1);
