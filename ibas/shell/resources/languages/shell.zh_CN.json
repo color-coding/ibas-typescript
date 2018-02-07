@@ -31,6 +31,7 @@
     "shell_data_choose": "选择",
     "shell_data_remove": "移除",
     "shell_data_add": "添加",
+    "shell_data_add_line": "添加行",
     "shell_data_save": "保存",
     "shell_data_clone": "复制",
     "shell_data_deleting": "正在删除[{0}]",
