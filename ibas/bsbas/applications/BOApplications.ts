@@ -277,7 +277,7 @@ export abstract class BOViewService<T extends IBOViewView> extends BOViewApplica
                     if (objects.instanceOf(caller.linkValue, Criteria)) {
                         criteria = <Criteria>caller.linkValue;
                     } else if (caller.linkValue instanceof String) {
-                        criteria = caller.linkValue;
+                        criteria = <string>caller.linkValue;
                     } else if (caller.linkValue instanceof Array) {
                         criteria = new Criteria();
                         for (let item of caller.linkValue) {
