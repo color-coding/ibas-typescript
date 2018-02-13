@@ -498,12 +498,12 @@ sap.m.ex.BOInput.extend("sap.m.ex.BOChooseInput", {
         } else {
             criteria = this.getCriteria().clone();
             for (let item of criteria.conditions) {
-                if (item.value.startsWith("{") && item.value.endsWith("}")) {
+                if (item.value.toString().startsWith("{") && item.value.toString().endsWith("}")) {
                     if (!ibas.objects.isNull(this.getBindingContext()) &&
                         !ibas.objects.isNull(this.getBindingContext().getModel()) &&
                         !ibas.objects.isNull(this.getBindingContext().getModel().getData())) {
                         item.value = this.getBindingContext().getModel().getData().
-                            getProperty(item.value.replace("{", "").replace("}", ""));
+                            getProperty(item.value.toString().replace("{", "").replace("}", ""));
                     }
                 }
             }
@@ -981,6 +981,11 @@ sap.m.FlexBox.extend("sap.m.ex.ProvincesCityDistrict", {
         }
         if (this.getBindingInfo("district") != null && this.getBindingInfo("district") !== undefined) {
             cityChange();
+        }
+        if (!ibas.strings.isEmpty(this.getWidth())) {
+            provincesSelect.setWidth(this.getWidth());
+            citySelect.setWidth(this.getWidth());
+            districtSelect.setWidth(this.getWidth());
         }
     },
     setProvinces(value: string): void {
