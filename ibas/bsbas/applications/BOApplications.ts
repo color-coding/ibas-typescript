@@ -271,7 +271,8 @@ export abstract class BOViewService<T extends IBOViewView> extends BOViewApplica
             let caller: IBOLinkServiceCaller = arguments[0];
             if (objects.instanceOf(caller.proxy, BOLinkServiceProxy)) {
                 // 链接服务代理或其子类
-                if (config.applyVariables(caller.boCode) === config.applyVariables(this.boCode)) {
+                if (caller.boCode === this.boCode
+                    || config.applyVariables(caller.boCode) === config.applyVariables(this.boCode)) {
                     // 分析查询条件
                     let criteria: Criteria | string;
                     if (objects.instanceOf(caller.linkValue, Criteria)) {
