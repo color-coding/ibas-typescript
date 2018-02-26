@@ -257,7 +257,9 @@ export class ServicesManager {
             throw new Error(i18n.prop("sys_invalid_parameter", "caller.proxy"));
         }
         for (let service of this.getServices(caller)) {
-            if (!objects.isNull(caller.category) && caller.category !== service.category) {
+            if (!objects.isNull(caller.category)
+                && !(caller.category === service.category
+                    || config.applyVariables(caller.category) === config.applyVariables(service.category))) {
                 // 类别不符
                 continue;
             }
