@@ -85,6 +85,14 @@ declare namespace sap {
                 getDistrict(): string;
                 setDistrict(value: string): void;
             }
+            export class BOLink extends sap.m.Link {
+                getBoCode(): string;
+                setBoCode(value: string): void;
+                getBoKey(): string;
+                setBoKey(value: string): void;
+                setBindingValue(value: string): void;
+                getBindingValue(): string;
+            }
         }
     }
 }

@@ -1008,5 +1008,63 @@ sap.m.FlexBox.extend("sap.m.ex.ProvincesCityDistrict", {
     },
     renderer: {}
 });
+/**
+ * 对象查看Link
+ */
+sap.m.Link.extend("sap.m.ex.BOLink", {
+    metadata: {
+        properties: {
+            /** 业务对象编码 */
+            boCode: { type: "string", group: "Ex" },
+            /** 对象查询属性名称 */
+            boKey: { type: "string", group: "Ex" },
+            /** 绑定字段 */
+            bindingValue: { type: "string", group: "Ex" },
+        },
+        events: {}
+    },
+    showBOView(oEvent: any): void {
+        let boCode: string = this.getBoCode();
+        let boKey: string = this.getBoKey();
+        if (ibas.strings.isEmpty(boCode)) {
+            console.log(ibas.i18n.prop("sap_m_ex_bocode_null"));
+            return;
+        }
+        if (ibas.strings.isEmpty(boKey)) {
+            console.log(ibas.i18n.prop("sap_m_ex_bokey_null"));
+            return;
+        }
+        ibas.servicesManager.runLinkService({
+            boCode: boCode,
+            linkValue: [
+                new ibas.Condition(boKey, ibas.emConditionOperation.EQUAL, oEvent.getSource().getText())
+            ],
+        });
+    },
+    getBoKey(): string {
+        return this.getProperty("boKey");
+    },
+    setBoKey(value: string): void {
+        let that: any = this;
+        this.attachPress(function (oEvent: any): void {
+            that.showBOView(oEvent);
+        });
+        this.setProperty("boKey", value);
+    },
+    getBoCode(): string {
+        return this.getProperty("boCode");
+    },
+    setBoCode(value: string): void {
+        this.setProperty("boCode", value);
+    },
+    setBindingValue(value: string): void {
+        this.setProperty("bindingValue", value);
+        this.bindProperty("text", this.getBindingInfo("bindingValue"));
+    },
+    getBindingValue(): string {
+        return this.getProperty("bindingValue");
+    },
+    renderer: {}
+});
 // 命名空间输出,不可删除
 export default sap.m.ex;
