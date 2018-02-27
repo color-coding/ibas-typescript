@@ -92,6 +92,8 @@ declare namespace sap {
                 setBoKey(value: string): void;
                 setBindingValue(value: string): void;
                 getBindingValue(): string;
+                setConsistent(value: boolean): void;
+                getConsistent(): boolean;
             }
         }
     }
