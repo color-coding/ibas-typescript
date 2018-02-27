@@ -1020,10 +1020,13 @@ sap.m.Link.extend("sap.m.ex.BOLink", {
             boKey: { type: "string", group: "Ex" },
             /** 绑定字段 */
             bindingValue: { type: "string", group: "Ex" },
+            /** 绑定字段 */
+            consistent: { type: "boolean", group: "Ex", defaultValue: true },
         },
         events: {}
     },
     showBOView(oEvent: any): void {
+        let that: any = this;
         let boCode: string = this.getBoCode();
         let boKey: string = this.getBoKey();
         if (ibas.strings.isEmpty(boCode)) {
@@ -1034,10 +1037,16 @@ sap.m.Link.extend("sap.m.ex.BOLink", {
             console.log(ibas.i18n.prop("sap_m_ex_bokey_null"));
             return;
         }
+        let value: string = "";
+        if (this.getConsistent()) {
+            value = oEvent.getSource().getText();
+        } else {
+            value = oEvent.getSource().getBindingValue();
+        }
         ibas.servicesManager.runLinkService({
             boCode: boCode,
             linkValue: [
-                new ibas.Condition(boKey, ibas.emConditionOperation.EQUAL, oEvent.getSource().getText())
+                new ibas.Condition(boKey, ibas.emConditionOperation.EQUAL, value)
             ],
         });
     },
@@ -1057,9 +1066,17 @@ sap.m.Link.extend("sap.m.ex.BOLink", {
     setBoCode(value: string): void {
         this.setProperty("boCode", value);
     },
+    getConsistent(): boolean {
+        return this.getProperty("consistent");
+    },
+    setConsistent(value: boolean): void {
+        this.setProperty("consistent", value);
+    },
     setBindingValue(value: string): void {
         this.setProperty("bindingValue", value);
-        this.bindProperty("text", this.getBindingInfo("bindingValue"));
+        if (this.getConsistent()) {
+            this.bindProperty("text", this.getBindingInfo("bindingValue"));
+        }
     },
     getBindingValue(): string {
         return this.getProperty("bindingValue");
