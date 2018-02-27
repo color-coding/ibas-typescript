@@ -511,7 +511,7 @@ sap.m.ex.BOInput.extend("sap.m.ex.BOChooseInput", {
 
         let boData: any = this.getBindingContext().getModel().getData();
         ibas.servicesManager.runChooseService<any>({
-            boCode: boType.BUSINESS_OBJECT_CODE,
+            boCode: ibas.config.applyVariables(boType.BUSINESS_OBJECT_CODE),
             chooseType: that.getChooseType(),
             criteria: criteria,
             onCompleted(selecteds: ibas.List<any>): void {
