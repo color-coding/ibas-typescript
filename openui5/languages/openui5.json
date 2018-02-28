@@ -1,0 +1,21 @@
+{
+    "ui5_utils_desktop_notification_not_supported": "The current browser does not support Notification API",
+    "ui5_utils_desktop_notification_title": "The message",
+    "ui5_utils_desktop_notification_send_error": "Internal error sending the message",
+    "ui5_data_types_not_empty_error": "{0} Can't be empty",
+    "ui5_data_types_min_length_error": "{0} length can not be less than {1}",
+    "ui5_data_types_max_length_error": "{0} length can not be greater than {1}",
+    "ui5_data_types_zip_code_error": "The postal code format is not correct",
+    "ui5_data_types_url_error": "URL format is not correct",
+    "ui5_data_types_password_error": "Password must begin with a letter, the length between 6 and 12, can only contain characters, Numbers, and underscores",
+    "ui5_data_types_personalid_error": "Id card number format is not correct",
+    "ui5_data_types_numeric_error": "Please enter the Numbers",
+    "ui5_data_types_numeric_minvalue_error": "{0} Must be greater than {1}",
+    "ui5_data_types_numeric_maxvalue_error": "{0} Must be smaller than {1}",
+    "ui5_data_types_decimal_error": "Please enter the Decimal Number",
+    "ui5_data_types_decimal_decimalPlaces_error": "{0} Decimal places is not greater than  {1}",
+    "ui5_data_types_datetime_error": "{0} Date format is not correct",
+    "ui5_data_types_time_error": "{0} Time format is not correct",
+    "ui5_data_types_email_error": "Enail The format is not correct",
+    "ui5_data_types_phone_error": "The phone format is not correct"
+}

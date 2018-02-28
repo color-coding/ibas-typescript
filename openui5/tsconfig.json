@@ -1,14 +1,16 @@
 {
     "compilerOptions": {
-        "module": "amd",
-        "target": "es6",
         "noImplicitAny": false,
         "removeComments": true,
-        "baseUrl": "./",
-        "paths": {
-            "ibas/index": [
-                "../ibas/index"
-            ]
-        }
-    }
+        "target": "es6",
+        "preserveConstEnums": true,
+        "outFile": "./index.js",
+        "declaration": true,
+        "sourceMap": true
+    },
+    "include": [
+        "./datatypes.ts",
+        "./utils.ts",
+        "./extends/*.ts"
+    ]
 }

@@ -1,11 +1,22 @@
 {
   "compilerOptions": {
-    "module": "amd",
-    "target": "es6",
     "noImplicitAny": false,
     "removeComments": true,
-    "sourceMap": false
+    "target": "es6",
+    "preserveConstEnums": true,
+    "outFile": "./index.js",
+    "declaration": true,
+    "sourceMap": true
   },
-  "exclude": [
+  "include": [
+    "./bobas/common/*.ts",
+    "./bobas/bo/*.ts",
+    "./bobas/expression/*.ts",
+    "./bobas/repository/*.ts",
+    "./bobas/task/*.ts",
+    "./bobas/debug/*.ts",
+    "./bsbas/common/*.ts",
+    "./bsbas/browser/*.ts",
+    "./bsbas/application/*.ts"
   ]
 }

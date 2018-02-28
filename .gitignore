@@ -1,42 +1,35 @@
-# log file
-*_log_*.txt
-*.log
-
-# release folder
-/release/
-/target/
-/out/
-
-# ide files & folder
-ibas-typescript
+# files & folder
 *.js
 *.map
 *.tmp
 *.publishproj
 *.sln
+*.log
+*_log_*.txt
 .project
-Web.config
+*.d.ts
 /.vs/
 /.vscode/
 /.metadata/
 /.recommenders/
+/.settings/
 /RemoteSystemsTempFiles/
 /Servers/
-/.settings/
+/tomcat/
+/others/
+/upload/
+/release/
+/target/
+/out/
+/test/apps/
 /openui5/resources/
 /openui5/index.html
 /openui5/LICENSE.txt
 /openui5/NOTICE.txt
 /openui5/README.txt
-/openui5/typings/*.js
-/tomcat/
-/others/
-/upload/
-/test/apps/
 
 
 # exceptions
 !ibas/3rdparty/*.js
-!openui5/typings/*.ts
-!openui5/typings/*.json
+!openui5/types/*.ts
 !test/apps/trainingtesting/
