@@ -9,7 +9,7 @@
 import {
     objects, ArrayList, Criteria, Condition, emConditionOperation,
     criterias, boFactory, emMessageLevel, logger, strings, Bindable,
-    ICriteria, ICondition
+    ICriteria, ICondition, config
 } from "../../bobas/index";
 import {
     IBOChooseService, IBOChooseServiceContract, IBOChooseServiceCaller,
@@ -271,13 +271,14 @@ export abstract class BOViewService<T extends IBOViewView> extends BOViewApplica
             let caller: IBOLinkServiceCaller = arguments[0];
             if (objects.instanceOf(caller.proxy, BOLinkServiceProxy)) {
                 // 链接服务代理或其子类
-                if (caller.boCode === this.boCode) {
+                if (caller.boCode === this.boCode
+                    || config.applyVariables(caller.boCode) === config.applyVariables(this.boCode)) {
                     // 分析查询条件
                     let criteria: Criteria | string;
                     if (objects.instanceOf(caller.linkValue, Criteria)) {
                         criteria = <Criteria>caller.linkValue;
                     } else if (caller.linkValue instanceof String) {
-                        criteria = caller.linkValue;
+                        criteria = <string>caller.linkValue;
                     } else if (caller.linkValue instanceof Array) {
                         criteria = new Criteria();
                         for (let item of caller.linkValue) {

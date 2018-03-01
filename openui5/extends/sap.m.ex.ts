@@ -498,12 +498,12 @@ sap.m.ex.BOInput.extend("sap.m.ex.BOChooseInput", {
         } else {
             criteria = this.getCriteria().clone();
             for (let item of criteria.conditions) {
-                if (item.value.startsWith("{") && item.value.endsWith("}")) {
+                if (item.value.toString().startsWith("{") && item.value.toString().endsWith("}")) {
                     if (!ibas.objects.isNull(this.getBindingContext()) &&
                         !ibas.objects.isNull(this.getBindingContext().getModel()) &&
                         !ibas.objects.isNull(this.getBindingContext().getModel().getData())) {
                         item.value = this.getBindingContext().getModel().getData().
-                            getProperty(item.value.replace("{", "").replace("}", ""));
+                            getProperty(item.value.toString().replace("{", "").replace("}", ""));
                     }
                 }
             }
@@ -511,7 +511,7 @@ sap.m.ex.BOInput.extend("sap.m.ex.BOChooseInput", {
 
         let boData: any = this.getBindingContext().getModel().getData();
         ibas.servicesManager.runChooseService<any>({
-            boCode: boType.BUSINESS_OBJECT_CODE,
+            boCode: ibas.config.applyVariables(boType.BUSINESS_OBJECT_CODE),
             chooseType: that.getChooseType(),
             criteria: criteria,
             onCompleted(selecteds: ibas.List<any>): void {
@@ -982,6 +982,11 @@ sap.m.FlexBox.extend("sap.m.ex.ProvincesCityDistrict", {
         if (this.getBindingInfo("district") != null && this.getBindingInfo("district") !== undefined) {
             cityChange();
         }
+        if (!ibas.strings.isEmpty(this.getWidth())) {
+            provincesSelect.setWidth(this.getWidth());
+            citySelect.setWidth(this.getWidth());
+            districtSelect.setWidth(this.getWidth());
+        }
     },
     setProvinces(value: string): void {
         this.setProperty("provinces", value);
@@ -1000,6 +1005,81 @@ sap.m.FlexBox.extend("sap.m.ex.ProvincesCityDistrict", {
     },
     getDistrict(): string {
         return this.getProperty("district");
+    },
+    renderer: {}
+});
+/**
+ * 对象查看Link
+ */
+sap.m.Link.extend("sap.m.ex.BOLink", {
+    metadata: {
+        properties: {
+            /** 业务对象编码 */
+            boCode: { type: "string", group: "Ex" },
+            /** 对象查询属性名称 */
+            boKey: { type: "string", group: "Ex" },
+            /** 绑定字段 */
+            bindingValue: { type: "string", group: "Ex" },
+            /** 绑定字段 */
+            consistent: { type: "boolean", group: "Ex", defaultValue: true },
+        },
+        events: {}
+    },
+    showBOView(oEvent: any): void {
+        let that: any = this;
+        let boCode: string = this.getBoCode();
+        let boKey: string = this.getBoKey();
+        if (ibas.strings.isEmpty(boCode)) {
+            console.log(ibas.i18n.prop("sap_m_ex_bocode_null"));
+            return;
+        }
+        if (ibas.strings.isEmpty(boKey)) {
+            console.log(ibas.i18n.prop("sap_m_ex_bokey_null"));
+            return;
+        }
+        let value: string = "";
+        if (this.getConsistent()) {
+            value = oEvent.getSource().getText();
+        } else {
+            value = oEvent.getSource().getBindingValue();
+        }
+        ibas.servicesManager.runLinkService({
+            boCode: boCode,
+            linkValue: [
+                new ibas.Condition(boKey, ibas.emConditionOperation.EQUAL, value)
+            ],
+        });
+    },
+    getBoKey(): string {
+        return this.getProperty("boKey");
+    },
+    setBoKey(value: string): void {
+        let that: any = this;
+        this.attachPress(function (oEvent: any): void {
+            that.showBOView(oEvent);
+        });
+        this.setProperty("boKey", value);
+    },
+    getBoCode(): string {
+        return this.getProperty("boCode");
+    },
+    setBoCode(value: string): void {
+        this.setProperty("boCode", value);
+    },
+    getConsistent(): boolean {
+        return this.getProperty("consistent");
+    },
+    setConsistent(value: boolean): void {
+        this.setProperty("consistent", value);
+    },
+    setBindingValue(value: string): void {
+        this.setProperty("bindingValue", value);
+        if (this.getConsistent()) {
+            this.bindProperty("text", this.getBindingInfo("bindingValue"));
+        }
+    },
+    getBindingValue(): string {
+        return this.getProperty("bindingValue");
     },
     renderer: {}
 });

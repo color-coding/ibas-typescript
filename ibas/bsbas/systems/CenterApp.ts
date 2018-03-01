@@ -104,14 +104,16 @@ export abstract class CenterApp<T extends ICenterView> extends AbstractApplicati
             },
             modules(): List<IModule> {
                 let modules: ArrayList<IModule> = new ArrayList();
-                for (let item of that.functionMap.values()) {
-                    let tmp: any = modules.firstOrDefault((c) => {
-                        if (item.module === c || item.module.id === c.id) {
-                            return true;
+                if (!objects.isNull(that.functionMap)) {
+                    for (let item of that.functionMap.values()) {
+                        let tmp: any = modules.firstOrDefault((c) => {
+                            if (item.module === c || item.module.id === c.id) {
+                                return true;
+                            }
+                        });
+                        if (objects.isNull(tmp)) {
+                            modules.add(item.module);
                         }
-                    });
-                    if (objects.isNull(tmp)) {
-                        modules.add(item.module);
                     }
                 }
                 return modules;

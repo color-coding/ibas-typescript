@@ -48,9 +48,7 @@ export class Console extends ibas.ModuleConsole {
     run(): void {
         // 加载语言-框架默认
         ibas.i18n.load(this.rootUrl + "resources/languages/trainingtesting.json");
-        ibas.i18n.load(this.rootUrl + "resources/languages/bo/material.json");
-        ibas.i18n.load(this.rootUrl + "resources/languages/bo/customer.json");
-        ibas.i18n.load(this.rootUrl + "resources/languages/bo/salesorder.json");
+        ibas.i18n.load(this.rootUrl + "resources/languages/bos.json");
         // 设置资源属性
         this.description = ibas.i18n.prop(this.name.toLowerCase());
         this.icon = ibas.i18n.prop(this.name.toLowerCase() + "_icon");

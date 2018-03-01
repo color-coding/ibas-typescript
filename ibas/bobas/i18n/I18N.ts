@@ -116,14 +116,28 @@ export class I18N {
         let loader: LanguageLoader = new LanguageLoader();
         let caller: ILanguageLoaderCaller = {
             address: address,
-            onCompleted(data: any): void {
+            onCompleted(resource: any): void {
                 if (objects.isNull(that.resources)) {
                     that.resources = new Map<string, Map<string, string>>();
                 }
-                for (let name in data) {
-                    if (data[name] !== undefined) {
-                        that.add(name, data[name]);
+                let setMap: Function = function (data: any): void {
+                    for (let name in data) {
+                        if (objects.isNull(name)) {
+                            continue;
+                        }
+                        let value: any = data[name];
+                        if (objects.isNull(value)) {
+                            continue;
+                        }
+                        that.add(name, value);
                     }
+                };
+                if (resource instanceof Array) {
+                    for (let item of resource) {
+                        setMap(item);
+                    }
+                } else {
+                    setMap(resource);
                 }
             }
         };
