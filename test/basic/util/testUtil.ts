@@ -16,7 +16,7 @@ console.log(ibas.strings.format("message level is {0}",
     ibas.config.get(ibas.CONFIG_ITEM_MESSAGES_LEVEL, ibas.emMessageLevel.FATAL, ibas.emMessageLevel)));
 // 测试读取资源文件
 console.log(ibas.i18n.prop("sys_hello_world"));
-ibas.i18n.load(ibas.urls.rootUrl(undefined) + "/../resources/languages/test.json");
+ibas.i18n.load(ibas.urls.rootUrl() + "/../resources/languages/test.json");
 console.log(ibas.i18n.prop("sys_hello_world"));
 // 测试日志
 ibas.logger.log(ibas.emMessageLevel.FATAL, "a fatal error", "test");
@@ -58,7 +58,7 @@ console.log(ibas.strings.format("I'm {2}.", "niuren.zhu", "coding", "some one"))
 ibas.assert.equals("string.count faild.", ibas.strings.count("I'm niuren.zhu.", "zhu"), 1);
 ibas.assert.equals("string.count faild.", ibas.strings.count("I'm niuren.zhu.", "."), 2);
 // 测试地址处理
-ibas.assert.equals("string.count faild.", ibas.urls.normalize(".../test/util/.././../testUtil.html"), document.location.href);
+ibas.assert.equals("string.count faild.", ibas.urls.normalize(".../test/util/.././../index.html"), document.location.href + "index.html");
 // 测试字符串构造器
 let builder: ibas.StringBuilder = new ibas.StringBuilder();
 builder.append("I");
@@ -70,10 +70,10 @@ builder.append(".");
 console.log(builder.toString());
 // 测试文件仓库
 let fileRepository: ibas.FileRepositoryAjax = new ibas.FileRepositoryAjax();
-fileRepository.address = ibas.urls.rootUrl(undefined) + "/../../repository";
+fileRepository.address = ibas.urls.rootUrl() + "/../../repository";
 fileRepository.load("salesorders.json", {
     onCompleted(opRslt: ibas.IOperationResult<any>): void {
-        console.log(opRslt.message);
+        console.log(opRslt);
     }
 });
 // 测试动作

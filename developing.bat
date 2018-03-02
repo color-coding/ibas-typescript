@@ -24,7 +24,7 @@ echo --工作的目录：%WORK_FOLDER%
 REM 启动文件夹监听
 CALL :WATCHING_TS "%WORK_FOLDER%ibas\tsconfig.json"
 CALL :WATCHING_TS "%WORK_FOLDER%openui5\tsconfig.json"
-CALL :WATCHING_TS "%WORK_FOLDER%test\apps\tsconfig.dev.json"
+CALL :WATCHING_TS "%WORK_FOLDER%test\basic\tsconfig.json"
 
 REM 启动web服务
 REM 优先启动IIS

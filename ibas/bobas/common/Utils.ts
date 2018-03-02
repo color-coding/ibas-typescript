@@ -710,17 +710,19 @@ namespace ibas {
             }
             return url;
         }
+        export function rootUrl(): string;
         /**
          * 获取当前根地址
          * @param type 基准文件名称，null表示文档地址
          */
-        export function rootUrl(type: string): string {
-            if (type === undefined || type === null) {
+        export function rootUrl(type: string): string;
+        export function rootUrl(): string {
+            if (strings.isEmpty(arguments[0])) {
                 // 未提供类型，则返回文档地址
                 let url: string = document.location.origin + document.location.pathname;
                 return url.substring(0, url.lastIndexOf("/"));
             }
-            let fileName: string = type;
+            let fileName: string = arguments[0];
             if (!fileName.startsWith("/")) { fileName = "/" + fileName; }
             if (!fileName.endsWith(".js")) { fileName = fileName + ".js"; }
             let root: string = window.document.location.origin;

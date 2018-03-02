@@ -122,7 +122,7 @@ boRepository.saveSalesOrder({
 });
 // 测试离线仓库
 boRepository.offline = true;
-boRepository.address = ibas.urls.rootUrl(undefined) + "/../../repository";
+boRepository.address = ibas.urls.rootUrl() + "/../../repository";
 boRepository.fetchSalesOrder({
     criteria: criteria,
     onCompleted(opRslt: ibas.IOperationResult<SalesOrder>): void {

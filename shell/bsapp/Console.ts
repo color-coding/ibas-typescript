@@ -51,7 +51,7 @@ namespace shell {
                 this.description = ibas.i18n.prop(this.name);
                 this.icon = ibas.strings.format("{0}/resources/images/logo_small.png", rootUrl);
                 // 加载网站配置文件
-                let siteUrl: string = ibas.urls.rootUrl(undefined);
+                let siteUrl: string = ibas.urls.rootUrl();
                 if (siteUrl !== rootUrl) {
                     // 网站与壳地址不同，加载网站配置
                     ibas.config.load(ibas.strings.format("{0}/{1}", siteUrl, ibas.CONFIG_FILE_NAME));
