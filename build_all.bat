@@ -25,14 +25,22 @@ if "%OPTIONS%" neq "" (
 )
 
 REM 编译项目配置
-SET TS_CONFIGS="ibas/tsconfig.json"
-SET TS_CONFIGS="%TS_CONFIGS% openui5/tsconfig.json"
-SET TS_CONFIGS="%TS_CONFIGS% shell/tsconfig.json"
-SET TS_CONFIGS="%TS_CONFIGS% shell/tsconfig.ui.c.json"
-SET TS_CONFIGS="%TS_CONFIGS% shell/tsconfig.ui.m.json"
+SET TS_CONFIGS=ibas\tsconfig.json
+SET TS_CONFIGS=%TS_CONFIGS% openui5\tsconfig.json
+SET TS_CONFIGS=%TS_CONFIGS% shell\tsconfig.json
+SET TS_CONFIGS=%TS_CONFIGS% shell\tsconfig.ui.c.json
+SET TS_CONFIGS=%TS_CONFIGS% shell\tsconfig.ui.m.json
 
-for /f %%l in ('echo %TS_CONFIGS%') DO (
+FOR %%l IN (%TS_CONFIGS%) DO (
   SET TS_CONFIG=%%l
   echo --开始编译：!TS_CONFIG!
   call !COMMOND! -p !TS_CONFIG!
+)
+
+REM 编译TT项目
+if exist "test\apps\trainingtesting\build_all.bat" (
+  set ROOT_FOLDER=%WORK_FOLDER%
+  cd /d "test\apps\trainingtesting"
+  call build_all.bat %OPTIONS%
+  cd /d !ROOT_FOLDER!
 )

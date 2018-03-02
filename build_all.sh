@@ -36,3 +36,12 @@ do
     ${COMMOND} -p ${TS_CONFIG}
   fi
 done
+
+# 编译TT项目
+if [ -x "test/apps/trainingtesting/build_all.sh" ]
+then
+  ROOT_FOLDER=${WORK_FOLDER}
+  cd "./test/apps/trainingtesting"
+  ./build_all.sh ${OPTIONS}
+  cd ${ROOT_FOLDER}
+fi

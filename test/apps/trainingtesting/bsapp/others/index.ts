@@ -1,14 +1,12 @@
 /**
  * @license
- * Copyright color-coding studio. All Rights Reserved.
+ * Copyright Color-Coding Studio. All Rights Reserved.
  *
  * Use of this source code is governed by an Apache License, Version 2.0
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
-
-// 模块索引文件，此文件集中导出类
-export * from "./OthersFunc";
-export * from "./DemoResidentApp";
-export * from "./DemoUrlApp";
-export * from "./DemoService";
-export * from "./DemoMapApp";
+/// <reference path="./OthersFunc.ts" />
+/// <reference path="./DemoResidentApp.ts" />
+/// <reference path="./DemoUrlApp.ts" />
+/// <reference path="./DemoService.ts" />
+/// <reference path="./DemoMapApp.ts" />
