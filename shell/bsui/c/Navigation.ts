@@ -11,43 +11,39 @@
 
 namespace shell {
     export namespace ui {
-        export namespace c {
-
+        /**
+         * 视图导航
+         */
+        export class Navigation extends ibas.ViewNavigation {
             /**
-             * 视图导航
+             * 创建实例
+             * @param id 应用id
              */
-            export class Navigation extends ibas.ViewNavigation {
-
-                /**
-                 * 创建实例
-                 * @param id 应用id
-                 */
-                protected newView(id: string): ibas.IView {
-                    let view: ibas.IView = null;
-                    switch (id) {
-                        case app.MainApp.APPLICATION_ID:
-                            view = new MainView();
-                            break;
-                        case app.LoginApp.APPLICATION_ID:
-                            view = new BigLoginView();
-                            break;
-                        case app.CenterApp.APPLICATION_ID:
-                            view = new CenterView();
-                            break;
-                        case app.AboutApp.APPLICATION_ID:
-                            view = new AboutView();
-                            break;
-                        case app.HelpApp.APPLICATION_ID:
-                            view = new HelpView();
-                            break;
-                        case app.QueryPanel.APPLICATION_ID:
-                            view = new QueryPanelView();
-                            break;
-                        default:
-                            break;
-                    }
-                    return view;
+            protected newView(id: string): ibas.IView {
+                let view: ibas.IView = null;
+                switch (id) {
+                    case app.MainApp.APPLICATION_ID:
+                        view = new c.MainView();
+                        break;
+                    case app.LoginApp.APPLICATION_ID:
+                        view = new c.BigLoginView();
+                        break;
+                    case app.CenterApp.APPLICATION_ID:
+                        view = new c.CenterView();
+                        break;
+                    case app.AboutApp.APPLICATION_ID:
+                        view = new c.AboutView();
+                        break;
+                    case app.HelpApp.APPLICATION_ID:
+                        view = new c.HelpView();
+                        break;
+                    case app.QueryPanel.APPLICATION_ID:
+                        view = new c.QueryPanelView();
+                        break;
+                    default:
+                        break;
                 }
+                return view;
             }
         }
     }

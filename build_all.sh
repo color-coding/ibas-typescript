@@ -19,6 +19,7 @@ COMMOND=tsc
 # 编译项目配置
 TS_CONFIGS="ibas/tsconfig.json"
 TS_CONFIGS="${TS_CONFIGS} openui5/tsconfig.json"
+TS_CONFIGS="${TS_CONFIGS} shell/loader.json"
 TS_CONFIGS="${TS_CONFIGS} shell/tsconfig.json"
 TS_CONFIGS="${TS_CONFIGS} shell/tsconfig.ui.c.json"
 TS_CONFIGS="${TS_CONFIGS} shell/tsconfig.ui.m.json"

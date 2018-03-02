@@ -11,7 +11,7 @@
 
 namespace ibas {
     /** 数据转换 */
-    export namespace judment {
+    export namespace judgment {
         export namespace convert {
             export function operation(value: emConditionOperation): emJudmentOperation {
                 if (objects.isNull(value)) {
@@ -52,7 +52,7 @@ namespace ibas {
                 throw new Error(i18n.prop("sys_unrecognized_data"));
             }
         }
-        export namespace factory {
+        export namespace expression {
             export function create<T>(type: string): IJudgmentExpression<T> {
                 if (strings.equalsIgnoreCase("string", type)) {
                     return <IJudgmentExpression<T>>(<any>new JudgmentExpressionString());

@@ -626,18 +626,8 @@ namespace ibas {
     }
     /** 业务对象工厂 */
     export class BOFactory implements IBOFactory {
-        /** 全局 */
-        private globalMap: Map<string, any> = function (): Map<string, any> {
-            if ((<any>window).ibas === undefined) {
-                (<any>window).ibas = {};
-            }
-            if ((<any>window).ibas.boMap === undefined) {
-                (<any>window).ibas.boMap = new Map();
-            }
-            return (<any>window).ibas.boMap;
-        }();
-        /** 模块 */
-        private modularMap: Map<string, any> = new Map();
+        /** 业务对象字典 */
+        private boMap: Map<string, any> = new Map();
         /**
          * 注册业务对象
          * @param name 检索值
@@ -662,7 +652,7 @@ namespace ibas {
                 if (objects.isNull(name)) {
                     throw new Error(i18n.prop("sys_unrecognized_data"));
                 }
-                this.modularMap.set(name, bo);
+                this.boMap.set(name, bo);
             } else if (arguments.length === 2) {
                 // 提供名称，则注册到全局
                 bo = arguments[1];
@@ -675,11 +665,10 @@ namespace ibas {
                 }
                 // 去除变量
                 name = config.applyVariables(name);
-                this.globalMap.set(name, bo);
+                this.boMap.set(name, bo);
                 name = objects.getName(bo);
                 if (!objects.isNull(name)) {
-                    /** 模块再注册次 */
-                    this.modularMap.set(name, bo);
+                    this.boMap.set(name, bo);
                 }
             }
         }
@@ -687,12 +676,8 @@ namespace ibas {
         classOf(name: string): any {
             // 去除变量
             name = config.applyVariables(name);
-            if (this.modularMap.has(name)) {
-                // 优先使用模块注册对象
-                return this.modularMap.get(name);
-            } else if (this.globalMap.has(name)) {
-                // 使用全局注册对象
-                return this.globalMap.get(name);
+            if (this.boMap.has(name)) {
+                return this.boMap.get(name);
             }
             throw new Error(i18n.prop("sys_bo_not_registered", name));
         }

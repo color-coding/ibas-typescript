@@ -4,11 +4,11 @@
     "removeComments": true,
     "target": "es6",
     "preserveConstEnums": true,
-    "outFile": "./index.js",
-    "declaration": true,
-    "sourceMap": true
+    "outFile": "./loader.js",
+    "declaration": false,
+    "sourceMap": false
   },
   "files": [
-    "./bsapp/Console.ts"
+    "./loader.ts"
   ]
 }

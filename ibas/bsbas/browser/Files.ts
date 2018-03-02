@@ -17,14 +17,14 @@ namespace ibas {
             if (strings.isEmpty(fileName)) {
                 fileName = strings.format("file_{0}", dates.now().getTime());
             }
-            let url: string = URL.createObjectURL(data);
+            let url: string = window.URL.createObjectURL(data);
             let save_link: any = document.createElementNS("http://www.w3.org/1999/xhtml", "a");
             save_link.href = url;
             save_link.download = fileName;
             let event: any = document.createEvent("MouseEvents");
             event.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
             save_link.dispatchEvent(event);
-            URL.revokeObjectURL(url);
+            window.URL.revokeObjectURL(url);
             logger.log(emMessageLevel.DEBUG, "files: save file as [{0}].", fileName);
         }
     }

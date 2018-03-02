@@ -27,6 +27,7 @@ if "%OPTIONS%" neq "" (
 REM ±‡“ÎœÓƒø≈‰÷√
 SET TS_CONFIGS=ibas\tsconfig.json
 SET TS_CONFIGS=%TS_CONFIGS% openui5\tsconfig.json
+SET TS_CONFIGS=%TS_CONFIGS% shell\loader.json
 SET TS_CONFIGS=%TS_CONFIGS% shell\tsconfig.json
 SET TS_CONFIGS=%TS_CONFIGS% shell\tsconfig.ui.c.json
 SET TS_CONFIGS=%TS_CONFIGS% shell\tsconfig.ui.m.json

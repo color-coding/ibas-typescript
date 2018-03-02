@@ -42,20 +42,12 @@ namespace shell {
             run(): void {
                 // 获取壳根地址
                 let rootUrl: string = ibas.urls.rootUrl(Console.ROOT_FILE_NAME);
-                // 加载配置-壳
-                ibas.config.load(ibas.strings.format("{0}/{1}", rootUrl, ibas.CONFIG_FILE_NAME));
                 // 加载语言-壳
                 ibas.i18n.load(ibas.strings.format("{0}/resources/languages/shell.json", rootUrl));
                 ibas.i18n.load(ibas.strings.format("{0}/resources/languages/enums.json", rootUrl));
                 // 设置资源属性
                 this.description = ibas.i18n.prop(this.name);
                 this.icon = ibas.strings.format("{0}/resources/images/logo_small.png", rootUrl);
-                // 加载网站配置文件
-                let siteUrl: string = ibas.urls.rootUrl();
-                if (siteUrl !== rootUrl) {
-                    // 网站与壳地址不同，加载网站配置
-                    ibas.config.load(ibas.strings.format("{0}/{1}", siteUrl, ibas.CONFIG_FILE_NAME));
-                }
                 // 加载视图显示者
                 let uiModules: string[] = [];
                 if (!ibas.config.get(ibas.CONFIG_ITEM_DISABLE_PLATFORM_VIEW, false)) {
@@ -70,11 +62,12 @@ namespace shell {
                     uiModules.push("index.ui.c");
                 }
                 let that: this = this;
-                require(uiModules, function (ui: any): void {
+                require(uiModules, function (): void {
                     // 设置视图显示者
-                    that.viewShower = new ui.ViewShower();
+                    let shell: any = (<any>window).shell;
+                    that.viewShower = new shell.ui.ViewShower();
                     // 设置导航
-                    that._navigation = new ui.Navigation();
+                    that._navigation = new shell.ui.Navigation();
                     // 调用初始化
                     that.initialize();
                     // 调用入口应用

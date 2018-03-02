@@ -14,8 +14,7 @@ namespace shell {
         /**
          * 视图-显示者-默认
          */
-        export class ViewShowerDefault implements ibas.IViewShower {
-
+        export class ViewShower implements ibas.IViewShower {
             constructor() {
                 let that: this = this;
                 // 键盘按钮按下
@@ -135,16 +134,6 @@ namespace shell {
                         }
                     }
                 });
-                // 设置默认平台
-                if (sap.ui.Device.system.phone) {
-                    ibas.config.set(ibas.CONFIG_ITEM_PLANTFORM, ibas.emPlantform.PHONE);
-                } else if (sap.ui.Device.system.desktop) {
-                    ibas.config.set(ibas.CONFIG_ITEM_PLANTFORM, ibas.emPlantform.DESKTOP);
-                } else if (sap.ui.Device.system.tablet) {
-                    ibas.config.set(ibas.CONFIG_ITEM_PLANTFORM, ibas.emPlantform.TABLET);
-                } else {
-                    ibas.config.set(ibas.CONFIG_ITEM_PLANTFORM, ibas.emPlantform.COMBINATION);
-                }
             }
             /** 按钮按下时 */
             private onKeyDown(event: KeyboardEvent): void {

@@ -59,7 +59,7 @@ namespace ibas {
             return String(value);
         }
     }
-    export namespace factory {
+    export namespace judgment {
         export namespace converter {
             export function create<T>(type: string): IValueConverter<T> {
                 if (strings.equalsIgnoreCase("string", type)) {
@@ -238,7 +238,7 @@ namespace ibas {
                 }
                 if (rootJudExp === null) {
                     // 第一个表达式
-                    rootJudExp = judment.factory.create<boolean>("boolean");
+                    rootJudExp = judgment.expression.create<boolean>("boolean");
                     rootJudExp.leftValue = currentValue;
                     rootJudExp.operation = emJudmentOperation.AND;
                     rootJudExp.rightValue = true;
@@ -263,7 +263,7 @@ namespace ibas {
          * @param judgeItem 判断项
          */
         protected createExpression(judgeItem: IJudgmentLinkItem): IJudgmentExpression<any> {
-            let expression: IJudgmentExpression<any> = judment.factory.create(judgeItem.leftOperter.valueType());
+            let expression: IJudgmentExpression<any> = judgment.expression.create(judgeItem.leftOperter.valueType());
             expression.leftValue = judgeItem.leftOperter.getValue();
             expression.operation = judgeItem.operation;
             expression.rightValue = judgeItem.rightOperter.getValue();
@@ -302,7 +302,7 @@ namespace ibas {
                     operator.setValue(value);
                 } else if (item.rightOperter instanceof ValueOperatorEx) {
                     let operator: IValueOperatorEx = item.rightOperter;
-                    operator.converter = factory.converter.create(item.leftOperter.valueType());
+                    operator.converter = judgment.converter.create(item.leftOperter.valueType());
                 }
                 jItems.add(item);
             }
@@ -332,7 +332,7 @@ namespace ibas {
                 || judgeItem.operation === emJudmentOperation.CONTAIN
                 || judgeItem.operation === emJudmentOperation.NOT_CONTAIN) {
                 // 此操作均为字符串独有操作
-                let expression: IJudgmentExpression<string> = judment.factory.create("string");
+                let expression: IJudgmentExpression<string> = judgment.expression.create("string");
                 expression.leftValue = strings.valueOf(judgeItem.leftOperter.getValue());
                 expression.operation = judgeItem.operation;
                 expression.rightValue = strings.valueOf(judgeItem.rightOperter.getValue());
@@ -359,9 +359,9 @@ namespace ibas {
                 if (item.relationship === emConditionRelationship.NONE) {
                     jItem.relationship = emJudmentOperation.AND;
                 } else {
-                    jItem.relationship = judment.convert.relationship(item.relationship);
+                    jItem.relationship = judgment.convert.relationship(item.relationship);
                 }
-                jItem.operation = judment.convert.operation(item.operation);
+                jItem.operation = judgment.convert.operation(item.operation);
                 // 左边取值
                 let operator: IPropertyValueOperator = new PropertyValueOperator();
                 operator.propertyName = item.alias;

@@ -36,11 +36,26 @@ WATCHING_TS()
     tsc -w -p ${CONFIG_FILE} & # '&'后台运行任务
   fi
 }
+# 函数-启动编译
+COMPILE_TS()
+{
+  CONFIG_FILE=$1
+  echo ----监听: ${CONFIG_FILE}
+  if [ -e ${CONFIG_FILE} ]
+  then
+    tsc -p ${CONFIG_FILE}
+  fi
+}
 
-# 启动文件夹监听
-WATCHING_TS "${WORK_FOLDER}/ibas/tsconfig.json";
-WATCHING_TS "${WORK_FOLDER}/openui5/tsconfig.json";
-WATCHING_TS "${WORK_FOLDER}/test/apps/tsconfig.dev.json";
+# 启动监听
+WATCHING_TS "${WORK_FOLDER}/ibas/tsconfig.json"
+WATCHING_TS "${WORK_FOLDER}/openui5/tsconfig.json"
+WATCHING_TS "${WORK_FOLDER}/shell/tsconfig.json"
+WATCHING_TS "${WORK_FOLDER}/shell/tsconfig.ui.c.json"
+WATCHING_TS "${WORK_FOLDER}/shell/tsconfig.ui.m.json"
+# 启动编译
+COMPILE_TS "${WORK_FOLDER}/shell/tsconfig.loader.json"
+COMPILE_TS "${WORK_FOLDER}/test/basic/tsconfig.json"
 
 # 启动tomcat
 WEB_SERVER="${WORK_FOLDER}/tomcat/bin/startup.sh"

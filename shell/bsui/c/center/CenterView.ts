@@ -26,9 +26,6 @@ namespace shell {
             export const CONFIG_ITEM_SHRINK_FUNCTION_LIST: string = "shrinkFunction";
             /** 配置项目-最大消息数 */
             export const CONFIG_ITEM_MAX_MESSAGES_COUNT: string = "messgesCount";
-            /** 配置项目-紧缩屏幕 */
-            export const CONFIG_ITEM_COMPACT_SCREEN: string = "compactScreen";
-
             /**
              * 视图-中心
              */
