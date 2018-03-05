@@ -38,6 +38,8 @@ namespace shell {
             Name: string;
             /** 类别 */
             Category: string;
+            /** 控制台 */
+            Console: string;
             /** 地址 */
             Address: string;
             /** 仓库地址 */

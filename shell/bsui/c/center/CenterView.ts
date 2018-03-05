@@ -426,7 +426,7 @@ namespace shell {
                         if (busy) {
                             if (ibas.objects.isNull(this.busyDialog)) {
                                 this.busyDialog = new sap.m.BusyDialog("");
-                                if (ibas.config.get(CONFIG_ITEM_COMPACT_SCREEN, false)) {
+                                if (ibas.config.get(openui5.CONFIG_ITEM_COMPACT_SCREEN, false)) {
                                     this.busyDialog.addStyleClass("sapUiSizeCompact");
                                 }
                             }
@@ -588,7 +588,7 @@ namespace shell {
                         view.isDisplayed = false;
                     });
                     // 设置视图紧凑
-                    if (ibas.config.get(CONFIG_ITEM_COMPACT_SCREEN, false)) {
+                    if (ibas.config.get(openui5.CONFIG_ITEM_COMPACT_SCREEN, false)) {
                         dialog.addStyleClass("sapUiSizeCompact");
                     }
                     // 修改id号
@@ -629,7 +629,7 @@ namespace shell {
                             view.isDisplayed = false;
                         });
                         // 设置视图紧凑
-                        if (ibas.config.get(CONFIG_ITEM_COMPACT_SCREEN, false)) {
+                        if (ibas.config.get(openui5.CONFIG_ITEM_COMPACT_SCREEN, false)) {
                             form.addStyleClass("sapUiSizeCompact");
                         }
                         // 修改id号
@@ -655,7 +655,7 @@ namespace shell {
                             popover.destroy(false);
                         });
                         // 设置视图紧凑
-                        if (ibas.config.get(CONFIG_ITEM_COMPACT_SCREEN, false)) {
+                        if (ibas.config.get(openui5.CONFIG_ITEM_COMPACT_SCREEN, false)) {
                             popover.addStyleClass("sapUiSizeCompact sapMOTAPopover sapTntToolHeaderPopover");
                         } else {
                             popover.addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");

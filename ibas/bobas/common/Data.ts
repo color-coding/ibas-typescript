@@ -6,19 +6,6 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 namespace ibas {
-    /** 关于 */
-    export const about: any = {
-        /** 网址 */
-        url: "https://colorcoding.org/",
-        /** 版权 */
-        copyright: "Color-Coding Studio",
-        /** 许可 */
-        license: "Apache License, Version 2.0",
-        /** 版本 */
-        version: "v0.2.0",
-        /** 维护者 */
-        maintainer: "Niuren.Zhu <niuren.zhu@icloud.com>"
-    };
     /**
      * 集合
      */

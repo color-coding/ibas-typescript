@@ -98,7 +98,7 @@ namespace shell {
                 try {
                     this.editQuery.user = ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE);
                     let that: this = this;
-                    let boRepository: bo.BORepositoryShell = new bo.BORepositoryShell();
+                    let boRepository: bo.IBORepositoryShell = bo.createRepository();
                     boRepository.saveUserQuery({
                         beSaved: this.editQuery,
                         onCompleted(opRslt: ibas.IOperationResult<bo.IUserQuery>): void {
@@ -154,7 +154,7 @@ namespace shell {
                     this.init(callBack);
                 } else {
                     let that: this = this;
-                    let boRepository: bo.IBORepositoryShell = new bo.BORepositoryShell();
+                    let boRepository: bo.IBORepositoryShell = bo.createRepository();
                     boRepository.fetchUserQueries({
                         user: ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE),
                         queryId: this.listener.queryId,
@@ -239,7 +239,7 @@ namespace shell {
                 if (criteria.conditions.length === 0 && !ibas.objects.isNull(this.listener.queryTarget) && !ibas.strings.isEmpty(this.view.searchContent)) {
                     let boName: string = this.targetName;
                     if (!ibas.objects.isNull(boName)) {
-                        let boRepository: bo.IBORepositoryShell = new bo.BORepositoryShell;
+                        let boRepository: bo.IBORepositoryShell = bo.createRepository();
                         boRepository.fetchBOInfos({
                             boCode: null,
                             boName: boName,

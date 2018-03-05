@@ -30,6 +30,61 @@ namespace trainingtesting {
                         visibleRowCount: ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 15),
                         rows: "{/rows}",
                         columns: [
+                            new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_salesorder_docentry"),
+                                template: new sap.m.Text("", {
+                                    wrapping: false
+                                }).bindProperty("text", {
+                                    path: "docEntry"
+                                })
+                            }),
+                            new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_salesorder_customercode"),
+                                template: new sap.m.Link("", {
+                                    wrapping: false,
+                                    press(event: any): void {
+                                        ibas.servicesManager.runLinkService({
+                                            boCode: bo.Customer.BUSINESS_OBJECT_CODE,
+                                            linkValue: event.getSource().getText()
+                                        });
+                                    }
+                                }).bindProperty("text", {
+                                    path: "customerCode"
+                                })
+                            }),
+                            new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_salesorder_customername"),
+                                template: new sap.m.Text("", {
+                                    wrapping: false
+                                }).bindProperty("text", {
+                                    path: "customerName",
+                                    formatter(data: any): any {
+                                        return ibas.enums.describe(ibas.emDocumentStatus, data);
+                                    }
+                                })
+                            }),
+                            new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_salesorder_documentstatus"),
+                                template: new sap.m.Text("", {
+                                    wrapping: false
+                                }).bindProperty("text", {
+                                    path: "documentStatus",
+                                    formatter(data: any): any {
+                                        return ibas.enums.describe(ibas.emDocumentStatus, data);
+                                    }
+                                })
+                            }),
+                            new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_salesorder_canceled"),
+                                template: new sap.m.Text("", {
+                                    wrapping: false
+                                }).bindProperty("text", {
+                                    path: "canceled",
+                                    formatter(data: any): any {
+                                        return ibas.enums.describe(ibas.emYesNo, data);
+                                    }
+                                })
+                            })
                         ]
                     });
                     // 调整选择样式风格

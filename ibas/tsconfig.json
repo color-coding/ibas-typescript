@@ -8,15 +8,7 @@
     "declaration": true,
     "sourceMap": true
   },
-  "include": [
-    "./bobas/common/*.ts",
-    "./bobas/bo/*.ts",
-    "./bobas/expression/*.ts",
-    "./bobas/repository/*.ts",
-    "./bobas/task/*.ts",
-    "./bobas/debug/*.ts",
-    "./bsbas/common/*.ts",
-    "./bsbas/browser/*.ts",
-    "./bsbas/application/*.ts"
+  "files": [
+    "./index.ts"
   ]
 }

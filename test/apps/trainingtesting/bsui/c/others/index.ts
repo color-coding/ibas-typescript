@@ -5,9 +5,7 @@
  * Use of this source code is governed by an Apache License, Version 2.0
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
-
-// 模块索引文件，此文件集中导出类
-export * from "./DemoUrlView";
-export * from "./DemoServiceView";
-export * from "./DemoResidentView";
-export * from "./DemoMapView";
+/// <reference path="./DemoUrlView.ts" />
+/// <reference path="./DemoServiceView.ts" />
+/// <reference path="./DemoResidentView.ts" />
+/// <reference path="./DemoMapView.ts" />

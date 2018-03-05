@@ -35,9 +35,17 @@ namespace trainingtesting {
                             template: new sap.m.ObjectListItem("", {
                                 type: sap.m.ListType.Active,
                                 title: {
-                                    path: ""
+                                    path: "name"
                                 },
                                 attributes: [
+                                    new sap.m.ObjectAttribute("", {
+                                        text: {
+                                            path: "code",
+                                            formatter(data: any): any {
+                                                return ibas.i18n.prop("bo_customer_code") + data;
+                                            }
+                                        }
+                                    }),
                                 ],
                             }),
                         }

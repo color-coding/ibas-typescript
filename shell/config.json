@@ -3,8 +3,8 @@
     "company": "CC",
     "language": "zh_CN",
     "debug": true,
-    "offline": false,
-    "offline|BORepositoryShell": false,
+    "offline": true,
+    "offline|BORepositoryShell": true,
     "helpUrl": "https://colorcoding.org/ibas/help",
     "welcomeUrl": "https://colorcoding.org/ibas/welcome",
     "fullScreen": false,
@@ -16,8 +16,8 @@
     "defalutServiceIcon": "sap-icon://e-care",
     "defalutModuleIcon": "sap-icon://nutrition-activity",
     "repositoryAddress|BORepositoryShell": "http://localhost:8080/initialfantasy/services/rest/data",
-    "repositoryAddress|BORepositoryShellOffline": ".../../../test/repository",
-    "repositoryAddress|BORepositoryTrainingTestingOffline": ".../../../test/repository"
+    "repositoryAddress|BORepositoryShellOffline": ".../../test/repository",
+    "repositoryAddress|BORepositoryTrainingTestingOffline": ".../../test/repository"
   },
   "languages": [
     "zh_CN",

@@ -30,6 +30,49 @@ namespace trainingtesting {
                             new sap.ui.layout.form.SimpleForm("", {
                                 editable: true,
                                 content: [
+                                    new sap.ui.core.Title("", { text: ibas.i18n.prop("trainingtesting_title_general") }),
+                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_material_code") }),
+                                    new sap.m.Input("", {
+                                        type: sap.m.InputType.Text,
+                                        value: {
+                                            path: "code"
+                                        },
+                                        enabled: {
+                                            path: "isNew"
+                                        }
+                                    }),
+                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_material_name") }),
+                                    new sap.m.Input("", {
+                                        type: sap.m.InputType.Text,
+                                        value: {
+                                            path: "name"
+                                        },
+                                    }),
+                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_material_activated") }),
+                                    new sap.m.Select("", {
+                                        items: openui5.utils.createComboBoxItems(ibas.emYesNo),
+                                        selectedKey: {
+                                            path: "activated",
+                                            type: "sap.ui.model.type.Integer"
+                                        }
+                                    }),
+                                    new sap.ui.core.Title("", { text: ibas.i18n.prop("trainingtesting_title_others") }),
+                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_material_docentry") }),
+                                    new sap.m.Input("", {
+                                        enabled: false,
+                                        type: sap.m.InputType.Text,
+                                        value: {
+                                            path: "docEntry"
+                                        }
+                                    }),
+                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_material_objectcode") }),
+                                    new sap.m.Input("", {
+                                        enabled: false,
+                                        type: sap.m.InputType.Text,
+                                        value: {
+                                            path: "objectCode"
+                                        }
+                                    }),
                                 ]
                             })
                         ]

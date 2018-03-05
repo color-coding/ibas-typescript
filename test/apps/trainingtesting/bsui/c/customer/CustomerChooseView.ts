@@ -30,6 +30,28 @@ namespace trainingtesting {
                         visibleRowCount: ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 15),
                         rows: "{/rows}",
                         columns: [
+                            new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_customer_code"),
+                                template: new sap.m.Link("", {
+                                    wrapping: false,
+                                    press(event: any): void {
+                                        ibas.servicesManager.runLinkService({
+                                            boCode: bo.Customer.BUSINESS_OBJECT_CODE,
+                                            linkValue: event.getSource().getText()
+                                        });
+                                    }
+                                }).bindProperty("text", {
+                                    path: "code"
+                                })
+                            }),
+                            new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_customer_name"),
+                                template: new sap.m.Text("", {
+                                    wrapping: false
+                                }).bindProperty("text", {
+                                    path: "name"
+                                })
+                            }),
                         ]
                     });
                     // 调整选择样式风格

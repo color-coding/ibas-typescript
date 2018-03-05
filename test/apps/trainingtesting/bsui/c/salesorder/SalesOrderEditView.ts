@@ -24,6 +24,10 @@ namespace trainingtesting {
                 addSalesOrderItemEvent: Function;
                 /** 删除销售订单-行事件 */
                 removeSalesOrderItemEvent: Function;
+                /** 选择销售订单客户事件 */
+                chooseSalesOrderCustomerEvent: Function;
+                /** 选择销售订单行物料事件 */
+                chooseSalesOrderItemMaterialEvent: Function;
 
                 /** 绘制视图 */
                 draw(): any {
@@ -31,6 +35,113 @@ namespace trainingtesting {
                     let formTop: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
                         editable: true,
                         content: [
+                            new sap.ui.core.Title("", { text: ibas.i18n.prop("trainingtesting_title_general") }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_customercode") }),
+                            new sap.m.Input("", {
+                                showValueHelp: true,
+                                valueHelpRequest: function (): void {
+                                    that.fireViewEvents(that.chooseSalesOrderCustomerEvent);
+                                }
+                            }).bindProperty("value", {
+                                path: "/customerCode",
+                                type: new openui5.datatype.Alphanumeric({
+                                    notEmpty: true,
+                                    minLength: 2,
+                                    maxLength: 8,
+                                    description: ibas.i18n.prop("bo_salesorder_customercode")
+                                })
+                            }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_customername") }),
+                            new sap.m.Input("", {
+                            }).bindProperty("value", {
+                                path: "/customerName",
+                                type: new openui5.datatype.Alphanumeric({
+                                    description: ibas.i18n.prop("bo_salesorder_customercode"),
+                                    validate(oValue: string): openui5.datatype.ValidateResult {
+                                        let result: openui5.datatype.ValidateResult = new openui5.datatype.ValidateResult();
+                                        result.status = true;
+                                        if (!oValue.endsWith("公司")) {
+                                            result.status = false;
+                                            result.message = "客户名称需要以[公司]结尾";
+                                        }
+                                        return result;
+                                    }
+                                })
+                            }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_reference1") }),
+                            new sap.m.Input("", {
+                            }).bindProperty("value", {
+                                path: "/reference1",
+                                type: new openui5.datatype.Email({
+                                    notEmpty: true,
+                                    description: ibas.i18n.prop("bo_salesorder_reference1")
+                                })
+                            }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_documentdate") }),
+                            new sap.m.DatePicker("", {
+                                valueFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE),
+                                displayFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE),
+                            }).bindProperty("dateValue", {
+                                path: "/documentDate",
+                                type: new openui5.datatype.DateTime({
+                                    description: ibas.i18n.prop("bo_salesorder_documentdate")
+                                })
+                            }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_createtime") }),
+                            new sap.m.TimePicker("", {
+                            }).bindProperty("dateValue", {
+                                path: "/createTime",
+                                type: new openui5.datatype.Time({
+                                    description: ibas.i18n.prop("bo_salesorder_createtime")
+                                })
+                            }),
+                            new sap.m.Label("", { text: "整数" }),
+                            new sap.m.Input("", {
+                            }).bindProperty("value", {
+                                path: "/updateTime",
+                                type: new openui5.datatype.Numeric({
+                                    description: ibas.i18n.prop("bo_salesorder_createtime")
+                                })
+                            }),
+                            new sap.m.Label("", { text: "小数,保留2位小数" }),
+                            new sap.m.Input("", {
+                            }).bindProperty("value", {
+                                path: "/documentTotal",
+                                type: new openui5.datatype.Sum({
+                                    decimalPlaces: 2,
+                                    description: ibas.i18n.prop("bo_salesorder_documenttotal")
+                                })
+                            }),
+                            new sap.m.Label("", { text: "百分数,保留3位小数" }),
+                            new sap.m.Input("", {
+                            }).bindProperty("value", {
+                                path: "/documentRate",
+                                type: new openui5.datatype.Percentage({
+                                    decimalPlaces: 3,
+                                    description: ibas.i18n.prop("bo_salesorder_documentrate")
+                                })
+                            }),
+                            new sap.ui.core.Title("", { text: ibas.i18n.prop("trainingtesting_title_others") }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_docentry") }),
+                            new sap.m.Input("", {
+                                type: sap.m.InputType.Number
+                            }).bindProperty("value", {
+                                path: "/docEntry"
+                            }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_documentstatus") }),
+                            new sap.m.Select("", {
+                                items: openui5.utils.createComboBoxItems(ibas.emDocumentStatus)
+                            }).bindProperty("selectedKey", {
+                                path: "/documentStatus",
+                                type: "sap.ui.model.type.Integer"
+                            }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_canceled") }),
+                            new sap.m.Select("", {
+                                items: openui5.utils.createComboBoxItems(ibas.emYesNo)
+                            }).bindProperty("selectedKey", {
+                                path: "/canceled",
+                                type: "sap.ui.model.type.Integer"
+                            })
                         ]
                     });
                     this.tableSalesOrderItem = new sap.ui.table.Table("", {
@@ -62,6 +173,66 @@ namespace trainingtesting {
                         visibleRowCount: ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 8),
                         rows: "{/rows}",
                         columns: [
+                            new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_salesorderitem_lineid"),
+                                template: new sap.m.Text("", {
+                                    width: "100%",
+                                }).bindProperty("text", {
+                                    path: "lineId"
+                                })
+                            }),
+                            new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_salesorderitem_linestatus"),
+                                template: new sap.m.Select("", {
+                                    width: "100%",
+                                    items: openui5.utils.createComboBoxItems(ibas.emDocumentStatus)
+                                }).bindProperty("selectedKey", {
+                                    path: "lineStatus",
+                                    type: "sap.ui.model.type.Integer"
+                                })
+                            }),
+                            new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_salesorderitem_itemcode"),
+                                template: new sap.m.Input("", {
+                                    width: "100%",
+                                    showValueHelp: true,
+                                    valueHelpRequest: function (): void {
+                                        that.fireViewEvents(that.chooseSalesOrderItemMaterialEvent,
+                                            // 获取当前对象
+                                            this.getBindingContext().getObject()
+                                        );
+                                    }
+                                }).bindProperty("value", {
+                                    path: "itemCode"
+                                })
+                            }),
+                            new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_salesorderitem_price"),
+                                template: new sap.m.Input("", {
+                                    width: "100%",
+                                    type: sap.m.InputType.Number
+                                }).bindProperty("value", {
+                                    path: "price",
+                                })
+                            }),
+                            new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_salesorderitem_quantity"),
+                                template: new sap.m.Input("", {
+                                    width: "100%",
+                                    type: sap.m.InputType.Number
+                                }).bindProperty("value", {
+                                    path: "quantity"
+                                })
+                            }),
+                            new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_salesorderitem_linetotal"),
+                                template: new sap.m.Input("", {
+                                    width: "100%",
+                                    type: sap.m.InputType.Number,
+                                }).bindProperty("value", {
+                                    path: "lineTotal"
+                                })
+                            })
                         ]
                     });
                     let formSalesOrderItem: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {

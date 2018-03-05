@@ -102,11 +102,64 @@ namespace trainingtesting {
                         items: {
                             path: "/rows",
                             template: new sap.m.ObjectListItem("", {
-                                type: sap.m.ListType.Active,
                                 title: {
-                                    path: ""
+                                    path: "docEntry",
+                                    formatter(data: any): any {
+                                        return ibas.strings.format("# {0}", data);
+                                    }
                                 },
+                                firstStatus: new sap.m.ObjectStatus("", {
+                                    text: {
+                                        path: "documentStatus",
+                                        formatter(data: any): any {
+                                            return ibas.enums.describe(ibas.emDocumentStatus, data);
+                                        }
+                                    }
+                                }),
+                                secondStatus: new sap.m.ObjectStatus("", {
+                                    text: {
+                                        path: "approvalStatus",
+                                        formatter(data: any): any {
+                                            return ibas.enums.describe(ibas.emApprovalStatus, data);
+                                        }
+                                    }
+                                }),
                                 attributes: [
+                                    new sap.m.ObjectAttribute("", {
+                                        text: {
+                                            parts: [
+                                                {
+                                                    path: "customerName"
+                                                },
+                                                {
+                                                    path: "customerCode",
+                                                    formatter: function (data: any): any {
+                                                        if (ibas.strings.isEmpty(data)) {
+                                                            return "";
+                                                        }
+                                                        return ibas.strings.format(" ({0})", data);
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }),
+                                    new sap.m.ObjectAttribute("", {
+                                        text: {
+                                            path: "documentDate",
+                                            type: new sap.ui.model.type.Date("", {
+                                                pattern: "yyyy-MM-dd",
+                                            })
+                                        }
+                                    }),
+                                    new sap.m.ObjectAttribute("", {
+                                        title: ibas.i18n.prop("bo_salesorder_documenttotal"),
+                                        text: {
+                                            parts: [
+                                                { path: "documentTotal" },
+                                                { path: "documentCurrency" }
+                                            ]
+                                        }
+                                    })
                                 ]
                             })
                         }

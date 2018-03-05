@@ -3,7 +3,8 @@
 <ns:ApplicationModule 
 	xmlns:ns="http://colorcoding.org/ibas/initialfantasy/bo">
 	<Activated>YES</Activated>
-	<ModuleId>e6424319-a311-440e-bc89-a825f82d5847</ModuleId>
+	<ModuleEntry>Console, ConsoleOthers</ModuleEntry>
+	<ModuleId>c78116bb-e270-437d-8230-1240871a3179</ModuleId>
 	<ModuleName>TrainingTesting</ModuleName>
 	<PlatformId>COMBINATION</PlatformId>
 </ns:ApplicationModule>

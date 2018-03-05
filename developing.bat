@@ -20,7 +20,7 @@ REM 判断是否传工作目录，没有则是启动目录
 if "%WORK_FOLDER%"=="" SET WORK_FOLDER=%STARTUP_FOLDER%
 REM 若工作目录最后字符不是“\”则补齐
 if "%WORK_FOLDER:~-1%" neq "\" SET WORK_FOLDER=%WORK_FOLDER%\
-echo --工作的目录：%WORK_FOLDER%
+echo --工作目录：%WORK_FOLDER%
 REM 启动监听
 CALL :WATCHING_TS "%WORK_FOLDER%ibas\tsconfig.json"
 CALL :WATCHING_TS "%WORK_FOLDER%openui5\tsconfig.json"
@@ -29,7 +29,15 @@ CALL :WATCHING_TS "%WORK_FOLDER%shell\tsconfig.ui.c.json"
 CALL :WATCHING_TS "%WORK_FOLDER%shell\tsconfig.ui.m.json"
 REM 启动编译
 CALL :COMPILE_TS "%WORK_FOLDER%shell\tsconfig.loader.json"
-CALL :COMPILE_TS "%WORK_FOLDER%test\basic\tsconfig.json"
+REM 编译其他模块
+echo ----处理应用目录
+for /f %%m in ('dir /b /s %WORK_FOLDER%\test\apps\build_all.bat') DO (
+  SET FOLDER=%%~pm
+  cd /d !FOLDER!
+  SET BUILDER=%%m
+  CALL "!BUILDER!" -w
+)
+cd /d %WORK_FOLDER%
 
 REM 启动web服务
 REM 优先启动IIS

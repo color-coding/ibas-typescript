@@ -135,7 +135,6 @@ namespace ibas {
             }
             putter(message.outString());
         }
-
     }
 
     /** 记录实例 */

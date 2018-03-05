@@ -156,6 +156,8 @@ namespace ibas {
      * 模块-控制台
      */
     export interface IModuleConsole extends IModule {
+        /** 模块名称 */
+        module: string;
         /** 当前平台 */
         readonly plantform: emPlantform;
         /** 初始化完成 */
@@ -360,10 +362,11 @@ namespace ibas {
     export const CONFIG_ITEM_DISABLE_PLATFORM_VIEW: string = "disablePlatformView";
     /** 模块控制台 */
     export abstract class ModuleConsole extends Module implements IModuleConsole {
-
         constructor() {
             super();
         }
+        /** 模块名称 */
+        module: string;
         /** 根地址 */
         rootUrl: string;
         /** 当前平台 */
@@ -480,6 +483,36 @@ namespace ibas {
         /** 设置仓库地址，返回值是否执行默认设置 */
         setRepository(address: string): boolean {
             return true;
+        }
+        /** 加载视图 */
+        protected loadUI(ui: string | string[], ready: Function): void {
+            let modules: string[] = [];
+            if (ui instanceof Array) {
+                for (let item of ui) {
+                    modules.push(item);
+                }
+            } else {
+                modules.push(ui);
+            }
+            let require: Require = ibas.requires.create({
+                context: ibas.requires.naming(this.module)
+            });
+            let that: this = this;
+            require(
+                modules,
+                function (): void {
+                    if (typeof ready === "function") {
+                        let module: any = window[that.module];
+                        if (!ibas.objects.isNull(module)) {
+                            module = module["ui"];
+                        }
+                        ready(module);
+                    }
+                },
+                function (error: RequireError): void {
+                    ibas.logger.log(ibas.emMessageLevel.ERROR, error.message);
+                }
+            );
         }
     }
     /** 模块控制台 */

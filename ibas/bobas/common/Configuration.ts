@@ -215,11 +215,6 @@ namespace ibas {
         /** 配置变化 */
         onConfigurationChanged(name: string, value: any): void;
     }
-
     /** 配置实例 */
     export const config: Configuration = new Configuration();
-    // 加载基本配置
-    config.load(urls.rootUrl("/ibas/index") + strings.format("/{0}", CONFIG_FILE_NAME));
-    // 加载网站配置
-    config.load(urls.rootUrl() + strings.format("/{0}", CONFIG_FILE_NAME));
 }

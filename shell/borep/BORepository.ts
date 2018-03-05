@@ -13,12 +13,18 @@
 
 namespace shell {
     export namespace bo {
-
+        /** 创建业务仓库 */
+        export function createRepository(): IBORepositoryShell {
+            if (ibas.config.get(ibas.CONFIG_ITEM_OFFLINE_MODE, false)) {
+                return new BORepositoryShellOffline();
+            } else {
+                return new BORepositoryShell();
+            }
+        }
         /**
          * 业务仓库-壳-远程
          */
-        export class BORepositoryShell extends ibas.BORepositoryApplication implements IBORepositoryShell {
-
+        class BORepositoryShell extends ibas.BORepositoryApplication implements IBORepositoryShell {
             /**
              * 创建此模块的后端与前端数据的转换者
              */
@@ -44,7 +50,7 @@ namespace shell {
                 if (ibas.objects.isNull(remoteRepository)) {
                     throw new Error(ibas.i18n.prop("sys_invalid_parameter", "remoteRepository"));
                 }
-                require(["../../3rdparty/crypto-js" + (ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE, false) ? "" : ".min")],
+                require(["../ibas/3rdparty/crypto-js" + (ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE, false) ? "" : ".min")],
                     function (cryptoJS: CryptoJS.Hashes): void {
                         let method: string = ibas.strings.format("userConnect?user={0}&password={1}", caller.user, cryptoJS.MD5(caller.password));
                         remoteRepository.callRemoteMethod(method, undefined, caller);
@@ -137,12 +143,10 @@ namespace shell {
                 remoteRepository.callRemoteMethod(method, undefined, caller);
             }
         }
-
         /**
          * 业务仓库应用
          */
-        export class BORepositoryShellOffline extends BORepositoryShell {
-
+        class BORepositoryShellOffline extends BORepositoryShell {
             constructor() {
                 super();
                 // 重新获取离线状态

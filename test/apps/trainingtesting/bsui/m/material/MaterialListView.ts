@@ -102,11 +102,29 @@ namespace trainingtesting {
                         items: {
                             path: "/rows",
                             template: new sap.m.ObjectListItem("", {
-                                type: sap.m.ListType.Active,
                                 title: {
-                                    path: ""
+                                    path: "code"
                                 },
+                                number: {
+                                    path: "onOrder"
+                                },
+                                numberUnit: {
+                                    path: "uom"
+                                },
+                                secondStatus: new sap.m.ObjectStatus("", {
+                                    text: {
+                                        path: "approvalStatus",
+                                        formatter(data: any): any {
+                                            return ibas.enums.describe(ibas.emApprovalStatus, data);
+                                        }
+                                    }
+                                }),
                                 attributes: [
+                                    new sap.m.ObjectAttribute("", {
+                                        text: {
+                                            path: "name"
+                                        }
+                                    }),
                                 ]
                             })
                         }

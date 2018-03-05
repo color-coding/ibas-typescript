@@ -34,6 +34,28 @@ namespace trainingtesting {
                         visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Interactive,
                         rows: "{/rows}",
                         columns: [
+                            new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_material_code"),
+                                template: new sap.m.Link("", {
+                                    wrapping: false,
+                                    press(event: any): void {
+                                        ibas.servicesManager.runLinkService({
+                                            boCode: bo.Material.BUSINESS_OBJECT_CODE,
+                                            linkValue: event.getSource().getText()
+                                        });
+                                    }
+                                }).bindProperty("text", {
+                                    path: "code"
+                                })
+                            }),
+                            new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_material_name"),
+                                template: new sap.m.Text("", {
+                                    wrapping: false
+                                }).bindProperty("text", {
+                                    path: "name",
+                                })
+                            }),
                         ]
                     });
                     // 添加列表自动查询事件
@@ -131,7 +153,7 @@ namespace trainingtesting {
                             ]
                         }),
                         content: [
-                            new sap.ui.layout.form.SimpleForm("",{
+                            new sap.ui.layout.form.SimpleForm("", {
                                 content: [
                                     this.table,
                                 ]

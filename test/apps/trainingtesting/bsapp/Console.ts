@@ -67,9 +67,9 @@ namespace trainingtesting {
                     uiModules.push("index.ui.c");
                 }
                 let that: this = this;
-                require(uiModules, function (ui: any): void {
+                this.loadUI(uiModules, function (ui: any): void {
                     // 设置导航
-                    that._navigation = new ui.default();
+                    that._navigation = new ui.Navigation();
                     // 调用初始化
                     that.initialize();
                 });
@@ -130,9 +130,9 @@ namespace trainingtesting {
                     uiModules.push("index.ui.c");
                 }
                 let that: this = this;
-                require(uiModules, function (ui: any): void {
+                this.loadUI(uiModules, function (ui: any): void {
                     // 设置导航
-                    that._navigation = new ui.default();
+                    that._navigation = new ui.Navigation();
                     // 调用初始化
                     that.initialize();
                 });

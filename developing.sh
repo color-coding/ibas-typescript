@@ -24,7 +24,7 @@ if [ "${WORK_FOLDER}" = "" ]
 then
   WORK_FOLDER=${STARTUP_FOLDER}
 fi
-echo --工作的目录：${WORK_FOLDER}
+echo --工作目录：${WORK_FOLDER}
 
 # 函数-启动监听
 WATCHING_TS()
@@ -55,7 +55,17 @@ WATCHING_TS "${WORK_FOLDER}/shell/tsconfig.ui.c.json"
 WATCHING_TS "${WORK_FOLDER}/shell/tsconfig.ui.m.json"
 # 启动编译
 COMPILE_TS "${WORK_FOLDER}/shell/tsconfig.loader.json"
-COMPILE_TS "${WORK_FOLDER}/test/basic/tsconfig.json"
+
+# 编译其他模块
+echo ----处理应用目录
+for builder in `find ${WORK_FOLDER}/test/apps/ -type f -name build_all.sh`
+do
+# 运行编译命令
+  if [ -x "${builder}" ]
+  then
+    "${builder}" -w
+  fi
+done
 
 # 启动tomcat
 WEB_SERVER="${WORK_FOLDER}/tomcat/bin/startup.sh"

@@ -34,6 +34,61 @@ namespace trainingtesting {
                         visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Interactive,
                         rows: "{/rows}",
                         columns: [
+                            new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_salesorder_docentry"),
+                                template: new sap.m.Text("", {
+                                    wrapping: false
+                                }).bindProperty("text", {
+                                    path: "docEntry"
+                                })
+                            }),
+                            new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_salesorder_customercode"),
+                                template: new sap.m.Link("", {
+                                    wrapping: false,
+                                    press(event: any): void {
+                                        ibas.servicesManager.runLinkService({
+                                            boCode: bo.Customer.BUSINESS_OBJECT_CODE,
+                                            linkValue: event.getSource().getText()
+                                        });
+                                    }
+                                }).bindProperty("text", {
+                                    path: "customerCode"
+                                })
+                            }),
+                            new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_salesorder_customername"),
+                                template: new sap.m.Text("", {
+                                    wrapping: false
+                                }).bindProperty("text", {
+                                    path: "customerName",
+                                    formatter(data: any): any {
+                                        return ibas.enums.describe(ibas.emDocumentStatus, data);
+                                    }
+                                })
+                            }),
+                            new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_salesorder_documentstatus"),
+                                template: new sap.m.Text("", {
+                                    wrapping: false
+                                }).bindProperty("text", {
+                                    path: "documentStatus",
+                                    formatter(data: any): any {
+                                        return ibas.enums.describe(ibas.emDocumentStatus, data);
+                                    }
+                                })
+                            }),
+                            new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_salesorder_canceled"),
+                                template: new sap.m.Text("", {
+                                    wrapping: false
+                                }).bindProperty("text", {
+                                    path: "canceled",
+                                    formatter(data: any): any {
+                                        return ibas.enums.describe(ibas.emYesNo, data);
+                                    }
+                                })
+                            })
                         ]
                     });
                     // 添加列表自动查询事件
@@ -131,7 +186,7 @@ namespace trainingtesting {
                             ]
                         }),
                         content: [
-                            new sap.ui.layout.form.SimpleForm("",{
+                            new sap.ui.layout.form.SimpleForm("", {
                                 content: [
                                     this.table,
                                 ]

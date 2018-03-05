@@ -8,9 +8,7 @@
         "declaration": true,
         "sourceMap": true
     },
-    "include": [
-        "./datatypes.ts",
-        "./utils.ts",
-        "./extends/*.ts"
+    "files": [
+        "./index.ts"
     ]
 }

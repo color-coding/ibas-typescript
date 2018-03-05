@@ -9,8 +9,6 @@
 /// <reference path="../../openui5/index.d.ts" />
 namespace shell {
     export namespace ui {
-        /** 配置项目-紧缩屏幕 */
-        export const CONFIG_ITEM_COMPACT_SCREEN: string = "compactScreen";
         /**
          * 视图-显示者-默认
          */
@@ -119,21 +117,6 @@ namespace shell {
                         sap.ui.getCore().getConfiguration().setLanguage(openui5.utils.toLanguageCode(language));
                     }
                 });
-                // 监听配置变化
-                ibas.config.registerListener({
-                    onConfigurationChanged(name: string, value: any): void {
-                        if (name === ibas.CONFIG_ITEM_PLANTFORM) {
-                            // 平台配置变化
-                            if (value === ibas.emPlantform.DESKTOP) {
-                                // 桌面平台，使用紧凑视图
-                                ibas.config.set(CONFIG_ITEM_COMPACT_SCREEN, true);
-                            } else {
-                                // 使用舒适视图
-                                ibas.config.set(CONFIG_ITEM_COMPACT_SCREEN, false);
-                            }
-                        }
-                    }
-                });
             }
             /** 按钮按下时 */
             private onKeyDown(event: KeyboardEvent): void {
@@ -157,7 +140,7 @@ namespace shell {
                     viewContent.placeAt("content");
                 } else if (viewContent instanceof sap.tnt.ToolPage
                     || viewContent instanceof sap.ui.core.Control) {
-                    if (ibas.config.get(CONFIG_ITEM_COMPACT_SCREEN, false)) {
+                    if (ibas.config.get(openui5.CONFIG_ITEM_COMPACT_SCREEN, false)) {
                         viewContent.addStyleClass("sapUiSizeCompact");
                         // viewContent.addStyleClass("sapUiSizeCozy");
                     }
@@ -199,7 +182,7 @@ namespace shell {
                 if (busy) {
                     if (ibas.objects.isNull(this.busyDialog)) {
                         this.busyDialog = new sap.m.BusyDialog("");
-                        if (ibas.config.get(CONFIG_ITEM_COMPACT_SCREEN, false)) {
+                        if (ibas.config.get(openui5.CONFIG_ITEM_COMPACT_SCREEN, false)) {
                             this.busyDialog.addStyleClass("sapUiSizeCompact");
                         }
                     }

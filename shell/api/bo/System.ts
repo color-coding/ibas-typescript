@@ -32,6 +32,8 @@ namespace shell {
             name: string;
             /** 索引文件 */
             index: string;
+            /** 控制台名称 */
+            console: string;
             /** 类别 */
             category: string;
             /** 地址 */

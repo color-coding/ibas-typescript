@@ -25,7 +25,7 @@ namespace shell {
                     if (ibas.objects.isNull(this.list_template)) {
                         // 尚未初始化表格
                         // 获取列描述
-                        let boRepository: bo.IBORepositoryShell = new bo.BORepositoryShell();
+                        let boRepository: bo.IBORepositoryShell = bo.createRepository();
                         boRepository.fetchBOInfos({
                             boName: this.boName,
                             boCode: null,

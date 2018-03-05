@@ -24,6 +24,10 @@ namespace trainingtesting {
                 addSalesOrderItemEvent: Function;
                 /** 删除销售订单-行事件 */
                 removeSalesOrderItemEvent: Function;
+                /** 选择销售订单客户事件 */
+                chooseSalesOrderCustomerEvent: Function;
+                /** 选择销售订单行物料事件 */
+                chooseSalesOrderItemMaterialEvent: Function;
                 /** 绘制视图 */
                 draw(): any {
                     let that: this = this;
@@ -34,6 +38,82 @@ namespace trainingtesting {
                             new sap.ui.layout.form.SimpleForm("", {
                                 editable: true,
                                 content: [
+                                    new sap.ui.core.Title("", { text: ibas.i18n.prop("trainingtesting_title_general") }),
+                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_customercode") }),
+                                    new sap.m.Input("", {
+                                        value: {
+                                            path: "customerCode",
+                                        },
+                                        showValueHelp: true,
+                                        valueHelpRequest: function (): void {
+                                            that.fireViewEvents(that.chooseSalesOrderCustomerEvent);
+                                        }
+                                    }),
+                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_customername") }),
+                                    new sap.m.Input("", {
+                                        editable: false,
+                                        value: {
+                                            path: "customerName",
+                                        }
+                                    }),
+                                    new sap.ui.core.Title("", { text: ibas.i18n.prop("trainingtesting_title_status") }),
+                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_documentstatus") }),
+                                    new sap.m.Select("", {
+                                        items: openui5.utils.createComboBoxItems(ibas.emDocumentStatus),
+                                        selectedKey: {
+                                            path: "documentStatus",
+                                            type: "sap.ui.model.type.Integer",
+                                        }
+                                    }),
+                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_canceled") }),
+                                    new sap.m.Select("", {
+                                        items: openui5.utils.createComboBoxItems(ibas.emYesNo),
+                                        selectedKey: {
+                                            path: "canceled",
+                                            type: "sap.ui.model.type.Integer",
+                                        }
+                                    }),
+                                    new sap.ui.core.Title("", { text: ibas.i18n.prop("trainingtesting_title_amount") }),
+                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_documenttotal") + "(RMB)" }),
+                                    new sap.m.Input("", {
+                                        width: "100%",
+                                        type: sap.m.InputType.Number,
+                                        value: {
+                                            path: "documentTotal",
+                                        },
+                                    }),
+                                    new sap.ui.core.Title("", { text: ibas.i18n.prop("trainingtesting_title_time") }),
+                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_documentdate") }),
+                                    new sap.m.DatePicker("", {
+                                        valueFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE, "yyyy-MM-dd"),
+                                        displayFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE, "yyyy-MM-dd"),
+                                        dateValue: {
+                                            path: "documentDate"
+                                        }
+                                    }),
+                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_postingdate") }),
+                                    new sap.m.DatePicker("", {
+                                        valueFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE, "yyyy-MM-dd"),
+                                        displayFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE, "yyyy-MM-dd"),
+                                        dateValue: {
+                                            path: "postingDate"
+                                        }
+                                    }),
+                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_deliverydate") }),
+                                    new sap.m.DatePicker("", {
+                                        valueFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE, "yyyy-MM-dd"),
+                                        displayFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE, "yyyy-MM-dd"),
+                                        dateValue: {
+                                            path: "deliveryDate"
+                                        }
+                                    }),
+                                    new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_salesorder_remarks") }),
+                                    new sap.m.TextArea("", {
+                                        rows: 3,
+                                        value: {
+                                            path: "remarks"
+                                        }
+                                    }),
                                 ]
                             })
                         ]
@@ -82,11 +162,43 @@ namespace trainingtesting {
                         items: {
                             path: "/rows",
                             template: new sap.m.ObjectListItem("", {
-                                type: sap.m.ListType.Active,
                                 title: {
-                                    path: ""
+                                    path: "itemCode"
                                 },
+                                type: "Active",
+                                number: {
+                                    parts: [
+                                        { path: "lineTotal" }
+                                    ],
+                                    type: sap.ui.model.type.Currency,
+                                    formatOptions: { showMeasure: false }
+                                },
+                                numberUnit: "RMB",
                                 attributes: [
+                                    new sap.m.ObjectAttribute("", {
+                                        text: {
+                                            path: "itemDescription"
+                                        }
+                                    }),
+                                    new sap.m.ObjectAttribute("", {
+                                        text: {
+                                            parts: [
+                                                {
+                                                    path: "price"
+                                                },
+                                                {
+                                                    path: "quantity",
+                                                    formatter: function (data: any): any {
+                                                        if (ibas.strings.isEmpty(data)) {
+                                                            return "";
+                                                        }
+                                                        return ibas.strings.format(" * {0}", data);
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        type: sap.ui.model.type.Integer,
+                                    })
                                 ]
                             }),
                         }
@@ -145,6 +257,61 @@ namespace trainingtesting {
                             new sap.ui.layout.form.SimpleForm("", {
                                 editable: true,
                                 content: [
+                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorderitem_linestatus") }),
+                                    new sap.m.Select("", {
+                                        width: "100%",
+                                        items: openui5.utils.createComboBoxItems(ibas.emDocumentStatus),
+                                        selectedKey: {
+                                            path: "lineStatus",
+                                            type: "sap.ui.model.type.Integer"
+                                        }
+                                    }),
+                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorderitem_itemcode") }),
+                                    new sap.m.Input("", {
+                                        width: "100%",
+                                        value: {
+                                            path: "itemCode"
+                                        },
+                                        showValueHelp: true,
+                                        valueHelpRequest: function (): void {
+                                            that.fireViewEvents(that.chooseSalesOrderItemMaterialEvent,
+                                                // 获取当前对象
+                                                this.getBindingContext().getObject()
+                                            );
+                                        }
+                                    }),
+                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorderitem_itemdescription") }),
+                                    new sap.m.Input("", {
+                                        width: "100%",
+                                        enabled: false,
+                                        value: {
+                                            path: "itemDescription"
+                                        },
+                                    }),
+                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorderitem_price") + "(RMB)" }),
+                                    new sap.m.Input("", {
+                                        width: "100%",
+                                        value: {
+                                            path: "price"
+                                        },
+                                        type: sap.m.InputType.Number,
+                                    }),
+                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorderitem_quantity") }),
+                                    new sap.m.Input("", {
+                                        width: "100%",
+                                        value: {
+                                            path: "quantity"
+                                        },
+                                        type: sap.m.InputType.Number
+                                    }),
+                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorderitem_linetotal") + "(RMB)" }),
+                                    new sap.m.Input("", {
+                                        width: "100%",
+                                        value: {
+                                            path: "lineTotal"
+                                        },
+                                        type: sap.m.InputType.Number
+                                    }),
                                 ]
                             })
                         ]

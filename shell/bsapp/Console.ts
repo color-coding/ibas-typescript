@@ -62,12 +62,11 @@ namespace shell {
                     uiModules.push("index.ui.c");
                 }
                 let that: this = this;
-                require(uiModules, function (): void {
+                this.loadUI(uiModules, function (ui: any): void {
                     // 设置视图显示者
-                    let shell: any = (<any>window).shell;
-                    that.viewShower = new shell.ui.ViewShower();
+                    that.viewShower = new ui.ViewShower();
                     // 设置导航
-                    that._navigation = new shell.ui.Navigation();
+                    that._navigation = new ui.Navigation();
                     // 调用初始化
                     that.initialize();
                     // 调用入口应用

@@ -35,6 +35,9 @@ namespace trainingtesting {
                 this.view.createDataEvent = this.createData;
                 this.view.addSalesOrderItemEvent = this.addSalesOrderItem;
                 this.view.removeSalesOrderItemEvent = this.removeSalesOrderItem;
+                this.view.chooseSalesOrderCustomerEvent = this.chooseSalesOrderCustomer;
+                this.view.chooseSalesOrderItemMaterialEvent = this.chooseSalesOrderItemMaterial;
+
             }
             /** 视图显示后 */
             protected viewShowed(): void {
@@ -206,6 +209,58 @@ namespace trainingtesting {
                 this.view.showSalesOrderItems(this.editData.salesOrderItems.filterDeleted());
             }
 
+            /** 选择销售订单客户事件 */
+            chooseSalesOrderCustomer(): void {
+                let that: this = this;
+                ibas.servicesManager.runChooseService<bo.Customer>({
+                    boCode: bo.Customer.BUSINESS_OBJECT_CODE,
+                    chooseType: ibas.emChooseType.SINGLE,
+                    criteria: [
+                        new ibas.Condition(bo.Customer.PROPERTY_ACTIVATED_NAME, ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES)
+                    ],
+                    onCompleted(selecteds: ibas.List<bo.Customer>): void {
+                        let selected: bo.Customer = selecteds.firstOrDefault();
+                        that.editData.customerCode = selected.code;
+                        that.editData.customerName = selected.name;
+                    }
+                });
+            }
+            /** 选择销售订单行物料事件 */
+            chooseSalesOrderItemMaterial(caller: bo.SalesOrderItem): void {
+                let that: this = this;
+                let chooseType: ibas.emChooseType = ibas.emChooseType.MULTIPLE;
+                if (ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM) === ibas.emPlantform.PHONE) {
+                    // 手机端单选
+                    chooseType = ibas.emChooseType.SINGLE;
+                }
+                ibas.servicesManager.runChooseService<bo.Material>({
+                    chooseType: chooseType,
+                    boCode: bo.Material.BUSINESS_OBJECT_CODE,
+                    criteria: [
+                        new ibas.Condition(bo.Material.PROPERTY_ACTIVATED_NAME, ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES)
+                    ],
+                    onCompleted(selecteds: ibas.List<bo.Material>): void {
+                        // 获取触发的对象
+                        let index: number = that.editData.salesOrderItems.indexOf(caller);
+                        let item: bo.SalesOrderItem = that.editData.salesOrderItems[index];
+                        // 选择返回数量多余触发数量时,自动创建新的项目
+                        let created: boolean = false;
+                        for (let selected of selecteds) {
+                            if (ibas.objects.isNull(item)) {
+                                item = that.editData.salesOrderItems.create();
+                                created = true;
+                            }
+                            item.itemCode = selected.code;
+                            item.itemDescription = selected.name;
+                            item = null;
+                        }
+                        if (created) {
+                            // 创建了新的行项目
+                            that.view.showSalesOrderItems(that.editData.salesOrderItems.filterDeleted());
+                        }
+                    }
+                });
+            }
         }
         /** 视图-销售订单 */
         export interface ISalesOrderEditView extends ibas.IBOEditView {
@@ -221,6 +276,10 @@ namespace trainingtesting {
             removeSalesOrderItemEvent: Function;
             /** 显示数据 */
             showSalesOrderItems(datas: bo.SalesOrderItem[]): void;
+            /** 选择销售订单客户事件 */
+            chooseSalesOrderCustomerEvent: Function;
+            /** 选择销售订单行物料事件 */
+            chooseSalesOrderItemMaterialEvent: Function;
         }
     }
 }

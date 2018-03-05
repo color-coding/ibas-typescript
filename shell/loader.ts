@@ -19,9 +19,41 @@ namespace loader {
             return this.indexOf(suffix, this.length - suffix.length) !== -1;
         };
     }
+    export namespace requires {
+        /** 创建require方法 */
+        export function create(baseUrl: string): Require;
+        /** 创建require方法 */
+        export function create(name: string, baseUrl: string): Require;
+        /** 创建require方法 */
+        export function create(): Require {
+            let name: string = "_", baseUrl: string;
+            if (arguments.length === 1) {
+                baseUrl = arguments[0];
+            } else {
+                name = arguments[0];
+                baseUrl = arguments[1];
+            }
+            if (this.noCache) {
+                // 不使用缓存
+                let runtime: string = this.runtime;
+                return (<any>window).requirejs.config({
+                    context: name,
+                    baseUrl: baseUrl,
+                    urlArgs: function (id: string, url: string): string {
+                        return (url.indexOf("?") === -1 ? "?" : "&") + "_=" + runtime;
+                    }
+                });
+            } else {
+                return (<any>window).requirejs.config({
+                    context: name,
+                    baseUrl: baseUrl
+                });
+            }
+        }
+    }
     export namespace ibas {
         // index路径
-        export const URL_INDEX: string = "ibas/index.js";
+        export const URL_INDEX: string = "ibas/index";
         // 诊断页面路径
         export const URL_DIAGNOSIS: string = "ibas/diagnosis/index.html";
     }
@@ -31,7 +63,7 @@ namespace loader {
         // 本地路径
         export const URL_LOCAL: string = "openui5/resources/sap-ui-core.js";
         // index路径
-        export const URL_INDEX: string = "openui5/index.js";
+        export const URL_INDEX: string = "openui5/index";
         // element标记
         export const URL_SCRIPT_ELEMENT_ID: string = "sap-ui-bootstrap";
 
@@ -83,22 +115,8 @@ namespace loader {
         }
         /** 扩展 */
         export function extend(caller: ILoaderCaller): void {
-            if (caller.noCache === true) {
-                // 不适用js缓存
-                require = requirejs.config({
-                    baseUrl: caller.url,
-                    urlArgs: function (id: string, url: string): string {
-                        return (url.indexOf("?") === -1 ? "?" : "&") + "_=" + (new Date()).getTime();
-                    }
-                });
-            } else {
-                // 使用js缓存
-                require = requirejs.config({
-                    baseUrl: caller.url,
-                });
-            }
-            require([
-                caller.url + URL_INDEX
+            requires.create(caller.url)([
+                URL_INDEX
             ], caller.onSuccess, caller.onError);
         }
         /** 创建脚本元素 */
@@ -114,6 +132,8 @@ namespace loader {
     }
     /** 应用程序 */
     export class Application {
+        // index路径
+        static URL_INDEX: string = "index";
         /** 根地址 */
         root: string;
         /** 不使用缓存 */
@@ -131,9 +151,8 @@ namespace loader {
                     + document.location.pathname.substring(0, document.location.pathname.lastIndexOf("/"));
             }
             let that: this = this;
-            let require: Require = this.createRequire("_", this.root);
-            require([
-                that.root + ibas.URL_INDEX
+            requires.create(this.root)([
+                ibas.URL_INDEX
             ], function (): void {
                 // 加载成功，加载ui5
                 openui5.load({
@@ -153,9 +172,9 @@ namespace loader {
         /** 显示视图 */
         private show(): void {
             let that: this = this;
-            let require: Require = this.createRequire("ibas.shell", this.root + "shell");
+            let require = requires.create("ibas.shell", this.root + "shell");
             require([
-                "index"
+                Application.URL_INDEX
             ], function (): void {
                 // 加载成功
                 let shell: any = (<any>window).shell;
@@ -164,6 +183,7 @@ namespace loader {
                 } else {
                     try {
                         let console = new shell.app.Console();
+                        console.module = "shell";
                         console.run();
                     } catch (error) {
                         that.diagnose();
@@ -172,25 +192,6 @@ namespace loader {
             }, function (): void {
                 that.diagnose();
             });
-        }
-        /** 创建require方法 */
-        private createRequire(name: string, baseUrl: string): Require {
-            if (this.noCache) {
-                // 不使用缓存
-                let runtime: string = this.runtime;
-                return (<any>window).requirejs.config({
-                    context: name,
-                    baseUrl: baseUrl,
-                    urlArgs: function (id: string, url: string): string {
-                        return (url.indexOf("?") === -1 ? "?" : "&") + "_=" + runtime;
-                    }
-                });
-            } else {
-                return (<any>window).requirejs.config({
-                    context: name,
-                    baseUrl: baseUrl
-                });
-            }
         }
         /** 诊断错误 */
         private diagnose() {
