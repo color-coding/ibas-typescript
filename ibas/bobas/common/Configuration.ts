@@ -131,8 +131,8 @@ namespace ibas {
             return undefined;
         }
         /** 返回配置项目 */
-        all(): List<KeyValue> {
-            let items: List<KeyValue> = new ArrayList();
+        all(): IList<KeyValue> {
+            let items: IList<KeyValue> = new ArrayList();
             for (let item of this.items.keys()) {
                 items.add(new KeyValue(item, this.items.get(item)));
             }

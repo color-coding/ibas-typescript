@@ -13,12 +13,12 @@ namespace shell {
         /**
          * 登录调用者
          */
-        export interface ConnectCaller extends ibas.MethodCaller<IUser> {
+        export interface IConnectCaller extends ibas.IMethodCaller<IUser> {
         }
         /**
          * 用户密码登录调用者
          */
-        export interface UserConnectCaller extends ConnectCaller {
+        export interface IUserConnectCaller extends IConnectCaller {
             /** 用户 */
             user: string;
             /** 密码 */
@@ -27,14 +27,14 @@ namespace shell {
         /**
          * 用户口令登录调用者
          */
-        export interface TokenConnectCaller extends ConnectCaller {
+        export interface ITokenConnectCaller extends IConnectCaller {
             /** 口令 */
             token: string;
         }
         /**
          * 用户相关调用者
          */
-        export interface UserMethodCaller<P> extends ibas.MethodCaller<P> {
+        export interface IUserMethodCaller<P> extends ibas.IMethodCaller<P> {
             /** 用户 */
             user: string;
             /** 平台 */
@@ -43,14 +43,14 @@ namespace shell {
         /**
          * 用户查询调用者
          */
-        export interface UserQueriesCaller extends UserMethodCaller<IUserQuery> {
+        export interface IUserQueriesCaller extends IUserMethodCaller<IUserQuery> {
             /** 查询标识 */
             queryId: string;
         }
         /**
          * 业务对象信息调用者
          */
-        export interface BOInfoCaller extends ibas.MethodCaller<IBOInfo> {
+        export interface IBOInfoCaller extends ibas.IMethodCaller<IBOInfo> {
             /** 业务对象名称 */
             boName: string;
             /** 业务对象编码 */
@@ -59,7 +59,7 @@ namespace shell {
              * 调用完成
              * @param opRslt 结果
              */
-            onCompleted(opRslt: ibas.IOperationResult<IBOInfo>);
+            onCompleted(opRslt: ibas.IOperationResult<IBOInfo>): void;
         }
         /** 登录仓库 */
         export interface IBORepositoryConnect {
@@ -71,12 +71,12 @@ namespace shell {
              * 用户密码登录
              * @param caller 调用者
              */
-            userConnect(caller: UserConnectCaller): void;
+            userConnect(caller: IUserConnectCaller): void;
             /**
              * 用户口令登录
              * @param caller 调用者
              */
-            tokenConnect(caller: TokenConnectCaller): void;
+            tokenConnect(caller: ITokenConnectCaller): void;
         }
         /** 系统仓库 */
         export interface IBORepositoryShell extends IBORepositoryConnect {
@@ -85,32 +85,32 @@ namespace shell {
              * 查询用户模块
              * @param caller 调用者
              */
-            fetchUserModules(caller: UserMethodCaller<IUserModule>): void;
+            fetchUserModules(caller: IUserMethodCaller<IUserModule>): void;
 
             /**
              * 查询用户权限
              * @param caller 调用者
              */
-            fetchUserPrivileges(caller: UserMethodCaller<IUserPrivilege>): void;
+            fetchUserPrivileges(caller: IUserMethodCaller<IUserPrivilege>): void;
 
             /**
              * 查询用户查询
              * @param caller 调用者
              */
-            fetchUserQueries(caller: UserQueriesCaller): void;
+            fetchUserQueries(caller: IUserQueriesCaller): void;
 
             /**
              * 保存用户查询
              * 当被保存的查询没有条件时则认为是删除
              * @param caller 调用者
              */
-            saveUserQuery(caller: ibas.SaveCaller<IUserQuery>): void;
+            saveUserQuery(caller: ibas.ISaveCaller<IUserQuery>): void;
 
             /**
              * 业务对象信息查询
              * @param caller 调用者
              */
-            fetchBOInfos(caller: BOInfoCaller): void;
+            fetchBOInfos(caller: IBOInfoCaller): void;
         }
     }
 }

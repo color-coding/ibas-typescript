@@ -14,47 +14,47 @@ namespace trainingtesting {
         export interface IBORepositoryTrainingTesting extends ibas.IBORepositoryApplication {
 
             /**
-            * 上传文件
-            * @param caller 调用者
-            */
-            upload(caller: ibas.UploadFileCaller<ibas.FileData>);
+             * 上传文件
+             * @param caller 调用者
+             */
+            upload(caller: ibas.IUploadFileCaller<ibas.FileData>): void;
             /**
-            * 下载文件
-            * @param caller 调用者
-            */
-            download(caller: ibas.DownloadFileCaller<Blob>);
+             * 下载文件
+             * @param caller 调用者
+             */
+            download(caller: ibas.IDownloadFileCaller<Blob>): void;
             /**
-            * 查询 物料主数据
-            * @param fetcher 查询者
-            */
-            fetchMaterial(fetcher: ibas.FetchCaller<bo.IMaterial>);
+             * 查询 物料主数据
+             * @param fetcher 查询者
+             */
+            fetchMaterial(fetcher: ibas.IFetchCaller<bo.IMaterial>): void;
             /**
-            * 保存 物料主数据
-            * @param saver 保存者
-            */
-            saveMaterial(saver: ibas.SaveCaller<bo.IMaterial>);
+             * 保存 物料主数据
+             * @param saver 保存者
+             */
+            saveMaterial(saver: ibas.ISaveCaller<bo.IMaterial>): void;
 
             /**
-            * 查询 客户主数据
-            * @param fetcher 查询者
-            */
-            fetchCustomer(fetcher: ibas.FetchCaller<bo.ICustomer>);
+             * 查询 客户主数据
+             * @param fetcher 查询者
+             */
+            fetchCustomer(fetcher: ibas.IFetchCaller<bo.ICustomer>): void;
             /**
-            * 保存 客户主数据
-            * @param saver 保存者
-            */
-            saveCustomer(saver: ibas.SaveCaller<bo.ICustomer>);
+             * 保存 客户主数据
+             * @param saver 保存者
+             */
+            saveCustomer(saver: ibas.ISaveCaller<bo.ICustomer>): void;
 
             /**
-            * 查询 销售订单
-            * @param fetcher 查询者
-            */
-            fetchSalesOrder(fetcher: ibas.FetchCaller<bo.ISalesOrder>);
+             * 查询 销售订单
+             * @param fetcher 查询者
+             */
+            fetchSalesOrder(fetcher: ibas.IFetchCaller<bo.ISalesOrder>): void;
             /**
-            * 保存 销售订单
-            * @param saver 保存者
-            */
-            saveSalesOrder(saver: ibas.SaveCaller<bo.ISalesOrder>);
+             * 保存 销售订单
+             * @param saver 保存者
+             */
+            saveSalesOrder(saver: ibas.ISaveCaller<bo.ISalesOrder>): void;
 
 
         }

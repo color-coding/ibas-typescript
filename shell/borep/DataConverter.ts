@@ -30,7 +30,7 @@ namespace shell {
             convert(data: any, sign: string): any {
                 if (ibas.objects.instanceOf(data, User)) {
                     let newData: User = data;
-                    let remote: bo4j.User = {
+                    let remote: bo4j.IUser = {
                         type: User.name,
                         Id: newData.id,
                         Code: newData.code,
@@ -42,7 +42,7 @@ namespace shell {
                     return remote;
                 } else if (ibas.objects.instanceOf(data, UserModule)) {
                     let newData: UserModule = data;
-                    let remote: bo4j.UserModule = {
+                    let remote: bo4j.IUserModule = {
                         type: UserModule.name,
                         Id: newData.id,
                         Name: newData.name,
@@ -57,7 +57,7 @@ namespace shell {
                     return remote;
                 } else if (ibas.objects.instanceOf(data, UserPrivilege)) {
                     let newData: UserPrivilege = data;
-                    let remote: bo4j.UserPrivilege = {
+                    let remote: bo4j.IUserPrivilege = {
                         type: UserPrivilege.name,
                         Source: ibas.enums.toString(ibas.emPrivilegeSource, newData.source),
                         Target: newData.target,
@@ -70,7 +70,7 @@ namespace shell {
                     if (!ibas.objects.isNull(newData.criteria)) {
                         rCriteria = this.convert(newData.criteria, null);
                     }
-                    let remote: bo4j.UserQuery = {
+                    let remote: bo4j.IUserQuery = {
                         type: UserQuery.name,
                         Id: newData.id,
                         Name: newData.name,
@@ -81,11 +81,11 @@ namespace shell {
                     return remote;
                 } else if (ibas.objects.instanceOf(data, BOInfo)) {
                     let newData: BOInfo = data;
-                    let properties: bo4j.BOPropertyInfo[] = [];
+                    let properties: bo4j.IBOPropertyInfo[] = [];
                     for (let item of newData.properties) {
                         properties.push(this.convert(item, null));
                     }
-                    let remote: bo4j.BOInfo = {
+                    let remote: bo4j.IBOInfo = {
                         type: BOInfo.name,
                         Code: newData.code,
                         Name: newData.name,
@@ -95,7 +95,7 @@ namespace shell {
                     return remote;
                 } else if (ibas.objects.instanceOf(data, BOPropertyInfo)) {
                     let newData: BOPropertyInfo = data;
-                    let remote: bo4j.BOPropertyInfo = {
+                    let remote: bo4j.IBOPropertyInfo = {
                         type: BOPropertyInfo.name,
                         Property: newData.property,
                         Searched: newData.searched,
@@ -115,7 +115,7 @@ namespace shell {
              */
             parsing(data: any, sign: string): any {
                 if (data.type === User.name) {
-                    let remote: bo4j.User = data;
+                    let remote: bo4j.IUser = data;
                     let newData: User = new User();
                     newData.id = remote.Id;
                     newData.code = remote.Code;
@@ -125,7 +125,7 @@ namespace shell {
                     newData.belong = remote.Belong;
                     return newData;
                 } else if (data.type === UserModule.name) {
-                    let remote: bo4j.UserModule = data;
+                    let remote: bo4j.IUserModule = data;
                     let newData: UserModule = new UserModule();
                     newData.id = remote.Id;
                     newData.name = remote.Name;
@@ -138,14 +138,14 @@ namespace shell {
                     newData.runtime = remote.Runtime;
                     return newData;
                 } else if (data.type === UserPrivilege.name) {
-                    let remote: bo4j.UserPrivilege = data;
+                    let remote: bo4j.IUserPrivilege = data;
                     let newData: UserPrivilege = new UserPrivilege();
                     newData.source = ibas.enums.valueOf(ibas.emPrivilegeSource, remote.Source);
                     newData.target = remote.Target;
                     newData.value = ibas.enums.valueOf(ibas.emAuthoriseType, remote.Value);
                     return newData;
                 } else if (data.type === UserQuery.name) {
-                    let remote: bo4j.UserQuery = data;
+                    let remote: bo4j.IUserQuery = data;
                     let newData: UserQuery = new UserQuery();
                     newData.id = remote.Id;
                     newData.name = remote.Name;
@@ -159,7 +159,7 @@ namespace shell {
                     }
                     return newData;
                 } else if (data.type === BOInfo.name) {
-                    let remote: bo4j.BOInfo = data;
+                    let remote: bo4j.IBOInfo = data;
                     let newData: BOInfo = new BOInfo();
                     newData.code = remote.Code;
                     newData.name = remote.Name;
@@ -171,7 +171,7 @@ namespace shell {
                     }
                     return newData;
                 } else if (data.type === BOPropertyInfo.name) {
-                    let remote: bo4j.BOPropertyInfo = data;
+                    let remote: bo4j.IBOPropertyInfo = data;
                     let newData: BOPropertyInfo = new BOPropertyInfo();
                     newData.property = remote.Property;
                     newData.searched = remote.Searched;

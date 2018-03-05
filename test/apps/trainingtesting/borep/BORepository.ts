@@ -20,10 +20,10 @@ namespace trainingtesting {
                 return new DataConverter4TT;
             }
             /**
-            * 上传文件
-            * @param caller 调用者
-            */
-            upload(caller: ibas.UploadFileCaller<ibas.FileData>): void {
+             * 上传文件
+             * @param caller 调用者
+             */
+            upload(caller: ibas.IUploadFileCaller<ibas.FileData>): void {
                 if (!this.address.endsWith("/")) { this.address += "/"; }
                 let fileRepository: ibas.FileRepositoryUploadAjax = new ibas.FileRepositoryUploadAjax();
                 fileRepository.address = this.address.replace("/services/rest/data/", "/services/rest/file/");
@@ -32,10 +32,10 @@ namespace trainingtesting {
                 fileRepository.upload("upload", caller);
             }
             /**
-            * 下载文件
-            * @param caller 调用者
-            */
-            download(caller: ibas.DownloadFileCaller<Blob>): void {
+             * 下载文件
+             * @param caller 调用者
+             */
+            download(caller: ibas.IDownloadFileCaller<Blob>): void {
                 if (!this.address.endsWith("/")) { this.address += "/"; }
                 let fileRepository: ibas.FileRepositoryDownloadAjax = new ibas.FileRepositoryDownloadAjax();
                 fileRepository.address = this.address.replace("/services/rest/data/", "/services/rest/file/");
@@ -44,47 +44,47 @@ namespace trainingtesting {
                 fileRepository.download("download", caller);
             }
             /**
-            * 查询 物料主数据
-            * @param fetcher 查询者
-            */
-            fetchMaterial(fetcher: ibas.FetchCaller<bo.Material>): void {
+             * 查询 物料主数据
+             * @param fetcher 查询者
+             */
+            fetchMaterial(fetcher: ibas.IFetchCaller<bo.Material>): void {
                 super.fetch(bo.Material.name, fetcher);
             }
             /**
-            * 保存 物料主数据
-            * @param saver 保存者
-            */
-            saveMaterial(saver: ibas.SaveCaller<bo.Material>): void {
+             * 保存 物料主数据
+             * @param saver 保存者
+             */
+            saveMaterial(saver: ibas.ISaveCaller<bo.Material>): void {
                 super.save(bo.Material.name, saver);
             }
 
             /**
-            * 查询 客户主数据
-            * @param fetcher 查询者
-            */
-            fetchCustomer(fetcher: ibas.FetchCaller<bo.Customer>): void {
+             * 查询 客户主数据
+             * @param fetcher 查询者
+             */
+            fetchCustomer(fetcher: ibas.IFetchCaller<bo.Customer>): void {
                 super.fetch(bo.Customer.name, fetcher);
             }
             /**
-            * 保存 客户主数据
-            * @param saver 保存者
-            */
-            saveCustomer(saver: ibas.SaveCaller<bo.Customer>): void {
+             * 保存 客户主数据
+             * @param saver 保存者
+             */
+            saveCustomer(saver: ibas.ISaveCaller<bo.Customer>): void {
                 super.save(bo.Customer.name, saver);
             }
 
             /**
-            * 查询 销售订单
-            * @param fetcher 查询者
-            */
-            fetchSalesOrder(fetcher: ibas.FetchCaller<bo.SalesOrder>): void {
+             * 查询 销售订单
+             * @param fetcher 查询者
+             */
+            fetchSalesOrder(fetcher: ibas.IFetchCaller<bo.SalesOrder>): void {
                 super.fetch(bo.SalesOrder.name, fetcher);
             }
             /**
-            * 保存 销售订单
-            * @param saver 保存者
-            */
-            saveSalesOrder(saver: ibas.SaveCaller<bo.SalesOrder>): void {
+             * 保存 销售订单
+             * @param saver 保存者
+             */
+            saveSalesOrder(saver: ibas.ISaveCaller<bo.SalesOrder>): void {
                 super.save(bo.SalesOrder.name, saver);
             }
 

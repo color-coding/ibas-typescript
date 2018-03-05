@@ -13,8 +13,8 @@ namespace trainingtesting {
     export namespace ui {
         export namespace m {
             /**
-            * 列表视图-客户主数据
-            */
+             * 列表视图-客户主数据
+             */
             export class CustomerListView extends ibas.BOListView implements app.ICustomerListView {
                 /** 返回查询的对象 */
                 get queryTarget(): any {

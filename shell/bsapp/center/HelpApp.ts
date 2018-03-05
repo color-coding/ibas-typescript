@@ -36,6 +36,7 @@ namespace shell {
             }
             /** 视图显示后 */
             protected viewShowed(): void {
+                //
             }
             /** 运行 */
             run(): void {

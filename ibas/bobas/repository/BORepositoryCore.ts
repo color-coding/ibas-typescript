@@ -12,7 +12,7 @@ namespace ibas {
     /**
      * 查询调用监听者
      */
-    export interface MethodCaller<T> {
+    export interface IMethodCaller<T> {
         /** 调用者，若设置值，则为onCompleted方法的this */
         caller?: any;
         /**
@@ -24,21 +24,21 @@ namespace ibas {
     /**
      * 查询调用者
      */
-    export interface FetchCaller<P> extends MethodCaller<P> {
+    export interface IFetchCaller<P> extends IMethodCaller<P> {
         /** 查询条件 */
         criteria: ICriteria | ICondition[];
     }
     /**
      * 保存调用者
      */
-    export interface SaveCaller<P> extends MethodCaller<P> {
+    export interface ISaveCaller<P> extends IMethodCaller<P> {
         /** 被保存对象 */
         beSaved: P;
         /**
          * 调用完成
          * @param opRslt 结果
          */
-        onCompleted(opRslt: IOperationResult<P>);
+        onCompleted(opRslt: IOperationResult<P>): void;
     }
     /**
      * 业务对象仓库，只读
@@ -49,7 +49,7 @@ namespace ibas {
          * @param boName 业务对象名称
          * @param caller 查询监听者
          */
-        fetch<P>(boName: string, caller: FetchCaller<P>);
+        fetch<P>(boName: string, caller: IFetchCaller<P>): void;
     }
     /**
      * 业务对象仓库
@@ -60,7 +60,7 @@ namespace ibas {
          * @param boName 业务对象名称
          * @param caller 保存监听者
          */
-        save<P>(boName: string, caller: SaveCaller<P>);
+        save<P>(boName: string, caller: ISaveCaller<P>): void;
     }
     /**
      * 远程仓库
@@ -77,19 +77,19 @@ namespace ibas {
         /**
          * 数据转换者
          */
-        converter: IDataConverter
+        converter: IDataConverter;
         /**
          * 调用远程方法
          * @param method 方法地址
          * @param data 数据
          * @param caller 调用者
          */
-        callRemoteMethod(method: string, data: any, caller: MethodCaller<any>): void;
+        callRemoteMethod(method: string, data: any, caller: IMethodCaller<any>): void;
     }
     /**
      * 加载文件调用者
      */
-    export interface LoadFileCaller extends MethodCaller<any> {
+    export interface ILoadFileCaller extends IMethodCaller<any> {
         /** 协议类型 */
         contentType?: string;
         /** 数据类型 */
@@ -104,12 +104,12 @@ namespace ibas {
          * @param fileName 文件名称
          * @param caller 调用者
          */
-        load(fileName: string, caller: LoadFileCaller);
+        load(fileName: string, caller: ILoadFileCaller): void;
     }
     /**
      * 上传文件调用者
      */
-    export interface UploadFileCaller<T> extends MethodCaller<T> {
+    export interface IUploadFileCaller<T> extends IMethodCaller<T> {
         /** 文件上传数据 */
         fileData: FormData;
     }
@@ -122,12 +122,12 @@ namespace ibas {
          * @param method 方法地址
          * @param caller 调用者
          */
-        upload<T>(method: string, caller: UploadFileCaller<T>);
+        upload<T>(method: string, caller: IUploadFileCaller<T>): void;
     }
     /**
      * 下载文件调用者，T类型一般为Blob
      */
-    export interface DownloadFileCaller<T> extends MethodCaller<T> {
+    export interface IDownloadFileCaller<T> extends IMethodCaller<T> {
         /** 下载条件 */
         criteria: ICriteria;
     }
@@ -140,7 +140,7 @@ namespace ibas {
          * @param method 方法地址
          * @param caller 调用者
          */
-        download<T>(method: string, caller: DownloadFileCaller<T>);
+        download<T>(method: string, caller: IDownloadFileCaller<T>): void;
     }
     /**
      * 数据转换者
@@ -242,6 +242,6 @@ namespace ibas {
          * @param data 数据
          * @param caller 调用者
          */
-        abstract callRemoteMethod(method: string, data: any, caller: MethodCaller<any>): void;
+        abstract callRemoteMethod(method: string, data: any, caller: IMethodCaller<any>): void;
     }
 }

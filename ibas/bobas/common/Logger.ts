@@ -21,20 +21,20 @@ namespace ibas {
          * 记录消息
          * @param message
          */
-        log(message: IMessage);
+        log(message: IMessage): void;
         /**
          * 记录消息
          * @param level 消息级别
          * @param message 消息格式
          * @param pars 格式内容
          */
-        log(level: emMessageLevel, message: string, ...pars: any[]);
+        log(level: emMessageLevel, message: string, ...pars: any[]): void;
         /**
          * 记录消息
          * @param message 内容
          * @param pars 格式内容
          */
-        log(message: string, ...pars: any[]);
+        log(message: string, ...pars: any[]): void;
     }
 
     /** 配置项目-消息输出级别 */

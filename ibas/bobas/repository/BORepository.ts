@@ -129,7 +129,7 @@ namespace ibas {
             return boRepository;
         }
         /** 查询业务对象 */
-        protected fetch<P>(boName: string, caller: FetchCaller<P>): void {
+        protected fetch<P>(boName: string, caller: IFetchCaller<P>): void {
             let boRepository: IBORepositoryReadonly = this.createReadonlyRepository();
             if (objects.isNull(boRepository)) {
                 throw new Error(i18n.prop("sys_invalid_parameter", "boRepository"));
@@ -137,7 +137,7 @@ namespace ibas {
             boRepository.fetch(boName, caller);
         }
         /** 保存业务对象 */
-        protected save<P>(boName: string, caller: SaveCaller<P>): void {
+        protected save<P>(boName: string, caller: ISaveCaller<P>): void {
             if (this.offline) {
                 throw new Error(i18n.prop("sys_operation_not_allowed_on_offline"));
             }

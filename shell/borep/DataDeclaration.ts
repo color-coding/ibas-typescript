@@ -9,12 +9,12 @@
 namespace shell {
     export namespace bo4j {
         /** 操作消息 */
-        export interface DataDeclaration {
+        export interface  IDataDeclaration {
             /** 数据类型 */
             type: string;
         }
         /** 用户 */
-        export interface User extends DataDeclaration {
+        export interface IUser extends  IDataDeclaration {
             /** id */
             Id: number;
             /** 编码 */
@@ -31,7 +31,7 @@ namespace shell {
             Password?: string;
         }
         /** 用户应用模块 */
-        export interface UserModule extends DataDeclaration {
+        export interface IUserModule extends  IDataDeclaration {
             /** id */
             Id: string;
             /** 名称 */
@@ -52,7 +52,7 @@ namespace shell {
             Runtime: string;
         }
         /** 操作消息 */
-        export interface UserPrivilege extends DataDeclaration {
+        export interface IUserPrivilege extends  IDataDeclaration {
             /** 来源 */
             Source: string;
             /** 目标 */
@@ -61,7 +61,7 @@ namespace shell {
             Value: string;
         }
         /** 查询 */
-        export interface UserQuery extends DataDeclaration {
+        export interface IUserQuery extends  IDataDeclaration {
             /** 标记 */
             Id: string;
             /** 名称 */
@@ -74,7 +74,7 @@ namespace shell {
             User: string;
         }
         /** 查询条件 */
-        export interface BOInfo extends DataDeclaration {
+        export interface IBOInfo extends  IDataDeclaration {
             /** 名称 */
             Name: string;
             /** 编码 */
@@ -82,10 +82,10 @@ namespace shell {
             /** 类型 */
             Type: string;
             /** 属性集合 */
-            Properties: BOPropertyInfo[];
+            Properties: IBOPropertyInfo[];
         }
         /** 排序 */
-        export interface BOPropertyInfo extends DataDeclaration {
+        export interface IBOPropertyInfo extends  IDataDeclaration {
             /** 属性 */
             Property: string;
             /** 描述 */

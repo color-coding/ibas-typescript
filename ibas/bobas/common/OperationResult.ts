@@ -44,15 +44,13 @@ namespace ibas {
     export interface IOperationResult<P> extends IOperationMessage {
         /**
          * 返回对象
-         * 
          */
-        resultObjects: List<P>;
+        resultObjects: IList<P>;
 
         /**
          * 操作执行信息
-         * 
          */
-        informations: List<IOperationInformation>;
+        informations: IList<IOperationInformation>;
     }
     /**
      * 操作信息
@@ -199,16 +197,16 @@ namespace ibas {
         /**
          * 返回对象
          */
-        private _resultObjects: List<P>;
+        private _resultObjects: IList<P>;
 
-        get resultObjects(): List<P> {
+        get resultObjects(): IList<P> {
             if (objects.isNull(this._resultObjects)) {
                 this._resultObjects = new ArrayList<P>();
             }
             return this._resultObjects;
         }
 
-        set resultObjects(value: List<P>) {
+        set resultObjects(value: IList<P>) {
             this._resultObjects = value;
         }
         /** 添加结果 */
@@ -231,16 +229,16 @@ namespace ibas {
         /**
          * 操作执行信息
          */
-        private _informations: List<IOperationInformation>;
+        private _informations: IList<IOperationInformation>;
 
-        get informations(): List<IOperationInformation> {
+        get informations(): IList<IOperationInformation> {
             if (objects.isNull(this._informations)) {
                 this._informations = new ArrayList<IOperationInformation>();
             }
             return this._informations;
         }
 
-        set informations(value: List<IOperationInformation>) {
+        set informations(value: IList<IOperationInformation>) {
             this._informations = value;
         }
     }

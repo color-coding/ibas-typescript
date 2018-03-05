@@ -13,8 +13,8 @@ namespace trainingtesting {
     export namespace ui {
         export namespace c {
             /**
-            * 列表视图-物料主数据
-            */
+             * 列表视图-物料主数据
+             */
             export class MaterialListView extends ibas.BOListView implements app.IMaterialListView {
                 /** 返回查询的对象 */
                 get queryTarget(): any {

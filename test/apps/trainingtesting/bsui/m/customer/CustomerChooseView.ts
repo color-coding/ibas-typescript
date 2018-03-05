@@ -13,8 +13,8 @@ namespace trainingtesting {
     export namespace ui {
         export namespace m {
             /**
-            * 选择视图-客户主数据
-            */
+             * 选择视图-客户主数据
+             */
             export class CustomerChooseView extends ibas.BOChooseView implements app.ICustomerChooseView {
                 /** 返回查询的对象 */
                 get queryTarget(): any {

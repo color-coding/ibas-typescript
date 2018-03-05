@@ -13,8 +13,8 @@ namespace trainingtesting {
     export namespace ui {
         export namespace c {
             /**
-            * 查看视图-物料主数据
-            */
+             * 查看视图-物料主数据
+             */
             export class MaterialViewView extends ibas.BOViewView implements app.IMaterialViewView {
 
                 /** 绘制视图 */

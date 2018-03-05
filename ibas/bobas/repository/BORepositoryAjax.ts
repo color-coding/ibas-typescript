@@ -24,7 +24,7 @@ namespace ibas {
          * @param data 数据
          * @param caller 方法监听
          */
-        callRemoteMethod(method: string, data: any, caller: MethodCaller<any>): void {
+        callRemoteMethod(method: string, data: any, caller: IMethodCaller<any>): void {
             let that: this = this;
             let ajaxSetting: JQueryAjaxSettings = this.createAjaxSettings(method, data);
             if (objects.isNull(ajaxSetting)) {
@@ -87,7 +87,7 @@ namespace ibas {
          * @param boName 业务对象名称
          * @param caller 查询者
          */
-        fetch<P>(boName: string, caller: FetchCaller<P>): void {
+        fetch<P>(boName: string, caller: IFetchCaller<P>): void {
             let method: string = "fetch" + boName;
             if (caller.criteria instanceof Array) {
                 // 替换查询条件数组
@@ -109,7 +109,7 @@ namespace ibas {
          * @param boName 业务对象名称
          * @param caller 保存者
          */
-        save<P>(boName: string, caller: SaveCaller<P>): void {
+        save<P>(boName: string, caller: ISaveCaller<P>): void {
             let method: string = "save" + boName;
             let data: string = JSON.stringify(this.converter.convert(caller.beSaved, method));
             this.callRemoteMethod(method, data, caller);
@@ -145,7 +145,7 @@ namespace ibas {
          * @param fileName 文件名
          * @param dataType 返回的数据类型
          */
-        protected createAjaxSettings(fileName: string, caller: LoadFileCaller): JQueryAjaxSettings {
+        protected createAjaxSettings(fileName: string, caller: ILoadFileCaller): JQueryAjaxSettings {
             let methodUrl: string = this.methodUrl(fileName);
             let type: string = "GET";
             let contentType: string = "application/json; charset=utf-8";
@@ -170,7 +170,7 @@ namespace ibas {
          * @param fileName 文件名称
          * @param caller 调用者
          */
-        load(fileName: string, caller: LoadFileCaller): void {
+        load(fileName: string, caller: ILoadFileCaller): void {
             this.callRemoteMethod(fileName, caller, caller);
         }
     }
@@ -181,7 +181,7 @@ namespace ibas {
          * @param boName 业务对象名称
          * @param caller 查询监听者
          */
-        fetch<P>(boName: string, caller: FetchCaller<P>): void {
+        fetch<P>(boName: string, caller: IFetchCaller<P>): void {
             let criteria: ICriteria;
             if (caller.criteria instanceof Array) {
                 criteria = new Criteria();
@@ -196,7 +196,7 @@ namespace ibas {
             }
             let fileName: string = strings.format("{0}s.json", boName).toLowerCase();
             let that: this = this;
-            let loadFileCaller: LoadFileCaller = {
+            let loadFileCaller: ILoadFileCaller = {
                 onCompleted(data: any): void {
                     let opRslt: IOperationResult<any> = new OperationResult();
                     if (!objects.isNull(that.converter)) {
@@ -302,7 +302,7 @@ namespace ibas {
          * @param method 方法地址
          * @param caller 调用者
          */
-        upload<T>(method: string, caller: UploadFileCaller<T>): void {
+        upload<T>(method: string, caller: IUploadFileCaller<T>): void {
             this.callRemoteMethod(method, caller.fileData, caller);
         }
     }
@@ -317,7 +317,7 @@ namespace ibas {
          * @param data 数据
          * @param caller 方法监听
          */
-        callRemoteMethod(method: string, data: any, caller: MethodCaller<any>): void {
+        callRemoteMethod(method: string, data: any, caller: IMethodCaller<any>): void {
             let request: XMLHttpRequest = this.createHttpRequest(method, data);
             if (objects.isNull(request)) {
                 throw new Error(i18n.prop("sys_invalid_parameter", "HttpRequest"));
@@ -371,8 +371,8 @@ namespace ibas {
          * @param method 方法地址
          * @param caller 调用者
          */
-        download<T>(method: string, caller: DownloadFileCaller<T>): void {
-            let methodCaller: MethodCaller<any> = {
+        download<T>(method: string, caller: IDownloadFileCaller<T>): void {
+            let methodCaller: IMethodCaller<any> = {
                 onCompleted(data: any): void {
                     let opRslt: IOperationResult<any> = null;
                     if (data instanceof OperationResult) {

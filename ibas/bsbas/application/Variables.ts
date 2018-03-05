@@ -87,7 +87,7 @@ namespace ibas {
         getWatcher(): ISystemWatcher {
             if (objects.isNull(this.watcher)) {
                 return {
-                    modules(): List<IModule> {
+                    modules(): IList<IModule> {
                         return new ArrayList();
                     }
                 };
@@ -98,7 +98,7 @@ namespace ibas {
     /** 系统运行状态观察者 */
     export interface ISystemWatcher {
         /** 运行的模块 */
-        modules(): List<IModule>;
+        modules(): IList<IModule>;
     }
     /** 变量管理员实例 */
     export const variablesManager: VariablesManager = new VariablesManager();

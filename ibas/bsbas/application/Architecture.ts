@@ -127,7 +127,7 @@ namespace ibas {
      */
     export interface IViewShower {
         /** 显示视图 */
-        show(view: IView);
+        show(view: IView): void;
         /** 清理资源 */
         destroy(view: IView): void;
         /** 设置忙状态 */
@@ -210,7 +210,7 @@ namespace ibas {
         copyright: string;
         /** 图标 */
         icon: string;
-        private _functions: List<IFunction>;
+        private _functions: IList<IFunction>;
         /** 功能集合 */
         functions(): IFunction[] {
             if (objects.isNull(this._functions)) {
@@ -504,7 +504,7 @@ namespace ibas {
                     if (typeof ready === "function") {
                         let module: any = window[that.module];
                         if (!ibas.objects.isNull(module)) {
-                            module = module["ui"];
+                            module = module[<string>"ui"];
                         }
                         ready(module);
                     }

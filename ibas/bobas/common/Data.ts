@@ -9,27 +9,27 @@ namespace ibas {
     /**
      * 集合
      */
-    export interface List<T> extends Array<T> {
+    export interface IList<T> extends Array<T> {
         /**
          * 添加项目
          * @param item 项目
          */
-        add(item: T);
+        add(item: T): void;
         /**
          * 添加项目
          * @param items 项目数组
          */
-        add(items: T[]);
+        add(items: T[]): void;
         /**
          * 移出项目
          * @param item 项目
          */
-        remove(item: T);
+        remove(item: T): void;
         /**
          * 移出项目
          * @param index 项目索引
          */
-        removeAt(index: number);
+        removeAt(index: number): void;
         /**
          * 第一个或默认
          */
@@ -63,7 +63,7 @@ namespace ibas {
     /**
      * 集合
      */
-    export class ArrayList<T> extends Array<T> implements List<T> {
+    export class ArrayList<T> extends Array<T> implements IList<T> {
         /** 创建集合，仅值 */
         static create<P>(map: Map<any, P>): ArrayList<P> {
             let list: ArrayList<P> = new ArrayList<P>();

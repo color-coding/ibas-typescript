@@ -8,17 +8,17 @@
 /** ibas的java端数据声明 */
 declare namespace ibas4j {
     /** 操作消息 */
-    export interface DataDeclaration {
+    export interface IDataDeclaration {
         /** 数据类型 */
         type: string;
     }
     /** 字符串 */
-    export interface String extends DataDeclaration {
+    export interface IString extends IDataDeclaration {
         /** 值 */
-        value: string
+        value: string;
     }
     /** 操作消息 */
-    export interface OperationMessage extends DataDeclaration {
+    export interface IOperationMessage extends IDataDeclaration {
         /** 结果标识 */
         SignID: string;
         /** 结果编码 */
@@ -31,14 +31,14 @@ declare namespace ibas4j {
         UserSign: string;
     }
     /** 操作结果 */
-    export interface OperationResult extends OperationMessage {
+    export interface IOperationResult extends IOperationMessage {
         /** 返回对象 */
         ResultObjects: any[];
         /** 操作执行信息 */
-        Informations: OperationInformation[];
+        Informations: IOperationInformation[];
     }
     /** 操作消息 */
-    export interface OperationInformation extends DataDeclaration {
+    export interface IOperationInformation extends IDataDeclaration {
         /** 名称 */
         Name: string;
         /** 标签 */
@@ -47,7 +47,7 @@ declare namespace ibas4j {
         Content: string;
     }
     /** 查询 */
-    export interface Criteria extends DataDeclaration {
+    export interface ICriteria extends IDataDeclaration {
         /** 业务对象 */
         BusinessObject: string;
         /** 查询结果数量 */
@@ -57,14 +57,14 @@ declare namespace ibas4j {
         /** 备注 */
         Remarks: string;
         /** 查询条件集合 */
-        Conditions: Condition[];
+        Conditions: ICondition[];
         /** 排序字段集合 */
-        Sorts: Sort[];
+        Sorts: ISort[];
         /** 子查询集合 */
-        ChildCriterias: ChildCriteria[];
+        ChildCriterias: IChildCriteria[];
     }
     /** 查询条件 */
-    export interface Condition extends DataDeclaration {
+    export interface ICondition extends IDataDeclaration {
         /** 条件字段（属性）名 */
         Alias: string;
         /** 几个闭括号"）" */
@@ -83,21 +83,21 @@ declare namespace ibas4j {
         Remarks: string;
     }
     /** 排序 */
-    export interface Sort extends DataDeclaration {
+    export interface ISort extends IDataDeclaration {
         /** 排序的字段（属性）名 */
         Alias: string;
-        /**排序方式 */
+        /** 排序方式 */
         SortType: string;
     }
     /** 子项查询 */
-    export interface ChildCriteria extends Criteria {
+    export interface IChildCriteria extends ICriteria {
         /** 属性路径  */
         PropertyPath: string;
         /** 仅返回存在子项的 */
         OnlyHasChilds: boolean;
     }
     /** 文件信息 */
-    export interface FileData extends DataDeclaration {
+    export interface IFileData extends IDataDeclaration {
         /** 文件名称  */
         FileName: string;
         /** 位置 */
@@ -106,18 +106,18 @@ declare namespace ibas4j {
         OriginalName: string;
     }
     /** 数据表 */
-    export interface DataTable extends DataDeclaration {
+    export interface IDataTable extends IDataDeclaration {
         /** 名称 */
         Name: string;
         /** 描述 */
         Description: string;
         /** 列 */
-        Columns: DataTableColumn[];
+        Columns: IDataTableColumn[];
         /** 行 */
-        Rows: DataTableRow[];
+        Rows: IDataTableRow[];
     }
     /** 数据表-列 */
-    export interface DataTableColumn extends DataDeclaration {
+    export interface IDataTableColumn extends IDataDeclaration {
         /** 名称 */
         Name: string;
         /** 描述 */
@@ -126,19 +126,19 @@ declare namespace ibas4j {
         DataType: string;
     }
     /** 数据表-行 */
-    export interface DataTableRow extends DataDeclaration {
+    export interface IDataTableRow extends IDataDeclaration {
         /** 值 */
         Cells: string[];
     }
     /** 键值 */
-    export interface KeyValue extends DataDeclaration {
+    export interface IKeyValue extends IDataDeclaration {
         /** 键 */
         Key: string;
         /** 值 */
         Value: any;
     }
     /** 键描述 */
-    export interface KeyText extends DataDeclaration {
+    export interface IKeyText extends IDataDeclaration {
         /** 键 */
         Key: string;
         /** 值 */

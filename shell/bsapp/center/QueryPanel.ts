@@ -236,7 +236,8 @@ namespace shell {
                 }
                 // 没有查询条件且有查询内容，尝试从注册信息添加
                 let that: this = this;
-                if (criteria.conditions.length === 0 && !ibas.objects.isNull(this.listener.queryTarget) && !ibas.strings.isEmpty(this.view.searchContent)) {
+                if (criteria.conditions.length === 0 && !ibas.objects.isNull(this.listener.queryTarget)
+                    && !ibas.strings.isEmpty(this.view.searchContent)) {
                     let boName: string = this.targetName;
                     if (!ibas.objects.isNull(boName)) {
                         let boRepository: bo.IBORepositoryShell = bo.createRepository();

@@ -15,14 +15,14 @@ namespace ibas {
         id?: string;
         eventType: emBrowserEventType;
         /** 事件被触发 */
-        onEventFired(event: Event)
+        onEventFired(event: Event):void;
     }
     export class BrowserEventManager {
         /** 集合 */
-        private _listeners: List<IBrowserEventListener>;
-        listeners(): List<IBrowserEventListener>;
-        listeners(type: emBrowserEventType): List<IBrowserEventListener>;
-        listeners(): List<IBrowserEventListener> {
+        private _listeners: IList<IBrowserEventListener>;
+        listeners(): IList<IBrowserEventListener>;
+        listeners(type: emBrowserEventType): IList<IBrowserEventListener>;
+        listeners(): IList<IBrowserEventListener> {
             if (objects.isNull(this._listeners)) {
                 this._listeners = new ArrayList<IBrowserEventListener>();
             }
@@ -30,7 +30,7 @@ namespace ibas {
             if (objects.isNull(type)) {
                 return this._listeners;
             } else {
-                let result: List<IBrowserEventListener> = new ArrayList<IBrowserEventListener>();
+                let result: IList<IBrowserEventListener> = new ArrayList<IBrowserEventListener>();
                 result.add(this._listeners.where((listener: IBrowserEventListener) => {
                     if (listener.eventType === type) {
                         return true;
@@ -42,12 +42,12 @@ namespace ibas {
         }
         /** 获取 */
         listener(id: string): IBrowserEventListener {
-            let listener: IBrowserEventListener = this.listeners().firstOrDefault((item) => {
+            let IListener: IBrowserEventListener = this.listeners().firstOrDefault((item) => {
                 if (item.id === id) {
                     return true;
                 }
             });
-            return listener;
+            return IListener;
         }
         /** 注册 */
         registerListener(listener: IBrowserEventListener): void {

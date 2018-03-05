@@ -13,8 +13,8 @@ namespace trainingtesting {
     export namespace ui {
         export namespace m {
             /**
-            * 编辑视图-物料主数据
-            */
+             * 编辑视图-物料主数据
+             */
             export class MaterialEditView extends ibas.BOEditView implements app.IMaterialEditView {
                 /** 删除数据事件 */
                 deleteDataEvent: Function;

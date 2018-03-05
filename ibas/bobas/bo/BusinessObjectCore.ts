@@ -13,7 +13,7 @@ namespace ibas {
     /**
      * 属性改变监听者
      */
-    export interface PropertyChangedListener {
+    export interface IPropertyChangedListener {
         /** 调用者，this指向 */
         caller?: any;
         /** 标记 */
@@ -21,7 +21,7 @@ namespace ibas {
         /**
          * 属性改变
          */
-        propertyChanged(property: string);
+        propertyChanged(property: string): void;
     }
 
     /**
@@ -32,12 +32,12 @@ namespace ibas {
          * 注册监听事件
          * @param listener 监听者
          */
-        registerListener(listener: PropertyChangedListener);
+        registerListener(listener: IPropertyChangedListener): void;
         /**
          * 移出监听事件
          * @param listener 监听者
          */
-        removeListener(listener: PropertyChangedListener);
+        removeListener(listener: IPropertyChangedListener): void;
         /**
          * 移出全部监听事件
          */
@@ -71,28 +71,24 @@ namespace ibas {
 
         /**
          * 标记为未修改
-         * 
          * @param recursive 递归
          */
         markOld(recursive: boolean): void;
 
         /**
          * 标记为新
-         * 
          * @param recursive 递归
          */
         markNew(recursive: boolean): void;
 
         /**
          * 标记为删除
-         * 
          * @param recursive 递归
          */
         markDeleted(recursive: boolean): void;
 
         /**
          * 对象置为脏
-         * 
          * @param recursive 递归
          */
         markDirty(recursive: boolean): void;
@@ -120,7 +116,7 @@ namespace ibas {
          * @param property 属性名称
          * @param value 值
          */
-        setProperty<P>(property: string, value: P);
+        setProperty<P>(property: string, value: P): void;
 
         /** 输出字符串 */
         toString(): string;
@@ -132,7 +128,7 @@ namespace ibas {
     /**
      * 业务对象集合
      */
-    export interface IBusinessObjects<T extends IBusinessObject> extends List<T> {
+    export interface IBusinessObjects<T extends IBusinessObject> extends IList<T> {
         /**
          * 新建并添加子项
          */
@@ -156,18 +152,18 @@ namespace ibas {
      */
     export abstract class Bindable implements IBindable {
 
-        private _listeners: ArrayList<PropertyChangedListener>;
+        private _listeners: ArrayList<IPropertyChangedListener>;
         /**
          * 注册监听事件
          * @param listener 监听者
          */
-        registerListener(listener: PropertyChangedListener): void {
+        registerListener(listener: IPropertyChangedListener): void {
             if (objects.isNull(this._listeners)) {
-                this._listeners = new ArrayList<PropertyChangedListener>();
+                this._listeners = new ArrayList<IPropertyChangedListener>();
             }
             // 存在指定id则更新
             for (let index: number = 0; index < this._listeners.length; index++) {
-                let item: PropertyChangedListener = this._listeners[index];
+                let item: IPropertyChangedListener = this._listeners[index];
                 if (item.id === listener.id && listener.id !== undefined) {
                     this._listeners[index] = item;
                     return;
@@ -182,13 +178,13 @@ namespace ibas {
          * 移出监听事件
          * @param listener 监听者
          */
-        removeListener(listener: PropertyChangedListener): void;
+        removeListener(listener: IPropertyChangedListener): void;
         /** 移出监听实现 */
         removeListener(): void {
             if (objects.isNull(this._listeners)) {
                 return;
             }
-            let listener: PropertyChangedListener = arguments[0];
+            let listener: IPropertyChangedListener = arguments[0];
             if (!objects.isNull(listener)) {
                 for (let item of this._listeners) {
                     if (item === listener) {

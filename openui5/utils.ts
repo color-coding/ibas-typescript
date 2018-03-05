@@ -115,8 +115,8 @@ namespace openui5 {
             return items;
         }
         /** 获取表格或者列表选中的对象 */
-        export function getSelecteds<T>(container: sap.m.List | sap.ui.table.Table): ibas.List<T> {
-            let selecteds: ibas.List<T> = new ibas.ArrayList<T>();
+        export function getSelecteds<T>(container: sap.m.List | sap.ui.table.Table): ibas.IList<T> {
+            let selecteds: ibas.IList<T> = new ibas.ArrayList<T>();
             if (container instanceof (sap.m.List)) {
                 if (container.getMode() === sap.m.ListMode.None) {
                     if (!ibas.objects.isNull(container.getSwipedItem())) {
@@ -141,8 +141,8 @@ namespace openui5 {
             return selecteds;
         }
         /** 获取表格选中的对象 */
-        export function getTableSelecteds<T>(table: sap.ui.table.Table): ibas.List<T> {
-            let selecteds: ibas.List<T> = new ibas.ArrayList<T>();
+        export function getTableSelecteds<T>(table: sap.ui.table.Table): ibas.IList<T> {
+            let selecteds: ibas.IList<T> = new ibas.ArrayList<T>();
             var idxs: any[] = table.getSelectedIndices();
             if (idxs.length > 0) {
                 for (var i: number = 0; i < idxs.length; i++) {

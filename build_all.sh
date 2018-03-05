@@ -19,7 +19,7 @@ COMMOND=tsc
 # 编译项目配置
 TS_CONFIGS="ibas/tsconfig.json"
 TS_CONFIGS="${TS_CONFIGS} openui5/tsconfig.json"
-TS_CONFIGS="${TS_CONFIGS} shell/loader.json"
+TS_CONFIGS="${TS_CONFIGS} shell/tsconfig.loader.json"
 TS_CONFIGS="${TS_CONFIGS} shell/tsconfig.json"
 TS_CONFIGS="${TS_CONFIGS} shell/tsconfig.ui.c.json"
 TS_CONFIGS="${TS_CONFIGS} shell/tsconfig.ui.m.json"
@@ -41,8 +41,5 @@ done
 # 编译TT项目
 if [ -x "test/apps/trainingtesting/build_all.sh" ]
 then
-  ROOT_FOLDER=${WORK_FOLDER}
-  cd "./test/apps/trainingtesting"
-  ./build_all.sh ${OPTIONS}
-  cd ${ROOT_FOLDER}
+  "test/apps/trainingtesting/build_all.sh" ${OPTIONS}
 fi

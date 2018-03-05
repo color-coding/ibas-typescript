@@ -42,7 +42,7 @@ namespace shell {
                     return builder.toString();
                 }
                 /** 显示库信息 */
-                showLibraries(components: ibas.List<app.Component>): void {
+                showLibraries(components: ibas.IList<app.Component>): void {
                     let list: sap.m.List = new sap.m.List("", {
                         headerText: "Libraries",
                     });
@@ -61,7 +61,7 @@ namespace shell {
                     this.form.addContent(list);
                 }
                 /** 显示应用信息 */
-                showApplications(components: ibas.List<app.Component>): void {
+                showApplications(components: ibas.IList<app.Component>): void {
                     let list: sap.m.List = new sap.m.List("", {
                         headerText: "Applications",
                     });

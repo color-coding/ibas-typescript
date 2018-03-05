@@ -13,8 +13,8 @@ namespace trainingtesting {
     export namespace ui {
         export namespace c {
             /**
-            * 选择视图-物料主数据
-            */
+             * 选择视图-物料主数据
+             */
             export class MaterialChooseView extends ibas.BOChooseView implements app.IMaterialChooseView {
                 /** 返回查询的对象 */
                 get queryTarget(): any {

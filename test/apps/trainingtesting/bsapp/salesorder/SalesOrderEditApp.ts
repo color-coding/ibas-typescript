@@ -218,7 +218,7 @@ namespace trainingtesting {
                     criteria: [
                         new ibas.Condition(bo.Customer.PROPERTY_ACTIVATED_NAME, ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES)
                     ],
-                    onCompleted(selecteds: ibas.List<bo.Customer>): void {
+                    onCompleted(selecteds: ibas.IList<bo.Customer>): void {
                         let selected: bo.Customer = selecteds.firstOrDefault();
                         that.editData.customerCode = selected.code;
                         that.editData.customerName = selected.name;
@@ -239,7 +239,7 @@ namespace trainingtesting {
                     criteria: [
                         new ibas.Condition(bo.Material.PROPERTY_ACTIVATED_NAME, ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES)
                     ],
-                    onCompleted(selecteds: ibas.List<bo.Material>): void {
+                    onCompleted(selecteds: ibas.IList<bo.Material>): void {
                         // 获取触发的对象
                         let index: number = that.editData.salesOrderItems.indexOf(caller);
                         let item: bo.SalesOrderItem = that.editData.salesOrderItems[index];

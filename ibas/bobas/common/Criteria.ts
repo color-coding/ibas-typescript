@@ -12,8 +12,8 @@
 
 namespace ibas {
     /**
-    * 查询
-    */
+     * 查询
+     */
     export interface ICriteria {
 
         /**
@@ -22,7 +22,7 @@ namespace ibas {
         businessObject: string;
 
         /**
-         *查询结果数量
+         * 查询结果数量
          */
         result: number;
 
@@ -63,9 +63,7 @@ namespace ibas {
 
         /**
          * 计算下一结果集的查询条件
-         * 
          * 注意BO多主键情况下，请自行修正。
-         * 
          * @param lastBO
          *            起始业务对象
          * @return 查询
@@ -74,9 +72,7 @@ namespace ibas {
 
         /**
          * 计算上一个结果集的查询条件
-         * 
          * 注意BO多主键情况下，请自行修正。
-         * 
          * @param firstBO
          *            起始业务对象
          * @return 查询
@@ -85,7 +81,6 @@ namespace ibas {
 
         /**
          * 复制查询条件
-         * 
          * @param criteria
          *            基于的查询
          * @return 查询
@@ -95,8 +90,8 @@ namespace ibas {
     }
 
     /**
-    * 查询条件
-    */
+     * 查询条件
+     */
     export interface ICondition {
 
         /**
@@ -135,7 +130,7 @@ namespace ibas {
     /**
      * 查询条件集合
      */
-    export interface IConditions extends List<ICondition> {
+    export interface IConditions extends IList<ICondition> {
         /**
          * 创建并返回新查询条件
          */
@@ -143,7 +138,7 @@ namespace ibas {
     }
     /**
      * 排序
-    */
+     */
     export interface ISort {
         /**
          * 排序的字段（属性）名
@@ -159,7 +154,7 @@ namespace ibas {
     /**
      * 排序集合
      */
-    export interface ISorts extends List<ISort> {
+    export interface ISorts extends IList<ISort> {
         /**
          * 创建并返回新排序
          */
@@ -184,7 +179,7 @@ namespace ibas {
     /**
      * 子项查询集合
      */
-    export interface IChildCriterias extends List<IChildCriteria> {
+    export interface IChildCriterias extends IList<IChildCriteria> {
         /**
          * 创建并返回新子项查询
          */

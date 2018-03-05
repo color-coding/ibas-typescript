@@ -23,32 +23,32 @@ namespace trainingtesting {
         class BOConverter4TT extends ibas.BOConverter {
 
             /**
-            * 自定义解析
-            * @param data 远程数据
-            * @returns 本地数据
-            */
+             * 自定义解析
+             * @param data 远程数据
+             * @returns 本地数据
+             */
             protected customParsing(data: any): ibas.IBusinessObject {
                 return data;
             }
 
             /**
-            * 转换数据
-            * @param boName 对象名称
-            * @param property 属性名称
-            * @param value 值
-            * @returns 转换的值
-            */
+             * 转换数据
+             * @param boName 对象名称
+             * @param property 属性名称
+             * @param value 值
+             * @returns 转换的值
+             */
             protected convertData(boName: string, property: string, value: any): any {
                 return super.convertData(boName, property, value);
             }
 
             /**
-            * 解析数据
-            * @param boName 对象名称
-            * @param property 属性名称
-            * @param value 值
-            * @returns 解析的值
-            */
+             * 解析数据
+             * @param boName 对象名称
+             * @param property 属性名称
+             * @param value 值
+             * @returns 解析的值
+             */
             protected parsingData(boName: string, property: string, value: any): any {
                 return super.parsingData(boName, property, value);
             }

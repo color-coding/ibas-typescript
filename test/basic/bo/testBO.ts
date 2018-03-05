@@ -9,7 +9,7 @@
 import { SalesOrder, SalesOrderItem } from "./SalesOrder";
 import { BORepositoryTest, DataConverter4Test } from "./BORepository";
 
-let listener: ibas.PropertyChangedListener = {
+let listener: ibas.IPropertyChangedListener = {
     propertyChanged(property: string): void {
         ibas.logger.log(ibas.emMessageLevel.DEBUG, "bo: property [{0}] was changed.", property);
     }
@@ -91,7 +91,7 @@ boRepository.token = "hahaha";
 boRepository.offline = false;
 boRepository.address = "http://localhost:8080/demo/services/jersey/json/";
 // 通过变量调用
-let fetcher: ibas.FetchCaller<SalesOrder> = {
+let fetcher: ibas.IFetchCaller<SalesOrder> = {
     /** 查询条件 */
     criteria: criteria,
     /**

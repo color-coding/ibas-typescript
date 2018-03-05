@@ -38,18 +38,18 @@ namespace ibas {
     ];
 
     /**
-    * 业务对象-行
-    */
+     * 业务对象-行
+     */
     export interface IBOLine {
         /**
-        * 行编号
-        */
+         * 行编号
+         */
         lineId: number;
     }
 
     /**
-    * 业务对象-单据
-    */
+     * 业务对象-单据
+     */
     export interface IBODocument extends IBusinessObject {
         /**
          * 单据号 主键
@@ -86,8 +86,8 @@ namespace ibas {
     }
 
     /**
-    * 业务对象-单据行
-    */
+     * 业务对象-单据行
+     */
     export interface IBODocumentLine extends IBusinessObject, IBOLine {
         /**
          * 单据编号 主键
@@ -112,15 +112,15 @@ namespace ibas {
     }
 
     /**
-    * 业务对象-单据行集合
-    */
+     * 业务对象-单据行集合
+     */
     export interface IBODocumentLines<T extends IBODocumentLine> extends IBusinessObjects<T> {
 
     }
 
     /**
-    * 业务对象-主数据
-    */
+     * 业务对象-主数据
+     */
     export interface IBOMasterData extends IBusinessObject {
         /**
          * 编码 主键
@@ -137,8 +137,8 @@ namespace ibas {
     }
 
     /**
-    * 业务对象-主数据行
-    */
+     * 业务对象-主数据行
+     */
     export interface IBOMasterDataLine extends IBusinessObject, IBOLine {
         /**
          * 编码 主键
@@ -151,28 +151,28 @@ namespace ibas {
     }
 
     /**
-    * 业务对象-主数据行集合
-    */
+     * 业务对象-主数据行集合
+     */
     export interface IBOMasterDataLines<T extends IBOMasterDataLine> extends IBusinessObjects<T> {
 
     }
     /**
-    * 业务对象-简单对象
-    */
+     * 业务对象-简单对象
+     */
     export interface IBOSimple extends IBusinessObject {
         /**
-        * 序号 主键
-        */
+         * 序号 主键
+         */
         objectKey: number;
     }
 
     /**
-    * 业务对象-简单对象行
-    */
+     * 业务对象-简单对象行
+     */
     export interface IBOSimpleLine extends IBusinessObject, IBOLine {
         /**
-        * 序号 主键
-        */
+         * 序号 主键
+         */
         objectKey: number;
         /**
          * 行编号 主键
@@ -181,14 +181,14 @@ namespace ibas {
     }
 
     /**
-    * 业务对象-简单对象行集合
-    */
+     * 业务对象-简单对象行集合
+     */
     export interface IBOSimpleLines<T extends IBOSimpleLine> extends IBusinessObjects<T> {
 
     }
     /**
-    * 业务对象存储标记
-    */
+     * 业务对象存储标记
+     */
     export interface IBOStorageTag {
         /**
          * 获取对象编号
@@ -392,9 +392,9 @@ namespace ibas {
             }
         }
 
-        private _listener: PropertyChangedListener;
+        private _listener: IPropertyChangedListener;
 
-        protected get listener(): PropertyChangedListener {
+        protected get listener(): IPropertyChangedListener {
             return this._listener;
         }
 

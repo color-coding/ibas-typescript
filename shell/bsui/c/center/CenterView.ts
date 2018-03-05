@@ -80,7 +80,8 @@ namespace shell {
                             // 系统服务
                             new sap.m.Button("", {
                                 tooltip: this.title,
-                                icon: ibas.config.get(ibas.CONFIG_ITEM_OFFLINE_MODE) ? "sap-icon://appear-offline" : "sap-icon://donut-chart",
+                                icon: ibas.config.get(ibas.CONFIG_ITEM_OFFLINE_MODE) ?
+                                    "sap-icon://appear-offline" : "sap-icon://donut-chart",
                                 width: "50px",
                                 type: sap.m.ButtonType.Transparent,
                                 layoutData: new sap.m.OverflowToolbarLayoutData("", {
@@ -868,7 +869,8 @@ namespace shell {
                     if (ibas.objects.isNull(event) || event.newURL.indexOf(ibas.URL_HASH_SIGN_VIEWS) < 0) {
                         return;
                     }
-                    let url: string = event.newURL.substring(event.newURL.indexOf(ibas.URL_HASH_SIGN_VIEWS) + ibas.URL_HASH_SIGN_VIEWS.length);
+                    let url: string = event.newURL.substring(
+                        event.newURL.indexOf(ibas.URL_HASH_SIGN_VIEWS) + ibas.URL_HASH_SIGN_VIEWS.length);
                     let viewId: string = url.substring(0, url.indexOf("/"));
                     // 普通视图匹配
                     for (let view of this.viewQueue.keys()) {

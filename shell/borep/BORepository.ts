@@ -45,14 +45,15 @@ namespace shell {
              * 用户密码登录
              * @param caller 用户密码登录调用者
              */
-            userConnect(caller: UserConnectCaller): void {
+            userConnect(caller: IUserConnectCaller): void {
                 let remoteRepository: ibas.IRemoteRepository = this.createRemoteRepository();
                 if (ibas.objects.isNull(remoteRepository)) {
                     throw new Error(ibas.i18n.prop("sys_invalid_parameter", "remoteRepository"));
                 }
                 require(["../ibas/3rdparty/crypto-js" + (ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE, false) ? "" : ".min")],
                     function (cryptoJS: CryptoJS.Hashes): void {
-                        let method: string = ibas.strings.format("userConnect?user={0}&password={1}", caller.user, cryptoJS.MD5(caller.password));
+                        let method: string =
+                            ibas.strings.format("userConnect?user={0}&password={1}", caller.user, cryptoJS.MD5(caller.password));
                         remoteRepository.callRemoteMethod(method, undefined, caller);
                     }, function (error: RequireError): void {
                         // 加载js库失败
@@ -66,7 +67,7 @@ namespace shell {
              * 用户口令登录
              * @param caller 用户口令登录调用者
              */
-            tokenConnect(caller: TokenConnectCaller): void {
+            tokenConnect(caller: ITokenConnectCaller): void {
                 let remoteRepository: ibas.IRemoteRepository = this.createRemoteRepository();
                 if (ibas.objects.isNull(remoteRepository)) {
                     throw new Error(ibas.i18n.prop("sys_invalid_parameter", "remoteRepository"));
@@ -79,7 +80,7 @@ namespace shell {
              * 查询用户模块
              * @param caller 用户检索调用者
              */
-            fetchUserModules(caller: UserMethodCaller<IUserModule>): void {
+            fetchUserModules(caller: IUserMethodCaller<IUserModule>): void {
                 let remoteRepository: ibas.IRemoteRepository = this.createRemoteRepository();
                 if (ibas.objects.isNull(remoteRepository)) {
                     throw new Error(ibas.i18n.prop("sys_invalid_parameter", "remoteRepository"));
@@ -94,7 +95,7 @@ namespace shell {
              * 查询用户角色权限
              * @param caller 用户检索调用者
              */
-            fetchUserPrivileges(caller: UserMethodCaller<IUserPrivilege>): void {
+            fetchUserPrivileges(caller: IUserMethodCaller<IUserPrivilege>): void {
                 let remoteRepository: ibas.IRemoteRepository = this.createRemoteRepository();
                 if (ibas.objects.isNull(remoteRepository)) {
                     throw new Error(ibas.i18n.prop("sys_invalid_parameter", "remoteRepository"));
@@ -109,7 +110,7 @@ namespace shell {
              * 查询用户查询
              * @param caller 调用者
              */
-            fetchUserQueries(caller: UserQueriesCaller): void {
+            fetchUserQueries(caller: IUserQueriesCaller): void {
                 let remoteRepository: ibas.IRemoteRepository = this.createRemoteRepository();
                 if (ibas.objects.isNull(remoteRepository)) {
                     throw new Error(ibas.i18n.prop("sys_invalid_parameter", "remoteRepository"));
@@ -124,7 +125,7 @@ namespace shell {
              * 保存用户查询
              * @param caller 调用者
              */
-            saveUserQuery(caller: ibas.SaveCaller<IUserQuery>): void {
+            saveUserQuery(caller: ibas.ISaveCaller<IUserQuery>): void {
                 this.save("UserQuery", caller);
             }
 
@@ -132,7 +133,7 @@ namespace shell {
              * 业务对象信息查询
              * @param caller 调用者
              */
-            fetchBOInfos(caller: BOInfoCaller): void {
+            fetchBOInfos(caller: IBOInfoCaller): void {
                 let remoteRepository: ibas.IRemoteRepository = this.createRemoteRepository();
                 if (ibas.objects.isNull(remoteRepository)) {
                     throw new Error(ibas.i18n.prop("sys_invalid_parameter", "remoteRepository"));
@@ -165,7 +166,7 @@ namespace shell {
              * 用户登录
              * @param caller 登录者
              */
-            userConnect(caller: UserConnectCaller): void {
+            userConnect(caller: IUserConnectCaller): void {
                 let criteria: ibas.ICriteria = new ibas.Criteria();
                 let condition: ibas.ICondition = criteria.conditions.create();
                 condition.alias = "code";
@@ -174,7 +175,7 @@ namespace shell {
                 condition.alias = "token";
                 condition.value = caller.password;
 
-                let fetchCaller: ibas.FetchCaller<User> = {
+                let fetchCaller: ibas.IFetchCaller<User> = {
                     criteria: criteria,
                     onCompleted(opRsltFetch: ibas.IOperationResult<User>): void {
                         let user: User = opRsltFetch.resultObjects.firstOrDefault();
@@ -196,13 +197,13 @@ namespace shell {
              * 用户口令登录
              * @param caller 用户口令登录者
              */
-            tokenConnect(caller: TokenConnectCaller): void {
+            tokenConnect(caller: ITokenConnectCaller): void {
                 let criteria: ibas.ICriteria = new ibas.Criteria();
                 let condition: ibas.ICondition = criteria.conditions.create();
                 condition.alias = "token";
                 condition.value = caller.token;
 
-                let fetchCaller: ibas.FetchCaller<User> = {
+                let fetchCaller: ibas.IFetchCaller<User> = {
                     criteria: criteria,
                     onCompleted(opRsltFetch: ibas.IOperationResult<User>): void {
                         let user: User = opRsltFetch.resultObjects.firstOrDefault();
@@ -225,8 +226,8 @@ namespace shell {
              * 查询用户模块
              * @param caller 用户检索者
              */
-            fetchUserModules(caller: UserMethodCaller<IUserModule>): void {
-                let fetchCaller: ibas.FetchCaller<UserModule> = {
+            fetchUserModules(caller: IUserMethodCaller<IUserModule>): void {
+                let fetchCaller: ibas.IFetchCaller<UserModule> = {
                     criteria: null,
                     onCompleted(opRslt: ibas.IOperationResult<UserModule>): void {
                         caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
@@ -239,8 +240,8 @@ namespace shell {
              * 查询用户角色权限
              * @param caller 用户检索者
              */
-            fetchUserPrivileges(caller: UserMethodCaller<IUserPrivilege>): void {
-                let fetchCaller: ibas.FetchCaller<UserPrivilege> = {
+            fetchUserPrivileges(caller: IUserMethodCaller<IUserPrivilege>): void {
+                let fetchCaller: ibas.IFetchCaller<UserPrivilege> = {
                     criteria: null,
                     onCompleted(opRslt: ibas.IOperationResult<UserPrivilege>): void {
                         caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
@@ -252,13 +253,13 @@ namespace shell {
              * 查询用户查询
              * @param caller 调用者
              */
-            fetchUserQueries(caller: UserQueriesCaller): void {
+            fetchUserQueries(caller: IUserQueriesCaller): void {
                 let criteria: ibas.ICriteria = new ibas.Criteria();
                 let condition: ibas.ICondition = criteria.conditions.create();
                 condition.alias = "id";
                 condition.value = caller.queryId;
 
-                let fetchCaller: ibas.FetchCaller<UserQuery> = {
+                let fetchCaller: ibas.IFetchCaller<UserQuery> = {
                     criteria: criteria,
                     onCompleted: caller.onCompleted,
                 };
@@ -268,7 +269,7 @@ namespace shell {
              * 业务对象信息查询
              * @param caller 调用者
              */
-            fetchBOInfos(caller: BOInfoCaller): void {
+            fetchBOInfos(caller: IBOInfoCaller): void {
                 let criteria: ibas.ICriteria = new ibas.Criteria();
                 if (!ibas.strings.isEmpty(caller.boCode)) {
                     let condition: ibas.ICondition = criteria.conditions.create();
@@ -283,7 +284,7 @@ namespace shell {
                     // 无效的参数
                     throw new Error(ibas.i18n.prop("sys_invalid_parameter", "boCode"));
                 }
-                let fetchCaller: ibas.FetchCaller<BOInfo> = {
+                let fetchCaller: ibas.IFetchCaller<BOInfo> = {
                     criteria: criteria,
                     onCompleted: caller.onCompleted,
                 };

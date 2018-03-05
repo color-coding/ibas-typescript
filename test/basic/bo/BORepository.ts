@@ -97,7 +97,7 @@ export class BORepositoryTest extends ibas.BORepositoryApplication {
      * 查询 销售订单
      * @param caller 查询者
      */
-    fetchSalesOrder(caller: ibas.FetchCaller<SalesOrder>): void {
+    fetchSalesOrder(caller: ibas.IFetchCaller<SalesOrder>): void {
         super.fetch("SalesOrder", caller);
     }
 
@@ -105,7 +105,7 @@ export class BORepositoryTest extends ibas.BORepositoryApplication {
      * 保存 销售订单
      * @param caller 保存者
      */
-    saveSalesOrder(caller: ibas.SaveCaller<SalesOrder>): void {
+    saveSalesOrder(caller: ibas.ISaveCaller<SalesOrder>): void {
         super.save("SalesOrder", caller);
     }
 }

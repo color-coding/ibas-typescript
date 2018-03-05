@@ -13,8 +13,8 @@ namespace trainingtesting {
     export namespace ui {
         export namespace c {
             /**
-            * 查看视图-销售订单
-            */
+             * 查看视图-销售订单
+             */
             export class SalesOrderViewView extends ibas.BOViewView implements app.ISalesOrderViewView {
 
                 /** 绘制视图 */

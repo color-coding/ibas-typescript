@@ -6,6 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 /// <reference path="../ibas/3rdparty/require.d.ts" />
+/// <reference path="../ibas/index.d.ts" />
 
 namespace loader {
     // 解决方法缺失
@@ -19,23 +20,23 @@ namespace loader {
             return this.indexOf(suffix, this.length - suffix.length) !== -1;
         };
     }
+    // ibas index路径
+    export const URL_IBAS_INDEX: string = "ibas/index";
+    // ibas 诊断页面路径
+    export const URL_IBAS_DIAGNOSIS: string = "ibas/diagnosis/index.html";
     export namespace requires {
-        /** 创建require方法 */
-        export function create(baseUrl: string): Require;
+        /** 运行时标记 */
+        export const runtime: string = (new Date()).getTime().toString();
         /** 创建require方法 */
         export function create(name: string, baseUrl: string): Require;
         /** 创建require方法 */
+        export function create(name: string, baseUrl: string, noCache: boolean): Require;
+        /** 创建require方法 */
         export function create(): Require {
-            let name: string = "_", baseUrl: string;
-            if (arguments.length === 1) {
-                baseUrl = arguments[0];
-            } else {
-                name = arguments[0];
-                baseUrl = arguments[1];
-            }
-            if (this.noCache) {
+            let name: string = arguments[0], baseUrl: string = arguments[1], noCache: boolean = arguments[2];
+            if (noCache) {
                 // 不使用缓存
-                let runtime: string = this.runtime;
+                let runtime: string = requires.runtime;
                 return (<any>window).requirejs.config({
                     context: name,
                     baseUrl: baseUrl,
@@ -50,12 +51,6 @@ namespace loader {
                 });
             }
         }
-    }
-    export namespace ibas {
-        // index路径
-        export const URL_INDEX: string = "ibas/index";
-        // 诊断页面路径
-        export const URL_DIAGNOSIS: string = "ibas/diagnosis/index.html";
     }
     export namespace openui5 {
         // 官方地址
@@ -115,7 +110,7 @@ namespace loader {
         }
         /** 扩展 */
         export function extend(caller: ILoaderCaller): void {
-            requires.create(caller.url)([
+            requires.create("_", caller.url, caller.noCache)([
                 URL_INDEX
             ], caller.onSuccess, caller.onError);
         }
@@ -138,11 +133,10 @@ namespace loader {
         root: string;
         /** 不使用缓存 */
         noCache: boolean;
-        /** 运行时标记 */
-        runtime: string;
+        /** 名称 */
+        name: string = "shell";
         /** 运行应用 */
         run(): void {
-            this.runtime = (new Date()).getTime().toString();
             if (typeof arguments[0] === "string") {
                 this.root = arguments[0];
             }
@@ -151,8 +145,8 @@ namespace loader {
                     + document.location.pathname.substring(0, document.location.pathname.lastIndexOf("/"));
             }
             let that: this = this;
-            requires.create(this.root)([
-                ibas.URL_INDEX
+            requires.create("_", this.root, this.noCache)([
+                URL_IBAS_INDEX
             ], function (): void {
                 // 加载成功，加载ui5
                 openui5.load({
@@ -171,8 +165,17 @@ namespace loader {
         }
         /** 显示视图 */
         private show(): void {
+            // 不使用缓存，设置运行版本
+            if (this.noCache) {
+                ibas.config.set(ibas.CONFIG_ITEM_RUNTIME_VERSION, requires.runtime);
+            }
+            // 模块require函数
+            let require: Require = ibas.requires.create({
+                context: ibas.requires.naming(this.name),
+                baseUrl: this.root + this.name,
+                waitSeconds: ibas.config.get(ibas.requires.CONFIG_ITEM_WAIT_SECONDS, 30)
+            });
             let that: this = this;
-            let require = requires.create("ibas.shell", this.root + "shell");
             require([
                 Application.URL_INDEX
             ], function (): void {
@@ -182,8 +185,8 @@ namespace loader {
                     that.diagnose();
                 } else {
                     try {
-                        let console = new shell.app.Console();
-                        console.module = "shell";
+                        let console: ibas.ModuleConsole = new shell.app.Console();
+                        console.module = that.name;
                         console.run();
                     } catch (error) {
                         that.diagnose();
@@ -194,8 +197,8 @@ namespace loader {
             });
         }
         /** 诊断错误 */
-        private diagnose() {
-            window.location.href = this.root + ibas.URL_DIAGNOSIS;
+        private diagnose(): void {
+            window.location.href = this.root + URL_IBAS_DIAGNOSIS;
         }
     }
 }

@@ -87,7 +87,7 @@ namespace shell {
                 this.show();
                 // 注册系统观察者
                 ibas.variablesManager.register({
-                    modules(): ibas.List<ibas.IModule> {
+                    modules(): ibas.IList<ibas.IModule> {
                         let modules: ibas.ArrayList<ibas.IModule> = new ibas.ArrayList();
                         if (!ibas.objects.isNull(that.functionMap)) {
                             for (let item of that.functionMap.values()) {
@@ -131,10 +131,12 @@ namespace shell {
                     return;
                 }
                 // 加载用户相关
-                ibas.logger.log(ibas.emMessageLevel.DEBUG, "center: initializing user [{0} - {1}]'s modules.", this.currentUser.id, this.currentUser.code);
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,
+                    "center: initializing user [{0} - {1}]'s modules.", this.currentUser.id, this.currentUser.code);
                 this.view.showStatusMessage(
                     ibas.emMessageType.INFORMATION,
-                    ibas.i18n.prop("shell_initialize_user_modules", ibas.strings.isEmpty(this.currentUser.name) ? this.currentUser.code : this.currentUser.name)
+                    ibas.i18n.prop("shell_initialize_user_modules",
+                        ibas.strings.isEmpty(this.currentUser.name) ? this.currentUser.code : this.currentUser.name)
                 );
                 let that: this = this;
                 let boRepository: bo.IBORepositoryShell = bo.createRepository();
@@ -382,7 +384,8 @@ namespace shell {
                         ibas.emMessageType.ERROR,
                         ibas.i18n.prop("shell_invalid_module_index", ibas.objects.isNull(module.name) ? module.id : module.name));
                 });
-                ibas.logger.log(ibas.emMessageLevel.DEBUG, "center: module [{0}] {root: [{1}], index: [{2}]}.", module.name, module.address, module.index);
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,
+                    "center: module [{0}] {root: [{1}], index: [{2}]}.", module.name, module.address, module.index);
             }
             /** 视图事件-激活功能 */
             private activateFunctions(id: string): void {
@@ -492,7 +495,7 @@ namespace shell {
             /** 激活功能，参数1 string 功能ID */
             activateFunctionsEvent: Function;
             /** 清理资源 */
-            destroyView(view: ibas.IView): void
+            destroyView(view: ibas.IView): void;
             /** 显示视图 */
             showView(view: ibas.IView): void;
             /** 设置忙状态 */

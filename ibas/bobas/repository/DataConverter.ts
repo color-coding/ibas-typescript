@@ -28,11 +28,11 @@ namespace ibas {
                 for (let item of newData.resultObjects) {
                     resultObjects.push(this.convert(item, null));
                 }
-                let informations: ibas4j.OperationInformation[] = [];
+                let informations: ibas4j.IOperationInformation[] = [];
                 for (let item of newData.informations) {
                     informations.push(this.convert(item, null));
                 }
-                let remote: ibas4j.OperationResult = {
+                let remote: ibas4j.IOperationResult = {
                     type: data.constructor.name,
                     SignID: newData.signID,
                     Time: dates.toString(newData.time),
@@ -45,7 +45,7 @@ namespace ibas {
                 return remote;
             } else if (objects.instanceOf(data, OperationInformation)) {
                 let newData: OperationInformation = data;
-                let remote: ibas4j.OperationInformation = {
+                let remote: ibas4j.IOperationInformation = {
                     type: data.constructor.name,
                     Name: newData.name,
                     Tag: newData.tag,
@@ -54,7 +54,7 @@ namespace ibas {
                 return remote;
             } else if (objects.instanceOf(data, OperationMessage)) {
                 let newData: OperationMessage = data;
-                let remote: ibas4j.OperationMessage = {
+                let remote: ibas4j.IOperationMessage = {
                     type: data.constructor.name,
                     SignID: newData.signID,
                     UserSign: newData.userSign,
@@ -65,19 +65,19 @@ namespace ibas {
                 return remote;
             } else if (objects.instanceOf(data, ChildCriteria)) {
                 let newData: ChildCriteria = data;
-                let conditions: ibas4j.Condition[] = [];
+                let conditions: ibas4j.ICondition[] = [];
                 for (let item of newData.conditions) {
                     conditions.push(this.convert(item, null));
                 }
-                let sorts: ibas4j.Sort[] = [];
+                let sorts: ibas4j.ISort[] = [];
                 for (let item of newData.sorts) {
                     sorts.push(this.convert(item, null));
                 }
-                let childCriteria: ibas4j.ChildCriteria[] = [];
+                let childCriteria: ibas4j.IChildCriteria[] = [];
                 for (let item of newData.childCriterias) {
                     childCriteria.push(this.convert(item, null));
                 }
-                let remote: ibas4j.ChildCriteria = {
+                let remote: ibas4j.IChildCriteria = {
                     type: data.constructor.name,
                     BusinessObject: newData.businessObject,
                     ResultCount: newData.result,
@@ -92,19 +92,19 @@ namespace ibas {
                 return remote;
             } else if (objects.instanceOf(data, Criteria)) {
                 let newData: Criteria = data;
-                let conditions: ibas4j.Condition[] = [];
+                let conditions: ibas4j.ICondition[] = [];
                 for (let item of newData.conditions) {
                     conditions.push(this.convert(item, null));
                 }
-                let sorts: ibas4j.Sort[] = [];
+                let sorts: ibas4j.ISort[] = [];
                 for (let item of newData.sorts) {
                     sorts.push(this.convert(item, null));
                 }
-                let childCriteria: ibas4j.ChildCriteria[] = [];
+                let childCriteria: ibas4j.IChildCriteria[] = [];
                 for (let item of newData.childCriterias) {
                     childCriteria.push(this.convert(item, null));
                 }
-                let remote: ibas4j.Criteria = {
+                let remote: ibas4j.ICriteria = {
                     type: data.constructor.name,
                     BusinessObject: newData.businessObject,
                     ResultCount: newData.result,
@@ -117,7 +117,7 @@ namespace ibas {
                 return remote;
             } else if (objects.instanceOf(data, Condition)) {
                 let newData: Condition = data;
-                let remote: ibas4j.Condition = {
+                let remote: ibas4j.ICondition = {
                     type: data.constructor.name,
                     Alias: newData.alias,
                     BracketClose: newData.bracketClose,
@@ -131,7 +131,7 @@ namespace ibas {
                 return remote;
             } else if (objects.instanceOf(data, Sort)) {
                 let newData: Sort = data;
-                let remote: ibas4j.Sort = {
+                let remote: ibas4j.ISort = {
                     type: data.constructor.name,
                     Alias: newData.alias,
                     SortType: enums.toString(emSortType, newData.sortType),
@@ -139,7 +139,7 @@ namespace ibas {
                 return remote;
             } else if (objects.instanceOf(data, FileData)) {
                 let newData: FileData = data;
-                let remote: ibas4j.FileData = {
+                let remote: ibas4j.IFileData = {
                     type: data.constructor.name,
                     FileName: newData.fileName,
                     Location: newData.location,
@@ -148,7 +148,7 @@ namespace ibas {
                 return remote;
             } else if (objects.instanceOf(data, KeyText)) {
                 let newData: KeyText = data;
-                let remote: ibas4j.KeyText = {
+                let remote: ibas4j.IKeyText = {
                     type: data.constructor.name,
                     Key: newData.key,
                     Text: newData.text,
@@ -156,7 +156,7 @@ namespace ibas {
                 return remote;
             } else if (objects.instanceOf(data, KeyValue)) {
                 let newData: KeyValue = data;
-                let remote: ibas4j.KeyValue = {
+                let remote: ibas4j.IKeyValue = {
                     type: data.constructor.name,
                     Key: newData.key,
                     Value: newData.value,
@@ -183,10 +183,10 @@ namespace ibas {
          */
         parsing(data: any, sign: string): any {
             if (data.type === "string") {
-                let remote: ibas4j.String = data;
+                let remote: ibas4j.IString = data;
                 return remote.value;
             } else if (data.type === OperationResult.name) {
-                let remote: ibas4j.OperationResult = data;
+                let remote: ibas4j.IOperationResult = data;
                 let newData: OperationResult<any> = new OperationResult();
                 newData.signID = remote.SignID;
                 newData.time = dates.valueOf(remote.Time);
@@ -206,14 +206,14 @@ namespace ibas {
                 }
                 return newData;
             } else if (data.type === OperationInformation.name) {
-                let remote: ibas4j.OperationInformation = data;
+                let remote: ibas4j.IOperationInformation = data;
                 let newData: OperationInformation = new OperationInformation();
                 newData.name = remote.Name;
                 newData.tag = remote.Tag;
                 newData.content = remote.Content;
                 return newData;
             } else if (data.type === OperationMessage.name) {
-                let remote: ibas4j.OperationMessage = data;
+                let remote: ibas4j.IOperationMessage = data;
                 let newData: OperationMessage = new OperationMessage();
                 newData.signID = remote.SignID;
                 newData.userSign = remote.UserSign;
@@ -222,7 +222,7 @@ namespace ibas {
                 newData.message = remote.Message;
                 return newData;
             } else if (data.type === ChildCriteria.name) {
-                let remote: ibas4j.ChildCriteria = data;
+                let remote: ibas4j.IChildCriteria = data;
                 let newData: ChildCriteria = new ChildCriteria();
                 newData.businessObject = remote.BusinessObject;
                 newData.result = remote.ResultCount;
@@ -250,7 +250,7 @@ namespace ibas {
                 }
                 return newData;
             } else if (data.type === Criteria.name) {
-                let remote: ibas4j.Criteria = data;
+                let remote: ibas4j.ICriteria = data;
                 let newData: Criteria = new Criteria();
                 newData.businessObject = remote.BusinessObject;
                 newData.result = remote.ResultCount;
@@ -276,7 +276,7 @@ namespace ibas {
                 }
                 return newData;
             } else if (data.type === Condition.name) {
-                let remote: ibas4j.Condition = data;
+                let remote: ibas4j.ICondition = data;
                 let newData: Condition = new Condition();
                 newData.alias = remote.Alias;
                 newData.bracketClose = remote.BracketClose;
@@ -288,20 +288,20 @@ namespace ibas {
                 newData.remarks = remote.Remarks;
                 return newData;
             } else if (data.type === Sort.name) {
-                let remote: ibas4j.Sort = data;
+                let remote: ibas4j.ISort = data;
                 let newData: Sort = new Sort();
                 newData.alias = remote.Alias;
                 newData.sortType = enums.valueOf(emSortType, remote.SortType);
                 return newData;
             } else if (data.type === FileData.name) {
-                let remote: ibas4j.FileData = data;
+                let remote: ibas4j.IFileData = data;
                 let newData: FileData = new FileData();
                 newData.fileName = remote.FileName;
                 newData.location = remote.Location;
                 newData.originalName = remote.OriginalName;
                 return newData;
             } else if (data.type === DataTable.name) {
-                let remote: ibas4j.DataTable = data;
+                let remote: ibas4j.IDataTable = data;
                 let newData: DataTable = new DataTable();
                 newData.name = remote.Name;
                 newData.description = remote.Description;
@@ -319,14 +319,14 @@ namespace ibas {
                 }
                 return newData;
             } else if (data.type === DataTableColumn.name) {
-                let remote: ibas4j.DataTableColumn = data;
+                let remote: ibas4j.IDataTableColumn = data;
                 let newData: DataTableColumn = new DataTableColumn();
                 newData.name = remote.Name;
                 newData.description = remote.Description;
                 newData.dataType = remote.DataType;
                 return newData;
             } else if (data.type === DataTableRow.name) {
-                let remote: ibas4j.DataTableRow = data;
+                let remote: ibas4j.IDataTableRow = data;
                 let newData: DataTableRow = new DataTableRow();
                 if (remote.Cells instanceof Array) {
                     for (let item of remote.Cells) {
@@ -335,13 +335,13 @@ namespace ibas {
                 }
                 return newData;
             } else if (data.type === KeyText.name) {
-                let remote: ibas4j.KeyText = data;
+                let remote: ibas4j.IKeyText = data;
                 let newData: KeyText = new KeyText();
                 newData.key = remote.Key;
                 newData.text = remote.Text;
                 return newData;
             } else if (data.type === KeyValue.name) {
-                let remote: ibas4j.KeyValue = data;
+                let remote: ibas4j.IKeyValue = data;
                 let newData: KeyValue = new KeyValue();
                 newData.key = remote.Key;
                 newData.value = remote.Value;

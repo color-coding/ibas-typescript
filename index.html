@@ -15,6 +15,7 @@
         ], function () {
             // 加载成功
             var app = new loader.Application();
+            app.noCache = true;
             app.run("./");
         }, function () {
             // 加载失败

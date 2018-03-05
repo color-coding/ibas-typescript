@@ -40,7 +40,7 @@ WATCHING_TS()
 COMPILE_TS()
 {
   CONFIG_FILE=$1
-  echo ----监听: ${CONFIG_FILE}
+  echo ----编译: ${CONFIG_FILE}
   if [ -e ${CONFIG_FILE} ]
   then
     tsc -p ${CONFIG_FILE}
@@ -50,7 +50,7 @@ COMPILE_TS()
 # 启动监听
 WATCHING_TS "${WORK_FOLDER}/ibas/tsconfig.json"
 WATCHING_TS "${WORK_FOLDER}/openui5/tsconfig.json"
-WATCHING_TS "${WORK_FOLDER}/shell/tsconfig.json"
+WATCHING_TS "${WORK_FOLDER}/shell/tsconfig.loader.json"
 WATCHING_TS "${WORK_FOLDER}/shell/tsconfig.ui.c.json"
 WATCHING_TS "${WORK_FOLDER}/shell/tsconfig.ui.m.json"
 # 启动编译
@@ -61,15 +61,16 @@ echo ----处理应用目录
 for builder in `find ${WORK_FOLDER}/test/apps/ -type f -name build_all.sh`
 do
 # 运行编译命令
-  if [ -x "${builder}" ]
+  if [ ! -x ${builder} ]
   then
-    "${builder}" -w
+    chmod 775 ${builder}
   fi
+  ${builder} -w
 done
 
 # 启动tomcat
 WEB_SERVER="${WORK_FOLDER}/tomcat/bin/startup.sh"
 if [ -e ${WEB_SERVER} ] && [ -x ${WEB_SERVER} ]
 then
-    ${WEB_SERVER}
+  ${WEB_SERVER}
 fi

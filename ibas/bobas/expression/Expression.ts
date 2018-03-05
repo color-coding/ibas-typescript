@@ -21,7 +21,6 @@ namespace ibas {
     export interface IJudgmentExpression<T> extends IExpression {
         /**
          * 表达式结果
-         * 
          * @return true，成立；false，不成立
          * @throws 不支持的操作
          */
@@ -94,7 +93,7 @@ namespace ibas {
     export interface IJudgmentLink {
         /** 判断项目集合 */
         judgmentItems: IJudgmentLinkItem[];
-        /** 
+        /**
          * 判断
          * @param value 比较值
          * @return true,满足;false,不满足

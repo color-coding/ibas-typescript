@@ -759,8 +759,8 @@ namespace ibas {
         /**
          * 获取地址栏中的所有查询参数
          */
-        export function params(): List<KeyText> {
-            let params: List<KeyText> = new ArrayList<KeyText>();
+        export function params(): IList<KeyText> {
+            let params: IList<KeyText> = new ArrayList<KeyText>();
             let items: string[] = window.location.search.substr(1).split("&");
             for (let item of items) {
                 let keyText: string[] = item.split("=");
@@ -776,7 +776,7 @@ namespace ibas {
          * @param name 指定参数名称
          */
         export function param(name: string): KeyText {
-            let params: List<KeyText> = this.params();
+            let params: IList<KeyText> = this.params();
             return params.firstOrDefault((c) => {
                 if (c.key === name) {
                     return true;

@@ -33,18 +33,20 @@ namespace shell {
             }
             /** 视图显示后 */
             protected viewShowed(): void {
-                let libraries: ibas.List<Component> = new ibas.ArrayList<Component>();
+                let libraries: ibas.IList<Component> = new ibas.ArrayList<Component>();
                 let copyright: string = ibas.i18n.prop("shell_license");
                 libraries.add(new Component("ibas.shell", (<any>window).ibas.shell.version, copyright, ibas.i18n.prop("shell_icon")));
                 libraries.add(new Component("ibas.bobas", (<any>window).ibas.bobas.version, copyright, ibas.i18n.prop("shell_icon")));
                 libraries.add(new Component("ibas.bsbas", (<any>window).ibas.bsbas.version, copyright, ibas.i18n.prop("shell_icon")));
-                libraries.add(new Component("jquery", "3.2.1", "© jQuery foundation and other contributors, released under the MIT license."));
-                libraries.add(new Component("requirejs", "2.3.5", "© jQuery foundation and other contributors, released under the MIT license."));
+                libraries.add(
+                    new Component("jquery", "3.2.1", "© jQuery foundation and other contributors, released under the MIT license."));
+                libraries.add(
+                    new Component("requirejs", "2.3.5", "© jQuery foundation and other contributors, released under the MIT license."));
                 libraries.add(new Component("require-css", "0.1.10", "© Guy Bedford, released under the MIT license."));
                 libraries.add(new Component("cryptojs", "3.1.9", "© Evan Vosberg, released under the MIT license."));
                 libraries.add(new Component("spin.js", "2.3.2", "© Felix Gnass, released under the MIT license."));
                 this.view.showLibraries(libraries);
-                let applications: ibas.List<Component> = new ibas.ArrayList<Component>();
+                let applications: ibas.IList<Component> = new ibas.ArrayList<Component>();
                 let watcher: ibas.ISystemWatcher = ibas.variablesManager.getWatcher();
                 if (!ibas.objects.isNull(watcher)) {
                     for (let item of watcher.modules()) {
@@ -133,16 +135,16 @@ namespace shell {
                 return null;
             }
         }
-        export interface IModuleMonitorCaller extends ibas.MethodCaller<any> {
+        export interface IModuleMonitorCaller extends ibas.IMethodCaller<any> {
             /** 模块名称 */
             name: string;
         }
         /** 视图-关于 */
         export interface IAboutView extends ibas.IView {
             /** 显示库信息 */
-            showLibraries(components: ibas.List<Component>): void;
+            showLibraries(components: ibas.IList<Component>): void;
             /** 显示应用信息 */
-            showApplications(components: ibas.List<Component>): void;
+            showApplications(components: ibas.IList<Component>): void;
         }
     }
 }

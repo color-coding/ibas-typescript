@@ -13,8 +13,8 @@ namespace trainingtesting {
     export namespace ui {
         export namespace m {
             /**
-            * 编辑视图-销售订单
-            */
+             * 编辑视图-销售订单
+             */
             export class SalesOrderEditView extends ibas.BOEditView implements app.ISalesOrderEditView {
                 /** 删除数据事件 */
                 deleteDataEvent: Function;

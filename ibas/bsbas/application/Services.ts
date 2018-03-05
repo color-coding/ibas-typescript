@@ -93,7 +93,7 @@ namespace ibas {
     export interface IBOChooseServiceContract extends IServiceContract {
         /** 业务对象编码 */
         boCode: string;
-        //选择类型
+        /** 选择类型 */
         chooseType?: emChooseType;
         /** 条件 */
         criteria?: ICriteria | ICondition[];
@@ -129,7 +129,8 @@ namespace ibas {
         onCompleted(result: Out): void;
     }
     /** 业务对象选择服务调用者 */
-    export interface IBOChooseServiceCaller<D> extends IServiceWithResultCaller<IBOChooseServiceContract, List<D>>, IBOChooseServiceContract {
+    export interface IBOChooseServiceCaller<D>
+        extends IServiceWithResultCaller<IBOChooseServiceContract, IList<D>>, IBOChooseServiceContract {
         /** 服务契约代理 */
         proxy?: IServiceProxy<IBOChooseServiceContract>;
     }

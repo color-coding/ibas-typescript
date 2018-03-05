@@ -515,12 +515,12 @@ namespace openui5 {
                 boCode: ibas.config.applyVariables(boType.BUSINESS_OBJECT_CODE),
                 chooseType: that.getChooseType(),
                 criteria: criteria,
-                onCompleted(selecteds: ibas.List<any>): void {
+                onCompleted(selecteds: ibas.IList<any>): void {
                     that.chooseCompleted(selecteds);
                 }
             });
         },
-        chooseCompleted: function (selecteds: ibas.List<any>): void {
+        chooseCompleted: function (selecteds: ibas.IList<any>): void {
             if (selecteds !== null && !!selecteds.firstOrDefault()) {
                 this.setSelectedKey(selecteds.firstOrDefault()[this.getBoKey()]);
             }
@@ -601,7 +601,7 @@ namespace openui5 {
                 boCode: "${Company}_SYS_USER",
                 chooseType: that.getChooseType(),
                 criteria: criteria,
-                onCompleted(selecteds: ibas.List<any>): void {
+                onCompleted(selecteds: ibas.IList<any>): void {
                     that.chooseCompleted(selecteds);
                 }
             });
@@ -609,7 +609,7 @@ namespace openui5 {
         /**
          * 选择用户后回调事件
          */
-        chooseCompleted: function (selecteds: ibas.List<any>): void {
+        chooseCompleted: function (selecteds: ibas.IList<any>): void {
             if (selecteds !== null && !!selecteds.firstOrDefault()) {
                 this.setSelectedKey(selecteds.firstOrDefault().DocEntry);
             }
@@ -645,7 +645,7 @@ namespace openui5 {
         /**
          * 选择用户后回调事件
          */
-        chooseCompleted: function (selecteds: ibas.List<any>): void {
+        chooseCompleted: function (selecteds: ibas.IList<any>): void {
             if (selecteds === null) {
                 console.log(ibas.i18n.prop("sap_m_ex_fetch_bos_null"));
                 return;
