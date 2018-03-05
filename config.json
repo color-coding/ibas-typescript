@@ -5,8 +5,8 @@
     "offline": false,
     "language": "zh_CN",
     "application": "智能业务应用系统",
-    "copyright": "© 2016-2017 color-coding studio",
-    "helpUrl": "http://www.avacloud.com.cn/",
+    "copyright": "© 2016-2017 Color-Coding Studio",
+    "helpUrl": "https://colorcoding.org/ibas/help",
     "welcomeUrl": "https://colorcoding.org/ibas/welcome",
     "repositoryAddress|BORepositoryShell": ".../initialfantasy/services/rest/data"
   },
