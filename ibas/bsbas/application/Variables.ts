@@ -39,8 +39,7 @@ namespace ibas {
             if (arguments.length === 1) {
                 if (objects.instanceOf(arguments[0], KeyValue)) {
                     variable = arguments[0];
-                } else if (arguments[0].user instanceof Function &&
-                    arguments[0].modules instanceof Function) {
+                } else if (arguments[0].modules instanceof Function) {
                     // 系统观察者
                     this.watcher = arguments[0];
                 }
