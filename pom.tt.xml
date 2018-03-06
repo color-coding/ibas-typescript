@@ -29,6 +29,7 @@
                             <targetPath></targetPath>
                             <excludes>
                                 <exclude>**/*.ts</exclude>
+                                <exclude>**/*.map</exclude>
                                 <exclude>**/tsconfig*.json</exclude>
                             </excludes>
                         </resource>

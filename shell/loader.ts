@@ -144,6 +144,9 @@ namespace loader {
                 this.root = document.location.origin
                     + document.location.pathname.substring(0, document.location.pathname.lastIndexOf("/"));
             }
+            if (!this.root.endsWith("/")) {
+                this.root += "/";
+            }
             let that: this = this;
             requires.create("_", this.root, this.noCache)([
                 URL_IBAS_INDEX
