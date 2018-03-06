@@ -63,7 +63,7 @@ namespace openui5 {
                 this.provinces = this.getLocalStorage("provinces");
                 return true;
             }
-            let url: string = ibas.strings.format("{0}/extends/data/province.json", this.rootUrl);
+            let url: string = ibas.strings.format("{0}/data/province.json", this.rootUrl);
             this.provinces = await this.load(url);
             this.addLocalStorage("provinces", JSON.stringify(this.provinces));
             if (ibas.objects.isNull(this.provinces)) {
@@ -77,7 +77,7 @@ namespace openui5 {
                 this.citys = this.getLocalStorage("citys");
                 return true;
             }
-            let url: string = ibas.strings.format("{0}/extends/data/city.json", this.rootUrl);
+            let url: string = ibas.strings.format("{0}/data/city.json", this.rootUrl);
             this.citys = await this.load(url);
             this.addLocalStorage("citys", JSON.stringify(this.citys));
             if (ibas.objects.isNull(this.citys)) {
@@ -91,7 +91,7 @@ namespace openui5 {
                 this.districts = this.getLocalStorage("districts");
                 return true;
             }
-            let url: string = ibas.strings.format("{0}/extends/data/district.json", this.rootUrl);
+            let url: string = ibas.strings.format("{0}/data/district.json", this.rootUrl);
             this.districts = await this.load(url);
             this.addLocalStorage("districts", JSON.stringify(this.districts));
             if (ibas.objects.isNull(this.districts)) {
