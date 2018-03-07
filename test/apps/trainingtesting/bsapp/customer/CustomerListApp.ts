@@ -182,7 +182,7 @@ namespace trainingtesting {
                 return [
                     new ibas.BOListServiceProxy({
                         data: this.view.getSelecteds(),
-                        converter: new bo.DataConverter4TT()
+                        converter: new bo.DataConverter()
                     })
                 ];
             }

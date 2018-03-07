@@ -5,11 +5,9 @@
  * Use of this source code is governed by an Apache License, Version 2.0
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
-/// <reference path="../../../../ibas/index.d.ts" />
-
 namespace trainingtesting {
     /** 模块-标识 */
-    export const CONSOLE_ID: string = "c78116bb-e270-437d-8230-1240871a3179";
+    export const CONSOLE_ID: string = "cbf02ceb-7ffe-4811-9f70-26dde9bf69e2";
     /** 模块-名称 */
     export const CONSOLE_NAME: string = "TrainingTesting";
     /** 模块-版本 */
@@ -24,5 +22,9 @@ namespace trainingtesting {
         export const BO_CODE_CUSTOMER: string = "CC_TT_CUSTOMER";
         /** 业务对象编码-销售订单 */
         export const BO_CODE_SALESORDER: string = "CC_TT_SALESORDER";
+    }
+
+    export namespace app {
+
     }
 }

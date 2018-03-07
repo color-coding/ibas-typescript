@@ -6,8 +6,6 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 /// <reference path="../../../../ibas/index.d.ts" />
-/// <reference path="../api/index.ts" />
-/// <reference path="./bo/index.ts" />
 /// <reference path="./DataConverter.ts" />
 
 namespace trainingtesting {
@@ -17,7 +15,7 @@ namespace trainingtesting {
 
             /** 创建此模块的后端与前端数据的转换者 */
             protected createConverter(): ibas.IDataConverter {
-                return new DataConverter4TT;
+                return new DataConverter;
             }
             /**
              * 上传文件
@@ -89,7 +87,5 @@ namespace trainingtesting {
             }
 
         }
-        // 注册业务对象仓库到工厂
-        ibas.boFactory.register(BO_REPOSITORY_TRAININGTESTING, BORepositoryTrainingTesting);
     }
 }

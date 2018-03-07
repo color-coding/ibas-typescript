@@ -5,14 +5,14 @@
  * Use of this source code is governed by an Apache License, Version 2.0
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
-/// <reference path="../../../../ibas/index.d.ts" />
-/// <reference path="./bo/index.ts" />
+/// <reference path="./bo/Material.ts" />
+/// <reference path="./bo/Customer.ts" />
+/// <reference path="./bo/SalesOrder.ts" />
 
 namespace trainingtesting {
     export namespace bo {
         /** 业务仓库 */
         export interface IBORepositoryTrainingTesting extends ibas.IBORepositoryApplication {
-
             /**
              * 上传文件
              * @param caller 调用者
@@ -33,7 +33,6 @@ namespace trainingtesting {
              * @param saver 保存者
              */
             saveMaterial(saver: ibas.ISaveCaller<bo.IMaterial>): void;
-
             /**
              * 查询 客户主数据
              * @param fetcher 查询者
@@ -44,7 +43,6 @@ namespace trainingtesting {
              * @param saver 保存者
              */
             saveCustomer(saver: ibas.ISaveCaller<bo.ICustomer>): void;
-
             /**
              * 查询 销售订单
              * @param fetcher 查询者
@@ -55,7 +53,6 @@ namespace trainingtesting {
              * @param saver 保存者
              */
             saveSalesOrder(saver: ibas.ISaveCaller<bo.ISalesOrder>): void;
-
 
         }
     }

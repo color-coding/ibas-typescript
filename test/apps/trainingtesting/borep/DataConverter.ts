@@ -6,21 +6,23 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 /// <reference path="../../../../ibas/index.d.ts" />
-/// <reference path="./bo/index.ts" />
+/// <reference path="./bo/Material.ts" />
+/// <reference path="./bo/Customer.ts" />
+/// <reference path="./bo/SalesOrder.ts" />
 
 namespace trainingtesting {
     export namespace bo {
         /** 数据转换者 */
-        export class DataConverter4TT extends ibas.DataConverter4j {
+        export class DataConverter extends ibas.DataConverter4j {
 
             /** 创建业务对象转换者 */
             protected createConverter(): ibas.BOConverter {
-                return new BOConverter4TT;
+                return new BOConverter;
             }
         }
 
         /** 业务对象转换者 */
-        class BOConverter4TT extends ibas.BOConverter {
+        class BOConverter extends ibas.BOConverter {
 
             /**
              * 自定义解析

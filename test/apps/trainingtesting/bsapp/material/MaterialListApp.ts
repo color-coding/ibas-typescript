@@ -114,7 +114,7 @@ namespace trainingtesting {
                     return;
                 }
                 let beDeleteds: ibas.ArrayList<bo.Material> = new ibas.ArrayList<bo.Material>();
-                if (data instanceof Array ) {
+                if (data instanceof Array) {
                     for (let item of data) {
                         item.delete();
                         beDeleteds.add(item);
@@ -140,7 +140,7 @@ namespace trainingtesting {
                         if (action === ibas.emMessageAction.YES) {
                             try {
                                 let boRepository: bo.BORepositoryTrainingTesting = new bo.BORepositoryTrainingTesting();
-                                let saveMethod: Function = function(beSaved: bo.Material):void {
+                                let saveMethod: Function = function (beSaved: bo.Material): void {
                                     boRepository.saveMaterial({
                                         beSaved: beSaved,
                                         onCompleted(opRslt: ibas.IOperationResult<bo.Material>): void {
@@ -156,7 +156,7 @@ namespace trainingtesting {
                                                     // 处理完成
                                                     that.busy(false);
                                                     that.messages(ibas.emMessageType.SUCCESS,
-                                                    ibas.i18n.prop("shell_data_delete") + ibas.i18n.prop("shell_sucessful"));
+                                                        ibas.i18n.prop("shell_data_delete") + ibas.i18n.prop("shell_sucessful"));
                                                 }
                                             } catch (error) {
                                                 that.messages(ibas.emMessageType.ERROR,
@@ -182,7 +182,7 @@ namespace trainingtesting {
                 return [
                     new ibas.BOListServiceProxy({
                         data: this.view.getSelecteds(),
-                        converter: new bo.DataConverter4TT()
+                        converter: new bo.DataConverter()
                     })
                 ];
             }
