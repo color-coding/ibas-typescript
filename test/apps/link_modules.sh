@@ -37,3 +37,24 @@ do
         fi;
   done
 done
+echo --映射链接库
+for folder in `ls ${STARTUP_FOLDER}`
+do
+  folder=${STARTUP_FOLDER}/${folder}
+  if [ -e "${folder}/3rdparty" ]
+  then
+    cd "${folder}/3rdparty/"
+    if [ ! -e "./ibas" ]
+    then
+      ln -sd "${STARTUP_FOLDER}/../../ibas" ibas
+    fi;
+    if [ ! -e "./shell" ]
+    then
+      ln -sd "${STARTUP_FOLDER}/../../shell" shell
+    fi;
+    if [ ! -e "./openui5" ]
+    then
+      ln -sd "${STARTUP_FOLDER}/../../openui5" openui5
+    fi;
+  fi;
+done
