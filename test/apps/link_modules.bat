@@ -39,9 +39,9 @@ echo ------”≥…‰¡¥Ω”ø‚
 for /f %%m in ('dir /ad /b %STARTUP_FOLDER%') do (
   set APP_FOLDER=%%m
   if exist !APP_FOLDER!\3rdparty (
-    if not exist !APP_FOLDER!\3rdparty\ibas mklink /d !APP_FOLDER!\3rdparty\ibas "%STARTUP_FOLDER%../../ibas"
-    if not exist !APP_FOLDER!\3rdparty\shell mklink /d !APP_FOLDER!\3rdparty\shell "%STARTUP_FOLDER%../../shell"
-    if not exist !APP_FOLDER!\3rdparty\openui5 mklink /d !APP_FOLDER!\3rdparty\openui5 "%STARTUP_FOLDER%../../openui5"
+    if not exist !APP_FOLDER!\3rdparty\ibas mklink /d !APP_FOLDER!\3rdparty\ibas "%STARTUP_FOLDER%..\..\ibas"
+    if not exist !APP_FOLDER!\3rdparty\shell mklink /d !APP_FOLDER!\3rdparty\shell "%STARTUP_FOLDER%..\..\shell"
+    if not exist !APP_FOLDER!\3rdparty\openui5 mklink /d !APP_FOLDER!\3rdparty\openui5 "%STARTUP_FOLDER%..\..\openui5"
   )
 )
 goto :EOF
