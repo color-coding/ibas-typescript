@@ -5,16 +5,10 @@
  * Use of this source code is governed by an Apache License, Version 2.0
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
-/// <reference path="../../../../../ibas/index.d.ts" />
-/// <reference path="../../borep/index.ts" />
-/// <reference path="./SalesOrderEditApp.ts" />
-/// <reference path="./SalesOrderViewApp.ts" />
-
 namespace trainingtesting {
     export namespace app {
         /** 列表应用-销售订单 */
         export class SalesOrderListApp extends ibas.BOListApplication<ISalesOrderListView, bo.SalesOrder> {
-
             /** 应用标识 */
             static APPLICATION_ID: string = "46b7b67d-a9c3-4a71-b29a-deccc3d6b052";
             /** 应用名称 */
@@ -114,7 +108,7 @@ namespace trainingtesting {
                     return;
                 }
                 let beDeleteds: ibas.ArrayList<bo.SalesOrder> = new ibas.ArrayList<bo.SalesOrder>();
-                if (data instanceof Array ) {
+                if (data instanceof Array) {
                     for (let item of data) {
                         item.delete();
                         beDeleteds.add(item);
@@ -140,7 +134,7 @@ namespace trainingtesting {
                         if (action === ibas.emMessageAction.YES) {
                             try {
                                 let boRepository: bo.BORepositoryTrainingTesting = new bo.BORepositoryTrainingTesting();
-                                let saveMethod: Function = function(beSaved: bo.SalesOrder):void {
+                                let saveMethod: Function = function (beSaved: bo.SalesOrder): void {
                                     boRepository.saveSalesOrder({
                                         beSaved: beSaved,
                                         onCompleted(opRslt: ibas.IOperationResult<bo.SalesOrder>): void {
@@ -156,7 +150,7 @@ namespace trainingtesting {
                                                     // 处理完成
                                                     that.busy(false);
                                                     that.messages(ibas.emMessageType.SUCCESS,
-                                                    ibas.i18n.prop("shell_data_delete") + ibas.i18n.prop("shell_sucessful"));
+                                                        ibas.i18n.prop("shell_data_delete") + ibas.i18n.prop("shell_sucessful"));
                                                 }
                                             } catch (error) {
                                                 that.messages(ibas.emMessageType.ERROR,

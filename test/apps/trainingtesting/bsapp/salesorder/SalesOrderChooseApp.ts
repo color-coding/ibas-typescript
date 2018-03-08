@@ -5,15 +5,10 @@
  * Use of this source code is governed by an Apache License, Version 2.0
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
-/// <reference path="../../../../../ibas/index.d.ts" />
-/// <reference path="../../borep/index.ts" />
-/// <reference path="./SalesOrderEditApp.ts" />
-
 namespace trainingtesting {
     export namespace app {
         /** 选择应用-销售订单 */
         export class SalesOrderChooseApp extends ibas.BOChooseService<ISalesOrderChooseView, bo.SalesOrder> {
-
             /** 应用标识 */
             static APPLICATION_ID: string = "6550c47f-9d4e-4a6b-96e4-cf2d1b8bdd92";
             /** 应用名称 */

@@ -5,15 +5,10 @@
  * Use of this source code is governed by an Apache License, Version 2.0
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
-/// <reference path="../../../../../ibas/index.d.ts" />
-/// <reference path="../../borep/index.ts" />
-/// <reference path="./MaterialEditApp.ts" />
-
 namespace trainingtesting {
     export namespace app {
         /** 选择应用-物料主数据 */
         export class MaterialChooseApp extends ibas.BOChooseService<IMaterialChooseView, bo.Material> {
-
             /** 应用标识 */
             static APPLICATION_ID: string = "1b1ba91a-ad47-4174-b4d9-998c3ea260bc";
             /** 应用名称 */

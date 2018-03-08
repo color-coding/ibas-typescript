@@ -5,14 +5,10 @@
  * Use of this source code is governed by an Apache License, Version 2.0
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
-/// <reference path="../../../../../ibas/index.d.ts" />
-/// <reference path="../../borep/index.ts" />
-
 namespace trainingtesting {
     export namespace app {
         /** 应用-演示 */
         export class DemoUrlApp extends ibas.Application<IDemoUrlView> {
-
             /** 应用标识 */
             static APPLICATION_ID: string = "12dd3006-7055-409b-9fc5-8b4434b1c781";
             /** 应用名称 */

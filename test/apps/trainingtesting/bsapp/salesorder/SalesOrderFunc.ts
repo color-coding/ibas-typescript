@@ -5,14 +5,9 @@
  * Use of this source code is governed by an Apache License, Version 2.0
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
-/// <reference path="../../../../../ibas/index.d.ts" />
-/// <reference path="../../borep/index.ts" />
-/// <reference path="./SalesOrderListApp.ts" />
-
 namespace trainingtesting {
     export namespace app {
         export class SalesOrderFunc extends ibas.ModuleFunction {
-
             /** 功能标识 */
             static FUNCTION_ID = "d205453b-29d4-49c8-99f3-d07737529316";
             /** 功能名称 */

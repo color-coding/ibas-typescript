@@ -6,10 +6,6 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 /// <reference path="../../ibas/3rdparty/crypto-js.d.ts" />
-/// <reference path="../../ibas/index.d.ts" />
-/// <reference path="../api/index.ts" />
-/// <reference path="./bo/System.ts" />
-/// <reference path="./DataConverter.ts" />
 
 namespace shell {
     export namespace bo {

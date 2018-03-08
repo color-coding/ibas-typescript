@@ -5,14 +5,10 @@
  * Use of this source code is governed by an Apache License, Version 2.0
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
-/// <reference path="../../../../../ibas/index.d.ts" />
-/// <reference path="../../borep/index.ts" />
-
 namespace trainingtesting {
     export namespace app {
         /** 编辑应用-物料主数据 */
         export class MaterialEditApp extends ibas.BOEditApplication<IMaterialEditView, bo.Material> {
-
             /** 应用标识 */
             static APPLICATION_ID: string = "515d88b4-d8b7-485a-9a81-9abcc2927e7a";
             /** 应用名称 */

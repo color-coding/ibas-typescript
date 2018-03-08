@@ -39,24 +39,8 @@ for /f %%m in ('dir /b /s %WORK_FOLDER%\test\apps\build_all.bat') DO (
 )
 cd /d %WORK_FOLDER%
 
-REM 启动web服务
-REM 优先启动IIS
-SET WEB_SERVER="%ProgramFiles%\IIS Express\iisexpress.exe"
-SET WEB_PORT=15386
-IF EXIST %WEB_SERVER% (
-  echo ----WEB服务：%WEB_SERVER%
-  START /min CALL %WEB_SERVER% /path:%WORK_FOLDER% /port:%WEB_PORT%
-  GOTO :EOF
-) ELSE (
-REM 不存在IIS，尝试启动此目录tomcat
-  SET WEB_SERVER="%WORK_FOLDER%tomcat\bin\startup.bat"
-  IF EXIST %WEB_SERVER% (
-    echo ----WEB服务：%WEB_SERVER%
-    CALL %WEB_SERVER%
-    GOTO :EOF
-  )
-)
-echo 不存在web服务，请设置iis或tomcat。
+echo Web服务，建议使用VSCode的插件Live Server。
+
 GOTO :EOF
 :WATCHING_TS
 SET CONFIG_FILE=%1

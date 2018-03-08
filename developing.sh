@@ -68,9 +68,4 @@ do
   ${builder} -w
 done
 
-# 启动tomcat
-WEB_SERVER="${WORK_FOLDER}/tomcat/bin/startup.sh"
-if [ -e ${WEB_SERVER} ] && [ -x ${WEB_SERVER} ]
-then
-  ${WEB_SERVER}
-fi
+echo Web服务，建议使用VSCode的插件Live Server。
