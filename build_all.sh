@@ -17,12 +17,16 @@ OPTIONS=$1
 COMMOND=tsc
 
 # 编译项目配置
-TS_CONFIGS="ibas/tsconfig.json"
-TS_CONFIGS="${TS_CONFIGS} openui5/tsconfig.json"
-TS_CONFIGS="${TS_CONFIGS} shell/tsconfig.loader.json"
-TS_CONFIGS="${TS_CONFIGS} shell/tsconfig.json"
-TS_CONFIGS="${TS_CONFIGS} shell/tsconfig.ui.c.json"
-TS_CONFIGS="${TS_CONFIGS} shell/tsconfig.ui.m.json"
+TS_CONFIGS="${WORK_FOLDER}/ibas/tsconfig.json"
+TS_CONFIGS="${TS_CONFIGS} ${WORK_FOLDER}/openui5/tsconfig.json"
+TS_CONFIGS="${TS_CONFIGS} ${WORK_FOLDER}/shell/tsconfig.loader.json"
+TS_CONFIGS="${TS_CONFIGS} ${WORK_FOLDER}/shell/tsconfig.json"
+TS_CONFIGS="${TS_CONFIGS} ${WORK_FOLDER}/shell/tsconfig.ui.c.json"
+TS_CONFIGS="${TS_CONFIGS} ${WORK_FOLDER}/shell/tsconfig.ui.m.json"
+# 编译TT项目
+TS_CONFIGS="${TS_CONFIGS} ${WORK_FOLDER}/test/apps/trainingtesting/tsconfig.json"
+TS_CONFIGS="${TS_CONFIGS} ${WORK_FOLDER}/test/apps/trainingtesting/tsconfig.ui.c.json"
+TS_CONFIGS="${TS_CONFIGS} ${WORK_FOLDER}/test/apps/trainingtesting/tsconfig.ui.m.json"
 
 # 执行编译指令
 for TS_CONFIG in `echo ${TS_CONFIGS}`
@@ -37,9 +41,3 @@ do
     ${COMMOND} -p ${TS_CONFIG}
   fi
 done
-
-# 编译TT项目
-if [ -x "test/apps/trainingtesting/build_all.sh" ]
-then
-  "test/apps/trainingtesting/build_all.sh" ${OPTIONS}
-fi

@@ -32,7 +32,7 @@ do
         if [ ! -e "${STARTUP_FOLDER}/${module_name}" ]
         then
             cd ${STARTUP_FOLDER}
-            ln -sd "${WORK_FOLDER}/${app}" ${module_name}
+            ln -s "${WORK_FOLDER}/${app}" ${module_name}
             cd ${WORK_FOLDER}
         fi;
   done
@@ -46,15 +46,15 @@ do
     cd "${folder}/3rdparty/"
     if [ ! -e "./ibas" ]
     then
-      ln -sd "${STARTUP_FOLDER}/../../ibas" ibas
+      ln -s "${STARTUP_FOLDER}/../../ibas" ibas
     fi;
     if [ ! -e "./shell" ]
     then
-      ln -sd "${STARTUP_FOLDER}/../../shell" shell
+      ln -s "${STARTUP_FOLDER}/../../shell" shell
     fi;
     if [ ! -e "./openui5" ]
     then
-      ln -sd "${STARTUP_FOLDER}/../../openui5" openui5
+      ln -s "${STARTUP_FOLDER}/../../openui5" openui5
     fi;
   fi;
 done
