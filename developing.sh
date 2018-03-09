@@ -48,24 +48,33 @@ COMPILE_TS()
 }
 
 # 启动监听
-WATCHING_TS "${WORK_FOLDER}/ibas/tsconfig.json"
-WATCHING_TS "${WORK_FOLDER}/openui5/tsconfig.json"
-WATCHING_TS "${WORK_FOLDER}/shell/tsconfig.loader.json"
-WATCHING_TS "${WORK_FOLDER}/shell/tsconfig.ui.c.json"
-WATCHING_TS "${WORK_FOLDER}/shell/tsconfig.ui.m.json"
+# WATCHING_TS "${WORK_FOLDER}/ibas/tsconfig.json"
+# WATCHING_TS "${WORK_FOLDER}/openui5/tsconfig.json"
+# WATCHING_TS "${WORK_FOLDER}/shell/tsconfig.loader.json"
+# WATCHING_TS "${WORK_FOLDER}/shell/tsconfig.ui.c.json"
+# WATCHING_TS "${WORK_FOLDER}/shell/tsconfig.ui.m.json"
 # 启动编译
+COMPILE_TS "${WORK_FOLDER}/ibas/tsconfig.json"
+COMPILE_TS "${WORK_FOLDER}/openui5/tsconfig.json"
+COMPILE_TS "${WORK_FOLDER}/shell/tsconfig.loader.json"
+COMPILE_TS "${WORK_FOLDER}/shell/tsconfig.ui.c.json"
+COMPILE_TS "${WORK_FOLDER}/shell/tsconfig.ui.m.json"
 COMPILE_TS "${WORK_FOLDER}/shell/tsconfig.loader.json"
 
 # 编译其他模块
-echo ----处理应用目录
-for builder in `find ${WORK_FOLDER}/test/apps/ -type f -name build_all.sh`
+echo --处理应用目录
+for folder in `ls ${WORK_FOLDER}/test/apps`
 do
+  builder=${WORK_FOLDER}/test/apps/${folder}/build_all.sh
 # 运行编译命令
-  if [ ! -x ${builder} ]
+  if [ -e ${builder} ]
   then
-    chmod 775 ${builder}
+    if [ ! -x ${builder} ]
+    then
+      chmod 775 ${builder}
+    fi
+    ${builder} -w
   fi
-  ${builder} -w
 done
 
 echo Web服务，建议使用VSCode的插件Live Server。
