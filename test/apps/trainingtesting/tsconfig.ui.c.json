@@ -1,9 +1,0 @@
-{
-  "extends": "./tsconfig.json",
-  "compilerOptions": {
-    "outFile": "./index.ui.c.js"
-  },
-  "files": [
-    "./bsui/c/Navigation.ts"
-  ]
-}

@@ -29,12 +29,12 @@ SET TS_CONFIGS=ibas\tsconfig.json
 SET TS_CONFIGS=%TS_CONFIGS% openui5\tsconfig.json
 SET TS_CONFIGS=%TS_CONFIGS% shell\tsconfig.loader.json
 SET TS_CONFIGS=%TS_CONFIGS% shell\tsconfig.json
-SET TS_CONFIGS=%TS_CONFIGS% shell\tsconfig.ui.c.json
-SET TS_CONFIGS=%TS_CONFIGS% shell\tsconfig.ui.m.json
+SET TS_CONFIGS=%TS_CONFIGS% shell\bsui\c\tsconfig.json
+SET TS_CONFIGS=%TS_CONFIGS% shell\bsui\m\tsconfig.json
 REM ±‡“ÎTTœÓƒø
 SET TS_CONFIGS=%TS_CONFIGS% test\apps\trainingtesting\tsconfig.json
-SET TS_CONFIGS=%TS_CONFIGS% test\apps\trainingtesting\tsconfig.ui.c.json
-SET TS_CONFIGS=%TS_CONFIGS% test\apps\trainingtesting\tsconfig.ui.m.json
+SET TS_CONFIGS=%TS_CONFIGS% test\apps\trainingtesting\bsui\c\tsconfig.json
+SET TS_CONFIGS=%TS_CONFIGS% test\apps\trainingtesting\bsui\m\tsconfig.json
 
 FOR %%l IN (%TS_CONFIGS%) DO (
   SET TS_CONFIG=%%l

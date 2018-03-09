@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outFile": "../../index.ui.m.js"
+  },
+  "files": [
+    "../ViewShower.ts",
+    "./Navigation.ts"
+  ]
+}
