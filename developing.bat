@@ -20,33 +20,42 @@ REM 判断是否传工作目录，没有则是启动目录
 if "%WORK_FOLDER%"=="" SET WORK_FOLDER=%STARTUP_FOLDER%
 REM 若工作目录最后字符不是“\”则补齐
 if "%WORK_FOLDER:~-1%" neq "\" SET WORK_FOLDER=%WORK_FOLDER%\
-echo --工作的目录：%WORK_FOLDER%
-REM 启动文件夹监听
-CALL :WATCHING_TS "%WORK_FOLDER%ibas\tsconfig.json"
-CALL :WATCHING_TS "%WORK_FOLDER%openui5\tsconfig.json"
-CALL :WATCHING_TS "%WORK_FOLDER%test\apps\tsconfig.dev.json"
-
-REM 启动web服务
-REM 优先启动IIS
-SET WEB_SERVER="%ProgramFiles%\IIS Express\iisexpress.exe"
-SET WEB_PORT=15386
-IF EXIST %WEB_SERVER% (
-  echo ----WEB服务：%WEB_SERVER%
-  START /min CALL %WEB_SERVER% /path:%WORK_FOLDER% /port:%WEB_PORT%
-  GOTO :EOF
-) ELSE (
-REM 不存在IIS，尝试启动此目录tomcat
-  SET WEB_SERVER="%WORK_FOLDER%tomcat\bin\startup.bat"
-  IF EXIST %WEB_SERVER% (
-    echo ----WEB服务：%WEB_SERVER%
-    CALL %WEB_SERVER%
-    GOTO :EOF
+echo --工作目录：%WORK_FOLDER%
+REM 启动监听
+REM CALL :WATCHING_TS "%WORK_FOLDER%ibas\tsconfig.json"
+REM CALL :WATCHING_TS "%WORK_FOLDER%openui5\tsconfig.json"
+REM CALL :WATCHING_TS "%WORK_FOLDER%shell\tsconfig.json"
+REM CALL :WATCHING_TS "%WORK_FOLDER%shell\tsconfig.ui.c.json"
+REM CALL :WATCHING_TS "%WORK_FOLDER%shell\tsconfig.ui.m.json"
+REM 启动编译
+CALL :COMPILE_TS "%WORK_FOLDER%ibas\tsconfig.json"
+CALL :COMPILE_TS "%WORK_FOLDER%openui5\tsconfig.json"
+CALL :COMPILE_TS "%WORK_FOLDER%shell\tsconfig.json"
+CALL :COMPILE_TS "%WORK_FOLDER%shell\tsconfig.ui.c.json"
+CALL :COMPILE_TS "%WORK_FOLDER%shell\tsconfig.ui.m.json"
+CALL :COMPILE_TS "%WORK_FOLDER%shell\tsconfig.loader.json"
+REM 编译其他模块
+echo --处理应用目录
+for /f %%m in ('dir /b /al %WORK_FOLDER%\test\apps\') DO (
+  SET FOLDER=%WORK_FOLDER%\test\apps\%%m
+  SET BUILDER=!FOLDER!\build_all.bat
+  if EXIST !BUILDER! (
+    cd /d !FOLDER!
+    CALL "!BUILDER!" -w
   )
 )
-echo 不存在web服务，请设置iis或tomcat。
+cd /d %WORK_FOLDER%
+
+echo Web服务，建议使用VSCode的插件Live Server。
+
 GOTO :EOF
 :WATCHING_TS
 SET CONFIG_FILE=%1
 echo ----监听: %CONFIG_FILE%
 IF EXIST %CONFIG_FILE% START /min tsc -w -p %CONFIG_FILE%
+GOTO :EOF
+:COMPILE_TS
+SET CONFIG_FILE=%1
+echo ----编译: %CONFIG_FILE%
+IF EXIST %CONFIG_FILE% tsc -p %CONFIG_FILE%
 GOTO :EOF

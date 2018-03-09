@@ -45,8 +45,8 @@ declare namespace CryptoJS {
 		stringify(words: any): string;
 	}
 
-	interface Mode {}
-	interface Padding {}
+	interface Mode { }
+	interface Padding { }
 
 	export interface Hashes {
 		MD5: Hash;

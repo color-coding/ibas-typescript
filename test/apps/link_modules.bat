@@ -27,10 +27,16 @@ for /f %%l in ('dir /ad /b ibas.*') do (
   echo ----模块目录：!MODULE_FOLDER!
   for /f %%m in ('dir /s /ad /b webapp') do (
     set APP_FOLDER=%%m
-    echo ------应用目录：!APP_FOLDER!
+    if exist !APP_FOLDER!\3rdparty (
+      echo ------应用目录：!APP_FOLDER!
 REM 取模块名称字符，ibas.businessone.service\src\main\webapp
-    call :MODULE_NAME !APP_FOLDER:~0,-24! !START_INDEX!
-    if not exist %STARTUP_FOLDER%!MODULE_NAME! mklink /d %STARTUP_FOLDER%!MODULE_NAME! "!APP_FOLDER!"
+      call :MODULE_NAME !APP_FOLDER:~0,-24! !START_INDEX!
+      if not exist %STARTUP_FOLDER%!MODULE_NAME! mklink /d %STARTUP_FOLDER%!MODULE_NAME! "!APP_FOLDER!" > nul
+REM 检查库符号链接
+      if not exist !APP_FOLDER!\3rdparty\ibas mklink /d !APP_FOLDER!\3rdparty\ibas "%STARTUP_FOLDER%..\..\ibas" > nul
+      if not exist !APP_FOLDER!\3rdparty\shell mklink /d !APP_FOLDER!\3rdparty\shell "%STARTUP_FOLDER%..\..\shell" > nul
+      if not exist !APP_FOLDER!\3rdparty\openui5 mklink /d !APP_FOLDER!\3rdparty\openui5 "%STARTUP_FOLDER%..\..\openui5" > nul
+    )
   )
   cd /d %WORK_FOLDER%
 )

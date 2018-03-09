@@ -1,0 +1,13 @@
+{
+  "appSettings": {
+    "debug": true,
+    "company": "CC",
+    "format|Date": "yyyy-MM-dd",
+    "format|Time": "hh:mm",
+    "format|DateTime": "yyyy-MM-dd hh:mm",
+    "decimalPlaces": 6,
+    "decimalPlaces|Price": 6,
+    "decimalPlaces|Quantity": 6,
+    "language": "zh_CN"
+  }
+}

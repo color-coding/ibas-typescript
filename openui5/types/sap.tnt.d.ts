@@ -1069,54 +1069,54 @@ declare namespace sap {
         }
 
         interface ControlMetadata {
-			/**
-			 * Whether the control is currently in busy state.
-			 * @default false
-			 */
+            /**
+             * Whether the control is currently in busy state.
+             * @default false
+             */
             busy?: boolean;
-			/**
-			 * The delay in milliseconds, after which the busy indicator will show up for this control.
-			 * @default 1000
-			 */
+            /**
+             * The delay in milliseconds, after which the busy indicator will show up for this control.
+             * @default 1000
+             */
             busyIndicatorDelay?: number;
-			/**
-			 * Whether the control should be visible on the screen. If set to false, a placeholder is rendered instead of the real control
-			 * @default true
-			 */
+            /**
+             * Whether the control should be visible on the screen. If set to false, a placeholder is rendered instead of the real control
+             * @default true
+             */
             visible?: boolean;
-			/**
-			 * The IDs of a logical field group that this control belongs to. All fields in a logical field group should share the same <code>fieldGroupId</code>.
-			 * Once a logical field group is left, the validateFieldGroup event is raised.
-			 * @default []
-			 */
+            /**
+             * The IDs of a logical field group that this control belongs to. All fields in a logical field group should share the same <code>fieldGroupId</code>.
+             * Once a logical field group is left, the validateFieldGroup event is raised.
+             * @default []
+             */
             fieldGroupIds?: string[];
-			/**
-			 * Event is fired if a logical field group defined by <code>fieldGroupIds</code> of a control was left or the user explicitly pressed a validation key combination.
-			 * Use this event to validate data of the controls belonging to a field group.
-			 * @param fieldGroupIds field group IDs of the logical field groups to validate
-			 */
+            /**
+             * Event is fired if a logical field group defined by <code>fieldGroupIds</code> of a control was left or the user explicitly pressed a validation key combination.
+             * Use this event to validate data of the controls belonging to a field group.
+             * @param fieldGroupIds field group IDs of the logical field groups to validate
+             */
             validateFieldGroup?: (fieldGroupIds: string[]) => void;
         }
 
         interface ItemMetadata {
-			/**
-			 * The text to be displayed for the item.
-			 * @default 
-			 */
+            /**
+             * The text to be displayed for the item.
+             * @default 
+             */
             text?: string;
-			/**
-			 * Enabled items can be selected.
-			 * @default true
-			 */
+            /**
+             * Enabled items can be selected.
+             * @default true
+             */
             enabled?: boolean;
-			/**
-			 * Options are RTL and LTR. Alternatively, an item can inherit its text direction from its parent control.
-			 * @default Inherit
-			 */
+            /**
+             * Options are RTL and LTR. Alternatively, an item can inherit its text direction from its parent control.
+             * @default Inherit
+             */
             textDirection?: sap.ui.core.TextDirection;
-			/**
-			 * Can be used as input for subsequent actions.
-			 */
+            /**
+             * Can be used as input for subsequent actions.
+             */
             key?: string;
         }
 

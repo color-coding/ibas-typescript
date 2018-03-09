@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "removeComments": true,
+    "target": "es6",
+    "preserveConstEnums": true,
+    "outFile": "./index.js",
+    "declaration": true,
+    "sourceMap": true
+  },
+  "files": [
+    "./bsapp/Console.ts"
+  ]
+}

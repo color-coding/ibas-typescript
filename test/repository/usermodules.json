@@ -1,16 +1,10 @@
 [
   {
-    "Id": "e6424319-a311-440e-bc89-a825f82d5847",
+    "Id": "c78116bb-e270-437d-8230-1240871a3179",
     "Name": "TrainingTesting",
     "Category": "",
-    "Address": ".../../../test/apps/trainingtesting/",
+    "Console": "Console, ConsoleOthers",
+    "Address": ".../../test/apps/trainingtesting/",
     "Repository": "http://localhost:8080/trainingtesting/services/rest/data"
-  },
-  {
-    "Id": "e6424319-a311-440e-bc89-a825f82d5848",
-    "Name": "TrainingTestingOthers",
-    "Category": "",
-    "Index": "index.others",
-    "Address": ".../../../test/apps/trainingtesting/"
   }
 ]

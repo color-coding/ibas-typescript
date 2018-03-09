@@ -7,10 +7,10 @@
     <version>0.1.0</version>
     <packaging>war</packaging>
     <name>ibas.trainingtesting.service</name>
-    <url>http://colorcoding.org/ibas/trainingtesting/</url>
+    <url>https://colorcoding.org/ibas/trainingtesting/</url>
     <organization>
         <name>colorcoding</name>
-        <url>http://colorcoding.org</url>
+        <url>https://colorcoding.org</url>
     </organization>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -29,7 +29,8 @@
                             <targetPath></targetPath>
                             <excludes>
                                 <exclude>**/*.ts</exclude>
-                                <exclude>**/tsconfig.json</exclude>
+                                <exclude>**/*.map</exclude>
+                                <exclude>**/tsconfig*.json</exclude>
                             </excludes>
                         </resource>
                         <resource>

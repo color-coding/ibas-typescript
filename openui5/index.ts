@@ -1,35 +1,47 @@
 /**
  * @license
- * Copyright color-coding studio. All Rights Reserved.
+ * Copyright Color-Coding Studio. All Rights Reserved.
  *
  * Use of this source code is governed by an Apache License, Version 2.0
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
-
+/// <reference path="../ibas/index.d.ts" />
 /// <reference path="./types/index.d.ts" />
-import * as ibas from "ibas/index";
+/// <reference path="./datatypes.ts" />
+/// <reference path="./utils.ts" />
+/// <reference path="./extends/ibas.ex.ts" />
+/// <reference path="./extends/sap.m.ex.ts" />
+/// <reference path="./extends/sap.ui.table.ex.ts" />
 
-/** openui5文件名称 */
-export const LIBRARY_OPENUI5_ROOT_FILE_NAME: string = "/openui5/index";
-if ((<any>window).ibas === undefined) {
-    (<any>window).ibas = {
-        copyright: "color-coding studio",
-        license: "Apache License, Version 2.0",
-        url: "https://colorcoding.org/"
-    };
+namespace openui5 {
+    /** 配置项目-紧缩屏幕 */
+    export const CONFIG_ITEM_COMPACT_SCREEN: string = "compactScreen";
+    // 监听配置变化
+    ibas.config.registerListener({
+        onConfigurationChanged(name: string, value: any): void {
+            if (name === ibas.CONFIG_ITEM_PLANTFORM) {
+                // 平台配置变化
+                if (value === ibas.emPlantform.DESKTOP) {
+                    // 桌面平台，使用紧凑视图
+                    ibas.config.set(CONFIG_ITEM_COMPACT_SCREEN, true);
+                } else {
+                    // 使用舒适视图
+                    ibas.config.set(CONFIG_ITEM_COMPACT_SCREEN, false);
+                }
+            }
+        }
+    });
+    // 设置默认平台
+    if (sap.ui.Device.system.phone) {
+        ibas.config.set(ibas.CONFIG_ITEM_PLANTFORM, ibas.emPlantform.PHONE);
+    } else if (sap.ui.Device.system.desktop) {
+        ibas.config.set(ibas.CONFIG_ITEM_PLANTFORM, ibas.emPlantform.DESKTOP);
+    } else if (sap.ui.Device.system.tablet) {
+        ibas.config.set(ibas.CONFIG_ITEM_PLANTFORM, ibas.emPlantform.TABLET);
+    } else {
+        ibas.config.set(ibas.CONFIG_ITEM_PLANTFORM, ibas.emPlantform.COMBINATION);
+    }
+
+    // 加载资源
+    ibas.i18n.load(ibas.strings.format("{0}/languages/openui5.json", ibas.urls.rootUrl("/openui5/index")));
 }
-if ((<any>window).ibas.openui5 === undefined) {
-    (<any>window).ibas.openui5 = {
-        version: "0.1.0",
-        author: "niuren.zhu"
-    };
-    let rootUrl: string = ibas.urls.rootUrl(LIBRARY_OPENUI5_ROOT_FILE_NAME);
-    // 加载语言-框架默认
-    ibas.i18n.load(ibas.strings.format("{0}/languages/datatypes.json", rootUrl));
-    // 加载语言-框架默认
-    ibas.i18n.load(ibas.strings.format("{0}/languages/utils.json", rootUrl));
-    // 加载语言-框架默认
-    ibas.i18n.load(ibas.strings.format("{0}/languages/sap.ex.json", rootUrl));
-}
-export * from "./datatypes";
-export * from "./utils";

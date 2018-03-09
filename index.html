@@ -3,49 +3,22 @@
 
 <head>
     <title>ibas apps</title>
+    <meta charset="utf-8" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta charset="utf-8" />
-    <script type="text/javascript" src="./ibas/3rdparty/spin.min.js"></script>
-    <script type="text/javascript" src="./ibas/3rdparty/jquery.min.js"></script>
-    <script type="text/javascript" src="./ibas/3rdparty/require.min.js"></script>
+    <script type="text/javascript" src="./ibas/3rdparty/spin.js"></script>
+    <script type="text/javascript" src="./ibas/3rdparty/jquery.js"></script>
+    <script type="text/javascript" src="./ibas/3rdparty/require.js"></script>
     <script type="text/javascript">
-        require(["./openui5/loader", "./ibas/loader"], function (uiLoader, ibasLoader) {
-            // 加载器加载成功
-            var root = document.location.origin + document.location.pathname.substring(0, document.location.pathname.lastIndexOf("/") + 1);
-            var onError = function () {
-                window.location.href = root + "./ibas/diagnosis/index.html";
-            };
-            // 没有成功获取加载器
-            if (uiLoader === undefined || ibasLoader === undefined) {
-                onError();
-                return;
-            }
-            var uiLoder = new uiLoader.default();
-            // 加载UI库
-            uiLoder.load({
-                url: root + "./openui5/",
-                noCache: true,
-                onSuccess: function () {
-                    // 加载ibas
-                    var ibasLoder = new ibasLoader.default();
-                    ibasLoder.load({
-                        url: root + "./",
-                        noCache: true,
-                        onSuccess: function () {
-                            // 加载UI库扩展
-                            uiLoder.extends({
-                                url: root + "./openui5/",
-                                noCache: true,
-                                onError: onError
-                            })
-                        },
-                        onError: onError
-                    });
-                },
-                onError: onError
-            });
+        require([
+            "./shell/loader"
+        ], function () {
+            // 加载成功
+            var app = new loader.Application();
+            app.noCache = true;
+            app.run("./");
         }, function () {
+            // 加载失败
             alert(arguments[0]);
         });
     </script>
