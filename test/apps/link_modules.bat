@@ -30,18 +30,19 @@ for /f %%l in ('dir /ad /b ibas.*') do (
     echo ------应用目录：!APP_FOLDER!
 REM 取模块名称字符，ibas.businessone.service\src\main\webapp
     call :MODULE_NAME !APP_FOLDER:~0,-24! !START_INDEX!
-    if not exist %STARTUP_FOLDER%!MODULE_NAME! mklink /d %STARTUP_FOLDER%!MODULE_NAME! "!APP_FOLDER!"
+    if not exist %STARTUP_FOLDER%!MODULE_NAME! mklink /d %STARTUP_FOLDER%!MODULE_NAME! "!APP_FOLDER!" > nul
   )
   cd /d %WORK_FOLDER%
 )
 cd /d %STARTUP_FOLDER%
-echo ------映射链接库
+echo --检查库符号链接
 for /f %%m in ('dir /ad /b %STARTUP_FOLDER%') do (
   set APP_FOLDER=%%m
   if exist !APP_FOLDER!\3rdparty (
-    if not exist !APP_FOLDER!\3rdparty\ibas mklink /d !APP_FOLDER!\3rdparty\ibas "%STARTUP_FOLDER%..\..\ibas"
-    if not exist !APP_FOLDER!\3rdparty\shell mklink /d !APP_FOLDER!\3rdparty\shell "%STARTUP_FOLDER%..\..\shell"
-    if not exist !APP_FOLDER!\3rdparty\openui5 mklink /d !APP_FOLDER!\3rdparty\openui5 "%STARTUP_FOLDER%..\..\openui5"
+    echo ----应用目录：!APP_FOLDER!
+    if not exist !APP_FOLDER!\3rdparty\ibas mklink /d !APP_FOLDER!\3rdparty\ibas "%STARTUP_FOLDER%..\..\ibas" > nul
+    if not exist !APP_FOLDER!\3rdparty\shell mklink /d !APP_FOLDER!\3rdparty\shell "%STARTUP_FOLDER%..\..\shell" > nul
+    if not exist !APP_FOLDER!\3rdparty\openui5 mklink /d !APP_FOLDER!\3rdparty\openui5 "%STARTUP_FOLDER%..\..\openui5" > nul
   )
 )
 goto :EOF

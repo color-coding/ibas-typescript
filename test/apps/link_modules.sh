@@ -32,29 +32,30 @@ do
         if [ ! -e "${STARTUP_FOLDER}/${module_name}" ]
         then
             cd ${STARTUP_FOLDER}
-            ln -s "${WORK_FOLDER}/${app}" ${module_name}
+            ln -s "${WORK_FOLDER}/${app}" ${module_name} > /dev/null
             cd ${WORK_FOLDER}
         fi;
   done
 done
-echo --映射链接库
+echo --检查库符号链接
 for folder in `ls ${STARTUP_FOLDER}`
 do
   folder=${STARTUP_FOLDER}/${folder}
   if [ -e "${folder}/3rdparty" ]
   then
+    echo ----应用目录："${folder}"
     cd "${folder}/3rdparty/"
     if [ ! -e "./ibas" ]
     then
-      ln -s "${STARTUP_FOLDER}/../../ibas" ibas
+      ln -s "${STARTUP_FOLDER}/../../ibas" ibas > /dev/null
     fi;
     if [ ! -e "./shell" ]
     then
-      ln -s "${STARTUP_FOLDER}/../../shell" shell
+      ln -s "${STARTUP_FOLDER}/../../shell" shell > /dev/null
     fi;
     if [ ! -e "./openui5" ]
     then
-      ln -s "${STARTUP_FOLDER}/../../openui5" openui5
+      ln -s "${STARTUP_FOLDER}/../../openui5" openui5 > /dev/null
     fi;
   fi;
 done
