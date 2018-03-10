@@ -46,6 +46,10 @@ namespace shell {
                 if (ibas.objects.isNull(remoteRepository)) {
                     throw new Error(ibas.i18n.prop("sys_invalid_parameter", "remoteRepository"));
                 }
+                // 使用此模块库加载器
+                let require = ibas.requires.create({
+                    context: shell.CONSOLE_NAME,
+                });
                 require(["../ibas/3rdparty/crypto-js" + (ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE, false) ? "" : ".min")],
                     function (cryptoJS: CryptoJS.Hashes): void {
                         let method: string =
