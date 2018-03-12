@@ -77,4 +77,16 @@ do
   fi
 done
 
-echo Web服务，建议使用VSCode的插件Live Server。
+echo 启动WEB SERVER
+# 启动tomcat
+WEB_SERVER="${WORK_FOLDER}/tomcat/bin/startup.sh"
+if [ -e ${WEB_SERVER} ] && [ -x ${WEB_SERVER} ]
+then
+  echo --检测到[TOMCAT]服务
+  echo "[Y]-启动:"
+  read DONE
+  if [ "${DONE}" = "y" ] || [ "${DONE}" = "Y" ]
+  then
+    ${WEB_SERVER}
+  fi
+fi

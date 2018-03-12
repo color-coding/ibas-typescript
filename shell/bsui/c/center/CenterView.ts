@@ -21,7 +21,7 @@ namespace shell {
             /** 配置项目-收缩功能列表 */
             export const CONFIG_ITEM_SHRINK_FUNCTION_LIST: string = "shrinkFunction";
             /** 配置项目-最大消息数 */
-            export const CONFIG_ITEM_MAX_MESSAGES_COUNT: string = "messgesCount";
+            export const CONFIG_ITEM_MAX_MESSAGE_COUNT: string = "messageCount";
             /**
              * 视图-中心
              */
@@ -268,7 +268,7 @@ namespace shell {
                     }), 0);
                     // 清除超出的历史消息
                     if (ibas.objects.isNull(this.messageCount)) {
-                        this.messageCount = ibas.config.get(CONFIG_ITEM_MAX_MESSAGES_COUNT, 5);
+                        this.messageCount = ibas.config.get(CONFIG_ITEM_MAX_MESSAGE_COUNT, 5);
                     }
                     if (this.messageHistory.getItems().length > this.messageCount) {
                         for (var index: number = this.messageHistory.getItems().length - 1; index < this.messageCount; index--) {

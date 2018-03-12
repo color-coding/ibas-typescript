@@ -405,17 +405,17 @@ namespace ibas {
     /** 业务对象的数据转换 */
     export abstract class BOConverter implements IBOConverter<IBusinessObject, any> {
         /** 获取对象类型 */
-        protected getTypeName(data: any): string {
+        private getTypeName(data: any): string {
             return data[REMOTE_OBJECT_TYPE_PROPERTY_NAME];
         }
         /** 设置对象类型 */
-        protected setTypeName(data: any, type: string): void {
+        private setTypeName(data: any, type: string): void {
             data[REMOTE_OBJECT_TYPE_PROPERTY_NAME] = type;
         }
 
         private _propertyMaps: PropertyMaps;
 
-        protected get propertyMaps(): PropertyMaps {
+        private get propertyMaps(): PropertyMaps {
             if (objects.isNull(this._propertyMaps)) {
                 this._propertyMaps = new PropertyMaps;
                 this._propertyMaps.add(new PropertyMap("_new", "isNew"));
@@ -436,6 +436,10 @@ namespace ibas {
             let dType: string = this.getTypeName(data);
             if (dType !== undefined) {
                 // 创建对象实例
+                let boFactory: BOFactory = this.factory();
+                if (objects.isNull(boFactory)) {
+                    throw new Error(i18n.prop("sys_invalid_parameter", boFactory));
+                }
                 let tType: any = boFactory.classOf(dType);
                 if (objects.isNull(tType)) {
                     throw new Error(i18n.prop("sys_invaild_mapping_type", dType));
@@ -466,7 +470,7 @@ namespace ibas {
          * @param source 源数据（远程类型）
          * @param target 目标数据（本地类型）
          */
-        protected parsingProperties(source: any, target: any): void {
+        private parsingProperties(source: any, target: any): void {
             for (let sName in source) {
                 if (objects.isNull(sName)) {
                     continue;
@@ -532,7 +536,7 @@ namespace ibas {
          * @param target 目标数据（远程类型）
          * @returns 目标数据
          */
-        protected convertProperties(source: any, target: any): any {
+        private convertProperties(source: any, target: any): any {
             this.setTypeName(target, source.constructor.name);
             for (let sName in source) {
                 if (objects.isNull(sName)) {
@@ -638,5 +642,7 @@ namespace ibas {
          * @returns 本地数据
          */
         protected abstract customParsing(data: any): IBusinessObject;
+        /** 业务对象工厂实例 */
+        protected abstract factory(): BOFactory;
     }
 }
