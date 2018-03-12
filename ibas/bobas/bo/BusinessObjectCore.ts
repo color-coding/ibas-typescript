@@ -645,25 +645,27 @@ namespace ibas {
                     return;
                 }
                 name = objects.getName(bo);
-                if (objects.isNull(name)) {
+                if (strings.isEmpty(name)) {
                     throw new Error(i18n.prop("sys_unrecognized_data"));
                 }
                 this.boMap.set(name, bo);
             } else if (arguments.length === 2) {
                 // 提供名称，则注册到全局
+                name = arguments[0];
+                if (strings.isEmpty(name)) {
+                    throw new Error(i18n.prop("sys_unrecognized_data"));
+                }
+                name = config.applyVariables(name); // 去除变量
                 bo = arguments[1];
                 if (objects.isNull(bo)) {
                     return;
                 }
-                name = arguments[0];
-                if (objects.isNull(name)) {
-                    throw new Error(i18n.prop("sys_unrecognized_data"));
-                }
-                // 去除变量
-                name = config.applyVariables(name);
-                this.boMap.set(name, bo);
-                name = objects.getName(bo);
-                if (!objects.isNull(name)) {
+                if (this !== ibas.boFactory) {
+                    // 注册到模块
+                    this.register(bo);
+                    // 注册到全局
+                    ibas.boFactory.register(name, bo);
+                } else {
                     this.boMap.set(name, bo);
                 }
             }

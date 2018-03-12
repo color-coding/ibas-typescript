@@ -13,7 +13,7 @@ namespace shell {
         /**
          * Shel 模块的数据转换者
          */
-        export class DataConverter4Shell extends ibas.DataConverter4j {
+        export class DataConverter extends ibas.DataConverter4j {
 
             createConverter(): ibas.IBOConverter<ibas.IBusinessObject, any> {
                 return null;
@@ -184,5 +184,7 @@ namespace shell {
                 }
             }
         }
+        /** 模块业务对象工厂 */
+        export const boFactory: ibas.BOFactory = new ibas.BOFactory();
     }
 }

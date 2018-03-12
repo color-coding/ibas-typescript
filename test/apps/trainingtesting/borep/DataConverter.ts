@@ -16,8 +16,14 @@ namespace trainingtesting {
             }
         }
 
+        /** 模块业务对象工厂 */
+        export const boFactory: ibas.BOFactory = new ibas.BOFactory();
         /** 业务对象转换者 */
         class BOConverter extends ibas.BOConverter {
+            /** 模块对象工厂 */
+            protected factory(): ibas.BOFactory {
+                return boFactory;
+            }
 
             /**
              * 自定义解析

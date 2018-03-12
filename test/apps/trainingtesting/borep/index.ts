@@ -16,10 +16,10 @@
 namespace trainingtesting {
     export namespace bo {
         // 注册业务对象仓库到工厂
-        ibas.boFactory.register(BO_REPOSITORY_TRAININGTESTING, BORepositoryTrainingTesting);
+        boFactory.register(BO_REPOSITORY_TRAININGTESTING, BORepositoryTrainingTesting);
         // 注册业务对象到工厂
-        ibas.boFactory.register(Material.BUSINESS_OBJECT_CODE, Material);
-        ibas.boFactory.register(Customer.BUSINESS_OBJECT_CODE, Customer);
-        ibas.boFactory.register(SalesOrder.BUSINESS_OBJECT_CODE, SalesOrder);
+        boFactory.register(Material.BUSINESS_OBJECT_CODE, Material);
+        boFactory.register(Customer.BUSINESS_OBJECT_CODE, Customer);
+        boFactory.register(SalesOrder.BUSINESS_OBJECT_CODE, SalesOrder);
     }
 }

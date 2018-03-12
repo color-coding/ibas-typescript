@@ -10,3 +10,8 @@
 /// <reference path="./bo/System.ts" />
 /// <reference path="./DataConverter.ts" />
 /// <reference path="./BORepository.ts" />
+
+namespace shell {
+    export namespace bo {
+    }
+}

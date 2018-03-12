@@ -25,7 +25,7 @@ namespace shell {
              * 创建此模块的后端与前端数据的转换者
              */
             protected createConverter(): ibas.IDataConverter {
-                return new DataConverter4Shell();
+                return new DataConverter();
             }
 
             /** 创建远程仓库 */
@@ -47,7 +47,7 @@ namespace shell {
                     throw new Error(ibas.i18n.prop("sys_invalid_parameter", "remoteRepository"));
                 }
                 // 使用此模块库加载器
-                let require = ibas.requires.create({
+                let require: Require = ibas.requires.create({
                     context: shell.CONSOLE_NAME,
                 });
                 require(["../ibas/3rdparty/crypto-js" + (ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE, false) ? "" : ".min")],
@@ -159,7 +159,7 @@ namespace shell {
              * 创建此模块的后端与前端数据的转换者
              */
             protected createConverter(): ibas.IDataConverter {
-                return new DataConverter4Shell();
+                return new DataConverter();
             }
 
             /**
@@ -291,7 +291,13 @@ namespace shell {
                 this.fetch("BOInfo", fetchCaller);
             }
         }
+
         // 注册业务对象仓库到工厂
-        ibas.boFactory.register(ibas.BO_REPOSITORY_CONNECT, BORepositoryShell);
+        if (ibas.config.get(ibas.CONFIG_ITEM_OFFLINE_MODE, false)) {
+            boFactory.register(ibas.BO_REPOSITORY_CONNECT, BORepositoryShell);
+        } else {
+            boFactory.register(ibas.BO_REPOSITORY_CONNECT, BORepositoryShellOffline);
+        }
+
     }
 }
