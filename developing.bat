@@ -46,9 +46,31 @@ for /f %%m in ('dir /b /al %WORK_FOLDER%\test\apps\') DO (
 )
 cd /d %WORK_FOLDER%
 
-echo Web服务，建议使用VSCode的插件Live Server。
-
+ECHO 启动WEB SERVER
+REM 检查IIS EXPRESS
+SET WEB_SERVER="%ProgramFiles%\IIS Express\iisexpress.exe"
+SET WEB_PORT=15386
+IF EXIST %WEB_SERVER% (
+  ECHO --检测到[IIS EXPRESS]服务
+  SET /p DONE=[Y]-启动:
+  IF /i "!DONE!"=="y" (
+    START /min CALL %WEB_SERVER% /path:%WORK_FOLDER% /port:%WEB_PORT%
+    ECHO --已启动[IIS EXPRESS]，端口[%WEB_PORT%]，工作目录[%WORK_FOLDER%]
+    GOTO :EOF
+  )
+)
+REM 检查TOMCAT
+SET WEB_SERVER="%WORK_FOLDER%tomcat\bin\startup.bat"
+IF EXIST %WEB_SERVER% (
+  ECHO --检测到[TOMCAT]服务
+  SET /p DONE=[Y]-启动:
+  IF /i "!DONE!"=="y" (
+    CALL %WEB_SERVER%
+    GOTO :EOF
+  )
+)
 GOTO :EOF
+
 :WATCHING_TS
 SET CONFIG_FILE=%1
 echo ----监听: %CONFIG_FILE%
