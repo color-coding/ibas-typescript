@@ -597,7 +597,7 @@ namespace ibas {
          */
         export function equals(left: Date, right: Date): boolean {
             let value: number = compare(left, right);
-            if (value === NaN) {
+            if (isNaN(value)) {
                 throw new Error(i18n.prop("sys_unrecognized_data"));
             }
             if (value === 0) {
@@ -613,7 +613,7 @@ namespace ibas {
          */
         export function after(left: Date, right: Date): boolean {
             let value: number = compare(left, right);
-            if (value === NaN) {
+            if (isNaN(value)) {
                 throw new Error(i18n.prop("sys_unrecognized_data"));
             }
             if (value < 0) {
@@ -628,7 +628,7 @@ namespace ibas {
          */
         export function before(left: Date, right: Date): boolean {
             let value: number = compare(left, right);
-            if (value === NaN) {
+            if (isNaN(value)) {
                 throw new Error(i18n.prop("sys_unrecognized_data"));
             }
             if (value > 0) {
