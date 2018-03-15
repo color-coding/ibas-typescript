@@ -1,6 +1,8 @@
 # files & folder
 *.js
 *.map
+*.bat
+*.sh
 *.tmp
 *.publishproj
 *.sln
@@ -22,6 +24,7 @@
 /target/
 /out/
 /test/apps/
+/node_modules/
 /openui5/resources/
 /openui5/index.html
 /openui5/LICENSE.txt
