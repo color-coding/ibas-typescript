@@ -18,6 +18,8 @@ namespace ibas {
     export const CONFIG_FILE_NAME: string = "config.json";
     /** 配置项目-运行时版本 */
     export const CONFIG_ITEM_RUNTIME_VERSION: string = "runtimeVersion";
+    /** 配置项目-使用最小库 */
+    export const CONFIG_ITEM_USE_MINIMUM_LIBRARY: string = "minLibrary";
     /**
      * 配置
      */

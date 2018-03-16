@@ -398,4 +398,6 @@ namespace ibas {
     export const CONFIG_ITEM_DEFAULT_CURRENCY: string = "defaultCurrency";
     /** 数据分隔符（,） */
     export const DATA_SEPARATOR: string = ",";
+    /** 最小库标记 */
+    export const SIGN_MIN_LIBRARY: string = ".min";
 }

@@ -486,13 +486,14 @@ namespace ibas {
         }
         /** 加载视图 */
         protected loadUI(ui: string | string[], ready: Function): void {
+            let minLibrary: boolean = ibas.config.get(ibas.CONFIG_ITEM_USE_MINIMUM_LIBRARY, false);
             let modules: string[] = [];
             if (ui instanceof Array) {
                 for (let item of ui) {
-                    modules.push(item);
+                    modules.push(item + (minLibrary ? SIGN_MIN_LIBRARY : ""));
                 }
             } else {
-                modules.push(ui);
+                modules.push(ui + (minLibrary ? SIGN_MIN_LIBRARY : ""));
             }
             let require: Require = ibas.requires.create({
                 context: ibas.requires.naming(this.module)

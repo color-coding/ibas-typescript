@@ -290,8 +290,9 @@ namespace shell {
                     },
                     waitSeconds: ibas.config.get(ibas.requires.CONFIG_ITEM_WAIT_SECONDS, 30)
                 });
+                let minLibrary: boolean = ibas.config.get(ibas.CONFIG_ITEM_USE_MINIMUM_LIBRARY, false);
                 require([
-                    module.index
+                    module.index + (minLibrary ? ibas.SIGN_MIN_LIBRARY : "")
                 ], function (): void {
                     try {
                         // 加载模块的控制台（可能多个）

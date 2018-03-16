@@ -20,6 +20,8 @@ namespace loader {
             return this.indexOf(suffix, this.length - suffix.length) !== -1;
         };
     }
+    // 最小库标记
+    export const SIGN_MIN_LIBRARY: string = ".min";
     // ibas index路径
     export const URL_IBAS_INDEX: string = "ibas/index";
     // ibas 诊断页面路径
@@ -68,6 +70,8 @@ namespace loader {
             url: string;
             /** 是否使用缓存 */
             noCache: boolean;
+            /** 使用最小库 */
+            minLibrary: boolean;
             /** 成功加载 */
             onSuccess(): void;
             /** 发生错误 */
@@ -111,7 +115,7 @@ namespace loader {
         /** 扩展 */
         export function extend(caller: ILoaderCaller): void {
             requires.create("_", caller.url, caller.noCache)([
-                URL_INDEX
+                URL_INDEX + (caller.minLibrary ? SIGN_MIN_LIBRARY : "")
             ], caller.onSuccess, caller.onError);
         }
         /** 创建脚本元素 */
@@ -133,6 +137,8 @@ namespace loader {
         root: string;
         /** 不使用缓存 */
         noCache: boolean;
+        /** 使用最小库 */
+        minLibrary: boolean;
         /** 名称 */
         name: string = "shell";
         /** 运行应用 */
@@ -149,12 +155,13 @@ namespace loader {
             }
             let that: this = this;
             requires.create("_", this.root, this.noCache)([
-                URL_IBAS_INDEX
+                URL_IBAS_INDEX + (this.minLibrary ? SIGN_MIN_LIBRARY : "")
             ], function (): void {
                 // 加载成功，加载ui5
                 openui5.load({
                     url: that.root,
                     noCache: that.noCache,
+                    minLibrary: that.minLibrary,
                     onError(): void {
                         that.diagnose();
                     },
@@ -169,8 +176,12 @@ namespace loader {
         /** 显示视图 */
         private show(): void {
             // 不使用缓存，设置运行版本
-            if (this.noCache) {
+            if (this.noCache === true) {
                 ibas.config.set(ibas.CONFIG_ITEM_RUNTIME_VERSION, requires.runtime);
+            }
+            // 使用最小库
+            if (this.minLibrary === true) {
+                ibas.config.set(ibas.CONFIG_ITEM_USE_MINIMUM_LIBRARY, this.minLibrary);
             }
             // 模块require函数
             let require: Require = ibas.requires.create({
@@ -180,7 +191,7 @@ namespace loader {
             });
             let that: this = this;
             require([
-                Application.URL_INDEX
+                Application.URL_INDEX + (this.minLibrary ? SIGN_MIN_LIBRARY : "")
             ], function (): void {
                 // 加载成功
                 let shell: any = (<any>window).shell;
@@ -201,7 +212,7 @@ namespace loader {
         }
         /** 诊断错误 */
         private diagnose(): void {
-            window.location.href = this.root + URL_IBAS_DIAGNOSIS;
+            // window.location.href = this.root + URL_IBAS_DIAGNOSIS;
         }
     }
 }
