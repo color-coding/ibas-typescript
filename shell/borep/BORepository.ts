@@ -50,7 +50,8 @@ namespace shell {
                 let require: Require = ibas.requires.create({
                     context: shell.CONSOLE_NAME,
                 });
-                require(["../ibas/3rdparty/crypto-js" + (ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE, false) ? "" : ".min")],
+                let minLibrary: boolean = ibas.config.get(ibas.CONFIG_ITEM_USE_MINIMUM_LIBRARY, false);
+                require(["../ibas/3rdparty/crypto-js" + (minLibrary ? ibas.SIGN_MIN_LIBRARY : "")],
                     function (cryptoJS: CryptoJS.Hashes): void {
                         let method: string =
                             ibas.strings.format("userConnect?user={0}&password={1}", caller.user, cryptoJS.MD5(caller.password));

@@ -276,21 +276,19 @@ namespace shell {
                 }
                 let that: this = this;
                 // 模块require函数
+                let minLibrary: boolean = ibas.config.get(ibas.CONFIG_ITEM_USE_MINIMUM_LIBRARY, false);
                 let require: Require = ibas.requires.create({
                     context: ibas.requires.naming(module.name),
                     baseUrl: module.address,
                     map: {
                         "*": {
                             "css": ibas.strings.format(
-                                "{0}/3rdparty/require-css{1}",
-                                ibas.urls.rootUrl("/ibas/index"),
-                                (ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE, false) ? ".js" : ".min.js")
+                                "{0}/3rdparty/require-css{1}.js", ibas.urls.rootUrl("/ibas/index"), (minLibrary ? ibas.SIGN_MIN_LIBRARY : "")
                             )
                         }
                     },
                     waitSeconds: ibas.config.get(ibas.requires.CONFIG_ITEM_WAIT_SECONDS, 30)
                 });
-                let minLibrary: boolean = ibas.config.get(ibas.CONFIG_ITEM_USE_MINIMUM_LIBRARY, false);
                 require([
                     module.index + (minLibrary ? ibas.SIGN_MIN_LIBRARY : "")
                 ], function (): void {
