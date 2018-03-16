@@ -11,11 +11,12 @@
     <script type="text/javascript" src="./ibas/3rdparty/require.min.js"></script>
     <script type="text/javascript">
         require([
-            "./shell/loader"
+            "./shell/loader.min"
         ], function () {
             // 加载成功
             var app = new loader.Application();
             app.noCache = true;
+            app.minLibrary = true;
             app.run("./");
         }, function () {
             // 加载失败

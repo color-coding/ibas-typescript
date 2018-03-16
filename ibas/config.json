@@ -2,6 +2,7 @@
   "appSettings": {
     "debug": true,
     "company": "CC",
+    "waitSeconds": 60,
     "format|Date": "yyyy-MM-dd",
     "format|Time": "hh:mm",
     "format|DateTime": "yyyy-MM-dd hh:mm",

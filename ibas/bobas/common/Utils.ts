@@ -725,6 +725,7 @@ namespace ibas {
             let fileName: string = arguments[0];
             if (!fileName.startsWith("/")) { fileName = "/" + fileName; }
             if (!fileName.endsWith(".js")) { fileName = fileName + ".js"; }
+            let fileName2: string = fileName.indexOf(ibas.SIGN_MIN_LIBRARY + ".js") > 0 ? fileName : fileName.replace(".js", ibas.SIGN_MIN_LIBRARY + ".js");
             let root: string = window.document.location.origin;
             let scripts: NodeListOf<HTMLScriptElement> = document.getElementsByTagName("script");
             for (let index: number = 0; index < scripts.length; index++) {
@@ -749,6 +750,10 @@ namespace ibas {
                         url = url.substring(0, url.indexOf("?"));
                     }
                     if (url.endsWith(fileName)) {
+                        root = url.substring(0, url.lastIndexOf("/"));
+                        break;
+                    }
+                    if (url.endsWith(fileName2)) {
                         root = url.substring(0, url.lastIndexOf("/"));
                         break;
                     }
