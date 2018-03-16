@@ -49,7 +49,7 @@ namespace ibas {
         /** 许可 */
         license: "Apache License, Version 2.0",
         /** 版本 */
-        version: "v0.2.0",
+        version: "0.2.0",
         /** 维护者 */
         maintainer: "Niuren.Zhu <niuren.zhu@icloud.com>"
     };
