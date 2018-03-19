@@ -62,6 +62,8 @@ namespace shell {
                 /** 绘制视图 */
                 draw(): any {
                     // 设置应用名称
+                    let user: string = ibas.config.get(CONFIG_ITEM_DEFAULT_USER);
+                    let password: string = ibas.config.get(CONFIG_ITEM_DEFAULT_PASSWORD);
                     document.title = ibas.config.get(ibas.CONFIG_ITEM_APPLICATION_NAME, ibas.i18n.prop("shell_name"));
                     let that: this = this;
                     this.form = new sap.ui.layout.form.SimpleForm("", {
@@ -76,17 +78,13 @@ namespace shell {
                                 text: ibas.i18n.prop("shell_user")
                             }),
                             new sap.m.Input(LoginView.UI_LOGIN_USER, {
-                                value: ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE, false)
-                                    ? ibas.config.get(CONFIG_ITEM_DEFAULT_USER)
-                                    : "",
+                                value: !ibas.strings.isEmpty(user) ? user : "",
                             }),
                             new sap.m.Label("", {
                                 text: ibas.i18n.prop("shell_password")
                             }),
                             new sap.m.Input(LoginView.UI_LOGIN_PASSWORD, {
-                                value: ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE, false)
-                                    ? ibas.config.get(CONFIG_ITEM_DEFAULT_PASSWORD)
-                                    : "",
+                                value: !ibas.strings.isEmpty(password) ? password : "",
                                 type: "Password"
                             }),
                             new sap.m.Label("", {

@@ -8,6 +8,10 @@
     "copyright": "© 2016-2017 Color-Coding Studio",
     "helpUrl": "https://colorcoding.org/ibas/help",
     "welcomeUrl": "https://colorcoding.org/ibas/welcome",
+    "defalutServiceIcon": "sap-icon://e-care",
+    "defalutModuleIcon": "sap-icon://nutrition-activity",
+    "defaultUser": "admin",
+    "defaultPassword": "1q2w3e",
     "repositoryAddress|BORepositoryShell": ".../initialfantasy/services/rest/data"
   },
   "languages": [
