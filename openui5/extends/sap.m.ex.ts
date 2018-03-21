@@ -21,7 +21,7 @@ namespace openui5 {
             },
             events: {}
         },
-        setEnumValue(value: any): void {
+        setEnumValue(value: Enumerator): void {
             let map: Map<string, string> = new Map<string, string>();
             // 如果属性为true,添加"请选择"项
             if (this.getBlank()) {
@@ -36,6 +36,9 @@ namespace openui5 {
                     additionalText: key
                 }));
             }
+        },
+        getEnumValue(): Enumerator {
+            return this.getProperty("enumValue");
         },
         getBlank(): Boolean {
             return this.getProperty("blank");
@@ -158,10 +161,10 @@ namespace openui5 {
         setBlank(value: Boolean): void {
             this.setProperty("blank", value);
         },
-        getCriteria(): any {
+        getCriteria(): ibas.Criteria {
             return this.getProperty("criteria");
         },
-        setCriteria(value: any): void {
+        setCriteria(value: ibas.Criteria): void {
             let criteria: ibas.Criteria;
             if (ibas.objects.instanceOf(value, ibas.Criteria)) {
                 criteria = value;
@@ -521,10 +524,10 @@ namespace openui5 {
                 this.setSelectedKey(selecteds.firstOrDefault()[this.getBoKey()]);
             }
         },
-        getCriteria(): any {
+        getCriteria(): ibas.Criteria {
             return this.getProperty("criteria");
         },
-        setCriteria(value: any): void {
+        setCriteria(value: ibas.Criteria): void {
             let criteria: ibas.Criteria;
             if (ibas.objects.instanceOf(value, ibas.Criteria)) {
                 criteria = value;
@@ -734,7 +737,7 @@ namespace openui5 {
             },
             events: {}
         },
-        setEnumValue(value: any): void {
+        setEnumValue(value: Enumerator): void {
             let map: Map<string, string> = new Map<string, string>();
             map = utils.getEnumMap(value);
             for (let item of map) {
@@ -745,6 +748,9 @@ namespace openui5 {
                     text: ibas.enums.describe(value, item[1]),
                 }));
             }
+        },
+        getEnumValue(): Enumerator {
+            return this.getProperty("enumValue");
         },
         setBindingValue(value: string): void {
             this.setProperty("bindingValue", value);
@@ -1079,5 +1085,81 @@ namespace openui5 {
             return this.getProperty("bindingValue");
         },
         renderer: {}
+    });
+    /**
+     * 业务对象Tokenizer
+     * 字符串以separator分隔,显示token
+     */
+    sap.m.Tokenizer.extend("sap.m.ex.TokenizerSeparator", {
+        metadata: {
+            properties: {
+                /** 分隔符 */
+                separator: { type: "string", group: "Ex", defaultValue: "," },
+                /** 绑定值 */
+                bindingValue: { type: "string", group: "Ex" },
+            },
+            events: {
+            },
+        },
+        /**
+         * 加载业务对象集合
+         * @param selecteds 业务对象KeyText集合
+         */
+        loadTokens(items: ibas.ArrayList<ibas.KeyText>): void {
+            let that: any = this;
+            this.removeAllTokens();
+            if (ibas.objects.isNull(items)) {
+                return;
+            }
+            for (let item of items) {
+                let token: sap.m.Token = new sap.m.Token("", {
+                    key: item.key,
+                    text: item.text,
+                    deselect: function (oEvent: sap.ui.base.Event): void {
+                        that.setBindingValue(that.getBindingValue());
+                    },
+                    delete: function (oEvent: any): void {
+                        let tokens: [string] = that.getBindingValue().split(that.getSeparator());
+                        let deleteKey: string = oEvent.getSource().getKey();
+                        let tokenString: string = "";
+                        for (let item of tokens) {
+                            if (item !== deleteKey) {
+                                tokenString += item + that.getSeparator();
+                            }
+                        }
+                        that.setBindingValue(tokenString);
+                    }
+                });
+                this.addToken(token);
+            }
+        },
+        setBindingValue(value: string): void {
+            if (!ibas.strings.isEmpty(value)) {
+                // 最后一位如果与分隔符一致则去除
+                if (value.charAt(value.length - 1) === this.getSeparator()) {
+                    value = value.substring(0, value.length - 1);
+                }
+                let items: ibas.ArrayList<ibas.KeyText> = new ibas.ArrayList<ibas.KeyText>();
+                for (let text of value.split(this.getSeparator())) {
+                    let item: ibas.KeyText = new ibas.KeyText();
+                    item.key = text;
+                    item.text = text;
+                    items.add(item);
+                }
+                this.loadTokens(items);
+            }
+            this.setProperty("bindingValue", value);
+        },
+        getBindingValue(): string {
+            return this.getProperty("bindingValue");
+        },
+        setSeparator(value: string): void {
+            this.setProperty("separator", value);
+        },
+        getSeparator(): string {
+            return this.getProperty("separator");
+        },
+        renderer: {
+        }
     });
 }
