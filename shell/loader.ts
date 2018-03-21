@@ -6,6 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 /// <reference path="../ibas/3rdparty/require.d.ts" />
+/// <reference path="../openui5/index.d.ts" />
 /// <reference path="../ibas/index.d.ts" />
 
 namespace loader {
@@ -167,6 +168,25 @@ namespace loader {
                     },
                     onSuccess(): void {
                         that.show();
+                        // ui 触发错误验证
+                        sap.ui.getCore().attachValidationError("", (oEvent) => {
+                            let control: any = oEvent.getParameter("element");
+                            let message: any = oEvent.getParameter("message");
+                            if (control && control.setValueState) {
+                                control.setValueState("Error");
+                                if (message) {
+                                    control.setValueStateText(message);
+                                }
+                                control.focus();
+                            }
+                        });
+                        // ui 触发正确验证
+                        sap.ui.getCore().attachValidationSuccess("", (oEvent) => {
+                            let control: any = oEvent.getParameter("element");
+                            if (control && control.setValueState) {
+                                control.setValueState("None");
+                            }
+                        });
                     },
                 });
             }, function (): void {
