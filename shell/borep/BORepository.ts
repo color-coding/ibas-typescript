@@ -294,7 +294,7 @@ namespace shell {
         }
 
         // 注册业务对象仓库到工厂
-        if (ibas.config.get(ibas.CONFIG_ITEM_OFFLINE_MODE, false)) {
+        if (!ibas.config.get(ibas.CONFIG_ITEM_OFFLINE_MODE, false)) {
             boFactory.register(ibas.BO_REPOSITORY_CONNECT, BORepositoryShell);
         } else {
             boFactory.register(ibas.BO_REPOSITORY_CONNECT, BORepositoryShellOffline);
