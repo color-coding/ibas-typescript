@@ -41,7 +41,25 @@ namespace openui5 {
     } else {
         ibas.config.set(ibas.CONFIG_ITEM_PLANTFORM, ibas.emPlantform.COMBINATION);
     }
-
+    // ui 触发错误验证
+    sap.ui.getCore().attachValidationError("", (oEvent) => {
+        let control: any = oEvent.getParameter("element");
+        let message: any = oEvent.getParameter("message");
+        if (control && control.setValueState) {
+            control.setValueState("Error");
+            if (message) {
+                control.setValueStateText(message);
+            }
+            control.focus();
+        }
+    });
+    // ui 触发正确验证
+    sap.ui.getCore().attachValidationSuccess("", (oEvent) => {
+        let control: any = oEvent.getParameter("element");
+        if (control && control.setValueState) {
+            control.setValueState("None");
+        }
+    });
     // 加载资源
     ibas.i18n.load(ibas.strings.format("{0}/languages/openui5.json", ibas.urls.rootUrl("/openui5/index")));
 }
