@@ -41,6 +41,7 @@ namespace openui5 {
     } else {
         ibas.config.set(ibas.CONFIG_ITEM_PLANTFORM, ibas.emPlantform.COMBINATION);
     }
+
     // ui 触发错误验证
     sap.ui.getCore().attachValidationError("", (oEvent) => {
         let control: any = oEvent.getParameter("element");
