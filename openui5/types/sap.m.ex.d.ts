@@ -9,15 +9,16 @@ declare namespace sap {
     namespace m {
         namespace ex {
             export class EnumSelect extends sap.m.Select {
-                setBoText(value: any): void;
-                getBoText(): any;
+                setEnumValue(value: Enumerator): void;
+                getEnumValue(): Enumerator;
                 setBlank(value: Boolean): void;
                 getBlank(): Boolean;
                 setBindingValue(value: string): void;
                 getBindingValue(): string;
             }
             export class EnumSegmentedButton extends sap.m.SegmentedButton {
-                setEnumValue(value: any): void;
+                setEnumValue(value: Enumerator): void;
+                getEnumValue(): Enumerator;
                 setBindingValue(value: string): void;
                 getBindingValue(): string;
             }
@@ -36,9 +37,9 @@ declare namespace sap {
                 getReadOnly(): Boolean;
             }
             export class BOChooseInput extends BOInput {
-                getChooseType(): any;
-                getCriteria(): any;
-                setCriteria(value: any): void;
+                getChooseType(): ibas.emChooseType;
+                getCriteria(): ibas.Criteria;
+                setCriteria(value: ibas.Criteria): void;
             }
             export class DataOwnerInput extends BOChooseInput {
             }
@@ -70,8 +71,8 @@ declare namespace sap {
                 setRepositoryName(value: string): void;
                 setBindingValue(value: string): void;
                 getBindingValue(): string;
-                getCriteria(): any;
-                setCriteria(value: any): void;
+                getCriteria(): ibas.Criteria;
+                setCriteria(value: ibas.Criteria): void;
             }
             export class SeriesSelect extends sap.m.ex.BOSelect {
                 getBoCode(): string;
@@ -94,6 +95,12 @@ declare namespace sap {
                 getBindingValue(): string;
                 setConsistent(value: boolean): void;
                 getConsistent(): boolean;
+            }
+            export class TokenizerSeparator extends sap.m.Tokenizer {
+                setBindingValue(value: string): void;
+                getBindingValue(): string;
+                setSeparator(value: string): void;
+                getSeparator(): string;
             }
         }
     }

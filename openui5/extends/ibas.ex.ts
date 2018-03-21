@@ -15,8 +15,8 @@ namespace openui5 {
         selectedKey: string;
         criteria: ibas.ICriteria;
         provinces: Array<any>;
-        citys: any;
-        districts: any;
+        citys: Array<any>;
+        districts: Array<any>;
         constructor(repositoryName?: string, boName?: string, keyAttribute?: string,
             textAttribute?: string, criteria?: ibas.Criteria, selectedKey?: string) {
             this.repositoryName = repositoryName;
@@ -64,7 +64,7 @@ namespace openui5 {
             }
             let url: string = ibas.strings.format("{0}/data/province.json", this.rootUrl);
             this.provinces = await this.load(url);
-            this.addLocalStorage("provinces", JSON.stringify(this.provinces));
+            this.addLocalStorage("provinces", this.provinces);
             if (ibas.objects.isNull(this.provinces)) {
                 return false;
             } else {
@@ -78,7 +78,7 @@ namespace openui5 {
             }
             let url: string = ibas.strings.format("{0}/data/city.json", this.rootUrl);
             this.citys = await this.load(url);
-            this.addLocalStorage("citys", JSON.stringify(this.citys));
+            this.addLocalStorage("citys", this.citys);
             if (ibas.objects.isNull(this.citys)) {
                 return false;
             } else {
@@ -92,7 +92,7 @@ namespace openui5 {
             }
             let url: string = ibas.strings.format("{0}/data/district.json", this.rootUrl);
             this.districts = await this.load(url);
-            this.addLocalStorage("districts", JSON.stringify(this.districts));
+            this.addLocalStorage("districts",this.districts);
             if (ibas.objects.isNull(this.districts)) {
                 return false;
             } else {
