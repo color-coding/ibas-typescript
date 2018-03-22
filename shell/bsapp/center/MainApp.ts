@@ -7,6 +7,8 @@
  */
 namespace shell {
     export namespace app {
+        /** 配置项目-应用名称 */
+        export const CONFIG_ITEM_APPLICATION_NAME: string = "application";
         /**
          * 应用-系统入口
          */

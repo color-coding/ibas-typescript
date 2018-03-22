@@ -18,6 +18,8 @@ namespace shell {
             export const CONFIG_ITEM_AUTO_ACTIVETED_FUNCTION: string = "autoFunction";
             /** 配置项目-欢迎页面地址 */
             export const CONFIG_ITEM_WELCOME_PAGE_URL: string = "welcomeUrl";
+            /** 配置项目-欢迎页面图片 */
+            export const CONFIG_ITEM_WELCOME_PAGE_IMAGE: string = "welcomeImage";
             /** 配置项目-收缩功能列表 */
             export const CONFIG_ITEM_SHRINK_FUNCTION_LIST: string = "shrinkFunction";
             /** 配置项目-最大消息数 */
@@ -220,17 +222,16 @@ namespace shell {
                     }
                     let viewContent: any = new sap.m.MessagePage("", {
                         text: ibas.i18n.prop("shell_welcome_page",
-                            name, ibas.config.get(ibas.CONFIG_ITEM_APPLICATION_NAME, ibas.i18n.prop("shell_name"))),
+                            name, ibas.config.get(app.CONFIG_ITEM_APPLICATION_NAME, ibas.i18n.prop("shell_name"))),
                         customDescription: new sap.m.Link("", {
                             target: "_blank",
                             text: ibas.config.get(CONFIG_ITEM_WELCOME_PAGE_URL),
                             href: ibas.config.get(CONFIG_ITEM_WELCOME_PAGE_URL)
                         }),
                         description: "",
-                        // title: "",
                         showHeader: false,
                         showNavButton: false,
-                        icon: ibas.i18n.prop("shell_welcome_image"),
+                        icon: ibas.config.get(CONFIG_ITEM_WELCOME_PAGE_IMAGE, "sap-icon://hello-world"),
                         textDirection: sap.ui.core.TextDirection.Inherit
                     });
                     return viewContent;

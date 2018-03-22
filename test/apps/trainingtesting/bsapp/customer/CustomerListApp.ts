@@ -128,7 +128,7 @@ namespace trainingtesting {
                 this.messages({
                     type: ibas.emMessageType.QUESTION,
                     title: ibas.i18n.prop(this.name),
-                    message: ibas.i18n.prop("shell_whether_to_delete", beDeleteds.length),
+                    message: ibas.i18n.prop("shell_multiple_data_delete_continue", beDeleteds.length),
                     actions: [ibas.emMessageAction.YES, ibas.emMessageAction.NO],
                     onCompleted(action: ibas.emMessageAction): void {
                         if (action === ibas.emMessageAction.YES) {

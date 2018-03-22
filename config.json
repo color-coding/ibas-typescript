@@ -8,6 +8,7 @@
     "copyright": "© 2016-2017 Color-Coding Studio",
     "helpUrl": "https://colorcoding.org/ibas/help",
     "welcomeUrl": "https://colorcoding.org/ibas/welcome",
+    "welcomeImage": "sap-icon://hello-world",
     "defalutServiceIcon": "sap-icon://e-care",
     "defalutModuleIcon": "sap-icon://nutrition-activity",
     "defaultUser": "admin",

@@ -50,7 +50,7 @@ namespace shell {
                 }
                 // 使用此模块库加载器
                 let require: Require = ibas.requires.create({
-                    context: shell.CONSOLE_NAME,
+                    context: ibas.requires.naming(shell.CONSOLE_NAME),
                 });
                 let minLibrary: boolean = ibas.config.get(ibas.CONFIG_ITEM_USE_MINIMUM_LIBRARY, false);
                 require(["../ibas/3rdparty/crypto-js" + (minLibrary ? ibas.SIGN_MIN_LIBRARY : "")],
@@ -297,9 +297,11 @@ namespace shell {
 
         // 注册业务对象仓库到工厂
         if (!ibas.config.get(ibas.CONFIG_ITEM_OFFLINE_MODE, false)) {
-            boFactory.register(ibas.BO_REPOSITORY_CONNECT, BORepositoryShell);
+            boFactory.register(BO_REPOSITORY_CONNECT, BORepositoryShell);
+            boFactory.register(BO_REPOSITORY_SHELL, BORepositoryShell);
         } else {
-            boFactory.register(ibas.BO_REPOSITORY_CONNECT, BORepositoryShellOffline);
+            boFactory.register(BO_REPOSITORY_CONNECT, BORepositoryShellOffline);
+            boFactory.register(BO_REPOSITORY_SHELL, BORepositoryShellOffline);
         }
 
     }
