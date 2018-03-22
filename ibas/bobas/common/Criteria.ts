@@ -862,37 +862,52 @@ namespace ibas {
             if (objects.isNull(criteria) || objects.isNull(target)) {
                 return criteria;
             }
-            if (criteria.sorts.length === 0) {
-                if (objects.isAssignableFrom(target, BODocument)
-                    || objects.isAssignableFrom(target, BOMasterData)) {
-                    let sort: ISort = criteria.sorts.create();
-                    sort.alias = BO_PROPERTY_NAME_DOCENTRY;
-                    sort.sortType = emSortType.DESCENDING;
-                } else if (objects.isAssignableFrom(target, BOSimple)) {
-                    let sort: ISort = criteria.sorts.create();
-                    sort.alias = BO_PROPERTY_NAME_OBJECTKEY;
-                    sort.sortType = emSortType.DESCENDING;
-                } else if (objects.isAssignableFrom(target, BODocumentLine)) {
-                    let sort: ISort = criteria.sorts.create();
-                    sort.alias = BO_PROPERTY_NAME_DOCENTRY;
-                    sort.sortType = emSortType.DESCENDING;
-                    sort = criteria.sorts.create();
-                    sort.alias = BO_PROPERTY_NAME_LINEID;
-                    sort.sortType = emSortType.ASCENDING;
-                } else if (objects.isAssignableFrom(target, BOMasterDataLine)) {
-                    let sort: ISort = criteria.sorts.create();
-                    sort.alias = BO_PROPERTY_NAME_CODE;
-                    sort.sortType = emSortType.DESCENDING;
-                    sort = criteria.sorts.create();
-                    sort.alias = BO_PROPERTY_NAME_LINEID;
-                    sort.sortType = emSortType.ASCENDING;
-                } else if (objects.isAssignableFrom(target, BOSimpleLine)) {
-                    let sort: ISort = criteria.sorts.create();
-                    sort.alias = BO_PROPERTY_NAME_OBJECTKEY;
-                    sort.sortType = emSortType.DESCENDING;
-                    sort = criteria.sorts.create();
-                    sort.alias = BO_PROPERTY_NAME_LINEID;
-                    sort.sortType = emSortType.ASCENDING;
+            if (criteria.sorts.length !== 0) {
+                return criteria;
+            }
+            if (objects.isAssignableFrom(target, BODocument)
+                || objects.isAssignableFrom(target, BOMasterData)) {
+                let sort: ISort = criteria.sorts.create();
+                sort.alias = BO_PROPERTY_NAME_DOCENTRY;
+                sort.sortType = emSortType.DESCENDING;
+            } else if (objects.isAssignableFrom(target, BOSimple)) {
+                let sort: ISort = criteria.sorts.create();
+                sort.alias = BO_PROPERTY_NAME_OBJECTKEY;
+                sort.sortType = emSortType.DESCENDING;
+            } else if (objects.isAssignableFrom(target, BODocumentLine)) {
+                let sort: ISort = criteria.sorts.create();
+                sort.alias = BO_PROPERTY_NAME_DOCENTRY;
+                sort.sortType = emSortType.DESCENDING;
+                sort = criteria.sorts.create();
+                sort.alias = BO_PROPERTY_NAME_LINEID;
+                sort.sortType = emSortType.ASCENDING;
+            } else if (objects.isAssignableFrom(target, BOMasterDataLine)) {
+                let sort: ISort = criteria.sorts.create();
+                sort.alias = BO_PROPERTY_NAME_CODE;
+                sort.sortType = emSortType.DESCENDING;
+                sort = criteria.sorts.create();
+                sort.alias = BO_PROPERTY_NAME_LINEID;
+                sort.sortType = emSortType.ASCENDING;
+            } else if (objects.isAssignableFrom(target, BOSimpleLine)) {
+                let sort: ISort = criteria.sorts.create();
+                sort.alias = BO_PROPERTY_NAME_OBJECTKEY;
+                sort.sortType = emSortType.DESCENDING;
+                sort = criteria.sorts.create();
+                sort.alias = BO_PROPERTY_NAME_LINEID;
+                sort.sortType = emSortType.ASCENDING;
+            } else if (objects.isAssignableFrom(target, BusinessObject)) {
+                let bo: BusinessObject<any> = new target();
+                let boCriteria: ICriteria = bo.criteria();
+                if (!objects.isNull(boCriteria)) {
+                    for (let item of boCriteria.conditions) {
+                        let sort: ISort = criteria.sorts.create();
+                        sort.alias = item.alias;
+                        if (criteria.sorts.length === 0) {
+                            sort.sortType = emSortType.DESCENDING;
+                        } else {
+                            sort.sortType = emSortType.ASCENDING;
+                        }
+                    }
                 }
             }
             return criteria;

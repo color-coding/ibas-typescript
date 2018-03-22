@@ -9,12 +9,14 @@
 
 namespace shell {
     export namespace bo {
-        /** 创建业务仓库 */
-        export function createRepository(): IBORepositoryShell {
-            if (ibas.config.get(ibas.CONFIG_ITEM_OFFLINE_MODE, false)) {
-                return new BORepositoryShellOffline();
-            } else {
-                return new BORepositoryShell();
+        export namespace repository {
+            /** 创建业务仓库 */
+            export function create(): IBORepositoryShell {
+                if (ibas.config.get(ibas.CONFIG_ITEM_OFFLINE_MODE, false)) {
+                    return new BORepositoryShellOffline();
+                } else {
+                    return new BORepositoryShell();
+                }
             }
         }
         /**
