@@ -107,7 +107,7 @@ namespace shell {
                         // 尚未初始化表格
                         if (!ibas.objects.isNull(this.boName)) {
                             let that: this = this;
-                            let boRepository: bo.IBORepositoryShell = bo.createRepository();
+                            let boRepository: bo.IBORepositoryShell = bo.repository.create();
                             boRepository.fetchBOInfos({
                                 boName: this.boName,
                                 boCode: null,

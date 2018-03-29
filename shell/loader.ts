@@ -212,7 +212,7 @@ namespace loader {
         }
         /** 诊断错误 */
         private diagnose(): void {
-            // window.location.href = this.root + URL_IBAS_DIAGNOSIS;
+            window.location.href = this.root + URL_IBAS_DIAGNOSIS;
         }
     }
 }

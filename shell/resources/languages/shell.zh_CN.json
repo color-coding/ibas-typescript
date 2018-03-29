@@ -52,7 +52,7 @@
     "shell_data_deleted": "数据已被删除",
     "shell_data_deleted_and_created": "数据已被删除，即将创建新的实例",
     "shell_data_fetched_none": "没有检索到数据",
-    "shell_data_save_first": "请先保存数据",
+    "shell_data_saved_first": "请先保存数据",
     "shell_data_not_saved_continue": "数据未保存，是否继续？",
     "shell_upload": "上传",
     "shell_uploading_file": "文件上传中，请稍后",
@@ -80,7 +80,6 @@
     "shell_user_unknown": "未知用户",
     "shell_url_new_window_opened": "网址已在新窗口打开",
     "shell_welcome_page": "{0}，欢迎来到【{1}】",
-    "shell_welcome_image": "sap-icon://hello-world",
     "shell_sorting_modules": "正在整理模块，请稍后",
     "shell_base_on_criteria": "请选择基于的查询",
     "shell_chooose_language": "请选择语言",
@@ -95,8 +94,8 @@
     "shell_query_condition_operation": "比较方式",
     "shell_query_condition_value": "值",
     "shell_query_condition_bracketclose": "闭括号",
-    "shell_whether_to_delete": "共[{0}]个对象是否删除？",
     "shell_please_chooose_data": "请选择{0}数据",
+    "shell_multiple_data_delete_continue": "共[{0}]个数据是否删除？",
     "shell_delete_continue": "请确认是否删除？",
     "shell_exit_continue": "请确认是退出？"
 }

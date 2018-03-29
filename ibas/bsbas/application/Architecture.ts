@@ -70,7 +70,7 @@ namespace ibas {
         application: IApplication<IView>;
         /** 唯一标识 */
         id: string;
-        /** 名称 */
+        /** 标题 */
         title: string;
         /** 绘制视图 */
         draw(): any;
@@ -306,8 +306,10 @@ namespace ibas {
         application: IApplication<IView>;
         /** 唯一标识 */
         id: string;
-        /** 名称 */
+        /** 标题 */
         title: string;
+        /** 隐藏标题栏 */
+        hideTitle: boolean;
         /** 是否已显示 */
         isDisplayed: boolean;
         /** 绘制视图 */

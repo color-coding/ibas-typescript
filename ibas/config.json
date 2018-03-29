@@ -9,6 +9,7 @@
     "decimalPlaces": 6,
     "decimalPlaces|Price": 6,
     "decimalPlaces|Quantity": 6,
+    "defaultCurrency": "CNY",
     "language": "zh_CN"
   }
 }

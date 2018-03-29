@@ -6,15 +6,10 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 namespace ibas {
-    /** 登录仓库名称 */
-    export const BO_REPOSITORY_CONNECT: string = "BORepositoryConnect";
     /** 系统用户-标记 */
     export const SYSTEM_USER_ID: number = -9;
     /** 位置用户-标记 */
     export const UNKNOWN_USER_ID: number = -1;
-
-    /** 配置项目-应用名称 */
-    export const CONFIG_ITEM_APPLICATION_NAME: string = "application";
 
     /** 配置项目-审批方法 */
     export const CONFIG_ITEM_APPROVAL_WAY: string = "approvalWay";

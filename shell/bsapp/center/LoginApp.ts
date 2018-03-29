@@ -71,7 +71,7 @@ namespace shell {
                         isNaN(parseInt(plantform, 0)) ? 0 : parseInt(plantform, 0)
                     );
                     ibas.logger.log(ibas.emMessageLevel.DEBUG, "app: user login system,token is [{0}].", userToken);
-                    let boRepository: bo.IBORepositoryShell = bo.createRepository();
+                    let boRepository: bo.IBORepositoryShell = bo.repository.create();
                     boRepository.tokenConnect({
                         caller: this, // 设置调用者，则onCompleted修正this
                         token: userToken,
@@ -87,7 +87,7 @@ namespace shell {
             private login(): void {
                 this.busy(true, ibas.i18n.prop("shell_logging_system"));
                 ibas.logger.log(ibas.emMessageLevel.DEBUG, "app: user [{0}] login system.", this.view.user);
-                let boRepository: bo.IBORepositoryShell = bo.createRepository();
+                let boRepository: bo.IBORepositoryShell = bo.repository.create();
                 boRepository.userConnect({
                     caller: this, // 设置调用者，则onCompleted修正this
                     user: this.view.user,

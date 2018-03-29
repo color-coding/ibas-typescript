@@ -136,7 +136,7 @@ namespace shell {
                         ibas.strings.isEmpty(this.currentUser.name) ? this.currentUser.code : this.currentUser.name)
                 );
                 let that: this = this;
-                let boRepository: bo.IBORepositoryShell = bo.createRepository();
+                let boRepository: bo.IBORepositoryShell = bo.repository.create();
                 boRepository.fetchUserModules({
                     user: this.currentUser.code,
                     platform: ibas.enums.toString(ibas.emPlantform, this.plantform),
