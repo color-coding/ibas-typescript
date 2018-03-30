@@ -280,7 +280,7 @@ namespace shell {
                     }), 0);
                     // 清除超出的历史消息
                     if (ibas.objects.isNull(this.messageCount)) {
-                        this.messageCount = ibas.config.get(CONFIG_ITEM_MAX_MESSAGE_COUNT, 5);
+                        this.messageCount = ibas.config.get(CONFIG_ITEM_MAX_MESSAGE_COUNT, 50);
                     }
                     if (this.messageHistory.getItems().length > this.messageCount) {
                         for (var index: number = this.messageHistory.getItems().length - 1; index < this.messageCount; index--) {
@@ -292,7 +292,7 @@ namespace shell {
                     }
                     // 延迟清除消息
                     if (ibas.objects.isNull(this.statusDelay)) {
-                        this.statusDelay = ibas.config.get(CONFIG_ITEM_STATUS_MESSAGES_DELAY, 0) * 1000;
+                        this.statusDelay = ibas.config.get(CONFIG_ITEM_STATUS_MESSAGES_DELAY, 2) * 1000;
                     }
                     setTimeout(function (): void {
                         if (ibas.dates.now().getTime() >= that.messageTime + that.statusDelay) {
@@ -376,7 +376,7 @@ namespace shell {
                             }
                             // 自动激活功能
                             if (funItem.id === autoActivetedFunction) {
-                                let duration: number = ibas.config.get(CONFIG_ITEM_STATUS_MESSAGES_DELAY, 0) * 1000;
+                                let duration: number = ibas.config.get(CONFIG_ITEM_STATUS_MESSAGES_DELAY, 2) * 1000;
                                 setTimeout(function (): void {
                                     that.fireViewEvents(that.activateFunctionsEvent, funItem.id);
                                 }, duration > 0 ? duration * 1.2 : 3000);
@@ -392,7 +392,7 @@ namespace shell {
                     }
                     // 延迟排序模块
                     if (ibas.objects.isNull(this.statusDelay)) {
-                        this.statusDelay = ibas.config.get(CONFIG_ITEM_STATUS_MESSAGES_DELAY, 0) * 1000;
+                        this.statusDelay = ibas.config.get(CONFIG_ITEM_STATUS_MESSAGES_DELAY, 2) * 1000;
                     }
                     // 计算模块位置并添加
                     if (ibas.objects.isNull(this.moduleTime)) {
