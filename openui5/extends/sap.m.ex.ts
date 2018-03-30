@@ -77,6 +77,13 @@ namespace openui5 {
                 blank: { type: "Boolean", group: "Ex", defaultValue: false },
             },
             events: {
+                "onLoadItemsCompleted": {
+                    parameters: {
+                        items: {
+                            type: Array
+                        }
+                    }
+                }
             },
         },
         /**
@@ -104,6 +111,7 @@ namespace openui5 {
                 });
                 this.addItem(selectItem);
             }
+            this.fireOnLoadItemsCompleted({ items: selecteds });
         },
         /**
          * 查询业务对象
@@ -213,6 +221,124 @@ namespace openui5 {
         },
         getBindingValue(): string {
             return this.getProperty("bindingValue");
+        },
+        renderer: {
+        }
+    });
+    /**
+     * 业务对象子对象Select
+     */
+    sap.m.ex.BOSelect.extend("sap.m.ex.BOChildSelect", {
+        metadata: {
+            properties: {
+                /** 显示值属性名称 */
+                boText: { type: "string", group: "Ex" },
+                /** 存储值属性名称 */
+                boKey: { type: "string", group: "Ex" },
+                /** 子对象属性名 */
+                childPropertyName: { type: "string", group: "Ex" },
+                /** 业务对象编码 */
+                boCode: { type: "string", group: "Ex" },
+                /** 业务对象仓库名称 */
+                repositoryName: { type: "string", group: "Ex" },
+                /** 查询业务对象条件 */
+                criteria: { type: "any", group: "Ex" },
+                /** 绑定值 */
+                bindingValue: { type: "string", group: "Ex" },
+                /** 是否添加空项 */
+                blank: { type: "Boolean", group: "Ex", defaultValue: false },
+            },
+            events: {
+            },
+        },
+        /**
+         * 加载业务对象集合
+         * @param selecteds 业务对象KeyText集合
+         */
+        loadItems(selecteds: ibas.ArrayList<ibas.KeyText>): void {
+            if (selecteds === null) {
+                console.log(ibas.i18n.prop("sap_m_ex_fetch_bos_null"));
+                return;
+            }
+            // 如果属性为true,添加"请选择"项
+            if (this.getBlank()) {
+                this.addItem(new sap.ui.core.ListItem("", {
+                    key: "",
+                    text: ibas.i18n.prop("sap_m_ex_select_please_select", ""),
+                    additionalText: ""
+                }));
+            }
+            for (let item of selecteds) {
+                let selectItem: sap.ui.core.ListItem = new sap.ui.core.ListItem("", {
+                    key: item.key,
+                    text: item.text,
+                    additionalText: item.key
+                });
+                this.addItem(selectItem);
+            }
+            this.fireOnLoadItemsCompleted({ items: selecteds });
+        },
+        /**
+         * 查询业务对象
+         */
+        async seachBO(): Promise<void> {
+            let that: any = this;
+            let boKey: string = this.getBoKey();
+            let selectedKey: string = this.getSelectedKey();
+            let boCode: string = this.getBoCode();
+            let childPropertyName: string = this.getChildPropertyName();
+            if (ibas.strings.isEmpty(boCode)) {
+                console.log(ibas.i18n.prop("sap_m_ex_bocode_null"));
+                return;
+            }
+            if (ibas.strings.isEmpty(childPropertyName)) {
+                console.log(ibas.i18n.prop("sap_m_ex_childpropertyname_null"));
+                return;
+            }
+            let boType: any = ibas.boFactory.classOf(boCode);
+            if (ibas.objects.isNull(boType)) {
+                console.log(ibas.i18n.prop("sap_m_ex_boType_null"));
+                return;
+            }
+            let boName: string = ibas.objects.getName(boType);
+            let boText: string = that.getBoText();
+            if (ibas.strings.isEmpty(boKey)) {
+                console.log(ibas.i18n.prop("sap_m_ex_bokey_null"));
+                return;
+            }
+            if (ibas.strings.isEmpty(boText)) {
+                console.log(ibas.i18n.prop("sap_m_ex_botext_null"));
+                return;
+            }
+            if (ibas.strings.isEmpty(boName)) {
+                console.log(ibas.i18n.prop("sap_m_ex_boname_null"));
+                return;
+            }
+            let criteria: ibas.Criteria = this.getCriteria();
+            if (ibas.objects.isNull(criteria)) {
+                criteria = new ibas.Criteria();
+            }
+            let boRepEx: BORepsitory = new BORepsitory();
+            boRepEx.boName = boName;
+            boRepEx.keyAttribute = boKey;
+            boRepEx.textAttribute = boText;
+            boRepEx.selectedKey = selectedKey;
+            boRepEx.childPropertyName = childPropertyName;
+            boRepEx.repositoryName = this.getRepositoryName();
+            boRepEx.criteria = criteria;
+            let keyTextList: ibas.ArrayList<ibas.KeyText> = await boRepEx.getChildBoKeyTextList();
+            if (ibas.objects.isNull(keyTextList)) {
+                console.log(ibas.i18n.prop("sap_m_ex_fetch_bos_null"));
+                return;
+            }
+            this.removeAllItems();
+            this.loadItems(keyTextList);
+        },
+        getChildPropertyName(): string {
+            return this.getProperty("childPropertyName");
+        },
+        setChildPropertyName(value: string): void {
+            this.setProperty("childPropertyName", value);
         },
         renderer: {
         }

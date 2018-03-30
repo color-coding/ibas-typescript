@@ -39,7 +39,7 @@ declare namespace sap {
             export class BOChooseInput extends BOInput {
                 getChooseType(): ibas.emChooseType;
                 getCriteria(): ibas.Criteria;
-                setCriteria(value: ibas.Criteria): void;
+                setCriteria(value: ibas.Criteria|ibas.Condition[]): void;
             }
             export class DataOwnerInput extends BOChooseInput {
             }
@@ -72,7 +72,7 @@ declare namespace sap {
                 setBindingValue(value: string): void;
                 getBindingValue(): string;
                 getCriteria(): ibas.Criteria;
-                setCriteria(value: ibas.Criteria): void;
+                setCriteria(value: ibas.Criteria|ibas.Condition[]): void;
             }
             export class SeriesSelect extends sap.m.ex.BOSelect {
                 getBoCode(): string;
@@ -101,6 +101,10 @@ declare namespace sap {
                 getBindingValue(): string;
                 setSeparator(value: string): void;
                 getSeparator(): string;
+            }
+            export class BOChildSelect extends sap.m.ex.BOSelect {
+                setChildPropertyName(value: string): void;
+                getChildPropertyName(): string;
             }
         }
     }
