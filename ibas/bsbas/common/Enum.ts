@@ -53,6 +53,8 @@ namespace ibas {
     }
     /** 权限来源 */
     export enum emPrivilegeSource {
+        /** 模块设置 */
+        MODULE,
         /** 应用设置 */
         APPLICATION,
         /** 业务对象设置 */
