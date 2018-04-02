@@ -1273,6 +1273,8 @@ namespace openui5 {
                     items.add(item);
                 }
                 this.loadTokens(items);
+            } else {
+                this.removeAllTokens();
             }
             this.setProperty("bindingValue", value);
         },
