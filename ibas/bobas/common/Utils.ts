@@ -484,7 +484,7 @@ namespace ibas {
         const DATA_PART_YEAR: string = "yyyy";
         const DATA_PART_MONTH: string = "MM";
         const DATA_PART_DAY: string = "dd";
-        const DATA_PART_HOUR: string = "hh";
+        const DATA_PART_HOUR: string = "HH";
         const DATA_PART_MINUTE: string = "mm";
         const DATA_PART_SECOND: string = "ss";
         /**
