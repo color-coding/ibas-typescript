@@ -1225,6 +1225,9 @@ namespace openui5 {
                 bindingValue: { type: "string", group: "Ex" },
             },
             events: {
+                "deleteToken": {
+                    parameters: {}
+                }
             },
         },
         /**
@@ -1254,6 +1257,7 @@ namespace openui5 {
                             }
                         }
                         that.setBindingValue(tokenString);
+                        that.fireDeleteToken();
                     }
                 });
                 this.addToken(token);
