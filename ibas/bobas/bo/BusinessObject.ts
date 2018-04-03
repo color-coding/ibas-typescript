@@ -351,10 +351,6 @@ namespace ibas {
                     newBO[item] = undefined;
                 }
             }
-            // 重新初始化
-            if (newBO instanceof BusinessObject) {
-                newBO.init();
-            }
             newBO.isLoading = false;
             return newBO;
         }
