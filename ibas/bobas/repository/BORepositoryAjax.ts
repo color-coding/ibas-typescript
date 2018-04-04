@@ -349,7 +349,11 @@ namespace ibas {
                     } else {
                         // 出错了
                         opRslt.resultCode = 10000 + this.status;
-                        opRslt.message = strings.format("{0} - {1}", this.statusText, i18n.prop("sys_network_error"));
+                        if (this.status === 500) {
+                            opRslt.message = strings.format("{0} - {1}", this.statusText, i18n.prop("sys_server_internal_error"));
+                        } else {
+                            opRslt.message = strings.format("{0} - {1}", this.statusText, i18n.prop("sys_network_error"));
+                        }
                         logger.log(emMessageLevel.ERROR,
                             "repository: call method [{2}] faild, {0} - {1}.", this.status, this.statusText, this.responseURL);
                         caller.onCompleted.call(objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
