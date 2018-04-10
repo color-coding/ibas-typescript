@@ -36,13 +36,6 @@ namespace ibas {
      */
     export interface IBOView extends IView {
     }
-    /**
-     * 业务对象应用-视图，带服务
-     */
-    export interface IBOViewWithServices extends IBOView {
-        /** 调用服务事件，参数1 IServicesShower显示服务者 */
-        callServicesEvent: Function;
-    }
     /** 使用查询面板 */
     export interface IUseQueryPanel {
         /** 查询标识 */
@@ -82,7 +75,7 @@ namespace ibas {
     /**
      * 业务对象应用-列表视图
      */
-    export interface IBOListView extends IBOQueryView, IBOViewWithServices {
+    export interface IBOListView extends IBOQueryView {
         /** 新建数据事件 */
         newDataEvent: Function;
         /** 查看数据事件，参数：目标数据 */
@@ -98,7 +91,7 @@ namespace ibas {
     /**
      * 业务对象应用-查看视图
      */
-    export interface IBOViewView extends IBOView, IBOViewWithServices {
+    export interface IBOViewView extends IBOView {
         /** 编辑数据事件 */
         editDataEvent: Function;
     }
@@ -395,56 +388,6 @@ namespace ibas {
         /** 查询数据 */
         protected abstract fetchData(criteria: ICriteria): void;
     }
-    /**
-     * 业务对象应用，带服务
-     */
-    export abstract class BOApplicationWithServices<T extends IBOViewWithServices> extends Application<T> {
-        /** 业务对象编码 */
-        boCode: string;
-        /** 注册视图，重载需要回掉此方法 */
-        protected registerView(): void {
-            super.registerView();
-            this.view.callServicesEvent = this.callServices;
-        }
-        /** 调用应用的服务 */
-        private callServices(): void {
-            let proxies: IServiceProxy<IServiceContract>[] = this.getServiceProxies();
-            if (objects.isNull(proxies) || proxies.length === 0) {
-                // 没有提供服务代理则退出
-                return;
-            }
-            let shower: IServicesShower = arguments[0];
-            if (objects.isNull(shower)) {
-                shower = (<IServicesShower><any>this.view);
-            }
-            if (objects.isNull(shower) || shower.displayServices === undefined) {
-                this.proceeding(emMessageType.WARNING, i18n.prop("sys_not_provided_display_service_method", this.description));
-                return;
-            }
-            // 获取服务
-            let services: Array<IServiceAgent> = new Array<IServiceAgent>();
-            for (let proxy of proxies) {
-                for (let service of servicesManager.getServices({
-                    proxy: proxy
-                })) {
-                    services.push(service);
-                }
-            }
-            if (services.length > 0) {
-                // 服务排序
-                services = services.sort((c, b): number => {
-                    return c.name.localeCompare(b.name);
-                });
-                // 显示可用服务
-                shower.displayServices(services);
-            } else {
-                this.proceeding(emMessageType.WARNING, i18n.prop("sys_application_no_services", this.description));
-            }
-        }
-        /** 获取服务的契约 */
-        protected abstract getServiceProxies(): IServiceProxy<IServiceContract>[];
-    }
-
     /**
      * 常驻应用
      */

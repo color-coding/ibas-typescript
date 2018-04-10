@@ -80,8 +80,6 @@ namespace ibas {
         newDataEvent: Function;
         /** 查看数据事件，参数：目标数据 */
         viewDataEvent: Function;
-        /** 调用服务事件 */
-        callServicesEvent: Function;
     }
     /** 业务对象选择视图 */
     export abstract class BOChooseView extends BOQueryDialogView implements IBOChooseView {
@@ -96,8 +94,6 @@ namespace ibas {
     export abstract class BOViewView extends BOView implements IBOViewView {
         /** 编辑数据事件 */
         editDataEvent: Function;
-        /** 调用服务事件 */
-        callServicesEvent: Function;
     }
     /** 业务对象编辑视图 */
     export abstract class BOEditView extends BOView implements IBOEditView {
