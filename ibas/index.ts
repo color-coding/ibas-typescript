@@ -15,6 +15,7 @@
 /// <reference path="./bobas/common/Logger.ts" />
 /// <reference path="./bobas/common/I18N.ts" />
 /// <reference path="./bobas/common/Utils.ts" />
+/// <reference path="./bobas/common/Waiter.ts" />
 /// <reference path="./bobas/debug/Assert.ts" />
 /// <reference path="./bobas/bo/BusinessObjectCore.ts" />
 /// <reference path="./bobas/bo/BusinessObject.ts" />
