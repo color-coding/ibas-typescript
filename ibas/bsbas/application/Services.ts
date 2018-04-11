@@ -50,6 +50,8 @@ namespace ibas {
      * 显示服务者
      */
     export interface IServicesShower {
+        /** 服务代理 */
+        proxy: IServiceProxy<IServiceContract>;
         /** 显示服务 */
         displayServices(services: IServiceAgent[]): void;
     }
@@ -478,6 +480,36 @@ namespace ibas {
             if (!this.runService(caller)) {
                 // 服务未运行
                 logger.log(emMessageLevel.WARN, "services: not found [{0}]'s application service.", objects.getName(caller.proxy));
+            }
+        }
+        /**
+         * 显示可用服务
+         * @param shower 显示服务者
+         */
+        showServices(shower: IServicesShower): void {
+            if (objects.isNull(shower)) {
+                throw new Error(i18n.prop("sys_invalid_parameter", "shower"));
+            }
+            if (objects.isNull(shower.proxy)) {
+                throw new Error(i18n.prop("sys_invalid_parameter", "shower.proxy"));
+            }
+            if (!(shower.displayServices instanceof Function)) {
+                throw new Error(i18n.prop("sys_not_provided_display_service_method"));
+            }
+            // 获取服务
+            let services: Array<IServiceAgent> = new Array<IServiceAgent>();
+            for (let service of servicesManager.getServices({
+                proxy: shower.proxy
+            })) {
+                services.push(service);
+            }
+            if (services.length > 0) {
+                // 服务排序
+                services = services.sort((c, b): number => {
+                    return c.name.localeCompare(b.name);
+                });
+                // 显示可用服务
+                shower.displayServices(services);
             }
         }
     }

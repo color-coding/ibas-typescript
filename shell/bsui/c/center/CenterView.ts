@@ -295,7 +295,7 @@ namespace shell {
                         this.statusDelay = ibas.config.get(CONFIG_ITEM_STATUS_MESSAGES_DELAY, 2) * 1000;
                     }
                     setTimeout(function (): void {
-                        if (ibas.dates.now().getTime() >= that.messageTime + that.statusDelay) {
+                        if (ibas.dates.now().getTime() >= (that.messageTime + that.statusDelay)) {
                             if (that.messagePopover.isOpen() && that.isDisplayed) {
                                 that.messagePopover.close();
                             }

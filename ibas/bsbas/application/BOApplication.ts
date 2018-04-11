@@ -157,7 +157,7 @@ namespace ibas {
     /**
      * 业务对象列表应用
      */
-    export abstract class BOListApplication<T extends IBOListView, D> extends BOApplicationWithServices<T> {
+    export abstract class BOListApplication<T extends IBOListView, D> extends BOApplication<T> {
         /** 注册视图，重载需要回掉此方法 */
         protected registerView(): void {
             super.registerView();
@@ -241,7 +241,7 @@ namespace ibas {
     /**
      * 业务对象查看应用
      */
-    export abstract class BOViewApplication<T extends IBOViewView> extends BOApplicationWithServices<T> {
+    export abstract class BOViewApplication<T extends IBOViewView> extends BOApplication<T> {
 
         /** 注册视图，重载需要回掉此方法 */
         protected registerView(): void {
