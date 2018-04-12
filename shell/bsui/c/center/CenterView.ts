@@ -621,7 +621,12 @@ namespace shell {
                 showBarView(view: ibas.BOBarView): void {
                     let that: this = this;
                     let form: any = view.draw();
-                    if (form instanceof sap.m.QuickView) {
+                    if (ibas.objects.isNull(form)) {
+                        setTimeout(function (): void {
+                            view.isDisplayed = false;
+                        }, 100);
+                        return;
+                    } else if (form instanceof sap.m.QuickView) {
                         // 快速视图
                         form.attachAfterClose(null, function (): void {
                             // 设置视图未显示

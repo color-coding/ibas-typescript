@@ -479,7 +479,7 @@ namespace ibas {
             // 调用服务
             if (!this.runService(caller)) {
                 // 服务未运行
-                logger.log(emMessageLevel.WARN, "services: not found [{0}]'s application service.", objects.getName(caller.proxy));
+                logger.log(emMessageLevel.WARN, "services: not found [{0}]'s application service.", objects.getName(objects.getType(caller.proxy)));
             }
         }
         /**
