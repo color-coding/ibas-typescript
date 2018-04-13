@@ -21,6 +21,8 @@ export class DataConverter4Test extends ibas.DataConverter4j {
     }
 }
 
+/** 模块业务对象工厂 */
+export const boFactory: ibas.BOFactory = new ibas.BOFactory();
 /**
  * Test 模块的业务对象转换者
  */
@@ -30,6 +32,10 @@ export class TestBOConverter extends ibas.BOConverter {
         super();
     }
 
+    /** 模块对象工厂 */
+    protected factory(): ibas.BOFactory {
+        return boFactory;
+    }
     /**
      * 自定义解析
      * @param data 远程数据
