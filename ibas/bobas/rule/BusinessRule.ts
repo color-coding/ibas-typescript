@@ -56,11 +56,13 @@ namespace ibas {
             for (let item of context.inputValues.entries()) {
                 let name: string = item["0"];
                 let value: any = item["1"];
-                if (typeof value === "number" && typeof this.maxValue === "number") {
+                if (typeof this.maxValue === "number") {
+                    value = numbers.valueOf(value);
                     if (value > this.maxValue) {
                         throw new BusinessRuleError(i18n.prop("sys_business_rule_max_value_error", name, value, this.maxValue));
                     }
-                } else if (value instanceof Date && this.maxValue instanceof Date) {
+                } else if (this.maxValue instanceof Date) {
+                    value = dates.valueOf(value);
                     if (dates.compare(value, this.maxValue) > 0) {
                         throw new BusinessRuleError(i18n.prop("sys_business_rule_max_value_error", name, value, this.maxValue));
                     }
@@ -89,11 +91,13 @@ namespace ibas {
             for (let item of context.inputValues.entries()) {
                 let name: string = item["0"];
                 let value: any = item["1"];
-                if (typeof value === "number" && typeof this.minValue === "number") {
+                if (typeof this.minValue === "number") {
+                    value = numbers.valueOf(value);
                     if (value < this.minValue) {
                         throw new BusinessRuleError(i18n.prop("sys_business_rule_min_value_error", name, value, this.minValue));
                     }
-                } else if (value instanceof Date && this.minValue instanceof Date) {
+                } else if (this.minValue instanceof Date) {
+                    value = dates.valueOf(value);
                     if (dates.compare(value, this.minValue) < 0) {
                         throw new BusinessRuleError(i18n.prop("sys_business_rule_min_value_error", name, value, this.minValue));
                     }
@@ -154,11 +158,7 @@ namespace ibas {
         protected compute(context: BusinessRuleContextCommon): void {
             let sum: number = 0;
             for (let property of this.addends) {
-                let value: number = context.inputValues.get(property);
-                if (typeof value !== "number") {
-                    logger.log(emMessageLevel.DEBUG, "rules: [{0}]'s value is not number.", property);
-                    return;
-                }
+                let value: number = numbers.valueOf(context.inputValues.get(property));
                 sum += value;
             }
             context.outputValues.set(this.result, sum);
@@ -198,11 +198,7 @@ namespace ibas {
         protected compute(context: BusinessRuleContextCommon): void {
             let total: number = context.inputValues.get(this.subtrahend);
             for (let property of this.subtractors) {
-                let value: number = context.inputValues.get(property);
-                if (typeof value !== "number") {
-                    logger.log(emMessageLevel.DEBUG, "rules: [{0}]'s value is not number.", property);
-                    return;
-                }
+                let value: number = numbers.valueOf(context.inputValues.get(property));
                 total -= value;
             }
             context.outputValues.set(this.result, total);
@@ -234,16 +230,8 @@ namespace ibas {
         multiplier: string;
         /** 计算规则 */
         protected compute(context: BusinessRuleContextCommon): void {
-            let multiplicand: number = context.inputValues.get(this.multiplicand);
-            if (typeof multiplicand !== "number") {
-                logger.log(emMessageLevel.DEBUG, "rules: [{0}]'s value is not number.", this.multiplicand);
-                return;
-            }
-            let multiplier: number = context.inputValues.get(this.multiplier);
-            if (typeof multiplier !== "number") {
-                logger.log(emMessageLevel.DEBUG, "rules: [{0}]'s value is not number.", this.multiplier);
-                return;
-            }
+            let multiplicand: number = numbers.valueOf(context.inputValues.get(this.multiplicand));
+            let multiplier: number = numbers.valueOf(context.inputValues.get(this.multiplier));
             let result: number = multiplicand * multiplier;
             context.outputValues.set(this.result, result);
         }
@@ -274,16 +262,8 @@ namespace ibas {
         divisor: string;
         /** 计算规则 */
         protected compute(context: BusinessRuleContextCommon): void {
-            let dividend: number = context.inputValues.get(this.dividend);
-            if (typeof dividend !== "number") {
-                logger.log(emMessageLevel.DEBUG, "rules: [{0}]'s value is not number.", this.dividend);
-                return;
-            }
-            let divisor: number = context.inputValues.get(this.divisor);
-            if (typeof divisor !== "number") {
-                logger.log(emMessageLevel.DEBUG, "rules: [{0}]'s value is not number.", this.divisor);
-                return;
-            }
+            let dividend: number = numbers.valueOf(context.inputValues.get(this.dividend));
+            let divisor: number = numbers.valueOf(context.inputValues.get(this.divisor));
             let result: number = dividend / divisor;
             context.outputValues.set(this.result, result);
         }
@@ -316,21 +296,9 @@ namespace ibas {
         addend: string;
         /** 计算规则 */
         protected compute(context: BusinessRuleContextCommon): void {
-            let result: number = context.inputValues.get(this.result);
-            if (typeof result !== "number") {
-                logger.log(emMessageLevel.DEBUG, "rules: [{0}]'s value is not number.", this.result);
-                return;
-            }
-            let augend: number = context.inputValues.get(this.augend);
-            if (typeof augend !== "number") {
-                logger.log(emMessageLevel.DEBUG, "rules: [{0}]'s value is not number.", this.augend);
-                return;
-            }
-            let addend: number = context.inputValues.get(this.addend);
-            if (typeof addend !== "number") {
-                logger.log(emMessageLevel.DEBUG, "rules: [{0}]'s value is not number.", this.addend);
-                return;
-            }
+            let result: number = numbers.valueOf(context.inputValues.get(this.result));
+            let augend: number = numbers.valueOf(context.inputValues.get(this.augend));
+            let addend: number = numbers.valueOf(context.inputValues.get(this.addend));
 
             if (augend === 0) {
                 context.outputValues.set(this.result, addend);
@@ -375,21 +343,9 @@ namespace ibas {
         multiplier: string;
         /** 计算规则 */
         protected compute(context: BusinessRuleContextCommon): void {
-            let result: number = context.inputValues.get(this.result);
-            if (typeof result !== "number") {
-                logger.log(emMessageLevel.DEBUG, "rules: [{0}]'s value is not number.", this.result);
-                return;
-            }
-            let multiplicand: number = context.inputValues.get(this.multiplicand);
-            if (typeof multiplicand !== "number") {
-                logger.log(emMessageLevel.DEBUG, "rules: [{0}]'s value is not number.", this.multiplicand);
-                return;
-            }
-            let multiplier: number = context.inputValues.get(this.multiplier);
-            if (typeof multiplier !== "number") {
-                logger.log(emMessageLevel.DEBUG, "rules: [{0}]'s value is not number.", this.multiplier);
-                return;
-            }
+            let result: number = numbers.valueOf(context.inputValues.get(this.result));
+            let multiplicand: number = numbers.valueOf(context.inputValues.get(this.multiplicand));
+            let multiplier: number = numbers.valueOf(context.inputValues.get(this.multiplier));
 
             if (multiplicand === 0) {
                 context.outputValues.set(this.result, multiplicand);
@@ -419,6 +375,8 @@ namespace ibas {
         constructor(result: string, collection: string, summing: string) {
             super(collection);
             this.name = i18n.prop("sys_business_rule_sum_elements");
+            this.result = result;
+            this.summing = summing;
             this.inputProperties.add(this.summing);
             this.affectedProperties.add(this.result);
         }
@@ -432,11 +390,7 @@ namespace ibas {
             let values: any[] = context.inputValues.get(this.summing);
             if (!objects.isNull(values)) {
                 for (let item of values) {
-                    if (typeof item !== "number") {
-                        logger.log(emMessageLevel.DEBUG, "rules: [{0}]'s value is not number.", this.summing);
-                        return;
-                    }
-                    result += item;
+                    result += numbers.valueOf(item);
                 }
             }
             context.outputValues.set(this.result, result);

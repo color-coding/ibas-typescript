@@ -471,6 +471,9 @@ namespace ibas {
          * @param target 目标数据（本地类型）
          */
         private parsingProperties(source: any, target: any): void {
+            if (target instanceof TrackableBase) {
+                target.isLoading = true;
+            }
             for (let sName in source) {
                 if (objects.isNull(sName)) {
                     continue;
@@ -516,6 +519,9 @@ namespace ibas {
                     }
                 }
                 target[tName] = sValue;
+            }
+            if (target instanceof TrackableBase) {
+                target.isLoading = false;
             }
         }
 

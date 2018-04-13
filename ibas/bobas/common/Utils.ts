@@ -420,6 +420,7 @@ namespace ibas {
             // 月份从0开始
             return new Date(strings.format("{0}-{1}-{2}", date.getFullYear(), date.getMonth() + 1, date.getDate()));
         }
+
         /**
          * 解析日期，支持以下格式
          * yyyy/MM/dd'T'HH:mm:ss
@@ -431,51 +432,62 @@ namespace ibas {
          * @param value 日期字符
          * @returns 日期
          */
-        export function valueOf(value: string): Date {
-            if (objects.isNull(value) || value.length === 0) {
+        export function valueOf(value: any): Date {
+            if (objects.isNull(value)) {
                 return undefined;
             }
-            let spTime: string = "T";
-            if (value.indexOf("'T'") > 0) {
-                spTime = "'T'";
-            } else if (value.indexOf(" ") > 0) {
-                spTime = " ";
+            if (<any>value instanceof Date) {
+                return <Date><any>value;
             }
-            let tmps: string[] = value.split(spTime);
-            let date: string = tmps[0];
-            let time: string = tmps[1];
-            let year: number = 0, month: number = 0, day: number = 0, hour: number = 0, minute: number = 0, second: number = 0;
-            if (!objects.isNull(date)) {
-                let spChar: string = "-";
-                if (date.indexOf("/") > 0) {
-                    spChar = "/";
-                }
-                tmps = date.split(spChar);
-                if (!objects.isNull(tmps[0])) {
-                    year = Number.parseInt(tmps[0]);
-                }
-                if (!objects.isNull(tmps[1])) {
-                    month = Number.parseInt(tmps[1]);
-                }
-                if (!objects.isNull(tmps[2])) {
-                    day = Number.parseInt(tmps[2]);
-                }
+            if (typeof value === "number") {
+                return new Date(value);
             }
-            if (!objects.isNull(time)) {
-                let spChar: string = ":";
-                tmps = time.split(spChar);
-                if (!objects.isNull(tmps[0])) {
-                    hour = Number.parseInt(tmps[0]);
+            if (typeof value === "string") {
+                if (value.length === 0) {
+                    return undefined;
                 }
-                if (!objects.isNull(tmps[1])) {
-                    minute = Number.parseInt(tmps[1]);
+                let spTime: string = "T";
+                if (value.indexOf("'T'") > 0) {
+                    spTime = "'T'";
+                } else if (value.indexOf(" ") > 0) {
+                    spTime = " ";
                 }
-                if (!objects.isNull(tmps[2])) {
-                    second = Number.parseInt(tmps[2]);
+                let tmps: string[] = value.split(spTime);
+                let date: string = tmps[0];
+                let time: string = tmps[1];
+                let year: number = 0, month: number = 0, day: number = 0, hour: number = 0, minute: number = 0, second: number = 0;
+                if (!objects.isNull(date)) {
+                    let spChar: string = "-";
+                    if (date.indexOf("/") > 0) {
+                        spChar = "/";
+                    }
+                    tmps = date.split(spChar);
+                    if (!objects.isNull(tmps[0])) {
+                        year = Number.parseInt(tmps[0]);
+                    }
+                    if (!objects.isNull(tmps[1])) {
+                        month = Number.parseInt(tmps[1]);
+                    }
+                    if (!objects.isNull(tmps[2])) {
+                        day = Number.parseInt(tmps[2]);
+                    }
                 }
+                if (!objects.isNull(time)) {
+                    let spChar: string = ":";
+                    tmps = time.split(spChar);
+                    if (!objects.isNull(tmps[0])) {
+                        hour = Number.parseInt(tmps[0]);
+                    }
+                    if (!objects.isNull(tmps[1])) {
+                        minute = Number.parseInt(tmps[1]);
+                    }
+                    if (!objects.isNull(tmps[2])) {
+                        second = Number.parseInt(tmps[2]);
+                    }
+                }
+                // 月份从0开始
+                return new Date(year, month - 1, day, hour, minute, second);
             }
-            // 月份从0开始
-            return new Date(year, month - 1, day, hour, minute, second);
         }
 
         const DATA_SEPARATOR: string = "-";
@@ -651,8 +663,11 @@ namespace ibas {
             }
 
         }
-        /**  转为小数 */
-        export function toFloat(data: any): number {
+        /**  数字 */
+        export function valueOf(data: any): number {
+            if (typeof data === "number") {
+                return <number>data;
+            }
             let value: number = parseFloat(data);
             if (isNaN(value)) {
                 return 0.0;

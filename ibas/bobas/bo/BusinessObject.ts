@@ -340,6 +340,7 @@ namespace ibas {
         /** 删除 */
         delete(): void {
             this.markDeleted(true);
+            super.firePropertyChanged("isDeleted");
         }
         /** 克隆对象 */
         clone(): T {
@@ -418,7 +419,11 @@ namespace ibas {
                     if (this.parent === bo) {
                         this.onParentPropertyChanged(name);
                     } else {
-                        this.runRules(name);
+                        if (name === "isDeleted") {
+                            this.runRules(null);
+                        } else {
+                            this.runRules(name);
+                        }
                         this.onChildPropertyChanged(bo, name);
                     }
                 }
@@ -579,9 +584,6 @@ namespace ibas {
             if (this.parent.isLoading) {
                 return;
             }
-            if (this.length === 0) {
-                return;
-            }
             if (objects.isNull(this.myRules)) {
                 this.myRules = businessRulesManager.getRules(objects.getType(this.parent));
             }
@@ -598,7 +600,13 @@ namespace ibas {
                 }
                 if (!strings.isEmpty(property) && !objects.isNull(rule.inputProperties)) {
                     // 根据属性筛选规则
-                    if (!rule.inputProperties.contain(property)) {
+                    let done: boolean = false;
+                    for (let item of rule.inputProperties) {
+                        if (strings.equalsIgnoreCase(item, property)) {
+                            done = true; break;
+                        }
+                    }
+                    if (!done) {
                         continue;
                     }
                 }

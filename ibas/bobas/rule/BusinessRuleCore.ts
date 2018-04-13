@@ -76,26 +76,22 @@ namespace ibas {
             this.initialized = false;
         }
         initialized: boolean;
-        private rules: IList<IBusinessRule>;
         /** 注册规则 */
         register(rules: IBusinessRule[] | IBusinessRule): void {
-            if (objects.isNull(this.rules)) {
-                this.rules = new ArrayList<IBusinessRule>();
-            }
             if (rules instanceof Array) {
                 for (let item of rules) {
-                    this.rules.add(item);
+                    this.push(item);
                 }
             } else {
-                this.rules.add(rules);
+                this.push(rules);
             }
         }
         /** 大小 */
         size(): number {
-            if (objects.isNull(this.rules)) {
+            if (objects.isNull(this)) {
                 return 0;
             }
-            return this.rules.length;
+            return this.length;
         }
         /**
          * 运行业务规则
@@ -105,11 +101,8 @@ namespace ibas {
          *            变化的属性
          */
         execute(bo: IBusinessObject, ...properties: string[]): void {
-            if (objects.isNull(this.rules)) {
-                return;
-            }
             let rules: IList<IBusinessRule> = new ArrayList<IBusinessRule>();
-            for (let rule of this.rules) {
+            for (let rule of this) {
                 let done: boolean = false;
                 for (let property of properties) {
                     if (objects.isNull(rule.inputProperties)) {
@@ -171,7 +164,10 @@ namespace ibas {
                 this.compute(context);
                 if (!objects.isNull(this.affectedProperties) && !objects.isNull(context.outputValues)) {
                     for (let item of this.affectedProperties) {
-                        bo.setProperty(item, context.outputValues.get(item));
+                        let value: any = context.outputValues.get(item);
+                        if (value !== undefined) {
+                            bo.setProperty(item, value);
+                        }
                     }
                 }
             } catch (error) {
@@ -214,6 +210,11 @@ namespace ibas {
                         for (let item of this.inputProperties) {
                             let values: ArrayList<any> = new ArrayList<any>();
                             for (let boValue of boValues) {
+                                if (boValue instanceof TrackableBase) {
+                                    if (boValue.isDeleted) {
+                                        continue;
+                                    }
+                                }
                                 values.add(boValue.getProperty(item));
                             }
                             context.inputValues.set(item, values);
@@ -224,7 +225,10 @@ namespace ibas {
                 this.compute(context);
                 if (!objects.isNull(this.affectedProperties) && !objects.isNull(context.outputValues)) {
                     for (let item of this.affectedProperties) {
-                        bo.setProperty(item, context.outputValues.get(item));
+                        let value: any = context.outputValues.get(item);
+                        if (value !== undefined) {
+                            bo.setProperty(item, value);
+                        }
                     }
                 }
             } catch (error) {
