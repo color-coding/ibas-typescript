@@ -143,11 +143,11 @@ namespace openui5 {
                     async: false,
                     cache: false,
                     error: function (xhr: JQueryXHR, status: string, error: string): void {
-                        console.warn(ibas.strings.format("config: load file [{2}] faild [{0} - {1}].", status, error, address));
+                        ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.strings.format("config: load file [{2}] faild [{0} - {1}].", status, error, address));
                         resolve(null);
                     },
                     success: function (data: any): void {
-                        console.log(ibas.strings.format("config: load file [{0}] successful.", address));
+                        ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.strings.format("config: load file [{0}] successful.", address));
                         resolve(data);
                     },
                 };
