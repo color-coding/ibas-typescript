@@ -178,6 +178,9 @@ namespace ibas {
             }
             let busy: boolean = arguments[0];
             let msg: string = arguments[1];
+            if (this.view instanceof View) {
+                this.view.isBusy = busy;
+            }
             if (!objects.isNull(this.viewShower)) {
                 this.viewShower.busy(this.view, busy, msg);
             } else {

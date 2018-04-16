@@ -312,6 +312,8 @@ namespace ibas {
         hideTitle: boolean;
         /** 是否已显示 */
         isDisplayed: boolean;
+        /** 是否忙 */
+        isBusy: boolean;
         /** 绘制视图 */
         abstract draw(): any;
         /** 关闭视图 */
@@ -322,6 +324,10 @@ namespace ibas {
          * @param pars 参数
          */
         protected fireViewEvents(event: Function, ...pars: any[]): void {
+            if (this.isBusy) {
+                ibas.logger.log(ibas.emMessageLevel.DEBUG, "view: event skipping, [{0} - {1}] is busy.", this.id, this.title);
+                return;
+            }
             if (typeof event !== "function") {
                 throw new Error(i18n.prop("sys_invalid_parameter", "event"));
             }
