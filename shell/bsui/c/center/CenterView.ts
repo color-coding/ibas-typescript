@@ -686,8 +686,10 @@ namespace shell {
                     if (!ibas.objects.isNull(bar) && bar instanceof sap.ui.core.Control) {
                         this.mainHeader.insertContent(bar, this.mainHeader.getContent().length - 1);
                         // 触发工具条显示完成事件
-                        view.barShowedEvent.apply(view.application);
-                        view.id = bar.getId();
+                        if (view instanceof ibas.View) {
+                            view.barShowedEvent.apply(view.application);
+                            view.id = bar.getId();
+                        }
                     }
                 }
                 /** 显示地址视图 */
@@ -893,7 +895,9 @@ namespace shell {
                     for (let view of this.viewQueue.keys()) {
                         if (view.id === viewId) {
                             // 通知视图事件
-                            view.onHashChanged(event);
+                            if (view instanceof ibas.View) {
+                                view.onHashChanged(event);
+                            }
                             return;
                         }
                     }
@@ -901,7 +905,9 @@ namespace shell {
                     for (let view of this.barViewQueue.keys()) {
                         if (view.id === viewId) {
                             // 通知视图事件
-                            view.onHashChanged(event);
+                            if (view instanceof ibas.View) {
+                                view.onHashChanged(event);
+                            }
                             return;
                         }
                     }
@@ -918,14 +924,18 @@ namespace shell {
                                 }
                                 for (let view of this.viewQueue.keys()) {
                                     if (view.id === tab.getKey()) {
-                                        view.onTouchMove(direction, event);
+                                        if (view instanceof ibas.View) {
+                                            view.onTouchMove(direction, event);
+                                        }
                                     }
                                 }
                             }
                         } else {
                             for (let view of this.viewQueue.keys()) {
                                 if (view.id === item.getId()) {
-                                    view.onTouchMove(direction, event);
+                                    if (view instanceof ibas.View) {
+                                        view.onTouchMove(direction, event);
+                                    }
                                 }
                             }
                         }

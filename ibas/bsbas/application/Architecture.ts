@@ -66,28 +66,14 @@ namespace ibas {
      * 应用-视图
      */
     export interface IView {
-        /** 应用 */
-        application: IApplication<IView>;
         /** 唯一标识 */
         id: string;
         /** 标题 */
         title: string;
         /** 绘制视图 */
         draw(): any;
-        /** 是否已显示 */
-        isDisplayed: boolean;
         /** 关闭视图 */
         closeEvent: Function;
-        /** 显示之后 */
-        onDisplayed(): void;
-        /** 关闭之后 */
-        onClosed(): void;
-        /** 键盘按钮按下 */
-        onKeyDown(event: KeyboardEvent): void;
-        /** 地址栏哈希值变化 */
-        onHashChanged(event: HashChangeEvent): void;
-        /** 手指触控移动 */
-        onTouchMove(direction: emTouchMoveDirection, event: TouchEvent): void;
     }
     /**
      * 应用-视图
@@ -258,16 +244,17 @@ namespace ibas {
                     throw new Error(i18n.prop("sys_invalid_view_navigation", this.id));
                 }
                 this._view = <T>this.navigation.create(this);
-                if (objects.isNull(this._view)) {
+                if (this._view instanceof View) {
+                    this._view.application = this;
+                    if (!strings.isEmpty(this.description)) {
+                        this._view.title = this.description;
+                    } else {
+                        this._view.title = this.name;
+                    }
+                    this.registerView();
+                } else {
                     throw new Error(i18n.prop("sys_invalid_view", this.id));
                 }
-                this._view.application = this;
-                if (!objects.isNull(this.description)) {
-                    this._view.title = this.description;
-                } else {
-                    this._view.title = this.name;
-                }
-                this.registerView();
             }
             return this._view;
         }
@@ -276,10 +263,12 @@ namespace ibas {
             if (objects.isNull(this._view)) {
                 return false;
             }
-            if (this._view.isDisplayed) {
-                return true;
-            } else {
-                return false;
+            if (this._view instanceof View) {
+                if (this._view.isDisplayed) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
         }
         /** 注册视图 */

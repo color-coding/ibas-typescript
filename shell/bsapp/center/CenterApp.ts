@@ -49,11 +49,12 @@ namespace shell {
             }
             /** 视图显示后 */
             private afterViewShow(): void {
-                if (ibas.objects.isNull(this.view)) {
+                if (this.view instanceof ibas.View) {
+                    this.view.isDisplayed = true;
+                    this.viewShowed();
+                } else {
                     throw new Error(ibas.i18n.prop("sys_invalid_view", this.name));
                 }
-                this.view.isDisplayed = true;
-                this.viewShowed();
             }
             /** 注册视图 */
             protected registerView(): void {
@@ -471,14 +472,16 @@ namespace shell {
             }
             /** 显示视图，可重载并添加权限控制 */
             showView(view: ibas.IView): void {
-                if (!ibas.objects.isNull(view.application)) {
-                    if (!this.canRun(view.application)) {
-                        throw new Error(
-                            ibas.i18n.prop("shell_application_not_allowed_run",
-                                ibas.objects.isNull(view.application.description) ? view.application.name : view.application.description));
+                if (view instanceof ibas.View) {
+                    if (!ibas.objects.isNull(view.application)) {
+                        if (!this.canRun(view.application)) {
+                            throw new Error(
+                                ibas.i18n.prop("shell_application_not_allowed_run",
+                                    ibas.objects.isNull(view.application.description) ? view.application.name : view.application.description));
+                        }
                     }
+                    this.view.showView(view);
                 }
-                this.view.showView(view);
             }
 
         }
