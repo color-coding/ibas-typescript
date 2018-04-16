@@ -76,7 +76,7 @@ namespace ibas {
             } else if (this.definedDataType() === emTableDataType.NUMERIC) {
                 return numbers.toInt(data);
             } else if (this.definedDataType() === emTableDataType.DECIMAL) {
-                return numbers.toFloat(data);
+                return numbers.valueOf(data);
             } else if (this.definedDataType() === emTableDataType.DATE) {
                 return dates.valueOf(data);
             } else {

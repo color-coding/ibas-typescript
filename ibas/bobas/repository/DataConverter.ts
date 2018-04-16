@@ -471,6 +471,9 @@ namespace ibas {
          * @param target 目标数据（本地类型）
          */
         private parsingProperties(source: any, target: any): void {
+            if (target instanceof TrackableBase) {
+                target.isLoading = true;
+            }
             for (let sName in source) {
                 if (objects.isNull(sName)) {
                     continue;
@@ -508,7 +511,7 @@ namespace ibas {
                 } else {
                     let boName: string = target.constructor.name;
                     let newValue: string = this.parsingData(boName, tName, sValue);
-                    if (objects.isNull(newValue)) {
+                    if (objects.isNull(newValue) && !objects.isNull(sValue)) {
                         let msg: string = boName + " - " + tName;
                         logger.log(emMessageLevel.WARN, i18n.prop("sys_not_parsed_data", msg));
                     } else {
@@ -516,6 +519,9 @@ namespace ibas {
                     }
                 }
                 target[tName] = sValue;
+            }
+            if (target instanceof TrackableBase) {
+                target.isLoading = false;
             }
         }
 
@@ -563,7 +569,7 @@ namespace ibas {
                     value = this.convertProperties(value, {});
                 } else {
                     let newValue: any = this.convertData(source.constructor.name, sName, value);
-                    if (objects.isNull(newValue)) {
+                    if (objects.isNull(newValue) && !objects.isNull(value)) {
                         let msg: string = source.constructor.name + " - " + name;
                         logger.log(emMessageLevel.WARN, i18n.prop("sys_not_converted_data", msg));
                     } else {

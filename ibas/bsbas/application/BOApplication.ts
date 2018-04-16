@@ -272,7 +272,7 @@ namespace ibas {
                         let criteria: Criteria | string;
                         if (objects.instanceOf(caller.linkValue, Criteria)) {
                             criteria = <Criteria>caller.linkValue;
-                        } else if (caller.linkValue instanceof String) {
+                        } else if (typeof caller.linkValue === "string") {
                             criteria = <string>caller.linkValue;
                         } else if (caller.linkValue instanceof Array) {
                             criteria = new Criteria();

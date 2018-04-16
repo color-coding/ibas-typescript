@@ -32,9 +32,10 @@ namespace ibas {
     /** 业务对象属性名称-lineStatus */
     export const BO_PROPERTY_NAME_LINESTATUS: string = "lineStatus";
     /** 需要被重置的属性名称 */
-    export const NEED_BE_RESET_PROPERTIES: string[] = ["_listeners",
-        "createDate", "createTime", "updateDate", "updateTime", "logInst", "createUserSign", "updateUserSign",
-        "createActionId", "updateActionId", "referenced", "canceled", "deleted", "approvalStatus", "lineStatus", "status", "documentStatus"
+    const NEED_BE_RESET_PROPERTIES: string[] = [
+        "_listeners",
+        "createDate", "createTime", "updateDate", "updateTime", "logInst", "createUserSign", "updateUserSign", "createActionId", "updateActionId",
+        "referenced", "canceled", "deleted", "approvalStatus", "lineStatus", "status", "documentStatus"
     ];
 
     /**
@@ -324,6 +325,7 @@ namespace ibas {
         constructor() {
             super();
             // 注册属性改变监听
+            this.initRules();
             let that: this = this;
             this.registerListener({
                 propertyChanged(name: string): void {
@@ -338,6 +340,7 @@ namespace ibas {
         /** 删除 */
         delete(): void {
             this.markDeleted(true);
+            super.firePropertyChanged("isDeleted");
         }
         /** 克隆对象 */
         clone(): T {
@@ -357,6 +360,39 @@ namespace ibas {
         /** 属性改变时 */
         protected onPropertyChanged(name: string): void {
             // 属性改变时调用，可重载此函数加入业务逻辑
+        }
+        /**
+         * 初始化业务规则
+         */
+        private initRules(): void {
+            let myRules: IBusinessRules = businessRulesManager.getRules(objects.getType(this));
+            if (objects.isNull(myRules)) {
+                return;
+            }
+            if (myRules.initialized) {
+                return;
+            }
+            let rules: IBusinessRule[] = this.registerRules();
+            if (objects.isNull(rules) || rules.length === 0) {
+                return;
+            }
+            myRules.register(rules);
+            myRules.initialized = true;
+        }
+        /**
+         * 注册的业务规则
+         */
+        protected registerRules(): IBusinessRule[] {
+            return null;
+        }
+        protected firePropertyChanged(property: string): void {
+            if (this.isLoading) { return; }
+            let myRules: IBusinessRules = businessRulesManager.getRules(objects.getType(this));
+            if (objects.isNull(myRules)) {
+                return;
+            }
+            myRules.execute(this, property);
+            super.firePropertyChanged(property);
         }
     }
 
@@ -383,6 +419,11 @@ namespace ibas {
                     if (this.parent === bo) {
                         this.onParentPropertyChanged(name);
                     } else {
+                        if (name === "isDeleted") {
+                            this.runRules(null);
+                        } else {
+                            this.runRules(name);
+                        }
                         this.onChildPropertyChanged(bo, name);
                     }
                 }
@@ -523,6 +564,7 @@ namespace ibas {
             if (objects.instanceOf(item, Bindable)) {
                 (<any>item).registerListener(this.listener);
             }
+            this.runRules(null);
         }
         /**
          * 移出项目后
@@ -531,6 +573,48 @@ namespace ibas {
         protected afterRemove(item: T): void {
             if (objects.instanceOf(item, Bindable)) {
                 (<any>item).removeListener(this.listener);
+            }
+            this.runRules(null);
+        }
+        private myRules: IBusinessRules;
+        private runRules(property: string): void {
+            if (objects.isNull(this.parent)) {
+                return;
+            }
+            if (this.parent.isLoading) {
+                return;
+            }
+            if (objects.isNull(this.myRules)) {
+                this.myRules = businessRulesManager.getRules(objects.getType(this.parent));
+            }
+            if (objects.isNull(this.myRules)) {
+                return;
+            }
+            for (let rule of this.myRules) {
+                if (!(rule instanceof BusinessRuleCollection)) {
+                    continue;
+                }
+                if (this.parent.getProperty(rule.collection) !== this) {
+                    // 不是为此集合规则
+                    continue;
+                }
+                if (!strings.isEmpty(property) && !objects.isNull(rule.inputProperties)) {
+                    // 根据属性筛选规则
+                    let done: boolean = false;
+                    for (let item of rule.inputProperties) {
+                        if (strings.equalsIgnoreCase(item, property)) {
+                            done = true; break;
+                        }
+                    }
+                    if (!done) {
+                        continue;
+                    }
+                }
+                try {
+                    rule.execute(this.parent);
+                } catch (error) {
+                    logger.log(error);
+                }
             }
         }
     }

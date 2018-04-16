@@ -616,6 +616,19 @@ export class SalesOrder extends ibas.BODocument<SalesOrder> {
         this.salesOrderItems = new SalesOrderItems(this);
         this.objectCode = SalesOrder.BUSINESS_OBJECT_CODE;
     }
+
+    /**
+     * 注册的业务规则
+     */
+    protected registerRules(): ibas.IBusinessRule[] {
+        return [
+            new ibas.BusinessRuleRequired(SalesOrder.PROPERTY_CUSTOMERCODE_NAME), // 要求有值
+            new ibas.BusinessRuleMinValue<number>(0, SalesOrder.PROPERTY_DOCUMENTRATE_NAME), // 不能低于0
+            new ibas.BusinessRuleSumElements(SalesOrder.PROPERTY_DOCUMENTTOTAL_NAME, SalesOrder.PROPERTY_SALESORDERITEMS_NAME,
+                SalesOrderItem.PROPERTY_LINETOTAL_NAME), // 计算项目-行总计
+            new ibas.BusinessRuleMinValue<number>(0, SalesOrder.PROPERTY_DOCUMENTTOTAL_NAME), // 不能低于0
+        ];
+    }
 }
 
 /** 销售订单-行 */
@@ -950,6 +963,19 @@ export class SalesOrderItem extends ibas.BODocumentLine<SalesOrderItem> {
     /** 初始化数据 */
     protected init(): void {
         this.user = new User();
+    }
+    /**
+     * 注册的业务规则
+     */
+    protected registerRules(): ibas.IBusinessRule[] {
+        return [
+            new ibas.BusinessRuleMinValue<number>(0, SalesOrderItem.PROPERTY_CLOSEDQUANTITY_NAME), // 不能低于0
+            new ibas.BusinessRuleMinValue<number>(0, SalesOrderItem.PROPERTY_QUANTITY_NAME), // 不能低于0
+            new ibas.BusinessRuleMinValue<number>(0, SalesOrderItem.PROPERTY_PRICE_NAME), // 不能低于0
+            // 计算总计 = 数量 * 价格
+            new ibas.BusinessRuleMultiplication(SalesOrderItem.PROPERTY_LINETOTAL_NAME, SalesOrderItem.PROPERTY_QUANTITY_NAME, SalesOrderItem.PROPERTY_PRICE_NAME),
+            new ibas.BusinessRuleMinValue<number>(0, SalesOrderItem.PROPERTY_LINETOTAL_NAME), // 不能低于0
+        ];
     }
 }
 

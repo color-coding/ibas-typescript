@@ -92,7 +92,7 @@ namespace openui5 {
          */
         loadItems(selecteds: ibas.ArrayList<ibas.KeyText>): void {
             if (selecteds === null) {
-                console.log(ibas.i18n.prop("sap_m_ex_fetch_bos_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_fetch_bos_null"));
                 return;
             }
             // 如果属性为true,添加"请选择"项
@@ -122,26 +122,26 @@ namespace openui5 {
             let selectedKey: string = this.getSelectedKey();
             let boCode: string = this.getBoCode();
             if (ibas.strings.isEmpty(boCode)) {
-                console.log(ibas.i18n.prop("sap_m_ex_bocode_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_bocode_null"));
                 return;
             }
             let boType: any = ibas.boFactory.classOf(boCode);
             if (ibas.objects.isNull(boType)) {
-                console.log(ibas.i18n.prop("sap_m_ex_boType_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_boType_null"));
                 return;
             }
             let boName: string = ibas.objects.getName(boType);
             let boText: string = that.getBoText();
             if (ibas.strings.isEmpty(boKey)) {
-                console.log(ibas.i18n.prop("sap_m_ex_bokey_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_bokey_null"));
                 return;
             }
             if (ibas.strings.isEmpty(boText)) {
-                console.log(ibas.i18n.prop("sap_m_ex_botext_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_botext_null"));
                 return;
             }
             if (ibas.strings.isEmpty(boName)) {
-                console.log(ibas.i18n.prop("sap_m_ex_boname_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_boname_null"));
                 return;
             }
             let criteria: ibas.Criteria = this.getCriteria();
@@ -157,7 +157,7 @@ namespace openui5 {
             boRepEx.criteria = criteria;
             let keyTextList: ibas.ArrayList<ibas.KeyText> = await boRepEx.getKeyTextList();
             if (ibas.objects.isNull(keyTextList)) {
-                console.log(ibas.i18n.prop("sap_m_ex_fetch_bos_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_fetch_bos_null"));
                 return;
             }
             this.removeAllItems();
@@ -257,7 +257,7 @@ namespace openui5 {
          */
         loadItems(selecteds: ibas.ArrayList<ibas.KeyText>): void {
             if (selecteds === null) {
-                console.log(ibas.i18n.prop("sap_m_ex_fetch_bos_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_fetch_bos_null"));
                 return;
             }
             // 如果属性为true,添加"请选择"项
@@ -288,30 +288,30 @@ namespace openui5 {
             let boCode: string = this.getBoCode();
             let childPropertyName: string = this.getChildPropertyName();
             if (ibas.strings.isEmpty(boCode)) {
-                console.log(ibas.i18n.prop("sap_m_ex_bocode_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_bocode_null"));
                 return;
             }
             if (ibas.strings.isEmpty(childPropertyName)) {
-                console.log(ibas.i18n.prop("sap_m_ex_childpropertyname_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_childpropertyname_null"));
                 return;
             }
             let boType: any = ibas.boFactory.classOf(boCode);
             if (ibas.objects.isNull(boType)) {
-                console.log(ibas.i18n.prop("sap_m_ex_boType_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_boType_null"));
                 return;
             }
             let boName: string = ibas.objects.getName(boType);
             let boText: string = that.getBoText();
             if (ibas.strings.isEmpty(boKey)) {
-                console.log(ibas.i18n.prop("sap_m_ex_bokey_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_bokey_null"));
                 return;
             }
             if (ibas.strings.isEmpty(boText)) {
-                console.log(ibas.i18n.prop("sap_m_ex_botext_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_botext_null"));
                 return;
             }
             if (ibas.strings.isEmpty(boName)) {
-                console.log(ibas.i18n.prop("sap_m_ex_boname_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_boname_null"));
                 return;
             }
             let criteria: ibas.Criteria = this.getCriteria();
@@ -328,7 +328,7 @@ namespace openui5 {
             boRepEx.criteria = criteria;
             let keyTextList: ibas.ArrayList<ibas.KeyText> = await boRepEx.getChildBoKeyTextList();
             if (ibas.objects.isNull(keyTextList)) {
-                console.log(ibas.i18n.prop("sap_m_ex_fetch_bos_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_fetch_bos_null"));
                 return;
             }
             this.removeAllItems();
@@ -362,11 +362,11 @@ namespace openui5 {
             let boText: string = that.getBoText();
             let objectCode: string = this.getObjectCode();
             if (ibas.strings.isEmpty(boKey)) {
-                console.log(ibas.i18n.prop("sap_m_ex_bokey_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_bokey_null"));
                 return;
             }
             if (ibas.strings.isEmpty(boText)) {
-                console.log(ibas.i18n.prop("sap_m_ex_botext_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_botext_null"));
                 return;
             }
             if (ibas.objects.isNull(selectedKey)) {
@@ -455,7 +455,7 @@ namespace openui5 {
          */
         addKeyTextItem(selected: ibas.KeyText): void {
             if (selected === null) {
-                console.log(ibas.i18n.prop("sap_m_ex_fetch_bos_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_fetch_bos_null"));
                 return;
             }
             if (!!selected) {
@@ -476,29 +476,29 @@ namespace openui5 {
             let selectedKey: string = this.getSelectedKey();
             let boCode: string = this.getBoCode();
             if (ibas.strings.isEmpty(boCode)) {
-                console.log(ibas.i18n.prop("sap_m_ex_bocode_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_bocode_null"));
                 return;
             }
             let boType: any = ibas.boFactory.classOf(boCode);
             if (ibas.objects.isNull(boType)) {
-                console.log(ibas.i18n.prop("sap_m_ex_boType_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_boType_null"));
                 return;
             }
             let boName: string = ibas.objects.getName(boType);
             let boText: string = that.getBoText();
             if (ibas.strings.isEmpty(boKey)) {
-                console.log(ibas.i18n.prop("sap_m_ex_bokey_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_bokey_null"));
                 return;
             }
             if (ibas.strings.isEmpty(boText)) {
-                console.log(ibas.i18n.prop("sap_m_ex_botext_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_botext_null"));
                 return;
             }
             if (ibas.objects.isNull(selectedKey)) {
                 return;
             }
             if (ibas.strings.isEmpty(boName)) {
-                console.log(ibas.i18n.prop("sap_m_ex_boname_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_boname_null"));
                 return;
             }
             let boRepEx: BORepsitory = new BORepsitory();
@@ -514,12 +514,12 @@ namespace openui5 {
             boRepEx.criteria = criteria;
             let keyTextList: ibas.ArrayList<ibas.KeyText> = await boRepEx.getKeyTextList();
             if (ibas.objects.isNull(keyTextList)) {
-                console.log(ibas.i18n.prop("sap_m_ex_fetch_bos_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_fetch_bos_null"));
                 return;
             }
             let keyText: ibas.KeyText = keyTextList.firstOrDefault();
             if (ibas.objects.isNull(keyText)) {
-                console.log(ibas.i18n.prop("sap_m_ex_fetch_bos_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_fetch_bos_null"));
                 return;
             }
             this.removeAllSuggestionItems();
@@ -610,12 +610,12 @@ namespace openui5 {
             let that: any = this;
             let boCode: string = this.getBoCode();
             if (ibas.strings.isEmpty(boCode)) {
-                console.log(ibas.i18n.prop("sap_m_ex_bocode_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_bocode_null"));
                 return;
             }
             let boType: any = ibas.boFactory.classOf(boCode);
             if (ibas.objects.isNull(boType)) {
-                console.log(ibas.i18n.prop("sap_m_ex_boType_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_boType_null"));
                 return;
             }
             let criteria: ibas.Criteria;
@@ -772,7 +772,7 @@ namespace openui5 {
          */
         chooseCompleted: function (selecteds: ibas.IList<any>): void {
             if (selecteds === null) {
-                console.log(ibas.i18n.prop("sap_m_ex_fetch_bos_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_fetch_bos_null"));
                 return;
             }
             let key: string = "";
@@ -800,18 +800,18 @@ namespace openui5 {
             let boName: string = ibas.objects.getName(boType);
             let boText: string = that.getBoText();
             if (ibas.strings.isEmpty(boKey)) {
-                console.log(ibas.i18n.prop("sap_m_ex_bokey_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_bokey_null"));
                 return;
             }
             if (ibas.strings.isEmpty(boText)) {
-                console.log(ibas.i18n.prop("sap_m_ex_botext_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_botext_null"));
                 return;
             }
             if (ibas.objects.isNull(selectedKey)) {
                 return;
             }
             if (ibas.strings.isEmpty(boName)) {
-                console.log(ibas.i18n.prop("sap_m_ex_boname_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_boname_null"));
                 return;
             }
             let boRepEx: BORepsitory = new BORepsitory();
@@ -835,7 +835,7 @@ namespace openui5 {
             keyText.key = "";
             keyText.text = "";
             if (ibas.objects.isNull(keyTextList)) {
-                console.log(ibas.i18n.prop("sap_m_ex_fetch_bos_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_fetch_bos_null"));
                 return;
             }
             for (let item of keyTextList) {
@@ -915,34 +915,34 @@ namespace openui5 {
             let boKey: string = this.getBoKey();
             let boCode: string = this.getBoCode();
             if (ibas.strings.isEmpty(boCode)) {
-                console.log(ibas.i18n.prop("sap_m_ex_bocode_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_bocode_null"));
                 return;
             }
             let boType: any = ibas.boFactory.classOf(boCode);
             if (ibas.objects.isNull(boType)) {
-                console.log(ibas.i18n.prop("sap_m_ex_boType_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_boType_null"));
                 return;
             }
             let boName: string = ibas.objects.getName(boType);
             let boText: string = that.getBoText();
             let boRep: any = ibas.boFactory.create(this.getRepositoryName());
             if (!ibas.objects.instanceOf(boRep, ibas.BORepositoryApplication)) {
-                console.log(ibas.i18n.prop("sap_m_ex_repository_type_error"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_repository_type_error"));
                 return;
             }
             if (ibas.strings.isEmpty(boKey)) {
-                console.log(ibas.i18n.prop("sap_m_ex_bokey_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_bokey_null"));
                 return;
             }
             if (ibas.strings.isEmpty(boText)) {
-                console.log(ibas.i18n.prop("sap_m_ex_botext_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_botext_null"));
                 return;
             }
             if (ibas.objects.isNull(boDesc)) {
                 return;
             }
             if (ibas.strings.isEmpty(boName)) {
-                console.log(ibas.i18n.prop("sap_m_ex_criteria_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_criteria_null"));
                 return;
             }
             let boRepEx: BORepsitory = new BORepsitory();
@@ -958,12 +958,12 @@ namespace openui5 {
             boRepEx.criteria = criteria;
             let keyTextList: ibas.ArrayList<ibas.KeyText> = await boRepEx.getKeyTextList();
             if (ibas.objects.isNull(keyTextList)) {
-                console.log(ibas.i18n.prop("sap_m_ex_fetch_bos_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_fetch_bos_null"));
                 return;
             }
             let keyText: ibas.KeyText = keyTextList.firstOrDefault();
             if (ibas.objects.isNull(keyText)) {
-                console.log(ibas.i18n.prop("sap_m_ex_fetch_bos_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_fetch_bos_null"));
                 return;
             }
             this.setText(keyText.text);
@@ -1003,6 +1003,9 @@ namespace openui5 {
         },
         renderer: {}
     });
+    /**
+     * 省市区三级联动
+     */
     sap.m.FlexBox.extend("sap.m.ex.ProvincesCityDistrict", {
         init(): void {
             this.draw();
@@ -1159,11 +1162,11 @@ namespace openui5 {
             let boCode: string = this.getBoCode();
             let boKey: string = this.getBoKey();
             if (ibas.strings.isEmpty(boCode)) {
-                console.log(ibas.i18n.prop("sap_m_ex_bocode_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_bocode_null"));
                 return;
             }
             if (ibas.strings.isEmpty(boKey)) {
-                console.log(ibas.i18n.prop("sap_m_ex_bokey_null"));
+                ibas.logger.log(ibas.emMessageLevel.DEBUG,ibas.i18n.prop("sap_m_ex_bokey_null"));
                 return;
             }
             let value: string = "";

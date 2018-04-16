@@ -74,24 +74,40 @@ namespace ibas {
          * @param recursive 递归
          */
         markOld(recursive: boolean): void;
+        /**
+         * 标记为未修改
+         */
+        markOld(): void;
 
         /**
          * 标记为新
          * @param recursive 递归
          */
         markNew(recursive: boolean): void;
+        /**
+         * 标记为新
+         */
+        markNew(): void;
 
         /**
          * 标记为删除
          * @param recursive 递归
          */
         markDeleted(recursive: boolean): void;
+        /**
+         * 标记为删除
+         */
+        markDeleted(): void;
 
         /**
          * 对象置为脏
          * @param recursive 递归
          */
         markDirty(recursive: boolean): void;
+        /**
+         * 对象置为脏
+         */
+        markDirty(): void;
 
         /**
          * 清除删除标记
@@ -99,6 +115,10 @@ namespace ibas {
          * @param recursive 递归
          */
         clearDeleted(recursive: boolean): void;
+        /**
+         * 清除删除标记
+         */
+        clearDeleted(): void;
     }
 
     /**
@@ -302,7 +322,7 @@ namespace ibas {
         /**
          * 标记为未修改
          */
-        markOld(recursive: boolean): void {
+        markOld(): void {
             this.isNew = false;
             this.isDirty = false;
             this.isDeleted = false;
@@ -311,7 +331,7 @@ namespace ibas {
         /**
          * 标记为新
          */
-        markNew(recursive: boolean): void {
+        markNew(): void {
             this.isNew = true;
             this.isDirty = true;
             this.isDeleted = false;
@@ -320,7 +340,7 @@ namespace ibas {
         /**
          * 标记为删除
          */
-        markDeleted(recursive: boolean): void {
+        markDeleted(): void {
             this.isDirty = true;
             this.isDeleted = true;
         }
@@ -328,16 +348,14 @@ namespace ibas {
         /**
          * 对象置为脏
          */
-        markDirty(recursive: boolean): void {
+        markDirty(): void {
             this.isDirty = true;
         }
 
         /**
          * 清除删除标记
-         *
-         * @param recursive 递归
          */
-        clearDeleted(recursive: boolean): void {
+        clearDeleted(): void {
             this.isDirty = true;
             this.isDeleted = false;
         }
@@ -446,12 +464,11 @@ namespace ibas {
             }
             return childs;
         }
-
-        /**
-         * 标记为未修改
-         */
-        markOld(recursive: boolean): void {
-            super.markOld(recursive);
+        markOld(): void;
+        markOld(recursive: boolean): void;
+        markOld(): void {
+            super.markOld();
+            let recursive: boolean = arguments[0];
             if (recursive !== undefined && recursive === true) {
                 for (let item of this.getChildBOs()) {
                     let value: IBusinessObject = item[1];
@@ -462,11 +479,11 @@ namespace ibas {
             }
         }
 
-        /**
-         * 标记为新
-         */
-        markNew(recursive: boolean): void {
-            super.markNew(recursive);
+        markNew(): void;
+        markNew(recursive: boolean): void;
+        markNew(): void {
+            super.markNew();
+            let recursive: boolean = arguments[0];
             if (recursive !== undefined && recursive === true) {
                 for (let item of this.getChildBOs()) {
                     let value: IBusinessObject = item[1];
@@ -477,11 +494,11 @@ namespace ibas {
             }
         }
 
-        /**
-         * 标记为删除
-         */
-        markDeleted(recursive: boolean): void {
-            super.markDeleted(recursive);
+        markDeleted(): void;
+        markDeleted(recursive: boolean): void;
+        markDeleted(): void {
+            super.markDeleted();
+            let recursive: boolean = arguments[0];
             if (recursive !== undefined && recursive === true) {
                 for (let item of this.getChildBOs()) {
                     let value: IBusinessObject = item[1];
@@ -492,11 +509,11 @@ namespace ibas {
             }
         }
 
-        /**
-         * 对象置为脏
-         */
-        markDirty(recursive: boolean): void {
-            super.markDirty(recursive);
+        markDirty(): void;
+        markDirty(recursive: boolean): void;
+        markDirty(): void {
+            super.markDirty();
+            let recursive: boolean = arguments[0];
             if (recursive !== undefined && recursive === true) {
                 for (let item of this.getChildBOs()) {
                     let value: IBusinessObject = item[1];
@@ -506,14 +523,11 @@ namespace ibas {
                 }
             }
         }
-
-        /**
-         * 清除删除标记
-         *
-         * @param recursive 递归
-         */
-        clearDeleted(recursive: boolean): void {
-            super.clearDeleted(recursive);
+        clearDeleted(): void;
+        clearDeleted(recursive: boolean): void;
+        clearDeleted(): void {
+            super.clearDeleted();
+            let recursive: boolean = arguments[0];
             if (recursive !== undefined && recursive === true) {
                 for (let item of this.getChildBOs()) {
                     let value: IBusinessObject = item[1];

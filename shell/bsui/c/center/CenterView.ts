@@ -560,6 +560,10 @@ namespace shell {
                         title = view.id;
                     }
                     let form: any = view.draw();
+                    if (form instanceof sap.ui.core.Control) {
+                        // 忙状态，不等待
+                        form.setBusyIndicatorDelay(0);
+                    }
                     let dialog: sap.m.Dialog = null;
                     if (form instanceof sap.m.Dialog) {
                         dialog = form;
@@ -621,7 +625,12 @@ namespace shell {
                 showBarView(view: ibas.BOBarView): void {
                     let that: this = this;
                     let form: any = view.draw();
-                    if (form instanceof sap.m.QuickView) {
+                    if (ibas.objects.isNull(form)) {
+                        setTimeout(function (): void {
+                            view.isDisplayed = false;
+                        }, 100);
+                        return;
+                    } else if (form instanceof sap.m.QuickView) {
                         // 快速视图
                         form.attachAfterClose(null, function (): void {
                             // 设置视图未显示
@@ -737,6 +746,10 @@ namespace shell {
                 /** 显示一般视图 */
                 showCommonView(view: ibas.View, container: sap.m.Page): void {
                     let viewContent: any = view.draw();
+                    if (viewContent instanceof sap.ui.core.Control) {
+                        // 忙状态，不等待
+                        viewContent.setBusyIndicatorDelay(0);
+                    }
                     if (ibas.objects.instanceOf(view, ibas.BOQueryView)) {
                         // 添加查询面板
                         let queryView: ibas.IEmbeddedQueryPanel = {

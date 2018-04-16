@@ -19,7 +19,7 @@
     "ui5_data_types_email_error": "Enail格式不正确",
     "ui5_data_types_phone_error": "电话格式不正确",
     "sap_m_ex_repository_type_error": "业务对象仓库类型错误",
-    "sap_m_ex_fetch_bos_null": "业务对象 {0} 没有查询结果",
+    "sap_m_ex_fetch_bos_null": "没有查询结果",
     "sap_m_ex_bocode_null": "boCode未赋值",
     "sap_m_ex_bokey_null": "boKey未赋值",
     "sap_m_ex_botext_null": "boText未赋值",
