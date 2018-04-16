@@ -241,7 +241,7 @@ namespace ibas {
         get view(): T {
             if (objects.isNull(this._view)) {
                 if (objects.isNull(this.navigation)) {
-                    throw new Error(i18n.prop("sys_invalid_view_navigation", this.id));
+                    throw new Error(i18n.prop("sys_invalid_view_navigation", this.name));
                 }
                 this._view = <T>this.navigation.create(this);
                 if (this._view instanceof View) {
@@ -253,7 +253,7 @@ namespace ibas {
                     }
                     this.registerView();
                 } else {
-                    throw new Error(i18n.prop("sys_invalid_view", this.id));
+                    throw new Error(i18n.prop("sys_invalid_view", this.name));
                 }
             }
             return this._view;
@@ -545,15 +545,25 @@ namespace ibas {
             let id: string = null;
             if (typeof data === "string") {
                 id = data;
-            } else if (!objects.isNull(data) && !objects.isNull(data.id)) {
+            } else if (data instanceof AbstractApplication) {
                 id = data.id;
             }
-            if (objects.isNull(id)) {
+            if (strings.isEmpty(id)) {
                 throw new Error(i18n.prop("sys_invalid_parameter", "view id"));
             }
             let view: IView = this.newView(id);
             if (objects.isNull(view)) {
-                throw new Error(i18n.prop("sys_invalid_view", id));
+                let name: string;
+                if (data instanceof AbstractApplication) {
+                    name = data.description;
+                    if (strings.isEmpty(name)) {
+                        name = data.name;
+                    }
+                }
+                if (strings.isEmpty(name)) {
+                    name = id;
+                }
+                throw new Error(i18n.prop("sys_invalid_view", name));
             }
             view.id = strings.format("{0}_{1}", id, uuids.random());
             return view;
