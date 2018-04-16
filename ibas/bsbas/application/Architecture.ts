@@ -66,28 +66,14 @@ namespace ibas {
      * 应用-视图
      */
     export interface IView {
-        /** 应用 */
-        application: IApplication<IView>;
         /** 唯一标识 */
         id: string;
         /** 标题 */
         title: string;
         /** 绘制视图 */
         draw(): any;
-        /** 是否已显示 */
-        isDisplayed: boolean;
         /** 关闭视图 */
         closeEvent: Function;
-        /** 显示之后 */
-        onDisplayed(): void;
-        /** 关闭之后 */
-        onClosed(): void;
-        /** 键盘按钮按下 */
-        onKeyDown(event: KeyboardEvent): void;
-        /** 地址栏哈希值变化 */
-        onHashChanged(event: HashChangeEvent): void;
-        /** 手指触控移动 */
-        onTouchMove(direction: emTouchMoveDirection, event: TouchEvent): void;
     }
     /**
      * 应用-视图
@@ -255,19 +241,20 @@ namespace ibas {
         get view(): T {
             if (objects.isNull(this._view)) {
                 if (objects.isNull(this.navigation)) {
-                    throw new Error(i18n.prop("sys_invalid_view_navigation", this.id));
+                    throw new Error(i18n.prop("sys_invalid_view_navigation", this.name));
                 }
                 this._view = <T>this.navigation.create(this);
-                if (objects.isNull(this._view)) {
-                    throw new Error(i18n.prop("sys_invalid_view", this.id));
-                }
-                this._view.application = this;
-                if (!objects.isNull(this.description)) {
-                    this._view.title = this.description;
+                if (this._view instanceof View) {
+                    this._view.application = this;
+                    if (!strings.isEmpty(this.description)) {
+                        this._view.title = this.description;
+                    } else {
+                        this._view.title = this.name;
+                    }
+                    this.registerView();
                 } else {
-                    this._view.title = this.name;
+                    throw new Error(i18n.prop("sys_invalid_view", this.name));
                 }
-                this.registerView();
             }
             return this._view;
         }
@@ -276,10 +263,12 @@ namespace ibas {
             if (objects.isNull(this._view)) {
                 return false;
             }
-            if (this._view.isDisplayed) {
-                return true;
-            } else {
-                return false;
+            if (this._view instanceof View) {
+                if (this._view.isDisplayed) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
         }
         /** 注册视图 */
@@ -312,6 +301,8 @@ namespace ibas {
         hideTitle: boolean;
         /** 是否已显示 */
         isDisplayed: boolean;
+        /** 是否忙 */
+        isBusy: boolean;
         /** 绘制视图 */
         abstract draw(): any;
         /** 关闭视图 */
@@ -322,6 +313,10 @@ namespace ibas {
          * @param pars 参数
          */
         protected fireViewEvents(event: Function, ...pars: any[]): void {
+            if (this.isBusy) {
+                ibas.logger.log(ibas.emMessageLevel.DEBUG, "view: event skipping, [{0} - {1}] is busy.", this.id, this.title);
+                return;
+            }
             if (typeof event !== "function") {
                 throw new Error(i18n.prop("sys_invalid_parameter", "event"));
             }
@@ -550,15 +545,25 @@ namespace ibas {
             let id: string = null;
             if (typeof data === "string") {
                 id = data;
-            } else if (!objects.isNull(data) && !objects.isNull(data.id)) {
+            } else if (data instanceof AbstractApplication) {
                 id = data.id;
             }
-            if (objects.isNull(id)) {
+            if (strings.isEmpty(id)) {
                 throw new Error(i18n.prop("sys_invalid_parameter", "view id"));
             }
             let view: IView = this.newView(id);
             if (objects.isNull(view)) {
-                throw new Error(i18n.prop("sys_invalid_view", id));
+                let name: string;
+                if (data instanceof AbstractApplication) {
+                    name = data.description;
+                    if (strings.isEmpty(name)) {
+                        name = data.name;
+                    }
+                }
+                if (strings.isEmpty(name)) {
+                    name = id;
+                }
+                throw new Error(i18n.prop("sys_invalid_view", name));
             }
             view.id = strings.format("{0}_{1}", id, uuids.random());
             return view;

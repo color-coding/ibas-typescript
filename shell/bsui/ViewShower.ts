@@ -28,8 +28,10 @@ namespace shell {
                         if (ibas.objects.isNull(that.currentView)) {
                             return;
                         }
-                        if (that.currentView.isDisplayed) {
-                            that.currentView.onKeyDown(event);
+                        if (that.currentView instanceof ibas.View) {
+                            if (that.currentView.isDisplayed) {
+                                that.currentView.onKeyDown(event);
+                            }
                         }
                     }
                 });
@@ -46,8 +48,10 @@ namespace shell {
                         if (ibas.objects.isNull(that.currentView)) {
                             return;
                         }
-                        if (that.currentView.isDisplayed) {
-                            that.currentView.onHashChanged(event);
+                        if (that.currentView instanceof ibas.View) {
+                            if (that.currentView.isDisplayed) {
+                                that.currentView.onHashChanged(event);
+                            }
                         }
                     }
                 });
@@ -86,8 +90,10 @@ namespace shell {
                                 if (ibas.objects.isNull(that.currentView)) {
                                     return;
                                 }
-                                if (that.currentView.isDisplayed) {
-                                    that.currentView.onTouchMove(touch.direction, event);
+                                if (that.currentView instanceof ibas.View) {
+                                    if (that.currentView.isDisplayed) {
+                                        that.currentView.onTouchMove(touch.direction, event);
+                                    }
                                 }
                             }
                         }
@@ -126,8 +132,10 @@ namespace shell {
                 if (ibas.objects.isNull(this.currentView)) {
                     return;
                 }
-                if (this.currentView.isDisplayed) {
-                    this.currentView.onKeyDown(event);
+                if (this.currentView instanceof ibas.View) {
+                    if (this.currentView.isDisplayed) {
+                        this.currentView.onKeyDown(event);
+                    }
                 }
             }
             private currentView: ibas.IView;
@@ -217,17 +225,21 @@ namespace shell {
                             if (!ibas.objects.isNull(caller.onCompleted)) {
                                 caller.onCompleted(openui5.utils.toMessageAction(oAction));
                             }
-                            if (!ibas.objects.isNull(cView) && !cView.isDisplayed) {
-                                cView.isDisplayed = true;
+                            if (cView instanceof ibas.View) {
+                                if (!ibas.objects.isNull(cView) && !cView.isDisplayed) {
+                                    cView.isDisplayed = true;
+                                }
                             }
                         }
                     }
                 );
-                if (!ibas.objects.isNull(cView) && cView.isDisplayed) {
-                    // 出现消息框，设置当前视图非显示状态
-                    cView.isDisplayed = false;
-                } else {
-                    cView = undefined;
+                if (cView instanceof ibas.View) {
+                    if (!ibas.objects.isNull(cView) && cView.isDisplayed) {
+                        // 出现消息框，设置当前视图非显示状态
+                        cView.isDisplayed = false;
+                    } else {
+                        cView = undefined;
+                    }
                 }
             }
         }

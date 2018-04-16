@@ -119,13 +119,14 @@ namespace ibas {
         show(): void {
             if (!objects.isNull(this.viewShower)) {
                 try {
-                    if (objects.isNull(this.view)) {
+                    if (this.view instanceof View) {
+                        if (this.view.isDisplayed) {
+                            // 已显示的视图不在显示
+                            this.proceeding(emMessageType.WARNING, i18n.prop("sys_application_view_was_displayed", this.name));
+                            return;
+                        }
+                    } else {
                         throw new Error(i18n.prop("sys_invalid_view", this.name));
-                    }
-                    if (this.view.isDisplayed) {
-                        // 已显示的视图不在显示
-                        this.proceeding(emMessageType.WARNING, i18n.prop("sys_application_view_was_displayed", this.name));
-                        return;
                     }
                     this.viewShower.show(this.view);
                     this.afterViewShow();
@@ -142,14 +143,15 @@ namespace ibas {
         }
         /** 视图显示后 */
         private afterViewShow(): void {
-            if (objects.isNull(this.view)) {
+            if (this.view instanceof View) {
+                this.view.isDisplayed = true;
+                // 延迟100毫秒激活显示函数
+                setTimeout(this.view.onDisplayed(), 100);
+                logger.log(emMessageLevel.DEBUG, "app: [{0} - {1}]'s view displayed.", this.id, this.name);
+                this.viewShowed();
+            } else {
                 throw new Error(i18n.prop("sys_invalid_view", this.name));
             }
-            this.view.isDisplayed = true;
-            // 延迟100毫秒激活显示函数
-            setTimeout(this.view.onDisplayed(), 100);
-            logger.log(emMessageLevel.DEBUG, "app: [{0} - {1}]'s view displayed.", this.id, this.name);
-            this.viewShowed();
         }
         /** 注册视图 */
         protected registerView(): void {
@@ -162,8 +164,10 @@ namespace ibas {
             if (!objects.isNull(this.view)) {
                 if (!objects.isNull(this.viewShower)) {
                     this.viewShower.destroy(this.view);
-                    this.view.isDisplayed = false;
-                    this.view.onClosed();
+                    if (this.view instanceof View) {
+                        this.view.isDisplayed = false;
+                        this.view.onClosed();
+                    }
                 }
             }
         }
@@ -178,6 +182,9 @@ namespace ibas {
             }
             let busy: boolean = arguments[0];
             let msg: string = arguments[1];
+            if (this.view instanceof View) {
+                this.view.isBusy = busy;
+            }
             if (!objects.isNull(this.viewShower)) {
                 this.viewShower.busy(this.view, busy, msg);
             } else {

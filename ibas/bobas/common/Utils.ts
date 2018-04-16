@@ -174,24 +174,6 @@ namespace ibas {
      */
     export namespace strings {
         /**
-         * 转为字符串
-         */
-        export function toString(content: any): string {
-            if (content === undefined || content === null) {
-                return "";
-            } else if (content instanceof Array) {
-                let stringBuilder: StringBuilder = new StringBuilder();
-                for (let item of content) {
-                    if (stringBuilder.length > 0) {
-                        stringBuilder.append(", ");
-                    }
-                    stringBuilder.append(item);
-                }
-                return stringBuilder.toString();
-            }
-            return content.toString();
-        }
-        /**
          * 是否为空
          * @param object 判断对象
          */
@@ -311,6 +293,15 @@ namespace ibas {
                 return value;
             } else if (typeof value === "number") {
                 return String(value);
+            } else if (value instanceof Array) {
+                let stringBuilder: StringBuilder = new StringBuilder();
+                for (let item of value) {
+                    if (stringBuilder.length > 0) {
+                        stringBuilder.append(", ");
+                    }
+                    stringBuilder.append(valueOf(item));
+                }
+                return stringBuilder.toString();
             } else {
                 return value.toString();
             }
