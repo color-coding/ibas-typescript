@@ -533,15 +533,17 @@ namespace openui5 {
             /** 检查控件验证类型 */
             function checkControlBindingInfoType(managedObject: sap.ui.base.ManagedObject): datatype.DataType {
                 let bindingInfo: any = null;
-                /** 控件当前有绑定内容才判断绑定类型 */
-                if (!!managedObject.getBindingContext()) {
-                    /** 获取值类型,根据不同控件的绑定值添加 */
-                    let bindingTypes: Array<string> = ["value", "dateValue", "secondDateValue", "selectedKey"];
-                    for (let type of bindingTypes) {
-                        let info: any = managedObject.getBindingInfo(type);
-                        if (!!info && !!info.type && info.type.validate instanceof Function) {
-                            bindingInfo = info;
-                            break;
+                if (!!managedObject && typeof managedObject.getBindingContext === "function") {
+                    /** 控件当前有绑定内容才判断绑定类型 */
+                    if (!!managedObject.getBindingContext()) {
+                        /** 获取值类型,根据不同控件的绑定值添加 */
+                        let bindingTypes: Array<string> = ["value", "dateValue", "secondDateValue", "selectedKey"];
+                        for (let type of bindingTypes) {
+                            let info: any = managedObject.getBindingInfo(type);
+                            if (!!info && !!info.type && info.type.validate instanceof Function) {
+                                bindingInfo = info;
+                                break;
+                            }
                         }
                     }
                 }
@@ -561,7 +563,8 @@ namespace openui5 {
             }
             for (let managedObject of managedObjects) {
                 let content: any = traverseContents(managedObject);
-                if (content instanceof Array) {
+                if (ibas.objects.isNull(content)) {
+                } else if (content instanceof Array) {
                     let stepResult: datatype.ValidateResult = validateControlBoundProperty(content);
                     if (!stepResult.status) {
                         validateResult.message = stepResult.message;
