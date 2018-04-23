@@ -570,7 +570,7 @@ namespace openui5 {
                 return;
             }
             // 此次赋值与当前值相同不重新查询
-            if (this.getProperty("selectedKey")=== value.toString()) {
+            if (this.getProperty("selectedKey") === value.toString()) {
                 return;
             }
             this.setProperty("selectedKey", value);
@@ -1304,5 +1304,93 @@ namespace openui5 {
         },
         renderer: {
         }
+    });
+    /**
+     * 业务对象编码组合控件
+     */
+    sap.m.FlexBox.extend("sap.m.ex.Series", {
+        init(): void {
+            this.draw();
+        },
+        seriesInput: sap.m.Input,
+        seriesSelect: sap.m.ex.SeriesSelect,
+        metadata: {
+            properties: {
+                /** 绑定字段 */
+                bindingValue: { type: "string", group: "Ex" },
+                /** 服务系列属性 */
+                seriesValue: { type: "string", group: "Ex" },
+                /** 业务对象编码 */
+                objectCode: { type: "string", group: "Ex" },
+                /** 是否新建 */
+                isNew: { type: "boolean", group: "Ex" },
+            },
+            events: {}
+        },
+        draw(): void {
+            let that: any = this;
+            that.seriesInput = new sap.m.Input("", {
+                width: "100%",
+                type: sap.m.InputType.Text,
+                layoutData: new sap.m.FlexItemData("", {
+                    growFactor: 0.7
+                })
+            });
+            that.seriesSelect = new sap.m.ex.SeriesSelect("", {
+                width: "100%",
+                objectCode: this.getObjectCode(),
+                bindingValue: {
+                    path: "series",
+                    type: "sap.ui.model.type.Integer",
+                },
+                change: function (oEvent: sap.ui.base.Event): void {
+                    let selected: any = this.getSelectedItem().getKey();
+                    if (selected !== "-1") {
+                        that.seriesInput.setValue("");
+                        that.seriesInput.setEditable(false);
+                    } else {
+                        that.seriesInput.setEditable(true);
+                    }
+                },
+                layoutData: new sap.m.FlexItemData("", {
+                    growFactor: 0.3
+                })
+            });
+            this.addItem(that.seriesInput);
+            this.addItem(new sap.m.Text("", {
+                width: "3px"
+            }));
+            this.addItem(that.seriesSelect);
+        },
+        setIsNew(value: boolean): void {
+            this.setProperty("isNew", value);
+            this.seriesInput.setEditable(value);
+            this.seriesSelect.setEnabled(value);
+        },
+        getIsNew(): boolean {
+            return this.getProperty("isNew");
+        },
+        setBindingValue(value: string): void {
+            this.setProperty("bindingValue", value);
+            this.seriesInput.bindProperty("value", this.getBindingInfo("bindingValue"));
+        },
+        getBindingValue(): string {
+            return this.getProperty("bindingValue");
+        },
+        setSeriesValue(value: string): void {
+            this.setProperty("seriesValue", value);
+            this.seriesSelect.bindProperty("bindingValue", this.getBindingInfo("seriesValue"));
+        },
+        getSeriesValue(): string {
+            return this.getProperty("seriesValue");
+        },
+        setObjectCode(value: string): void {
+            this.seriesSelect.setObjectCode(value);
+            this.setProperty("objectCode", value);
+        },
+        getObjectCode(): string {
+            return this.getProperty("objectCode");
+        },
+        renderer: {}
     });
 }
