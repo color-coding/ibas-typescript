@@ -1348,8 +1348,17 @@ namespace openui5 {
                     if (selected !== "-1") {
                         that.seriesInput.setValue("");
                         that.seriesInput.setEditable(false);
+                        let bindingInfo: any = new Object();
+                        // 复制控件bindingInfo,去除验证
+                        $.extend(bindingInfo, that.getBindingInfo("bindingValue"));
+                        if (!ibas.objects.isNull(bindingInfo)) {
+                            bindingInfo.type = null;
+                            that.seriesInput.bindProperty("value", bindingInfo);
+                        }
                     } else {
+                        // 恢复验证
                         that.seriesInput.setEditable(true);
+                        that.seriesInput.bindProperty("value", that.getBindingInfo("bindingValue"));
                     }
                 },
                 layoutData: new sap.m.FlexItemData("", {
@@ -1373,6 +1382,7 @@ namespace openui5 {
         setBindingValue(value: string): void {
             this.setProperty("bindingValue", value);
             this.seriesInput.bindProperty("value", this.getBindingInfo("bindingValue"));
+
         },
         getBindingValue(): string {
             return this.getProperty("bindingValue");
