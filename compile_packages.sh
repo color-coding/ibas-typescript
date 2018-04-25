@@ -11,7 +11,8 @@ echo '    4. 运行提示符运行mvn -v 检查安装是否成功。            
 echo '    5. 编译war包到release目录。                                             '
 echo '****************************************************************************'
 # 设置参数变量
-WORK_FOLDER=`pwd`
+cd `dirname $0`
+WORK_FOLDER=${PWD}
 OPNAME=`date '+%Y%m%d_%H%M%S'`
 LOGFILE=${WORK_FOLDER}/compile_packages_log_${OPNAME}.txt
 

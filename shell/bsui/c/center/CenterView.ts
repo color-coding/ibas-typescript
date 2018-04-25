@@ -181,34 +181,42 @@ namespace shell {
                     } else {
                         this.mainPage.setHeader(this.mainHeader);
                     }
-                    form.addHeaderContent(new sap.m.Button("", {
-                        icon: icon,
-                        type: sap.m.ButtonType.Transparent,
-                        press: function (event: any): void {
-                            if (this.getIcon() === "sap-icon://full-screen") {
-                                that.mainPage.setSideExpanded(false);
-                                that.mainPage.setHeader(null);
-                                // that.mainPage.setSideContent(null);
-                                form.setFloatingFooter(true);
-                                this.setIcon("sap-icon://exit-full-screen");
-                                ibas.config.set(CONFIG_ITEM_FULL_SCREEN, true);
-                            } else {
-                                that.mainPage.setHeader(that.mainHeader);
-                                // that.mainPage.setSideContent(that.navigation);
-                                this.setIcon("sap-icon://full-screen");
-                                ibas.config.set(CONFIG_ITEM_FULL_SCREEN, false);
+                    // 全屏钮
+                    form.addHeaderContent(
+                        new sap.m.Button("", {
+                            icon: icon,
+                            type: sap.m.ButtonType.Transparent,
+                            press: function (event: any): void {
+                                if (this.getIcon() === "sap-icon://full-screen") {
+                                    that.mainPage.setSideExpanded(false);
+                                    that.mainPage.setHeader(null);
+                                    // that.mainPage.setSideContent(null);
+                                    form.setFloatingFooter(true);
+                                    ibas.config.set(CONFIG_ITEM_FULL_SCREEN, true);
+                                    this.setIcon("sap-icon://exit-full-screen");
+                                } else {
+                                    that.mainPage.setHeader(that.mainHeader);
+                                    // that.mainPage.setSideContent(that.navigation);
+                                    ibas.config.set(CONFIG_ITEM_FULL_SCREEN, false);
+                                    this.setIcon("sap-icon://full-screen");
+                                }
                             }
-                        }
-                    }));
+                        }));
                     // 退出钮
-                    form.addHeaderContent(new sap.m.Button("", {
-                        icon: "sap-icon://inspect-down",
-                        tooltip: ibas.i18n.prop("shell_close_view"),
-                        type: sap.m.ButtonType.Transparent,
-                        press: function (): void {
-                            that.destroyCurrentView();
-                        }
-                    }));
+                    form.addHeaderContent(
+                        new sap.m.Button("", {
+                            icon: "sap-icon://inspect-down",
+                            tooltip: ibas.i18n.prop("shell_close_view"),
+                            type: sap.m.ButtonType.Transparent,
+                            press: function (): void {
+                                // 退出全屏状态
+                                if (that.mainPage.getHeader() === null) {
+                                    that.mainPage.setHeader(that.mainHeader);
+                                    ibas.config.set(CONFIG_ITEM_FULL_SCREEN, false);
+                                }
+                                that.destroyCurrentView();
+                            }
+                        }));
                     return form;
                 }
                 /** 创建欢迎页 */

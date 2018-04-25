@@ -357,10 +357,7 @@ namespace ibas {
         protected fireCompleted(result: D): void {
             // 关闭视图
             this.close();
-            if (objects.isNull(result)) {
-                return;
-            }
-            if (objects.isNull(this.onCompleted) || typeof this.onCompleted !== "function") {
+            if (!(this.onCompleted instanceof Function)) {
                 return;
             }
             try {
