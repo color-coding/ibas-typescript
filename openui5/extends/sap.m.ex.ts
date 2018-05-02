@@ -567,6 +567,8 @@ namespace openui5 {
         setSelectedKey(value: string): void {
             // 值为空时返回
             if (ibas.objects.isNull(value) || ibas.strings.isEmpty(value)) {
+                // 清除已选项
+                this.setSelectedItem(null);
                 return;
             }
             // 此次赋值与当前值相同不重新查询
