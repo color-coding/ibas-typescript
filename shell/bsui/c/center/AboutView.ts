@@ -94,7 +94,7 @@ namespace shell {
                             }
                         }));
                     }
-                    this.form.addContent(list);
+                    this.form.insertContent(list, 0);
                 }
             }
         }
