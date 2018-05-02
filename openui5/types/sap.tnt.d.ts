@@ -10,8 +10,8 @@ declare namespace sap {
         class NavigationList extends sap.ui.core.Control {
             /**
              * Constructor for a new NavigationList.
-             * 
-             * 
+             *
+             *
              * Accepts an object literal <code>mSettings</code> that defines initial
              * property values, aggregated and associated objects as well as event handlers.
              * See {@link sap.ui.base.ManagedObject#constructor} for a general description of the syntax of the settings object.
@@ -21,8 +21,8 @@ declare namespace sap {
             constructor(sId?: string, mSettings?: sap.tnt.NavigationListMetadata);
             /**
              * Constructor for a new NavigationList.
-             * 
-             * 
+             *
+             *
              * Accepts an object literal <code>mSettings</code> that defines initial
              * property values, aggregated and associated objects as well as event handlers.
              * See {@link sap.ui.base.ManagedObject#constructor} for a general description of the syntax of the settings object.
@@ -51,10 +51,10 @@ declare namespace sap {
             addItem(oItem: NavigationListItem): NavigationList;
             /**
              * Attaches event handler <code>fnFunction</code> to the <code>itemSelect</code> event of this <code>sap.tnt.NavigationList</code>.
-             * 
-             * When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, 
+             *
+             * When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified,
              * otherwise it will be bound to this <code>sap.tnt.NavigationList</code> itself.
-             * 
+             *
              * Fired when an item is selected.
              * @param oData An application-specific payload object that will be passed to the event handler along with the event object when firing the event
              * @param fnFunction The function to be called when the event occurs
@@ -69,7 +69,7 @@ declare namespace sap {
             destroyItems(): NavigationList;
             /**
              * Detaches event handler <code>fnFunction</code> from the <code>itemSelect</code> event of this <code>sap.tnt.NavigationList</code>.
-             * 
+             *
              * The passed function and listener object must match the ones used for event registration.
              * @param fnFunction The function to be called, when the event occurs
              * @param oListener Context object on which the given function had to be called
@@ -79,7 +79,7 @@ declare namespace sap {
             /**
              * Creates a new subclass of class sap.tnt.NavigationList with name <code>sClassName</code>
              * and enriches it with the information contained in <code>oClassInfo</code>.
-             * 
+             *
              * <code>oClassInfo</code> might contain the same kind of information as described in {@link sap.ui.core.Control.extend}.
              * @param sClassName Name of the class being created
              * @param oClassInfo Object literal with information about the class(optional)
@@ -90,7 +90,7 @@ declare namespace sap {
             /**
              * Creates a subclass of class sap.ui.base.Object with name <code>sClassName</code>
              * and enriches it with the information contained in <code>oClassInfo</code>.
-             * 
+             *
              * <code>oClassInfo</code> might contain three kinds of informations:
              * <ul>
              * <li><code>metadata:</code> an (optional) object literal with metadata about the class.
@@ -105,27 +105,27 @@ declare namespace sap {
              * </ul>
              * Subclasses of sap.ui.base.Object can enrich the set of supported metadata (e.g. see {@link sap.ui.core.Element.extend}).
              * </li>
-             * 
+             *
              * <li><code>constructor:</code> a function that serves as a constructor function for the new class.
              * If no constructor function is given, the framework creates a default implementation that delegates all
              * its arguments to the constructor function of the base class.
              * </li>
-             * 
+             *
              * <li><i>any-other-name:</i> any other property in the <code>oClassInfo</code> is copied into the prototype
              * object of the newly created class. Callers can thereby add methods or properties to all instances of the
              * class. But be aware that the given values are shared between all instances of the class. Usually, it doesn't
              * make sense to use primitive values here other than to declare public constants.
              * </li>
-             * 
+             *
              * </ul>
-             * 
+             *
              * The prototype object of the newly created class uses the same prototype as instances of the base class
              * (prototype chaining).
-             * 
+             *
              * A metadata object is always created, even if there is no <code>metadata</code> entry in the <code>oClassInfo</code>
              * object. A getter for the metadata is always attached to the prototype and to the class (constructor function)
              * itself.
-             * 
+             *
              * Last but not least, with the third argument <code>FNMetaImpl</code> the constructor of a metadata class
              * can be specified. Instances of that class will be used to represent metadata for the newly created class
              * and for any subclass created from it. Typically, only frameworks will use this parameter to enrich the
@@ -140,7 +140,7 @@ declare namespace sap {
             /**
              * Creates a new subclass of class sap.ui.core.Control with name <code>sClassName</code>
              * and enriches it with the information contained in <code>oClassInfo</code>.
-             * 
+             *
              * <code>oClassInfo</code> might contain the same kind of information as described in {@link sap.ui.core.Element.extend}.
              * @note Overload from base type sap.ui.core.Control
              * @param sClassName Name of the class being created
@@ -151,7 +151,7 @@ declare namespace sap {
             extend(sClassName: string, oClassInfo?: any, FNMetaImpl?: any): any;
             /**
              * Fires event <code>itemSelect</code> to attached listeners.
-             * 
+             *
              * Expects the following event parameters:
              * <ul>
              * <li><code>item</code> of type <code>sap.ui.core.Item</code>The selected item.</li>
@@ -162,33 +162,33 @@ declare namespace sap {
             fireItemSelect(mArguments?: any): NavigationList;
             /**
              * Returns array of IDs of the elements which are the current targets of the association <code>ariaDescribedBy</code>.
-             * @return 
+             * @return
              */
             getAriaDescribedBy(): any[];
             /**
              * Returns array of IDs of the elements which are the current targets of the association <code>ariaLabelledBy</code>.
-             * @return 
+             * @return
              */
             getAriaLabelledBy(): any[];
             /**
              * Gets current value of property <code>expanded</code>.
-             * 
+             *
              * Specifies if the control is in expanded or collapsed mode.
-             * 
+             *
              * Default value is <code>true</code>.
              * @return Value of property <code>expanded</code>
              */
             getExpanded(): boolean;
             /**
              * Gets content of aggregation <code>items</code>.
-             * 
+             *
              * The items displayed in the list.
-             * @return 
+             * @return
              */
             getItems(): NavigationListItem[];
             /**
              * Gets current value of property <code>width</code>.
-             * 
+             *
              * Specifies the width of the control.
              * @return Value of property <code>width</code>
              */
@@ -222,7 +222,7 @@ declare namespace sap {
             removeAllAriaLabelledBy(): any[];
             /**
              * Removes all the controls from the aggregation <code>items</code>.
-             * 
+             *
              * Additionally, it unregisters them from the hosting UIArea.
              * @return An array of the removed elements (might be empty)
              */
@@ -247,11 +247,11 @@ declare namespace sap {
             removeItem(vItem: number | string | NavigationListItem): NavigationListItem;
             /**
              * Sets a new value for property <code>expanded</code>.
-             * 
+             *
              * Specifies if the control is in expanded or collapsed mode.
-             * 
+             *
              * When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.
-             * 
+             *
              * Default value is <code>true</code>.
              * @param bExpanded New value for property <code>expanded</code>
              * @return Reference to <code>this</code> in order to allow method chaining
@@ -259,9 +259,9 @@ declare namespace sap {
             setExpanded(bExpanded: boolean): NavigationList;
             /**
              * Sets a new value for property <code>width</code>.
-             * 
+             *
              * Specifies the width of the control.
-             * 
+             *
              * When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.
              * @param sWidth New value for property <code>width</code>
              * @return Reference to <code>this</code> in order to allow method chaining
@@ -272,8 +272,8 @@ declare namespace sap {
         class NavigationListItem extends sap.ui.core.Item {
             /**
              * Constructor for a new NavigationListItem.
-             * 
-             * 
+             *
+             *
              * Accepts an object literal <code>mSettings</code> that defines initial
              * property values, aggregated and associated objects as well as event handlers.
              * See {@link sap.ui.base.ManagedObject#constructor} for a general description of the syntax of the settings object.
@@ -283,8 +283,8 @@ declare namespace sap {
             constructor(sId?: string, mSettings?: sap.tnt.NavigationListItemMetadata);
             /**
              * Constructor for a new NavigationListItem.
-             * 
-             * 
+             *
+             *
              * Accepts an object literal <code>mSettings</code> that defines initial
              * property values, aggregated and associated objects as well as event handlers.
              * See {@link sap.ui.base.ManagedObject#constructor} for a general description of the syntax of the settings object.
@@ -301,10 +301,10 @@ declare namespace sap {
             addItem(oItem: NavigationListItem): NavigationListItem;
             /**
              * Attaches event handler <code>fnFunction</code> to the <code>select</code> event of this <code>sap.tnt.NavigationListItem</code>.
-             * 
-             * When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, 
+             *
+             * When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified,
              * otherwise it will be bound to this <code>sap.tnt.NavigationListItem</code> itself.
-             * 
+             *
              * Fired when this item is selected.
              * @param oData An application-specific payload object that will be passed to the event handler along with the event object when firing the event
              * @param fnFunction The function to be called when the event occurs
@@ -319,7 +319,7 @@ declare namespace sap {
             destroyItems(): NavigationListItem;
             /**
              * Detaches event handler <code>fnFunction</code> from the <code>select</code> event of this <code>sap.tnt.NavigationListItem</code>.
-             * 
+             *
              * The passed function and listener object must match the ones used for event registration.
              * @param fnFunction The function to be called, when the event occurs
              * @param oListener Context object on which the given function had to be called
@@ -329,7 +329,7 @@ declare namespace sap {
             /**
              * Creates a new subclass of class sap.tnt.NavigationListItem with name <code>sClassName</code>
              * and enriches it with the information contained in <code>oClassInfo</code>.
-             * 
+             *
              * <code>oClassInfo</code> might contain the same kind of information as described in {@link sap.ui.core.Item.extend}.
              * @param sClassName Name of the class being created
              * @param oClassInfo Object literal with information about the class(optional)
@@ -340,7 +340,7 @@ declare namespace sap {
             /**
              * Creates a subclass of class sap.ui.base.Object with name <code>sClassName</code>
              * and enriches it with the information contained in <code>oClassInfo</code>.
-             * 
+             *
              * <code>oClassInfo</code> might contain three kinds of informations:
              * <ul>
              * <li><code>metadata:</code> an (optional) object literal with metadata about the class.
@@ -355,27 +355,27 @@ declare namespace sap {
              * </ul>
              * Subclasses of sap.ui.base.Object can enrich the set of supported metadata (e.g. see {@link sap.ui.core.Element.extend}).
              * </li>
-             * 
+             *
              * <li><code>constructor:</code> a function that serves as a constructor function for the new class.
              * If no constructor function is given, the framework creates a default implementation that delegates all
              * its arguments to the constructor function of the base class.
              * </li>
-             * 
+             *
              * <li><i>any-other-name:</i> any other property in the <code>oClassInfo</code> is copied into the prototype
              * object of the newly created class. Callers can thereby add methods or properties to all instances of the
              * class. But be aware that the given values are shared between all instances of the class. Usually, it doesn't
              * make sense to use primitive values here other than to declare public constants.
              * </li>
-             * 
+             *
              * </ul>
-             * 
+             *
              * The prototype object of the newly created class uses the same prototype as instances of the base class
              * (prototype chaining).
-             * 
+             *
              * A metadata object is always created, even if there is no <code>metadata</code> entry in the <code>oClassInfo</code>
              * object. A getter for the metadata is always attached to the prototype and to the class (constructor function)
              * itself.
-             * 
+             *
              * Last but not least, with the third argument <code>FNMetaImpl</code> the constructor of a metadata class
              * can be specified. Instances of that class will be used to represent metadata for the newly created class
              * and for any subclass created from it. Typically, only frameworks will use this parameter to enrich the
@@ -390,7 +390,7 @@ declare namespace sap {
             /**
              * Creates a new subclass of class sap.ui.core.Item with name <code>sClassName</code>
              * and enriches it with the information contained in <code>oClassInfo</code>.
-             * 
+             *
              * <code>oClassInfo</code> might contain the same kind of information as described in {@link sap.ui.core.Element.extend}.
              * @note Overload from base type sap.ui.core.Item
              * @param sClassName Name of the class being created
@@ -401,7 +401,7 @@ declare namespace sap {
             extend(sClassName: string, oClassInfo?: any, FNMetaImpl?: any): any;
             /**
              * Fires event <code>select</code> to attached listeners.
-             * 
+             *
              * Expects the following event parameters:
              * <ul>
              * <li><code>item</code> of type <code>sap.ui.core.Item</code>The selected item.</li>
@@ -412,36 +412,36 @@ declare namespace sap {
             fireSelect(mArguments?: any): NavigationListItem;
             /**
              * Gets current value of property <code>expanded</code>.
-             * 
+             *
              * Specifies if the item is expanded.
-             * 
+             *
              * Default value is <code>true</code>.
              * @return Value of property <code>expanded</code>
              */
             getExpanded(): boolean;
             /**
              * Gets current value of property <code>hasExpander</code>.
-             * 
+             *
              * Specifies if the item has an expander.
-             * 
+             *
              * Default value is <code>true</code>.
              * @return Value of property <code>hasExpander</code>
              */
             getHasExpander(): boolean;
             /**
              * Gets current value of property <code>icon</code>.
-             * 
+             *
              * Specifies the icon for the item.
-             * 
+             *
              * Default value is <code></code>.
              * @return Value of property <code>icon</code>
              */
             getIcon(): any;
             /**
              * Gets content of aggregation <code>items</code>.
-             * 
+             *
              * The sub items.
-             * @return 
+             * @return
              */
             getItems(): NavigationListItem[];
             /**
@@ -463,7 +463,7 @@ declare namespace sap {
             insertItem(oItem: NavigationListItem, iIndex: number): NavigationListItem;
             /**
              * Removes all the controls from the aggregation <code>items</code>.
-             * 
+             *
              * Additionally, it unregisters them from the hosting UIArea.
              * @return An array of the removed elements (might be empty)
              */
@@ -476,11 +476,11 @@ declare namespace sap {
             removeItem(vItem: number | string | NavigationListItem): NavigationListItem;
             /**
              * Sets a new value for property <code>expanded</code>.
-             * 
+             *
              * Specifies if the item is expanded.
-             * 
+             *
              * When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.
-             * 
+             *
              * Default value is <code>true</code>.
              * @param bExpanded New value for property <code>expanded</code>
              * @return Reference to <code>this</code> in order to allow method chaining
@@ -488,11 +488,11 @@ declare namespace sap {
             setExpanded(bExpanded: boolean): NavigationListItem;
             /**
              * Sets a new value for property <code>hasExpander</code>.
-             * 
+             *
              * Specifies if the item has an expander.
-             * 
+             *
              * When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.
-             * 
+             *
              * Default value is <code>true</code>.
              * @param bHasExpander New value for property <code>hasExpander</code>
              * @return Reference to <code>this</code> in order to allow method chaining
@@ -500,11 +500,11 @@ declare namespace sap {
             setHasExpander(bHasExpander: boolean): NavigationListItem;
             /**
              * Sets a new value for property <code>icon</code>.
-             * 
+             *
              * Specifies the icon for the item.
-             * 
+             *
              * When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.
-             * 
+             *
              * Default value is <code></code>.
              * @param sIcon New value for property <code>icon</code>
              * @return Reference to <code>this</code> in order to allow method chaining
@@ -515,8 +515,8 @@ declare namespace sap {
         class SideNavigation extends sap.ui.core.Control {
             /**
              * Constructor for a new SideNavigation.
-             * 
-             * 
+             *
+             *
              * Accepts an object literal <code>mSettings</code> that defines initial
              * property values, aggregated and associated objects as well as event handlers.
              * See {@link sap.ui.base.ManagedObject#constructor} for a general description of the syntax of the settings object.
@@ -526,8 +526,8 @@ declare namespace sap {
             constructor(sId?: string, mSettings?: sap.tnt.SideNavigationMetadata);
             /**
              * Constructor for a new SideNavigation.
-             * 
-             * 
+             *
+             *
              * Accepts an object literal <code>mSettings</code> that defines initial
              * property values, aggregated and associated objects as well as event handlers.
              * See {@link sap.ui.base.ManagedObject#constructor} for a general description of the syntax of the settings object.
@@ -538,10 +538,10 @@ declare namespace sap {
             constructor(sId?: string, mSettings?: any);
             /**
              * Attaches event handler <code>fnFunction</code> to the <code>itemSelect</code> event of this <code>sap.tnt.SideNavigation</code>.
-             * 
-             * When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, 
+             *
+             * When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified,
              * otherwise it will be bound to this <code>sap.tnt.SideNavigation</code> itself.
-             * 
+             *
              * Fired when an item is selected.
              * @param oData An application-specific payload object that will be passed to the event handler along with the event object when firing the event
              * @param fnFunction The function to be called when the event occurs
@@ -551,8 +551,8 @@ declare namespace sap {
             attachItemSelect(oData: any, fnFunction: any, oListener?: any): SideNavigation;
             /**
              * Binds aggregation <code>item</code> to model data.
-             * 
-             * See {@link sap.ui.base.ManagedObject#bindAggregation ManagedObject.bindAggregation} for a 
+             *
+             * See {@link sap.ui.base.ManagedObject#bindAggregation ManagedObject.bindAggregation} for a
              * detailed description of the possible properties of <code>oBindingInfo</code>.
              * @param oBindingInfo The binding information
              * @return Reference to <code>this</code> in order to allow method chaining
@@ -575,7 +575,7 @@ declare namespace sap {
             destroyItem(): SideNavigation;
             /**
              * Detaches event handler <code>fnFunction</code> from the <code>itemSelect</code> event of this <code>sap.tnt.SideNavigation</code>.
-             * 
+             *
              * The passed function and listener object must match the ones used for event registration.
              * @param fnFunction The function to be called, when the event occurs
              * @param oListener Context object on which the given function had to be called
@@ -585,7 +585,7 @@ declare namespace sap {
             /**
              * Creates a new subclass of class sap.tnt.SideNavigation with name <code>sClassName</code>
              * and enriches it with the information contained in <code>oClassInfo</code>.
-             * 
+             *
              * <code>oClassInfo</code> might contain the same kind of information as described in {@link sap.ui.core.Control.extend}.
              * @param sClassName Name of the class being created
              * @param oClassInfo Object literal with information about the class(optional)
@@ -596,7 +596,7 @@ declare namespace sap {
             /**
              * Creates a subclass of class sap.ui.base.Object with name <code>sClassName</code>
              * and enriches it with the information contained in <code>oClassInfo</code>.
-             * 
+             *
              * <code>oClassInfo</code> might contain three kinds of informations:
              * <ul>
              * <li><code>metadata:</code> an (optional) object literal with metadata about the class.
@@ -611,27 +611,27 @@ declare namespace sap {
              * </ul>
              * Subclasses of sap.ui.base.Object can enrich the set of supported metadata (e.g. see {@link sap.ui.core.Element.extend}).
              * </li>
-             * 
+             *
              * <li><code>constructor:</code> a function that serves as a constructor function for the new class.
              * If no constructor function is given, the framework creates a default implementation that delegates all
              * its arguments to the constructor function of the base class.
              * </li>
-             * 
+             *
              * <li><i>any-other-name:</i> any other property in the <code>oClassInfo</code> is copied into the prototype
              * object of the newly created class. Callers can thereby add methods or properties to all instances of the
              * class. But be aware that the given values are shared between all instances of the class. Usually, it doesn't
              * make sense to use primitive values here other than to declare public constants.
              * </li>
-             * 
+             *
              * </ul>
-             * 
+             *
              * The prototype object of the newly created class uses the same prototype as instances of the base class
              * (prototype chaining).
-             * 
+             *
              * A metadata object is always created, even if there is no <code>metadata</code> entry in the <code>oClassInfo</code>
              * object. A getter for the metadata is always attached to the prototype and to the class (constructor function)
              * itself.
-             * 
+             *
              * Last but not least, with the third argument <code>FNMetaImpl</code> the constructor of a metadata class
              * can be specified. Instances of that class will be used to represent metadata for the newly created class
              * and for any subclass created from it. Typically, only frameworks will use this parameter to enrich the
@@ -646,7 +646,7 @@ declare namespace sap {
             /**
              * Creates a new subclass of class sap.ui.core.Control with name <code>sClassName</code>
              * and enriches it with the information contained in <code>oClassInfo</code>.
-             * 
+             *
              * <code>oClassInfo</code> might contain the same kind of information as described in {@link sap.ui.core.Element.extend}.
              * @note Overload from base type sap.ui.core.Control
              * @param sClassName Name of the class being created
@@ -657,7 +657,7 @@ declare namespace sap {
             extend(sClassName: string, oClassInfo?: any, FNMetaImpl?: any): any;
             /**
              * Fires event <code>itemSelect</code> to attached listeners.
-             * 
+             *
              * Expects the following event parameters:
              * <ul>
              * <li><code>item</code> of type <code>sap.ui.core.Item</code>The selected item.</li>
@@ -668,32 +668,32 @@ declare namespace sap {
             fireItemSelect(mArguments?: any): SideNavigation;
             /**
              * Gets current value of property <code>expanded</code>.
-             * 
+             *
              * Specifies if the control is expanded.
-             * 
+             *
              * Default value is <code>true</code>.
              * @return Value of property <code>expanded</code>
              */
             getExpanded(): boolean;
             /**
              * Gets content of aggregation <code>fixedItem</code>.
-             * 
+             *
              * Defines the content inside the fixed part.
-             * @return 
+             * @return
              */
             getFixedItem(): NavigationList;
             /**
              * Gets content of aggregation <code>footer</code>.
-             * 
+             *
              * Defines the content inside the footer.
-             * @return 
+             * @return
              */
             getFooter(): NavigationList;
             /**
              * Gets content of aggregation <code>item</code>.
-             * 
+             *
              * Defines the content inside the flexible part.
-             * @return 
+             * @return
              */
             getItem(): NavigationList;
             /**
@@ -731,7 +731,7 @@ declare namespace sap {
             /**
              * Creates a new subclass of class sap.tnt.ToolHeader with name <code>sClassName</code>
              * and enriches it with the information contained in <code>oClassInfo</code>.
-             * 
+             *
              * <code>oClassInfo</code> might contain the same kind of information as described in {@link sap.m.OverflowToolbar.extend}.
              * @param sClassName Name of the class being created
              * @param oClassInfo Object literal with information about the class(optional)
@@ -742,7 +742,7 @@ declare namespace sap {
             /**
              * Creates a new subclass of class sap.ui.core.Control with name <code>sClassName</code>
              * and enriches it with the information contained in <code>oClassInfo</code>.
-             * 
+             *
              * <code>oClassInfo</code> might contain the same kind of information as described in {@link sap.ui.core.Element.extend}.
              * @note Overload from base type sap.ui.core.Control
              * @param sClassName Name of the class being created
@@ -754,7 +754,7 @@ declare namespace sap {
             /**
              * Creates a new subclass of class sap.m.Toolbar with name <code>sClassName</code>
              * and enriches it with the information contained in <code>oClassInfo</code>.
-             * 
+             *
              * <code>oClassInfo</code> might contain the same kind of information as described in {@link sap.ui.core.Control.extend}.
              * @note Overload from base type sap.m.Toolbar
              * @param sClassName Name of the class being created
@@ -782,7 +782,7 @@ declare namespace sap {
             /**
              * Creates a new subclass of class sap.tnt.ToolHeaderUtilitySeparator with name <code>sClassName</code>
              * and enriches it with the information contained in <code>oClassInfo</code>.
-             * 
+             *
              * <code>oClassInfo</code> might contain the same kind of information as described in {@link sap.ui.core.Control.extend}.
              * @param sClassName Name of the class being created
              * @param oClassInfo Object literal with information about the class(optional)
@@ -793,7 +793,7 @@ declare namespace sap {
             /**
              * Creates a new subclass of class sap.ui.core.Control with name <code>sClassName</code>
              * and enriches it with the information contained in <code>oClassInfo</code>.
-             * 
+             *
              * <code>oClassInfo</code> might contain the same kind of information as described in {@link sap.ui.core.Element.extend}.
              * @note Overload from base type sap.ui.core.Control
              * @param sClassName Name of the class being created
@@ -807,8 +807,8 @@ declare namespace sap {
         class ToolPage extends sap.ui.core.Control {
             /**
              * Constructor for a new ToolPage.
-             * 
-             * 
+             *
+             *
              * Accepts an object literal <code>mSettings</code> that defines initial
              * property values, aggregated and associated objects as well as event handlers.
              * See {@link sap.ui.base.ManagedObject#constructor} for a general description of the syntax of the settings object.
@@ -818,8 +818,8 @@ declare namespace sap {
             constructor(sId?: string, mSettings?: sap.tnt.ToolPageMetadata);
             /**
              * Constructor for a new ToolPage.
-             * 
-             * 
+             *
+             *
              * Accepts an object literal <code>mSettings</code> that defines initial
              * property values, aggregated and associated objects as well as event handlers.
              * See {@link sap.ui.base.ManagedObject#constructor} for a general description of the syntax of the settings object.
@@ -852,7 +852,7 @@ declare namespace sap {
             /**
              * Creates a new subclass of class sap.tnt.ToolPage with name <code>sClassName</code>
              * and enriches it with the information contained in <code>oClassInfo</code>.
-             * 
+             *
              * <code>oClassInfo</code> might contain the same kind of information as described in {@link sap.ui.core.Control.extend}.
              * @param sClassName Name of the class being created
              * @param oClassInfo Object literal with information about the class(optional)
@@ -863,7 +863,7 @@ declare namespace sap {
             /**
              * Creates a subclass of class sap.ui.base.Object with name <code>sClassName</code>
              * and enriches it with the information contained in <code>oClassInfo</code>.
-             * 
+             *
              * <code>oClassInfo</code> might contain three kinds of informations:
              * <ul>
              * <li><code>metadata:</code> an (optional) object literal with metadata about the class.
@@ -878,27 +878,27 @@ declare namespace sap {
              * </ul>
              * Subclasses of sap.ui.base.Object can enrich the set of supported metadata (e.g. see {@link sap.ui.core.Element.extend}).
              * </li>
-             * 
+             *
              * <li><code>constructor:</code> a function that serves as a constructor function for the new class.
              * If no constructor function is given, the framework creates a default implementation that delegates all
              * its arguments to the constructor function of the base class.
              * </li>
-             * 
+             *
              * <li><i>any-other-name:</i> any other property in the <code>oClassInfo</code> is copied into the prototype
              * object of the newly created class. Callers can thereby add methods or properties to all instances of the
              * class. But be aware that the given values are shared between all instances of the class. Usually, it doesn't
              * make sense to use primitive values here other than to declare public constants.
              * </li>
-             * 
+             *
              * </ul>
-             * 
+             *
              * The prototype object of the newly created class uses the same prototype as instances of the base class
              * (prototype chaining).
-             * 
+             *
              * A metadata object is always created, even if there is no <code>metadata</code> entry in the <code>oClassInfo</code>
              * object. A getter for the metadata is always attached to the prototype and to the class (constructor function)
              * itself.
-             * 
+             *
              * Last but not least, with the third argument <code>FNMetaImpl</code> the constructor of a metadata class
              * can be specified. Instances of that class will be used to represent metadata for the newly created class
              * and for any subclass created from it. Typically, only frameworks will use this parameter to enrich the
@@ -913,7 +913,7 @@ declare namespace sap {
             /**
              * Creates a new subclass of class sap.ui.core.Control with name <code>sClassName</code>
              * and enriches it with the information contained in <code>oClassInfo</code>.
-             * 
+             *
              * <code>oClassInfo</code> might contain the same kind of information as described in {@link sap.ui.core.Element.extend}.
              * @note Overload from base type sap.ui.core.Control
              * @param sClassName Name of the class being created
@@ -924,30 +924,30 @@ declare namespace sap {
             extend(sClassName: string, oClassInfo?: any, FNMetaImpl?: any): any;
             /**
              * Gets content of aggregation <code>header</code>.
-             * 
+             *
              * The control to appear in the header area.
-             * @return 
+             * @return
              */
             getHeader(): ToolHeader;
             /**
              * Gets content of aggregation <code>mainContents</code>.
-             * 
+             *
              * The content section.
-             * @return 
+             * @return
              */
             getMainContents(): sap.ui.core.Control[];
             /**
              * Gets content of aggregation <code>sideContent</code>.
-             * 
+             *
              * The side menu of the layout.
-             * @return 
+             * @return
              */
             getSideContent(): SideNavigation;
             /**
              * Gets current value of property <code>sideExpanded</code>.
-             * 
+             *
              * Indicates if the side area is expanded. Overrides the expanded property of the sideContent aggregation.
-             * 
+             *
              * Default value is <code>true</code>.
              * @return Value of property <code>sideExpanded</code>
              */
@@ -971,7 +971,7 @@ declare namespace sap {
             insertMainContent(oMainContent: sap.ui.core.Control, iIndex: number): ToolPage;
             /**
              * Removes all the controls from the aggregation <code>mainContents</code>.
-             * 
+             *
              * Additionally, it unregisters them from the hosting UIArea.
              * @return An array of the removed elements (might be empty)
              */
@@ -1007,6 +1007,36 @@ declare namespace sap {
             toggleSideContentMode(): ToolPage;
         }
 
+        class InfoLabel extends sap.ui.core.Control {
+            /**
+             * Constructor for a new NavigationList.
+             *
+             *
+             * Accepts an object literal <code>mSettings</code> that defines initial
+             * property values, aggregated and associated objects as well as event handlers.
+             * See {@link sap.ui.base.ManagedObject#constructor} for a general description of the syntax of the settings object.
+             * @note Any overloads to support not documented metadata
+             * @param sId ID for the new control, generated automatically if no ID is given(optional)
+             * @param mSettings Initial settings for the new control(optional)
+             */
+            constructor(sId?: string, mSettings?: any);
+            bindText(oBindingInfo): sap.tnt.InfoLabel;
+            getColorScheme(): number;
+            getDisplayOnly(): boolean;
+            getMetadata(): sap.ui.base.Metadata;
+            getRenderMode(): sap.tnt.RenderMode;
+            getText(): string;
+            getTextDirection(): sap.ui.core.TextDirection;
+            setColorScheme(iColorScheme): sap.tnt.InfoLabel;
+            setDisplayOnly(bDisplayOnly): sap.tnt.InfoLabel;
+            setRenderMode(sRenderMode): sap.tnt.InfoLabel;
+            setText(sText): sap.tnt.InfoLabel;
+            setTextDirection(sTextDirection): sap.tnt.InfoLabel;
+            setWidth(sWidth): sap.tnt.InfoLabel;
+            unbindText(): sap.tnt.InfoLabel;
+        }
+
+
         interface NavigationListMetadata extends ControlMetadata {
             /**
              * Specifies the width of the control.
@@ -1027,7 +1057,7 @@ declare namespace sap {
         interface NavigationListItemMetadata extends ItemMetadata {
             /**
              * Specifies the icon for the item.
-             * @default 
+             * @default
              */
             icon?: any;
             /**
@@ -1101,7 +1131,7 @@ declare namespace sap {
         interface ItemMetadata {
             /**
              * The text to be displayed for the item.
-             * @default 
+             * @default
              */
             text?: string;
             /**
@@ -1119,6 +1149,9 @@ declare namespace sap {
              */
             key?: string;
         }
-
+        interface RenderMode {
+            Loose,
+            Narrow
+        }
     }
 }
