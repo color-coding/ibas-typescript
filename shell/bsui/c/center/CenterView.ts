@@ -12,6 +12,8 @@ namespace shell {
             export const CONFIG_ITEM_STATUS_MESSAGES_DELAY: string = "statusDelay";
             /** 配置项目-全屏模式 */
             export const CONFIG_ITEM_FULL_SCREEN: string = "fullScreen";
+            /** 配置项目-全屏模式-设备 */
+            export const CONFIG_ITEM_FULL_SCREEN_ON_PLANTFORM: string = CONFIG_ITEM_FULL_SCREEN + "|{0}";
             /** 配置项目-功能分组 */
             export const CONFIG_ITEM_GROUP_FUNCTONS: string = "groupFunctions";
             /** 配置项目-自动激活的功能 */
@@ -174,8 +176,15 @@ namespace shell {
                     form.attachNavButtonPress(null, this.destroyCurrentView, this);
                     // 全屏钮
                     let icon: string = "sap-icon://full-screen";
-                    if (ibas.config.get(CONFIG_ITEM_FULL_SCREEN, false)
-                        && ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM) !== ibas.emPlantform.PHONE) {
+                    // 全屏，当前平台
+                    let fullScreen: boolean = ibas.config.get(
+                        ibas.strings.format(CONFIG_ITEM_FULL_SCREEN_ON_PLANTFORM,
+                            ibas.enums.toString(ibas.emPlantform, ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM))));
+                    // 全屏，整体
+                    if (ibas.objects.isNull(fullScreen)) {
+                        fullScreen = ibas.config.get(CONFIG_ITEM_FULL_SCREEN, false);
+                    }
+                    if (fullScreen) {
                         this.mainPage.setHeader(null);
                         icon = "sap-icon://exit-full-screen";
                     } else {

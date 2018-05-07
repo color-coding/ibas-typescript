@@ -8,6 +8,7 @@
     "helpUrl": "https://colorcoding.org/ibas/help",
     "welcomeUrl": "https://colorcoding.org/ibas/welcome",
     "fullScreen": false,
+    "fullScreen|PHONE": true,
     "compactScreen": false,
     "disablePlatformView": false,
     "defaultUser": "admin",
