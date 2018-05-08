@@ -73,6 +73,7 @@ declare namespace sap {
                 getBindingValue(): string;
                 getCriteria(): ibas.Criteria;
                 setCriteria(value: ibas.Criteria | ibas.Condition[]): void;
+                fireOnLoadItemsCompleted(mArguments: any): void;
             }
             export class SeriesSelect extends sap.m.ex.BOSelect {
                 getBoCode(): string;

@@ -518,11 +518,11 @@ namespace openui5 {
                 return;
             }
             let keyText: ibas.KeyText = keyTextList.firstOrDefault();
+            this.removeAllSuggestionItems();
             if (ibas.objects.isNull(keyText)) {
                 ibas.logger.log(ibas.emMessageLevel.DEBUG, ibas.i18n.prop("sap_m_ex_fetch_bos_null"));
                 return;
             }
-            this.removeAllSuggestionItems();
             this.addKeyTextItem(keyText);
         },
         getReadOnly(): Boolean {
@@ -567,7 +567,6 @@ namespace openui5 {
         setSelectedKey(value: string): void {
             // 值为空时返回
             if (ibas.objects.isNull(value) || ibas.strings.isEmpty(value)) {
-                // 清除已选项
                 this.setSelectedItem(null);
                 return;
             }
