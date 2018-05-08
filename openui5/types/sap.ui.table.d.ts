@@ -45,7 +45,8 @@ declare namespace sap {
                 attachRowSelectionChange(oData?, fnFunction?, oListener?): sap.ui.table.Table;
                 setSelectionMode(sSelectionMode: sap.ui.table.SelectionMode);
                 setSelectedIndex(iSelectedIndex): sap.ui.table.Table;
-                addSelectionInterval(iIndexFrom, iIndexTo): sap.ui.table.Table
+                addSelectionInterval(iIndexFrom, iIndexTo): sap.ui.table.Table;
+                setVisibleRowCount(iVisibleRowCount): sap.ui.table.Table;
             }
             export class Column extends sap.ui.core.Control {
                 constructor(mSettings?: any);
