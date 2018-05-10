@@ -409,7 +409,7 @@ namespace ibas {
         export function today(): Date {
             let date: Date = now();
             // 月份从0开始
-            return new Date(strings.format("{0}-{1}-{2}", date.getFullYear(), date.getMonth() + 1, date.getDate()));
+            return valueOf(strings.format("{0}-{1}-{2}", date.getFullYear(), date.getMonth() + 1, date.getDate()));
         }
 
         /**
