@@ -218,11 +218,6 @@ namespace shell {
                             tooltip: ibas.i18n.prop("shell_close_view"),
                             type: sap.m.ButtonType.Transparent,
                             press: function (): void {
-                                // 退出全屏状态
-                                if (that.mainPage.getHeader() === null) {
-                                    that.mainPage.setHeader(that.mainHeader);
-                                    ibas.config.set(CONFIG_ITEM_FULL_SCREEN, false);
-                                }
                                 that.destroyCurrentView();
                             }
                         }));
@@ -896,6 +891,11 @@ namespace shell {
                         this.showView(lastView);
                     }
                     if (this.mainPage.getMainContents().length === 0) {
+                        // 退出全屏状态
+                        if (this.mainPage.getHeader() === null) {
+                            this.mainPage.setHeader(this.mainHeader);
+                            ibas.config.set(CONFIG_ITEM_FULL_SCREEN, false);
+                        }
                         // 页面没有内容时，显示欢迎
                         this.mainPage.addMainContent(this.drawWelcomePage());
                     }
