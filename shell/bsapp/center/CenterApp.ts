@@ -59,7 +59,7 @@ namespace shell {
             /** 注册视图 */
             protected registerView(): void {
                 // 注册视图事件
-                this.view.activateFunctionsEvent = this.activateFunctions;
+                this.view.activateFunctionEvent = this.activateFunction;
                 this.view.aboutEvent = this.about;
                 this.view.helpEvent = this.help;
                 this.view.closeEvent = this.close;
@@ -83,25 +83,6 @@ namespace shell {
                     that.init();
                 }, 300);
                 this.show();
-                // 注册系统观察者
-                ibas.variablesManager.register({
-                    modules(): ibas.IList<ibas.IModule> {
-                        let modules: ibas.ArrayList<ibas.IModule> = new ibas.ArrayList();
-                        if (!ibas.objects.isNull(that.functionMap)) {
-                            for (let item of that.functionMap.values()) {
-                                let tmp: any = modules.firstOrDefault((c) => {
-                                    if (item.module === c || item.module.id === c.id) {
-                                        return true;
-                                    }
-                                });
-                                if (ibas.objects.isNull(tmp)) {
-                                    modules.add(item.module);
-                                }
-                            }
-                        }
-                        return modules;
-                    }
-                });
             }
             /** 视图显示后 */
             protected viewShowed(): void {
@@ -123,6 +104,8 @@ namespace shell {
             }
             /** 当前用户 */
             private currentUser: bo.IUser;
+            /** 权限管理员 */
+            private privilegeManager: UserPrivilegeManager;
             /** 初始化用户相关 */
             private init(): void {
                 if (ibas.objects.isNull(this.currentUser)) {
@@ -136,50 +119,98 @@ namespace shell {
                     ibas.i18n.prop("shell_initialize_user_modules",
                         ibas.strings.isEmpty(this.currentUser.name) ? this.currentUser.code : this.currentUser.name)
                 );
+                let user: string = this.currentUser.code;
+                let platform: string = ibas.enums.toString(ibas.emPlantform, this.plantform);
                 let that: this = this;
-                let boRepository: bo.IBORepositoryShell = bo.repository.create();
-                boRepository.fetchUserModules({
-                    user: this.currentUser.code,
-                    platform: ibas.enums.toString(ibas.emPlantform, this.plantform),
-                    onCompleted: function (opRslt: ibas.IOperationResult<bo.IUserModule>): void {
-                        try {
-                            if (opRslt.resultCode !== 0) {
-                                throw new Error(opRslt.message);
+                this.privilegeManager = new UserPrivilegeManager();
+                this.privilegeManager.load({
+                    user: user,
+                    platform: platform,
+                    onError(error: Error): void {
+                        that.view.showMessageBox({
+                            title: that.description,
+                            type: ibas.emMessageType.ERROR,
+                            message: ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE, false) ? error.stack : error.message
+                        });
+                    },
+                    onCompleted(): void {
+                        // 权限加载成功，加载模块
+                        consoleManager.load({
+                            user: user,
+                            platform: platform,
+                            onError(error: Error): void {
+                                that.view.showMessageBox({
+                                    title: that.description,
+                                    type: ibas.emMessageType.ERROR,
+                                    message: ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE, false) ? error.stack : error.message
+                                });
+                            },
+                            onStatusMessage(type: ibas.emMessageType, message: string): void {
+                                that.view.showStatusMessage(type, message);
+                            },
+                            onCompleted(console: ibas.ModuleConsole): void {
+                                // 有效模块控制台
+                                console.addListener(function (): void {
+                                    let show: boolean = false;
+                                    if (!ibas.config.get(CONFIG_ITEM_HIDE_NO_FUNCTION_MODULE, true)) {
+                                        show = true;
+                                    }
+                                    // 如当前模块包含Hash指向的功能,激活
+                                    let currentHashValue: string = window.location.hash;
+                                    let hashFuncId: string = null;
+                                    if (currentHashValue.startsWith(ibas.URL_HASH_SIGN_FUNCTIONS)) {
+                                        let url: string = currentHashValue.substring(ibas.URL_HASH_SIGN_FUNCTIONS.length);
+                                        let index: number = url.indexOf("/") < 0 ? url.length : url.indexOf("/");
+                                        hashFuncId = url.substring(0, index);
+                                    }
+                                    if (ibas.objects.isNull(that.functionMap)) {
+                                        that.functionMap = new Map<string, ibas.IModuleFunction>();
+                                    }
+                                    // 处理功能
+                                    for (let func of console.functions()) {
+                                        // 没权限，不激活功能
+                                        if (!that.privilegeManager.canRun(func)) {
+                                            continue;
+                                        }
+                                        if (!show) { show = true; }
+                                        that.functionMap.set(func.id, func);
+                                        // 如当前模块包含Hash指向的功能,激活
+                                        if (ibas.strings.equals(func.id, hashFuncId)) {
+                                            ibas.urls.changeHash(currentHashValue);
+                                        }
+                                    }
+                                    // 处理应用
+                                    for (let app of console.applications()) {
+                                        // 没权限，不激活应用
+                                        if (!that.privilegeManager.canRun(app)) {
+                                            continue;
+                                        }
+                                        // 显示常驻应用
+                                        if (ibas.objects.instanceOf(app, ibas.ResidentApplication)) {
+                                            that.view.showResidentView(<ibas.IBarView>app.view);
+                                        }
+                                    }
+                                    // 处理服务
+                                    for (let service of console.services()) {
+                                        // 没权限，不激活服务
+                                        if (!that.privilegeManager.canRun(service)) {
+                                            continue;
+                                        }
+                                        ibas.servicesManager.register(service);
+                                    }
+                                    if (show) {
+                                        // 显示模块
+                                        that.view.showModule(console);
+                                    } else {
+                                        ibas.logger.log(ibas.emMessageLevel.DEBUG,
+                                            "center: hide no functions module [{0}].", console.name);
+                                    }
+                                });
+                                // 设置视图显示者
+                                console.viewShower = that;
+                                console.run();
                             }
-                            for (let module of opRslt.resultObjects) {
-                                that.view.showStatusMessage(
-                                    ibas.emMessageType.INFORMATION,
-                                    ibas.i18n.prop("shell_initialize_module", ibas.strings.isEmpty(module.name) ? module.id : module.name)
-                                );
-                                that.initModuleConsole(module);
-                            }
-                        } catch (error) {
-                            that.view.showMessageBox({
-                                title: that.description,
-                                type: ibas.emMessageType.ERROR,
-                                message: ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE, false) ? error.stack : error.message
-                            });
-                        }
-                    }
-                });
-                boRepository.fetchUserPrivileges({
-                    user: this.currentUser.code,
-                    platform: ibas.enums.toString(ibas.emPlantform, this.plantform),
-                    onCompleted: function (opRslt: ibas.IOperationResult<bo.IUserPrivilege>): void {
-                        try {
-                            if (opRslt.resultCode !== 0) {
-                                throw new Error(opRslt.message);
-                            }
-                            that.userPrivileges = opRslt.resultObjects;
-                            // 此处应该通过权限过滤下已加载内容
-                        } catch (error) {
-                            that.view.showMessageBox({
-                                title: that.description,
-                                type: ibas.emMessageType.ERROR,
-                                message: ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE, false) ? error.stack : error.message
-                            });
-                            // 权限获取失败，此处应该退出系统
-                        }
+                        });
                     }
                 });
                 // 哈希值监控
@@ -225,214 +256,9 @@ namespace shell {
                 });
             }
             private functionMap: Map<string, ibas.IModuleFunction>;
-            /** 注册运行的功能 */
-            protected registerFunctions(module: ibas.IModuleConsole): void {
-                if (ibas.objects.isNull(this.functionMap)) {
-                    this.functionMap = new Map<string, ibas.IModuleFunction>();
-                }
-                for (let func of module.functions()) {
-                    // 权限控制，没权限的不能激活菜单
-                    let tmp: any = this.userPrivileges.firstOrDefault((c) => {
-                        if (c.source === ibas.emPrivilegeSource.APPLICATION && c.target === func.id) {
-                            if (c.value !== ibas.emAuthoriseType.ALL) {
-                                return true;
-                            }
-                        }
-                        return false;
-                    });
-                    if (!ibas.objects.isNull(tmp)) {
-                        func.activated = false;
-                        ibas.logger.log(ibas.emMessageLevel.DEBUG, "center: disabled function [{0} - {1}].", func.description, func.id);
-                    }
-                    if (func.activated) {
-                        // 没权限，不激活功能
-                        this.functionMap.set(func.id, func);
-                    }
-                }
-            }
-            /** 加载模块 */
-            private initModuleConsole(module: bo.IUserModule): void {
-                // 补充模块初始值
-                if (ibas.objects.isNull(module.authorise)) {
-                    module.authorise = ibas.emAuthoriseType.ALL;
-                }
-                // 模块入口地址
-                if (ibas.strings.isEmpty(module.address)) {
-                    // 模块地址无效，不再加载
-                    this.view.showStatusMessage(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_invalid_module_address", module.name));
-                    ibas.logger.log(ibas.emMessageLevel.DEBUG, "center: invaild address module [{0}].", module.name);
-                    return;
-                }
-                module.address = ibas.urls.normalize(module.address);
-                if (!module.address.endsWith("/")) {
-                    module.address += "/";
-                }
-                // 模块索引文件
-                if (ibas.strings.isEmpty(module.index)) {
-                    module.index = "index";
-                }
-                // 模块控制台名称
-                if (ibas.strings.isEmpty(module.console)) {
-                    module.console = "Console";
-                }
-                let that: this = this;
-                // 模块require函数
-                let minLibrary: boolean = ibas.config.get(ibas.CONFIG_ITEM_USE_MINIMUM_LIBRARY, false);
-                let require: Require = ibas.requires.create({
-                    context: ibas.requires.naming(module.name),
-                    baseUrl: module.address,
-                    map: {
-                        "*": {
-                            "css": ibas.strings.format(
-                                "{0}/3rdparty/require-css{1}.js", ibas.urls.rootUrl("/ibas/index"), (minLibrary ? ibas.SIGN_MIN_LIBRARY : "")
-                            )
-                        }
-                    },
-                    waitSeconds: ibas.config.get(ibas.requires.CONFIG_ITEM_WAIT_SECONDS, 30)
-                });
-                require([
-                    module.index + (minLibrary ? ibas.SIGN_MIN_LIBRARY : "")
-                ], function (): void {
-                    try {
-                        // 加载模块的控制台（可能多个）
-                        for (let item of module.console.split(ibas.DATA_SEPARATOR)) {
-                            if (ibas.strings.isEmpty(item)) {
-                                continue;
-                            }
-                            item = item.trim();
-                            if (item.indexOf(".") < 0) {
-                                // 没有命名空间，补全
-                                item = ibas.strings.format("{0}.app.{1}", module.name.toLowerCase(), item);
-                            }
-                            let consoleClass: any = window;
-                            for (let tmp of item.split(".")) {
-                                if (ibas.objects.isNull(consoleClass)) {
-                                    break;
-                                }
-                                consoleClass = consoleClass[tmp];
-                            }
-                            if (!ibas.objects.isAssignableFrom(consoleClass, ibas.ModuleConsole)) {
-                                throw new TypeError(item);
-                            }
-                            let console: ibas.ModuleConsole = new consoleClass();
-                            if (!(ibas.objects.instanceOf(console, ibas.ModuleConsole))) {
-                                throw new ReferenceError(item);
-                            }
-                            // 设置模块名称
-                            console.module = module.name.toLowerCase();
-                            // 设置模块根地址
-                            console.rootUrl = module.address;
-                            // 有效模块控制台
-                            console.addListener(function (): void {
-                                if (console.functions().length > 0
-                                    && ibas.config.get(CONFIG_ITEM_HIDE_NO_FUNCTION_MODULE, true)
-                                    && module.authorise === ibas.emAuthoriseType.ALL) {
-                                    // 注册模块功能
-                                    that.registerFunctions(console);
-                                    // 显示模块
-                                    that.view.showModule(console);
-                                    // 如当前模块包含Hash指向的功能,激活
-                                    let currentHashValue: string = window.location.hash;
-                                    if (currentHashValue.startsWith(ibas.URL_HASH_SIGN_FUNCTIONS)) {
-                                        let url: string = currentHashValue.substring(ibas.URL_HASH_SIGN_FUNCTIONS.length);
-                                        let index: number = url.indexOf("/") < 0 ? url.length : url.indexOf("/");
-                                        let id: string = url.substring(0, index);
-                                        for (let func of console.functions()) {
-                                            if (ibas.strings.equals(func.id, id)) {
-                                                ibas.urls.changeHash(currentHashValue);
-                                            }
-                                        }
-                                    }
-                                } else {
-                                    ibas.logger.log(ibas.emMessageLevel.DEBUG,
-                                        "center: hide no functions module [{0}].", console.name);
-                                }
-                                // 显示常驻应用
-                                for (let app of console.applications()) {
-                                    if (ibas.objects.instanceOf(app, ibas.ResidentApplication)) {
-                                        that.view.showResidentView(<ibas.IBarView>app.view);
-                                    }
-                                }
-                            });
-                            // 设置仓库地址
-                            if (!ibas.objects.isNull(module.repository)) {
-                                let done: boolean = console.setRepository(module.repository);
-                                // 注册模块业务仓库默认地址，创建实例时默认取此地址
-                                if (!ibas.objects.isNull(console.name) && done) {
-                                    module.repository = ibas.urls.normalize(module.repository);
-                                    let repositoryName: string = ibas.strings.format(ibas.MODULE_REPOSITORY_NAME_TEMPLATE, console.name);
-                                    let configName: string = ibas.strings.format(
-                                        ibas.CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS, repositoryName);
-                                    ibas.config.set(configName, module.repository);
-                                    ibas.logger.log(ibas.emMessageLevel.DEBUG,
-                                        "repository: register [{0}]'s default address [{1}].", repositoryName, module.repository);
-                                }
-                            }
-                            // 设置视图显示者
-                            console.viewShower = that;
-                            console.run();
-                        }
-                    } catch (error) {
-                        that.view.showStatusMessage(ibas.emMessageType.ERROR, error.message);
-                    }
-                }, function (): void {
-                    // 模块加载失败
-                    that.view.showStatusMessage(
-                        ibas.emMessageType.ERROR,
-                        ibas.i18n.prop("shell_invalid_module_index", ibas.objects.isNull(module.name) ? module.id : module.name));
-                });
-                ibas.logger.log(ibas.emMessageLevel.DEBUG,
-                    "center: module [{0}] {root: [{1}], index: [{2}]}.", module.name, module.address, module.index);
-            }
             /** 视图事件-激活功能 */
-            private activateFunctions(id: string): void {
+            private activateFunction(id: string): void {
                 ibas.urls.changeHash(ibas.strings.format("{0}{1}", ibas.URL_HASH_SIGN_FUNCTIONS, id));
-            }
-
-            /** 用户权限 */
-            private userPrivileges: ibas.ArrayList<bo.IUserPrivilege>;
-            /** 判断是否可以运行应用 */
-            protected canRun(app: ibas.IApplication<ibas.IView>): boolean {
-                let run: boolean = true;
-                if (!ibas.objects.isNull(this.userPrivileges)) {
-                    if (ibas.objects.instanceOf(app, ibas.BOApplication)) {
-                        // 应用是业务对象应用，根据应用类型设置权限
-                        for (let item of this.userPrivileges) {
-                            if (item.source !== ibas.emPrivilegeSource.BUSINESS_OBJECT) {
-                                continue;
-                            }
-                            if (item.target !== (<ibas.BOApplication<ibas.IBOView>>app).boCode) {
-                                continue;
-                            }
-                            if (item.value === ibas.emAuthoriseType.READ) {
-                                if (ibas.objects.instanceOf(app, ibas.BOListApplication)) {
-                                    run = true;
-                                } else if (ibas.objects.instanceOf(app, ibas.BOChooseApplication)) {
-                                    run = true;
-                                } else if (ibas.objects.instanceOf(app, ibas.BOViewApplication)) {
-                                    run = true;
-                                } else if (ibas.objects.instanceOf(app, ibas.BOEditApplication)) {
-                                    run = false;
-                                }
-                            } else {
-                                run = item.value === ibas.emAuthoriseType.NONE ? false : true;
-                            }
-                            break;
-                        }
-                    }
-                    // 应用设置，覆盖之前设置
-                    for (let item of this.userPrivileges) {
-                        if (item.source !== ibas.emPrivilegeSource.APPLICATION) {
-                            continue;
-                        }
-                        if (item.target !== app.id) {
-                            continue;
-                        }
-                        run = item.value === ibas.emAuthoriseType.NONE ? false : true;
-                        break;
-                    }
-                }
-                return run;
             }
             /** 关闭视图 */
             close(): void {
@@ -473,12 +299,10 @@ namespace shell {
             /** 显示视图，可重载并添加权限控制 */
             showView(view: ibas.IView): void {
                 if (view instanceof ibas.View) {
-                    if (!ibas.objects.isNull(view.application)) {
-                        if (!this.canRun(view.application)) {
-                            throw new Error(
-                                ibas.i18n.prop("shell_application_not_allowed_run",
-                                    ibas.objects.isNull(view.application.description) ? view.application.name : view.application.description));
-                        }
+                    if (!this.privilegeManager.canRun(view.application)) {
+                        throw new Error(
+                            ibas.i18n.prop("shell_application_not_allowed_run",
+                                ibas.objects.isNull(view.application.description) ? view.application.name : view.application.description));
                     }
                     this.view.showView(view);
                 }
@@ -492,7 +316,7 @@ namespace shell {
             /** 激活关于 */
             aboutEvent: Function;
             /** 激活功能，参数1 string 功能ID */
-            activateFunctionsEvent: Function;
+            activateFunctionEvent: Function;
             /** 清理资源 */
             destroyView(view: ibas.IView): void;
             /** 显示视图 */
@@ -508,5 +332,251 @@ namespace shell {
             /** 显示常驻视图 */
             showResidentView(view: ibas.IBarView): void;
         }
+
+        interface IUserPrivilegeLoader {
+            /** 用户 */
+            user: string;
+            /** 平台 */
+            platform: string;
+            /**
+             * 发生错误
+             * @param error 错误
+             */
+            onError(error: Error): void;
+            /** 完成 */
+            onCompleted(): void;
+        }
+        /** 用户权限管理员 */
+        class UserPrivilegeManager {
+            /** 用户权限 */
+            private userPrivileges: ibas.IList<bo.IUserPrivilege>;
+            /** 是否可以运行，应用 */
+            canRun(app: ibas.IApplication<ibas.IView>): boolean;
+            /** 是否可以运行，功能 */
+            canRun(app: ibas.IModuleFunction): boolean;
+            /** 是否可以运行，服务 */
+            canRun(app: ibas.IServiceMapping): boolean;
+            /** 判断是否可以运行应用 */
+            canRun(): boolean {
+                let run: boolean = true;
+                if (ibas.objects.isNull(this.userPrivileges)) {
+                    return run;
+                }
+                let element: ibas.IElement = arguments[0];
+                if (ibas.objects.instanceOf(element, ibas.BOApplication)) {
+                    // 应用是业务对象应用，根据应用类型设置权限
+                    for (let item of this.userPrivileges) {
+                        if (item.source !== ibas.emPrivilegeSource.BUSINESS_OBJECT) {
+                            continue;
+                        }
+                        if (item.target !== (<ibas.BOApplication<ibas.IBOView>>element).boCode) {
+                            continue;
+                        }
+                        if (item.value === ibas.emAuthoriseType.READ) {
+                            if (ibas.objects.instanceOf(app, ibas.BOListApplication)) {
+                                run = true;
+                            } else if (ibas.objects.instanceOf(app, ibas.BOChooseApplication)) {
+                                run = true;
+                            } else if (ibas.objects.instanceOf(app, ibas.BOViewApplication)) {
+                                run = true;
+                            } else if (ibas.objects.instanceOf(app, ibas.BOEditApplication)) {
+                                run = false;
+                            }
+                        } else {
+                            run = item.value === ibas.emAuthoriseType.NONE ? false : true;
+                        }
+                        break;
+                    }
+                }
+                // 应用设置，覆盖之前设置
+                for (let item of this.userPrivileges) {
+                    if (item.source === ibas.emPrivilegeSource.BUSINESS_OBJECT) {
+                        continue;
+                    }
+                    if (item.target !== element.id) {
+                        continue;
+                    }
+                    run = item.value === ibas.emAuthoriseType.NONE ? false : true;
+                    break;
+                }
+                return run;
+            }
+
+            load(loader: IUserPrivilegeLoader): void {
+                let that: this = this;
+                let boRepository: bo.IBORepositoryShell = bo.repository.create();
+                boRepository.fetchUserPrivileges({
+                    user: loader.user,
+                    platform: loader.platform,
+                    onCompleted: function (opRslt: ibas.IOperationResult<bo.IUserPrivilege>): void {
+                        try {
+                            if (opRslt.resultCode !== 0) {
+                                throw new Error(opRslt.message);
+                            }
+                            that.userPrivileges = opRslt.resultObjects;
+                            if (loader.onCompleted instanceof Function) {
+                                loader.onCompleted();
+                            }
+                        } catch (error) {
+                            if (loader.onError instanceof Function) {
+                                loader.onError(error);
+                            }
+                        }
+                    }
+                });
+            }
+        }
+        export interface IModuleConsoleLoader {
+            /** 用户 */
+            user: string;
+            /** 平台 */
+            platform: string;
+            /** 运行消息 */
+            onStatusMessage(type: ibas.emMessageType, message: string): void;
+            /**
+             * 发生错误
+             * @param error 错误
+             */
+            onError(error: Error): void;
+            /**
+             * 完成
+             * @param console 控制台
+             */
+            onCompleted(console: ibas.ModuleConsole): void;
+        }
+        export class ModuleConsoleManager {
+            /** 模块控制台 */
+            private consoles: ibas.IList<ibas.IModuleConsole>;
+            modules(): ibas.IModule[] {
+                let modules: ibas.IList<ibas.IModule> = new ibas.ArrayList<ibas.IModule>();
+                if (ibas.objects.isNull(this.consoles)) {
+                    return modules;
+                }
+                for (let item of this.consoles) {
+                    modules.add(item);
+                }
+                return modules;
+            }
+            load(loader: IModuleConsoleLoader): void {
+                this.consoles = new ibas.ArrayList<ibas.IModuleConsole>();
+                let that: this = this;
+                let boRepository: bo.IBORepositoryShell = bo.repository.create();
+                boRepository.fetchUserModules({
+                    user: loader.user,
+                    platform: loader.platform,
+                    onCompleted: function (opRslt: ibas.IOperationResult<bo.IUserModule>): void {
+                        try {
+                            if (opRslt.resultCode !== 0) {
+                                throw new Error(opRslt.message);
+                            }
+                            for (let module of opRslt.resultObjects) {
+                                loader.onStatusMessage(
+                                    ibas.emMessageType.INFORMATION,
+                                    ibas.i18n.prop("shell_initialize_module", ibas.strings.isEmpty(module.name) ? module.id : module.name)
+                                );
+                                // 补充模块初始值
+                                if (ibas.objects.isNull(module.authorise)) {
+                                    module.authorise = ibas.emAuthoriseType.ALL;
+                                }
+                                // 模块入口地址
+                                if (ibas.strings.isEmpty(module.address)) {
+                                    // 模块地址无效，不再加载
+                                    loader.onStatusMessage(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_invalid_module_address", module.name));
+                                    continue;
+                                }
+                                module.address = ibas.urls.normalize(module.address);
+                                if (!module.address.endsWith("/")) {
+                                    module.address += "/";
+                                }
+                                // 模块索引文件
+                                if (ibas.strings.isEmpty(module.index)) {
+                                    module.index = "index";
+                                }
+                                // 模块控制台名称
+                                if (ibas.strings.isEmpty(module.console)) {
+                                    module.console = "Console";
+                                }
+                                // 模块require函数
+                                let minLibrary: boolean = ibas.config.get(ibas.CONFIG_ITEM_USE_MINIMUM_LIBRARY, false);
+                                let require: Require = ibas.requires.create({
+                                    context: ibas.requires.naming(module.name),
+                                    baseUrl: module.address,
+                                    map: {
+                                        "*": {
+                                            "css": ibas.strings.format("{0}/3rdparty/require-css{1}.js",
+                                                ibas.urls.rootUrl("/ibas/index"),
+                                                (minLibrary ? ibas.SIGN_MIN_LIBRARY : "")
+                                            )
+                                        }
+                                    },
+                                    waitSeconds: ibas.config.get(ibas.requires.CONFIG_ITEM_WAIT_SECONDS, 30)
+                                });
+                                require([
+                                    module.index + (minLibrary ? ibas.SIGN_MIN_LIBRARY : "")
+                                ], function (): void {
+                                    try {
+                                        // 加载模块的控制台（可能多个）
+                                        for (let item of module.console.split(ibas.DATA_SEPARATOR)) {
+                                            if (ibas.strings.isEmpty(item)) {
+                                                continue;
+                                            }
+                                            item = item.trim();
+                                            if (item.indexOf(".") < 0) {
+                                                // 没有命名空间，补全
+                                                item = ibas.strings.format("{0}.app.{1}", module.name.toLowerCase(), item);
+                                            }
+                                            let consoleClass: any = window;
+                                            for (let tmp of item.split(".")) {
+                                                if (ibas.objects.isNull(consoleClass)) {
+                                                    break;
+                                                }
+                                                consoleClass = consoleClass[tmp];
+                                            }
+                                            if (!ibas.objects.isAssignableFrom(consoleClass, ibas.ModuleConsole)) {
+                                                throw new TypeError(item);
+                                            }
+                                            let console: ibas.ModuleConsole = new consoleClass();
+                                            if (!(ibas.objects.instanceOf(console, ibas.ModuleConsole))) {
+                                                throw new ReferenceError(item);
+                                            }
+                                            // 设置模块名称
+                                            console.module = module.name.toLowerCase();
+                                            // 设置模块根地址
+                                            console.rootUrl = module.address;
+                                            // 设置仓库地址
+                                            if (!ibas.strings.isEmpty(module.repository)) {
+                                                let done: boolean = console.setRepository(module.repository);
+                                                // 注册模块业务仓库默认地址，创建实例时默认取此地址
+                                                if (!ibas.objects.isNull(console.name) && done) {
+                                                    module.repository = ibas.urls.normalize(module.repository);
+                                                    let repositoryName: string = ibas.strings.format(ibas.MODULE_REPOSITORY_NAME_TEMPLATE, console.name);
+                                                    let configName: string = ibas.strings.format(
+                                                        ibas.CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS, repositoryName);
+                                                    ibas.config.set(configName, module.repository);
+                                                    ibas.logger.log(ibas.emMessageLevel.DEBUG,
+                                                        "repository: register [{0}]'s default address [{1}].", repositoryName, module.repository);
+                                                }
+                                            }
+                                            that.consoles.add(console);
+                                            loader.onCompleted(console);
+                                        }
+                                    } catch (error) {
+                                        loader.onError(error);
+                                    }
+                                }, function (): void {
+                                    // 模块加载失败
+                                    loader.onError(new ReferenceError(ibas.i18n.prop("shell_invalid_module_index", ibas.objects.isNull(module.name) ? module.id : module.name)));
+                                });
+                                ibas.logger.log(ibas.emMessageLevel.DEBUG,
+                                    "center: module [{0}] {root: [{1}], index: [{2}]}.", module.name, module.address, module.index);
+                            }
+                        } catch (error) {
+                            loader.onError(error);
+                        }
+                    }
+                });
+            }
+        }
+        export const consoleManager: ModuleConsoleManager = new ModuleConsoleManager();
     }
 }

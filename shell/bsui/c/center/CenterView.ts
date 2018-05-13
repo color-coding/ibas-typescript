@@ -49,7 +49,7 @@ namespace shell {
                 /** 激活关于 */
                 aboutEvent: Function;
                 /** 激活功能，参数1 string 功能ID */
-                activateFunctionsEvent: Function;
+                activateFunctionEvent: Function;
                 /** 绘制视图 */
                 draw(): any {
                     let that: this = this;
@@ -379,7 +379,7 @@ namespace shell {
                                 key: funItem.name,
                                 text: funItem.description,
                                 select(): void {
-                                    that.fireViewEvents(that.activateFunctionsEvent, funItem.id);
+                                    that.fireViewEvents(that.activateFunctionEvent, funItem.id);
                                 }
                             });
                             mdNVItem.addItem(subNvItem);
@@ -390,7 +390,7 @@ namespace shell {
                             if (funItem.id === autoActivetedFunction) {
                                 let duration: number = ibas.config.get(CONFIG_ITEM_STATUS_MESSAGES_DELAY, 2) * 1000;
                                 setTimeout(function (): void {
-                                    that.fireViewEvents(that.activateFunctionsEvent, funItem.id);
+                                    that.fireViewEvents(that.activateFunctionEvent, funItem.id);
                                 }, duration > 0 ? duration * 1.2 : 3000);
                             }
                         }
