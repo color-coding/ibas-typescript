@@ -49,7 +49,7 @@ namespace shell {
                 /** 激活关于 */
                 aboutEvent: Function;
                 /** 激活功能，参数1 string 功能ID */
-                activateFunctionsEvent: Function;
+                activateFunctionEvent: Function;
                 /** 绘制视图 */
                 draw(): any {
                     let that: this = this;
@@ -218,11 +218,6 @@ namespace shell {
                             tooltip: ibas.i18n.prop("shell_close_view"),
                             type: sap.m.ButtonType.Transparent,
                             press: function (): void {
-                                // 退出全屏状态
-                                if (that.mainPage.getHeader() === null) {
-                                    that.mainPage.setHeader(that.mainHeader);
-                                    ibas.config.set(CONFIG_ITEM_FULL_SCREEN, false);
-                                }
                                 that.destroyCurrentView();
                             }
                         }));
@@ -384,7 +379,7 @@ namespace shell {
                                 key: funItem.name,
                                 text: funItem.description,
                                 select(): void {
-                                    that.fireViewEvents(that.activateFunctionsEvent, funItem.id);
+                                    that.fireViewEvents(that.activateFunctionEvent, funItem.id);
                                 }
                             });
                             mdNVItem.addItem(subNvItem);
@@ -395,7 +390,7 @@ namespace shell {
                             if (funItem.id === autoActivetedFunction) {
                                 let duration: number = ibas.config.get(CONFIG_ITEM_STATUS_MESSAGES_DELAY, 2) * 1000;
                                 setTimeout(function (): void {
-                                    that.fireViewEvents(that.activateFunctionsEvent, funItem.id);
+                                    that.fireViewEvents(that.activateFunctionEvent, funItem.id);
                                 }, duration > 0 ? duration * 1.2 : 3000);
                             }
                         }
@@ -896,6 +891,11 @@ namespace shell {
                         this.showView(lastView);
                     }
                     if (this.mainPage.getMainContents().length === 0) {
+                        // 退出全屏状态
+                        if (this.mainPage.getHeader() === null) {
+                            this.mainPage.setHeader(this.mainHeader);
+                            ibas.config.set(CONFIG_ITEM_FULL_SCREEN, false);
+                        }
                         // 页面没有内容时，显示欢迎
                         this.mainPage.addMainContent(this.drawWelcomePage());
                     }

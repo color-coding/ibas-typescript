@@ -27,8 +27,6 @@ namespace ibas {
     export class VariablesManager {
         /** 运行中的变量 */
         private variables: Map<string, KeyValue>;
-        /** 注册系统观察者 */
-        register(watcher: ISystemWatcher): void;
         /** 注册变量 */
         register(variable: KeyValue): void;
         /** 注册变量 */
@@ -39,9 +37,6 @@ namespace ibas {
             if (arguments.length === 1) {
                 if (objects.instanceOf(arguments[0], KeyValue)) {
                     variable = arguments[0];
-                } else if (arguments[0].modules instanceof Function) {
-                    // 系统观察者
-                    this.watcher = arguments[0];
                 }
             } else if (arguments.length === 2) {
                 variable = new KeyValue();
@@ -81,23 +76,6 @@ namespace ibas {
             }
             return value.value;
         }
-        /** 系统用户 */
-        private watcher: ISystemWatcher;
-        getWatcher(): ISystemWatcher {
-            if (objects.isNull(this.watcher)) {
-                return {
-                    modules(): IList<IModule> {
-                        return new ArrayList();
-                    }
-                };
-            }
-            return this.watcher;
-        }
-    }
-    /** 系统运行状态观察者 */
-    export interface ISystemWatcher {
-        /** 运行的模块 */
-        modules(): IList<IModule>;
     }
     /** 变量管理员实例 */
     export const variablesManager: VariablesManager = new VariablesManager();

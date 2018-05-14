@@ -30,8 +30,8 @@ namespace ibas {
         copyright: string;
         /** 图标 */
         icon: string;
-        /** 功能集合 */
-        functions(): IFunction[];
+        /** 元素 */
+        elements(): IElement[];
     }
     /**
      * 功能
@@ -154,23 +154,19 @@ namespace ibas {
         functions(): IModuleFunction[];
         /** 默认功能 */
         default(): IModuleFunction;
-        /** 添加初始化完成监听 */
-        addListener(listener: Function): void;
         /** 已实例应用集合 */
         applications(): IApplication<IView>[];
+        /** 添加初始化完成监听 */
+        addListener(listener: Function): void;
     }
     /**
      * 模块-功能
      */
     export interface IModuleFunction extends IFunction {
-        /** 所属模块 */
-        module: IModule;
         /** 图标 */
         icon: string;
         /** 视图导航 */
         navigation: IViewNavigation;
-        /** 激活的 */
-        activated: boolean;
         /** 默认应用 */
         default(): IApplication<IView>;
     }
@@ -196,21 +192,21 @@ namespace ibas {
         copyright: string;
         /** 图标 */
         icon: string;
-        private _functions: IList<IFunction>;
-        /** 功能集合 */
-        functions(): IFunction[] {
-            if (objects.isNull(this._functions)) {
-                this._functions = new ArrayList<IFunction>();
+        private _elements: IList<IElement>;
+        /** 元素 */
+        elements(): IElement[] {
+            if (objects.isNull(this._elements)) {
+                this._elements = new ArrayList<IElement>();
             }
-            return this._functions;
+            return this._elements;
         }
         /** 注册功能 */
-        protected register(item: IFunction): void {
+        protected register(item: IElement): void {
             if (objects.isNull(item)) { return; }
-            if (objects.isNull(this._functions)) {
-                this._functions = new ArrayList<IFunction>();
+            if (objects.isNull(this._elements)) {
+                this._elements = new ArrayList<IElement>();
             }
-            this._functions.add(item);
+            this._elements.add(item);
         }
     }
     /** 地址hash值标记-功能 */
@@ -370,19 +366,6 @@ namespace ibas {
         get plantform(): emPlantform {
             return config.get(CONFIG_ITEM_PLANTFORM, emPlantform.COMBINATION, emPlantform);
         }
-        /** 功能集合，仅激活的 */
-        functions(): IModuleFunction[] {
-            let list: Array<IModuleFunction> = new Array<IModuleFunction>();
-            for (let item of super.functions()) {
-                if (objects.instanceOf(item, ModuleFunction)) {
-                    if (!(<ModuleFunction>item).activated) {
-                        continue;
-                    }
-                }
-                list.push(<IModuleFunction>item);
-            }
-            return list;
-        }
         /** 默认功能 */
         default(): IModuleFunction {
             let list: IModuleFunction[] = this.functions();
@@ -390,6 +373,68 @@ namespace ibas {
                 return list[0];
             }
             return null;
+        }
+        /** 功能集合，仅激活的 */
+        functions(): IModuleFunction[] {
+            let list: Array<IModuleFunction> = new Array<IModuleFunction>();
+            for (let item of super.elements()) {
+                if (!objects.instanceOf(item, ModuleFunction)) {
+                    continue;
+                }
+                list.push(<IModuleFunction>item);
+            }
+            return list;
+        }
+        /** 应用集合 */
+        applications(): IApplication<IView>[] {
+            let list: Array<IApplication<IView>> = new Array<IApplication<IView>>();
+            for (let item of super.elements()) {
+                if (!objects.instanceOf(item, Application)) {
+                    continue;
+                }
+                list.push(<IApplication<IView>>item);
+            }
+            return list;
+        }
+        /** 服务集合 */
+        services(): IServiceMapping[] {
+            let list: Array<IServiceMapping> = new Array<IServiceMapping>();
+            for (let item of super.elements()) {
+                if (!objects.instanceOf(item, ServiceMapping)) {
+                    continue;
+                }
+                list.push(<IServiceMapping>item);
+            }
+            return list;
+        }
+        /** 注册功能 */
+        protected register(item: ModuleFunction): void;
+        /** 注册应用 */
+        protected register(item: Application<IView>): void;
+        /** 注册服务 */
+        protected register(item: ServiceMapping): void;
+        /** 注册实现，需要区分注册内容 */
+        protected register(): void {
+            let item: any = arguments[0];
+            if (item instanceof ModuleFunction) {
+                // 注册模块功能
+                if (strings.isEmpty(item.id)) {
+                    item.id = uuids.random();
+                }
+                item.navigation = this.navigation();
+            } else if (item instanceof Application) {
+                // 注册应用
+                if (strings.isEmpty(item.id)) {
+                    item.id = uuids.random();
+                }
+                item.navigation = this.navigation();
+                item.viewShower = this.viewShower;
+            } else if (item instanceof ServiceMapping) {
+                // 注册服务
+                item.navigation = this.navigation();
+                item.viewShower = this.viewShower;
+            }
+            super.register(item);
         }
         private listeners: Array<Function>;
         /** 添加初始化完成监听 */
@@ -433,50 +478,6 @@ namespace ibas {
         abstract navigation(): IViewNavigation;
         /** 视图显示者 */
         viewShower: IViewShower;
-        private _applications: ArrayList<IApplication<IView>>;
-        /** 已实例应用集合 */
-        applications(): IApplication<IView>[] {
-            if (objects.isNull(this._applications)) {
-                this._applications = new ArrayList<IApplication<IView>>();
-            }
-            return this._applications;
-        }
-        /** 注册功能 */
-        protected register(item: ModuleFunction): void;
-        /** 注册应用 */
-        protected register(item: AbstractApplication<IView>): void;
-        /** 注册服务 */
-        protected register(item: ServiceMapping): void;
-        /** 注册实现，需要区分注册内容 */
-        protected register(): void {
-            let item: any = arguments[0];
-            if (item instanceof ModuleFunction) {
-                // 注册模块功能
-                if (objects.isNull(item.id)) {
-                    item.id = uuids.random();
-                }
-                item.navigation = this.navigation();
-                item.module = this;
-                item.activated = true;
-                super.register(item);
-            } else if (item instanceof AbstractFunction) {
-                // 注册功能
-                super.register(item);
-            } else if (item instanceof AbstractApplication) {
-                // 注册应用
-                if (objects.isNull(this._applications)) {
-                    this._applications = new ArrayList<IApplication<IView>>();
-                }
-                item.navigation = this.navigation();
-                item.viewShower = this.viewShower;
-                this._applications.add(item);
-            } else if (item instanceof ServiceMapping) {
-                // 注册服务
-                item.navigation = this.navigation();
-                item.viewShower = this.viewShower;
-                servicesManager.register(item);
-            }
-        }
         /** 设置仓库地址，返回值是否执行默认设置 */
         setRepository(address: string): boolean {
             return true;
@@ -515,14 +516,10 @@ namespace ibas {
     }
     /** 模块控制台 */
     export abstract class ModuleFunction extends AbstractFunction implements IModuleFunction {
-        /** 所属模块 */
-        module: IModule;
         /** 图标 */
         icon: string;
         /** 创建视图导航 */
         navigation: IViewNavigation;
-        /** 激活的 */
-        activated: boolean;
         /** 默认功能 */
         abstract default(): IApplication<IView>;
     }
