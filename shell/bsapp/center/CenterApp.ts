@@ -561,11 +561,14 @@ namespace shell {
                                             loader.onCompleted(console);
                                         }
                                     } catch (error) {
-                                        loader.onError(error);
+                                        loader.onStatusMessage(ibas.emMessageType.ERROR, error.message);
                                     }
                                 }, function (): void {
                                     // 模块加载失败
-                                    loader.onError(new ReferenceError(ibas.i18n.prop("shell_invalid_module_index", ibas.objects.isNull(module.name) ? module.id : module.name)));
+                                    loader.onStatusMessage(
+                                        ibas.emMessageType.ERROR,
+                                        ibas.i18n.prop("shell_invalid_module_index", ibas.objects.isNull(module.name) ? module.id : module.name)
+                                    );
                                 });
                                 ibas.logger.log(ibas.emMessageLevel.DEBUG,
                                     "center: module [{0}] {root: [{1}], index: [{2}]}.", module.name, module.address, module.index);

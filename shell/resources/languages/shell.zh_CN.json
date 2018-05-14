@@ -30,7 +30,7 @@
     "shell_invalid_module_address": "模块[{0}]的地址无效",
     "shell_invalid_module_index": "模块[{0}]的索引无效",
     "shell_initialize_user_modules": "开始加载用户[{0}]的应用",
-    "shell_initialize_module": "加载模块[{0}]",
+    "shell_initialize_module": "模块[{0}]开始加载",
     "shell_close_view": "关闭视图",
     "shell_data_new": "新建",
     "shell_data_create": "创建",
