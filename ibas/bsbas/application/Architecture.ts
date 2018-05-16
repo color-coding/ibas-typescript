@@ -198,8 +198,23 @@ namespace ibas {
             if (objects.isNull(this._elements)) {
                 this._elements = new ArrayList<IElement>();
             }
-            return this._elements;
+            let elements: IList<IElement> = new ArrayList<IElement>();
+            for (let item of this._elements) {
+                if (this.isSkip instanceof Function) {
+                    if (this.isSkip(item)) {
+                        continue;
+                    }
+                }
+                elements.add(item);
+            }
+            return elements;
         }
+        /**
+         * 是否跳过
+         * @argument element 元素
+         * @returns true，跳过；false，使用
+         */
+        isSkip: (element: IElement) => boolean;
         /** 注册功能 */
         protected register(item: IElement): void {
             if (objects.isNull(item)) { return; }
@@ -407,15 +422,8 @@ namespace ibas {
             }
             return list;
         }
-        /** 注册功能 */
-        protected register(item: ModuleFunction): void;
-        /** 注册应用 */
-        protected register(item: Application<IView>): void;
-        /** 注册服务 */
-        protected register(item: ServiceMapping): void;
         /** 注册实现，需要区分注册内容 */
-        protected register(): void {
-            let item: any = arguments[0];
+        protected register(item: IElement): void {
             if (item instanceof ModuleFunction) {
                 // 注册模块功能
                 if (strings.isEmpty(item.id)) {

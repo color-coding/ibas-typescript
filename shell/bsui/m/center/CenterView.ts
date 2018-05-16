@@ -9,7 +9,6 @@
 namespace shell {
     export namespace ui {
         export namespace m {
-
             /**
              * 视图-中心
              */
