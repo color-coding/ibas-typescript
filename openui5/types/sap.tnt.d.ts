@@ -445,6 +445,12 @@ declare namespace sap {
              */
             getItems(): NavigationListItem[];
             /**
+             * Gets current value of property <code>visible</code>.
+             * value is <code>true</code>.
+             * @returns Value of property <code>visible</code>
+            */
+            getVisible(): boolean;
+            /**
              * Checks for the provided <code>sap.tnt.NavigationListItem</code> in the aggregation <code>items</code>.
              * and returns its index if found or -1 otherwise.
              * @param oItem The item whose index is looked for
@@ -510,6 +516,14 @@ declare namespace sap {
              * @return Reference to <code>this</code> in order to allow method chaining
              */
             setIcon(sIcon: any): NavigationListItem;
+            /**
+             * Sets a new value for property <code>visible</code>.When
+             * called with a value of <code>null</code> or <code>undefined</code>, the default value of the
+             * property will be restored.Default value is <code>true</code>.
+             * @param bVisible New value for property <code>visible</code>
+             * @returns Reference to <code>this</code> in order to allow method chaining
+            */
+            setVisible(bVisible: boolean): sap.m.semantic.SemanticControl;
         }
 
         class SideNavigation extends sap.ui.core.Control {

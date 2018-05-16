@@ -26,6 +26,8 @@ namespace shell {
             export const CONFIG_ITEM_SHRINK_FUNCTION_LIST: string = "shrinkFunction";
             /** 配置项目-最大消息数 */
             export const CONFIG_ITEM_MAX_MESSAGE_COUNT: string = "messageCount";
+            /** 配置项目-隐藏无功能模块 */
+            export const CONFIG_ITEM_HIDE_NO_FUNCTION_MODULE: string = "hideModule";
             /**
              * 视图-中心
              */
@@ -336,77 +338,26 @@ namespace shell {
                  * @param module 模块
                  */
                 showModule(module: ibas.IModuleConsole): void {
-                    let that: this = this;
                     let nvList: sap.tnt.NavigationList = this.navigation.getItem();
-                    let nvItem: sap.tnt.NavigationListItem = new sap.tnt.NavigationListItem("", {
-                        key: module.name,
-                        text: module.description,
-                        icon: module.icon,
-                        expanded: false,
-                        select(): void {
-                            // 展开菜单
-                            this.setExpanded(!this.getExpanded());
-                        }
-                    });
-                    nvList.addItem(nvItem);
-                    let showFunctions: Function = function (mModule: ibas.IModuleConsole): void {
-                        /** 自动激活的功能 */
-                        let autoActivetedFunction: string = ibas.config.get(CONFIG_ITEM_AUTO_ACTIVETED_FUNCTION);
-                        for (let funItem of mModule.functions()) {
-                            let newGroup: boolean = false;
-                            let mdNVItem: sap.tnt.NavigationListItem = nvItem;
-                            if (ibas.config.get(CONFIG_ITEM_GROUP_FUNCTONS, false)
-                                && !ibas.objects.isNull(funItem.category) && funItem.category.length > 0) {
-                                // 菜单分组
-                                for (let item of nvItem.getItems()) {
-                                    if (item.getKey() === ibas.strings.format("{0}_{1}", mModule.name, funItem.category)) {
-                                        mdNVItem = item;
-                                        break;
-                                    }
-                                }
-                                if (mdNVItem === nvItem) {
-                                    // 不存在分组，新建一个
-                                    mdNVItem = new sap.tnt.NavigationListItem("", {
-                                        key: ibas.strings.format("{0}_{1}", mModule.name, funItem.category),
-                                        text: ibas.i18n.prop(funItem.category),
-                                        expanded: false,
-                                        hasExpander: true,
-                                    });
-                                    newGroup = true;
-                                }
+                    nvList.addItem(
+                        new sap.tnt.NavigationListItem("", {
+                            key: module.name,
+                            text: module.description,
+                            icon: module.icon,
+                            expanded: false,
+                            visible: !ibas.config.get(CONFIG_ITEM_HIDE_NO_FUNCTION_MODULE, true),
+                            select(): void {
+                                // 展开菜单
+                                this.setExpanded(!this.getExpanded());
                             }
-                            let subNvItem: sap.tnt.NavigationListItem = new sap.tnt.NavigationListItem("", {
-                                key: funItem.name,
-                                text: funItem.description,
-                                select(): void {
-                                    that.fireViewEvents(that.activateFunctionEvent, funItem.id);
-                                }
-                            });
-                            mdNVItem.addItem(subNvItem);
-                            if (newGroup) {
-                                nvItem.addItem(mdNVItem);
-                            }
-                            // 自动激活功能
-                            if (funItem.id === autoActivetedFunction) {
-                                let duration: number = ibas.config.get(CONFIG_ITEM_STATUS_MESSAGES_DELAY, 2) * 1000;
-                                setTimeout(function (): void {
-                                    that.fireViewEvents(that.activateFunctionEvent, funItem.id);
-                                }, duration > 0 ? duration * 1.2 : 3000);
-                            }
-                        }
-                    };
-                    if (module.isInitialized) {
-                        // 已初始化完成
-                        showFunctions(module);
-                    } else {
-                        // 未初始化完成，等待完成后显示
-                        module.addListener(showFunctions);
-                    }
+                        })
+                    );
                     // 延迟排序模块
                     if (ibas.objects.isNull(this.statusDelay)) {
                         this.statusDelay = ibas.config.get(CONFIG_ITEM_STATUS_MESSAGES_DELAY, 2) * 1000;
                     }
                     // 计算模块位置并添加
+                    let that: this = this;
                     if (ibas.objects.isNull(this.moduleTime)) {
                         this.moduleTime = ibas.dates.now().getTime();
                         setTimeout(function (): void {
@@ -432,6 +383,65 @@ namespace shell {
                 }
                 /** 模块时间 */
                 private moduleTime: number;
+                /**
+                 * 显示模块功能
+                 * @param module 模块
+                 * @param func 功能
+                 */
+                showModuleFunction(module: string, func: ibas.IModuleFunction): void {
+                    /** 自动激活的功能 */
+                    let autoActivetedFunction: string = ibas.config.get(CONFIG_ITEM_AUTO_ACTIVETED_FUNCTION);
+                    let nvList: sap.tnt.NavigationList = this.navigation.getItem();
+                    let nvItem: sap.tnt.NavigationListItem = null;
+                    for (let item of nvList.getItems()) {
+                        if (item.getKey() === module) {
+                            nvItem = item;
+                            break;
+                        }
+                    }
+                    if (ibas.objects.isNull(nvItem)) {
+                        throw new Error(ibas.strings.format("not found module [{0}].", module));
+                    }
+                    // 设置模块可见
+                    nvItem.setVisible(true);
+                    let that: this = this;
+                    let mdNVItem: sap.tnt.NavigationListItem = nvItem;
+                    if (ibas.config.get(CONFIG_ITEM_GROUP_FUNCTONS, false) && !ibas.strings.isEmpty(func.category)) {
+                        // 菜单分组
+                        for (let item of nvItem.getItems()) {
+                            if (item.getKey() === ibas.strings.format("{0}_{1}", nvItem.getKey(), func.category)) {
+                                mdNVItem = item;
+                                break;
+                            }
+                        }
+                        if (mdNVItem === nvItem) {
+                            // 不存在分组，新建一个
+                            mdNVItem = new sap.tnt.NavigationListItem("", {
+                                key: ibas.strings.format("{0}_{1}", nvItem.getKey(), func.category),
+                                text: ibas.i18n.prop(func.category),
+                                expanded: false,
+                                hasExpander: true,
+                            });
+                            nvItem.addItem(mdNVItem);
+                        }
+                    }
+                    mdNVItem.addItem(
+                        new sap.tnt.NavigationListItem("", {
+                            key: func.name,
+                            text: func.description,
+                            select(): void {
+                                that.fireViewEvents(that.activateFunctionEvent, func.id);
+                            }
+                        })
+                    );
+                    // 自动激活功能
+                    if (func.id === autoActivetedFunction) {
+                        let duration: number = ibas.config.get(CONFIG_ITEM_STATUS_MESSAGES_DELAY, 2) * 1000;
+                        setTimeout(function (): void {
+                            that.fireViewEvents(that.activateFunctionEvent, func.id);
+                        }, duration > 0 ? duration * 1.2 : 3000);
+                    }
+                }
                 /** 设置忙状态 */
                 busyView(view: ibas.IView, busy: boolean, msg: string): any {
                     let ui: sap.ui.core.Element = sap.ui.getCore().byId(view.id);

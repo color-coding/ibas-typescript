@@ -8,7 +8,6 @@
 namespace shell {
     export namespace ui {
         export namespace c {
-
             /**
              * 视图-关于
              */

@@ -7,8 +7,6 @@
  */
 namespace shell {
     export namespace app {
-        /** 配置项目-隐藏无功能模块 */
-        export const CONFIG_ITEM_HIDE_NO_FUNCTION_MODULE: string = "hideModule";
         /** 应用-中心 */
         export class CenterApp extends ibas.AbstractApplication<ICenterView> {
             /** 应用标识 */
@@ -119,6 +117,7 @@ namespace shell {
                     ibas.i18n.prop("shell_initialize_user_modules",
                         ibas.strings.isEmpty(this.currentUser.name) ? this.currentUser.code : this.currentUser.name)
                 );
+                this.functionMap = new Map<string, ibas.IModuleFunction>();
                 let user: string = this.currentUser.code;
                 let platform: string = ibas.enums.toString(ibas.emPlantform, this.plantform);
                 let that: this = this;
@@ -134,6 +133,13 @@ namespace shell {
                         });
                     },
                     onCompleted(): void {
+                        // 如当前模块包含Hash指向的功能,激活
+                        let hashFuncId: string = null;
+                        if (window.location.hash.startsWith(ibas.URL_HASH_SIGN_FUNCTIONS)) {
+                            let url: string = window.location.hash.substring(ibas.URL_HASH_SIGN_FUNCTIONS.length);
+                            let index: number = url.indexOf("/") < 0 ? url.length : url.indexOf("/");
+                            hashFuncId = url.substring(0, index);
+                        }
                         // 权限加载成功，加载模块
                         consoleManager.load({
                             user: user,
@@ -149,61 +155,37 @@ namespace shell {
                                 that.view.showStatusMessage(type, message);
                             },
                             onCompleted(console: ibas.ModuleConsole): void {
+                                // 设置跳过方法
+                                console.isSkip = function (element: ibas.IElement): boolean {
+                                    // 没权限，跳过元素
+                                    return !that.privilegeManager.canRun(element);
+                                };
                                 // 有效模块控制台
                                 console.addListener(function (): void {
-                                    let show: boolean = false;
-                                    if (!ibas.config.get(CONFIG_ITEM_HIDE_NO_FUNCTION_MODULE, true)) {
-                                        show = true;
-                                    }
-                                    // 如当前模块包含Hash指向的功能,激活
-                                    let currentHashValue: string = window.location.hash;
-                                    let hashFuncId: string = null;
-                                    if (currentHashValue.startsWith(ibas.URL_HASH_SIGN_FUNCTIONS)) {
-                                        let url: string = currentHashValue.substring(ibas.URL_HASH_SIGN_FUNCTIONS.length);
-                                        let index: number = url.indexOf("/") < 0 ? url.length : url.indexOf("/");
-                                        hashFuncId = url.substring(0, index);
-                                    }
-                                    if (ibas.objects.isNull(that.functionMap)) {
-                                        that.functionMap = new Map<string, ibas.IModuleFunction>();
-                                    }
-                                    // 处理功能
-                                    for (let func of console.functions()) {
-                                        // 没权限，不激活功能
-                                        if (!that.privilegeManager.canRun(func)) {
-                                            continue;
+                                    // 显示模块
+                                    that.view.showModule(console);
+                                    // 模块可用，才加载功能和应用
+                                    if (that.privilegeManager.canRun(console)) {
+                                        // 处理功能
+                                        for (let func of console.functions()) {
+                                            that.functionMap.set(func.id, func);
+                                            that.view.showModuleFunction(console.name, func);
+                                            // 如当前模块包含Hash指向的功能,激活
+                                            if (ibas.strings.equals(func.id, hashFuncId)) {
+                                                ibas.urls.changeHash(window.location.hash);
+                                            }
                                         }
-                                        if (!show) { show = true; }
-                                        that.functionMap.set(func.id, func);
-                                        // 如当前模块包含Hash指向的功能,激活
-                                        if (ibas.strings.equals(func.id, hashFuncId)) {
-                                            ibas.urls.changeHash(currentHashValue);
-                                        }
-                                    }
-                                    // 处理应用
-                                    for (let app of console.applications()) {
-                                        // 没权限，不激活应用
-                                        if (!that.privilegeManager.canRun(app)) {
-                                            continue;
-                                        }
-                                        // 显示常驻应用
-                                        if (ibas.objects.instanceOf(app, ibas.ResidentApplication)) {
-                                            that.view.showResidentView(<ibas.IBarView>app.view);
+                                        // 处理应用
+                                        for (let app of console.applications()) {
+                                            // 显示常驻应用
+                                            if (ibas.objects.instanceOf(app, ibas.ResidentApplication)) {
+                                                that.view.showResidentView(<ibas.IBarView>app.view);
+                                            }
                                         }
                                     }
                                     // 处理服务
                                     for (let service of console.services()) {
-                                        // 没权限，不激活服务
-                                        if (!that.privilegeManager.canRun(service)) {
-                                            continue;
-                                        }
                                         ibas.servicesManager.register(service);
-                                    }
-                                    if (show) {
-                                        // 显示模块
-                                        that.view.showModule(console);
-                                    } else {
-                                        ibas.logger.log(ibas.emMessageLevel.DEBUG,
-                                            "center: hide no functions module [{0}].", console.name);
                                     }
                                 });
                                 // 设置视图显示者
@@ -329,10 +311,11 @@ namespace shell {
             showMessageBox(caller: ibas.IMessgesCaller): void;
             /** 显示模块 */
             showModule(console: ibas.IModuleConsole): void;
+            /** 显示模块功能 */
+            showModuleFunction(module: string, func: ibas.IModuleFunction): void;
             /** 显示常驻视图 */
             showResidentView(view: ibas.IBarView): void;
         }
-
         interface IUserPrivilegeLoader {
             /** 用户 */
             user: string;
@@ -350,19 +333,12 @@ namespace shell {
         class UserPrivilegeManager {
             /** 用户权限 */
             private userPrivileges: ibas.IList<bo.IUserPrivilege>;
-            /** 是否可以运行，应用 */
-            canRun(app: ibas.IApplication<ibas.IView>): boolean;
-            /** 是否可以运行，功能 */
-            canRun(app: ibas.IModuleFunction): boolean;
-            /** 是否可以运行，服务 */
-            canRun(app: ibas.IServiceMapping): boolean;
             /** 判断是否可以运行应用 */
-            canRun(): boolean {
+            canRun(element: ibas.IElement): boolean {
                 let run: boolean = true;
                 if (ibas.objects.isNull(this.userPrivileges)) {
                     return run;
                 }
-                let element: ibas.IElement = arguments[0];
                 if (ibas.objects.instanceOf(element, ibas.BOApplication)) {
                     // 应用是业务对象应用，根据应用类型设置权限
                     for (let item of this.userPrivileges) {
@@ -396,13 +372,21 @@ namespace shell {
                     if (item.target !== element.id) {
                         continue;
                     }
-                    run = item.value === ibas.emAuthoriseType.NONE ? false : true;
+                    if (ibas.objects.instanceOf(element, ibas.ModuleConsole)) {
+                        run = item.value === ibas.emAuthoriseType.ALL ? true : false;
+                    } else {
+                        run = item.value === ibas.emAuthoriseType.NONE ? false : true;
+                    }
                     break;
                 }
                 return run;
             }
-
+            /** 加载权限 */
             load(loader: IUserPrivilegeLoader): void {
+                if (!ibas.objects.isNull(this.userPrivileges)) {
+                    // 已初始化不在处理
+                    return;
+                }
                 let that: this = this;
                 let boRepository: bo.IBORepositoryShell = bo.repository.create();
                 boRepository.fetchUserPrivileges({
