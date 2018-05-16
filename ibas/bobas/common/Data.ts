@@ -64,15 +64,6 @@ namespace ibas {
      * 集合
      */
     export class ArrayList<T> extends Array<T> implements IList<T> {
-        /** 创建集合，仅值 */
-        static create<P>(map: Map<any, P>): ArrayList<P> {
-            let list: ArrayList<P> = new ArrayList<P>();
-            for (let item of map.values()) {
-                list.add(item);
-            }
-            return list;
-        }
-
         /**
          * 添加项目
          * @param item 项目
@@ -132,7 +123,7 @@ namespace ibas {
          * @param index 项目索引
          */
         removeAt(index: number): void {
-            if (index >= 0 && index < super.length) {
+            if (index >= 0 && index < this.length) {
                 this.remove(this[index]);
             }
         }
