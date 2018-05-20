@@ -225,16 +225,11 @@ namespace shell {
                 ibas.criterias.resultCount(criteria);
                 // 根据目标类型，修正排序条件
                 ibas.criterias.sorts(criteria, this.listener.queryTarget);
-                // 给查询条件赋值
-                for (let item of criteria.conditions) {
-                    if (ibas.strings.isEmpty(item.value)) {
-                        item.value = this.view.searchContent;
-                    }
-                }
                 // 没有查询条件且有查询内容，尝试从注册信息添加
                 let that: this = this;
-                if (criteria.conditions.length === 0 && !ibas.objects.isNull(this.listener.queryTarget)
-                    && !ibas.strings.isEmpty(this.view.searchContent)) {
+                if ((criteria.conditions.length === 0
+                    || criteria.conditions.firstOrDefault(c => c.operation === ibas.emConditionOperation.CONTAIN) == null)
+                    && !ibas.objects.isNull(this.listener.queryTarget) && !ibas.strings.isEmpty(this.view.searchContent)) {
                     let boName: string = this.targetName;
                     if (!ibas.objects.isNull(boName)) {
                         let boRepository: bo.IBORepositoryShell = bo.repository.create();
@@ -245,7 +240,13 @@ namespace shell {
                                 if (opRslt.resultCode !== 0) {
                                     that.messages(ibas.emMessageType.WARNING, opRslt.message);
                                 }
+                                if (criteria.conditions.length > 1) {
+                                    criteria.conditions.firstOrDefault().bracketOpen += 1;
+                                    criteria.conditions.lastOrDefault().bracketClose += 1;
+                                }
                                 // 检索到了查询字段
+                                let firstCondition: ibas.ICondition = null;
+                                let lastCondition: ibas.ICondition = null;
                                 for (let boItem of opRslt.resultObjects) {
                                     for (let boProperty of boItem.properties) {
                                         if (!boProperty.searched) {
@@ -257,7 +258,16 @@ namespace shell {
                                         condition.operation = ibas.emConditionOperation.CONTAIN;
                                         // 修正查询关系为或
                                         condition.relationship = ibas.emConditionRelationship.OR;
+                                        if (firstCondition === null) {
+                                            firstCondition = condition;
+                                        }
+                                        lastCondition = condition;
                                     }
+                                }
+                                if (firstCondition !== lastCondition) {
+                                    firstCondition.bracketOpen = 1;
+                                    firstCondition.relationship = ibas.emConditionRelationship.AND;
+                                    lastCondition.bracketClose = 1;
                                 }
                                 // 没有查询字段，则查询主键
                                 if (criteria.conditions.length === 0) {
@@ -268,6 +278,12 @@ namespace shell {
                         });
                     }
                 } else {
+                    // 给查询条件赋值
+                    for (let item of criteria.conditions) {
+                        if (ibas.strings.isEmpty(item.value)) {
+                            item.value = this.view.searchContent;
+                        }
+                    }
                     this.fireQuery(criteria);
                 }
             }
