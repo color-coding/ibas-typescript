@@ -355,8 +355,8 @@ namespace ibas {
                 // 结果 = 乘数 * 被乘数
                 result = multiplier * multiplicand;
                 context.outputValues.set(this.result, result);
-            } else if (multiplier === 0 && result !== 0) {
-                // 加数 = 结果 / 被加数
+            } else if (multiplicand !== 0 && result !== 0) {
+                // 乘数 = 结果 / 被乘数
                 multiplier = result / multiplicand;
                 context.outputValues.set(this.multiplier, multiplier);
             }

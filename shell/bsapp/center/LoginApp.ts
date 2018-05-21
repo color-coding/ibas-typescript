@@ -62,14 +62,6 @@ namespace shell {
                 let userTokenParam: ibas.KeyText = ibas.urls.param(ibas.CONFIG_ITEM_USER_TOKEN);
                 if (!ibas.objects.isNull(userTokenParam)) {
                     let userToken: string = userTokenParam.text;
-                    let plantformParam: ibas.KeyText = ibas.urls.param(ibas.CONFIG_ITEM_PLANTFORM);
-                    let plantform: string = "";
-                    if (!ibas.objects.isNull(plantformParam)) {
-                        plantform = plantformParam.text;
-                    }
-                    ibas.config.set(ibas.CONFIG_ITEM_PLANTFORM,
-                        isNaN(parseInt(plantform, 0)) ? 0 : parseInt(plantform, 0)
-                    );
                     ibas.logger.log(ibas.emMessageLevel.DEBUG, "app: user login system,token is [{0}].", userToken);
                     let boRepository: bo.IBORepositoryShell = bo.repository.create();
                     boRepository.tokenConnect({
