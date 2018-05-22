@@ -121,7 +121,7 @@ namespace trainingtesting {
                                     icon: "sap-icon://action",
                                     press: function (event: any): void {
                                         ibas.servicesManager.showServices({
-                                            proxy: new ibas.BOListServiceProxy({
+                                            proxy: new ibas.BOServiceProxy({
                                                 data: openui5.utils.getSelecteds(that.table),
                                                 converter: new bo.DataConverter(),
                                             }),

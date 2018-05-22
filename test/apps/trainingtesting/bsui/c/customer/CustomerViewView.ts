@@ -47,7 +47,7 @@ namespace trainingtesting {
                                     icon: "sap-icon://action",
                                     press: function (event: any): void {
                                         ibas.servicesManager.showServices({
-                                            proxy: new ibas.BOListServiceProxy({
+                                            proxy: new ibas.BOServiceProxy({
                                                 data: (<any>that.layoutMain.getModel()).getObject(),
                                                 converter: new bo.DataConverter(),
                                             }),
