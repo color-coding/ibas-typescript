@@ -42,7 +42,7 @@ namespace trainingtesting {
                                             press: function (event: any): void {
                                                 that.page.setShowFooter(true);
                                                 ibas.servicesManager.showServices({
-                                                    proxy: new ibas.BOListServiceProxy({
+                                                    proxy: new ibas.BOServiceProxy({
                                                         data: openui5.utils.getSelecteds(that.list),
                                                         converter: new bo.DataConverter(),
                                                     }),
