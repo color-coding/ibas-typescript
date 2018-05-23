@@ -678,7 +678,10 @@ namespace openui5 {
             this.setProperty("criteria", criteria);
         },
         getChooseType(): ibas.emChooseType {
-            return ibas.emChooseType.SINGLE;
+            return this.getProperty("chooseType");
+        },
+        setChooseType(value: ibas.emChooseType): void {
+            this.setProperty("chooseType", value);
         },
         _getValueHelpIcon: function (Control: any): void {
             var that: any = this;

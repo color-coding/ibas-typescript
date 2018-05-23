@@ -38,6 +38,7 @@ declare namespace sap {
             }
             export class BOChooseInput extends BOInput {
                 getChooseType(): ibas.emChooseType;
+                setChooseType(value: ibas.emChooseType): void;
                 getCriteria(): ibas.Criteria;
                 setCriteria(value: ibas.Criteria | ibas.Condition[]): void;
             }
