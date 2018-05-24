@@ -168,6 +168,7 @@ namespace shell {
                                     if (that.privilegeManager.canRun(console)) {
                                         // 处理功能
                                         for (let func of console.functions()) {
+                                            // 注册功能事件响应
                                             that.functionMap.set(func.id, func);
                                             that.view.showModuleFunction(console.name, func);
                                             // 如当前模块包含Hash指向的功能,激活
@@ -186,6 +187,11 @@ namespace shell {
                                     // 处理服务
                                     for (let service of console.services()) {
                                         ibas.servicesManager.register(service);
+                                    }
+                                    // 注册元素描述
+                                    ibas.i18n.add(console.id, console.description);
+                                    for (let item of console.elements()) {
+                                        ibas.i18n.add(item.id, item.description);
                                     }
                                 });
                                 // 设置视图显示者
