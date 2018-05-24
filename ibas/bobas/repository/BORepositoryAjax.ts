@@ -388,7 +388,10 @@ namespace ibas {
                     caller.onCompleted.call(objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
                 }
             };
-            let data: string = JSON.stringify(this.converter.convert(caller.criteria, method));
+            let data: any = caller.criteria;
+            if (!(data instanceof FormData)) {
+                data = JSON.stringify(this.converter.convert(data, method));
+            }
             this.callRemoteMethod(method, data, methodCaller);
         }
         protected createHttpRequest(method: string, data: any): XMLHttpRequest {
@@ -396,7 +399,9 @@ namespace ibas {
             let xhr: XMLHttpRequest = new XMLHttpRequest();
             xhr.open("POST", methodUrl, true);
             xhr.responseType = "blob";
-            xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+            if (!(data instanceof FormData)) {
+                xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+            }
             return xhr;
         }
     }
