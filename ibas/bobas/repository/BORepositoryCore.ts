@@ -129,7 +129,7 @@ namespace ibas {
      */
     export interface IDownloadFileCaller<T> extends IMethodCaller<T> {
         /** 下载条件 */
-        criteria: ICriteria;
+        criteria: ICriteria | FormData;
     }
     /**
      * 文件上传仓库
