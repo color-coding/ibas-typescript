@@ -539,15 +539,13 @@ namespace ibas {
                     item.setProperty(BO_PROPERTY_NAME_DOCENTRY, code);
                 }
             }
-            if ((<any>item).lineId !== undefined) {
-                // 存在行编号，为其自动编号
-                let max: number = 1;
-                for (let tmp of this) {
-                    let id: number = tmp.getProperty<number>(BO_PROPERTY_NAME_LINEID);
-                    if (id !== undefined) {
-                        if (id > max) {
-                            max = id;
-                        }
+            // 存在行编号，为其自动编号
+            let max: number = 1;
+            for (let tmp of this) {
+                let id: number = tmp.getProperty<number>(BO_PROPERTY_NAME_LINEID);
+                if (id !== undefined) {
+                    if (id > max) {
+                        max = id;
                     }
                 }
                 item.setProperty(BO_PROPERTY_NAME_LINEID, max);
