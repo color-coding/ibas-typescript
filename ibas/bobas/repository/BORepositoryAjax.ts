@@ -54,23 +54,12 @@ namespace ibas {
                         tmpOpRslt.addResults(opRslt);
                         opRslt = tmpOpRslt;
                     }
-                    /*
-                    logger.log(emMessageLevel.DEBUG,
-                        "repository: call method [{2}] sucessful, {0} - {1}.", opRslt.resultCode, opRslt.message, ajaxSetting.url);
-                    */
                     caller.onCompleted.call(objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
                 } else {
-                    /*
-                    logger.log(emMessageLevel.DEBUG,
-                        "repository: call method [{1}] sucessful, {0}.", textStatus, ajaxSetting.url);
-                    */
                     caller.onCompleted.call(objects.isNull(caller.caller) ? caller : caller.caller, data);
                 }
             };
             // 调用远程方法
-            /*
-            logger.log(emMessageLevel.DEBUG, "repository: calling method [{0}].", ajaxSetting.url);
-            */
             jQuery.ajax(ajaxSetting);
         }
         /**
@@ -334,17 +323,20 @@ namespace ibas {
                             if (objects.isNull(opRslt)) {
                                 throw new Error(i18n.prop("sys_data_converter_parsing_faild"));
                             }
-                            /*
-                            logger.log(emMessageLevel.DEBUG,
-                                "repository: call method [{2}] sucessful, {0} - {1}.", opRslt.resultCode, opRslt.message, this.responseURL);
-                            */
                             caller.onCompleted.call(objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
                         } else {
-                            /*
-                            logger.log(emMessageLevel.DEBUG,
-                                "repository: call method [{1}] sucessful, {0}.", this.statusText, this.responseURL);
-                            */
                             caller.onCompleted.call(objects.isNull(caller.caller) ? caller : caller.caller, this.response);
+                        }
+                        let headers: string = request.getAllResponseHeaders();
+                        if (!ibas.strings.isEmpty(headers)) {
+                            headers = headers.replace("\r\n", "\n");
+                            for (let item of headers.split("\n")) {
+                                let values: string[] = item.split(":");
+                                if (values.length < 2) {
+                                    continue;
+                                }
+                                opRslt.informations.add(new ibas.OperationInformation(values[0].trim(), values[1].trim()));
+                            }
                         }
                     } else {
                         // 出错了
