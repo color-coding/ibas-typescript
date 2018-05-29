@@ -678,6 +678,9 @@ namespace openui5 {
             this.setProperty("criteria", criteria);
         },
         getChooseType(): ibas.emChooseType {
+            if (ibas.objects.isNull(this.getProperty("chooseType"))) {
+                return ibas.emChooseType.SINGLE;
+            }
             return this.getProperty("chooseType");
         },
         setChooseType(value: ibas.emChooseType): void {
