@@ -540,16 +540,16 @@ namespace ibas {
                 }
             }
             // 存在行编号，为其自动编号
-            let max: number = 1;
+            let max: number = 0;
             for (let tmp of this) {
                 let id: number = tmp.getProperty<number>(BO_PROPERTY_NAME_LINEID);
-                if (id !== undefined) {
+                if (!isNaN(id)) {
                     if (id > max) {
                         max = id;
                     }
                 }
-                item.setProperty(BO_PROPERTY_NAME_LINEID, max);
             }
+            item.setProperty(BO_PROPERTY_NAME_LINEID, max + 1);
             // 处理单据状态
             if (objects.instanceOf(item, BODocumentLine)) {
                 if (objects.instanceOf(this.parent, BODocument)) {
