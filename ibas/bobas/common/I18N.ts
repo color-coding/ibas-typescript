@@ -68,18 +68,18 @@ namespace ibas {
          * @param args 替代内容
          */
         prop(key: string, ...args: any[]): string {
+            if (strings.isEmpty(key)) {
+                return key;
+            }
             if (objects.isNull(this.resources)) {
                 // 没有初始化则加载
                 this.resources = new Map<string, Map<string, string>>();
                 this.load(null);
             }
             let value: string = null;
-            if (!strings.isEmpty(key)) {
-                let group: string = this.groupName(key);
-                let map: Map<string, string> = this.resources.get(group);
-                if (!objects.isNull(map)) {
-                    value = map.get(key);
-                }
+            let map: Map<string, string> = this.resources.get(this.groupName(key));
+            if (!objects.isNull(map)) {
+                value = map.get(key);
             }
             if (!strings.isEmpty(value)) {
                 return strings.format(value, args);
