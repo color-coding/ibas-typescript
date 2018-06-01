@@ -1067,7 +1067,7 @@ namespace openui5 {
                 return false;
             }
             let time: number = value;
-            let hour: number = time / 100;
+            let hour: number = Math.floor(time / 100);
             let minute: number = time % 100;
             if (hour >= 0 && hour <= 23 && minute >= 0 && minute <= 59) {
                 return true;
