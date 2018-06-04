@@ -17,15 +17,33 @@ namespace ibas {
             if (strings.isEmpty(fileName)) {
                 fileName = strings.format("file_{0}", dates.now().getTime());
             }
-            let url: string = window.URL.createObjectURL(data);
-            let save_link: any = document.createElementNS("http://www.w3.org/1999/xhtml", "a");
-            save_link.href = url;
-            save_link.download = fileName;
-            let event: any = document.createEvent("MouseEvents");
-            event.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-            save_link.dispatchEvent(event);
-            window.URL.revokeObjectURL(url);
-            logger.log(emMessageLevel.DEBUG, "files: save file as [{0}].", fileName);
+            if (window.Blob) {
+                // ie 10+ (native saveAs FileAPI)
+                if (window.navigator.msSaveOrOpenBlob) {
+                    window.navigator.msSaveOrOpenBlob(data, fileName);
+                    logger.log(emMessageLevel.DEBUG, "files: save file as [{0}].", fileName);
+                    return;
+                } else {
+                    let oURL: any = window.URL || (<any>window).webkitURL;
+                    let sBlobUrl: string = oURL.createObjectURL(data);
+                    let oLink: any = window.document.createElement("a");
+                    if ("download" in oLink) {
+                        // use an anchor link with download attribute for download
+                        let $body: any = jQuery(document.body);
+                        let $link: any = jQuery(oLink).attr({
+                            download: fileName,
+                            href: sBlobUrl,
+                            style: "display:none"
+                        });
+                        $body.append($link);
+                        $link.get(0).click();
+                        $link.remove();
+                        logger.log(emMessageLevel.DEBUG, "files: save file as [{0}].", fileName);
+                        return;
+                    }
+                }
+            }
+            throw new Error(i18n.prop("sys_unsupported_operation"));
         }
     }
 }
