@@ -79,6 +79,9 @@ namespace ibas {
         /** 数据转换者 */
         converter?: IDataConverter;
     }
+    /** 数据表格服务契约 */
+    export interface IDataTableServiceContract extends IDataServiceContract<DataTable> {
+    }
     /** 业务对象连接服务的契约 */
     export interface IBOLinkServiceContract extends IServiceContract {
         /** 业务对象编码 */
@@ -242,6 +245,13 @@ namespace ibas {
     /** 业务对象服务代理 */
     export class BOServiceProxy extends DataServiceProxy<IBOServiceContract> {
         constructor(contract: IBOServiceContract);
+        constructor() {
+            super(arguments[0]);
+        }
+    }
+    /** 数据表格服务代理 */
+    export class DataTableServiceProxy extends DataServiceProxy<IDataTableServiceContract> {
+        constructor(contract: IDataTableServiceContract);
         constructor() {
             super(arguments[0]);
         }
