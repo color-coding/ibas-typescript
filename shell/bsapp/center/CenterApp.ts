@@ -459,7 +459,15 @@ namespace shell {
                             if (opRslt.resultCode !== 0) {
                                 throw new Error(opRslt.message);
                             }
-                            for (let module of opRslt.resultObjects) {
+                            // 去除重复模块
+                            let userModules: ibas.ArrayList<bo.IUserModule> = new ibas.ArrayList<bo.IUserModule>();
+                            for (let item of opRslt.resultObjects) {
+                                if (userModules.firstOrDefault(c => c.id === item.id) !== null) {
+                                    continue;
+                                }
+                                userModules.add(item);
+                            }
+                            for (let module of userModules) {
                                 loader.onStatusMessage(
                                     ibas.emMessageType.INFORMATION,
                                     ibas.i18n.prop("shell_initialize_module", ibas.strings.isEmpty(module.name) ? module.id : module.name)
