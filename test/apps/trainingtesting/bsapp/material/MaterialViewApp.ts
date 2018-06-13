@@ -8,7 +8,7 @@
 namespace trainingtesting {
     export namespace app {
         /** 查看应用-物料主数据 */
-        export class MaterialViewApp extends ibas.BOViewService<IMaterialViewView> {
+        export class MaterialViewApp extends ibas.BOViewService<IMaterialViewView, bo.Material> {
             /** 应用标识 */
             static APPLICATION_ID: string = "16530a89-6ade-468c-b5fe-c14053326377";
             /** 应用名称 */
@@ -32,6 +32,7 @@ namespace trainingtesting {
             /** 视图显示后 */
             protected viewShowed(): void {
                 // 视图加载完成
+                super.viewShowed();
             }
             /** 编辑数据，参数：目标数据 */
             protected editData(): void {
@@ -57,20 +58,30 @@ namespace trainingtesting {
                 this.busy(true);
                 let that: this = this;
                 if (typeof criteria === "string") {
+                    let value: string = criteria;
                     criteria = new ibas.Criteria();
+                    criteria.result = 1;
                     // 添加查询条件
-
+                    let condition: ibas.ICondition = criteria.conditions.create();
+                    condition.alias = bo.Material.PROPERTY_CODE_NAME;
+                    condition.value = value;
                 }
                 let boRepository: bo.BORepositoryTrainingTesting = new bo.BORepositoryTrainingTesting();
                 boRepository.fetchMaterial({
                     criteria: criteria,
                     onCompleted(opRslt: ibas.IOperationResult<bo.Material>): void {
                         try {
+                            that.busy(false);
                             if (opRslt.resultCode !== 0) {
                                 throw new Error(opRslt.message);
                             }
                             that.viewData = opRslt.resultObjects.firstOrDefault();
-                            that.viewShowed();
+                            if (!that.isViewShowed()) {
+                                // 没显示视图，先显示
+                                that.show();
+                            } else {
+                                that.viewShowed();
+                            }
                         } catch (error) {
                             that.messages(error);
                         }

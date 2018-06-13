@@ -241,17 +241,19 @@ namespace ibas {
     /**
      * 业务对象查看应用
      */
-    export abstract class BOViewApplication<T extends IBOViewView> extends BOApplication<T> {
+    export abstract class BOViewApplication<T extends IBOViewView, D> extends BOApplication<T> {
 
         /** 注册视图，重载需要回掉此方法 */
         protected registerView(): void {
             super.registerView();
         }
+        /** 当前查看的数据 */
+        protected abstract viewData: D;
     }
     /**
      * 业务对象查看应用服务
      */
-    export abstract class BOViewService<T extends IBOViewView> extends BOViewApplication<T> {
+    export abstract class BOViewService<T extends IBOViewView, D> extends BOViewApplication<T, D> {
         /** 运行 */
         run(): void;
         /**
@@ -261,10 +263,10 @@ namespace ibas {
         run(caller: IBOLinkServiceCaller): void;
         /** 运行 */
         run(): void {
-            if (arguments.length === 1) {
-                // 判断是否为选择契约
-                let caller: IBOLinkServiceCaller = arguments[0];
-                if (objects.instanceOf(caller.proxy, BOLinkServiceProxy)) {
+            if (!objects.isNull(arguments[0])) {
+                if (objects.instanceOf(arguments[0].proxy, BOLinkServiceProxy)) {
+                    // 判断是否为选择契约
+                    let caller: IBOLinkServiceCaller = arguments[0];
                     // 链接服务代理或其子类
                     if (caller.boCode === this.boCode
                         || config.applyVariables(caller.boCode) === config.applyVariables(this.boCode)) {
@@ -276,6 +278,7 @@ namespace ibas {
                             criteria = <string>caller.linkValue;
                         } else if (caller.linkValue instanceof Array) {
                             criteria = new Criteria();
+                            criteria.result = 1;
                             for (let item of caller.linkValue) {
                                 if (objects.instanceOf(item, Condition)) {
                                     // 过滤无效查询条件
@@ -287,6 +290,26 @@ namespace ibas {
                             }
                         }
                         this.fetchData(criteria);
+                        // 退出后续
+                        return;
+                    }
+                } else if (typeof arguments[0].category === "string") {
+                    // 判断是否为hash参数
+                    let value: string = arguments[0].category;
+                    if (!strings.isEmpty(value)) {
+                        let criteria: Criteria = new Criteria();
+                        criteria.result = 1;
+                        for (let item of value.split("&")) {
+                            let tmps: string[] = item.split("=");
+                            if (tmps.length >= 2) {
+                                let condition: ICondition = criteria.conditions.create();
+                                condition.alias = tmps[0];
+                                condition.value = tmps[1];
+                            }
+                        }
+                        this.fetchData(criteria);
+                        // 退出后续
+                        return;
                     }
                 }
             }
@@ -295,5 +318,29 @@ namespace ibas {
         }
         /** 查询数据 */
         protected abstract fetchData(criteria: ICriteria | string): void;
+        /** 视图显示后 */
+        protected viewShowed(): void {
+            // 更新当前hash地址
+            if (this.viewData instanceof BusinessObject) {
+                let criteria: ICriteria = this.viewData.criteria();
+                if (!objects.isNull(criteria) && criteria.conditions.length > 0) {
+                    let bulider: StringBuilder = new StringBuilder();
+                    bulider.append(URL_HASH_SIGN_SERVICES);
+                    bulider.append(this.id);
+                    bulider.append("/");
+                    for (let item of criteria.conditions) {
+                        if (bulider.length > 3) {
+                            bulider.append("&");
+                        }
+                        bulider.append(item.alias);
+                        bulider.append("=");
+                        bulider.append(item.value);
+                    }
+                    // 发送登录连接请求后,清除地址栏中的查询参数信息,并且不保留浏览器历史记录
+                    window.history.replaceState(null, null, decodeURI(bulider.toString()));
+                }
+            }
+
+        }
     }
 }
