@@ -161,7 +161,7 @@ namespace ibas {
                 let value: number = numbers.valueOf(context.inputValues.get(property));
                 sum += value;
             }
-            context.outputValues.set(this.result, sum);
+            context.outputValues.set(this.result, ibas.numbers.round(sum));
         }
     }
     /** 业务规则-求差 */
@@ -201,7 +201,7 @@ namespace ibas {
                 let value: number = numbers.valueOf(context.inputValues.get(property));
                 total -= value;
             }
-            context.outputValues.set(this.result, total);
+            context.outputValues.set(this.result, ibas.numbers.round(total));
         }
     }
     /** 业务规则-求积 */
@@ -233,7 +233,7 @@ namespace ibas {
             let multiplicand: number = numbers.valueOf(context.inputValues.get(this.multiplicand));
             let multiplier: number = numbers.valueOf(context.inputValues.get(this.multiplier));
             let result: number = multiplicand * multiplier;
-            context.outputValues.set(this.result, result);
+            context.outputValues.set(this.result, ibas.numbers.round(result));
         }
     }
     /** 业务规则-求商 */
@@ -265,7 +265,7 @@ namespace ibas {
             let dividend: number = numbers.valueOf(context.inputValues.get(this.dividend));
             let divisor: number = numbers.valueOf(context.inputValues.get(this.divisor));
             let result: number = dividend / divisor;
-            context.outputValues.set(this.result, result);
+            context.outputValues.set(this.result, ibas.numbers.round(result));
         }
     }
     /** 业务规则-加减法推导 */
@@ -301,17 +301,17 @@ namespace ibas {
             let addend: number = numbers.valueOf(context.inputValues.get(this.addend));
 
             if (augend === 0) {
-                context.outputValues.set(this.result, addend);
+                context.outputValues.set(this.result, ibas.numbers.round(addend));
                 return;
             }
             if (addend !== 0 && result === 0) {
                 // 结果 = 加数 + 被加数
                 result = addend + augend;
-                context.outputValues.set(this.result, result);
+                context.outputValues.set(this.result, ibas.numbers.round(result));
             } else if (addend === 0 && result !== 0) {
                 // 加数 = 结果 - 被加数
                 addend = result - augend;
-                context.outputValues.set(this.addend, addend);
+                context.outputValues.set(this.addend, ibas.numbers.round(addend));
             }
         }
     }
@@ -348,17 +348,17 @@ namespace ibas {
             let multiplier: number = numbers.valueOf(context.inputValues.get(this.multiplier));
 
             if (multiplicand === 0) {
-                context.outputValues.set(this.result, multiplicand);
+                context.outputValues.set(this.result, ibas.numbers.round(multiplicand));
                 return;
             }
             if (multiplier !== 0 && result === 0) {
                 // 结果 = 乘数 * 被乘数
                 result = multiplier * multiplicand;
-                context.outputValues.set(this.result, result);
+                context.outputValues.set(this.result, ibas.numbers.round(result));
             } else if (multiplicand !== 0 && result !== 0) {
                 // 乘数 = 结果 / 被乘数
                 multiplier = result / multiplicand;
-                context.outputValues.set(this.multiplier, multiplier);
+                context.outputValues.set(this.multiplier, ibas.numbers.round(multiplier));
             }
         }
     }
@@ -393,7 +393,7 @@ namespace ibas {
                     result += numbers.valueOf(item);
                 }
             }
-            context.outputValues.set(this.result, result);
+            context.outputValues.set(this.result, ibas.numbers.round(result));
         }
     }
 }

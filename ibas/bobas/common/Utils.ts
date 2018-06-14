@@ -666,6 +666,36 @@ namespace ibas {
                 return value;
             }
         }
+        /**
+         * 保留小数位
+         * @param value 数
+         * @param scale 小数位（默认配置值）
+         */
+        export function round(value: number, scale?: number): number {
+            if (Math.round(value) !== value) {
+                if (isNaN(scale)) {
+                    scale = config.get(CONFIG_ITEM_DECIMAL_PLACES, 6);
+                }
+                if (Math.pow(0.1, scale) > value) {
+                    return 0;
+                }
+                var sign: number = Math.sign(value);
+                var arr: string[] = ("" + Math.abs(value)).split(".");
+                if (arr.length > 1) {
+                    if (arr[1].length > scale) {
+                        var integ: number = +arr[0] * Math.pow(10, scale);
+                        var dec: number = integ + (+arr[1].slice(0, scale) + Math.pow(10, scale));
+                        var proc: number = +arr[1].slice(scale, scale + 1);
+                        if (proc >= 5) {
+                            dec = dec + 1;
+                        }
+                        dec = sign * (dec - Math.pow(10, scale)) / Math.pow(10, scale);
+                        return dec;
+                    }
+                }
+            }
+            return value;
+        }
     }
     /**
      * 地址
