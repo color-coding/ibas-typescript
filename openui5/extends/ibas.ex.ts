@@ -7,9 +7,9 @@
  */
 namespace openui5 {
     /** 配置项目-是否应用web缓存 */
-    export const CONFIG_ITEM_WEB_CACHE: string = "webcache";
+    export const CONFIG_ITEM_WEB_CACHE: string = "useCache";
     /** 配置项目-weby库名 */
-    export const CONFIG_ITEM_WEB_CACHE_DB_NAME: string = "webcachedbname";
+    export const CONFIG_ITEM_WEB_CACHE_DB_NAME: string = "cacheDBName";
     export class BORepsitory {
         rootUrl: string = ibas.urls.rootUrl("/openui5/index");
         keyAttribute: string;
@@ -37,12 +37,12 @@ namespace openui5 {
         }
         async getKeyTextList(): Promise<ibas.ArrayList<ibas.KeyText>> {
             let that: this = this;
-            let ibasDB: openui5.IbasDB;
+            let CacheDB: openui5.CacheDB;
             let cacheKeyText: ibas.KeyText;
             if (that.cache && that.systemWebCache) {
-                ibasDB = await openui5.IbasDB.getIndexedDB();
-                if (!ibas.objects.isNull(ibasDB)) {
-                    cacheKeyText = await ibasDB.getData(that.boCode, that.selectedKey);
+                CacheDB = await openui5.CacheDB.getIndexedDB();
+                if (!ibas.objects.isNull(CacheDB)) {
+                    cacheKeyText = await CacheDB.getData(that.boCode, that.selectedKey);
                 }
             }
             let promise: Promise<ibas.ArrayList<ibas.KeyText>> = new Promise<ibas.ArrayList<ibas.KeyText>>(resolve => {
@@ -72,8 +72,8 @@ namespace openui5 {
                                 keyText.key = data.getProperty(that.keyAttribute);
                                 keyText.text = data.getProperty(that.textAttribute);
                                 keyTextList.push(keyText);
-                                if (that.cache && that.systemWebCache && !ibas.objects.isNull(ibasDB)) {
-                                    ibasDB.add(that.boCode, keyText);
+                                if (that.cache && that.systemWebCache && !ibas.objects.isNull(CacheDB)) {
+                                    CacheDB.add(that.boCode, keyText);
                                 }
                             }
                             resolve(keyTextList);
@@ -191,25 +191,25 @@ namespace openui5 {
     /**
      * 缓存库 操作类
      */
-    export class IbasDB {
-        private ibasDBInfo: IbasDBInfo;
+    export class CacheDB {
+        private cacheDBInfo: CacheDBInfo;
         /** web indexed库名 */
         private static webDBName: string = ibas.config.get(CONFIG_ITEM_WEB_CACHE_DB_NAME, "ibas_db");
 
-        private static _indexedDB: openui5.IbasDB;
-        public static async  getIndexedDB(): Promise<openui5.IbasDB> {
+        private static _indexedDB: openui5.CacheDB;
+        public static async  getIndexedDB(): Promise<openui5.CacheDB> {
             // 判断浏览器是否支持indexedDB
             if (!window.indexedDB) {
                 return null;
             }
-            if (!IbasDB._indexedDB) {
-                IbasDB._indexedDB = new openui5.IbasDB();
-                IbasDB._indexedDB.ibasDBInfo = new IbasDBInfo();
-                IbasDB._indexedDB.ibasDBInfo.dbName = IbasDB.webDBName;
-                IbasDB._indexedDB.ibasDBInfo.currentDBFactory = window.indexedDB;
-                await IbasDB._indexedDB.initDB();
+            if (!CacheDB._indexedDB) {
+                CacheDB._indexedDB = new openui5.CacheDB();
+                CacheDB._indexedDB.cacheDBInfo = new CacheDBInfo();
+                CacheDB._indexedDB.cacheDBInfo.dbName = CacheDB.webDBName;
+                CacheDB._indexedDB.cacheDBInfo.currentDBFactory = window.indexedDB;
+                await CacheDB._indexedDB.initDB();
             }
-            return IbasDB._indexedDB;
+            return CacheDB._indexedDB;
         }
         /**
          * 初始化DB
@@ -219,17 +219,17 @@ namespace openui5 {
         public async initDB(version?: number, newTables?: Array<string>): Promise<boolean> {
             let that: this = this;
             let promise: Promise<boolean> = new Promise<boolean>(resolve => {
-                let dbRequest: IDBOpenDBRequest = !version ? that.ibasDBInfo.currentDBFactory.open(that.ibasDBInfo.dbName)
-                    : that.ibasDBInfo.currentDBFactory.open(that.ibasDBInfo.dbName, version);
+                let dbRequest: IDBOpenDBRequest = !version ? that.cacheDBInfo.currentDBFactory.open(that.cacheDBInfo.dbName)
+                    : that.cacheDBInfo.currentDBFactory.open(that.cacheDBInfo.dbName, version);
                 dbRequest.onerror = function (e: any): void {
                     console.log("OPen Error!");
                 };
                 dbRequest.onupgradeneeded = function (e: any): void {
-                    that.ibasDBInfo.currentDB = e.target.result;
+                    that.cacheDBInfo.currentDB = e.target.result;
                     if (!!newTables) {
                         for (let table of newTables) {
-                            if (!that.ibasDBInfo.currentDB.objectStoreNames.contains(table)) {
-                                let store: IDBObjectStore = that.ibasDBInfo.currentDB.createObjectStore(table, { keyPath: "key" });
+                            if (!that.cacheDBInfo.currentDB.objectStoreNames.contains(table)) {
+                                let store: IDBObjectStore = that.cacheDBInfo.currentDB.createObjectStore(table, { keyPath: "key" });
                                 store.createIndex("textIndex", "text", { unique: true });
                                 store.createIndex("keyIndex", "key", { unique: true });
                             }
@@ -237,8 +237,8 @@ namespace openui5 {
                     }
                 };
                 dbRequest.onsuccess = function (e: any): void {
-                    that.ibasDBInfo.currentDB = e.target.result;
-                    that.ibasDBInfo.dbVersion = that.ibasDBInfo.currentDB.version;
+                    that.cacheDBInfo.currentDB = e.target.result;
+                    that.cacheDBInfo.dbVersion = that.cacheDBInfo.currentDB.version;
                     resolve(true);
                 };
             });
@@ -253,7 +253,7 @@ namespace openui5 {
             if (!dbName) {
                 dbName = ibas.config.get(CONFIG_ITEM_WEB_CACHE_DB_NAME, "ibas_db");
             }
-            this.ibasDBInfo.currentDBFactory.deleteDatabase(dbName);
+            this.cacheDBInfo.currentDBFactory.deleteDatabase(dbName);
         }
         /**
          * 获取读写权限
@@ -262,14 +262,14 @@ namespace openui5 {
         async getStore(storeName: string, readOnly?: boolean): Promise<IDBObjectStore> {
             try {
                 // 如果当前缓存中不存在该表则重新初始化数据库
-                if (!this.ibasDBInfo.currentDB.objectStoreNames.contains(storeName)) {
+                if (!this.cacheDBInfo.currentDB.objectStoreNames.contains(storeName)) {
                     let newTables: Array<string> = new Array<string>();
                     newTables.push(storeName);
-                    this.ibasDBInfo.currentDB.close();
-                    await this.initDB(this.ibasDBInfo.dbVersion + 1, newTables);
+                    this.cacheDBInfo.currentDB.close();
+                    await this.initDB(this.cacheDBInfo.dbVersion + 1, newTables);
                 }
                 let transaction: IDBTransaction = (!readOnly) ?
-                    this.ibasDBInfo.currentDB.transaction(storeName, "readwrite") : this.ibasDBInfo.currentDB.transaction(storeName, "readonly");
+                    this.cacheDBInfo.currentDB.transaction(storeName, "readwrite") : this.cacheDBInfo.currentDB.transaction(storeName, "readonly");
                 return transaction.objectStore(storeName);
             } catch (error) {
                 ibas.logger.log(ibas.emMessageLevel.DEBUG, ibas.i18n.prop("sap_ibas_ex_ibasdb_not_store"));
@@ -391,7 +391,7 @@ namespace openui5 {
     /**
      * 缓存库 操作类信息
      */
-    export class IbasDBInfo {
+    export class CacheDBInfo {
         /** 库名 */
         dbName: string;
         /** 版本号 */
