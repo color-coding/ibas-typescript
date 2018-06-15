@@ -23,6 +23,7 @@
 /// <reference path="./bobas/repository/DataConverter.ts" />
 /// <reference path="./bobas/repository/BORepositoryCore.ts" />
 /// <reference path="./bobas/repository/BORepositoryAjax.ts" />
+/// <reference path="./bobas/repository/BORepositoryLocal.ts" />
 /// <reference path="./bobas/repository/BORepository.ts" />
 /// <reference path="./bobas/expression/Expression.ts" />
 /// <reference path="./bobas/expression/JudgmentExpression.ts" />
