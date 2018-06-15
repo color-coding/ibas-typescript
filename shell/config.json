@@ -15,6 +15,8 @@
     "defaultPassword": "1q2w3e",
     "defalutServiceIcon": "sap-icon://e-care",
     "defalutModuleIcon": "sap-icon://nutrition-activity",
+    "webcache": true,
+    "webcachedbname": "ibas_cloud",
     "repositoryAddress|BORepositoryShell": "http://localhost:8080/initialfantasy/services/rest/data",
     "repositoryAddress|BORepositoryShellOffline": ".../../test/repository",
     "repositoryAddress|BORepositoryTrainingTestingOffline": ".../../test/repository"
