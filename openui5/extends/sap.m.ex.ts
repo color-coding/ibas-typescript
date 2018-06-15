@@ -502,6 +502,8 @@ namespace openui5 {
                 return;
             }
             let boRepEx: BORepsitory = new BORepsitory();
+            boRepEx.cache = true;
+            boRepEx.boCode = boCode;
             boRepEx.boName = boName;
             boRepEx.keyAttribute = boKey;
             boRepEx.textAttribute = boText;
@@ -961,6 +963,8 @@ namespace openui5 {
                 return;
             }
             let boRepEx: BORepsitory = new BORepsitory();
+            boRepEx.cache = true;
+            boRepEx.boCode = boCode;
             boRepEx.boName = boName;
             boRepEx.keyAttribute = boKey;
             boRepEx.textAttribute = boText;
