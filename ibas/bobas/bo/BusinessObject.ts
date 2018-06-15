@@ -395,7 +395,9 @@ namespace ibas {
             super.firePropertyChanged(property);
         }
     }
-
+    const PROPERTY_LISTENER: symbol = Symbol("listener");
+    const PROPERTY_PARENT: symbol = Symbol("parent");
+    const PROPERTY_RULES: symbol = Symbol("rules");
     /**
      * 业务对象集合基类
      */
@@ -408,7 +410,7 @@ namespace ibas {
          */
         constructor(parent: P) {
             super();
-            this._listener = {
+            this[PROPERTY_LISTENER] = {
                 caller: this,
                 propertyChanged(name: string): void {
                     // this指向业务对象集合基类,arguments[1]指向触发事件的BO
@@ -432,26 +434,21 @@ namespace ibas {
                 this.parent = parent;
             }
         }
-
-        private _listener: IPropertyChangedListener;
-
-        protected get listener(): IPropertyChangedListener {
-            return this._listener;
+        protected listener(): IPropertyChangedListener {
+            return this[PROPERTY_LISTENER];
         }
 
-        private _parent: P;
-
         protected get parent(): P {
-            return this._parent;
+            return this[PROPERTY_PARENT];
         }
 
         protected set parent(value: P) {
             if (objects.instanceOf(this.parent, Bindable)) {
-                (<any>this.parent).removeListener(this.listener);
+                (<any>this.parent).removeListener(this.listener());
             }
-            this._parent = value;
+            this[PROPERTY_PARENT] = value;
             if (objects.instanceOf(this.parent, Bindable)) {
-                (<any>this.parent).registerListener(this.listener);
+                (<any>this.parent).registerListener(this.listener());
             }
         }
         /** 父项属性改变时 */
@@ -558,9 +555,8 @@ namespace ibas {
                     item.setProperty(BO_PROPERTY_NAME_LINESTATUS, this.parent.getProperty(BO_PROPERTY_NAME_LINESTATUS));
                 }
             }
-            let that: this = this;
             if (objects.instanceOf(item, Bindable)) {
-                (<any>item).registerListener(this.listener);
+                (<any>item).registerListener(this.listener());
             }
             this.runRules(null);
         }
@@ -570,11 +566,16 @@ namespace ibas {
          */
         protected afterRemove(item: T): void {
             if (objects.instanceOf(item, Bindable)) {
-                (<any>item).removeListener(this.listener);
+                (<any>item).removeListener(this.listener());
             }
             this.runRules(null);
         }
-        private myRules: IBusinessRules;
+        private get rules(): IBusinessRules {
+            return this[PROPERTY_RULES];
+        }
+        private set rules(value: IBusinessRules) {
+            this[PROPERTY_RULES] = value;
+        }
         private runRules(property: string): void {
             if (objects.isNull(this.parent)) {
                 return;
@@ -582,13 +583,13 @@ namespace ibas {
             if (this.parent.isLoading) {
                 return;
             }
-            if (objects.isNull(this.myRules)) {
-                this.myRules = businessRulesManager.getRules(objects.getType(this.parent));
+            if (objects.isNull(this.rules)) {
+                this.rules = businessRulesManager.getRules(objects.getType(this.parent));
             }
-            if (objects.isNull(this.myRules)) {
+            if (objects.isNull(this.rules)) {
                 return;
             }
-            for (let rule of this.myRules) {
+            for (let rule of this.rules) {
                 if (!(rule instanceof BusinessRuleCollection)) {
                     continue;
                 }

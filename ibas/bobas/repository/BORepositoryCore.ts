@@ -184,28 +184,11 @@ namespace ibas {
     /** 远程仓库 */
     export abstract class RemoteRepository implements IRemoteRepository {
         /** 远程服务地址 */
-        private _address: string;
-        get address(): string {
-            return this._address;
-        }
-        set address(value: string) {
-            this._address = value;
-        }
+        address: string;
         /** 访问口令 */
-        private _token: string;
-        get token(): string {
-            return this._token;
-        }
-        set token(value: string) {
-            this._token = value;
-        }    /** 数据转换者 */
-        private _converter: IDataConverter;
-        get converter(): IDataConverter {
-            return this._converter;
-        }
-        set converter(value: IDataConverter) {
-            this._converter = value;
-        }
+        token: string;
+        /** 数据转换者 */
+        converter: IDataConverter;
         /**
          * 返回方法地址
          * @param method 方法名称

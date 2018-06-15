@@ -94,9 +94,16 @@ namespace ibas {
      * 操作消息
      */
     export class OperationMessage implements IOperationMessage {
+        constructor();
+        constructor(error: Error);
         constructor() {
-            this.resultCode = 0;
-            this.message = "";
+            if (arguments[0] instanceof Error) {
+                this.resultCode = -1;
+                this.message = arguments[0].message;
+            } else {
+                this.resultCode = 0;
+                this.message = "";
+            }
             this.time = new Date();
         }
         /** 结果标识 */
@@ -114,8 +121,10 @@ namespace ibas {
      * 操作消息结果
      */
     export class OperationResult<P> extends OperationMessage implements IOperationResult<P> {
+        constructor();
+        constructor(error: Error);
         constructor() {
-            super();
+            super(arguments[0]);
             this.resultObjects = new ArrayList<P>();
             this.informations = new ArrayList<IOperationInformation>();
         }

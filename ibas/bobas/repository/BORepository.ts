@@ -77,31 +77,12 @@ namespace ibas {
                 this.token = config.get(CONFIG_ITEM_USER_TOKEN);
             }
         }
-
-        private _address: string;
         /** 远程地址 */
-        get address(): string {
-            return this._address;
-        }
-        set address(value: string) {
-            this._address = value;
-        }
-        private _token: string;
+        address: string;
         /** 访问口令 */
-        get token(): string {
-            return this._token;
-        }
-        set token(value: string) {
-            this._token = value;
-        }
-        private _offline: boolean;
+        token: string;
         /** 是否离线 */
-        get offline(): boolean {
-            return this._offline;
-        }
-        set offline(value: boolean) {
-            this._offline = value;
-        }
+        offline: boolean;
         /** 创建只读业务仓库 */
         protected createReadonlyRepository(): IBORepositoryReadonly {
             if (this.offline) {

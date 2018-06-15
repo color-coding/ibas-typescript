@@ -181,6 +181,7 @@ namespace ibas {
         /** 描述 */
         description: string;
     }
+    const PROPERTY_ELEMENTS: symbol = Symbol("elements");
     /** 模块 */
     export class Module extends Element implements IModule {
         constructor() {
@@ -192,14 +193,13 @@ namespace ibas {
         copyright: string;
         /** 图标 */
         icon: string;
-        private _elements: IList<IElement>;
         /** 元素 */
         elements(): IElement[] {
-            if (objects.isNull(this._elements)) {
-                this._elements = new ArrayList<IElement>();
+            if (objects.isNull(this[PROPERTY_ELEMENTS])) {
+                this[PROPERTY_ELEMENTS] = new ArrayList<IElement>();
             }
             let elements: IList<IElement> = new ArrayList<IElement>();
-            for (let item of this._elements) {
+            for (let item of this[PROPERTY_ELEMENTS]) {
                 if (this.isSkip instanceof Function) {
                     if (this.isSkip(item)) {
                         continue;
@@ -218,10 +218,10 @@ namespace ibas {
         /** 注册功能 */
         protected register(item: IElement): void {
             if (objects.isNull(item)) { return; }
-            if (objects.isNull(this._elements)) {
-                this._elements = new ArrayList<IElement>();
+            if (objects.isNull(this[PROPERTY_ELEMENTS])) {
+                this[PROPERTY_ELEMENTS] = new ArrayList<IElement>();
             }
-            this._elements.add(item);
+            this[PROPERTY_ELEMENTS].add(item);
         }
     }
     /** 地址hash值标记-功能 */
@@ -232,6 +232,7 @@ namespace ibas {
             super();
         }
     }
+    const PROPERTY_VIEW: symbol = Symbol("view");
     /** 配置项目-平台 */
     export const CONFIG_ITEM_PLANTFORM: string = "plantform";
     /** 功能-应用 */
@@ -247,35 +248,34 @@ namespace ibas {
         viewShower: IViewShower;
         /** 视图导航 */
         navigation: IViewNavigation;
-        private _view: T;
         /** 应用的视图 */
         get view(): T {
-            if (objects.isNull(this._view)) {
+            if (objects.isNull(this[PROPERTY_VIEW])) {
                 if (objects.isNull(this.navigation)) {
                     throw new Error(i18n.prop("sys_invalid_view_navigation", this.name));
                 }
-                this._view = <T>this.navigation.create(this);
-                if (this._view instanceof View) {
-                    this._view.application = this;
+                this[PROPERTY_VIEW] = <T>this.navigation.create(this);
+                if (this[PROPERTY_VIEW] instanceof View) {
+                    this[PROPERTY_VIEW].application = this;
                     if (!strings.isEmpty(this.description)) {
-                        this._view.title = this.description;
+                        this[PROPERTY_VIEW].title = this.description;
                     } else {
-                        this._view.title = this.name;
+                        this[PROPERTY_VIEW].title = this.name;
                     }
                     this.registerView();
                 } else {
                     throw new Error(i18n.prop("sys_invalid_view", this.name));
                 }
             }
-            return this._view;
+            return this[PROPERTY_VIEW];
         }
         /** 视图是否已显示 */
         isViewShowed(): boolean {
-            if (objects.isNull(this._view)) {
+            if (objects.isNull(this[PROPERTY_VIEW])) {
                 return false;
             }
-            if (this._view instanceof View) {
-                if (this._view.isDisplayed) {
+            if (this[PROPERTY_VIEW] instanceof View) {
+                if (this[PROPERTY_VIEW].isDisplayed) {
                     return true;
                 } else {
                     return false;
@@ -293,8 +293,8 @@ namespace ibas {
         /** 清理资源（视图关闭并取消引用） */
         destroy(): void {
             this.close();
-            if (!objects.isNull(this._view)) {
-                this._view = null;
+            if (!objects.isNull(this[PROPERTY_VIEW])) {
+                this[PROPERTY_VIEW] = null;
             }
         }
     }

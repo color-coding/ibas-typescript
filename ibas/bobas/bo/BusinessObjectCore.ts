@@ -14,10 +14,10 @@ namespace ibas {
      * 属性改变监听者
      */
     export interface IPropertyChangedListener {
-        /** 调用者，this指向 */
-        caller?: any;
         /** 标记 */
         id?: string;
+        /** 调用者，this指向 */
+        caller?: any;
         /**
          * 属性改变
          */
@@ -61,14 +61,9 @@ namespace ibas {
          */
         readonly isDeleted: boolean;
         /**
-         * 是否有效
-         */
-        readonly isVaild: boolean;
-        /**
          * 是否加载数据中
          */
         isLoading: boolean;
-
         /**
          * 标记为未修改
          * @param recursive 递归
@@ -78,7 +73,6 @@ namespace ibas {
          * 标记为未修改
          */
         markOld(): void;
-
         /**
          * 标记为新
          * @param recursive 递归
@@ -88,7 +82,6 @@ namespace ibas {
          * 标记为新
          */
         markNew(): void;
-
         /**
          * 标记为删除
          * @param recursive 递归
@@ -167,29 +160,24 @@ namespace ibas {
         /** 创建对象实例，参数1：对象名称 */
         create<B extends IBusinessObject>(name: string): B;
     }
+    const PROPERTY_LISTENER: symbol = Symbol("listener");
     /**
      * 可监听的对象
      */
     export abstract class Bindable implements IBindable {
 
-        private _listeners: ArrayList<IPropertyChangedListener>;
+        protected listeners(): IList<IPropertyChangedListener> {
+            if (this[PROPERTY_LISTENER] === undefined) {
+                this[PROPERTY_LISTENER] = new ArrayList<IPropertyChangedListener>();
+            }
+            return this[PROPERTY_LISTENER];
+        }
         /**
          * 注册监听事件
          * @param listener 监听者
          */
         registerListener(listener: IPropertyChangedListener): void {
-            if (objects.isNull(this._listeners)) {
-                this._listeners = new ArrayList<IPropertyChangedListener>();
-            }
-            // 存在指定id则更新
-            for (let index: number = 0; index < this._listeners.length; index++) {
-                let item: IPropertyChangedListener = this._listeners[index];
-                if (item.id === listener.id && listener.id !== undefined) {
-                    this._listeners[index] = item;
-                    return;
-                }
-            }
-            this._listeners.push(listener);
+            this.listeners().push(listener);
         }
 
         /** 移出全部监听 */
@@ -201,14 +189,14 @@ namespace ibas {
         removeListener(listener: IPropertyChangedListener): void;
         /** 移出监听实现 */
         removeListener(): void {
-            if (objects.isNull(this._listeners)) {
+            if (objects.isNull(this.listeners())) {
                 return;
             }
             let listener: IPropertyChangedListener = arguments[0];
             if (!objects.isNull(listener)) {
-                for (let item of this._listeners) {
+                for (let item of this.listeners()) {
                     if (item === listener) {
-                        this._listeners.remove(item);
+                        this.listeners().remove(item);
                     }
                 }
             }
@@ -219,7 +207,7 @@ namespace ibas {
          * @param property 属性
          */
         protected firePropertyChanged(property: string): void {
-            if (objects.isNull(this._listeners)) {
+            if (objects.isNull(this.listeners())) {
                 return;
             }
             if (!objects.isNull(property) && property.length > 0) {
@@ -230,7 +218,7 @@ namespace ibas {
                 // 属性首字母小写
                 property = property[0].toLowerCase() + property.substring(1);
             }
-            for (let item of this._listeners) {
+            for (let item of this.listeners()) {
                 if (objects.isNull(item.caller)) {
                     item.propertyChanged(property);
                 } else {
@@ -239,6 +227,7 @@ namespace ibas {
             }
         }
     }
+    const PROPERTY_ISLOADING: symbol = Symbol("isLoading");
     /**
      * 状态跟踪对象
      */
@@ -252,73 +241,21 @@ namespace ibas {
             this.isLoading = false;
             this.isSavable = true;
         }
-
-        private _new: boolean;
-        /**
-         * 是否新建
-         */
-        get isNew(): boolean {
-            return this._new;
-        }
-        set isNew(value: boolean) {
-            this._new = value;
-        }
-
-        private _dirty: boolean;
-        /**
-         * 是否修改
-         */
-        get isDirty(): boolean {
-            return this._dirty;
-        }
-        set isDirty(value: boolean) {
-            this._dirty = value;
-        }
-
-        private _deleted: boolean;
-        /**
-         * 是否刪除
-         */
-        get isDeleted(): boolean {
-            return this._deleted;
-        }
-        set isDeleted(value: boolean) {
-            this._deleted = value;
-        }
-
-        private _savable: boolean;
-        /**
-         * 是否保存
-         */
-        get isSavable(): boolean {
-            return this._savable;
-        }
-        set isSavable(value: boolean) {
-            this._savable = value;
-        }
-
-        private _loading: boolean;
-        /**
-         * 是否加载
-         */
+        /** 是否新建 */
+        isNew: boolean;
+        /** 是否修改 */
+        isDirty: boolean;
+        /** 是否刪除 */
+        isDeleted: boolean;
+        /** 是否保存 */
+        isSavable: boolean;
+        /** 是否加载 */
         get isLoading(): boolean {
-            return this._loading;
+            return this[PROPERTY_ISLOADING];
         }
         set isLoading(value: boolean) {
-            this._loading = value;
+            this[PROPERTY_ISLOADING] = value;
         }
-
-        private _vaild: boolean;
-        /**
-         * 是否有效
-         */
-        get isVaild(): boolean {
-            return this._vaild;
-        }
-        set isVaild(value: boolean) {
-            this._vaild = value;
-        }
-
         /**
          * 标记为未修改
          */
