@@ -204,12 +204,19 @@ namespace openui5 {
             }
             if (!CacheDB._indexedDB) {
                 CacheDB._indexedDB = new openui5.CacheDB();
+            }
+            if (!CacheDB._indexedDB.cacheDBInfo) {
                 CacheDB._indexedDB.cacheDBInfo = new CacheDBInfo();
                 CacheDB._indexedDB.cacheDBInfo.dbName = CacheDB.webDBName;
                 CacheDB._indexedDB.cacheDBInfo.currentDBFactory = window.indexedDB;
+            }
+            if (!CacheDB._indexedDB.cacheDBInfo.currentDB) {
                 await CacheDB._indexedDB.initDB();
             }
-            return CacheDB._indexedDB;
+            let promise: Promise<openui5.CacheDB> = new Promise<openui5.CacheDB>(resolve => {
+                resolve(CacheDB._indexedDB);
+            });
+            return promise;
         }
         /**
          * 初始化DB
@@ -261,6 +268,7 @@ namespace openui5 {
          */
         async getStore(storeName: string, readOnly?: boolean): Promise<IDBObjectStore> {
             try {
+                let that: this = this;
                 // 如果当前缓存中不存在该表则重新初始化数据库
                 if (!this.cacheDBInfo.currentDB.objectStoreNames.contains(storeName)) {
                     let newTables: Array<string> = new Array<string>();
@@ -268,9 +276,12 @@ namespace openui5 {
                     this.cacheDBInfo.currentDB.close();
                     await this.initDB(this.cacheDBInfo.dbVersion + 1, newTables);
                 }
-                let transaction: IDBTransaction = (!readOnly) ?
-                    this.cacheDBInfo.currentDB.transaction(storeName, "readwrite") : this.cacheDBInfo.currentDB.transaction(storeName, "readonly");
-                return transaction.objectStore(storeName);
+                let promise: Promise<IDBObjectStore> = new Promise<IDBObjectStore>(resolve => {
+                    let transaction: IDBTransaction = (!readOnly) ?
+                        that.cacheDBInfo.currentDB.transaction(storeName, "readwrite") : that.cacheDBInfo.currentDB.transaction(storeName, "readonly");
+                    resolve(transaction.objectStore(storeName));
+                });
+                return promise;
             } catch (error) {
                 ibas.logger.log(ibas.emMessageLevel.DEBUG, ibas.i18n.prop("sap_ibas_ex_ibasdb_not_store"));
                 return null;
@@ -347,7 +358,7 @@ namespace openui5 {
          * @param fetchKey 查询主键
          */
         async fetch(storeName: string, fetchKey: string): Promise<Array<ibas.KeyText>> {
-            let store: IDBObjectStore = await this.getStore(storeName,true);
+            let store: IDBObjectStore = await this.getStore(storeName, true);
             let key: IDBIndex = store.index("textIndex");
             let request: IDBRequest = key.openCursor(IDBKeyRange.only(fetchKey));
             let results: Array<ibas.KeyText> = new Array<ibas.KeyText>();
@@ -374,7 +385,7 @@ namespace openui5 {
          * @param indexValue 查询值
          */
         async getData(storeName: string, indexValue: string): Promise<ibas.KeyText> {
-            let store: IDBObjectStore = await this.getStore(storeName,true);
+            let store: IDBObjectStore = await this.getStore(storeName, true);
             let promise: Promise<ibas.KeyText> = new Promise<ibas.KeyText>(resolve => {
                 let index: IDBIndex = store.index("keyIndex");
                 index.get(indexValue).onsuccess = function (e: any): void {
