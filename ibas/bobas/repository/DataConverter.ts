@@ -418,12 +418,6 @@ namespace ibas {
         private get propertyMaps(): PropertyMaps {
             if (objects.isNull(this._propertyMaps)) {
                 this._propertyMaps = new PropertyMaps;
-                this._propertyMaps.add(new PropertyMap("_new", "isNew"));
-                this._propertyMaps.add(new PropertyMap("_dirty", "isDirty"));
-                this._propertyMaps.add(new PropertyMap("_deleted", "isDeleted"));
-                this._propertyMaps.add(new PropertyMap("_savable", "isSavable"));
-                this._propertyMaps.add(new PropertyMap("_loading", undefined));// 忽略属性
-                this._propertyMaps.add(new PropertyMap("_listeners", undefined));// 忽略属性
             }
             return this._propertyMaps;
         }

@@ -20,12 +20,15 @@ namespace ibas {
     export const CONFIG_ITEM_RUNTIME_VERSION: string = "runtimeVersion";
     /** 配置项目-使用最小库 */
     export const CONFIG_ITEM_USE_MINIMUM_LIBRARY: string = "minLibrary";
+    const PROPERTY_ITEMS: symbol = Symbol("items");
     /**
      * 配置
      */
     export class Configuration {
 
-        private items: Map<string, any> = new Map<string, any>();
+        constructor() {
+            this[PROPERTY_ITEMS] = new Map<string, any>();
+        }
         /**
          * 加载配置文件
          */
@@ -63,7 +66,7 @@ namespace ibas {
          * @param value 值
          */
         set(key: string, value: any): void {
-            this.items.set(key, value);
+            this[PROPERTY_ITEMS].set(key, value);
             // 触发值改变事件
             this.fireConfigurationChanged(key, value);
         }
@@ -104,9 +107,9 @@ namespace ibas {
                 type = arguments[2];
             }
             let value: any;
-            if (this.items.has(key)) {
+            if (this[PROPERTY_ITEMS].has(key)) {
                 // 配置了
-                value = this.items.get(key);
+                value = this[PROPERTY_ITEMS].get(key);
                 if (defalut !== undefined) {
                     // 提供了默认值
                     if (typeof value !== typeof defalut) {
@@ -135,8 +138,8 @@ namespace ibas {
         /** 返回配置项目 */
         all(): IList<KeyValue> {
             let items: IList<KeyValue> = new ArrayList();
-            for (let item of this.items.keys()) {
-                items.add(new KeyValue(item, this.items.get(item)));
+            for (let item of this[PROPERTY_ITEMS].keys()) {
+                items.add(new KeyValue(item, this[PROPERTY_ITEMS].get(item)));
             }
             return items;
         }

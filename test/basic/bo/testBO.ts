@@ -7,7 +7,7 @@
  */
 /// <reference path="../../../ibas/index.d.ts" />
 import { SalesOrder, SalesOrderItem } from "./SalesOrder";
-import { BORepositoryTest, DataConverter4Test } from "./BORepository";
+import { BORepositoryTest, DataConverter4Test, boFactory } from "./BORepository";
 
 let listener: ibas.IPropertyChangedListener = {
     propertyChanged(property: string): void {
@@ -149,7 +149,55 @@ item.lineTotal = 100;
 ibas.assert.equals("order.documentTotal does not equal the total number of item.lineTotal.",
     order.documentTotal === 100, true);
 // 移除子项时移除子项监听事件
-let listenerCount: number = (<any>item)._listeners.length;
+let listenerCount: number = (<any>item).listeners().length;
 order.salesOrderItems.remove(item);
 ibas.assert.equals("item is not remove the listener after it removed from the collection",
-    listenerCount - (<any>item)._listeners.length === 1, true);
+    listenerCount - (<any>item).listeners().length === 1, true);
+
+// 测试本地存储
+let localRepository: ibas.BORepositoryIndexedDB = new ibas.BORepositoryIndexedDB();
+localRepository.name = "test";
+localRepository.converter = new DataConverter4Test();
+boFactory.register(SalesOrder);
+cOrder.docEntry = 100;
+localRepository.save(SalesOrder.name, {
+    beSaved: cOrder,
+    onCompleted(opRslt: ibas.IOperationResult<SalesOrder>): void {
+        if (opRslt.resultCode !== 0) {
+            ibas.logger.log(ibas.emMessageLevel.ERROR, opRslt.message);
+        }
+        for (let item of opRslt.resultObjects) {
+            ibas.logger.log(ibas.strings.format("save data: {0}.", item.toString()));
+        }
+    }
+});
+cOrder.docEntry = 101;
+localRepository.save(SalesOrder.name, {
+    beSaved: cOrder,
+    onCompleted(opRslt: ibas.IOperationResult<SalesOrder>): void {
+        if (opRslt.resultCode !== 0) {
+            ibas.logger.log(ibas.emMessageLevel.ERROR, opRslt.message);
+        }
+        for (let item of opRslt.resultObjects) {
+            ibas.logger.log(ibas.strings.format("save data: {0}.", item.toString()));
+        }
+    }
+});
+setTimeout(function (): void {
+    let criteria: ibas.ICriteria = new ibas.Criteria();
+    let condition: ibas.ICondition = criteria.conditions.create();
+    condition.alias = "docEntry";
+    condition.value = cOrder.docEntry.toString();
+
+    localRepository.fetch(SalesOrder.name, {
+        criteria: criteria,
+        onCompleted(opRslt: ibas.IOperationResult<SalesOrder>): void {
+            if (opRslt.resultCode !== 0) {
+                ibas.logger.log(ibas.emMessageLevel.ERROR, opRslt.message);
+            }
+            for (let item of opRslt.resultObjects) {
+                ibas.logger.log(ibas.strings.format("fetch data: {0}.", item.toString()));
+            }
+        }
+    });
+}, 1000);

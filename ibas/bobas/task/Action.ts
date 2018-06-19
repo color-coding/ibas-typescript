@@ -9,6 +9,8 @@
 /// <reference path="../common/Configuration.ts" />
 
 namespace ibas {
+    const PROPERTY_STARTTIME: symbol = Symbol("startTime");
+    const PROPERTY_ENDTIME: symbol = Symbol("endTime");
     /**
      * 动作
      */
@@ -105,21 +107,19 @@ namespace ibas {
         /** 名称 */
         name: string;
         /** 开始时间 */
-        private _startTime: Date;
         get startTime(): Date {
-            return this._startTime;
+            return this[PROPERTY_STARTTIME];
         }
         /** 结束时间 */
-        private _endTime: Date;
         get endTime(): Date {
-            return this._endTime;
+            return this[PROPERTY_ENDTIME];
         }
         /** 是否运行中 */
         isRunning(): boolean {
-            if (objects.isNull(this._startTime)) {
+            if (objects.isNull(this[PROPERTY_STARTTIME])) {
                 return false;
             }
-            if (!objects.isNull(this._endTime)) {
+            if (!objects.isNull(this[PROPERTY_ENDTIME])) {
                 return false;
             }
             return true;
@@ -130,8 +130,8 @@ namespace ibas {
                 throw new Error("action is running.");
             }
             let done: boolean = false;
-            this._startTime = new Date();
-            this._endTime = undefined;
+            this[PROPERTY_STARTTIME] = new Date();
+            this[PROPERTY_ENDTIME] = undefined;
             this.log(emMessageLevel.INFO,
                 "action is starting at [{0}].", this.startTime.toLocaleString());
             try {
@@ -150,7 +150,7 @@ namespace ibas {
             if (!this.isRunning()) {
                 throw new Error("action is not running.");
             }
-            this._endTime = new Date();
+            this[PROPERTY_ENDTIME] = new Date();
             this.log(emMessageLevel.INFO,
                 "action was completed at [{0}], during [{1}]s.", this.endTime.toLocaleString(),
                 dates.difference(dates.emDifferenceType.SECOND, this.endTime, this.startTime));
