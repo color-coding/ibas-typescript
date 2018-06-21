@@ -152,32 +152,9 @@ namespace ibas {
             if (strings.isEmpty(boName)) {
                 boName = "buckets";
             }
-            let storeParameters: IDBObjectStoreParameters = null;
-            if (caller.beSaved instanceof BODocument) {
-                storeParameters = {
-                    keyPath: "DocEntry"
-                };
-            } else if (caller.beSaved instanceof BODocumentLine) {
-                storeParameters = {
-                    keyPath: ["DocEntry", "LineId"]
-                };
-            } else if (caller.beSaved instanceof BOMasterData) {
-                storeParameters = {
-                    keyPath: "Code"
-                };
-            } else if (caller.beSaved instanceof BOMasterDataLine) {
-                storeParameters = {
-                    keyPath: ["Code", "LineId"]
-                };
-            } else if (caller.beSaved instanceof BOSimple) {
-                storeParameters = {
-                    keyPath: "ObjectKey"
-                };
-            } else if (caller.beSaved instanceof BOSimpleLine) {
-                storeParameters = {
-                    keyPath: ["ObjectKey", "LineId"]
-                };
-            }
+            let storeParameters: IDBObjectStoreParameters = {
+                autoIncrement: true,
+            };
             let that: this = this;
             this.openDB({
                 onError(error: Error): void {
