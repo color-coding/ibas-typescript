@@ -159,19 +159,7 @@ let localRepository: ibas.BORepositoryIndexedDB = new ibas.BORepositoryIndexedDB
 localRepository.name = "test";
 localRepository.converter = new DataConverter4Test();
 boFactory.register(SalesOrder);
-cOrder.docEntry = 100;
-localRepository.save(SalesOrder.name, {
-    beSaved: cOrder,
-    onCompleted(opRslt: ibas.IOperationResult<SalesOrder>): void {
-        if (opRslt.resultCode !== 0) {
-            ibas.logger.log(ibas.emMessageLevel.ERROR, opRslt.message);
-        }
-        for (let item of opRslt.resultObjects) {
-            ibas.logger.log(ibas.strings.format("save data: {0}.", item.toString()));
-        }
-    }
-});
-cOrder.docEntry = 101;
+cOrder.docEntry = Math.floor(Math.random() * 1000);
 localRepository.save(SalesOrder.name, {
     beSaved: cOrder,
     onCompleted(opRslt: ibas.IOperationResult<SalesOrder>): void {
@@ -187,6 +175,7 @@ setTimeout(function (): void {
     let criteria: ibas.ICriteria = new ibas.Criteria();
     let condition: ibas.ICondition = criteria.conditions.create();
     condition.alias = "docEntry";
+    condition.operation = ibas.emConditionOperation.GRATER_EQUAL;
     condition.value = cOrder.docEntry.toString();
 
     localRepository.fetch(SalesOrder.name, {

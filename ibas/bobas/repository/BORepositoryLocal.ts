@@ -49,6 +49,7 @@ namespace ibas {
             dbRequest.onupgradeneeded = function (e: Event): void {
                 that.db = (<any>e).target.result;
                 opener.onSuccess(that.db);
+                dbRequest.onsuccess = null;
             };
         }
         /** 关闭数据库 */
