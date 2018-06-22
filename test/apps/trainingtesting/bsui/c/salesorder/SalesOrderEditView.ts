@@ -108,14 +108,11 @@ namespace trainingtesting {
                                     description: ibas.i18n.prop("bo_salesorder_documenttotal")
                                 })
                             }),
-                            new sap.m.Label("", { text: "百分数,保留3位小数" }),
+                            new sap.m.Label("", { text: "百分数" }),
                             new sap.m.Input("", {
                             }).bindProperty("value", {
                                 path: "/documentRate",
-                                type: new openui5.datatype.Percentage({
-                                    decimalPlaces: 3,
-                                    description: ibas.i18n.prop("bo_salesorder_documentrate")
-                                })
+                                type: new openui5.datatype.Percentage()
                             }),
                             new sap.ui.core.Title("", { text: ibas.i18n.prop("trainingtesting_title_others") }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_docentry") }),
@@ -209,6 +206,7 @@ namespace trainingtesting {
                                     type: sap.m.InputType.Number
                                 }).bindProperty("value", {
                                     path: "price",
+                                    type: new openui5.datatype.Price(),
                                 })
                             }),
                             new sap.ui.table.Column("", {
@@ -217,7 +215,8 @@ namespace trainingtesting {
                                     width: "100%",
                                     type: sap.m.InputType.Number
                                 }).bindProperty("value", {
-                                    path: "quantity"
+                                    path: "quantity",
+                                    type: new openui5.datatype.Quantity(),
                                 })
                             }),
                             new sap.ui.table.Column("", {
@@ -226,7 +225,8 @@ namespace trainingtesting {
                                     width: "100%",
                                     type: sap.m.InputType.Number,
                                 }).bindProperty("value", {
-                                    path: "lineTotal"
+                                    path: "lineTotal",
+                                    type: new openui5.datatype.Sum(),
                                 })
                             })
                         ]

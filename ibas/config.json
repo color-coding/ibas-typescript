@@ -7,8 +7,10 @@
     "format|Time": "hh:mm",
     "format|DateTime": "yyyy-MM-dd hh:mm",
     "decimalPlaces": 6,
-    "decimalPlaces|Price": 6,
-    "decimalPlaces|Quantity": 6,
+    "decimalPlaces|Price": 2,
+    "decimalPlaces|Quantity": 2,
+    "decimalPlaces|Sum": 4,
+    "decimalPlaces|Measurement": 4,
     "defaultCurrency": "CNY",
     "language": "zh_CN"
   }

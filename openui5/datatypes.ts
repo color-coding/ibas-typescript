@@ -13,18 +13,17 @@ namespace openui5 {
         export abstract class DataType extends sap.ui.model.SimpleType {
             constructor(settings?: IDataTypeSetting) {
                 super();
-                if (ibas.objects.isNull(settings)) {
-                    return;
-                }
-                this.description = settings.description;
-                if (settings.validate instanceof Function) {
-                    this.validate = settings.validate;
-                }
-                if (settings.formatValue instanceof Function) {
-                    this.formatValue = settings.formatValue;
-                }
-                if (settings.parseValue instanceof Function) {
-                    this.parseValue = settings.parseValue;
+                if (!ibas.objects.isNull(settings)) {
+                    this.description = settings.description;
+                    if (settings.validate instanceof Function) {
+                        this.validate = settings.validate;
+                    }
+                    if (settings.formatValue instanceof Function) {
+                        this.formatValue = settings.formatValue;
+                    }
+                    if (settings.parseValue instanceof Function) {
+                        this.parseValue = settings.parseValue;
+                    }
                 }
             }
             description: string = "";
@@ -66,12 +65,11 @@ namespace openui5 {
              */
             constructor(settings?: IAlphanumericSetting) {
                 super(settings);
-                if (ibas.objects.isNull(settings)) {
-                    return;
+                if (!ibas.objects.isNull(settings)) {
+                    this.notEmpty = settings.notEmpty;
+                    this.maxLength = settings.maxLength;
+                    this.minLength = settings.minLength;
                 }
-                this.notEmpty = settings.notEmpty;
-                this.maxLength = settings.maxLength;
-                this.minLength = settings.minLength;
             }
             notEmpty: boolean = false;
             maxLength: number = null;
@@ -110,11 +108,10 @@ namespace openui5 {
              */
             constructor(settings?: INumericSetting) {
                 super(settings);
-                if (ibas.objects.isNull(settings)) {
-                    return;
+                if (!ibas.objects.isNull(settings)) {
+                    this.minValue = settings.minValue;
+                    this.maxValue = settings.maxValue;
                 }
-                this.minValue = settings.minValue;
-                this.maxValue = settings.maxValue;
             }
             minValue: number = undefined;
             maxValue: number = undefined;
@@ -166,10 +163,9 @@ namespace openui5 {
              */
             constructor(settings?: IDecimalSetting) {
                 super(settings);
-                if (ibas.objects.isNull(settings)) {
-                    return;
+                if (!ibas.objects.isNull(settings)) {
+                    this.decimalPlaces = settings.decimalPlaces;
                 }
-                this.decimalPlaces = settings.decimalPlaces;
                 if (ibas.objects.isNull(this.decimalPlaces)) {
                     this.decimalPlaces = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES, 6);
                 }
@@ -223,10 +219,9 @@ namespace openui5 {
              */
             constructor(settings?: IDateTimeSetting) {
                 super(settings);
-                if (ibas.objects.isNull(settings)) {
-                    return;
+                if (!ibas.objects.isNull(settings)) {
+                    this.format = settings.format;
                 }
-                this.format = settings.format;
             }
             format?: string;
             formatValue(oValue: any): Date {
@@ -268,10 +263,9 @@ namespace openui5 {
              */
             constructor(settings?: ITimeSetting) {
                 super(settings);
-                if (ibas.objects.isNull(settings)) {
-                    return;
+                if (!ibas.objects.isNull(settings)) {
+                    this.format = settings.format;
                 }
-                this.format = settings.format;
             }
             format?: string;
             formatValue(oValue: any): Date {
@@ -404,8 +398,9 @@ namespace openui5 {
              * 百分比类型
              * @param settings 设置
              */
-            constructor(settings?: IDecimalSetting) {
-                super(settings);
+            constructor() {
+                super();
+                this.decimalPlaces = 2;
             }
             formatValue(oValue: any): string {
                 if (ibas.objects.isNull(oValue) || typeof oValue !== "number") {
