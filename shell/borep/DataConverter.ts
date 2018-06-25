@@ -92,11 +92,24 @@ namespace shell {
                     return remote;
                 } else if (ibas.objects.instanceOf(data, BOPropertyInfo)) {
                     let newData: BOPropertyInfo = data;
+                    let values: bo4j.IBOPropertyValue[] = [];
+                    for (let item of newData.values) {
+                        values.push(this.convert(item, null));
+                    }
                     let remote: bo4j.IBOPropertyInfo = {
                         type: BOPropertyInfo.name,
                         Property: newData.property,
                         Searched: newData.searched,
                         Editable: newData.editable,
+                        Description: newData.description,
+                        Values: values
+                    };
+                    return remote;
+                } else if (ibas.objects.instanceOf(data, BOPropertyValue)) {
+                    let newData: BOPropertyValue = data;
+                    let remote: bo4j.IBOPropertyValue = {
+                        type: BOPropertyInfo.name,
+                        Value: newData.value,
                         Description: newData.description
                     };
                     return remote;
@@ -174,6 +187,16 @@ namespace shell {
                     newData.searched = remote.Searched;
                     newData.description = remote.Description;
                     newData.editable = remote.Editable;
+                    for (let item of remote.Values) {
+                        item.type = BOPropertyValue.name;
+                        newData.values.push(this.parsing(item, null));
+                    }
+                    return newData;
+                } else if (data.type === BOPropertyValue.name) {
+                    let remote: bo4j.IBOPropertyValue = data;
+                    let newData: BOPropertyValue = new BOPropertyValue();
+                    newData.value = remote.Value;
+                    newData.description = remote.Description;
                     return newData;
                 } else if (sign === "saveUserQuery") {
                     // 此方法返回值，没有标记类型

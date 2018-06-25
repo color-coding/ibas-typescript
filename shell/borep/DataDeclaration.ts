@@ -9,12 +9,12 @@
 namespace shell {
     export namespace bo4j {
         /** 操作消息 */
-        export interface  IDataDeclaration {
+        export interface IDataDeclaration {
             /** 数据类型 */
             type: string;
         }
         /** 用户 */
-        export interface IUser extends  IDataDeclaration {
+        export interface IUser extends IDataDeclaration {
             /** id */
             Id: number;
             /** 编码 */
@@ -31,7 +31,7 @@ namespace shell {
             Password?: string;
         }
         /** 用户应用模块 */
-        export interface IUserModule extends  IDataDeclaration {
+        export interface IUserModule extends IDataDeclaration {
             /** id */
             Id: string;
             /** 名称 */
@@ -51,8 +51,8 @@ namespace shell {
             /** 运行时 */
             Runtime: string;
         }
-        /** 操作消息 */
-        export interface IUserPrivilege extends  IDataDeclaration {
+        /** 用户权限 */
+        export interface IUserPrivilege extends IDataDeclaration {
             /** 来源 */
             Source: string;
             /** 目标 */
@@ -60,8 +60,8 @@ namespace shell {
             /** 权限值 */
             Value: string;
         }
-        /** 查询 */
-        export interface IUserQuery extends  IDataDeclaration {
+        /** 用户查询 */
+        export interface IUserQuery extends IDataDeclaration {
             /** 标记 */
             Id: string;
             /** 名称 */
@@ -73,8 +73,8 @@ namespace shell {
             /** 用户 */
             User: string;
         }
-        /** 查询条件 */
-        export interface IBOInfo extends  IDataDeclaration {
+        /** 业务对象 */
+        export interface IBOInfo extends IDataDeclaration {
             /** 名称 */
             Name: string;
             /** 编码 */
@@ -84,8 +84,8 @@ namespace shell {
             /** 属性集合 */
             Properties: IBOPropertyInfo[];
         }
-        /** 排序 */
-        export interface IBOPropertyInfo extends  IDataDeclaration {
+        /** 业务对象属性 */
+        export interface IBOPropertyInfo extends IDataDeclaration {
             /** 属性 */
             Property: string;
             /** 描述 */
@@ -94,6 +94,15 @@ namespace shell {
             Searched: boolean;
             /** 可编辑 */
             Editable: boolean;
+            /** 值集合 */
+            Values: IBOPropertyValue[];
+        }
+        /** 业务对象属性值 */
+        export interface IBOPropertyValue extends IDataDeclaration {
+            /** 值 */
+            Value: string;
+            /** 描述 */
+            Description: string;
         }
     }
 }

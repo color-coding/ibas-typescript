@@ -82,6 +82,15 @@ namespace shell {
             description: string;
             /** 查询 */
             searched: boolean;
+            /** 属性值集合 */
+            values: Array<IBOPropertyValue>;
+        }
+        /** 业务对象属性值 */
+        export interface IBOPropertyValue {
+            /** 值 */
+            value: string;
+            /** 描述 */
+            description: string;
         }
     }
 }

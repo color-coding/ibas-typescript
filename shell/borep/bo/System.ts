@@ -96,6 +96,15 @@ namespace shell {
             searched: boolean;
             /** 编辑 */
             editable: boolean;
+            /** 属性值集合 */
+            values: Array<BOPropertyValue>;
+        }
+        /** 业务对象属性值 */
+        export class BOPropertyValue implements IBOPropertyValue {
+            /** 值 */
+            value: string;
+            /** 描述 */
+            description: string;
         }
     }
 }
