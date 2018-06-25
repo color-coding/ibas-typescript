@@ -944,7 +944,7 @@ namespace openui5 {
             if (typeof value !== "string") { // 必须为string类型
                 return false;
             }
-            let result: any = value.match(/^http:\/\/[A-Za-z0-9]+\.[A-Za-z0-9]+[\/=\?%\-&_~`@[\]\’:+!]*([^<>\"])*$/);
+            let result: any = value.match(/^(http|https):\/\/[A-Za-z0-9]+\.[A-Za-z0-9]+[\/=\?%\-&_~`@[\]\’:+!]*([^<>\"])*$/);
             if (result === null) {
                 return false;
             }
