@@ -529,24 +529,28 @@ namespace ibas {
                 }
                 let objectKey: number = this.parent.getProperty<number>(BO_PROPERTY_NAME_OBJECTKEY);
                 if (objectKey !== undefined) {
-                    item.setProperty(BO_PROPERTY_NAME_DOCENTRY, objectKey);
+                    item.setProperty(BO_PROPERTY_NAME_OBJECTKEY, objectKey);
                 }
                 let code: string = this.parent.getProperty<string>(BO_PROPERTY_NAME_CODE);
                 if (code !== undefined) {
-                    item.setProperty(BO_PROPERTY_NAME_DOCENTRY, code);
+                    item.setProperty(BO_PROPERTY_NAME_CODE, code);
                 }
             }
             // 存在行编号，为其自动编号
-            let max: number = 0;
-            for (let tmp of this) {
-                let id: number = tmp.getProperty<number>(BO_PROPERTY_NAME_LINEID);
-                if (!isNaN(id)) {
-                    if (id > max) {
-                        max = id;
+            if (objects.instanceOf(item, BODocumentLine)
+                || objects.instanceOf(item, BOMasterDataLine)
+                || objects.instanceOf(item, BOSimpleLine)) {
+                let max: number = 0;
+                for (let tmp of this) {
+                    let id: number = tmp.getProperty<number>(BO_PROPERTY_NAME_LINEID);
+                    if (!isNaN(id)) {
+                        if (id > max) {
+                            max = id;
+                        }
                     }
                 }
+                item.setProperty(BO_PROPERTY_NAME_LINEID, max + 1);
             }
-            item.setProperty(BO_PROPERTY_NAME_LINEID, max + 1);
             // 处理单据状态
             if (objects.instanceOf(item, BODocumentLine)) {
                 if (objects.instanceOf(this.parent, BODocument)) {
