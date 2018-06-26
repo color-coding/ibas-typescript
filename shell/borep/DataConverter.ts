@@ -187,6 +187,7 @@ namespace shell {
                     newData.searched = remote.Searched;
                     newData.description = remote.Description;
                     newData.editable = remote.Editable;
+                    newData.values = new Array<BOPropertyValue>();
                     for (let item of remote.Values) {
                         item.type = BOPropertyValue.name;
                         newData.values.push(this.parsing(item, null));
