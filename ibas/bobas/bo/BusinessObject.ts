@@ -315,7 +315,28 @@ namespace ibas {
          */
         organization: string;
     }
-
+    /** 用户字段 */
+    export interface IUserField {
+        /** 名称 */
+        name: string;
+        /** 类型 */
+        valueType: emDbFieldType;
+        /** 值 */
+        value: any;
+    }
+    /** 用户字段集合 */
+    export interface IUserFields {
+        /** 获取用户字段 */
+        get(index: number): IUserField;
+        /** 获取用户字段 */
+        get(name: string): IUserField;
+        /** 变量集合 */
+        forEach(): IUserField[];
+        /** 大小 */
+        size(): number;
+        /** 注册 */
+        register(name: string, valueType: emDbFieldType): IUserField;
+    }
 
     /**
      * 业务对象基类
@@ -393,6 +414,15 @@ namespace ibas {
             }
             myRules.execute(this, property);
             super.firePropertyChanged(property);
+        }
+        /** 用户字段 */
+        private UserFields: UserFields;
+        get userFields(): IUserFields {
+            if (objects.isNull(this.UserFields)) {
+                this.UserFields = new UserFields(this);
+                this.UserFields.registers();
+            }
+            return this.UserFields;
         }
     }
     const PROPERTY_LISTENER: symbol = Symbol("listener");
@@ -843,6 +873,133 @@ namespace ibas {
             builder.append("]");
             builder.append("}");
             return builder.toString();
+        }
+    }
+    /** 用户字段 */
+    export class UserField<T> implements IUserField {
+        /** 名称 */
+        Name: string;
+        get name(): string {
+            return this.Name;
+        }
+        set name(value: string) {
+            this.Name = value;
+        }
+        /** 类型 */
+        ValueType: emDbFieldType;
+        get valueType(): emDbFieldType {
+            return this.ValueType;
+        }
+        set valueType(value: emDbFieldType) {
+            this.ValueType = value;
+        }
+        /** 值 */
+        Value: T;
+        get value(): T {
+            return this.Value;
+        }
+        set value(value: T) {
+            this.Value = value;
+        }
+    }
+    class UserFieldInfo {
+        name: string;
+        valueType: emDbFieldType;
+    }
+    class UserFieldManager {
+        userFieldInfos: Map<any, IList<UserFieldInfo>> = new Map<any, IList<UserFieldInfo>>();
+        getInfos(type: any): UserFieldInfo[] {
+            let infos: IList<UserFieldInfo> = this.userFieldInfos.get(type);
+            if (!objects.isNull(infos)) {
+                return infos;
+            }
+            return new ArrayList<UserFieldInfo>();
+        }
+        register(type: any, name: string, valueType: emDbFieldType): UserFieldInfo {
+            let infos: IList<UserFieldInfo> = this.userFieldInfos.get(type);
+            if (objects.isNull(infos)) {
+                infos = new ArrayList<UserFieldInfo>();
+                this.userFieldInfos.set(type, infos);
+            }
+            let info: UserFieldInfo = infos.firstOrDefault(c => c.name === name);
+            if (objects.isNull(info)) {
+                info = new UserFieldInfo();
+                info.name = name;
+                info.valueType = valueType;
+                infos.add(info);
+            }
+            return info;
+        }
+        create(info: UserFieldInfo): IUserField {
+            let userField: IUserField = null;
+            if (info.valueType === emDbFieldType.DATE) {
+                userField = new UserField<Date>();
+            } else if (info.valueType === emDbFieldType.NUMERIC) {
+                userField = new UserField<Number>();
+            } else if (info.valueType === emDbFieldType.DECIMAL) {
+                userField = new UserField<Number>();
+            } else {
+                userField = new UserField<String>();
+            }
+            return userField;
+        }
+    }
+    const userFieldManager: UserFieldManager = new UserFieldManager();
+    /** 用户字段集合 */
+    export class UserFields extends Array<IUserField> implements IUserFields {
+        constructor(bo: IBusinessObject) {
+            super();
+            this[PROPERTY_PARENT] = bo;
+        }
+        /** 注册全部用户字段 */
+        registers(): void {
+            for (let item of userFieldManager.getInfos(objects.getType(this[PROPERTY_PARENT]))) {
+                this.register(item.name, item.valueType);
+            }
+        }
+        /** 注册用户字段 */
+        register(name: string, valueType: emDbFieldType): IUserField {
+            for (let item of this) {
+                if (item.name === name) {
+                    return item;
+                }
+            }
+            let info: UserFieldInfo = userFieldManager.register(objects.getType(this[PROPERTY_PARENT]), name, valueType);
+            let userField: IUserField = userFieldManager.create(info);
+            userField.name = name;
+            userField.valueType = valueType;
+            this.push(userField);
+            return userField;
+        }
+        /** 大小 */
+        size(): number {
+            return this.length;
+        }
+        /** 变量集合 */
+        forEach(): IUserField[] {
+            return this;
+        }
+        /** 获取用户字段 */
+        get(index: number): IUserField;
+        /** 获取用户字段 */
+        get(name: string): IUserField;
+        get(): IUserField {
+            let index: any = arguments[0];
+            let userField: IUserField = null;
+            if (typeof index === "number") {
+                userField = this[index];
+            } else {
+                for (let item of this) {
+                    if (item.name === index) {
+                        userField = item;
+                        break;
+                    }
+                }
+            }
+            if (objects.isNull(userField)) {
+                throw new Error(i18n.prop("sys_not_found_user_field", index));
+            }
+            return userField;
         }
     }
 }
