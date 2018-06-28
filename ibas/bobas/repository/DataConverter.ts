@@ -488,6 +488,23 @@ namespace ibas {
                         }
                         // 已处理，继续下一个
                         continue;
+                    } else if (tName === "UserFields" && target instanceof BusinessObject) {
+                        // 用户字段
+                        for (let item of sValue) {
+                            let remote: ibas4j.IUserField = item;
+                            let userField: IUserField = target.userFields.register(remote.Name, enums.valueOf(emDbFieldType, remote.ValueType));
+                            if (userField.valueType === emDbFieldType.DATE) {
+                                userField.value = dates.valueOf(remote.Value);
+                            } else if (userField.valueType === emDbFieldType.NUMERIC) {
+                                userField.value = parseInt(remote.Value, 0);
+                            } else if (userField.valueType === emDbFieldType.DECIMAL) {
+                                userField.value = parseFloat(remote.Value);
+                            } else {
+                                userField.value = remote.Value;
+                            }
+                        }
+                        // 已处理，继续下一个
+                        continue;
                     }
                 } else if (typeof sValue === "object") {
                     // 此属性是对象
@@ -615,7 +632,9 @@ namespace ibas {
          * @returns 转换的值
          */
         protected convertData(boName: string, property: string, value: any): any {
-            if (typeof value === "number") {
+            if (boName === UserField.name && property === "ValueType") {
+                return enums.toString(emDbFieldType, value);
+            } else if (typeof value === "number") {
                 // 枚举类型
                 if (property === "DocumentStatus" || property === "LineStatus") {
                     return enums.toString(emDocumentStatus, value);

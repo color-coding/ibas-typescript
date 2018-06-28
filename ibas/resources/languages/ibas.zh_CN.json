@@ -13,6 +13,7 @@
   "sys_invaild_mapping_type": "[{0}]的映射对象类型无效",
   "sys_not_parsed_data": "没有解析的数据[{0}]",
   "sys_not_converted_data": "没有转换的数据[{0}]",
+  "sys_not_found_user_field": "没有找到用户字段[{0}]",
   "sys_network_error": "服务器资源不可用，请稍后重试",
   "sys_server_internal_error": "服务器内部错误，请检查调用参数",
   "sys_unsupported_operation": "不支持的操作",

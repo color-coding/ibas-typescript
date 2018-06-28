@@ -144,4 +144,13 @@ declare namespace ibas4j {
         /** 值 */
         Text: string;
     }
+    /** 用户字段 */
+    export interface IUserField extends IDataDeclaration {
+        /** 名称 */
+        Name: string;
+        /** 数据类型 */
+        ValueType: string;
+        /** 值 */
+        Value: string;
+    }
 }
