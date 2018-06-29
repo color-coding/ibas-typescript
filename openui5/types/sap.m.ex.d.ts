@@ -59,6 +59,12 @@ declare namespace sap {
                 setBindingValue(value: string): void;
                 getBindingValue(): string;
             }
+            export class DescText extends sap.m.Text {
+                getDescList(): ibas.ArrayList<ibas.KeyText>;
+                setDescList(value: ibas.ArrayList<ibas.KeyText>): void;
+                setBindingValue(value: string): void;
+                getBindingValue(): string;
+            }
             export class BOSelect extends sap.m.Select {
                 setBlank(value: Boolean): void;
                 getBlank(): Boolean;
