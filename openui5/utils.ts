@@ -751,6 +751,18 @@ namespace openui5 {
                         userFieldForm.removeAllContent();
                         // 查询属性信息回调函数
                         let completed: Function = function (boPropertyInformations: [any]): void {
+                            // 如果对象没有自定义字段，打开自定义字段层按钮不显示
+                            if (boPropertyInformations.length <= 0) {
+                                let toolbar: sap.m.Toolbar = container.getSubHeader();
+                                if (!ibas.objects.isNull(toolbar)) {
+                                    let controls: Array<sap.ui.core.Control> = toolbar.getContent();
+                                    let userFieldButton: sap.ui.core.Control = controls[controls.length - 1];
+                                    if (!ibas.objects.isNull(userFieldButton) && userFieldButton instanceof sap.m.Button) {
+                                        userFieldButton.setVisible(false);
+                                    }
+                                }
+                                return;
+                            }
                             registerUserField(bo, boPropertyInformations);
                             for (let index: number = 0; index < boPropertyInformations.length; index++) {
                                 const info: any = boPropertyInformations[index];
