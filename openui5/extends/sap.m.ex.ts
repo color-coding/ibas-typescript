@@ -1023,6 +1023,41 @@ namespace openui5 {
         renderer: {}
     });
     /**
+     * 显示数据集描述Text
+     */
+    sap.m.Text.extend("sap.m.ex.DescText", {
+        metadata: {
+            properties: {
+                /** 描述数据集 */
+                descList: { type: "object", group: "Ex" },
+                /** 描述字段,绑定后触发查询对象事件 */
+                bindingValue: { type: "string", group: "Ex" },
+            },
+            events: {}
+        },
+        getDescList(): ibas.ArrayList<ibas.KeyText> {
+            return this.getProperty("descList");
+        },
+        setDescList(value: ibas.ArrayList<ibas.KeyText>): void {
+            this.setProperty("descList", value);
+        },
+        getBindingValue(): string {
+            return this.getProperty("bindingValue");
+        },
+        setBindingValue(value: string): void {
+            this.setProperty("bindingValue", value);
+            let keytextList: ibas.ArrayList<ibas.KeyText> = this.getDescList();
+            if (!ibas.strings.isEmpty(keytextList)) {
+                for (let item of keytextList) {
+                    if (value === item.key) {
+                        this.setText(item.text);
+                    }
+                }
+            }
+        },
+        renderer: {}
+    });
+    /**
      * 省市区三级联动
      */
     sap.m.FlexBox.extend("sap.m.ex.ProvincesCityDistrict", {
