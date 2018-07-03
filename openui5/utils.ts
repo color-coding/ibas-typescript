@@ -698,7 +698,7 @@ namespace openui5 {
                 subHeader.addContent(new sap.m.ToolbarSpacer(""));
                 subHeader.addContent(new sap.m.Button("", {
                     type: sap.m.ButtonType.Transparent,
-                    icon: "sap-icon://vertical-grip",
+                    icon: "sap-icon://filter-fields",
                     press: function (): void {
                         if (split.getSecondaryContentSize() === "100%") {
                             split.setSecondaryContentSize("80%");
@@ -888,7 +888,7 @@ namespace openui5 {
                 if (userFieldInfo.boPropertyValues.length > 0) {
                     let keyLists: ibas.ArrayList<ibas.KeyText> = new ibas.ArrayList<ibas.KeyText>();
                     for (let item of userFieldInfo.boPropertyValues) {
-                        keyLists.add(new ibas.KeyText(item.value, item.description))
+                        keyLists.add(new ibas.KeyText(item.value, item.description));
                     }
                     userFieldText.setDescList(keyLists);
                     userFieldText.bindProperty("bindingValue", {
