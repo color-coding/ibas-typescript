@@ -10,6 +10,13 @@ namespace ibas {
      * 字符串构建器
      */
     export class StringBuilder {
+        /** 未定义值字符 */
+        valueUndefined: string;
+        /** 空值字符 */
+        valueNull: string;
+        /**
+         * 已添加的值
+         */
         private values: string[] = new Array<string>();
 
         /**
@@ -24,9 +31,9 @@ namespace ibas {
          */
         append(str: any): void {
             if (str === undefined) {
-                this.values.push("undefined");
+                this.values.push(objects.isNull(this.valueUndefined) ? "undefined" : this.valueUndefined);
             } else if (str === null) {
-                this.values.push("null");
+                this.values.push(objects.isNull(this.valueNull) ? "null" : this.valueNull);
             } else {
                 this.values.push(str.toString());
             }
