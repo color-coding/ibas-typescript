@@ -6,13 +6,15 @@
     "language": "zh_CN",
     "application": "智能业务应用系统",
     "copyright": "© 2016-2017 Color-Coding Studio",
-    "helpUrl": "https://colorcoding.org/ibas/help",
-    "welcomeUrl": "https://colorcoding.org/ibas/welcome",
+    "helpUrl": "https://ibas.colorcoding.org/help",
+    "welcomeUrl": "https://ibas.colorcoding.org/welcome",
     "welcomeImage": "sap-icon://hello-world",
     "defalutServiceIcon": "sap-icon://e-care",
     "defalutModuleIcon": "sap-icon://nutrition-activity",
     "defaultUser": "admin",
     "defaultPassword": "1q2w3e",
+    "useCache": true,
+    "cacheDBName": "ibas_cache_ui",
     "repositoryAddress|BORepositoryShell": ".../initialfantasy/services/rest/data"
   },
   "languages": [
