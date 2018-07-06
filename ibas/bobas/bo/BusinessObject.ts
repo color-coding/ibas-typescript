@@ -315,6 +315,11 @@ namespace ibas {
          */
         organization: string;
     }
+    /** 业务对象-用户字段 */
+    export interface IBOUserFields {
+        /** 用户字段 */
+        userFields: IUserFields;
+    }
     /** 用户字段 */
     export interface IUserField {
         /** 名称 */
