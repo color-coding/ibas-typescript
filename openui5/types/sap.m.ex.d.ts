@@ -124,6 +124,14 @@ declare namespace sap {
                 setObjectCode(value: string): void;
                 getObjectCode(): string;
             }
+            export class UserField extends sap.m.FlexBox {
+                setBoType(value: string): void;
+                getBoType(): string;
+                setPropertyName(value: string): void;
+                getPropertyName(): string;
+                setBindingValue(value: string): void;
+                getBindingValue(): string;
+            }
         }
     }
 }
