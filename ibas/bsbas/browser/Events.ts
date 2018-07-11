@@ -15,7 +15,7 @@ namespace ibas {
         id?: string;
         eventType: emBrowserEventType;
         /** 事件被触发 */
-        onEventFired(event: Event):void;
+        onEventFired(event: Event): void;
     }
     export class BrowserEventManager {
         /** 集合 */
@@ -185,6 +185,8 @@ namespace ibas {
         UNLOAD,
         VOLUMECHANGE,
         WAITING,
+        /** 自定义事件-扫码,CustomEvent */
+        SCAN
     }
 
     /** 浏览器事件管理员实例 */
