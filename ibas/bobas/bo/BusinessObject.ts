@@ -33,7 +33,6 @@ namespace ibas {
     export const BO_PROPERTY_NAME_LINESTATUS: string = "lineStatus";
     /** 需要被重置的属性名称 */
     const NEED_BE_RESET_PROPERTIES: string[] = [
-        "_listeners",
         "createDate", "createTime", "updateDate", "updateTime", "logInst", "createUserSign", "updateUserSign", "createActionId", "updateActionId",
         "referenced", "canceled", "deleted", "approvalStatus", "lineStatus", "status", "documentStatus"
     ];

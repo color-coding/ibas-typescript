@@ -14,27 +14,25 @@ namespace ibas {
     export const CONFIG_ITEM_LANGUAGE_CODE: string = "language";
     /** 配置项目-资源分组名称 */
     export const CONFIG_ITEM_I18N_GROUP_NAMES: string = "i18nGroups";
+    const PROPERTY_LISTENER: symbol = Symbol("listener");
+    const PROPERTY_LANGUAGE: symbol = Symbol("language");
     /** 多语言 */
     export class I18N {
         /** 默认语言编码 */
         private DEFAULT_LANGUAGE_CODE: string = "en_US";
-
-        private _language: string;
         /** 语言 */
         get language(): string {
-            if (strings.isEmpty(this._language)) {
-                this._language = config.get(CONFIG_ITEM_LANGUAGE_CODE, this.DEFAULT_LANGUAGE_CODE);
+            if (strings.isEmpty(this[PROPERTY_LANGUAGE])) {
+                this[PROPERTY_LANGUAGE] = config.get(CONFIG_ITEM_LANGUAGE_CODE, this.DEFAULT_LANGUAGE_CODE);
             }
-            return this._language;
+            return this[PROPERTY_LANGUAGE];
         }
         set language(value: string) {
-            if (this._language !== value) {
-                this._language = value;
+            if (this[PROPERTY_LANGUAGE] !== value) {
+                this[PROPERTY_LANGUAGE] = value;
                 this.fireLanguageChanged();
             }
         }
-
-        private _listeners: ArrayList<ILanguageChangedListener>;
         /**
          * 注册监听事件
          * @param listener 监听者
@@ -43,20 +41,20 @@ namespace ibas {
             if (objects.isNull(listener)) {
                 return;
             }
-            if (objects.isNull(this._listeners)) {
-                this._listeners = new ArrayList<ILanguageChangedListener>();
+            if (objects.isNull(this[PROPERTY_LISTENER])) {
+                this[PROPERTY_LISTENER] = new ArrayList<ILanguageChangedListener>();
             }
-            this._listeners.add(listener);
+            this[PROPERTY_LISTENER].add(listener);
         }
         /** 触发语言改变事件 */
         protected fireLanguageChanged(): void {
-            if (!objects.isNull(this._language)) {
-                logger.log(emMessageLevel.INFO, "i18n: language change to [{0}].", this._language);
+            if (!objects.isNull(this[PROPERTY_LANGUAGE])) {
+                logger.log(emMessageLevel.INFO, "i18n: language change to [{0}].", this[PROPERTY_LANGUAGE]);
             }
             this.reload();
-            if (!objects.isNull(this._listeners)) {
-                for (let item of this._listeners) {
-                    item.onLanguageChanged(this._language);
+            if (!objects.isNull(this[PROPERTY_LISTENER])) {
+                for (let item of this[PROPERTY_LISTENER]) {
+                    item.onLanguageChanged(this[PROPERTY_LANGUAGE]);
                 }
             }
         }
