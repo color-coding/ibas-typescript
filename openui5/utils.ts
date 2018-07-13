@@ -827,9 +827,12 @@ namespace openui5 {
                     });
                     // 查询属性信息回调函数
                     let completed: Function = function (boPropertyInformations: [any]): void {
-                        // 如果对象没有自定义字段，打开自定义字段层按钮不显示
-                        if (boPropertyInformations.length <= 0) {
-                            container.setVisible(false);
+                         // 如果对象没有自定义字段并且容器中无内容则容器不显示
+                         if (boPropertyInformations.length <= 0) {
+                            let formContent: sap.ui.core.Element[] = container.getContent();
+                            if (ibas.objects.isNull(formContent) || formContent.length <= 0) {
+                                container.setVisible(false);
+                            }
                             return;
                         }
                         CurrentPropertyInformations = boPropertyInformations;
