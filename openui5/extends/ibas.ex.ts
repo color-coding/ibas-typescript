@@ -60,8 +60,8 @@ namespace openui5 {
                     }
                 }
                 let boRep: any = ibas.boFactory.create(this.repositoryName);
-                let criteria: ibas.ICriteria = new ibas.Criteria();
-                criteria = that.criteria;
+                let criteria: ibas.ICriteria = that.criteria;
+                criteria.noChilds = true;
                 boRep[ibas.strings.format("fetch{0}", this.boName)]({
                     criteria: criteria,
                     onCompleted(opRslt: ibas.IOperationResult<any>): void {
