@@ -1452,7 +1452,7 @@ namespace openui5 {
     /**
      * 自定义字段显示控件
      */
-    sap.m.FlexBox.extend("sap.m.ex.UserField", {
+    sap.m.FlexBox.extend("sap.m.ex.SmartField", {
         metadata: {
             properties: {
                 /** 绑定字段 */
@@ -1464,7 +1464,7 @@ namespace openui5 {
             },
             events: {}
         },
-        loadUserFieldControl(): void {
+        loadControl(): void {
             let that: any = this;
             let completed: Function = function (boPropertyInformations: ibas.ArrayList<any>): void {
                 if (!ibas.objects.isNull(boPropertyInformations)) {
@@ -1504,7 +1504,7 @@ namespace openui5 {
         setBindingValue(value: string): void {
             this.setProperty("bindingValue", value);
             if (!ibas.objects.isNull(this.getBindingInfo("bindingValue")) && value === null) {
-                this.loadUserFieldControl();
+                this.loadControl();
             }
         },
         getBindingValue(): string {
