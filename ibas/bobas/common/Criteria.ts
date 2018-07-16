@@ -670,6 +670,7 @@ namespace ibas {
          */
         toString(): string {
             let builder: StringBuilder = new StringBuilder();
+            builder.map(undefined, "");
             builder.append("{");
             builder.append(this.alias);
             builder.append(" ");
@@ -694,6 +695,8 @@ namespace ibas {
                     return ">";
                 case emConditionOperation.IS_NULL:
                     return "is null";
+                case emConditionOperation.LESS_EQUAL:
+                    return "<=";
                 case emConditionOperation.LESS_THAN:
                     return "<";
                 case emConditionOperation.NOT_CONTAIN:
