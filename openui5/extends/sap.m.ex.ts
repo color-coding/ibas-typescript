@@ -1428,7 +1428,6 @@ namespace openui5 {
         setBindingValue(value: string): void {
             this.setProperty("bindingValue", value);
             this.seriesInput.bindProperty("value", this.getBindingInfo("bindingValue"));
-
         },
         getBindingValue(): string {
             return this.getProperty("bindingValue");
@@ -1446,6 +1445,70 @@ namespace openui5 {
         },
         getObjectCode(): string {
             return this.getProperty("objectCode");
+        },
+        renderer: {}
+    });
+
+    /**
+     * 自定义字段显示控件
+     */
+    sap.m.FlexBox.extend("sap.m.ex.UserField", {
+        metadata: {
+            properties: {
+                /** 绑定字段 */
+                bindingValue: { type: "string", group: "Ex" },
+                /** 业务对象类型 */
+                boType: { type: "string", group: "Ex" },
+                /** 自定义字段属性名称 */
+                propertyName: { type: "string", group: "Ex" },
+            },
+            events: {}
+        },
+        loadUserFieldControl(): void {
+            let that: any = this;
+            let completed: Function = function (boPropertyInformations: ibas.ArrayList<any>): void {
+                if (!ibas.objects.isNull(boPropertyInformations)) {
+                    let property: any = boPropertyInformations.firstOrDefault();
+                    if (!ibas.objects.isNull(property)) {
+                        that.removeAllItems();
+                        if (!ibas.objects.isNull(that.getBindingInfo("bindingValue"))) {
+                            let bingingPath: string = that.getBindingInfo("bindingValue").binding.sPath;
+                            let control: any = openui5.utils.getUserFieldControl(property, bingingPath);
+                            if (!ibas.objects.isNull(control)) {
+                                control.setWidth(that.getWidth());
+                                control.setLayoutData(new sap.m.FlexItemData("", {
+                                    growFactor: 12
+                                }));
+                                that.addItem(control);
+                            }
+                        }
+                    }
+                } else {
+                    that.setVisible(false);
+                }
+            };
+            openui5.utils.getUserFieldInformations(this.getBoType(), completed, this.getPropertyName());
+        },
+        setBoType(value: string): void {
+            this.setProperty("boType", value);
+        },
+        getBoType(): string {
+            return this.getProperty("boType");
+        },
+        setPropertyName(value: string): void {
+            this.setProperty("propertyName", value);
+        },
+        getPropertyName(): string {
+            return this.getProperty("propertyName");
+        },
+        setBindingValue(value: string): void {
+            this.setProperty("bindingValue", value);
+            if (!ibas.objects.isNull(this.getBindingInfo("bindingValue")) && value === null) {
+                this.loadUserFieldControl();
+            }
+        },
+        getBindingValue(): string {
+            return this.getProperty("bindingValue");
         },
         renderer: {}
     });

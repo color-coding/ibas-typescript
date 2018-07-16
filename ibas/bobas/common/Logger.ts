@@ -39,17 +39,16 @@ namespace ibas {
 
     /** 配置项目-消息输出级别 */
     export const CONFIG_ITEM_MESSAGES_LEVEL: string = "msgLevel";
+    const PROPERTY_LEVEL: symbol = Symbol("level");
     /**
      * 运行消息记录
      */
     export class Logger implements ILogger {
-
-        private _level: emMessageLevel;
         /**
          * 消息输出的级别
          */
         get level(): emMessageLevel {
-            if (strings.isEmpty(this._level)) {
+            if (strings.isEmpty(this[PROPERTY_LEVEL])) {
                 // 没有设置则每次都从配置取
                 let level: emMessageLevel = config.get(CONFIG_ITEM_MESSAGES_LEVEL, emMessageLevel.ERROR, emMessageLevel);
                 if (config.get(CONFIG_ITEM_DEBUG_MODE, false)) {
@@ -57,10 +56,10 @@ namespace ibas {
                 }
                 return level;
             }
-            return this._level;
+            return this[PROPERTY_LEVEL];
         }
-        set language(value: emMessageLevel) {
-            this._level = value;
+        set level(value: emMessageLevel) {
+            this[PROPERTY_LEVEL] = value;
         }
         /**
          * 记录消息

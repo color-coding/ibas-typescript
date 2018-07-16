@@ -21,6 +21,7 @@ namespace ibas {
     /** 配置项目-使用最小库 */
     export const CONFIG_ITEM_USE_MINIMUM_LIBRARY: string = "minLibrary";
     const PROPERTY_ITEMS: symbol = Symbol("items");
+    const PROPERTY_LISTENER: symbol = Symbol("listener");
     /**
      * 配置
      */
@@ -162,7 +163,7 @@ namespace ibas {
         private variableMap: Map<string, string>;
         /** 替换字符串中的配置项，配置项示例：${Company} */
         applyVariables(value: string): string {
-            if (value !== null && value.indexOf("${") >= 0) {
+            if (value !== undefined && value !== null && value.indexOf("${") >= 0) {
                 if (this.variableMap == null) {
                     this.variableMap = new Map<string, string>();
                 }
@@ -171,7 +172,7 @@ namespace ibas {
                 }
                 let reg: RegExp = new RegExp("\\$\\{([\\!a-zA-Z].*?)\\}");
                 let results: RegExpExecArray = reg.exec(value);
-                if (results !== null) {
+                if (results !== undefined && results !== null) {
                     for (let item of results) {
                         if (!item.startsWith("${") || !item.endsWith("}")) {
                             // 正则写不对，麻痹的不搞了
@@ -189,8 +190,6 @@ namespace ibas {
             }
             return value;
         }
-
-        private _listeners: Array<IConfigurationChangedListener>;
         /**
          * 注册监听事件
          * @param listener 监听者
@@ -199,17 +198,17 @@ namespace ibas {
             if (listener === undefined || listener === null) {
                 return;
             }
-            if (this._listeners === undefined || this._listeners === null) {
-                this._listeners = new Array<IConfigurationChangedListener>();
+            if (this[PROPERTY_LISTENER] === undefined || this[PROPERTY_LISTENER] === null) {
+                this[PROPERTY_LISTENER] = new Array<IConfigurationChangedListener>();
             }
-            this._listeners.push(listener);
+            this[PROPERTY_LISTENER].push(listener);
         }
         /** 触发语言改变事件 */
         protected fireConfigurationChanged(name: string, value: any): void {
-            if (this._listeners === undefined || this._listeners === null) {
+            if (this[PROPERTY_LISTENER] === undefined || this[PROPERTY_LISTENER] === null) {
                 return;
             }
-            for (let item of this._listeners) {
+            for (let item of this[PROPERTY_LISTENER]) {
                 item.onConfigurationChanged(name, value);
             }
         }

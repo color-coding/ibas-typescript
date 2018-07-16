@@ -13,6 +13,7 @@
 /// <reference path="./DataDeclaration.ts" />
 
 namespace ibas {
+    const PROPERTY_BOCONVERTER: symbol = Symbol("boConverter");
     /** 数据转换，ibas4java */
     export abstract class DataConverter4j implements IDataConverter {
         /**
@@ -359,13 +360,11 @@ namespace ibas {
                 throw new Error(i18n.prop("sys_unable_to_parse_data", objects.isNull(data.type) ? "unknown" : data.type));
             }
         }
-
-        private _boConverter: IBOConverter<IBusinessObject, any>;
         protected get boConverter(): IBOConverter<IBusinessObject, any> {
-            if (objects.isNull(this._boConverter)) {
-                this._boConverter = this.createConverter();
+            if (objects.isNull(this[PROPERTY_BOCONVERTER])) {
+                this[PROPERTY_BOCONVERTER] = this.createConverter();
             }
-            return this._boConverter;
+            return this[PROPERTY_BOCONVERTER];
         }
         /** 创建业务对象转换者 */
         protected abstract createConverter(): IBOConverter<IBusinessObject, any>;
@@ -402,6 +401,7 @@ namespace ibas {
     }
     /** 远程对象，类型属性名称 */
     export const REMOTE_OBJECT_TYPE_PROPERTY_NAME: string = "type";
+    const PROPERTY_PROPERTYMAPS: symbol = Symbol("propertyMaps");
     /** 业务对象的数据转换 */
     export abstract class BOConverter implements IBOConverter<IBusinessObject, any> {
         /** 获取对象类型 */
@@ -412,14 +412,11 @@ namespace ibas {
         private setTypeName(data: any, type: string): void {
             data[REMOTE_OBJECT_TYPE_PROPERTY_NAME] = type;
         }
-
-        private _propertyMaps: PropertyMaps;
-
         private get propertyMaps(): PropertyMaps {
-            if (objects.isNull(this._propertyMaps)) {
-                this._propertyMaps = new PropertyMaps;
+            if (objects.isNull(this[PROPERTY_PROPERTYMAPS])) {
+                this[PROPERTY_PROPERTYMAPS] = new PropertyMaps;
             }
-            return this._propertyMaps;
+            return this[PROPERTY_PROPERTYMAPS];
         }
         /**
          * 解析远程数据

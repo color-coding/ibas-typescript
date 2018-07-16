@@ -60,8 +60,8 @@ namespace openui5 {
                     }
                 }
                 let boRep: any = ibas.boFactory.create(this.repositoryName);
-                let criteria: ibas.ICriteria = new ibas.Criteria();
-                criteria = that.criteria;
+                let criteria: ibas.ICriteria = that.criteria;
+                criteria.noChilds = true;
                 boRep[ibas.strings.format("fetch{0}", this.boName)]({
                     criteria: criteria,
                     onCompleted(opRslt: ibas.IOperationResult<any>): void {
@@ -274,12 +274,21 @@ namespace openui5 {
                     let newTables: Array<string> = new Array<string>();
                     newTables.push(storeName);
                     this.cacheDBInfo.currentDB.close();
+                    this.cacheDBInfo.currentDB = null;
                     await this.initDB(this.cacheDBInfo.dbVersion + 1, newTables);
                 }
                 let promise: Promise<IDBObjectStore> = new Promise<IDBObjectStore>(resolve => {
-                    let transaction: IDBTransaction = (!readOnly) ?
-                        that.cacheDBInfo.currentDB.transaction(storeName, "readwrite") : that.cacheDBInfo.currentDB.transaction(storeName, "readonly");
-                    resolve(transaction.objectStore(storeName));
+                    try {
+                        let transaction: IDBTransaction = (!readOnly) ?
+                            that.cacheDBInfo.currentDB.transaction(storeName, "readwrite") : that.cacheDBInfo.currentDB.transaction(storeName, "readonly");
+                        resolve(transaction.objectStore(storeName));
+                    } catch (error) {
+                        ibas.logger.log(ibas.emMessageLevel.DEBUG, ibas.i18n.prop("sap_ibas_ex_ibasdb_is_closed"));
+                        that.deleteDB(that.cacheDBInfo.dbName);
+                        that.cacheDBInfo = null;
+                        CacheDB.getIndexedDB();
+                        return null;
+                    }
                 });
                 return promise;
             } catch (error) {
