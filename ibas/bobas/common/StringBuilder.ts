@@ -10,32 +10,43 @@ namespace ibas {
      * 字符串构建器
      */
     export class StringBuilder {
-        /** 未定义值字符 */
-        valueUndefined: string;
-        /** 空值字符 */
-        valueNull: string;
+        constructor() {
+            this.valueMap = new Map<any, string>();
+            this.valueMap.set(null, "null");
+            this.valueMap.set(undefined, "undefined");
+        }
+        private valueMap: Map<any, string>;
+        /**
+         * 设置值的映射字符串
+         * @param value 值
+         * @param str 映射的字符串
+         */
+        map(value: any, str: string): void {
+            if (objects.isNull(str)) {
+                return;
+            }
+            this.valueMap.set(value, str);
+        }
         /**
          * 已添加的值
          */
         private values: string[] = new Array<string>();
-
         /**
          * 获取当前长度
          */
         get length(): number {
             return this.values.length;
         }
-
         /**
          * 添加字符
          */
         append(str: any): void {
-            if (str === undefined) {
-                this.values.push(objects.isNull(this.valueUndefined) ? "undefined" : this.valueUndefined);
-            } else if (str === null) {
-                this.values.push(objects.isNull(this.valueNull) ? "null" : this.valueNull);
+            if (!objects.isNull(this.valueMap) && this.valueMap.has(str)) {
+                this.values.push(this.valueMap.get(str));
             } else {
-                this.values.push(str.toString());
+                if (!objects.isNull(str)) {
+                    this.values.push(str.toString());
+                }
             }
         }
         /**

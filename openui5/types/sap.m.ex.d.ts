@@ -124,7 +124,7 @@ declare namespace sap {
                 setObjectCode(value: string): void;
                 getObjectCode(): string;
             }
-            export class UserField extends sap.m.FlexBox {
+            export class SmartField extends sap.m.FlexBox {
                 setBoType(value: string): void;
                 getBoType(): string;
                 setPropertyName(value: string): void;
