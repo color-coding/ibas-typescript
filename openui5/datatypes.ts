@@ -268,14 +268,18 @@ namespace openui5 {
                 }
             }
             format?: string;
-            formatValue(oValue: any): Date {
+            formatValue(oValue: any): any {
                 if (validation.isTime(oValue)) {
                     let time: number = oValue;
                     let hour: number = time / 100;
                     let minute: number = time % 100;
                     let date: Date = new Date();
                     date.setHours(hour, minute, 0, 0);
-                    return date;
+                    if (ibas.strings.isEmpty(this.format)) {
+                        return date;
+                    } else {
+                        return ibas.dates.toString(date, this.format);
+                    }
                 }
                 return oValue;
             }
