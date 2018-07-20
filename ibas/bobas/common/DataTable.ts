@@ -8,6 +8,13 @@
 /// <reference path="./Data.ts" />
 
 namespace ibas {
+    /** 转换参数 */
+    export interface IConvertParam {
+        /** 格式化数据 */
+        format: boolean;
+        /** 使用索引为名称 */
+        indexName: boolean;
+    }
     /** 数据表 */
     export class DataTable {
         /** 名称 */
@@ -19,14 +26,12 @@ namespace ibas {
         /** 行 */
         rows: ArrayList<DataTableRow> = new ArrayList<DataTableRow>();
         /** 转为对象 */
-        convert(conversion: boolean): any[];
-        /** 转为对象 */
-        convert(): any[];
-        /** 转为对象 */
-        convert(): any[] {
-            let conversionType: boolean = true;
-            if (arguments.length > 0) {
-                conversionType = arguments[0];
+        convert(param: IConvertParam = undefined): any[] {
+            if (objects.isNull(param)) {
+                param = {
+                    format: true,
+                    indexName: false,
+                };
             }
             let datas: any = [];
             let data: any;
@@ -34,12 +39,15 @@ namespace ibas {
                 data = {};
                 for (var index: number = 0; index < this.columns.length; index++) {
                     var col: DataTableColumn = this.columns[index];
-                    if (conversionType) {
+                    var value: any = row.cells[index];
+                    if (param.format) {
                         // 转换类型
-                        data[col.name] = col.convert(row.cells[index]);
+                        value = col.convert(value);
+                    }
+                    if (param.indexName) {
+                        data[index.toString()] = value;
                     } else {
-                        // 不转换类型
-                        data[col.name] = row.cells[index];
+                        data[col.name] = value;
                     }
                 }
                 datas.push(data);
