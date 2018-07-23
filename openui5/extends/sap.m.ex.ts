@@ -1450,7 +1450,7 @@ namespace openui5 {
     });
 
     /**
-     * 自定义字段显示控件
+     * 智能字段控件
      */
     sap.m.FlexBox.extend("sap.m.ex.SmartField", {
         metadata: {
