@@ -260,7 +260,10 @@ namespace openui5 {
             if (!dbName) {
                 dbName = ibas.config.get(CONFIG_ITEM_WEB_CACHE_DB_NAME, "ibas_db");
             }
+            this.cacheDBInfo.currentDB.close();
             this.cacheDBInfo.currentDBFactory.deleteDatabase(dbName);
+            this.cacheDBInfo = null;
+            CacheDB.getIndexedDB();
         }
         /**
          * 获取读写权限
@@ -285,8 +288,6 @@ namespace openui5 {
                     } catch (error) {
                         ibas.logger.log(ibas.emMessageLevel.DEBUG, ibas.i18n.prop("sap_ibas_ex_ibasdb_is_closed"));
                         that.deleteDB(that.cacheDBInfo.dbName);
-                        that.cacheDBInfo = null;
-                        CacheDB.getIndexedDB();
                         return null;
                     }
                 });
