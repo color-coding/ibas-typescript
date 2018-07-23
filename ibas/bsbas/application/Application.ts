@@ -194,13 +194,20 @@ namespace ibas {
         /** 设置消息 */
         protected proceeding(msg: string): void;
         /** 设置消息 */
+        protected proceeding(error: Error): void;
+        /** 设置消息 */
         protected proceeding(type: emMessageType, msg: string): void;
         /** 设置消息 */
         protected proceeding(): void {
             let type: emMessageType = emMessageType.INFORMATION;
             let msg: string;
             if (arguments.length === 1) {
-                msg = arguments[0];
+                if (arguments[0] instanceof Error) {
+                    msg = arguments[0].message;
+                    type = emMessageType.ERROR;
+                } else {
+                    msg = arguments[0];
+                }
             } else if (arguments.length === 2) {
                 type = arguments[0];
                 msg = arguments[1];
