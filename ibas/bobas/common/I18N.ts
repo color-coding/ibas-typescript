@@ -199,7 +199,7 @@ namespace ibas {
     class LanguageLoader {
         /** 加载 */
         load(caller: ILanguageLoaderCaller): void {
-            var JQryAjxSetting: JQueryAjaxSettings = {
+            let JQryAjxSetting: JQueryAjaxSettings = {
                 url: caller.address,
                 type: "GET",
                 contentType: "application/json; charset=utf-8",

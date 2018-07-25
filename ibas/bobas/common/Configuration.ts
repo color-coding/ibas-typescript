@@ -35,7 +35,7 @@ namespace ibas {
          */
         load(address: string): void {
             let that: any = this;
-            var JQryAjxSetting: JQueryAjaxSettings = {
+            let JQryAjxSetting: JQueryAjaxSettings = {
                 url: address,
                 type: "GET",
                 contentType: "application/json; charset=utf-8",

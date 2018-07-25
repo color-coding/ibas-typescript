@@ -34,12 +34,11 @@ namespace ibas {
                 };
             }
             let datas: any = [];
-            let data: any;
             for (let row of this.rows) {
-                data = {};
-                for (var index: number = 0; index < this.columns.length; index++) {
-                    var col: DataTableColumn = this.columns[index];
-                    var value: any = row.cells[index];
+                let data: any = {};
+                for (let index: number = 0; index < this.columns.length; index++) {
+                    let col: DataTableColumn = this.columns[index];
+                    let value: any = row.cells[index];
                     if (param.format) {
                         // 转换类型
                         value = col.convert(value);
@@ -53,6 +52,21 @@ namespace ibas {
                 datas.push(data);
             }
             return datas;
+        }
+        /**
+         * 克隆
+         * @param rows 保留的行索引（未定义为全部）
+         */
+        clone(rows: number[] = undefined): DataTable {
+            let table: DataTable = JSON.parse(JSON.stringify(this));
+            if (rows instanceof Array) {
+                let nRows: ArrayList<DataTableRow> = new ArrayList<DataTableRow>();
+                for (let item of rows) {
+                    nRows.push(table.rows[item]);
+                }
+                table.rows = nRows;
+            }
+            return table;
         }
     }
     /** 数据表-列 */

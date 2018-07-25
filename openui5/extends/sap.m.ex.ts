@@ -689,10 +689,10 @@ namespace openui5 {
             this.setProperty("chooseType", value);
         },
         _getValueHelpIcon: function (Control: any): void {
-            var that: any = this;
-            var IconPool: any = sap.ui.require("sap/ui/core/IconPool");
+            let that: any = this;
+            let IconPool: any = sap.ui.require("sap/ui/core/IconPool");
             if (!this._oValueHelpIcon) {
-                var sURI: any = IconPool.getIconURI("value-help");
+                let sURI: any = IconPool.getIconURI("value-help");
                 this._oValueHelpIcon = IconPool.createControlByURI({
                     src: sURI,
                     useIconTooltip: false,

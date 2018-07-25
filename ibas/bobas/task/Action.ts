@@ -139,14 +139,19 @@ namespace ibas {
             this.log(emMessageLevel.INFO, "action was completed at [{0}], during [{1}]s.",
                 this.endTime.toLocaleString(),
                 dates.difference(dates.emDifferenceType.SECOND, this.endTime, this.startTime));
+            if (this.onDone instanceof Function) {
+                this.onDone();
+            }
         }
         /** 停止（最好重载） */
         stop(): void {
             this.done();
         }
-        /** 运行（需要实现） */
-        protected abstract run(): boolean;
         /** 额外的运行数据 */
         extraData: any;
+        /** 执行完成时调用 */
+        onDone: Function;
+        /** 运行（需要实现） */
+        protected abstract run(): boolean;
     }
 }

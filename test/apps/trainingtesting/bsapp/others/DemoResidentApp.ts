@@ -29,6 +29,10 @@ namespace trainingtesting {
             protected viewShowed(): void {
                 // 视图加载完成
             }
+            /** 工具条显示后 */
+            protected barShowed(): void {
+
+            }
 
         }
         /** 视图-演示 */

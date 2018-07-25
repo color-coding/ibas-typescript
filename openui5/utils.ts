@@ -12,7 +12,7 @@ namespace openui5 {
         export const CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT: string = "tableRow|List";
         /** 配置项目-子项表格可视行数 */
         export const CONFIG_ITEM_ITEM_TABLE_VISIBLE_ROW_COUNT: string = "tableRow|Item";
-        var mapLanguage: Map<string, string> = new Map();
+        let mapLanguage: Map<string, string> = new Map();
         /** 转换语言编码 */
         export function toLanguageCode(data: string): string {
             if (ibas.objects.isNull(data)) {
@@ -141,9 +141,9 @@ namespace openui5 {
         /** 获取表格选中的对象 */
         export function getTableSelecteds<T>(table: sap.ui.table.Table): ibas.IList<T> {
             let selecteds: ibas.IList<T> = new ibas.ArrayList<T>();
-            var idxs: any[] = table.getSelectedIndices();
+            let idxs: any[] = table.getSelectedIndices();
             if (idxs.length > 0) {
-                for (var i: number = 0; i < idxs.length; i++) {
+                for (let i: number = 0; i < idxs.length; i++) {
                     selecteds.push(table.getContextByIndex(idxs[i]).getObject());
                 }
             }
@@ -182,7 +182,7 @@ namespace openui5 {
             if (ibas.objects.isNull(data)) {
                 return undefined;
             }
-            var toValue: Function = function (data: ibas.emMessageAction): any {
+            let toValue: Function = function (data: ibas.emMessageAction): any {
                 switch (data) {
                     case ibas.emMessageAction.ABORT:
                         return sap.m.MessageBox.Action.ABORT;

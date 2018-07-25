@@ -161,7 +161,7 @@ namespace openui5 {
         }
         private async load(address: string): Promise<any> {
             let promise: Promise<any> = new Promise<any>(resolve => {
-                var JQryAjxSetting: JQueryAjaxSettings = {
+                let JQryAjxSetting: JQueryAjaxSettings = {
                     url: address,
                     type: "GET",
                     contentType: "application/json; charset=utf-8",

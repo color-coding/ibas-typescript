@@ -110,7 +110,7 @@ namespace ibas {
                     };
                     let opRslt: OperationResult<P> = new OperationResult<P>();
                     dbRequest.onsuccess = function (e: Event): void {
-                        var cursor: IDBCursorWithValue = (<any>e.target).result;
+                        let cursor: IDBCursorWithValue = (<any>e.target).result;
                         if (cursor) {
                             let data: any = cursor.value;
                             if (!objects.isNull(that.converter)) {

@@ -297,9 +297,7 @@ namespace shell {
                         this.messageCount = ibas.config.get(CONFIG_ITEM_MAX_MESSAGE_COUNT, 50);
                     }
                     if (this.messageHistory.getItems().length > this.messageCount) {
-                        for (var index: number = this.messageHistory.getItems().length - 1; index < this.messageCount; index--) {
-                            this.messageHistory.removeItem(index);
-                        }
+                        this.messageHistory.removeItem(this.messageHistory.getItems().length - 1);
                     }
                     if (!this.messagePopover.isOpen() && this.isDisplayed) {
                         this.messagePopover.openBy(this.messageButton, true);
@@ -708,7 +706,7 @@ namespace shell {
                     if (!ibas.objects.isNull(bar) && bar instanceof sap.ui.core.Control) {
                         this.mainHeader.insertContent(bar, this.mainHeader.getContent().length - 1);
                         // 触发工具条显示完成事件
-                        if (view instanceof ibas.View) {
+                        if (view instanceof ibas.BOBarView) {
                             view.barShowedEvent.apply(view.application);
                             view.id = bar.getId();
                         }

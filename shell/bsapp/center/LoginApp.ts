@@ -33,7 +33,7 @@ namespace shell {
                 // 获取支持的语言列表
                 let address: string = ibas.urls.normalize(".../config.json");
                 let that: this = this;
-                var JQryAjxSetting: JQueryAjaxSettings = {
+                let JQryAjxSetting: JQueryAjaxSettings = {
                     url: address,
                     type: "GET",
                     contentType: "application/json; charset=utf-8",

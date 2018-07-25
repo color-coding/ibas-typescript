@@ -679,13 +679,13 @@ namespace ibas {
                 if (Math.pow(0.1, scale) > value) {
                     return 0;
                 }
-                var sign: number = Math.sign(value);
-                var arr: string[] = ("" + Math.abs(value)).split(".");
+                let sign: number = Math.sign(value);
+                let arr: string[] = ("" + Math.abs(value)).split(".");
                 if (arr.length > 1) {
                     if (arr[1].length > scale) {
-                        var integ: number = +arr[0] * Math.pow(10, scale);
-                        var dec: number = integ + (+arr[1].slice(0, scale) + Math.pow(10, scale));
-                        var proc: number = +arr[1].slice(scale, scale + 1);
+                        let integ: number = +arr[0] * Math.pow(10, scale);
+                        let dec: number = integ + (+arr[1].slice(0, scale) + Math.pow(10, scale));
+                        let proc: number = +arr[1].slice(scale, scale + 1);
                         if (proc >= 5) {
                             dec = dec + 1;
                         }
