@@ -58,15 +58,31 @@ namespace ibas {
          * @param rows 保留的行索引（未定义为全部）
          */
         clone(rows: number[] = undefined): DataTable {
-            let table: DataTable = JSON.parse(JSON.stringify(this));
-            if (rows instanceof Array) {
-                let nRows: ArrayList<DataTableRow> = new ArrayList<DataTableRow>();
-                for (let item of rows) {
-                    nRows.push(table.rows[item]);
-                }
-                table.rows = nRows;
+            let nTable: DataTable = new DataTable();
+            nTable.name = this.name;
+            nTable.description = this.description;
+            for (let item of this.columns) {
+                let nItem: DataTableColumn = new DataTableColumn();
+                nItem.name = item.name;
+                nItem.description = item.description;
+                nItem.dataType = item.dataType;
+                nTable.columns.push(nItem);
             }
-            return table;
+            if (!(rows instanceof Array)) {
+                rows = [];
+                for (let index: number = 0; index < this.rows.length; index++) {
+                    rows.push(index);
+                }
+            }
+            for (let item of rows) {
+                let row: DataTableRow = this.rows[item];
+                let nRow: DataTableRow = new DataTableRow();
+                for (let cell of row.cells) {
+                    nRow.cells.add(cell);
+                }
+                nTable.rows.push(nRow);
+            }
+            return nTable;
         }
     }
     /** 数据表-列 */
