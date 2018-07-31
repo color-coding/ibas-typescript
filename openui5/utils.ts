@@ -57,6 +57,24 @@ namespace openui5 {
             return map;
         }
         /**
+         * 描述业务对象
+         * @param boCode 业务对象编码
+         */
+        export function describeBOCode(boCode: string): string {
+            try {
+                let type: any = ibas.boFactory.classOf(boCode);
+                let name: string = ibas.objects.getName(type);
+                let descript: string = ibas.i18n.prop(ibas.strings.format("bo_{0}", name).toLowerCase());
+                if (descript.startsWith("[") && descript.endsWith("]")) {
+                    return boCode;
+                } else {
+                    return descript;
+                }
+            } catch (error) {
+                return boCode;
+            }
+        }
+        /**
          * 创建下拉框可选项
          * @param data 枚举类型
          */
@@ -819,7 +837,8 @@ namespace openui5 {
                         }
                     };
                     getUserFieldInformations(boName, completed);
-                } else if (container instanceof sap.ui.layout.form.SimpleForm) { // SimpleForm
+                } else if (container instanceof sap.ui.layout.form.SimpleForm) {
+                    // simpleForm
                     container.attachModelContextChange(null, function (oEvent: any): void {
                         if (!ibas.objects.isNull(oEvent.getSource()) && !ibas.objects.isNull(oEvent.getSource().getModel())) {
                             bo = oEvent.getSource().getModel().getData();
@@ -827,8 +846,8 @@ namespace openui5 {
                     });
                     // 查询属性信息回调函数
                     let completed: Function = function (boPropertyInformations: [any]): void {
-                         // 如果对象没有自定义字段并且容器中无内容则容器不显示
-                         if (boPropertyInformations.length <= 0) {
+                        // 如果对象没有自定义字段并且容器中无内容则容器不显示
+                        if (boPropertyInformations.length <= 0) {
                             let formContent: sap.ui.core.Element[] = container.getContent();
                             if (ibas.objects.isNull(formContent) || formContent.length <= 0) {
                                 container.setVisible(false);

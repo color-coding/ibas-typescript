@@ -454,26 +454,26 @@ namespace ibas {
                     }
                     tmps = date.split(spChar);
                     if (!objects.isNull(tmps[0])) {
-                        year = Number.parseInt(tmps[0]);
+                        year = Number.parseInt(tmps[0], 0);
                     }
                     if (!objects.isNull(tmps[1])) {
-                        month = Number.parseInt(tmps[1]);
+                        month = Number.parseInt(tmps[1], 0);
                     }
                     if (!objects.isNull(tmps[2])) {
-                        day = Number.parseInt(tmps[2]);
+                        day = Number.parseInt(tmps[2], 0);
                     }
                 }
                 if (!objects.isNull(time)) {
                     let spChar: string = ":";
                     tmps = time.split(spChar);
                     if (!objects.isNull(tmps[0])) {
-                        hour = Number.parseInt(tmps[0]);
+                        hour = Number.parseInt(tmps[0], 0);
                     }
                     if (!objects.isNull(tmps[1])) {
-                        minute = Number.parseInt(tmps[1]);
+                        minute = Number.parseInt(tmps[1], 0);
                     }
                     if (!objects.isNull(tmps[2])) {
-                        second = Number.parseInt(tmps[2]);
+                        second = Number.parseInt(tmps[2], 0);
                     }
                 }
                 // 月份从0开始
