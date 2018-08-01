@@ -468,21 +468,17 @@ namespace ibas {
                 this.parent = parent;
             }
         }
-        protected listener(): IPropertyChangedListener {
-            return this[PROPERTY_LISTENER];
-        }
 
         protected get parent(): P {
             return this[PROPERTY_PARENT];
         }
-
         protected set parent(value: P) {
             if (objects.instanceOf(this.parent, Bindable)) {
-                (<any>this.parent).removeListener(this.listener());
+                (<any>this.parent).removeListener(this[PROPERTY_LISTENER]);
             }
             this[PROPERTY_PARENT] = value;
             if (objects.instanceOf(this.parent, Bindable)) {
-                (<any>this.parent).registerListener(this.listener());
+                (<any>this.parent).registerListener(this[PROPERTY_LISTENER]);
             }
         }
         /** 父项属性改变时 */
@@ -594,7 +590,7 @@ namespace ibas {
                 }
             }
             if (objects.instanceOf(item, Bindable)) {
-                (<any>item).registerListener(this.listener());
+                (<any>item).registerListener(this[PROPERTY_LISTENER]);
             }
             this.runRules(null);
         }
@@ -604,15 +600,9 @@ namespace ibas {
          */
         protected afterRemove(item: T): void {
             if (objects.instanceOf(item, Bindable)) {
-                (<any>item).removeListener(this.listener());
+                (<any>item).removeListener(this[PROPERTY_LISTENER]);
             }
             this.runRules(null);
-        }
-        private get rules(): IBusinessRules {
-            return this[PROPERTY_RULES];
-        }
-        private set rules(value: IBusinessRules) {
-            this[PROPERTY_RULES] = value;
         }
         private runRules(property: string): void {
             if (objects.isNull(this.parent)) {
@@ -621,13 +611,13 @@ namespace ibas {
             if (this.parent.isLoading) {
                 return;
             }
-            if (objects.isNull(this.rules)) {
-                this.rules = businessRulesManager.getRules(objects.getType(this.parent));
+            if (objects.isNull(this[PROPERTY_RULES])) {
+                this[PROPERTY_RULES] = businessRulesManager.getRules(objects.getType(this.parent));
             }
-            if (objects.isNull(this.rules)) {
+            if (objects.isNull(this[PROPERTY_RULES])) {
                 return;
             }
-            for (let rule of this.rules) {
+            for (let rule of this[PROPERTY_RULES]) {
                 if (!(rule instanceof BusinessRuleCollection)) {
                     continue;
                 }

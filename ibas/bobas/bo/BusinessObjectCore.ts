@@ -146,7 +146,12 @@ namespace ibas {
          * 新建并添加子项
          */
         create(): T;
-
+        /**
+         * 移出项目
+         * @param item 被移出项目
+         * @returns true,被移出;false,被delete;null,无效数据
+         */
+        remove(item: T): boolean;
         /** 过滤删除的项目 */
         filterDeleted(): T[];
     }
@@ -165,19 +170,15 @@ namespace ibas {
      * 可监听的对象
      */
     export abstract class Bindable implements IBindable {
-
-        protected listeners(): IList<IPropertyChangedListener> {
-            if (this[PROPERTY_LISTENER] === undefined) {
-                this[PROPERTY_LISTENER] = new ArrayList<IPropertyChangedListener>();
-            }
-            return this[PROPERTY_LISTENER];
-        }
         /**
          * 注册监听事件
          * @param listener 监听者
          */
         registerListener(listener: IPropertyChangedListener): void {
-            this.listeners().push(listener);
+            if (this[PROPERTY_LISTENER] === undefined) {
+                this[PROPERTY_LISTENER] = new ArrayList<IPropertyChangedListener>();
+            }
+            this[PROPERTY_LISTENER].push(listener);
         }
 
         /** 移出全部监听 */
@@ -189,14 +190,14 @@ namespace ibas {
         removeListener(listener: IPropertyChangedListener): void;
         /** 移出监听实现 */
         removeListener(): void {
-            if (objects.isNull(this.listeners())) {
+            if (objects.isNull(this[PROPERTY_LISTENER])) {
                 return;
             }
             let listener: IPropertyChangedListener = arguments[0];
             if (!objects.isNull(listener)) {
-                for (let item of this.listeners()) {
+                for (let item of this[PROPERTY_LISTENER]) {
                     if (item === listener) {
-                        this.listeners().remove(item);
+                        this[PROPERTY_LISTENER].remove(item);
                     }
                 }
             }
@@ -207,7 +208,7 @@ namespace ibas {
          * @param property 属性
          */
         protected firePropertyChanged(property: string): void {
-            if (objects.isNull(this.listeners())) {
+            if (objects.isNull(this[PROPERTY_LISTENER])) {
                 return;
             }
             if (!objects.isNull(property) && property.length > 0) {
@@ -218,7 +219,7 @@ namespace ibas {
                 // 属性首字母小写
                 property = property[0].toLowerCase() + property.substring(1);
             }
-            for (let item of this.listeners()) {
+            for (let item of this[PROPERTY_LISTENER]) {
                 if (objects.isNull(item.caller)) {
                     item.propertyChanged(property);
                 } else {
@@ -543,18 +544,27 @@ namespace ibas {
         }
 
         /**
-         * 移出项目
+         * 移出项目（新数据，则移出集合；否则，标记删除）
          * @param item 项目
          */
-        remove(item: T): void {
+        remove(item: T): boolean {
             // 无效值不做处理
             if (item === null || item === undefined) {
-                return;
+                return null;
             }
-            super.remove(item);
-            this.afterRemove(item);
+            // 不是集合值
+            if (!this.contain(item)) {
+                return null;
+            }
+            if (!item.isNew) {
+                item.delete();
+                return false;
+            } else {
+                super.remove(item);
+                this.afterRemove(item);
+                return true;
+            }
         }
-
         /**
          * 移出项目后
          * @param item 项目
