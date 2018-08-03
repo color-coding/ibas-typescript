@@ -14,8 +14,12 @@
             "./loader"
         ], function () {
             // 加载成功
-            var app = new loader.Application();
-            app.run("../");
+            try {
+                var app = new loader.Application();
+                app.run("../");
+            } catch (error) {
+                window.navigate("../ibas/diagnosis/index.html");
+            }
         }, function () {
             // 加载失败
             alert(arguments[0]);

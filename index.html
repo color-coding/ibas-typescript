@@ -14,10 +14,14 @@
             "./shell/loader.min"
         ], function () {
             // 加载成功
-            var app = new loader.Application();
-            app.noCache = true;
-            app.minLibrary = true;
-            app.run("./");
+            try {
+                var app = new loader.Application();
+                app.noCache = true;
+                app.minLibrary = true;
+                app.run("./");
+            } catch (error) {
+                window.navigate("ibas/diagnosis/index.html");
+            }
         }, function () {
             // 加载失败
             alert(arguments[0]);

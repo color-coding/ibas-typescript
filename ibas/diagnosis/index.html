@@ -3,35 +3,66 @@
 
 <head>
     <title>ibas diagnosis</title>
+    <meta charset="utf-8" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta charset="utf-8" />
-    <script type="text/javascript" src="../3rdparty/jquery.js"></script>
+    <script type="text/javascript" src="./assets/js/jquery.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="./assets/css/plans.css" />
 </head>
 
 <body id="content">
-    <div id="title">
-        <h1>ibas.diagnosis.title</h1>
+    <div id="browsers" class="plans">
+        <div class="title">
+            <h1>Oops! An error has occured.</h1>
+            <h4>Please check if the browser supports.</h4>
+        </div>
+        <div class="plan">
+            <h3 class="plan-title">Edge</h3>
+            <p class="plan-price">16+</p>
+            <ul class="plan-features">
+            </ul>
+            <a href="https://www.microsoft.com/windows/microsoft-edge" class="plan-button">Download</a>
+        </div>
+        <div class="plan plan-highlight">
+            <p class="plan-recommended">Recommended</p>
+            <h3 class="plan-title">Chrome</h3>
+            <p class="plan-price">55+</p>
+            <ul class="plan-features">
+            </ul>
+            <a href="https://www.google.com/chrome/" class="plan-button">Download</a>
+        </div>
+        <div class="plan">
+            <h3 class="plan-title">Firefox</h3>
+            <p class="plan-price">57+</p>
+            <ul class="plan-features">
+            </ul>
+            <a href="https://www.mozilla.org/firefox/" class="plan-button">Download</a>
+        </div>
+        <div class="plan">
+            <h3 class="plan-title">Safari</h3>
+            <p class="plan-price">11+</p>
+            <ul class="plan-features">
+            </ul>
+            <a href="https://www.apple.com/safari/" class="plan-button">Download</a>
+        </div>
+        <div class="plan">
+            <h3 class="plan-title">Opera</h3>
+            <p class="plan-price">40+</p>
+            <ul class="plan-features">
+            </ul>
+            <a href="https://www.opera.com/" class="plan-button">Download</a>
+        </div>
+        <div class="plan">
+            <p class="plan-recommended" style="background: #707070;">Unavailable</p>
+            <h4 class="plan-title" style="color: #707070;">Internet
+                <br>Explorer</h4>
+            <p class="plan-price" style="margin-bottom: 39px;"></p>
+            <ul class="plan-features">
+            </ul>
+            <a href="#" class="plan-button" style="background: #707070; border-bottom: 2px solid #707070;">Download</a>
+        </div>
     </div>
-    <div id="title">
-        <h2>browser support</h2>
-        <script type="text/javascript">
-            // 显示浏览器支持状况
-            jQuery.ajax({
-                url: window.document.location.href.substring(0, window.document.location.href.lastIndexOf("/")) + "/config.json",
-                type: "GET",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                async: false,
-                cache: false,
-                error: function (xhr, status, error) {
-                    alert(error);
-                },
-                success: function (data) {
-                },
-            });
-        </script>
-    </div>
+
 </body>
 
 </html>
