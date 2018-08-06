@@ -1512,4 +1512,37 @@ namespace openui5 {
         },
         renderer: {}
     });
+
+    /**
+     * sap.m.ex.Wizard控件
+     */
+    sap.m.Wizard.extend("sap.m.ex.Wizard", {
+        metadata: {
+            properties: {},
+            events: {
+                // 导航跳转时触发事件，step参数为跳转的步骤
+                "toStep": {
+                    parameters: {
+                        items: {
+                            step: sap.m.WizardStep
+                        }
+                    }
+                }
+            }
+        },
+        _handleStepChanged: function (event: any): void {
+            let previousStepIndex: any = ((typeof event === "number") ? event : event.getParameter("current")) - 2;
+            let previousStep: any = this._stepPath[previousStepIndex];
+            let subsequentStep: any = this._getNextStep(previousStep, previousStepIndex);
+            let focusFirstElement: any = sap.ui.Device.system.desktop ? true : false;
+            this.goToStep(subsequentStep, focusFirstElement);
+            // 从标签点击步骤时，event类型为标签的object类型，只有标签点击时触发自定义事件
+            if (typeof event !== "number") {
+                this.fireToStep({ step: subsequentStep });
+            }
+        },
+        renderer: {
+
+        }
+    });
 }
