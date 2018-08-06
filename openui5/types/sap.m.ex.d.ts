@@ -132,6 +132,11 @@ declare namespace sap {
                 setBindingValue(value: string): void;
                 getBindingValue(): string;
             }
+            /**
+            * sap.m.ex.Wizard控件
+            */
+            export class Wizard extends sap.m.Wizard {
+            }
         }
     }
 }
