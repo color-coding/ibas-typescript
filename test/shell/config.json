@@ -1,0 +1,12 @@
+{
+  "appSettings": {
+    "company": "CC",
+    "language": "zh_CN",
+    "debug": true,
+    "offline": false,
+    "offline|BORepositoryShell": false,
+    "repositoryAddress|BORepositoryShell": "http://localhost:8080/initialfantasy/services/rest/data",
+    "repositoryAddress|BORepositoryShellOffline": ".../../test/repository",
+    "repositoryAddress|BORepositoryTrainingTestingOffline": ".../../test/repository"
+  }
+}

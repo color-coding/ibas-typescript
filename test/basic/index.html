@@ -3,13 +3,17 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>ibas test - util</title>
-    <script type="text/javascript" src="../../../ibas/index.js"></script>
-    <script type="text/javascript" src="./index.js"></script>
+    <title>ibas test</title>
 </head>
 
 <body>
-
+    <script type="text/javascript">
+        (function () {
+            // 跳转到测试shell，并传递此页地址
+            let url = window.location.href.replace(window.location.pathname, "");
+            window.location.href = url + "/test/shell/index.html?" + encodeURIComponent(window.location.href);
+        }());
+    </script>
 </body>
 
 </html>

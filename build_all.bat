@@ -35,6 +35,9 @@ REM ±‡“ÎTTœÓƒø
 SET TS_CONFIGS=%TS_CONFIGS% test\apps\trainingtesting\tsconfig.json
 SET TS_CONFIGS=%TS_CONFIGS% test\apps\trainingtesting\bsui\c\tsconfig.json
 SET TS_CONFIGS=%TS_CONFIGS% test\apps\trainingtesting\bsui\m\tsconfig.json
+REM ±‡“Î≤‚ ‘ø«
+SET TS_CONFIGS=%TS_CONFIGS% test\shell\tsconfig.json
+SET TS_CONFIGS=%TS_CONFIGS% test\shell\bsui\c\tsconfig.json
 
 FOR %%l IN (%TS_CONFIGS%) DO (
   SET TS_CONFIG=%%l
