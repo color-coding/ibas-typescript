@@ -80,7 +80,7 @@ namespace ibas {
                 this.setLogger(new Logger());
             }
             let pars: any[] = [];
-            let heard: string = strings.format("[{0}]: ", objects.isNull(this.name) ? objects.getName(objects.getType(this)) : this.name);
+            let heard: string = strings.format("{0}: ", objects.isNull(this.name) ? objects.getTypeName(this) : this.name);
             if (typeof arguments[0] === "number") {
                 // 类型
                 pars.push(arguments[0]);

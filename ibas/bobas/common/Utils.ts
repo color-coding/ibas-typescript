@@ -91,17 +91,30 @@ namespace ibas {
             if (objects.isNull(type)) {
                 return undefined;
             }
+            if (typeof type !== "function") {
+                throw new Error("is not a class.");
+            }
             return type.name;
         }
         /**
          * 获取实例类型
-         * @param 实例 类型
+         * @param 实例
          */
         export function getType(instance: any): any {
             if (objects.isNull(instance)) {
                 return undefined;
             }
+            if (typeof instance !== "object") {
+                throw new Error("is not a object.");
+            }
             return instance.constructor;
+        }
+        /**
+         * 获取实例的类型名称
+         * @param instance 实例
+         */
+        export function getTypeName(instance: any): any {
+            return getName(getType(instance));
         }
         /**
          * 克隆对象

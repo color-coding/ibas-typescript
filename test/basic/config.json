@@ -1,0 +1,8 @@
+{
+  "appSettings": {
+    "company": "CC",
+    "language": "zh_CN",
+    "debug": true,
+    "offline": false
+  }
+}

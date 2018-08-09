@@ -15,7 +15,7 @@
         ], function () {
             // 加载成功
             try {
-                var app = new loader.Application();
+                let app = new loader.Application();
                 app.run("../");
             } catch (error) {
                 window.navigate("../ibas/diagnosis/index.html");
@@ -31,7 +31,7 @@
     <div id="spinner"></div>
     <script type="text/javascript">
         (function () {
-            var opts = {
+            let opts = {
                 lines: 13 // The number of lines to draw
                 , length: 28 // The length of each line
                 , width: 14 // The line thickness
@@ -53,8 +53,8 @@
                 , hwaccel: false // Whether to use hardware acceleration
                 , position: 'absolute' // Element positioning
             };
-            var target = document.getElementById('spinner');
-            var spinner = new Spinner(opts).spin(target);
+            let target = document.getElementById('spinner');
+            let spinner = new Spinner(opts).spin(target);
         }());
     </script>
 </body>

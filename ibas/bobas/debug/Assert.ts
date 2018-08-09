@@ -6,6 +6,10 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 namespace ibas {
+    /** 断言错误 */
+    export class AssertionError extends Error {
+
+    }
     /**
      * 单元测试，断言相关
      */
@@ -46,7 +50,7 @@ namespace ibas {
                 }
             }
             if (unexpected !== actual) {
-                throw new Error(message);
+                throw new AssertionError(message);
             }
         }
         /**

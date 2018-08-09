@@ -135,6 +135,10 @@ namespace loader {
         static URL_INDEX: string = "index";
         /** 根地址 */
         root: string;
+        /** ibas 根地址 */
+        ibasRoot: string;
+        /** openui5 根地址 */
+        openui5Root: string;
         /** 不使用缓存 */
         noCache: boolean;
         /** 使用最小库 */
@@ -153,13 +157,19 @@ namespace loader {
             if (!this.root.endsWith("/")) {
                 this.root += "/";
             }
+            if (this.ibasRoot === null || this.ibasRoot === undefined) {
+                this.ibasRoot = this.root;
+            }
+            if (this.openui5Root === null || this.openui5Root === undefined) {
+                this.openui5Root = this.root;
+            }
             let that: this = this;
-            requires.create("_", this.root, this.noCache)([
+            requires.create("_", this.ibasRoot, this.noCache)([
                 URL_IBAS_INDEX + (this.minLibrary ? SIGN_MIN_LIBRARY : "")
             ], function (): void {
                 // 加载成功，加载ui5
                 openui5.load({
-                    url: that.root,
+                    url: that.openui5Root,
                     noCache: that.noCache,
                     minLibrary: that.minLibrary,
                     onError(): void {
@@ -212,7 +222,7 @@ namespace loader {
         }
         /** 诊断错误 */
         private diagnose(): void {
-            window.location.href = this.root + URL_IBAS_DIAGNOSIS;
+            window.location.href = this.ibasRoot + URL_IBAS_DIAGNOSIS;
         }
     }
 }
