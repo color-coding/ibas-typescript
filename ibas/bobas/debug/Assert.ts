@@ -9,7 +9,7 @@ namespace ibas {
     /**
      * 单元测试，断言相关
      */
-    export namespace assert {
+    export namespace asserts {
         /**
          * 断言相等
          * @param message 消息
