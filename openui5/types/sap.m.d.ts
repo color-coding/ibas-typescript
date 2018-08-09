@@ -7337,7 +7337,7 @@ declare namespace sap {
     /**
      * A sap.m.LightBox control represents a popup containing an image and a footer.
      * The purpose of the control is to display an image in its original size as long as this is possible.
-     * On smaller screens, images are scaled down to fit. 
+     * On smaller screens, images are scaled down to fit.
     */
     export class LightBox extends sap.ui.core.Control {
 
@@ -34408,6 +34408,25 @@ declare namespace sap {
        * @returns Reference to <code>this</code> in order to allow method chaining
       */
       setWidth(sWidth: any): sap.m.PlanningCalendar;
+    }
+    /**
+     * An item to be used in a PlanningCalendarLegend.
+     * @resource sap/m/PlanningCalendarLegend.js
+    */
+    export class PlanningCalendarLegend extends sap.ui.unified.CalendarLegend {
+      constructor(sId: string, mSettings?: any);
+      addAppointmentItem(oAppointmentItem): sap.m.PlanningCalendarLegend;
+      destroyAppointmentItems(): sap.m.PlanningCalendarLegend;
+      getAppointmentItems(): sap.ui.unified.CalendarLegendItem[];
+      getAppointmentItemsHeader(): string;
+      getItemsHeader(): string;
+      indexOfAppointmentItem(oAppointmentItem): number;
+      insertAppointmentItem(oAppointmentItem, iIndex): sap.m.PlanningCalendarLegend;
+      removeAllAppointmentItems(): sap.ui.unified.CalendarLegendItem[];
+      removeAppointmentItem(vAppointmentItem): sap.ui.unified.CalendarLegendItem;
+      setAppointmentItemsHeader(sAppointmentItemsHeader): sap.m.PlanningCalendarLegend;
+      setItemsHeader(sItemsHeader): sap.m.PlanningCalendarLegend;
+
     }
     /**
      * An item to be used in a TabContainer.
