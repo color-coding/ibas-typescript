@@ -51,9 +51,11 @@ namespace ibas {
                 } catch (error) {
                     if (error instanceof AssertionError) {
                         // 断言错误
+                        logger.log(emMessageLevel.ERROR, "{0}: assertion faild, {1}.", objects.getTypeName(this), error.message);
                         result.addFailure(this, error);
                     } else {
                         // 执行错误
+                        logger.log(emMessageLevel.ERROR, "{0}: an error has occured, {1}", objects.getTypeName(this), error.message);
                         result.addError(this, error);
                     }
                 }
@@ -101,13 +103,13 @@ namespace ibas {
     export namespace test {
         /**
          * 返回程序包的测试用例
-         * @param package 程序包
+         * @param lib 程序包
          * @param namespace 分析的命名空间
          */
-        export function cases(package: any): IList<TestCase> {
+        export function cases(lib: any): IList<TestCase> {
             let cases: ArrayList<TestCase> = new ArrayList<TestCase>();
-            for (let item of Object.getOwnPropertyNames(package)) {
-                let Type: any = package[item];
+            for (let item of Object.getOwnPropertyNames(lib)) {
+                let Type: any = lib[item];
                 if (!objects.isAssignableFrom(Type, TestCase)) {
                     continue;
                 }
