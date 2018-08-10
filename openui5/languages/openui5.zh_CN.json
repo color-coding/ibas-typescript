@@ -32,5 +32,6 @@
     "sap_ibas_ex_ibasdb_not_store": "缓存表不存在",
     "sap_ibas_ex_ibasdb_is_closed": "缓存数据库已关闭",
     "sap_ui_table_ex_selection_type_single_tooltip": "切换至多选模式",
-    "sap_ui_table_ex_selection_type_multi_tooltip": "切换至单选模式"
+    "sap_ui_table_ex_selection_type_multi_tooltip": "切换至单选模式",
+    "sap_m_ex_chooseicon_text": "选择图标"
 }

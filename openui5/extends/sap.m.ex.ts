@@ -1545,4 +1545,85 @@ namespace openui5 {
 
         }
     });
+    /**
+     * sap.m.ex.ChooseIcon控件,选择ui5图标
+     */
+    sap.m.Button.extend("sap.m.ex.ChooseIcon", {
+        init(): void {
+            this.draw();
+        },
+        metadata: {
+            properties: {
+                /** 绑定字段 */
+                bindingValue: { type: "string", group: "Ex" },
+            },
+            events: {}
+        },
+        draw(): void {
+            let that: any = this;
+            let seachValue: string = "";
+            let selectDialog: sap.m.SelectDialog = new sap.m.SelectDialog("", {
+                title: ibas.i18n.prop("sap_m_ex_chooseicon_text"),
+                search: function (oEvent: any): void {
+                    seachValue = oEvent.getParameter("value");
+                    let oFilter: sap.ui.model.Filter = new sap.ui.model.Filter("name", sap.ui.model.FilterOperator.Contains, seachValue);
+                    let oBinding: any = oEvent.getSource().getBinding("items");
+                    if (ibas.objects.isNull(oBinding)) {
+                        return;
+                    }
+                    oBinding.filter([oFilter]);
+                },
+                confirm: function (oEvent: sap.ui.base.Event): void {
+                    let selectedIconName: string = oEvent.getParameter("selectedItem").getTitle();
+                    that.setBindingValue(selectedIconName);
+                },
+            });
+            let listItemTemp: sap.m.StandardListItem = new sap.m.StandardListItem("", {
+                title: {
+                    path: "name"
+                },
+                icon: {
+                    path: "name",
+                    formatter(data: any): any {
+                        return ibas.strings.format("{0}{1}", "sap-icon://", data);
+                    }
+                }
+            });
+            selectDialog.bindAggregation("items", {
+                path: "/",
+                templateShareable: true,
+                template: listItemTemp
+            });
+            let icons: ibas.ArrayList<{name:string}> = that.getIcons();
+            selectDialog.setModel(new sap.ui.model.json.JSONModel(icons));
+            selectDialog.bindObject("/");
+            this.attachPress(async function (oEvent: sap.ui.base.Event): Promise<void> {
+                selectDialog.open(seachValue);
+            });
+        },
+        getIcons(): ibas.ArrayList<any> {
+            let iconArray: Array<string> = sap.ui.core.IconPool.getIconNames(undefined);
+            let icons: ibas.ArrayList<{name:string}>=new ibas.ArrayList<{name:string}>();
+            for (let iconName of iconArray) {
+                icons.add({
+                    name: iconName
+                });
+            }
+            return icons;
+        },
+        setBindingValue(value: string): void {
+            if (ibas.strings.isEmpty(value)) {
+                this.setText(ibas.i18n.prop("sap_m_ex_chooseicon_text"));
+                return;
+            }
+            this.setProperty("bindingValue", value);
+            this.setIcon(ibas.strings.format("{0}{1}", "sap-icon://", value));
+        },
+        getBindingValue(): string {
+            return this.getProperty("bindingValue");
+        },
+        renderer: {
+
+        }
+    });
 }
