@@ -36405,7 +36405,17 @@ declare namespace sap {
         "Type07",
         "Type08",
         "Type09",
-        "Type10"
+        "Type10",
+        "Type11",
+        "Type12",
+        "Type13",
+        "Type14",
+        "Type15",
+        "Type16",
+        "Type17",
+        "Type18",
+        "Type19",
+        "Type20"
       }
       /**
        * Type of a interval in a <code>CalendarRow</code>.
