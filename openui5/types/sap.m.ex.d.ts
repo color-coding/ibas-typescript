@@ -137,6 +137,13 @@ declare namespace sap {
             */
             export class Wizard extends sap.m.Wizard {
             }
+            /**
+             * sap.m.ex.ChooseIcon控件
+             */
+            export class ChooseIcon extends sap.m.Button {
+                setBindingValue(value: string): void;
+                getBindingValue(): string;
+            }
         }
     }
 }
