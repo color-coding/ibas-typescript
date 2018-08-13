@@ -14,6 +14,7 @@
 
 namespace ibas {
     const PROPERTY_BOCONVERTER: symbol = Symbol("boConverter");
+    const MSG_SIGN_EXCEPTION: string = "Exception: ";
     /** 数据转换，ibas4java */
     export abstract class DataConverter4j implements IDataConverter {
         /**
@@ -176,6 +177,17 @@ namespace ibas {
                 throw new Error(i18n.prop("sys_unable_to_convert_data", objects.getName(objects.getType(data))));
             }
         }
+        /** 修正消息 */
+        protected fixMessage(message: string): string {
+            if (strings.isEmpty(message)) {
+                return message;
+            }
+            let index: number = message.lastIndexOf(MSG_SIGN_EXCEPTION);
+            if (index > 0) {
+                return message.substring(index + MSG_SIGN_EXCEPTION.length);
+            }
+            return message;
+        }
         /**
          * 解析业务对象数据
          * @param data 目标类型
@@ -194,6 +206,9 @@ namespace ibas {
                 newData.userSign = remote.UserSign;
                 newData.resultCode = remote.ResultCode;
                 newData.message = remote.Message;
+                if (newData.resultCode !== 0) {
+                    newData.message = this.fixMessage(newData.message);
+                }
                 if (remote.ResultObjects instanceof Array) {
                     for (let item of remote.ResultObjects) {
                         newData.resultObjects.add(this.parsing(item, null));
@@ -221,6 +236,9 @@ namespace ibas {
                 newData.time = dates.valueOf(remote.Time);
                 newData.resultCode = remote.ResultCode;
                 newData.message = remote.Message;
+                if (newData.resultCode !== 0) {
+                    newData.message = this.fixMessage(newData.message);
+                }
                 return newData;
             } else if (data.type === ChildCriteria.name) {
                 let remote: ibas4j.IChildCriteria = data;
