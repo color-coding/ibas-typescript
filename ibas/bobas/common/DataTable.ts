@@ -12,8 +12,8 @@ namespace ibas {
     export interface IConvertParam {
         /** 格式化数据 */
         format: boolean;
-        /** 使用索引为名称 */
-        indexName: boolean;
+        /** 使用名称 */
+        nameAs: "name" | "index" | "description";
     }
     /** 数据表 */
     export class DataTable {
@@ -30,7 +30,7 @@ namespace ibas {
             if (objects.isNull(param)) {
                 param = {
                     format: true,
-                    indexName: false,
+                    nameAs: "name",
                 };
             }
             let datas: any = [];
@@ -43,8 +43,10 @@ namespace ibas {
                         // 转换类型
                         value = col.convert(value);
                     }
-                    if (param.indexName) {
+                    if (param.nameAs === "index") {
                         data[index.toString()] = value;
+                    } else if (param.nameAs === "description" && !ibas.strings.isEmpty(col.description)) {
+                        data[col.description] = value;
                     } else {
                         data[col.name] = value;
                     }

@@ -319,7 +319,7 @@ namespace shell {
             /** 显示常驻视图 */
             showResidentView(view: ibas.IBarView): void;
         }
-        interface IUserPrivilegeLoader {
+        export interface IUserPrivilegeLoader {
             /** 用户 */
             user: string;
             /** 平台 */
