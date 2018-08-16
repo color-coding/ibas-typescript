@@ -180,6 +180,9 @@ namespace openui5 {
                 return oValue.toFixed(this.decimalPlaces);
             }
             parseValue(oValue: any): number {
+                if (ibas.strings.isEmpty(oValue)) {
+                    return undefined;
+                }
                 if (ibas.objects.isNull(this.decimalPlaces)) {
                     return Number.parseFloat(oValue);
                 }
@@ -188,7 +191,7 @@ namespace openui5 {
             }
             validate(oValue: number, managedObject?: sap.ui.base.ManagedObject): ValidateResult {
                 let result: ValidateResult = super.validate(oValue, managedObject);
-                if (isNaN(oValue)) {
+                if (oValue === NaN) {
                     result.status = false;
                     result.message = ibas.i18n.prop("ui5_data_types_decimal_error");
                     this.fireValidationError(managedObject, result.message);
