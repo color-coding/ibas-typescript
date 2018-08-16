@@ -152,6 +152,8 @@ namespace ibas {
                             nValue.push(nItem);
                         }
                     }
+                } else if (value instanceof Date) {
+                    newData[name] = new Date(value.getTime());
                 } else if (value instanceof Object) {
                     // 克隆新对象
                     let nValue: any = clone(value);
