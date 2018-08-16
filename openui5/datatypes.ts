@@ -191,7 +191,7 @@ namespace openui5 {
             }
             validate(oValue: number, managedObject?: sap.ui.base.ManagedObject): ValidateResult {
                 let result: ValidateResult = super.validate(oValue, managedObject);
-                if (oValue === NaN) {
+                if (isNaN(oValue) && !ibas.objects.isNull(oValue)) {
                     result.status = false;
                     result.message = ibas.i18n.prop("ui5_data_types_decimal_error");
                     this.fireValidationError(managedObject, result.message);
