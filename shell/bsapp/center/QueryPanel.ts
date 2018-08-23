@@ -282,6 +282,8 @@ namespace shell {
                     for (let item of criteria.conditions) {
                         if (ibas.strings.isEmpty(item.value)) {
                             item.value = this.view.searchContent;
+                        } else if (item.value.startsWith("${") && item.value.endsWith("}")) {
+                            item.value = ibas.variablesManager.getValue(item.value);
                         }
                     }
                     this.fireQuery(criteria);

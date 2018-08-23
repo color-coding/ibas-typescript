@@ -295,7 +295,7 @@ namespace ibas {
                     }
                 } else if (typeof arguments[0].category === "string") {
                     // 判断是否为hash参数
-                    let value: string = arguments[0].category;
+                    let value: string = decodeURI(arguments[0].category);
                     if (!strings.isEmpty(value)) {
                         let criteria: Criteria = new Criteria();
                         criteria.result = 1;
@@ -337,7 +337,7 @@ namespace ibas {
                         bulider.append(item.value);
                     }
                     // 发送登录连接请求后,清除地址栏中的查询参数信息,并且不保留浏览器历史记录
-                    window.history.replaceState(null, null, decodeURI(bulider.toString()));
+                    window.history.replaceState(null, null, encodeURI(bulider.toString()));
                 }
             }
 
