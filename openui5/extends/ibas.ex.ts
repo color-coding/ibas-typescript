@@ -20,6 +20,7 @@ namespace openui5 {
         childPropertyName: string;
         selectedKey: string;
         criteria: ibas.ICriteria;
+        countries: Array<any>;
         provinces: Array<any>;
         citys: Array<any>;
         districts: Array<any>;
@@ -116,6 +117,20 @@ namespace openui5 {
                 });
             });
             return promise;
+        }
+        async getCountries(): Promise<boolean> {
+            if (!ibas.strings.isEmpty(this.getLocalStorage("countries"))) {
+                this.countries = this.getLocalStorage("countries");
+                return true;
+            }
+            let url: string = ibas.strings.format("{0}/data/countries.json", this.rootUrl);
+            this.countries = await this.load(url);
+            this.addLocalStorage("countries", this.countries);
+            if (ibas.objects.isNull(this.countries)) {
+                return false;
+            } else {
+                return true;
+            }
         }
         async getProvinces(): Promise<boolean> {
             if (!ibas.strings.isEmpty(this.getLocalStorage("provinces"))) {
