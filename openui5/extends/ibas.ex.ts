@@ -119,13 +119,8 @@ namespace openui5 {
             return promise;
         }
         async getCountries(): Promise<boolean> {
-            if (!ibas.strings.isEmpty(this.getLocalStorage("countries"))) {
-                this.countries = this.getLocalStorage("countries");
-                return true;
-            }
             let url: string = ibas.strings.format("{0}/data/countries.json", this.rootUrl);
             this.countries = await this.load(url);
-            this.addLocalStorage("countries", this.countries);
             if (ibas.objects.isNull(this.countries)) {
                 return false;
             } else {
@@ -133,13 +128,8 @@ namespace openui5 {
             }
         }
         async getProvinces(): Promise<boolean> {
-            if (!ibas.strings.isEmpty(this.getLocalStorage("provinces"))) {
-                this.provinces = this.getLocalStorage("provinces");
-                return true;
-            }
             let url: string = ibas.strings.format("{0}/data/provinces.json", this.rootUrl);
             this.provinces = await this.load(url);
-            this.addLocalStorage("provinces", this.provinces);
             if (ibas.objects.isNull(this.provinces)) {
                 return false;
             } else {
@@ -147,13 +137,8 @@ namespace openui5 {
             }
         }
         async getCities(): Promise<boolean> {
-            if (!ibas.strings.isEmpty(this.getLocalStorage("cities"))) {
-                this.citys = this.getLocalStorage("citys");
-                return true;
-            }
             let url: string = ibas.strings.format("{0}/data/cities.json", this.rootUrl);
             this.citys = await this.load(url);
-            this.addLocalStorage("citys", this.citys);
             if (ibas.objects.isNull(this.citys)) {
                 return false;
             } else {
@@ -161,13 +146,8 @@ namespace openui5 {
             }
         }
         async getDistricts(): Promise<boolean> {
-            if (!ibas.strings.isEmpty(this.getLocalStorage("districts"))) {
-                this.districts = this.getLocalStorage("districts");
-                return true;
-            }
             let url: string = ibas.strings.format("{0}/data/districts.json", this.rootUrl);
             this.districts = await this.load(url);
-            this.addLocalStorage("districts", this.districts);
             if (ibas.objects.isNull(this.districts)) {
                 return false;
             } else {
@@ -182,7 +162,7 @@ namespace openui5 {
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     async: false,
-                    cache: false,
+                    cache: true,
                     error: function (xhr: JQueryXHR, status: string, error: string): void {
                         ibas.logger.log(ibas.emMessageLevel.DEBUG, ibas.strings.format("config: load file [{2}] faild [{0} - {1}].", status, error, address));
                         resolve(null);
@@ -195,12 +175,6 @@ namespace openui5 {
                 jQuery.ajax(JQryAjxSetting);
             });
             return promise;
-        }
-        addLocalStorage(name: string, value: any): void {
-            window.localStorage.setItem(name, JSON.stringify(value));
-        }
-        getLocalStorage(name: string): any {
-            return JSON.parse(window.localStorage.getItem(name));
         }
     }
     /**
