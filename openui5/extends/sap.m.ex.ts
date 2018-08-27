@@ -1099,14 +1099,23 @@ namespace openui5 {
                 let selectedKey: string = selectedItem.getAdditionalText();
                 if (!!provincesSelect) {
                     provincesSelect.removeAllItems();
-                    for (let item of boRepEx.provinces[selectedKey]) {
-                        provincesSelect.addItem(
-                            new sap.ui.core.ListItem("", {
-                                key: item.name,
-                                text: item.name,
-                                additionalText: item.id
-                            })
-                        );
+                    provincesSelect.addItem(
+                        new sap.ui.core.ListItem("", {
+                            key: ibas.i18n.prop("shell_please_chooose_data", ""),
+                            text: ibas.i18n.prop("shell_please_chooose_data", ""),
+                            additionalText: ibas.i18n.prop("shell_please_chooose_data", "")
+                        })
+                    );
+                    if (!ibas.objects.isNull(boRepEx.provinces[selectedKey])) {
+                        for (let item of boRepEx.provinces[selectedKey]) {
+                            provincesSelect.addItem(
+                                new sap.ui.core.ListItem("", {
+                                    key: item.name,
+                                    text: item.name,
+                                    additionalText: item.id
+                                })
+                            );
+                        }
                     }
                     provincesSelect.bindProperty("selectedKey", that.getBindingInfo("province"));
                     provinceChange();
@@ -1124,14 +1133,23 @@ namespace openui5 {
                 let selectedKey: string = selectedItem.getAdditionalText();
                 if (!!citiesSelect) {
                     citiesSelect.removeAllItems();
-                    for (let item of boRepEx.citys[selectedKey]) {
-                        citiesSelect.addItem(
-                            new sap.ui.core.ListItem("", {
-                                key: item.name,
-                                text: item.name,
-                                additionalText: item.id
-                            })
-                        );
+                    citiesSelect.addItem(
+                        new sap.ui.core.ListItem("", {
+                            key: ibas.i18n.prop("shell_please_chooose_data", ""),
+                            text: ibas.i18n.prop("shell_please_chooose_data", ""),
+                            additionalText: ibas.i18n.prop("shell_please_chooose_data", "")
+                        })
+                    );
+                    if (!ibas.objects.isNull(boRepEx.citys[selectedKey])) {
+                        for (let item of boRepEx.citys[selectedKey]) {
+                            citiesSelect.addItem(
+                                new sap.ui.core.ListItem("", {
+                                    key: item.name,
+                                    text: item.name,
+                                    additionalText: item.id
+                                })
+                            );
+                        }
                     }
                     citiesSelect.bindProperty("selectedKey", that.getBindingInfo("city"));
                     cityChange();
@@ -1146,14 +1164,23 @@ namespace openui5 {
                 let selectedKey: string = selectedItem.getAdditionalText();
                 if (!!districtsSelect) {
                     districtsSelect.removeAllItems();
-                    for (let item of boRepEx.districts[selectedKey]) {
-                        districtsSelect.addItem(
-                            new sap.ui.core.ListItem("", {
-                                key: item.name,
-                                text: item.name,
-                                additionalText: item.id
-                            })
-                        );
+                    districtsSelect.addItem(
+                        new sap.ui.core.ListItem("", {
+                            key: ibas.i18n.prop("shell_please_chooose_data", ""),
+                            text: ibas.i18n.prop("shell_please_chooose_data", ""),
+                            additionalText: ibas.i18n.prop("shell_please_chooose_data", "")
+                        })
+                    );
+                    if (!ibas.objects.isNull(boRepEx.districts[selectedKey])) {
+                        for (let item of boRepEx.districts[selectedKey]) {
+                            districtsSelect.addItem(
+                                new sap.ui.core.ListItem("", {
+                                    key: item.name,
+                                    text: item.name,
+                                    additionalText: item.id
+                                })
+                            );
+                        }
                     }
                     districtsSelect.bindProperty("selectedKey", that.getBindingInfo("district"));
                 }
@@ -1177,6 +1204,13 @@ namespace openui5 {
                     loadProvinces();
                     if (!ibas.objects.isNull(provincesSelect)) {
                         provincesSelect.removeAllItems();
+                        provincesSelect.addItem(
+                            new sap.ui.core.ListItem("", {
+                                key: ibas.i18n.prop("shell_please_chooose_data", ""),
+                                text: ibas.i18n.prop("shell_please_chooose_data", ""),
+                                additionalText: ibas.i18n.prop("shell_please_chooose_data", "")
+                            })
+                        );
                         for (let item of boRepEx.provinces["86"]) {
                             provincesSelect.addItem(
                                 new sap.ui.core.ListItem("", {
@@ -1199,6 +1233,13 @@ namespace openui5 {
                         }
                     });
                     countriesSelect.removeAllItems();
+                    countriesSelect.addItem(
+                        new sap.ui.core.ListItem("", {
+                            key: ibas.i18n.prop("shell_please_chooose_data", ""),
+                            text: ibas.i18n.prop("shell_please_chooose_data", ""),
+                            additionalText: ibas.i18n.prop("shell_please_chooose_data", "")
+                        })
+                    );
                     for (let item of boRepEx.countries) {
                         countriesSelect.addItem(
                             new sap.ui.core.ListItem("", {
