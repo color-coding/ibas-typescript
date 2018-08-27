@@ -20,6 +20,7 @@ namespace openui5 {
         childPropertyName: string;
         selectedKey: string;
         criteria: ibas.ICriteria;
+        countries: Array<any>;
         provinces: Array<any>;
         citys: Array<any>;
         districts: Array<any>;
@@ -117,12 +118,26 @@ namespace openui5 {
             });
             return promise;
         }
+        async getCountries(): Promise<boolean> {
+            if (!ibas.strings.isEmpty(this.getLocalStorage("countries"))) {
+                this.countries = this.getLocalStorage("countries");
+                return true;
+            }
+            let url: string = ibas.strings.format("{0}/data/countries.json", this.rootUrl);
+            this.countries = await this.load(url);
+            this.addLocalStorage("countries", this.countries);
+            if (ibas.objects.isNull(this.countries)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
         async getProvinces(): Promise<boolean> {
             if (!ibas.strings.isEmpty(this.getLocalStorage("provinces"))) {
                 this.provinces = this.getLocalStorage("provinces");
                 return true;
             }
-            let url: string = ibas.strings.format("{0}/data/province.json", this.rootUrl);
+            let url: string = ibas.strings.format("{0}/data/provinces.json", this.rootUrl);
             this.provinces = await this.load(url);
             this.addLocalStorage("provinces", this.provinces);
             if (ibas.objects.isNull(this.provinces)) {
@@ -131,12 +146,12 @@ namespace openui5 {
                 return true;
             }
         }
-        async getCitys(): Promise<boolean> {
-            if (!ibas.strings.isEmpty(this.getLocalStorage("citys"))) {
+        async getCities(): Promise<boolean> {
+            if (!ibas.strings.isEmpty(this.getLocalStorage("cities"))) {
                 this.citys = this.getLocalStorage("citys");
                 return true;
             }
-            let url: string = ibas.strings.format("{0}/data/city.json", this.rootUrl);
+            let url: string = ibas.strings.format("{0}/data/cities.json", this.rootUrl);
             this.citys = await this.load(url);
             this.addLocalStorage("citys", this.citys);
             if (ibas.objects.isNull(this.citys)) {
@@ -150,7 +165,7 @@ namespace openui5 {
                 this.districts = this.getLocalStorage("districts");
                 return true;
             }
-            let url: string = ibas.strings.format("{0}/data/district.json", this.rootUrl);
+            let url: string = ibas.strings.format("{0}/data/districts.json", this.rootUrl);
             this.districts = await this.load(url);
             this.addLocalStorage("districts", this.districts);
             if (ibas.objects.isNull(this.districts)) {

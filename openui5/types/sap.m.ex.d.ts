@@ -87,8 +87,10 @@ declare namespace sap {
                 setBoCode(value: string): void;
             }
             export class ProvincesCityDistrict extends sap.m.FlexBox {
-                getProvinces(): string;
-                setProvinces(value: string): void;
+                getCountry(): string;
+                setCountry(value: string): void;
+                getProvince(): string;
+                setProvince(value: string): void;
                 getCity(): string;
                 setCity(value: string): void;
                 getDistrict(): string;
