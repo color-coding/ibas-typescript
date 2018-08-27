@@ -164,10 +164,6 @@ namespace ibas {
             if (!objects.isNull(this.view)) {
                 if (!objects.isNull(this.viewShower)) {
                     this.viewShower.destroy(this.view);
-                    if (this.view instanceof View) {
-                        this.view.isDisplayed = false;
-                        this.view.onClosed();
-                    }
                 }
             }
         }

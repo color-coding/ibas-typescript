@@ -832,11 +832,17 @@ namespace shell {
                     if (view instanceof CenterView) {
                         // 自身销毁，从浏览器缓存刷新页面
                         document.location.replace(document.location.origin + document.location.pathname);
+                        view.isDisplayed = false;
+                        view.onClosed();
                         return;
                     } else {
                         let ui: sap.ui.core.Element = sap.ui.getCore().byId(view.id);
                         if (!ibas.objects.isNull(ui)) {
                             ui.destroy(true);
+                        }
+                        if (view instanceof ibas.View) {
+                            view.isDisplayed = false;
+                            view.onClosed();
                         }
                         if (this.viewQueue.has(view)) {
                             this.viewQueue.delete(view);
