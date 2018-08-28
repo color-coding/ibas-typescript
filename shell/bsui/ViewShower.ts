@@ -176,6 +176,10 @@ namespace shell {
                     if (this.currentView === view) {
                         this.currentView = undefined;
                     }
+                    if (view instanceof ibas.View) {
+                        view.isDisplayed = false;
+                        view.onClosed();
+                    }
                 }
                 // 销毁忙对话框
                 if (!ibas.objects.isNull(this.busyDialog)) {

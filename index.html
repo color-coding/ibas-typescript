@@ -15,7 +15,7 @@
         ], function () {
             // 加载成功
             try {
-                let app = new loader.Application();
+                var app = new loader.Application();
                 app.noCache = true;
                 app.minLibrary = true;
                 app.run("./");
@@ -35,14 +35,14 @@
     <div id="spinner"></div>
     <script type="text/javascript">
         (function () {
-            let opts = {
+            var opts = {
                 lines: 13, length: 28, width: 14, radius: 42, scale: 0.25, corners: 1,
                 color: '#000', opacity: 0.25, rotate: 0, direction: 1, speed: 1, trail: 60,
                 fps: 20, zIndex: 2e9, className: 'spinner', top: '50%', left: '50%', shadow: false,
                 hwaccel: false, position: 'absolute'
             };
-            let target = document.getElementById('spinner');
-            let spinner = new Spinner(opts).spin(target);
+            var target = document.getElementById('spinner');
+            var spinner = new Spinner(opts).spin(target);
         }());
     </script>
 </body>
