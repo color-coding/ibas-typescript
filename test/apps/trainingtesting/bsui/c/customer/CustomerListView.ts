@@ -16,6 +16,10 @@ namespace trainingtesting {
                 get queryTarget(): any {
                     return bo.Customer;
                 }
+                /** 自动查询 */
+                get autoQuery(): boolean {
+                    return true;
+                }
                 /** 编辑数据，参数：目标数据 */
                 editDataEvent: Function;
                 /** 删除数据事件，参数：删除对象集合 */

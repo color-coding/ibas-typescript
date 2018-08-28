@@ -44,6 +44,8 @@ namespace ibas {
         readonly queryTarget?: any;
         /** 使用的查询 */
         readonly usingCriteria?: ICriteria;
+        /** 自动查询 */
+        readonly autoQuery: boolean;
         /** 查询数据 */
         query(criteria: ICriteria): void;
         /** 嵌入下拉条 */

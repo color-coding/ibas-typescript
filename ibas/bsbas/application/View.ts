@@ -29,6 +29,8 @@ namespace ibas {
             // 确认方法，可重载
         }
     }
+    /** 配置项目-自动查询 */
+    export const CONFIG_ITEM_AUTO_QUERY: string = "autoQuery";
     /** 业务对象查询视图 */
     export abstract class BOQueryView extends BOView implements IBOQueryView {
         /** 查询标识 */
@@ -38,6 +40,10 @@ namespace ibas {
         /** 使用的查询 */
         get usingCriteria(): ICriteria {
             return this.lastCriteria;
+        }
+        /** 自动查询 */
+        get autoQuery(): boolean {
+            return ibas.config.get(CONFIG_ITEM_AUTO_QUERY, false);
         }
         /** 上一次使用的查询 */
         protected lastCriteria: ICriteria;
@@ -58,6 +64,10 @@ namespace ibas {
         /** 使用的查询 */
         get usingCriteria(): ICriteria {
             return this.lastCriteria;
+        }
+        /** 自动查询 */
+        get autoQuery(): boolean {
+            return false;
         }
         /** 上一次使用的查询 */
         protected lastCriteria: ICriteria;

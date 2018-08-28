@@ -822,6 +822,10 @@ namespace shell {
                             }
                             // 触发工具条显示完成事件
                             queryPanel.view.barShowedEvent.apply(queryPanel);
+                            // 如果自动查询，则调用
+                            if (view.autoQuery === true) {
+                                queryPanel.view.searchEvent.apply(queryPanel);
+                            }
                         });
                     }
                 }
