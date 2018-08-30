@@ -247,6 +247,13 @@ namespace ibas {
             return count;
         }
         /**
+         * 删除全部空格
+         * @param content 待分析字符串
+         */
+        export function trim(content: string): string {
+            return replace(content, " ", "");
+        }
+        /**
          * 替换字符，全部
          * @param content 待分析字符
          * @param search 查询的字符

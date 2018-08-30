@@ -406,7 +406,7 @@ namespace ibas {
             return false;
         }
         /** 运行选择服务 */
-        runChooseService<D>(caller: IBOChooseServiceCaller<D>): void {
+        runChooseService<D>(caller: IBOChooseServiceCaller<D>): boolean {
             if (objects.isNull(caller)) {
                 throw new Error(i18n.prop("sys_invalid_parameter", "caller"));
             }
@@ -423,10 +423,12 @@ namespace ibas {
             if (!this.runService(caller)) {
                 // 服务未运行
                 logger.log(emMessageLevel.WARN, "services: not found [{0}]'s choose service.", caller.boCode);
+                return false;
             }
+            return true;
         }
         /** 运行连接服务 */
-        runLinkService(caller: IBOLinkServiceCaller): void {
+        runLinkService(caller: IBOLinkServiceCaller): boolean {
             if (objects.isNull(caller)) {
                 throw new Error(i18n.prop("sys_invalid_parameter", "caller"));
             }
@@ -445,8 +447,10 @@ namespace ibas {
             // 调用服务
             if (!this.runService(caller)) {
                 // 服务未运行
-                logger.log(emMessageLevel.WARN, "services: not found [{0}]'s choose service.", caller.boCode);
+                logger.log(emMessageLevel.WARN, "services: not found [{0}]'s link service.", caller.boCode);
+                return false;
             }
+            return true;
         }
         /**
          * 运行应用服务
@@ -462,7 +466,7 @@ namespace ibas {
          * 运行应用服务
          * @param caller 调用者<In,Out>(<输入类型,输出类型>)
          */
-        runApplicationService<In, Out>(): void {
+        runApplicationService<In, Out>(): boolean {
             let caller: IApplicationServiceCaller<In> = arguments[0];
             if (objects.isNull(caller)) {
                 throw new Error(i18n.prop("sys_invalid_parameter", "caller"));
@@ -478,7 +482,9 @@ namespace ibas {
             if (!this.runService(caller)) {
                 // 服务未运行
                 logger.log(emMessageLevel.WARN, "services: not found [{0}]'s application service.", objects.getName(objects.getType(caller.proxy)));
+                return false;
             }
+            return true;
         }
         /**
          * 显示可用服务

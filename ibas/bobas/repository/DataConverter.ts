@@ -679,4 +679,55 @@ namespace ibas {
         /** 业务对象工厂实例 */
         protected abstract factory(): BOFactory;
     }
+    /**
+     * 查询方法
+     */
+    export namespace criterias {
+        class DataConverter extends DataConverter4j {
+            protected createConverter(): IBOConverter<IBusinessObject, any> {
+                throw new Error("Method not implemented.");
+            }
+        }
+        /**
+         * 解析查询
+         * @param content 内容
+         */
+        export function valueOf(content: string): ICriteria {
+            if (strings.isEmpty(content)) {
+                return null;
+            }
+            if (content.startsWith("{[") && content.endsWith("]}")) {
+                content = content.substring(1, content.length - 1);
+                content = strings.trim(content);
+                content = strings.replace(content, "[", "");
+                content = strings.replace(content, "]", "");
+                let values: string[] = content.split(".");
+                if (values.length === 2) {
+                    let criteria: ICriteria = new Criteria();
+                    let vFields: string[] = values[1].split("&");
+                    if (vFields.length > 0) {
+                        criteria.businessObject = values[0];
+                        for (let field of vFields) {
+                            field = field.trim();
+                            if (strings.isEmpty(field)) {
+                                continue;
+                            }
+                            let tValues: string[] = field.split("=");
+                            if (tValues.length !== 2) {
+                                return null;
+                            } else {
+                                let condition: ICondition = criteria.conditions.create();
+                                condition.alias = tValues[0];
+                                condition.value = tValues[1];
+                            }
+                        }
+                        return criteria;
+                    }
+                }
+            } else if (content.startsWith("{") && content.endsWith("}")) {
+                return new DataConverter().parsing(JSON.parse(content), "");
+            }
+            return null;
+        }
+    }
 }

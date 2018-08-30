@@ -996,4 +996,87 @@ namespace ibas {
             return userField;
         }
     }
+    /** 业务对象工具 */
+    export namespace businessobjects {
+        /**
+         * 业务对象名称
+         * @param boCode 对象编码
+         */
+        export function name(boCode: string): string {
+            try {
+                return objects.getName(boFactory.classOf(boCode));
+            } catch (error) {
+                return boCode;
+            }
+        }
+        /** 获取资源 */
+        function resource(boName: string, field: string = undefined): string {
+            if (objects.isNull(field)) {
+                // 对象
+                let key: string = strings.format("bo_{0}", boName).toLowerCase();
+                let value: string = i18n.prop(key);
+                if (value.startsWith("[") && value.endsWith("]")) {
+                    return boName;
+                } else {
+                    return value;
+                }
+            } else {
+                // 属性
+                let key: string = strings.format("bo_{0}_{1}", boName, field).toLowerCase();
+                let value: string = i18n.prop(key);
+                if (value.startsWith("[") && value.endsWith("]")) {
+                    return field;
+                } else {
+                    return value;
+                }
+            }
+        }
+        /**
+         * 描述业务对象
+         * 如：{[CC_MM_ITEM].[Code = A00001]&[DocEntry = 3]}
+         * @param boKeys 对象标记
+         */
+        export function describe(boKeys: string): string {
+            if (strings.isEmpty(boKeys)) {
+                return boKeys;
+            }
+            if (boKeys.startsWith("{[") && boKeys.endsWith("]}")) {
+                boKeys = boKeys.substring(1, boKeys.length - 1);
+                boKeys = strings.trim(boKeys);
+                boKeys = strings.replace(boKeys, "[", "");
+                boKeys = strings.replace(boKeys, "]", "");
+                let values: string[] = boKeys.split(".");
+                if (values.length === 2) {
+                    let vFields: string[] = values[1].split("&");
+                    if (vFields.length > 0) {
+                        let boName: string = name(values[0]);
+                        let builder: StringBuilder = new StringBuilder();
+                        builder.append(resource(boName));
+                        builder.append(": ");
+                        for (let field of vFields) {
+                            field = field.trim();
+                            if (strings.isEmpty(field)) {
+                                continue;
+                            }
+                            if (builder.length > 2) {
+                                builder.append(", ");
+                            }
+                            let tValues: string[] = field.split("=");
+                            if (tValues.length !== 2) {
+                                builder.append(field);
+                            } else {
+                                builder.append(resource(boName, tValues[0]));
+                                builder.append("-");
+                                builder.append(tValues[1]);
+                            }
+                        }
+                        return builder.toString();
+                    }
+                }
+            } else {
+                return resource(name(boKeys));
+            }
+            return boKeys;
+        }
+    }
 }
