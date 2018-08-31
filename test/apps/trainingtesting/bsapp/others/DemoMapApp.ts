@@ -22,12 +22,10 @@ namespace trainingtesting {
             }
             /** 注册视图 */
             protected registerView(): void {
-                //
                 this.view.closeEvent = this.close;
             }
             /** 视图显示后 */
             protected viewShowed(): void {
-                //
             }
             /** 运行 */
             run(): void {

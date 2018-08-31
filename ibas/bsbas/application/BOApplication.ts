@@ -15,6 +15,78 @@
 
 namespace ibas {
     /**
+     * 业务对象应用-视图
+     */
+    export interface IBOView extends IView {
+    }
+    /**
+     * 业务对象应用-选择视图
+     */
+    export interface IBOQueryView extends IBOView, IUseQueryPanel {
+        /** 查询数据事件，参数：查询条件 ICriteria */
+        fetchDataEvent: Function;
+    }
+    /**
+     * 业务对象应用-选择视图
+     */
+    export interface IBOChooseView extends IBOQueryView {
+        /** 选择数据事件，参数：选择数据 */
+        chooseDataEvent: Function;
+        /** 新建数据事件 */
+        newDataEvent: Function;
+        /** 选择类型 */
+        chooseType: emChooseType;
+    }
+    /**
+     * 业务对象应用-列表视图
+     */
+    export interface IBOListView extends IBOQueryView {
+        /** 新建数据事件 */
+        newDataEvent: Function;
+        /** 查看数据事件，参数：目标数据 */
+        viewDataEvent: Function;
+    }
+    /**
+     * 业务对象应用-编辑视图
+     */
+    export interface IBOEditView extends IBOView {
+        /** 保存数据事件 */
+        saveDataEvent: Function;
+    }
+    /**
+     * 业务对象应用-查看视图
+     */
+    export interface IBOViewView extends IBOView {
+        /** 编辑数据事件 */
+        editDataEvent: Function;
+    }
+    /**
+     * 业务对象应用
+     */
+    export abstract class BOApplication<T extends IBOView> extends Application<T> {
+        /** 业务对象编码 */
+        boCode: string;
+        /** 注册视图，重载需要回掉此方法 */
+        protected registerView(): void {
+            super.registerView();
+        }
+        /** 视图显示后 */
+        protected viewShowed(): void {
+        }
+    }
+    /**
+     * 业务对象查询应用
+     */
+    export abstract class BOQueryApplication<T extends IBOQueryView> extends BOApplication<T> {
+        /** 注册视图，重载需要回掉此方法 */
+        protected registerView(): void {
+            super.registerView();
+            this.view.fetchDataEvent = this.fetchData;
+        }
+        /** 查询数据 */
+        protected abstract fetchData(criteria: ICriteria): void;
+    }
+    /**
      * 业务对象选择应用
      */
     export abstract class BOChooseApplication<T extends IBOChooseView, D> extends BOQueryApplication<T> {
@@ -226,29 +298,43 @@ namespace ibas {
         protected abstract editData: D;
         /** 选择数据，参数：数据 */
         protected abstract saveData(): void;
-        /** 关闭视图 */
-        close(): void {
-            if (objects.instanceOf(this.editData, Bindable)) {
-                // 移出所有事件监听，防止资源不被回收
-                (<Bindable><any>this.editData).removeListener(true);
+        /** 视图显示后 */
+        protected viewShowed(): void {
+            // 修改标题
+            if (!objects.isNull(this.editData)) {
+                let data: IApprovalData = <IApprovalData><any>this.editData;
+                if (objects.isNull(data.approvalStatus)
+                    && data.approvalStatus !== emApprovalStatus.UNAFFECTED) {
+                    this.view.title = strings.format("{0} · {1}", this.view.title, enums.describe(emApprovalStatus, data.approvalStatus));
+                } else {
+                    this.view.title = this.description;
+                }
             }
-            this.editData = undefined;
-            super.close();
         }
     }
-
-
     /**
      * 业务对象查看应用
      */
     export abstract class BOViewApplication<T extends IBOViewView, D> extends BOApplication<T> {
-
         /** 注册视图，重载需要回掉此方法 */
         protected registerView(): void {
             super.registerView();
         }
         /** 当前查看的数据 */
         protected abstract viewData: D;
+        /** 视图显示后 */
+        protected viewShowed(): void {
+            // 修改标题
+            if (!objects.isNull(this.viewData)) {
+                let data: IApprovalData = <IApprovalData><any>this.viewData;
+                if (objects.isNull(data.approvalStatus)
+                    && data.approvalStatus !== emApprovalStatus.UNAFFECTED) {
+                    this.view.title = strings.format("{0} · {1}", this.view.title, enums.describe(emApprovalStatus, data.approvalStatus));
+                } else {
+                    this.view.title = this.description;
+                }
+            }
+        }
     }
     /**
      * 业务对象查看应用服务
@@ -320,6 +406,7 @@ namespace ibas {
         protected abstract fetchData(criteria: ICriteria | string): void;
         /** 视图显示后 */
         protected viewShowed(): void {
+            super.viewShowed();
             // 更新当前hash地址
             if (this.viewData instanceof BusinessObject) {
                 let criteria: ICriteria = this.viewData.criteria();

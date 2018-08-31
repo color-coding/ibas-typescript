@@ -569,6 +569,10 @@ namespace shell {
                             this.mainPage.addMainContent(container);
                         }
                     }
+                    if (view instanceof ibas.View) {
+                        view.isDisplayed = true;
+                        view.onDisplayed();
+                    }
                 }
                 /** 显示对话框视图 */
                 showDialogView(view: ibas.BODialogView): void {

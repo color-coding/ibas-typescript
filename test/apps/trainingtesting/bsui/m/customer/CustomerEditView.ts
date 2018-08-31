@@ -197,6 +197,7 @@ namespace trainingtesting {
                     // 新建时：禁用删除，
                     if (data.isNew) {
                         if (this.page.getSubHeader() instanceof sap.m.Toolbar) {
+                            openui5.utils.changeToolbarSavable(<sap.m.Toolbar>this.page.getSubHeader(), true);
                             openui5.utils.changeToolbarDeletable(<sap.m.Toolbar>this.page.getSubHeader(), false);
                         }
                     }

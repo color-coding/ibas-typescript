@@ -32,72 +32,6 @@ namespace ibas {
         embedded(view: any): void;
     }
     /**
-     * 业务对象应用-视图
-     */
-    export interface IBOView extends IView {
-    }
-    /** 使用查询面板 */
-    export interface IUseQueryPanel {
-        /** 查询标识 */
-        readonly queryId: string;
-        /** 查询目标 */
-        readonly queryTarget?: any;
-        /** 使用的查询 */
-        readonly usingCriteria?: ICriteria;
-        /** 自动查询 */
-        readonly autoQuery: boolean;
-        /** 查询数据 */
-        query(criteria: ICriteria): void;
-        /** 嵌入下拉条 */
-        embeddedPuller?(view: any): void;
-    }
-    /** 嵌入查询面板 */
-    export interface IEmbeddedQueryPanel {
-        /** 嵌入 */
-        embedded(view: any): void;
-    }
-    /**
-     * 业务对象应用-选择视图
-     */
-    export interface IBOQueryView extends IBOView, IUseQueryPanel {
-        /** 查询数据事件，参数：查询条件 ICriteria */
-        fetchDataEvent: Function;
-    }
-    /**
-     * 业务对象应用-选择视图
-     */
-    export interface IBOChooseView extends IBOQueryView {
-        /** 选择数据事件，参数：选择数据 */
-        chooseDataEvent: Function;
-        /** 新建数据事件 */
-        newDataEvent: Function;
-        /** 选择类型 */
-        chooseType: emChooseType;
-    }
-    /**
-     * 业务对象应用-列表视图
-     */
-    export interface IBOListView extends IBOQueryView {
-        /** 新建数据事件 */
-        newDataEvent: Function;
-        /** 查看数据事件，参数：目标数据 */
-        viewDataEvent: Function;
-    }
-    /**
-     * 业务对象应用-编辑视图
-     */
-    export interface IBOEditView extends IBOView {
-        /** 保存数据事件 */
-        saveDataEvent: Function;
-    }
-    /**
-     * 业务对象应用-查看视图
-     */
-    export interface IBOViewView extends IBOView {
-        /** 编辑数据事件 */
-        editDataEvent: Function;
-    }
-    /**
      * 常驻应用-视图
      */
     export interface IResidentView extends IBarView {
@@ -124,7 +58,10 @@ namespace ibas {
                     if (this.view instanceof View) {
                         if (this.view.isDisplayed) {
                             // 已显示的视图不在显示
-                            this.proceeding(emMessageType.WARNING, i18n.prop("sys_application_view_was_displayed", this.name));
+                            this.proceeding(emMessageType.WARNING,
+                                i18n.prop("sys_application_view_was_displayed",
+                                    strings.isEmpty(this.description) ? this.name : this.description)
+                            );
                             return;
                         }
                     } else {
@@ -146,9 +83,6 @@ namespace ibas {
         /** 视图显示后 */
         private afterViewShow(): void {
             if (this.view instanceof View) {
-                this.view.isDisplayed = true;
-                // 延迟100毫秒激活显示函数
-                setTimeout(this.view.onDisplayed(), 100);
                 logger.log(emMessageLevel.DEBUG, "app: [{0} - {1}]'s view displayed.", this.id, this.name);
                 this.viewShowed();
             } else {
@@ -373,29 +307,6 @@ namespace ibas {
                 this.messages(error);
             }
         }
-    }
-    /**
-     * 业务对象应用
-     */
-    export abstract class BOApplication<T extends IBOView> extends Application<T> {
-        /** 业务对象编码 */
-        boCode: string;
-        /** 注册视图，重载需要回掉此方法 */
-        protected registerView(): void {
-            super.registerView();
-        }
-    }
-    /**
-     * 业务对象查询应用
-     */
-    export abstract class BOQueryApplication<T extends IBOQueryView> extends BOApplication<T> {
-        /** 注册视图，重载需要回掉此方法 */
-        protected registerView(): void {
-            super.registerView();
-            this.view.fetchDataEvent = this.fetchData;
-        }
-        /** 查询数据 */
-        protected abstract fetchData(criteria: ICriteria): void;
     }
     /**
      * 常驻应用

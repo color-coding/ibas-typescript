@@ -27,7 +27,6 @@ namespace trainingtesting {
             }
             /** 视图显示后 */
             protected viewShowed(): void {
-                //
             }
             static INSIDE_OPENED: boolean = true;
             /** 运行 */
