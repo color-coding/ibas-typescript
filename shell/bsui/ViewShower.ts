@@ -167,6 +167,10 @@ namespace shell {
                 } else {
                     throw new Error(ibas.i18n.prop("shell_invalid_ui"));
                 }
+                if (view instanceof ibas.View) {
+                    view.isDisplayed = true;
+                    view.onDisplayed();
+                }
             }
             /** 清理资源 */
             destroy(view: ibas.IView): void {
