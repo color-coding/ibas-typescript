@@ -522,8 +522,9 @@ namespace openui5 {
             let keyText: ibas.KeyText = keyTextList.firstOrDefault();
             this.removeAllSuggestionItems();
             if (ibas.objects.isNull(keyText)) {
-                ibas.logger.log(ibas.emMessageLevel.DEBUG, ibas.i18n.prop("sap_m_ex_fetch_bos_null"));
-                return;
+                keyText = new ibas.KeyText();
+                keyText.key = selectedKey;
+                keyText.text = selectedKey;
             }
             this.addKeyTextItem(keyText);
         },
@@ -1085,7 +1086,7 @@ namespace openui5 {
             let citiesSelect: sap.m.Select;
             let districtsSelect: sap.m.Select;
             // 国家改变时触发
-            let countryChange: Function = function (change:boolean): void {
+            let countryChange: Function = function (change: boolean): void {
                 let selectedItem: any = countriesSelect.getSelectedItem();
                 if (!!citiesSelect) {
                     citiesSelect.removeAllItems();
@@ -1125,7 +1126,7 @@ namespace openui5 {
                 }
             };
             // 省改变时触发
-            let provinceChange: Function = function (change:boolean): void {
+            let provinceChange: Function = function (change: boolean): void {
                 let selectedItem: any = provincesSelect.getSelectedItem();
                 if (!!districtsSelect) {
                     districtsSelect.removeAllItems();
@@ -1162,7 +1163,7 @@ namespace openui5 {
                 }
             };
             // 市改变时触发
-            let cityChange: Function = function (change:boolean): void {
+            let cityChange: Function = function (change: boolean): void {
                 let selectedItem: any = citiesSelect.getSelectedItem();
                 if (ibas.objects.isNull(selectedItem)) {
                     return;
