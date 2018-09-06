@@ -43155,6 +43155,7 @@ declare namespace sap {
      * Determines the type of HTML elements used for rendering controls.
     */
     enum FlexRendertype {
+      "Bare",
       "Div",
       "List"
     }
