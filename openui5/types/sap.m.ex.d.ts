@@ -95,6 +95,8 @@ declare namespace sap {
                 setCity(value: string): void;
                 getDistrict(): string;
                 setDistrict(value: string): void;
+                setEnabled(value: boolean): void;
+                getEnabled(): boolean;
             }
             export class BOLink extends sap.m.Link {
                 getBoCode(): string;

@@ -1075,11 +1075,14 @@ namespace openui5 {
                 city: { type: "string", group: "Ex" },
                 /** 区 */
                 district: { type: "string", group: "Ex" },
+                /** 是否可用 */
+                enabled: { type: "boolean", group: "Ex", defaultValue: true },
             },
             events: {}
         },
         async draw(): Promise<void> {
             let that: any = this;
+            this.removeAllItems();
             let boRepEx: BORepsitory = new BORepsitory();
             let countriesSelect: sap.m.Select;
             let provincesSelect: sap.m.Select;
@@ -1199,6 +1202,7 @@ namespace openui5 {
                 if (!ibas.objects.isNull(that.getBindingInfo("province"))) {
                     if (provincesLoadStatus) {
                         provincesSelect = new sap.m.Select(that.getId() + "-Province", {
+                            enabled: that.getEnabled(),
                             change: function (oEvent: any): void {
                                 provinceChange(true);
                             }
@@ -1238,6 +1242,7 @@ namespace openui5 {
                 let countriesLoadStatus: boolean = await boRepEx.getCountries();
                 if (countriesLoadStatus) {
                     countriesSelect = new sap.m.Select(this.getId() + "-Country", {
+                        enabled: that.getEnabled(),
                         change: function (oEvent: any): void {
                             countryChange(true);
                         }
@@ -1274,6 +1279,7 @@ namespace openui5 {
                 let citysLoadStatus: boolean = await boRepEx.getCities();
                 if (citysLoadStatus) {
                     citiesSelect = new sap.m.Select(this.getId() + "-City", {
+                        enabled: that.getEnabled(),
                         change: function (oEvent: any): void {
                             cityChange(true);
                         }
@@ -1286,7 +1292,9 @@ namespace openui5 {
             if (!ibas.objects.isNull(this.getBindingInfo("district"))) {
                 let districtsLoadStatus: boolean = await boRepEx.getDistricts();
                 if (districtsLoadStatus) {
-                    districtsSelect = new sap.m.Select(this.getId() + "-District");
+                    districtsSelect = new sap.m.Select(this.getId() + "-District", {
+                        enabled: that.getEnabled(),
+                    });
                     this.addItem(districtsSelect);
                     districtsSelect.bindProperty("selectedKey", this.getBindingInfo("district"));
                 }
@@ -1338,6 +1346,12 @@ namespace openui5 {
         },
         getDistrict(): string {
             return this.getProperty("district");
+        },
+        setEnabled(value: boolean): void {
+            this.setProperty("enabled", value);
+        },
+        getEnabled(): boolean {
+            return this.getProperty("enabled");
         },
         renderer: {}
     });
