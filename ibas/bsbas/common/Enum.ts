@@ -76,6 +76,13 @@ namespace ibas {
         /** 多选 */
         MULTIPLE
     }
+    /** 视图模式 */
+    export enum emViewMode {
+        /** 一般 */
+        COMMON,
+        /** 查看 */
+        VIEW
+    }
     /** 手指触控移动方向 */
     export enum emTouchMoveDirection {
         /** 上 */

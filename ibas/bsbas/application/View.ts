@@ -99,11 +99,15 @@ namespace ibas {
         chooseDataEvent: Function;
         /** 选择类型 */
         chooseType: emChooseType;
+        /** 视图模式 */
+        mode: emViewMode;
     }
     /** 业务对象查看视图 */
     export abstract class BOViewView extends BOView implements IBOViewView {
         /** 编辑数据事件 */
         editDataEvent: Function;
+        /** 视图模式 */
+        mode: emViewMode;
     }
     /** 业务对象编辑视图 */
     export abstract class BOEditView extends BOView implements IBOEditView {

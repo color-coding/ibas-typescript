@@ -36,6 +36,8 @@ namespace ibas {
         newDataEvent: Function;
         /** 选择类型 */
         chooseType: emChooseType;
+        /** 视图模式 */
+        mode: emViewMode;
     }
     /**
      * 业务对象应用-列表视图
@@ -59,6 +61,8 @@ namespace ibas {
     export interface IBOViewView extends IBOView {
         /** 编辑数据事件 */
         editDataEvent: Function;
+        /** 视图模式 */
+        mode: emViewMode;
     }
     /**
      * 业务对象应用
@@ -124,13 +128,17 @@ namespace ibas {
                 let caller: IBOChooseServiceCaller<D> = arguments[0];
                 // 选择服务代理或其子类
                 if (objects.instanceOf(caller.proxy, BOChooseServiceProxy)) {
-                    // 设置标题
-                    if (!strings.isEmpty(caller.title)) {
-                        this.description = caller.title;
-                    }
                     // 设置返回方法
                     if (typeof caller.onCompleted === "function") {
                         this.onCompleted = caller.onCompleted;
+                    }
+                    // 设置标题
+                    if (!strings.isEmpty(caller.title)) {
+                        this.view.title = caller.title;
+                    }
+                    // 设置视图模式
+                    if (!objects.isNull(caller.viewMode)) {
+                        this.view.mode = caller.viewMode;
                     }
                     // 设置选择类型
                     let chooseType: emChooseType = caller.chooseType;

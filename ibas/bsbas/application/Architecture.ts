@@ -70,10 +70,10 @@ namespace ibas {
         id: string;
         /** 标题 */
         title: string;
-        /** 绘制视图 */
-        draw(): any;
         /** 关闭视图 */
         closeEvent: Function;
+        /** 绘制视图 */
+        draw(): any;
     }
     /**
      * 应用-视图
@@ -256,7 +256,7 @@ namespace ibas {
                 }
                 this[PROPERTY_VIEW] = <T>this.navigation.create(this);
                 if (this[PROPERTY_VIEW] instanceof View) {
-                    this[PROPERTY_VIEW].application = this;
+                    this[PROPERTY_VIEW][PROPERTY_APPLICATION] = this;
                     if (!strings.isEmpty(this.description)) {
                         this[PROPERTY_VIEW].title = this.description;
                     } else {
@@ -300,10 +300,13 @@ namespace ibas {
     }
     /** 地址hash值标记-视图 */
     export const URL_HASH_SIGN_VIEWS: string = "#/views/";
+    const PROPERTY_APPLICATION: symbol = Symbol("application");
     /** 视图 */
     export abstract class View implements IView {
         /** 应用 */
-        application: IApplication<IView>;
+        get application(): IApplication<IView> {
+            return this[PROPERTY_APPLICATION];
+        }
         /** 唯一标识 */
         id: string;
         /** 标题 */
@@ -314,10 +317,10 @@ namespace ibas {
         isDisplayed: boolean;
         /** 是否忙 */
         isBusy: boolean;
-        /** 绘制视图 */
-        abstract draw(): any;
         /** 关闭视图 */
         closeEvent: Function;
+        /** 绘制视图 */
+        abstract draw(): any;
         /**
          * 触发视图事件
          * @param event 触发的事件

@@ -99,6 +99,8 @@ namespace ibas {
         criteria?: ICriteria | ICondition[];
         /** 选择服务标题 */
         title?: string;
+        /** 视图模式 */
+        viewMode?: emViewMode;
     }
     /** 查询编辑服务契约 */
     export interface ICriteriaEditorServiceContract extends IServiceContract {

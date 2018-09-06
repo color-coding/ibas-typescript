@@ -111,6 +111,7 @@ namespace trainingtesting {
                         buttons: [
                             new sap.m.Button("", {
                                 text: ibas.i18n.prop("shell_data_new"),
+                                visible: this.mode === ibas.emViewMode.VIEW ? false : true,
                                 type: sap.m.ButtonType.Transparent,
                                 press: function (): void {
                                     that.fireViewEvents(that.newDataEvent);
