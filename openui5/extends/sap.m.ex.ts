@@ -1349,6 +1349,11 @@ namespace openui5 {
         },
         setEnabled(value: boolean): void {
             this.setProperty("enabled", value);
+            for (let item of this.getItems()) {
+                if (item instanceof sap.m.Select) {
+                    item.setEnabled(value);
+                }
+            }
         },
         getEnabled(): boolean {
             return this.getProperty("enabled");
