@@ -1077,6 +1077,14 @@ namespace openui5 {
                 district: { type: "string", group: "Ex" },
                 /** 是否可用 */
                 enabled: { type: "boolean", group: "Ex", defaultValue: true },
+                /** 国家下拉控件  */
+                countriesSelect: { type: "sap.m.Select", group: "Ex" },
+                /** 省下拉控件 */
+                provincesSelect: { type: "sap.m.Select", group: "Ex" },
+                /** 市下拉控件 */
+                citiesSelect: { type: "sap.m.Select", group: "Ex" },
+                /** 区下载控件 */
+                districtsSelect: { type: "sap.m.Select", group: "Ex" },
             },
             events: {}
         },
@@ -1084,26 +1092,17 @@ namespace openui5 {
             let that: any = this;
             this.removeAllItems();
             let boRepEx: BORepsitory = new BORepsitory();
-            let countriesSelect: sap.m.Select;
-            let provincesSelect: sap.m.Select;
-            let citiesSelect: sap.m.Select;
-            let districtsSelect: sap.m.Select;
             // 国家改变时触发
             let countryChange: Function = function (change: boolean): void {
-                let selectedItem: any = countriesSelect.getSelectedItem();
-                if (!!citiesSelect) {
-                    citiesSelect.removeAllItems();
-                }
-                if (!!districtsSelect) {
-                    districtsSelect.removeAllItems();
-                }
+                let selectedItem: any = that.countriesSelect.getSelectedItem();
                 if (ibas.objects.isNull(selectedItem)) {
                     return;
                 }
                 let selectedKey: string = selectedItem.getAdditionalText();
-                if (!!provincesSelect) {
-                    provincesSelect.removeAllItems();
-                    provincesSelect.addItem(
+                if (!!that.provincesSelect) {
+                    that.provincesSelect.unbindProperty("selectedKey", false);
+                    that.provincesSelect.removeAllItems();
+                    that.provincesSelect.addItem(
                         new sap.ui.core.ListItem("", {
                             key: ibas.i18n.prop("shell_please_chooose_data", ""),
                             text: ibas.i18n.prop("shell_please_chooose_data", ""),
@@ -1112,7 +1111,7 @@ namespace openui5 {
                     );
                     if (!ibas.objects.isNull(boRepEx.provinces[selectedKey])) {
                         for (let item of boRepEx.provinces[selectedKey]) {
-                            provincesSelect.addItem(
+                            that.provincesSelect.addItem(
                                 new sap.ui.core.ListItem("", {
                                     key: item.name,
                                     text: item.name,
@@ -1121,26 +1120,28 @@ namespace openui5 {
                             );
                         }
                     }
-                    provincesSelect.bindProperty("selectedKey", that.getBindingInfo("province"));
+                    that.provincesSelect.bindProperty("selectedKey", that.getBindingInfo("province"));
                     if (change) {
-                        provincesSelect.setSelectedKey(ibas.i18n.prop("shell_please_chooose_data", ""));
+                        that.provincesSelect.setSelectedKey(ibas.i18n.prop("shell_please_chooose_data", ""));
+                        provinceChange(change);
                     }
-                    provinceChange(change);
+
                 }
             };
             // 省改变时触发
             let provinceChange: Function = function (change: boolean): void {
-                let selectedItem: any = provincesSelect.getSelectedItem();
-                if (!!districtsSelect) {
-                    districtsSelect.removeAllItems();
-                }
+                let selectedItem: any = that.provincesSelect.getSelectedItem();
                 if (ibas.objects.isNull(selectedItem)) {
                     return;
                 }
                 let selectedKey: string = selectedItem.getAdditionalText();
-                if (!!citiesSelect) {
-                    citiesSelect.removeAllItems();
-                    citiesSelect.addItem(
+                // if (!ibas.objects.isNull(text) && !ibas.strings.isEmpty(text)) {
+                //     selectedKey = that.provincesSelect.getItemByKey(text).getAdditionalText();
+                // }
+                if (!!that.citiesSelect) {
+                    that.citiesSelect.unbindProperty("selectedKey", false);
+                    that.citiesSelect.removeAllItems();
+                    that.citiesSelect.addItem(
                         new sap.ui.core.ListItem("", {
                             key: ibas.i18n.prop("shell_please_chooose_data", ""),
                             text: ibas.i18n.prop("shell_please_chooose_data", ""),
@@ -1149,7 +1150,7 @@ namespace openui5 {
                     );
                     if (!ibas.objects.isNull(boRepEx.citys[selectedKey])) {
                         for (let item of boRepEx.citys[selectedKey]) {
-                            citiesSelect.addItem(
+                            that.citiesSelect.addItem(
                                 new sap.ui.core.ListItem("", {
                                     key: item.name,
                                     text: item.name,
@@ -1158,23 +1159,24 @@ namespace openui5 {
                             );
                         }
                     }
-                    citiesSelect.bindProperty("selectedKey", that.getBindingInfo("city"));
+                    that.citiesSelect.bindProperty("selectedKey", that.getBindingInfo("city"));
                     if (change) {
-                        citiesSelect.setSelectedKey(ibas.i18n.prop("shell_please_chooose_data", ""));
+                        that.citiesSelect.setSelectedKey(ibas.i18n.prop("shell_please_chooose_data", ""));
+                        cityChange(change);
                     }
-                    cityChange(change);
+
                 }
             };
             // 市改变时触发
             let cityChange: Function = function (change: boolean): void {
-                let selectedItem: any = citiesSelect.getSelectedItem();
+                let selectedItem: any = that.citiesSelect.getSelectedItem();
                 if (ibas.objects.isNull(selectedItem)) {
                     return;
                 }
                 let selectedKey: string = selectedItem.getAdditionalText();
-                if (!!districtsSelect) {
-                    districtsSelect.removeAllItems();
-                    districtsSelect.addItem(
+                if (!!that.districtsSelect) {
+                    that.districtsSelect.removeAllItems();
+                    that.districtsSelect.addItem(
                         new sap.ui.core.ListItem("", {
                             key: ibas.i18n.prop("shell_please_chooose_data", ""),
                             text: ibas.i18n.prop("shell_please_chooose_data", ""),
@@ -1183,7 +1185,7 @@ namespace openui5 {
                     );
                     if (!ibas.objects.isNull(boRepEx.districts[selectedKey])) {
                         for (let item of boRepEx.districts[selectedKey]) {
-                            districtsSelect.addItem(
+                            that.districtsSelect.addItem(
                                 new sap.ui.core.ListItem("", {
                                     key: item.name,
                                     text: item.name,
@@ -1192,22 +1194,27 @@ namespace openui5 {
                             );
                         }
                     }
-                    districtsSelect.bindProperty("selectedKey", that.getBindingInfo("district"));
+                    that.districtsSelect.bindProperty("selectedKey", that.getBindingInfo("district"));
                     if (change) {
-                        districtsSelect.setSelectedKey(ibas.i18n.prop("shell_please_chooose_data", ""));
+                        that.districtsSelect.setSelectedKey(ibas.i18n.prop("shell_please_chooose_data", ""));
                     }
                 }
             };
+            // 加载省级控件
             let loadProvinces: Function = function (): void {
                 if (!ibas.objects.isNull(that.getBindingInfo("province"))) {
                     if (provincesLoadStatus) {
-                        provincesSelect = new sap.m.Select(that.getId() + "-Province", {
+                        that.provincesSelect = new sap.m.Select(that.getId() + "-Province", {
                             enabled: that.getEnabled(),
                             change: function (oEvent: any): void {
-                                provinceChange(true);
+                                let change: boolean = ibas.objects.isNull(oEvent.getParameter("change")) ? true : false;
+                                provinceChange(change);
                             }
                         });
-                        that.addItem(provincesSelect);
+                        that.addItem(that.provincesSelect);
+                        if (!ibas.objects.isNull(that.getBindingInfo("province"))) {
+                            that.provincesSelect.bindProperty("selectedKey", that.getBindingInfo("province"));
+                        }
                     }
                 }
             };
@@ -1216,9 +1223,9 @@ namespace openui5 {
             if (ibas.objects.isNull(this.getBindingInfo("country"))) {
                 if (provincesLoadStatus) {
                     loadProvinces(true);
-                    if (!ibas.objects.isNull(provincesSelect)) {
-                        provincesSelect.removeAllItems();
-                        provincesSelect.addItem(
+                    if (!ibas.objects.isNull(that.provincesSelect)) {
+                        that.provincesSelect.removeAllItems();
+                        that.provincesSelect.addItem(
                             new sap.ui.core.ListItem("", {
                                 key: ibas.i18n.prop("shell_please_chooose_data", ""),
                                 text: ibas.i18n.prop("shell_please_chooose_data", ""),
@@ -1226,7 +1233,7 @@ namespace openui5 {
                             })
                         );
                         for (let item of boRepEx.provinces["86"]) {
-                            provincesSelect.addItem(
+                            that.provincesSelect.addItem(
                                 new sap.ui.core.ListItem("", {
                                     key: item.name,
                                     text: item.name,
@@ -1234,21 +1241,22 @@ namespace openui5 {
                                 })
                             );
                         }
-                        provincesSelect.bindProperty("selectedKey", this.getBindingInfo("province"));
+                        that.provincesSelect.bindProperty("selectedKey", this.getBindingInfo("province"));
                     }
                 }
             } else {
-                // 获取市级数据
+                // 获取国级数据
                 let countriesLoadStatus: boolean = await boRepEx.getCountries();
                 if (countriesLoadStatus) {
-                    countriesSelect = new sap.m.Select(this.getId() + "-Country", {
+                    that.countriesSelect = new sap.m.Select(this.getId() + "-Country", {
                         enabled: that.getEnabled(),
                         change: function (oEvent: any): void {
-                            countryChange(true);
+                            let change: boolean = ibas.objects.isNull(oEvent.getParameter("change")) ? true : false;
+                            countryChange(change);
                         }
                     });
-                    countriesSelect.removeAllItems();
-                    countriesSelect.addItem(
+                    that.countriesSelect.removeAllItems();
+                    that.countriesSelect.addItem(
                         new sap.ui.core.ListItem("", {
                             key: ibas.i18n.prop("shell_please_chooose_data", ""),
                             text: ibas.i18n.prop("shell_please_chooose_data", ""),
@@ -1256,7 +1264,7 @@ namespace openui5 {
                         })
                     );
                     for (let item of boRepEx.countries) {
-                        countriesSelect.addItem(
+                        that.countriesSelect.addItem(
                             new sap.ui.core.ListItem("", {
                                 key: item.name,
                                 text: item.name,
@@ -1264,39 +1272,35 @@ namespace openui5 {
                             })
                         );
                     }
-                    this.addItem(countriesSelect);
-                    countriesSelect.bindProperty("selectedKey", this.getBindingInfo("country"));
+                    this.addItem(that.countriesSelect);
+                    that.countriesSelect.bindProperty("selectedKey", this.getBindingInfo("country"));
                     loadProvinces();
-                    if (!ibas.objects.isNull(this.getBindingInfo("province"))) {
-                        provincesSelect.bindProperty("selectedKey", this.getBindingInfo("province"));
-                    } else {
-                        return;
-                    }
                 }
             }
             if (!ibas.objects.isNull(this.getBindingInfo("city"))) {
                 // 获取市级数据
                 let citysLoadStatus: boolean = await boRepEx.getCities();
                 if (citysLoadStatus) {
-                    citiesSelect = new sap.m.Select(this.getId() + "-City", {
+                    that.citiesSelect = new sap.m.Select(this.getId() + "-City", {
                         enabled: that.getEnabled(),
                         change: function (oEvent: any): void {
-                            cityChange(true);
+                            let change: boolean = ibas.objects.isNull(oEvent.getParameter("change")) ? true : false;
+                            cityChange(change);
                         }
                     });
-                    this.addItem(citiesSelect);
-                    citiesSelect.bindProperty("selectedKey", this.getBindingInfo("city"));
+                    this.addItem(that.citiesSelect);
+                    that.citiesSelect.bindProperty("selectedKey", this.getBindingInfo("city"));
                 }
             }
             // 获取区级数据
             if (!ibas.objects.isNull(this.getBindingInfo("district"))) {
                 let districtsLoadStatus: boolean = await boRepEx.getDistricts();
                 if (districtsLoadStatus) {
-                    districtsSelect = new sap.m.Select(this.getId() + "-District", {
+                    this.districtsSelect = new sap.m.Select(this.getId() + "-District", {
                         enabled: that.getEnabled(),
                     });
-                    this.addItem(districtsSelect);
-                    districtsSelect.bindProperty("selectedKey", this.getBindingInfo("district"));
+                    this.addItem(this.districtsSelect);
+                    this.districtsSelect.bindProperty("selectedKey", this.getBindingInfo("district"));
                 }
             }
             if (!ibas.objects.isNull(this.getBindingInfo("province")) && !ibas.objects.isNull(this.getBindingInfo("country"))) {
@@ -1309,17 +1313,21 @@ namespace openui5 {
                 cityChange(false);
             }
             if (!ibas.strings.isEmpty(this.getWidth())) {
-                if (!ibas.objects.isNull(countriesSelect)) {
-                    countriesSelect.setWidth(this.getWidth());
+                if (!ibas.objects.isNull(that.countriesSelect)) {
+                    that.countriesSelect.setWidth(this.getWidth());
+                    that.countriesSelect.setEnabled(this.getEnabled());
                 }
-                if (!ibas.objects.isNull(provincesSelect)) {
-                    provincesSelect.setWidth(this.getWidth());
+                if (!ibas.objects.isNull(that.provincesSelect)) {
+                    that.provincesSelect.setWidth(this.getWidth());
+                    that.provincesSelect.setEnabled(this.getEnabled());
                 }
-                if (!ibas.objects.isNull(citiesSelect)) {
-                    citiesSelect.setWidth(this.getWidth());
+                if (!ibas.objects.isNull(that.citiesSelect)) {
+                    that.citiesSelect.setWidth(this.getWidth());
+                    that.citiesSelect.setEnabled(this.getEnabled());
                 }
-                if (!ibas.objects.isNull(districtsSelect)) {
-                    districtsSelect.setWidth(this.getWidth());
+                if (!ibas.objects.isNull(this.districtsSelect)) {
+                    this.districtsSelect.setWidth(this.getWidth());
+                    that.districtsSelect.setEnabled(this.getEnabled());
                 }
             }
         },
@@ -1329,10 +1337,10 @@ namespace openui5 {
         getCountry(): string {
             return this.getProperty("country");
         },
-        setProvinces(value: string): void {
+        setProvince(value: string): void {
             this.setProperty("province", value);
         },
-        getProvinces(): string {
+        getProvince(): string {
             return this.getProperty("province");
         },
         setCity(value: string): void {
