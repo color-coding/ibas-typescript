@@ -13,8 +13,6 @@ echo '**************************************************************************
 # 设置参数变量
 cd `dirname $0`
 WORK_FOLDER=${PWD}
-OPNAME=`date '+%Y%m%d_%H%M%S'`
-LOGFILE=${WORK_FOLDER}/compile_packages_log_${OPNAME}.txt
 
 echo --当前工作的目录是[${WORK_FOLDER}]
 echo --清除项目缓存
@@ -26,14 +24,14 @@ mkdir -p ${WORK_FOLDER}/release/
 echo --开始编译
 if [ -e ${WORK_FOLDER}/pom.xml ]
 then
-  mvn clean package -f ${WORK_FOLDER}/pom.xml >>$LOGFILE
+  mvn clean package -f ${WORK_FOLDER}/pom.xml
   if [ -e ${WORK_FOLDER}/target/*.war ]
   then
-    cp -r ${WORK_FOLDER}/target/*.war ${WORK_FOLDER}/release >>$LOGFILE
+    cp -r ${WORK_FOLDER}/target/*.war ${WORK_FOLDER}/release
   fi
   if [ -d ${WORK_FOLDER}/target ]
   then
-    rm -rf ${WORK_FOLDER}/target >>$LOGFILE
+    rm -rf ${WORK_FOLDER}/target
   fi
 fi
 
