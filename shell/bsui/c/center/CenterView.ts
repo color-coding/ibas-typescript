@@ -493,6 +493,15 @@ namespace shell {
                             } else if (!ibas.objects.isNull(view.id)) {
                                 container.setTitle(view.id);
                             }
+                            // 接管title属性定义
+                            Object.defineProperty(view, "title", {
+                                get: function (): string {
+                                    return container.getTitle();
+                                },
+                                set: function (value: string): void {
+                                    container.setTitle(value);
+                                }
+                            });
                             if (ibas.objects.instanceOf(view, ibas.UrlView)) {
                                 // 视图为地址视图
                                 this.showUrlView(<ibas.UrlView>view, container);
