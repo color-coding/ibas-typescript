@@ -30,12 +30,26 @@ do
     echo ----检查[${module}]的引用
     for app in `ls -l ${WORK_FOLDER}`
     do
-      if [ -e "${WORK_FOLDER}/${app}/3rdparty/${module}" ]
+      if [ -e "${WORK_FOLDER}/${app}/3rdparty/${module}/index.ts" ]
       then
 # 存在引用
-          echo ------更新[${app}]的引用
-          rm -rf "${WORK_FOLDER}/${app}/3rdparty/${module}"
-          cp -rf "${WORK_FOLDER}/${module}/api" "${WORK_FOLDER}/${app}/3rdparty/${module}"
+        echo ------更新[${app}]的引用
+        rm -rf "${WORK_FOLDER}/${app}/3rdparty/${module}"
+        cp -rf "${WORK_FOLDER}/${module}/api" "${WORK_FOLDER}/${app}/3rdparty/${module}"
+      fi
+    done
+  fi
+  if [ -e "${WORK_FOLDER}/${module}/index.d.ts" ]
+  then
+# 存在index.d.ts
+    echo ----检查[${module}]的声明
+    for app in `ls -l ${WORK_FOLDER}`
+    do
+      if [ -e "${WORK_FOLDER}/${app}/3rdparty/${module}/index.d.ts" ]
+      then
+# 存在声明
+        echo ------更新[${app}]的声明
+        cp -f "${WORK_FOLDER}/${module}/index.d.ts" "${WORK_FOLDER}/${app}/3rdparty/${module}/index.d.ts"
       fi
     done
   fi

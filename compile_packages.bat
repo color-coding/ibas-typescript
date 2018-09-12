@@ -16,12 +16,12 @@ SET WORK_FOLDER=%~dp0
 
 echo --当前工作的目录是[%WORK_FOLDER%]
 echo --清除项目缓存
-if exist %WORK_FOLDER%release\ rd /s /q %WORK_FOLDER%release\
-if not exist %WORK_FOLDER%release md %WORK_FOLDER%release
+if exist %WORK_FOLDER%release\ rd /s /q %WORK_FOLDER%release\ >nul
+if not exist %WORK_FOLDER%release md %WORK_FOLDER%release >nul
 echo --开始编译
 if exist %WORK_FOLDER%pom.xml (
-  call "%MAVEN_HOME%\bin\mvn" clean package -f %WORK_FOLDER%pom.xml
-  if exist %WORK_FOLDER%\target\*.war copy /y %WORK_FOLDER%\target\*.war %WORK_FOLDER%release\
+  call "%MAVEN_HOME%\bin\mvn" -q clean package -f %WORK_FOLDER%pom.xml
+  if exist %WORK_FOLDER%\target\*.war copy /y %WORK_FOLDER%\target\*.war %WORK_FOLDER%release\ >nul
   if exist %WORK_FOLDER%\target\ rd /s /q %WORK_FOLDER%\target\
 )
 

@@ -24,7 +24,7 @@ mkdir -p ${WORK_FOLDER}/release/
 echo --开始编译
 if [ -e ${WORK_FOLDER}/pom.xml ]
 then
-  mvn clean package -f ${WORK_FOLDER}/pom.xml
+  mvn -q clean package -f ${WORK_FOLDER}/pom.xml
   if [ -e ${WORK_FOLDER}/target/*.war ]
   then
     cp -r ${WORK_FOLDER}/target/*.war ${WORK_FOLDER}/release

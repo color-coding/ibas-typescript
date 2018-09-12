@@ -27,15 +27,27 @@ for /f %%n in ('dir /ad /b "%WORK_FOLDER%"') do (
   if exist !MODULE_FOLDER!\api (
 REM 存在api
     echo ----检查[%%n]的引用
-      for /f %%m in ('dir /ad /b') do (
-        set APP_FOLDER=%WORK_FOLDER%\%%m
-        if exist !APP_FOLDER!\3rdparty\%%n (
+    for /f %%m in ('dir /ad /b') do (
+      set APP_FOLDER=%WORK_FOLDER%\%%m
+      if exist !APP_FOLDER!\3rdparty\%%n\index.ts (
 REM 存在引用
-          echo ------更新[%%m]的引用
-          rd /s /q !APP_FOLDER!\3rdparty\%%n
-          xcopy /s /y /i /q !MODULE_FOLDER!\api !APP_FOLDER!\3rdparty\%%n >nul
-        )
+        echo ------更新[%%m]的引用
+        rd /s /q !APP_FOLDER!\3rdparty\%%n
+        xcopy /s /y /i /q !MODULE_FOLDER!\api !APP_FOLDER!\3rdparty\%%n >nul
       )
+    )
+  )
+  if exist !MODULE_FOLDER!\index.d.ts (
+REM 存在index.d.ts
+    echo ----检查[%%n]的声明
+    for /f %%m in ('dir /ad /b') do (
+      set APP_FOLDER=%WORK_FOLDER%\%%m
+      if exist !APP_FOLDER!\3rdparty\%%n\index.d.ts (
+REM 存在声明
+        echo ------更新[%%m]的声明
+        copy /y !MODULE_FOLDER!\index.d.ts !APP_FOLDER!\3rdparty\%%n\index.d.ts >nul
+      )
+    )
   )
 )
 cd /d %STARTUP_FOLDER%
