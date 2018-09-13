@@ -89,6 +89,14 @@ namespace ibas {
                 for (let index: number = 2; index < arguments.length; index++) {
                     pars.push(arguments[index]);
                 }
+            } else if (arguments[0] instanceof Error) {
+                // 类型
+                pars.push(emMessageLevel.ERROR);
+                // 内容
+                pars.push(heard + arguments[0].message);
+                for (let index: number = 1; index < arguments.length; index++) {
+                    pars.push(arguments[index]);
+                }
             } else {
                 // 类型
                 pars.push(emMessageLevel.INFO);
