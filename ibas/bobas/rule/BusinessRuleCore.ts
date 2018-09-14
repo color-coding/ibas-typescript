@@ -103,6 +103,10 @@ namespace ibas {
         execute(bo: IBusinessObject, ...properties: string[]): void {
             let rules: IList<IBusinessRule> = new ArrayList<IBusinessRule>();
             for (let rule of this) {
+                // 只执行一次
+                if (rules.contain(rule)) {
+                    continue;
+                }
                 let done: boolean = false;
                 for (let property of properties) {
                     if (objects.isNull(rule.inputProperties)) {

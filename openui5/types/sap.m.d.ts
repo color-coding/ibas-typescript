@@ -43368,5 +43368,13 @@ declare namespace sap {
       "Delimited",
       "None"
     }
+    /**
+     * Available Panel Accessible Landmark Roles.
+    */
+    enum PanelAccessibleRole {
+      "Complementary",
+      "Form",
+      "Region",
+    }
   }
 }

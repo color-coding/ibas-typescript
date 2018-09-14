@@ -1043,8 +1043,7 @@ namespace ibas {
             if (boKeys.startsWith("{[") && boKeys.endsWith("]}")) {
                 boKeys = boKeys.substring(1, boKeys.length - 1);
                 boKeys = strings.trim(boKeys);
-                boKeys = strings.replace(boKeys, "[", "");
-                boKeys = strings.replace(boKeys, "]", "");
+                boKeys = strings.remove(boKeys, "[", "]");
                 let values: string[] = boKeys.split(".");
                 if (values.length === 2) {
                     let vFields: string[] = values[1].split("&");

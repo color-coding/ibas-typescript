@@ -184,7 +184,11 @@ namespace ibas {
             }
             let index: number = message.lastIndexOf(MSG_SIGN_EXCEPTION);
             if (index > 0) {
-                return message.substring(index + MSG_SIGN_EXCEPTION.length);
+                let value: string = message.substring(index + MSG_SIGN_EXCEPTION.length);
+                value = ibas.strings.trim(value);
+                if (!ibas.strings.isEmpty(value)) {
+                    return value;
+                }
             }
             return message;
         }
@@ -698,9 +702,7 @@ namespace ibas {
             }
             if (content.startsWith("{[") && content.endsWith("]}")) {
                 content = content.substring(1, content.length - 1);
-                content = strings.trim(content);
-                content = strings.replace(content, "[", "");
-                content = strings.replace(content, "]", "");
+                content = strings.remove(content, " ", "[", "]");
                 let values: string[] = content.split(".");
                 if (values.length === 2) {
                     let criteria: ICriteria = new Criteria();

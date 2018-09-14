@@ -254,6 +254,27 @@ namespace ibas {
             return replace(content, " ", "");
         }
         /**
+         * 删除指定字符
+         * @param content 待分析字符串
+         * @param args 删除的字符
+         */
+        export function remove(content: string, ...args: string[]): string {
+            if (content === undefined || content === null) { throw new Error("content is invalid."); }
+            if (args === undefined || args === null || args.length === 0) { throw new Error("args is invalid."); }
+            let removes: string = "";
+            for (let item of args) {
+                removes = removes + item;
+            }
+            let value: string = "";
+            for (let item of content) {
+                if (removes.indexOf(item) >= 0) {
+                    continue;
+                }
+                value = value + item;
+            }
+            return value;
+        }
+        /**
          * 替换字符，全部
          * @param content 待分析字符
          * @param search 查询的字符
