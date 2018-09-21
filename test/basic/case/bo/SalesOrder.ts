@@ -830,7 +830,7 @@ namespace test {
                 new ibas.BusinessRuleMinValue<number>(0, SalesOrderItem.PROPERTY_QUANTITY_NAME), // 不能低于0
                 new ibas.BusinessRuleMinValue<number>(0, SalesOrderItem.PROPERTY_PRICE_NAME), // 不能低于0
                 // 计算总计 = 数量 * 价格
-                new ibas.BusinessRuleMultiplication(SalesOrderItem.PROPERTY_LINETOTAL_NAME, SalesOrderItem.PROPERTY_QUANTITY_NAME, SalesOrderItem.PROPERTY_PRICE_NAME),
+                new ibas.BusinessRuleMultiplicativeDeductionEx(SalesOrderItem.PROPERTY_QUANTITY_NAME, SalesOrderItem.PROPERTY_PRICE_NAME, SalesOrderItem.PROPERTY_LINETOTAL_NAME),
                 new ibas.BusinessRuleMinValue<number>(0, SalesOrderItem.PROPERTY_LINETOTAL_NAME), // 不能低于0
             ];
         }

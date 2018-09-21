@@ -17,8 +17,10 @@ namespace ibas {
          *
          * @param bo
          *            执行规则的业务对象
+         * @param trigger
+         *            触发者
          */
-        execute(bo: IBusinessObject): void;
+        execute(bo: IBusinessObject, trigger?: string): void;
         /**
          * 输入的属性集合
          *
@@ -122,7 +124,7 @@ namespace ibas {
                 }
             }
             for (let rule of rules) {
-                rule.execute(bo);
+                rule.execute(bo, ibas.strings.valueOf(properties));
             }
         }
     }
@@ -140,7 +142,7 @@ namespace ibas {
         /** 被影响的属性集合 */
         affectedProperties: IList<string>;
         /** 运行业务规则 */
-        abstract execute(bo: IBusinessObject): void;
+        abstract execute(bo: IBusinessObject, trigger: string): void;
     }
     /** 业务规则内容 */
     export class BusinessRuleContextCommon {
@@ -151,14 +153,16 @@ namespace ibas {
         source: IBusinessObject;
         inputValues: Map<string, any>;
         outputValues: Map<string, any>;
+        trigger: string;
     }
     /** 普通业务规则 */
     export abstract class BusinessRuleCommon extends BusinessRule {
         /** 运行业务逻辑 */
-        execute(bo: IBusinessObject): void {
+        execute(bo: IBusinessObject, trigger: string = undefined): void {
             try {
                 let context: BusinessRuleContextCommon = new BusinessRuleContextCommon();
                 context.source = bo;
+                context.trigger = trigger;
                 if (!objects.isNull(this.inputProperties)) {
                     for (let item of this.inputProperties) {
                         context.inputValues.set(item, bo.getProperty(item));

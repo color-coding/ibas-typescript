@@ -396,4 +396,33 @@ namespace ibas {
             context.outputValues.set(this.result, ibas.numbers.round(result));
         }
     }
+    /** 业务规则-乘除法推导，增强 */
+    export class BusinessRuleMultiplicativeDeductionEx extends BusinessRuleMultiplicativeDeduction {
+        /** 计算规则 */
+        protected compute(context: BusinessRuleContextCommon): void {
+            if (strings.isEmpty(context.trigger)) {
+                super.compute(context);
+            } else {
+                let result: number = numbers.valueOf(context.inputValues.get(this.result));
+                let multiplicand: number = numbers.valueOf(context.inputValues.get(this.multiplicand));
+                let multiplier: number = numbers.valueOf(context.inputValues.get(this.multiplier));
+                if (strings.equalsIgnoreCase(context.trigger, this.result)) {
+                    // 结果触发
+                    if (multiplicand !== 0) {
+                        // 乘数 = 结果 / 被乘数
+                        multiplier = result / multiplicand;
+                        context.outputValues.set(this.multiplier, ibas.numbers.round(multiplier));
+                    }
+                } else if (strings.equalsIgnoreCase(context.trigger, this.multiplicand)
+                    || strings.equalsIgnoreCase(context.trigger, this.multiplier)) {
+                    // 被乘数触发 or 乘数触发
+                    // 结果 = 乘数 * 被乘数
+                    result = multiplier * multiplicand;
+                    context.outputValues.set(this.result, ibas.numbers.round(result));
+                } else {
+                    super.compute(context);
+                }
+            }
+        }
+    }
 }
