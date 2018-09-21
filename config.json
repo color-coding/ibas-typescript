@@ -11,6 +11,7 @@
     "welcomeImage": "sap-icon://hello-world",
     "defalutServiceIcon": "sap-icon://e-care",
     "defalutModuleIcon": "sap-icon://nutrition-activity",
+    "disableReportFunctions": true,
     "defaultUser": "admin",
     "defaultPassword": "1q2w3e",
     "useCache": true,

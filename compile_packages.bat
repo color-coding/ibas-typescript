@@ -25,4 +25,4 @@ if exist %WORK_FOLDER%pom.xml (
   if exist %WORK_FOLDER%\target\ rd /s /q %WORK_FOLDER%\target\
 )
 
-echo --编译完成，更多信息请查看[compile_packages_log_%OPNAME%.txt]
+echo --编译完成

@@ -398,6 +398,16 @@ namespace ibas {
     }
     /** 业务规则-乘除法推导，增强 */
     export class BusinessRuleMultiplicativeDeductionEx extends BusinessRuleMultiplicativeDeduction {
+        /**
+         *
+         * @param augend 属性-被乘数
+         * @param addend 属性-乘数
+         * @param result 属性-结果
+         */
+        constructor(multiplicand: string, multiplier: string, result: string) {
+            super(multiplicand, multiplier, result);
+            this.affectedProperties.add(this.multiplicand);
+        }
         /** 计算规则 */
         protected compute(context: BusinessRuleContextCommon): void {
             if (strings.isEmpty(context.trigger)) {
@@ -408,17 +418,25 @@ namespace ibas {
                 let multiplier: number = numbers.valueOf(context.inputValues.get(this.multiplier));
                 if (strings.equalsIgnoreCase(context.trigger, this.result)) {
                     // 结果触发
-                    if (multiplicand !== 0) {
+                    if (multiplicand !== 0 && multiplier === 0) {
                         // 乘数 = 结果 / 被乘数
                         multiplier = result / multiplicand;
                         context.outputValues.set(this.multiplier, ibas.numbers.round(multiplier));
+                    } else if (multiplier !== 0) {
+                        // 被乘数 = 结果 / 乘数
+                        let newMultiplicand: number = result / multiplier;
+                        if (Math.abs(newMultiplicand - multiplicand) > 0.00001) {
+                            context.outputValues.set(this.multiplicand, ibas.numbers.round(newMultiplicand));
+                        }
                     }
                 } else if (strings.equalsIgnoreCase(context.trigger, this.multiplicand)
                     || strings.equalsIgnoreCase(context.trigger, this.multiplier)) {
                     // 被乘数触发 or 乘数触发
                     // 结果 = 乘数 * 被乘数
-                    result = multiplier * multiplicand;
-                    context.outputValues.set(this.result, ibas.numbers.round(result));
+                    let newResult: number = multiplier * multiplicand;
+                    if (Math.abs(newResult - result) > 0.00001) {
+                        context.outputValues.set(this.result, ibas.numbers.round(newResult));
+                    }
                 } else {
                     super.compute(context);
                 }

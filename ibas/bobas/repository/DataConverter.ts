@@ -302,8 +302,8 @@ namespace ibas {
                 let remote: ibas4j.ICondition = data;
                 let newData: Condition = new Condition();
                 newData.alias = remote.Alias;
-                newData.bracketClose = remote.BracketClose;
-                newData.bracketOpen = remote.BracketOpen;
+                newData.bracketClose = ibas.objects.isNull(remote.BracketClose) ? 0 : remote.BracketClose;
+                newData.bracketOpen = ibas.objects.isNull(remote.BracketOpen) ? 0 : remote.BracketOpen;
                 newData.comparedAlias = remote.ComparedAlias;
                 newData.value = remote.Value;
                 newData.operation = enums.valueOf(emConditionOperation, remote.Operation);
