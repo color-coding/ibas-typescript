@@ -178,23 +178,27 @@ namespace ibas {
                     caller = arguments[0];
                 } else if (arguments[0] instanceof Error) {
                     caller = {
-                        title: i18n.prop(this.name),
                         type: emMessageType.ERROR,
-                        message: config.get(CONFIG_ITEM_DEBUG_MODE, false) ? arguments[0].stack : arguments[0].message
+                        message: !config.get(CONFIG_ITEM_DEBUG_MODE, false) ?
+                            arguments[0].message
+                            : strings.isWith(arguments[0].stack, "Error: ", undefined) ?
+                                arguments[0].stack
+                                : strings.format("Error: {0}\n{1}", arguments[0].message, arguments[0].stack)
                     };
                 } else {
                     caller = {
-                        title: i18n.prop(this.name),
                         type: emMessageType.INFORMATION,
                         message: arguments[0]
                     };
                 }
             } else if (arguments.length === 2) {
                 caller = {
-                    title: i18n.prop(this.name),
                     type: arguments[0],
                     message: arguments[1]
                 };
+            }
+            if (strings.isEmpty(caller.title)) {
+                caller.title = strings.isEmpty(this.description) ? this.name : this.description;
             }
             if (!objects.isNull(this.viewShower)) {
                 this.viewShower.messages(caller);

@@ -349,6 +349,29 @@ namespace ibas {
                 return value.toString();
             }
         }
+        /**
+         * 判断字符的开始和结束字符
+         * @param value 内容
+         * @param starts 开始字符
+         * @param ends 结束字符
+         */
+        export function isWith(value: any, starts: string, ends: string): boolean {
+            let sValue: string = valueOf(value);
+            if (isEmpty(sValue)) {
+                return false;
+            }
+            if (!isEmpty(starts)) {
+                if (!sValue.startsWith(starts)) {
+                    return false;
+                }
+            }
+            if (!isEmpty(ends)) {
+                if (!sValue.endsWith(ends)) {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
     /**
      * 唯一标识
