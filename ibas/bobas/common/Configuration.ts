@@ -122,6 +122,12 @@ namespace ibas {
                                     return type[item];
                                 }
                             }
+                        } else if (typeof defalut === "string") {
+                            value = strings.valueOf(value);
+                        } else if (typeof defalut === "number") {
+                            value = numbers.valueOf(value);
+                        } else if (typeof defalut === "boolean") {
+                            value = booleans.valueOf(value);
                         }
                     }
                 }

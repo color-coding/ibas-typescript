@@ -418,8 +418,9 @@ namespace ibas {
                 let multiplier: number = numbers.valueOf(context.inputValues.get(this.multiplier));
                 if (strings.equalsIgnoreCase(context.trigger, this.result)) {
                     // 结果触发
-                    if (multiplicand !== 0 && multiplier === 0) {
+                    if (multiplicand !== 0 && multiplier <= 0) {
                         // 乘数 = 结果 / 被乘数
+                        // 小于0时，重新计算
                         multiplier = result / multiplicand;
                         context.outputValues.set(this.multiplier, ibas.numbers.round(multiplier));
                     } else if (multiplier !== 0) {

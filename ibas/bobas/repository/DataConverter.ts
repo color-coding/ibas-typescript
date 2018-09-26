@@ -15,6 +15,13 @@
 namespace ibas {
     const PROPERTY_BOCONVERTER: symbol = Symbol("boConverter");
     const MSG_SIGN_EXCEPTION: string = "Exception: ";
+    /** 被转换的数据 */
+    export interface IConvertedData {
+        /** 转换之前 */
+        beforeConvert(): void;
+        /** 解析之后 */
+        afterParsing(): void;
+    }
     /** 数据转换，ibas4java */
     export abstract class DataConverter4j implements IDataConverter {
         /**
@@ -550,6 +557,10 @@ namespace ibas {
                 }
                 target[tName] = sValue;
             }
+            // 解析完成后操作
+            if ((<IConvertedData>target).afterParsing instanceof Function) {
+                (<IConvertedData>target).afterParsing();
+            }
             if (target instanceof TrackableBase) {
                 target.isLoading = false;
             }
@@ -574,6 +585,10 @@ namespace ibas {
          */
         private convertProperties(source: any, target: any): any {
             this.setTypeName(target, source.constructor.name);
+            // 转换前操作
+            if ((<IConvertedData>source).beforeConvert instanceof Function) {
+                (<IConvertedData>source).beforeConvert();
+            }
             for (let sName in source) {
                 if (objects.isNull(sName)) {
                     continue;
