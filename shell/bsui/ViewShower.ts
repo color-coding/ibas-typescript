@@ -6,6 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 /// <reference path="../../ibas/index.d.ts" />
+/// <reference path="../index.d.ts" />
 /// <reference path="../../openui5/index.d.ts" />
 namespace shell {
     export namespace ui {
@@ -14,6 +15,7 @@ namespace shell {
          */
         export class ViewShower implements ibas.IViewShower {
             constructor() {
+                document.title = ibas.config.get(app.CONFIG_ITEM_APPLICATION_NAME, ibas.i18n.prop("shell_name"));
                 let that: this = this;
                 // 键盘按钮按下
                 ibas.browserEventManager.registerListener({
@@ -227,7 +229,7 @@ namespace shell {
                 sap.m.MessageBox.show(
                     caller.message, {
                         icon: openui5.utils.toMessageBoxIcon(caller.type),
-                        title: ibas.i18n.prop("shell_name"),
+                        title: ibas.config.get(app.CONFIG_ITEM_APPLICATION_NAME, ibas.i18n.prop("shell_name")),
                         actions: openui5.utils.toMessageBoxAction(caller.actions),
                         onClose(oAction: any): void {
                             if (!ibas.objects.isNull(caller.onCompleted)) {

@@ -64,7 +64,6 @@ namespace shell {
                     // 设置应用名称
                     let user: string = ibas.config.get(CONFIG_ITEM_DEFAULT_USER);
                     let password: string = ibas.config.get(CONFIG_ITEM_DEFAULT_PASSWORD);
-                    document.title = ibas.config.get(app.CONFIG_ITEM_APPLICATION_NAME, ibas.i18n.prop("shell_name"));
                     let that: this = this;
                     this.form = new sap.ui.layout.form.SimpleForm("", {
                         content: [
