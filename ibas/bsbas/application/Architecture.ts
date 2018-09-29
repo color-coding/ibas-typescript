@@ -167,6 +167,8 @@ namespace ibas {
         icon: string;
         /** 视图导航 */
         navigation: IViewNavigation;
+        /** 视图显示者 */
+        viewShower: IViewShower;
         /** 默认应用 */
         default(): IApplication<IView>;
     }
@@ -439,11 +441,9 @@ namespace ibas {
                     item.id = uuids.random();
                 }
                 item.navigation = this.navigation();
-                item.viewShower = this.viewShower;
             } else if (item instanceof ServiceMapping) {
                 // 注册服务
                 item.navigation = this.navigation();
-                item.viewShower = this.viewShower;
             }
             super.register(item);
         }
@@ -487,8 +487,6 @@ namespace ibas {
         }
         /** 创建视图导航 */
         abstract navigation(): IViewNavigation;
-        /** 视图显示者 */
-        viewShower: IViewShower;
         /** 设置仓库地址，返回值是否执行默认设置 */
         setRepository(address: string): boolean {
             return true;
@@ -531,6 +529,8 @@ namespace ibas {
         icon: string;
         /** 创建视图导航 */
         navigation: IViewNavigation;
+        /** 视图显示者 */
+        viewShower: IViewShower;
         /** 默认功能 */
         abstract default(): IApplication<IView>;
     }

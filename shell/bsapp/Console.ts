@@ -23,6 +23,8 @@ namespace shell {
                 this.version = CONSOLE_VERSION;
                 this.copyright = ibas.i18n.prop("shell_license");
             }
+            /** 视图显示者 */
+            viewShower: ibas.IViewShower;
             private _navigation: ibas.IViewNavigation;
             /** 视图导航 */
             navigation(): ibas.IViewNavigation {

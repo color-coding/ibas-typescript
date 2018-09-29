@@ -116,12 +116,15 @@ namespace shell {
                         ibas.strings.isEmpty(this.currentUser.name) ? this.currentUser.code : this.currentUser.name)
                 );
                 this.functionMap = new Map<string, ibas.IModuleFunction>();
-                let user: string = this.currentUser.code;
-                let platform: string = ibas.enums.toString(ibas.emPlantform, this.plantform);
                 let that: this = this;
+                // 设置服务参数
+                ibas.servicesManager.viewShower = () => {
+                    return that;
+                };
+                // 权限加载
                 privilegeManager.load({
-                    user: user,
-                    platform: platform,
+                    user: this.currentUser.code,
+                    platform: ibas.enums.toString(ibas.emPlantform, this.plantform),
                     onError(error: Error): void {
                         that.view.showMessageBox({
                             title: that.description,
@@ -139,8 +142,8 @@ namespace shell {
                         }
                         // 权限加载成功，加载模块
                         consoleManager.load({
-                            user: user,
-                            platform: platform,
+                            user: that.currentUser.code,
+                            platform: ibas.enums.toString(ibas.emPlantform, that.plantform),
                             onError(error: Error): void {
                                 that.view.showMessageBox({
                                     title: that.description,
@@ -165,6 +168,9 @@ namespace shell {
                                     if (privilegeManager.canRun(console)) {
                                         // 处理功能
                                         for (let func of console.functions()) {
+                                            if (ibas.objects.isNull(func.viewShower)) {
+                                                func.viewShower = that;
+                                            }
                                             // 注册功能事件响应
                                             that.functionMap.set(func.id, func);
                                             that.view.showModuleFunction(console.name, func);
@@ -177,6 +183,9 @@ namespace shell {
                                         for (let app of console.applications()) {
                                             // 显示常驻应用
                                             if (ibas.objects.instanceOf(app, ibas.ResidentApplication)) {
+                                                if (ibas.objects.isNull(app.viewShower)) {
+                                                    app.viewShower = that;
+                                                }
                                                 that.view.showResidentView(<ibas.IBarView>app.view);
                                             }
                                         }
@@ -191,8 +200,6 @@ namespace shell {
                                         ibas.i18n.add(item.id, item.description);
                                     }
                                 });
-                                // 设置视图显示者
-                                console.viewShower = that;
                                 console.run();
                             }
                         });

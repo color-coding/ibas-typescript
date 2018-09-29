@@ -25,6 +25,7 @@
   "sys_invaild_judgment_link_conditions": "无效的判断链条件",
   "sys_application_no_services": "应用[{0}]没有匹配的服务",
   "sys_application_view_was_displayed": "应用[{0}]的视图已经显示",
+  "sys_getting_available_services": "正在获取[{0}]的可用服务",
   "sys_invalid_view_shower": "应用[{0}]的视图显示者无效",
   "sys_invalid_view": "应用[{0}]的视图无效",
   "sys_invalid_view_data": "应用[{0}]的视图数据无效",
