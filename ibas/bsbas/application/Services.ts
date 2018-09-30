@@ -39,8 +39,6 @@ namespace ibas {
         icon: string;
         /** 服务代理的类型 */
         proxy: any;
-        /** 视图显示者 */
-        viewShower: IViewShower;
         /** 视图导航 */
         navigation: IViewNavigation;
         /** 创建服务实例 */
@@ -165,8 +163,6 @@ namespace ibas {
         constructor() {
             this.icon = config.get(CONFIG_ITEM_DEFALUT_SERVICE_ICON);
         }
-        /** 视图显示者 */
-        viewShower: IViewShower;
         /** 视图导航 */
         navigation: IViewNavigation;
         /** 唯一标识 */
@@ -302,7 +298,7 @@ namespace ibas {
                                     "services: call service [{0}-{1}], hash value [{2}] ", mapping.description, mapping.id, method);
                                 // 运行服务
                                 if (objects.instanceOf(service, Application)) {
-                                    (<Application<IView>>service).viewShower = mapping.viewShower;
+                                    (<Application<IView>>service).viewShower = that.viewShower();
                                     (<Application<IView>>service).navigation = mapping.navigation;
                                 }
                                 service.run({
@@ -315,6 +311,10 @@ namespace ibas {
                     }
                 }
             });
+        }
+        /** 视图显示者 */
+        viewShower(): IViewShower {
+            throw new Error("Method not implemented.");
         }
         /** 服务映射 */
         private mappings: Map<string, IServiceMapping>;
@@ -352,6 +352,7 @@ namespace ibas {
         getServices(caller: IServiceCaller<IServiceContract>): IServiceAgent[] {
             let services: Array<IServiceAgent> = new Array<IServiceAgent>();
             if (!objects.isNull(this.mappings)) {
+                let viewShower: IViewShower = this.viewShower();
                 for (let mapping of this.mappings.values()) {
                     if (!objects.instanceOf(caller.proxy, mapping.proxy)) {
                         continue;
@@ -370,7 +371,7 @@ namespace ibas {
                             if (!objects.isNull(service)) {
                                 // 运行服务
                                 if (objects.instanceOf(service, Application)) {
-                                    (<Application<IView>>service).viewShower = mapping.viewShower;
+                                    (<Application<IView>>service).viewShower = viewShower;
                                     (<Application<IView>>service).navigation = mapping.navigation;
                                 }
                                 service.run(caller);
@@ -393,6 +394,8 @@ namespace ibas {
             if (objects.isNull(caller.proxy) || !objects.instanceOf(caller.proxy, ServiceProxy)) {
                 throw new Error(i18n.prop("sys_invalid_parameter", "caller.proxy"));
             }
+            this.viewShower().proceeding(undefined,
+                emMessageType.INFORMATION, i18n.prop("sys_getting_available_services", objects.getTypeName(caller.proxy)));
             for (let service of this.getServices(caller)) {
                 if (!strings.isEmpty(caller.category)
                     && !(caller.category === service.category

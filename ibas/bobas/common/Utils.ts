@@ -763,6 +763,19 @@ namespace ibas {
             return value;
         }
     }
+
+    /**
+     * 布尔值
+     */
+    export namespace booleans {
+        /**  布尔值 */
+        export function valueOf(data: any): boolean {
+            if (typeof data === "boolean") {
+                return <boolean>data;
+            }
+            return Boolean(data);
+        }
+    }
     /**
      * 地址
      */
