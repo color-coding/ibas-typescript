@@ -843,36 +843,41 @@ namespace ibas {
             let fileName2: string = fileName.indexOf(ibas.SIGN_MIN_LIBRARY + ".js") > 0 ? fileName : fileName.replace(".js", ibas.SIGN_MIN_LIBRARY + ".js");
             let root: string = window.document.location.origin;
             let scripts: NodeListOf<HTMLScriptElement> = document.getElementsByTagName("script");
-            for (let index: number = 0; index < scripts.length; index++) {
-                let script: HTMLScriptElement = scripts[index];
-                if (script.src !== undefined && script.src !== null && script.src.length !== 0) {
-                    let url: string = script.src;
-                    if (url.indexOf("./") >= 0) {
-                        // 相对路径地址，需要处理下
-                        if (url.startsWith("http")) {
-                            url = normalize(url);
-                        } else {
-                            if (objects.isNull(script.baseURI)) {
-                                // 有的浏览器，不存在此属性
-                                url = normalize(window.document.location.origin + script.src);
+            if (scripts.length > 0) {
+                for (let index: number = 0; index < scripts.length; index++) {
+                    let script: HTMLScriptElement = scripts[index];
+                    if (script.src !== undefined && script.src !== null && script.src.length !== 0) {
+                        let url: string = script.src;
+                        if (url.indexOf("./") >= 0) {
+                            // 相对路径地址，需要处理下
+                            if (url.startsWith("http")) {
+                                url = normalize(url);
                             } else {
-                                url = normalize(script.baseURI + script.src);
+                                if (objects.isNull(script.baseURI)) {
+                                    // 有的浏览器，不存在此属性
+                                    url = normalize(window.document.location.origin + script.src);
+                                } else {
+                                    url = normalize(script.baseURI + script.src);
+                                }
                             }
                         }
-                    }
-                    if (url.indexOf("?") > 0) {
-                        // 去除参数部分
-                        url = url.substring(0, url.indexOf("?"));
-                    }
-                    if (url.endsWith(fileName)) {
-                        root = url.substring(0, url.lastIndexOf("/"));
-                        break;
-                    }
-                    if (url.endsWith(fileName2)) {
-                        root = url.substring(0, url.lastIndexOf("/"));
-                        break;
+                        if (url.indexOf("?") > 0) {
+                            // 去除参数部分
+                            url = url.substring(0, url.indexOf("?"));
+                        }
+                        if (url.endsWith(fileName)) {
+                            root = url.substring(0, url.lastIndexOf("/"));
+                            break;
+                        }
+                        if (url.endsWith(fileName2)) {
+                            root = url.substring(0, url.lastIndexOf("/"));
+                            break;
+                        }
                     }
                 }
+            } else {
+                let url: string = normalize(rootUrl() + fileName);
+                root = url.substring(0, url.lastIndexOf("/"));
             }
             return root;
         }
