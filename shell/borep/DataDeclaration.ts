@@ -92,8 +92,10 @@ namespace shell {
             Description: string;
             /** 查询 */
             Searched: boolean;
-            /** 可编辑 */
-            Editable: boolean;
+            /** 系统的 */
+            Systemed: boolean;
+            /** 授权的 */
+            Authorised: ibas.emAuthoriseType;
             /** 值集合 */
             Values: IBOPropertyValue[];
         }
