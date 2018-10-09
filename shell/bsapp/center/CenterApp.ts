@@ -475,6 +475,7 @@ namespace shell {
                                 }
                                 userModules.add(item);
                             }
+                            // 定义Promise数组,包含所有模块控制台加载的Promise实例
                             let promises: ibas.ArrayList<Promise<ibas.ModuleConsole>> = new ibas.ArrayList<Promise<ibas.ModuleConsole>>();
                             for (let module of userModules) {
                                 loader.onStatusMessage(
@@ -585,6 +586,7 @@ namespace shell {
                                         "center: module [{0}] {root: [{1}], index: [{2}]}.", module.name, module.address, module.index);
                                 }));
                             }
+                            // 方法Promise.all可在所有异步加载模块控制台完成后触发
                             Promise.all(promises).then(resultList => {
                                 if (!ibas.objects.isNull(loader.onAllConsoleCompleted)) {
                                     loader.onAllConsoleCompleted();
