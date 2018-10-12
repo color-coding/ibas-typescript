@@ -718,7 +718,7 @@ namespace openui5 {
         }
     });
     /**
-     * 数据所有者Input 继承sap.m.ex.AutoBOInput
+     * 数据所有者Input 继承sap.m.ex.BOChooseInput
      */
     sap.m.ex.BOChooseInput.extend("sap.m.ex.DataOwnerInput", {
         metadata: {
@@ -732,7 +732,6 @@ namespace openui5 {
          */
         fireChooseList: function (): void {
             let that: any = this;
-            let boData: any = this.getBindingContext().getModel().getData();
             let criteria: ibas.Criteria = this.getCriteria();
             if (ibas.objects.isNull(criteria)) {
                 criteria = new ibas.Criteria();
@@ -741,7 +740,7 @@ namespace openui5 {
                 condition.value = "Y";
             }
             ibas.servicesManager.runChooseService<any>({
-                boCode: "${Company}_SYS_USER",
+                boCode: that.getBoCode(),
                 chooseType: that.getChooseType(),
                 criteria: criteria,
                 onCompleted(selecteds: ibas.IList<any>): void {
@@ -771,6 +770,49 @@ namespace openui5 {
         },
         getRepositoryName(): string {
             return "BORepositoryInitialFantasy";
+        },
+        renderer: {
+        },
+    });
+    /**
+     * 数据所属组织Input 继承sap.m.ex.OrganizationInput
+     */
+    sap.m.ex.DataOwnerInput.extend("sap.m.ex.OrganizationInput", {
+        metadata: {
+            properties: {
+            },
+            events: {
+            },
+        },
+        /**
+         * 选择用户后回调事件
+         */
+        chooseCompleted: function (selecteds: ibas.IList<any>): void {
+            if (selecteds !== null && !!selecteds.firstOrDefault()) {
+                this.setSelectedKey(selecteds.firstOrDefault().Code);
+            }
+        },
+        getBoKey(): string {
+            return "code";
+        },
+        getBoCode(): string {
+            return ibas.config.applyVariables("${Company}_SYS_ORGANIZATION");
+        },
+        renderer: {
+        },
+    });
+    /**
+     * 数据所属组织Input 继承sap.m.ex.OrganizationInput
+     */
+    sap.m.ex.OrganizationInput.extend("sap.m.ex.ProjectInput", {
+        metadata: {
+            properties: {
+            },
+            events: {
+            },
+        },
+        getBoCode(): string {
+            return ibas.config.applyVariables("${Company}_SYS_PROJECT");
         },
         renderer: {
         },

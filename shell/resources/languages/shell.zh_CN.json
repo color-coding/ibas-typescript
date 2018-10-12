@@ -82,7 +82,7 @@
     "shell_user_system": "系统用户",
     "shell_user_unknown": "未知用户",
     "shell_url_new_window_opened": "网址已在新窗口打开",
-    "shell_welcome_page": "{0}，欢迎来到【{1}】",
+    "shell_welcome_page": "{0}，你好！\n欢迎来到【{1}】",
     "shell_sorting_modules": "正在整理模块，请稍后",
     "shell_base_on_criteria": "请选择基于的查询",
     "shell_chooose_language": "请选择语言",

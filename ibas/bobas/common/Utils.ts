@@ -113,7 +113,7 @@ namespace ibas {
          * 获取实例的类型名称
          * @param instance 实例
          */
-        export function getTypeName(instance: any): any {
+        export function getTypeName(instance: any): string {
             return getName(getType(instance));
         }
         /**

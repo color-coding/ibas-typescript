@@ -44,8 +44,11 @@ declare namespace sap {
             }
             export class DataOwnerInput extends BOChooseInput {
             }
+            export class OrganizationInput extends BOChooseInput {
+            }
+            export class ProjectInput extends OrganizationInput {
+            }
             export class TeamMembersInput extends DataOwnerInput {
-
             }
             export class BOText extends sap.m.Text {
                 getBoCode(): string;

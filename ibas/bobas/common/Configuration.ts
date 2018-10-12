@@ -138,8 +138,6 @@ namespace ibas {
                     return defalut;
                 }
             }
-            // 记录不能获取到的配置
-            // this.log(emMessageLevel.DEBUG, strings.format("config: unable to get value for [{0}].", key));
             return undefined;
         }
         /** 返回配置项目 */
@@ -150,22 +148,6 @@ namespace ibas {
             }
             return items;
         }
-        private log(level: emMessageLevel, message: string): void {
-            if ((<any>window).ibas !== undefined && (<any>window).ibas !== null
-                && (<any>window).ibas.logger !== undefined && (<any>window).ibas.logger !== null) {
-                let logger: ILogger = <ILogger>(<any>window).ibas.logger;
-                logger.log(level, message);
-            } else {
-                if (level === emMessageLevel.WARN) {
-                    console.warn(message);
-                } if (level === emMessageLevel.ERROR) {
-                    console.error(message);
-                } else {
-                    console.log(message);
-                }
-            }
-        }
-
         private variableMap: Map<string, string>;
         /** 替换字符串中的配置项，配置项示例：${Company} */
         applyVariables(value: string): string {
