@@ -100,7 +100,8 @@ namespace shell {
                         type: BOPropertyInfo.name,
                         Property: newData.property,
                         Searched: newData.searched,
-                        Editable: newData.editable,
+                        Systemed: newData.systemed,
+                        Authorised: newData.authorised,
                         Description: newData.description,
                         Values: values
                     };
@@ -186,7 +187,8 @@ namespace shell {
                     newData.property = remote.Property;
                     newData.searched = remote.Searched;
                     newData.description = remote.Description;
-                    newData.editable = remote.Editable;
+                    newData.systemed = remote.Systemed;
+                    newData.authorised = remote.Authorised;
                     newData.values = new Array<BOPropertyValue>();
                     for (let item of remote.Values) {
                         item.type = BOPropertyValue.name;

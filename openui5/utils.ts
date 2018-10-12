@@ -966,7 +966,7 @@ namespace openui5 {
          */
         export function getUserFieldControl(userFieldInfo: any, bindingPath?: string, readOnly?: boolean): any {
             try {
-                if (ibas.objects.isNull(bindingPath) || ibas.strings.isEmpty(bindingPath)) {
+                if (ibas.objects.isNull(bindingPath) || ibas.strings.isEmpty(bindingPath) || userFieldInfo.authorised === ibas.emAuthoriseType.NONE) {
                     return null;
                 }
                 // 默认为可编辑
@@ -974,7 +974,7 @@ namespace openui5 {
                     readOnly = false;
                 }
                 // 属性信息中可编辑为NO时只读
-                if (userFieldInfo.editable === ibas.emYesNo.NO) {
+                if (userFieldInfo.authorised === ibas.emAuthoriseType.READ) {
                     readOnly = true;
                 }
                 // 只读显示Text控件
