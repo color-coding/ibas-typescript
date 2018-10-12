@@ -842,7 +842,7 @@ namespace ibas {
             if (!fileName.endsWith(".js")) { fileName = fileName + ".js"; }
             let fileName2: string = fileName.indexOf(ibas.SIGN_MIN_LIBRARY + ".js") > 0 ? fileName : fileName.replace(".js", ibas.SIGN_MIN_LIBRARY + ".js");
             let root: string = window.document.location.origin;
-            let scripts: NodeListOf<HTMLScriptElement> = document.getElementsByTagName("script");
+            let scripts: HTMLCollectionOf<HTMLScriptElement> = document.getElementsByTagName("script");
             if (scripts.length > 0) {
                 for (let index: number = 0; index < scripts.length; index++) {
                     let script: HTMLScriptElement = scripts[index];
