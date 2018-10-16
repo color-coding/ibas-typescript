@@ -29,6 +29,10 @@ namespace test {
             this.assertEquals("converter convertDate faild.", sValue, "2017-03-14T23:59:59");
             dValue = ibas.dates.valueOf("2017/3/14T23:59:59");
             this.assertEquals("converter parsingDate faild.", dValue, new Date(2017, 2, 14, 23, 59, 59));
+            this.assertEquals("data within faild.", ibas.dates.within(new Date(2017, 2, 14), undefined), true);
+            this.assertEquals("data within faild.", ibas.dates.within(undefined, new Date(2099, 2, 14)), true);
+            this.assertEquals("data within faild.", ibas.dates.within(new Date(2017, 2, 14), new Date(2099, 2, 14)), true);
+            this.assertEquals("data within faild.", ibas.dates.within(new Date(2017, 2, 14), new Date(2018, 2, 14)), false);
         }
         // 测试字符串操作
         testString(): void {
