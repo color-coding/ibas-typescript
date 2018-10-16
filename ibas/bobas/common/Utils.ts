@@ -734,13 +734,15 @@ namespace ibas {
     export namespace numbers {
         /** 转为整数 */
         export function toInt(data: any): number {
+            if (typeof data === "number") {
+                data = data.toString();
+            }
             let value: number = parseInt(data, 0);
             if (isNaN(value)) {
                 return 0;
             } else {
                 return value;
             }
-
         }
         /**  数字 */
         export function valueOf(data: any): number {

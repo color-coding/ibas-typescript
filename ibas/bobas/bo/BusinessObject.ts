@@ -570,16 +570,22 @@ namespace ibas {
             if (objects.instanceOf(item, BODocumentLine)
                 || objects.instanceOf(item, BOMasterDataLine)
                 || objects.instanceOf(item, BOSimpleLine)) {
-                let max: number = 0;
-                for (let tmp of this) {
-                    let id: number = tmp.getProperty<number>(BO_PROPERTY_NAME_LINEID);
-                    if (!isNaN(id)) {
-                        if (id > max) {
-                            max = id;
+                if (numbers.toInt(item.getProperty(BO_PROPERTY_NAME_LINEID)) <= 0) {
+                    let max: number = 0;
+                    for (let tmp of this) {
+                        if (tmp === item) {
+                            // 自身则下一条
+                            continue;
+                        }
+                        let id: number = tmp.getProperty<number>(BO_PROPERTY_NAME_LINEID);
+                        if (!isNaN(id)) {
+                            if (id > max) {
+                                max = id;
+                            }
                         }
                     }
+                    item.setProperty(BO_PROPERTY_NAME_LINEID, max + 1);
                 }
-                item.setProperty(BO_PROPERTY_NAME_LINEID, max + 1);
             }
             // 处理单据状态
             if (objects.instanceOf(item, BODocumentLine)) {

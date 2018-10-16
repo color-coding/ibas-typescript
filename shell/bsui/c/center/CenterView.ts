@@ -273,25 +273,24 @@ namespace shell {
                  * @param message 消息内容
                  */
                 showStatusMessage(type: ibas.emMessageType, message: string): void {
-                    let that: this = this;
+                    message = message.replace(/\{(.+?)\}/g, function (value: string): string {
+                        return ibas.businessobjects.describe(value);
+                    });
                     let uiType: sap.ui.core.MessageType = openui5.utils.toMessageType(type);
-                    // 特殊字符处理
-                    message = message.replace("{", "(").replace("}", ")");
                     this.messagePopover.destroyContent();
                     this.messagePopover.addContent(
                         new sap.m.MessageStrip("", {
                             width: "100%",
-                            text: message,
                             type: uiType,
                             showIcon: true,
                             showCloseButton: false
-                        })
-                    );
+                        }).setText(message));
                     this.messageTime = ibas.dates.now().getTime();
-                    this.messageHistory.insertItem(new sap.m.MessagePopoverItem("", {
-                        type: uiType,
-                        title: message,
-                    }), 0);
+                    this.messageHistory.insertItem(
+                        new sap.m.MessagePopoverItem("", {
+                            type: uiType,
+                            title: message,
+                        }).setTitle(message), 0);
                     // 清除超出的历史消息
                     if (ibas.objects.isNull(this.messageCount)) {
                         this.messageCount = ibas.config.get(CONFIG_ITEM_MAX_MESSAGE_COUNT, 50);
@@ -306,6 +305,7 @@ namespace shell {
                     if (ibas.objects.isNull(this.statusDelay)) {
                         this.statusDelay = ibas.config.get(CONFIG_ITEM_STATUS_MESSAGES_DELAY, 2) * 1000;
                     }
+                    let that: this = this;
                     setTimeout(function (): void {
                         if (ibas.dates.now().getTime() >= (that.messageTime + that.statusDelay)) {
                             if (that.messagePopover.isOpen() && that.isDisplayed) {
@@ -317,19 +317,19 @@ namespace shell {
                 /** 对话消息 */
                 showMessageBox(caller: ibas.IMessgesCaller): void {
                     jQuery.sap.require("sap.m.MessageBox");
-                    sap.m.MessageBox.show(
-                        caller.message,
-                        {
-                            icon: openui5.utils.toMessageBoxIcon(caller.type),
-                            title: caller.title,
-                            actions: openui5.utils.toMessageBoxAction(caller.actions),
-                            onClose(oAction: any): void {
-                                if (!ibas.objects.isNull(caller.onCompleted)) {
-                                    caller.onCompleted(openui5.utils.toMessageAction(oAction));
-                                }
+                    let message: string = caller.message.replace(/\{(.+?)\}/g, function (value: string): string {
+                        return ibas.businessobjects.describe(value);
+                    });
+                    sap.m.MessageBox.show(message, {
+                        icon: openui5.utils.toMessageBoxIcon(caller.type),
+                        title: caller.title,
+                        actions: openui5.utils.toMessageBoxAction(caller.actions),
+                        onClose(oAction: any): void {
+                            if (!ibas.objects.isNull(caller.onCompleted)) {
+                                caller.onCompleted(openui5.utils.toMessageAction(oAction));
                             }
                         }
-                    );
+                    });
                 }
                 /**
                  * 显示模块
@@ -802,7 +802,6 @@ namespace shell {
                         // 查询面板无效，不添加
                         this.showStatusMessage(ibas.emMessageType.ERROR, ibas.i18n.prop("shell_invalid_query_panel"));
                     } else {
-                        let that: this = this;
                         // 设置视图导航
                         queryPanel.navigation = this.application.navigation;
                         queryPanel.viewShower = <any>this.application;
