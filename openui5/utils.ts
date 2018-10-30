@@ -458,13 +458,18 @@ namespace openui5 {
         }
         /** 改变表格选择方式（复选框单选）  */
         export function changeSelectionStyle(table: sap.ui.table.Table, chooseType: ibas.emChooseType): void {
+            if (!(table instanceof sap.ui.table.Table)) {
+                return;
+            }
             if (chooseType === ibas.emChooseType.SINGLE) {
-                if (!ibas.objects.isNull(table) && ibas.objects.instanceOf(table, sap.ui.table.Table)) {
-                    table.setSelectionMode(sap.ui.table.SelectionMode.MultiToggle);
-                    table.attachRowSelectionChange(function (oEvent: any): void {
-                        this.setSelectedIndex(this.getSelectedIndex());
-                    });
-                }
+                table.setEnableSelectAll(false);
+                table.setSelectionMode(sap.ui.table.SelectionMode.MultiToggle);
+                table.attachRowSelectionChange(function (oEvent: any): void {
+                    this.setSelectedIndex(this.getSelectedIndex());
+                });
+            }
+            if (chooseType === ibas.emChooseType.MULTIPLE) {
+                table.setEnableSelectAll(true);
             }
         }
         /** 转换选择类型  */
