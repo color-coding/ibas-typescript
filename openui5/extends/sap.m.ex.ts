@@ -691,21 +691,54 @@ namespace openui5 {
         },
         _getValueHelpIcon: function (Control: any): void {
             let that: any = this;
-            let IconPool: any = sap.ui.require("sap/ui/core/IconPool");
-            if (!this._oValueHelpIcon) {
-                let sURI: any = IconPool.getIconURI("value-help");
-                this._oValueHelpIcon = IconPool.createControlByURI({
-                    src: sURI,
+            if (ibas.objects.isNull(this.addEndIcon)) {
+                let IconPool: any = sap.ui.require("sap/ui/core/IconPool");
+                if (!this._oValueHelpIcon) {
+                    let sURI: any = IconPool.getIconURI("value-help");
+                    this._oValueHelpIcon = IconPool.createControlByURI({
+                        src: sURI,
+                        useIconTooltip: false,
+                        noTabStop: true
+                    });
+                    this._oValueHelpIcon.addStyleClass("sapMInputValHelpInner");
+                    this._oValueHelpIcon.attachPress(function (oEvent: any): void {
+                        // if the property valueHelpOnly is set to true, the event is triggered in the ontap function
+                        Control.fireChooseList();
+                    });
+                }
+                return this._oValueHelpIcon;
+            } else {
+                let aEndIcons: any = this.getAggregation("_endIcon") || [];
+                let oValueStateIcon: any = aEndIcons[0];
+                oValueStateIcon = this.addEndIcon({
+                    id: this.getId() + "-vhi",
+                    src: sap.ui.core.IconPool.getIconURI("value-help"),
                     useIconTooltip: false,
-                    noTabStop: true
+                    noTabStop: true,
+                    press: function (oEvent: any): void {
+                        // if the property valueHelpOnly is set to true, the event is triggered in the ontap function
+                        if (!that.getValueHelpOnly()) {
+                            var oParent: any = this.getParent(),
+                                $input: any;
+
+                            if (sap.ui.Device.support.touch) {
+                                // prevent opening the soft keyboard
+                                $input = oParent.$("inner");
+                                $input.attr("readonly", "readonly");
+                                oParent.focus();
+                                $input.removeAttr("readonly");
+                            } else {
+                                oParent.focus();
+                            }
+
+                            that.bValueHelpRequested = true;
+                            that.fireValueHelpRequest({ fromSuggestions: false });
+                            that.fireChooseList();
+                        }
+                    }
                 });
-                this._oValueHelpIcon.addStyleClass("sapMInputValHelpInner");
-                this._oValueHelpIcon.attachPress(function (oEvent: any): void {
-                    // if the property valueHelpOnly is set to true, the event is triggered in the ontap function
-                    Control.fireChooseList();
-                });
+                return oValueStateIcon;
             }
-            return this._oValueHelpIcon;
         },
         renderer: {
             writeValueHelpIcon: function (oRm: any, Control: any): void {
