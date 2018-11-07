@@ -27,7 +27,7 @@
   },
   {
     "bo_material": "物料主数据",
-    "bo_material_code": "物料编号",
+    "bo_material_code": "物料编码",
     "bo_material_name": "物料名称",
     "bo_material_onorder": "订购数量",
     "bo_material_uom": "单位",
@@ -117,7 +117,7 @@
     "bo_salesorderitem_updateactionid": "更新动作标识",
     "bo_salesorderitem_reference1": "参考1",
     "bo_salesorderitem_reference2": "参考2",
-    "bo_salesorderitem_itemcode": "物料编号",
+    "bo_salesorderitem_itemcode": "物料编码",
     "bo_salesorderitem_itemdescription": "物料/服务描述",
     "bo_salesorderitem_quantity": "数量",
     "bo_salesorderitem_deliverydate": "行交货日期",

@@ -1,4 +1,4 @@
-﻿# attributes setting
+# attributes setting
 *.sh                  text eol=lf
 *.bat                 text eol=crlf
 compile_order.txt     text eol=lf

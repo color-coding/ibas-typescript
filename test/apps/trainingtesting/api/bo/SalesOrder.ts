@@ -143,7 +143,7 @@ namespace trainingtesting {
             reference1: string;
             /** 参考2 */
             reference2: string;
-            /** 物料编号 */
+            /** 物料编码 */
             itemCode: string;
             /** 物料/服务描述 */
             itemDescription: string;

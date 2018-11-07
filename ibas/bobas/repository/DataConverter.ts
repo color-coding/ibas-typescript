@@ -189,10 +189,12 @@ namespace ibas {
             if (strings.isEmpty(message)) {
                 return message;
             }
+            if (ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE) === true) {
+                return message;
+            }
             let index: number = message.lastIndexOf(MSG_SIGN_EXCEPTION);
             if (index > 0) {
                 let value: string = message.substring(index + MSG_SIGN_EXCEPTION.length);
-                value = ibas.strings.trim(value);
                 if (!ibas.strings.isEmpty(value)) {
                     return value;
                 }

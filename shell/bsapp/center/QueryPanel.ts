@@ -278,20 +278,20 @@ namespace shell {
                         });
                     }
                 } else {
-                    // 给查询条件赋值
-                    for (let item of criteria.conditions) {
-                        if (ibas.strings.isEmpty(item.value)) {
-                            item.value = this.view.searchContent;
-                        } else if (typeof item.value === "string" && item.value.startsWith("${") && item.value.endsWith("}")) {
-                            item.value = ibas.variablesManager.getValue(item.value);
-                        }
-                    }
                     this.fireQuery(criteria);
                 }
             }
             /** 通知查询事件 */
             private fireQuery(criteria: ibas.ICriteria): void {
                 if (!ibas.objects.isNull(this.listener)) {
+                    // 给查询条件赋值
+                    for (let item of criteria.conditions) {
+                        if (ibas.strings.isEmpty(item.value)) {
+                            item.value = this.view.searchContent;
+                        } else if (ibas.strings.isWith(item.value, "${", "}")) {
+                            item.value = ibas.variablesManager.getValue(item.value);
+                        }
+                    }
                     this.listener.query(criteria);
                 }
                 this.busy(false);

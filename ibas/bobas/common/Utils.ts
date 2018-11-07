@@ -138,10 +138,24 @@ namespace ibas {
                     continue;
                 }
                 let value: any = data[name];
-                if (value instanceof Array) {
+                if (value instanceof UserFields) {
                     let nValue: any = newData[name];
                     if (nValue === undefined) {
-                        nValue = new ibas.ArrayList<any>();
+                        nValue = new UserFields(newData);
+                        newData[name] = nValue;
+                    }
+                    for (let item of value) {
+                        let nItem: any = clone(item);
+                        if (nValue.add !== undefined) {
+                            nValue.add(nItem);
+                        } else {
+                            nValue.push(nItem);
+                        }
+                    }
+                } else if (value instanceof Array) {
+                    let nValue: any = newData[name];
+                    if (nValue === undefined) {
+                        nValue = new ArrayList<any>();
                         newData[name] = nValue;
                     }
                     for (let item of value) {
@@ -864,7 +878,7 @@ namespace ibas {
             let fileName: string = arguments[0];
             if (!fileName.startsWith("/")) { fileName = "/" + fileName; }
             if (!fileName.endsWith(".js")) { fileName = fileName + ".js"; }
-            let fileName2: string = fileName.indexOf(ibas.SIGN_MIN_LIBRARY + ".js") > 0 ? fileName : fileName.replace(".js", ibas.SIGN_MIN_LIBRARY + ".js");
+            let fileName2: string = fileName.indexOf(SIGN_MIN_LIBRARY + ".js") > 0 ? fileName : fileName.replace(".js", SIGN_MIN_LIBRARY + ".js");
             let root: string = window.document.location.origin;
             let scripts: HTMLCollectionOf<HTMLScriptElement> = document.getElementsByTagName("script");
             for (let index: number = 0; index < scripts.length; index++) {
