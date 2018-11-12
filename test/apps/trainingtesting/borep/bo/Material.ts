@@ -15,13 +15,13 @@ namespace trainingtesting {
             constructor() {
                 super();
             }
-            /** 映射的属性名称-物料编号 */
+            /** 映射的属性名称-物料编码 */
             static PROPERTY_CODE_NAME: string = "Code";
-            /** 获取-物料编号 */
+            /** 获取-物料编码 */
             get code(): string {
                 return this.getProperty<string>(Material.PROPERTY_CODE_NAME);
             }
-            /** 设置-物料编号 */
+            /** 设置-物料编码 */
             set code(value: string) {
                 this.setProperty(Material.PROPERTY_CODE_NAME, value);
             }

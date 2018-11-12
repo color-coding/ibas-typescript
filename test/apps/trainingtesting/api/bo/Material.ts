@@ -9,7 +9,7 @@ namespace trainingtesting {
     export namespace bo {
         /** 物料主数据 */
         export interface IMaterial extends ibas.IBOMasterData {
-            /** 物料编号 */
+            /** 物料编码 */
             code: string;
             /** 物料名称 */
             name: string;

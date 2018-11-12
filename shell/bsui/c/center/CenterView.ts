@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @license
  * Copyright Color-Coding Studio. All Rights Reserved.
  *
@@ -280,7 +280,6 @@ namespace shell {
                     this.messagePopover.destroyContent();
                     this.messagePopover.addContent(
                         new sap.m.MessageStrip("", {
-                            width: "100%",
                             type: uiType,
                             showIcon: true,
                             showCloseButton: false

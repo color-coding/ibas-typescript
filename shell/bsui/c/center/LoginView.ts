@@ -90,7 +90,6 @@ namespace shell {
                                 text: ibas.i18n.prop("shell_language")
                             }),
                             new sap.m.Select(LoginView.UI_LOGIN_LANGUAGE, {
-                                placeholder: ibas.i18n.prop("shell_chooose_language"),
                                 change: function (): void {
                                     that.fireViewEvents(that.changeLanguageEvent);
                                 }

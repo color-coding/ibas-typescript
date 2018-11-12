@@ -313,7 +313,7 @@ namespace ibas {
                 let data: IApprovalData = <IApprovalData><any>this.editData;
                 if (!objects.isNull(data.approvalStatus)
                     && data.approvalStatus !== emApprovalStatus.UNAFFECTED) {
-                    this.view.title = strings.format("{0} · {1}", this.view.title, enums.describe(emApprovalStatus, data.approvalStatus));
+                    this.view.title = strings.format("{0} · {1}", this.description, enums.describe(emApprovalStatus, data.approvalStatus));
                 } else {
                     this.view.title = this.description;
                 }
@@ -337,7 +337,7 @@ namespace ibas {
                 let data: IApprovalData = <IApprovalData><any>this.viewData;
                 if (!objects.isNull(data.approvalStatus)
                     && data.approvalStatus !== emApprovalStatus.UNAFFECTED) {
-                    this.view.title = strings.format("{0} · {1}", this.view.title, enums.describe(emApprovalStatus, data.approvalStatus));
+                    this.view.title = strings.format("{0} · {1}", this.description, enums.describe(emApprovalStatus, data.approvalStatus));
                 } else {
                     this.view.title = this.description;
                 }

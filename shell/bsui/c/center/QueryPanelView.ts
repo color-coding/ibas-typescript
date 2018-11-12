@@ -46,7 +46,6 @@ namespace shell {
                             }
                         });
                         this.baseOn = new sap.m.Select("", {
-                            placeholder: ibas.i18n.prop("shell_base_on_criteria"),
                             width: "55%",
                             maxWidth: "55%"
                         });
