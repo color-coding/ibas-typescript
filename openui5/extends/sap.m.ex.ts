@@ -1094,6 +1094,8 @@ namespace openui5 {
             this.setProperty("bindingValue", value);
             if (!ibas.strings.isEmpty(value)) {
                 this.seachBO();
+            } else {
+                this.setText(value);
             }
         },
         renderer: {}
@@ -1129,6 +1131,8 @@ namespace openui5 {
                         this.setText(item.text);
                     }
                 }
+            } else {
+                this.setText(value);
             }
         },
         renderer: {}
@@ -1752,7 +1756,7 @@ namespace openui5 {
         },
         setBindingValue(value: string): void {
             this.setProperty("bindingValue", value);
-            if (!ibas.objects.isNull(this.getBindingInfo("bindingValue")) && value === null) {
+            if (!ibas.objects.isNull(this.getBindingInfo("bindingValue")) && ibas.strings.isEmpty(value)) {
                 this.loadControl();
             }
         },
