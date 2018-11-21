@@ -790,7 +790,7 @@ namespace shell {
                     }
                     container.addContent(viewContent);
                     // 隐藏标题栏
-                    if (view.hideTitle) {
+                    if (view.hideTitle === true) {
                         container.setShowHeader(false);
                     }
                 }
