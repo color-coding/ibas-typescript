@@ -166,6 +166,7 @@ namespace shell {
                         app.setInitialPage(viewContent);
                         this.currentView = view;
                     }
+                    view.id = viewContent.getId();
                 } else {
                     throw new Error(ibas.i18n.prop("shell_invalid_ui"));
                 }
