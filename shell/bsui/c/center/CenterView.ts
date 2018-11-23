@@ -34,6 +34,7 @@ namespace shell {
             const UI_MAIN_BACK: string = "__UI_MAIN_BACK";
             const UI_MAIN_TITLE: string = "__UI_MAIN_TITLE";
             const UI_DATA_KEY_VIEW: string = "__UI_DATA_KEY_VIEW";
+            const UI_DATA_KEY_HASH: string = "__UI_DATA_KEY_HASH";
             /**
              * 视图-中心
              */
@@ -196,6 +197,18 @@ namespace shell {
                                 } else {
                                     title.setText(null);
                                 }
+                                // 切换hash值
+                                for (let item of page.getCustomData()) {
+                                    if (ibas.strings.equals(item.getKey(), UI_DATA_KEY_HASH)) {
+                                        let data: any = item.getValue();
+                                        if (typeof data === "string") {
+                                            if (!(ibas.strings.equals(data, window.location.hash))) {
+                                                window.history.pushState(null, null, data);
+                                            }
+                                        }
+                                        break;
+                                    }
+                                }
                             } else if (page instanceof sap.m.MessagePage) {
                                 let title: any = sap.ui.getCore().byId(UI_MAIN_TITLE);
                                 if (title instanceof sap.m.Title) {
@@ -206,6 +219,8 @@ namespace shell {
                                 if (button instanceof sap.m.Button) {
                                     button.setVisible(false);
                                 }
+                                // 切换hash值
+                                window.history.pushState(null, null, "#");
                             }
                         },
                     });
@@ -238,6 +253,11 @@ namespace shell {
                             new sap.ui.core.CustomData("", {
                                 key: UI_DATA_KEY_VIEW,
                                 value: view,
+                                writeToDom: false,
+                            }),
+                            new sap.ui.core.CustomData("", {
+                                key: UI_DATA_KEY_HASH,
+                                value: window.location.hash,
                                 writeToDom: false,
                             })
                         ]
@@ -624,10 +644,10 @@ namespace shell {
                             } else {
                                 throw new Error(ibas.i18n.prop("shell_invalid_ui"));
                             }
+                            view.id = container.getId();
                             let pageContainer: sap.m.NavContainer = this.pageContainer.addPage(container);
                             setTimeout(() => {
                                 pageContainer.to(container.getId());
-                                view.id = container.getId();
                             }, 100);
                         } else {
                             // 存在页面直接跳转
@@ -894,7 +914,6 @@ namespace shell {
                     if (!ibas.objects.isNull(ui)) {
                         this.pageContainer.back(null);
                         this.pageContainer.removePage(ui);
-                        ibas.urls.changeHash("#");
                         ui.destroy(true);
                     } else {
                         let ui: sap.ui.core.Element = sap.ui.getCore().byId(view.id);

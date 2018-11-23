@@ -948,12 +948,12 @@ namespace ibas {
          * @param newHash
          */
         export function changeHash(newHash: string): void {
-            if (strings.equalsIgnoreCase(window.location.hash, newHash)) {
-                let event: HashChangeEvent = new HashChangeEvent("hashchange", { oldURL: window.location.href, newURL: newHash });
-                window.dispatchEvent(event);
-            } else {
-                window.location.hash = newHash;
+            let oldHash: string = window.location.hash;
+            if (!strings.equalsIgnoreCase(oldHash, newHash)) {
+                window.history.pushState(null, null, newHash);
             }
+            let event: HashChangeEvent = new HashChangeEvent("hashchange", { oldURL: oldHash, newURL: newHash });
+            window.dispatchEvent(event);
         }
     }
     /**

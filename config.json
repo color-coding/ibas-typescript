@@ -11,9 +11,10 @@
     "welcomeImage": "sap-icon://hello-world",
     "defalutServiceIcon": "sap-icon://e-care",
     "defalutModuleIcon": "sap-icon://nutrition-activity",
+    "fullScreen|TABLET": true,
+    "queryPanelConfigurable|TABLET": false,
+    "queryPanelSelectable|TABLET": false,
     "disableReportFunctions": true,
-    "queryPanelConfigurable|PHONE": false,
-    "queryPanelSelectable|PHONE": false,
     "defaultUser": "admin",
     "defaultPassword": "1q2w3e",
     "repositoryAddress|BORepositoryShell": ".../initialfantasy/services/rest/data"

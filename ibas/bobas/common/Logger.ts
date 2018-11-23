@@ -24,6 +24,11 @@ namespace ibas {
         log(message: IMessage): void;
         /**
          * 记录消息
+         * @param error 错误
+         */
+        log(error: Error): void;
+        /**
+         * 记录消息
          * @param level 消息级别
          * @param message 消息格式
          * @param pars 格式内容
@@ -68,6 +73,11 @@ namespace ibas {
         log(message: IMessage): void;
         /**
          * 记录消息
+         * @param error 错误
+         */
+        log(error: Error): void;
+        /**
+         * 记录消息
          * @param level 消息级别
          * @param message 消息格式
          * @param pars 格式内容
@@ -94,6 +104,11 @@ namespace ibas {
             let useCount: number = 0;// 使用的参数
             if (arguments[0] instanceof Message) {
                 message = arguments[0];
+                useCount++;
+            } else if (arguments[0] instanceof Error) {
+                message = new Message();
+                message.level = emMessageLevel.ERROR;
+                message.content = arguments[0].message;
                 useCount++;
             } else if (typeof (arguments[0]) === "number") {
                 message = new Message();
