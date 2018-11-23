@@ -12,6 +12,10 @@ namespace shell {
              * 视图-查询面板
              */
             export class QueryPanelView extends ibas.BOPanelView implements app.IQueryPanelView {
+                /** 可配置查询 */
+                configurable: boolean;
+                /** 可配置查询 */
+                selectable: boolean;
                 /** 查询 */
                 searchEvent: Function;
                 /** 删除查询 */
@@ -49,6 +53,7 @@ namespace shell {
                             width: "55%",
                             maxWidth: "55%"
                         });
+                        this.baseOn.setVisible(this.selectable);
                         this.config = new sap.m.Button("", {
                             icon: "sap-icon://filter",
                             type: sap.m.ButtonType.Transparent,
@@ -56,6 +61,7 @@ namespace shell {
                                 that.fireViewEvents(that.showFullViewEvent);
                             }
                         });
+                        this.config.setVisible(this.selectable);
                         this.bar = new sap.m.Toolbar("", {
                             width: "100%",
                             design: sap.m.ToolbarDesign.Auto,

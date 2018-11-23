@@ -7,6 +7,14 @@
  */
 namespace shell {
     export namespace app {
+        /** 配置项目-可配置查询 */
+        const CONFIG_ITEM_QUERY_PANEL_CONFIGURABLE: string = "queryPanelConfigurable";
+        /** 配置项目-可配置查询-设备 */
+        const CONFIG_ITEM_QUERY_PANEL_CONFIGURABLE_ON_PLANTFORM: string = CONFIG_ITEM_QUERY_PANEL_CONFIGURABLE + "|{0}";
+        /** 配置项目-可选择查询 */
+        const CONFIG_ITEM_QUERY_PANEL_SELECTABLE: string = "queryPanelSelectable";
+        /** 配置项目-可选择查询-设备 */
+        const CONFIG_ITEM_QUERY_PANEL_SELECTABLE_ON_PLANTFORM: string = CONFIG_ITEM_QUERY_PANEL_SELECTABLE + "|{0}";
         /**
          * 查询面板
          */
@@ -176,6 +184,26 @@ namespace shell {
             /** 注册监听 */
             register(listener: ibas.IUseQueryPanel): void {
                 this.listener = listener;
+                if (!ibas.objects.isNull(this.listener)) {
+                    this.view.configurable = this.listener.configurable;
+                    this.view.selectable = this.listener.selectable;
+                }
+                if (typeof this.view.selectable !== "boolean") {
+                    this.view.selectable = ibas.config.get(
+                        ibas.strings.format(CONFIG_ITEM_QUERY_PANEL_SELECTABLE_ON_PLANTFORM,
+                            ibas.enums.toString(ibas.emPlantform, ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM))));
+                }
+                if (typeof this.view.selectable !== "boolean") {
+                    this.view.selectable = ibas.config.get(CONFIG_ITEM_QUERY_PANEL_SELECTABLE, true);
+                }
+                if (typeof this.view.configurable !== "boolean") {
+                    this.view.configurable = ibas.config.get(
+                        ibas.strings.format(CONFIG_ITEM_QUERY_PANEL_CONFIGURABLE_ON_PLANTFORM,
+                            ibas.enums.toString(ibas.emPlantform, ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM))));
+                }
+                if (typeof this.view.configurable !== "boolean") {
+                    this.view.configurable = ibas.config.get(CONFIG_ITEM_QUERY_PANEL_CONFIGURABLE, true);
+                }
             }
             protected get targetName(): string {
                 let boName: any = null;
@@ -299,6 +327,10 @@ namespace shell {
         }
         /** 查询面板-视图 */
         export interface IQueryPanelView extends ibas.IBarView {
+            /** 可配置查询 */
+            configurable: boolean;
+            /** 可配置查询 */
+            selectable: boolean;
             /** 查询事件 */
             searchEvent: Function;
             /** 查询内容 */

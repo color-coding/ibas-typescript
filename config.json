@@ -12,10 +12,10 @@
     "defalutServiceIcon": "sap-icon://e-care",
     "defalutModuleIcon": "sap-icon://nutrition-activity",
     "disableReportFunctions": true,
+    "queryPanelConfigurable|PHONE": false,
+    "queryPanelSelectable|PHONE": false,
     "defaultUser": "admin",
     "defaultPassword": "1q2w3e",
-    "useCache": true,
-    "cacheDBName": "ibas_cache_ui",
     "repositoryAddress|BORepositoryShell": ".../initialfantasy/services/rest/data"
   },
   "languages": [

@@ -313,8 +313,6 @@ namespace ibas {
         id: string;
         /** 标题 */
         title: string;
-        /** 隐藏标题栏 */
-        hideTitle: boolean;
         /** 是否已显示 */
         isDisplayed: boolean;
         /** 是否忙 */

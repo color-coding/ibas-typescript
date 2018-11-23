@@ -21,6 +21,10 @@ namespace ibas {
         readonly queryTarget?: any;
         /** 使用的查询 */
         readonly usingCriteria?: ICriteria;
+        /** 可配置查询 */
+        readonly configurable?: boolean;
+        /** 可选择查询 */
+        readonly selectable?: boolean;
         /** 查询数据 */
         query(criteria: ICriteria): void;
         /** 嵌入下拉条 */

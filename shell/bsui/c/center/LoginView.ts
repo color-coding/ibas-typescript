@@ -99,7 +99,20 @@ namespace shell {
                             }),
                             new sap.m.Select("", {
                                 // enabled: ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE, false) ? true : false,
-                                items: openui5.utils.createComboBoxItems(ibas.emPlantform),
+                                items: [
+                                    new sap.ui.core.ListItem("", {
+                                        key: ibas.emPlantform.DESKTOP,
+                                        text: ibas.enums.describe(ibas.emPlantform, ibas.emPlantform.DESKTOP),
+                                    }),
+                                    new sap.ui.core.ListItem("", {
+                                        key: ibas.emPlantform.PHONE,
+                                        text: ibas.enums.describe(ibas.emPlantform, ibas.emPlantform.PHONE),
+                                    }),
+                                    new sap.ui.core.ListItem("", {
+                                        key: ibas.emPlantform.TABLET,
+                                        text: ibas.enums.describe(ibas.emPlantform, ibas.emPlantform.TABLET),
+                                    }),
+                                ],
                                 selectedKey: ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM),
                                 change: function (): void {
                                     ibas.config.set(ibas.CONFIG_ITEM_PLANTFORM,
