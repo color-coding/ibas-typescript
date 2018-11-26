@@ -710,33 +710,32 @@ namespace openui5 {
             } else {
                 let aEndIcons: any = this.getAggregation("_endIcon") || [];
                 let oValueStateIcon: any = aEndIcons[0];
-                oValueStateIcon = this.addEndIcon({
-                    id: this.getId() + "-vhi",
-                    src: sap.ui.core.IconPool.getIconURI("value-help"),
-                    useIconTooltip: false,
-                    noTabStop: true,
-                    press: function (oEvent: any): void {
-                        // if the property valueHelpOnly is set to true, the event is triggered in the ontap function
-                        if (!that.getValueHelpOnly()) {
-                            var oParent: any = this.getParent(),
-                                $input: any;
+                if (!oValueStateIcon) {
+                    oValueStateIcon = this.addEndIcon({
+                        id: this.getId() + "-vhi",
+                        src: sap.ui.core.IconPool.getIconURI("value-help"),
+                        useIconTooltip: false,
+                        noTabStop: true,
+                        press: function (oEvent:any):void {
+                            if (!that.getValueHelpOnly()) {
+                                let oParent: any = this.getParent();
+                                let $input: any;
 
-                            if (sap.ui.Device.support.touch) {
-                                // prevent opening the soft keyboard
-                                $input = oParent.$("inner");
-                                $input.attr("readonly", "readonly");
-                                oParent.focus();
-                                $input.removeAttr("readonly");
-                            } else {
-                                oParent.focus();
+                                if (sap.ui.Device.support.touch) {
+                                    $input = oParent.$("inner");
+                                    $input.attr("readonly", "readonly");
+                                    oParent.focus();
+                                    $input.removeAttr("readonly");
+                                } else {
+                                    oParent.focus();
+                                }
+
+                                that.bValueHelpRequested = true;
+                                that.fireChooseList();
                             }
-
-                            that.bValueHelpRequested = true;
-                            that.fireValueHelpRequest({ fromSuggestions: false });
-                            that.fireChooseList();
                         }
-                    }
-                });
+                    });
+                }
                 return oValueStateIcon;
             }
         },
