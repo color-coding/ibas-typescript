@@ -314,6 +314,11 @@ namespace shell {
                 if (!ibas.objects.isNull(this.listener)) {
                     // 给查询条件赋值
                     for (let item of criteria.conditions) {
+                        if (item.operation === ibas.emConditionOperation.IS_NULL
+                            || item.operation === ibas.emConditionOperation.NOT_NULL
+                            || !ibas.strings.isEmpty(item.comparedAlias)) {
+                            continue;
+                        }
                         if (ibas.strings.isEmpty(item.value)) {
                             item.value = this.view.searchContent;
                         } else if (ibas.strings.isWith(item.value, "${", "}")) {

@@ -21,7 +21,7 @@ namespace trainingtesting {
                     let that: this = this;
                     this.pageCustomer = new sap.m.Page("", {
                         showHeader: false,
-                        showfooter: false,
+                        showFooter: false,
                         content: [
                             new sap.ui.layout.form.SimpleForm("", {
                                 editable: true,

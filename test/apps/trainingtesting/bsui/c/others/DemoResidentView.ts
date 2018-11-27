@@ -34,11 +34,9 @@ namespace trainingtesting {
                 /** 绘制视图 */
                 draw(): any {
                     let form: sap.ui.layout.VerticalLayout = new sap.ui.layout.VerticalLayout("", {
-                        class: "sapUiContentPadding",
                         width: "100%",
                         content: [
                             new sap.m.List("", {
-                                class: "sapContrast sapContrastPlus",
                                 items: [
                                     new sap.m.NotificationListGroup("", {
                                         title: "SO-0000001的审批",
@@ -75,9 +73,10 @@ namespace trainingtesting {
                                         ]
                                     }),
                                 ]
-                            }),
+                            }).addStyleClass("sapContrast sapContrastPlus"),
                         ]
                     });
+                    form.addStyleClass("sapUiContentPadding");
                     return form;
                 }
             }

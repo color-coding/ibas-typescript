@@ -29,7 +29,7 @@ namespace trainingtesting {
                     let that: this = this;
                     this.pageSalesOrder = new sap.m.Page("", {
                         showHeader: false,
-                        showfooter: false,
+                        showFooter: false,
                         content: [
                             new sap.ui.layout.form.SimpleForm("", {
                                 editable: true,
@@ -119,13 +119,10 @@ namespace trainingtesting {
                         growing: true,
                         growingThreshold: ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 5),
                         growingScrollToLoad: true,
-                        visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Auto,
                         mode: sap.m.ListMode.None,
-                        selectionMode: sap.ui.table.SelectionMode.None,
+                        swipeDirection: sap.m.SwipeDirection.RightToLeft,
                         swipeContent: new sap.m.FlexBox("", {
                             height: "100%",
-                            mode: sap.m.ListMode.None,
-                            swipeDirection: sap.m.SwipeDirection.RightToLeft,
                             width: "6rem",
                             items: [
                                 new sap.m.SegmentedButton("", {
@@ -192,8 +189,7 @@ namespace trainingtesting {
                                                     }
                                                 }
                                             ]
-                                        },
-                                        type: sap.ui.model.type.Integer,
+                                        }
                                     })
                                 ]
                             }),
