@@ -26,9 +26,9 @@ if "%OPTIONS%" neq "" (
 
 REM 编译项目配置
 SET TS_CONFIGS=ibas\tsconfig.json
-SET TS_CONFIGS=%TS_CONFIGS% openui5\tsconfig.json
 SET TS_CONFIGS=%TS_CONFIGS% shell\tsconfig.loader.json
 SET TS_CONFIGS=%TS_CONFIGS% shell\tsconfig.json
+SET TS_CONFIGS=%TS_CONFIGS% openui5\tsconfig.json
 SET TS_CONFIGS=%TS_CONFIGS% shell\bsui\c\tsconfig.json
 SET TS_CONFIGS=%TS_CONFIGS% shell\bsui\m\tsconfig.json
 REM 编译TT项目

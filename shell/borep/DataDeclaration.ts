@@ -90,12 +90,18 @@ namespace shell {
             Property: string;
             /** 描述 */
             Description: string;
+            /** 数据类型 */
+            DataType: string;
+            /** 编辑类型 */
+            EditType: string;
+            /** 长度 */
+            EditSize: number;
             /** 查询 */
             Searched: boolean;
             /** 系统的 */
             Systemed: boolean;
             /** 授权的 */
-            Authorised: ibas.emAuthoriseType;
+            Authorised: string;
             /** 值集合 */
             Values: IBOPropertyValue[];
         }

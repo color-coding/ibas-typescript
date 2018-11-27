@@ -262,8 +262,7 @@ namespace shell {
                     if (!ibas.objects.isNull(boName)) {
                         let boRepository: bo.IBORepositoryShell = bo.repository.create();
                         boRepository.fetchBOInfos({
-                            boCode: null,
-                            boName: boName,
+                            boCode: boName,
                             onCompleted(opRslt: ibas.IOperationResult<bo.IBOInfo>): void {
                                 if (opRslt.resultCode !== 0) {
                                     that.messages(ibas.emMessageType.WARNING, opRslt.message);

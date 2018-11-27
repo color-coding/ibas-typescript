@@ -80,6 +80,12 @@ namespace shell {
             property: string;
             /** 描述 */
             description: string;
+            /** 数据类型 */
+            dataType: string;
+            /** 编辑类型 */
+            editType: string;
+            /** 长度 */
+            editSize: number;
             /** 查询 */
             searched: boolean;
             /** 系统的 */

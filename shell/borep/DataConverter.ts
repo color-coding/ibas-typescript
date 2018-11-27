@@ -99,10 +99,13 @@ namespace shell {
                     let remote: bo4j.IBOPropertyInfo = {
                         type: BOPropertyInfo.name,
                         Property: newData.property,
+                        DataType: newData.dataType,
+                        EditType: newData.editType,
+                        EditSize: newData.editSize,
                         Searched: newData.searched,
                         Systemed: newData.systemed,
-                        Authorised: newData.authorised,
                         Description: newData.description,
+                        Authorised: ibas.enums.toString(ibas.emAuthoriseType, newData.authorised),
                         Values: values
                     };
                     return remote;
@@ -185,10 +188,13 @@ namespace shell {
                     let remote: bo4j.IBOPropertyInfo = data;
                     let newData: BOPropertyInfo = new BOPropertyInfo();
                     newData.property = remote.Property;
-                    newData.searched = remote.Searched;
                     newData.description = remote.Description;
+                    newData.dataType = remote.DataType;
+                    newData.editType = remote.EditType;
+                    newData.editSize = remote.EditSize;
+                    newData.searched = remote.Searched;
                     newData.systemed = remote.Systemed;
-                    newData.authorised = remote.Authorised;
+                    newData.authorised = ibas.strings.isEmpty(remote.Authorised) ? ibas.emAuthoriseType.ALL : ibas.enums.valueOf(ibas.emAuthoriseType, remote.Authorised);
                     newData.values = new Array<BOPropertyValue>();
                     for (let item of remote.Values) {
                         item.type = BOPropertyValue.name;

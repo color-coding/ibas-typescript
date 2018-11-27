@@ -114,8 +114,7 @@ namespace shell {
                             let that: this = this;
                             let boRepository: bo.IBORepositoryShell = bo.repository.create();
                             boRepository.fetchBOInfos({
-                                boName: this.boName,
-                                boCode: null,
+                                boCode: this.boName,
                                 onCompleted(opRslt: ibas.IOperationResult<bo.IBOInfo>): void {
                                     let boInfo: bo.IBOInfo = opRslt.resultObjects.firstOrDefault();
                                     if (ibas.objects.isNull(boInfo)) {

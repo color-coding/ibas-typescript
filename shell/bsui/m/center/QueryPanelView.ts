@@ -23,8 +23,7 @@ namespace shell {
                         // 获取列描述
                         let boRepository: bo.IBORepositoryShell = bo.repository.create();
                         boRepository.fetchBOInfos({
-                            boName: this.boName,
-                            boCode: null,
+                            boCode: this.boName,
                             onCompleted(opRslt: ibas.IOperationResult<bo.IBOInfo>): void {
                                 let properies: bo.IBOPropertyInfo[] = [];
                                 if (opRslt.resultObjects.length > 0) {

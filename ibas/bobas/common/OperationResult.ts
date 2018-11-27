@@ -137,20 +137,20 @@ namespace ibas {
          */
         informations: IList<IOperationInformation>;
         /** 添加结果 */
-        addResults(value: P): void;
+        addResults(value: P): IOperationResult<P>;
         /** 添加结果 */
-        addResults(value: P[]): void;
-        addResults(): void {
-            if (objects.isNull(arguments[0])) {
-                return;
-            }
-            if (arguments[0] instanceof Array) {
-                for (let item of arguments[0]) {
-                    this.resultObjects.add(item);
+        addResults(value: P[]): IOperationResult<P>;
+        addResults(): IOperationResult<P> {
+            if (!objects.isNull(arguments[0])) {
+                if (arguments[0] instanceof Array) {
+                    for (let item of arguments[0]) {
+                        this.resultObjects.add(item);
+                    }
+                } else {
+                    this.resultObjects.add(arguments[0]);
                 }
-            } else {
-                this.resultObjects.add(arguments[0]);
             }
+            return this;
         }
     }
 }

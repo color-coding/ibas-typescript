@@ -151,7 +151,7 @@ namespace ibas {
         private variableMap: Map<string, string>;
         /** 替换字符串中的配置项，配置项示例：${Company} */
         applyVariables(value: string): string {
-            if (value !== undefined && value !== null && value.indexOf("${") >= 0) {
+            if (typeof value === "string" && value.indexOf("${") >= 0) {
                 if (this.variableMap == null) {
                     this.variableMap = new Map<string, string>();
                 }

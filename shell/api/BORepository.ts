@@ -48,13 +48,15 @@ namespace shell {
          * 业务对象信息调用者
          */
         export interface IBOInfoCaller extends ibas.IMethodCaller<IBOInfo> {
-            /** 业务对象名称 */
-            boName: string;
-            /** 业务对象编码 */
+            /** 业务对象编码（主） */
             boCode: string;
+            /** 对象名称（主或子项） */
+            boName?: string;
+            /** 不使用缓存 */
+            noCached?: boolean;
             /**
              * 调用完成
-             * @param opRslt 结果
+             * @param opRslt
              */
             onCompleted(opRslt: ibas.IOperationResult<IBOInfo>): void;
         }

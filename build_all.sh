@@ -18,9 +18,9 @@ COMMOND=tsc
 
 # 编译项目配置
 TS_CONFIGS="${WORK_FOLDER}/ibas/tsconfig.json"
-TS_CONFIGS="${TS_CONFIGS} ${WORK_FOLDER}/openui5/tsconfig.json"
 TS_CONFIGS="${TS_CONFIGS} ${WORK_FOLDER}/shell/tsconfig.loader.json"
 TS_CONFIGS="${TS_CONFIGS} ${WORK_FOLDER}/shell/tsconfig.json"
+TS_CONFIGS="${TS_CONFIGS} ${WORK_FOLDER}/openui5/tsconfig.json"
 TS_CONFIGS="${TS_CONFIGS} ${WORK_FOLDER}/shell/bsui/c/tsconfig.json"
 TS_CONFIGS="${TS_CONFIGS} ${WORK_FOLDER}/shell/bsui/m/tsconfig.json"
 # 编译TT项目
