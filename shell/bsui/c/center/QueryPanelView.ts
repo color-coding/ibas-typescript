@@ -163,6 +163,9 @@ namespace shell {
                     }));
                     if (!ibas.objects.isNull(properies)) {
                         for (let property of properies) {
+                            if (ibas.strings.isEmpty(property.editType)) {
+                                continue;
+                            }
                             items.push(new sap.ui.core.ListItem("", {
                                 key: property.property,
                                 text: property.description,

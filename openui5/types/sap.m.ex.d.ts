@@ -132,8 +132,10 @@ declare namespace sap {
                 getObjectCode(): string;
             }
             export class SmartField extends sap.m.FlexBox {
-                setBoType(value: string): void;
-                getBoType(): string;
+                setBoCode(value: string): void;
+                getBoCode(): string;
+                setBoName(value: string): void;
+                getBoName(): string;
                 setPropertyName(value: string): void;
                 getPropertyName(): string;
                 setBindingValue(value: string): void;

@@ -68,10 +68,15 @@ namespace shell {
                             iconPress(oControlEvent: sap.ui.base.Event): void {
                                 // 按钮按下，查询此模块资源消耗
                                 let feedListItem: sap.m.FeedListItem = <sap.m.FeedListItem>oControlEvent.getSource();
+                                if (feedListItem.getBusy()) {
+                                    return;
+                                }
+                                feedListItem.setBusy(true);
                                 let monitor: app.ModuleMonitor = new app.ModuleMonitor();
                                 monitor.monitor({
                                     name: item.name,
                                     onCompleted(opRslt: ibas.IOperationResult<any>): void {
+                                        feedListItem.setBusy(false);
                                         if (opRslt.resultCode !== 0 || opRslt.informations.length === 0) {
                                             return;
                                         }

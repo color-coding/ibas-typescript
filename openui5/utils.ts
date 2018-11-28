@@ -736,206 +736,129 @@ namespace openui5 {
         }
         /**
          * 加载列表自定义字段
-         * @param container 容器 page
-         * @param boType 对象类型
+         * @param container 容器
+         * @param boCode 对象类型
+         * @param boName 对象类型
          * @param readOnly 是否只读
          */
-        export function loadUserFields(container: sap.m.Page, boType: any, readOnly?: boolean): void;
-        /**
-         * 加载列表自定义字段
-         * @param container 容器 Table
-         * @param boType 对象类型
-         * @param readOnly 是否只读
-         */
-        export function loadUserFields(container: sap.ui.table.Table, boType: any, readOnly?: boolean): void;
-        /**
-         * 加载列表自定义字段
-         * @param container 容器 SimpleForm
-         * @param boType 对象类型
-         * @param readOnly 是否只读
-         */
-        export function loadUserFields(container: sap.ui.layout.form.SimpleForm, boType: any, readOnly?: boolean): void;
-
+        export function loadUserFields(container: sap.m.Page | sap.ui.table.Table | sap.ui.layout.form.SimpleForm, boCode: string, readOnly?: boolean): void;
+        export function loadUserFields(container: sap.m.Page | sap.ui.table.Table | sap.ui.layout.form.SimpleForm, boCode: string, boName: string, readOnly?: boolean): void;
         export function loadUserFields(): void {
-            try {
-                let container: any = arguments[0];
-                let boType: any = arguments[1];
-                if (ibas.objects.isNull(container) || ibas.objects.isNull(boType)) {
-                    return;
-                }
-                let boName: string;
-                if (typeof boType === "string") {
-                    boName = ibas.strings.valueOf(boType);
-                } else {
-                    boName = ibas.objects.getName(boType);
-                    if (ibas.objects.isNull(boName)) {
+            let container: any = arguments[0];
+            let boCode: string = ibas.config.applyVariables(arguments[1]);
+            let boName: string = ibas.config.applyVariables(arguments[2]);
+            let readOnly: boolean = arguments[3];
+            if (typeof boName === "boolean") {
+                readOnly = Boolean(boName);
+                boName = undefined;
+            }
+            if (ibas.objects.isNull(readOnly)) {
+                readOnly = false;
+            }
+            if (ibas.objects.isNull(container) || ibas.objects.isNull(boCode)) {
+                return;
+            }
+            let boRepository: shell.bo.IBORepositoryShell = ibas.boFactory.create(shell.bo.BO_REPOSITORY_SHELL);
+            boRepository.fetchBOInfos({
+                boCode: boCode,
+                boName: boName,
+                onCompleted(opRslt: ibas.IOperationResult<shell.bo.IBOInfo>): void {
+                    let boInfo: shell.bo.IBOInfo = opRslt.resultObjects.firstOrDefault();
+                    if (ibas.objects.isNull(boInfo)) {
                         return;
                     }
-                }
-                let readOnly: any = arguments[2];
-                let bo: ibas.BusinessObject<any>;
-                let CurrentPropertyInformations: [any];
-                if (container instanceof sap.m.Page) {
-                    container.attachModelContextChange(null, function (oEvent: any): void {
-                        if (!ibas.objects.isNull(oEvent.getSource()) && !ibas.objects.isNull(oEvent.getSource().getModel())) {
-                            bo = oEvent.getSource().getModel().getData();
+                    if (ibas.objects.isNull(boInfo.properties)) {
+                        return;
+                    }
+                    let properties: ibas.IList<shell.bo.IBOPropertyInfo> = new ibas.ArrayList();
+                    for (let item of boInfo.properties) {
+                        if (item.systemed) {
+                            continue;
                         }
-                    });
-                    let split: any = container.getContent()[0];
-                    if (ibas.objects.instanceOf(split, sap.ui.unified.SplitContainer)) {
-                        let userFieldForm: sap.ui.layout.form.SimpleForm = split.getContent()[0];
-                        if (ibas.objects.instanceOf(userFieldForm, sap.ui.layout.form.SimpleForm)) {
-                            userFieldForm.removeAllContent();
-                            // 查询属性信息回调函数
-                            let completed: Function = function (boPropertyInformations: [any]): void {
-                                // 如果对象没有自定义字段，打开自定义字段层按钮不显示
-                                if (boPropertyInformations.length <= 0) {
-                                    let toolbar: sap.m.Toolbar = container.getSubHeader();
-                                    if (!ibas.objects.isNull(toolbar)) {
+                        properties.add(item);
+                    }
+                    let bo: ibas.BusinessObject<any>;
+                    if (container instanceof sap.m.Page) {
+                        container.attachModelContextChange(null, function (oEvent: any): void {
+                            if (!ibas.objects.isNull(oEvent.getSource()) && !ibas.objects.isNull(oEvent.getSource().getModel())) {
+                                bo = oEvent.getSource().getModel().getData();
+                            }
+                        });
+                        let split: any = container.getContent()[0];
+                        if (split instanceof sap.ui.unified.SplitContainer) {
+                            let userFieldForm: any = split.getContent()[0];
+                            if (userFieldForm instanceof sap.ui.layout.form.SimpleForm) {
+                                userFieldForm.removeAllContent();
+                                if (properties.length <= 0) {
+                                    // 如果对象没有自定义字段，打开自定义字段层按钮不显示
+                                    let toolbar: any = container.getSubHeader();
+                                    if (toolbar instanceof sap.m.Toolbar) {
                                         let controls: Array<sap.ui.core.Control> = toolbar.getContent();
                                         let userFieldButton: sap.ui.core.Control = controls[controls.length - 1];
                                         if (!ibas.objects.isNull(userFieldButton) && userFieldButton instanceof sap.m.Button) {
                                             userFieldButton.setVisible(false);
                                         }
                                     }
-                                    return;
-                                }
-                                CurrentPropertyInformations = boPropertyInformations;
-                                registerUserField(bo, CurrentPropertyInformations);
-                                for (let index: number = 0; index < boPropertyInformations.length; index++) {
-                                    const info: any = boPropertyInformations[index];
-                                    userFieldForm.addContent(new sap.m.Label("", { text: info.description }));
-                                    let ctl: any = getUserFieldControl(info, ibas.strings.format("userFields/{0}/value", index), readOnly);
-                                    if (!ibas.objects.isNull(ctl)) {
-                                        userFieldForm.addContent(ctl);
-                                    }
-                                }
-                            };
-                            getUserFieldInformations(boName, completed);
-                        }
-                    }
-                } else if (container instanceof sap.ui.table.Table) {
-                    container.attachModelContextChange(null, function (oEvent: any): void {
-                        if (!ibas.objects.isNull(oEvent.getSource()) && !ibas.objects.isNull(oEvent.getSource().getModel())) {
-                            if (!ibas.objects.isNull(oEvent.getSource().getModel().getData().rows)) {
-                                bo = oEvent.getSource().getModel().getData().rows[0];
-                                if (!ibas.objects.isNull(CurrentPropertyInformations)) {
-                                    registerUserField(bo, CurrentPropertyInformations);
-                                }
-                            }
-                        }
-                    });
-                    // 查询属性信息回调函数
-                    let completed: Function = function (boPropertyInformations: [any]): void {
-                        CurrentPropertyInformations = boPropertyInformations;
-                        registerUserField(bo, CurrentPropertyInformations);
-                        for (let index: number = 0; index < boPropertyInformations.length; index++) {
-                            const info: any = boPropertyInformations[index];
-                            let column: sap.ui.table.Column = new sap.ui.table.Column("", {
-                                label: info.description
-                            });
-                            let ctl: any = getUserFieldControl(info, ibas.strings.format("userFields/{0}/value", index), readOnly);
-                            if (!ibas.objects.isNull(ctl)) {
-                                column.setTemplate(ctl);
-                                container.addColumn(column);
-                            }
-                        }
-                    };
-                    getUserFieldInformations(boName, completed);
-                } else if (container instanceof sap.ui.layout.form.SimpleForm) {
-                    // simpleForm
-                    container.attachModelContextChange(null, function (oEvent: any): void {
-                        if (!ibas.objects.isNull(oEvent.getSource()) && !ibas.objects.isNull(oEvent.getSource().getModel())) {
-                            bo = oEvent.getSource().getModel().getData();
-                        }
-                    });
-                    // 查询属性信息回调函数
-                    let completed: Function = function (boPropertyInformations: [any]): void {
-                        // 如果对象没有自定义字段并且容器中无内容则容器不显示
-                        if (boPropertyInformations.length <= 0) {
-                            let formContent: sap.ui.core.Element[] = container.getContent();
-                            if (ibas.objects.isNull(formContent) || formContent.length <= 0) {
-                                container.setVisible(false);
-                            }
-                            return;
-                        }
-                        CurrentPropertyInformations = boPropertyInformations;
-                        registerUserField(bo, CurrentPropertyInformations);
-                        for (let index: number = 0; index < boPropertyInformations.length; index++) {
-                            const info: any = boPropertyInformations[index];
-                            container.addContent(new sap.m.Label("", { text: info.description }));
-                            let ctl: any = getUserFieldControl(info, ibas.strings.format("userFields/{0}/value", index), readOnly);
-                            if (!ibas.objects.isNull(ctl)) {
-                                container.addContent(ctl);
-                            }
-                        }
-                    };
-                    getUserFieldInformations(boName, completed);
-                }
-            } catch (error) {
-                ibas.logger.log(ibas.emMessageLevel.DEBUG, error);
-            }
-        }
-        /**
-         * 注册对象自定义字段
-         * @param bo 对象实例
-         * @param boPropertyInformations 对象自定义字段信息
-         */
-        function registerUserField(bo: ibas.BusinessObject<any>, boPropertyInformations: [any]): void {
-            if (!ibas.objects.isNull(bo)) {
-                for (let info of boPropertyInformations) {
-                    bo.userFields.register(info.Property, ibas.enums.valueOf(ibas.emDbFieldType, info.DataType));
-                }
-            }
-        }
-        /**
-         * 获取自定义字信息段类
-         * @param objectName 对象名称
-         * @param getUserFieldInformationCompleted 回调函数
-         * @param property 查询属性名称，可选，未传入则返回所有自定义字段
-         */
-        export function getUserFieldInformations(objectName: string, getUserFieldInformationCompleted: Function, property?: string): void {
-            let boRep: any = ibas.boFactory.create("BORepositoryInitialFantasy");
-            let criteria: ibas.ICriteria = new ibas.Criteria();
-            criteria.noChilds = false;
-            let condition: ibas.ICondition = criteria.conditions.create();
-            condition.alias = "name";
-            condition.value = ibas.config.applyVariables(objectName);
-            let childCriteria: ibas.IChildCriteria = criteria.childCriterias.create();
-            childCriteria.propertyPath = "boPropertyInformations";
-            childCriteria.onlyHasChilds = true;
-            let childCondition: ibas.ICondition = childCriteria.conditions.create();
-            childCondition.alias = "property";
-            if (ibas.objects.isNull(property)) {
-                childCondition.value = "U_";
-                childCondition.operation = ibas.emConditionOperation.START;
-            } else {
-                childCondition.value = property;
-                childCondition.operation = ibas.emConditionOperation.EQUAL;
-            }
-            let sort: ibas.ISort = childCriteria.sorts.create();
-            sort.alias = "property";
-            boRep[ibas.strings.format("fetch{0}", "BOInformation")]({
-                criteria: criteria,
-                onCompleted(opRslt: ibas.IOperationResult<any>): void {
-                    try {
-                        if (opRslt.resultCode === 0) {
-                            if (opRslt.resultObjects.length > 0) {
-                                let info: any = opRslt.resultObjects.firstOrDefault();
-                                if (!ibas.objects.isNull(info)) {
-                                    if (info.boPropertyInformations.length > 0) {
-                                        if (ibas.objects.isNull(property)) {
-                                            getUserFieldInformationCompleted(info.boPropertyInformations.filter(c => {
-                                                return c.Property.substring(0, 2) === "U_";
-                                            }));
-                                        } else {
-                                            getUserFieldInformationCompleted(info.boPropertyInformations);
+                                } else {
+                                    registerUserField(bo, properties);
+                                    for (let index: number = 0; index < properties.length; index++) {
+                                        let property: shell.bo.IBOPropertyInfo = properties[index];
+                                        userFieldForm.addContent(new sap.m.Label("", { text: property.description }));
+                                        let control: sap.ui.core.Control = createUserFieldControl(property, ibas.strings.format("userFields/{0}/value", index), readOnly);
+                                        if (!ibas.objects.isNull(control)) {
+                                            userFieldForm.addContent(control);
                                         }
                                     }
                                 }
                             }
                         }
-                    } catch (error) {
+                    } else if (container instanceof sap.ui.table.Table) {
+                        container.attachModelContextChange(null, function (oEvent: any): void {
+                            if (!ibas.objects.isNull(oEvent.getSource()) && !ibas.objects.isNull(oEvent.getSource().getModel())) {
+                                if (!ibas.objects.isNull(oEvent.getSource().getModel().getData().rows)) {
+                                    bo = oEvent.getSource().getModel().getData().rows[0];
+                                    if (!ibas.objects.isNull(properties)) {
+                                        registerUserField(bo, properties);
+                                    }
+                                }
+                            }
+                        });
+                        // 查询属性信息回调函数
+                        registerUserField(bo, properties);
+                        for (let index: number = 0; index < properties.length; index++) {
+                            let property: shell.bo.IBOPropertyInfo = properties[index];
+                            let column: sap.ui.table.Column = new sap.ui.table.Column("", {
+                                label: property.description
+                            });
+                            let control: any = createUserFieldControl(property, ibas.strings.format("userFields/{0}/value", index), readOnly);
+                            if (!ibas.objects.isNull(control)) {
+                                column.setTemplate(control);
+                                container.addColumn(column);
+                            }
+                        }
+                    } else if (container instanceof sap.ui.layout.form.SimpleForm) {
+                        container.attachModelContextChange(null, function (oEvent: any): void {
+                            if (!ibas.objects.isNull(oEvent.getSource()) && !ibas.objects.isNull(oEvent.getSource().getModel())) {
+                                bo = oEvent.getSource().getModel().getData();
+                            }
+                        });
+                        // 如果对象没有自定义字段并且容器中无内容则容器不显示
+                        if (properties.length <= 0) {
+                            let formContent: sap.ui.core.Element[] = container.getContent();
+                            if (ibas.objects.isNull(formContent) || formContent.length <= 0) {
+                                container.setVisible(false);
+                            }
+                        } else {
+                            registerUserField(bo, properties);
+                            for (let index: number = 0; index < properties.length; index++) {
+                                let property: shell.bo.IBOPropertyInfo = properties[index];
+                                container.addContent(new sap.m.Label("", { text: property.description }));
+                                let control: any = createUserFieldControl(property, ibas.strings.format("userFields/{0}/value", index), readOnly);
+                                if (!ibas.objects.isNull(control)) {
+                                    container.addContent(control);
+                                }
+                            }
+                        }
                     }
                 }
             });
@@ -943,25 +866,62 @@ namespace openui5 {
         /**
          * 注册对象自定义字段
          * @param bo 对象实例
-         * @param boType 对象类型或对象名称
+         * @param properties 对象自定义字段信息
          */
-        export function registerBOUserField(bo: any | string): void {
+        export function registerUserField(bo: any, properties?: Array<shell.bo.IBOPropertyInfo>): void {
             if (ibas.objects.isNull(bo)) {
                 return;
             }
-            let boName: string;
-            if (bo instanceof String) {
-                boName = ibas.strings.valueOf(bo);
-            } else {
-                boName = ibas.objects.getName(ibas.objects.getType(bo));
+            let boType: any = bo;
+            if (boType instanceof ibas.BusinessObject) {
+                // 对象实例
+                if (ibas.objects.isNull(properties)) {
+                    return;
+                }
+                for (let item of properties) {
+                    bo.userFields.register(item.property, ibas.enums.valueOf(ibas.emDbFieldType, item.dataType));
+                }
+            } else if (boType instanceof Function) {
+                // 对象类型
+                let boCode: string;
+                if (!ibas.objects.isNull((<any>bo).BUSINESS_OBJECT_CODE)) {
+                    // 如果目标是对象，则尝试使用其编码
+                    boCode = ibas.config.applyVariables((<any>bo).BUSINESS_OBJECT_CODE);
+                } else if (!ibas.objects.isNull((<any>bo).name)) {
+                    // 如果目标是对象，则尝试使用其名称
+                    boCode = (<any>bo).name;
+                }
+                let boRepository: shell.bo.IBORepositoryShell = ibas.boFactory.create(shell.bo.BO_REPOSITORY_SHELL);
+                boRepository.fetchBOInfos({
+                    boCode: boCode,
+                    onCompleted(opRslt: ibas.IOperationResult<shell.bo.IBOInfo>): void {
+                        let register: Function = function (data: any): void {
+                            if (!(data instanceof ibas.BusinessObject)) {
+                                return;
+                            }
+                            let boInfo: shell.bo.IBOInfo = opRslt.resultObjects.firstOrDefault(
+                                c => c.name === ibas.objects.getTypeName(data));
+                            if (!ibas.objects.isNull(boInfo)) {
+                                for (let item of boInfo.properties) {
+                                    data.userFields.register(item.property, ibas.enums.valueOf(ibas.emDbFieldType, item.dataType));
+                                }
+                            }
+                            for (let item in data) {
+                                if (ibas.objects.isNull(item)) {
+                                    continue;
+                                }
+                                let itemData: any = data[item];
+                                if (itemData instanceof ibas.BusinessObject) {
+                                    register(itemData);
+                                } else if (itemData instanceof ibas.BusinessObjects) {
+                                    register(itemData.create());
+                                }
+                            }
+                        };
+                        register(new boType);
+                    }
+                });
             }
-            if (ibas.objects.isNull(boName)) {
-                return;
-            }
-            let completed: Function = function (boPropertyInformations: [any]): void {
-                registerUserField(bo, boPropertyInformations);
-            };
-            getUserFieldInformations(boName, completed);
         }
         /**
          * 获取显示自定义字段控件
@@ -969,101 +929,92 @@ namespace openui5 {
          * @param bindingPath 属性绑定路径 bindProperty("dateValue", { path: bindingPath});
          * @param readOnly 是否只读
          */
-        export function getUserFieldControl(userFieldInfo: any, bindingPath?: string, readOnly?: boolean): any {
-            try {
-                if (ibas.objects.isNull(bindingPath) || ibas.strings.isEmpty(bindingPath) || userFieldInfo.authorised === ibas.emAuthoriseType.NONE) {
-                    return null;
-                }
-                // 默认为可编辑
-                if (ibas.objects.isNull(readOnly)) {
-                    readOnly = false;
-                }
-                // 属性信息中可编辑为NO时只读
-                if (userFieldInfo.authorised === ibas.emAuthoriseType.READ) {
-                    readOnly = true;
-                }
-                // 只读显示Text控件
-                if (readOnly) {
-                    let userFieldText: sap.m.ex.DescText = new sap.m.ex.DescText("", {
-                        wrapping: false
-                    });
-                    // 可选值显示描述
-                    if (userFieldInfo.boPropertyValues.length > 0) {
-                        let keyLists: ibas.ArrayList<ibas.KeyText> = new ibas.ArrayList<ibas.KeyText>();
-                        for (let item of userFieldInfo.boPropertyValues) {
-                            keyLists.add(new ibas.KeyText(item.value, item.description));
-                        }
-                        userFieldText.setDescList(keyLists);
-                        userFieldText.bindProperty("bindingValue", {
-                            path: bindingPath
-                        });
-                        return userFieldText;
-                    }
-                    // 如果是日期类型，设置日期显示格式
-                    if (ibas.enums.valueOf(ibas.emDbFieldType, userFieldInfo.DataType) === ibas.emDbFieldType.DATE) {
-                        userFieldText.bindProperty("text", {
-                            path: bindingPath,
-                            type: new sap.ui.model.type.Date({
-                                pattern: "yyyy-MM-dd",
-                                strictParsing: true,
-                            })
-                        });
-                    } else {
-                        userFieldText.bindProperty("text", {
-                            path: bindingPath
-                        });
-                    }
-                    return userFieldText;
-                } else {
-                    // 日期控件
-                    if (ibas.enums.valueOf(ibas.emDbFieldType, userFieldInfo.DataType) === ibas.emDbFieldType.DATE) {
-                        let userFieldDatePicker: sap.m.DatePicker = new sap.m.DatePicker("", {
-                            valueFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE),
-                            displayFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE),
-                        });
-                        userFieldDatePicker.bindProperty("dateValue", {
-                            path: bindingPath
-                        });
-                        return userFieldDatePicker;
-                    } else {
-                        // 非日期类型判断可选值，有可选值显示为下拉控件
-                        if (userFieldInfo.boPropertyValues.length > 0) {
-                            let userFieldSelect: sap.m.Select = new sap.m.Select("", {
-                                width: "100%",
-                            });
-                            // 添加空项
-                            userFieldSelect.addItem(new sap.ui.core.ListItem("", {
-                                key: "",
-                                text: ibas.i18n.prop("shell_please_chooose_data", ""),
-                                additionalText: ""
-                            }));
-                            for (let item of userFieldInfo.boPropertyValues) {
-                                let selectItem: sap.ui.core.ListItem = new sap.ui.core.ListItem("", {
-                                    key: item.value,
-                                    text: item.description,
-                                    additionalText: item.value
-                                });
-                                userFieldSelect.addItem(selectItem);
-                            }
-                            userFieldSelect.bindProperty("selectedKey", {
-                                path: bindingPath,
-                            });
-                            return userFieldSelect;
-                        }
-                    }
-                    // 默认返回文本控件
-                    let userFieldInput: sap.m.Input = new sap.m.Input("", {
-                        // 根据属性大小设置最大输入值
-                        maxLength: userFieldInfo.EditSize,
-                        value: {
-                            path: bindingPath
-                        }
-                    });
-                    return userFieldInput;
-                }
-            } catch (error) {
-                ibas.logger.log(ibas.emMessageLevel.DEBUG, error);
+        export function createUserFieldControl(userFieldInfo: shell.bo.IBOPropertyInfo, bindingPath?: string, readOnly: boolean = false): sap.ui.core.Control {
+            if (ibas.objects.isNull(bindingPath) || ibas.strings.isEmpty(bindingPath) || userFieldInfo.authorised === ibas.emAuthoriseType.NONE) {
                 return null;
+            }
+            // 属性信息中可编辑为NO时只读
+            if (userFieldInfo.authorised === ibas.emAuthoriseType.READ) {
+                readOnly = true;
+            }
+            // 只读显示Text控件
+            if (readOnly) {
+                let userFieldText: sap.m.ex.DescText = new sap.m.ex.DescText("", {
+                    wrapping: false
+                });
+                // 可选值显示描述
+                if (!ibas.objects.isNull(userFieldInfo.values) && userFieldInfo.values.length > 0) {
+                    let keyLists: ibas.ArrayList<ibas.KeyText> = new ibas.ArrayList<ibas.KeyText>();
+                    for (let item of userFieldInfo.values) {
+                        keyLists.add(new ibas.KeyText(item.value, item.description));
+                    }
+                    userFieldText.setDescList(keyLists);
+                    userFieldText.bindProperty("bindingValue", {
+                        path: bindingPath
+                    });
+                    return userFieldText;
+                }
+                // 如果是日期类型，设置日期显示格式
+                if (ibas.enums.valueOf(ibas.emDbFieldType, userFieldInfo.dataType) === ibas.emDbFieldType.DATE) {
+                    userFieldText.bindProperty("text", {
+                        path: bindingPath,
+                        type: new sap.ui.model.type.Date({
+                            pattern: "yyyy-MM-dd",
+                            strictParsing: true,
+                        })
+                    });
+                } else {
+                    userFieldText.bindProperty("text", {
+                        path: bindingPath
+                    });
+                }
+                return userFieldText;
+            } else {
+                // 日期控件
+                if (ibas.enums.valueOf(ibas.emDbFieldType, userFieldInfo.dataType) === ibas.emDbFieldType.DATE) {
+                    let userFieldDatePicker: sap.m.DatePicker = new sap.m.DatePicker("", {
+                        valueFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE),
+                        displayFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE),
+                    });
+                    userFieldDatePicker.bindProperty("dateValue", {
+                        path: bindingPath
+                    });
+                    return userFieldDatePicker;
+                } else {
+                    // 非日期类型判断可选值，有可选值显示为下拉控件
+                    if (!ibas.objects.isNull(userFieldInfo.values) && userFieldInfo.values.length > 0) {
+                        let userFieldSelect: sap.m.Select = new sap.m.Select("", {
+                            width: "100%",
+                        });
+                        // 添加空项
+                        userFieldSelect.addItem(new sap.ui.core.ListItem("", {
+                            key: "",
+                            text: ibas.i18n.prop("shell_please_chooose_data", ""),
+                            additionalText: ""
+                        }));
+                        for (let item of userFieldInfo.values) {
+                            let selectItem: sap.ui.core.ListItem = new sap.ui.core.ListItem("", {
+                                key: item.value,
+                                text: item.description,
+                                additionalText: item.value
+                            });
+                            userFieldSelect.addItem(selectItem);
+                        }
+                        userFieldSelect.bindProperty("selectedKey", {
+                            path: bindingPath,
+                        });
+                        return userFieldSelect;
+                    }
+                }
+                // 默认返回文本控件
+                let userFieldInput: sap.m.Input = new sap.m.Input("", {
+                    // 根据属性大小设置最大输入值
+                    maxLength: userFieldInfo.editSize,
+                    value: {
+                        path: bindingPath
+                    }
+                });
+                return userFieldInput;
             }
         }
     }
