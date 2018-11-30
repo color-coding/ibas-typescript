@@ -19,6 +19,12 @@ namespace shell {
                 }
             }
         }
+        /** 配置项目-连接方式 */
+        export const CONFIG_ITEM_CONNECTION_WAY: string = "connectionWay";
+        /** 连接方式-用户密码 */
+        export const CONNECTION_WAY_USER_PASSWORD: string = "USER_PASSWORD";
+        /** 连接方式-用户口令 */
+        export const CONNECTION_WAY_USER_TOKEN: string = "USER_TOKEN";
         /**
          * 业务仓库-壳-远程
          */
@@ -57,7 +63,15 @@ namespace shell {
                     function (cryptoJS: CryptoJS.Hashes): void {
                         let method: string =
                             ibas.strings.format("userConnect?user={0}&password={1}", caller.user, cryptoJS.MD5(caller.password));
-                        remoteRepository.callRemoteMethod(method, undefined, caller);
+                        remoteRepository.callRemoteMethod(method, undefined, {
+                            caller: caller.caller,
+                            onCompleted(opRslt: ibas.IOperationResult<IUser>): void {
+                                if (opRslt.resultCode === 0) {
+                                    ibas.config.set(CONFIG_ITEM_CONNECTION_WAY, CONNECTION_WAY_USER_PASSWORD);
+                                }
+                                caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
+                            }
+                        });
                     }, function (error: RequireError): void {
                         // 加载js库失败
                         let opRslt: ibas.IOperationResult<any> = new ibas.OperationResult();
@@ -76,7 +90,15 @@ namespace shell {
                     throw new Error(ibas.i18n.prop("sys_invalid_parameter", "remoteRepository"));
                 }
                 let method: string = ibas.strings.format("tokenConnect?token={0}", caller.token);
-                remoteRepository.callRemoteMethod(method, undefined, caller);
+                remoteRepository.callRemoteMethod(method, undefined, {
+                    caller: caller.caller,
+                    onCompleted(opRslt: ibas.IOperationResult<IUser>): void {
+                        if (opRslt.resultCode === 0) {
+                            ibas.config.set(CONFIG_ITEM_CONNECTION_WAY, CONNECTION_WAY_USER_TOKEN);
+                        }
+                        caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
+                    }
+                });
             }
 
             /**
