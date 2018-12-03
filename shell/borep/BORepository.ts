@@ -158,6 +158,11 @@ namespace shell {
              * @param caller 调用者
              */
             fetchBOInfos(caller: IBOInfoCaller): void {
+                if (ibas.objects.isNull(caller.boCode)) {
+                    // 没有查询条件，直接返回
+                    caller.onCompleted(new ibas.OperationResult<IBOInfo>());
+                    return;
+                }
                 if (!caller.noCached) {
                     // 优先使用缓存数据
                     let data: DataWrapping = boInfoCache.get(caller.boCode);
@@ -246,8 +251,8 @@ namespace shell {
         class DataWrapping {
             constructor(data: IBOInfo) {
                 this.data = data;
-                if (this.data === null) {
-                    this.time = WAITING_TIME + ibas.dates.now().getTime();
+                if (this.data === null || this.data === EMPTY_BOINFO) {
+                    this.time = (WAITING_TIME * 3) + ibas.dates.now().getTime();
                 } else {
                     this.time = EXPIRED_TIME + ibas.dates.now().getTime();
                 }

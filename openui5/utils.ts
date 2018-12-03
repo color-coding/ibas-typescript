@@ -782,6 +782,9 @@ namespace openui5 {
                         container.attachModelContextChange(null, function (oEvent: any): void {
                             if (!ibas.objects.isNull(oEvent.getSource()) && !ibas.objects.isNull(oEvent.getSource().getModel())) {
                                 bo = oEvent.getSource().getModel().getData();
+                                if (!ibas.objects.isNull(bo)) {
+                                    registerUserField(bo, properties);
+                                }
                             }
                         });
                         let split: any = container.getContent()[0];
@@ -840,6 +843,9 @@ namespace openui5 {
                         container.attachModelContextChange(null, function (oEvent: any): void {
                             if (!ibas.objects.isNull(oEvent.getSource()) && !ibas.objects.isNull(oEvent.getSource().getModel())) {
                                 bo = oEvent.getSource().getModel().getData();
+                                if (!ibas.objects.isNull(bo)) {
+                                    registerUserField(bo, properties);
+                                }
                             }
                         });
                         // 如果对象没有自定义字段并且容器中无内容则容器不显示
