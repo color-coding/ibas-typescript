@@ -148,7 +148,7 @@ namespace ibas {
                 this.endTime.toLocaleString(),
                 dates.difference(dates.emDifferenceType.SECOND, this.endTime, this.startTime));
             if (this.onDone instanceof Function) {
-                this.onDone();
+                this.onDone.apply(this);
             }
         }
         /** 停止（最好重载） */

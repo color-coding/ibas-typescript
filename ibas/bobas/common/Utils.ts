@@ -186,16 +186,45 @@ namespace ibas {
         }
         /**
          * 获取属性值
-         * @param propertyName 属性名称
          * @param data 对象
+         * @param propertyName 属性名称
          */
-        export function getPropertyValue(propertyName: string, data: any): any {
+        export function getPropertyValue(data: any, propertyName: string): any {
+            if (isNull(data)) {
+                return undefined;
+            }
             for (let key in data) {
                 if (strings.equalsIgnoreCase(key, propertyName)) {
                     return data[key];
                 }
             }
             return undefined;
+        }
+        /**
+         * 属性是否存在
+         * @param data 对象
+         * @param propertyName 属性名称
+         * @param ignoreCase 忽略大小写
+         */
+        export function hasProperty(data: any, propertyName: string, ignoreCase: boolean = true): boolean {
+            if (isNull(data)) {
+                return false;
+            }
+            if (strings.isEmpty(propertyName)) {
+                return false;
+            }
+            for (let item in data) {
+                if (ignoreCase === true) {
+                    if (strings.equalsIgnoreCase(item, propertyName)) {
+                        return true;
+                    }
+                } else {
+                    if (strings.equals(item, propertyName)) {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
     }
     /**
@@ -973,8 +1002,8 @@ namespace ibas {
                 let compare: number = 0;
                 for (let sort of sorts) {
                     compare = 0;
-                    let cValue: any = objects.getPropertyValue(sort.alias, c);
-                    let bValue: any = objects.getPropertyValue(sort.alias, b);
+                    let cValue: any = objects.getPropertyValue(c, sort.alias);
+                    let bValue: any = objects.getPropertyValue(b, sort.alias);
                     if (objects.isNull(cValue) && objects.isNull(bValue)) {
                         // 均空，一样
                         compare = 0;

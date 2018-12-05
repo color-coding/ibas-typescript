@@ -51,7 +51,7 @@ namespace ibas {
         propertyName: string;
         /** 获取值 */
         getValue(): any {
-            return objects.getPropertyValue(this.propertyName, super.getValue());
+            return objects.getPropertyValue(super.getValue(), this.propertyName);
         }
     }
     export class ValueConverterString implements IValueConverter<string> {

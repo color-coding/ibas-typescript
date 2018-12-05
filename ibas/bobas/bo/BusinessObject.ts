@@ -540,6 +540,14 @@ namespace ibas {
                         }
                     }
                 }
+            } else if (strings.equalsIgnoreCase(name, BO_PROPERTY_NAME_CANCELED)) {
+                for (let item of this) {
+                    if (objects.instanceOf(item, BusinessObject)) {
+                        if (objects.hasProperty(item, BO_PROPERTY_NAME_CANCELED)) {
+                            item.setProperty(BO_PROPERTY_NAME_CANCELED, this.parent.getProperty(BO_PROPERTY_NAME_CANCELED));
+                        }
+                    }
+                }
             }
         }
         /** 子项属性改变时 */
