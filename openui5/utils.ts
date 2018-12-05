@@ -782,6 +782,9 @@ namespace openui5 {
                         container.attachModelContextChange(null, function (oEvent: any): void {
                             if (!ibas.objects.isNull(oEvent.getSource()) && !ibas.objects.isNull(oEvent.getSource().getModel())) {
                                 bo = oEvent.getSource().getModel().getData();
+                                if (!ibas.objects.isNull(bo)) {
+                                    registerUserField(bo, properties);
+                                }
                             }
                         });
                         let split: any = container.getContent()[0];
@@ -800,13 +803,18 @@ namespace openui5 {
                                         }
                                     }
                                 } else {
-                                    registerUserField(bo, properties);
                                     for (let index: number = 0; index < properties.length; index++) {
                                         let property: shell.bo.IBOPropertyInfo = properties[index];
                                         userFieldForm.addContent(new sap.m.Label("", { text: property.description }));
                                         let control: sap.ui.core.Control = createUserFieldControl(property, ibas.strings.format("userFields/{0}/value", index), readOnly);
                                         if (!ibas.objects.isNull(control)) {
                                             userFieldForm.addContent(control);
+                                        }
+                                    }
+                                    if (!ibas.objects.isNull(container.getBindingContext())) {
+                                        if (!ibas.objects.isNull(container.getBindingContext().getObject())) {
+                                            bo = container.getBindingContext().getObject();
+                                            registerUserField(bo, properties);
                                         }
                                     }
                                 }
@@ -840,6 +848,9 @@ namespace openui5 {
                         container.attachModelContextChange(null, function (oEvent: any): void {
                             if (!ibas.objects.isNull(oEvent.getSource()) && !ibas.objects.isNull(oEvent.getSource().getModel())) {
                                 bo = oEvent.getSource().getModel().getData();
+                                if (!ibas.objects.isNull(bo)) {
+                                    registerUserField(bo, properties);
+                                }
                             }
                         });
                         // 如果对象没有自定义字段并且容器中无内容则容器不显示
@@ -849,13 +860,18 @@ namespace openui5 {
                                 container.setVisible(false);
                             }
                         } else {
-                            registerUserField(bo, properties);
                             for (let index: number = 0; index < properties.length; index++) {
                                 let property: shell.bo.IBOPropertyInfo = properties[index];
                                 container.addContent(new sap.m.Label("", { text: property.description }));
                                 let control: any = createUserFieldControl(property, ibas.strings.format("userFields/{0}/value", index), readOnly);
                                 if (!ibas.objects.isNull(control)) {
                                     container.addContent(control);
+                                }
+                            }
+                            if (!ibas.objects.isNull(container.getBindingContext())) {
+                                if (!ibas.objects.isNull(container.getBindingContext().getObject())) {
+                                    bo = container.getBindingContext().getObject();
+                                    registerUserField(bo, properties);
                                 }
                             }
                         }
