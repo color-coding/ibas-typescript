@@ -367,6 +367,7 @@ namespace ibas {
             // 可重载
         }
     }
+    const PROPERTY_LISTENERS: symbol = Symbol("listeners");
     /** 配置项目-默认模块图标 */
     export const CONFIG_ITEM_DEFALUT_MODULE_ICON: string = "defalutModuleIcon";
     /** 配置项目-禁用平台视图 */
@@ -445,13 +446,12 @@ namespace ibas {
             }
             super.register(item);
         }
-        private listeners: Array<Function>;
         /** 添加初始化完成监听 */
         addListener(listener: Function): void {
-            if (objects.isNull(this.listeners)) {
-                this.listeners = new Array<Function>();
+            if (objects.isNull(this[PROPERTY_LISTENERS])) {
+                this[PROPERTY_LISTENERS] = new Array<Function>();
             }
-            this.listeners.push(listener);
+            this[PROPERTY_LISTENERS].push(listener);
         }
         /** 初始化完成 */
         isInitialized: boolean;
@@ -463,16 +463,16 @@ namespace ibas {
         /** 初始化完成，需要手工调用 */
         protected fireInitialized(): void {
             this.isInitialized = true;
-            if (objects.isNull(this.listeners)) {
+            if (objects.isNull(this[PROPERTY_LISTENERS])) {
                 return;
             }
-            for (let listener of this.listeners) {
+            for (let listener of this[PROPERTY_LISTENERS]) {
                 if (listener instanceof Function) {
                     listener.call(listener, this);
                 }
             }
             // 清除监听
-            delete (this.listeners);
+            this[PROPERTY_LISTENERS] = undefined;
         }
         /** 注册 */
         protected abstract registers(): void;

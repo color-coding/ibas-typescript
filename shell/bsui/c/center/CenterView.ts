@@ -18,8 +18,6 @@ namespace shell {
             export const CONFIG_ITEM_NO_LOGOUT: string = "noLogOut";
             /** 配置项目-功能分组 */
             export const CONFIG_ITEM_GROUP_FUNCTONS: string = "groupFunctions";
-            /** 配置项目-自动激活的功能 */
-            export const CONFIG_ITEM_AUTO_ACTIVETED_FUNCTION: string = "autoFunction";
             /** 配置项目-欢迎页面地址 */
             export const CONFIG_ITEM_WELCOME_PAGE_URL: string = "welcomeUrl";
             /** 配置项目-欢迎页面图片 */
@@ -191,11 +189,24 @@ namespace shell {
                         afterNavigate(): void {
                             let page: any = this.getCurrentPage();
                             if (page instanceof sap.m.Page) {
-                                let title: any = sap.ui.getCore().byId(UI_MAIN_TITLE);
-                                if (title instanceof sap.m.Title && title.getVisible()) {
-                                    title.setText(page.getTitle());
-                                } else {
-                                    title.setText(null);
+                                if (page.getShowHeader() === false) {
+                                    // 全屏模式
+                                    let title: any = sap.ui.getCore().byId(UI_MAIN_TITLE);
+                                    if (title instanceof sap.m.Title) {
+                                        title.setVisible(true);
+                                        title.setText(page.getTitle());
+                                    }
+                                    let button: any = sap.ui.getCore().byId(UI_MAIN_BACK);
+                                    if (button instanceof sap.m.Button) {
+                                        button.setVisible(true);
+                                    }
+                                    if (mainPage.getSideExpanded() === false && ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM) === ibas.emPlantform.PHONE) {
+                                        // 手机模式，全屏时隐藏menu按钮
+                                        let button: any = sap.ui.getCore().byId(UI_MAIN_MENU);
+                                        if (button instanceof sap.m.Button) {
+                                            button.setVisible(false);
+                                        }
+                                    }
                                 }
                                 // 切换hash值
                                 for (let item of page.getCustomData()) {
@@ -210,12 +221,16 @@ namespace shell {
                                     }
                                 }
                             } else if (page instanceof sap.m.MessagePage) {
+                                let button: any = sap.ui.getCore().byId(UI_MAIN_MENU);
+                                if (button instanceof sap.m.Button) {
+                                    button.setVisible(true);
+                                }
                                 let title: any = sap.ui.getCore().byId(UI_MAIN_TITLE);
                                 if (title instanceof sap.m.Title) {
                                     title.setVisible(false);
                                     title.setText(null);
                                 }
-                                let button: any = sap.ui.getCore().byId(UI_MAIN_BACK);
+                                button = sap.ui.getCore().byId(UI_MAIN_BACK);
                                 if (button instanceof sap.m.Button) {
                                     button.setVisible(false);
                                 }
@@ -273,18 +288,6 @@ namespace shell {
                     if (fullScreen) {
                         // 全屏
                         page.setShowHeader(false);
-                        let title: any = sap.ui.getCore().byId(UI_MAIN_TITLE);
-                        if (title instanceof sap.m.Title) {
-                            if (!title.getVisible()) {
-                                title.setVisible(true);
-                            }
-                        }
-                        let button: any = sap.ui.getCore().byId(UI_MAIN_BACK);
-                        if (button instanceof sap.m.Button) {
-                            if (!button.getVisible()) {
-                                button.setVisible(true);
-                            }
-                        }
                     } else {
                         // 非全屏
                         // 退出钮
@@ -475,8 +478,6 @@ namespace shell {
                  * @param func 功能
                  */
                 showModuleFunction(module: string, func: ibas.IModuleFunction): void {
-                    /** 自动激活的功能 */
-                    let autoActivetedFunction: string = ibas.config.get(CONFIG_ITEM_AUTO_ACTIVETED_FUNCTION);
                     let nvList: sap.tnt.NavigationList = this.navigation.getItem();
                     let nvItem: sap.tnt.NavigationListItem = null;
                     for (let item of nvList.getItems()) {
@@ -520,13 +521,6 @@ namespace shell {
                             }
                         })
                     );
-                    // 自动激活功能
-                    if (func.id === autoActivetedFunction) {
-                        let duration: number = ibas.config.get(CONFIG_ITEM_STATUS_MESSAGES_DELAY, 2) * 1000;
-                        setTimeout(function (): void {
-                            that.fireViewEvents(that.activateFunctionEvent, func.id);
-                        }, duration > 0 ? duration * 1.2 : 3000);
-                    }
                 }
                 /** 设置忙状态 */
                 busyView(view: ibas.IView, busy: boolean, msg: string): any {

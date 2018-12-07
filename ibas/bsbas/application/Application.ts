@@ -72,7 +72,8 @@ namespace ibas {
                         throw new Error(i18n.prop("sys_invalid_view", this.name));
                     }
                     this.viewShower.show(this.view);
-                    this.afterViewShow();
+                    logger.log(emMessageLevel.DEBUG, "app: [{0} - {1}]'s view displayed.", this.id, this.name);
+                    this.viewShowed();
                 } catch (error) {
                     this.viewShower.messages({
                         title: this.description,
@@ -82,15 +83,6 @@ namespace ibas {
                 }
             } else {
                 throw new Error(i18n.prop("sys_invalid_view_shower", this.name));
-            }
-        }
-        /** 视图显示后 */
-        private afterViewShow(): void {
-            if (this.view instanceof View) {
-                logger.log(emMessageLevel.DEBUG, "app: [{0} - {1}]'s view displayed.", this.id, this.name);
-                this.viewShowed();
-            } else {
-                throw new Error(i18n.prop("sys_invalid_view", this.name));
             }
         }
         /** 注册视图 */

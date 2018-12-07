@@ -229,8 +229,8 @@ namespace shell {
                 jQuery.sap.require("sap.m.MessageBox");
                 sap.m.MessageBox.show(
                     caller.message, {
+                        title: cView.title,
                         icon: openui5.utils.toMessageBoxIcon(caller.type),
-                        title: ibas.config.get(app.CONFIG_ITEM_APPLICATION_NAME, ibas.i18n.prop("shell_name")),
                         actions: openui5.utils.toMessageBoxAction(caller.actions),
                         onClose(oAction: any): void {
                             if (!ibas.objects.isNull(caller.onCompleted)) {

@@ -977,6 +977,9 @@ namespace ibas {
          * @param newHash
          */
         export function changeHash(newHash: string): void {
+            if (!strings.isWith(newHash, "#/", undefined)) {
+                newHash = "#/" + newHash;
+            }
             let oldHash: string = window.location.hash;
             if (!strings.equalsIgnoreCase(oldHash, newHash)) {
                 window.history.pushState(null, null, newHash);
