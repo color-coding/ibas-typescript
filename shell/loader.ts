@@ -5,9 +5,6 @@
  * Use of this source code is governed by an Apache License, Version 2.0
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
-/// <reference path="../ibas/3rdparty/require.d.ts" />
-/// <reference path="../ibas/index.d.ts" />
-
 namespace loader {
     // 解决方法缺失
     if (typeof String.prototype.startsWith === undefined) {

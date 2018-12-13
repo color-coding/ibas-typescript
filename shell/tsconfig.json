@@ -1,13 +1,17 @@
 {
   "compilerOptions": {
     "noImplicitAny": false,
-    "removeComments": true,
+    "removeComments": false,
     "target": "es6",
     "preserveConstEnums": true,
     "outFile": "./index.js",
     "declaration": true,
     "sourceMap": true
   },
+  "include": [
+    "../ibas/index.d.ts",
+    "../openui5/index.d.ts"
+  ],
   "files": [
     "./bsapp/Console.ts"
   ]

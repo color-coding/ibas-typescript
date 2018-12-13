@@ -8,6 +8,10 @@
         "declaration": true,
         "sourceMap": true
     },
+    "include": [
+        "../ibas/index.d.ts",
+        "../shell/index.d.ts"
+    ],
     "files": [
         "./index.ts"
     ]

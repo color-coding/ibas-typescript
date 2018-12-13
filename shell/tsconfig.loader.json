@@ -1,13 +1,17 @@
 {
   "compilerOptions": {
     "noImplicitAny": false,
-    "removeComments": true,
+    "removeComments": false,
     "target": "es6",
     "preserveConstEnums": true,
     "outFile": "./loader.js",
     "declaration": false,
     "sourceMap": false
   },
+  "include": [
+    "../ibas/3rdparty/require.d.ts",
+    "../ibas/index.d.ts"
+  ],
   "files": [
     "./loader.ts"
   ]
