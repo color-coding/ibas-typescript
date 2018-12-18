@@ -342,18 +342,18 @@ namespace shell {
             /** 完成 */
             onCompleted(): void;
         }
-        const PROPERTY_USERPRIVILEGES: symbol = Symbol("userPrivileges");
+        const userPrivileges: ibas.IList<bo.IUserPrivilege> = new ibas.ArrayList<bo.IUserPrivilege>();
         /** 用户权限管理员 */
         export class UserPrivilegeManager {
             /** 判断是否可以运行应用 */
             canRun(element: ibas.IElement): boolean {
                 let run: boolean = true;
-                if (ibas.objects.isNull(this[PROPERTY_USERPRIVILEGES])) {
+                if (ibas.objects.isNull(userPrivileges)) {
                     return run;
                 }
                 if (ibas.objects.instanceOf(element, ibas.BOApplication)) {
                     // 应用是业务对象应用，根据应用类型设置权限
-                    for (let item of this[PROPERTY_USERPRIVILEGES]) {
+                    for (let item of userPrivileges) {
                         if (item.source !== ibas.emPrivilegeSource.BUSINESS_OBJECT) {
                             continue;
                         }
@@ -377,7 +377,7 @@ namespace shell {
                     }
                 }
                 // 应用设置，覆盖之前设置
-                for (let item of this[PROPERTY_USERPRIVILEGES]) {
+                for (let item of userPrivileges) {
                     if (item.source === ibas.emPrivilegeSource.BUSINESS_OBJECT) {
                         continue;
                     }
@@ -395,7 +395,7 @@ namespace shell {
             }
             /** 加载权限 */
             load(loader: IUserPrivilegeLoader): void {
-                if (!ibas.objects.isNull(this[PROPERTY_USERPRIVILEGES])) {
+                if (!ibas.objects.isNull(userPrivileges) && userPrivileges.length > 0) {
                     // 已初始化不在处理
                     return;
                 }
@@ -409,7 +409,7 @@ namespace shell {
                             if (opRslt.resultCode !== 0) {
                                 throw new Error(opRslt.message);
                             }
-                            that[PROPERTY_USERPRIVILEGES] = opRslt.resultObjects;
+                            userPrivileges.add(opRslt.resultObjects);
                             if (loader.onCompleted instanceof Function) {
                                 loader.onCompleted();
                             }
@@ -442,20 +442,130 @@ namespace shell {
              */
             onCompleted(console: ibas.ModuleConsole): void;
         }
-        const PROPERTY_CONSOLES: symbol = Symbol("consoles");
+        class ModuleLoader {
+            constructor() {
+                this.consoles = new ibas.ArrayList<ibas.IModule>();
+                this.faildModules = new ibas.ArrayList<bo.IUserModule>();
+                this.minLibrary = ibas.config.get(ibas.CONFIG_ITEM_USE_MINIMUM_LIBRARY, false);
+            }
+            minLibrary: boolean;
+            modules: ibas.IList<bo.IUserModule>;
+            faildModules: ibas.IList<bo.IUserModule>;
+            consoles: ibas.IList<ibas.IModule>;
+            onUncaughtError: (event: ErrorEvent) => void;
+            load(onCompleted: (console: ibas.ModuleConsole) => void, onStatusMessage: (type: ibas.emMessageType, message: string) => void): void {
+                window.addEventListener("error", this.onUncaughtError);
+                let that: this = this;
+                // 加载模块文件
+                for (let module of that.modules) {
+                    onStatusMessage(
+                        ibas.emMessageType.INFORMATION,
+                        ibas.i18n.prop("shell_initialize_module", ibas.strings.isEmpty(module.name) ? module.id : module.name)
+                    );
+                    // 模块require函数
+                    ibas.requires.require({
+                        context: ibas.requires.naming(module.name),
+                        baseUrl: module.address,
+                        map: {
+                            "*": {
+                                "css": ibas.strings.format("{0}/3rdparty/require-css{1}.js",
+                                    ibas.urls.rootUrl("/ibas/index"),
+                                    (this.minLibrary ? ibas.SIGN_MIN_LIBRARY : "")
+                                )
+                            }
+                        },
+                        waitSeconds: ibas.config.get(ibas.requires.CONFIG_ITEM_WAIT_SECONDS, 10),
+                    }, module.index + (this.minLibrary ? ibas.SIGN_MIN_LIBRARY : ""), function (): void {
+                        try {
+                            let consoleClass: any = window;
+                            for (let tmp of module.console.split(".")) {
+                                if (ibas.objects.isNull(consoleClass)) {
+                                    break;
+                                }
+                                consoleClass = consoleClass[tmp];
+                            }
+                            if (!ibas.objects.isAssignableFrom(consoleClass, ibas.ModuleConsole)) {
+                                throw new TypeError(ibas.i18n.prop("shell_invalid_module_console", module.console));
+                            }
+                            let console: ibas.ModuleConsole = new consoleClass();
+                            if (!(ibas.objects.instanceOf(console, ibas.ModuleConsole))) {
+                                throw new ReferenceError(module.console);
+                            }
+                            // 设置模块名称
+                            console.module = module.name.toLowerCase();
+                            // 设置模块根地址
+                            console.rootUrl = module.address;
+                            // 设置仓库地址
+                            if (!ibas.strings.isEmpty(module.repository)) {
+                                let done: boolean = console.setRepository(module.repository);
+                                // 注册模块业务仓库默认地址，创建实例时默认取此地址
+                                if (!ibas.objects.isNull(console.name) && done) {
+                                    module.repository = ibas.urls.normalize(module.repository);
+                                    let repositoryName: string = ibas.strings.format(ibas.MODULE_REPOSITORY_NAME_TEMPLATE, console.name);
+                                    let configName: string = ibas.strings.format(
+                                        ibas.CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS, repositoryName);
+                                    ibas.config.set(configName, module.repository);
+                                    ibas.logger.log(ibas.emMessageLevel.DEBUG,
+                                        "repository: register [{0}]'s default address [{1}].", repositoryName, module.repository);
+                                }
+                            }
+                            onCompleted(console);
+                            that.consoles.add(console);
+                        } catch (error) {
+                            onStatusMessage(ibas.emMessageType.ERROR, error.message);
+                        } finally {
+                            that.modules.remove(module);
+                            ibas.logger.log(ibas.emMessageLevel.DEBUG, "center: module: [{0}|{1}] was loaded.", module.name, module.console);
+                            if (that.modules.length === 0) {
+                                if (that.faildModules.length === 0) {
+                                    that.release();
+                                } else {
+                                    for (let item of that.faildModules) {
+                                        that.modules.add(item);
+                                    }
+                                    for (let item of that.modules) {
+                                        ibas.logger.log(ibas.emMessageLevel.DEBUG, "center: module: [{0}|{1}] begin to reload.", item.name, item.console);
+                                        ibas.requires.require({
+                                            context: ibas.requires.naming(item.name),
+                                            baseUrl: item.address,
+                                            map: {
+                                                "*": {
+                                                    "css": ibas.strings.format("{0}/3rdparty/require-css{1}.js",
+                                                        ibas.urls.rootUrl("/ibas/index"),
+                                                        (that.minLibrary ? ibas.SIGN_MIN_LIBRARY : "")
+                                                    )
+                                                }
+                                            },
+                                            waitSeconds: ibas.config.get(ibas.requires.CONFIG_ITEM_WAIT_SECONDS, 10),
+                                        }, item.index + (that.minLibrary ? ibas.SIGN_MIN_LIBRARY : ""));
+                                    }
+                                }
+                            }
+                        }
+                    }, function (): void {
+                        that.modules.remove(module);
+                    });
+                }
+            }
+            release(): void {
+                this.modules.clear();
+                this.faildModules.clear();
+                window.removeEventListener("error", this.onUncaughtError);
+            }
+        }
+        const moduleLoader: ModuleLoader = new ModuleLoader();
         export class ModuleConsoleManager {
             modules(): ibas.IModule[] {
                 let modules: ibas.IList<ibas.IModule> = new ibas.ArrayList<ibas.IModule>();
-                if (ibas.objects.isNull(this[PROPERTY_CONSOLES])) {
+                if (ibas.objects.isNull(moduleLoader.consoles)) {
                     return modules;
                 }
-                for (let item of this[PROPERTY_CONSOLES]) {
+                for (let item of moduleLoader.consoles) {
                     modules.add(item);
                 }
-                return modules;
+                return moduleLoader.consoles;
             }
             load(loader: IModuleConsoleLoader): void {
-                let moduleConsoles: ibas.ArrayList<ibas.IModuleConsole> = this[PROPERTY_CONSOLES] = new ibas.ArrayList<ibas.IModuleConsole>();
                 let boRepository: bo.IBORepositoryShell = bo.repository.create();
                 boRepository.fetchUserModules({
                     user: loader.user,
@@ -465,7 +575,7 @@ namespace shell {
                             if (opRslt.resultCode !== 0) {
                                 throw new Error(opRslt.message);
                             }
-                            // 初始化加载模块
+                            // 加载模块
                             let userModules: ibas.ArrayList<bo.IUserModule> = new ibas.ArrayList<bo.IUserModule>();
                             for (let module of opRslt.resultObjects) {
                                 if (userModules.firstOrDefault(c => c.id === module.id) !== null) {
@@ -501,82 +611,42 @@ namespace shell {
                                     "center: module: [{0}], root: [{1}], console: [{2}].", module.name, module.address, module.console);
                                 userModules.add(module);
                             }
-                            // 加载模块文件
-                            for (let module of userModules) {
-                                if (await new Promise<boolean>(resolve => {
-                                    // 模块require函数
-                                    let minLibrary: boolean = ibas.config.get(ibas.CONFIG_ITEM_USE_MINIMUM_LIBRARY, false);
-                                    let require: Require = ibas.requires.create({
-                                        context: ibas.requires.naming(module.name),
-                                        baseUrl: module.address,
-                                        map: {
-                                            "*": {
-                                                "css": ibas.strings.format("{0}/3rdparty/require-css{1}.js",
-                                                    ibas.urls.rootUrl("/ibas/index"),
-                                                    (minLibrary ? ibas.SIGN_MIN_LIBRARY : "")
-                                                )
-                                            }
-                                        },
-                                        waitSeconds: ibas.config.get(ibas.requires.CONFIG_ITEM_WAIT_SECONDS, 10)
-                                    });
-                                    require([
-                                        module.index + (minLibrary ? ibas.SIGN_MIN_LIBRARY : "")
-                                    ], function (): void {
-                                        return resolve(true);
-                                    }, function (): void {
-                                        return resolve(false);
-                                    });
-                                })) {
-                                    // 加载成功
-                                } else {
-                                    // 加载失败
-                                }
-                            }
-                            // 加载模块控制台
-                            for (let module of userModules) {
-                                try {
-                                    loader.onStatusMessage(
-                                        ibas.emMessageType.INFORMATION,
-                                        ibas.i18n.prop("shell_initialize_module", ibas.strings.isEmpty(module.name) ? module.id : module.name)
+                            moduleLoader.modules = userModules;
+                            moduleLoader.onUncaughtError = function (event: ErrorEvent): void {
+                                if (event.error instanceof ReferenceError && !ibas.objects.isNull(moduleLoader.modules)) {
+                                    let urlIndex: string = event.filename.split("?")[0];
+                                    let module: bo.IUserModule = moduleLoader.modules.firstOrDefault(c =>
+                                        ibas.strings.isWith(urlIndex, ibas.urls.normalize(c.address + c.index), ".js")
                                     );
-                                    let consoleClass: any = window;
-                                    for (let tmp of module.console.split(".")) {
-                                        if (ibas.objects.isNull(consoleClass)) {
-                                            break;
+                                    if (!ibas.objects.isNull(module)) {
+                                        // 卸载加载失败模块
+                                        ibas.requires.create({
+                                            context: ibas.requires.naming(module.name)
+                                        }).undef(module.index + (moduleLoader.minLibrary ? ibas.SIGN_MIN_LIBRARY : ""));
+                                        // 添加失败清单
+                                        for (let item of moduleLoader.modules) {
+                                            if (item.name !== module.name) {
+                                                continue;
+                                            }
+                                            if (item.index !== module.index) {
+                                                continue;
+                                            }
+                                            if (moduleLoader.faildModules.contain(item)) {
+                                                continue;
+                                            }
+                                            moduleLoader.faildModules.add(item);
+                                            ibas.logger.log(ibas.emMessageLevel.DEBUG, "center: module: [{0}|{1}] will be reload.", item.name, item.console);
                                         }
-                                        consoleClass = consoleClass[tmp];
-                                    }
-                                    if (!ibas.objects.isAssignableFrom(consoleClass, ibas.ModuleConsole)) {
-                                        throw new TypeError(ibas.i18n.prop("shell_invalid_module_console", module.console));
-                                    }
-                                    let console: ibas.ModuleConsole = new consoleClass();
-                                    if (!(ibas.objects.instanceOf(console, ibas.ModuleConsole))) {
-                                        throw new ReferenceError(module.console);
-                                    }
-                                    // 设置模块名称
-                                    console.module = module.name.toLowerCase();
-                                    // 设置模块根地址
-                                    console.rootUrl = module.address;
-                                    // 设置仓库地址
-                                    if (!ibas.strings.isEmpty(module.repository)) {
-                                        let done: boolean = console.setRepository(module.repository);
-                                        // 注册模块业务仓库默认地址，创建实例时默认取此地址
-                                        if (!ibas.objects.isNull(console.name) && done) {
-                                            module.repository = ibas.urls.normalize(module.repository);
-                                            let repositoryName: string = ibas.strings.format(ibas.MODULE_REPOSITORY_NAME_TEMPLATE, console.name);
-                                            let configName: string = ibas.strings.format(
-                                                ibas.CONFIG_ITEM_TEMPLATE_REMOTE_REPOSITORY_ADDRESS, repositoryName);
-                                            ibas.config.set(configName, module.repository);
-                                            ibas.logger.log(ibas.emMessageLevel.DEBUG,
-                                                "repository: register [{0}]'s default address [{1}].", repositoryName, module.repository);
+                                        // 移出失败模块
+                                        for (let item of moduleLoader.faildModules) {
+                                            moduleLoader.modules.remove(item);
                                         }
                                     }
-                                    loader.onCompleted(console);
-                                    moduleConsoles.add(console);
-                                } catch (error) {
-                                    loader.onStatusMessage(ibas.emMessageType.ERROR, error.message);
                                 }
-                            }
+                            };
+                            moduleLoader.load((console: ibas.ModuleConsole): void => {
+                                loader.onCompleted(console);
+                            }, loader.onStatusMessage);
                         } catch (error) {
                             loader.onError(error);
                         }

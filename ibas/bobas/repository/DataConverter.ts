@@ -94,6 +94,7 @@ namespace ibas {
                     Remarks: newData.remarks,
                     PropertyPath: newData.propertyPath,
                     OnlyHasChilds: newData.onlyHasChilds,
+                    IncludingOtherChilds: newData.includingOtherChilds,
                     Conditions: conditions,
                     ChildCriterias: childCriteria,
                     Sorts: sorts
@@ -261,6 +262,7 @@ namespace ibas {
                 newData.noChilds = remote.NoChilds;
                 newData.remarks = remote.Remarks;
                 newData.onlyHasChilds = remote.OnlyHasChilds;
+                newData.includingOtherChilds = remote.IncludingOtherChilds;
                 newData.propertyPath = remote.PropertyPath;
                 if (remote.Conditions instanceof Array) {
                     for (let item of remote.Conditions) {

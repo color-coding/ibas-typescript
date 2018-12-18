@@ -174,6 +174,11 @@ namespace ibas {
          * 仅返回存在子项的
          */
         onlyHasChilds: boolean;
+
+        /**
+         * 包含不符合条件子项（仅查到结果时有效）
+         */
+        includingOtherChilds: boolean;
     }
 
     /**
@@ -821,6 +826,18 @@ namespace ibas {
 
         set onlyHasChilds(value: boolean) {
             this.OnlyHasChilds = value;
+        }
+        /**
+         *  包含不符合条件子项（仅查到结果时有效）
+         */
+        private IncludingOtherChilds: boolean;
+
+        get includingOtherChilds(): boolean {
+            return this.IncludingOtherChilds;
+        }
+
+        set includingOtherChilds(value: boolean) {
+            this.IncludingOtherChilds = value;
         }
     }
 

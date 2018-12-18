@@ -34,5 +34,25 @@ namespace ibas {
             }
             return (<any>window).require.config(requireConfig);
         }
+
+        /**
+         * 加载模块
+         * @param requireConfig 配置
+         * @param module 模块
+         * @param success 成功时
+         * @param fail 失败时
+         */
+        export function require(requireConfig: RequireConfig, module: string | string[], success: Function = undefined, fail: Function = undefined): void {
+            let modules: string[] = new ArrayList<string>();
+            if (module instanceof Array) {
+                for (let item of module) {
+                    modules.push(item);
+                }
+            } else {
+                modules.push(module);
+            }
+            let require: Require = create(requireConfig);
+            require(modules, success, fail);
+        }
     }
 }

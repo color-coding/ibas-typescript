@@ -95,6 +95,8 @@ declare namespace ibas4j {
         PropertyPath: string;
         /** 仅返回存在子项的 */
         OnlyHasChilds: boolean;
+        /** 包含不符合条件子项 */
+        IncludingOtherChilds: boolean;
     }
     /** 文件信息 */
     export interface IFileData extends IDataDeclaration {

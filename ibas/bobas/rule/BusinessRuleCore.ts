@@ -58,18 +58,15 @@ namespace ibas {
          */
         getRules(type: any): IBusinessRules;
     }
+    const _rules: Map<any, IBusinessRules> = new Map<any, IBusinessRules>();
     class BusinessRulesManager implements IBusinessRulesManager {
-        private rules: Map<any, IBusinessRules>;
         getRules(type: any): IBusinessRules {
-            if (objects.isNull(this.rules)) {
-                this.rules = new Map<any, IBusinessRules>();
+            let items: IBusinessRules = _rules.get(type);
+            if (objects.isNull(items)) {
+                items = new BusinessRules();
+                _rules.set(type, items);
             }
-            let rules: IBusinessRules = this.rules.get(type);
-            if (objects.isNull(rules)) {
-                rules = new BusinessRules();
-                this.rules.set(type, rules);
-            }
-            return rules;
+            return items;
         }
     }
     class BusinessRules extends Array implements IBusinessRules {

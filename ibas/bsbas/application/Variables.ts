@@ -23,10 +23,10 @@ namespace ibas {
     export const VARIABLE_NAME_USER_BELONG: string = "${USER_BELONG}";
     /** 变量-用户口令 */
     export const VARIABLE_NAME_USER_TOKEN: string = "${USER_TOKEN}";
+    /** 运行中的变量 */
+    const _variables: Map<string, KeyValue> = new Map<string, KeyValue>();
     /** 变量管理员 */
     export class VariablesManager {
-        /** 运行中的变量 */
-        private variables: Map<string, KeyValue>;
         /** 注册变量 */
         register(variable: KeyValue): void;
         /** 注册变量 */
@@ -44,27 +44,24 @@ namespace ibas {
                 variable.value = arguments[1];
             }
             if (!objects.isNull(variable)) {
-                if (objects.isNull(this.variables)) {
-                    this.variables = new Map();
-                }
-                this.variables.set(variable.key, variable);
+                _variables.set(variable.key, variable);
             }
         }
         /** 获取所有变量 */
         all(): KeyValue[] {
             let values: Array<KeyValue> = new Array<KeyValue>();
-            for (let item of this.variables.values()) {
+            for (let item of _variables.values()) {
                 values.push(item);
             }
             return values;
         }
         /** 获取变量 */
         get(key: string): KeyValue {
-            if (objects.isNull(this.variables)) {
+            if (objects.isNull(_variables)) {
                 return null;
             }
-            if (this.variables.has(key)) {
-                return this.variables.get(key);
+            if (_variables.has(key)) {
+                return _variables.get(key);
             }
             return null;
         }

@@ -275,6 +275,8 @@ namespace ibas {
             super(arguments[0]);
         }
     }
+    /** 服务映射 */
+    const _mappings: Map<string, IServiceMapping> = new Map<string, IServiceMapping>();
     /** 服务管理员 */
     export class ServicesManager {
         constructor() {
@@ -316,17 +318,12 @@ namespace ibas {
         viewShower(): IViewShower {
             throw new Error("Method not implemented.");
         }
-        /** 服务映射 */
-        private mappings: Map<string, IServiceMapping>;
         /** 注册服务映射 */
         register(mapping: IServiceMapping): void {
             if (objects.isNull(mapping)) {
                 return;
             }
-            if (objects.isNull(this.mappings)) {
-                this.mappings = new Map();
-            }
-            this.mappings.set(mapping.id, mapping);
+            _mappings.set(mapping.id, mapping);
             // 如当前注册的服务为Hash指向的服务,激活
             let currentHashValue: string = window.location.hash;
             if (currentHashValue.startsWith(URL_HASH_SIGN_SERVICES)) {
@@ -340,20 +337,20 @@ namespace ibas {
         }
         /** 获取服务映射 */
         getServiceMapping(id: string): IServiceMapping {
-            if (objects.isNull(this.mappings)) {
+            if (objects.isNull(_mappings)) {
                 return null;
             }
-            if (this.mappings.has(id)) {
-                return this.mappings.get(id);
+            if (_mappings.has(id)) {
+                return _mappings.get(id);
             }
             return null;
         }
         /** 获取服务 */
         getServices(caller: IServiceCaller<IServiceContract>): IServiceAgent[] {
             let services: Array<IServiceAgent> = new Array<IServiceAgent>();
-            if (!objects.isNull(this.mappings)) {
+            if (!objects.isNull(_mappings)) {
                 let viewShower: IViewShower = this.viewShower();
-                for (let mapping of this.mappings.values()) {
+                for (let mapping of _mappings.values()) {
                     if (!objects.instanceOf(caller.proxy, mapping.proxy)) {
                         continue;
                     }
