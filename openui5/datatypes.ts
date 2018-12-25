@@ -886,7 +886,7 @@ namespace openui5 {
             if (typeof value !== "string") { // 必须为string类型
                 return false;
             }
-            let result: any = value.match(/^((\(\d{2,3}\))|(\d{3}\-))?((13\d{9})|(15\d{9})|(16\d{9})|(17\d{9})|(18\d{9}))$/);
+            let result: any = value.match(/^((\(\d{2,3}\))|(\d{3}\-))?((13\d{9})|(14\d{9})|(15\d{9})|(16\d{9})|(17\d{9})|(18\d{9}))$/);
             if (result === null) {
                 return false;
             }

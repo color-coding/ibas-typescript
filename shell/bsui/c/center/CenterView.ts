@@ -957,41 +957,45 @@ namespace shell {
                         break;
                     }
                 }
-                /** 当手指移动时 */
-                onTouchMove(direction: ibas.emTouchMoveDirection, event: TouchEvent): void {
-                    for (let item of this.pageContainer.getPages()) {
-                        if (item instanceof sap.m.TabContainer) {
-                            // 当前为页签控件
-                            for (let tab of item.getItems()) {
-                                // 遍历页签内容
-                                if (item.getSelectedItem() !== tab) {
-                                    continue;
-                                }
-                                for (let cusData of tab.getCustomData()) {
-                                    if (!(ibas.strings.equals(cusData.getKey(), UI_DATA_KEY_VIEW))) {
-                                        continue;
-                                    }
-                                    let data: any = cusData.getValue();
-                                    if (data instanceof ibas.View) {
-                                        // 通知视图事件
-                                        data.onTouchMove(direction, event);
-                                    }
-                                    break;
-                                }
-                            }
-                        } else if (item instanceof sap.m.Page) {
-                            for (let cusData of item.getCustomData()) {
-                                if (!(ibas.strings.equals(cusData.getKey(), UI_DATA_KEY_VIEW))) {
-                                    continue;
-                                }
-                                let data: any = cusData.getValue();
-                                if (data instanceof ibas.View) {
-                                    // 通知视图事件
-                                    data.onTouchMove(direction, event);
-                                }
-                                break;
+                private currentPageView(): ibas.View {
+                    let page: sap.ui.core.Control = this.pageContainer.getCurrentPage();
+                    if (ibas.objects.isNull(page)) {
+                        return;
+                    }
+                    if (page instanceof sap.m.Page && page.getContent()[0] instanceof sap.m.TabContainer) {
+                        // 当前页面是页签时，则为选中的页签
+                        page = page.getContent()[0];
+                        if (page instanceof sap.m.TabContainer) {
+                            page = page.getSelectedItem();
+                            if (ibas.objects.isNull(page)) {
+                                return;
                             }
                         }
+                    }
+                    for (let item of page.getCustomData()) {
+                        if (ibas.strings.equals(item.getKey(), UI_DATA_KEY_VIEW)) {
+                            let data: any = item.getValue();
+                            if (data instanceof ibas.View) {
+                                return data;
+                            }
+                        }
+                    }
+                    return;
+                }
+                /** 按钮按下时 */
+                onKeyDown(event: KeyboardEvent): void {
+                    // 获取当前窗体
+                    let view: ibas.View = this.currentPageView();
+                    if (!ibas.objects.isNull(view)) {
+                        view.onKeyDown(event);
+                    }
+                }
+                /** 当手指移动时 */
+                onTouchMove(direction: ibas.emTouchMoveDirection, event: TouchEvent): void {
+                    // 获取当前窗体
+                    let view: ibas.View = this.currentPageView();
+                    if (!ibas.objects.isNull(view)) {
+                        view.onTouchMove(direction, event);
                     }
                 }
             }
