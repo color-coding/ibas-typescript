@@ -79,7 +79,6 @@ namespace shell {
             }
             /** 视图显示后 */
             protected viewShowed(): void {
-                // 显示常驻应用
             }
             /** 帮助 */
             private help(): void {
@@ -110,12 +109,7 @@ namespace shell {
                     ibas.i18n.prop("shell_initialize_user_modules",
                         ibas.strings.isEmpty(this.currentUser.name) ? this.currentUser.code : this.currentUser.name)
                 );
-                this.functionMap = new Map<string, ibas.IModuleFunction>();
                 let that: this = this;
-                // 设置服务参数
-                ibas.servicesManager.viewShower = () => {
-                    return that;
-                };
                 // 权限加载
                 privilegeManager.load({
                     user: this.currentUser.code,
@@ -173,7 +167,7 @@ namespace shell {
                                                 func.viewShower = that;
                                             }
                                             // 注册功能事件响应
-                                            that.functionMap.set(func.id, func);
+                                            moduleFunctions.set(func.id, func);
                                             that.view.showModuleFunction(console.name, func);
                                             if (ibas.strings.equals(func.id, hashFuncId)) {
                                                 // 如当前模块包含Hash指向的功能,激活
@@ -208,52 +202,33 @@ namespace shell {
                         });
                     }
                 });
-                // 哈希值监控
-                ibas.browserEventManager.registerListener({
-                    eventType: ibas.emBrowserEventType.HASHCHANGE,
-                    onEventFired: (event: HashChangeEvent): void => {
-                        try {
-                            if (event.newURL.indexOf(ibas.URL_HASH_SIGN_FUNCTIONS) < 0) {
-                                return;
-                            }
-                            let url: string = event.newURL.substring(
-                                event.newURL.indexOf(ibas.URL_HASH_SIGN_FUNCTIONS) + ibas.URL_HASH_SIGN_FUNCTIONS.length);
-                            let index: number = url.indexOf("/") < 0 ? url.length : url.indexOf("/");
-                            let functionId: string = url.substring(0, index);
-                            if (ibas.objects.isNull(that.functionMap)) {
-                                return;
-                            }
-                            if (that.functionMap.has(functionId)) {
-                                try {
-                                    let func: ibas.IModuleFunction = that.functionMap.get(functionId);
-                                    let app: ibas.IApplication<ibas.IView> = func.default();
-                                    if (ibas.objects.isNull(app)) {
-                                        return;
-                                    }
-                                    if (ibas.objects.isNull(app.navigation)) {
-                                        app.navigation = func.navigation;
-                                    }
-                                    if (ibas.objects.isNull(app.viewShower)) {
-                                        app.viewShower = that;
-                                    }
-                                    app.run();
-                                } catch (error) {
-                                    that.messages({
-                                        type: ibas.emMessageType.ERROR,
-                                        message: ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE, false) ? error.stack : error.message
-                                    });
-                                }
-                            }
-                        } catch (error) {
-                            ibas.logger.log(error);
-                        }
-                    }
-                });
             }
-            private functionMap: Map<string, ibas.IModuleFunction>;
             /** 视图事件-激活功能 */
             private activateFunction(id: string): void {
-                ibas.urls.changeHash(ibas.strings.format("{0}{1}", ibas.URL_HASH_SIGN_FUNCTIONS, id));
+                try {
+                    if (ibas.objects.isNull(moduleFunctions)) {
+                        return;
+                    }
+                    if (moduleFunctions.has(id)) {
+                        let func: ibas.IModuleFunction = moduleFunctions.get(id);
+                        let app: ibas.IApplication<ibas.IView> = func.default();
+                        if (ibas.objects.isNull(app)) {
+                            return;
+                        }
+                        if (ibas.objects.isNull(app.navigation)) {
+                            app.navigation = func.navigation;
+                        }
+                        if (ibas.objects.isNull(app.viewShower)) {
+                            app.viewShower = this;
+                        }
+                        app.run();
+                    }
+                } catch (error) {
+                    this.messages({
+                        type: ibas.emMessageType.ERROR,
+                        message: ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE, false) ? error.stack : error.message
+                    });
+                }
             }
             /** 关闭视图 */
             close(): void {
@@ -304,6 +279,7 @@ namespace shell {
             }
 
         }
+        const moduleFunctions: Map<string, ibas.IModuleFunction> = new Map<string, ibas.IModuleFunction>();
         /** 系统中心-视图 */
         export interface ICenterView extends ibas.IView {
             /** 激活帮助 */

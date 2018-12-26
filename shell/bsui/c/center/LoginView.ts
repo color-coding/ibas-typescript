@@ -17,7 +17,7 @@ namespace shell {
             /**
              * 视图-登陆
              */
-            export class LoginView extends ibas.BOView implements app.ILoginView {
+            export class LoginView extends ibas.View implements app.ILoginView {
                 /** 登陆 */
                 loginEvent: Function;
                 /** 改变语言 */
@@ -55,17 +55,13 @@ namespace shell {
                         }));
                     }
                 }
-                private static UI_LOGIN_USER: string = "login_user";
-                private static UI_LOGIN_PASSWORD: string = "login_password";
-                private static UI_LOGIN_LANGUAGE: string = "login_language";
-                private static UI_LOGIN_PLANTFORM: string = "login_plantform";
                 /** 绘制视图 */
                 draw(): any {
                     // 设置应用名称
                     let user: string = ibas.config.get(CONFIG_ITEM_DEFAULT_USER);
                     let password: string = ibas.config.get(CONFIG_ITEM_DEFAULT_PASSWORD);
                     let that: this = this;
-                    this.form = new sap.ui.layout.form.SimpleForm("", {
+                    return new sap.ui.layout.form.SimpleForm("", {
                         content: [
                             new sap.m.Title("", {
                                 text: document.title,
@@ -76,25 +72,25 @@ namespace shell {
                             new sap.m.Label("", {
                                 text: ibas.i18n.prop("shell_user")
                             }),
-                            new sap.m.Input(LoginView.UI_LOGIN_USER, {
+                            this.txtUser = new sap.m.Input("", {
                                 value: !ibas.strings.isEmpty(user) ? user : "",
                             }),
                             new sap.m.Label("", {
                                 text: ibas.i18n.prop("shell_password")
                             }),
-                            new sap.m.Input(LoginView.UI_LOGIN_PASSWORD, {
+                            this.txtPassword = new sap.m.Input("", {
                                 value: !ibas.strings.isEmpty(password) ? password : "",
                                 type: "Password"
                             }),
                             new sap.m.Label("", {
                                 text: ibas.i18n.prop("shell_language")
                             }),
-                            new sap.m.Select(LoginView.UI_LOGIN_LANGUAGE, {
+                            this.sltLanguages = new sap.m.Select("", {
                                 change: function (): void {
                                     that.fireViewEvents(that.changeLanguageEvent);
                                 }
                             }),
-                            new sap.m.Label(LoginView.UI_LOGIN_PLANTFORM, {
+                            new sap.m.Label("", {
                                 text: ibas.i18n.prop("shell_plantform")
                             }),
                             new sap.m.Select("", {
@@ -138,9 +134,6 @@ namespace shell {
                             })
                         ]
                     });
-                    // 重新赋值id
-                    this.id = this.form.getId();
-                    return this.form;
                 }
                 /** 按钮按下时 */
                 onKeyDown(event: KeyboardEvent): void {
@@ -151,27 +144,9 @@ namespace shell {
                         this.fireViewEvents(this.loginEvent);
                     }
                 }
-                private form: sap.ui.layout.form.SimpleForm;
-                private getContorl(name: string): any {
-                    for (let item of this.form.getContent()) {
-                        if (item.getId() === name) {
-                            return item;
-                        }
-                    }
-                    return undefined;
-                }
-                private get txtUser(): sap.m.Input {
-                    return this.getContorl(LoginView.UI_LOGIN_USER);
-                }
-                private get txtPassword(): sap.m.Input {
-                    return this.getContorl(LoginView.UI_LOGIN_PASSWORD);
-                }
-                private get sltLanguages(): sap.m.Select {
-                    return this.getContorl(LoginView.UI_LOGIN_LANGUAGE);
-                }
-                private get sltPlantform(): sap.m.Select {
-                    return this.getContorl(LoginView.UI_LOGIN_PLANTFORM);
-                }
+                private txtUser: sap.m.Input;
+                private txtPassword: sap.m.Input;
+                private sltLanguages: sap.m.Select;
             }
             /**
              * 视图-登陆

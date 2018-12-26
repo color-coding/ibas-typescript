@@ -78,7 +78,6 @@ namespace shell {
             /** 登录系统 */
             private login(): void {
                 this.busy(true, ibas.i18n.prop("shell_logging_system"));
-                ibas.logger.log(ibas.emMessageLevel.DEBUG, "app: user [{0}] login system.", this.view.user);
                 let boRepository: bo.IBORepositoryShell = bo.repository.create();
                 boRepository.userConnect({
                     caller: this, // 设置调用者，则onCompleted修正this
@@ -86,6 +85,7 @@ namespace shell {
                     password: this.view.password,
                     onCompleted: this.onConnectCompleted,
                 });
+                ibas.logger.log(ibas.emMessageLevel.DEBUG, "app: user [{0}] login system.", this.view.user);
             }
 
             private onConnectCompleted(opRslt: ibas.IOperationResult<bo.IUser>): void {

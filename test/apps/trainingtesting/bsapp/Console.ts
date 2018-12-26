@@ -103,6 +103,7 @@ namespace trainingtesting {
                 this.register(new DemoUrlFunc());
                 this.register(new DemoTabFunc());
                 this.register(new DemoMapFunc());
+                this.register(new DemoShellFunc());
                 // 注册服务应用
                 this.register(new DemoServiceMapping());
                 // 注册常驻应用

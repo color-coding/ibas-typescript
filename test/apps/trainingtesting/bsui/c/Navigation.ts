@@ -75,6 +75,9 @@ namespace trainingtesting {
                     case app.DemoMapApp.APPLICATION_ID:
                         view = new c.DemoMapView();
                         break;
+                    case app.DemoShellApp.APPLICATION_ID:
+                        view = new c.DemoShellView();
+                        break;
                     default:
                         break;
                 }
