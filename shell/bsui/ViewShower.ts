@@ -8,179 +8,66 @@
 /// <reference path="../index.d.ts" />
 namespace shell {
     export namespace ui {
+        export const UI_APP: string = "__UI_APP";
+        export const UI_DATA_KEY_VIEW: string = "__UI_DATA_KEY_VIEW";
+        export const UI_DATA_KEY_HASH: string = "__UI_DATA_KEY_HASH";
         /**
          * 视图-显示者-默认
          */
         export class ViewShower implements ibas.IViewShower {
-            constructor() {
-                document.title = ibas.config.get(app.CONFIG_ITEM_APPLICATION_NAME, ibas.i18n.prop("shell_name"));
-                let that: this = this;
-                // 键盘按钮按下
-                ibas.browserEventManager.registerListener({
-                    eventType: ibas.emBrowserEventType.KEYDOWN,
-                    onEventFired: (event: KeyboardEvent): void => {
-                        if (ibas.objects.isNull(event)) {
-                            return;
-                        }
-                        if (!ibas.objects.isNull(that.busyDialog)) {
-                            return;
-                        }
-                        if (ibas.objects.isNull(that.currentView)) {
-                            return;
-                        }
-                        if (that.currentView instanceof ibas.View) {
-                            if (that.currentView.isDisplayed) {
-                                that.currentView.onKeyDown(event);
-                            }
-                        }
-                    }
-                });
-                // 哈希值变化
-                ibas.browserEventManager.registerListener({
-                    eventType: ibas.emBrowserEventType.HASHCHANGE,
-                    onEventFired: (event: HashChangeEvent): void => {
-                        if (!event.newURL.startsWith(ibas.URL_HASH_SIGN_VIEWS)) {
-                            return;
-                        }
-                        if (!ibas.objects.isNull(that.busyDialog)) {
-                            return;
-                        }
-                        if (ibas.objects.isNull(that.currentView)) {
-                            return;
-                        }
-                        if (that.currentView instanceof ibas.View) {
-                            if (that.currentView.isDisplayed) {
-                                that.currentView.onHashChanged(event);
-                            }
-                        }
-                    }
-                });
-                // touch事件
-                let touch: any = {
-                    target: null,
-                    startPoint: null,
-                    direction: ibas.emTouchMoveDirection.NONE,
-                    start: function (event: TouchEvent): void {
-                        touch.target = event.target;
-                        touch.startPoint = event.touches[0];
-                        touch.direction = ibas.emTouchMoveDirection.NONE;
-                    },
-                    move: function (event: TouchEvent): void {
-                        if (touch.target === event.target) {
-                            if (touch.direction === ibas.emTouchMoveDirection.NONE) { // do once at start
-                                let point: Touch = event.touches[0];
-                                let offsetX: number = point.screenX - touch.startPoint.screenX;
-                                let offsetY: number = point.screenY - touch.startPoint.screenY;
-                                if (Math.abs(offsetY) > Math.abs(offsetX)) {
-                                    if (offsetY > 0) {
-                                        touch.direction = ibas.emTouchMoveDirection.DOWN;
-                                    } else {
-                                        touch.direction = ibas.emTouchMoveDirection.UP;
-                                    }
-                                } else {
-                                    if (offsetX > 0) {
-                                        touch.direction = ibas.emTouchMoveDirection.RIGHT;
-                                    } else {
-                                        touch.direction = ibas.emTouchMoveDirection.LEFT;
-                                    }
-                                }
-                                if (!ibas.objects.isNull(that.busyDialog)) {
-                                    return;
-                                }
-                                if (ibas.objects.isNull(that.currentView)) {
-                                    return;
-                                }
-                                if (that.currentView instanceof ibas.View) {
-                                    if (that.currentView.isDisplayed) {
-                                        that.currentView.onTouchMove(touch.direction, event);
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    end: function (event: TouchEvent): void {
-                        touch.target = null;
-                        touch.startPoint = null;
-                        touch.direction = ibas.emTouchMoveDirection.NONE;
-                    }
-                };
-                ibas.browserEventManager.registerListener({
-                    eventType: ibas.emBrowserEventType.TOUCHSTART,
-                    onEventFired: touch.start
-                });
-                ibas.browserEventManager.registerListener({
-                    eventType: ibas.emBrowserEventType.TOUCHMOVE,
-                    onEventFired: touch.move
-                });
-                ibas.browserEventManager.registerListener({
-                    eventType: ibas.emBrowserEventType.TOUCHEND,
-                    onEventFired: touch.end
-                });
-                // 语言变化监听
-                ibas.i18n.language = openui5.utils.toLanguageCode(sap.ui.getCore().getConfiguration().getLanguage());
-                ibas.i18n.registerListener({
-                    onLanguageChanged(language: string): void {
-                        sap.ui.getCore().getConfiguration().setLanguage(openui5.utils.toLanguageCode(language));
-                    }
-                });
-            }
-            /** 按钮按下时 */
-            private onKeyDown(event: KeyboardEvent): void {
-                if (!ibas.objects.isNull(this.busyDialog)) {
-                    return;
-                }
-                if (ibas.objects.isNull(this.currentView)) {
-                    return;
-                }
-                if (this.currentView instanceof ibas.View) {
-                    if (this.currentView.isDisplayed) {
-                        this.currentView.onKeyDown(event);
-                    }
-                }
-            }
-            private currentView: ibas.IView;
             /** 显示视图 */
             show(view: ibas.IView): void {
-                let viewContent: any = view.draw();
-                if (ibas.objects.isNull(viewContent)) {
-                    ibas.logger.log(ibas.emMessageLevel.WARN, "shower: empty view.");
-                } else if (viewContent instanceof sap.m.App) {
-                    viewContent.placeAt("content");
-                } else if (viewContent instanceof sap.tnt.ToolPage
-                    || viewContent instanceof sap.ui.core.Control) {
-                    if (ibas.config.get(openui5.CONFIG_ITEM_COMPACT_SCREEN, false)) {
-                        viewContent.addStyleClass("sapUiSizeCompact");
-                        // viewContent.addStyleClass("sapUiSizeCozy");
+                if (view instanceof ibas.View) {
+                    let viewContent: any = view.draw();
+                    if (ibas.objects.isNull(viewContent)) {
+                        ibas.logger.log(ibas.emMessageLevel.WARN, "shower: empty view.");
                     }
-                    let app: sap.ui.core.Element = sap.ui.getCore().byId("ibas-app");
-                    if (app instanceof sap.m.App) {
-                        let page: any = app.getInitialPage();
-                        if (page instanceof sap.ui.core.Control) {
-                            page.destroy(true);
-                        } else if (typeof page === "string") {
-                            app.setInitialPage(undefined);
+                    if (viewContent instanceof sap.ui.core.Element) {
+                        viewContent.addCustomData(new sap.ui.core.CustomData("", {
+                            key: UI_DATA_KEY_VIEW,
+                            value: view,
+                            writeToDom: false,
+                        }));
+                    }
+                    if (view.application instanceof app.MainApp) {
+                        viewContent.placeAt("content");
+                    } else if (view.application instanceof app.LoginApp) {
+                        if (ibas.config.get(openui5.CONFIG_ITEM_COMPACT_SCREEN, false)) {
+                            viewContent.addStyleClass("sapUiSizeCompact");
                         }
-                        app.addPage(viewContent);
-                        app.setInitialPage(viewContent);
-                        this.currentView = view;
+                        let app: sap.ui.core.Element = sap.ui.getCore().byId(UI_APP);
+                        if (app instanceof sap.m.App) {
+                            app.addPage(viewContent);
+                            app.to(viewContent);
+                        }
+                    } else if (view.application instanceof app.CenterApp) {
+                        if (ibas.config.get(openui5.CONFIG_ITEM_COMPACT_SCREEN, false)) {
+                            viewContent.addStyleClass("sapUiSizeCompact");
+                        }
+                        let app: sap.ui.core.Element = sap.ui.getCore().byId(UI_APP);
+                        if (app instanceof sap.m.App) {
+                            app.addPage(viewContent);
+                            app.to(viewContent);
+                        }
                     }
                     view.id = viewContent.getId();
-                } else {
-                    throw new Error(ibas.i18n.prop("shell_invalid_ui"));
-                }
-                if (view instanceof ibas.View) {
                     view.isDisplayed = true;
                     view.onDisplayed();
+                } else {
+                    throw new Error(ibas.i18n.prop("shell_invalid_ui"));
                 }
             }
             /** 清理资源 */
             destroy(view: ibas.IView): void {
                 let ui: sap.ui.core.Element = sap.ui.getCore().byId(view.id);
                 if (!ibas.objects.isNull(ui)) {
-                    ui.destroy(true);
-                    if (this.currentView === view) {
-                        this.currentView = undefined;
+                    if (ui.getParent() && ui.getParent().getId() === UI_APP) {
+                        let app: sap.ui.core.Element = sap.ui.getCore().byId(UI_APP);
+                        if (app instanceof sap.m.App) {
+                            app.setInitialPage(undefined);
+                        }
                     }
+                    ui.destroy(true);
                     if (view instanceof ibas.View) {
                         view.isDisplayed = false;
                         view.onClosed();
@@ -223,33 +110,19 @@ namespace shell {
             }
             /** 对话消息 */
             messages(caller: ibas.IMessgesCaller): void {
-                let cView: ibas.IView = this.currentView;
                 jQuery.sap.require("sap.m.MessageBox");
                 sap.m.MessageBox.show(
                     caller.message, {
-                        title: cView.title,
+                        title: caller.title,
                         icon: openui5.utils.toMessageBoxIcon(caller.type),
                         actions: openui5.utils.toMessageBoxAction(caller.actions),
                         onClose(oAction: any): void {
-                            if (!ibas.objects.isNull(caller.onCompleted)) {
+                            if (caller.onCompleted instanceof Function) {
                                 caller.onCompleted(openui5.utils.toMessageAction(oAction));
-                            }
-                            if (cView instanceof ibas.View) {
-                                if (!ibas.objects.isNull(cView) && !cView.isDisplayed) {
-                                    cView.isDisplayed = true;
-                                }
                             }
                         }
                     }
                 );
-                if (cView instanceof ibas.View) {
-                    if (!ibas.objects.isNull(cView) && cView.isDisplayed) {
-                        // 出现消息框，设置当前视图非显示状态
-                        cView.isDisplayed = false;
-                    } else {
-                        cView = undefined;
-                    }
-                }
             }
         }
     }

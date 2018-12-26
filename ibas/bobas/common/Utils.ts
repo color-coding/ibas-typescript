@@ -977,6 +977,9 @@ namespace ibas {
          * @param newHash
          */
         export function changeHash(newHash: string): void {
+            if (objects.isNull(newHash)) {
+                newHash = "";
+            }
             if (!strings.isWith(newHash, "#/", undefined)) {
                 newHash = "#/" + newHash;
             }

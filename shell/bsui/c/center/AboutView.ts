@@ -11,7 +11,7 @@ namespace shell {
             /**
              * 视图-关于
              */
-            export class AboutView extends ibas.BOView implements app.IAboutView {
+            export class AboutView extends ibas.View implements app.IAboutView {
                 /** 绘制视图 */
                 draw(): any {
                     this.form = new sap.m.Page("", {

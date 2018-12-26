@@ -3970,6 +3970,12 @@ declare namespace sap {
       getFloatingFooter(): boolean;
 
       /**
+       * Gets content of aggregation <code>customHeader</code>.The (optional) customHeader of this page. It is always
+       * located at the top of the page
+      */
+      getCustomHeader(): sap.m.IBar;
+
+      /**
        * Gets content of aggregation <code>footer</code>.The (optional) footer of this page. It is always
        * located at the bottom of the page
       */
@@ -4219,6 +4225,13 @@ declare namespace sap {
        * @returns Reference to <code>this</code> in order to allow method chaining
       */
       setFooter(oFooter: sap.m.IBar): sap.m.Page;
+
+      /**
+       * Sets the aggregated <code>customHeader</code>.
+       * @param oFooter The customHeader to set
+       * @returns Reference to <code>this</code> in order to allow method chaining
+      */
+      setCustomHeader(oCustomHeader: sap.m.IBar): sap.m.Page;
 
       /**
        * Sets a new value for property <code>icon</code>.the icon that is rendered in the page header bar in
@@ -24225,6 +24238,12 @@ declare namespace sap {
       */
       _toTabStripItem(vItem: sap.m.TabContainerItem | string): any | any;
 
+       /**
+        * Adds some item to the aggregation items.
+        * @param oItem 
+        */
+      addItem(oItem: sap.m.TabContainerItem): sap.m.TabContainer;
+
       /**
        * Attaches event handler <code>fnFunction</code> to the <code>addNewButtonPress</code> event of this
        * <code>sap.m.TabContainer</code>.When called, the context of the event handler (its
@@ -24373,6 +24392,12 @@ declare namespace sap {
        * @returns The removed item or null
       */
       removeItem(vItem: number | string | sap.m.TabContainerItem): sap.m.TabContainerItem;
+
+      /**
+       * Sets the associated selectedItem.
+       * @param oSelectedItem 
+       */
+      setSelectedItem(oSelectedItem: string | sap.m.TabContainerItem): sap.m.TabContainer
 
       /**
        * Unbinds aggregation <code>items</code> from model data.

@@ -227,12 +227,8 @@ namespace ibas {
     }
     /** 服务代理 */
     export abstract class ServiceProxy<C extends IServiceContract> implements IServiceProxy<C> {
-        constructor(contract: C);
-        constructor() {
-            if (objects.isNull(arguments[0])) {
-                throw new Error(i18n.prop("sys_invalid_parameter", "contract"));
-            }
-            this.contract = arguments[0];
+        constructor(contract: C = undefined) {
+            this.contract = contract;
         }
         /** 服务的契约 */
         contract: C;
@@ -324,16 +320,6 @@ namespace ibas {
                 return;
             }
             _mappings.set(mapping.id, mapping);
-            // 如当前注册的服务为Hash指向的服务,激活
-            let currentHashValue: string = window.location.hash;
-            if (currentHashValue.startsWith(URL_HASH_SIGN_SERVICES)) {
-                let url: string = currentHashValue.substring(URL_HASH_SIGN_SERVICES.length);
-                let index: number = url.indexOf("/") < 0 ? url.length : url.indexOf("/");
-                let id: string = url.substring(0, index);
-                if (strings.equals(mapping.id, id)) {
-                    urls.changeHash(currentHashValue);
-                }
-            }
         }
         /** 获取服务映射 */
         getServiceMapping(id: string): IServiceMapping {
@@ -352,6 +338,12 @@ namespace ibas {
                 let viewShower: IViewShower = this.viewShower();
                 for (let mapping of _mappings.values()) {
                     if (!objects.instanceOf(caller.proxy, mapping.proxy)) {
+                        continue;
+                    }
+                    if (!strings.isEmpty(caller.category)
+                        && !(caller.category === mapping.category
+                            || config.applyVariables(caller.category) === config.applyVariables(mapping.category))) {
+                        // 类别不符
                         continue;
                     }
                     // 创建服务
@@ -394,12 +386,6 @@ namespace ibas {
             this.viewShower().proceeding(undefined,
                 emMessageType.INFORMATION, i18n.prop("sys_getting_available_services", objects.getTypeName(caller.proxy)));
             for (let service of this.getServices(caller)) {
-                if (!strings.isEmpty(caller.category)
-                    && !(caller.category === service.category
-                        || config.applyVariables(caller.category) === config.applyVariables(service.category))) {
-                    // 类别不符
-                    continue;
-                }
                 // 运行服务
                 service.run();
                 return true;

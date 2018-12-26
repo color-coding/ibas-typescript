@@ -229,8 +229,7 @@ namespace ibas {
     /**
      * 服务应用
      */
-    export abstract class ServiceApplication<T extends IView, C extends IServiceContract>
-        extends Application<T> implements IService<IServiceCaller<C>> {
+    export abstract class ServiceApplication<T extends IView, C extends IServiceContract> extends Application<T> implements IService<IServiceCaller<C>> {
         /** 注册视图，重载需要回掉此方法 */
         protected registerView(): void {
             super.registerView();
@@ -312,18 +311,15 @@ namespace ibas {
      * 常驻应用
      */
     export abstract class ResidentApplication<T extends IResidentView> extends BarApplication<T> {
-
         /** 注册视图，重载需要回掉此方法 */
         protected registerView(): void {
             super.registerView();
         }
     }
-
     /**
      * 业务对象快捷应用
      */
     export abstract class ShortcutApplication<T extends IShortcutView> extends BarApplication<T> {
-
         /** 注册视图，重载需要回掉此方法 */
         protected registerView(): void {
             super.registerView();

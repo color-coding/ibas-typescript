@@ -78,7 +78,6 @@ namespace shell {
             /** 登录系统 */
             private login(): void {
                 this.busy(true, ibas.i18n.prop("shell_logging_system"));
-                ibas.logger.log(ibas.emMessageLevel.DEBUG, "app: user [{0}] login system.", this.view.user);
                 let boRepository: bo.IBORepositoryShell = bo.repository.create();
                 boRepository.userConnect({
                     caller: this, // 设置调用者，则onCompleted修正this
@@ -86,6 +85,7 @@ namespace shell {
                     password: this.view.password,
                     onCompleted: this.onConnectCompleted,
                 });
+                ibas.logger.log(ibas.emMessageLevel.DEBUG, "app: user [{0}] login system.", this.view.user);
             }
 
             private onConnectCompleted(opRslt: ibas.IOperationResult<bo.IUser>): void {
@@ -128,7 +128,25 @@ namespace shell {
                     centerApp.run(user);
                     this.destroy();
                 } catch (error) {
-                    this.messages(error);
+                    let that: this = this;
+                    if (that.view instanceof ibas.View) {
+                        that.view.isBusy = true;
+                    }
+                    this.messages({
+                        type: ibas.emMessageType.ERROR,
+                        title: ibas.strings.isEmpty(this.description) ? this.name : this.description,
+                        message: !ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE, false) ?
+                            error.message
+                            : ibas.strings.isWith(error.stack, "Error: ", undefined) ?
+                                error.stack
+                                : ibas.strings.format("Error: {0}\n{1}", error.message, error.stack),
+                        onCompleted(): void {
+                            if (that.view instanceof ibas.View) {
+                                that.view.isBusy = false;
+                            }
+                            that = undefined;
+                        }
+                    });
                 }
             }
         }
