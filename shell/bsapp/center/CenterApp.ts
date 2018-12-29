@@ -110,6 +110,10 @@ namespace shell {
                         ibas.strings.isEmpty(this.currentUser.name) ? this.currentUser.code : this.currentUser.name)
                 );
                 let that: this = this;
+                // 设置服务参数
+                ibas.servicesManager.viewShower = () => {
+                    return that;
+                };
                 // 权限加载
                 privilegeManager.load({
                     user: this.currentUser.code,
