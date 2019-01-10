@@ -731,26 +731,27 @@ namespace shell {
                 }
                 /** 显示工具条视图 */
                 protected showBarView(view: ibas.BOBarView): void {
-                    let that: this = this;
                     let form: any = view.draw();
                     if (ibas.objects.isNull(form)) {
                         setTimeout(function (): void {
                             view.isDisplayed = false;
+                            view.onClosed();
                         }, 100);
                         return;
-                    } else if (form instanceof sap.m.QuickView) {
+                    }
+                    if (form instanceof sap.m.QuickView) {
                         // 快速视图
                         form.attachAfterClose(null, function (): void {
-                            // 设置视图未显示
-                            that.destroyView(view);
+                            view.isDisplayed = false;
+                            view.onClosed();
                         });
                         form.openBy(view.drawBar());
                     } else if (form instanceof sap.m.Dialog) {
                         // 对话框视图
                         // 添加关闭事件
                         form.attachAfterClose(null, function (): void {
-                            // 设置视图未显示
                             view.isDisplayed = false;
+                            view.onClosed();
                         });
                         // 设置视图紧凑
                         if (ibas.config.get(openui5.CONFIG_ITEM_COMPACT_SCREEN, false)) {

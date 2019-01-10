@@ -6,6 +6,7 @@
 // 官方库
 /// <reference path="./jquery.sap.d.ts" />
 /// <reference path="./sap.m.d.ts" />
+/// <reference path="./sap.f.d.ts" />
 /// <reference path="./sap.ui.d.ts" />
 /// <reference path="./sap.tnt.d.ts" />
 /// <reference path="./sap.uxap.d.ts" />

@@ -63,6 +63,28 @@ namespace trainingtesting {
                 showView(view: ibas.IView): void {
                     if (view instanceof ibas.BODialogView) {
                         this.showDialogView(view);
+                    } else if (view instanceof ibas.BOBarView) {
+                        let form: any = view.draw();
+                        if (form instanceof sap.m.QuickView) {
+                            // 快速视图
+                            form.attachAfterClose(null, function (): void {
+                                view.isDisplayed = false;
+                                view.onClosed();
+                            });
+                            form.openBy(view.drawBar());
+                        } else if (form instanceof sap.m.Dialog) {
+                            // 对话框视图
+                            // 添加关闭事件
+                            form.attachAfterClose(null, function (): void {
+                                view.isDisplayed = false;
+                                view.onClosed();
+                            });
+                            // 设置视图紧凑
+                            if (ibas.config.get(openui5.CONFIG_ITEM_COMPACT_SCREEN, false)) {
+                                form.addStyleClass("sapUiSizeCompact");
+                            }
+                            form.open();
+                        }
                     } else {
                         let page: sap.m.Page = new sap.m.Page("", {
                             enableScrolling: false,
