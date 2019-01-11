@@ -104,7 +104,7 @@ namespace shell {
         /** 用户壳视图 */
         export abstract class ShellView extends ibas.View implements IShellView {
             showQueryPanel: (view: ibas.BOQueryView | ibas.BOQueryDialogView, embeddedView: ibas.IEmbeddedQueryPanel) => void;
-            showDialogView: (view: ibas.BODialogView) => void;
+            showDialogView: (view: ibas.DialogView) => void;
             abstract showView(view: ibas.IView): void;
             abstract destroyView(view: ibas.IView): void;
             abstract busyView(view: ibas.IView, busy: boolean, msg: string): void;

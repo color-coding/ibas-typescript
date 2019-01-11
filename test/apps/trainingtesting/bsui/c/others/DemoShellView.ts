@@ -61,29 +61,31 @@ namespace trainingtesting {
                 private pageContainer: sap.m.NavContainer;
 
                 showView(view: ibas.IView): void {
-                    if (view instanceof ibas.BODialogView) {
+                    if (view instanceof ibas.DialogView) {
                         this.showDialogView(view);
-                    } else if (view instanceof ibas.BOBarView) {
-                        let form: any = view.draw();
-                        if (form instanceof sap.m.QuickView) {
+                    } else if (view instanceof ibas.BarView) {
+                        let viewContent: any = view.draw();
+                        if (viewContent instanceof sap.m.QuickView) {
                             // 快速视图
-                            form.attachAfterClose(null, function (): void {
+                            viewContent.attachAfterClose(null, function (): void {
                                 view.isDisplayed = false;
                                 view.onClosed();
                             });
-                            form.openBy(view.drawBar());
-                        } else if (form instanceof sap.m.Dialog) {
+                            view.id = viewContent.getId();
+                            viewContent.openBy(<any>sap.ui.getCore().byId(view.barId));
+                        } else if (viewContent instanceof sap.m.Dialog) {
                             // 对话框视图
                             // 添加关闭事件
-                            form.attachAfterClose(null, function (): void {
+                            viewContent.attachAfterClose(null, function (): void {
                                 view.isDisplayed = false;
                                 view.onClosed();
                             });
                             // 设置视图紧凑
                             if (ibas.config.get(openui5.CONFIG_ITEM_COMPACT_SCREEN, false)) {
-                                form.addStyleClass("sapUiSizeCompact");
+                                viewContent.addStyleClass("sapUiSizeCompact");
                             }
-                            form.open();
+                            view.id = viewContent.getId();
+                            viewContent.open();
                         }
                     } else {
                         let page: sap.m.Page = new sap.m.Page("", {
@@ -134,7 +136,7 @@ namespace trainingtesting {
                     }
                 }
                 busyView(view: ibas.IView, busy: boolean, msg: string): void {
-                    let content: sap.ui.core.Element = sap.ui.getCore().getControl(view.id);
+                    let content: sap.ui.core.Element = sap.ui.getCore().byId(view.id);
                     if (content instanceof sap.ui.core.Control) {
                         content.setBusy(busy);
                     }
@@ -145,18 +147,18 @@ namespace trainingtesting {
                     });
                     jQuery.sap.require("sap.m.MessageToast");
                     sap.m.MessageToast.show(message, {
-                        duration: 1500,                  // default
-                        width: "15em",                   // default
-                        my: "center bottom",             // default
-                        at: "center bottom",             // default
-                        of: window,                      // default
-                        offset: "0 0",                   // default
-                        collision: "fit fit",            // default
-                        onClose: null,                   // default
-                        autoClose: true,                 // default
-                        animationTimingFunction: "ease", // default
-                        animationDuration: 1000,         // default
-                        closeOnBrowserNavigation: true   // default
+                        duration: 1500,
+                        width: "15em",
+                        my: "center bottom",
+                        at: "center bottom",
+                        of: window,
+                        offset: "0 0",
+                        collision: "fit fit",
+                        onClose: null,
+                        autoClose: true,
+                        animationTimingFunction: "ease",
+                        animationDuration: 1000,
+                        closeOnBrowserNavigation: true
                     });
                 }
                 showMessageBox(caller: ibas.IMessgesCaller): void {

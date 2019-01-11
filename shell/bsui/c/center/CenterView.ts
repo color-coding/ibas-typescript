@@ -550,10 +550,10 @@ namespace shell {
                 }
                 /** 显示视图 */
                 showView(view: ibas.IView): void {
-                    if (view instanceof ibas.BODialogView) {
+                    if (view instanceof ibas.DialogView) {
                         // 对话框视图
                         this.showDialogView(view);
-                    } else if (view instanceof ibas.BOBarView) {
+                    } else if (view instanceof ibas.BarView) {
                         // 工具条视图
                         this.showBarView(view);
                     } else if (view instanceof app.ShellView) {
@@ -641,7 +641,7 @@ namespace shell {
                         view.showQueryPanel = function (view: ibas.BOQueryView | ibas.BOQueryDialogView, embeddedView: ibas.IEmbeddedQueryPanel): void {
                             that.showQueryPanel(view, embeddedView);
                         };
-                        view.showDialogView = function (view: ibas.BODialogView): void {
+                        view.showDialogView = function (view: ibas.DialogView): void {
                             that.showDialogView(view);
                         };
                         let page: sap.m.Page = new sap.m.Page("", {
@@ -671,7 +671,7 @@ namespace shell {
                     }
                 }
                 /** 显示对话框视图 */
-                protected showDialogView(view: ibas.BODialogView): void {
+                protected showDialogView(view: ibas.DialogView): void {
                     let title: string;
                     // 设置标题
                     if (!ibas.objects.isNull(view.title)) {
@@ -730,50 +730,46 @@ namespace shell {
                     }
                 }
                 /** 显示工具条视图 */
-                protected showBarView(view: ibas.BOBarView): void {
-                    let form: any = view.draw();
-                    if (ibas.objects.isNull(form)) {
-                        setTimeout(function (): void {
-                            view.isDisplayed = false;
-                            view.onClosed();
-                        }, 100);
-                        return;
-                    }
-                    if (form instanceof sap.m.QuickView) {
+                protected showBarView(view: ibas.BarView): void {
+                    let viewContent: any = view.draw();
+                    if (viewContent instanceof sap.m.QuickView) {
                         // 快速视图
-                        form.attachAfterClose(null, function (): void {
+                        viewContent.attachAfterClose(null, function (): void {
                             view.isDisplayed = false;
                             view.onClosed();
                         });
-                        form.openBy(view.drawBar());
-                    } else if (form instanceof sap.m.Dialog) {
+                        view.id = viewContent.getId();
+                        viewContent.openBy(<any>sap.ui.getCore().byId(view.barId));
+                    } else if (viewContent instanceof sap.m.Dialog) {
                         // 对话框视图
                         // 添加关闭事件
-                        form.attachAfterClose(null, function (): void {
+                        viewContent.attachAfterClose(null, function (): void {
                             view.isDisplayed = false;
                             view.onClosed();
                         });
                         // 设置视图紧凑
                         if (ibas.config.get(openui5.CONFIG_ITEM_COMPACT_SCREEN, false)) {
-                            form.addStyleClass("sapUiSizeCompact");
+                            viewContent.addStyleClass("sapUiSizeCompact");
                         }
-                        form.open();
-                    } else {
+                        view.id = viewContent.getId();
+                        viewContent.open();
+                    } else if (viewContent instanceof sap.ui.core.Control) {
                         // 弹出层
                         let popover: sap.m.ResponsivePopover;
-                        if (form instanceof sap.m.ResponsivePopover) {
-                            popover = form;
+                        if (viewContent instanceof sap.m.ResponsivePopover) {
+                            popover = viewContent;
                         } else {
                             popover = new sap.m.ResponsivePopover("", {
                                 showHeader: false,
                                 placement: sap.m.PlacementType.Bottom,
-                                content: [form]
+                                content: [viewContent]
                             });
                         }
                         // 添加关闭事件
                         popover.attachAfterClose(null, function (): void {
                             // 设置视图未显示
                             view.isDisplayed = false;
+                            view.onClosed();
                             popover.destroy(false);
                         });
                         // 设置视图紧凑
@@ -782,9 +778,14 @@ namespace shell {
                         } else {
                             popover.addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
                         }
-                        popover.openBy(view.drawBar());
+                        view.id = popover.getId();
+                        popover.openBy(<any>sap.ui.getCore().byId(view.barId));
+                    } else {
+                        setTimeout(function (): void {
+                            view.isDisplayed = false;
+                            view.onClosed();
+                        }, 100);
                     }
-                    view.id = form.getId();
                 }
                 /** 显示地址视图 */
                 protected showUrlView(view: ibas.UrlView, container: sap.m.Page): void {
@@ -895,10 +896,10 @@ namespace shell {
                 showResidentView(view: ibas.IBarView): void {
                     let bar: any = view.drawBar();
                     if (bar instanceof sap.ui.core.Control) {
-                        view.id = bar.getId();
+                        view.barId = bar.getId();
                         this.mainHeader.insertContent(bar, this.mainHeader.getContent().length - 1);
                         // 触发工具条显示完成事件
-                        if (view instanceof ibas.BOBarView) {
+                        if (view instanceof ibas.BarView) {
                             view.barShowedEvent.apply(view.application);
                         }
                     }

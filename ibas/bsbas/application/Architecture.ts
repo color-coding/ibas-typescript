@@ -76,7 +76,7 @@ namespace ibas {
         draw(): any;
     }
     /**
-     * 应用-视图
+     * 地址应用-视图
      */
     export interface IUrlView extends IView {
         /** 内部打开 */
@@ -88,6 +88,8 @@ namespace ibas {
      * 工具条应用-视图
      */
     export interface IBarView extends IView {
+        /** 工具条标识 */
+        barId: string;
         /** 绘制工具条视图 */
         drawBar(): any;
         /** 激活完整视图事件 */

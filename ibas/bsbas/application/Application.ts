@@ -48,7 +48,7 @@ namespace ibas {
 
     }
     /**
-     * 业务对象应用
+     * 应用
      */
     export abstract class Application<T extends IView> extends AbstractApplication<T> {
         /** 运行 */
@@ -317,7 +317,7 @@ namespace ibas {
         }
     }
     /**
-     * 业务对象快捷应用
+     * 快捷应用
      */
     export abstract class ShortcutApplication<T extends IShortcutView> extends BarApplication<T> {
         /** 注册视图，重载需要回掉此方法 */

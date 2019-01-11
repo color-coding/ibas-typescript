@@ -11,7 +11,7 @@ namespace trainingtesting {
             /**
              * 视图-demo
              */
-            export class DemoServiceView extends ibas.BODialogView implements app.IDemoServiceView {
+            export class DemoServiceView extends ibas.DialogView implements app.IDemoServiceView {
                 drawBars(): any {
                     let that: this = this;
                     return [

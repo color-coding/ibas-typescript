@@ -94,7 +94,6 @@ namespace ibas {
      * 业务对象选择应用
      */
     export abstract class BOChooseApplication<T extends IBOChooseView, D> extends BOQueryApplication<T> {
-
         /** 注册视图，重载需要回掉此方法 */
         protected registerView(): void {
             super.registerView();
@@ -112,8 +111,7 @@ namespace ibas {
      * 业务对象选择服务
      * 类型参数：视图，选择数据
      */
-    export abstract class BOChooseService<T extends IBOChooseView, D> extends BOChooseApplication<T, D>
-        implements IBOChooseService<D> {
+    export abstract class BOChooseService<T extends IBOChooseView, D> extends BOChooseApplication<T, D> implements IBOChooseService<D> {
         /** 运行 */
         run(): void;
         /**
@@ -233,7 +231,6 @@ namespace ibas {
             this.fireCompleted(datas);
         }
     }
-
     /**
      * 业务对象列表应用
      */

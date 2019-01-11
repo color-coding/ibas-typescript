@@ -19,11 +19,8 @@ namespace ibas {
         /** 地址 */
         url: string;
     }
-    /** 业务对象视图 */
-    export abstract class BOView extends View implements IBOView {
-    }
-    /** 业务对象查询视图 */
-    export abstract class BODialogView extends BOView {
+    /** 对话框视图 */
+    export abstract class DialogView extends View {
         /** 确认 */
         confirm(): void {
             // 确认方法，可重载
@@ -32,7 +29,7 @@ namespace ibas {
     /** 配置项目-自动查询 */
     export const CONFIG_ITEM_AUTO_QUERY: string = "autoQuery";
     /** 业务对象查询视图 */
-    export abstract class BOQueryView extends BOView implements IBOQueryView {
+    export abstract class BOQueryView extends View implements IBOQueryView {
         /** 查询标识 */
         get queryId(): string {
             return this.application.id;
@@ -56,7 +53,7 @@ namespace ibas {
         }
     }
     /** 业务对象查询对话视图 */
-    export abstract class BOQueryDialogView extends BODialogView implements IBOQueryView {
+    export abstract class BOQueryDialogView extends DialogView implements IBOQueryView {
         /** 查询标识 */
         get queryId(): string {
             return this.application.id;
@@ -103,19 +100,21 @@ namespace ibas {
         mode: emViewMode;
     }
     /** 业务对象查看视图 */
-    export abstract class BOViewView extends BOView implements IBOViewView {
+    export abstract class BOViewView extends View implements IBOViewView {
         /** 编辑数据事件 */
         editDataEvent: Function;
         /** 视图模式 */
         mode: emViewMode;
     }
     /** 业务对象编辑视图 */
-    export abstract class BOEditView extends BOView implements IBOEditView {
+    export abstract class BOEditView extends View implements IBOEditView {
         /** 保存数据事件 */
         saveDataEvent: Function;
     }
-    /** 业务对象工具条视图 */
-    export abstract class BOBarView extends BOView implements IBarView {
+    /** 工具条视图 */
+    export abstract class BarView extends View implements IBarView {
+        /** 工具条标识 */
+        barId: string;
         /** 绘制工具条 */
         abstract drawBar(): any;
         /** 激活完整视图事件 */
@@ -123,8 +122,10 @@ namespace ibas {
         /** 工具条视图显示完成事件 */
         barShowedEvent: Function;
     }
-    /** 业务对象面板视图 */
-    export abstract class BOPanelView extends BODialogView implements IBarView {
+    /** 面板视图 */
+    export abstract class PanelView extends DialogView implements IBarView {
+        /** 工具条标识 */
+        barId: string;
         /** 绘制工具条 */
         abstract drawBar(): any;
         /** 激活完整视图事件 */
@@ -132,12 +133,12 @@ namespace ibas {
         /** 工具条视图显示完成事件 */
         barShowedEvent: Function;
     }
-    /** 业务对象常驻应用视图 */
-    export abstract class BOResidentView extends BOBarView implements IResidentView {
+    /** 常驻应用视图 */
+    export abstract class ResidentView extends BarView implements IResidentView {
 
     }
-    /** 业务对象快捷应用视图 */
-    export abstract class BOShortcutView extends BOBarView implements IShortcutView {
+    /** 快捷应用视图 */
+    export abstract class ShortcutView extends BarView implements IShortcutView {
 
     }
     /** 页签视图 */

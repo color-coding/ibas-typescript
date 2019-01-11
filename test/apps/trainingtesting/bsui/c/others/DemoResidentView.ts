@@ -11,24 +11,19 @@ namespace trainingtesting {
             /**
              * 视图-常驻
              */
-            export class DemoResidentView extends ibas.BOResidentView implements app.IDemoResidentView {
+            export class DemoResidentView extends ibas.ResidentView implements app.IDemoResidentView {
                 /** 绘制工具条视图 */
                 drawBar(): any {
                     let that: this = this;
-                    // 不重复创建工具条钮
-                    if (ibas.objects.isNull(this.bar)) {
-                        this.bar = new sap.m.Button("", {
-                            tooltip: this.title,
-                            icon: "sap-icon://fob-watch",
-                            type: sap.m.ButtonType.Transparent,
-                            press: function (): void {
-                                that.fireViewEvents(that.showFullViewEvent);
-                            }
-                        });
-                    }
-                    return this.bar;
+                    return new sap.m.Button("", {
+                        tooltip: this.title,
+                        icon: "sap-icon://fob-watch",
+                        type: sap.m.ButtonType.Transparent,
+                        press: function (): void {
+                            that.fireViewEvents(that.showFullViewEvent);
+                        }
+                    });
                 }
-                private bar: sap.m.Button;
                 /** 激活完整视图事件 */
                 showFullViewEvent: Function;
                 /** 绘制视图 */

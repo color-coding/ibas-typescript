@@ -11,7 +11,7 @@ namespace shell {
             /**
              * 视图-查询面板
              */
-            export class QueryPanelView extends ibas.BOPanelView implements app.IQueryPanelView {
+            export class QueryPanelView extends ibas.PanelView implements app.IQueryPanelView {
                 /** 可配置查询 */
                 configurable: boolean;
                 /** 可配置查询 */
@@ -42,37 +42,31 @@ namespace shell {
                 }
                 /** 绘制工具条视图 */
                 drawBar(): any {
-                    if (ibas.objects.isNull(this.bar)) {
-                        let that: this = this;
-                        this.search = new sap.m.SearchField("", {
-                            search: function (): void {
-                                that.fireViewEvents(that.searchEvent);
-                            }
-                        });
-                        this.baseOn = new sap.m.Select("", {
-                            width: "55%",
-                            maxWidth: "55%"
-                        });
-                        this.baseOn.setVisible(this.selectable);
-                        this.config = new sap.m.Button("", {
-                            icon: "sap-icon://filter",
-                            type: sap.m.ButtonType.Transparent,
-                            press: function (): void {
-                                that.fireViewEvents(that.showFullViewEvent);
-                            }
-                        });
-                        this.config.setVisible(this.selectable);
-                        this.bar = new sap.m.Toolbar("", {
-                            width: "100%",
-                            design: sap.m.ToolbarDesign.Auto,
-                            content: [
-                                this.search,
-                                this.baseOn,
-                                this.config
-                            ]
-                        });
-                    }
-                    return this.bar;
+                    let that: this = this;
+                    return new sap.m.Toolbar("", {
+                        width: "100%",
+                        design: sap.m.ToolbarDesign.Auto,
+                        content: [
+                            this.search = new sap.m.SearchField("", {
+                                search: function (): void {
+                                    that.fireViewEvents(that.searchEvent);
+                                }
+                            }),
+                            this.baseOn = new sap.m.Select("", {
+                                width: "55%",
+                                maxWidth: "55%",
+                                visible: this.selectable
+                            }),
+                            this.config = new sap.m.Button("", {
+                                icon: "sap-icon://filter",
+                                type: sap.m.ButtonType.Transparent,
+                                press: function (): void {
+                                    that.fireViewEvents(that.showFullViewEvent);
+                                },
+                                visible: this.configurable
+                            })
+                        ]
+                    });
                 }
                 /** 绘制拉动条视图 */
                 drawPuller(): any {
@@ -83,7 +77,6 @@ namespace shell {
                         }
                     });
                 }
-                private bar: sap.m.Toolbar;
                 private search: sap.m.SearchField;
                 private config: sap.m.Button;
                 private baseOn: sap.m.Select;
