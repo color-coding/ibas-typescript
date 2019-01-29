@@ -21,6 +21,8 @@ namespace shell {
             token: string;
             /* 归属 */
             belong: string;
+            /* 身份 */
+            identities: ibas.IList<string>;
         }
         /** 用户模块 */
         export interface IUserModule {

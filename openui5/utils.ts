@@ -562,7 +562,7 @@ namespace openui5 {
                         /** 获取值类型,根据不同控件的绑定值添加 */
                         let bindingTypes: Array<string> = ["value", "dateValue", "secondDateValue", "selectedKey"];
                         for (let type of bindingTypes) {
-                            let info: any = managedObject.getBindingInfo(type);
+                            let info: any = (<any>managedObject).getBindingInfo(type);
                             if (!!info && !!info.type && info.type.validate instanceof Function) {
                                 bindingInfo = info;
                                 break;
@@ -605,7 +605,7 @@ namespace openui5 {
                             bindingInfoType.fireValidationError(managedObject, validateResult.message);
                         } else {
                             if (managedObject instanceof sap.ui.core.Element) {
-                                sap.ui.getCore().fireValidationSuccess({
+                                (<any>sap.ui.getCore()).fireValidationSuccess({
                                     element: managedObject
                                 });
                             }

@@ -29,6 +29,8 @@ namespace shell {
             Belong: string;
             /** 密码 */
             Password?: string;
+            /* 身份 */
+            Identities: string;
         }
         /** 用户应用模块 */
         export interface IUserModule extends IDataDeclaration {

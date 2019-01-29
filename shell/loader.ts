@@ -121,7 +121,7 @@ namespace loader {
             domScript.setAttribute("id", URL_SCRIPT_ELEMENT_ID);
             domScript.setAttribute("data-sap-ui-bindingSyntax", "complex");
             domScript.setAttribute("data-sap-ui-theme", "sap_belize");
-            domScript.setAttribute("data-sap-ui-libs", "sap.m, sap.f, sap.tnt, sap.ui.layout, sap.ui.table, sap.ui.codeeditor");
+            domScript.setAttribute("data-sap-ui-libs", "sap.m, sap.f, sap.tnt, sap.ui.layout, sap.ui.table");
             // domScript.setAttribute("data-sap-ui-preload", "async"); // 异步加载预加载库
             return domScript;
         }

@@ -383,7 +383,7 @@ namespace ibas {
                 let stringBuilder: StringBuilder = new StringBuilder();
                 for (let item of value) {
                     if (stringBuilder.length > 0) {
-                        stringBuilder.append(", ");
+                        stringBuilder.append(ibas.DATA_SEPARATOR);
                     }
                     stringBuilder.append(valueOf(item));
                 }

@@ -70,6 +70,7 @@ namespace shell {
                 ibas.variablesManager.register(ibas.VARIABLE_NAME_USER_SUPER, this.currentUser.super);
                 ibas.variablesManager.register(ibas.VARIABLE_NAME_USER_BELONG, this.currentUser.belong);
                 ibas.variablesManager.register(ibas.VARIABLE_NAME_USER_TOKEN, this.currentUser.token);
+                ibas.variablesManager.register(ibas.VARIABLE_NAME_USER_IDENTITIES, this.currentUser.identities);
                 // 初始化
                 let that: this = this;
                 setTimeout(function (): void {

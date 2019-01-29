@@ -966,7 +966,7 @@ namespace shell {
                     }
                 }
                 private currentPageView(): ibas.View {
-                    let page: sap.ui.core.Control = this.pageContainer.getCurrentPage();
+                    let page: sap.ui.core.Element = this.pageContainer.getCurrentPage();
                     if (ibas.objects.isNull(page)) {
                         return;
                     }
@@ -974,7 +974,7 @@ namespace shell {
                         // 当前页面是页签时，则为选中的页签
                         page = page.getContent()[0];
                         if (page instanceof sap.m.TabContainer) {
-                            page = page.getSelectedItem();
+                            page = sap.ui.getCore().byId(page.getSelectedItem());
                             if (ibas.objects.isNull(page)) {
                                 return;
                             }

@@ -51,7 +51,7 @@ namespace openui5 {
                         element: managedObject,
                         message: message,
                     };
-                    return sap.ui.getCore().fireValidationError(arg);
+                    return (<any>sap.ui.getCore()).fireValidationError(arg);
                 }
             }
         }
@@ -122,7 +122,7 @@ namespace openui5 {
                 return oValue.toString();
             }
             parseValue(oValue: any): number {
-                return Number.parseInt(oValue);
+                return Number.parseInt(oValue, 0);
             }
             validate(oValue: number, managedObject?: sap.ui.base.ManagedObject): ValidateResult {
                 let result: ValidateResult = super.validate(oValue, managedObject);

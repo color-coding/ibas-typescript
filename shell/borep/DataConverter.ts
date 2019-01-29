@@ -34,7 +34,8 @@ namespace shell {
                         Name: newData.name,
                         Super: newData.super,
                         Token: newData.token,
-                        Belong: newData.belong
+                        Belong: newData.belong,
+                        Identities: ibas.strings.valueOf(newData.identities)
                     };
                     return remote;
                 } else if (ibas.objects.instanceOf(data, UserModule)) {
@@ -137,6 +138,15 @@ namespace shell {
                     newData.super = remote.Super;
                     newData.token = remote.Token !== undefined ? remote.Token : remote.Password;
                     newData.belong = remote.Belong;
+                    newData.identities = new ibas.ArrayList<string>();
+                    if (!ibas.strings.isEmpty(remote.Identities)) {
+                        for (let item of remote.Identities.split(ibas.DATA_SEPARATOR)) {
+                            if (newData.identities.contain(item)) {
+                                continue;
+                            }
+                            newData.identities.add(item);
+                        }
+                    }
                     return newData;
                 } else if (data.type === UserModule.name) {
                     let remote: bo4j.IUserModule = data;
