@@ -379,7 +379,7 @@ namespace trainingtesting {
                                             showHeader: false,
                                             placement: sap.m.PlacementType.Bottom,
                                         });
-                                        popover.addContent(new sap.m.Button({
+                                        popover.addContent(new sap.m.Button("", {
                                             text: ibas.i18n.prop("bo_salesorderitem"),
                                             type: sap.m.ButtonType.Transparent,
                                             icon: "sap-icon://folder",

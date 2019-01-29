@@ -119,7 +119,7 @@ namespace shell {
                                         showHeader: false,
                                         placement: sap.m.PlacementType.Bottom,
                                         content: [
-                                            new sap.m.Button({
+                                            new sap.m.Button("", {
                                                 text: ibas.i18n.prop("shell_help"),
                                                 type: sap.m.ButtonType.Transparent,
                                                 icon: "sap-icon://sys-help",
@@ -128,7 +128,7 @@ namespace shell {
                                                     popover.close();
                                                 }
                                             }),
-                                            new sap.m.Button({
+                                            new sap.m.Button("", {
                                                 text: ibas.i18n.prop("shell_about"),
                                                 type: sap.m.ButtonType.Transparent,
                                                 icon: "sap-icon://world",
@@ -137,7 +137,7 @@ namespace shell {
                                                     popover.close();
                                                 }
                                             }),
-                                            new sap.m.Button({
+                                            new sap.m.Button("", {
                                                 text: ibas.i18n.prop("shell_logout"),
                                                 type: sap.m.ButtonType.Transparent,
                                                 icon: "sap-icon://system-exit",
@@ -581,9 +581,7 @@ namespace shell {
                             });
                             page.addContent(container);
                             pageContainer.addPage(page);
-                            setTimeout(() => {
-                                pageContainer.to(page.getId());
-                            }, 100);
+                            setTimeout(() => pageContainer.to(page.getId()), 100);
                         }
                         let containerItem: sap.m.TabContainerItem = new sap.m.TabContainerItem("", {
                             name: view.title,
@@ -621,9 +619,7 @@ namespace shell {
                             }
                             view.id = container.getId();
                             let pageContainer: sap.m.NavContainer = this.pageContainer.addPage(container);
-                            setTimeout(() => {
-                                pageContainer.to(container.getId());
-                            }, 100);
+                            setTimeout(() => pageContainer.to(container.getId()), 100);
                         } else {
                             // 存在页面直接跳转
                             this.pageContainer.backToPage(container.getId());

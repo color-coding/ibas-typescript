@@ -464,7 +464,7 @@ namespace openui5 {
             if (chooseType === ibas.emChooseType.SINGLE) {
                 table.setEnableSelectAll(false);
                 table.setSelectionMode(sap.ui.table.SelectionMode.MultiToggle);
-                table.attachRowSelectionChange(function (oEvent: any): void {
+                table.attachRowSelectionChange(undefined,function (oEvent: any): void {
                     this.setSelectedIndex(this.getSelectedIndex());
                 });
             }

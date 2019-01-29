@@ -72,11 +72,8 @@ namespace shell {
                 ibas.variablesManager.register(ibas.VARIABLE_NAME_USER_TOKEN, this.currentUser.token);
                 ibas.variablesManager.register(ibas.VARIABLE_NAME_USER_IDENTITIES, this.currentUser.identities);
                 // 初始化
-                let that: this = this;
-                setTimeout(function (): void {
-                    that.init();
-                }, 300);
                 this.show();
+                setTimeout(() => this.init(), 300);
             }
             /** 视图显示后 */
             protected viewShowed(): void {
@@ -172,9 +169,7 @@ namespace shell {
                                             that.view.showModuleFunction(console.name, func);
                                             if (ibas.strings.equals(func.id, hashFuncId)) {
                                                 // 如当前模块包含Hash指向的功能,激活
-                                                setTimeout(() => {
-                                                    ibas.urls.changeHash(window.location.hash);
-                                                }, 1500);
+                                                setTimeout(() => ibas.urls.changeHash(window.location.hash), 1500);
                                             }
                                         }
                                         // 处理应用
@@ -197,9 +192,7 @@ namespace shell {
                                             let index: number = url.indexOf("/") < 0 ? url.length : url.indexOf("/");
                                             let id: string = url.substring(0, index);
                                             if (ibas.strings.equals(service.id, id)) {
-                                                setTimeout(() => {
-                                                    ibas.urls.changeHash(window.location.hash);
-                                                }, 1500);
+                                                setTimeout(() => ibas.urls.changeHash(window.location.hash), 1500);
                                             }
                                         }
                                     }

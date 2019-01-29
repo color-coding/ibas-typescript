@@ -43,7 +43,7 @@ namespace shell {
                     });
                     // 添加UI组件
                     components.add(new app.Component("openui5",
-                        (<any>sap.ui.getVersionInfo()).version,
+                        (<any>sap.ui).getVersionInfo().version,
                         "© SAP SE, made available under Apache License 2.0.",
                         "sap-icon://sap-ui5"));
                     for (let item of components) {

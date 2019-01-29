@@ -167,11 +167,7 @@ namespace shell {
                     if (data instanceof DataWrapping) {
                         if (data.check() && data.data === EMPTY_BOINFO) {
                             // 代理数据，等待返回方法
-                            let that: this = this;
-                            setTimeout(() => {
-                                that.fetchBOInfos(caller);
-                                that = null;
-                            }, WAITING_TIME);
+                            setTimeout(() => this.fetchBOInfos(caller), WAITING_TIME);
                         } else {
                             let opRsltInfo: ibas.OperationResult<IBOInfo> = new ibas.OperationResult<IBOInfo>();
                             if (ibas.strings.isEmpty(caller.boName)) {

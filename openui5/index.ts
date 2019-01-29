@@ -42,7 +42,7 @@ namespace openui5 {
     }
 
     // ui 触发错误验证
-    sap.ui.getCore().attachValidationError("", (oEvent) => {
+    sap.ui.getCore().attachValidationError(undefined, (oEvent: sap.ui.base.Event) => {
         let control: any = oEvent.getParameter("element");
         let message: any = oEvent.getParameter("message");
         if (control && control.setValueState) {
@@ -54,7 +54,7 @@ namespace openui5 {
         }
     });
     // ui 触发正确验证
-    sap.ui.getCore().attachValidationSuccess("", (oEvent) => {
+    sap.ui.getCore().attachValidationSuccess(undefined, (oEvent: sap.ui.base.Event) => {
         let control: any = oEvent.getParameter("element");
         if (control && control.setValueState) {
             control.setValueState("None");
