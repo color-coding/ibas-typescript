@@ -59,7 +59,8 @@ namespace shell {
                         type: UserPrivilege.name,
                         Source: ibas.enums.toString(ibas.emPrivilegeSource, newData.source),
                         Target: newData.target,
-                        Value: ibas.enums.toString(ibas.emAuthoriseType, newData.value)
+                        Value: ibas.enums.toString(ibas.emAuthoriseType, newData.value),
+                        Automatic: newData.automatic === true ? "YES" : "NO"
                     };
                     return remote;
                 } else if (ibas.objects.instanceOf(data, UserQuery)) {
@@ -167,6 +168,7 @@ namespace shell {
                     newData.source = ibas.enums.valueOf(ibas.emPrivilegeSource, remote.Source);
                     newData.target = remote.Target;
                     newData.value = ibas.enums.valueOf(ibas.emAuthoriseType, remote.Value);
+                    newData.automatic = remote.Automatic === "YES" ? true : false;
                     return newData;
                 } else if (data.type === UserQuery.name) {
                     let remote: bo4j.IUserQuery = data;

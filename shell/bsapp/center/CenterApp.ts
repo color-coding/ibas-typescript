@@ -380,7 +380,6 @@ namespace shell {
                     // 已初始化不在处理
                     return;
                 }
-                let that: this = this;
                 let boRepository: bo.IBORepositoryShell = bo.repository.create();
                 boRepository.fetchUserPrivileges({
                     user: loader.user,
@@ -390,7 +389,16 @@ namespace shell {
                             if (opRslt.resultCode !== 0) {
                                 throw new Error(opRslt.message);
                             }
-                            userPrivileges.add(opRslt.resultObjects);
+                            let configed: boolean = ibas.config.get(CONFIG_ITEM_AUTO_ACTIVETED_FUNCTION) ? true : false;
+                            for (let item of opRslt.resultObjects) {
+                                userPrivileges.add(item);
+                                if (item.automatic === true && !configed
+                                    && item.source === ibas.emPrivilegeSource.APPLICATION
+                                    && item.value === ibas.emAuthoriseType.ALL) {
+                                    // 没有配置，则使用权限设置
+                                    ibas.config.set(CONFIG_ITEM_AUTO_ACTIVETED_FUNCTION, item.target);
+                                }
+                            }
                             if (loader.onCompleted instanceof Function) {
                                 loader.onCompleted();
                             }

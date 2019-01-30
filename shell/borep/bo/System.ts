@@ -59,6 +59,8 @@ namespace shell {
             target: string;
             /** 权限值 */
             value: ibas.emAuthoriseType;
+            /** 自动运行 */
+            automatic: boolean;
         }
         /**
          * 用户查询

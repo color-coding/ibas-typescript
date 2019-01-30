@@ -61,6 +61,8 @@ namespace shell {
             Target: string;
             /** 权限值 */
             Value: string;
+            /** 自动运行 */
+            Automatic: string;
         }
         /** 用户查询 */
         export interface IUserQuery extends IDataDeclaration {
