@@ -362,9 +362,7 @@ namespace ibas {
             }
         }
     }
-    /**
-     * 业务规则-集合元素属性求和
-     */
+    /** 业务规则-集合元素属性求和 */
     export class BusinessRuleSumElements extends BusinessRuleCollection {
         /**
          *
@@ -441,6 +439,60 @@ namespace ibas {
                 } else {
                     super.compute(context);
                 }
+            }
+        }
+    }
+    /** 业务规则-舍入 */
+    export class BusinessRuleRoundingOff extends BusinessRuleCommon {
+        /**
+         * 构造
+         * @param rounding 属性-舍入值
+         * @param original 属性-原始值
+         * @param place  保留小数位数
+         * @param enabled  属性-是否激活
+         */
+        constructor(rounding: string, original: string, place: number = 0, enabled: string = undefined) {
+            super();
+            this.name = i18n.prop("sys_business_rule_rounding_off");
+            this.rounding = rounding;
+            this.original = original;
+            this.place = place;
+            this.enabled = enabled;
+            if (typeof this.place !== "number") {
+                this.place = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES);
+            }
+            // 设置输入输出参数
+            this.inputProperties.add(this.original);
+            if (!ibas.strings.isEmpty(this.enabled)) {
+                this.inputProperties.add(this.enabled);
+            }
+            // 设置输出参数
+            this.affectedProperties.add(this.rounding);
+            this.affectedProperties.add(this.original);
+        }
+        /** 属性-舍入值 */
+        rounding: string;
+        /** 属性-原始值 */
+        original: string;
+        /** 属性-激活 */
+        enabled: string;
+        /** 保留小数位 */
+        place: number;
+        /** 计算规则 */
+        protected compute(context: BusinessRuleContextCommon): void {
+            let enabled: boolean = false;
+            if (!ibas.strings.isEmpty(this.enabled)) {
+                enabled = Boolean(context.inputValues.get(this.enabled));
+            }
+            if (enabled !== true) {
+                return;
+            }
+            let place: number = Number(this.place);
+            let original: number = Number(context.inputValues.get(this.original));
+            let value: number = ibas.numbers.round(original, place);
+            if (original !== value) {
+                context.outputValues.set(this.rounding, value - original);
+                context.outputValues.set(this.original, value);
             }
         }
     }

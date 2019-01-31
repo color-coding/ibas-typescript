@@ -47,5 +47,6 @@
   "sys_business_rule_summation": "求和运算",
   "sys_business_rule_sum_elements": "集合元素属性求和",
   "sys_business_rule_multiplicative_deduction": "乘除法推导",
-  "sys_business_rule_additive_deduction": "加减法推导"
+  "sys_business_rule_additive_deduction": "加减法推导",
+  "sys_business_rule_rounding_off": "数值小数位舍入"
 }
