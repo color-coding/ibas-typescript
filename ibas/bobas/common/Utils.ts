@@ -1000,9 +1000,9 @@ namespace ibas {
          * @param sorts 排序方式
          * @param datas 数据
          */
-        export function sort<T>(datas: Array<T>, sorts: ISort[]): Array<T> {
+        export function sort<T>(datas: Array<T>, sorts: ISort[]): IList<T> {
             if (objects.isNull(sorts) || sorts.length === 0) {
-                return datas;
+                return create(datas);
             }
             let newDatas: Array<T> = datas.sort((c, b): number => {
                 let compare: number = 0;
@@ -1050,7 +1050,22 @@ namespace ibas {
                 }
                 return compare;
             });
-            return newDatas;
+            return create(newDatas);
+        }
+        /**
+         * 创建数组
+         * @param data 数据
+         */
+        export function create<T>(data: T | T[] | Array<T>): IList<T> {
+            let datas: ArrayList<T> = new ArrayList<T>();
+            if (data instanceof Array) {
+                for (let item of data) {
+                    datas.push(item);
+                }
+            } else if (!objects.isNull(data)) {
+                datas.add(data);
+            }
+            return datas;
         }
     }
 }

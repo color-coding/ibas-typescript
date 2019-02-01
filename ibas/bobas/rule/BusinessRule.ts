@@ -489,6 +489,9 @@ namespace ibas {
             }
             let place: number = Number(this.place);
             let original: number = Number(context.inputValues.get(this.original));
+            if (isNaN(original)) {
+                return;
+            }
             let value: number = ibas.numbers.round(original, place);
             if (original !== value) {
                 context.outputValues.set(this.rounding, value - original);

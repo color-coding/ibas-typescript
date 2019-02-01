@@ -33,6 +33,7 @@
 /// <reference path="./bobas/expression/JudgmentExpression.ts" />
 /// <reference path="./bobas/expression/JudgmentLink.ts" />
 /// <reference path="./bobas/task/Action.ts" />
+/// <reference path="./bobas/task/Queue.ts" />
 /// <reference path="./bobas/rule/BusinessRuleCore.ts" />
 /// <reference path="./bobas/rule/BusinessRule.ts" />
 /// <reference path="./bsbas/common/Data.ts" />
