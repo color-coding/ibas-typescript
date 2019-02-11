@@ -43,9 +43,9 @@ namespace shell {
                 libraries.add(new Component("spin.js", "2.3.2", "© Felix Gnass, released under the MIT license."));
                 this.view.showLibraries(libraries);
                 let applications: ibas.IList<Component> = new ibas.ArrayList<Component>();
-                for (let item of consoleManager.modules()) {
-                    applications.add(new Component(item.name, item.version, item.copyright, item.icon));
-                }
+                modules.forEach((module) => {
+                    applications.add(new Component(module.name, module.version, module.copyright, module.icon));
+                });
                 this.view.showApplications(applications);
             }
         }
