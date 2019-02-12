@@ -6,6 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 /// <reference path="./MainView.ts" />
+/// <reference path="./WelcomeView.ts" />
 /// <reference path="./LoginView.ts" />
 /// <reference path="./AboutView.ts" />
 /// <reference path="./HelpView.ts" />

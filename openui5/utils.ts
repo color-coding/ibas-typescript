@@ -34,11 +34,7 @@ namespace openui5 {
          * 获取枚举类型map
          * @param data 枚举类型
          */
-        export function getEnumMap(data: any): Map<string, string>;
-        /** 获取枚举类型map */
-        export function getEnumMap(): Map<string, string> {
-            // 首先获取枚举内容
-            let data: any = arguments[0];
+        export function getEnumMap(data: any): Map<string, string> {
             let map: Map<string, string> = new Map<string, string>();
             for (let item in data) {
                 if (ibas.objects.isNull(item)) {
@@ -77,32 +73,22 @@ namespace openui5 {
         /**
          * 创建下拉框可选项
          * @param data 枚举类型
-         */
-        export function createComboBoxItems(data: any): sap.ui.core.ListItem[];
-        /**
-         * 创建下拉框可选项
-         * @param data 枚举类型
          * @param blank 是否创建空白项
          */
-        export function createComboBoxItems(data: any, blank: boolean): sap.ui.core.ListItem[];
-        /** 创建下拉框可选项 */
-        export function createComboBoxItems(): sap.ui.core.ListItem[] {
-            // 首先获取枚举内容
-            let data: any = arguments[0];
-            let blank: boolean = arguments[1];
-            let map: Map<string, string> = new Map<string, string>();
-            if (blank) {
-                map.set("", ibas.i18n.prop("shell_please_chooose_data", ""));
-            }
-            map = getEnumMap(data);
-            // 转换枚举内容
+        export function createComboBoxItems(data: any, blank: boolean = false): sap.ui.core.ListItem[] {
             let items: Array<sap.ui.core.ListItem> = new Array<sap.ui.core.ListItem>();
-            for (let item of map) {
-                let key: any = item[0];
+            if (blank === true) {
                 items.push(new sap.ui.core.ListItem("", {
-                    key: key,
+                    key: "",
+                    text: ibas.i18n.prop("shell_please_chooose_data", ""),
+                    additionalText: ""
+                }));
+            }
+            for (let item of getEnumMap(data)) {
+                items.push(new sap.ui.core.ListItem("", {
+                    key: item[0],
                     text: ibas.enums.describe(data, item[1]),
-                    additionalText: key
+                    additionalText: item[1]
                 }));
             }
             return items;
@@ -111,20 +97,13 @@ namespace openui5 {
          * 创建SegmentedButtonItem
          * @param data 枚举类型
          */
-        export function createSegmentedButtonItems(data: any): sap.m.SegmentedButtonItem[];
-        /** 创建SegmentedButtonItem */
-        export function createSegmentedButtonItems(): sap.m.SegmentedButtonItem[] {
-            // 首先获取枚举内容
-            let data: any = arguments[0];
-            let map: Map<string, string> = new Map<string, string>();
-            map = getEnumMap(data);
+        export function createSegmentedButtonItems(data: any): sap.m.SegmentedButtonItem[] {
             // 转换枚举内容
             let items: Array<sap.m.SegmentedButtonItem> = new Array<sap.m.SegmentedButtonItem>();
-            for (let item of map) {
-                let key: any = item[0];
+            for (let item of getEnumMap(data)) {
                 items.push(new sap.m.SegmentedButtonItem("", {
                     width: "auto",
-                    key: key,
+                    key: item[0],
                     text: ibas.enums.describe(data, item[1]),
                 }));
             }
@@ -133,25 +112,49 @@ namespace openui5 {
         /** 获取表格或者列表选中的对象 */
         export function getSelecteds<T>(container: sap.m.List | sap.ui.table.Table): ibas.IList<T> {
             let selecteds: ibas.IList<T> = new ibas.ArrayList<T>();
-            if (container instanceof (sap.m.List)) {
+            if (container instanceof sap.m.List) {
                 if (container.getMode() === sap.m.ListMode.None) {
-                    if (!ibas.objects.isNull(container.getSwipedItem())) {
-                        selecteds.push(container.getSwipedItem().getBindingContext().getObject());
+                    let item: sap.m.ListItemBase = container.getSwipedItem();
+                    if (!ibas.objects.isNull(item)) {
+                        selecteds.push(item.getBindingContext().getObject());
                     }
                 } else {
-                    let Contexts: any[] = container.getSelectedContexts(undefined);
-                    if (Contexts.length > 0) {
-                        for (let i: number = 0; i < Contexts.length; i++) {
-                            selecteds.push(Contexts[i].getObject());
-                        }
+                    for (let item of container.getSelectedContexts(undefined)) {
+                        selecteds.push((<any>item).getObject());
                     }
                 }
-            } else if (container instanceof (sap.ui.table.Table)) {
-                let idxs: any[] = container.getSelectedIndices();
-                if (idxs.length > 0) {
-                    for (let i: number = 0; i < idxs.length; i++) {
-                        selecteds.push(container.getContextByIndex(idxs[i]).getObject());
+            } else if (container instanceof sap.ui.table.Table) {
+                for (let item of container.getSelectedIndices()) {
+                    selecteds.push(container.getContextByIndex(item).getObject());
+                }
+            }
+            return selecteds;
+        }
+        /** 获取表格或者列表未选中的对象 */
+        export function getUnSelecteds<T>(container: sap.m.List | sap.ui.table.Table): ibas.IList<T> {
+            let selecteds: ibas.IList<T> = new ibas.ArrayList<T>();
+            if (container instanceof sap.m.List) {
+                for (let item of container.getItems()) {
+                    selecteds.push(item.getBindingContext().getObject());
+                }
+                if (container.getMode() === sap.m.ListMode.None) {
+                    if (!ibas.objects.isNull(container.getSwipedItem())) {
+                        selecteds.remove(container.getSwipedItem().getBindingContext().getObject());
                     }
+                } else {
+                    for (let item of container.getSelectedContexts(undefined)) {
+                        selecteds.remove((<any>item).getObject());
+                    }
+                }
+            } else if (container instanceof sap.ui.table.Table) {
+                let index: number = 0;
+                let context: sap.ui.model.Context = container.getContextByIndex(index);
+                while (!ibas.objects.isNull(context)) {
+                    selecteds.push(context.getObject());
+                    context = container.getContextByIndex(++index);
+                }
+                for (let item of container.getSelectedIndices()) {
+                    selecteds.remove(container.getContextByIndex(item).getObject());
                 }
             }
             return selecteds;
@@ -159,11 +162,8 @@ namespace openui5 {
         /** 获取表格选中的对象 */
         export function getTableSelecteds<T>(table: sap.ui.table.Table): ibas.IList<T> {
             let selecteds: ibas.IList<T> = new ibas.ArrayList<T>();
-            let idxs: any[] = table.getSelectedIndices();
-            if (idxs.length > 0) {
-                for (let i: number = 0; i < idxs.length; i++) {
-                    selecteds.push(table.getContextByIndex(idxs[i]).getObject());
-                }
+            for (let item of table.getSelectedIndices()) {
+                selecteds.push(table.getContextByIndex(item).getObject());
             }
             return selecteds;
         }
@@ -191,15 +191,7 @@ namespace openui5 {
             }
         }
         /** 转换消息框动作值 */
-        export function toMessageBoxAction(data: ibas.emMessageAction): any;
-        /** 转换消息框动作值 */
-        export function toMessageBoxAction(datas: ibas.emMessageAction[]): any;
-        /** 转换消息框动作值 */
-        export function toMessageBoxAction(): any {
-            let data: any = arguments[0];
-            if (ibas.objects.isNull(data)) {
-                return undefined;
-            }
+        export function toMessageBoxAction(data: ibas.emMessageAction | ibas.emMessageAction[]): any {
             let toValue: Function = function (data: ibas.emMessageAction): any {
                 switch (data) {
                     case ibas.emMessageAction.ABORT:
@@ -266,23 +258,11 @@ namespace openui5 {
             return uiType;
         }
         /** 监听模型变化，并刷新控件 */
-        export function refreshModelChanged(managedObject: sap.ui.base.ManagedObject, data: ibas.IBindable): void;
-        /** 监听模型变化，并刷新控件 */
-        export function refreshModelChanged(managedObject: sap.ui.base.ManagedObject, data: ibas.IBindable[]): void;
-        /** 监听模型变化，并刷新控件 */
-        export function refreshModelChanged(): void {
-            let managedObject: sap.ui.base.ManagedObject, data: ibas.IBindable[];
-            managedObject = arguments[0];
-            data = arguments[1];
+        export function refreshModelChanged(managedObject: sap.ui.base.ManagedObject, data: ibas.IBindable | ibas.IBindable[]): void {
             if (ibas.objects.isNull(managedObject) || ibas.objects.isNull(data)) {
                 return;
             }
-            let datas: Array<ibas.IBindable> = [];
-            if (data instanceof Array) {
-                datas = data;
-            } else {
-                datas.push(data);
-            }
+            let datas: ibas.IList<ibas.IBindable> = ibas.arrays.create(data);
             for (let item of datas) {
                 if (item.registerListener !== undefined) {
                     item.registerListener({
@@ -399,18 +379,7 @@ namespace openui5 {
             }
         }
         /** 改变窗体内控件编辑状态 */
-        export function changeFormEditable(form: sap.ui.layout.form.SimpleForm, editable: boolean): void;
-        /** 改变窗体内控件编辑状态 */
-        export function changeFormEditable(form: sap.ui.layout.VerticalLayout, editable: boolean): void;
-        /** 改变窗体内控件编辑状态 */
-        export function changeFormEditable(form: sap.m.Page, editable: boolean): void;
-        /** 改变窗体内控件编辑状态 */
-        export function changeFormEditable(): void {
-            let form: any = arguments[0];
-            if (ibas.objects.isNull(form)) {
-                return;
-            }
-            let editable: boolean = arguments[1];
+        export function changeFormEditable(form: sap.m.Page | sap.ui.layout.VerticalLayout | sap.ui.layout.form.SimpleForm, editable: boolean): void {
             if (form instanceof sap.ui.layout.form.SimpleForm) {
                 for (let item of form.getContent()) {
                     this.changeControlEditable(item, editable);
@@ -464,7 +433,7 @@ namespace openui5 {
             if (chooseType === ibas.emChooseType.SINGLE) {
                 table.setEnableSelectAll(false);
                 table.setSelectionMode(sap.ui.table.SelectionMode.MultiToggle);
-                table.attachRowSelectionChange(undefined,function (oEvent: any): void {
+                table.attachRowSelectionChange(undefined, function (oEvent: any): void {
                     this.setSelectedIndex(this.getSelectedIndex());
                 });
             }

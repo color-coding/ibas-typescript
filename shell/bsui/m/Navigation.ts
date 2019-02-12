@@ -27,6 +27,9 @@ namespace shell {
                     case app.LoginApp.APPLICATION_ID:
                         view = new m.LoginView();
                         break;
+                    case app.WelcomeApp.APPLICATION_ID:
+                        view = new m.WelcomeView();
+                        break;
                     case app.CenterApp.APPLICATION_ID:
                         view = new m.CenterView();
                         break;

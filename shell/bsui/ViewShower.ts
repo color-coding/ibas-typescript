@@ -17,45 +17,76 @@ namespace shell {
         export class ViewShower implements ibas.IViewShower {
             /** 显示视图 */
             show(view: ibas.IView): void {
-                if (view instanceof ibas.View) {
-                    let viewContent: any = view.draw();
-                    if (ibas.objects.isNull(viewContent)) {
-                        ibas.logger.log(ibas.emMessageLevel.WARN, "shower: empty view.");
-                    }
-                    if (viewContent instanceof sap.ui.core.Element) {
-                        viewContent.addCustomData(new sap.ui.core.CustomData("", {
-                            key: UI_DATA_KEY_VIEW,
-                            value: view,
-                            writeToDom: false,
-                        }));
-                    }
-                    if (view.application instanceof app.MainApp) {
-                        viewContent.placeAt("content");
-                    } else if (view.application instanceof app.LoginApp) {
-                        if (ibas.config.get(openui5.CONFIG_ITEM_COMPACT_SCREEN, false)) {
-                            viewContent.addStyleClass("sapUiSizeCompact");
-                        }
-                        let app: sap.ui.core.Element = sap.ui.getCore().byId(UI_APP);
-                        if (app instanceof sap.m.App) {
-                            app.addPage(viewContent);
-                            app.to(viewContent);
-                        }
-                    } else if (view.application instanceof app.CenterApp) {
-                        if (ibas.config.get(openui5.CONFIG_ITEM_COMPACT_SCREEN, false)) {
-                            viewContent.addStyleClass("sapUiSizeCompact");
-                        }
-                        let app: sap.ui.core.Element = sap.ui.getCore().byId(UI_APP);
-                        if (app instanceof sap.m.App) {
-                            app.addPage(viewContent);
-                            app.to(viewContent);
-                        }
-                    }
-                    view.id = viewContent.getId();
-                    view.isDisplayed = true;
-                    view.onDisplayed();
-                } else {
+                if (!(view instanceof ibas.View)) {
                     throw new Error(ibas.i18n.prop("shell_invalid_ui"));
                 }
+                let viewContent: any = view.draw();
+                if (ibas.objects.isNull(viewContent)) {
+                    ibas.logger.log(ibas.emMessageLevel.WARN, "shower: empty view.");
+                    return;
+                }
+                if (viewContent instanceof sap.ui.core.Element) {
+                    viewContent.addCustomData(new sap.ui.core.CustomData("", {
+                        key: UI_DATA_KEY_VIEW,
+                        value: view,
+                        writeToDom: false,
+                    }));
+                }
+                if (view.application instanceof app.MainApp) {
+                    viewContent.placeAt("content");
+                } else if (view.application instanceof app.WelcomeApp) {
+                    if (viewContent instanceof sap.m.Dialog) {
+                        let pView: ibas.View = null;
+                        viewContent.open();
+                        // 隐藏app
+                        let app: sap.ui.core.Element = sap.ui.getCore().byId(UI_APP);
+                        if (app instanceof sap.m.App) {
+                            app.setVisible(false);
+                            let page: sap.ui.core.Control = app.getCurrentPage();
+                            for (let item of page.getCustomData()) {
+                                if (item.getKey() === UI_DATA_KEY_VIEW) {
+                                    pView = item.getValue();
+                                }
+                            }
+                            if (pView instanceof ibas.View) {
+                                pView.isDisplayed = false;
+                            }
+                        }
+                        viewContent.attachAfterClose(null, () => {
+                            // 重新显示app
+                            if (app instanceof sap.m.App) {
+                                app.setVisible(true);
+                                if (pView instanceof ibas.View) {
+                                    pView.isDisplayed = true;
+                                }
+                                // 界面显示后，没有触发导航事件
+                                (<any>app).fireAfterNavigate(undefined);
+                                pView = null;
+                            }
+                        });
+                    }
+                } else if (view.application instanceof app.LoginApp) {
+                    if (ibas.config.get(openui5.CONFIG_ITEM_COMPACT_SCREEN, false)) {
+                        viewContent.addStyleClass("sapUiSizeCompact");
+                    }
+                    let app: sap.ui.core.Element = sap.ui.getCore().byId(UI_APP);
+                    if (app instanceof sap.m.App) {
+                        app.addPage(viewContent);
+                        app.to(viewContent);
+                    }
+                } else if (view.application instanceof app.CenterApp) {
+                    if (ibas.config.get(openui5.CONFIG_ITEM_COMPACT_SCREEN, false)) {
+                        viewContent.addStyleClass("sapUiSizeCompact");
+                    }
+                    let app: sap.ui.core.Element = sap.ui.getCore().byId(UI_APP);
+                    if (app instanceof sap.m.App) {
+                        app.addPage(viewContent);
+                        app.to(viewContent);
+                    }
+                }
+                view.id = viewContent.getId();
+                view.isDisplayed = true;
+                view.onDisplayed();
             }
             /** 清理资源 */
             destroy(view: ibas.IView): void {
@@ -67,7 +98,11 @@ namespace shell {
                             app.setInitialPage(undefined);
                         }
                     }
-                    ui.destroy(true);
+                    if (ui instanceof sap.m.Dialog) {
+                        ui.close();
+                    } else {
+                        ui.destroy(true);
+                    }
                     if (view instanceof ibas.View) {
                         view.isDisplayed = false;
                         view.onClosed();

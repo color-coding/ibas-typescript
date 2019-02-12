@@ -10,6 +10,8 @@ namespace trainingtesting {
         export const UI_DATA_KEY_VIEW: string = "__UI_DATA_KEY_VIEW";
         export namespace c {
             export class DemoShellView extends shell.app.ShellView implements app.IDemoShellView {
+                /** 激活地图应用 */
+                activateMapEvent: Function;
                 /** 绘制视图 */
                 draw(): any {
                     let that: this = this;
@@ -20,6 +22,13 @@ namespace trainingtesting {
                         showSubHeader: false,
                         showNavButton: true,
                         headerContent: [
+                            new sap.m.Button("", {
+                                icon: "sap-icon://map",
+                                type: sap.m.ButtonType.Transparent,
+                                press: function (): void {
+                                    that.fireViewEvents(that.activateMapEvent);
+                                }
+                            }),
                             new sap.m.Button("", {
                                 icon: "sap-icon://inspect-down",
                                 tooltip: ibas.i18n.prop("shell_close_view"),

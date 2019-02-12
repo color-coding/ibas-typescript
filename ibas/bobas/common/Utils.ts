@@ -496,7 +496,7 @@ namespace ibas {
      */
     export namespace dates {
         /**
-         * 当前时间
+         * 是否日期类型
          */
         export function isDate(value: any): boolean {
             if (value instanceof Date) {
@@ -505,20 +505,28 @@ namespace ibas {
             return false;
         }
         /**
-         * 当前时间
+         * 当前时间（含时间）
          */
         export function now(): Date {
             return new Date(Date.now());
         }
         /**
-         * 当前日期
+         * 当前日期（不含时间）
          */
         export function today(): Date {
             let date: Date = now();
             // 月份从0开始
             return valueOf(strings.format("{0}-{1}-{2}", date.getFullYear(), date.getMonth() + 1, date.getDate()));
         }
-
+        /**
+         * 时间（1155）
+         */
+        export function time(): number {
+            let date: Date = now();
+            let hour: number = date.getHours();
+            let minute: number = date.getMinutes();
+            return hour * 100 + minute;
+        }
         /**
          * 解析日期，支持以下格式
          * yyyy/MM/dd'T'HH:mm:ss

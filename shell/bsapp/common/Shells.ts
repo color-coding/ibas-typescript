@@ -14,6 +14,7 @@ namespace shell {
             /** 注册视图，重载需要回掉此方法 */
             protected registerView(): void {
                 this.view.closeEvent = this.close;
+                this.view.activateFunctionEvent = this.activateFunction;
             }
             run(): void {
                 this.show();
@@ -56,6 +57,15 @@ namespace shell {
             }
             /** 视图显示后 */
             protected viewShowed(): void {
+                // 构建功能检索
+                this[PROPERTY_FUNCTIONS] = new Map<string, ibas.IModuleFunction>();
+                app.modules.forEach((module) => {
+                    for (let item of module.elements()) {
+                        if (item instanceof ibas.ModuleFunction) {
+                            this[PROPERTY_FUNCTIONS].set(item.id, item);
+                        }
+                    }
+                });
             }
             /** 关闭视图 */
             close(): void {
@@ -85,7 +95,26 @@ namespace shell {
                     this.view.showView(view);
                 }
             }
+            /** 视图事件-激活功能 */
+            private activateFunction(id: string): void {
+                if (ibas.objects.isNull(this[PROPERTY_FUNCTIONS])) {
+                    return;
+                }
+                if (this[PROPERTY_FUNCTIONS].has(id)) {
+                    let func: ibas.IModuleFunction = this[PROPERTY_FUNCTIONS].get(id);
+                    let app: ibas.IApplication<ibas.IView> = func.default();
+                    if (ibas.objects.isNull(app)) {
+                        return;
+                    }
+                    if (ibas.objects.isNull(app.navigation)) {
+                        app.navigation = func.navigation;
+                    }
+                    app.viewShower = this;
+                    app.run();
+                }
+            }
         }
+        const PROPERTY_FUNCTIONS: symbol = Symbol("functions");
         /**
          * 用户壳视图
          */
@@ -100,6 +129,8 @@ namespace shell {
             showStatusMessage(type: ibas.emMessageType, message: string): void;
             /** 显示消息对话框    */
             showMessageBox(caller: ibas.IMessgesCaller): void;
+            /** 激活功能，参数1 string 功能ID */
+            activateFunctionEvent: Function;
         }
         /** 用户壳视图 */
         export abstract class ShellView extends ibas.View implements IShellView {
@@ -110,6 +141,17 @@ namespace shell {
             abstract busyView(view: ibas.IView, busy: boolean, msg: string): void;
             abstract showStatusMessage(type: ibas.emMessageType, message: string): void;
             abstract showMessageBox(caller: ibas.IMessgesCaller): void;
+            activateFunctionEvent: Function;
+            /** 地址栏哈希值变化 */
+            onHashChanged(event: HashChangeEvent): void {
+                super.onHashChanged(event);
+                if (event.newURL.indexOf(ibas.URL_HASH_SIGN_FUNCTIONS) >= 0) {
+                    let url: string = event.newURL.substring(
+                        event.newURL.indexOf(ibas.URL_HASH_SIGN_FUNCTIONS) + ibas.URL_HASH_SIGN_FUNCTIONS.length);
+                    let index: number = url.indexOf("/") < 0 ? url.length : url.indexOf("/");
+                    this.fireViewEvents(this.activateFunctionEvent, url.substring(0, index));
+                }
+            }
         }
     }
 }

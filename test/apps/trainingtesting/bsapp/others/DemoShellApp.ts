@@ -23,17 +23,26 @@ namespace trainingtesting {
             /** 注册视图 */
             protected registerView(): void {
                 super.registerView();
+                this.view.activateMapEvent = this.activateMap;
             }
             /** 视图显示后 */
             protected viewShowed(): void {
+                super.viewShowed();
+                // 直接调用app
                 let app: SalesOrderListApp = new SalesOrderListApp();
                 app.viewShower = this;
                 app.navigation = this.navigation;
                 app.run();
             }
+            private activateMap(): void {
+                // 通过hash值调用功能
+                ibas.urls.changeHash(ibas.URL_HASH_SIGN_FUNCTIONS + DemoMapFunc.FUNCTION_ID);
+            }
         }
         /** 视图-壳 */
         export interface IDemoShellView extends shell.app.IShellView {
+            /** 激活地图应用 */
+            activateMapEvent: Function;
         }
     }
 }

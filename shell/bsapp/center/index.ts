@@ -6,6 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 /// <reference path="./MainApp.ts" />
+/// <reference path="./WelcomeApp.ts" />
 /// <reference path="./LoginApp.ts" />
 /// <reference path="./AboutApp.ts" />
 /// <reference path="./HelpApp.ts" />

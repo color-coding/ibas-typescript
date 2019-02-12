@@ -9,6 +9,8 @@ namespace shell {
     export namespace app {
         /** 配置项目-自动激活的功能 */
         export const CONFIG_ITEM_AUTO_ACTIVETED_FUNCTION: string = "autoFunction";
+        /** 配置项目-总激活欢迎应用 */
+        export const CONFIG_ITEM_ALWAYS_ACTIVETED_WELCOME: string = "alwaysWelcome";
         /** 应用-中心 */
         export class CenterApp extends ibas.AbstractApplication<ICenterView> {
             /** 应用标识 */
@@ -65,7 +67,7 @@ namespace shell {
                 // 初始化
                 this.show();
                 if (arguments[0] instanceof bo.User) {
-                    setTimeout(() => this.init(arguments[0]), 300);
+                    setTimeout(() => this.init(arguments[0]), 150);
                 }
             }
             /** 视图显示后 */
@@ -91,13 +93,7 @@ namespace shell {
                     return;
                 }
                 // 加载用户相关
-                ibas.logger.log(ibas.emMessageLevel.DEBUG,
-                    "center: initializing user [{0} - {1}]'s modules.", user.id, user.code);
-                this.view.showStatusMessage(
-                    ibas.emMessageType.INFORMATION,
-                    ibas.i18n.prop("shell_initialize_user_modules",
-                        ibas.strings.isEmpty(user.name) ? user.code : user.name)
-                );
+                ibas.logger.log(ibas.emMessageLevel.DEBUG, "center: initializing user [{0} - {1}]'s modules.", user.id, user.code);
                 // 如当前模块包含Hash指向的功能,激活
                 let hashFuncId: string = null;
                 if (window.location.hash.startsWith(ibas.URL_HASH_SIGN_FUNCTIONS)) {
@@ -111,6 +107,19 @@ namespace shell {
                         ibas.urls.changeHash(ibas.strings.format("{0}{1}", ibas.URL_HASH_SIGN_FUNCTIONS, hashFuncId));
                     }
                 }
+                // 存在自动打开功能，则显示欢迎页面
+                let appWelcome: WelcomeApp = null;
+                if (!ibas.strings.isEmpty(hashFuncId) || ibas.config.get(CONFIG_ITEM_ALWAYS_ACTIVETED_WELCOME) === true) {
+                    appWelcome = new WelcomeApp();
+                    appWelcome.viewShower = this.viewShower;
+                    appWelcome.navigation = this.navigation;
+                    appWelcome.description = ibas.strings.format("{0} - {1}", appWelcome.description, user.name ? user.name : user.code);
+                    appWelcome.run();
+                }
+                this.view.showStatusMessage(
+                    ibas.emMessageType.INFORMATION,
+                    ibas.i18n.prop("shell_initialize_user_modules", ibas.strings.isEmpty(user.name) ? user.code : user.name)
+                );
                 // 权限加载成功，加载模块
                 moduleConsoleManager.load({
                     user: user.code,
@@ -126,29 +135,36 @@ namespace shell {
                         this.view.showStatusMessage(type, message);
                     },
                     onCompleted: (console: ibas.ModuleConsole) => {
-                        let that: this = this;
                         // 设置跳过方法
                         console.isSkip = function (element: ibas.IElement): boolean {
                             // 没权限，跳过元素
                             return !privileges.canRun(element);
                         };
                         // 有效模块控制台
-                        console.addListener(function (): void {
+                        console.addListener(() => {
                             // 显示模块
-                            that.view.showModule(console);
+                            this.view.showModule(console);
                             // 模块可用，才加载功能和应用
                             if (privileges.canRun(console)) {
                                 // 处理功能
                                 for (let func of console.functions()) {
                                     if (ibas.objects.isNull(func.viewShower)) {
-                                        func.viewShower = that;
+                                        func.viewShower = this;
                                     }
                                     // 注册功能事件响应
                                     moduleFunctions.set(func.id, func);
-                                    that.view.showModuleFunction(console.name, func);
+                                    this.view.showModuleFunction(console.name, func);
                                     if (ibas.strings.equals(func.id, hashFuncId)) {
-                                        // 如当前模块包含Hash指向的功能,激活
-                                        setTimeout(() => ibas.urls.changeHash(window.location.hash), 1500);
+                                        // hash值是当前功能，则激活
+                                        setTimeout(() => {
+                                            this.activateFunction(func.id);
+                                            // 功能加载后，自动关闭欢迎
+                                            if (appWelcome instanceof ibas.Application) {
+                                                setTimeout(() => {
+                                                    appWelcome.destroy();
+                                                }, 1000);
+                                            }
+                                        }, 1000);
                                     }
                                 }
                                 // 处理应用
@@ -156,9 +172,9 @@ namespace shell {
                                     // 显示常驻应用
                                     if (ibas.objects.instanceOf(app, ibas.ResidentApplication)) {
                                         if (ibas.objects.isNull(app.viewShower)) {
-                                            app.viewShower = that;
+                                            app.viewShower = this;
                                         }
-                                        that.view.showResidentView(<ibas.IBarView>app.view);
+                                        this.view.showResidentView(<ibas.IBarView>app.view);
                                     }
                                 }
                             }
@@ -171,7 +187,7 @@ namespace shell {
                                     let index: number = url.indexOf("/") < 0 ? url.length : url.indexOf("/");
                                     let id: string = url.substring(0, index);
                                     if (ibas.strings.equals(service.id, id)) {
-                                        setTimeout(() => ibas.urls.changeHash(window.location.hash), 1500);
+                                        setTimeout(() => ibas.urls.changeHash(window.location.hash), 1000);
                                     }
                                 }
                             }

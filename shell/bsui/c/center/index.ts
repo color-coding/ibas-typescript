@@ -7,6 +7,7 @@
  */
 /// <reference path="./MainView.ts" />
 /// <reference path="./LoginView.ts" />
+/// <reference path="./WelcomeView.ts" />
 /// <reference path="./AboutView.ts" />
 /// <reference path="./HelpView.ts" />
 /// <reference path="./CenterView.ts" />

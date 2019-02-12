@@ -18,10 +18,10 @@ namespace shell {
             export const CONFIG_ITEM_NO_LOGOUT: string = "noLogOut";
             /** 配置项目-功能分组 */
             export const CONFIG_ITEM_GROUP_FUNCTONS: string = "groupFunctions";
-            /** 配置项目-欢迎页面地址 */
-            export const CONFIG_ITEM_WELCOME_PAGE_URL: string = "welcomeUrl";
             /** 配置项目-欢迎页面图片 */
             export const CONFIG_ITEM_WELCOME_PAGE_IMAGE: string = "welcomeImage";
+            /** 配置项目-欢迎页面地址 */
+            export const CONFIG_ITEM_WELCOME_PAGE_URL: string = "welcomeUrl";
             /** 配置项目-收缩功能列表 */
             export const CONFIG_ITEM_SHRINK_FUNCTION_LIST: string = "shrinkFunction";
             /** 配置项目-最大消息数 */
@@ -360,33 +360,32 @@ namespace shell {
                 private moduleTime: number;
                 /** 显示状态消息 */
                 showStatusMessage(type: ibas.emMessageType, message: string): void {
-                    if (this.isDisplayed === false) {
-                        return;
-                    }
+                    // 记录历史消息
                     message = message.replace(/\{(.+?)\}/g, function (value: string): string {
                         return ibas.businessobjects.describe(value);
                     });
                     let uiType: sap.ui.core.MessageType = openui5.utils.toMessageType(type);
-                    this.messagePopover.destroyContent();
-                    this.messagePopover.addContent(
-                        new sap.m.MessageStrip("", {
-                            type: uiType,
-                            showIcon: true,
-                            showCloseButton: false
-                        }).setText(message));
-                    this.messageTime = ibas.dates.now().getTime();
-                    this.messageHistory.insertItem(
-                        new sap.m.MessagePopoverItem("", {
-                            type: uiType,
-                            title: message,
-                        }).setTitle(message), 0);
-                    // 清除超出的历史消息
+                    this.messageHistory.insertItem(new sap.m.MessagePopoverItem("", {
+                        type: uiType,
+                        title: message,
+                    }).setTitle(message), 0);
                     if (ibas.objects.isNull(this.messageCount)) {
                         this.messageCount = ibas.config.get(CONFIG_ITEM_MAX_MESSAGE_COUNT, 50);
                     }
                     if (this.messageHistory.getItems().length > this.messageCount) {
                         this.messageHistory.removeItem(this.messageHistory.getItems().length - 1);
                     }
+                    this.messageTime = ibas.dates.now().getTime();
+                    // 视图没有显示，则不显示消息
+                    if (this.isDisplayed === false) {
+                        return;
+                    }
+                    this.messagePopover.destroyContent();
+                    this.messagePopover.addContent(new sap.m.MessageStrip("", {
+                        type: uiType,
+                        showIcon: true,
+                        showCloseButton: false
+                    }).setText(message));
                     if (!this.messagePopover.isOpen()) {
                         this.messagePopover.openBy(this.navigation.getFixedItem(), true);
                     }
@@ -394,11 +393,10 @@ namespace shell {
                     if (ibas.objects.isNull(this.statusDelay)) {
                         this.statusDelay = ibas.config.get(CONFIG_ITEM_STATUS_MESSAGES_DELAY, 2) * 1000;
                     }
-                    let that: this = this;
-                    setTimeout(function (): void {
-                        if (ibas.dates.now().getTime() >= (that.messageTime + that.statusDelay)) {
-                            if (that.messagePopover.isOpen()) {
-                                that.messagePopover.close();
+                    setTimeout(() => {
+                        if (ibas.dates.now().getTime() >= (this.messageTime + this.statusDelay)) {
+                            if (this.messagePopover.isOpen()) {
+                                this.messagePopover.close();
                             }
                         }
                     }, this.statusDelay);
@@ -423,31 +421,28 @@ namespace shell {
                 /** 显示模块 */
                 showModule(module: ibas.IModuleConsole): void {
                     let nvList: sap.tnt.NavigationList = this.navigation.getItem();
-                    nvList.addItem(
-                        new sap.tnt.NavigationListItem("", {
-                            key: module.name,
-                            text: module.description,
-                            icon: module.icon,
-                            expanded: false,
-                            visible: !ibas.config.get(CONFIG_ITEM_HIDE_NO_FUNCTION_MODULE, true),
-                            select(): void {
-                                // 展开菜单
-                                this.setExpanded(!this.getExpanded());
-                            }
-                        })
-                    );
+                    nvList.addItem(new sap.tnt.NavigationListItem("", {
+                        key: module.name,
+                        text: module.description,
+                        icon: module.icon,
+                        expanded: false,
+                        visible: !ibas.config.get(CONFIG_ITEM_HIDE_NO_FUNCTION_MODULE, true),
+                        select(): void {
+                            // 展开菜单
+                            this.setExpanded(!this.getExpanded());
+                        }
+                    }));
                     // 延迟排序模块
                     if (ibas.objects.isNull(this.statusDelay)) {
                         this.statusDelay = ibas.config.get(CONFIG_ITEM_STATUS_MESSAGES_DELAY, 2) * 1000;
                     }
                     // 计算模块位置并添加
-                    let that: this = this;
                     if (ibas.objects.isNull(this.moduleTime)) {
                         this.moduleTime = ibas.dates.now().getTime();
-                        setTimeout(function (): void {
-                            if (ibas.dates.now().getTime() >= that.messageTime + that.statusDelay / 2) {
-                                that.messageTime = ibas.dates.now().getTime();
-                                that.showStatusMessage(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_sorting_modules"));
+                        setTimeout(() => {
+                            if (ibas.dates.now().getTime() >= this.messageTime + this.statusDelay / 2) {
+                                this.messageTime = ibas.dates.now().getTime();
+                                this.showStatusMessage(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_sorting_modules"));
                                 let items: ibas.ArrayList<any> = new ibas.ArrayList<any>();
                                 items.add(nvList.getItems());
                                 items = items.sort((c, b): number => {
@@ -458,7 +453,7 @@ namespace shell {
                                     nvList.addItem(item);
                                 }
                                 // 重置
-                                delete (that.moduleTime);
+                                delete (this.moduleTime);
                             }
                         }, this.statusDelay / 2);
                     } else {
@@ -480,7 +475,6 @@ namespace shell {
                     }
                     // 设置模块可见
                     nvItem.setVisible(true);
-                    let that: this = this;
                     let mdNVItem: sap.tnt.NavigationListItem = nvItem;
                     if (ibas.config.get(CONFIG_ITEM_GROUP_FUNCTONS, false) && !ibas.strings.isEmpty(func.category)) {
                         // 菜单分组
@@ -633,12 +627,11 @@ namespace shell {
                 protected showShellView(view: app.ShellView): void {
                     let app: any = sap.ui.getCore().byId(UI_APP);
                     if (app instanceof sap.m.App) {
-                        let that: this = this;
-                        view.showQueryPanel = function (view: ibas.BOQueryView | ibas.BOQueryDialogView, embeddedView: ibas.IEmbeddedQueryPanel): void {
-                            that.showQueryPanel(view, embeddedView);
+                        view.showQueryPanel = (view: ibas.BOQueryView | ibas.BOQueryDialogView, embeddedView: ibas.IEmbeddedQueryPanel) => {
+                            this.showQueryPanel(view, embeddedView);
                         };
-                        view.showDialogView = function (view: ibas.DialogView): void {
-                            that.showDialogView(view);
+                        view.showDialogView = (view: ibas.DialogView) => {
+                            this.showDialogView(view);
                         };
                         let page: sap.m.Page = new sap.m.Page("", {
                             enableScrolling: false,
@@ -703,7 +696,8 @@ namespace shell {
                                             view.closeEvent.apply(view.application);
                                         }
                                     }
-                                })]
+                                })
+                            ]
                         });
                     }
                     // 设置视图紧凑
@@ -915,6 +909,8 @@ namespace shell {
                     let viewContent: sap.ui.core.Element = sap.ui.getCore().byId(view.id);
                     if (viewContent instanceof sap.m.TabContainerItem) {
                         // 页签的不做处理
+                    } else if (viewContent instanceof sap.m.Dialog) {
+                        viewContent.close();
                     } else if (!ibas.objects.isNull(viewContent)) {
                         let parent: sap.ui.base.ManagedObject = viewContent.getParent();
                         if (parent instanceof sap.m.NavContainer) {

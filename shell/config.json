@@ -7,6 +7,7 @@
     "offline|BORepositoryShell": false,
     "helpUrl": "https://ibas.colorcoding.org/help",
     "welcomeUrl": "https://ibas.colorcoding.org/welcome",
+    "welcomeContent": "",
     "compactScreen": false,
     "disablePlatformView": false,
     "fullScreen|TABLET": true,

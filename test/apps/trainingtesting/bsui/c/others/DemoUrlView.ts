@@ -51,7 +51,7 @@ namespace trainingtesting {
                         ]
                     });
                     let html: string = ibas.strings.format(
-                        `<iframe src="{0}" width="{1}" height="{2}" scrolling="no"></iframe>`,
+                        `<iframe src="{0}" width="{1}" height="{2}" style="border:0px;" scrolling="no"></iframe>`,
                         this.url, getWindowWidth(false), getWindowHeight(false));
                     this.form.addContent(
                         new sap.ui.core.HTML("", {

@@ -276,9 +276,11 @@ namespace shell {
                 boRepository.fetchUserPrivileges({
                     user: loader.user,
                     platform: loader.platform,
-                    onCompleted(opRslt: ibas.IOperationResult<bo.IUserPrivilege>): void {
+                    onCompleted: (opRslt) => {
                         if (opRslt.resultCode !== 0) {
-                            loader.onCompleted(new Error(opRslt.message));
+                            if (loader.onCompleted instanceof Function) {
+                                loader.onCompleted(new Error(opRslt.message));
+                            }
                         } else {
                             let configed: boolean = ibas.config.get(CONFIG_ITEM_AUTO_ACTIVETED_FUNCTION) ? true : false;
                             for (let item of opRslt.resultObjects) {
