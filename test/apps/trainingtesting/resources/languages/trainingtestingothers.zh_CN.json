@@ -5,12 +5,14 @@
   "trainingtestingothers_func_tab": "页签视图",
   "trainingtestingothers_func_map": "地图",
   "trainingtestingothers_func_shell": "主页",
+  "trainingtestingothers_func_data": "数据类型",
   "trainingtestingothers_app_url": "b1plus",
   "trainingtestingothers_app_tab": "页签应用",
   "trainingtestingothers_app_resident": "应用-常驻",
   "trainingtestingothers_app_service": "应用-服务",
   "trainingtestingothers_app_map": "应用-地图",
   "trainingtestingothers_app_shell": "应用-主页",
+  "trainingtestingothers_app_data": "应用-数据类型",
   "trainingtestingothers_map_location": "位置{0}-{1}",
   "trainingtestingothers_closing_delimiter": "----结束----"
 }

@@ -10,3 +10,4 @@
 /// <reference path="./DemoResidentView.ts" />
 /// <reference path="./DemoMapView.ts" />
 /// <reference path="./DemoShellView.ts" />
+/// <reference path="./DemoDataView.ts" />

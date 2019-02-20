@@ -99,12 +99,17 @@ namespace ibas {
         definedDataType(): emTableDataType {
             if (this.dataType === "java.lang.String") {
                 return emTableDataType.ALPHANUMERIC;
-            } else if (this.dataType === "java.sql.Timestamp") {
+            } else if (this.dataType === "java.sql.Timestamp"
+                || this.dataType === "java.util.Date") {
                 return emTableDataType.DATE;
             } else if (this.dataType === "java.lang.Integer"
-                || this.dataType === "java.lang.Short") {
+                || this.dataType === "java.lang.Short"
+                || this.dataType === "java.lang.Long"
+                || this.dataType === "java.math.BigInteger") {
                 return emTableDataType.NUMERIC;
-            } else if (this.dataType === "java.math.BigDecimal") {
+            } else if (this.dataType === "java.math.BigDecimal"
+                || this.dataType === "java.lang.Float"
+                || this.dataType === "java.lang.Double") {
                 return emTableDataType.DECIMAL;
             }
             return emTableDataType.ALPHANUMERIC;

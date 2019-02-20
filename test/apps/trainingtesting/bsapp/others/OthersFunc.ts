@@ -75,5 +75,22 @@ namespace trainingtesting {
                 return app;
             }
         }
+        /** 功能-数据类型 */
+        export class DemoDataFunc extends ibas.ModuleFunction {
+            static FUNCTION_ID = "7533d53a-b178-47a1-9f2a-e8ad23bad6b6";
+            static FUNCTION_NAME = "trainingtestingothers_func_data";
+            constructor() {
+                super();
+                this.id = DemoDataFunc.FUNCTION_ID;
+                this.name = DemoDataFunc.FUNCTION_NAME;
+                this.description = ibas.i18n.prop(this.name);
+            }
+            /** 默认功能 */
+            default(): ibas.IApplication<ibas.IView> {
+                let app: DemoDataApp = new DemoDataApp();
+                app.navigation = this.navigation;
+                return app;
+            }
+        }
     }
 }

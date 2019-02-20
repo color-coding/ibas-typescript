@@ -11,6 +11,7 @@
     "decimalPlaces|Quantity": 2,
     "decimalPlaces|Sum": 4,
     "decimalPlaces|Measurement": 4,
+    "decimalPlaces|Rate": 4,
     "defaultCurrency": "CNY",
     "language": "zh_CN",
     "i18nGroups": "bo,"

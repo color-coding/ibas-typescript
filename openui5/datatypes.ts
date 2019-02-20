@@ -56,6 +56,14 @@ namespace openui5 {
             }
         }
         /**
+         * 未知基类
+         */
+        export class Unknown extends DataType {
+            constructor(settings?: IDataTypeSetting) {
+                super();
+            }
+        }
+        /**
          * 字母数字类型
          */
         export class Alphanumeric extends DataType {

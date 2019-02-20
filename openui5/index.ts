@@ -7,6 +7,7 @@
  */
 /// <reference path="./types/index.d.ts" />
 /// <reference path="./datatypes.ts" />
+/// <reference path="./data.ts" />
 /// <reference path="./utils.ts" />
 /// <reference path="./extends/ibas.ex.ts" />
 /// <reference path="./extends/sap.m.ex.ts" />

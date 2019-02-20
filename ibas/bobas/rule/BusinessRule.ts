@@ -496,6 +496,8 @@ namespace ibas {
             if (original !== value) {
                 context.outputValues.set(this.rounding, value - original);
                 context.outputValues.set(this.original, value);
+            } else {
+                context.outputValues.set(this.rounding, 0);
             }
         }
     }
