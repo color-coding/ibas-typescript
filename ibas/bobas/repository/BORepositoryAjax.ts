@@ -278,7 +278,7 @@ namespace ibas {
                 url: methodUrl,
                 type: "POST",
                 data: data,
-                async: false,
+                async: true,
                 cache: false,
                 contentType: false,
                 processData: false
