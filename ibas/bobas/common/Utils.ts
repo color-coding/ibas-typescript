@@ -526,7 +526,11 @@ namespace ibas {
         export function today(): Date {
             let date: Date = now();
             // 月份从0开始
-            return valueOf(strings.format("{0}-{1}-{2}", date.getFullYear(), date.getMonth() + 1, date.getDate()));
+            return valueOf(strings.format("{0}-{1}-{2}",
+                date.getFullYear(),
+                strings.fill(date.getMonth() + 1, 2, "0"),
+                strings.fill(date.getDate(), 2, "0"))
+            );
         }
         /**
          * 时间（1155）
@@ -598,7 +602,7 @@ namespace ibas {
         export function toString(): string {
             let value: Date = arguments[0];
             if (objects.isNull(value) || !(value instanceof Date)) {
-                return "";
+                return null;
             }
             let format: string =
                 DATA_PART_YEAR + DATA_SEPARATOR +

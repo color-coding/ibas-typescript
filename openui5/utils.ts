@@ -290,7 +290,7 @@ namespace openui5 {
             if (ibas.objects.isNull(trigger) || ibas.objects.isNull(trigger.listener)) {
                 return;
             }
-            if (trigger.listener instanceof (sap.m.List)) {
+            if (trigger.listener instanceof (sap.m.ListBase)) {
                 // 绑定触发一次的事件
                 trigger.listener.attachEvent("updateFinished", undefined, function (oEvent: any): void {
                     if (this.getBusy()) {

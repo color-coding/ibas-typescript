@@ -74,6 +74,11 @@ namespace ibas {
          * @param pars 格式内容
          */
         protected log(message: string, ...pars: any[]): void;
+        /**
+         * 记录消息
+         * @param error 错误
+         */
+        protected log(error: Error): void;
         protected log(): void {
             if (objects.isNull(this[PROPERTY_LOGGER])) {
                 // 未提供则使用默认
@@ -161,5 +166,58 @@ namespace ibas {
         onDone: Function;
         /** 运行（需要实现） */
         protected abstract run(): boolean;
+    }
+    /**
+     * 动作
+     */
+    export namespace actions {
+        /**
+         * 复制配置项目
+         * @param source 源
+         * @param target 目标
+         * @param cover 是否覆盖
+         */
+        export function copyConfig(source: Action, target: Action, cover: boolean = false): void {
+            if (!(source instanceof Action)) {
+                return;
+            }
+            if (!(target instanceof Action)) {
+                return;
+            }
+            let sConfig: Configuration = source[PROPERTY_CONFIG];
+            if (!(sConfig instanceof Configuration)) {
+                return;
+            }
+            let tConfig: Configuration = target[PROPERTY_CONFIG];
+            if (!(tConfig instanceof Configuration)) {
+                return;
+            }
+            for (let item of sConfig.all()) {
+                // 跳过无效的
+                if (objects.isNull(item.value)) {
+                    continue;
+                }
+                let value: any = tConfig.get(item.key);
+                // 跳过有值不覆盖
+                if (!objects.isNull(value) && cover !== true) {
+                    continue;
+                }
+                tConfig.set(item.key, item.value);
+            }
+        }
+        /**
+         * 复制记录者
+         * @param source 源
+         * @param target 目标
+         */
+        export function copyLogger(source: Action, target: Action): void {
+            if (!(source instanceof Action)) {
+                return;
+            }
+            if (!(target instanceof Action)) {
+                return;
+            }
+            target[PROPERTY_LOGGER] = source[PROPERTY_LOGGER];
+        }
     }
 }

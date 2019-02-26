@@ -94,7 +94,7 @@ namespace shell {
                     if (index > 0) {
                         address = address.substring(0, index) + "/services/monitor/";
                         // 用户口令，先获取仓库口令
-                        let token: string = ibas.config.get(ibas.strings.format(ibas.CONFIG_ITEM_REPOSITORY_USER_TOKEN, name));
+                        let token: string = ibas.config.get(ibas.strings.format(ibas.CONFIG_ITEM_TEMPLATE_USER_TOKEN, name));
                         // 没有仓库口令，则使用全局口令
                         if (ibas.strings.isEmpty(token)) {
                             token = ibas.config.get(ibas.CONFIG_ITEM_USER_TOKEN);
