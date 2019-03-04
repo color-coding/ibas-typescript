@@ -15,6 +15,39 @@ declare namespace sap {
              */
             var CoreFacade: any;
             /**
+             * <p>Analysis result which is created after analysis with the SupportAssistant.</p>
+             */
+            export interface AnalysisResult {
+                /**
+                 * <p>The loaded libraries.</p>
+                 */
+                loadedLibraries: any;
+                /**
+                 * <p>Data for the performed analysis.</p>
+                 */
+                analysisInfo: any;
+                /**
+                 * <p>The metadata provided in the analyze method, if any.</p>
+                 */
+                analysisMetadata: any;
+                /**
+                 * <p>Array with information about the application.</p>
+                 */
+                applicationInfo: Object[];
+                /**
+                 * <p>Technical information.</p>
+                 */
+                technicalInfo: Object[];
+                /**
+                 * <p>Count of the issues, found in the application.</p>
+                 */
+                totalIssuesCount: number;
+                /**
+                 * <p>Array with all the issues, which were found.</p>
+                 */
+                issues: Object[];
+            }
+            /**
              * <p>Defines the Audiences.</p>
              */
             export enum Audiences {
@@ -111,6 +144,11 @@ declare namespace sap {
                  */
                 static getPublicElements(): any[];
                 /**
+                 * <p>Gets the type of the execution scope</p>
+                 * @returns string <p>The type of the execution scope. Possible values are <code>global</code>, <code>subtree</code> or <code>components</code>.</p>
+                 */
+                static getType(): string;
+                /**
                  */
                 constructor();
             }
@@ -160,18 +198,18 @@ declare namespace sap {
     namespace ui {
         namespace support {
             /**
-             * <p>The <code>sap.ui.support.RuleAnalyzer</code> namespace is the central entry point for the Support Assistant functionality.</p><h3>Overview</h3><p> <code>sap.ui.support.RuleAnalyzer</code> reveals an API for the Support Assistant which you can easily work with to analyze an application.</p><h3>Usage</h3><p><ul> <li> <code>sap.ui.support.RuleAnalyzer.addRule</code> method allows adding a new rule. </li> <li> <code>sap.ui.support.RuleAnalyzer.analyze</code> starts the analysis of the application. </li> <li> Then the result can be accessed with methods <code>sap.ui.support.RuleAnalyzer.getAnalysisHistory</code>, <code>sap.ui.support.RuleAnalyzer.getLastAnalysisHistory</code> or <code>sap.ui.support.RuleAnalyzer.getFormattedAnalysisHistory</code>. </li> </ul></p><p>For more information, see <a class="jsdoclink scrollToMethod" target="_self" href="#/topic/a34eb58aaf124f538a3ead23a6cab04a" data-sap-ui-target="a34eb58aaf124f538a3ead23a6cab04a">Support Assistant API</a>.</p>
+             * <p>The <code>sap.ui.support.RuleAnalyzer</code> namespace is the central entry point for the Support Assistant functionality.</p><h3>Overview</h3><p> <code>sap.ui.support.RuleAnalyzer</code> reveals an API for the Support Assistant which you can easily work with to analyze an application.</p><h3>Usage</h3><p><ul> <li> <code>sap.ui.support.RuleAnalyzer.addRule</code> method allows adding a new rule. </li> <li> <code>sap.ui.support.RuleAnalyzer.analyze</code> starts the analysis of the application. </li> <li> Then the result can be accessed with methods <code>sap.ui.support.RuleAnalyzer.getAnalysisHistory</code>, <code>sap.ui.support.RuleAnalyzer.getLastAnalysisHistory</code> or <code>sap.ui.support.RuleAnalyzer.getFormattedAnalysisHistory</code>. </li> </ul></p><p>For more information, see <a target="_self" href="#/topic/a34eb58aaf124f538a3ead23a6cab04a">Support Assistant API</a>.</p>
              */
             namespace RuleAnalyzer {
                 /**
                  * <p>Adds new temporary rule when in silent mode</p>
-                 * @param {any} oRule <p>Settings for the new rule. For detailed information about its properties see <a class="jsdoclink scrollToMethod" target="_self" href="#/topic/eaeea19a991d46f29e6d8d8827317d0e" data-sap-ui-target="eaeea19a991d46f29e6d8d8827317d0e">Rule Property Values</a></p>
+                 * @param {any} oRule <p>Settings for the new rule. For detailed information about its properties see <a target="_self" href="#/topic/eaeea19a991d46f29e6d8d8827317d0e">Rule Property Values</a></p>
                  * @returns string <p>Rule creation status. Possible values are "success" or description of why adding failed.</p>
                  */
                 function addRule(oRule: any): string;
                 /**
                  * <p>Main method to perform analysis of a given running application.</p><p>Allows to choose a particular execution scope - desired part of the UI to be checked and a flexible way to specify the list of rules to be used.</p>
-                 * @param {any} oExecutionScope <p>The execution scope of the analysis (see <a class="jsdoclink scrollToMethod" target="_self" href="#/topic/e15067d976f24b11907f4c262bd749a0" data-sap-ui-target="e15067d976f24b11907f4c262bd749a0">Execution Scopes</a>).</p>
+                 * @param {any} oExecutionScope <p>The execution scope of the analysis (see <a target="_self" href="#/topic/e15067d976f24b11907f4c262bd749a0">Execution Scope</a>).</p>
                  * @param {any | string | object[]} vPresetOrRules <p>This optional parameter allows for selection of subset of rules for the analysis. You can pass: <ul> <li>A rule preset object containing the preset ID and the list of rules it contains.</li> <li>A string that refers to the ID of a system preset.</li> <li>An object array with a plain list of rules.</li> </ul></p>
                  * @param {any} oMetadata <p>Metadata in custom format. Its only purpose is to be included in the analysis report.</p>
                  * @returns Promise<any> <p>Notifies the finished state by starting the Analyzer</p>
@@ -179,9 +217,9 @@ declare namespace sap {
                 function analyze(oExecutionScope?: any, vPresetOrRules?: any | string | object[], oMetadata?: any): Promise<any>;
                 /**
                  * <p>Returns the history of all executed analyses.</p>
-                 * @returns Object[] <p>Array of history objects in the order of analyses performed. The results of the last analysis are contained in the last element in the array.</p>
+                 * @returns sap.ui.support.AnalysisResult[] <p>Array of history objects in the order of analyses performed. The results of the last analysis are contained in the last element in the array.</p>
                  */
-                function getAnalysisHistory(): Object[];
+                function getAnalysisHistory(): sap.ui.support.AnalysisResult[];
                 /**
                  * <p>Returns the history of all executed analyses into formatted output depending on the passed format.</p>
                  * @param {sap.ui.support.HistoryFormats} sFormat <p>The format into which the history object will be converted. Possible values are listed in sap.ui.support.HistoryFormats.</p>
@@ -190,9 +228,9 @@ declare namespace sap {
                 function getFormattedAnalysisHistory(sFormat?: sap.ui.support.HistoryFormats): any;
                 /**
                  * <p>Returns the result of the last analysis performed.</p>
-                 * @returns any <p>Last analysis history.</p>
+                 * @returns sap.ui.support.AnalysisResult <p>Last analysis history.</p>
                  */
-                function getLastAnalysisHistory(): any;
+                function getLastAnalysisHistory(): sap.ui.support.AnalysisResult;
             }
         }
     }
@@ -243,5 +281,15 @@ declare namespace sap {
                 function updateRule(sRuleId: string, ORuleSettings: any): string;
             }
         }
+    }
+}
+/**
+ */
+declare namespace sap {
+}
+declare namespace sap {
+    /**
+     */
+    namespace ui {
     }
 }

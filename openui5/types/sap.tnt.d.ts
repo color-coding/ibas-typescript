@@ -15,85 +15,85 @@ declare namespace sap {
          */
         export class InfoLabel extends sap.ui.core.Control {
             /**
-             * <p>Constructor for a new <code>InfoLabel</code>.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.ui.base.ManagedObject/methods/constructor" data-sap-ui-target="sap.ui.base.ManagedObject/methods/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+             * <p>Constructor for a new <code>InfoLabel</code>.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
              * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
              * @param {any} mSettings <p>Initial settings for the new control</p>
              */
             constructor(sId?: string, mSettings?: any);
             /**
-             * <p>Binds property <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.InfoLabel/methods/getText" data-sap-ui-target="getText">text</a> to model data.</p><p>See <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.ui.base.ManagedObject/methods/bindProperty" data-sap-ui-target="sap.ui.base.ManagedObject/methods/bindProperty">ManagedObject.bindProperty</a> for a detailed description of the possible properties of <code>oBindingInfo</code></p>
+             * <p>Binds property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getText" href="#/api/sap.tnt.InfoLabel/methods/getText">text</a> to model data.</p><p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/bindProperty">ManagedObject.bindProperty</a> for a detailed description of the possible properties of <code>oBindingInfo</code></p>
              * @param {any} oBindingInfo <p>The binding information</p>
              * @returns sap.tnt.InfoLabel <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             bindText(oBindingInfo: any): sap.tnt.InfoLabel;
             /**
-             * <p>Gets current value of property <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.InfoLabel/methods/getColorScheme" data-sap-ui-target="getColorScheme">colorScheme</a>.</p><p>Specifies the fill and text color of the control. Accepts a digit as a value. You can choose from 9 predefined background and text color combinations. The color schemes are non-semantic, you can select them according to your own preferences. The default <code>colorScheme</code> is 7.</p><p>Default value is <code>7</code>.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getColorScheme" href="#/api/sap.tnt.InfoLabel/methods/getColorScheme">colorScheme</a>.</p><p>Specifies the fill and text color of the control. Accepts a digit as a value. You can choose from 9 predefined background and text color combinations. The color schemes are non-semantic, you can select them according to your own preferences. The default <code>colorScheme</code> is 7.</p><p>Default value is <code>7</code>.</p>
              * @returns number <p>Value of property <code>colorScheme</code></p>
              */
             getColorScheme(): number;
             /**
-             * <p>Gets current value of property <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.InfoLabel/methods/getDisplayOnly" data-sap-ui-target="getDisplayOnly">displayOnly</a>.</p><p>Determines if the <code>InfoLabel</code> is in <code>displayOnly</code> mode. When set to <code>true</code> the control size adjusts to fit other controls, for example non-editable <code>Forms</code>.</p><p>Default value is <code>false</code>.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getDisplayOnly" href="#/api/sap.tnt.InfoLabel/methods/getDisplayOnly">displayOnly</a>.</p><p>Determines if the <code>InfoLabel</code> is in <code>displayOnly</code> mode. When set to <code>true</code> the control size adjusts to fit other controls, for example non-editable <code>Forms</code>.</p><p>Default value is <code>false</code>.</p>
              * @returns boolean <p>Value of property <code>displayOnly</code></p>
              */
             getDisplayOnly(): boolean;
             /**
-             * <p>Gets current value of property <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.InfoLabel/methods/getRenderMode" data-sap-ui-target="getRenderMode">renderMode</a>.</p><p>Specifies the type of the <code>InfoLabel</code> paddings - loose or narrow. <b>Note:</b> By default the padding is loose. It is recommended to use narrow (smaller) paddings for numeric texts.</p><p>Default value is <code>Loose</code>.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getRenderMode" href="#/api/sap.tnt.InfoLabel/methods/getRenderMode">renderMode</a>.</p><p>Specifies the type of the <code>InfoLabel</code> paddings - loose or narrow. <b>Note:</b> By default the padding is loose. It is recommended to use narrow (smaller) paddings for numeric texts.</p><p>Default value is <code>Loose</code>.</p>
              * @returns sap.tnt.RenderMode <p>Value of property <code>renderMode</code></p>
              */
             getRenderMode(): sap.tnt.RenderMode;
             /**
-             * <p>Gets current value of property <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.InfoLabel/methods/getText" data-sap-ui-target="getText">text</a>.</p><p>Specifies the text inside the <code>InfoLabel</code> control.</p><p>Default value is <code>empty string</code>.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getText" href="#/api/sap.tnt.InfoLabel/methods/getText">text</a>.</p><p>Specifies the text inside the <code>InfoLabel</code> control.</p><p>Default value is <code>empty string</code>.</p>
              * @returns string <p>Value of property <code>text</code></p>
              */
             getText(): string;
             /**
-             * <p>Gets current value of property <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.InfoLabel/methods/getTextDirection" data-sap-ui-target="getTextDirection">textDirection</a>.</p><p>Available options for the text direction are LTR and RTL. By default the control inherits the text direction from its parent control.</p><p>Default value is <code>Inherit</code>.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTextDirection" href="#/api/sap.tnt.InfoLabel/methods/getTextDirection">textDirection</a>.</p><p>Available options for the text direction are LTR and RTL. By default the control inherits the text direction from its parent control.</p><p>Default value is <code>Inherit</code>.</p>
              * @returns sap.ui.core.TextDirection <p>Value of property <code>textDirection</code></p>
              */
             getTextDirection(): sap.ui.core.TextDirection;
             /**
-             * <p>Gets current value of property <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.InfoLabel/methods/getWidth" data-sap-ui-target="getWidth">width</a>.</p><p>Specifies the width of the <code>InfoLabel</code> control. By default, the <code>InfoLabel</code> control has the width of the content. Set this property to restrict the width to a custom value.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getWidth" href="#/api/sap.tnt.InfoLabel/methods/getWidth">width</a>.</p><p>Specifies the width of the <code>InfoLabel</code> control. By default, the <code>InfoLabel</code> control has the width of the content. Set this property to restrict the width to a custom value.</p>
              * @returns sap.ui.core.CSSSize <p>Value of property <code>width</code></p>
              */
             getWidth(): sap.ui.core.CSSSize;
             /**
-             * <p>Sets a new value for property <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.InfoLabel/methods/getColorScheme" data-sap-ui-target="getColorScheme">colorScheme</a>.</p><p>Specifies the fill and text color of the control. Accepts a digit as a value. You can choose from 9 predefined background and text color combinations. The color schemes are non-semantic, you can select them according to your own preferences. The default <code>colorScheme</code> is 7.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>7</code>.</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getColorScheme" href="#/api/sap.tnt.InfoLabel/methods/getColorScheme">colorScheme</a>.</p><p>Specifies the fill and text color of the control. Accepts a digit as a value. You can choose from 9 predefined background and text color combinations. The color schemes are non-semantic, you can select them according to your own preferences. The default <code>colorScheme</code> is 7.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>7</code>.</p>
              * @param {number} iColorScheme <p>New value for property <code>colorScheme</code></p>
              * @returns sap.tnt.InfoLabel <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             setColorScheme(iColorScheme: number): sap.tnt.InfoLabel;
             /**
-             * <p>Sets a new value for property <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.InfoLabel/methods/getDisplayOnly" data-sap-ui-target="getDisplayOnly">displayOnly</a>.</p><p>Determines if the <code>InfoLabel</code> is in <code>displayOnly</code> mode. When set to <code>true</code> the control size adjusts to fit other controls, for example non-editable <code>Forms</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getDisplayOnly" href="#/api/sap.tnt.InfoLabel/methods/getDisplayOnly">displayOnly</a>.</p><p>Determines if the <code>InfoLabel</code> is in <code>displayOnly</code> mode. When set to <code>true</code> the control size adjusts to fit other controls, for example non-editable <code>Forms</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
              * @param {boolean} bDisplayOnly <p>New value for property <code>displayOnly</code></p>
              * @returns sap.tnt.InfoLabel <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             setDisplayOnly(bDisplayOnly: boolean): sap.tnt.InfoLabel;
             /**
-             * <p>Sets a new value for property <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.InfoLabel/methods/getRenderMode" data-sap-ui-target="getRenderMode">renderMode</a>.</p><p>Specifies the type of the <code>InfoLabel</code> paddings - loose or narrow. <b>Note:</b> By default the padding is loose. It is recommended to use narrow (smaller) paddings for numeric texts.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Loose</code>.</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getRenderMode" href="#/api/sap.tnt.InfoLabel/methods/getRenderMode">renderMode</a>.</p><p>Specifies the type of the <code>InfoLabel</code> paddings - loose or narrow. <b>Note:</b> By default the padding is loose. It is recommended to use narrow (smaller) paddings for numeric texts.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Loose</code>.</p>
              * @param {sap.tnt.RenderMode} sRenderMode <p>New value for property <code>renderMode</code></p>
              * @returns sap.tnt.InfoLabel <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             setRenderMode(sRenderMode: sap.tnt.RenderMode): sap.tnt.InfoLabel;
             /**
-             * <p>Sets a new value for property <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.InfoLabel/methods/getText" data-sap-ui-target="getText">text</a>.</p><p>Specifies the text inside the <code>InfoLabel</code> control.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getText" href="#/api/sap.tnt.InfoLabel/methods/getText">text</a>.</p><p>Specifies the text inside the <code>InfoLabel</code> control.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
              * @param {string} sText <p>New value for property <code>text</code></p>
              * @returns sap.tnt.InfoLabel <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             setText(sText: string): sap.tnt.InfoLabel;
             /**
-             * <p>Sets a new value for property <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.InfoLabel/methods/getTextDirection" data-sap-ui-target="getTextDirection">textDirection</a>.</p><p>Available options for the text direction are LTR and RTL. By default the control inherits the text direction from its parent control.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Inherit</code>.</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTextDirection" href="#/api/sap.tnt.InfoLabel/methods/getTextDirection">textDirection</a>.</p><p>Available options for the text direction are LTR and RTL. By default the control inherits the text direction from its parent control.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Inherit</code>.</p>
              * @param {sap.ui.core.TextDirection} sTextDirection <p>New value for property <code>textDirection</code></p>
              * @returns sap.tnt.InfoLabel <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             setTextDirection(sTextDirection: sap.ui.core.TextDirection): sap.tnt.InfoLabel;
             /**
-             * <p>Sets a new value for property <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.InfoLabel/methods/getWidth" data-sap-ui-target="getWidth">width</a>.</p><p>Specifies the width of the <code>InfoLabel</code> control. By default, the <code>InfoLabel</code> control has the width of the content. Set this property to restrict the width to a custom value.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getWidth" href="#/api/sap.tnt.InfoLabel/methods/getWidth">width</a>.</p><p>Specifies the width of the <code>InfoLabel</code> control. By default, the <code>InfoLabel</code> control has the width of the content. Set this property to restrict the width to a custom value.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
              * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
              * @returns sap.tnt.InfoLabel <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             setWidth(sWidth: sap.ui.core.CSSSize): sap.tnt.InfoLabel;
             /**
-             * <p>Unbinds property <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.InfoLabel/methods/getText" data-sap-ui-target="getText">text</a> from model data.</p>
+             * <p>Unbinds property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getText" href="#/api/sap.tnt.InfoLabel/methods/getText">text</a> from model data.</p>
              * @returns sap.tnt.InfoLabel <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             unbindText(): sap.tnt.InfoLabel;
@@ -103,31 +103,31 @@ declare namespace sap {
          */
         export class NavigationList extends sap.ui.core.Control {
             /**
-             * <p>Constructor for a new NavigationList.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.ui.base.ManagedObject/methods/constructor" data-sap-ui-target="sap.ui.base.ManagedObject/methods/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+             * <p>Constructor for a new NavigationList.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
              * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
              * @param {any} mSettings <p>Initial settings for the new control</p>
              */
             constructor(sId?: string, mSettings?: any);
             /**
-             * <p>Adds some ariaDescribedBy into the association <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.NavigationList/methods/getAriaDescribedBy" data-sap-ui-target="getAriaDescribedBy">ariaDescribedBy</a>.</p>
+             * <p>Adds some ariaDescribedBy into the association <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAriaDescribedBy" href="#/api/sap.tnt.NavigationList/methods/getAriaDescribedBy">ariaDescribedBy</a>.</p>
              * @param {sap.ui.core.ID | sap.ui.core.Control} vAriaDescribedBy <p>The ariaDescribedBy to add; if empty, nothing is inserted</p>
              * @returns sap.tnt.NavigationList <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             addAriaDescribedBy(vAriaDescribedBy: sap.ui.core.ID | sap.ui.core.Control): sap.tnt.NavigationList;
             /**
-             * <p>Adds some ariaLabelledBy into the association <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.NavigationList/methods/getAriaLabelledBy" data-sap-ui-target="getAriaLabelledBy">ariaLabelledBy</a>.</p>
+             * <p>Adds some ariaLabelledBy into the association <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAriaLabelledBy" href="#/api/sap.tnt.NavigationList/methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
              * @param {sap.ui.core.ID | sap.ui.core.Control} vAriaLabelledBy <p>The ariaLabelledBy to add; if empty, nothing is inserted</p>
              * @returns sap.tnt.NavigationList <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             addAriaLabelledBy(vAriaLabelledBy: sap.ui.core.ID | sap.ui.core.Control): sap.tnt.NavigationList;
             /**
-             * <p>Adds some item to the aggregation <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.NavigationList/methods/getItems" data-sap-ui-target="getItems">items</a>.</p>
+             * <p>Adds some item to the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.tnt.NavigationList/methods/getItems">items</a>.</p>
              * @param {sap.tnt.NavigationListItem} oItem <p>The item to add; if empty, nothing is inserted</p>
              * @returns sap.tnt.NavigationList <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             addItem(oItem: sap.tnt.NavigationListItem): sap.tnt.NavigationList;
             /**
-             * <p>Attaches event handler <code>fnFunction</code> to the <a class="jsdoclink scrollToEvent" target="_self" href="#/api/sap.tnt.NavigationList/events/itemSelect" data-sap-ui-target="sap.tnt.NavigationList/events/itemSelect">itemSelect</a> event of this <code>sap.tnt.NavigationList</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.tnt.NavigationList</code> itself.</p><p>Fired when an item is selected.</p>
+             * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="itemSelect" href="#/api/sap.tnt.NavigationList/events/itemSelect">itemSelect</a> event of this <code>sap.tnt.NavigationList</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.tnt.NavigationList</code> itself.</p><p>Fired when an item is selected.</p>
              * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
              * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
              * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.tnt.NavigationList</code> itself</p>
@@ -135,40 +135,40 @@ declare namespace sap {
              */
             attachItemSelect(oData: any, fnFunction: Function, oListener?: any): sap.tnt.NavigationList;
             /**
-             * <p>Destroys all the items in the aggregation <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.NavigationList/methods/getItems" data-sap-ui-target="getItems">items</a>.</p>
+             * <p>Destroys all the items in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.tnt.NavigationList/methods/getItems">items</a>.</p>
              * @returns sap.tnt.NavigationList <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             destroyItems(): sap.tnt.NavigationList;
             /**
-             * <p>Detaches event handler <code>fnFunction</code> from the <a class="jsdoclink scrollToEvent" target="_self" href="#/api/sap.tnt.NavigationList/events/itemSelect" data-sap-ui-target="sap.tnt.NavigationList/events/itemSelect">itemSelect</a> event of this <code>sap.tnt.NavigationList</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+             * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="itemSelect" href="#/api/sap.tnt.NavigationList/events/itemSelect">itemSelect</a> event of this <code>sap.tnt.NavigationList</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
              * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
              * @param {any} oListener <p>Context object on which the given function had to be called</p>
              * @returns sap.tnt.NavigationList <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            detachItemSelect(fnFunction: Function, oListener: any): sap.tnt.NavigationList;
+            detachItemSelect(fnFunction: Function, oListener?: any): sap.tnt.NavigationList;
             /**
-             * <p>Fires event <a class="jsdoclink scrollToEvent" target="_self" href="#/api/sap.tnt.NavigationList/events/itemSelect" data-sap-ui-target="sap.tnt.NavigationList/events/itemSelect">itemSelect</a> to attached listeners.</p>
+             * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="itemSelect" href="#/api/sap.tnt.NavigationList/events/itemSelect">itemSelect</a> to attached listeners.</p>
              * @param {any} mParameters <p>Parameters to pass along with the event</p>
              * @returns sap.tnt.NavigationList <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             protected fireItemSelect(mParameters?: any): sap.tnt.NavigationList;
             /**
-             * <p>Returns array of IDs of the elements which are the current targets of the association <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.NavigationList/methods/getAriaDescribedBy" data-sap-ui-target="getAriaDescribedBy">ariaDescribedBy</a>.</p>
+             * <p>Returns array of IDs of the elements which are the current targets of the association <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAriaDescribedBy" href="#/api/sap.tnt.NavigationList/methods/getAriaDescribedBy">ariaDescribedBy</a>.</p>
              * @returns sap.ui.core.ID[] 
              */
             getAriaDescribedBy(): sap.ui.core.ID[];
             /**
-             * <p>Returns array of IDs of the elements which are the current targets of the association <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.NavigationList/methods/getAriaLabelledBy" data-sap-ui-target="getAriaLabelledBy">ariaLabelledBy</a>.</p>
+             * <p>Returns array of IDs of the elements which are the current targets of the association <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAriaLabelledBy" href="#/api/sap.tnt.NavigationList/methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
              * @returns sap.ui.core.ID[] 
              */
             getAriaLabelledBy(): sap.ui.core.ID[];
             /**
-             * <p>Gets current value of property <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.NavigationList/methods/getExpanded" data-sap-ui-target="getExpanded">expanded</a>.</p><p>Specifies if the control is in expanded or collapsed mode.</p><p>Default value is <code>true</code>.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getExpanded" href="#/api/sap.tnt.NavigationList/methods/getExpanded">expanded</a>.</p><p>Specifies if the control is in expanded or collapsed mode.</p><p>Default value is <code>true</code>.</p>
              * @returns boolean <p>Value of property <code>expanded</code></p>
              */
             getExpanded(): boolean;
             /**
-             * <p>Gets content of aggregation <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.NavigationList/methods/getItems" data-sap-ui-target="getItems">items</a>.</p><p>The items displayed in the list.</p>
+             * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.tnt.NavigationList/methods/getItems">items</a>.</p><p>The items displayed in the list.</p>
              * @returns sap.tnt.NavigationListItem[] 
              */
             getItems(): sap.tnt.NavigationListItem[];
@@ -178,58 +178,63 @@ declare namespace sap {
              */
             getSelectedItem(): sap.tnt.NavigationListItem | null;
             /**
-             * <p>Gets current value of property <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.NavigationList/methods/getWidth" data-sap-ui-target="getWidth">width</a>.</p><p>Specifies the width of the control.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSelectedKey" href="#/api/sap.tnt.NavigationList/methods/getSelectedKey">selectedKey</a>.</p><p>Specifies the currently selected key.</p>
+             * @returns string <p>Value of property <code>selectedKey</code></p>
+             */
+            getSelectedKey(): string;
+            /**
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getWidth" href="#/api/sap.tnt.NavigationList/methods/getWidth">width</a>.</p><p>Specifies the width of the control.</p>
              * @returns sap.ui.core.CSSSize <p>Value of property <code>width</code></p>
              */
             getWidth(): sap.ui.core.CSSSize;
             /**
-             * <p>Checks for the provided <code>sap.tnt.NavigationListItem</code> in the aggregation <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.NavigationList/methods/getItems" data-sap-ui-target="getItems">items</a>. and returns its index if found or -1 otherwise.</p>
+             * <p>Checks for the provided <code>sap.tnt.NavigationListItem</code> in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.tnt.NavigationList/methods/getItems">items</a>. and returns its index if found or -1 otherwise.</p>
              * @param {sap.tnt.NavigationListItem} oItem <p>The item whose index is looked for</p>
              * @returns number <p>The index of the provided control in the aggregation if found, or -1 otherwise</p>
              */
             indexOfItem(oItem: sap.tnt.NavigationListItem): number;
             /**
-             * <p>Inserts a item into the aggregation <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.NavigationList/methods/getItems" data-sap-ui-target="getItems">items</a>.</p>
+             * <p>Inserts a item into the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.tnt.NavigationList/methods/getItems">items</a>.</p>
              * @param {sap.tnt.NavigationListItem} oItem <p>The item to insert; if empty, nothing is inserted</p>
              * @param {number} iIndex <p>The <code>0</code>-based index the item should be inserted at; for a negative value of <code>iIndex</code>, the item is inserted at position 0; for a value greater than the current size of the aggregation, the item is inserted at the last position</p>
              * @returns sap.tnt.NavigationList <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             insertItem(oItem: sap.tnt.NavigationListItem, iIndex: number): sap.tnt.NavigationList;
             /**
-             * <p>Removes all the controls in the association named <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.NavigationList/methods/getAriaDescribedBy" data-sap-ui-target="getAriaDescribedBy">ariaDescribedBy</a>.</p>
+             * <p>Removes all the controls in the association named <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAriaDescribedBy" href="#/api/sap.tnt.NavigationList/methods/getAriaDescribedBy">ariaDescribedBy</a>.</p>
              * @returns sap.ui.core.ID[] <p>An array of the removed elements (might be empty)</p>
              */
             removeAllAriaDescribedBy(): sap.ui.core.ID[];
             /**
-             * <p>Removes all the controls in the association named <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.NavigationList/methods/getAriaLabelledBy" data-sap-ui-target="getAriaLabelledBy">ariaLabelledBy</a>.</p>
+             * <p>Removes all the controls in the association named <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAriaLabelledBy" href="#/api/sap.tnt.NavigationList/methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
              * @returns sap.ui.core.ID[] <p>An array of the removed elements (might be empty)</p>
              */
             removeAllAriaLabelledBy(): sap.ui.core.ID[];
             /**
-             * <p>Removes all the controls from the aggregation <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.NavigationList/methods/getItems" data-sap-ui-target="getItems">items</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
+             * <p>Removes all the controls from the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.tnt.NavigationList/methods/getItems">items</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
              * @returns sap.tnt.NavigationListItem[] <p>An array of the removed elements (might be empty)</p>
              */
             removeAllItems(): sap.tnt.NavigationListItem[];
             /**
-             * <p>Removes an ariaDescribedBy from the association named <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.NavigationList/methods/getAriaDescribedBy" data-sap-ui-target="getAriaDescribedBy">ariaDescribedBy</a>.</p>
+             * <p>Removes an ariaDescribedBy from the association named <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAriaDescribedBy" href="#/api/sap.tnt.NavigationList/methods/getAriaDescribedBy">ariaDescribedBy</a>.</p>
              * @param {number | sap.ui.core.ID | sap.ui.core.Control} vAriaDescribedBy <p>The ariaDescribedBy to be removed or its index or ID</p>
              * @returns sap.ui.core.ID <p>The removed ariaDescribedBy or <code>null</code></p>
              */
             removeAriaDescribedBy(vAriaDescribedBy: number | sap.ui.core.ID | sap.ui.core.Control): sap.ui.core.ID;
             /**
-             * <p>Removes an ariaLabelledBy from the association named <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.NavigationList/methods/getAriaLabelledBy" data-sap-ui-target="getAriaLabelledBy">ariaLabelledBy</a>.</p>
+             * <p>Removes an ariaLabelledBy from the association named <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAriaLabelledBy" href="#/api/sap.tnt.NavigationList/methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
              * @param {number | sap.ui.core.ID | sap.ui.core.Control} vAriaLabelledBy <p>The ariaLabelledBy to be removed or its index or ID</p>
              * @returns sap.ui.core.ID <p>The removed ariaLabelledBy or <code>null</code></p>
              */
             removeAriaLabelledBy(vAriaLabelledBy: number | sap.ui.core.ID | sap.ui.core.Control): sap.ui.core.ID;
             /**
-             * <p>Removes a item from the aggregation <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.NavigationList/methods/getItems" data-sap-ui-target="getItems">items</a>.</p>
+             * <p>Removes a item from the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.tnt.NavigationList/methods/getItems">items</a>.</p>
              * @param {number | string | sap.tnt.NavigationListItem} vItem <p>The item to remove or its index or id</p>
              * @returns sap.tnt.NavigationListItem <p>The removed item or <code>null</code></p>
              */
             removeItem(vItem: number | string | sap.tnt.NavigationListItem): sap.tnt.NavigationListItem;
             /**
-             * <p>Sets a new value for property <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.NavigationList/methods/getExpanded" data-sap-ui-target="getExpanded">expanded</a>.</p><p>Specifies if the control is in expanded or collapsed mode.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getExpanded" href="#/api/sap.tnt.NavigationList/methods/getExpanded">expanded</a>.</p><p>Specifies if the control is in expanded or collapsed mode.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
              * @param {boolean} bExpanded <p>New value for property <code>expanded</code></p>
              * @returns sap.tnt.NavigationList <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
@@ -237,12 +242,17 @@ declare namespace sap {
             /**
              * <p>Sets the association for selectedItem. Set <code>null</code> to deselect.</p>
              * @param {string | sap.tnt.NavigationListItem} selectedItem <p>The control to be set as selected</p>
-             * @param {boolean} suppressInvalidate <p>If true, the managed object's invalidate method is not called</p>
              * @returns sap.tnt.NavigationList|null <p>The <code>selectedItem</code> association</p>
              */
-            setSelectedItem(selectedItem: string | sap.tnt.NavigationListItem, suppressInvalidate: boolean): sap.tnt.NavigationList | null;
+            setSelectedItem(selectedItem: string | sap.tnt.NavigationListItem): sap.tnt.NavigationList | null;
             /**
-             * <p>Sets a new value for property <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.NavigationList/methods/getWidth" data-sap-ui-target="getWidth">width</a>.</p><p>Specifies the width of the control.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+             * <p>Sets the selected item based on a key.</p>
+             * @param {string} selectedKey <p>The key of the item to be selected</p>
+             * @returns sap.tnt.NavigationList <p>this pointer for chaining</p>
+             */
+            setSelectedKey(selectedKey: string): sap.tnt.NavigationList;
+            /**
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getWidth" href="#/api/sap.tnt.NavigationList/methods/getWidth">width</a>.</p><p>Specifies the width of the control.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
              * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
              * @returns sap.tnt.NavigationList <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
@@ -253,19 +263,19 @@ declare namespace sap {
          */
         export class NavigationListItem extends sap.ui.core.Item {
             /**
-             * <p>Constructor for a new NavigationListItem.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.ui.base.ManagedObject/methods/constructor" data-sap-ui-target="sap.ui.base.ManagedObject/methods/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+             * <p>Constructor for a new NavigationListItem.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
              * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
              * @param {any} mSettings <p>Initial settings for the new control</p>
              */
             constructor(sId?: string, mSettings?: any);
             /**
-             * <p>Adds some item to the aggregation <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.NavigationListItem/methods/getItems" data-sap-ui-target="getItems">items</a>.</p>
+             * <p>Adds some item to the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.tnt.NavigationListItem/methods/getItems">items</a>.</p>
              * @param {sap.tnt.NavigationListItem} oItem <p>The item to add; if empty, nothing is inserted</p>
              * @returns sap.tnt.NavigationListItem <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             addItem(oItem: sap.tnt.NavigationListItem): sap.tnt.NavigationListItem;
             /**
-             * <p>Attaches event handler <code>fnFunction</code> to the <a class="jsdoclink scrollToEvent" target="_self" href="#/api/sap.tnt.NavigationListItem/events/select" data-sap-ui-target="sap.tnt.NavigationListItem/events/select">select</a> event of this <code>sap.tnt.NavigationListItem</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.tnt.NavigationListItem</code> itself.</p><p>Fired when this item is selected.</p>
+             * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="select" href="#/api/sap.tnt.NavigationListItem/events/select">select</a> event of this <code>sap.tnt.NavigationListItem</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.tnt.NavigationListItem</code> itself.</p><p>Fired when this item is selected.</p>
              * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
              * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
              * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.tnt.NavigationListItem</code> itself</p>
@@ -273,92 +283,92 @@ declare namespace sap {
              */
             attachSelect(oData: any, fnFunction: Function, oListener?: any): sap.tnt.NavigationListItem;
             /**
-             * <p>Destroys all the items in the aggregation <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.NavigationListItem/methods/getItems" data-sap-ui-target="getItems">items</a>.</p>
+             * <p>Destroys all the items in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.tnt.NavigationListItem/methods/getItems">items</a>.</p>
              * @returns sap.tnt.NavigationListItem <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             destroyItems(): sap.tnt.NavigationListItem;
             /**
-             * <p>Detaches event handler <code>fnFunction</code> from the <a class="jsdoclink scrollToEvent" target="_self" href="#/api/sap.tnt.NavigationListItem/events/select" data-sap-ui-target="sap.tnt.NavigationListItem/events/select">select</a> event of this <code>sap.tnt.NavigationListItem</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+             * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="select" href="#/api/sap.tnt.NavigationListItem/events/select">select</a> event of this <code>sap.tnt.NavigationListItem</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
              * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
              * @param {any} oListener <p>Context object on which the given function had to be called</p>
              * @returns sap.tnt.NavigationListItem <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            detachSelect(fnFunction: Function, oListener: any): sap.tnt.NavigationListItem;
+            detachSelect(fnFunction: Function, oListener?: any): sap.tnt.NavigationListItem;
             /**
-             * <p>Fires event <a class="jsdoclink scrollToEvent" target="_self" href="#/api/sap.tnt.NavigationListItem/events/select" data-sap-ui-target="sap.tnt.NavigationListItem/events/select">select</a> to attached listeners.</p>
+             * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="select" href="#/api/sap.tnt.NavigationListItem/events/select">select</a> to attached listeners.</p>
              * @param {any} mParameters <p>Parameters to pass along with the event</p>
              * @returns sap.tnt.NavigationListItem <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             protected fireSelect(mParameters?: any): sap.tnt.NavigationListItem;
             /**
-             * <p>Gets current value of property <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.NavigationListItem/methods/getExpanded" data-sap-ui-target="getExpanded">expanded</a>.</p><p>Specifies if the item is expanded.</p><p>Default value is <code>true</code>.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getExpanded" href="#/api/sap.tnt.NavigationListItem/methods/getExpanded">expanded</a>.</p><p>Specifies if the item is expanded.</p><p>Default value is <code>true</code>.</p>
              * @returns boolean <p>Value of property <code>expanded</code></p>
              */
             getExpanded(): boolean;
             /**
-             * <p>Gets current value of property <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.NavigationListItem/methods/getHasExpander" data-sap-ui-target="getHasExpander">hasExpander</a>.</p><p>Specifies if the item has an expander.</p><p>Default value is <code>true</code>.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getHasExpander" href="#/api/sap.tnt.NavigationListItem/methods/getHasExpander">hasExpander</a>.</p><p>Specifies if the item has an expander.</p><p>Default value is <code>true</code>.</p>
              * @returns boolean <p>Value of property <code>hasExpander</code></p>
              */
             getHasExpander(): boolean;
             /**
-             * <p>Gets current value of property <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.NavigationListItem/methods/getIcon" data-sap-ui-target="getIcon">icon</a>.</p><p>Specifies the icon for the item.</p><p>Default value is <code>empty string</code>.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getIcon" href="#/api/sap.tnt.NavigationListItem/methods/getIcon">icon</a>.</p><p>Specifies the icon for the item.</p><p>Default value is <code>empty string</code>.</p>
              * @returns sap.ui.core.URI <p>Value of property <code>icon</code></p>
              */
             getIcon(): sap.ui.core.URI;
             /**
-             * <p>Gets content of aggregation <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.NavigationListItem/methods/getItems" data-sap-ui-target="getItems">items</a>.</p><p>The sub items.</p>
+             * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.tnt.NavigationListItem/methods/getItems">items</a>.</p><p>The sub items.</p>
              * @returns sap.tnt.NavigationListItem[] 
              */
             getItems(): sap.tnt.NavigationListItem[];
             /**
-             * <p>Gets current value of property <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.NavigationListItem/methods/getVisible" data-sap-ui-target="getVisible">visible</a>.</p><p>Specifies if the item should be shown.</p><p>Default value is <code>true</code>.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getVisible" href="#/api/sap.tnt.NavigationListItem/methods/getVisible">visible</a>.</p><p>Specifies if the item should be shown.</p><p>Default value is <code>true</code>.</p>
              * @returns boolean <p>Value of property <code>visible</code></p>
              */
             getVisible(): boolean;
             /**
-             * <p>Checks for the provided <code>sap.tnt.NavigationListItem</code> in the aggregation <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.NavigationListItem/methods/getItems" data-sap-ui-target="getItems">items</a>. and returns its index if found or -1 otherwise.</p>
+             * <p>Checks for the provided <code>sap.tnt.NavigationListItem</code> in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.tnt.NavigationListItem/methods/getItems">items</a>. and returns its index if found or -1 otherwise.</p>
              * @param {sap.tnt.NavigationListItem} oItem <p>The item whose index is looked for</p>
              * @returns number <p>The index of the provided control in the aggregation if found, or -1 otherwise</p>
              */
             indexOfItem(oItem: sap.tnt.NavigationListItem): number;
             /**
-             * <p>Inserts a item into the aggregation <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.NavigationListItem/methods/getItems" data-sap-ui-target="getItems">items</a>.</p>
+             * <p>Inserts a item into the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.tnt.NavigationListItem/methods/getItems">items</a>.</p>
              * @param {sap.tnt.NavigationListItem} oItem <p>The item to insert; if empty, nothing is inserted</p>
              * @param {number} iIndex <p>The <code>0</code>-based index the item should be inserted at; for a negative value of <code>iIndex</code>, the item is inserted at position 0; for a value greater than the current size of the aggregation, the item is inserted at the last position</p>
              * @returns sap.tnt.NavigationListItem <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             insertItem(oItem: sap.tnt.NavigationListItem, iIndex: number): sap.tnt.NavigationListItem;
             /**
-             * <p>Removes all the controls from the aggregation <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.NavigationListItem/methods/getItems" data-sap-ui-target="getItems">items</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
+             * <p>Removes all the controls from the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.tnt.NavigationListItem/methods/getItems">items</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
              * @returns sap.tnt.NavigationListItem[] <p>An array of the removed elements (might be empty)</p>
              */
             removeAllItems(): sap.tnt.NavigationListItem[];
             /**
-             * <p>Removes a item from the aggregation <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.NavigationListItem/methods/getItems" data-sap-ui-target="getItems">items</a>.</p>
+             * <p>Removes a item from the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.tnt.NavigationListItem/methods/getItems">items</a>.</p>
              * @param {number | string | sap.tnt.NavigationListItem} vItem <p>The item to remove or its index or id</p>
              * @returns sap.tnt.NavigationListItem <p>The removed item or <code>null</code></p>
              */
             removeItem(vItem: number | string | sap.tnt.NavigationListItem): sap.tnt.NavigationListItem;
             /**
-             * <p>Sets a new value for property <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.NavigationListItem/methods/getExpanded" data-sap-ui-target="getExpanded">expanded</a>.</p><p>Specifies if the item is expanded.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getExpanded" href="#/api/sap.tnt.NavigationListItem/methods/getExpanded">expanded</a>.</p><p>Specifies if the item is expanded.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
              * @param {boolean} bExpanded <p>New value for property <code>expanded</code></p>
              * @returns sap.tnt.NavigationListItem <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             setExpanded(bExpanded: boolean): sap.tnt.NavigationListItem;
             /**
-             * <p>Sets a new value for property <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.NavigationListItem/methods/getHasExpander" data-sap-ui-target="getHasExpander">hasExpander</a>.</p><p>Specifies if the item has an expander.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getHasExpander" href="#/api/sap.tnt.NavigationListItem/methods/getHasExpander">hasExpander</a>.</p><p>Specifies if the item has an expander.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
              * @param {boolean} bHasExpander <p>New value for property <code>hasExpander</code></p>
              * @returns sap.tnt.NavigationListItem <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             setHasExpander(bHasExpander: boolean): sap.tnt.NavigationListItem;
             /**
-             * <p>Sets a new value for property <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.NavigationListItem/methods/getIcon" data-sap-ui-target="getIcon">icon</a>.</p><p>Specifies the icon for the item.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getIcon" href="#/api/sap.tnt.NavigationListItem/methods/getIcon">icon</a>.</p><p>Specifies the icon for the item.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
              * @param {sap.ui.core.URI} sIcon <p>New value for property <code>icon</code></p>
              * @returns sap.tnt.NavigationListItem <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             setIcon(sIcon: sap.ui.core.URI): sap.tnt.NavigationListItem;
             /**
-             * <p>Sets a new value for property <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.NavigationListItem/methods/getVisible" data-sap-ui-target="getVisible">visible</a>.</p><p>Specifies if the item should be shown.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getVisible" href="#/api/sap.tnt.NavigationListItem/methods/getVisible">visible</a>.</p><p>Specifies if the item should be shown.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
              * @param {boolean} bVisible <p>New value for property <code>visible</code></p>
              * @returns sap.tnt.NavigationListItem <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
@@ -382,13 +392,13 @@ declare namespace sap {
          */
         export class SideNavigation extends sap.ui.core.Control {
             /**
-             * <p>Constructor for a new SideNavigation.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.ui.base.ManagedObject/methods/constructor" data-sap-ui-target="sap.ui.base.ManagedObject/methods/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+             * <p>Constructor for a new SideNavigation.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
              * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
              * @param {any} mSettings <p>Initial settings for the new control</p>
              */
             constructor(sId?: string, mSettings?: any);
             /**
-             * <p>Attaches event handler <code>fnFunction</code> to the <a class="jsdoclink scrollToEvent" target="_self" href="#/api/sap.tnt.SideNavigation/events/itemSelect" data-sap-ui-target="sap.tnt.SideNavigation/events/itemSelect">itemSelect</a> event of this <code>sap.tnt.SideNavigation</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.tnt.SideNavigation</code> itself.</p><p>Fired when an item is selected.</p>
+             * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="itemSelect" href="#/api/sap.tnt.SideNavigation/events/itemSelect">itemSelect</a> event of this <code>sap.tnt.SideNavigation</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.tnt.SideNavigation</code> itself.</p><p>Fired when an item is selected.</p>
              * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
              * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
              * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.tnt.SideNavigation</code> itself</p>
@@ -396,64 +406,69 @@ declare namespace sap {
              */
             attachItemSelect(oData: any, fnFunction: Function, oListener?: any): sap.tnt.SideNavigation;
             /**
-             * <p>Binds aggregation <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.SideNavigation/methods/getItem" data-sap-ui-target="getItem">item</a> to model data.</p><p>See <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.ui.base.ManagedObject/methods/bindAggregation" data-sap-ui-target="sap.ui.base.ManagedObject/methods/bindAggregation">ManagedObject.bindAggregation</a> for a detailed description of the possible properties of <code>oBindingInfo</code>.</p>
+             * <p>Binds aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItem" href="#/api/sap.tnt.SideNavigation/methods/getItem">item</a> to model data.</p><p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/bindAggregation">ManagedObject.bindAggregation</a> for a detailed description of the possible properties of <code>oBindingInfo</code>.</p>
              * @param {any} oBindingInfo <p>The binding information</p>
              * @returns sap.tnt.SideNavigation <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             bindItem(oBindingInfo: any): sap.tnt.SideNavigation;
             /**
-             * <p>Destroys the fixedItem in the aggregation <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.SideNavigation/methods/getFixedItem" data-sap-ui-target="getFixedItem">fixedItem</a>.</p>
+             * <p>Destroys the fixedItem in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getFixedItem" href="#/api/sap.tnt.SideNavigation/methods/getFixedItem">fixedItem</a>.</p>
              * @returns sap.tnt.SideNavigation <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             destroyFixedItem(): sap.tnt.SideNavigation;
             /**
-             * <p>Destroys the footer in the aggregation <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.SideNavigation/methods/getFooter" data-sap-ui-target="getFooter">footer</a>.</p>
+             * <p>Destroys the footer in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getFooter" href="#/api/sap.tnt.SideNavigation/methods/getFooter">footer</a>.</p>
              * @returns sap.tnt.SideNavigation <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             destroyFooter(): sap.tnt.SideNavigation;
             /**
-             * <p>Destroys the item in the aggregation <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.SideNavigation/methods/getItem" data-sap-ui-target="getItem">item</a>.</p>
+             * <p>Destroys the item in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItem" href="#/api/sap.tnt.SideNavigation/methods/getItem">item</a>.</p>
              * @returns sap.tnt.SideNavigation <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             destroyItem(): sap.tnt.SideNavigation;
             /**
-             * <p>Detaches event handler <code>fnFunction</code> from the <a class="jsdoclink scrollToEvent" target="_self" href="#/api/sap.tnt.SideNavigation/events/itemSelect" data-sap-ui-target="sap.tnt.SideNavigation/events/itemSelect">itemSelect</a> event of this <code>sap.tnt.SideNavigation</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+             * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="itemSelect" href="#/api/sap.tnt.SideNavigation/events/itemSelect">itemSelect</a> event of this <code>sap.tnt.SideNavigation</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
              * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
              * @param {any} oListener <p>Context object on which the given function had to be called</p>
              * @returns sap.tnt.SideNavigation <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            detachItemSelect(fnFunction: Function, oListener: any): sap.tnt.SideNavigation;
+            detachItemSelect(fnFunction: Function, oListener?: any): sap.tnt.SideNavigation;
             /**
-             * <p>Fires event <a class="jsdoclink scrollToEvent" target="_self" href="#/api/sap.tnt.SideNavigation/events/itemSelect" data-sap-ui-target="sap.tnt.SideNavigation/events/itemSelect">itemSelect</a> to attached listeners.</p>
+             * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="itemSelect" href="#/api/sap.tnt.SideNavigation/events/itemSelect">itemSelect</a> to attached listeners.</p>
              * @param {any} mParameters <p>Parameters to pass along with the event</p>
              * @returns sap.tnt.SideNavigation <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             protected fireItemSelect(mParameters?: any): sap.tnt.SideNavigation;
             /**
-             * <p>Gets current value of property <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.SideNavigation/methods/getExpanded" data-sap-ui-target="getExpanded">expanded</a>.</p><p>Specifies if the control is expanded.</p><p>Default value is <code>true</code>.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getExpanded" href="#/api/sap.tnt.SideNavigation/methods/getExpanded">expanded</a>.</p><p>Specifies if the control is expanded.</p><p>Default value is <code>true</code>.</p>
              * @returns boolean <p>Value of property <code>expanded</code></p>
              */
             getExpanded(): boolean;
             /**
-             * <p>Gets content of aggregation <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.SideNavigation/methods/getFixedItem" data-sap-ui-target="getFixedItem">fixedItem</a>.</p><p>Defines the content inside the fixed part.</p>
+             * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getFixedItem" href="#/api/sap.tnt.SideNavigation/methods/getFixedItem">fixedItem</a>.</p><p>Defines the content inside the fixed part.</p>
              * @returns sap.tnt.NavigationList 
              */
             getFixedItem(): sap.tnt.NavigationList;
             /**
-             * <p>Gets content of aggregation <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.SideNavigation/methods/getFooter" data-sap-ui-target="getFooter">footer</a>.</p><p>Defines the content inside the footer.</p>
+             * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getFooter" href="#/api/sap.tnt.SideNavigation/methods/getFooter">footer</a>.</p><p>Defines the content inside the footer.</p>
              * @returns sap.tnt.NavigationList 
              */
             getFooter(): sap.tnt.NavigationList;
             /**
-             * <p>Gets content of aggregation <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.SideNavigation/methods/getItem" data-sap-ui-target="getItem">item</a>.</p><p>Defines the content inside the flexible part.</p>
+             * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItem" href="#/api/sap.tnt.SideNavigation/methods/getItem">item</a>.</p><p>Defines the content inside the flexible part.</p>
              * @returns sap.tnt.NavigationList 
              */
             getItem(): sap.tnt.NavigationList;
             /**
-             * <p>ID of the element which is the current target of the association <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.SideNavigation/methods/getSelectedItem" data-sap-ui-target="getSelectedItem">selectedItem</a>, or <code>null</code>.</p>
+             * <p>ID of the element which is the current target of the association <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSelectedItem" href="#/api/sap.tnt.SideNavigation/methods/getSelectedItem">selectedItem</a>, or <code>null</code>.</p>
              * @returns sap.ui.core.ID 
              */
             getSelectedItem(): sap.ui.core.ID;
+            /**
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSelectedKey" href="#/api/sap.tnt.SideNavigation/methods/getSelectedKey">selectedKey</a>.</p><p>Specifies the currently selected key.</p>
+             * @returns string <p>Value of property <code>selectedKey</code></p>
+             */
+            getSelectedKey(): string;
             /**
              * <p>Sets if the control is in expanded or collapsed mode.</p>
              * @param {boolean} isExpanded <p>Indication if the SideNavigation is expanded.</p>
@@ -461,19 +476,19 @@ declare namespace sap {
              */
             setExpanded(isExpanded: boolean): sap.tnt.SideNavigation;
             /**
-             * <p>Sets the aggregated <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.SideNavigation/methods/getFixedItem" data-sap-ui-target="getFixedItem">fixedItem</a>.</p>
+             * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getFixedItem" href="#/api/sap.tnt.SideNavigation/methods/getFixedItem">fixedItem</a>.</p>
              * @param {sap.tnt.NavigationList} oFixedItem <p>The fixedItem to set</p>
              * @returns sap.tnt.SideNavigation <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             setFixedItem(oFixedItem: sap.tnt.NavigationList): sap.tnt.SideNavigation;
             /**
-             * <p>Sets the aggregated <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.SideNavigation/methods/getFooter" data-sap-ui-target="getFooter">footer</a>.</p>
+             * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getFooter" href="#/api/sap.tnt.SideNavigation/methods/getFooter">footer</a>.</p>
              * @param {sap.tnt.NavigationList} oFooter <p>The footer to set</p>
              * @returns sap.tnt.SideNavigation <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             setFooter(oFooter: sap.tnt.NavigationList): sap.tnt.SideNavigation;
             /**
-             * <p>Sets the aggregated <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.SideNavigation/methods/getItem" data-sap-ui-target="getItem">item</a>.</p>
+             * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItem" href="#/api/sap.tnt.SideNavigation/methods/getItem">item</a>.</p>
              * @param {sap.tnt.NavigationList} oItem <p>The item to set</p>
              * @returns sap.tnt.SideNavigation <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
@@ -481,18 +496,23 @@ declare namespace sap {
             /**
              * <p>Sets the association for selectedItem</p>
              * @param {string | sap.tnt.NavigationListItem} selectedItem <p>The control to be set as selected</p>
-             * @param {boolean} suppressInvalidate <p>If true, the managed object's invalidate method is not called</p>
              * @returns sap.tnt.SideNavigation|null <p>The <code>selectedItem</code> association</p>
              */
-            setSelectedItem(selectedItem: string | sap.tnt.NavigationListItem, suppressInvalidate: boolean): sap.tnt.SideNavigation | null;
+            setSelectedItem(selectedItem: string | sap.tnt.NavigationListItem): sap.tnt.SideNavigation | null;
             /**
-             * <p>Unbinds aggregation <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.SideNavigation/methods/getItem" data-sap-ui-target="getItem">item</a> from model data.</p>
+             * <p>Sets the selected item based on a key.</p>
+             * @param {string} selectedKey <p>The key of the item to be selected</p>
+             * @returns sap.tnt.SideNavigation <p>this pointer for chaining</p>
+             */
+            setSelectedKey(selectedKey: string): sap.tnt.SideNavigation;
+            /**
+             * <p>Unbinds aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItem" href="#/api/sap.tnt.SideNavigation/methods/getItem">item</a> from model data.</p>
              * @returns sap.tnt.SideNavigation <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             unbindItem(): sap.tnt.SideNavigation;
         }
         /**
-         * <p>The ToolHeader control is a horizontal container that is most commonly used to display buttons, labels, and other various input controls. </p><h4>Overview</h4><p> The ToolHeader control is based on <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.m.OverflowToolbar" data-sap-ui-target="OverflowToolbar">sap.m.OverflowToolbar</a>. It contains clearly structured menus of commands that are available across the various apps within the same tool layout. </p><h4>Usage</h4><p> <ul> <li>If an app implements side navigation in addition to the tool header menu, the menu icon must be the first item on the left-hand side of the tool header.</li> <li>The app menu and the side navigation must not have any dependencies and must work independently.</li> </ul></p>
+         * <p>The ToolHeader control is a horizontal container that is most commonly used to display buttons, labels, and other various input controls. </p><h4>Overview</h4><p> The ToolHeader control is based on <a target="_self" class="jsdoclink" href="#/api/sap.m.OverflowToolbar">sap.m.OverflowToolbar</a>. It contains clearly structured menus of commands that are available across the various apps within the same tool layout. </p><h4>Usage</h4><p> <ul> <li>If an app implements side navigation in addition to the tool header menu, the menu icon must be the first item on the left-hand side of the tool header.</li> <li>The app menu and the side navigation must not have any dependencies and must work independently.</li> </ul></p>
          */
         export class ToolHeader extends sap.m.OverflowToolbar {
             /**
@@ -507,95 +527,95 @@ declare namespace sap {
          */
         export class ToolHeaderUtilitySeparator extends sap.ui.core.Control {
             /**
-             * <p>Constructor for a new ToolHeaderUtilitySeparator.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.ui.base.ManagedObject/methods/constructor" data-sap-ui-target="sap.ui.base.ManagedObject/methods/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p><p>This class does not have its own settings, but all settings applicable to the base type <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.ui.core.Control/methods/constructor" data-sap-ui-target="sap.ui.core.Control/methods/constructor">sap.ui.core.Control</a> can be used.</p>
+             * <p>Constructor for a new ToolHeaderUtilitySeparator.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p><p>This class does not have its own settings, but all settings applicable to the base type <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.Control/constructor">sap.ui.core.Control</a> can be used.</p>
              * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
              * @param {any} mSettings <p>Initial settings for the new control</p>
              */
             constructor(sId?: string, mSettings?: any);
         }
         /**
-         * <p>The ToolPage is a layout control, used to create a basic tools app that has a header, side navigation and contents area. </p><h4>Overview</h4><p> The control has three main areas - a header on top, navigation to the side and a content area that can hold any control. The header and side navigation use custom controls - <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.ToolHeader" data-sap-ui-target="ToolHeader">sap.tnt.ToolHeader</a> and <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.SideNavigation" data-sap-ui-target="SideNavigation">sap.tnt.SideNavigation</a>. </p><h4>Usage</h4><p> The main usage of the sap.tnt controls is for scenarios in the tooling or administration space.</p>
+         * <p>The ToolPage is a layout control, used to create a basic tools app that has a header, side navigation and contents area. </p><h4>Overview</h4><p> The control has three main areas - a header on top, navigation to the side and a content area that can hold any control. The header and side navigation use custom controls - <a target="_self" class="jsdoclink" href="#/api/sap.tnt.ToolHeader">sap.tnt.ToolHeader</a> and <a target="_self" class="jsdoclink" href="#/api/sap.tnt.SideNavigation">sap.tnt.SideNavigation</a>. </p><h4>Usage</h4><p> The main usage of the sap.tnt controls is for scenarios in the tooling or administration space.</p>
          */
         export class ToolPage extends sap.ui.core.Control {
             /**
-             * <p>Constructor for a new ToolPage.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.ui.base.ManagedObject/methods/constructor" data-sap-ui-target="sap.ui.base.ManagedObject/methods/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+             * <p>Constructor for a new ToolPage.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
              * @param {string} sId <p>ID for the new control, generated automatically if no id is given</p>
              * @param {any} mSettings <p>Initial settings for the new control</p>
              */
             constructor(sId?: string, mSettings?: any);
             /**
-             * <p>Adds some mainContent to the aggregation <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.ToolPage/methods/getMainContents" data-sap-ui-target="getMainContents">mainContents</a>.</p>
+             * <p>Adds some mainContent to the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMainContents" href="#/api/sap.tnt.ToolPage/methods/getMainContents">mainContents</a>.</p>
              * @param {sap.ui.core.Control} oMainContent <p>The mainContent to add; if empty, nothing is inserted</p>
              * @returns sap.tnt.ToolPage <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             addMainContent(oMainContent: sap.ui.core.Control): sap.tnt.ToolPage;
             /**
-             * <p>Destroys the header in the aggregation <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.ToolPage/methods/getHeader" data-sap-ui-target="getHeader">header</a>.</p>
+             * <p>Destroys the header in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getHeader" href="#/api/sap.tnt.ToolPage/methods/getHeader">header</a>.</p>
              * @returns sap.tnt.ToolPage <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             destroyHeader(): sap.tnt.ToolPage;
             /**
-             * <p>Destroys all the mainContents in the aggregation <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.ToolPage/methods/getMainContents" data-sap-ui-target="getMainContents">mainContents</a>.</p>
+             * <p>Destroys all the mainContents in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMainContents" href="#/api/sap.tnt.ToolPage/methods/getMainContents">mainContents</a>.</p>
              * @returns sap.tnt.ToolPage <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             destroyMainContents(): sap.tnt.ToolPage;
             /**
-             * <p>Destroys the sideContent in the aggregation <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.ToolPage/methods/getSideContent" data-sap-ui-target="getSideContent">sideContent</a>.</p>
+             * <p>Destroys the sideContent in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSideContent" href="#/api/sap.tnt.ToolPage/methods/getSideContent">sideContent</a>.</p>
              * @returns sap.tnt.ToolPage <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             destroySideContent(): sap.tnt.ToolPage;
             /**
-             * <p>Gets content of aggregation <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.ToolPage/methods/getHeader" data-sap-ui-target="getHeader">header</a>.</p><p>The control to appear in the header area.</p>
+             * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getHeader" href="#/api/sap.tnt.ToolPage/methods/getHeader">header</a>.</p><p>The control to appear in the header area.</p>
              * @returns sap.tnt.ToolHeader 
              */
             getHeader(): sap.tnt.ToolHeader;
             /**
-             * <p>Gets content of aggregation <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.ToolPage/methods/getMainContents" data-sap-ui-target="getMainContents">mainContents</a>.</p><p>The content section.</p>
+             * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMainContents" href="#/api/sap.tnt.ToolPage/methods/getMainContents">mainContents</a>.</p><p>The content section.</p>
              * @returns sap.ui.core.Control[] 
              */
             getMainContents(): sap.ui.core.Control[];
             /**
-             * <p>Gets content of aggregation <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.ToolPage/methods/getSideContent" data-sap-ui-target="getSideContent">sideContent</a>.</p><p>The side menu of the layout.</p>
+             * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSideContent" href="#/api/sap.tnt.ToolPage/methods/getSideContent">sideContent</a>.</p><p>The side menu of the layout.</p>
              * @returns sap.tnt.SideNavigation 
              */
             getSideContent(): sap.tnt.SideNavigation;
             /**
-             * <p>Gets current value of property <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.ToolPage/methods/getSideExpanded" data-sap-ui-target="getSideExpanded">sideExpanded</a>.</p><p>Indicates if the side area is expanded. Overrides the expanded property of the sideContent aggregation.</p><p>Default value is <code>true</code>.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSideExpanded" href="#/api/sap.tnt.ToolPage/methods/getSideExpanded">sideExpanded</a>.</p><p>Indicates if the side area is expanded. Overrides the expanded property of the sideContent aggregation.</p><p>Default value is <code>true</code>.</p>
              * @returns boolean <p>Value of property <code>sideExpanded</code></p>
              */
             getSideExpanded(): boolean;
             /**
-             * <p>Checks for the provided <code>sap.ui.core.Control</code> in the aggregation <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.ToolPage/methods/getMainContents" data-sap-ui-target="getMainContents">mainContents</a>. and returns its index if found or -1 otherwise.</p>
+             * <p>Checks for the provided <code>sap.ui.core.Control</code> in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMainContents" href="#/api/sap.tnt.ToolPage/methods/getMainContents">mainContents</a>. and returns its index if found or -1 otherwise.</p>
              * @param {sap.ui.core.Control} oMainContent <p>The mainContent whose index is looked for</p>
              * @returns number <p>The index of the provided control in the aggregation if found, or -1 otherwise</p>
              */
             indexOfMainContent(oMainContent: sap.ui.core.Control): number;
             /**
-             * <p>Inserts a mainContent into the aggregation <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.ToolPage/methods/getMainContents" data-sap-ui-target="getMainContents">mainContents</a>.</p>
+             * <p>Inserts a mainContent into the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMainContents" href="#/api/sap.tnt.ToolPage/methods/getMainContents">mainContents</a>.</p>
              * @param {sap.ui.core.Control} oMainContent <p>The mainContent to insert; if empty, nothing is inserted</p>
              * @param {number} iIndex <p>The <code>0</code>-based index the mainContent should be inserted at; for a negative value of <code>iIndex</code>, the mainContent is inserted at position 0; for a value greater than the current size of the aggregation, the mainContent is inserted at the last position</p>
              * @returns sap.tnt.ToolPage <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             insertMainContent(oMainContent: sap.ui.core.Control, iIndex: number): sap.tnt.ToolPage;
             /**
-             * <p>Removes all the controls from the aggregation <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.ToolPage/methods/getMainContents" data-sap-ui-target="getMainContents">mainContents</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
+             * <p>Removes all the controls from the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMainContents" href="#/api/sap.tnt.ToolPage/methods/getMainContents">mainContents</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
              * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
              */
             removeAllMainContents(): sap.ui.core.Control[];
             /**
-             * <p>Removes a mainContent from the aggregation <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.ToolPage/methods/getMainContents" data-sap-ui-target="getMainContents">mainContents</a>.</p>
+             * <p>Removes a mainContent from the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMainContents" href="#/api/sap.tnt.ToolPage/methods/getMainContents">mainContents</a>.</p>
              * @param {number | string | sap.ui.core.Control} vMainContent <p>The mainContent to remove or its index or id</p>
              * @returns sap.ui.core.Control <p>The removed mainContent or <code>null</code></p>
              */
             removeMainContent(vMainContent: number | string | sap.ui.core.Control): sap.ui.core.Control;
             /**
-             * <p>Sets the aggregated <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.ToolPage/methods/getHeader" data-sap-ui-target="getHeader">header</a>.</p>
+             * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getHeader" href="#/api/sap.tnt.ToolPage/methods/getHeader">header</a>.</p>
              * @param {sap.tnt.ToolHeader} oHeader <p>The header to set</p>
              * @returns sap.tnt.ToolPage <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             setHeader(oHeader: sap.tnt.ToolHeader): sap.tnt.ToolPage;
             /**
-             * <p>Sets the aggregated <a class="jsdoclink scrollToMethod" target="_self" href="#/api/sap.tnt.ToolPage/methods/getSideContent" data-sap-ui-target="getSideContent">sideContent</a>.</p>
+             * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSideContent" href="#/api/sap.tnt.ToolPage/methods/getSideContent">sideContent</a>.</p>
              * @param {sap.tnt.SideNavigation} oSideContent <p>The sideContent to set</p>
              * @returns sap.tnt.ToolPage <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
@@ -613,4 +633,8 @@ declare namespace sap {
             toggleSideContentMode(): sap.tnt.ToolPage;
         }
     }
+}
+/**
+ */
+declare namespace sap {
 }

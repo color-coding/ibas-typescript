@@ -13,8 +13,7 @@
 /// <reference path ="./sap.tnt.d.ts" />
 /// <reference path ="./sap.ui.codeeditor.d.ts" />
 /// <reference path ="./sap.ui.core.d.ts" />
-/// <reference path ="./sap.ui.documentation.d.ts" />
-/// <reference path ="./sap.ui.fl.d.ts" />
+/// <reference path ="./sap.ui.integration.d.ts" />
 /// <reference path ="./sap.ui.layout.d.ts" />
 /// <reference path ="./sap.ui.rta.d.ts" />
 /// <reference path ="./sap.ui.suite.d.ts" />
