@@ -492,7 +492,7 @@ namespace ibas {
             return true;
         }
         /** 加载视图 */
-        protected loadUI(ui: string | string[], ready: Function): void {
+        protected loadUI(ui: string | string[], ready: (ui: any) => void): void {
             let minLibrary: boolean = ibas.config.get(ibas.CONFIG_ITEM_USE_MINIMUM_LIBRARY, false);
             let modules: string[] = [];
             if (ui instanceof Array) {
