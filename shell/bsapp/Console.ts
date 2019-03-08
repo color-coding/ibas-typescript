@@ -11,6 +11,8 @@
 
 namespace shell {
     export namespace app {
+        /** 属性-导航 */
+        const PROPERTY_NAVIGATION: symbol = Symbol("navigation");
         /** 模块控制台 */
         export class Console extends ibas.ModuleConsole {
             /** 根文件名称 */
@@ -25,10 +27,9 @@ namespace shell {
             }
             /** 视图显示者 */
             viewShower: ibas.IViewShower;
-            private _navigation: ibas.IViewNavigation;
             /** 视图导航 */
             navigation(): ibas.IViewNavigation {
-                return this._navigation;
+                return this[PROPERTY_NAVIGATION];
             }
             /** 初始化 */
             protected registers(): void {
@@ -58,16 +59,15 @@ namespace shell {
                     // 使用c类型视图
                     uiModules.push("index.ui.c");
                 }
-                let that: this = this;
-                this.loadUI(uiModules, function (ui: any): void {
+                this.loadUI(uiModules, (ui) => {
                     // 设置视图显示者
-                    that.viewShower = new ui.ViewShower();
+                    this.viewShower = new ui.ViewShower();
                     // 设置导航
-                    that._navigation = new ui.Navigation();
+                    this[PROPERTY_NAVIGATION] = new ui.Navigation();
                     // 调用初始化
-                    that.initialize();
+                    this.initialize();
                     // 调用入口应用
-                    let app: ibas.IApplication<ibas.IView> = that.default().default();
+                    let app: ibas.IApplication<ibas.IView> = this.default().default();
                     app.show();
                 });
                 // 保留基类方法

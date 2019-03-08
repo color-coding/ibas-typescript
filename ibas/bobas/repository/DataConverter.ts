@@ -14,7 +14,6 @@
 
 namespace ibas {
     const PROPERTY_BOCONVERTER: symbol = Symbol("boConverter");
-    const MSG_SIGN_EXCEPTION: string = "Exception: ";
     /** 被转换的数据 */
     export interface IConvertedData {
         /** 转换之前 */
@@ -185,23 +184,6 @@ namespace ibas {
                 throw new Error(i18n.prop("sys_unable_to_convert_data", objects.getName(objects.getType(data))));
             }
         }
-        /** 修正消息 */
-        protected fixMessage(message: string): string {
-            if (strings.isEmpty(message)) {
-                return message;
-            }
-            if (ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE) === true) {
-                return message;
-            }
-            let index: number = message.lastIndexOf(MSG_SIGN_EXCEPTION);
-            if (index > 0) {
-                let value: string = message.substring(index + MSG_SIGN_EXCEPTION.length);
-                if (!ibas.strings.isEmpty(value)) {
-                    return value;
-                }
-            }
-            return message;
-        }
         /**
          * 解析业务对象数据
          * @param data 目标类型
@@ -221,7 +203,7 @@ namespace ibas {
                 newData.resultCode = remote.ResultCode;
                 newData.message = remote.Message;
                 if (newData.resultCode !== 0) {
-                    newData.message = this.fixMessage(newData.message);
+                    newData.message = newData.message;
                 }
                 if (remote.ResultObjects instanceof Array) {
                     for (let item of remote.ResultObjects) {
@@ -251,7 +233,7 @@ namespace ibas {
                 newData.resultCode = remote.ResultCode;
                 newData.message = remote.Message;
                 if (newData.resultCode !== 0) {
-                    newData.message = this.fixMessage(newData.message);
+                    newData.message = newData.message;
                 }
                 return newData;
             } else if (data.type === ChildCriteria.name) {

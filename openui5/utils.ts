@@ -362,6 +362,8 @@ namespace openui5 {
                 ctrl.setEnabled(editable);
             } else if (ctrl instanceof sap.m.Button) {
                 ctrl.setEnabled(editable);
+            } else if (ctrl instanceof sap.m.CheckBox) {
+                ctrl.setEnabled(editable);
             } else if (ctrl instanceof sap.ui.table.Table) {
                 ctrl.setEditable(editable);
                 for (let row of ctrl.getRows()) {
@@ -374,6 +376,22 @@ namespace openui5 {
                 }
             } else if (ctrl instanceof sap.m.Toolbar || ctrl instanceof sap.m.OverflowToolbar) {
                 for (let item of ctrl.getContent()) {
+                    this.changeControlEditable(item, editable);
+                }
+            } else if (ctrl instanceof sap.ui.layout.form.SimpleForm) {
+                for (let item of ctrl.getContent()) {
+                    this.changeControlEditable(item, editable);
+                }
+            } else if (ctrl instanceof sap.ui.layout.VerticalLayout) {
+                for (let item of ctrl.getContent()) {
+                    this.changeControlEditable(item, editable);
+                }
+            } else if (ctrl instanceof sap.m.Page) {
+                for (let item of ctrl.getContent()) {
+                    this.changeControlEditable(item, editable);
+                }
+            } else if (ctrl instanceof sap.m.FlexBox) {
+                for (let item of ctrl.getItems()) {
                     this.changeControlEditable(item, editable);
                 }
             }

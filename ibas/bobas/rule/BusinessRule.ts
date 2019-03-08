@@ -196,7 +196,7 @@ namespace ibas {
         subtractors: IList<string>;
         /** 计算规则 */
         protected compute(context: BusinessRuleContextCommon): void {
-            let total: number = context.inputValues.get(this.subtrahend);
+            let total: number = numbers.valueOf(context.inputValues.get(this.subtrahend));
             for (let property of this.subtractors) {
                 let value: number = numbers.valueOf(context.inputValues.get(property));
                 total -= value;

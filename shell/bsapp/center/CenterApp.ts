@@ -313,6 +313,10 @@ namespace shell {
             onCompleted: (console: ibas.ModuleConsole) => void;
         }
         class ModuleConsoleManager {
+            constructor() {
+                // 获取是否压缩配置
+                this.minLibrary = ibas.config.get(ibas.CONFIG_ITEM_USE_MINIMUM_LIBRARY, false);
+            }
             minLibrary: boolean;
             modules: ibas.IList<bo.IUserModule>;
             faildModules: ibas.IList<bo.IUserModule>;
@@ -467,8 +471,14 @@ namespace shell {
                                             }
                                         }
                                     }
-                                }, function (): void {
+                                }, function (error: Error): void {
                                     that.modules.remove(module);
+                                    if (error instanceof Error) {
+                                        loader.onStatusMessage(
+                                            ibas.emMessageType.ERROR,
+                                            ibas.i18n.prop("shell_invalid_module_index", ibas.strings.isEmpty(module.name) ? module.id : module.name)
+                                        );
+                                    }
                                 });
                             }
                         }
@@ -484,7 +494,6 @@ namespace shell {
              */
             protected require(module: bo.IUserModule, success?: Function, fail?: Function): void {
                 ibas.logger.log(ibas.emMessageLevel.DEBUG, "center: module: [{0}|{1}] begin to reload.", module.name, module.console);
-                let that: this = this;
                 ibas.requires.require({
                     context: ibas.requires.naming(module.name),
                     baseUrl: module.address,
@@ -492,13 +501,13 @@ namespace shell {
                         "*": {
                             "css": ibas.strings.format("{0}/3rdparty/require-css{1}.js",
                                 ibas.urls.rootUrl("/ibas/index"),
-                                (that.minLibrary ? ibas.SIGN_MIN_LIBRARY : "")
+                                (this.minLibrary ? ibas.SIGN_MIN_LIBRARY : "")
                             )
                         }
                     },
                     waitSeconds: ibas.config.get(ibas.requires.CONFIG_ITEM_WAIT_SECONDS, 10),
                 },
-                    module.index + (that.minLibrary ? ibas.SIGN_MIN_LIBRARY : ""),
+                    module.index + (this.minLibrary ? ibas.SIGN_MIN_LIBRARY : ""),
                     success,
                     fail
                 );

@@ -60,7 +60,7 @@ namespace openui5 {
          */
         export class Unknown extends DataType {
             constructor(settings?: IDataTypeSetting) {
-                super();
+                super(settings);
             }
         }
         /**

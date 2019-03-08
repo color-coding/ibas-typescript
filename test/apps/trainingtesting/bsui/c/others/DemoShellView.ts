@@ -158,9 +158,9 @@ namespace trainingtesting {
                     sap.m.MessageToast.show(message, {
                         duration: 1500,
                         width: "15em",
-                        my: "center bottom",
-                        at: "center bottom",
-                        of: window,
+                        my: sap.ui.core.Popup.Dock.CenterBottom,
+                        at: sap.ui.core.Popup.Dock.CenterBottom,
+                        of: this.pageContainer,
                         offset: "0 0",
                         collision: "fit fit",
                         onClose: null,
