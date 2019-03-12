@@ -464,7 +464,12 @@ namespace openui5 {
                     text: selected.text
                 });
                 this.addSuggestionItem(item);
+                let editable: boolean = this.getEditable();
+                if (!editable) {
+                    this.setEditable(!editable);
+                }
                 this.setSelectedItem(item);
+                this.setEditable(editable);
             }
         },
         /**
