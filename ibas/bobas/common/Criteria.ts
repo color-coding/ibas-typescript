@@ -466,10 +466,12 @@ namespace ibas {
                 condition.operation = operation;
             }
             // 不是标准类型
-            if (boCriteria == null) {
+            if (boCriteria == null && bo.criteria instanceof Function) {
                 boCriteria = bo.criteria();
-                for (let condition of boCriteria.conditions) {
-                    condition.operation = operation;
+                if (boCriteria && boCriteria.conditions instanceof Array) {
+                    for (let condition of boCriteria.conditions) {
+                        condition.operation = operation;
+                    }
                 }
             }
             return boCriteria;

@@ -1,5 +1,6 @@
 [
     {
+        "type": "Customer",
         "isDirty": false,
         "isDeleted": false,
         "isNew": false,
@@ -11,6 +12,7 @@
         "DataOwner": 0,
         "Deleted": "NO",
         "DocEntry": 0,
+        "ObjectCode": "CC_TT_CUSTOMER",
         "LogInst": 0,
         "Name": "上海世纪电子商务有限公司",
         "Referenced": "NO",
@@ -19,6 +21,7 @@
         "UpdateUserSign": 0
     },
     {
+        "type": "Customer",
         "isDirty": false,
         "isDeleted": false,
         "isNew": false,
@@ -30,6 +33,7 @@
         "DataOwner": 0,
         "Deleted": "NO",
         "DocEntry": 0,
+        "ObjectCode": "CC_TT_CUSTOMER",
         "LogInst": 0,
         "Name": "上海海龙信息技术有限公司",
         "Referenced": "NO",
@@ -38,6 +42,7 @@
         "UpdateUserSign": 0
     },
     {
+        "type": "Customer",
         "isDirty": false,
         "isDeleted": false,
         "isNew": false,
@@ -49,6 +54,7 @@
         "DataOwner": 0,
         "Deleted": "NO",
         "DocEntry": 0,
+        "ObjectCode": "CC_TT_CUSTOMER",
         "LogInst": 0,
         "Name": "东莞德诚电子公司",
         "Referenced": "NO",
@@ -57,6 +63,7 @@
         "UpdateUserSign": 0
     },
     {
+        "type": "Customer",
         "isDirty": false,
         "isDeleted": false,
         "isNew": false,
@@ -68,6 +75,7 @@
         "DataOwner": 0,
         "Deleted": "NO",
         "DocEntry": 0,
+        "ObjectCode": "CC_TT_CUSTOMER",
         "LogInst": 0,
         "Name": "北京三立电脑商城",
         "Referenced": "NO",
@@ -76,6 +84,7 @@
         "UpdateUserSign": 0
     },
     {
+        "type": "Customer",
         "isDirty": false,
         "isDeleted": false,
         "isNew": false,
@@ -87,6 +96,7 @@
         "DataOwner": 0,
         "Deleted": "NO",
         "DocEntry": 0,
+        "ObjectCode": "CC_TT_CUSTOMER",
         "LogInst": 0,
         "Name": "北京海龙电子公司",
         "Referenced": "NO",
@@ -95,6 +105,7 @@
         "UpdateUserSign": 0
     },
     {
+        "type": "Customer",
         "isDirty": false,
         "isDeleted": false,
         "isNew": false,
@@ -106,6 +117,7 @@
         "DataOwner": 0,
         "Deleted": "NO",
         "DocEntry": 0,
+        "ObjectCode": "CC_TT_CUSTOMER",
         "LogInst": 0,
         "Name": "北京龙发电子贸易公司",
         "Referenced": "NO",
@@ -114,6 +126,7 @@
         "UpdateUserSign": 0
     },
     {
+        "type": "Customer",
         "isDirty": false,
         "isDeleted": false,
         "isNew": false,
@@ -125,6 +138,7 @@
         "DataOwner": 0,
         "Deleted": "NO",
         "DocEntry": 0,
+        "ObjectCode": "CC_TT_CUSTOMER",
         "LogInst": 0,
         "Name": "南方计算机系统有限公司",
         "Referenced": "NO",
@@ -133,6 +147,7 @@
         "UpdateUserSign": 0
     },
     {
+        "type": "Customer",
         "isDirty": false,
         "isDeleted": false,
         "isNew": false,
@@ -144,6 +159,7 @@
         "DataOwner": 0,
         "Deleted": "NO",
         "DocEntry": 0,
+        "ObjectCode": "CC_TT_CUSTOMER",
         "LogInst": 0,
         "Name": "大连威海公司",
         "Referenced": "NO",
@@ -152,6 +168,7 @@
         "UpdateUserSign": 0
     },
     {
+        "type": "Customer",
         "isDirty": false,
         "isDeleted": false,
         "isNew": false,
@@ -163,6 +180,7 @@
         "DataOwner": 0,
         "Deleted": "NO",
         "DocEntry": 0,
+        "ObjectCode": "CC_TT_CUSTOMER",
         "LogInst": 0,
         "Name": "天津诚信公司",
         "Referenced": "NO",
@@ -171,6 +189,7 @@
         "UpdateUserSign": 0
     },
     {
+        "type": "Customer",
         "isDirty": false,
         "isDeleted": false,
         "isNew": false,
@@ -182,6 +201,7 @@
         "DataOwner": 0,
         "Deleted": "NO",
         "DocEntry": 0,
+        "ObjectCode": "CC_TT_CUSTOMER",
         "LogInst": 0,
         "Name": "安捷公司",
         "Referenced": "NO",
@@ -190,6 +210,7 @@
         "UpdateUserSign": 0
     },
     {
+        "type": "Customer",
         "isDirty": false,
         "isDeleted": false,
         "isNew": false,
@@ -201,6 +222,7 @@
         "DataOwner": 0,
         "Deleted": "NO",
         "DocEntry": 0,
+        "ObjectCode": "CC_TT_CUSTOMER",
         "LogInst": 0,
         "Name": "广州嘉诚公司",
         "Referenced": "NO",
@@ -209,6 +231,7 @@
         "UpdateUserSign": 0
     },
     {
+        "type": "Customer",
         "isDirty": false,
         "isDeleted": false,
         "isNew": false,
@@ -220,6 +243,7 @@
         "DataOwner": 0,
         "Deleted": "NO",
         "DocEntry": 0,
+        "ObjectCode": "CC_TT_CUSTOMER",
         "LogInst": 0,
         "Name": "广州运昌进出口贸易公司",
         "Referenced": "NO",
@@ -228,6 +252,7 @@
         "UpdateUserSign": 0
     },
     {
+        "type": "Customer",
         "isDirty": false,
         "isDeleted": false,
         "isNew": false,
@@ -239,6 +264,7 @@
         "DataOwner": 0,
         "Deleted": "NO",
         "DocEntry": 0,
+        "ObjectCode": "CC_TT_CUSTOMER",
         "LogInst": 0,
         "Name": "杭州宜庆公司",
         "Referenced": "NO",
@@ -247,6 +273,7 @@
         "UpdateUserSign": 0
     },
     {
+        "type": "Customer",
         "isDirty": false,
         "isDeleted": false,
         "isNew": false,
@@ -258,6 +285,7 @@
         "DataOwner": 0,
         "Deleted": "NO",
         "DocEntry": 0,
+        "ObjectCode": "CC_TT_CUSTOMER",
         "LogInst": 0,
         "Name": "深圳特达外贸公司",
         "Referenced": "NO",
@@ -266,6 +294,7 @@
         "UpdateUserSign": 0
     },
     {
+        "type": "Customer",
         "isDirty": false,
         "isDeleted": false,
         "isNew": false,
@@ -277,6 +306,7 @@
         "DataOwner": 0,
         "Deleted": "NO",
         "DocEntry": 0,
+        "ObjectCode": "CC_TT_CUSTOMER",
         "LogInst": 0,
         "Name": "珠海信达电子公司",
         "Referenced": "NO",
@@ -285,6 +315,7 @@
         "UpdateUserSign": 0
     },
     {
+        "type": "Customer",
         "isDirty": false,
         "isDeleted": false,
         "isNew": false,
@@ -296,6 +327,7 @@
         "DataOwner": 0,
         "Deleted": "NO",
         "DocEntry": 0,
+        "ObjectCode": "CC_TT_CUSTOMER",
         "LogInst": 0,
         "Name": "石家庄汉德贸易公司",
         "Referenced": "NO",
@@ -304,6 +336,7 @@
         "UpdateUserSign": 0
     },
     {
+        "type": "Customer",
         "isDirty": false,
         "isDeleted": false,
         "isNew": false,
@@ -315,6 +348,7 @@
         "DataOwner": 0,
         "Deleted": "NO",
         "DocEntry": 0,
+        "ObjectCode": "CC_TT_CUSTOMER",
         "LogInst": 0,
         "Name": "维度电子中国",
         "Referenced": "NO",
@@ -323,6 +357,7 @@
         "UpdateUserSign": 0
     },
     {
+        "type": "Customer",
         "isDirty": false,
         "isDeleted": false,
         "isNew": false,
@@ -334,6 +369,7 @@
         "DataOwner": 0,
         "Deleted": "NO",
         "DocEntry": 0,
+        "ObjectCode": "CC_TT_CUSTOMER",
         "LogInst": 0,
         "Name": "网购客户",
         "Referenced": "NO",
@@ -342,6 +378,7 @@
         "UpdateUserSign": 0
     },
     {
+        "type": "Customer",
         "isDirty": false,
         "isDeleted": false,
         "isNew": false,
@@ -353,6 +390,7 @@
         "DataOwner": 0,
         "Deleted": "NO",
         "DocEntry": 0,
+        "ObjectCode": "CC_TT_CUSTOMER",
         "LogInst": 0,
         "Name": "重庆电子公司",
         "Referenced": "NO",
@@ -361,6 +399,7 @@
         "UpdateUserSign": 0
     },
     {
+        "type": "Customer",
         "isDirty": false,
         "isDeleted": false,
         "isNew": false,
@@ -372,6 +411,7 @@
         "DataOwner": 0,
         "Deleted": "NO",
         "DocEntry": 0,
+        "ObjectCode": "CC_TT_CUSTOMER",
         "LogInst": 0,
         "Name": "零售客户",
         "Referenced": "NO",

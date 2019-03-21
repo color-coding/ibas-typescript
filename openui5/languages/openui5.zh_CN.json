@@ -26,12 +26,14 @@
     "sap_m_ex_botype_null": "对象类型不存在",
     "sap_m_ex_boname_null": "业务对象名称不存在",
     "sap_m_ex_criteria_null": "对象查询条件未赋值",
-    "sap_m_ex_childpropertyname_null":"childPropertyName未赋值",
-    "sap_m_ex_select_please_select":"请选择",
+    "sap_m_ex_childpropertyname_null": "childPropertyName未赋值",
+    "sap_m_ex_select_please_select": "请选择",
     "sap_m_ex_seriesselect_manual": "手动编号",
     "sap_ibas_ex_ibasdb_not_store": "缓存表不存在",
     "sap_ibas_ex_ibasdb_is_closed": "缓存数据库已关闭",
     "sap_ui_table_ex_selection_type_single_tooltip": "切换至多选模式",
     "sap_ui_table_ex_selection_type_multi_tooltip": "切换至单选模式",
-    "sap_m_ex_chooseicon_text": "选择图标"
+    "sap_m_ex_chooseicon_text": "选择图标",
+    "ui_manual_series": "手动编号",
+    "ui_please_select_data": "请选择数据"
 }

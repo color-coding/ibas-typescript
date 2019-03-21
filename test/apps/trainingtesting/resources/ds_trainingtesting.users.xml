@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE DomainModel>
+<Domain Name="TrainingTesting" ShortName="TT">
+  <Model Name="SalesOrder" Description="销售订单" ModelType="Document" Mapped="${Company}_TT_ORDR">
+    <Property Name="U_Address" Description="送货地址" DataType="Alphanumeric" DataSubType="Default" EditSize="100"/>
+    <Property Name="U_Carrier" Description="承运商" DataType="Alphanumeric" DataSubType="Default" EditSize="8"/>
+    <Property Name="U_ReceiptDate" Description="签收日期" DataType="Date" DataSubType="Default" EditSize="8"/>
+    <Property Name="U_Expense" Description="运费" DataType="Decimal" DataSubType="Price" EditSize="8"/>
+  </Model>
+  <Model Name="SalesOrderItem" Description="销售订单-行" ModelType="DocumentLine" Mapped="${Company}_TT_RDR1">
+    <Property Name="U_Color" Description="颜色" DataType="Alphanumeric" DataSubType="Default" EditSize="8"/>
+    <Property Name="U_PrdDate" Description="生产日期" DataType="Alphanumeric" DataSubType="Default" EditSize="8"/>
+  </Model>
+  <BusinessObject MappedModel="SalesOrder" ShortName="${Company}_TT_SALESORDER">
+    <RelatedBO Relation="OneToMany" MappedModel="SalesOrderItem">
+      <RelatedBO Relation="OneToMany" MappedModel="BatchItem"/>
+    </RelatedBO>
+  </BusinessObject>
+</Domain>

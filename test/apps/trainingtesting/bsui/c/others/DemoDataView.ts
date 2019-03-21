@@ -26,7 +26,7 @@ namespace trainingtesting {
                                 type: sap.m.InputType.Text
                             }).bindProperty("value", {
                                 path: "/alphanumeric",
-                                type: new openui5.data.Alphanumeric({
+                                type: new sap.extension.data.Alphanumeric({
                                     notEmpty: true,
                                     maxLength: 20,
                                     minLength: 3,
@@ -43,7 +43,7 @@ namespace trainingtesting {
                                 type: sap.m.InputType.Number
                             }).bindProperty("value", {
                                 path: "/numeric",
-                                type: new openui5.data.Numeric({
+                                type: new sap.extension.data.Numeric({
                                     maxValue: 999,
                                     minValue: 0
                                 }),
@@ -53,7 +53,7 @@ namespace trainingtesting {
                                 type: sap.m.InputType.Number
                             }).bindProperty("value", {
                                 path: "/decimal",
-                                type: new openui5.data.Decimal(),
+                                type: new sap.extension.data.Decimal(),
                             }).bindProperty("description", {
                                 path: "/decimal",
                             }),
@@ -62,7 +62,7 @@ namespace trainingtesting {
                                 type: sap.m.InputType.Number
                             }).bindProperty("value", {
                                 path: "/price",
-                                type: new openui5.data.Price(),
+                                type: new sap.extension.data.Price(),
                             }).bindProperty("description", {
                                 path: "/price",
                             }),
@@ -71,7 +71,7 @@ namespace trainingtesting {
                                 type: sap.m.InputType.Number
                             }).bindProperty("value", {
                                 path: "/quantity",
-                                type: new openui5.data.Quantity(),
+                                type: new sap.extension.data.Quantity(),
                             }).bindProperty("description", {
                                 path: "/quantity",
                             }),
@@ -80,7 +80,7 @@ namespace trainingtesting {
                                 type: sap.m.InputType.Number
                             }).bindProperty("value", {
                                 path: "/rate",
-                                type: new openui5.data.Rate(),
+                                type: new sap.extension.data.Rate(),
                             }).bindProperty("description", {
                                 path: "/rate",
                             }),
@@ -89,7 +89,7 @@ namespace trainingtesting {
                                 type: sap.m.InputType.Number
                             }).bindProperty("value", {
                                 path: "/sum",
-                                type: new openui5.data.Sum(),
+                                type: new sap.extension.data.Sum(),
                             }).bindProperty("description", {
                                 path: "/sum",
                             }),
@@ -98,7 +98,7 @@ namespace trainingtesting {
                                 type: sap.m.InputType.Number
                             }).bindProperty("value", {
                                 path: "/measurement",
-                                type: new openui5.data.Measurement(),
+                                type: new sap.extension.data.Measurement(),
                             }).bindProperty("description", {
                                 path: "/measurement",
                             }),
@@ -107,7 +107,7 @@ namespace trainingtesting {
                                 type: sap.m.InputType.Text
                             }).bindProperty("value", {
                                 path: "/percentage",
-                                type: new openui5.data.Percentage(),
+                                type: new sap.extension.data.Percentage(),
                             }).bindProperty("description", {
                                 path: "/percentage",
                             }),
@@ -115,31 +115,31 @@ namespace trainingtesting {
                             new sap.m.DatePicker("", {
                             }).bindProperty("value", {
                                 path: "/dateTime",
-                                type: new openui5.data.DateTime(),
+                                type: new sap.extension.data.Date(),
                             }),
                             new sap.m.Text("", {
                             }).bindProperty("text", {
                                 path: "/dateTime",
-                                type: new openui5.data.DateTime(),
+                                type: new sap.extension.data.Date(),
                             }),
                             new sap.m.Label("", { text: "Time" }),
                             new sap.m.TimePicker("", {
-                                valueFormat: openui5.data.Time.DEFAULT_FORMAT,
+                                valueFormat: sap.extension.data.Time.DEFAULT_FORMAT,
                             }).bindProperty("value", {
                                 path: "/time",
-                                type: new openui5.data.Time(),
+                                type: new sap.extension.data.Time(),
                             }),
                             new sap.m.Text("", {
                             }).bindProperty("text", {
                                 path: "/time",
-                                type: new openui5.data.Time(),
+                                type: new sap.extension.data.Time(),
                             }),
                             new sap.m.Label("", { text: "emYesNo" }),
                             new sap.m.CheckBox("", {
                                 text: "type: Unknown"
                             }).bindProperty("selected", {
                                 path: "/canceled",
-                                type: new openui5.data.Unknown({
+                                type: new sap.extension.data.Unknown({
                                     formatValue(oValue: any, sInternalType: string): any {
                                         if (sInternalType === "boolean") {
                                             return oValue === ibas.emYesNo.YES ? true : false;
@@ -162,19 +162,19 @@ namespace trainingtesting {
                                 text: "type: YesNo"
                             }).bindProperty("selected", {
                                 path: "/canceled",
-                                type: new openui5.data.YesNo(),
+                                type: new sap.extension.data.YesNo(),
                             }),
                             new sap.m.Label("", { text: "emDocumentStatus" }),
                             new sap.m.Select("", {
                                 items: openui5.utils.createComboBoxItems(ibas.emDocumentStatus),
                             }).bindProperty("selectedKey", {
                                 path: "/documentStatus",
-                                type: new openui5.data.DocumentStatus(),
+                                type: new sap.extension.data.DocumentStatus(),
                             }),
                             new sap.m.Text("", {
                             }).bindProperty("text", {
                                 path: "/documentStatus",
-                                type: new openui5.data.DocumentStatus({
+                                type: new sap.extension.data.DocumentStatus({
                                     describe: true,
                                 }),
                             }),
@@ -183,7 +183,7 @@ namespace trainingtesting {
                                 items: openui5.utils.createComboBoxItems(sap.ui.core.Popup.Dock),
                             }).bindProperty("selectedKey", {
                                 path: "/messageType",
-                                type: new openui5.data.Enum({
+                                type: new sap.extension.data.Enum({
                                     enumType: sap.ui.core.Popup.Dock,
                                 }),
                             }),

@@ -23,72 +23,62 @@ namespace trainingtesting {
                 /** 绘制视图 */
                 draw(): any {
                     let that: this = this;
-                    this.table = new sap.ui.table.Table("", {
+                    this.table = new sap.extension.table.DataTable("", {
                         enableSelectAll: false,
-                        selectionBehavior: sap.ui.table.SelectionBehavior.Row,
+                        chooseType: ibas.emChooseType.SINGLE,
                         visibleRowCount: ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 15),
                         visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Interactive,
+                        dataInfo: bo.SalesOrder,
                         rows: "{/rows}",
                         columns: [
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_salesorder_docentry"),
-                                template: new sap.m.Text("", {
-                                    wrapping: false
-                                }).bindProperty("text", {
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
                                     path: "docEntry"
                                 })
                             }),
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_salesorder_customercode"),
-                                template: new sap.m.Link("", {
-                                    wrapping: false,
-                                    press(event: any): void {
-                                        ibas.servicesManager.runLinkService({
-                                            boCode: bo.Customer.BUSINESS_OBJECT_CODE,
-                                            linkValue: event.getSource().getText()
-                                        });
-                                    }
-                                }).bindProperty("text", {
+                                template: new sap.extension.m.DataLink("", {
+                                    objectCode: bo.Customer.BUSINESS_OBJECT_CODE,
+                                }).bindProperty("bindingValue", {
                                     path: "customerCode"
                                 })
                             }),
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_salesorder_customername"),
-                                template: new sap.m.Text("", {
-                                    wrapping: false
-                                }).bindProperty("text", {
-                                    path: "customerName",
-                                    formatter(data: any): any {
-                                        return ibas.enums.describe(ibas.emDocumentStatus, data);
-                                    }
+                                template: new sap.extension.m.RepositoryText("", {
+                                    repository: bo.BORepositoryTrainingTesting,
+                                    dataInfo: {
+                                        type: bo.Customer,
+                                        key: bo.Customer.PROPERTY_CODE_NAME,
+                                        text: bo.Customer.PROPERTY_NAME_NAME
+                                    },
+                                }).bindProperty("bindingValue", {
+                                    path: "customerCode",
                                 })
                             }),
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_salesorder_documentstatus"),
-                                template: new sap.m.Text("", {
-                                    wrapping: false
-                                }).bindProperty("text", {
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
                                     path: "documentStatus",
-                                    formatter(data: any): any {
-                                        return ibas.enums.describe(ibas.emDocumentStatus, data);
-                                    }
+                                    type: new sap.extension.data.DocumentStatus({ describe: true })
                                 })
                             }),
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_salesorder_canceled"),
-                                template: new sap.m.Text("", {
-                                    wrapping: false
-                                }).bindProperty("text", {
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
                                     path: "canceled",
-                                    formatter(data: any): any {
-                                        return ibas.enums.describe(ibas.emYesNo, data);
-                                    }
+                                    type: new sap.extension.data.YesNo({ describe: true })
                                 })
                             })
                         ]
                     });
                     // 添加列表自动查询事件
-                    openui5.utils.triggerNextResults({
+                    sap.extension.table.triggerNextResults({
                         listener: this.table,
                         next(data: any): void {
                             if (ibas.objects.isNull(that.lastCriteria)) {
@@ -119,10 +109,7 @@ namespace trainingtesting {
                                     type: sap.m.ButtonType.Transparent,
                                     icon: "sap-icon://display",
                                     press: function (): void {
-                                        that.fireViewEvents(that.viewDataEvent,
-                                            // 获取表格选中的对象
-                                            openui5.utils.getSelecteds<bo.SalesOrder>(that.table).firstOrDefault()
-                                        );
+                                        that.fireViewEvents(that.viewDataEvent, that.table.getSelecteds().firstOrDefault());
                                     }
                                 }),
                                 new sap.m.Button("", {
@@ -130,10 +117,7 @@ namespace trainingtesting {
                                     type: sap.m.ButtonType.Transparent,
                                     icon: "sap-icon://edit",
                                     press: function (): void {
-                                        that.fireViewEvents(that.editDataEvent,
-                                            // 获取表格选中的对象
-                                            openui5.utils.getSelecteds<bo.SalesOrder>(that.table).firstOrDefault()
-                                        );
+                                        that.fireViewEvents(that.editDataEvent, that.table.getSelecteds().firstOrDefault());
                                     }
                                 }),
                                 new sap.m.ToolbarSeparator(""),
@@ -142,10 +126,7 @@ namespace trainingtesting {
                                     type: sap.m.ButtonType.Transparent,
                                     icon: "sap-icon://delete",
                                     press: function (): void {
-                                        that.fireViewEvents(that.deleteDataEvent,
-                                            // 获取表格选中的对象
-                                            openui5.utils.getSelecteds<bo.SalesOrder>(that.table)
-                                        );
+                                        that.fireViewEvents(that.deleteDataEvent, that.table.getSelecteds());
                                     }
                                 }),
                                 new sap.m.ToolbarSpacer(""),
@@ -155,7 +136,7 @@ namespace trainingtesting {
                                     press: function (event: any): void {
                                         ibas.servicesManager.showServices({
                                             proxy: new ibas.BOServiceProxy({
-                                                data: openui5.utils.getSelecteds(that.table),
+                                                data: that.table.getSelecteds(),
                                                 converter: new bo.DataConverter(),
                                             }),
                                             displayServices(services: ibas.IServiceAgent[]): void {
@@ -195,25 +176,16 @@ namespace trainingtesting {
                     });
                     return page;
                 }
-                private table: sap.ui.table.Table;
+                private table: sap.extension.table.DataTable;
                 /** 显示数据 */
                 showData(datas: bo.SalesOrder[]): void {
-                    let done: boolean = false;
                     let model: sap.ui.model.Model = this.table.getModel(undefined);
-                    if (!ibas.objects.isNull(model)) {
-                        // 已存在绑定数据，添加新的
-                        let hDatas: any = (<any>model).getData();
-                        if (!ibas.objects.isNull(hDatas) && hDatas.rows instanceof Array) {
-                            for (let item of datas) {
-                                hDatas.rows.push(item);
-                            }
-                            model.refresh(false);
-                            done = true;
-                        }
-                    }
-                    if (!done) {
-                        // 没有显示数据
-                        this.table.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
+                    if (model instanceof sap.extension.model.JSONModel) {
+                        // 已绑定过数据
+                        model.addData(datas);
+                    } else {
+                        // 未绑定过数据
+                        this.table.setModel(new sap.extension.model.JSONModel({ rows: datas }));
                     }
                     this.table.setBusy(false);
                 }

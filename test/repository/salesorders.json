@@ -1,5 +1,6 @@
 [
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -21,6 +22,7 @@
         "DocumentTotal": 39429.000000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -107,6 +109,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -128,6 +131,7 @@
         "DocumentTotal": 20270.250000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -214,6 +218,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -235,6 +240,7 @@
         "DocumentTotal": 31151.250000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -273,6 +279,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -294,6 +301,7 @@
         "DocumentTotal": 5029.540000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -356,6 +364,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -377,6 +386,7 @@
         "DocumentTotal": 31020.330000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -463,6 +473,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -484,6 +495,7 @@
         "DocumentTotal": 69527.250000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -570,6 +582,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -591,6 +604,7 @@
         "DocumentTotal": 2047.500000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -629,6 +643,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -650,6 +665,7 @@
         "DocumentTotal": 14952.600000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -688,6 +704,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -709,6 +726,7 @@
         "DocumentTotal": 4730.370000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -771,6 +789,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -792,6 +811,7 @@
         "DocumentTotal": 10444.020000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -878,6 +898,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -899,6 +920,7 @@
         "DocumentTotal": 17496.630000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -1009,6 +1031,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -1030,6 +1053,7 @@
         "DocumentTotal": 135.140000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -1068,6 +1092,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -1089,6 +1114,7 @@
         "DocumentTotal": 52458.120000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -1175,6 +1201,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -1196,6 +1223,7 @@
         "DocumentTotal": 1239.030000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -1258,6 +1286,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -1279,6 +1308,7 @@
         "DocumentTotal": 38412.560000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -1389,6 +1419,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -1410,6 +1441,7 @@
         "DocumentTotal": 7424.420000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -1520,6 +1552,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -1541,6 +1574,7 @@
         "DocumentTotal": 1578.330000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -1603,6 +1637,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -1624,6 +1659,7 @@
         "DocumentTotal": 5352.630000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -1710,6 +1746,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -1731,6 +1768,7 @@
         "DocumentTotal": 996.840000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -1769,6 +1807,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -1790,6 +1829,7 @@
         "DocumentTotal": 1806.830000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -1876,6 +1916,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -1897,6 +1938,7 @@
         "DocumentTotal": 2076.780000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -1959,6 +2001,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -1980,6 +2023,7 @@
         "DocumentTotal": 3743.010000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -2090,6 +2134,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -2111,6 +2156,7 @@
         "DocumentTotal": 2305.490000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -2173,6 +2219,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -2194,6 +2241,7 @@
         "DocumentTotal": 60079.500000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -2256,6 +2304,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -2277,6 +2326,7 @@
         "DocumentTotal": 69248.320000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -2363,6 +2413,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -2384,6 +2435,7 @@
         "DocumentTotal": 27410.930000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -2494,6 +2546,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -2515,6 +2568,7 @@
         "DocumentTotal": 290.750000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -2553,6 +2607,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -2574,6 +2629,7 @@
         "DocumentTotal": 15495.480000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -2684,6 +2740,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -2705,6 +2762,7 @@
         "DocumentTotal": 971.920000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -2743,6 +2801,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -2764,6 +2823,7 @@
         "DocumentTotal": 15429.380000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -2826,6 +2886,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -2847,6 +2908,7 @@
         "DocumentTotal": 10568.610000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -2909,6 +2971,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -2930,6 +2993,7 @@
         "DocumentTotal": 9707.200000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -3040,6 +3104,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -3061,6 +3126,7 @@
         "DocumentTotal": 10474.820000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -3171,6 +3237,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -3192,6 +3259,7 @@
         "DocumentTotal": 149.530000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -3230,6 +3298,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -3251,6 +3320,7 @@
         "DocumentTotal": 17147.810000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -3313,6 +3383,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -3334,6 +3405,7 @@
         "DocumentTotal": 11697.080000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -3444,6 +3516,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -3465,6 +3538,7 @@
         "DocumentTotal": 72953.900000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -3575,6 +3649,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -3596,6 +3671,7 @@
         "DocumentTotal": 18350.060000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -3706,6 +3782,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -3727,6 +3804,7 @@
         "DocumentTotal": 11084.930000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -3789,6 +3867,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -3810,6 +3889,7 @@
         "DocumentTotal": 26580.940000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -3920,6 +4000,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -3941,6 +4022,7 @@
         "DocumentTotal": 1453.750000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -3979,6 +4061,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -4000,6 +4083,7 @@
         "DocumentTotal": 63948.460000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -4086,6 +4170,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -4107,6 +4192,7 @@
         "DocumentTotal": 21706.290000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -4217,6 +4303,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -4238,6 +4325,7 @@
         "DocumentTotal": 1246.050000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
@@ -4276,6 +4364,7 @@
         "UserSign": 0
     },
     {
+        "type": "SalesOrder",
         "isDirty": true,
         "isDeleted": false,
         "isNew": false,
@@ -4297,6 +4386,7 @@
         "DocumentTotal": 1801.800000,
         "Handwritten": "NO",
         "Instance": 0,
+        "ObjectCode": "CC_TT_SALESORDER",
         "LogInst": 0,
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",

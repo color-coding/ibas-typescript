@@ -7,11 +7,35 @@
  */
 /// <reference path="./types/index.d.ts" />
 /// <reference path="./datatypes.ts" />
-/// <reference path="./data.ts" />
 /// <reference path="./utils.ts" />
 /// <reference path="./extends/ibas.ex.ts" />
 /// <reference path="./extends/sap.m.ex.ts" />
 /// <reference path="./extends/sap.ui.table.ex.ts" />
+/// <reference path="./extensions/BORepository.ts" />
+/// <reference path="./extensions/Common.ts" />
+/// <reference path="./extensions/DataType.ts" />
+/// <reference path="./extensions/components/Model.d.ts" />
+/// <reference path="./extensions/components/Model.ts" />
+/// <reference path="./extensions/components/Input.d.ts" />
+/// <reference path="./extensions/components/Input.ts" />
+/// <reference path="./extensions/components/Select.d.ts" />
+/// <reference path="./extensions/components/Select.ts" />
+/// <reference path="./extensions/components/Text.d.ts" />
+/// <reference path="./extensions/components/Text.ts" />
+/// <reference path="./extensions/components/Link.d.ts" />
+/// <reference path="./extensions/components/Link.ts" />
+/// <reference path="./extensions/components/List.d.ts" />
+/// <reference path="./extensions/components/List.ts" />
+/// <reference path="./extensions/components/CheckBox.d.ts" />
+/// <reference path="./extensions/components/CheckBox.ts" />
+/// <reference path="./extensions/components/ComboBox.d.ts" />
+/// <reference path="./extensions/components/ComboBox.ts" />
+/// <reference path="./extensions/components/DatePicker.d.ts" />
+/// <reference path="./extensions/components/DatePicker.ts" />
+/// <reference path="./extensions/components/Table.d.ts" />
+/// <reference path="./extensions/components/Table.ts" />
+/// <reference path="./extensions/components/Page.d.ts" />
+/// <reference path="./extensions/components/Page.ts" />
 
 namespace openui5 {
     /** 配置项目-紧缩屏幕 */
