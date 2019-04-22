@@ -135,9 +135,13 @@ namespace sap {
                     if (this.getSelectedKey() !== value) {
                         this.setProperty("selectedKey", value);
                         this.setProperty("bindingValue", value);
+                        let item: sap.ui.core.Item = this.getSuggestionItemByKey(String(value));
                         if (ibas.strings.isEmpty(value)) {
                             this.updateDomValue("");
-                        } else if (!this.getSuggestionItemByKey(value) && !ibas.strings.isEmpty(value)) {
+                        } else if (!ibas.objects.isNull(item)) {
+                            this.setSelectedItem(item);
+                            this.updateDomValue(item.getText());
+                        } else if (ibas.objects.isNull(item) && !ibas.strings.isEmpty(value)) {
                             // 没有此建议值
                             let dataInfo: repository.IDataInfo = this.getDataInfo();
                             if (ibas.objects.isNull(dataInfo)) {
@@ -244,6 +248,8 @@ namespace sap {
                 },
                 /** 初始化 */
                 init(this: SelectionInput): void {
+                    // 调用基类构造
+                    (<any>RepositoryInput.prototype).init.apply(this, arguments);
                     // 自身事件监听
                     this.attachValueHelpRequest(null, () => {
                         let boCode: string = this.getDataInfo().type;
@@ -368,7 +374,7 @@ namespace sap {
                 }
             });
             /**
-             * 组织数据-输入框
+             * 项目数据-输入框
              */
             SelectionInput.extend("sap.extension.m.ProjectInput", {
                 metadata: {

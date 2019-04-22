@@ -53,9 +53,18 @@ namespace trainingtesting {
             referenced: ibas.emYesNo;
             /** 删除的 */
             deleted: ibas.emYesNo;
-
+            /** 街道 */
+            street: string;
+            /** 县/区 */
+            district: string;
+            /** 市 */
+            city: string;
+            /** 省 */
+            province: string;
+            /** 国 */
+            country: string;
+            /** 邮编 */
+            zipCode: string;
         }
-
-
     }
 }

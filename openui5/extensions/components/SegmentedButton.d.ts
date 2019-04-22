@@ -9,9 +9,9 @@ declare namespace sap {
     namespace extension {
         namespace m {
             /**
-             * 文本框
+             * 分段按钮
              */
-            class Text extends sap.m.Text {
+            class SegmentedButton extends sap.m.SegmentedButton {
                 /**
                  * 构造
                  * @param {string} sId 唯一标记，不要赋值
@@ -39,30 +39,25 @@ declare namespace sap {
                  * 设置绑定值
                  * @param value 值
                  */
-                setBindingValue(value: string): this;
+                setBindingValue(value: string): SegmentedButton;
             }
             /**
-             * 业务仓库数据-文本框
+             * 分段按钮-枚举
              */
-            class RepositoryText extends Text {
+            class EnumSegmentedButton extends SegmentedButton {
                 /**
-                 * 获取业务仓库实例
+                 * 获取枚举类型
                  */
-                getRepository(): ibas.BORepositoryApplication;
+                getEnumType(): any;
                 /**
-                 * 设置业务仓库
-                 * @param value 业务仓库实例；业务仓库名称
+                 * 设置枚举类型
+                 * @param value 枚举类型
                  */
-                setRepository(value: ibas.BORepositoryApplication | string): this;
+                setEnumType(value: any): EnumSegmentedButton;
                 /**
-                 * 获取数据信息
+                 * 加载可选值
                  */
-                getDataInfo(): repository.IDataInfo;
-                /**
-                 * 设置数据信息
-                 * @param value 数据信息
-                 */
-                setDataInfo(value: repository.IDataInfo | any): this;
+                loadItems(): EnumSegmentedButton;
             }
         }
     }

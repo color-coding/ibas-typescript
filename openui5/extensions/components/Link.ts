@@ -71,6 +71,9 @@ namespace sap {
                 },
                 /** 初始化 */
                 init(this: DataLink): void {
+                    // 调用基类构造
+                    (<any>Link.prototype).init.apply(this, arguments);
+                    // 监听事件
                     this.attachPress(undefined, (event: sap.ui.base.Event) => {
                         let source: DataLink = <DataLink>event.getSource();
                         if (ibas.objects.isNull(source)) {

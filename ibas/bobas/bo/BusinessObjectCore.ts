@@ -528,11 +528,23 @@ namespace ibas {
                 if (arg instanceof Array) {
                     for (let item of arg) {
                         super.add(item);
+                        if (item instanceof TrackableBase) {
+                            item.isLoading = true;
+                        }
                         this.afterAdd(item);
+                        if (item instanceof TrackableBase) {
+                            item.isLoading = false;
+                        }
                     }
                 } else {
                     super.add(arg);
+                    if (arg instanceof TrackableBase) {
+                        arg.isLoading = true;
+                    }
                     this.afterAdd(arg);
+                    if (arg instanceof TrackableBase) {
+                        arg.isLoading = false;
+                    }
                 }
             }
         }

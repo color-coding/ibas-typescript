@@ -338,6 +338,8 @@ namespace ibas {
         forEach(): IUserField[];
         /** 大小 */
         size(): number;
+        /** 返回索引 */
+        indexOf(item: IUserField): number;
         /** 注册 */
         register(name: string, valueType: emDbFieldType): IUserField;
     }

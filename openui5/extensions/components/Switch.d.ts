@@ -9,9 +9,9 @@ declare namespace sap {
     namespace extension {
         namespace m {
             /**
-             * 文本框
+             * 开关框
              */
-            class Text extends sap.m.Text {
+            class Switch extends sap.m.Switch {
                 /**
                  * 构造
                  * @param {string} sId 唯一标记，不要赋值
@@ -34,35 +34,12 @@ declare namespace sap {
                 /**
                  * 获取绑定值
                  */
-                getBindingValue(): string;
+                getBindingValue(): boolean;
                 /**
                  * 设置绑定值
                  * @param value 值
                  */
-                setBindingValue(value: string): this;
-            }
-            /**
-             * 业务仓库数据-文本框
-             */
-            class RepositoryText extends Text {
-                /**
-                 * 获取业务仓库实例
-                 */
-                getRepository(): ibas.BORepositoryApplication;
-                /**
-                 * 设置业务仓库
-                 * @param value 业务仓库实例；业务仓库名称
-                 */
-                setRepository(value: ibas.BORepositoryApplication | string): this;
-                /**
-                 * 获取数据信息
-                 */
-                getDataInfo(): repository.IDataInfo;
-                /**
-                 * 设置数据信息
-                 * @param value 数据信息
-                 */
-                setDataInfo(value: repository.IDataInfo | any): this;
+                setBindingValue(value: boolean): this;
             }
         }
     }

@@ -204,7 +204,7 @@ namespace sap {
                                         blankData.key = "";
                                     }
                                     if (!blankData.text) {
-                                        blankData.text = ibas.i18n.prop("ui_please_select_data");
+                                        blankData.text = ibas.i18n.prop("openui5_please_select_data");
                                     }
                                     this.addItem(new sap.ui.core.ListItem("", {
                                         key: blankData.key,
@@ -240,7 +240,7 @@ namespace sap {
                         /** 属性名称 */
                         propertyName: { type: "string" },
                         /** 空白数据 */
-                        blankData: { type: "any", defaultValue: { key: "", text: ibas.i18n.prop("ui_please_select_data") } },
+                        blankData: { type: "any", defaultValue: { key: "", text: ibas.i18n.prop("openui5_please_select_data") } },
                     },
                     events: {}
                 },
@@ -388,7 +388,7 @@ namespace sap {
                         (values) => {
                             this.addItem(new sap.ui.core.ListItem("", {
                                 key: 0,
-                                text: ibas.i18n.prop("ui_manual_series")
+                                text: ibas.i18n.prop("openui5_manual_series")
                             }));
                             if (values instanceof Error) {
                                 ibas.logger.log(values);

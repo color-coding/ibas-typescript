@@ -20,6 +20,12 @@ declare namespace sap {
                  */
                 protected setProperty(sPropertyName: string, oValue: any, bSuppressInvalidate?: boolean): this;
                 /**
+                 * 绑定属性
+                 * @param sName 属性名称
+                 * @param oBindingInfo 绑定信息
+                 */
+                bindProperty(sName: string, oBindingInfo: any): this;
+                /**
                  * 获取选择的数据
                  */
                 getSelecteds<T>(): ibas.IList<T>;
@@ -36,6 +42,17 @@ declare namespace sap {
                  * @param value 选择类型
                  */
                 setChooseType(value: ibas.emChooseType): this;
+                /**
+                 * 设置模型
+                 * @param oModel 数据模型
+                 * @param sName 名称
+                 */
+                setModel(oModel: model.JSONModel, sName?: string): this;
+                /**
+                 * 获取模型
+                 * @param sModelName 名称
+                 */
+                getModel(sModelName?: string | undefined): model.JSONModel;
             }
             /**
              * 表格列
@@ -48,6 +65,12 @@ declare namespace sap {
                  * @param bSuppressInvalidate 立即
                  */
                 protected setProperty(sPropertyName: string, oValue: any, bSuppressInvalidate?: boolean): this;
+                /**
+                 * 绑定属性
+                 * @param sName 属性名称
+                 * @param oBindingInfo 绑定信息
+                 */
+                bindProperty(sName: string, oBindingInfo: any): this;
             }
             /**
              * 数据表格
@@ -62,6 +85,15 @@ declare namespace sap {
                  * @param value 值
                  */
                 setDataInfo(value: { code: string, name?: string } | string | shell.bo.IBOInfo): this;
+                /**
+                 * 获取属性过滤器
+                 */
+                getPropertyFilter(): Function;
+                /**
+                 * 设置属性过滤器
+                 * @param value 过滤器
+                 */
+                setPropertyFilter(value: (property: shell.bo.IBOPropertyInfo) => boolean): this;
             }
             /**
              * 数据表格列

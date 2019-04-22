@@ -23,6 +23,12 @@
     "bo_customer_activated": "已激活的",
     "bo_customer_referenced": "已引用",
     "bo_customer_deleted": "删除的",
+    "bo_customer_street": "街道",
+    "bo_customer_district": "县/区",
+    "bo_customer_city": "市",
+    "bo_customer_province": "省",
+    "bo_customer_country": "国",
+    "bo_customer_zipcode": "邮编",
     "bo_customer_closing_delimiter": "----结束----"
   },
   {

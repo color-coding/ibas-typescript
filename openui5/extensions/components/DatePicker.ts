@@ -47,6 +47,17 @@ namespace sap {
                 setDateValue(this: DatePicker, value: any): DatePicker {
                     return this.setBindingValue(value);
                 },
+                /** 初始化 */
+                init(this: DatePicker): void {
+                    (<any>sap.m.DatePicker.prototype).init.apply(this, arguments);
+                    this.attachChange(undefined, () => {
+                        let oldValue: any = this.getBindingValue();
+                        let newValue: any = this.getDateValue();
+                        if (oldValue !== newValue) {
+                            this.setProperty("bindingValue", this.getDateValue());
+                        }
+                    });
+                }
             });
             /**
              * 时间选择框
@@ -87,6 +98,17 @@ namespace sap {
                 setDateValue(this: TimePicker, value: any): TimePicker {
                     return this.setBindingValue(value);
                 },
+                /** 初始化 */
+                init(this: DatePicker): void {
+                    (<any>sap.m.DatePicker.prototype).init.apply(this, arguments);
+                    this.attachChange(undefined, () => {
+                        let oldValue: any = this.getBindingValue();
+                        let newValue: any = this.getDateValue();
+                        if (oldValue !== newValue) {
+                            this.setProperty("bindingValue", this.getDateValue());
+                        }
+                    });
+                }
             });
         }
     }

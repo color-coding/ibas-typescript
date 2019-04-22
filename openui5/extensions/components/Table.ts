@@ -163,6 +163,8 @@ namespace sap {
                 setTemplate(this: Column, value: sap.ui.core.Control | string): Column {
                     if (value instanceof sap.m.Select) {
                         value.setWidth("100%");
+                    } else if (value instanceof sap.m.ComboBox) {
+                        value.setWidth("100%");
                     }
                     sap.ui.table.Column.prototype.setTemplate.apply(this, arguments);
                     return this;
@@ -176,6 +178,8 @@ namespace sap {
                     properties: {
                         /** 数据信息 */
                         dataInfo: { type: "any" },
+                        /** 属性过滤器 */
+                        propertyFilter: { type: "function" },
                     },
                     events: {}
                 },
@@ -193,13 +197,22 @@ namespace sap {
                 setDataInfo(this: DataTable, value: { code: string, name?: string } | string | Function | shell.bo.IBOInfo): DataTable {
                     return this.setProperty("dataInfo", value);
                 },
-                /*
-                rendered: true,
-                onAfterRendering(this: DataTable): void {
-                    if ((<any>this).rendered === true) {
-                        return;
-                    }
-                    (<any>this).rendered = true;
+                /**
+                 * 获取属性过滤器
+                 */
+                getPropertyFilter(): Function {
+                    return this.getProperty("propertyFilter");
+                },
+                /**
+                 * 设置属性过滤器
+                 * @param value 过滤器
+                 */
+                setPropertyFilter(value: (property: shell.bo.IBOPropertyInfo) => boolean): DataTable {
+                    return this.setProperty("propertyFilter", value);
+                },
+                /** 重构设置 */
+                applySettings(this: DataTable): DataTable {
+                    Table.prototype.applySettings.apply(this, arguments);
                     let dataInfo: any = this.getDataInfo();
                     if (typeof dataInfo === "string") {
                         dataInfo = {
@@ -230,31 +243,88 @@ namespace sap {
                             });
                         }
                     }
+                    return this;
+                },
+                /**
+                 * 设置模型
+                 * @param oModel 数据模型
+                 * @param sName 名称
+                 */
+                setModel(this: DataTable, oModel: model.JSONModel, sName?: string): DataTable {
+                    let model: model.JSONModel = this.getModel();
+                    // 判断是否有有效模型
+                    if (model && model.getData()) {
+                        let data: any = model.getData();
+                        if (!(data.rows instanceof Array && data.rows.length > 0)) {
+                            model = undefined;
+                        }
+                    }
+                    // 没有设置过模型，则更新控件绑定信息
+                    if (ibas.objects.isNull(model) && !ibas.objects.isNull(oModel)) {
+                        // 获取对象信息
+                        let data: any = oModel.getData();
+                        if (data instanceof Array) {
+                            data = data[0];
+                        } else if (data.rows instanceof Array) {
+                            data = data.rows[0];
+                        }
+                        if (!ibas.objects.isNull(data)) {
+                            let userFields: ibas.IUserFields = data.userFields;
+                            if (!ibas.objects.isNull(userFields)) {
+                                for (let column of this.getColumns()) {
+                                    if (column instanceof DataColumn) {
+                                        let template: sap.ui.core.Control | string = column.getTemplate();
+                                        if (template instanceof sap.ui.core.Control) {
+                                            let bindingInfo: any = (<any>template).getBindingInfo("bindingValue");
+                                            if (!ibas.objects.isNull(bindingInfo)) {
+                                                userfields.check(userFields, bindingInfo);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    return Table.prototype.setModel.apply(this, arguments);
                 }
-                */
             });
             function propertyColumns(this: DataTable, boInfo: shell.bo.IBOInfo): void {
                 if (!boInfo || !(boInfo.properties instanceof Array)) {
                     return;
                 }
                 // 查询未存在的属性
+                let filter: Function = this.getPropertyFilter();
                 let properties: ibas.IList<shell.bo.IBOPropertyInfo> = new ibas.ArrayList<shell.bo.IBOPropertyInfo>();
                 for (let item of boInfo.properties) {
                     if (item.editSize <= 0) {
                         continue;
                     }
-                    if (!ibas.strings.isWith(item.property, "U_", null)) {
+                    if (item.authorised === ibas.emAuthoriseType.NONE) {
                         continue;
+                    }
+                    if (filter instanceof Function) {
+                        if (filter(item) === false) {
+                            continue;
+                        }
                     }
                     properties.add(item);
                 }
+                // 只读列表（遍历列，存在输入框则非只读）
+                let readonly: boolean = true;
                 for (let column of this.getColumns()) {
                     if (column instanceof DataColumn) {
                         let propertyInfo: shell.bo.IBOPropertyInfo = column.getPropertyInfo();
-                        if (ibas.objects.isNull(propertyInfo)) {
-                            let template: sap.ui.core.Control | string = column.getTemplate();
-                            if (template instanceof sap.ui.core.Control) {
-
+                        let template: sap.ui.core.Control | string = column.getTemplate();
+                        if (template instanceof sap.ui.core.Control) {
+                            if (template instanceof sap.m.InputBase) {
+                                readonly = false;
+                            }
+                            if (ibas.objects.isNull(propertyInfo)) {
+                                let path: string = (<any>template).getBindingPath("bindingValue");
+                                if (!ibas.strings.isEmpty(path)) {
+                                    propertyInfo = properties.firstOrDefault(c => ibas.strings.equalsIgnoreCase(path, c.property));
+                                    column.setPropertyInfo(propertyInfo);
+                                }
                             }
                         }
                         if (ibas.objects.isNull(propertyInfo)) {
@@ -270,128 +340,10 @@ namespace sap {
                 }
                 // 创建未存在的列
                 for (let property of properties) {
-                    // 创建绑定信息
-                    let bindInfo: { path: string, type?: sap.extension.data.Type } = {
-                        path: property.property
-                    };
-                    if (property.dataType === "Numeric") {
-                        bindInfo.type = new sap.extension.data.Numeric();
-                    } else if (property.dataType === "Date") {
-                        if (property.editType === "Time") {
-                            bindInfo.type = new sap.extension.data.Time();
-                        } else {
-                            bindInfo.type = new sap.extension.data.Date();
-                        }
-                    } else if (property.dataType === "Decimal") {
-                        if (property.editType === "Rate") {
-                            bindInfo.type = new sap.extension.data.Rate();
-                        } else if (property.editType === "Sum") {
-                            bindInfo.type = new sap.extension.data.Sum();
-                        } else if (property.editType === "Price") {
-                            bindInfo.type = new sap.extension.data.Price();
-                        } else if (property.editType === "Quantity") {
-                            bindInfo.type = new sap.extension.data.Quantity();
-                        } else if (property.editType === "Percentage") {
-                            bindInfo.type = new sap.extension.data.Percentage();
-                        } else if (property.editType === "Measurement") {
-                            bindInfo.type = new sap.extension.data.Measurement();
-                        } else {
-                            bindInfo.type = new sap.extension.data.Decimal();
-                        }
-                    }
-                    if (property.authorised === ibas.emAuthoriseType.READ) {
-                        // 只读权限
-                        if (property.values instanceof Array && property.values.length > 0) {
-                            // 可选值
-                            bindInfo.type = new sap.extension.data.Unknown({
-                                formatValue(oValue: any, sInternalType: string): any {
-                                    if (sInternalType === "string") {
-                                        for (let item of property.values) {
-                                            if (item.value === oValue) {
-                                                return item.description;
-                                            }
-                                        }
-                                    }
-                                    return oValue;
-                                },
-                                parseValue(oValue: any, sInternalType: string): any {
-                                    if (sInternalType === "string") {
-                                        for (let item of property.values) {
-                                            if (item.description === oValue) {
-                                                return item.value;
-                                            }
-                                        }
-                                    }
-                                    return oValue;
-                                }
-                            });
-                        }
-                        this.addColumn(new DataColumn("", {
-                            label: property.description,
-                            width: ibas.strings.format("{0}px", property.editSize),
-                            template: new sap.extension.m.Text("", {
-                            }).bindProperty("bindingValue", bindInfo)
-                        }));
-                    } else if (property.authorised === ibas.emAuthoriseType.ALL) {
-                        // 读写权限
-                        if (bindInfo.type instanceof sap.extension.data.Date) {
-                            this.addColumn(new DataColumn("", {
-                                label: property.description,
-                                width: ibas.strings.format("{0}px", property.editSize),
-                                template: new sap.extension.m.DatePicker("", {
-                                }).bindProperty("bindingValue", bindInfo)
-                            }));
-                        } else if (bindInfo.type instanceof sap.extension.data.Time) {
-                            this.addColumn(new DataColumn("", {
-                                label: property.description,
-                                width: ibas.strings.format("{0}px", property.editSize),
-                                template: new sap.extension.m.TimePicker("", {
-                                }).bindProperty("bindingValue", bindInfo)
-                            }));
-                        } else if (bindInfo.type instanceof sap.extension.data.Decimal) {
-                            this.addColumn(new DataColumn("", {
-                                label: property.description,
-                                width: ibas.strings.format("{0}px", property.editSize),
-                                template: new sap.extension.m.Input("", {
-                                    type: sap.m.InputType.Number
-                                }).bindProperty("bindingValue", bindInfo)
-                            }));
-                        } else if (bindInfo.type instanceof sap.extension.data.Numeric) {
-                            this.addColumn(new DataColumn("", {
-                                label: property.description,
-                                width: ibas.strings.format("{0}px", property.editSize),
-                                template: new sap.extension.m.Input("", {
-                                    type: sap.m.InputType.Number
-                                }).bindProperty("bindingValue", bindInfo)
-                            }));
-                        } else if (property.values instanceof Array && property.values.length > 0) {
-                            let items: ibas.IList<sap.ui.core.Item> = new ibas.ArrayList<sap.ui.core.Item>();
-                            items.add(new sap.ui.core.ListItem("", {
-                                key: "",
-                                text: ibas.i18n.prop("ui_please_select_data")
-                            }));
-                            for (let item of property.values) {
-                                items.add(new sap.ui.core.ListItem("", {
-                                    key: item.value,
-                                    text: item.value
-                                }));
-                            }
-                            this.addColumn(new DataColumn("", {
-                                label: property.description,
-                                width: ibas.strings.format("{0}px", property.editSize),
-                                template: new sap.extension.m.Select("", {
-                                    items: items
-                                }).bindProperty("bindingValue", bindInfo)
-                            }));
-                        } else {
-                            this.addColumn(new DataColumn("", {
-                                label: property.description,
-                                width: ibas.strings.format("{0}px", property.editSize),
-                                template: new sap.extension.m.Input("", {
-                                }).bindProperty("bindingValue", bindInfo)
-                            }));
-                        }
-                    }
+                    this.addColumn(new DataColumn("", {
+                        label: property.description,
+                        template: factories.newComponent(property, readonly),
+                    }));
                 }
             }
             /**
@@ -402,6 +354,10 @@ namespace sap {
                     properties: {
                         /** 属性信息 */
                         propertyInfo: { type: "any" },
+                        /** 列宽 */
+                        width: { type: "sap.ui.core.CSSSize", group: "Dimension", defaultValue: "10rem" },
+                        /** 自动改变列宽 */
+                        autoResizable: { type: "boolean", defalutValue: true },
                     },
                     events: {}
                 },

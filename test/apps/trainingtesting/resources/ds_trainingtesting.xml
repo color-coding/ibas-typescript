@@ -51,6 +51,12 @@
     <Property Name="Activated" Description="已激活的" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Activated"/>
     <Property Name="Referenced" Description="已引用" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Refed"/>
     <Property Name="Deleted" Description="删除的" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Deleted"/>
+    <Property Name="Street" Description="街道" DataType="Alphanumeric" DataSubType="Default" EditSize="100" Mapped="Street"/>
+    <Property Name="District" Description="县/区" DataType="Alphanumeric" DataSubType="Default" EditSize="100" Mapped="District"/>
+    <Property Name="City" Description="市" DataType="Alphanumeric" DataSubType="Default" EditSize="100" Mapped="City"/>
+    <Property Name="Province" Description="省" DataType="Alphanumeric" DataSubType="Default" EditSize="100" Mapped="Province"/>
+    <Property Name="Country" Description="国" DataType="Alphanumeric" DataSubType="Default" EditSize="100" Mapped="Country"/>
+    <Property Name="ZipCode" Description="邮编" DataType="Alphanumeric" DataSubType="Default" EditSize="10" Mapped="ZipCode"/>
   </Model>
   <BusinessObject MappedModel="Customer" ShortName="${Company}_TT_CUSTOMER"/>
   <Model Name="SalesOrder" Description="销售订单" ModelType="Document" Mapped="${Company}_TT_ORDR">

@@ -34,6 +34,13 @@
     "sap_ui_table_ex_selection_type_single_tooltip": "切换至多选模式",
     "sap_ui_table_ex_selection_type_multi_tooltip": "切换至单选模式",
     "sap_m_ex_chooseicon_text": "选择图标",
-    "ui_manual_series": "手动编号",
-    "ui_please_select_data": "请选择数据"
+    "openui5_address": "地址",
+    "openui5_country": "国家",
+    "openui5_province": "省",
+    "openui5_city": "市",
+    "openui5_district": "区",
+    "openui5_street": "街道",
+    "openui5_zipcode": "邮编",
+    "openui5_manual_series": "手动编号",
+    "openui5_please_select_data": "请选择数据"
 }

@@ -29,6 +29,12 @@ namespace trainingtesting {
                         visibleRowCount: ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 15),
                         visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Interactive,
                         dataInfo: bo.SalesOrder,
+                        propertyFilter(property: shell.bo.IBOPropertyInfo): boolean {
+                            if (!ibas.strings.isWith(property.property, "U_", undefined)) {
+                                return false;
+                            }
+                            return true;
+                        },
                         rows: "{/rows}",
                         columns: [
                             new sap.extension.table.DataColumn("", {
@@ -64,7 +70,7 @@ namespace trainingtesting {
                                 template: new sap.extension.m.Text("", {
                                 }).bindProperty("bindingValue", {
                                     path: "documentStatus",
-                                    type: new sap.extension.data.DocumentStatus({ describe: true })
+                                    type: new sap.extension.data.DocumentStatus(true)
                                 })
                             }),
                             new sap.extension.table.DataColumn("", {
@@ -72,7 +78,7 @@ namespace trainingtesting {
                                 template: new sap.extension.m.Text("", {
                                 }).bindProperty("bindingValue", {
                                     path: "canceled",
-                                    type: new sap.extension.data.YesNo({ describe: true })
+                                    type: new sap.extension.data.YesNo(true)
                                 })
                             })
                         ]
@@ -92,7 +98,7 @@ namespace trainingtesting {
                             that.fireViewEvents(that.fetchDataEvent, criteria);
                         }
                     });
-                    let page: sap.m.Page = new sap.m.Page("", {
+                    return new sap.extension.m.Page("", {
                         showHeader: false,
                         subHeader: new sap.m.Toolbar("", {
                             content: [
@@ -158,7 +164,7 @@ namespace trainingtesting {
                                                         }
                                                     }));
                                                 }
-                                                (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
+                                                popover.addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
                                                 popover.openBy(event.getSource(), true);
                                             }
                                         });
@@ -174,7 +180,6 @@ namespace trainingtesting {
                             })
                         ]
                     });
-                    return page;
                 }
                 private table: sap.extension.table.DataTable;
                 /** 显示数据 */

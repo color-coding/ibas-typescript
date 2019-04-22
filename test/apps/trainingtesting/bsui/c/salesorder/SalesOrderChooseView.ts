@@ -58,7 +58,7 @@ namespace trainingtesting {
                                 template: new sap.extension.m.Text("", {
                                 }).bindProperty("bindingValue", {
                                     path: "documentStatus",
-                                    type: new sap.extension.data.DocumentStatus({ describe: true })
+                                    type: new sap.extension.data.DocumentStatus(true)
                                 })
                             }),
                             new sap.extension.table.DataColumn("", {
@@ -66,7 +66,7 @@ namespace trainingtesting {
                                 template: new sap.extension.m.Text("", {
                                 }).bindProperty("bindingValue", {
                                     path: "canceled",
-                                    type: new sap.extension.data.YesNo({ describe: true })
+                                    type: new sap.extension.data.YesNo(true)
                                 })
                             })
                         ]

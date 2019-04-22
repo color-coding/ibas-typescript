@@ -39,7 +39,7 @@ namespace trainingtesting {
                                     that.fireViewEvents(that.chooseSalesOrderCustomerEvent);
                                 }
                             }).bindProperty("bindingValue", {
-                                path: "/customerCode",
+                                path: "customerCode",
                                 type: new sap.extension.data.Alphanumeric({
                                     notEmpty: true,
                                     minLength: 2,
@@ -50,7 +50,7 @@ namespace trainingtesting {
                             new sap.extension.m.Input("", {
                                 // editable: false,
                             }).bindProperty("bindingValue", {
-                                path: "/customerName",
+                                path: "customerName",
                                 type: new sap.extension.data.Alphanumeric()
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_reference1") }),
@@ -68,7 +68,7 @@ namespace trainingtesting {
                                     new ibas.Condition(bo.Material.PROPERTY_ACTIVATED_NAME, ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES)
                                 ],
                             }).bindProperty("bindingValue", {
-                                path: "/reference1",
+                                path: "reference1",
                                 type: new sap.extension.data.Alphanumeric({
                                     regExp: /^.{3,20}$/
                                 })
@@ -86,7 +86,7 @@ namespace trainingtesting {
                                     new ibas.Condition(bo.Material.PROPERTY_CODE_NAME, ibas.emConditionOperation.START, "A")
                                 ],
                             }).bindProperty("bindingValue", {
-                                path: "/reference2",
+                                path: "reference2",
                                 type: new sap.extension.data.Alphanumeric()
                             }),
                             new sap.ui.core.Title("", { text: ibas.i18n.prop("trainingtesting_title_others") }),
@@ -94,26 +94,26 @@ namespace trainingtesting {
                             new sap.extension.m.Input("", {
                                 type: sap.m.InputType.Number
                             }).bindProperty("bindingValue", {
-                                path: "/docEntry",
+                                path: "docEntry",
                                 type: new sap.extension.data.Numeric()
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_documentstatus") }),
                             new sap.extension.m.EnumSelect("", {
                                 enumType: ibas.emDocumentStatus
                             }).bindProperty("bindingValue", {
-                                path: "/documentStatus",
+                                path: "documentStatus",
                                 type: new sap.extension.data.DocumentStatus()
                             }),
                             new sap.extension.m.CheckBox("", {
                                 text: ibas.i18n.prop("bo_salesorder_canceled")
                             }).bindProperty("bindingValue", {
-                                path: "/canceled",
+                                path: "canceled",
                                 type: new sap.extension.data.YesNo()
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_documentdate") }),
                             new sap.extension.m.DatePicker("", {
                             }).bindProperty("bindingValue", {
-                                path: "/documentDate",
+                                path: "documentDate",
                                 type: new sap.extension.data.Date()
                             }),
                         ]
@@ -145,6 +145,16 @@ namespace trainingtesting {
                                 }),
                                 enableSelectAll: false,
                                 visibleRowCount: ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 8),
+                                dataInfo: {
+                                    code: bo.SalesOrder.BUSINESS_OBJECT_CODE,
+                                    name: bo.SalesOrderItem.name
+                                },
+                                propertyFilter(property: shell.bo.IBOPropertyInfo): boolean {
+                                    if (!ibas.strings.isWith(property.property, "U_", undefined)) {
+                                        return false;
+                                    }
+                                    return true;
+                                },
                                 rows: "{/rows}",
                                 columns: [
                                     new sap.extension.table.DataColumn("", {
@@ -224,39 +234,31 @@ namespace trainingtesting {
                             new sap.extension.m.UserInput("", {
                                 showValueHelp: true,
                             }).bindProperty("bindingValue", {
-                                path: "/dataOwner",
+                                path: "dataOwner",
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_organization") }),
                             new sap.extension.m.OrganizationInput("", {
                                 showValueHelp: true,
                             }).bindProperty("bindingValue", {
-                                path: "/organization",
+                                path: "organization",
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_teammembers") }),
                             new sap.extension.m.UserInput("", {
                                 showValueHelp: true,
                                 chooseType: ibas.emChooseType.MULTIPLE,
                             }).bindProperty("bindingValue", {
-                                path: "/teamMembers",
+                                path: "teamMembers",
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_remarks") }),
                             new sap.extension.m.TextArea("", {
                                 rows: 3,
                             }).bindProperty("bindingValue", {
-                                path: "/remarks",
+                                path: "remarks",
                             }),
                             new sap.ui.core.Title("", {}),
                         ]
                     });
-                    this.layoutMain = new sap.ui.layout.VerticalLayout("", {
-                        width: "100%",
-                        content: [
-                            formTop,
-                            formSalesOrderItem,
-                            formBottom,
-                        ]
-                    });
-                    this.page = new sap.m.Page("", {
+                    return this.page = new sap.extension.m.DataPage("", {
                         showHeader: false,
                         subHeader: new sap.m.Toolbar("", {
                             content: [
@@ -305,13 +307,24 @@ namespace trainingtesting {
                                 }),
                             ]
                         }),
-                        content: [this.layoutMain]
+                        dataInfo: {
+                            code: bo.SalesOrder.BUSINESS_OBJECT_CODE,
+                        },
+                        propertyFilter(property: shell.bo.IBOPropertyInfo): boolean {
+                            if (!ibas.strings.isWith(property.property, "U_", undefined)) {
+                                return false;
+                            }
+                            return true;
+                        },
+                        content: [
+                            formTop,
+                            formSalesOrderItem,
+                            formBottom,
+                        ]
                     });
-                    return this.page;
                 }
 
-                private page: sap.m.Page;
-                private layoutMain: sap.ui.layout.VerticalLayout;
+                private page: sap.extension.m.Page;
                 private tableSalesOrderItem: sap.extension.table.Table;
 
                 /** 改变视图状态 */
@@ -332,14 +345,13 @@ namespace trainingtesting {
                             openui5.utils.changeToolbarSavable(<sap.m.Toolbar>this.page.getSubHeader(), false);
                             openui5.utils.changeToolbarDeletable(<sap.m.Toolbar>this.page.getSubHeader(), false);
                         }
-                        openui5.utils.changeFormEditable(this.layoutMain, false);
+                        openui5.utils.changeFormEditable(this.page, false);
                     }
                 }
 
                 /** 显示数据 */
                 showSalesOrder(data: bo.SalesOrder): void {
-                    this.layoutMain.setModel(new sap.extension.model.JSONModel(data));
-                    this.layoutMain.bindObject("/");
+                    this.page.setModel(new sap.extension.model.JSONModel(data));
                     // 改变视图状态
                     this.changeViewStatus(data);
                 }

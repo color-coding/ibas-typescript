@@ -24,6 +24,10 @@ declare namespace sap {
                  * @param sPath 路径
                  */
                 addData(oData: any | any[], sPath?: string): void;
+                /**
+                 * 获取数据
+                 */
+                getData<T>(): T;
             }
         }
     }

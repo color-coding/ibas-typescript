@@ -174,9 +174,7 @@ namespace trainingtesting {
                             new sap.m.Text("", {
                             }).bindProperty("text", {
                                 path: "/documentStatus",
-                                type: new sap.extension.data.DocumentStatus({
-                                    describe: true,
-                                }),
+                                type: new sap.extension.data.DocumentStatus(true),
                             }),
                             new sap.m.Label("", { text: "MessageType" }),
                             new sap.m.Select("", {

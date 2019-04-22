@@ -32,10 +32,17 @@
 /// <reference path="./extensions/components/ComboBox.ts" />
 /// <reference path="./extensions/components/DatePicker.d.ts" />
 /// <reference path="./extensions/components/DatePicker.ts" />
+/// <reference path="./extensions/components/SegmentedButton.d.ts" />
+/// <reference path="./extensions/components/SegmentedButton.ts" />
+/// <reference path="./extensions/components/Switch.d.ts" />
+/// <reference path="./extensions/components/Switch.ts" />
 /// <reference path="./extensions/components/Table.d.ts" />
 /// <reference path="./extensions/components/Table.ts" />
 /// <reference path="./extensions/components/Page.d.ts" />
 /// <reference path="./extensions/components/Page.ts" />
+/// <reference path="./extensions/components/AddressArea.d.ts" />
+/// <reference path="./extensions/components/AddressArea.ts" />
+/// <reference path="./extensions/components/Factory.ts" />
 
 namespace openui5 {
     /** 配置项目-紧缩屏幕 */

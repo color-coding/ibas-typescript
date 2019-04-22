@@ -560,7 +560,7 @@ namespace sap {
                             let time: string = String(this.format);
                             let hour: number = Math.floor(oValue / 100);
                             let minute: number = oValue - (hour * 100);
-                            return time.replace("HH", ibas.strings.valueOf(hour))
+                            return time.replace("HH", ibas.strings.fill(hour, 2, "0"))
                                 .replace("mm", ibas.strings.fill(minute, 2, "0"));
                         } else {
                             return oValue;
@@ -763,22 +763,17 @@ namespace sap {
                 }
             }
             /**
-             * 指定的枚举设置
-             */
-            export interface ISpecifiedEnumSetting extends ITypeSetting {
-                /**
-                 * 枚举值描述（使用后不能解析值）
-                 */
-                describe?: boolean;
-            }
-            /**
              * 是否类型
              */
             export class YesNo extends Enum {
-                constructor(setting?: ISpecifiedEnumSetting) {
+                /**
+                 * 构造
+                 * @param describe 使用描述，当true时，显示语言描述，但不能使用双向绑定
+                 */
+                constructor(describe?: boolean) {
                     super({
                         enumType: ibas.emYesNo,
-                        describe: setting ? setting.describe : undefined,
+                        describe: describe,
                     });
                 }
                 /**
@@ -810,10 +805,14 @@ namespace sap {
              * 单据状态类型
              */
             export class DocumentStatus extends Enum {
-                constructor(setting?: ISpecifiedEnumSetting) {
+                /**
+                 * 构造
+                 * @param describe 使用描述，当true时，显示语言描述，但不能使用双向绑定
+                 */
+                constructor(describe?: boolean) {
                     super({
                         enumType: ibas.emDocumentStatus,
-                        describe: setting ? setting.describe : undefined,
+                        describe: describe,
                     });
                 }
             }
@@ -821,10 +820,14 @@ namespace sap {
              * 对象状态类型
              */
             export class BOStatus extends Enum {
-                constructor(setting?: ISpecifiedEnumSetting) {
+                /**
+                 * 构造
+                 * @param describe 使用描述，当true时，显示语言描述，但不能使用双向绑定
+                 */
+                constructor(describe?: boolean) {
                     super({
                         enumType: ibas.emBOStatus,
-                        describe: setting ? setting.describe : undefined,
+                        describe: describe,
                     });
                 }
             }
@@ -832,10 +835,14 @@ namespace sap {
              * 审批状态类型
              */
             export class ApprovalStatus extends Enum {
-                constructor(setting?: ISpecifiedEnumSetting) {
+                /**
+                 * 构造
+                 * @param describe 使用描述，当true时，显示语言描述，但不能使用双向绑定
+                 */
+                constructor(describe?: boolean) {
                     super({
                         enumType: ibas.emApprovalStatus,
-                        describe: setting ? setting.describe : undefined,
+                        describe: describe,
                     });
                 }
             }
@@ -843,10 +850,14 @@ namespace sap {
              * 审批结果类型
              */
             export class ApprovalResult extends Enum {
-                constructor(setting?: ISpecifiedEnumSetting) {
+                /**
+                 * 构造
+                 * @param describe 使用描述，当true时，显示语言描述，但不能使用双向绑定
+                 */
+                constructor(describe?: boolean) {
                     super({
                         enumType: ibas.emApprovalResult,
-                        describe: setting ? setting.describe : undefined,
+                        describe: describe,
                     });
                 }
             }
@@ -854,10 +865,14 @@ namespace sap {
              * 审批步骤状态类型
              */
             export class ApprovalStepStatus extends Enum {
-                constructor(setting?: ISpecifiedEnumSetting) {
+                /**
+                 * 构造
+                 * @param describe 使用描述，当true时，显示语言描述，但不能使用双向绑定
+                 */
+                constructor(describe?: boolean) {
                     super({
                         enumType: ibas.emApprovalStepStatus,
-                        describe: setting ? setting.describe : undefined,
+                        describe: describe,
                     });
                 }
             }
@@ -865,10 +880,14 @@ namespace sap {
              * 权限类型类型
              */
             export class AuthoriseType extends Enum {
-                constructor(setting?: ISpecifiedEnumSetting) {
+                /**
+                 * 构造
+                 * @param describe 使用描述，当true时，显示语言描述，但不能使用双向绑定
+                 */
+                constructor(describe?: boolean) {
                     super({
                         enumType: ibas.emAuthoriseType,
-                        describe: setting ? setting.describe : undefined,
+                        describe: describe,
                     });
                 }
             }
@@ -876,10 +895,14 @@ namespace sap {
              * 条件操作类型
              */
             export class ConditionOperation extends Enum {
-                constructor(setting?: ISpecifiedEnumSetting) {
+                /**
+                 * 构造
+                 * @param describe 使用描述，当true时，显示语言描述，但不能使用双向绑定
+                 */
+                constructor(describe?: boolean) {
                     super({
                         enumType: ibas.emConditionOperation,
-                        describe: setting ? setting.describe : undefined,
+                        describe: describe,
                     });
                 }
             }
@@ -887,10 +910,14 @@ namespace sap {
              * 条件关系类型
              */
             export class ConditionRelationship extends Enum {
-                constructor(setting?: ISpecifiedEnumSetting) {
+                /**
+                 * 构造
+                 * @param describe 使用描述，当true时，显示语言描述，但不能使用双向绑定
+                 */
+                constructor(describe?: boolean) {
                     super({
                         enumType: ibas.emConditionRelationship,
-                        describe: setting ? setting.describe : undefined,
+                        describe: describe,
                     });
                 }
             }
@@ -898,10 +925,14 @@ namespace sap {
              * 排序方式类型
              */
             export class SortType extends Enum {
-                constructor(setting?: ISpecifiedEnumSetting) {
+                /**
+                 * 构造
+                 * @param describe 使用描述，当true时，显示语言描述，但不能使用双向绑定
+                 */
+                constructor(describe?: boolean) {
                     super({
                         enumType: ibas.emSortType,
-                        describe: setting ? setting.describe : undefined,
+                        describe: describe,
                     });
                 }
             }
@@ -909,10 +940,14 @@ namespace sap {
              * 方向类型
              */
             export class Direction extends Enum {
-                constructor(setting?: ISpecifiedEnumSetting) {
+                /**
+                 * 构造
+                 * @param describe 使用描述，当true时，显示语言描述，但不能使用双向绑定
+                 */
+                constructor(describe?: boolean) {
                     super({
                         enumType: ibas.emDirection,
-                        describe: setting ? setting.describe : undefined,
+                        describe: describe,
                     });
                 }
             }

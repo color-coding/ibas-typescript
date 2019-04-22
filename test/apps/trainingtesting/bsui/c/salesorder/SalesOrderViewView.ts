@@ -19,9 +19,47 @@ namespace trainingtesting {
                     let formTop: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
                         editable: true,
                         content: [
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_customername") }),
+                            new sap.extension.m.Input("", {
+                                // editable: false,
+                            }).bindProperty("bindingValue", {
+                                path: "customerName",
+                                type: new sap.extension.data.Alphanumeric()
+                            }),
+                            new sap.m.Label("", { text: "A" }),
+                            new sap.extension.m.Input("", {
+                                // editable: false,
+                            }).bindProperty("bindingValue", {
+                                path: "userFields/0/value",
+                                type: new sap.extension.data.Alphanumeric()
+                            }),
+                            new sap.m.Label("", { text: "B" }),
+                            new sap.extension.m.Input("", {
+                                // editable: false,
+                                bindingValue: "{= " + "${}.customerName" + " }",
+                            }),
+                            new sap.m.Label("", { text: "C" }),
+                            new sap.extension.m.Input("", {
+                                // editable: false,
+                                bindingValue: "{= " + "${}.userFields.get('U_Address').value" + " }",
+                            }),
+                            new sap.m.Label("", { text: "D" }),
+                            new sap.extension.m.Input("", {
+                                // editable: false,
+                            }).bindProperty("bindingValue", {
+                                path: "{= userFields.get('U_Address').value }",
+                                type: new sap.extension.data.Alphanumeric()
+                            }),
+                            new sap.m.Label("", { text: "E" }),
+                            new sap.extension.m.Input("", {
+                                // editable: false,
+                            }).bindProperty("bindingValue", {
+                                path: "userFields/{= " + "${}/userFields.get('U_Address')" + " }/value",
+                                type: new sap.extension.data.Alphanumeric()
+                            }),
                         ]
                     });
-                    this.tableSalesOrderItem = new sap.ui.table.Table("", {
+                    this.tableSalesOrderItem = new sap.extension.table.Table("", {
                         enableSelectAll: false,
                         selectionBehavior: sap.ui.table.SelectionBehavior.Row,
                         visibleRowCount: ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 8),
@@ -36,14 +74,7 @@ namespace trainingtesting {
                             this.tableSalesOrderItem,
                         ]
                     });
-                    this.layoutMain = new sap.ui.layout.VerticalLayout("", {
-                        width: "100%",
-                        content: [
-                            formTop,
-                            formSalesOrderItem,
-                        ]
-                    });
-                    let page: sap.m.Page = new sap.m.Page("", {
+                    return this.page = new sap.extension.m.Page("", {
                         showHeader: false,
                         subHeader: new sap.m.Bar("", {
                             contentLeft: [
@@ -64,7 +95,7 @@ namespace trainingtesting {
                                     press: function (event: any): void {
                                         ibas.servicesManager.showServices({
                                             proxy: new ibas.BOServiceProxy({
-                                                data: (<any>that.layoutMain.getModel()).getData(),
+                                                data: that.page.getModel().getData(),
                                                 converter: new bo.DataConverter(),
                                             }),
                                             displayServices(services: ibas.IServiceAgent[]): void {
@@ -86,7 +117,7 @@ namespace trainingtesting {
                                                         }
                                                     }));
                                                 }
-                                                (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
+                                                popover.addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
                                                 popover.openBy(event.getSource(), true);
                                             }
                                         });
@@ -94,21 +125,24 @@ namespace trainingtesting {
                                 })
                             ]
                         }),
-                        content: [this.layoutMain]
+                        content: [
+                            formTop,
+                            formSalesOrderItem,
+                        ]
                     });
-                    return page;
                 }
-                private layoutMain: sap.ui.layout.VerticalLayout;
-                private tableSalesOrderItem: sap.ui.table.Table;
+
+                private page: sap.extension.m.Page;
+                private tableSalesOrderItem: sap.extension.table.Table;
 
                 /** 显示数据 */
                 showSalesOrder(data: bo.SalesOrder): void {
-                    this.layoutMain.setModel(new sap.ui.model.json.JSONModel(data));
-                    this.layoutMain.bindObject("/");
+                    this.page.setModel(new sap.extension.model.JSONModel(data));
                 }
+
                 /** 显示数据 */
                 showSalesOrderItems(datas: bo.SalesOrderItem[]): void {
-                    this.tableSalesOrderItem.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
+                    this.tableSalesOrderItem.setModel(new sap.extension.model.JSONModel({ rows: datas }));
                 }
             }
         }

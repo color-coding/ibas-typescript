@@ -26,14 +26,24 @@ declare namespace sap {
                  */
                 protected setProperty(sPropertyName: string, oValue: any, bSuppressInvalidate?: boolean): this;
                 /**
+                 * 绑定属性
+                 * @param sName 属性名称
+                 * @param oBindingInfo 绑定信息
+                 */
+                bindProperty(sName: string, oBindingInfo: any): this;
+                /**
                  * 获取绑定值
                  */
-                getBindingValue(): boolean;
+                getBindingValue(): string;
                 /**
                  * 设置绑定值
                  * @param value 值
                  */
-                setBindingValue(value: boolean): this;
+                setBindingValue(value: string): ComboBox;
+                /**
+                 * 销毁可选项
+                 */
+                destroyItems(): ComboBox;
             }
         }
     }

@@ -33,6 +33,7 @@ namespace trainingtesting {
             protected viewShowed(): void {
                 // 视图加载完成
                 super.viewShowed();
+                this.view.showSalesOrder(this.viewData);
             }
             /** 编辑数据，参数：目标数据 */
             protected editData(): void {
@@ -92,7 +93,8 @@ namespace trainingtesting {
         }
         /** 视图-销售订单 */
         export interface ISalesOrderViewView extends ibas.IBOViewView {
-
+            /** 显示数据 */
+            showSalesOrder(data: bo.SalesOrder): void;
         }
         /** 销售订单连接服务映射 */
         export class SalesOrderLinkServiceMapping extends ibas.BOLinkServiceMapping {

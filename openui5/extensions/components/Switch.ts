@@ -9,13 +9,13 @@ namespace sap {
     export namespace extension {
         export namespace m {
             /**
-             * 下拉框
+             * 开关框
              */
-            sap.m.ComboBox.extend("sap.extension.m.ComboBox", {
+            sap.m.Switch.extend("sap.extension.m.Switch", {
                 metadata: {
                     properties: {
                         /** 绑定值 */
-                        bindingValue: { type: "string" },
+                        bindingValue: { type: "boolean" },
                     },
                     events: {}
                 },
@@ -24,32 +24,25 @@ namespace sap {
                 /**
                  * 获取绑定值
                  */
-                getBindingValue(this: ComboBox): string {
+                getBindingValue(this: Switch): boolean {
                     return this.getProperty("bindingValue");
                 },
                 /**
                  * 设置绑定值
                  * @param value 值
                  */
-                setBindingValue(this: ComboBox, value: string): ComboBox {
-                    sap.m.Select.prototype.setSelectedKey.apply(this, arguments);
+                setBindingValue(this: Switch, value: boolean): Switch {
+                    sap.m.Switch.prototype.setState.apply(this, arguments);
                     this.setProperty("bindingValue", value);
                     return this;
                 },
-                /** 重写此方法，设置选中值 */
-                setSelection(this: ComboBox, value: sap.ui.core.Item): ComboBox {
-                    (<any>sap.m.ComboBox.prototype).setSelection.apply(this, arguments);
-                    this.setProperty("bindingValue", this.getSelectedKey());
-                    return this;
-                },
                 /**
-                 * 销毁可选项
+                 * 设置绑定值
+                 * @param value 值
                  */
-                destroyItems(this: ComboBox): ComboBox {
-                    (<any>sap.m.ComboBox.prototype).destroyItems.apply(this, arguments);
-                    this.setValue(undefined);
-                    return this;
-                }
+                setState(this: Switch, value: boolean): Switch {
+                    return this.setBindingValue(value);
+                },
             });
         }
     }

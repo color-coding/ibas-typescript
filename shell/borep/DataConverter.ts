@@ -14,7 +14,6 @@ namespace shell {
          * Shel 模块的数据转换者
          */
         export class DataConverter extends ibas.DataConverter4j {
-
             createConverter(): ibas.IBOConverter<ibas.IBusinessObject, any> {
                 return null;
             }
@@ -206,7 +205,7 @@ namespace shell {
                     newData.editSize = remote.EditSize;
                     newData.searched = remote.Searched;
                     newData.systemed = remote.Systemed;
-                    newData.authorised = ibas.strings.isEmpty(remote.Authorised) ? ibas.emAuthoriseType.ALL : ibas.enums.valueOf(ibas.emAuthoriseType, remote.Authorised);
+                    newData.authorised = ibas.strings.isEmpty(remote.Authorised) ? ibas.emAuthoriseType.NONE : ibas.enums.valueOf(ibas.emAuthoriseType, remote.Authorised);
                     newData.values = new Array<BOPropertyValue>();
                     for (let item of remote.Values) {
                         item.type = BOPropertyValue.name;

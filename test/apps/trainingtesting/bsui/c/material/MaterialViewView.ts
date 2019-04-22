@@ -21,13 +21,7 @@ namespace trainingtesting {
                         content: [
                         ]
                     });
-                    this.layoutMain = new sap.ui.layout.VerticalLayout("", {
-                        width: "100%",
-                        content: [
-                            formTop,
-                        ]
-                    });
-                    let page: sap.m.Page = new sap.m.Page("", {
+                    return this.page = new sap.extension.m.Page("", {
                         showHeader: false,
                         subHeader: new sap.m.Bar("", {
                             contentLeft: [
@@ -48,7 +42,7 @@ namespace trainingtesting {
                                     press: function (event: any): void {
                                         ibas.servicesManager.showServices({
                                             proxy: new ibas.BOServiceProxy({
-                                                data: (<any>that.layoutMain.getModel()).getData(),
+                                                data: that.page.getModel().getData(),
                                                 converter: new bo.DataConverter(),
                                             }),
                                             displayServices(services: ibas.IServiceAgent[]): void {
@@ -70,7 +64,7 @@ namespace trainingtesting {
                                                         }
                                                     }));
                                                 }
-                                                (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
+                                                popover.addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
                                                 popover.openBy(event.getSource(), true);
                                             }
                                         });
@@ -78,16 +72,17 @@ namespace trainingtesting {
                                 })
                             ]
                         }),
-                        content: [this.layoutMain]
+                        content: [
+                            formTop
+                        ]
                     });
-                    return page;
                 }
-                private layoutMain: sap.ui.layout.VerticalLayout;
+
+                private page: sap.extension.m.Page;
 
                 /** 显示数据 */
                 showMaterial(data: bo.Material): void {
-                    this.layoutMain.setModel(new sap.ui.model.json.JSONModel(data));
-                    this.layoutMain.bindObject("/");
+                    this.page.setModel(new sap.extension.model.JSONModel(data));
                 }
             }
         }
