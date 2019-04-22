@@ -8,7 +8,7 @@
 declare namespace sap {
     namespace ui {
         /**
-         * <p>UI5 library: sap.ui.codeeditor.</p>
+         * <p><p>UI5 library: sap.ui.codeeditor.</p></p>
          */
         namespace codeeditor {
             /**

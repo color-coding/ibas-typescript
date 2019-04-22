@@ -10,7 +10,7 @@ declare namespace sap {
       namespace rta {
          namespace service {
             /**
-             * <p>Provides necessary functionality to get and execute actions on controls. Actions are UI operations available in RTA such as rename, remove, move etc.</p>
+             * <p><p>Provides necessary functionality to get and execute actions on controls. Actions are UI operations available in RTA such as rename, remove, move etc.</p></p>
              */
             namespace Action {
                /**
@@ -66,7 +66,7 @@ declare namespace sap {
                 */
                function get(vControlIds: string | string[]): sap.ui.rta.service.Action.ActionObject[];
                /**
-                * <p>Object containing the detailed information about the action.</p><p><pre>
+                * <p><p>Object containing the detailed information about the action.</p><p><pre>
                {
                   id: &lt;string&gt;, // ID of the action
                   group: &lt;string&gt;, // Group name, in case the action has been grouped with other action(s)
@@ -75,7 +75,7 @@ declare namespace sap {
                   rank: &lt;int&gt;, // Sorting rank for visual representation of the action position
                   text: &lt;string&gt;, // Action name
                }
-               </pre></p>
+               </pre></p></p>
                 */
                export interface ActionObject {
                }
@@ -89,7 +89,7 @@ declare namespace sap {
       namespace rta {
          namespace service {
             /**
-             * <p>Provides functionality to create ControllerExtensions</p>
+             * <p><p>Provides functionality to create ControllerExtensions</p></p>
              */
             namespace ControllerExtension {
                /**
@@ -115,7 +115,7 @@ declare namespace sap {
       namespace rta {
          namespace service {
             /**
-             * <p>Provides necessary functionality to get tree model data for an outline. Takes into consideration different designtime root elements.</p>
+             * <p><p>Provides necessary functionality to get tree model data for an outline. Takes into consideration different designtime root elements.</p></p>
              */
             namespace Outline {
                /**
@@ -126,7 +126,7 @@ declare namespace sap {
                 */
                function get(sId?: string, iDepth?: number): sap.ui.rta.service.Outline.OutlineObject;
                /**
-                * <p>Object containing an outline of available nodes.</p>
+                * <p><p>Object containing an outline of available nodes.</p></p>
                 */
                export interface OutlineObject {
                }
@@ -140,7 +140,7 @@ declare namespace sap {
       namespace rta {
          namespace service {
             /**
-             * <p>Provides necessary functionality to retrieve design time metadata properties. Takes into consideration control metadata properties, design time metadata properties, annotations, label and name.</p>
+             * <p><p>Provides necessary functionality to retrieve design time metadata properties. Takes into consideration control metadata properties, design time metadata properties, annotations, label and name.</p></p>
              */
             namespace Property {
                /**
@@ -239,7 +239,7 @@ declare namespace sap {
                 */
                function get(sControlId: string): sap.ui.rta.service.Property.PropertyObject;
                /**
-                * <p>Object containing the detailed information about design time properties of the passed control.</p>
+                * <p><p>Object containing the detailed information about design time properties of the passed control.</p></p>
                 */
                export interface PropertyObject {
                }
@@ -253,7 +253,7 @@ declare namespace sap {
       namespace rta {
          namespace service {
             /**
-             * <p>Provides functionality to get and set selection on controls.</p>
+             * <p><p>Provides functionality to get and set selection on controls.</p></p>
              */
             export class Selection {
                /**
@@ -336,8 +336,8 @@ declare namespace sap {
             destroy(): void;
             /**
              * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getOrigin" href="#/api/sap.ui.rta.Client/methods/getOrigin">origin</a>.</p><p>Receiving window origin; a valid origin has to be specified, see <a target="_blank" href="https://html.spec.whatwg.org/multipage/origin.html#origin">https://html.spec.whatwg.org/multipage/origin.html#origin</a>
-                <img src="./resources/sap/ui/documentation/sdk/images/link-external.png" 
-                title="Information published on non SAP site" class="sapUISDKExternalLink"/></p>
+            <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
+            title="Information published on non SAP site" class="sapUISDKExternalLink"/></p>
              * @returns string <p>Value of property <code>origin</code></p>
              */
             getOrigin(): string;
@@ -348,8 +348,8 @@ declare namespace sap {
             getWindow(): any;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getOrigin" href="#/api/sap.ui.rta.Client/methods/getOrigin">origin</a>.</p><p>Receiving window origin; a valid origin has to be specified, see <a target="_blank" href="https://html.spec.whatwg.org/multipage/origin.html#origin">https://html.spec.whatwg.org/multipage/origin.html#origin</a>
-                <img src="./resources/sap/ui/documentation/sdk/images/link-external.png" 
-                title="Information published on non SAP site" class="sapUISDKExternalLink"/></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+            <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
+            title="Information published on non SAP site" class="sapUISDKExternalLink"/></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
              * @param {string} sOrigin <p>New value for property <code>origin</code></p>
              * @returns sap.ui.rta.Client <p>Reference to <code>this</code> in order to allow method chaining</p>
              */

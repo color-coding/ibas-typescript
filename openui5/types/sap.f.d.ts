@@ -7,7 +7,7 @@
  */
 declare namespace sap {
 	/**
-	 * <p>SAPUI5 library with controls specialized for SAP Fiori apps.</p>
+	 * <p><p>SAPUI5 library with controls specialized for SAP Fiori apps.</p></p>
 	 */
 	namespace f {
 		/**
@@ -191,7 +191,7 @@ declare namespace sap {
 			unbindDetailBox(): sap.f.Avatar;
 		}
 		/**
-		 * <p>Types of image size and position that determine how an image fits in the <a target="_self" class="jsdoclink" href="#/api/sap.f.Avatar">sap.f.Avatar</a> control area.</p>
+		 * <p><p>Types of image size and position that determine how an image fits in the <a target="_self" class="jsdoclink" href="#/api/sap.f.Avatar">sap.f.Avatar</a> control area.</p></p>
 		 */
 		export enum AvatarImageFitType {
 			/**
@@ -204,7 +204,7 @@ declare namespace sap {
 			Cover = "Cover",
 		}
 		/**
-		 * <p>Types of shape for the <a target="_self" class="jsdoclink" href="#/api/sap.f.Avatar">sap.f.Avatar</a> control.</p>
+		 * <p><p>Types of shape for the <a target="_self" class="jsdoclink" href="#/api/sap.f.Avatar">sap.f.Avatar</a> control.</p></p>
 		 */
 		export enum AvatarShape {
 			/**
@@ -217,7 +217,7 @@ declare namespace sap {
 			Square = "Square",
 		}
 		/**
-		 * <p>Predefined sizes for the <a target="_self" class="jsdoclink" href="#/api/sap.f.Avatar">sap.f.Avatar</a> control.</p>
+		 * <p><p>Predefined sizes for the <a target="_self" class="jsdoclink" href="#/api/sap.f.Avatar">sap.f.Avatar</a> control.</p></p>
 		 */
 		export enum AvatarSize {
 			/**
@@ -246,7 +246,7 @@ declare namespace sap {
 			XS = "XS",
 		}
 		/**
-		 * <p>Types of <a target="_self" class="jsdoclink" href="#/api/sap.f.Avatar">sap.f.Avatar</a> based on the displayed content.</p>
+		 * <p><p>Types of <a target="_self" class="jsdoclink" href="#/api/sap.f.Avatar">sap.f.Avatar</a> based on the displayed content.</p></p>
 		 */
 		export enum AvatarType {
 			/**
@@ -261,6 +261,81 @@ declare namespace sap {
 			 * <p>The displayed content is initials.</p>
 			 */
 			Initials = "Initials",
+		}
+		/**
+		 * <p>A control that represents a container with a predefined header and content.</p><h3>Overview</h3><p> The card is a container for grouping and displaying information.</p><h3>Structure</h3><p> You can control the width and height of the card, using properties. The <code>Card</code> has the following aggregations: <ul> <li><code>header</code> - can be either a <a target="_self" class="jsdoclink" href="#/api/sap.f.cards.Header">Header</a> or a <a target="_self" class="jsdoclink" href="#/api/sap.f.cards.NumericHeader">NumericHeader</a> <li><code>content</code> - can be any <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.Control">Control</a>.</li> </ul></p><h3>Guidelines:</h3><p> <ul> <li>A card should represent a task or visualize a specific set of information.</li> <li>It is recommended to use cards on home page layouts.</li> <li>The card shouldn't be large with a lot of content.</li> </ul></p><h3>Usage</h3><p> To show a KPI value or any numeric information, use <a target="_self" class="jsdoclink" href="#/api/sap.f.cards.NumericHeader">NumericHeader</a> as a card header. For any other use cases, use the regular <a target="_self" class="jsdoclink" href="#/api/sap.f.cards.Header">Header</a>. Recommended content: - List - Table - Object information - Charts - Timelines - Images</p><p><i>When to use</i> <ul> <li>When you need multiple cards on a home page layout.</li> <li>When you have to achieve simple card visualization.</li> </ul></p><p><i>When not to use</i> <ul> <li>When you have to reuse the card between applications. For such cases, use: <a target="_self" class="jsdoclink" href="#/api/sap.ui.integration.widgets.Card">Integration Card</a>.</li> <li>When you need nesting. For such cases, use: <a target="_self" class="jsdoclink" href="#/api/sap.m.Panel">Panel</a>.</li> <li>When the card is not part of a card layout. For such cases, use: <a target="_self" class="jsdoclink" href="#/api/sap.m.Panel">Panel</a>.</li> <li>When you need more header configuration flexibility.</li> </ul></p>
+		 */
+		export class Card extends sap.ui.core.Control implements sap.f.ICard {
+			/**
+			 * <p>Constructor for a new <code>Card</code>.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+			 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
+			 * @param {any} mSettings <p>Initial settings for the new control</p>
+			 */
+			constructor(sId?: string, mSettings?: any);
+			/**
+			 * <p>Destroys the content in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getContent" href="#/api/sap.f.Card/methods/getContent">content</a>.</p>
+			 * @returns sap.f.Card <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			destroyContent(): sap.f.Card;
+			/**
+			 * <p>Destroys the header in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getHeader" href="#/api/sap.f.Card/methods/getHeader">header</a>.</p>
+			 * @returns sap.f.Card <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			destroyHeader(): sap.f.Card;
+			/**
+			 * <p>Implements sap.f.ICard interface.</p>
+			 * @returns sap.ui.core.Control <p>The content of the card.</p>
+			 */
+			protected getCardContent(): sap.ui.core.Control;
+			/**
+			 * <p>Implements sap.f.ICard interface.</p>
+			 * @returns sap.f.cards.IHeader <p>The header of the card.</p>
+			 */
+			protected getCardHeader(): sap.f.cards.IHeader;
+			/**
+			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getContent" href="#/api/sap.f.Card/methods/getContent">content</a>.</p><p>Defines the content of the card.</p>
+			 * @returns sap.ui.core.Control 
+			 */
+			getContent(): sap.ui.core.Control;
+			/**
+			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getHeader" href="#/api/sap.f.Card/methods/getHeader">header</a>.</p><p>Defines the header of the card.</p>
+			 * @returns sap.f.cards.IHeader 
+			 */
+			getHeader(): sap.f.cards.IHeader;
+			/**
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getHeight" href="#/api/sap.f.Card/methods/getHeight">height</a>.</p><p>Defines the height of the card.</p><p>Default value is <code>auto</code>.</p>
+			 * @returns sap.ui.core.CSSSize <p>Value of property <code>height</code></p>
+			 */
+			getHeight(): sap.ui.core.CSSSize;
+			/**
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getWidth" href="#/api/sap.f.Card/methods/getWidth">width</a>.</p><p>Defines the width of the card.</p><p>Default value is <code>100%</code>.</p>
+			 * @returns sap.ui.core.CSSSize <p>Value of property <code>width</code></p>
+			 */
+			getWidth(): sap.ui.core.CSSSize;
+			/**
+			 * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getContent" href="#/api/sap.f.Card/methods/getContent">content</a>.</p>
+			 * @param {sap.ui.core.Control} oContent <p>The content to set</p>
+			 * @returns sap.f.Card <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setContent(oContent: sap.ui.core.Control): sap.f.Card;
+			/**
+			 * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getHeader" href="#/api/sap.f.Card/methods/getHeader">header</a>.</p>
+			 * @param {sap.f.cards.IHeader} oHeader <p>The header to set</p>
+			 * @returns sap.f.Card <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setHeader(oHeader: sap.f.cards.IHeader): sap.f.Card;
+			/**
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getHeight" href="#/api/sap.f.Card/methods/getHeight">height</a>.</p><p>Defines the height of the card.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>auto</code>.</p>
+			 * @param {sap.ui.core.CSSSize} sHeight <p>New value for property <code>height</code></p>
+			 * @returns sap.f.Card <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setHeight(sHeight: sap.ui.core.CSSSize): sap.f.Card;
+			/**
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getWidth" href="#/api/sap.f.Card/methods/getWidth">width</a>.</p><p>Defines the width of the card.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>100%</code>.</p>
+			 * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
+			 * @returns sap.f.Card <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setWidth(sWidth: sap.ui.core.CSSSize): sap.f.Card;
 		}
 		/**
 		 * <p>A layout control, representing a web page, consisting of a title, header with dynamic behavior, a content area, and an optional floating footer.</p><h3>Overview</h3><p>The control consist of several components:</p><p><ul><li><a target="_self" class="jsdoclink" href="#/api/sap.f.DynamicPageTitle">DynamicPageTitle</a> - consists of a heading on the left side, content in the middle, and actions on the right. The displayed content changes based on the current mode of the <a target="_self" class="jsdoclink" href="#/api/sap.f.DynamicPageHeader">DynamicPageHeader</a>.</li> <li><a target="_self" class="jsdoclink" href="#/api/sap.f.DynamicPageHeader">DynamicPageHeader</a> - a generic container, which can contain a single layout control and does not care about the content alignment and responsiveness. The header works in two modes - expanded and snapped and its behavior can be adjusted with the help of different properties.</li> <li>Content area - a generic container, which can have a single UI5 layout control and does not care about the content alignment and responsiveness.</li> <li>Footer - positioned at the bottom with a small offset and used for additional actions, the footer floats above the content. It can be any <a target="_self" class="jsdoclink" href="#/api/sap.m.IBar">sap.m.IBar</a> control.</li></ul></p><h3>Usage</h3><p>Use the <code>DynamicPage</code> if you need to have a title, that is always visible and a header, that has configurable Expanding/Snapping functionality. If you don't need the Expanding/Snapping functionality it is better to use the <a target="_self" class="jsdoclink" href="#/api/sap.m.Page">sap.m.Page</a> as a lighter control.</p><p><ul><b>Notes:</b> <li>If you're displaying a <a target="_self" class="jsdoclink" href="#/api/sap.m.FlexBox">sap.m.FlexBox</a> with non-adaptive content (doesn't stretch to fill the available space), it is recommended to set the <code>fitContainer</code> property of the <a target="_self" class="jsdoclink" href="#/api/sap.m.FlexBox">FlexBox</a> to <code>false</code>.</li> <li>If you are displaying a <a target="_self" class="jsdoclink" href="#/api/sap.ui.table.Table">sap.ui.table.Table</a>, keep in mind that it is non-adaptive and may cause unpredicted behavior for the <code>DynamicPage</code> on smaller screen sizes, such as mobile.</li> <li>Snapping of the <a target="_self" class="jsdoclink" href="#/api/sap.f.DynamicPageTitle">DynamicPageTitle</a> is not supported in the following case: When the <code>DynamicPage</code> has a scroll bar, the control usually scrolls to the snapping point - the point, where the <a target="_self" class="jsdoclink" href="#/api/sap.f.DynamicPageHeader">DynamicPageHeader</a> is scrolled out completely. However, when there is a scroll bar, but not enough content to reach the snapping point, the snapping is not possible using scrolling.</li> <li>When using <a target="_self" class="jsdoclink" href="#/api/sap.ui.layout.form.Form">sap.ui.layout.form.Form</a>, <a target="_self" class="jsdoclink" href="#/api/sap.m.Panel">sap.m.Panel</a>, <a target="_self" class="jsdoclink" href="#/api/sap.m.Table">sap.m.Table</a> and <a target="_self" class="jsdoclink" href="#/api/sap.m.List">sap.m.List</a> controls in the content of <code>DynamicPage</code>, you need to adjust their left text offset if you want to achieve vertical alignment between the <code>sap.f.DynamicPageHeader</code>`s content and <code>DynamicPage</code>`s content. For more information, see the documentation for the <code>content</code> aggregation.</li></ul></p><h3>Responsive Behavior</h3><p>The responsive behavior of the <code>DynamicPage</code> depends on the behavior of the content that is displayed. To adjust the <code>DynamicPage</code> content padding, the <code>sapUiContentPadding</code>, <code>sapUiNoContentPadding</code>, and <code>sapUiResponsiveContentPadding</code> CSS classes can be used.</p>
@@ -917,7 +992,7 @@ declare namespace sap {
 			setSnappedTitleOnMobile(oSnappedTitleOnMobile: sap.m.Title): sap.f.DynamicPageTitle;
 		}
 		/**
-		 * <p>Defines the areas within the <code>sap.f.DynamicPageTitle</code>.</p>
+		 * <p><p>Defines the areas within the <code>sap.f.DynamicPageTitle</code>.</p></p>
 		 */
 		export enum DynamicPageTitleArea {
 			/**
@@ -1454,10 +1529,10 @@ declare namespace sap {
 		}
 		/**
 		 * <p>A list-based control with grid layout capabilities.</p><h3>Overview</h3><p>The control is based on <a target="_self" class="jsdoclink" href="#/api/sap.m.ListBase">sap.m.ListBase</a> and adds the flexibility to configure different grid layouts. The layout used is based on the CSS display grid and the control has a default configuration.</p><p>With <code>customLayout</code> aggregation it is possible to use: <ul> <li>Predefined simple grid layouts such as <a target="_self" class="jsdoclink" href="#/api/sap.ui.layout.cssgrid.GridBoxLayout">GridBoxLayout</a></li> <li>Flexible grid layouts, such as <a target="_self" class="jsdoclink" href="#/api/sap.ui.layout.cssgrid.GridBasicLayout">GridBasicLayout</a> or <a target="_self" class="jsdoclink" href="#/api/sap.ui.layout.cssgrid.GridResponsiveLayout">GridResponsiveLayout</a> which reveal the native-browser CSS display grid APIs. For more information, see <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout">MDN web docs: CSS Grid Layout</a>
-			<img src="./resources/sap/ui/documentation/sdk/images/link-external.png" 
-			title="Information published on non SAP site" class="sapUISDKExternalLink"/></li> </ul></p><p>Every item can override its size by specifying the number of columns and/or rows it will take in the grid. This is done using <a target="_self" class="jsdoclink" href="#/api/sap.ui.layout.cssgrid.GridItemLayoutData">GridItemLayoutData</a>.</p><h3>Usage</h3><p>For general cases, use the default grid configuration of the <code>GridList</code>. For Box case (equal sized items), use <code>customLayout</code> aggregation with <a target="_self" class="jsdoclink" href="#/api/sap.ui.layout.cssgrid.GridBoxLayout">GridBoxLayout</a> For Grids which need different configurations based on available width, use <code>customLayout</code> aggregation with <a target="_self" class="jsdoclink" href="#/api/sap.ui.layout.cssgrid.GridResponsiveLayout">GridResponsiveLayout</a> To set a specific position to an item or define its dimensions in the grid, pass <code>layoutData</code> of type <a target="_self" class="jsdoclink" href="#/api/sap.ui.layout.cssgrid.GridItemLayoutData">GridItemLayoutData</a></p><p><i>When to use</i> <ul> <li>If <a target="_self" class="jsdoclink" href="#/api/sap.m.ListBase">sap.m.ListBase</a> features are required and the items must be positioned in a grid layout</li> </ul></p><p><i>When not to use</i> <ul> <li>If a list layout is required, use <a target="_self" class="jsdoclink" href="#/api/sap.m.List">sap.m.List</a> instead. <li>If only the layout is required, use <a target="_self" class="jsdoclink" href="#/api/sap.ui.layout.cssgrid.CSSGrid">sap.ui.layout.cssgrid.CSSGrid</a> instead. </ul></p><h3>Current Limitations</h3><p> <ul> <li>For Microsoft Internet Explorer some layouts are not supported, due to browser specifics.</li> <li>For Microsoft Edge 15 and older versions some layouts are not supported, due to browser specifics.</li> </ul><br><br><span>Documentation links:</span><ul><li><a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout">MDN web docs: CSS Grid Layout</a>
-			<img src="./resources/sap/ui/documentation/sdk/images/link-external.png" 
-			title="Information published on non SAP site" class="sapUISDKExternalLink"/></li></ul></p>
+		<img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
+		title="Information published on non SAP site" class="sapUISDKExternalLink"/></li> </ul></p><p>Every item can override its size by specifying the number of columns and/or rows it will take in the grid. This is done using <a target="_self" class="jsdoclink" href="#/api/sap.ui.layout.cssgrid.GridItemLayoutData">GridItemLayoutData</a>.</p><h3>Usage</h3><p>For general cases, use the default grid configuration of the <code>GridList</code>. For Box case (equal sized items), use <code>customLayout</code> aggregation with <a target="_self" class="jsdoclink" href="#/api/sap.ui.layout.cssgrid.GridBoxLayout">GridBoxLayout</a> For Grids which need different configurations based on available width, use <code>customLayout</code> aggregation with <a target="_self" class="jsdoclink" href="#/api/sap.ui.layout.cssgrid.GridResponsiveLayout">GridResponsiveLayout</a> To set a specific position to an item or define its dimensions in the grid, pass <code>layoutData</code> of type <a target="_self" class="jsdoclink" href="#/api/sap.ui.layout.cssgrid.GridItemLayoutData">GridItemLayoutData</a></p><p><i>When to use</i> <ul> <li>If <a target="_self" class="jsdoclink" href="#/api/sap.m.ListBase">sap.m.ListBase</a> features are required and the items must be positioned in a grid layout</li> </ul></p><p><i>When not to use</i> <ul> <li>If a list layout is required, use <a target="_self" class="jsdoclink" href="#/api/sap.m.List">sap.m.List</a> instead. <li>If only the layout is required, use <a target="_self" class="jsdoclink" href="#/api/sap.ui.layout.cssgrid.CSSGrid">sap.ui.layout.cssgrid.CSSGrid</a> instead. </ul></p><h3>Current Limitations</h3><p> <ul> <li>For Microsoft Internet Explorer some layouts are not supported, due to browser specifics.</li> <li>For Microsoft Edge 15 and older versions some layouts are not supported, due to browser specifics.</li> </ul><br><br><span>Documentation links:</span><ul><li><a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout">MDN web docs: CSS Grid Layout</a>
+		<img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
+		title="Information published on non SAP site" class="sapUISDKExternalLink"/></li></ul></p>
 		 */
 		export class GridList extends sap.m.ListBase {
 			/**
@@ -1493,17 +1568,17 @@ declare namespace sap {
 			setCustomLayout(oCustomLayout: sap.ui.layout.cssgrid.GridLayoutBase): sap.f.GridList;
 		}
 		/**
-		 * <p>Interface for card controls</p>
+		 * <p><p>Interface for card controls</p></p>
 		 */
 		export interface ICard {
 		}
 		/**
-		 * <p>Interface for controls suitable for sap.f.ShellBar additionalContent aggregation</p>
+		 * <p><p>Interface for controls suitable for the <code>additionalContent</code> aggregation of <code><a target="_self" class="jsdoclink" href="#/api/sap.f.ShellBar">sap.f.ShellBar</a></code>.</p></p>
 		 */
 		export interface IShellBar {
 		}
 		/**
-		 * <p>Layouts, representing the number of columns to be displayed and their relative widths for a <a target="_self" class="jsdoclink" href="#/api/sap.f.FlexibleColumnLayout">sap.f.FlexibleColumnLayout</a> control.</p><p>Each layout has a predefined ratio for the three columns, depending on device size. Based on the device and layout, some columns are hidden. For more information, refer to the ratios (in %) for each value, listed below: (dash "-" means non-accessible columns).</p><p><b>Note:</b> Please note that on a phone device, due to the limited screen size, only one column can be displayed at a time. For all two-column layouts, this column is the <code>Mid</code> column, and for all three-column layouts - the <code>End</code> column, even though the respective column may be hidden on desktop and tablet for that particular layout. Therefore some of the names (such as <code>ThreeColumnsMidExpandedEndHidden</code> for example) are representative of the desktop scenario only.</p><p>For more information, see <a target="_self" href="#/topic/3b9f760da5b64adf8db7f95247879086">Types of Layout</a> in the documentation.</p>
+		 * <p><p>Layouts, representing the number of columns to be displayed and their relative widths for a <a target="_self" class="jsdoclink" href="#/api/sap.f.FlexibleColumnLayout">sap.f.FlexibleColumnLayout</a> control.</p><p>Each layout has a predefined ratio for the three columns, depending on device size. Based on the device and layout, some columns are hidden. For more information, refer to the ratios (in %) for each value, listed below: (dash "-" means non-accessible columns).</p><p><b>Note:</b> Please note that on a phone device, due to the limited screen size, only one column can be displayed at a time. For all two-column layouts, this column is the <code>Mid</code> column, and for all three-column layouts - the <code>End</code> column, even though the respective column may be hidden on desktop and tablet for that particular layout. Therefore some of the names (such as <code>ThreeColumnsMidExpandedEndHidden</code> for example) are representative of the desktop scenario only.</p><p>For more information, see <a target="_self" href="#/topic/3b9f760da5b64adf8db7f95247879086">Types of Layout</a> in the documentation.</p></p>
 		 */
 		export enum LayoutType {
 			/**
@@ -1544,7 +1619,7 @@ declare namespace sap {
 			TwoColumnsMidExpanded = "TwoColumnsMidExpanded",
 		}
 		/**
-		 * <p>A horizontal bar control holding multiple child controls used as application shell header.</p><h3>Overview</h3><p>The <code>ShellHeader</code> shows multiple child controls used as application shell header.</p>
+		 * <p>A horizontal bar control holding multiple child controls used as application shell header.</p><h3>Overview</h3><p>The <code>ShellBar</code> is used as the uppermost section (shell) of the app. It is fully responsive and adaptive, and corresponds to the SAP Fiori Design Guidelines.</p><h3>Usage</h3><p>Content specified in the <code>ShellBar</code> properties and aggregations is automatically positioned in dedicated places of the control.</p>
 		 */
 		export class ShellBar extends sap.ui.core.Control {
 			/**
@@ -1555,12 +1630,12 @@ declare namespace sap {
 			constructor(sId?: string, mSettings?: any);
 			/**
 			 * <p>Adds some additionalContent to the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAdditionalContent" href="#/api/sap.f.ShellBar/methods/getAdditionalContent">additionalContent</a>.</p>
-			 * @param {sap.ui.core.Control} oAdditionalContent <p>The additionalContent to add; if empty, nothing is inserted</p>
+			 * @param {sap.f.IShellBar} oAdditionalContent <p>The additionalContent to add; if empty, nothing is inserted</p>
 			 * @returns sap.f.ShellBar <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			addAdditionalContent(oAdditionalContent: sap.ui.core.Control): sap.f.ShellBar;
+			addAdditionalContent(oAdditionalContent: sap.f.IShellBar): sap.f.ShellBar;
 			/**
-			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="avatarPressed" href="#/api/sap.f.ShellBar/events/avatarPressed">avatarPressed</a> event of this <code>sap.f.ShellBar</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.ShellBar</code> itself.</p><p>Fired when the Profile Avatar is pressed</p>
+			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="avatarPressed" href="#/api/sap.f.ShellBar/events/avatarPressed">avatarPressed</a> event of this <code>sap.f.ShellBar</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.ShellBar</code> itself.</p><p>Fired when the profile avatar is pressed.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
 			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.ShellBar</code> itself</p>
@@ -1568,7 +1643,7 @@ declare namespace sap {
 			 */
 			attachAvatarPressed(oData: any, fnFunction: Function, oListener?: any): sap.f.ShellBar;
 			/**
-			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="copilotPressed" href="#/api/sap.f.ShellBar/events/copilotPressed">copilotPressed</a> event of this <code>sap.f.ShellBar</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.ShellBar</code> itself.</p><p>Fired when the home CoPilot is pressed</p>
+			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="copilotPressed" href="#/api/sap.f.ShellBar/events/copilotPressed">copilotPressed</a> event of this <code>sap.f.ShellBar</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.ShellBar</code> itself.</p><p>Fired when the SAP CoPilot icon is pressed.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
 			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.ShellBar</code> itself</p>
@@ -1576,7 +1651,7 @@ declare namespace sap {
 			 */
 			attachCopilotPressed(oData: any, fnFunction: Function, oListener?: any): sap.f.ShellBar;
 			/**
-			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="homeIconPressed" href="#/api/sap.f.ShellBar/events/homeIconPressed">homeIconPressed</a> event of this <code>sap.f.ShellBar</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.ShellBar</code> itself.</p><p>Fired when the home Icon/Logo is pressed</p>
+			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="homeIconPressed" href="#/api/sap.f.ShellBar/events/homeIconPressed">homeIconPressed</a> event of this <code>sap.f.ShellBar</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.ShellBar</code> itself.</p><p>Fired when the <code>homeIcon</code> is pressed.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
 			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.ShellBar</code> itself</p>
@@ -1584,7 +1659,7 @@ declare namespace sap {
 			 */
 			attachHomeIconPressed(oData: any, fnFunction: Function, oListener?: any): sap.f.ShellBar;
 			/**
-			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="menuButtonPressed" href="#/api/sap.f.ShellBar/events/menuButtonPressed">menuButtonPressed</a> event of this <code>sap.f.ShellBar</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.ShellBar</code> itself.</p><p>Fired when the alternative menu button is pressed</p>
+			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="menuButtonPressed" href="#/api/sap.f.ShellBar/events/menuButtonPressed">menuButtonPressed</a> event of this <code>sap.f.ShellBar</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.ShellBar</code> itself.</p><p>Fired when the alternative menu button is pressed.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
 			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.ShellBar</code> itself</p>
@@ -1592,7 +1667,7 @@ declare namespace sap {
 			 */
 			attachMenuButtonPressed(oData: any, fnFunction: Function, oListener?: any): sap.f.ShellBar;
 			/**
-			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="navButtonPressed" href="#/api/sap.f.ShellBar/events/navButtonPressed">navButtonPressed</a> event of this <code>sap.f.ShellBar</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.ShellBar</code> itself.</p><p>Fired when the navigation/back button is pressed</p>
+			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="navButtonPressed" href="#/api/sap.f.ShellBar/events/navButtonPressed">navButtonPressed</a> event of this <code>sap.f.ShellBar</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.ShellBar</code> itself.</p><p>Fired when the navigation/back button is pressed.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
 			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.ShellBar</code> itself</p>
@@ -1600,7 +1675,7 @@ declare namespace sap {
 			 */
 			attachNavButtonPressed(oData: any, fnFunction: Function, oListener?: any): sap.f.ShellBar;
 			/**
-			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="notificationsPressed" href="#/api/sap.f.ShellBar/events/notificationsPressed">notificationsPressed</a> event of this <code>sap.f.ShellBar</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.ShellBar</code> itself.</p><p>Fired when the home notifications button is pressed</p>
+			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="notificationsPressed" href="#/api/sap.f.ShellBar/events/notificationsPressed">notificationsPressed</a> event of this <code>sap.f.ShellBar</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.ShellBar</code> itself.</p><p>Fired when the notifications button is pressed.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
 			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.ShellBar</code> itself</p>
@@ -1608,7 +1683,7 @@ declare namespace sap {
 			 */
 			attachNotificationsPressed(oData: any, fnFunction: Function, oListener?: any): sap.f.ShellBar;
 			/**
-			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="productSwitcherPressed" href="#/api/sap.f.ShellBar/events/productSwitcherPressed">productSwitcherPressed</a> event of this <code>sap.f.ShellBar</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.ShellBar</code> itself.</p><p>Fired when the home Product Switcher button is pressed</p>
+			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="productSwitcherPressed" href="#/api/sap.f.ShellBar/events/productSwitcherPressed">productSwitcherPressed</a> event of this <code>sap.f.ShellBar</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.ShellBar</code> itself.</p><p>Fired when the product switcher button is pressed.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
 			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.ShellBar</code> itself</p>
@@ -1616,7 +1691,7 @@ declare namespace sap {
 			 */
 			attachProductSwitcherPressed(oData: any, fnFunction: Function, oListener?: any): sap.f.ShellBar;
 			/**
-			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="searchButtonPressed" href="#/api/sap.f.ShellBar/events/searchButtonPressed">searchButtonPressed</a> event of this <code>sap.f.ShellBar</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.ShellBar</code> itself.</p><p>Fired when the search button is pressed</p>
+			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="searchButtonPressed" href="#/api/sap.f.ShellBar/events/searchButtonPressed">searchButtonPressed</a> event of this <code>sap.f.ShellBar</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.ShellBar</code> itself.</p><p>Fired when the search button is pressed.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
 			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.ShellBar</code> itself</p>
@@ -1743,91 +1818,96 @@ declare namespace sap {
 			 */
 			protected fireSearchButtonPressed(mParameters?: any): sap.f.ShellBar;
 			/**
-			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAdditionalContent" href="#/api/sap.f.ShellBar/methods/getAdditionalContent">additionalContent</a>.</p><p>Additional content to be displayed in the control. Currently only a subset of controls are supported. Only controls implementing sap.f.IShellBar interface will be allowed here.</p>
-			 * @returns sap.ui.core.Control[] 
+			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAdditionalContent" href="#/api/sap.f.ShellBar/methods/getAdditionalContent">additionalContent</a>.</p><p>Additional content to be displayed in the control.</p><p><b>Note:</b> Only controls implementing the <code><a target="_self" class="jsdoclink" href="#/api/sap.f.IShellBar">sap.f.IShellBar</a></code> interface are allowed.</p>
+			 * @returns sap.f.IShellBar[] 
 			 */
-			getAdditionalContent(): sap.ui.core.Control[];
+			getAdditionalContent(): sap.f.IShellBar[];
 			/**
-			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getHomeIcon" href="#/api/sap.f.ShellBar/methods/getHomeIcon">homeIcon</a>.</p><p>Used to display company/product logo or icon</p><p>Default value is <code>empty string</code>.</p>
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getHomeIcon" href="#/api/sap.f.ShellBar/methods/getHomeIcon">homeIcon</a>.</p><p>Defines the URI to the home icon, such as company or product logo.</p><p>Default value is <code>empty string</code>.</p>
 			 * @returns sap.ui.core.URI <p>Value of property <code>homeIcon</code></p>
 			 */
 			getHomeIcon(): sap.ui.core.URI;
 			/**
-			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMenu" href="#/api/sap.f.ShellBar/methods/getMenu">menu</a>.</p><p>Menu which will be attached to the main title</p>
+			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMenu" href="#/api/sap.f.ShellBar/methods/getMenu">menu</a>.</p><p>The menu attached to the main title.</p>
 			 * @returns sap.m.Menu 
 			 */
 			getMenu(): sap.m.Menu;
 			/**
-			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getProfile" href="#/api/sap.f.ShellBar/methods/getProfile">profile</a>.</p><p>Profile Avatar</p>
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getNotificationsNumber" href="#/api/sap.f.ShellBar/methods/getNotificationsNumber">notificationsNumber</a>.</p><p>Defines the displayed number of upcoming notifications.</p><p>Default value is <code>empty string</code>.</p>
+			 * @returns string <p>Value of property <code>notificationsNumber</code></p>
+			 */
+			getNotificationsNumber(): string;
+			/**
+			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getProfile" href="#/api/sap.f.ShellBar/methods/getProfile">profile</a>.</p><p>The profile avatar.</p>
 			 * @returns sap.f.Avatar 
 			 */
 			getProfile(): sap.f.Avatar;
 			/**
-			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSecondTitle" href="#/api/sap.f.ShellBar/methods/getSecondTitle">secondTitle</a>.</p><p>Secondary title</p><p>Default value is <code>empty string</code>.</p>
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSecondTitle" href="#/api/sap.f.ShellBar/methods/getSecondTitle">secondTitle</a>.</p><p>Defines the secondary title of the control.</p><p>Default value is <code>empty string</code>.</p>
 			 * @returns string <p>Value of property <code>secondTitle</code></p>
 			 */
 			getSecondTitle(): string;
 			/**
-			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getShowCopilot" href="#/api/sap.f.ShellBar/methods/getShowCopilot">showCopilot</a>.</p><p>CoPilot</p><p>Default value is <code>false</code>.</p>
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getShowCopilot" href="#/api/sap.f.ShellBar/methods/getShowCopilot">showCopilot</a>.</p><p>Determines whether the SAP CoPilot icon is displayed.</p><p>Default value is <code>false</code>.</p>
 			 * @returns boolean <p>Value of property <code>showCopilot</code></p>
 			 */
 			getShowCopilot(): boolean;
 			/**
-			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getShowMenuButton" href="#/api/sap.f.ShellBar/methods/getShowMenuButton">showMenuButton</a>.</p><p>Alternative menu button if <code>menu</code> aggregation is not used</p><p>Default value is <code>false</code>.</p>
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getShowMenuButton" href="#/api/sap.f.ShellBar/methods/getShowMenuButton">showMenuButton</a>.</p><p>Determines whether a hamburger menu button is displayed (as an alternative if the <code>menu</code> aggregation is not used).</p><p>Default value is <code>false</code>.</p>
 			 * @returns boolean <p>Value of property <code>showMenuButton</code></p>
 			 */
 			getShowMenuButton(): boolean;
 			/**
-			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getShowNavButton" href="#/api/sap.f.ShellBar/methods/getShowNavButton">showNavButton</a>.</p><p>Back navigation button</p><p>Default value is <code>false</code>.</p>
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getShowNavButton" href="#/api/sap.f.ShellBar/methods/getShowNavButton">showNavButton</a>.</p><p>Determines whether a back navigation button is displayed.</p><p>Default value is <code>false</code>.</p>
 			 * @returns boolean <p>Value of property <code>showNavButton</code></p>
 			 */
 			getShowNavButton(): boolean;
 			/**
-			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getShowNotifications" href="#/api/sap.f.ShellBar/methods/getShowNotifications">showNotifications</a>.</p><p>Notifications button</p><p>Default value is <code>false</code>.</p>
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getShowNotifications" href="#/api/sap.f.ShellBar/methods/getShowNotifications">showNotifications</a>.</p><p>Determines whether the notifications button is displayed.</p><p>Default value is <code>false</code>.</p>
 			 * @returns boolean <p>Value of property <code>showNotifications</code></p>
 			 */
 			getShowNotifications(): boolean;
 			/**
-			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getShowProductSwitcher" href="#/api/sap.f.ShellBar/methods/getShowProductSwitcher">showProductSwitcher</a>.</p><p>Product Switcher button</p><p>Default value is <code>false</code>.</p>
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getShowProductSwitcher" href="#/api/sap.f.ShellBar/methods/getShowProductSwitcher">showProductSwitcher</a>.</p><p>Determines whether the product switcher button is displayed.</p><p>Default value is <code>false</code>.</p>
 			 * @returns boolean <p>Value of property <code>showProductSwitcher</code></p>
 			 */
 			getShowProductSwitcher(): boolean;
 			/**
-			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getShowSearch" href="#/api/sap.f.ShellBar/methods/getShowSearch">showSearch</a>.</p><p>Search button</p><p>Default value is <code>false</code>.</p>
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getShowSearch" href="#/api/sap.f.ShellBar/methods/getShowSearch">showSearch</a>.</p><p>Determines whether the search button is displayed.</p><p>Default value is <code>false</code>.</p>
 			 * @returns boolean <p>Value of property <code>showSearch</code></p>
 			 */
 			getShowSearch(): boolean;
 			/**
-			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTitle" href="#/api/sap.f.ShellBar/methods/getTitle">title</a>.</p><p>Main title of the control</p><p>Default value is <code>empty string</code>.</p>
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTitle" href="#/api/sap.f.ShellBar/methods/getTitle">title</a>.</p><p>Defines the main title of the control.</p><p>Default value is <code>empty string</code>.</p>
 			 * @returns string <p>Value of property <code>title</code></p>
 			 */
 			getTitle(): string;
 			/**
-			 * <p>Checks for the provided <code>sap.ui.core.Control</code> in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAdditionalContent" href="#/api/sap.f.ShellBar/methods/getAdditionalContent">additionalContent</a>. and returns its index if found or -1 otherwise.</p>
-			 * @param {sap.ui.core.Control} oAdditionalContent <p>The additionalContent whose index is looked for</p>
+			 * <p>Checks for the provided <code>sap.f.IShellBar</code> in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAdditionalContent" href="#/api/sap.f.ShellBar/methods/getAdditionalContent">additionalContent</a>. and returns its index if found or -1 otherwise.</p>
+			 * @param {sap.f.IShellBar} oAdditionalContent <p>The additionalContent whose index is looked for</p>
 			 * @returns number <p>The index of the provided control in the aggregation if found, or -1 otherwise</p>
 			 */
-			indexOfAdditionalContent(oAdditionalContent: sap.ui.core.Control): number;
+			indexOfAdditionalContent(oAdditionalContent: sap.f.IShellBar): number;
 			/**
 			 * <p>Inserts a additionalContent into the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAdditionalContent" href="#/api/sap.f.ShellBar/methods/getAdditionalContent">additionalContent</a>.</p>
-			 * @param {sap.ui.core.Control} oAdditionalContent <p>The additionalContent to insert; if empty, nothing is inserted</p>
+			 * @param {sap.f.IShellBar} oAdditionalContent <p>The additionalContent to insert; if empty, nothing is inserted</p>
 			 * @param {number} iIndex <p>The <code>0</code>-based index the additionalContent should be inserted at; for a negative value of <code>iIndex</code>, the additionalContent is inserted at position 0; for a value greater than the current size of the aggregation, the additionalContent is inserted at the last position</p>
 			 * @returns sap.f.ShellBar <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			insertAdditionalContent(oAdditionalContent: sap.ui.core.Control, iIndex: number): sap.f.ShellBar;
+			insertAdditionalContent(oAdditionalContent: sap.f.IShellBar, iIndex: number): sap.f.ShellBar;
 			/**
 			 * <p>Removes a additionalContent from the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAdditionalContent" href="#/api/sap.f.ShellBar/methods/getAdditionalContent">additionalContent</a>.</p>
-			 * @param {number | string | sap.ui.core.Control} vAdditionalContent <p>The additionalContent to remove or its index or id</p>
-			 * @returns sap.ui.core.Control <p>The removed additionalContent or <code>null</code></p>
+			 * @param {number | string | sap.f.IShellBar} vAdditionalContent <p>The additionalContent to remove or its index or id</p>
+			 * @returns sap.f.IShellBar <p>The removed additionalContent or <code>null</code></p>
 			 */
-			removeAdditionalContent(vAdditionalContent: number | string | sap.ui.core.Control): sap.ui.core.Control;
+			removeAdditionalContent(vAdditionalContent: number | string | sap.f.IShellBar): sap.f.IShellBar;
 			/**
 			 * <p>Removes all the controls from the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAdditionalContent" href="#/api/sap.f.ShellBar/methods/getAdditionalContent">additionalContent</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
-			 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
+			 * @returns sap.f.IShellBar[] <p>An array of the removed elements (might be empty)</p>
 			 */
-			removeAllAdditionalContent(): sap.ui.core.Control[];
+			removeAllAdditionalContent(): sap.f.IShellBar[];
 			/**
-			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getHomeIcon" href="#/api/sap.f.ShellBar/methods/getHomeIcon">homeIcon</a>.</p><p>Used to display company/product logo or icon</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getHomeIcon" href="#/api/sap.f.ShellBar/methods/getHomeIcon">homeIcon</a>.</p><p>Defines the URI to the home icon, such as company or product logo.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
 			 * @param {sap.ui.core.URI} sHomeIcon <p>New value for property <code>homeIcon</code></p>
 			 * @returns sap.f.ShellBar <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
@@ -1845,49 +1925,49 @@ declare namespace sap {
 			 */
 			setProfile(oProfile: sap.f.Avatar): sap.f.ShellBar;
 			/**
-			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSecondTitle" href="#/api/sap.f.ShellBar/methods/getSecondTitle">secondTitle</a>.</p><p>Secondary title</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSecondTitle" href="#/api/sap.f.ShellBar/methods/getSecondTitle">secondTitle</a>.</p><p>Defines the secondary title of the control.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
 			 * @param {string} sSecondTitle <p>New value for property <code>secondTitle</code></p>
 			 * @returns sap.f.ShellBar <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
 			setSecondTitle(sSecondTitle: string): sap.f.ShellBar;
 			/**
-			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getShowCopilot" href="#/api/sap.f.ShellBar/methods/getShowCopilot">showCopilot</a>.</p><p>CoPilot</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getShowCopilot" href="#/api/sap.f.ShellBar/methods/getShowCopilot">showCopilot</a>.</p><p>Determines whether the SAP CoPilot icon is displayed.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
 			 * @param {boolean} bShowCopilot <p>New value for property <code>showCopilot</code></p>
 			 * @returns sap.f.ShellBar <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
 			setShowCopilot(bShowCopilot: boolean): sap.f.ShellBar;
 			/**
-			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getShowMenuButton" href="#/api/sap.f.ShellBar/methods/getShowMenuButton">showMenuButton</a>.</p><p>Alternative menu button if <code>menu</code> aggregation is not used</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getShowMenuButton" href="#/api/sap.f.ShellBar/methods/getShowMenuButton">showMenuButton</a>.</p><p>Determines whether a hamburger menu button is displayed (as an alternative if the <code>menu</code> aggregation is not used).</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
 			 * @param {boolean} bShowMenuButton <p>New value for property <code>showMenuButton</code></p>
 			 * @returns sap.f.ShellBar <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
 			setShowMenuButton(bShowMenuButton: boolean): sap.f.ShellBar;
 			/**
-			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getShowNavButton" href="#/api/sap.f.ShellBar/methods/getShowNavButton">showNavButton</a>.</p><p>Back navigation button</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getShowNavButton" href="#/api/sap.f.ShellBar/methods/getShowNavButton">showNavButton</a>.</p><p>Determines whether a back navigation button is displayed.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
 			 * @param {boolean} bShowNavButton <p>New value for property <code>showNavButton</code></p>
 			 * @returns sap.f.ShellBar <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
 			setShowNavButton(bShowNavButton: boolean): sap.f.ShellBar;
 			/**
-			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getShowNotifications" href="#/api/sap.f.ShellBar/methods/getShowNotifications">showNotifications</a>.</p><p>Notifications button</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getShowNotifications" href="#/api/sap.f.ShellBar/methods/getShowNotifications">showNotifications</a>.</p><p>Determines whether the notifications button is displayed.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
 			 * @param {boolean} bShowNotifications <p>New value for property <code>showNotifications</code></p>
 			 * @returns sap.f.ShellBar <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
 			setShowNotifications(bShowNotifications: boolean): sap.f.ShellBar;
 			/**
-			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getShowProductSwitcher" href="#/api/sap.f.ShellBar/methods/getShowProductSwitcher">showProductSwitcher</a>.</p><p>Product Switcher button</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getShowProductSwitcher" href="#/api/sap.f.ShellBar/methods/getShowProductSwitcher">showProductSwitcher</a>.</p><p>Determines whether the product switcher button is displayed.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
 			 * @param {boolean} bShowProductSwitcher <p>New value for property <code>showProductSwitcher</code></p>
 			 * @returns sap.f.ShellBar <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
 			setShowProductSwitcher(bShowProductSwitcher: boolean): sap.f.ShellBar;
 			/**
-			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getShowSearch" href="#/api/sap.f.ShellBar/methods/getShowSearch">showSearch</a>.</p><p>Search button</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getShowSearch" href="#/api/sap.f.ShellBar/methods/getShowSearch">showSearch</a>.</p><p>Determines whether the search button is displayed.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
 			 * @param {boolean} bShowSearch <p>New value for property <code>showSearch</code></p>
 			 * @returns sap.f.ShellBar <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
 			setShowSearch(bShowSearch: boolean): sap.f.ShellBar;
 			/**
-			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTitle" href="#/api/sap.f.ShellBar/methods/getTitle">title</a>.</p><p>Main title of the control</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTitle" href="#/api/sap.f.ShellBar/methods/getTitle">title</a>.</p><p>Defines the main title of the control.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
 			 * @param {string} sTitle <p>New value for property <code>title</code></p>
 			 * @returns sap.f.ShellBar <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
@@ -1898,7 +1978,7 @@ declare namespace sap {
 declare namespace sap {
 	namespace f {
 		/**
-		 * <p>A string type that represents the shrink ratios of the areas within the <code>sap.f.DynamicPageTitle</code>.</p>
+		 * <p><p>A string type that represents the shrink ratios of the areas within the <code>sap.f.DynamicPageTitle</code>.</p></p>
 		 */
 		export type DynamicPageTitleShrinkRatio = string;
 	}
@@ -1913,9 +1993,311 @@ declare namespace sap {
 		 */
 		namespace cards {
 			/**
-			 * <p>Marker interface for card headers</p>
+			 * <p>A control used to group a set of card attributes in a header.</p><h3>Overview</h3><p> The <code>Header</code> displays general information about the card. You can configure the title, subtitle, status text and icon, using properties.</p><h3>Usage</h3><p> You should always set a title. To show a KPI or any numeric information, use <a target="_self" class="jsdoclink" href="#/api/sap.f.cards.NumericHeader">NumericHeader</a> instead.</p>
+			 */
+			export class Header extends sap.ui.core.Control implements sap.f.cards.IHeader {
+				/**
+				 * <p>Constructor for a new <code>Header</code>.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+				 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
+				 * @param {any} mSettings <p>Initial settings for the new control</p>
+				 */
+				constructor(sId?: string, mSettings?: any);
+				/**
+				 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="press" href="#/api/sap.f.cards.Header/events/press">press</a> event of this <code>sap.f.cards.Header</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.cards.Header</code> itself.</p><p>Fires when the user presses the control.</p>
+				 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+				 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+				 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.cards.Header</code> itself</p>
+				 * @returns sap.f.cards.Header <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				attachPress(oData: any, fnFunction: Function, oListener?: any): sap.f.cards.Header;
+				/**
+				 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="press" href="#/api/sap.f.cards.Header/events/press">press</a> event of this <code>sap.f.cards.Header</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+				 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+				 * @param {any} oListener <p>Context object on which the given function had to be called</p>
+				 * @returns sap.f.cards.Header <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				detachPress(fnFunction: Function, oListener?: any): sap.f.cards.Header;
+				/**
+				 * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="press" href="#/api/sap.f.cards.Header/events/press">press</a> to attached listeners.</p>
+				 * @param {any} mParameters <p>Parameters to pass along with the event</p>
+				 * @returns sap.f.cards.Header <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				protected firePress(mParameters?: any): sap.f.cards.Header;
+				/**
+				 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getIconDisplayShape" href="#/api/sap.f.cards.Header/methods/getIconDisplayShape">iconDisplayShape</a>.</p><p>Defines the shape of the icon.</p><p>Default value is <code>Circle</code>.</p>
+				 * @returns sap.f.AvatarShape <p>Value of property <code>iconDisplayShape</code></p>
+				 */
+				getIconDisplayShape(): sap.f.AvatarShape;
+				/**
+				 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getIconInitials" href="#/api/sap.f.cards.Header/methods/getIconInitials">iconInitials</a>.</p><p>Defines the initials of the icon.</p><p>Default value is <code>empty string</code>.</p>
+				 * @returns string <p>Value of property <code>iconInitials</code></p>
+				 */
+				getIconInitials(): string;
+				/**
+				 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getIconSrc" href="#/api/sap.f.cards.Header/methods/getIconSrc">iconSrc</a>.</p><p>Defines the icon source.</p><p>Default value is <code>empty string</code>.</p>
+				 * @returns sap.ui.core.URI <p>Value of property <code>iconSrc</code></p>
+				 */
+				getIconSrc(): sap.ui.core.URI;
+				/**
+				 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getStatusText" href="#/api/sap.f.cards.Header/methods/getStatusText">statusText</a>.</p><p>Defines the status text.</p><p>Default value is <code>empty string</code>.</p>
+				 * @returns string <p>Value of property <code>statusText</code></p>
+				 */
+				getStatusText(): string;
+				/**
+				 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSubtitle" href="#/api/sap.f.cards.Header/methods/getSubtitle">subtitle</a>.</p><p>Defines the subtitle.</p><p>Default value is <code>empty string</code>.</p>
+				 * @returns string <p>Value of property <code>subtitle</code></p>
+				 */
+				getSubtitle(): string;
+				/**
+				 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTitle" href="#/api/sap.f.cards.Header/methods/getTitle">title</a>.</p><p>Defines the title.</p><p>Default value is <code>empty string</code>.</p>
+				 * @returns string <p>Value of property <code>title</code></p>
+				 */
+				getTitle(): string;
+				/**
+				 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getIconDisplayShape" href="#/api/sap.f.cards.Header/methods/getIconDisplayShape">iconDisplayShape</a>.</p><p>Defines the shape of the icon.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Circle</code>.</p>
+				 * @param {sap.f.AvatarShape} sIconDisplayShape <p>New value for property <code>iconDisplayShape</code></p>
+				 * @returns sap.f.cards.Header <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				setIconDisplayShape(sIconDisplayShape: sap.f.AvatarShape): sap.f.cards.Header;
+				/**
+				 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getIconInitials" href="#/api/sap.f.cards.Header/methods/getIconInitials">iconInitials</a>.</p><p>Defines the initials of the icon.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
+				 * @param {string} sIconInitials <p>New value for property <code>iconInitials</code></p>
+				 * @returns sap.f.cards.Header <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				setIconInitials(sIconInitials: string): sap.f.cards.Header;
+				/**
+				 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getIconSrc" href="#/api/sap.f.cards.Header/methods/getIconSrc">iconSrc</a>.</p><p>Defines the icon source.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
+				 * @param {sap.ui.core.URI} sIconSrc <p>New value for property <code>iconSrc</code></p>
+				 * @returns sap.f.cards.Header <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				setIconSrc(sIconSrc: sap.ui.core.URI): sap.f.cards.Header;
+				/**
+				 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getStatusText" href="#/api/sap.f.cards.Header/methods/getStatusText">statusText</a>.</p><p>Defines the status text.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
+				 * @param {string} sStatusText <p>New value for property <code>statusText</code></p>
+				 * @returns sap.f.cards.Header <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				setStatusText(sStatusText: string): sap.f.cards.Header;
+				/**
+				 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSubtitle" href="#/api/sap.f.cards.Header/methods/getSubtitle">subtitle</a>.</p><p>Defines the subtitle.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
+				 * @param {string} sSubtitle <p>New value for property <code>subtitle</code></p>
+				 * @returns sap.f.cards.Header <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				setSubtitle(sSubtitle: string): sap.f.cards.Header;
+				/**
+				 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTitle" href="#/api/sap.f.cards.Header/methods/getTitle">title</a>.</p><p>Defines the title.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
+				 * @param {string} sTitle <p>New value for property <code>title</code></p>
+				 * @returns sap.f.cards.Header <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				setTitle(sTitle: string): sap.f.cards.Header;
+			}
+			/**
+			 * <p><p>Marker interface for card headers</p></p>
 			 */
 			export interface IHeader {
+			}
+			/**
+			 * <p>A control used to group a set of card attributes in a header.</p><h3>Overview</h3><p> The <code>NumericHeader</code> shows general information about the card and allows the configuration of a numeric value visualization. You can configure the title, subtitle, status text and icon, using properties.</p><h3>Usage</h3><p> To show only basic information, use <a target="_self" class="jsdoclink" href="#/api/sap.f.cards.Header">Header</a> instead. It is possible to add more side number indicators, using the <code>sideIndicators</code> aggregation. You should always set a title. You should always have a maximum of two side indicators.</p>
+			 */
+			export class NumericHeader extends sap.ui.core.Control {
+				/**
+				 * <p>Constructor for a new <code>NumericHeader</code>.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+				 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
+				 * @param {any} mSettings <p>Initial settings for the new control</p>
+				 */
+				constructor(sId?: string, mSettings?: any);
+				/**
+				 * <p>Adds some sideIndicator to the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSideIndicators" href="#/api/sap.f.cards.NumericHeader/methods/getSideIndicators">sideIndicators</a>.</p>
+				 * @param {sap.f.cards.NumericSideIndicator} oSideIndicator <p>The sideIndicator to add; if empty, nothing is inserted</p>
+				 * @returns sap.f.cards.NumericHeader <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				addSideIndicator(oSideIndicator: sap.f.cards.NumericSideIndicator): sap.f.cards.NumericHeader;
+				/**
+				 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="press" href="#/api/sap.f.cards.NumericHeader/events/press">press</a> event of this <code>sap.f.cards.NumericHeader</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.cards.NumericHeader</code> itself.</p><p>Fires when the user presses the control.</p>
+				 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+				 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+				 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.cards.NumericHeader</code> itself</p>
+				 * @returns sap.f.cards.NumericHeader <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				attachPress(oData: any, fnFunction: Function, oListener?: any): sap.f.cards.NumericHeader;
+				/**
+				 * <p>Destroys all the sideIndicators in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSideIndicators" href="#/api/sap.f.cards.NumericHeader/methods/getSideIndicators">sideIndicators</a>.</p>
+				 * @returns sap.f.cards.NumericHeader <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				destroySideIndicators(): sap.f.cards.NumericHeader;
+				/**
+				 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="press" href="#/api/sap.f.cards.NumericHeader/events/press">press</a> event of this <code>sap.f.cards.NumericHeader</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+				 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+				 * @param {any} oListener <p>Context object on which the given function had to be called</p>
+				 * @returns sap.f.cards.NumericHeader <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				detachPress(fnFunction: Function, oListener?: any): sap.f.cards.NumericHeader;
+				/**
+				 * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="press" href="#/api/sap.f.cards.NumericHeader/events/press">press</a> to attached listeners.</p>
+				 * @param {any} mParameters <p>Parameters to pass along with the event</p>
+				 * @returns sap.f.cards.NumericHeader <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				protected firePress(mParameters?: any): sap.f.cards.NumericHeader;
+				/**
+				 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getDetails" href="#/api/sap.f.cards.NumericHeader/methods/getDetails">details</a>.</p><p>Additional text which adds more details to what is shown in the numeric header.</p>
+				 * @returns string <p>Value of property <code>details</code></p>
+				 */
+				getDetails(): string;
+				/**
+				 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getNumber" href="#/api/sap.f.cards.NumericHeader/methods/getNumber">number</a>.</p><p>The numeric value of the main number indicator. If the value contains more than five characters, only the first five are displayed. Without rounding the number.</p>
+				 * @returns string <p>Value of property <code>number</code></p>
+				 */
+				getNumber(): string;
+				/**
+				 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getScale" href="#/api/sap.f.cards.NumericHeader/methods/getScale">scale</a>.</p><p>Defines the unit of measurement (scaling prefix) for the main indicator. Financial characters can be used for currencies and counters. The International System of Units (SI) prefixes can be used. If the unit contains more than three characters, only the first three characters are displayed.</p>
+				 * @returns string <p>Value of property <code>scale</code></p>
+				 */
+				getScale(): string;
+				/**
+				 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSideIndicators" href="#/api/sap.f.cards.NumericHeader/methods/getSideIndicators">sideIndicators</a>.</p><p>Additional side number indicators. For example "Deviation" and "Target". Not more than two side indicators should be used.</p>
+				 * @returns sap.f.cards.NumericSideIndicator[] 
+				 */
+				getSideIndicators(): sap.f.cards.NumericSideIndicator[];
+				/**
+				 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getState" href="#/api/sap.f.cards.NumericHeader/methods/getState">state</a>.</p><p>The semantic color which represents the state of the main number indicator.</p><p>Default value is <code>Neutral</code>.</p>
+				 * @returns sap.m.ValueColor <p>Value of property <code>state</code></p>
+				 */
+				getState(): sap.m.ValueColor;
+				/**
+				 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSubtitle" href="#/api/sap.f.cards.NumericHeader/methods/getSubtitle">subtitle</a>.</p><p>The subtitle of the card</p>
+				 * @returns string <p>Value of property <code>subtitle</code></p>
+				 */
+				getSubtitle(): string;
+				/**
+				 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTitle" href="#/api/sap.f.cards.NumericHeader/methods/getTitle">title</a>.</p><p>The title of the card</p>
+				 * @returns string <p>Value of property <code>title</code></p>
+				 */
+				getTitle(): string;
+				/**
+				 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTrend" href="#/api/sap.f.cards.NumericHeader/methods/getTrend">trend</a>.</p><p>The direction of the trend arrow. Shows deviation for the value of the main number indicator.</p><p>Default value is <code>None</code>.</p>
+				 * @returns sap.m.DeviationIndicator <p>Value of property <code>trend</code></p>
+				 */
+				getTrend(): sap.m.DeviationIndicator;
+				/**
+				 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getUnitOfMeasurement" href="#/api/sap.f.cards.NumericHeader/methods/getUnitOfMeasurement">unitOfMeasurement</a>.</p><p>General unit of measurement for the header. Displayed as side information to the subtitle.</p>
+				 * @returns string <p>Value of property <code>unitOfMeasurement</code></p>
+				 */
+				getUnitOfMeasurement(): string;
+				/**
+				 * <p>Checks for the provided <code>sap.f.cards.NumericSideIndicator</code> in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSideIndicators" href="#/api/sap.f.cards.NumericHeader/methods/getSideIndicators">sideIndicators</a>. and returns its index if found or -1 otherwise.</p>
+				 * @param {sap.f.cards.NumericSideIndicator} oSideIndicator <p>The sideIndicator whose index is looked for</p>
+				 * @returns number <p>The index of the provided control in the aggregation if found, or -1 otherwise</p>
+				 */
+				indexOfSideIndicator(oSideIndicator: sap.f.cards.NumericSideIndicator): number;
+				/**
+				 * <p>Inserts a sideIndicator into the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSideIndicators" href="#/api/sap.f.cards.NumericHeader/methods/getSideIndicators">sideIndicators</a>.</p>
+				 * @param {sap.f.cards.NumericSideIndicator} oSideIndicator <p>The sideIndicator to insert; if empty, nothing is inserted</p>
+				 * @param {number} iIndex <p>The <code>0</code>-based index the sideIndicator should be inserted at; for a negative value of <code>iIndex</code>, the sideIndicator is inserted at position 0; for a value greater than the current size of the aggregation, the sideIndicator is inserted at the last position</p>
+				 * @returns sap.f.cards.NumericHeader <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				insertSideIndicator(oSideIndicator: sap.f.cards.NumericSideIndicator, iIndex: number): sap.f.cards.NumericHeader;
+				/**
+				 * <p>Removes all the controls from the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSideIndicators" href="#/api/sap.f.cards.NumericHeader/methods/getSideIndicators">sideIndicators</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
+				 * @returns sap.f.cards.NumericSideIndicator[] <p>An array of the removed elements (might be empty)</p>
+				 */
+				removeAllSideIndicators(): sap.f.cards.NumericSideIndicator[];
+				/**
+				 * <p>Removes a sideIndicator from the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSideIndicators" href="#/api/sap.f.cards.NumericHeader/methods/getSideIndicators">sideIndicators</a>.</p>
+				 * @param {number | string | sap.f.cards.NumericSideIndicator} vSideIndicator <p>The sideIndicator to remove or its index or id</p>
+				 * @returns sap.f.cards.NumericSideIndicator <p>The removed sideIndicator or <code>null</code></p>
+				 */
+				removeSideIndicator(vSideIndicator: number | string | sap.f.cards.NumericSideIndicator): sap.f.cards.NumericSideIndicator;
+				/**
+				 * <p>Sets additional text which adds more details to what is shown in the numeric header.</p>
+				 * @param {string} sValue <p>The text of the details</p>
+				 * @returns sap.f.cards.NumericHeader <p><code>this</code> pointer for chaining</p>
+				 */
+				setDetails(sValue: string): sap.f.cards.NumericHeader;
+				/**
+				 * <p>Sets the value of the main number indicator.</p>
+				 * @param {string} sValue <p>A string representation of the number</p>
+				 * @returns sap.f.cards.NumericHeader <p><code>this</code> pointer for chaining</p>
+				 */
+				setNumber(sValue: string): sap.f.cards.NumericHeader;
+				/**
+				 * <p>Sets the unit of measurement (scaling prefix) for the main indicator.</p>
+				 * @param {string} sValue <p>The text of the title</p>
+				 * @returns sap.f.cards.NumericHeader <p><code>this</code> pointer for chaining</p>
+				 */
+				setScale(sValue: string): sap.f.cards.NumericHeader;
+				/**
+				 * <p>Sets the semantic color which represents the state of the main number indicator.</p>
+				 * @param {sap.m.ValueColor} sValue <p>The semantic color which represents the state</p>
+				 * @returns sap.f.cards.NumericHeader <p><code>this</code> pointer for chaining</p>
+				 */
+				setState(sValue: sap.m.ValueColor): sap.f.cards.NumericHeader;
+				/**
+				 * <p>Sets the subtitle.</p>
+				 * @param {string} sValue <p>The text of the subtitle</p>
+				 * @returns sap.f.cards.NumericHeader <p><code>this</code> pointer for chaining</p>
+				 */
+				setSubtitle(sValue: string): sap.f.cards.NumericHeader;
+				/**
+				 * <p>Sets the title.</p>
+				 * @param {string} sValue <p>The text of the title</p>
+				 * @returns sap.f.cards.NumericHeader <p><code>this</code> pointer for chaining</p>
+				 */
+				setTitle(sValue: string): sap.f.cards.NumericHeader;
+				/**
+				 * <p>Sets the direction of the trend arrow.</p>
+				 * @param {sap.m.DeviationIndicator} sValue <p>The direction of the trend arrow</p>
+				 * @returns sap.f.cards.NumericHeader <p><code>this</code> pointer for chaining</p>
+				 */
+				setTrend(sValue: sap.m.DeviationIndicator): sap.f.cards.NumericHeader;
+				/**
+				 * <p>Sets the general unit of measurement for the header. Displayed as side information to the subtitle.</p>
+				 * @param {string} sValue <p>The value of the unit of measurement</p>
+				 * @returns sap.f.cards.NumericHeader <p><code>this</code> pointer for chaining</p>
+				 */
+				setUnitOfMeasurement(sValue: string): sap.f.cards.NumericHeader;
+			}
+			/**
+			 * <p>A control used by <code>sap.f.cards.NumericHeader</code> to hold a set of side indicator attributes.</p>
+			 */
+			export class NumericSideIndicator extends sap.ui.core.Control {
+				/**
+				 * <p>Constructor for a new <code>NumericSideIndicator</code>.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+				 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
+				 * @param {any} mSettings <p>Initial settings for the new control</p>
+				 */
+				constructor(sId?: string, mSettings?: any);
+				/**
+				 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getNumber" href="#/api/sap.f.cards.NumericSideIndicator/methods/getNumber">number</a>.</p><p>The numeric value</p>
+				 * @returns string <p>Value of property <code>number</code></p>
+				 */
+				getNumber(): string;
+				/**
+				 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTitle" href="#/api/sap.f.cards.NumericSideIndicator/methods/getTitle">title</a>.</p><p>The title of the indicator</p>
+				 * @returns string <p>Value of property <code>title</code></p>
+				 */
+				getTitle(): string;
+				/**
+				 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getUnit" href="#/api/sap.f.cards.NumericSideIndicator/methods/getUnit">unit</a>.</p><p>Defines the unit of measurement (scaling prefix) for the numeric value</p>
+				 * @returns string <p>Value of property <code>unit</code></p>
+				 */
+				getUnit(): string;
+				/**
+				 * <p>Sets the numeric value.</p>
+				 * @param {string} sValue <p>The text of the title</p>
+				 * @returns sap.f.cards.NumericSideIndicator <p>this pointer for chaining</p>
+				 */
+				setNumber(sValue: string): sap.f.cards.NumericSideIndicator;
+				/**
+				 * <p>Sets the title.</p>
+				 * @param {string} sValue <p>The text of the title</p>
+				 * @returns sap.f.cards.NumericSideIndicator <p>this pointer for chaining</p>
+				 */
+				setTitle(sValue: string): sap.f.cards.NumericSideIndicator;
+				/**
+				 * <p>Sets the unit of measurement.</p>
+				 * @param {string} sValue <p>The text of the title</p>
+				 * @returns sap.f.cards.NumericSideIndicator <p>this pointer for chaining</p>
+				 */
+				setUnit(sValue: string): sap.f.cards.NumericSideIndicator;
 			}
 		}
 	}

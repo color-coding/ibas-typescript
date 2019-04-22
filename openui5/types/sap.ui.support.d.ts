@@ -8,14 +8,14 @@
 declare namespace sap {
     namespace ui {
         /**
-         * <p>UI5 library: sap.ui.support. A library for the Support Assistant tool. </p><h3>Overview</h3><p> The library provides the Support Assistant tool. It enables application developers to check whether their applications are built according to the best practices for building SAPUI5 apps. The tool uses a set of pre-defined rules to check all aspects of an application.</p>
+         * <p><p>UI5 library: sap.ui.support. A library for the Support Assistant tool. </p></p><h3>Overview</h3><p><p> The library provides the Support Assistant tool. It enables application developers to check whether their applications are built according to the best practices for building SAPUI5 apps. The tool uses a set of pre-defined rules to check all aspects of an application.</p></p>
          */
         namespace support {
             /**
              */
             var CoreFacade: any;
             /**
-             * <p>Analysis result which is created after analysis with the SupportAssistant.</p>
+             * <p><p>Analysis result which is created after analysis with the SupportAssistant.</p></p>
              */
             export interface AnalysisResult {
                 /**
@@ -48,7 +48,7 @@ declare namespace sap {
                 issues: Object[];
             }
             /**
-             * <p>Defines the Audiences.</p>
+             * <p><p>Defines the Audiences.</p></p>
              */
             export enum Audiences {
                 /**
@@ -65,7 +65,7 @@ declare namespace sap {
                 Internal = "Internal",
             }
             /**
-             * <p>Issue Categories.</p>
+             * <p><p>Issue Categories.</p></p>
              */
             export enum Categories {
                 /**
@@ -153,7 +153,7 @@ declare namespace sap {
                 constructor();
             }
             /**
-             * <p>Analysis history formats.</p>
+             * <p><p>Analysis history formats.</p></p>
              */
             export enum HistoryFormats {
                 /**
@@ -166,7 +166,7 @@ declare namespace sap {
                 String = "String",
             }
             /**
-             * <p>Defines severity types.</p>
+             * <p><p>Defines severity types.</p></p>
              */
             export enum Severity {
                 /**
@@ -183,7 +183,7 @@ declare namespace sap {
                 Medium = "Medium",
             }
             /**
-             * <p>Contains the available system presets.</p>
+             * <p><p>Contains the available system presets.</p></p>
              */
             export enum SystemPresets {
                 /**
@@ -198,7 +198,7 @@ declare namespace sap {
     namespace ui {
         namespace support {
             /**
-             * <p>The <code>sap.ui.support.RuleAnalyzer</code> namespace is the central entry point for the Support Assistant functionality.</p><h3>Overview</h3><p> <code>sap.ui.support.RuleAnalyzer</code> reveals an API for the Support Assistant which you can easily work with to analyze an application.</p><h3>Usage</h3><p><ul> <li> <code>sap.ui.support.RuleAnalyzer.addRule</code> method allows adding a new rule. </li> <li> <code>sap.ui.support.RuleAnalyzer.analyze</code> starts the analysis of the application. </li> <li> Then the result can be accessed with methods <code>sap.ui.support.RuleAnalyzer.getAnalysisHistory</code>, <code>sap.ui.support.RuleAnalyzer.getLastAnalysisHistory</code> or <code>sap.ui.support.RuleAnalyzer.getFormattedAnalysisHistory</code>. </li> </ul></p><p>For more information, see <a target="_self" href="#/topic/a34eb58aaf124f538a3ead23a6cab04a">Support Assistant API</a>.</p>
+             * <p><p>The <code>sap.ui.support.RuleAnalyzer</code> namespace is the central entry point for the Support Assistant functionality.</p></p><h3>Overview</h3><p><p> <code>sap.ui.support.RuleAnalyzer</code> reveals an API for the Support Assistant which you can easily work with to analyze an application.</p></p><h3>Usage</h3><p><p><ul> <li> <code>sap.ui.support.RuleAnalyzer.addRule</code> method allows adding a new rule. </li> <li> <code>sap.ui.support.RuleAnalyzer.analyze</code> starts the analysis of the application. </li> <li> Then the result can be accessed with methods <code>sap.ui.support.RuleAnalyzer.getAnalysisHistory</code>, <code>sap.ui.support.RuleAnalyzer.getLastAnalysisHistory</code> or <code>sap.ui.support.RuleAnalyzer.getFormattedAnalysisHistory</code>. </li> </ul></p><p>For more information, see <a target="_self" href="#/topic/a34eb58aaf124f538a3ead23a6cab04a">Support Assistant API</a>.</p></p>
              */
             namespace RuleAnalyzer {
                 /**
@@ -239,7 +239,7 @@ declare namespace sap {
     namespace ui {
         namespace support {
             /**
-             * <p>Creates a RuleSet. The RuleSet can store multiple rules concerning namespaces. </p><h3>Usage</h3><p> The RuleSet is an interface used to create, update and delete rulesets.</p>
+             * <p><p>Creates a RuleSet. The RuleSet can store multiple rules concerning namespaces. </p></p><h3>Usage</h3><p><p> The RuleSet is an interface used to create, update and delete rulesets.</p></p>
              */
             namespace RuleSet {
                 /**

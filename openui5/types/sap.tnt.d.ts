@@ -7,7 +7,7 @@
  */
 declare namespace sap {
     /**
-     * <p>SAPUI5 library with controls specialized for administrative applications.</p>
+     * <p><p>SAPUI5 library with controls specialized for administrative applications.</p></p>
      */
     namespace tnt {
         /**
@@ -375,7 +375,7 @@ declare namespace sap {
             setVisible(bVisible: boolean): sap.tnt.NavigationListItem;
         }
         /**
-         * <p>Predefined types of <code>InfoLabel</code></p>
+         * <p><p>Predefined types of <code>InfoLabel</code></p></p>
          */
         export enum RenderMode {
             /**

@@ -8,7 +8,7 @@
 declare namespace sap {
     namespace ui {
         /**
-         * <p>Unified controls intended for both, mobile and desktop scenarios</p>
+         * <p><p>Unified controls intended for both, mobile and desktop scenarios</p></p>
          */
         namespace unified {
             /**
@@ -486,7 +486,7 @@ declare namespace sap {
                 setTitle(sTitle: string): sap.ui.unified.CalendarAppointment;
             }
             /**
-             * <p>Visualization types for <a target="_self" class="jsdoclink" href="#/api/sap.ui.unified.CalendarAppointment">sap.ui.unified.CalendarAppointment</a>.</p>
+             * <p><p>Visualization types for <a target="_self" class="jsdoclink" href="#/api/sap.ui.unified.CalendarAppointment">sap.ui.unified.CalendarAppointment</a>.</p></p>
              */
             export enum CalendarAppointmentVisualization {
                 /**
@@ -564,7 +564,7 @@ declare namespace sap {
                 setStartDate(oStartDate: any): sap.ui.unified.CalendarDateInterval;
             }
             /**
-             * <p>Types of a calendar day used for visualization.</p>
+             * <p><p>Types of a calendar day used for visualization.</p></p>
              */
             export enum CalendarDayType {
                 /**
@@ -657,7 +657,7 @@ declare namespace sap {
                 Type20 = "Type20",
             }
             /**
-             * <p>Interval types in a <code>CalendarRow</code>.</p>
+             * <p><p>Interval types in a <code>CalendarRow</code>.</p></p>
              */
             export enum CalendarIntervalType {
                 /**
@@ -1873,7 +1873,7 @@ declare namespace sap {
                 setMode(sMode: sap.ui.unified.ColorPickerMode, bSuppressInvalidate: boolean): void;
             }
             /**
-             * <p>Types of a color picker display mode</p>
+             * <p><p>Types of a color picker display mode</p></p>
              */
             export enum ColorPickerDisplayMode {
                 /**
@@ -1890,7 +1890,7 @@ declare namespace sap {
                 Simplified = "Simplified",
             }
             /**
-             * <p>different styles for a ColorPicker.</p>
+             * <p><p>different styles for a ColorPicker.</p></p>
              */
             export enum ColorPickerMode {
                 /**
@@ -2096,7 +2096,7 @@ declare namespace sap {
                 switchContent(): void;
             }
             /**
-             * <p>Predefined animations for the ContentSwitcher</p>
+             * <p><p>Predefined animations for the ContentSwitcher</p></p>
              */
             export enum ContentSwitcherAnimation {
                 /**
@@ -2593,7 +2593,7 @@ declare namespace sap {
                  */
                 getMaximumFileSize(): number;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMimeType" href="#/api/sap.ui.unified.FileUploader/methods/getMimeType">mimeType</a>.</p><p>The chosen files will be checked against an array of mime types. If at least one file does not fit the mime type restriction the upload is prevented. This property is not supported by Internet Explorer 9. Example: mimeType ["image/png", "image/jpeg"].</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMimeType" href="#/api/sap.ui.unified.FileUploader/methods/getMimeType">mimeType</a>.</p><p>The chosen files will be checked against an array of mime types. If at least one file does not fit the mime type restriction the upload is prevented. <b>Note:</b> This property is not supported by Internet Explorer & Edge. Example: mimeType ["image/png", "image/jpeg"].</p>
                  * @returns string[] <p>Value of property <code>mimeType</code></p>
                  */
                 getMimeType(): string[];
@@ -2821,7 +2821,7 @@ declare namespace sap {
                  */
                 setMaximumFileSize(fMaximumFileSize: number): sap.ui.unified.FileUploader;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMimeType" href="#/api/sap.ui.unified.FileUploader/methods/getMimeType">mimeType</a>.</p><p>The chosen files will be checked against an array of mime types. If at least one file does not fit the mime type restriction the upload is prevented. This property is not supported by Internet Explorer 9. Example: mimeType ["image/png", "image/jpeg"].</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMimeType" href="#/api/sap.ui.unified.FileUploader/methods/getMimeType">mimeType</a>.</p><p>The chosen files will be checked against an array of mime types. If at least one file does not fit the mime type restriction the upload is prevented. <b>Note:</b> This property is not supported by Internet Explorer & Edge. Example: mimeType ["image/png", "image/jpeg"].</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {string[]} sMimeType <p>New value for property <code>mimeType</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
@@ -2972,7 +2972,7 @@ declare namespace sap {
                 setWithCredentials(bWithCredentials: boolean): sap.ui.unified.FileUploaderXHRSettings;
             }
             /**
-             * <p>Types of display mode for overlapping appointments.</p>
+             * <p><p>Types of display mode for overlapping appointments.</p></p>
              */
             export enum GroupAppointmentsMode {
                 /**
@@ -2985,7 +2985,7 @@ declare namespace sap {
                 Expanded = "Expanded",
             }
             /**
-             * <p>Marker interface for controls that process instances of <code>window.Blob</code>, such as <code>window.File</code>. The implementation of this Interface should implement the following Interface methods: <ul> <li><code>getProcessedBlobsFromArray</code></li> </ul></p>
+             * <p><p>Marker interface for controls that process instances of <code>window.Blob</code>, such as <code>window.File</code>. The implementation of this Interface should implement the following Interface methods: <ul> <li><code>getProcessedBlobsFromArray</code></li> </ul></p></p>
              */
             export interface IProcessableBlobs {
             }
@@ -4197,7 +4197,7 @@ declare namespace sap {
                 setShowSecondaryContent(bShowSecondaryContent: boolean): sap.ui.unified.SplitContainer;
             }
             /**
-             * <p>Standard day types visualized in a <a target="_self" class="jsdoclink" href="#/api/sap.m.PlanningCalendarLegend">sap.m.PlanningCalendarLegend</a>, which correspond to days in a <a target="_self" class="jsdoclink" href="#/api/sap.ui.unified.Calendar">sap.ui.unified.Calendar</a>.</p>
+             * <p><p>Standard day types visualized in a <a target="_self" class="jsdoclink" href="#/api/sap.m.PlanningCalendarLegend">sap.m.PlanningCalendarLegend</a>, which correspond to days in a <a target="_self" class="jsdoclink" href="#/api/sap.ui.unified.Calendar">sap.ui.unified.Calendar</a>.</p></p>
              */
             export enum StandardCalendarLegendItem {
                 /**
@@ -4224,7 +4224,7 @@ declare namespace sap {
     namespace ui {
         namespace unified {
             /**
-             * <p>Controls and helper classes around the calendar control.</p>
+             * <p><p>Controls and helper classes around the calendar control.</p></p>
              */
             namespace calendar {
                 /**
@@ -5528,7 +5528,7 @@ declare namespace sap {
                     setStartDate(oStartDate: any): sap.ui.unified.calendar.TimesRow;
                 }
                 /**
-                 * <p>renders a YearPicker with ItemNavigation This is used inside the calendar. Not for stand alone usage</p>
+                 * <p>renders a YearPicker with ItemNavigation This is used inside the calendar. Not for stand alone usage. As in all date-time controls, all pubic JS Date objects that are given (e.g. <code>setDate()</code>) or read (e.g. <code>getFirstRenderedDate</code>) with values which are considered as date objects in browser(local) timezone.</p>
                  */
                 export class YearPicker extends sap.ui.core.Control {
                     /**

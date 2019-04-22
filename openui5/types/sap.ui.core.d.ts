@@ -6,13 +6,13 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 /**
- * <p>Root namespace for JavaScript functionality provided by SAP SE.</p><p>The <code>sap</code> namespace is automatically registered with the OpenAjax hub if it exists.</p>
+ * <p><p>Root namespace for JavaScript functionality provided by SAP SE.</p><p>The <code>sap</code> namespace is automatically registered with the OpenAjax hub if it exists.</p></p>
  */
 declare namespace sap {
 }
 declare namespace sap {
   /**
-   * <p>The <code>sap.ui</code> namespace is the central OpenAjax compliant entry point for UI related JavaScript functionality provided by SAP.</p>
+   * <p><p>The <code>sap.ui</code> namespace is the central OpenAjax compliant entry point for UI related JavaScript functionality provided by SAP.</p></p>
    */
   namespace ui {
     /**
@@ -175,6 +175,10 @@ declare namespace sap {
          */
         constructor(extensionObject?: any);
         /**
+         * <p>A map of QUnit-style assertions to be used in an opaTest. Contains all methods available on QUnit.assert for the running QUnit version. Available assertions are: ok, equal, propEqual, deepEqual, strictEqual and their negative counterparts.</p><p>For more information, see <a target="_self" class="jsdoclink" href="#/api/sap.ui.test.opaQunit">sap.ui.test.opaQunit</a>.</p>
+         */
+        assert: { [key: string]: any };
+        /**
          * <p>The global configuration of Opa. All of the global values can be overwritten in an individual <code>waitFor</code> call. The default values are: <ul> <li>arrangements: A new Opa instance</li> <li>actions: A new Opa instance</li> <li>assertions: A new Opa instance</li> <li>timeout : 15 seconds, 0 for infinite timeout</li> <li>pollingInterval: 400 milliseconds</li> <li>debugTimeout: 0 seconds, infinite timeout by default. This will be used instead of timeout if running in debug mode.</li> <li>asyncPolling: false</li> </ul> You can either directly manipulate the config, or extend it using <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="extendConfig" href="#/api/sap.ui.test.Opa/methods/extendConfig">sap.ui.test.Opa.extendConfig</a>.</p>
          */
         config: any;
@@ -282,17 +286,17 @@ declare namespace sap {
          */
         static getContext(): any;
         /**
-         * <p>Returns the HashChanger object in the current context. If an IFrame is launched, it will return the IFrame's HashChanger.</p>
+         * <p>Returns the HashChanger object in the current context. If an iframe is launched, it will return the iframe's HashChanger.</p>
          * @returns sap.ui.core.routing.HashChanger <p>The HashChanger instance</p>
          */
         static getHashChanger(): sap.ui.core.routing.HashChanger;
         /**
-         * <p>Returns the jQuery object in the current context. If an IFrame is launched, it will return the IFrame's jQuery object.</p>
+         * <p>Returns the jQuery object in the current context. If an iframe is launched, it will return the iframe's jQuery object.</p>
          * @returns any <p>The jQuery object</p>
          */
         static getJQuery(): any;
         /**
-         * <p>Returns the Opa plugin used for retrieving controls. If an IFrame is launched, it will return the IFrame's plugin.</p>
+         * <p>Returns the Opa plugin used for retrieving controls. If an iframe is launched, it will return the iframe's plugin.</p>
          * @returns sap.ui.test.OpaPlugin <p>The plugin instance</p>
          */
         static getPlugin(): sap.ui.test.OpaPlugin;
@@ -303,29 +307,28 @@ declare namespace sap {
          */
         static getTestLibConfig(sTestLibName: string): any;
         /**
-         * <p>Returns the QUnit utils object in the current context. If an IFrame is launched, it will return the IFrame's QUnit utils.</p>
+         * <p>Returns the QUnit utils object in the current context. If an iframe is launched, it will return the iframe's QUnit utils.</p>
          * @returns sap.ui.test.qunit <p>The QUnit utils</p>
          */
         static getUtils(): any;
         /**
-         * <p>Returns the window object in the current context. If an IFrame is launched, it will return the IFrame's window.</p>
-         * @returns Window <p>The window of the IFrame</p>
+         * <p>Returns the window object in the current context. If an iframe is launched, it will return the iframe's window.</p>
+         * @returns Window <p>The window of the iframe</p>
          */
         static getWindow(): Window;
         /**
-         * <p>Starts an app in an IFrame. Only works reliably if running on the same server.</p>
-         * @param {string} sSource <p>The source of the IFrame.</p>
-         * @param {number} iTimeout <p>The timeout for loading the IFrame in seconds - default is 80.</p>
+         * <p>Starts an app in an iframe. Only works reliably if running on the same server.</p>
+         * @param {string | any} vSourceOrOptions <p>The source URL of the iframe or, since 1.53, you can provide a startup configuration object as the only parameter.</p>
+         * @param {number} iTimeout <p>The timeout for loading the iframe in seconds - default is 80.</p>
          * @param {boolean} autoWait <p>Since 1.53, activates autoWait while the application is starting up. This allows more time for application startup and stabilizes tests for slow-loading applications. This parameter is false by default, regardless of the global autoWait value, to prevent issues in existing tests.</p>
-         * @param {string | number} width <p>Since 1.57, sets a fixed width for the iFrame.</p>
-         * @param {string | number} height <p>Since 1.57, sets a fixed height for the iFrame. Setting width and/or height is useful when testing responsive applications on screens of varying sizes. By default, the iFrame dimensions are 60% of the outer window dimensions.</p>
-         * @param {any} oOptions <p>Since 1.53, you can provide a startup configuration object as an only parameter. oOptions is expected to have keys among: source, timeout, autoWait, width, height.</p>
+         * @param {string | number} width <p>Since 1.57, sets a fixed width for the iframe.</p>
+         * @param {string | number} height <p>Since 1.57, sets a fixed height for the iframe. Setting width and/or height is useful when testing responsive applications on screens of varying sizes. By default, the iframe dimensions are 60% of the outer window dimensions.</p>
          * @returns any <p>A promise that gets resolved on success</p>
          */
-        static iStartMyAppInAFrame(sSource: string, iTimeout: number, autoWait: boolean, width: string | number, height: string | number, oOptions?: any): any;
+        static iStartMyAppInAFrame(vSourceOrOptions: string | any, iTimeout?: number, autoWait?: boolean, width?: string | number, height?: string | number): any;
         /**
-         * <p>Removes the IFrame from the DOM and removes all the references to its objects. Use <a target="_self" class="jsdoclink" href="#/api/sap.ui.test.Opa5/methods/hasAppStartedInAFrame">sap.ui.test.Opa5#hasAppStartedInAFrame</a> to ensure that an IFrame has been started and teardown can be safely performed.</p>
-         * @returns any <p>A promise that gets resolved on success. If no IFrame has been created or an error occurs, the promise is rejected with the options object. A detailed error message containing the stack trace and Opa logs is available in options.errorMessage.</p>
+         * <p>Removes the iframe from the DOM and removes all the references to its objects. Use <a target="_self" class="jsdoclink" href="#/api/sap.ui.test.Opa5/methods/hasAppStartedInAFrame">sap.ui.test.Opa5#hasAppStartedInAFrame</a> to ensure that an iframe has been started and teardown can be safely performed.</p>
+         * @returns any <p>A promise that gets resolved on success. If no iframe has been created or an error occurs, the promise is rejected with the options object. A detailed error message containing the stack trace and Opa logs is available in options.errorMessage.</p>
          */
         static iTeardownMyAppFrame(): any;
         /**
@@ -340,13 +343,17 @@ declare namespace sap {
          */
         constructor();
         /**
+         * <p>A map of QUnit-style assertions to be used in an opaTest. Contains all methods available on QUnit.assert for the running QUnit version. Available assertions are: ok, equal, propEqual, deepEqual, strictEqual and their negative counterparts. You can define custom OPA5 assertions in the extensions section of <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="sap.ui.test.Opa5.extendConfig" href="#/api/sap.ui.test.Opa5/methods/sap.ui.test.Opa5.extendConfig">sap.ui.test.Opa5.extendConfig</a></p><p>Example usage: oOpa5.waitFor({ success: function () { Opa5.assert.ok(true, "Should be true"); } });</p><p>For more information, see <a target="_self" class="jsdoclink" href="#/api/sap.ui.test.opaQunit">sap.ui.test.opaQunit</a>.</p>
+         */
+        assert: { [key: string]: any };
+        /**
          * <p>Checks if the application has been started using <a target="_self" class="jsdoclink" href="#/api/sap.ui.test.Opa5/methods/iStartMyAppInAFrame">sap.ui.test.Opa5#iStartMyAppInAFrame</a> or <a target="_self" class="jsdoclink" href="#/api/sap.ui.test.Opa5/methods/iStartMyUIComponent">sap.ui.test.Opa5#iStartMyUIComponent</a></p>
          * @returns boolean <p>A boolean indicating whether the application has been started regardless of how it was started</p>
          */
         hasAppStarted(): boolean;
         /**
          * <p>Checks if the application has been started using <a target="_self" class="jsdoclink" href="#/api/sap.ui.test.Opa5/methods/iStartMyAppInAFrame">sap.ui.test.Opa5#iStartMyAppInAFrame</a></p>
-         * @returns boolean <p>A boolean indicating whether the application has been started in an iFrame</p>
+         * @returns boolean <p>A boolean indicating whether the application has been started in an iframe</p>
          */
         hasAppStartedInAFrame(): boolean;
         /**
@@ -355,16 +362,15 @@ declare namespace sap {
          */
         hasUIComponentStarted(): boolean;
         /**
-         * <p>Starts an app in an IFrame. Only works reliably if running on the same server.</p>
-         * @param {string} sSource <p>The source of the IFrame</p>
-         * @param {number} iTimeout <p>The timeout for loading the IFrame in seconds - default is 80</p>
+         * <p>Starts an app in an iframe. Only works reliably if running on the same server.</p>
+         * @param {string | any} vSourceOrOptions <p>The source URL of the iframe or, since 1.53, you can provide a startup configuration object as the only parameter.</p>
+         * @param {number} iTimeout <p>The timeout for loading the iframe in seconds - default is 80</p>
          * @param {boolean} autoWait <p>Since 1.53, activates autoWait while the application is starting up. This allows more time for application startup and stabilizes tests for slow-loading applications. This parameter is false by default, regardless of the global autoWait value, to prevent issues in existing tests.</p>
-         * @param {string | number} width <p>Since 1.57, sets a fixed width for the iFrame.</p>
-         * @param {string | number} height <p>Since 1.57, sets a fixed height for the iFrame. Setting width and/or height is useful when testing responsive applications on screens of varying sizes. By default, the iFrame dimensions are 60% of the outer window dimensions.</p>
-         * @param {any} oOptions <p>Since 1.53, you can provide a startup configuration object as an only parameter. oOptions is expected to have keys among: source, timeout, autoWait, width, height.</p>
+         * @param {string | number} width <p>Since 1.57, sets a fixed width for the iframe.</p>
+         * @param {string | number} height <p>Since 1.57, sets a fixed height for the iframe. Setting width and/or height is useful when testing responsive applications on screens of varying sizes. By default, the iframe dimensions are 60% of the outer window dimensions.</p>
          * @returns any <p>A promise that gets resolved on success</p>
          */
-        iStartMyAppInAFrame(sSource: string, iTimeout: number, autoWait: boolean, width: string | number, height: string | number, oOptions?: any): any;
+        iStartMyAppInAFrame(vSourceOrOptions: string | any, iTimeout?: number, autoWait?: boolean, width?: string | number, height?: string | number): any;
         /**
          * <p>Starts a UIComponent.</p>
          * @param {any} oOptions <p>An Object that contains the configuration for starting up a UIComponent.</p>
@@ -372,13 +378,13 @@ declare namespace sap {
          */
         iStartMyUIComponent(oOptions: any): any;
         /**
-         * <p>Tears down the started application regardless of how it was started. Removes the IFrame launched by <a target="_self" class="jsdoclink" href="#/api/sap.ui.test.Opa5/methods/iStartMyAppInAFrame">sap.ui.test.Opa5#iStartMyAppInAFrame</a> or destroys the UIComponent launched by <a target="_self" class="jsdoclink" href="#/api/sap.ui.test.Opa5/methods/iStartMyUIComponent">sap.ui.test.Opa5#iStartMyUIComponent</a>. This function is designed to make the test's teardown independent of the startup. Use <a target="_self" class="jsdoclink" href="#/api/sap.ui.test.Opa5/methods/hasAppStarted">sap.ui.test.Opa5#hasAppStarted</a> to ensure that the application has been started and teardown can be safely performed.</p>
+         * <p>Tears down the started application regardless of how it was started. Removes the iframe launched by <a target="_self" class="jsdoclink" href="#/api/sap.ui.test.Opa5/methods/iStartMyAppInAFrame">sap.ui.test.Opa5#iStartMyAppInAFrame</a> or destroys the UIComponent launched by <a target="_self" class="jsdoclink" href="#/api/sap.ui.test.Opa5/methods/iStartMyUIComponent">sap.ui.test.Opa5#iStartMyUIComponent</a>. This function is designed to make the test's teardown independent of the startup. Use <a target="_self" class="jsdoclink" href="#/api/sap.ui.test.Opa5/methods/hasAppStarted">sap.ui.test.Opa5#hasAppStarted</a> to ensure that the application has been started and teardown can be safely performed.</p>
          * @returns any <p>A promise that gets resolved on success. If nothing has been started or an error occurs, the promise is rejected with the options object. A detailed error message containing the stack trace and Opa logs is available in options.errorMessage.</p>
          */
         iTeardownMyApp(): any;
         /**
-         * <p>Removes the IFrame from the DOM and removes all the references to its objects Use <a target="_self" class="jsdoclink" href="#/api/sap.ui.test.Opa5/methods/hasAppStartedInAFrame">sap.ui.test.Opa5#hasAppStartedInAFrame</a> to ensure that an IFrame has been started and teardown can be safely performed.</p>
-         * @returns any <p>A promise that gets resolved on success. If no IFrame has been created or an error occurs, the promise is rejected with the options object. A detailed error message containing the stack trace and Opa logs is available in options.errorMessage.</p>
+         * <p>Removes the iframe from the DOM and removes all the references to its objects Use <a target="_self" class="jsdoclink" href="#/api/sap.ui.test.Opa5/methods/hasAppStartedInAFrame">sap.ui.test.Opa5#hasAppStartedInAFrame</a> to ensure that an iframe has been started and teardown can be safely performed.</p>
+         * @returns any <p>A promise that gets resolved on success. If no iframe has been created or an error occurs, the promise is rejected with the options object. A detailed error message containing the stack trace and Opa logs is available in options.errorMessage.</p>
          */
         iTeardownMyAppFrame(): any;
         /**
@@ -416,7 +422,7 @@ declare namespace sap {
          */
         constructor();
         /**
-         * <p>Gets all the controls of a certain type that are currently instantiated. If the control type is omitted, nothing is returned.</p>
+         * <p>Gets all the controls of a certain type that are currently instantiated. If the control type is omitted, all controls are returned.</p>
          * @param {Function} fnConstructorType <p>the control type, e.g: sap.m.CheckBox</p>
          * @param {string} sControlType <p>optional control type name, e.g: "sap.m.CheckBox"</p>
          * @returns any[] <p>an array of the found controls (can be empty)</p>
@@ -495,7 +501,7 @@ declare namespace sap {
       }
       namespace RecordReplay {
         /**
-         * <p>Control selector plain object description.</p><p>All matchers are combined when used in a single selector Listed in descending order of preference</p>
+         * <p><p>Control selector plain object description.</p><p>All matchers are combined when used in a single selector Listed in descending order of preference</p></p>
          */
         export interface ControlSelector {
           /**
@@ -528,7 +534,7 @@ declare namespace sap {
           properties: any;
         }
         /**
-         * <p>Interaction types.</p><p>Values correspond to OPA5 built-in actions <a target="_self" class="jsdoclink" href="#/api/sap.ui.test.actions">sap.ui.test.actions</a>.</p>
+         * <p><p>Interaction types.</p><p>Values correspond to OPA5 built-in actions <a target="_self" class="jsdoclink" href="#/api/sap.ui.test.actions">sap.ui.test.actions</a>.</p></p>
          */
         export enum InteractionType {
           /**
@@ -599,7 +605,7 @@ declare namespace sap {
           setText(sText: string): sap.ui.test.actions.EnterText;
         }
         /**
-         * <p>The Press action is used to simulate a press interaction on a Control's dom ref. This will work out of the box for most of the controls (even custom controls).</p><p>Here is a List of supported controls (some controls will trigger the press on a specific region):</p><p><ul> <li>sap.m.Button</li> <li>sap.m.ComboBox</li> <li>sap.m.IconTabFilter</li> <li>sap.m.Input - Value help</li> <li>sap.m.Link</li> <li>sap.m.List - More Button</li> <li>sap.m.ObjectIdentifier</li> <li>sap.m.Page - Back Button</li> <li>sap.m.SearchField - Search Button</li> <li>sap.m.semantic.DetailPage - Back Button</li> <li>sap.m.semantic.FullscreenPage - Back Button</li> <li>sap.m.StandardListItem</li> <li>sap.m.StandardTile</li> <li>sap.m.Table - More Button</li> <li>sap.ui.comp.smartfilterbar.SmartFilterBar - Go Button</li> </ul></p>
+         * <p>The <code>Press</code> action is used to simulate a press interaction with a control. Most controls are supported, for example buttons, links, list items, tables, filters, and form controls.</p><p>The <code>Press</code> action targets a special DOM element representing the control. This DOM element can be customized.</p><p>For most most controls (even custom ones), the DOM focus reference is an appropriate choice. You can choose a different DOM element by specifying its ID suffix. You can do this by directly passing the ID suffix to the Press constructor, or by defining a control adapter.</p><p>There are some basic controls for which OPA5 has defined <code>Press</code> control adapters. For more information, see <a target="_self" class="jsdoclink" href="#/api/sap.ui.test.actions.Press.controlAdapters">sap.ui.test.actions.Press.controlAdapters</a>.</p>
          */
         export class Press extends sap.ui.test.actions.Action {
           /**
@@ -611,7 +617,7 @@ declare namespace sap {
        */
       namespace gherkin {
         /**
-         * <p>Provides utility functions for formatting 2D arrays of strings (such as the raw data loaded from a Gherkin feature file) into a more useful format such as an array of objects or a single object. Also handles normalization of the raw strings.</p>
+         * <p><p>Provides utility functions for formatting 2D arrays of strings (such as the raw data loaded from a Gherkin feature file) into a more useful format such as an array of objects or a single object. Also handles normalization of the raw strings.</p></p>
          */
         namespace dataTableUtils {
           /**
@@ -656,7 +662,7 @@ declare namespace sap {
            */
           function toTable(aData: string[], vNorm?: string | Function): object[];
           /**
-           * <p>A simple object containing a series of normalization functions that change a string according to a particular strategy. All strategies do the following normalization as a minimum:</p><p><ul> <li>Trim spaces off the string on both sides. For example: <code>" hello "</code> becomes <code>"hello"</code>.</li> <li>Assume that dashes and underscores are analogs for a space. For example: <code>"sold-to party"</code> and <code>"sold to party"</code> are equivalent, and would both convert to the camelCase <code>"soldToParty"</code>.</li> <li>Trim multiple spaces between words. For example: <code>"hello____world"</code> becomes <code>"hello world"</code>.</li> <li>Remove any characters that are not alphanumeric or whitespace. For example: <code>"(hello)"</code> becomes <code>"hello"</code>.</li> </ul></p>
+           * <p><p>A simple object containing a series of normalization functions that change a string according to a particular strategy. All strategies do the following normalization as a minimum:</p><p><ul> <li>Trim spaces off the string on both sides. For example: <code>" hello "</code> becomes <code>"hello"</code>.</li> <li>Assume that dashes and underscores are analogs for a space. For example: <code>"sold-to party"</code> and <code>"sold to party"</code> are equivalent, and would both convert to the camelCase <code>"soldToParty"</code>.</li> <li>Trim multiple spaces between words. For example: <code>"hello____world"</code> becomes <code>"hello world"</code>.</li> <li>Remove any characters that are not alphanumeric or whitespace. For example: <code>"(hello)"</code> becomes <code>"hello"</code>.</li> </ul></p></p>
            */
           namespace normalization {
             /**
@@ -692,7 +698,7 @@ declare namespace sap {
           }
         }
         /**
-         * <p>Dynamically generates and executes Opa5 tests based on a Gherkin feature file and step definitions.</p><p>Logs activity to Opa5, and some debug information to the console with the prefix "[GHERKIN]"</p>
+         * <p><p>Dynamically generates and executes Opa5 tests based on a Gherkin feature file and step definitions.</p><p>Logs activity to Opa5, and some debug information to the console with the prefix "[GHERKIN]"</p></p>
          */
         namespace opa5TestHarness {
           /**
@@ -702,7 +708,7 @@ declare namespace sap {
           function test(args: any): void;
         }
         /**
-         * <p>Dynamically generates and executes QUnit tests based on a Gherkin feature file and step definitions</p><p>Logs activity to QUnit, and some debug information to the console with the prefix "[GHERKIN]"</p>
+         * <p><p>Dynamically generates and executes QUnit tests based on a Gherkin feature file and step definitions</p><p>Logs activity to QUnit, and some debug information to the console with the prefix "[GHERKIN]"</p></p>
          */
         namespace qUnitTestHarness {
           /**
@@ -1105,7 +1111,7 @@ declare namespace sap {
 declare namespace sap {
   namespace ui {
     /**
-     * <p>SAPUI5 base classes</p>
+     * <p><p>SAPUI5 base classes</p></p>
      */
     namespace base {
       /**
@@ -1207,7 +1213,7 @@ declare namespace sap {
       /**
        * <p>An Event object consisting of an ID, a source and a map of parameters. Implements <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.Poolable">sap.ui.base.Poolable</a> and therefore an event object in the event handler will be reset by <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ObjectPool">sap.ui.base.ObjectPool</a> after the event handler is done.</p>
        */
-      export class Event extends sap.ui.base.Object implements sap.ui.base.Poolable {
+      export class Event extends sap.ui.base.Object {
         /**
          * <p>Creates an event with the given <code>sId</code>, linked to the provided <code>oSource</code> and enriched with the <code>mParameters</code>.</p>
          * @param {string} sId <p>The id of the event</p>
@@ -1244,14 +1250,6 @@ declare namespace sap {
          * <p>Prevent the default action of this event.</p><p><b>Note:</b> This function only has an effect if preventing the default action of the event is supported by the event source.</p>
          */
         preventDefault(): void;
-        /**
-         * <p>Called by the object pool when this instance will be actived for a caller. The same method will be called after a new instance has been created by an otherwise exhausted pool.</p><p>If the caller provided any arguments to <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ObjectPool/methods/borrowObject">sap.ui.base.ObjectPool#borrowObject</a> all arguments will be propagated to this method.</p>
-         */
-        init(): void;
-        /**
-         * <p>Called by the object pool when an instance is returned to the pool. While no specific implementation is required, poolable objects in general should clean all caller specific state (set to null) in this method to avoid memory leaks and to enforce garbage collection of the caller state.</p>
-         */
-        reset(): void;
       }
       /**
        * <p>Provides eventing capabilities for objects like attaching or detaching event handlers for events which are notified when events are fired.</p>
@@ -1859,7 +1857,7 @@ declare namespace sap {
       /**
        * <p><strong>Note about Info Objects</strong></p><p>Several methods in this class return info objects that describe a property, aggregation, association or event of the class described by this metadata object. The type, structure and behavior of these info objects is not yet documented and not part of the stable, public API.</p><p>Code using such methods and the returned info objects therefore needs to be aware of the following restrictions:</p><p><ul> <li>the set of properties exposed by each info object, their type and value might change as well as the class of the info object itself.</p><p>Properties that represent settings provided during class definition (in the oClassInfo parameter of the 'extend' call, e.g. 'type', 'multiple' of an aggregation) are more likely to stay the same than additional, derived properties like '_iKind'.</li></p><p><li>info objects must not be modified / enriched although they technically could.</li></p><p><li>the period of validity of info objects is not defined. They should be referenced only for a short time and not be kept as members of long living objects or closures.</li></p><p></ul></p>
        */
-      export class ManagedObjectMetadata {
+      export class ManagedObjectMetadata extends sap.ui.base.Metadata {
         /**
          * <p>Test whether a given ID looks like it was automatically generated.</p><p>Examples: <pre>
         True for:
@@ -2146,7 +2144,7 @@ declare namespace sap {
         returnObject(oObject: any): void;
       }
       /**
-       * <p>Contract for objects that can be pooled by ObjectPool</p>
+       * <p><p>Contract for objects that can be pooled by ObjectPool</p></p>
        */
       export interface Poolable {
         /**
@@ -2164,7 +2162,7 @@ declare namespace sap {
 declare namespace sap {
   namespace ui {
     /**
-     * <p>The SAPUI5 Core Runtime.</p><p>Contains the UI5 jQuery plugins (jQuery.sap.*), the Core and all its components, base classes for Controls, Components and the Model View Controller classes.</p>
+     * <p><p>The SAPUI5 Core Runtime.</p><p>Contains the UI5 jQuery plugins (jQuery.sap.*), the Core and all its components, base classes for Controls, Components and the Model View Controller classes.</p></p>
      */
     namespace core {
       /**
@@ -2186,7 +2184,7 @@ declare namespace sap {
        */
       function CustomStyleClassSupport(): void;
       /**
-       * <p>Defines the accessible landmark roles for ARIA support. This enumeration is used with the AccessibleRole control property. For more information, go to "Roles for Accessible Rich Internet Applications (WAI-ARIA Roles)" at the www.w3.org homepage.</p>
+       * <p><p>Defines the accessible landmark roles for ARIA support. This enumeration is used with the AccessibleRole control property. For more information, go to "Roles for Accessible Rich Internet Applications (WAI-ARIA Roles)" at the www.w3.org homepage.</p></p>
        */
       export enum AccessibleLandmarkRole {
         /**
@@ -2227,7 +2225,7 @@ declare namespace sap {
         Search = "Search",
       }
       /**
-       * <p>Defines the accessible roles for ARIA support. This enumeration is used with the AccessibleRole control property. For more information, goto "Roles for Accessible Rich Internet Applications (WAI-ARIA Roles)" at the www.w3.org homepage.</p>
+       * <p><p>Defines the accessible roles for ARIA support. This enumeration is used with the AccessibleRole control property. For more information, goto "Roles for Accessible Rich Internet Applications (WAI-ARIA Roles)" at the www.w3.org homepage.</p></p>
        */
       export enum AccessibleRole {
         /**
@@ -2464,7 +2462,7 @@ declare namespace sap {
         TreeItem = "TreeItem",
       }
       /**
-       * <p>Configuration options for the colors of a progress bar</p>
+       * <p><p>Configuration options for the colors of a progress bar</p></p>
        */
       export enum BarColor {
         /**
@@ -2485,7 +2483,7 @@ declare namespace sap {
         POSITIVE = "POSITIVE",
       }
       /**
-       * <p>Configuration options for the BusyIndicator size</p>
+       * <p><p>Configuration options for the BusyIndicator size</p></p>
        */
       export enum BusyIndicatorSize {
         /**
@@ -2506,7 +2504,7 @@ declare namespace sap {
         Small = "Small",
       }
       /**
-       * <p>The types of Calendar</p>
+       * <p><p>The types of Calendar</p></p>
        */
       export enum CalendarType {
         /**
@@ -2890,7 +2888,7 @@ declare namespace sap {
         setWidth(sWidth: sap.ui.core.CSSSize): sap.ui.core.ComponentContainer;
       }
       /**
-       * <p>Enumeration for different lifecycle behaviors of Components created by the ComponentContainer.</p>
+       * <p><p>Enumeration for different lifecycle behaviors of Components created by the ComponentContainer.</p></p>
        */
       export enum ComponentLifecycle {
         /**
@@ -2908,7 +2906,7 @@ declare namespace sap {
       }
       /**
        */
-      export class ComponentMetadata {
+      export class ComponentMetadata extends sap.ui.base.ManagedObjectMetadata {
         /**
          * <p>Creates a new metadata object for a Component subclass.</p>
          * @param {string} sClassName <p>Fully qualified name of the class that is described by this metadata object</p>
@@ -3018,8 +3016,8 @@ declare namespace sap {
         getInspect(): boolean;
         /**
          * <p>Returns a string that identifies the current language.</p><p>The value returned by this methods in most cases corresponds to the exact value that has been configured by the user or application or that has been determined from the user agent settings. It has not been normalized, but has been validated against a relaxed version of <a target="_blank" href="http://www.ietf.org/rfc/bcp/bcp47.txt">BCP47</a>
-            <img src="./resources/sap/ui/documentation/sdk/images/link-external.png" 
-            title="Information published on non SAP site" class="sapUISDKExternalLink"/>, allowing underscores ('_') instead of the suggested dashes ('-') and not taking the case of letters into account.</p><p>The exceptions mentioned above affect languages that have been specified via the URL parameter <code>sap-language</code>. That parameter by definition represents an SAP logon language code ('ABAP language'). Most but not all of these language codes are valid ISO639 two-letter languages and as such are valid BCP47 language tags. For better BCP47 compliance, the framework maps the following non-BCP47 SAP logon codes to a BCP47 substitute: <pre>
+        <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
+        title="Information published on non SAP site" class="sapUISDKExternalLink"/>, allowing underscores ('_') instead of the suggested dashes ('-') and not taking the case of letters into account.</p><p>The exceptions mentioned above affect languages that have been specified via the URL parameter <code>sap-language</code>. That parameter by definition represents an SAP logon language code ('ABAP language'). Most but not all of these language codes are valid ISO639 two-letter languages and as such are valid BCP47 language tags. For better BCP47 compliance, the framework maps the following non-BCP47 SAP logon codes to a BCP47 substitute: <pre>
            "ZH"  -->  "zh-Hans"         // script 'Hans' added to distinguish it from zh-Hant
            "ZF"  -->  "zh-Hant"         // ZF is not a valid ISO639 code, use the compliant language + script 'Hant'
              "    "1Q"  -->  "en-US-x-saptrc"  // special language code for supportability (tracing),
@@ -3123,7 +3121,7 @@ declare namespace sap {
       }
       namespace Configuration {
         /**
-         * <p>Enumerable list with available animation modes.</p><p>This enumerable is used to validate the animation mode. Animation modes allow to specify different animation scenarios or levels. The implementation of the Control (JavaScript or CSS) has to be done differently for each animation mode.</p>
+         * <p><p>Enumerable list with available animation modes.</p><p>This enumerable is used to validate the animation mode. Animation modes allow to specify different animation scenarios or levels. The implementation of the Control (JavaScript or CSS) has to be done differently for each animation mode.</p></p>
          */
         export enum AnimationMode {
           /**
@@ -3745,8 +3743,8 @@ declare namespace sap {
         includeLibraryTheme(sLibName: string, sVariant?: string, sQuery?: string): void;
         /**
          * <p>Provides the framework with information about a library.</p><p>This method is intended to be called exactly once while the main module of a library (its <code>library.js</code> module) is executing, typically at its begin. The single parameter <code>oLibInfo</code> is an info object that describes the content of the library.</p><p>When the <code>oLibInfo</code> has been processed, a normalized version of it will be kept and will be returned as library information in later calls to <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLoadedLibraries" href="#/api/sap.ui.core.Core/methods/getLoadedLibraries">#getLoadedLibraries</a>. Finally, <code>initLibrary</code> fires (the currently private) <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="LibraryChanged" href="#/api/sap.ui.core.Core/events/LibraryChanged">#event:LibraryChanged</a> event with operation 'add' for the newly loaded library.</p><h3>Side Effects</h3><p>While analyzing the <code>oLibInfo</code>, the framework takes some additional actions:</p><p><ul> <li>If the info object contains a list of <code>interfaces</code>, they will be registered with the <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.DataType">sap.ui.base.DataType</a> class to make them available as aggregation types in managed objects.</li></p><p><li>If the object contains a list of <code>controls</code> or <code>elements</code>, <a target="_self" class="jsdoclink" href="#/api/sap.ui/methods/sap.ui.lazyRequire">lazy stubs</a> will be created for their constructor as well as for their static <code>extend</code> and <code>getMetadata</code> methods.<br> <b>Note:</b> Future versions might abandon the concept of lazy stubs as it requires synchronous XMLHttpRequests which have been deprecated (see <a target="_blank" href="http://xhr.spec.whatwg.org">http://xhr.spec.whatwg.org</a>
-            <img src="./resources/sap/ui/documentation/sdk/images/link-external.png" 
-            title="Information published on non SAP site" class="sapUISDKExternalLink"/>). To be on the safe side, productive applications should always require any modules that they directly depend on.</li></p><p><li>With the <code>noLibraryCSS</code> property, the library can be marked as 'theming-free'. Otherwise, the framework will add a &lt;link&gt; tag to the page's head, pointing to the library's theme-specific stylesheet. The creation of such a &lt;link&gt; tag can be suppressed with the <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.Configuration">global configuration option</a> <code>preloadLibCss</code>. It can contain a list of library names for which no stylesheet should be included. This is e.g. useful when an application merges the CSS for multiple libraries and already loaded the resulting stylesheet.</li></p><p><li>If a list of library <code>dependencies</code> is specified in the info object, those libraries will be loaded synchronously by <code>initLibrary</code>.<br> <b>Note:</b> Dependencies between libraries don't have to be modeled as AMD dependencies. Only when enums or types from an additional library are used in the coding of the <code>library.js</code> module, the library should be additionally listed in the AMD dependencies.</li> </ul></p><p>Last but not least, higher layer frameworks might want to include their own metadata for libraries. The property <code>extensions</code> might contain such additional metadata. Its structure is not defined by the framework, but it is strongly suggested that each extension only occupies a single property in the <code>extensions</code> object and that the name of that property contains some namespace information (e.g. library name that introduces the feature) to avoid conflicts with other extensions. The framework won't touch the content of <code>extensions</code> but will make it available in the library info objects returned by <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLoadedLibraries" href="#/api/sap.ui.core.Core/methods/getLoadedLibraries">#getLoadedLibraries</a>.</p><h3>Relationship to Descriptor for Libraries (manifest.json)</h3><p>The information contained in <code>oLibInfo</code> is partially redundant to the content of the descriptor for the same library (its <code>manifest.json</code> file). Future versions of UI5 might ignore the information provided in <code>oLibInfo</code> and might evaluate the descriptor file instead. Library developers therefore should keep the information in both files in sync.</p><p>When the <code>manifest.json</code> is generated from the <code>.library</code> file (which is the default for UI5 libraries built with Maven), then the content of the <code>.library</code> and <code>library.js</code> files must be kept in sync.</p>
+        <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
+        title="Information published on non SAP site" class="sapUISDKExternalLink"/>). To be on the safe side, productive applications should always require any modules that they directly depend on.</li></p><p><li>With the <code>noLibraryCSS</code> property, the library can be marked as 'theming-free'. Otherwise, the framework will add a &lt;link&gt; tag to the page's head, pointing to the library's theme-specific stylesheet. The creation of such a &lt;link&gt; tag can be suppressed with the <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.Configuration">global configuration option</a> <code>preloadLibCss</code>. It can contain a list of library names for which no stylesheet should be included. This is e.g. useful when an application merges the CSS for multiple libraries and already loaded the resulting stylesheet.</li></p><p><li>If a list of library <code>dependencies</code> is specified in the info object, those libraries will be loaded synchronously by <code>initLibrary</code>.<br> <b>Note:</b> Dependencies between libraries don't have to be modeled as AMD dependencies. Only when enums or types from an additional library are used in the coding of the <code>library.js</code> module, the library should be additionally listed in the AMD dependencies.</li> </ul></p><p>Last but not least, higher layer frameworks might want to include their own metadata for libraries. The property <code>extensions</code> might contain such additional metadata. Its structure is not defined by the framework, but it is strongly suggested that each extension only occupies a single property in the <code>extensions</code> object and that the name of that property contains some namespace information (e.g. library name that introduces the feature) to avoid conflicts with other extensions. The framework won't touch the content of <code>extensions</code> but will make it available in the library info objects returned by <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLoadedLibraries" href="#/api/sap.ui.core.Core/methods/getLoadedLibraries">#getLoadedLibraries</a>.</p><h3>Relationship to Descriptor for Libraries (manifest.json)</h3><p>The information contained in <code>oLibInfo</code> is partially redundant to the content of the descriptor for the same library (its <code>manifest.json</code> file). Future versions of UI5 might ignore the information provided in <code>oLibInfo</code> and might evaluate the descriptor file instead. Library developers therefore should keep the information in both files in sync.</p><p>When the <code>manifest.json</code> is generated from the <code>.library</code> file (which is the default for UI5 libraries built with Maven), then the content of the <code>.library</code> and <code>library.js</code> files must be kept in sync.</p>
          * @param {any} oLibInfo <p>Info object for the library</p>
          */
         initLibrary(oLibInfo: any): void;
@@ -3902,7 +3900,7 @@ declare namespace sap {
         constructor();
       }
       /**
-       * <p>Font design for texts</p>
+       * <p><p>Font design for texts</p></p>
        */
       export enum Design {
         /**
@@ -4015,7 +4013,7 @@ declare namespace sap {
         destroy(bSuppressInvalidate?: boolean): void;
         /**
          * <p>Cleans up the resources associated with this element and all its children.</p><p>After an element has been destroyed, it can no longer be used in the UI!</p><p>Applications should call this method if they don't need the element any longer.</p>
-         * @param {boolean} bSuppressInvalidate <p>if true, the UI element is not marked for redraw</p>
+         * @param {boolean} bSuppressInvalidate <p>if true, the UI element is removed from DOM synchronously and parent will not be invalidated.</p>
          */
         destroy(bSuppressInvalidate?: boolean): void;
         /**
@@ -4360,7 +4358,7 @@ declare namespace sap {
         constructor(sId: string, mSettings?: any);
       }
       /**
-       * <p>Configuration options for horizontal alignments of controls</p>
+       * <p><p>Configuration options for horizontal alignments of controls</p></p>
        */
       export enum HorizontalAlign {
         /**
@@ -4686,7 +4684,7 @@ declare namespace sap {
         setWidth(sWidth: sap.ui.core.CSSSize): sap.ui.core.Icon;
       }
       /**
-       * <p>Semantic Colors of an icon.</p>
+       * <p><p>Semantic Colors of an icon.</p></p>
        */
       export enum IconColor {
         /**
@@ -4715,17 +4713,17 @@ declare namespace sap {
         Positive = "Positive",
       }
       /**
-       * <p>Marker interface for controls that can serve as a context menu. Implementation of this interface should implement <li><code>openAsContextMenu</code></li> method.</p>
+       * <p><p>Marker interface for controls that can serve as a context menu. Implementation of this interface should implement <li><code>openAsContextMenu</code></li> method.</p></p>
        */
       export interface IContextMenu {
       }
       /**
-       * <p>Marker interface for controls that can be used as content of <code>sap.ui.layout.form.Form</code> or <code>sap.ui.layout.form.SimpleForm</code>.</p><p>If the control's width must not be adjusted by the <code>Form</code> control to meet the cell's width, the control must implement the <code>getFormDoNotAdjustWidth</code> function and return <code>true</code>.</p>
+       * <p><p>Marker interface for controls that can be used as content of <code>sap.ui.layout.form.Form</code> or <code>sap.ui.layout.form.SimpleForm</code>.</p><p>If the control's width must not be adjusted by the <code>Form</code> control to meet the cell's width, the control must implement the <code>getFormDoNotAdjustWidth</code> function and return <code>true</code>.</p></p>
        */
       export interface IFormContent {
       }
       /**
-       * <p>State of the Input Method Editor (IME) for the control.</p><p>Depending on its value, it allows users to enter and edit for example Chinese characters.</p>
+       * <p><p>State of the Input Method Editor (IME) for the control.</p><p>Depending on its value, it allows users to enter and edit for example Chinese characters.</p></p>
        */
       export enum ImeMode {
         /**
@@ -4746,7 +4744,7 @@ declare namespace sap {
         Inactive = "Inactive",
       }
       /**
-       * <p>Colors to highlight certain UI elements. In contrast to the <code>ValueState</code> the semantic meaning must be defined by the application.</p>
+       * <p><p>Colors to highlight certain UI elements. In contrast to the <code>ValueState</code> the semantic meaning must be defined by the application.</p></p>
        */
       export enum IndicationColor {
         /**
@@ -4852,7 +4850,7 @@ declare namespace sap {
         toStatic(): sap.ui.core.InvisibleText;
       }
       /**
-       * <p>Interface for the controls which are suitable to shrink.</p><p>This means the control should still look fine when it gets smaller than its normal size, e.g. Text controls which can show ellipsis in case of shrink.</p><p>Note: This marker interface can be implemented by controls to give a hint to the container. The control itself does not need to implement anything. A parent control that respects this interface will apply the "flex-shrink" as a CSS property which determines how much the item will shrink relative to the rest of the items in the container when negative free space is distributed.</p>
+       * <p><p>Interface for the controls which are suitable to shrink.</p><p>This means the control should still look fine when it gets smaller than its normal size, e.g. Text controls which can show ellipsis in case of shrink.</p><p>Note: This marker interface can be implemented by controls to give a hint to the container. The control itself does not need to implement anything. A parent control that respects this interface will apply the "flex-shrink" as a CSS property which determines how much the item will shrink relative to the rest of the items in the container when negative free space is distributed.</p></p>
        */
       export interface IShrinkable {
       }
@@ -4912,7 +4910,7 @@ declare namespace sap {
         setTextDirection(sTextDirection: sap.ui.core.TextDirection): sap.ui.core.Item;
       }
       /**
-       * <p>Marker interface for controls which are suitable for use as label.</p>
+       * <p><p>Marker interface for controls which are suitable for use as label.</p></p>
        */
       export interface Label {
       }
@@ -5544,7 +5542,7 @@ declare namespace sap {
         setTimestamp(sTimestamp: string): sap.ui.core.Message;
       }
       /**
-       * <p>Defines the different message types of a message</p>
+       * <p><p>Defines the different message types of a message</p></p>
        */
       export enum MessageType {
         /**
@@ -5569,7 +5567,7 @@ declare namespace sap {
         Warning = "Warning",
       }
       /**
-       * <p>Defines the different possible states of an element that can be open or closed and does not only toggle between these states, but also spends some time in between (e.g. because of an animation).</p>
+       * <p><p>Defines the different possible states of an element that can be open or closed and does not only toggle between these states, but also spends some time in between (e.g. because of an animation).</p></p>
        */
       export enum OpenState {
         /**
@@ -5590,7 +5588,7 @@ declare namespace sap {
         OPENING = "OPENING",
       }
       /**
-       * <p>Orientation of a UI element</p>
+       * <p><p>Orientation of a UI element</p></p>
        */
       export enum Orientation {
         /**
@@ -5817,12 +5815,12 @@ declare namespace sap {
       namespace Popup {
       }
       /**
-       * <p>Marker interface for controls that are not rendered "embedded" into other controls but need to be opened/closed.</p><p>Such controls are handled differently during rendering.</p>
+       * <p><p>Marker interface for controls that are not rendered "embedded" into other controls but need to be opened/closed.</p><p>Such controls are handled differently during rendering.</p></p>
        */
       export interface PopupInterface {
       }
       /**
-       * <p>Priorities for general use.</p>
+       * <p><p>Priorities for general use.</p></p>
        */
       export enum Priority {
         /**
@@ -6143,7 +6141,7 @@ declare namespace sap {
         unbind(oOwnerDomRef: string): void;
       }
       /**
-       * <p>Actions are: Click on track, button, drag of thumb, or mouse wheel click</p>
+       * <p><p>Actions are: Click on track, button, drag of thumb, or mouse wheel click</p></p>
        */
       export enum ScrollBarAction {
         /**
@@ -6164,7 +6162,7 @@ declare namespace sap {
         Step = "Step",
       }
       /**
-       * <p>Defines the possible values for horizontal and vertical scrolling behavior.</p>
+       * <p><p>Defines the possible values for horizontal and vertical scrolling behavior.</p></p>
        */
       export enum Scrolling {
         /**
@@ -6196,7 +6194,7 @@ declare namespace sap {
         constructor(sId?: string, mSettings?: any);
       }
       /**
-       * <p>Sort order of a column</p>
+       * <p><p>Sort order of a column</p></p>
        */
       export enum SortOrder {
         /**
@@ -6213,7 +6211,7 @@ declare namespace sap {
         None = "None",
       }
       /**
-       * <p>Configuration options for text alignments.</p>
+       * <p><p>Configuration options for text alignments.</p></p>
        */
       export enum TextAlign {
         /**
@@ -6242,7 +6240,7 @@ declare namespace sap {
         Right = "Right",
       }
       /**
-       * <p>Configuration options for the direction of texts.</p>
+       * <p><p>Configuration options for the direction of texts.</p></p>
        */
       export enum TextDirection {
         /**
@@ -6314,7 +6312,7 @@ declare namespace sap {
         setText(sText: string): sap.ui.core.Title;
       }
       /**
-       * <p>Level of a title.</p>
+       * <p><p>Level of a title.</p></p>
        */
       export enum TitleLevel {
         /**
@@ -6347,7 +6345,7 @@ declare namespace sap {
         H6 = "H6",
       }
       /**
-       * <p>Marker interface for toolbar controls.</p>
+       * <p><p>Marker interface for toolbar controls.</p></p>
        */
       export interface Toolbar {
       }
@@ -6753,7 +6751,7 @@ declare namespace sap {
         setContainer(oContainer: sap.ui.core.ComponentContainer): sap.ui.core.UIComponent;
       }
       /**
-       * <p>Marker for the correctness of the current value.</p>
+       * <p><p>Marker for the correctness of the current value.</p></p>
        */
       export enum ValueState {
         /**
@@ -6829,7 +6827,7 @@ declare namespace sap {
         removeMultipleLayoutData(vMultipleLayoutData: number | string | sap.ui.core.LayoutData): sap.ui.core.LayoutData;
       }
       /**
-       * <p>Configuration options for vertical alignments, for example of a layout cell content within the borders.</p>
+       * <p><p>Configuration options for vertical alignments, for example of a layout cell content within the borders.</p></p>
        */
       export enum VerticalAlign {
         /**
@@ -6850,7 +6848,7 @@ declare namespace sap {
         Top = "Top",
       }
       /**
-       * <p>Configuration options for text wrapping.</p>
+       * <p><p>Configuration options for text wrapping.</p></p>
        */
       export enum Wrapping {
         /**
@@ -7006,9 +7004,9 @@ declare namespace sap {
   namespace ui {
     namespace core {
       /**
-       * <p>A string type that represents non-relative CSS size values.</p><p>This is a subtype of the <code>'&lt;length&gt; type'</code> defined in the CSS specifications. Allowed values are only absolute CSS sizes like &quot;1px&quot; or &quot;2em&quot;. Percentage sizes like &quot;50%&quot; and the special values &quot;auto&quot; and &quot;inherit&quot; are NOT allowed. Mathematical expressions using the CSS3 <code>calc(<i>expression</i>)</code> operator are allowed as long as they do not use percentage sizes.</p><p>Note that CSS might not allow all these values for every CSS property representing a size. So even if a value is accepted by <code>sap.ui.core.AbsoluteCSSSize</code>, it still might have no effect in a specific context. In other words: UI5 controls usually don't extend the range of allowed values in CSS.</p><p><b>Units</b></p><p>Valid font-relative units are <code>em, ex</code> and <code>rem</code>. Supported absolute units are <code>cm, mm, in, pc, pt</code> and <code>px</code>. Other units are not supported.</p><p><b>Mathematical Expressions</b></p><p>Expressions inside the <code>calc()</code> operator are only roughly checked for validity. Not every value that this type accepts is a valid expression in the sense of the CSS spec. But vice versa, any expression that is valid according to the spec should be accepted by this type. The current implementation is based on the <a target="_blank" href="http://dev.w3.org/csswg/css-values-3/#calc-syntax">CSS3 Draft specification from 22 April 2015</a>
-          <img src="./resources/sap/ui/documentation/sdk/images/link-external.png" 
-          title="Information published on non SAP site" class="sapUISDKExternalLink"/>.</p><p>Noteworthy details: <ul> <li>whitespace is mandatory around a '-' or '+' operator and optional otherwise</li> <li>parentheses are accepted but not checked for being balanced (a limitation of regexp based checks)</li> <li>semantic constraints like type restrictions are not checked</li> </ul></p><p>Future versions of UI5 might check <code>calc()</code> expressions in more detail, so applications should not assume that a value, that is invalid according to the CSS spec but currently accepted by this type still will be accepted by future versions of this type.</p>
+       * <p><p>A string type that represents non-relative CSS size values.</p><p>This is a subtype of the <code>'&lt;length&gt; type'</code> defined in the CSS specifications. Allowed values are only absolute CSS sizes like &quot;1px&quot; or &quot;2em&quot;. Percentage sizes like &quot;50%&quot; and the special values &quot;auto&quot; and &quot;inherit&quot; are NOT allowed. Mathematical expressions using the CSS3 <code>calc(<i>expression</i>)</code> operator are allowed as long as they do not use percentage sizes.</p><p>Note that CSS might not allow all these values for every CSS property representing a size. So even if a value is accepted by <code>sap.ui.core.AbsoluteCSSSize</code>, it still might have no effect in a specific context. In other words: UI5 controls usually don't extend the range of allowed values in CSS.</p><p><b>Units</b></p><p>Valid font-relative units are <code>em, ex</code> and <code>rem</code>. Supported absolute units are <code>cm, mm, in, pc, pt</code> and <code>px</code>. Other units are not supported.</p><p><b>Mathematical Expressions</b></p><p>Expressions inside the <code>calc()</code> operator are only roughly checked for validity. Not every value that this type accepts is a valid expression in the sense of the CSS spec. But vice versa, any expression that is valid according to the spec should be accepted by this type. The current implementation is based on the <a target="_blank" href="http://dev.w3.org/csswg/css-values-3/#calc-syntax">CSS3 Draft specification from 22 April 2015</a>
+      <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
+      title="Information published on non SAP site" class="sapUISDKExternalLink"/>.</p><p>Noteworthy details: <ul> <li>whitespace is mandatory around a '-' or '+' operator and optional otherwise</li> <li>parentheses are accepted but not checked for being balanced (a limitation of regexp based checks)</li> <li>semantic constraints like type restrictions are not checked</li> </ul></p><p>Future versions of UI5 might check <code>calc()</code> expressions in more detail, so applications should not assume that a value, that is invalid according to the CSS spec but currently accepted by this type still will be accepted by future versions of this type.</p></p>
        */
       export type AbsoluteCSSSize = string;
     }
@@ -7018,7 +7016,7 @@ declare namespace sap {
   namespace ui {
     namespace core {
       /**
-       * <p>The AppCacheBuster is used to hook into URL relevant functions in jQuery and SAPUI5 and rewrite the URLs with a timestamp segment. The timestamp information is fetched from the server and used later on for the URL rewriting.</p>
+       * <p><p>The AppCacheBuster is used to hook into URL relevant functions in jQuery and SAPUI5 and rewrite the URLs with a timestamp segment. The timestamp information is fetched from the server and used later on for the URL rewriting.</p></p>
        */
       namespace AppCacheBuster {
         /**
@@ -7052,7 +7050,7 @@ declare namespace sap {
   namespace ui {
     namespace core {
       /**
-       * <p>Provides methods to show or hide a waiting animation covering the whole page and blocking user interaction.</p>
+       * <p><p>Provides methods to show or hide a waiting animation covering the whole page and blocking user interaction.</p></p>
        */
       export class BusyIndicator {
         /**
@@ -7110,7 +7108,7 @@ declare namespace sap {
   namespace ui {
     namespace core {
       /**
-       * <p>Collision behavior: horizontal/vertical.</p><p>Defines how the position of an element should be adjusted in case it overflows the window in some direction. For both directions this can be "flip", "fit" or "none". If only one behavior is provided it is applied to both directions. Examples: "flip", "fit none".</p>
+       * <p><p>Collision behavior: horizontal/vertical.</p><p>Defines how the position of an element should be adjusted in case it overflows the window in some direction. For both directions this can be "flip", "fit" or "none". If only one behavior is provided it is applied to both directions. Examples: "flip", "fit none".</p></p>
        */
       export type Collision = string;
     }
@@ -7120,7 +7118,7 @@ declare namespace sap {
   namespace ui {
     namespace core {
       /**
-       * <p>A string type that represents CSS color values.</p><p>Allowed values are CSS hex colors like "#666666" or "#fff", RGB/HSL values like "rgb(0,0,0)" or "hsla(50%,10%,30%,0.5)" as well as CSS color names like "green" and "darkblue" and special values like "inherit" and "transparent".</p><p>The empty string is also allowed and has the same effect as setting no color.</p>
+       * <p><p>A string type that represents CSS color values.</p><p>Allowed values are CSS hex colors like "#666666" or "#fff", RGB/HSL values like "rgb(0,0,0)" or "hsla(50%,10%,30%,0.5)" as well as CSS color names like "green" and "darkblue" and special values like "inherit" and "transparent".</p><p>The empty string is also allowed and has the same effect as setting no color.</p></p>
        */
       export type CSSColor = string;
     }
@@ -7130,9 +7128,9 @@ declare namespace sap {
   namespace ui {
     namespace core {
       /**
-       * <p>A string type that represents CSS size values.</p><p>The CSS specifications calls this the <code>'&lt;length&gt; type'</code>. Allowed values are CSS sizes like "1px" or "2em" or "50%". The special values <code>auto</code> and <code>inherit</code> are also accepted as well as mathematical expressions using the CSS3 <code>calc(<i>expression</i>)</code> operator. Furthermore, length units representing a percentage of the current viewport dimensions: width (vw), height (vh), the smaller of the two (vmin), or the larger of the two (vmax) can also be defined as a CSS size.</p><p>Note that CSS does not allow all these values for every CSS property representing a size. E.g. <code>padding-left</code> doesn't allow the value <code>auto</code>. So even if a value is accepted by <code>sap.ui.core.CSSSize</code>, it still might have no effect in a specific context. In other words: UI5 controls usually don't extend the range of allowed values in CSS.</p><p><b>Units</b></p><p>Valid font-relative units are <code>em, ex</code> and <code>rem</code>. Viewport relative units <code>vw, vh, vmin, vmax</code> are also valid. Supported absolute units are <code>cm, mm, in, pc, pt</code> and <code>px</code>.Other units are not supported yet.</p><p><b>Mathematical Expressions</b></p><p>Expressions inside the <code>calc()</code> operator are only roughly checked for validity. Not every value that this type accepts might be a valid expression in the sense of the CSS spec. But vice versa, any expression that is valid according to the spec should be accepted by this type. The current implementation is based on the <a target="_blank" href="http://dev.w3.org/csswg/css-values-3/#calc-syntax">CSS3 Draft specification from 22 April 2015</a>
-          <img src="./resources/sap/ui/documentation/sdk/images/link-external.png" 
-          title="Information published on non SAP site" class="sapUISDKExternalLink"/>.</p><p>Noteworthy details: <ul> <li>whitespace is mandatory around a '-' or '+' operator and optional otherwise</li> <li>parentheses are accepted but not checked for being balanced (a limitation of regexp based checks)</li> <li>semantic constraints like type restrictions are not checked</li> </ul></p><p>Future versions of UI5 might check <code>calc()</code> expressions in more detail, so applications should not assume that a value, that is invalid according to the CSS spec but currently accepted by this type still will be accepted by future versions of this type.</p>
+       * <p><p>A string type that represents CSS size values.</p><p>The CSS specifications calls this the <code>'&lt;length&gt; type'</code>. Allowed values are CSS sizes like "1px" or "2em" or "50%". The special values <code>auto</code> and <code>inherit</code> are also accepted as well as mathematical expressions using the CSS3 <code>calc(<i>expression</i>)</code> operator. Furthermore, length units representing a percentage of the current viewport dimensions: width (vw), height (vh), the smaller of the two (vmin), or the larger of the two (vmax) can also be defined as a CSS size.</p><p>Note that CSS does not allow all these values for every CSS property representing a size. E.g. <code>padding-left</code> doesn't allow the value <code>auto</code>. So even if a value is accepted by <code>sap.ui.core.CSSSize</code>, it still might have no effect in a specific context. In other words: UI5 controls usually don't extend the range of allowed values in CSS.</p><p><b>Units</b></p><p>Valid font-relative units are <code>em, ex</code> and <code>rem</code>. Viewport relative units <code>vw, vh, vmin, vmax</code> are also valid. Supported absolute units are <code>cm, mm, in, pc, pt</code> and <code>px</code>.Other units are not supported yet.</p><p><b>Mathematical Expressions</b></p><p>Expressions inside the <code>calc()</code> operator are only roughly checked for validity. Not every value that this type accepts might be a valid expression in the sense of the CSS spec. But vice versa, any expression that is valid according to the spec should be accepted by this type. The current implementation is based on the <a target="_blank" href="http://dev.w3.org/csswg/css-values-3/#calc-syntax">CSS3 Draft specification from 22 April 2015</a>
+      <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
+      title="Information published on non SAP site" class="sapUISDKExternalLink"/>.</p><p>Noteworthy details: <ul> <li>whitespace is mandatory around a '-' or '+' operator and optional otherwise</li> <li>parentheses are accepted but not checked for being balanced (a limitation of regexp based checks)</li> <li>semantic constraints like type restrictions are not checked</li> </ul></p><p>Future versions of UI5 might check <code>calc()</code> expressions in more detail, so applications should not assume that a value, that is invalid according to the CSS spec but currently accepted by this type still will be accepted by future versions of this type.</p></p>
        */
       export type CSSSize = string;
     }
@@ -7142,7 +7140,7 @@ declare namespace sap {
   namespace ui {
     namespace core {
       /**
-       * <p>This type checks the short hand form of a margin or padding definition.</p><p>E.g. "1px 1px" or up to four CSSSize values are allowed or tHe special keyword <code>inherit</code>.</p>
+       * <p><p>This type checks the short hand form of a margin or padding definition.</p><p>E.g. "1px 1px" or up to four CSSSize values are allowed or tHe special keyword <code>inherit</code>.</p></p>
        */
       export type CSSSizeShortHand = string;
     }
@@ -7289,10 +7287,10 @@ declare namespace sap {
            * <p>Scrolls to an element within a container.</p>
            * @param {HTMLElement} oElement <p>A DOM element.</p>
            * @param {number} iTime <p>The duration of animated scrolling in milliseconds. To scroll immediately without animation, give 0 as value.</p>
-           * @param {any[]} Specifies <p>the offset left and top for the DOM Element.</p>
+           * @param {number[]} aOffset <p>Specifies an additional left and top offset of the target scroll position, relative to the upper left corner of the DOM element</p>
            * @returns sap.ui.core.delegate.ScrollEnablement 
            */
-          protected scrollToElement(oElement: HTMLElement, iTime: number, Specifies: any[]): sap.ui.core.delegate.ScrollEnablement;
+          protected scrollToElement(oElement: HTMLElement, iTime?: number, aOffset?: number[]): sap.ui.core.delegate.ScrollEnablement;
           /**
            * <p>Sets GrowingList control to scroll container</p>
            * @param {Function} fnScrollLoadCallback <p>Scrolling callback</p>
@@ -7329,9 +7327,369 @@ declare namespace sap {
 declare namespace sap {
   namespace ui {
     namespace core {
+      /**
+       * <p><p>Contains classes and helpers related to drag & drop functionality.</p></p>
+       */
       namespace dnd {
         /**
-         * <p>When a user requests to drag some controls that can be dragged, a drag session is started. The drag session can be used to transfer data between applications or between dragged and dropped controls. Please see provided APIs for more details.</p><p><b>Note:</b> This object only exists during a drag-and-drop operation.</p>
+         * <p>Provides the base class for all drag-and-drop configurations. This feature enables a native HTML5 drag-and-drop API for the controls, therefore it is limited to browser support. </p><h3>Limitations</h3><p> <ul> <li>There is no mobile device that supports drag and drop.</li> <li>There is no accessible alternative for drag and drop. Applications which use the drag-and-drop functionality must provide an accessible alternative UI (for example, action buttons or menus) to perform the same operations.</li> <li>A custom dragging ghost element is not possible in Internet Explorer.</li> <li>Transparency of the drag ghost element and the cursor during drag-and-drop operations depends on the browser implementation.</li> <li>Internet Explorer does only support plain text MIME type for the DataTransfer Object.</li> <li>Constraining a drag position is not possible, therefore there is no snap-to-grid or snap-to-element feature possible.</li> <li>Texts in draggable controls cannot be selected.</li> <li>The text of input fields in draggable controls can be selected, but not dragged.</li> </ul></p>
+         */
+        export abstract class DragDropBase extends sap.ui.core.Element {
+          /**
+           * <p>Constructor for a new DragDropBase.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+           * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
+           * @param {any} mSettings <p>Initial settings for the new control</p>
+           */
+          constructor(sId?: string, mSettings?: any);
+          /**
+           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEnabled" href="#/api/sap.ui.core.dnd.DragDropBase/methods/getEnabled">enabled</a>.</p><p>Indicates whether this configuration is active or not.</p><p>Default value is <code>true</code>.</p>
+           * @returns boolean <p>Value of property <code>enabled</code></p>
+           */
+          getEnabled(): boolean;
+          /**
+           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getGroupName" href="#/api/sap.ui.core.dnd.DragDropBase/methods/getGroupName">groupName</a>.</p><p>Defines the name of the group to which this object belongs. If <code>groupName</code> is specified, then this object will only interacts with other drag-and-drop objects within the same group.</p>
+           * @returns string <p>Value of property <code>groupName</code></p>
+           */
+          getGroupName(): string;
+          /**
+           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getGroupName" href="#/api/sap.ui.core.dnd.DragDropBase/methods/getGroupName">groupName</a>.</p><p>Defines the name of the group to which this object belongs. If <code>groupName</code> is specified, then this object will only interacts with other drag-and-drop objects within the same group.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+           * @param {string} sGroupName <p>New value for property <code>groupName</code></p>
+           * @returns sap.ui.core.dnd.DragDropBase <p>Reference to <code>this</code> in order to allow method chaining</p>
+           */
+          setGroupName(sGroupName: string): sap.ui.core.dnd.DragDropBase;
+        }
+        /**
+         * <p>Provides the configuration for drag-and-drop operations. <b>Note:</b> This configuration might be ignored due to control <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.Element/methods/sap.ui.core.Element.extend">metadata</a> restrictions.</p>
+         */
+        export class DragDropInfo extends sap.ui.core.dnd.DropInfo implements sap.ui.core.dnd.IDragInfo, sap.ui.core.dnd.IDropInfo {
+          /**
+           * <p>Constructor for a new DragDropInfo.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+           * @param {string} sId <p>ID for the new DragDropInfo, generated automatically if no ID is given</p>
+           * @param {any} mSettings <p>Initial settings for the DragDropInfo</p>
+           */
+          constructor(sId?: string, mSettings?: any);
+          /**
+           * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dragEnd" href="#/api/sap.ui.core.dnd.DragDropInfo/events/dragEnd">dragEnd</a> event of this <code>sap.ui.core.dnd.DragDropInfo</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.core.dnd.DragDropInfo</code> itself.</p><p>This event is fired when a drag operation is being ended.</p>
+           * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+           * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+           * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.core.dnd.DragDropInfo</code> itself</p>
+           * @returns sap.ui.core.dnd.DragDropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
+           */
+          attachDragEnd(oData: any, fnFunction: Function, oListener?: any): sap.ui.core.dnd.DragDropInfo;
+          /**
+           * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dragStart" href="#/api/sap.ui.core.dnd.DragDropInfo/events/dragStart">dragStart</a> event of this <code>sap.ui.core.dnd.DragDropInfo</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.core.dnd.DragDropInfo</code> itself.</p><p>This event is fired when the user starts dragging an element.</p>
+           * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+           * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+           * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.core.dnd.DragDropInfo</code> itself</p>
+           * @returns sap.ui.core.dnd.DragDropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
+           */
+          attachDragStart(oData: any, fnFunction: Function, oListener?: any): sap.ui.core.dnd.DragDropInfo;
+          /**
+           * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dragEnd" href="#/api/sap.ui.core.dnd.DragDropInfo/events/dragEnd">dragEnd</a> event of this <code>sap.ui.core.dnd.DragDropInfo</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object on which the given function had to be called</p>
+           * @returns sap.ui.core.dnd.DragDropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
+           */
+          detachDragEnd(fnFunction: Function, oListener?: any): sap.ui.core.dnd.DragDropInfo;
+          /**
+           * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dragStart" href="#/api/sap.ui.core.dnd.DragDropInfo/events/dragStart">dragStart</a> event of this <code>sap.ui.core.dnd.DragDropInfo</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object on which the given function had to be called</p>
+           * @returns sap.ui.core.dnd.DragDropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
+           */
+          detachDragStart(fnFunction: Function, oListener?: any): sap.ui.core.dnd.DragDropInfo;
+          /**
+           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dragEnd" href="#/api/sap.ui.core.dnd.DragDropInfo/events/dragEnd">dragEnd</a> to attached listeners.</p>
+           * @param {any} mParameters <p>Parameters to pass along with the event</p>
+           * @returns sap.ui.core.dnd.DragDropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
+           */
+          protected fireDragEnd(mParameters?: any): sap.ui.core.dnd.DragDropInfo;
+          /**
+           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dragStart" href="#/api/sap.ui.core.dnd.DragDropInfo/events/dragStart">dragStart</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by using the <code>preventDefault</code>-method on the event object.</p>
+           * @param {any} mParameters <p>Parameters to pass along with the event</p>
+           * @returns boolean <p>Whether or not to prevent the default action</p>
+           */
+          protected fireDragStart(mParameters?: any): boolean;
+          /**
+           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSourceAggregation" href="#/api/sap.ui.core.dnd.DragDropInfo/methods/getSourceAggregation">sourceAggregation</a>.</p><p>The name of the aggregation from which all children can be dragged. If undefined, the control itself can be dragged.</p>
+           * @returns string <p>Value of property <code>sourceAggregation</code></p>
+           */
+          getSourceAggregation(): string;
+          /**
+           * <p>ID of the element which is the current target of the association <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTargetElement" href="#/api/sap.ui.core.dnd.DragDropInfo/methods/getTargetElement">targetElement</a>, or <code>null</code>.</p>
+           * @returns sap.ui.core.ID 
+           */
+          getTargetElement(): sap.ui.core.ID;
+          /**
+           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSourceAggregation" href="#/api/sap.ui.core.dnd.DragDropInfo/methods/getSourceAggregation">sourceAggregation</a>.</p><p>The name of the aggregation from which all children can be dragged. If undefined, the control itself can be dragged.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+           * @param {string} sSourceAggregation <p>New value for property <code>sourceAggregation</code></p>
+           * @returns sap.ui.core.dnd.DragDropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
+           */
+          setSourceAggregation(sSourceAggregation: string): sap.ui.core.dnd.DragDropInfo;
+          /**
+           * <p>Sets the associated <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTargetElement" href="#/api/sap.ui.core.dnd.DragDropInfo/methods/getTargetElement">targetElement</a>.</p>
+           * @param {sap.ui.core.ID | sap.ui.core.Element} oTargetElement <p>ID of an element which becomes the new target of this targetElement association; alternatively, an element instance may be given</p>
+           * @returns sap.ui.core.dnd.DragDropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
+           */
+          setTargetElement(oTargetElement: sap.ui.core.ID | sap.ui.core.Element): sap.ui.core.dnd.DragDropInfo;
+        }
+        /**
+         * <p>Provides the configuration for drag operations. <b>Note:</b> This configuration might be ignored due to control <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.Element/methods/sap.ui.core.Element.extend">metadata</a> restrictions.</p>
+         */
+        export class DragInfo extends sap.ui.core.dnd.DragDropBase implements sap.ui.core.dnd.IDragInfo {
+          /**
+           * <p>Constructor for a new DragInfo.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+           * @param {string} sId <p>ID for the new DragInfo, generated automatically if no ID is given</p>
+           * @param {any} mSettings <p>Initial settings for the DragInfo</p>
+           */
+          constructor(sId?: string, mSettings?: any);
+          /**
+           * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dragEnd" href="#/api/sap.ui.core.dnd.DragInfo/events/dragEnd">dragEnd</a> event of this <code>sap.ui.core.dnd.DragInfo</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.core.dnd.DragInfo</code> itself.</p><p>This event is fired when a drag operation is being ended.</p>
+           * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+           * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+           * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.core.dnd.DragInfo</code> itself</p>
+           * @returns sap.ui.core.dnd.DragInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
+           */
+          attachDragEnd(oData: any, fnFunction: Function, oListener?: any): sap.ui.core.dnd.DragInfo;
+          /**
+           * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dragStart" href="#/api/sap.ui.core.dnd.DragInfo/events/dragStart">dragStart</a> event of this <code>sap.ui.core.dnd.DragInfo</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.core.dnd.DragInfo</code> itself.</p><p>This event is fired when the user starts dragging an element.</p>
+           * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+           * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+           * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.core.dnd.DragInfo</code> itself</p>
+           * @returns sap.ui.core.dnd.DragInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
+           */
+          attachDragStart(oData: any, fnFunction: Function, oListener?: any): sap.ui.core.dnd.DragInfo;
+          /**
+           * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dragEnd" href="#/api/sap.ui.core.dnd.DragInfo/events/dragEnd">dragEnd</a> event of this <code>sap.ui.core.dnd.DragInfo</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object on which the given function had to be called</p>
+           * @returns sap.ui.core.dnd.DragInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
+           */
+          detachDragEnd(fnFunction: Function, oListener?: any): sap.ui.core.dnd.DragInfo;
+          /**
+           * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dragStart" href="#/api/sap.ui.core.dnd.DragInfo/events/dragStart">dragStart</a> event of this <code>sap.ui.core.dnd.DragInfo</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object on which the given function had to be called</p>
+           * @returns sap.ui.core.dnd.DragInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
+           */
+          detachDragStart(fnFunction: Function, oListener?: any): sap.ui.core.dnd.DragInfo;
+          /**
+           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dragEnd" href="#/api/sap.ui.core.dnd.DragInfo/events/dragEnd">dragEnd</a> to attached listeners.</p>
+           * @param {any} mParameters <p>Parameters to pass along with the event</p>
+           * @returns sap.ui.core.dnd.DragInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
+           */
+          protected fireDragEnd(mParameters?: any): sap.ui.core.dnd.DragInfo;
+          /**
+           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dragStart" href="#/api/sap.ui.core.dnd.DragInfo/events/dragStart">dragStart</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by using the <code>preventDefault</code>-method on the event object.</p>
+           * @param {any} mParameters <p>Parameters to pass along with the event</p>
+           * @returns boolean <p>Whether or not to prevent the default action</p>
+           */
+          protected fireDragStart(mParameters?: any): boolean;
+          /**
+           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSourceAggregation" href="#/api/sap.ui.core.dnd.DragInfo/methods/getSourceAggregation">sourceAggregation</a>.</p><p>The name of the aggregation from which all children can be dragged. If undefined, the control itself can be dragged.</p>
+           * @returns string <p>Value of property <code>sourceAggregation</code></p>
+           */
+          getSourceAggregation(): string;
+          /**
+           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSourceAggregation" href="#/api/sap.ui.core.dnd.DragInfo/methods/getSourceAggregation">sourceAggregation</a>.</p><p>The name of the aggregation from which all children can be dragged. If undefined, the control itself can be dragged.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+           * @param {string} sSourceAggregation <p>New value for property <code>sourceAggregation</code></p>
+           * @returns sap.ui.core.dnd.DragInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
+           */
+          setSourceAggregation(sSourceAggregation: string): sap.ui.core.dnd.DragInfo;
+        }
+        /**
+         * <p><p>Configuration options for visual drop effects that are given during a drag and drop operation.</p></p>
+         */
+        export enum DropEffect {
+          /**
+           * <p>A copy of the source item is made at the new location.</p>
+           */
+          Copy = "Copy",
+          /**
+           * <p>A link is established to the source at the new location.</p>
+           */
+          Link = "Link",
+          /**
+           * <p>An item is moved to a new location.</p>
+           */
+          Move = "Move",
+          /**
+           * <p>The item cannot be dropped.</p>
+           */
+          None = "None",
+        }
+        /**
+         * <p>Provides the configuration for drop operations. <b>Note:</b> This configuration might be ignored due to control <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.Element/methods/sap.ui.core.Element.extend">metadata</a> restrictions.</p>
+         */
+        export class DropInfo extends sap.ui.core.dnd.DragDropBase implements sap.ui.core.dnd.IDropInfo {
+          /**
+           * <p>Constructor for a new DropInfo.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+           * @param {string} sId <p>ID for the new DropInfo, generated automatically if no ID is given</p>
+           * @param {any} mSettings <p>Initial settings for the DropInfo</p>
+           */
+          constructor(sId?: string, mSettings?: any);
+          /**
+           * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dragEnter" href="#/api/sap.ui.core.dnd.DropInfo/events/dragEnter">dragEnter</a> event of this <code>sap.ui.core.dnd.DropInfo</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.core.dnd.DropInfo</code> itself.</p><p>This event is fired when a dragged element enters a drop target.</p>
+           * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+           * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+           * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.core.dnd.DropInfo</code> itself</p>
+           * @returns sap.ui.core.dnd.DropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
+           */
+          attachDragEnter(oData: any, fnFunction: Function, oListener?: any): sap.ui.core.dnd.DropInfo;
+          /**
+           * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dragOver" href="#/api/sap.ui.core.dnd.DropInfo/events/dragOver">dragOver</a> event of this <code>sap.ui.core.dnd.DropInfo</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.core.dnd.DropInfo</code> itself.</p><p>This event is fired when an element is being dragged over a valid drop target.</p>
+           * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+           * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+           * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.core.dnd.DropInfo</code> itself</p>
+           * @returns sap.ui.core.dnd.DropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
+           */
+          attachDragOver(oData: any, fnFunction: Function, oListener?: any): sap.ui.core.dnd.DropInfo;
+          /**
+           * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="drop" href="#/api/sap.ui.core.dnd.DropInfo/events/drop">drop</a> event of this <code>sap.ui.core.dnd.DropInfo</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.core.dnd.DropInfo</code> itself.</p><p>This event is fired when an element is dropped on a valid drop target, as specified by the drag-and-drop info.</p>
+           * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+           * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+           * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.core.dnd.DropInfo</code> itself</p>
+           * @returns sap.ui.core.dnd.DropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
+           */
+          attachDrop(oData: any, fnFunction: Function, oListener?: any): sap.ui.core.dnd.DropInfo;
+          /**
+           * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dragEnter" href="#/api/sap.ui.core.dnd.DropInfo/events/dragEnter">dragEnter</a> event of this <code>sap.ui.core.dnd.DropInfo</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object on which the given function had to be called</p>
+           * @returns sap.ui.core.dnd.DropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
+           */
+          detachDragEnter(fnFunction: Function, oListener?: any): sap.ui.core.dnd.DropInfo;
+          /**
+           * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dragOver" href="#/api/sap.ui.core.dnd.DropInfo/events/dragOver">dragOver</a> event of this <code>sap.ui.core.dnd.DropInfo</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object on which the given function had to be called</p>
+           * @returns sap.ui.core.dnd.DropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
+           */
+          detachDragOver(fnFunction: Function, oListener?: any): sap.ui.core.dnd.DropInfo;
+          /**
+           * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="drop" href="#/api/sap.ui.core.dnd.DropInfo/events/drop">drop</a> event of this <code>sap.ui.core.dnd.DropInfo</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object on which the given function had to be called</p>
+           * @returns sap.ui.core.dnd.DropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
+           */
+          detachDrop(fnFunction: Function, oListener?: any): sap.ui.core.dnd.DropInfo;
+          /**
+           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dragEnter" href="#/api/sap.ui.core.dnd.DropInfo/events/dragEnter">dragEnter</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by using the <code>preventDefault</code>-method on the event object.</p>
+           * @param {any} mParameters <p>Parameters to pass along with the event</p>
+           * @returns boolean <p>Whether or not to prevent the default action</p>
+           */
+          protected fireDragEnter(mParameters?: any): boolean;
+          /**
+           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dragOver" href="#/api/sap.ui.core.dnd.DropInfo/events/dragOver">dragOver</a> to attached listeners.</p>
+           * @param {any} mParameters <p>Parameters to pass along with the event</p>
+           * @returns sap.ui.core.dnd.DropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
+           */
+          protected fireDragOver(mParameters?: any): sap.ui.core.dnd.DropInfo;
+          /**
+           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="drop" href="#/api/sap.ui.core.dnd.DropInfo/events/drop">drop</a> to attached listeners.</p>
+           * @param {any} mParameters <p>Parameters to pass along with the event</p>
+           * @returns sap.ui.core.dnd.DropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
+           */
+          protected fireDrop(mParameters?: any): sap.ui.core.dnd.DropInfo;
+          /**
+           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getDropEffect" href="#/api/sap.ui.core.dnd.DropInfo/methods/getDropEffect">dropEffect</a>.</p><p>Defines the visual drop effect.</p><p>Default value is <code>Move</code>.</p>
+           * @returns sap.ui.core.dnd.DropEffect <p>Value of property <code>dropEffect</code></p>
+           */
+          getDropEffect(): sap.ui.core.dnd.DropEffect;
+          /**
+           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getDropLayout" href="#/api/sap.ui.core.dnd.DropInfo/methods/getDropLayout">dropLayout</a>.</p><p>Defines the layout of the droppable controls if <code>dropPosition</code> is set to <code>Between</code> or <code>OnOrBetween</code>.</p><p>Default value is <code>Default</code>.</p>
+           * @returns sap.ui.core.dnd.DropLayout <p>Value of property <code>dropLayout</code></p>
+           */
+          getDropLayout(): sap.ui.core.dnd.DropLayout;
+          /**
+           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getDropPosition" href="#/api/sap.ui.core.dnd.DropInfo/methods/getDropPosition">dropPosition</a>.</p><p>Defines the position for the drop action, visualized by a rectangle.</p><p>Default value is <code>On</code>.</p>
+           * @returns sap.ui.core.dnd.DropPosition <p>Value of property <code>dropPosition</code></p>
+           */
+          getDropPosition(): sap.ui.core.dnd.DropPosition;
+          /**
+           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTargetAggregation" href="#/api/sap.ui.core.dnd.DropInfo/methods/getTargetAggregation">targetAggregation</a>.</p><p>The aggregation name in the drop target control which is the target of this drag-and-drop action. If undefined, the entire control is the target. This can be handy if the target control does not have any aggregations or if the drop position within the target does not matter.</p>
+           * @returns string <p>Value of property <code>targetAggregation</code></p>
+           */
+          getTargetAggregation(): string;
+          /**
+           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getDropEffect" href="#/api/sap.ui.core.dnd.DropInfo/methods/getDropEffect">dropEffect</a>.</p><p>Defines the visual drop effect.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Move</code>.</p>
+           * @param {sap.ui.core.dnd.DropEffect} sDropEffect <p>New value for property <code>dropEffect</code></p>
+           * @returns sap.ui.core.dnd.DropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
+           */
+          setDropEffect(sDropEffect: sap.ui.core.dnd.DropEffect): sap.ui.core.dnd.DropInfo;
+          /**
+           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getDropLayout" href="#/api/sap.ui.core.dnd.DropInfo/methods/getDropLayout">dropLayout</a>.</p><p>Defines the layout of the droppable controls if <code>dropPosition</code> is set to <code>Between</code> or <code>OnOrBetween</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Default</code>.</p>
+           * @param {sap.ui.core.dnd.DropLayout} sDropLayout <p>New value for property <code>dropLayout</code></p>
+           * @returns sap.ui.core.dnd.DropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
+           */
+          setDropLayout(sDropLayout: sap.ui.core.dnd.DropLayout): sap.ui.core.dnd.DropInfo;
+          /**
+           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getDropPosition" href="#/api/sap.ui.core.dnd.DropInfo/methods/getDropPosition">dropPosition</a>.</p><p>Defines the position for the drop action, visualized by a rectangle.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>On</code>.</p>
+           * @param {sap.ui.core.dnd.DropPosition} sDropPosition <p>New value for property <code>dropPosition</code></p>
+           * @returns sap.ui.core.dnd.DropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
+           */
+          setDropPosition(sDropPosition: sap.ui.core.dnd.DropPosition): sap.ui.core.dnd.DropInfo;
+          /**
+           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTargetAggregation" href="#/api/sap.ui.core.dnd.DropInfo/methods/getTargetAggregation">targetAggregation</a>.</p><p>The aggregation name in the drop target control which is the target of this drag-and-drop action. If undefined, the entire control is the target. This can be handy if the target control does not have any aggregations or if the drop position within the target does not matter.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+           * @param {string} sTargetAggregation <p>New value for property <code>targetAggregation</code></p>
+           * @returns sap.ui.core.dnd.DropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
+           */
+          setTargetAggregation(sTargetAggregation: string): sap.ui.core.dnd.DropInfo;
+        }
+        /**
+         * <p><p>Configuration options for the layout of the droppable controls.</p></p>
+         */
+        export enum DropLayout {
+          /**
+           * <p>Default <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.Element/methods/sap.ui.core.Element.extend">layout</a> definition of the aggregations.</p>
+           */
+          Default = "Default",
+          /**
+           * <p>Droppable controls are arranged horizontally.</p>
+           */
+          Horizontal = "Horizontal",
+          /**
+           * <p>Droppable controls are arranged vertically.</p>
+           */
+          Vertical = "Vertical",
+        }
+        /**
+         * <p><p>Configuration options for drop positions.</p></p>
+         */
+        export enum DropPosition {
+          /**
+           * <p>Drop between the controls.</p>
+           */
+          Between = "Between",
+          /**
+           * <p>Drop on the control.</p>
+           */
+          On = "On",
+          /**
+           * <p>Drop on the control or between the controls.</p>
+           */
+          OnOrBetween = "OnOrBetween",
+        }
+        /**
+         * <p><p>Marker interface for drag configuration providing information about the source of the drag operation.</p></p>
+         */
+        export interface IDragInfo {
+        }
+        /**
+         * <p><p>Marker interface for drop configuration providing information about the target of the drop operation.</p></p>
+         */
+        export interface IDropInfo {
+        }
+      }
+    }
+  }
+}
+declare namespace sap {
+  namespace ui {
+    namespace core {
+      namespace dnd {
+        /**
+         * <p><p>When a user requests to drag some controls that can be dragged, a drag session is started. The drag session can be used to transfer data between applications or between dragged and dropped controls. Please see provided APIs for more details.</p><p><b>Note:</b> This object only exists during a drag-and-drop operation.</p></p>
          */
         namespace DragSession {
           /**
@@ -7371,7 +7729,7 @@ declare namespace sap {
   namespace ui {
     namespace core {
       /**
-       * <p>Docking position: horizontal/vertical.</p><p>Defines a position on the element which is used for aligned positioning of another element (e.g. the left top corner of a popup is positioned at the left bottom corner of the input field). For the horizontal position possible values are "begin", "left", "center", "right" and "end", where left/right always are left and right, or begin/end which are dependent on the text direction. For the vertical position possible values are "top", "center" and "bottom". Examples: "left top", "end bottom", "center center".</p>
+       * <p><p>Docking position: horizontal/vertical.</p><p>Defines a position on the element which is used for aligned positioning of another element (e.g. the left top corner of a popup is positioned at the left bottom corner of the input field). For the horizontal position possible values are "begin", "left", "center", "right" and "end", where left/right always are left and right, or begin/end which are dependent on the text direction. For the vertical position possible values are "top", "center" and "bottom". Examples: "left top", "end bottom", "center center".</p></p>
        */
       export type Dock = string;
     }
@@ -7397,7 +7755,7 @@ declare namespace sap {
   namespace ui {
     namespace core {
       /**
-       * <p>Format classes</p>
+       * <p><p>Format classes</p></p>
        */
       namespace format {
         /**
@@ -7575,7 +7933,7 @@ declare namespace sap {
         }
         namespace NumberFormat {
           /**
-           * <p>Specifies a rounding behavior for numerical operations capable of discarding precision. Each rounding mode in this object indicates how the least significant returned digits of rounded result is to be calculated.</p>
+           * <p><p>Specifies a rounding behavior for numerical operations capable of discarding precision. Each rounding mode in this object indicates how the least significant returned digits of rounded result is to be calculated.</p></p>
            */
           export enum RoundingMode {
             /**
@@ -7620,7 +7978,7 @@ declare namespace sap {
   namespace ui {
     namespace core {
       /**
-       * <p>The IconPool is a static class for retrieving or registering icons. It also provides helping methods for easier consumption of icons. There are already icons registered in IconPool, please use the Demo App named "Icon Explorer" to find the name of the icon.</p><p>In order to use the icon inside an existing control, please call <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="sap.ui.core.IconPool.getIconURI" href="#/api/sap.ui.core.IconPool/methods/sap.ui.core.IconPool.getIconURI">sap.ui.core.IconPool.getIconURI</a> and assign the URI to the control's property which supports icons. If you want to support both, icons and standard images in your own control, please use the static method <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="sap.ui.core.IconPool.createControlByURI" href="#/api/sap.ui.core.IconPool/methods/sap.ui.core.IconPool.createControlByURI">sap.ui.core.IconPool.createControlByURI</a> to either create an Icon in case the first argument is an icon-URL or another control which you define by providing it as the second argument.</p>
+       * <p><p>The IconPool is a static class for retrieving or registering icons. It also provides helping methods for easier consumption of icons. There are already icons registered in IconPool, please use the Demo App named "Icon Explorer" to find the name of the icon.</p><p>In order to use the icon inside an existing control, please call <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="sap.ui.core.IconPool.getIconURI" href="#/api/sap.ui.core.IconPool/methods/sap.ui.core.IconPool.getIconURI">sap.ui.core.IconPool.getIconURI</a> and assign the URI to the control's property which supports icons. If you want to support both, icons and standard images in your own control, please use the static method <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="sap.ui.core.IconPool.createControlByURI" href="#/api/sap.ui.core.IconPool/methods/sap.ui.core.IconPool.createControlByURI">sap.ui.core.IconPool.createControlByURI</a> to either create an Icon in case the first argument is an icon-URL or another control which you define by providing it as the second argument.</p></p>
        */
       namespace IconPool {
         /**
@@ -7695,7 +8053,7 @@ declare namespace sap {
   namespace ui {
     namespace core {
       /**
-       * <p>A string type representing an Id or a name.</p><p>Allowed is a sequence of characters (capital/lowercase), digits, underscores, dashes, points and/or colons. It may start with a character or underscore only.</p>
+       * <p><p>A string type representing an Id or a name.</p><p>Allowed is a sequence of characters (capital/lowercase), digits, underscores, dashes, points and/or colons. It may start with a character or underscore only.</p></p>
        */
       export type ID = string;
     }
@@ -7705,7 +8063,7 @@ declare namespace sap {
   namespace ui {
     namespace core {
       /**
-       * <p>Helper functionality for enhancement of a <code>Label</code> with common label functionality.</p>
+       * <p><p>Helper functionality for enhancement of a <code>Label</code> with common label functionality.</p><br><br>References: <ul><li>sap.ui.core.LabelEnablement#enrich</li></ul></p>
        */
       namespace LabelEnablement {
         /**
@@ -8088,7 +8446,7 @@ declare namespace sap {
           static registerExtensionProvider(sExtensionProvider: string): void;
           /**
            * <p>Instantiates a (MVC-style) controller. Consumers should call the constructor only in the typed controller scenario. In the generic controller use case, they should use <a target="_self" class="jsdoclink" href="#/api/sap.ui/methods/sap.ui.controller">sap.ui.controller</a> instead.</p>
-           * @param {string | object[]} sName <p>The name of the controller to instantiate. If a controller is defined as real sub-class,</p>
+           * @param {string | object[]} sName <p>The name of the controller to instantiate. If a controller is defined as real sub-class, the "arguments" of the sub-class constructor should be given instead.</p>
            */
           constructor(sName: string | object[]);
           /**
@@ -8152,7 +8510,7 @@ declare namespace sap {
           asyncSupport: any;
         }
         /**
-         * <p>Marker interface for a ControllerExtension.</p>
+         * <p><p>Marker interface for a ControllerExtension.</p></p>
          */
         export interface IControllerExtension {
         }
@@ -8209,7 +8567,7 @@ declare namespace sap {
           protected getAutoPrefixId(): boolean;
         }
         /**
-         * <p>Execution option for overrides defined by a ControllerExtension</p>
+         * <p><p>Execution option for overrides defined by a ControllerExtension</p><br><br>References: <ul><li>sap.ui.core.mvc.ControllerExtension</li></ul></p>
          */
         export enum OverrideExcecution {
           /**
@@ -8512,13 +8870,13 @@ declare namespace sap {
         }
         namespace View {
           /**
-           * <p>Interface for Preprocessor implementations that can be hooked in the view life cycle.</p><p>There are two possibilities to use the preprocessor. It can be either passed to the view via the mSettings.preprocessors object where it is the executed only for this instance, or by the registerPreprocessor method of the view type. Currently this is available only for XMLViews (as of version 1.30).</p>
+           * <p><p>Interface for Preprocessor implementations that can be hooked in the view life cycle.</p><p>There are two possibilities to use the preprocessor. It can be either passed to the view via the mSettings.preprocessors object where it is the executed only for this instance, or by the registerPreprocessor method of the view type. Currently this is available only for XMLViews (as of version 1.30).</p><br><br>References: <ul><li>sap.ui.view</li><li>sap.ui.core.mvc.View.registerPreprocessor (the method is available specialized for view types, so use the following)</li><li>sap.ui.core.mvc.XMLView.registerPreprocessor</li></ul></p>
            */
           export interface Preprocessor {
           }
         }
         /**
-         * <p>Specifies possible view types</p>
+         * <p><p>Specifies possible view types</p></p>
          */
         export enum ViewType {
           /**
@@ -8574,7 +8932,7 @@ declare namespace sap {
         }
         namespace XMLView {
           /**
-           * <p>Specifies the available preprocessor types for XMLViews</p>
+           * <p><p>Specifies the available preprocessor types for XMLViews</p><br><br>References: <ul><li>sap.ui.core.mvc.XMLView</li><li>sap.ui.core.mvc.View.Preprocessor</li></ul></p>
            */
           export enum PreprocessorType {
             /**
@@ -8599,7 +8957,7 @@ declare namespace sap {
   namespace ui {
     namespace core {
       /**
-       * <p>A string type that represents a percentage value.</p>
+       * <p><p>A string type that represents a percentage value.</p></p>
        */
       export type Percentage = string;
     }
@@ -8610,7 +8968,7 @@ declare namespace sap {
     namespace core {
       namespace Popup {
         /**
-         * <p>Enumeration providing options for docking of some element to another. "Right" and "Left" will stay the same in RTL mode, but "Begin" and "End" will flip to the other side ("Begin" is "Right" in RTL).</p>
+         * <p><p>Enumeration providing options for docking of some element to another. "Right" and "Left" will stay the same in RTL mode, but "Begin" and "End" will flip to the other side ("Begin" is "Right" in RTL).</p></p>
          */
         export enum Dock {
           /**
@@ -8667,7 +9025,7 @@ declare namespace sap {
   namespace ui {
     namespace core {
       /**
-       * <p>Base Class for a Renderer.</p>
+       * <p><p>Base Class for a Renderer.</p></p>
        */
       namespace Renderer {
         /**
@@ -8733,7 +9091,7 @@ declare namespace sap {
   namespace ui {
     namespace core {
       /**
-       * <p>The resize handling API provides firing of resize events on all browsers by regularly checking the width and height of registered DOM elements or controls and firing events accordingly.</p>
+       * <p><p>The resize handling API provides firing of resize events on all browsers by regularly checking the width and height of registered DOM elements or controls and firing events accordingly.</p></p>
        */
       namespace ResizeHandler {
         /**
@@ -8772,6 +9130,44 @@ declare namespace sap {
         /**
          */
         namespace usage {
+          /**
+           * <p>Broadcasts UI5 events via single native custom browser event. This way consumers have a generic mechanism for hooking into any UI5 event. Example consumer code: <pre>
+              window.addEventListener("UI5Event", function(oEvent) {
+          
+                  // consumer coding, e.g. :
+                  // analyze event
+                  // store events - GDPR is responsibility of the consumer
+                  // or any other
+          
+                  var oDetail = oEvent.detail;
+          
+                  console.log("UI5 Event " 				+ oDetail.eventName
+                    + " occurred at " 					+ new Date(oDetail.timestamp).toString()
+                    + " for element " 					+ oDetail.targetId
+                    + " of type "						+ oDetail.targetType
+                    + ", which is part of component " 	+ oDetail.componentId
+                    + " with version " 					+ oDetail.componentVersion
+                    + " and additional parameters "		, oDetail.additionalAttributes);
+          
+              });
+          </pre><br><br><span>Documentation links:</span><ul><li><a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent)">https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent)</a>
+          <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
+          title="Information published on non SAP site" class="sapUISDKExternalLink"/></li></ul></p>
+           */
+          export class EventBroadcaster {
+            /**
+             * <p>Disables the EventBroadcaster.</p>
+             */
+            static disable(): void;
+            /**
+             * <p>Starts broadcasting events. Consumers could stop broadcasting via <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.support.usage.EventBroadcaster/methods/disable">EventBroadcaster.disable</a></p>
+             */
+            static enable(): void;
+            /**
+             * <p>Event broadcaster. This class is meant for private usages. Apps are not supposed to used it. It is created for an experimental purpose.</p>
+             */
+            constructor();
+          }
         }
       }
     }
@@ -8792,7 +9188,7 @@ declare namespace sap {
     namespace core {
       namespace theming {
         /**
-         * <p>A helper used for (read-only) access to CSS parameters at runtime.</p>
+         * <p><p>A helper used for (read-only) access to CSS parameters at runtime.</p></p>
          */
         namespace Parameters {
           /**
@@ -8815,7 +9211,7 @@ declare namespace sap {
   namespace ui {
     namespace core {
       /**
-       * <p>A string type that represents an RFC 3986 conformant URI.</p>
+       * <p><p>A string type that represents an RFC 3986 conformant URI.</p></p>
        */
       export type URI = string;
     }
@@ -8826,7 +9222,7 @@ declare namespace sap {
     namespace core {
       namespace util {
         /**
-         * <p>Utility class to handle files.</p>
+         * <p><p>Utility class to handle files.</p></p>
          */
         namespace File {
           /**
@@ -8850,7 +9246,7 @@ declare namespace sap {
       namespace util {
         namespace reflection {
           /**
-           * <p>Abstract static utility class to access ManageObjects and XMLNodes that represent ManagedObjects in a harmonized way.</p><p>The class mirrors the ManagedObject API so that code that needs to work with ManagedObjects in several representations can be written in a single way. The slight differences are handled by specifying a super set of parameters that might not be needed in all use cases. For example sap.ui.fl is using this class and its subtypes for change handlers that can be applied on XMLViews and normal ManagedObject instances.</p>
+           * <p><p>Abstract static utility class to access ManageObjects and XMLNodes that represent ManagedObjects in a harmonized way.</p><p>The class mirrors the ManagedObject API so that code that needs to work with ManagedObjects in several representations can be written in a single way. The slight differences are handled by specifying a super set of parameters that might not be needed in all use cases. For example sap.ui.fl is using this class and its subtypes for change handlers that can be applied on XMLViews and normal ManagedObject instances.</p></p>
            */
           namespace BaseTreeModifier {
             /**
@@ -9072,7 +9468,7 @@ declare namespace sap {
       namespace util {
         namespace reflection {
           /**
-           * <p>Static utility class to access ManagedObjects in a harmonized way with XMLNodes.</p>
+           * <p><p>Static utility class to access ManagedObjects in a harmonized way with XMLNodes.</p></p>
            */
           namespace JsControlTreeModifier {
             /**
@@ -9098,7 +9494,7 @@ declare namespace sap {
       namespace util {
         namespace reflection {
           /**
-           * <p>Static utility class to access XMLNodes like ManageObjects, inside this classes oControl usually means XML node.</p>
+           * <p><p>Static utility class to access XMLNodes like ManageObjects, inside this classes oControl usually means XML node.</p></p>
            */
           namespace XmlTreeModifier {
           }
@@ -9112,16 +9508,16 @@ declare namespace sap {
     namespace core {
       namespace util {
         /**
-         * <p>The XML pre-processor for template instructions in XML views.</p>
+         * <p><p>The XML pre-processor for template instructions in XML views.</p></p>
          */
         namespace XMLPreprocessor {
           /**
-           * <p>Context interface provided by XML template processing as an additional first argument to any formatter function which opts in to this mechanism. Candidates for such formatter functions are all those used in binding expressions which are evaluated during XML template processing, including those used inside template instructions like <code>&lt;template:if></code>. The formatter function needs to be marked with a property <code>requiresIContext = true</code> to express that it requires this extended signature (compared to ordinary formatter functions). The usual arguments are provided after the first one (currently: the raw value from the model).</p><p>This interface provides callback functions to access the model and path which are needed to process OData V4 annotations. It initially offers a subset of methods from <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.Context">sap.ui.model.Context</a> so that formatters might also be called with a context object for convenience, e.g. outside of XML template processing (see below for an exception to this rule).</p><p><b>Example:</b> Suppose you have a formatter function called "foo" like below and it is used within an XML template like <code>&lt;template:if test="{path: '...', formatter: 'foo'}"></code>. In this case <code>foo</code> is called with arguments <code>oInterface, vRawValue</code> such that <code>oInterface.getModel().getObject(oInterface.getPath()) === vRawValue</code> holds. <pre>
+           * <p><p>Context interface provided by XML template processing as an additional first argument to any formatter function which opts in to this mechanism. Candidates for such formatter functions are all those used in binding expressions which are evaluated during XML template processing, including those used inside template instructions like <code>&lt;template:if></code>. The formatter function needs to be marked with a property <code>requiresIContext = true</code> to express that it requires this extended signature (compared to ordinary formatter functions). The usual arguments are provided after the first one (currently: the raw value from the model).</p><p>This interface provides callback functions to access the model and path which are needed to process OData V4 annotations. It initially offers a subset of methods from <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.Context">sap.ui.model.Context</a> so that formatters might also be called with a context object for convenience, e.g. outside of XML template processing (see below for an exception to this rule).</p><p><b>Example:</b> Suppose you have a formatter function called "foo" like below and it is used within an XML template like <code>&lt;template:if test="{path: '...', formatter: 'foo'}"></code>. In this case <code>foo</code> is called with arguments <code>oInterface, vRawValue</code> such that <code>oInterface.getModel().getObject(oInterface.getPath()) === vRawValue</code> holds. <pre>
           window.foo = function (oInterface, vRawValue) {
               //TODO ...
           };
           window.foo.requiresIContext = true;
-          </pre></p><p><b>Composite Binding Examples:</b> Suppose you have the same formatter function and it is used in a composite binding like <code>&lt;Text text="{path: 'Label', formatter: 'foo'}: {path: 'Value', formatter: 'foo'}"/></code>. In this case <code>oInterface.getPath()</code> refers to ".../Label" in the 1st call and ".../Value" in the 2nd call. This means each formatter call knows which part of the composite binding it belongs to and behaves just as if it was an ordinary binding.</p><p>Suppose your formatter is not used within a part of the composite binding, but at the root of the composite binding in order to aggregate all parts like <code> &lt;Text text="{parts: [{path: 'Label'}, {path: 'Value'}], formatter: 'foo'}"/></code>. In this case <code>oInterface.getPath(0)</code> refers to ".../Label" and <code>oInterface.getPath(1)</code> refers to ".../Value". This means, the root formatter can access the ith part of the composite binding at will (since 1.31.0); see also <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="sap.ui.core.util.XMLPreprocessor.IContext.getInterface" href="#/api/sap.ui.core.util.XMLPreprocessor.IContext/methods/sap.ui.core.util.XMLPreprocessor.IContext.getInterface">getInterface</a>. The function <code>foo</code> is called with arguments such that <code> oInterface.getModel(i).getObject(oInterface.getPath(i)) === arguments[i + 1]</code> holds. This use is not supported within an expression binding, that is, <code>&lt;Text text="{= ${parts: [{path: 'Label'}, {path: 'Value'}], formatter: 'foo'} }"/></code> does not work as expected because the property <code>requiresIContext = true</code> is ignored.</p><p>To distinguish those two use cases, just check whether <code>oInterface.getModel() === undefined</code>, in which case the formatter is called on root level of a composite binding. To find out the number of parts, probe for the smallest non-negative integer where <code>oInterface.getModel(i) === undefined</code>. This additional functionality is, of course, not available from <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.Context">sap.ui.model.Context</a>, i.e. such formatters MUST be called with an instance of this context interface.</p>
+          </pre></p><p><b>Composite Binding Examples:</b> Suppose you have the same formatter function and it is used in a composite binding like <code>&lt;Text text="{path: 'Label', formatter: 'foo'}: {path: 'Value', formatter: 'foo'}"/></code>. In this case <code>oInterface.getPath()</code> refers to ".../Label" in the 1st call and ".../Value" in the 2nd call. This means each formatter call knows which part of the composite binding it belongs to and behaves just as if it was an ordinary binding.</p><p>Suppose your formatter is not used within a part of the composite binding, but at the root of the composite binding in order to aggregate all parts like <code> &lt;Text text="{parts: [{path: 'Label'}, {path: 'Value'}], formatter: 'foo'}"/></code>. In this case <code>oInterface.getPath(0)</code> refers to ".../Label" and <code>oInterface.getPath(1)</code> refers to ".../Value". This means, the root formatter can access the ith part of the composite binding at will (since 1.31.0); see also <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="sap.ui.core.util.XMLPreprocessor.IContext.getInterface" href="#/api/sap.ui.core.util.XMLPreprocessor.IContext/methods/sap.ui.core.util.XMLPreprocessor.IContext.getInterface">getInterface</a>. The function <code>foo</code> is called with arguments such that <code> oInterface.getModel(i).getObject(oInterface.getPath(i)) === arguments[i + 1]</code> holds. This use is not supported within an expression binding, that is, <code>&lt;Text text="{= ${parts: [{path: 'Label'}, {path: 'Value'}], formatter: 'foo'} }"/></code> does not work as expected because the property <code>requiresIContext = true</code> is ignored.</p><p>To distinguish those two use cases, just check whether <code>oInterface.getModel() === undefined</code>, in which case the formatter is called on root level of a composite binding. To find out the number of parts, probe for the smallest non-negative integer where <code>oInterface.getModel(i) === undefined</code>. This additional functionality is, of course, not available from <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.Context">sap.ui.model.Context</a>, i.e. such formatters MUST be called with an instance of this context interface.</p></p>
            */
           export interface IContext {
           }
@@ -9134,7 +9530,7 @@ declare namespace sap {
   namespace ui {
     namespace core {
       /**
-       * <p>Helper functionality for value state support.</p>
+       * <p><p>Helper functionality for value state support.</p></p>
        */
       namespace ValueStateSupport {
         /**
@@ -9163,7 +9559,7 @@ declare namespace sap {
 declare namespace sap {
   namespace ui {
     /**
-     * <p>Device and Feature Detection API: Provides information about the used browser / device and cross platform support for certain events like media queries, orientation change or resizing.</p><p>This API is independent from any other part of the UI5 framework. This allows it to be loaded beforehand, if it is needed, to create the UI5 bootstrap dynamically depending on the capabilities of the browser or device.</p>
+     * <p><p>Device and Feature Detection API: Provides information about the used browser / device and cross platform support for certain events like media queries, orientation change or resizing.</p><p>This API is independent from any other part of the UI5 framework. This allows it to be loaded beforehand, if it is needed, to create the UI5 bootstrap dynamically depending on the capabilities of the browser or device.</p></p>
      */
     namespace Device {
     }
@@ -9173,7 +9569,7 @@ declare namespace sap {
   namespace ui {
     namespace Device {
       /**
-       * <p>Contains information about the used browser.</p>
+       * <p><p>Contains information about the used browser.</p></p>
        */
       namespace browser {
         /**
@@ -9245,7 +9641,7 @@ declare namespace sap {
     namespace Device {
       namespace browser {
         /**
-         * <p>Enumeration containing the names of known browsers.</p>
+         * <p><p>Enumeration containing the names of known browsers.</p></p>
          */
         export enum BROWSER {
           /**
@@ -9281,7 +9677,7 @@ declare namespace sap {
   namespace ui {
     namespace Device {
       /**
-       * <p>Event API for screen width changes.</p><p>This API is based on media queries but can also be used if media queries are not natively supported by the used browser. In this case, the behavior of media queries is simulated by this API.</p><p>There are several predefined <a target="_self" class="jsdoclink" href="#/api/sap.ui.Device.media.RANGESETS">range sets</a> available. Each of them defines a set of intervals for the screen width (from small to large). Whenever the screen width changes and the current screen width is in a different interval to the one before the change, the registered event handlers for the range set are called.</p><p>If needed, it is also possible to define a custom set of intervals.</p><p>The following example shows a typical use case: <pre>
+       * <p><p>Event API for screen width changes.</p><p>This API is based on media queries but can also be used if media queries are not natively supported by the used browser. In this case, the behavior of media queries is simulated by this API.</p><p>There are several predefined <a target="_self" class="jsdoclink" href="#/api/sap.ui.Device.media.RANGESETS">range sets</a> available. Each of them defines a set of intervals for the screen width (from small to large). Whenever the screen width changes and the current screen width is in a different interval to the one before the change, the registered event handlers for the range set are called.</p><p>If needed, it is also possible to define a custom set of intervals.</p><p>The following example shows a typical use case: <pre>
       function sizeChanged(mParams) {
           switch(mParams.name) {
               case "Phone":
@@ -9299,7 +9695,7 @@ declare namespace sap {
       sap.ui.Device.media.attachHandler(sizeChanged, null, sap.ui.Device.media.RANGESETS.SAP_STANDARD);
       // Do some initialization work based on the current size
       sizeChanged(sap.ui.Device.media.getCurrentRange(sap.ui.Device.media.RANGESETS.SAP_STANDARD));
-      </pre></p>
+      </pre></p></p>
        */
       namespace media {
         /**
@@ -9308,14 +9704,14 @@ declare namespace sap {
          * @param {any} oListener <p>The object that wants to be notified when the event occurs (<code>this</code> context within the handler function). If it is not specified, the handler function is called in the context of the <code>window</code>.</p>
          * @param {string} sName <p>The name of the range set to listen to. The range set must be initialized beforehand (<a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="sap.ui.Device.media.initRangeSet" href="#/api/sap.ui.Device.media/methods/sap.ui.Device.media.initRangeSet">sap.ui.Device.media.initRangeSet</a>). If no name is provided, the <a target="_self" class="jsdoclink" href="#/api/SAP_STANDARD">default range set</a> is used.</p>
          */
-        function attachHandler(fnFunction: Function, oListener: any, sName: string): void;
+        function attachHandler(fnFunction: Function, oListener?: any, sName?: string): void;
         /**
          * <p>Removes a previously attached event handler from the change events of the screen width.</p><p>The passed parameters must match those used for registration with <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="sap.ui.Device.media.attachHandler" href="#/api/sap.ui.Device.media/methods/sap.ui.Device.media.attachHandler">#.attachHandler</a> beforehand.</p>
          * @param {Function} fnFunction <p>The handler function to detach from the event</p>
          * @param {any} oListener <p>The object that wanted to be notified when the event occurred</p>
          * @param {string} sName <p>The name of the range set to listen to. If no name is provided, the <a target="_self" class="jsdoclink" href="#/api/SAP_STANDARD">default range set</a> is used.</p>
          */
-        function detachHandler(fnFunction: Function, oListener: any, sName: string): void;
+        function detachHandler(fnFunction: Function, oListener?: any, sName?: string): void;
         /**
          * <p>Returns information about the current active range of the range set with the given name.</p><p>If the optional parameter <code>iWidth</iWidth> is given, the active range will be determined for that width, otherwise it is determined for the current window size.</p>
          * @param {string} sName <p>The name of the range set. The range set must be initialized beforehand (<a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="sap.ui.Device.media.initRangeSet" href="#/api/sap.ui.Device.media/methods/sap.ui.Device.media.initRangeSet">sap.ui.Device.media.initRangeSet</a>)</p>
@@ -9351,7 +9747,7 @@ declare namespace sap {
     namespace Device {
       namespace media {
         /**
-         * <p>Enumeration containing the names and settings of predefined screen width media query range sets.</p>
+         * <p><p>Enumeration containing the names and settings of predefined screen width media query range sets.</p></p>
          */
         export enum RANGESETS {
           /**
@@ -9383,7 +9779,7 @@ declare namespace sap {
   namespace ui {
     namespace Device {
       /**
-       * <p>Common API for orientation change notifications across all platforms.</p><p>For browsers or devices that do not provide native support for orientation change events the API simulates them based on the ratio of the document's width and height.</p>
+       * <p><p>Common API for orientation change notifications across all platforms.</p><p>For browsers or devices that do not provide native support for orientation change events the API simulates them based on the ratio of the document's width and height.</p></p>
        */
       namespace orientation {
         /**
@@ -9414,7 +9810,7 @@ declare namespace sap {
   namespace ui {
     namespace Device {
       /**
-       * <p>Contains information about the operating system of the Device.</p>
+       * <p><p>Contains information about the operating system of the Device.</p></p>
        */
       namespace os {
         /**
@@ -9466,7 +9862,7 @@ declare namespace sap {
     namespace Device {
       namespace os {
         /**
-         * <p>Enumeration containing the names of known operating systems.</p>
+         * <p><p>Enumeration containing the names of known operating systems.</p></p>
          */
         export enum OS {
           /**
@@ -9506,7 +9902,7 @@ declare namespace sap {
   namespace ui {
     namespace Device {
       /**
-       * <p>Common API for document window size change notifications across all platforms.</p>
+       * <p><p>Common API for document window size change notifications across all platforms.</p></p>
        */
       namespace resize {
         /**
@@ -9537,7 +9933,7 @@ declare namespace sap {
   namespace ui {
     namespace Device {
       /**
-       * <p>Contains information about detected capabilities of the used browser or Device.</p>
+       * <p><p>Contains information about detected capabilities of the used browser or Device.</p></p>
        */
       namespace support {
         /**
@@ -9576,7 +9972,7 @@ declare namespace sap {
   namespace ui {
     namespace Device {
       /**
-       * <p>Provides a basic categorization of the used device based on various indicators.</p><p>These indicators are for example the support of touch events, the screen size, the used operation system or the user agent of the browser.</p><p><b>Note:</b> Depending on the capabilities of the device it is also possible that multiple flags are set to <code>true</code>.</p>
+       * <p><p>Provides a basic categorization of the used device based on various indicators.</p><p>These indicators are for example the support of touch events, the screen size, the used operation system or the user agent of the browser.</p><p><b>Note:</b> Depending on the capabilities of the device it is also possible that multiple flags are set to <code>true</code>.</p></p>
        */
       namespace system {
         /**
@@ -9606,7 +10002,7 @@ declare namespace sap {
 declare namespace sap {
   namespace ui {
     /**
-     * <p>Provides access to UI5 loader configuration.</p><p>The configuration is used by <a target="_self" class="jsdoclink" href="#/api/sap.ui/methods/sap.ui.require">sap.ui.require</a> and <a target="_self" class="jsdoclink" href="#/api/sap.ui/methods/sap.ui.define">sap.ui.define</a>.</p>
+     * <p><p>Provides access to UI5 loader configuration.</p><p>The configuration is used by <a target="_self" class="jsdoclink" href="#/api/sap.ui/methods/sap.ui.require">sap.ui.require</a> and <a target="_self" class="jsdoclink" href="#/api/sap.ui/methods/sap.ui.define">sap.ui.define</a>.</p></p>
      */
     namespace loader {
       /**
@@ -9658,7 +10054,7 @@ declare namespace sap {
 declare namespace sap {
   namespace ui {
     /**
-     * <p>The SAPUI5 Data Binding API.</p><p>The default binding mode for model implementations (if not implemented otherwise) is two way and the supported binding modes by the model are one way, two way and one time. The default binding mode can be changed by the application for each model instance. A model implementation should specify its supported binding modes and set the default binding mode accordingly (e.g. if the model supports only one way binding the default binding mode should also be set to one way).</p><p>The default size limit for models is 100. The size limit determines the number of entries used for the list bindings.</p>
+     * <p><p>The SAPUI5 Data Binding API.</p><p>The default binding mode for model implementations (if not implemented otherwise) is two way and the supported binding modes by the model are one way, two way and one time. The default binding mode can be changed by the application for each model instance. A model implementation should specify its supported binding modes and set the default binding mode accordingly (e.g. if the model supports only one way binding the default binding mode should also be set to one way).</p><p>The default size limit for models is 100. The size limit determines the number of entries used for the list bindings.</p></p>
      */
     namespace model {
       /**
@@ -9817,7 +10213,7 @@ declare namespace sap {
         protected updateRequired(oModel: any): boolean;
       }
       /**
-       * <p>Binding type definitions.</p>
+       * <p><p>Binding type definitions.</p></p>
        */
       export enum BindingMode {
         /**
@@ -9838,7 +10234,7 @@ declare namespace sap {
         TwoWay = "TwoWay",
       }
       /**
-       * <p>Change Reason for Model/ListBinding/TreeBinding.</p>
+       * <p><p>Change Reason for Model/ListBinding/TreeBinding.</p></p>
        */
       export enum ChangeReason {
         /**
@@ -10164,8 +10560,9 @@ declare namespace sap {
         /**
          * <p>Sets the value for this binding. The value is parsed and validated against its type and then set to the binding. A model implementation should check if the current default binding mode permits setting the binding value and if so set the new value also in the model.</p>
          * @param {any} vValue <p>the value to set for this binding</p>
+         * @returns undefined|Promise <p>a Promise in case asynchronous parsing/validation is done</p>
          */
-        setExternalValue(vValue: any): void;
+        setExternalValue(vValue: any): undefined | Promise<any>;
         /**
          * <p>Sets the external value of a composite binding. If no CompositeType is assigned to the binding, the default implementation assumes a space separated list of values. This will cause the setValue to be called for each nested binding, except for undefined values in the array.</p>
          * @param {any} oValue <p>the value to set for this binding</p>
@@ -10369,9 +10766,9 @@ declare namespace sap {
          * <p>Format the given value in model representation to an output value in the given internal type. This happens according to the format options, if target type is 'string'. If oValue is not defined or null, null will be returned.</p>
          * @param {any} oValue <p>the value to be formatted</p>
          * @param {string} sInternalType <p>the target type</p>
-         * @returns any <p>the formatted output value</p>
+         * @returns any|Promise <p>the formatted output value or a Promise resolving with the formatted value</p>
          */
-        formatValue(oValue: any, sInternalType: string): any;
+        formatValue(oValue: any, sInternalType: string): any | Promise<any>;
         /**
          * <p>Format the given set of values in model representation to an output value in the given internal type. This happens according to the format options, if target type is 'string'. If aValues is not defined or null, null will be returned.</p>
          * @param {any[]} aValues <p>the values to be formatted</p>
@@ -10383,9 +10780,9 @@ declare namespace sap {
          * <p>Parse a value of an internal type to the expected value of the model type.</p>
          * @param {any} oValue <p>the value to be parsed</p>
          * @param {string} sInternalType <p>the source type</p>
-         * @returns any <p>the parse result</p>
+         * @returns any|Promise <p>the parse result or a Promise resolving with the parse result</p>
          */
-        parseValue(oValue: any, sInternalType: string): any;
+        parseValue(oValue: any, sInternalType: string): any | Promise<any>;
         /**
          * <p>Parse a value of an internal type to the expected set of values of the model type.</p>
          * @param {any} oValue <p>the value to be parsed</p>
@@ -10397,8 +10794,9 @@ declare namespace sap {
         /**
          * <p>Validate whether a given value in model representation is valid and meets the defined constraints (if any).</p>
          * @param {any} oValue <p>the value to be validated</p>
+         * @returns undefined|Promise <p>a Promise in case validation is asynchronous</p>
          */
-        validateValue(oValue: any): void;
+        validateValue(oValue: any): undefined | Promise<any>;
         /**
          * <p>Validate whether a given value in model representation is valid and meets the defined constraints (if any).</p>
          * @param {any[]} aValues <p>the set of values to be validated</p>
@@ -10597,7 +10995,7 @@ declare namespace sap {
          */
         static defaultComparator(a: any, b: any): number;
         /**
-         * <p>Constructor for Filter.</p><p>You either pass a single object literal with the filter parameters or use the individual constructor arguments. No matter which variant is used, only certain combinations of parameters are supported (the following list uses the names from the object literal): <ul> <li>A <code>path</code>, <code>operator</code> and one or two values (<code>value1</code>, <code>value2</code>), depending on the operator</li> <li>A <code>path</code> and a custom filter function <code>test</code></li> <li>An array of other filters named <code>filters</code> and a Boolean flag <code>and</code> that specifies whether to combine the filters with an AND (<code>true</code>) or an OR (<code>false</code>) operator.</li> </ul> An error will be logged to the console if an invalid combination of parameters is provided. Please note that a model implementation may not support a custom filter function, e.g. if the model does not perform client side filtering. It also depends on the model implementation if the filtering is case sensitive or not. See particular model documentation for details The filter operators <code>Any</code> and <code>All</code> are only supported in V4 OData models. When creating a filter instance with these filter operators, the argument <code>variable</code> only accepts a string identifier and <code>condition</code> needs to be another filter instance.</p>
+         * <p>Constructor for Filter.</p><p>You either pass a single object literal with the filter parameters or use the individual constructor arguments. No matter which variant is used, only certain combinations of parameters are supported (the following list uses the names from the object literal): <ul> <li>A <code>path</code>, <code>operator</code> and one or two values (<code>value1</code>, <code>value2</code>), depending on the operator</li> <li>A <code>path</code> and a custom filter function <code>test</code></li> <li>An array of other filters named <code>filters</code> and a Boolean flag <code>and</code> that specifies whether to combine the filters with an AND (<code>true</code>) or an OR (<code>false</code>) operator.</li> </ul> An error will be logged to the console if an invalid combination of parameters is provided. Please note that a model implementation may not support a custom filter function, e.g. if the model does not perform client side filtering. It also depends on the model implementation if the filtering is case sensitive or not. Client models filter case insensitive compared to the OData models which filter case sensitive by default. See particular model documentation for details The filter operators <code>Any</code> and <code>All</code> are only supported in V4 OData models. When creating a filter instance with these filter operators, the argument <code>variable</code> only accepts a string identifier and <code>condition</code> needs to be another filter instance.</p>
          * @param {any | string | sap.ui.model.Filter[]} vFilterInfo <p>Filter info object or a path or an array of filters</p>
          * @param {sap.ui.model.FilterOperator | Function | boolean} vOperator <p>Either a filter operator or a custom filter function or a Boolean flag that defines how to combine multiple filters</p>
          * @param {any} vValue1 <p>First value to use with the given filter operator</p>
@@ -10606,7 +11004,7 @@ declare namespace sap {
         constructor(vFilterInfo: any | string | sap.ui.model.Filter[], vOperator?: sap.ui.model.FilterOperator | Function | boolean, vValue1?: any, vValue2?: any);
       }
       /**
-       * <p>Operators for the Filter.</p>
+       * <p><p>Operators for the Filter.</p></p>
        */
       export enum FilterOperator {
         /**
@@ -10675,7 +11073,7 @@ declare namespace sap {
         StartsWith = "StartsWith",
       }
       /**
-       * <p>Enumeration of the possible filter types.</p><p>Each <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.ListBinding">list binding</a> maintains two separate lists of filters: one for filters defined by the control that owns the binding, and another list for filters that an application can define in addition. When executing the filter operation, both sets of filters are combined.</p><p>See method <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.ListBinding/methods/filter">ListBinding#filter</a> on how to specify the filter type. When no filter type is given to that method, the behavior depends on the specific model implementation and should be documented in the API reference for that model.</p>
+       * <p><p>Enumeration of the possible filter types.</p><p>Each <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.ListBinding">list binding</a> maintains two separate lists of filters: one for filters defined by the control that owns the binding, and another list for filters that an application can define in addition. When executing the filter operation, both sets of filters are combined.</p><p>See method <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.ListBinding/methods/filter">ListBinding#filter</a> on how to specify the filter type. When no filter type is given to that method, the behavior depends on the specific model implementation and should be documented in the API reference for that model.</p></p>
        */
       export enum FilterType {
         /**
@@ -11097,8 +11495,9 @@ declare namespace sap {
         /**
          * <p>Sets the value for this binding. The value is parsed and validated against its type and then set to the binding. A model implementation should check if the current default binding mode permits setting the binding value and if so set the new value also in the model.</p>
          * @param {any} vValue <p>the value to set for this binding</p>
+         * @returns undefined|Promise <p>a Promise in case asynchronous parsing/validation is done</p>
          */
-        setExternalValue(vValue: any): void;
+        setExternalValue(vValue: any): undefined | Promise<any>;
         /**
          * <p>Sets the optional formatter function for the binding.</p>
          * @param {Function} fnFormatter <p>the formatter function for the binding</p>
@@ -11250,9 +11649,9 @@ declare namespace sap {
          * <p>Format the given value in model representation to an output value in the given internal type. This happens according to the format options, if target type is 'string'. If oValue is not defined or null, null will be returned.</p>
          * @param {any} oValue <p>the value to be formatted</p>
          * @param {string} sInternalType <p>the target type</p>
-         * @returns any <p>the formatted output value</p>
+         * @returns any|Promise <p>the formatted output value or a Promise resolving with the formatted value</p>
          */
-        formatValue(oValue: any, sInternalType: string): any;
+        formatValue(oValue: any, sInternalType: string): any | Promise<any>;
         /**
          * <p>Returns an object which has <code>format</code> and <code>parse</code> method. These two methods are used for converting between the raw value which is stored in the model and the related primitive type in JavaScript.</p><p>If a instance of <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.format.DateFormat/constructor">DateFormat</a> or <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.format.NumberFormat/constructor">NumberFormat</a> fits the needs, they could also be used as return value.</p><p>The default implementation of the <code>format</code> and <code>parse</code> method simply returns the given parameter. The subclass of <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.SimpleType/constructor">SimpleType</a> should override this method if the raw value isn't already a JavaScript primitive type. The overwritten method must return an object which has the <code>format</code> and <code>parse</code> method implemented.</p><p>For example<br> If the type is related to a JavaScript Date object, but the raw value isn't, this method should return an instance of <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.format.DateFormat/constructor">DateFormat</a>, which is able to convert between the raw value and a JavaScript Date object.</p>
          * @returns any <p>The format which converts between the raw value from the model and the related JavaScript primitive type</p>
@@ -11262,14 +11661,15 @@ declare namespace sap {
          * <p>Parse a value of an internal type to the expected value of the model type.</p>
          * @param {any} oValue <p>the value to be parsed</p>
          * @param {string} sInternalType <p>the source type</p>
-         * @returns any <p>the parse result</p>
+         * @returns any|Promise <p>the parse result or a Promise resolving with the parse result</p>
          */
-        parseValue(oValue: any, sInternalType: string): any;
+        parseValue(oValue: any, sInternalType: string): any | Promise<any>;
         /**
          * <p>Validate whether a given value in model representation is valid and meets the defined constraints (if any).</p>
          * @param {any} oValue <p>the value to be validated</p>
+         * @returns undefined|Promise <p>a Promise in case validation is asynchronous</p>
          */
-        validateValue(oValue: any): void;
+        validateValue(oValue: any): undefined | Promise<any>;
       }
       /**
        * <p>Sorter for list bindings.</p><p>Instances of this class define the sort order for a list binding.</p>
@@ -11312,7 +11712,7 @@ declare namespace sap {
         constructor();
       }
       /**
-       * <p>Different modes for setting the auto expand mode on tree or analytical bindings.</p>
+       * <p><p>Different modes for setting the auto expand mode on tree or analytical bindings.</p></p>
        */
       export enum TreeAutoExpandMode {
         /**
@@ -11459,7 +11859,7 @@ declare namespace sap {
   namespace ui {
     namespace model {
       /**
-       * <p>Analytical Adapter for ODataModels</p>
+       * <p><p>Analytical Adapter for ODataModels</p></p>
        */
       namespace analytics {
         /**
@@ -11726,7 +12126,7 @@ declare namespace sap {
     namespace model {
       namespace analytics {
         /**
-         * <p>The OData4Analytics API is purely experimental, not yet functionally complete and not meant for productive usage. At present, its only purpose is to demonstrate how easy analytical extensions of OData4SAP can be consumed.</p><p><em>USE OBJECTS VIA METHODS ONLY - DO NOT ACCESS JAVASCRIPT OBJECT PROPERTIES DIRECTLY !</em></p><p>Lazy initialization of attributes will cause unexpected values when you access object attributes directly.</p>
+         * <p><p>The OData4Analytics API is purely experimental, not yet functionally complete and not meant for productive usage. At present, its only purpose is to demonstrate how easy analytical extensions of OData4SAP can be consumed.</p><p><em>USE OBJECTS VIA METHODS ONLY - DO NOT ACCESS JAVASCRIPT OBJECT PROPERTIES DIRECTLY !</em></p><p>Lazy initialization of attributes will cause unexpected values when you access object attributes directly.</p></p>
          */
         namespace odata4analytics {
           /**
@@ -12746,7 +13146,7 @@ declare namespace sap {
             removeSorter(sPropertyName: string): void;
           }
           /**
-           * <p>Sort order of a property.</p>
+           * <p><p>Sort order of a property.</p></p>
            */
           export enum SortOrder {
             /**
@@ -12767,7 +13167,7 @@ declare namespace sap {
   namespace ui {
     namespace model {
       /**
-       * <p>Control-based DataBinding.</p><p><strong>Note</strong>: Although this namespace was declared as 'public', the contained classes never have been declared 'public' and are not supported. We do not recommended to use them. As of 1.58, the <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.base.ManagedObjectModel">sap.ui.model.base.ManagedObjectModel</a> can be tested as an alternative. It is much more powerful, but still in an experimental state.</p>
+       * <p><p>Control-based DataBinding.</p><p><strong>Note</strong>: Although this namespace was declared as 'public', the contained classes never have been declared 'public' and are not supported. We do not recommended to use them. As of 1.58, the <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.base.ManagedObjectModel">sap.ui.model.base.ManagedObjectModel</a> can be tested as an alternative. It is much more powerful, but still in an experimental state.</p></p>
        */
       namespace control {
       }
@@ -12778,7 +13178,7 @@ declare namespace sap {
   namespace ui {
     namespace model {
       /**
-       * <p>JSON-based DataBinding</p>
+       * <p><p>JSON-based DataBinding</p></p>
        */
       namespace json {
         /**
@@ -12821,6 +13221,11 @@ declare namespace sap {
            */
           constructor(oData: any | string, bObserve?: boolean);
           /**
+           * <p>Returns a Promise of the current data-loading state. Every currently running <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.json.JSONModel/methods/loadData">sap.ui.model.json.JSONModel#loadData</a> call is respected by the returned Promise. This also includes a potential loadData call from the JSONModel's constructor in case a URL was given. The data-loaded Promise will resolve once all running requests have finished. Only request, which have been queued up to the point of calling this function will be respected by the returned Promise.</p>
+           * @returns Promise<any> <p>a Promise, which resolves if all pending data-loading requests have finished</p>
+           */
+          dataLoaded(): Promise<any>;
+          /**
            * <p>Serializes the current JSON data of the model into a string. Note: May not work in Internet Explorer 8 because of lacking JSON support (works only if IE 8 mode is enabled)</p>
            * @returns string <p>the JSON data serialized as string</p>
            */
@@ -12847,8 +13252,9 @@ declare namespace sap {
            * @param {boolean} bMerge <p>Whether the data should be merged instead of replaced</p>
            * @param {boolean} bCache <p>Disables caching if set to false. Default is true.</p>
            * @param {any} mHeaders <p>An object of additional header key/value pairs to send along with the request</p>
+           * @returns Promise|undefined <p>in case bAsync is set to true a Promise is returned; this promise resolves/rejects based on the request status</p>
            */
-          loadData(sURL: string, oParameters?: any | string, bAsync?: boolean, sType?: string, bMerge?: boolean, bCache?: boolean, mHeaders?: any): void;
+          loadData(sURL: string, oParameters?: any | string, bAsync?: boolean, sType?: string, bMerge?: boolean, bCache?: boolean, mHeaders?: any): Promise<any> | undefined;
           /**
            * <p>Sets the data, passed as a JS object tree, to the model.</p>
            * @param {any} oData <p>the data to set on the model</p>
@@ -12906,7 +13312,7 @@ declare namespace sap {
   namespace ui {
     namespace model {
       /**
-       * <p>Message DataBinding</p>
+       * <p><p>Message DataBinding</p></p>
        */
       namespace message {
         /**
@@ -12952,7 +13358,7 @@ declare namespace sap {
   namespace ui {
     namespace model {
       /**
-       * <p>OData-based DataBinding Utility Class</p>
+       * <p><p>OData-based DataBinding Utility Class</p></p>
        */
       namespace odata {
         /**
@@ -12964,7 +13370,7 @@ declare namespace sap {
          */
         function ODataTreeBindingFlat(): void;
         /**
-         * <p>A collection of methods which help to consume <a href="http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part3-csdl.html"> OData V4 annotations</a> in XML template views. Every context argument must belong to a <code>sap.ui.model.odata.ODataMetaModel</code> instance.</p><p>Formatter functions like <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="sap.ui.model.odata.AnnotationHelper.format" href="#/api/sap.ui.model.odata.AnnotationHelper/methods/sap.ui.model.odata.AnnotationHelper.format">format</a> and <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="sap.ui.model.odata.AnnotationHelper.simplePath" href="#/api/sap.ui.model.odata.AnnotationHelper/methods/sap.ui.model.odata.AnnotationHelper.simplePath">simplePath</a> can be used in complex bindings to turn OData V4 annotations into texts or data bindings, e.g. <code>&lt;sfi:SmartField value="{path : 'meta>Value', formatter : 'sap.ui.model.odata.AnnotationHelper.simplePath'}"/></code>.</p><p>Helper functions like <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="sap.ui.model.odata.AnnotationHelper.resolvePath" href="#/api/sap.ui.model.odata.AnnotationHelper/methods/sap.ui.model.odata.AnnotationHelper.resolvePath">resolvePath</a> can be used by template instructions in XML template views, e.g. <code>&lt;template:with path="meta>Value" helper="sap.ui.model.odata.AnnotationHelper.resolvePath" var="target"></code>.</p><p>Since 1.31.0, you DO NOT need to <a target="_self" class="jsdoclink" href="#/api/jQuery.sap/methods/jQuery.sap.require">jQuery.sap.require</a> this module before use.</p>
+         * <p><p>A collection of methods which help to consume <a href="http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part3-csdl.html"> OData V4 annotations</a> in XML template views. Every context argument must belong to a <code>sap.ui.model.odata.ODataMetaModel</code> instance.</p><p>Formatter functions like <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="sap.ui.model.odata.AnnotationHelper.format" href="#/api/sap.ui.model.odata.AnnotationHelper/methods/sap.ui.model.odata.AnnotationHelper.format">format</a> and <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="sap.ui.model.odata.AnnotationHelper.simplePath" href="#/api/sap.ui.model.odata.AnnotationHelper/methods/sap.ui.model.odata.AnnotationHelper.simplePath">simplePath</a> can be used in complex bindings to turn OData V4 annotations into texts or data bindings, e.g. <code>&lt;sfi:SmartField value="{path : 'meta>Value', formatter : 'sap.ui.model.odata.AnnotationHelper.simplePath'}"/></code>.</p><p>Helper functions like <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="sap.ui.model.odata.AnnotationHelper.resolvePath" href="#/api/sap.ui.model.odata.AnnotationHelper/methods/sap.ui.model.odata.AnnotationHelper.resolvePath">resolvePath</a> can be used by template instructions in XML template views, e.g. <code>&lt;template:with path="meta>Value" helper="sap.ui.model.odata.AnnotationHelper.resolvePath" var="target"></code>.</p><p>Since 1.31.0, you DO NOT need to <a target="_self" class="jsdoclink" href="#/api/jQuery.sap/methods/jQuery.sap.require">jQuery.sap.require</a> this module before use.</p></p>
          */
         namespace AnnotationHelper {
           /**
@@ -13065,7 +13471,7 @@ declare namespace sap {
           function simplePath(oInterface: sap.ui.core.util.XMLPreprocessor.IContext | sap.ui.model.Context, vRawValue?: any): string;
         }
         /**
-         * <p>Different modes for retrieving the count of collections</p>
+         * <p><p>Different modes for retrieving the count of collections</p></p>
          */
         export enum BatchMode {
           /**
@@ -13078,7 +13484,7 @@ declare namespace sap {
           None = "None",
         }
         /**
-         * <p>Different modes for retrieving the count of collections.</p>
+         * <p><p>Different modes for retrieving the count of collections.</p><br><br>References: <ul><li>sap.ui.model.ODataModel#bindList</li><li>sap.ui.model.ODataModel#constructor</li><li>sap.ui.model.v2.ODataModel#bindList</li><li>sap.ui.model.v2.ODataModel#constructor</li></ul></p>
          */
         export enum CountMode {
           /**
@@ -13118,6 +13524,19 @@ declare namespace sap {
            * @returns sap.ui.model.Filter <p>a <code>sap.ui.model.Filter</code> object</p>
            */
           convert(): sap.ui.model.Filter;
+        }
+        /**
+         * <p><p>Different scopes for retrieving messages from a service.</p><br><br>References: <ul><li>sap.ui.model.ODataModel#constructor</li></ul></p>
+         */
+        export enum MessageScope {
+          /**
+           * <p>Retrieve messages for the whole business object. If the service does not support this option it fallbacks to requested.</p>
+           */
+          BusinessObject = "BusinessObject",
+          /**
+           * <p>Retrieve messages only for the requested/changed entities.</p>
+           */
+          RequestedObjects = "RequestedObjects",
         }
         /**
          * <p>Implementation to access oData Annotations</p>
@@ -13887,14 +14306,14 @@ declare namespace sap {
            */
           setUseBatch(bUseBatch?: boolean): void;
           /**
-           * <p>Submits the collected changes in the batch which were collected via <code>addBatchReadOperations</code> or <code>addBatchChangeOperations</code>. The batch will be cleared afterwards. If the batch is empty no request will be performed and false will be returned. Note: No data will be stored in the model.</p>
-           * @param {Function} fnSuccess <p>a callback function which is called when the batch request has been successfully sent. Note: There might have errors occured in the single batch operations. These errors can be accessed in the aErrorResponses parameter in the callback handler. The handler can have the following parameters: oData, oResponse and aErrorResponses.</p>
-           * @param {Function} fnError <p>a callback function which is called when the batch request failed. The handler can have the parameter: oError which contains additional error information.</p>
-           * @param {boolean} bAsync <p>true for asynchronous request. Default is true.</p>
-           * @param {boolean} bImportData 
-           * @returns any <p>an object which has an <code>abort</code> function to abort the current request. Returns false if no request will be performed because the batch is empty.</p>
+           * <p>Submits the collected changes in the batch which were collected via <code>addBatchReadOperations</code> or <code>addBatchChangeOperations</code>. The batch will be cleared afterwards. If the batch is empty, no request will be sent and false will be returned.</p><p><b>Note:</b> No data will be stored in the model as long as <code>bImportData</code> is not set.</p>
+           * @param {Function} fnSuccess <p>A callback function which is called when the batch request has been successfully sent. Note: Errors that may have come up in the single batch operations can be accessed in the <code>aErrorResponses</code> parameter in the callback handler. The handler can have the following parameters: <code>oData</code>, <code>oResponse</code> and <code>aErrorResponses</code>.</p>
+           * @param {Function} fnError <p>A callback function which is called when the batch request failed. The handler can have the parameter <code>oError</code> which contains additional error information.</p>
+           * @param {boolean} bAsync <p>true for asynchronous request</p>
+           * @param {boolean} bImportData <p>Whether response data should be imported into the model</p>
+           * @returns any <p>An object which has an <code>abort</code> function to abort the current request. Returns false if no request will be performed because the batch is empty.</p>
            */
-          submitBatch(fnSuccess: Function, fnError: Function, bAsync: boolean, bImportData: boolean): any;
+          submitBatch(fnSuccess?: Function, fnError?: Function, bAsync?: boolean, bImportData?: boolean): any;
           /**
            * <p>Submits the collected changes which were collected by the setProperty method. A MERGE request will be triggered to only update the changed properties. If a URI with a $expand System Query Option was used then the expand entries will be removed from the collected changes. Changes to this entries should be done on the entry itself. So no deep updates are supported.</p>
            * @param {Function} fnSuccess <p>a callback function which is called when the data has been successfully updated. The handler can have the following parameters: oData and response.</p>
@@ -13971,7 +14390,7 @@ declare namespace sap {
           function setOrigin(sServiceURL: string, vParameters: any | string): string;
         }
         /**
-         * <p>Different modes for executing service operations (filtering, sorting)</p>
+         * <p><p>Different modes for executing service operations (filtering, sorting)</p></p>
          */
         export enum OperationMode {
           /**
@@ -13992,18 +14411,18 @@ declare namespace sap {
           Server = "Server",
         }
         /**
-         * <p>The types in this namespace are <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.SimpleType">simple types</a> corresponding to OData primitive types for both <a target="_blank" href="http://www.odata.org/documentation/odata-version-2-0/overview#AbstractTypeSystem">OData V2</a>
-            <img src="./resources/sap/ui/documentation/sdk/images/link-external.png" 
-            title="Information published on non SAP site" class="sapUISDKExternalLink"/> and <a target="_blank" href="http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part3-csdl.html">OData V4</a>
-            <img src="./resources/sap/ui/documentation/sdk/images/link-external.png" 
-            title="Information published on non SAP site" class="sapUISDKExternalLink"/> (see "4.4 Primitive Types").</p><p>They can be used in any place where simple types are allowed (and the model representation matches), but they are of course most valuable when used in bindings to a <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v2.ODataModel">sap.ui.model.odata.v2.ODataModel</a> or <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataModel">sap.ui.model.odata.v4.ODataModel</a>.</p><p><b>Example:</b> <pre>
+         * <p><p>The types in this namespace are <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.SimpleType">simple types</a> corresponding to OData primitive types for both <a target="_blank" href="http://www.odata.org/documentation/odata-version-2-0/overview#AbstractTypeSystem">OData V2</a>
+        <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
+        title="Information published on non SAP site" class="sapUISDKExternalLink"/> and <a target="_blank" href="http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part3-csdl.html">OData V4</a>
+        <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
+        title="Information published on non SAP site" class="sapUISDKExternalLink"/> (see "4.4 Primitive Types").</p><p>They can be used in any place where simple types are allowed (and the model representation matches), but they are of course most valuable when used in bindings to a <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v2.ODataModel">sap.ui.model.odata.v2.ODataModel</a> or <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataModel">sap.ui.model.odata.v4.ODataModel</a>.</p><p><b>Example:</b> <pre>
           &lt;Label text="ID"/>
           &lt;Input value="{path : 'id', type : 'sap.ui.model.odata.type.String',
               constraints : {nullable : false, maxLength : 10}}"/>
           &lt;Label text="valid through"/>
           &lt;Input value="{path : 'validThrough', type : 'sap.ui.model.odata.type.DateTime',
               constraints : {displayFormat : 'Date'}}"/>
-        </pre></p><p>All types support formatting from the representation used in ODataModel ("model format") to various representations used by UI elements ("target type") and vice versa. Additionally they support validating a given value against the type's constraints.</p><p>The following target types may be supported: <table> <tr><th>Type</th><th>Description</th></tr> <tr><td><code>string</code></td><td>The value is converted to a <code>string</code>, so that it can be displayed in an input field. Supported by all types.</td></tr> <tr><td><code>boolean</code></td><td>The value is converted to a <code>Boolean</code>, so that it can be displayed in a checkbox. Only supported by <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type.Boolean">sap.ui.model.odata.type.Boolean</a>.</td></tr> <tr><td><code>int</code></td><td>The value is converted to an integer (as <code>number</code>). May cause truncation of decimals and overruns. Supported by all numeric types.</td></tr> <tr><td><code>float</code></td><td>The value is converted to a <code>number</code>. Supported by all numeric types.</td></tr> <tr><td><code>any</code></td><td>A technical format. The value is simply passed through. Only supported by <code>format</code>, not by <code>parse</code>. Supported by all types.</td></tr> </table></p><p>All constraints relevant for OData V2 may be given as strings besides their natural types (e.g. <code>nullable : "false"</code> or <code>maxLength : "10"</code>). This makes the life of template processors easier, but is not needed for OData V4.</p><p><b>Handling of <code>null</code></b>:</p><p>All types handle <code>null</code> in the same way. When formatting to <code>string</code>, it is simply passed through (and <code>undefined</code> becomes <code>null</code>, too). When parsing from <code>string</code>, it is also passed through. Additionally, <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type.String">String</a> and <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type.Guid">Guid</a> convert the empty string to <code>null</code> when parsing. <code>validate</code> decides based on the constraint <code>nullable</code>: If <code>false</code>, <code>null</code> is not accepted and leads to a (locale-dependent) <code>ParseException</code>.</p><p>This ensures that the user cannot clear an input field bound to an attribute with non-nullable type. However it does not ensure that the user really entered something if the field was empty before.</p><p><b><code>Date</code> vs. <code>DateTime</code></b>:</p><p>The type <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type.Date">sap.ui.model.odata.type.Date</a> is only valid for an OData V4 service. If you use the type for an OData V2 service, displaying is possible but you get an error message from server if you try to save changes.</p><p>For an OData V2 service use <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type.DateTime">sap.ui.model.odata.type.DateTime</a> with the constraint <code>displayFormat: "Date"</code> to display only a date.</p>
+        </pre></p><p>All types support formatting from the representation used in ODataModel ("model format") to various representations used by UI elements ("target type") and vice versa. Additionally they support validating a given value against the type's constraints.</p><p>The following target types may be supported: <table> <tr><th>Type</th><th>Description</th></tr> <tr><td><code>string</code></td><td>The value is converted to a <code>string</code>, so that it can be displayed in an input field. Supported by all types.</td></tr> <tr><td><code>boolean</code></td><td>The value is converted to a <code>Boolean</code>, so that it can be displayed in a checkbox. Only supported by <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type.Boolean">sap.ui.model.odata.type.Boolean</a>.</td></tr> <tr><td><code>int</code></td><td>The value is converted to an integer (as <code>number</code>). May cause truncation of decimals and overruns. Supported by all numeric types.</td></tr> <tr><td><code>float</code></td><td>The value is converted to a <code>number</code>. Supported by all numeric types.</td></tr> <tr><td><code>any</code></td><td>A technical format. The value is simply passed through. Only supported by <code>format</code>, not by <code>parse</code>. Supported by all types.</td></tr> </table></p><p>All constraints relevant for OData V2 may be given as strings besides their natural types (e.g. <code>nullable : "false"</code> or <code>maxLength : "10"</code>). This makes the life of template processors easier, but is not needed for OData V4.</p><p><b>Handling of <code>null</code></b>:</p><p>All types handle <code>null</code> in the same way. When formatting to <code>string</code>, it is simply passed through (and <code>undefined</code> becomes <code>null</code>, too). When parsing from <code>string</code>, it is also passed through. Additionally, <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type.String">String</a> and <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type.Guid">Guid</a> convert the empty string to <code>null</code> when parsing. <code>validate</code> decides based on the constraint <code>nullable</code>: If <code>false</code>, <code>null</code> is not accepted and leads to a (locale-dependent) <code>ParseException</code>.</p><p>This ensures that the user cannot clear an input field bound to an attribute with non-nullable type. However it does not ensure that the user really entered something if the field was empty before.</p><p><b><code>Date</code> vs. <code>DateTime</code></b>:</p><p>The type <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type.Date">sap.ui.model.odata.type.Date</a> is only valid for an OData V4 service. If you use the type for an OData V2 service, displaying is possible but you get an error message from server if you try to save changes.</p><p>For an OData V2 service use <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type.DateTime">sap.ui.model.odata.type.DateTime</a> with the constraint <code>displayFormat: "Date"</code> to display only a date.</p></p>
          */
         namespace type {
           /**
@@ -14020,9 +14439,9 @@ declare namespace sap {
              * <p>Format the given value in model representation to an output value in the given internal type. This happens according to the format options, if target type is 'string'. If oValue is not defined or null, null will be returned.</p>
              * @param {any} oValue <p>the value to be formatted</p>
              * @param {string} sInternalType <p>the target type</p>
-             * @returns any <p>the formatted output value</p>
+             * @returns any|Promise <p>the formatted output value or a Promise resolving with the formatted value</p>
              */
-            formatValue(oValue: any, sInternalType: string): any;
+            formatValue(oValue: any, sInternalType: string): any | Promise<any>;
             /**
              * <p>Formats the given boolean value to the given target type.</p>
              * @param {boolean} bValue <p>the value to be formatted</p>
@@ -14044,9 +14463,9 @@ declare namespace sap {
              * <p>Parse a value of an internal type to the expected value of the model type.</p>
              * @param {any} oValue <p>the value to be parsed</p>
              * @param {string} sInternalType <p>the source type</p>
-             * @returns any <p>the parse result</p>
+             * @returns any|Promise <p>the parse result or a Promise resolving with the parse result</p>
              */
-            parseValue(oValue: any, sInternalType: string): any;
+            parseValue(oValue: any, sInternalType: string): any | Promise<any>;
             /**
              * <p>Parses the given value from the given type to a boolean.</p>
              * @param {boolean | string} vValue <p>the value to be parsed; the empty string and <code>null</code> are parsed to <code>null</code></p>
@@ -14057,8 +14476,9 @@ declare namespace sap {
             /**
              * <p>Validate whether a given value in model representation is valid and meets the defined constraints (if any).</p>
              * @param {any} oValue <p>the value to be validated</p>
+             * @returns undefined|Promise <p>a Promise in case validation is asynchronous</p>
              */
-            validateValue(oValue: any): void;
+            validateValue(oValue: any): undefined | Promise<any>;
             /**
              * <p>Validates whether the given value in model representation is valid and meets the given constraints.</p>
              * @param {boolean} bValue <p>the value to be validated</p>
@@ -14092,11 +14512,11 @@ declare namespace sap {
             protected getRange(): any;
           }
           /**
-           * <p>This class represents the Currency composite type with the parts amount, currency, and currency customizing. The amount part is formatted according to the customizing for the currency. Use the result of the promise returned by <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataMetaModel/methods/requestCurrencyCodes">sap.ui.model.odata.v4.ODataMetaModel#requestCurrencyCodes</a> as currency customizing part. If no currency customizing is available, UI5's default formatting applies. The type may only be used for amount and currency parts from a <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataModel">sap.ui.model.odata.v4.ODataModel</a>.</p>
+           * <p>This class represents the <code>Currency</code> composite type with the parts amount, currency, and currency customizing. The amount part is formatted according to the customizing for the currency. Use the result of the promise returned by <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataMetaModel/methods/requestCurrencyCodes">sap.ui.model.odata.v4.ODataMetaModel#requestCurrencyCodes</a> as currency customizing part. If no currency customizing is available, UI5's default formatting applies. The type may only be used for amount and currency parts from a <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataModel">sap.ui.model.odata.v4.ODataModel</a>.</p>
            */
           export class Currency extends sap.ui.model.type.Currency {
             /**
-             * <p>Constructor for a Currency composite type.</p>
+             * <p>Constructor for a <code>Currency</code> composite type.</p>
              * @param {any} oFormatOptions <p>See parameter <code>oFormatOptions</code> of <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.type.Currency/constructor">sap.ui.model.type.Currency#constructor</a>. Format options are immutable, that is, they can only be set once on construction.</p>
              * @param {any} oConstraints <p>Not supported</p>
              */
@@ -14105,9 +14525,9 @@ declare namespace sap {
              * <p>Format the given value in model representation to an output value in the given internal type. This happens according to the format options, if target type is 'string'. If oValue is not defined or null, null will be returned.</p>
              * @param {any} oValue <p>the value to be formatted</p>
              * @param {string} sInternalType <p>the target type</p>
-             * @returns any <p>the formatted output value</p>
+             * @returns any|Promise <p>the formatted output value or a Promise resolving with the formatted value</p>
              */
-            formatValue(oValue: any, sInternalType: string): any;
+            formatValue(oValue: any, sInternalType: string): any | Promise<any>;
             /**
              * <p>Format the given set of values in model representation to an output value in the given internal type. This happens according to the format options, if target type is 'string'. If aValues is not defined or null, null will be returned.</p>
              * @param {any[]} aValues <p>the values to be formatted</p>
@@ -14123,10 +14543,10 @@ declare namespace sap {
              */
             formatValue(vValue: any[] | string, sInternalType: string): any;
             /**
-             * <p>Formats the given values of the parts of the Currency composite type to the given target type.</p>
-             * @param {any[]} aValues <p>Array of part values to be formatted; contains amount, currency, currency customizing in this order. The first call to this method where all parts are set determines the currency customizing; subsequent calls use this customizing, so that the corresponding part may be omitted. Changes to the currency customizing part after this first method call are not considered: The currency customizing for this Currency instance remains unchanged.</p>
+             * <p>Formats the given values of the parts of the <code>Currency</code> composite type to the given target type.</p>
+             * @param {any[]} aValues <p>Array of part values to be formatted; contains amount, currency, currency customizing in this order. The first call to this method where all parts are set determines the currency customizing; subsequent calls use this customizing, so that the corresponding part may be omitted. Changes to the currency customizing part after this first method call are not considered: The currency customizing for this <code>Currency</code> instance remains unchanged.</p>
              * @param {string} sTargetType <p>The target type; must be "string" or a type with "string" as its <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.DataType/methods/getPrimitiveType">primitive type</a>. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type">sap.ui.model.odata.type</a> for more information.</p>
-             * @returns string <p>The formatted output value; <code>null</code>, if <code>aValues</code> or the amount or currency value contained therein is <code>undefined</code> or <code>null</code> or if the unit customizing is not set.</p>
+             * @returns string <p>The formatted output value; <code>null</code>, if <code>aValues</code> is <code>undefined</code> or <code>null</code> or if the amount, the currency or the currency customizing contained therein is <code>undefined</code>.</p>
              */
             formatValue(aValues: any[], sTargetType: string): string;
             /**
@@ -14152,9 +14572,9 @@ declare namespace sap {
              * <p>Parse a value of an internal type to the expected value of the model type.</p>
              * @param {any} oValue <p>the value to be parsed</p>
              * @param {string} sInternalType <p>the source type</p>
-             * @returns any <p>the parse result</p>
+             * @returns any|Promise <p>the parse result or a Promise resolving with the parse result</p>
              */
-            parseValue(oValue: any, sInternalType: string): any;
+            parseValue(oValue: any, sInternalType: string): any | Promise<any>;
             /**
              * <p>Parse a value of an internal type to the expected set of values of the model type.</p>
              * @param {any} oValue <p>the value to be parsed</p>
@@ -14175,29 +14595,31 @@ declare namespace sap {
              * <p>Parses the given string value to an array containing amount and currency.<br><br>References: <ul><li>sap.ui.model.type.Currency#parseValue</li></ul></p>
              * @param {string} vValue <p>The value to be parsed</p>
              * @param {string} sSourceType <p>The source type (the expected type of <code>vValue</code>); must be "string", or a type with "string" as its <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.DataType/methods/getPrimitiveType">primitive type</a>. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type">sap.ui.model.odata.type</a> for more information.</p>
+             * @param {any[]} aCurrentValues <p>The current values of all binding parts</p>
              * @returns any[] <p>An array containing amount and currency in this order. Both, amount and currency, are string values unless the format option <code>parseAsString</code> is <code>false</code>; in this case, the amount is a number.</p>
              */
-            parseValue(vValue: string, sSourceType: string): any[];
+            parseValue(vValue: string, sSourceType: string, aCurrentValues: any[]): any[];
             /**
              * <p>Validate whether a given value in model representation is valid and meets the defined constraints (if any).</p>
              * @param {any} oValue <p>the value to be validated</p>
+             * @returns undefined|Promise <p>a Promise in case validation is asynchronous</p>
              */
-            validateValue(oValue: any): void;
+            validateValue(oValue: any): undefined | Promise<any>;
             /**
              * <p>Validate whether a given value in model representation is valid and meets the defined constraints (if any).</p>
              * @param {any[]} aValues <p>the set of values to be validated</p>
              */
             validateValue(aValues: any[]): void;
             /**
-             * <p>Does nothing as the Currency type does not support constraints.</p>
+             * <p>Does nothing as the <code>Currency</code> type does not support constraints.</p>
              * @param {string} vValue <p>The value to be validated</p>
              */
             validateValue(vValue: string): void;
           }
           /**
            * <p>This class represents the OData V4 primitive type <code>Edm.Date</code>.</p><p>In <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataModel">sap.ui.model.odata.v4.ODataModel</a> this type is represented as a <code>string</code> in the format "yyyy-mm-dd".</p><p><b>Note: For an OData V2 service use <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type.DateTime">sap.ui.model.odata.type.DateTime</a> with the constraint <code>displayFormat: "Date"</code> to display only a date.</b><br><br><span>Documentation links:</span><ul><li><a target="_blank" href="http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part3-csdl.html">http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part3-csdl.html</a>
-              <img src="./resources/sap/ui/documentation/sdk/images/link-external.png" 
-              title="Information published on non SAP site" class="sapUISDKExternalLink"/></li></ul></p>
+          <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
+          title="Information published on non SAP site" class="sapUISDKExternalLink"/></li></ul></p>
            */
           export class Date extends sap.ui.model.odata.type.ODataType {
             /**
@@ -14210,9 +14632,9 @@ declare namespace sap {
              * <p>Format the given value in model representation to an output value in the given internal type. This happens according to the format options, if target type is 'string'. If oValue is not defined or null, null will be returned.</p>
              * @param {any} oValue <p>the value to be formatted</p>
              * @param {string} sInternalType <p>the target type</p>
-             * @returns any <p>the formatted output value</p>
+             * @returns any|Promise <p>the formatted output value or a Promise resolving with the formatted value</p>
              */
-            formatValue(oValue: any, sInternalType: string): any;
+            formatValue(oValue: any, sInternalType: string): any | Promise<any>;
             /**
              * <p>Formats the given value to the given target type.</p>
              * @param {string | Date} vValue <p>the value to be formatted</p>
@@ -14234,9 +14656,9 @@ declare namespace sap {
              * <p>Parse a value of an internal type to the expected value of the model type.</p>
              * @param {any} oValue <p>the value to be parsed</p>
              * @param {string} sInternalType <p>the source type</p>
-             * @returns any <p>the parse result</p>
+             * @returns any|Promise <p>the parse result or a Promise resolving with the parse result</p>
              */
-            parseValue(oValue: any, sInternalType: string): any;
+            parseValue(oValue: any, sInternalType: string): any | Promise<any>;
             /**
              * <p>Parses the given value to a date.</p>
              * @param {string} sValue <p>the value to be parsed, maps <code>""</code> to <code>null</code></p>
@@ -14247,8 +14669,9 @@ declare namespace sap {
             /**
              * <p>Validate whether a given value in model representation is valid and meets the defined constraints (if any).</p>
              * @param {any} oValue <p>the value to be validated</p>
+             * @returns undefined|Promise <p>a Promise in case validation is asynchronous</p>
              */
-            validateValue(oValue: any): void;
+            validateValue(oValue: any): undefined | Promise<any>;
             /**
              * <p>Validates whether the given value in model representation is valid and meets the given constraints.</p>
              * @param {string} sValue <p>the value to be validated</p>
@@ -14290,9 +14713,9 @@ declare namespace sap {
              * <p>Format the given value in model representation to an output value in the given internal type. This happens according to the format options, if target type is 'string'. If oValue is not defined or null, null will be returned.</p>
              * @param {any} oValue <p>the value to be formatted</p>
              * @param {string} sInternalType <p>the target type</p>
-             * @returns any <p>the formatted output value</p>
+             * @returns any|Promise <p>the formatted output value or a Promise resolving with the formatted value</p>
              */
-            formatValue(oValue: any, sInternalType: string): any;
+            formatValue(oValue: any, sInternalType: string): any | Promise<any>;
             /**
              * <p>Formats the given value to the given target type.</p>
              * @param {Date} oValue <p>The value to be formatted, which is represented in the model as a <code>Date</code> instance (OData V2)</p>
@@ -14304,9 +14727,9 @@ declare namespace sap {
              * <p>Parse a value of an internal type to the expected value of the model type.</p>
              * @param {any} oValue <p>the value to be parsed</p>
              * @param {string} sInternalType <p>the source type</p>
-             * @returns any <p>the parse result</p>
+             * @returns any|Promise <p>the parse result or a Promise resolving with the parse result</p>
              */
-            parseValue(oValue: any, sInternalType: string): any;
+            parseValue(oValue: any, sInternalType: string): any | Promise<any>;
             /**
              * <p>Parses the given value to a <code>Date</code> instance (OData V2).</p>
              * @param {string} sValue <p>The value to be parsed; the empty string and <code>null</code> are parsed to <code>null</code></p>
@@ -14317,8 +14740,9 @@ declare namespace sap {
             /**
              * <p>Validate whether a given value in model representation is valid and meets the defined constraints (if any).</p>
              * @param {any} oValue <p>the value to be validated</p>
+             * @returns undefined|Promise <p>a Promise in case validation is asynchronous</p>
              */
-            validateValue(oValue: any): void;
+            validateValue(oValue: any): undefined | Promise<any>;
             /**
              * <p>Validates whether the given value in model representation is valid and meets the defined constraints.</p>
              * @param {Date} oValue <p>The value to be validated</p>
@@ -14339,9 +14763,9 @@ declare namespace sap {
              * <p>Format the given value in model representation to an output value in the given internal type. This happens according to the format options, if target type is 'string'. If oValue is not defined or null, null will be returned.</p>
              * @param {any} oValue <p>the value to be formatted</p>
              * @param {string} sInternalType <p>the target type</p>
-             * @returns any <p>the formatted output value</p>
+             * @returns any|Promise <p>the formatted output value or a Promise resolving with the formatted value</p>
              */
-            formatValue(oValue: any, sInternalType: string): any;
+            formatValue(oValue: any, sInternalType: string): any | Promise<any>;
             /**
              * <p>Formats the given value to the given target type.</p>
              * @param {Date} oValue <p>The value to be formatted, which is represented in the model as a <code>Date</code> instance (OData V2)</p>
@@ -14370,9 +14794,9 @@ declare namespace sap {
              * <p>Parse a value of an internal type to the expected value of the model type.</p>
              * @param {any} oValue <p>the value to be parsed</p>
              * @param {string} sInternalType <p>the source type</p>
-             * @returns any <p>the parse result</p>
+             * @returns any|Promise <p>the parse result or a Promise resolving with the parse result</p>
              */
-            parseValue(oValue: any, sInternalType: string): any;
+            parseValue(oValue: any, sInternalType: string): any | Promise<any>;
             /**
              * <p>Parses the given value to a <code>Date</code> instance (OData V2).</p>
              * @param {string} sValue <p>The value to be parsed; the empty string and <code>null</code> are parsed to <code>null</code></p>
@@ -14390,8 +14814,9 @@ declare namespace sap {
             /**
              * <p>Validate whether a given value in model representation is valid and meets the defined constraints (if any).</p>
              * @param {any} oValue <p>the value to be validated</p>
+             * @returns undefined|Promise <p>a Promise in case validation is asynchronous</p>
              */
-            validateValue(oValue: any): void;
+            validateValue(oValue: any): undefined | Promise<any>;
             /**
              * <p>Validates whether the given value in model representation is valid and meets the defined constraints.</p>
              * @param {Date} oValue <p>The value to be validated</p>
@@ -14417,9 +14842,9 @@ declare namespace sap {
              * <p>Format the given value in model representation to an output value in the given internal type. This happens according to the format options, if target type is 'string'. If oValue is not defined or null, null will be returned.</p>
              * @param {any} oValue <p>the value to be formatted</p>
              * @param {string} sInternalType <p>the target type</p>
-             * @returns any <p>the formatted output value</p>
+             * @returns any|Promise <p>the formatted output value or a Promise resolving with the formatted value</p>
              */
-            formatValue(oValue: any, sInternalType: string): any;
+            formatValue(oValue: any, sInternalType: string): any | Promise<any>;
             /**
              * <p>Formats the given value to the given target type. When formatting to "string" the type's constraint <code>scale</code> is taken into account.</p>
              * @param {string} sValue <p>the value to be formatted, which is represented as a string in the model</p>
@@ -14441,9 +14866,9 @@ declare namespace sap {
              * <p>Parse a value of an internal type to the expected value of the model type.</p>
              * @param {any} oValue <p>the value to be parsed</p>
              * @param {string} sInternalType <p>the source type</p>
-             * @returns any <p>the parse result</p>
+             * @returns any|Promise <p>the parse result or a Promise resolving with the parse result</p>
              */
-            parseValue(oValue: any, sInternalType: string): any;
+            parseValue(oValue: any, sInternalType: string): any | Promise<any>;
             /**
              * <p>Parses the given value, which is expected to be of the given type, to a decimal in <code>string</code> representation.</p>
              * @param {string | number} vValue <p>the value to be parsed; the empty string and <code>null</code> are parsed to <code>null</code></p>
@@ -14454,8 +14879,9 @@ declare namespace sap {
             /**
              * <p>Validate whether a given value in model representation is valid and meets the defined constraints (if any).</p>
              * @param {any} oValue <p>the value to be validated</p>
+             * @returns undefined|Promise <p>a Promise in case validation is asynchronous</p>
              */
-            validateValue(oValue: any): void;
+            validateValue(oValue: any): undefined | Promise<any>;
             /**
              * <p>Validates whether the given value in model representation is valid and meets the defined constraints.</p>
              * @param {string} sValue <p>the value to be validated</p>
@@ -14476,9 +14902,9 @@ declare namespace sap {
              * <p>Format the given value in model representation to an output value in the given internal type. This happens according to the format options, if target type is 'string'. If oValue is not defined or null, null will be returned.</p>
              * @param {any} oValue <p>the value to be formatted</p>
              * @param {string} sInternalType <p>the target type</p>
-             * @returns any <p>the formatted output value</p>
+             * @returns any|Promise <p>the formatted output value or a Promise resolving with the formatted value</p>
              */
-            formatValue(oValue: any, sInternalType: string): any;
+            formatValue(oValue: any, sInternalType: string): any | Promise<any>;
             /**
              * <p>Formats the given value to the given target type. When formatting to "string", very large or very small values are formatted to the exponential format (e.g. "-3.14 E+15").</p>
              * @param {number | string} vValue <p>the value to be formatted, which is represented as a number in the model</p>
@@ -14500,9 +14926,9 @@ declare namespace sap {
              * <p>Parse a value of an internal type to the expected value of the model type.</p>
              * @param {any} oValue <p>the value to be parsed</p>
              * @param {string} sInternalType <p>the source type</p>
-             * @returns any <p>the parse result</p>
+             * @returns any|Promise <p>the parse result or a Promise resolving with the parse result</p>
              */
-            parseValue(oValue: any, sInternalType: string): any;
+            parseValue(oValue: any, sInternalType: string): any | Promise<any>;
             /**
              * <p>Parses the given value, which is expected to be of the given type, to an Edm.Double in <code>number</code> representation.</p>
              * @param {string | number} vValue <p>the value to be parsed; the empty string and <code>null</code> are parsed to <code>null</code>; note that there is no way to enter <code>Infinity</code> or <code>NaN</code> values</p>
@@ -14513,8 +14939,9 @@ declare namespace sap {
             /**
              * <p>Validate whether a given value in model representation is valid and meets the defined constraints (if any).</p>
              * @param {any} oValue <p>the value to be validated</p>
+             * @returns undefined|Promise <p>a Promise in case validation is asynchronous</p>
              */
-            validateValue(oValue: any): void;
+            validateValue(oValue: any): undefined | Promise<any>;
             /**
              * <p>Validates whether the given value in model representation is valid and meets the defined constraints.</p>
              * @param {number} fValue <p>the value to be validated</p>
@@ -14535,9 +14962,9 @@ declare namespace sap {
              * <p>Format the given value in model representation to an output value in the given internal type. This happens according to the format options, if target type is 'string'. If oValue is not defined or null, null will be returned.</p>
              * @param {any} oValue <p>the value to be formatted</p>
              * @param {string} sInternalType <p>the target type</p>
-             * @returns any <p>the formatted output value</p>
+             * @returns any|Promise <p>the formatted output value or a Promise resolving with the formatted value</p>
              */
-            formatValue(oValue: any, sInternalType: string): any;
+            formatValue(oValue: any, sInternalType: string): any | Promise<any>;
             /**
              * <p>Formats the given value to the given target type.</p>
              * @param {string} sValue <p>the value to be formatted</p>
@@ -14559,9 +14986,9 @@ declare namespace sap {
              * <p>Parse a value of an internal type to the expected value of the model type.</p>
              * @param {any} oValue <p>the value to be parsed</p>
              * @param {string} sInternalType <p>the source type</p>
-             * @returns any <p>the parse result</p>
+             * @returns any|Promise <p>the parse result or a Promise resolving with the parse result</p>
              */
-            parseValue(oValue: any, sInternalType: string): any;
+            parseValue(oValue: any, sInternalType: string): any | Promise<any>;
             /**
              * <p>Parses the given value to a GUID.</p>
              * @param {string} sValue <p>the value to be parsed, maps <code>""</code> to <code>null</code></p>
@@ -14572,8 +14999,9 @@ declare namespace sap {
             /**
              * <p>Validate whether a given value in model representation is valid and meets the defined constraints (if any).</p>
              * @param {any} oValue <p>the value to be validated</p>
+             * @returns undefined|Promise <p>a Promise in case validation is asynchronous</p>
              */
-            validateValue(oValue: any): void;
+            validateValue(oValue: any): undefined | Promise<any>;
             /**
              * <p>Validates whether the given value in model representation is valid and meets the given constraints.</p>
              * @param {string} sValue <p>the value to be validated</p>
@@ -14594,9 +15022,9 @@ declare namespace sap {
              * <p>Format the given value in model representation to an output value in the given internal type. This happens according to the format options, if target type is 'string'. If oValue is not defined or null, null will be returned.</p>
              * @param {any} oValue <p>the value to be formatted</p>
              * @param {string} sInternalType <p>the target type</p>
-             * @returns any <p>the formatted output value</p>
+             * @returns any|Promise <p>the formatted output value or a Promise resolving with the formatted value</p>
              */
-            formatValue(oValue: any, sInternalType: string): any;
+            formatValue(oValue: any, sInternalType: string): any | Promise<any>;
             /**
              * <p>Formats the given value to the given target type. When formatting to <code>string</code> the format options are used.</p>
              * @param {number} iValue <p>the value in model representation to be formatted</p>
@@ -14608,9 +15036,9 @@ declare namespace sap {
              * <p>Parse a value of an internal type to the expected value of the model type.</p>
              * @param {any} oValue <p>the value to be parsed</p>
              * @param {string} sInternalType <p>the source type</p>
-             * @returns any <p>the parse result</p>
+             * @returns any|Promise <p>the parse result or a Promise resolving with the parse result</p>
              */
-            parseValue(oValue: any, sInternalType: string): any;
+            parseValue(oValue: any, sInternalType: string): any | Promise<any>;
             /**
              * <p>Parses the given value, which is expected to be of the given source type, to an Int in number representation.</p>
              * @param {number | string} vValue <p>the value to be parsed. The empty string and <code>null</code> are parsed to <code>null</code>.</p>
@@ -14621,8 +15049,9 @@ declare namespace sap {
             /**
              * <p>Validate whether a given value in model representation is valid and meets the defined constraints (if any).</p>
              * @param {any} oValue <p>the value to be validated</p>
+             * @returns undefined|Promise <p>a Promise in case validation is asynchronous</p>
              */
-            validateValue(oValue: any): void;
+            validateValue(oValue: any): undefined | Promise<any>;
             /**
              * <p>Validates whether the given value in model representation is valid and meets the defined constraints.</p>
              * @param {number} iValue <p>the value to be validated</p>
@@ -14695,9 +15124,9 @@ declare namespace sap {
              * <p>Format the given value in model representation to an output value in the given internal type. This happens according to the format options, if target type is 'string'. If oValue is not defined or null, null will be returned.</p>
              * @param {any} oValue <p>the value to be formatted</p>
              * @param {string} sInternalType <p>the target type</p>
-             * @returns any <p>the formatted output value</p>
+             * @returns any|Promise <p>the formatted output value or a Promise resolving with the formatted value</p>
              */
-            formatValue(oValue: any, sInternalType: string): any;
+            formatValue(oValue: any, sInternalType: string): any | Promise<any>;
             /**
              * <p>Formats the given value to the given target type.</p>
              * @param {string} sValue <p>the value to be formatted, which is represented as a string in the model</p>
@@ -14719,9 +15148,9 @@ declare namespace sap {
              * <p>Parse a value of an internal type to the expected value of the model type.</p>
              * @param {any} oValue <p>the value to be parsed</p>
              * @param {string} sInternalType <p>the source type</p>
-             * @returns any <p>the parse result</p>
+             * @returns any|Promise <p>the parse result or a Promise resolving with the parse result</p>
              */
-            parseValue(oValue: any, sInternalType: string): any;
+            parseValue(oValue: any, sInternalType: string): any | Promise<any>;
             /**
              * <p>Parses the given value, which is expected to be of the given type, to an Int64 in <code>string</code> representation.</p>
              * @param {string | number} vValue <p>the value to be parsed; the empty string and <code>null</code> are parsed to <code>null</code></p>
@@ -14732,8 +15161,9 @@ declare namespace sap {
             /**
              * <p>Validate whether a given value in model representation is valid and meets the defined constraints (if any).</p>
              * @param {any} oValue <p>the value to be validated</p>
+             * @returns undefined|Promise <p>a Promise in case validation is asynchronous</p>
              */
-            validateValue(oValue: any): void;
+            validateValue(oValue: any): undefined | Promise<any>;
             /**
              * <p>Validates whether the given value in model representation is valid and meets the defined constraints.</p>
              * @param {string} sValue <p>the value to be validated</p>
@@ -14742,10 +15172,10 @@ declare namespace sap {
           }
           /**
            * <p>This class is an abstract base class for all OData primitive types (see <a target="_blank" href="http://docs.oasis-open.org/odata/odata/v4.0/errata02/os/complete/part3-csdl/odata-v4.0-errata02-os-part3-csdl-complete.html#_The_edm:Documentation_Element">OData V4 Edm Types</a>
-              <img src="./resources/sap/ui/documentation/sdk/images/link-external.png" 
-              title="Information published on non SAP site" class="sapUISDKExternalLink"/> and <a target="_blank" href="http://www.odata.org/documentation/odata-version-2-0/overview#AbstractTypeSystem">OData V2 Edm Types</a>
-              <img src="./resources/sap/ui/documentation/sdk/images/link-external.png" 
-              title="Information published on non SAP site" class="sapUISDKExternalLink"/>). All subtypes implement the interface of <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.SimpleType">sap.ui.model.SimpleType</a>. That means they implement next to the constructor: <ul> <li><a target="_self" class="jsdoclink" href="#/api/sap.ui.model.SimpleType/methods/getName">getName</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.ui.model.SimpleType/methods/formatValue">formatValue</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.ui.model.SimpleType/methods/parseValue">parseValue</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.ui.model.SimpleType/methods/validateValue">validateValue</a></li> </ul></p><p>All ODataTypes are immutable. All format options and constraints are given to the constructor, they cannot be modified later.</p><p>All ODataTypes use a locale-specific message when throwing an error caused by invalid user input (e.g. if <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type.Double/methods/parseValue">Double.parseValue</a> cannot parse the given value to a number, or if any type's <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="validateValue" href="#/api/sap.ui.model.odata.type.ODataType/methods/validateValue">validateValue</a> gets a <code>null</code>, but the constraint <code>nullable</code> is <code>false</code>).</p>
+          <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
+          title="Information published on non SAP site" class="sapUISDKExternalLink"/> and <a target="_blank" href="http://www.odata.org/documentation/odata-version-2-0/overview#AbstractTypeSystem">OData V2 Edm Types</a>
+          <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
+          title="Information published on non SAP site" class="sapUISDKExternalLink"/>). All subtypes implement the interface of <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.SimpleType">sap.ui.model.SimpleType</a>. That means they implement next to the constructor: <ul> <li><a target="_self" class="jsdoclink" href="#/api/sap.ui.model.SimpleType/methods/getName">getName</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.ui.model.SimpleType/methods/formatValue">formatValue</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.ui.model.SimpleType/methods/parseValue">parseValue</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.ui.model.SimpleType/methods/validateValue">validateValue</a></li> </ul></p><p>All ODataTypes are immutable. All format options and constraints are given to the constructor, they cannot be modified later.</p><p>All ODataTypes use a locale-specific message when throwing an error caused by invalid user input (e.g. if <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type.Double/methods/parseValue">Double.parseValue</a> cannot parse the given value to a number, or if any type's <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="validateValue" href="#/api/sap.ui.model.odata.type.ODataType/methods/validateValue">validateValue</a> gets a <code>null</code>, but the constraint <code>nullable</code> is <code>false</code>).</p>
            */
           export abstract class ODataType extends sap.ui.model.SimpleType {
             /**
@@ -14778,9 +15208,9 @@ declare namespace sap {
              * <p>Format the given value in model representation to an output value in the given internal type. This happens according to the format options, if target type is 'string'. If oValue is not defined or null, null will be returned.</p>
              * @param {any} oValue <p>the value to be formatted</p>
              * @param {string} sInternalType <p>the target type</p>
-             * @returns any <p>the formatted output value</p>
+             * @returns any|Promise <p>the formatted output value or a Promise resolving with the formatted value</p>
              */
-            formatValue(oValue: any, sInternalType: string): any;
+            formatValue(oValue: any, sInternalType: string): any | Promise<any>;
             /**
              * <p>Formats the given value to the given target type.<br><br>References: <ul><li>sap.ui.model.SimpleType#formatValue</li></ul></p>
              * @param {any} vValue <p>The raw value to be retrieved "as is"</p>
@@ -14802,9 +15232,9 @@ declare namespace sap {
              * <p>Parse a value of an internal type to the expected value of the model type.</p>
              * @param {any} oValue <p>the value to be parsed</p>
              * @param {string} sInternalType <p>the source type</p>
-             * @returns any <p>the parse result</p>
+             * @returns any|Promise <p>the parse result or a Promise resolving with the parse result</p>
              */
-            parseValue(oValue: any, sInternalType: string): any;
+            parseValue(oValue: any, sInternalType: string): any | Promise<any>;
             /**
              * <p>Method not supported<br><br>References: <ul><li>sap.ui.model.SimpleType#parseValue</li></ul></p>
              */
@@ -14812,8 +15242,9 @@ declare namespace sap {
             /**
              * <p>Validate whether a given value in model representation is valid and meets the defined constraints (if any).</p>
              * @param {any} oValue <p>the value to be validated</p>
+             * @returns undefined|Promise <p>a Promise in case validation is asynchronous</p>
              */
-            validateValue(oValue: any): void;
+            validateValue(oValue: any): undefined | Promise<any>;
             /**
              * <p>Method not supported<br><br>References: <ul><li>sap.ui.model.SimpleType#validateValue</li></ul></p>
              */
@@ -14859,9 +15290,9 @@ declare namespace sap {
              * <p>Format the given value in model representation to an output value in the given internal type. This happens according to the format options, if target type is 'string'. If oValue is not defined or null, null will be returned.</p>
              * @param {any} oValue <p>the value to be formatted</p>
              * @param {string} sInternalType <p>the target type</p>
-             * @returns any <p>the formatted output value</p>
+             * @returns any|Promise <p>the formatted output value or a Promise resolving with the formatted value</p>
              */
-            formatValue(oValue: any, sInternalType: string): any;
+            formatValue(oValue: any, sInternalType: string): any | Promise<any>;
             /**
              * <p>Formats the given value to the given target type.</p>
              * @param {string | number} vValue <p>the value to be formatted, which is represented as a number in the model</p>
@@ -14883,9 +15314,9 @@ declare namespace sap {
              * <p>Parse a value of an internal type to the expected value of the model type.</p>
              * @param {any} oValue <p>the value to be parsed</p>
              * @param {string} sInternalType <p>the source type</p>
-             * @returns any <p>the parse result</p>
+             * @returns any|Promise <p>the parse result or a Promise resolving with the parse result</p>
              */
-            parseValue(oValue: any, sInternalType: string): any;
+            parseValue(oValue: any, sInternalType: string): any | Promise<any>;
             /**
              * <p>Parses the given value, which is expected to be of the given type, to an Edm.Single in <code>number</code> representation.</p>
              * @param {string | number} vValue <p>the value to be parsed; the empty string and <code>null</code> are parsed to <code>null</code>; note that there is no way to enter <code>Infinity</code> or <code>NaN</code> values</p>
@@ -14896,8 +15327,9 @@ declare namespace sap {
             /**
              * <p>Validate whether a given value in model representation is valid and meets the defined constraints (if any).</p>
              * @param {any} oValue <p>the value to be validated</p>
+             * @returns undefined|Promise <p>a Promise in case validation is asynchronous</p>
              */
-            validateValue(oValue: any): void;
+            validateValue(oValue: any): undefined | Promise<any>;
             /**
              * <p>Validates whether the given value in model representation is valid and meets the defined constraints.</p>
              * @param {number} fValue <p>the value to be validated</p>
@@ -14906,8 +15338,8 @@ declare namespace sap {
           }
           /**
            * <p>This class represents the OData V4 primitive type <a target="_blank" href="http://docs.oasis-open.org/odata/odata/v4.0/errata02/os/complete/part3-csdl/odata-v4.0-errata02-os-part3-csdl-complete.html#_The_edm:Documentation_Element"><code>Edm.Stream</code></a>
-              <img src="./resources/sap/ui/documentation/sdk/images/link-external.png" 
-              title="Information published on non SAP site" class="sapUISDKExternalLink"/>. The values for stream properties do not appear in the entity payload. Instead, the values are read or written through URLs.</p><p>This type only supports reading streams. For this purpose bind the stream property to a control property of type <code>sap.ui.core.URI</code>. {#formatValue} will then deliver the correct URL to read the stream.</p>
+          <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
+          title="Information published on non SAP site" class="sapUISDKExternalLink"/>. The values for stream properties do not appear in the entity payload. Instead, the values are read or written through URLs.</p><p>This type only supports reading streams. For this purpose bind the stream property to a control property of type <code>sap.ui.core.URI</code>. {#formatValue} will then deliver the correct URL to read the stream.</p>
            */
           export class Stream extends sap.ui.model.odata.type.ODataType {
             /**
@@ -14920,9 +15352,9 @@ declare namespace sap {
              * <p>Format the given value in model representation to an output value in the given internal type. This happens according to the format options, if target type is 'string'. If oValue is not defined or null, null will be returned.</p>
              * @param {any} oValue <p>the value to be formatted</p>
              * @param {string} sInternalType <p>the target type</p>
-             * @returns any <p>the formatted output value</p>
+             * @returns any|Promise <p>the formatted output value or a Promise resolving with the formatted value</p>
              */
-            formatValue(oValue: any, sInternalType: string): any;
+            formatValue(oValue: any, sInternalType: string): any | Promise<any>;
             /**
              * <p>Returns the input value unchanged.<br><br>References: <ul><li>sap.ui.model.SimpleType#formatValue</li></ul></p>
              * @param {string} sValue <p>the read URL</p>
@@ -14944,9 +15376,9 @@ declare namespace sap {
              * <p>Parse a value of an internal type to the expected value of the model type.</p>
              * @param {any} oValue <p>the value to be parsed</p>
              * @param {string} sInternalType <p>the source type</p>
-             * @returns any <p>the parse result</p>
+             * @returns any|Promise <p>the parse result or a Promise resolving with the parse result</p>
              */
-            parseValue(oValue: any, sInternalType: string): any;
+            parseValue(oValue: any, sInternalType: string): any | Promise<any>;
             /**
              * <p>Method not supported<br><br>References: <ul><li>sap.ui.model.SimpleType#parseValue</li></ul></p>
              */
@@ -14954,8 +15386,9 @@ declare namespace sap {
             /**
              * <p>Validate whether a given value in model representation is valid and meets the defined constraints (if any).</p>
              * @param {any} oValue <p>the value to be validated</p>
+             * @returns undefined|Promise <p>a Promise in case validation is asynchronous</p>
              */
-            validateValue(oValue: any): void;
+            validateValue(oValue: any): undefined | Promise<any>;
             /**
              * <p>Method not supported<br><br>References: <ul><li>sap.ui.model.SimpleType#validateValue</li></ul></p>
              */
@@ -14975,9 +15408,9 @@ declare namespace sap {
              * <p>Format the given value in model representation to an output value in the given internal type. This happens according to the format options, if target type is 'string'. If oValue is not defined or null, null will be returned.</p>
              * @param {any} oValue <p>the value to be formatted</p>
              * @param {string} sInternalType <p>the target type</p>
-             * @returns any <p>the formatted output value</p>
+             * @returns any|Promise <p>the formatted output value or a Promise resolving with the formatted value</p>
              */
-            formatValue(oValue: any, sInternalType: string): any;
+            formatValue(oValue: any, sInternalType: string): any | Promise<any>;
             /**
              * <p>Formats the given value to the given target type. If <code>isDigitSequence</code> constraint of this type is set to <code>true</code> and the target type is any or string and the given value contains only digits, the leading zeros are truncated.</p>
              * @param {string} sValue <p>the value to be formatted</p>
@@ -14999,9 +15432,9 @@ declare namespace sap {
              * <p>Parse a value of an internal type to the expected value of the model type.</p>
              * @param {any} oValue <p>the value to be parsed</p>
              * @param {string} sInternalType <p>the source type</p>
-             * @returns any <p>the parse result</p>
+             * @returns any|Promise <p>the parse result or a Promise resolving with the parse result</p>
              */
-            parseValue(oValue: any, sInternalType: string): any;
+            parseValue(oValue: any, sInternalType: string): any | Promise<any>;
             /**
              * <p>Parses the given value which is expected to be of the given type to a string. If <code>isDigitSequence</code> constraint of this type is set to <code>true</code> and the parsed string is a sequence of digits, then the parsed string is either enhanced with leading zeros, if <code>maxLength</code> constraint is given, or leading zeros are removed from parsed string.</p><p>Note: An empty input string (<code>""</code>) is parsed to <code>null</code>. This value will be rejected with a <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.ValidateException">ValidateException</a> by <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="validateValue" href="#/api/sap.ui.model.odata.type.String/methods/validateValue">#validateValue</a> if the constraint <code>nullable</code> is <code>false</code>.</p>
              * @param {string | number | boolean} vValue <p>the value to be parsed</p>
@@ -15012,8 +15445,9 @@ declare namespace sap {
             /**
              * <p>Validate whether a given value in model representation is valid and meets the defined constraints (if any).</p>
              * @param {any} oValue <p>the value to be validated</p>
+             * @returns undefined|Promise <p>a Promise in case validation is asynchronous</p>
              */
-            validateValue(oValue: any): void;
+            validateValue(oValue: any): undefined | Promise<any>;
             /**
              * <p>Validates whether the given value in model representation is valid and meets the defined constraints.</p>
              * @param {string} sValue <p>the value to be validated</p>
@@ -15034,9 +15468,9 @@ declare namespace sap {
              * <p>Format the given value in model representation to an output value in the given internal type. This happens according to the format options, if target type is 'string'. If oValue is not defined or null, null will be returned.</p>
              * @param {any} oValue <p>the value to be formatted</p>
              * @param {string} sInternalType <p>the target type</p>
-             * @returns any <p>the formatted output value</p>
+             * @returns any|Promise <p>the formatted output value or a Promise resolving with the formatted value</p>
              */
-            formatValue(oValue: any, sInternalType: string): any;
+            formatValue(oValue: any, sInternalType: string): any | Promise<any>;
             /**
              * <p>Formats the given value to the given target type</p>
              * @param {any} oValue <p>the value in model representation to be formatted.</p>
@@ -15058,9 +15492,9 @@ declare namespace sap {
              * <p>Parse a value of an internal type to the expected value of the model type.</p>
              * @param {any} oValue <p>the value to be parsed</p>
              * @param {string} sInternalType <p>the source type</p>
-             * @returns any <p>the parse result</p>
+             * @returns any|Promise <p>the parse result or a Promise resolving with the parse result</p>
              */
-            parseValue(oValue: any, sInternalType: string): any;
+            parseValue(oValue: any, sInternalType: string): any | Promise<any>;
             /**
              * <p>Parses the given value, which is expected to be of the given type, to a time object.</p>
              * @param {string} sValue <p>the value to be parsed, maps <code>""</code> to <code>null</code></p>
@@ -15071,8 +15505,9 @@ declare namespace sap {
             /**
              * <p>Validate whether a given value in model representation is valid and meets the defined constraints (if any).</p>
              * @param {any} oValue <p>the value to be validated</p>
+             * @returns undefined|Promise <p>a Promise in case validation is asynchronous</p>
              */
-            validateValue(oValue: any): void;
+            validateValue(oValue: any): undefined | Promise<any>;
             /**
              * <p>Validates whether the given value in model representation is valid and meets the defined constraints.</p>
              * @param {any} oValue <p>the value to be validated</p>
@@ -15081,8 +15516,8 @@ declare namespace sap {
           }
           /**
            * <p>This class represents the OData V4 primitive type <a target="_blank" href="http://docs.oasis-open.org/odata/odata/v4.0/errata02/os/complete/part3-csdl/odata-v4.0-errata02-os-part3-csdl-complete.html#_The_edm:Documentation_Element"><code>Edm.TimeOfDay</code></a>
-              <img src="./resources/sap/ui/documentation/sdk/images/link-external.png" 
-              title="Information published on non SAP site" class="sapUISDKExternalLink"/>. In <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataModel">sap.ui.model.odata.v4.ODataModel</a> this type is represented as a <code>string</code>.</p>
+          <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
+          title="Information published on non SAP site" class="sapUISDKExternalLink"/>. In <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataModel">sap.ui.model.odata.v4.ODataModel</a> this type is represented as a <code>string</code>.</p>
            */
           export class TimeOfDay extends sap.ui.model.odata.type.ODataType {
             /**
@@ -15095,9 +15530,9 @@ declare namespace sap {
              * <p>Format the given value in model representation to an output value in the given internal type. This happens according to the format options, if target type is 'string'. If oValue is not defined or null, null will be returned.</p>
              * @param {any} oValue <p>the value to be formatted</p>
              * @param {string} sInternalType <p>the target type</p>
-             * @returns any <p>the formatted output value</p>
+             * @returns any|Promise <p>the formatted output value or a Promise resolving with the formatted value</p>
              */
-            formatValue(oValue: any, sInternalType: string): any;
+            formatValue(oValue: any, sInternalType: string): any | Promise<any>;
             /**
              * <p>Formats the given value to the given target type.</p>
              * @param {string} sValue <p>The value to be formatted, which is represented as a string in the model</p>
@@ -15119,9 +15554,9 @@ declare namespace sap {
              * <p>Parse a value of an internal type to the expected value of the model type.</p>
              * @param {any} oValue <p>the value to be parsed</p>
              * @param {string} sInternalType <p>the source type</p>
-             * @returns any <p>the parse result</p>
+             * @returns any|Promise <p>the parse result or a Promise resolving with the parse result</p>
              */
-            parseValue(oValue: any, sInternalType: string): any;
+            parseValue(oValue: any, sInternalType: string): any | Promise<any>;
             /**
              * <p>Parses the given value, which is expected to be of the given type, to a string with an OData V4 Edm.TimeOfDay value.</p>
              * @param {string} sValue <p>The value to be parsed, maps <code>""</code> to <code>null</code></p>
@@ -15132,8 +15567,9 @@ declare namespace sap {
             /**
              * <p>Validate whether a given value in model representation is valid and meets the defined constraints (if any).</p>
              * @param {any} oValue <p>the value to be validated</p>
+             * @returns undefined|Promise <p>a Promise in case validation is asynchronous</p>
              */
-            validateValue(oValue: any): void;
+            validateValue(oValue: any): undefined | Promise<any>;
             /**
              * <p>Validates the given value in model representation and meets the type's constraints.</p>
              * @param {string} sValue <p>The value to be validated</p>
@@ -15141,11 +15577,11 @@ declare namespace sap {
             validateValue(sValue: string): void;
           }
           /**
-           * <p>This class represents the Unit composite type with the parts measure, unit, and unit customizing. The measure part is formatted according to the customizing for the unit. Use the result of the promise returned by <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataMetaModel/methods/requestUnitsOfMeasure">sap.ui.model.odata.v4.ODataMetaModel#requestUnitsOfMeasure</a> as unit customizing part. If no unit customizing is available, UI5's default formatting applies. The type may only be used for measure and unit parts from a <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataModel">sap.ui.model.odata.v4.ODataModel</a>.</p>
+           * <p>This class represents the <code>Unit</code> composite type with the parts measure, unit, and unit customizing. The measure part is formatted according to the customizing for the unit. Use the result of the promise returned by <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataMetaModel/methods/requestUnitsOfMeasure">sap.ui.model.odata.v4.ODataMetaModel#requestUnitsOfMeasure</a> as unit customizing part. If no unit customizing is available, UI5's default formatting applies. The type may only be used for measure and unit parts from a <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataModel">sap.ui.model.odata.v4.ODataModel</a>.</p>
            */
           export class Unit extends sap.ui.model.type.Unit {
             /**
-             * <p>Constructor for a Unit composite type.</p>
+             * <p>Constructor for a <code>Unit</code> composite type.</p>
              * @param {any} oFormatOptions <p>See parameter <code>oFormatOptions</code> of <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.type.Unit/constructor">sap.ui.model.type.Unit#constructor</a>. Format options are immutable, that is, they can only be set once on construction.</p>
              * @param {any} oConstraints <p>Not supported</p>
              * @param {string[]} aDynamicFormatOptionNames <p>Not supported</p>
@@ -15155,9 +15591,9 @@ declare namespace sap {
              * <p>Format the given value in model representation to an output value in the given internal type. This happens according to the format options, if target type is 'string'. If oValue is not defined or null, null will be returned.</p>
              * @param {any} oValue <p>the value to be formatted</p>
              * @param {string} sInternalType <p>the target type</p>
-             * @returns any <p>the formatted output value</p>
+             * @returns any|Promise <p>the formatted output value or a Promise resolving with the formatted value</p>
              */
-            formatValue(oValue: any, sInternalType: string): any;
+            formatValue(oValue: any, sInternalType: string): any | Promise<any>;
             /**
              * <p>Format the given set of values in model representation to an output value in the given internal type. This happens according to the format options, if target type is 'string'. If aValues is not defined or null, null will be returned.</p>
              * @param {any[]} aValues <p>the values to be formatted</p>
@@ -15173,10 +15609,10 @@ declare namespace sap {
              */
             formatValue(vValue: any[] | string, sInternalType: string): any;
             /**
-             * <p>Formats the given values of the parts of the Unit composite type to the given target type.</p>
-             * @param {any[]} aValues <p>Array of part values to be formatted; contains measure, unit, unit customizing in this order. The first call to this method where all parts are set determines the unit customizing; subsequent calls use this customizing, so that the corresponding part may be omitted. Changes to the unit customizing part after this first method call are not considered: The unit customizing for this Unit instance remains unchanged.</p>
+             * <p>Formats the given values of the parts of the <code>Unit</code> composite type to the given target type.</p>
+             * @param {any[]} aValues <p>Array of part values to be formatted; contains measure, unit, unit customizing in this order. The first call to this method where all parts are set determines the unit customizing; subsequent calls use this customizing, so that the corresponding part may be omitted. Changes to the unit customizing part after this first method call are not considered: The unit customizing for this <code>Unit</code> instance remains unchanged.</p>
              * @param {string} sTargetType <p>The target type; must be "string" or a type with "string" as its <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.DataType/methods/getPrimitiveType">primitive type</a>. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type">sap.ui.model.odata.type</a> for more information.</p>
-             * @returns string <p>The formatted output value; <code>null</code>, if <code>aValues</code> or the measure or unit value contained therein is <code>undefined</code> or <code>null</code> or if the unit customizing is not set</p>
+             * @returns string <p>The formatted output value; <code>null</code>, if <code>aValues</code> is <code>undefined</code> or <code>null</code> or if the measure, the unit or the unit customizing contained therein is <code>undefined</code>.</p>
              */
             formatValue(aValues: any[], sTargetType: string): string;
             /**
@@ -15202,9 +15638,9 @@ declare namespace sap {
              * <p>Parse a value of an internal type to the expected value of the model type.</p>
              * @param {any} oValue <p>the value to be parsed</p>
              * @param {string} sInternalType <p>the source type</p>
-             * @returns any <p>the parse result</p>
+             * @returns any|Promise <p>the parse result or a Promise resolving with the parse result</p>
              */
-            parseValue(oValue: any, sInternalType: string): any;
+            parseValue(oValue: any, sInternalType: string): any | Promise<any>;
             /**
              * <p>Parse a value of an internal type to the expected set of values of the model type.</p>
              * @param {any} oValue <p>the value to be parsed</p>
@@ -15225,28 +15661,30 @@ declare namespace sap {
              * <p>Parses the given string value to an array containing measure and unit.<br><br>References: <ul><li>sap.ui.model.type.Unit#parseValue</li></ul></p>
              * @param {string} vValue <p>The value to be parsed</p>
              * @param {string} sSourceType <p>The source type (the expected type of <code>vValue</code>); must be "string", or a type with "string" as its <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.DataType/methods/getPrimitiveType">primitive type</a>. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type">sap.ui.model.odata.type</a> for more information.</p>
+             * @param {any[]} aCurrentValues <p>The current values of all binding parts</p>
              * @returns any[] <p>An array containing measure and unit in this order. Both, measure and unit, are string values unless the format option <code>parseAsString</code> is <code>false</code>; in this case, the measure is a number.</p>
              */
-            parseValue(vValue: string, sSourceType: string): any[];
+            parseValue(vValue: string, sSourceType: string, aCurrentValues: any[]): any[];
             /**
              * <p>Validate whether a given value in model representation is valid and meets the defined constraints (if any).</p>
              * @param {any} oValue <p>the value to be validated</p>
+             * @returns undefined|Promise <p>a Promise in case validation is asynchronous</p>
              */
-            validateValue(oValue: any): void;
+            validateValue(oValue: any): undefined | Promise<any>;
             /**
              * <p>Validate whether a given value in model representation is valid and meets the defined constraints (if any).</p>
              * @param {any[]} aValues <p>the set of values to be validated</p>
              */
             validateValue(aValues: any[]): void;
             /**
-             * <p>Does nothing as the Unit type does not support constraints.</p>
+             * <p>Does nothing as the <code>Unit</code> type does not support constraints.</p>
              * @param {string} vValue <p>The value to be validated</p>
              */
             validateValue(vValue: string): void;
           }
         }
         /**
-         * <p>Different methods for update operations.</p>
+         * <p><p>Different methods for update operations.</p></p>
          */
         export enum UpdateMethod {
           /**
@@ -15259,7 +15697,7 @@ declare namespace sap {
           Put = "Put",
         }
         /**
-         * <p>OData-based DataBinding</p>
+         * <p><p>OData-based DataBinding</p></p>
          */
         namespace v2 {
           /**
@@ -15391,7 +15829,7 @@ declare namespace sap {
           }
           namespace ODataAnnotations {
             /**
-             * <p>Parameters of the <code>error</code> event</p>
+             * <p><p>Parameters of the <code>error</code> event</p></p>
              */
             export interface errorParameters {
               /**
@@ -15400,7 +15838,7 @@ declare namespace sap {
               result: Error;
             }
             /**
-             * <p>Parameters of the <code>failed</code> event</p>
+             * <p><p>Parameters of the <code>failed</code> event</p></p>
              */
             export interface failedParameters {
               /**
@@ -15409,7 +15847,7 @@ declare namespace sap {
               result: Error[];
             }
             /**
-             * <p>Parameters of the <code>loaded</code> event</p>
+             * <p><p>Parameters of the <code>loaded</code> event</p></p>
              */
             export interface loadedParameters {
               /**
@@ -15418,7 +15856,7 @@ declare namespace sap {
               result: sap.ui.model.odata.v2.ODataAnnotations.Source[] | Error[] | any;
             }
             /**
-             * <p>An annotation source, containing either a URL to be loaded or an XML string to be parsed.</p>
+             * <p><p>An annotation source, containing either a URL to be loaded or an XML string to be parsed.</p></p>
              */
             export interface Source {
               /**
@@ -15443,7 +15881,7 @@ declare namespace sap {
               annotations: { [key: string]: any };
             }
             /**
-             * <p>Parameters of the <code>success</code> event</p>
+             * <p><p>Parameters of the <code>success</code> event</p></p>
              */
             export interface successParameters {
               /**
@@ -15724,6 +16162,11 @@ declare namespace sap {
              * @returns any <p>An object which has a <code>contextCreated</code> function that returns a <code>Promise</code>. This resolves with the created <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.Context">sap.ui.model.Context</a>. In addition it has an <code>abort</code> function to abort the current request.</p>
              */
             callFunction(sFunctionName: string, mParameters?: { [key: string]: any }): any;
+            /**
+             * <p>Check whether the canonical requests calculation is switched on. See 'canonicalRequests' parameter of the model constructor.</p>
+             * @returns boolean <p>Canonical requests calculation switched on/off</p>
+             */
+            canonicalRequestsEnabled(): boolean;
             /**
              * <p>Trigger a <code>POST</code> request to the OData service that was specified in the model constructor.</p><p>Please note that deep creates are not supported and may not work.</p>
              * @param {string} sPath <p>A string containing the path to the collection where an entry should be created. The path is concatenated to the service URL which was specified in the model constructor.</p>
@@ -16163,8 +16606,8 @@ declare namespace sap {
               }
             });
           </pre></p><h3>Operation Modes</h3><p> For a full definition and explanation of all OData binding operation modes see <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.OperationMode">sap.ui.model.odata.OperationMode</a>.</p><h4>OperationMode.Server</h4><p> Filtering on the <code>ODataTreeBinding</code> is only supported with (<a target="_self" class="jsdoclink" href="#/api/sap.ui.model.FilterType.Application">application filters</a>). However please be aware that this applies only to filters which do not prevent the creation of a hierarchy. So filtering on a property (e.g. a "Customer") is fine, as long as the application can ensure that the responses from the backend are sufficient to create a valid hierarchy on the client. Subsequent paging requests for sibling and child nodes must also return responses since the filters will be sent with every request. Using control-defined filters (<a target="_self" class="jsdoclink" href="#/api/sap.ui.model.FilterType.Control">FilterType.Control</a>) via the <code>filter()</code> function is not supported for the operation mode <code>Server</code>.</p><h4>OperationMode.Client and OperationMode.Auto</h4><p> The ODataTreeBinding supports control-defined filters only in operation modes <code>Client</code> and <code>Auto</code>. In these operation modes, the filters and sorters will be applied on the client, like for the <code>v2.ODataListBinding</code>.</p><p>The operation modes <code>Client</code> and <code>Auto</code> are only supported for services which expose the hierarchy annotations mentioned above, but do <b>not</b> expose the <code>hierarchy-node-descendant-count-for</code> annotation. Services with hierarchy annotations including the <code>hierarchy-node-descendant-count-for</code> annotation, do <b>not</b> support the operation modes <code>Client</code> and <code>Auto</code>.<br><br><span>Documentation links:</span><ul><li><a target="_blank" href="https://wiki.scn.sap.com/wiki/display/EmTech/SAP+Annotations+for+OData+Version+2.0">"SAP Annotations for OData Version 2.0" Specification</a>
-              <img src="./resources/sap/ui/documentation/sdk/images/link-sap.png" 
-              title="Information published on SAP site" class="sapUISDKExternalLink"/></li></ul></p>
+          <img src="./resources/sap/ui/documentation/sdk/images/link-sap.png"
+          title="Information published on SAP site" class="sapUISDKExternalLink"/></li></ul></p>
            */
           export class ODataTreeBinding extends sap.ui.model.TreeBinding {
             /**
@@ -16294,11 +16737,11 @@ declare namespace sap {
           }
         }
         /**
-         * <p>Model and related classes like bindings for OData V4.</p>
+         * <p><p>Model and related classes like bindings for OData V4.</p></p>
          */
         namespace v4 {
           /**
-           * <p>A collection of methods which help to consume <a href="http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part3-csdl.html"> OData V4 annotations</a> in XML template views. Every context argument must belong to a <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataMetaModel">sap.ui.model.odata.v4.ODataMetaModel</a> instance.</p>
+           * <p><p>A collection of methods which help to consume <a href="http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part3-csdl.html"> OData V4 annotations</a> in XML template views. Every context argument must belong to a <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataMetaModel">sap.ui.model.odata.v4.ODataMetaModel</a> instance.</p></p>
            */
           namespace AnnotationHelper {
             /**
@@ -16739,7 +17182,7 @@ declare namespace sap {
              */
             getLength(): number;
             /**
-             * <p>Returns the number of entries in the list. As long as the client does not know the size on the server an estimated length is returned.<br><br>References: <ul><li>sap.ui.model.ListBinding#getLength</li></ul></p>
+             * <p>Returns the number of entries in the list. As long as the client does not know the size on the server, an estimated length is returned.<br><br>References: <ul><li>sap.ui.model.ListBinding#getLength</li></ul></p>
              * @returns number <p>The number of entries in the list</p>
              */
             getLength(): number;
@@ -16830,7 +17273,7 @@ declare namespace sap {
             /**
              * <p>Updates the binding's system query option <code>$apply</code> based on the given data aggregation information. Its value is "groupby((&lt;dimension_1,...,dimension_N,unit_or_text_1,...,unit_or_text_K>), aggregate(&lt;measure> with &lt;method> as &lt;alias>, ...))" where the "aggregate" part is only present if measures are given and both "with" and "as" are optional.<br><br>References: <ul><li>sap.ui.model.analytics.AnalyticalBinding#updateAnalyticalInfo</li><li>#changeParameters</li><li>#setAggregation</li></ul></p>
              * @param {object[]} aAggregation <p>An array with objects holding the information needed for data aggregation; see also <a href="http://docs.oasis-open.org/odata/odata-data-aggregation-ext/v4.0/">OData Extension for Data Aggregation Version 4.0</a></p>
-             * @returns any <p>The return object contains a property <code>measureRangePromise</code> if and only if at least one measure has requested a minimum or maximum value; its value is a promise which resolves with the measure range map as soon as data has been received; the measure range map contains measure names as keys and objects as values which have a <code>min</code> and <code>max</code> property as requested above. <code>undefined</code> is returned instead of an empty object.</p>
+             * @returns any <p>The return object contains a property <code>measureRangePromise</code> if and only if at least one measure has requested a minimum or maximum value; its value is a promise which resolves with the measure range map as soon as data has been received; the measure range map contains measure names as keys and objects as values which have a <code>min</code> and <code>max</code> property as requested above. In case of multiple calls to this method while the binding's root binding is suspended, only the last call's promise will resolve with the right result; the other calls just get the same result as the last call, which may or may not fit to their <code>aAggregation</code> argument. <code>undefined</code> is returned instead of an empty object.</p>
              */
             protected updateAnalyticalInfo(aAggregation: object[]): any;
           }
@@ -17007,7 +17450,7 @@ declare namespace sap {
             toString(): string;
           }
           /**
-           * <p>Model implementation for OData V4.</p><p>Every resource path (relative to the service root URL, no query options) according to "4 Resource Path" in specification "OData Version 4.0 Part 2: URL Conventions" is a valid data binding path within this model if a leading slash is added; for example "/" + "SalesOrderList('A%2FB%26C')" to access an entity instance with key "A/B&C". Note that appropriate URI encoding is necessary. "4.5.1 Addressing Actions" needs an operation binding, see <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataContextBinding">sap.ui.model.odata.v4.ODataContextBinding</a>.</p><p>Note that the OData V4 model has its own <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.Context">sap.ui.model.odata.v4.Context</a> class. Bindings which are relative to such a V4 context depend on their corresponding parent binding and do not access data with their own service requests unless parameters are provided.</p><p><b>Group IDs</b> control the model's use of batch requests. Valid group IDs are: <ul> <li><b>$auto</b> and <b>$auto.*</b>: Bundles requests from the model in a batch request which is sent automatically before rendering. You can use different '$auto.*' group IDs to use different batch requests. The suffix may be any non-empty string consisting of alphanumeric characters from the basic Latin alphabet, including the underscore. The submit mode for these group IDs is always <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.SubmitMode/methods/Auto">sap.ui.model.odata.v4.SubmitMode#Auto</a>. </li> <li><b>$direct</b>: Sends requests directly without batch. The submit mode for this group ID is always <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.SubmitMode/methods/Direct">sap.ui.model.odata.v4.SubmitMode#Direct</a>. </li> <li>An application group ID, which is a non-empty string consisting of alphanumeric characters from the basic Latin alphabet, including the underscore. By default, an application group has the submit mode <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.SubmitMode/methods/API">sap.ui.model.odata.v4.SubmitMode#API</a>. It is possible to use a different submit mode; for details see <code>mParameters.groupProperties</code>. </li> </ul></p><p><b>Note: The model does not support any public events; attaching an event handler leads to an error.</b></p>
+           * <p>Model implementation for OData V4.</p><p>Every resource path (relative to the service root URL, no query options) according to "4 Resource Path" in specification "OData Version 4.0 Part 2: URL Conventions" is a valid data binding path within this model if a leading slash is added; for example "/" + "SalesOrderList('A%2FB%26C')" to access an entity instance with key "A/B&C". Note that appropriate URI encoding is necessary, see the example of <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataUtils/methods/sap.ui.model.odata.v4.ODataUtils.formatLiteral">sap.ui.model.odata.v4.ODataUtils.formatLiteral</a>. "4.5.1 Addressing Actions" needs an operation binding, see <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataContextBinding">sap.ui.model.odata.v4.ODataContextBinding</a>.</p><p>Note that the OData V4 model has its own <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.Context">sap.ui.model.odata.v4.Context</a> class. Bindings which are relative to such a V4 context depend on their corresponding parent binding and do not access data with their own service requests unless parameters are provided.</p><p><b>Group IDs</b> control the model's use of batch requests. Valid group IDs are: <ul> <li><b>$auto</b> and <b>$auto.*</b>: Bundles requests from the model in a batch request which is sent automatically before rendering. You can use different '$auto.*' group IDs to use different batch requests. The suffix may be any non-empty string consisting of alphanumeric characters from the basic Latin alphabet, including the underscore. The submit mode for these group IDs is always <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.SubmitMode/methods/Auto">sap.ui.model.odata.v4.SubmitMode#Auto</a>. </li> <li><b>$direct</b>: Sends requests directly without batch. The submit mode for this group ID is always <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.SubmitMode/methods/Direct">sap.ui.model.odata.v4.SubmitMode#Direct</a>. </li> <li>An application group ID, which is a non-empty string consisting of alphanumeric characters from the basic Latin alphabet, including the underscore. By default, an application group has the submit mode <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.SubmitMode/methods/API">sap.ui.model.odata.v4.SubmitMode#API</a>. It is possible to use a different submit mode; for details see <code>mParameters.groupProperties</code>. </li> </ul></p><p><b>Note: The model does not support any public events; attaching an event handler leads to an error.</b></p>
            */
           export class ODataModel extends sap.ui.model.Model {
             /**
@@ -17313,7 +17756,7 @@ declare namespace sap {
             suspend(): void;
           }
           /**
-           * <p>A collection of methods which help to consume OData V4 services.</p>
+           * <p><p>A collection of methods which help to consume OData V4 services.</p></p>
            */
           namespace ODataUtils {
             /**
@@ -17324,6 +17767,13 @@ declare namespace sap {
              * @returns number <p>The result of the comparison: <code>0</code> if the values are equal, <code>1</code> if the first value is larger, <code>-1</code> if the second value is larger, <code>NaN</code> if they cannot be compared</p>
              */
             function compare(vValue1: any, vValue2: any, vEdmType?: boolean | string): number;
+            /**
+             * <p>Formats the given OData value into a literal suitable for usage in data binding paths and URLs.</p>
+             * @param {any} vValue <p>The value according to "OData JSON Format Version 4.0" section "7.1 Primitive Value"</p>
+             * @param {string} sType <p>The OData primitive type, e.g. "Edm.String"</p>
+             * @returns string <p>The literal according to "OData Version 4.0 Part 2: URL Conventions" section "5.1.1.6.1 Primitive Literals"</p>
+             */
+            function formatLiteral(vValue: any, sType: string): string;
             /**
              * <p>Parses an "Edm.Date" value and returns the corresponding JavaScript <code>Date</code> value (UTC with a time value of "00:00:00").</p>
              * @param {string} sDate <p>The "Edm.Date" value to parse</p>
@@ -17344,7 +17794,7 @@ declare namespace sap {
             function parseTimeOfDay(sTimeOfDay: string): Date;
           }
           /**
-           * <p>Modes to control the use of batch requests for a group ID.</p>
+           * <p><p>Modes to control the use of batch requests for a group ID.</p></p>
            */
           export enum SubmitMode {
             /**
@@ -17361,7 +17811,7 @@ declare namespace sap {
             Direct = "Direct",
           }
           /**
-           * <p>Specifies the value list type of a property.</p>
+           * <p><p>Specifies the value list type of a property.</p><br><br>References: <ul><li>sap.ui.model.odata.v4.ODataMetaModel#getValueListType</li></ul></p>
            */
           export enum ValueListType {
             /**
@@ -17386,7 +17836,7 @@ declare namespace sap {
   namespace ui {
     namespace model {
       /**
-       * <p>ResourceBundle-based DataBinding</p>
+       * <p><p>ResourceBundle-based DataBinding</p></p>
        */
       namespace resource {
         /**
@@ -17447,7 +17897,7 @@ declare namespace sap {
   namespace ui {
     namespace model {
       /**
-       * <p>XML-based DataBinding</p>
+       * <p><p>XML-based DataBinding</p></p>
        */
       namespace xml {
         /**
@@ -17493,14 +17943,14 @@ declare namespace sap {
           getXML(): undefined;
           /**
            * <p>Load XML-encoded data from the server using a GET HTTP request and store the resulting XML data in the model. Note: Due to browser security restrictions, most "Ajax" requests are subject to the same origin policy, the request can not successfully retrieve data from a different domain, subdomain, or protocol.</p>
-           * @param {string} sURL <p>A string containing the URL to which the request is sent.</p>
-           * @param {any | string} oParameters <p>A map or string that is sent to the server with the request.</p>
-           * @param {boolean} bAsync <p>if the request should be asynchron or not. Default is true.</p>
-           * @param {string} sType <p>of request. Default is 'GET'</p>
-           * @param {string} bCache <p>force no caching if false. Default is false</p>
+           * @param {string} sURL <p>A string containing the URL to which the request is sent</p>
+           * @param {any | string} oParameters <p>A map of parameters or a single parameter string that is sent to the server with the request</p>
+           * @param {boolean} bAsync <p>Whether the request should be asynchronous or not</p>
+           * @param {string} sType <p>HTTP method of request</p>
+           * @param {string} bCache <p>Force no caching if false</p>
            * @param {any} mHeaders <p>An object of additional header key/value pairs to send along with the request</p>
            */
-          loadData(sURL: string, oParameters: any | string, bAsync: boolean, sType: string, bCache: string, mHeaders: any): void;
+          loadData(sURL: string, oParameters?: any | string, bAsync?: boolean, sType?: string, bCache?: string, mHeaders?: any): void;
           /**
            * <p>Sets the provided XML encoded data object to the model</p>
            * @param {any} oData <p>the data to set to the model</p>
@@ -17654,15 +18104,6 @@ declare namespace sap {
            * @returns sap.ui.core.support.RuleEngineOpaAssertions <p>Object with the methods which will enhance the OPA assertions.</p>
            */
           getAssertions(): sap.ui.core.support.RuleEngineOpaAssertions;
-        }
-        /**
-         * <p>Experimental class for working with SAP Web Analytics.</p>
-         */
-        export class UsageAnalytics {
-          /**
-           * <p>Usage Analytics routines. This class is meant for private usages. Apps are not supposed to used it. It is created for an experimental purpose.</p>
-           */
-          constructor();
         }
       }
     }
@@ -17863,365 +18304,6 @@ declare namespace sap {
     namespace core {
       /**
        */
-      namespace dnd {
-        /**
-         * <p>Provides the base class for all drag-and-drop configurations. This feature enables a native HTML5 drag-and-drop API for the controls, therefore it is limited to browser support. </p><h3>Limitations</h3><p> <ul> <li>There is no mobile device that supports drag and drop.</li> <li>There is no accessible alternative for drag and drop. Applications which use the drag-and-drop functionality must provide an accessible alternative UI (for example, action buttons or menus) to perform the same operations.</li> <li>A custom dragging ghost element is not possible in Internet Explorer.</li> <li>Transparency of the drag ghost element and the cursor during drag-and-drop operations depends on the browser implementation.</li> <li>Internet Explorer does only support plain text MIME type for the DataTransfer Object.</li> <li>Constraining a drag position is not possible, therefore there is no snap-to-grid or snap-to-element feature possible.</li> <li>Texts in draggable controls cannot be selected.</li> <li>The text of input fields in draggable controls can be selected, but not dragged.</li> </ul></p>
-         */
-        export abstract class DragDropBase extends sap.ui.core.Element {
-          /**
-           * <p>Constructor for a new DragDropBase.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
-           * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
-           * @param {any} mSettings <p>Initial settings for the new control</p>
-           */
-          constructor(sId?: string, mSettings?: any);
-          /**
-           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEnabled" href="#/api/sap.ui.core.dnd.DragDropBase/methods/getEnabled">enabled</a>.</p><p>Indicates whether this configuration is active or not.</p><p>Default value is <code>true</code>.</p>
-           * @returns boolean <p>Value of property <code>enabled</code></p>
-           */
-          getEnabled(): boolean;
-          /**
-           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getGroupName" href="#/api/sap.ui.core.dnd.DragDropBase/methods/getGroupName">groupName</a>.</p><p>Defines the name of the group to which this object belongs. If <code>groupName</code> is specified, then this object will only interacts with other drag-and-drop objects within the same group.</p>
-           * @returns string <p>Value of property <code>groupName</code></p>
-           */
-          getGroupName(): string;
-          /**
-           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getGroupName" href="#/api/sap.ui.core.dnd.DragDropBase/methods/getGroupName">groupName</a>.</p><p>Defines the name of the group to which this object belongs. If <code>groupName</code> is specified, then this object will only interacts with other drag-and-drop objects within the same group.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
-           * @param {string} sGroupName <p>New value for property <code>groupName</code></p>
-           * @returns sap.ui.core.dnd.DragDropBase <p>Reference to <code>this</code> in order to allow method chaining</p>
-           */
-          setGroupName(sGroupName: string): sap.ui.core.dnd.DragDropBase;
-        }
-        /**
-         * <p>Provides the configuration for drag-and-drop operations. <b>Note:</b> This configuration might be ignored due to control <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.Element/methods/sap.ui.core.Element.extend">metadata</a> restrictions.</p>
-         */
-        export class DragDropInfo extends sap.ui.core.dnd.DropInfo implements sap.ui.core.dnd.IDragInfo, sap.ui.core.dnd.IDropInfo {
-          /**
-           * <p>Constructor for a new DragDropInfo.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
-           * @param {string} sId <p>ID for the new DragDropInfo, generated automatically if no ID is given</p>
-           * @param {any} mSettings <p>Initial settings for the DragDropInfo</p>
-           */
-          constructor(sId?: string, mSettings?: any);
-          /**
-           * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dragEnd" href="#/api/sap.ui.core.dnd.DragDropInfo/events/dragEnd">dragEnd</a> event of this <code>sap.ui.core.dnd.DragDropInfo</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.core.dnd.DragDropInfo</code> itself.</p><p>This event is fired when a drag operation is being ended.</p>
-           * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-           * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
-           * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.core.dnd.DragDropInfo</code> itself</p>
-           * @returns sap.ui.core.dnd.DragDropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
-           */
-          attachDragEnd(oData: any, fnFunction: Function, oListener?: any): sap.ui.core.dnd.DragDropInfo;
-          /**
-           * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dragStart" href="#/api/sap.ui.core.dnd.DragDropInfo/events/dragStart">dragStart</a> event of this <code>sap.ui.core.dnd.DragDropInfo</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.core.dnd.DragDropInfo</code> itself.</p><p>This event is fired when the user starts dragging an element.</p>
-           * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-           * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
-           * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.core.dnd.DragDropInfo</code> itself</p>
-           * @returns sap.ui.core.dnd.DragDropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
-           */
-          attachDragStart(oData: any, fnFunction: Function, oListener?: any): sap.ui.core.dnd.DragDropInfo;
-          /**
-           * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dragEnd" href="#/api/sap.ui.core.dnd.DragDropInfo/events/dragEnd">dragEnd</a> event of this <code>sap.ui.core.dnd.DragDropInfo</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
-           * @param {any} oListener <p>Context object on which the given function had to be called</p>
-           * @returns sap.ui.core.dnd.DragDropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
-           */
-          detachDragEnd(fnFunction: Function, oListener?: any): sap.ui.core.dnd.DragDropInfo;
-          /**
-           * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dragStart" href="#/api/sap.ui.core.dnd.DragDropInfo/events/dragStart">dragStart</a> event of this <code>sap.ui.core.dnd.DragDropInfo</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
-           * @param {any} oListener <p>Context object on which the given function had to be called</p>
-           * @returns sap.ui.core.dnd.DragDropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
-           */
-          detachDragStart(fnFunction: Function, oListener?: any): sap.ui.core.dnd.DragDropInfo;
-          /**
-           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dragEnd" href="#/api/sap.ui.core.dnd.DragDropInfo/events/dragEnd">dragEnd</a> to attached listeners.</p>
-           * @param {any} mParameters <p>Parameters to pass along with the event</p>
-           * @returns sap.ui.core.dnd.DragDropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
-           */
-          protected fireDragEnd(mParameters?: any): sap.ui.core.dnd.DragDropInfo;
-          /**
-           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dragStart" href="#/api/sap.ui.core.dnd.DragDropInfo/events/dragStart">dragStart</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by using the <code>preventDefault</code>-method on the event object.</p>
-           * @param {any} mParameters <p>Parameters to pass along with the event</p>
-           * @returns boolean <p>Whether or not to prevent the default action</p>
-           */
-          protected fireDragStart(mParameters?: any): boolean;
-          /**
-           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSourceAggregation" href="#/api/sap.ui.core.dnd.DragDropInfo/methods/getSourceAggregation">sourceAggregation</a>.</p><p>The name of the aggregation from which all children can be dragged. If undefined, the control itself can be dragged.</p>
-           * @returns string <p>Value of property <code>sourceAggregation</code></p>
-           */
-          getSourceAggregation(): string;
-          /**
-           * <p>ID of the element which is the current target of the association <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTargetElement" href="#/api/sap.ui.core.dnd.DragDropInfo/methods/getTargetElement">targetElement</a>, or <code>null</code>.</p>
-           * @returns sap.ui.core.ID 
-           */
-          getTargetElement(): sap.ui.core.ID;
-          /**
-           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSourceAggregation" href="#/api/sap.ui.core.dnd.DragDropInfo/methods/getSourceAggregation">sourceAggregation</a>.</p><p>The name of the aggregation from which all children can be dragged. If undefined, the control itself can be dragged.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
-           * @param {string} sSourceAggregation <p>New value for property <code>sourceAggregation</code></p>
-           * @returns sap.ui.core.dnd.DragDropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
-           */
-          setSourceAggregation(sSourceAggregation: string): sap.ui.core.dnd.DragDropInfo;
-          /**
-           * <p>Sets the associated <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTargetElement" href="#/api/sap.ui.core.dnd.DragDropInfo/methods/getTargetElement">targetElement</a>.</p>
-           * @param {sap.ui.core.ID | sap.ui.core.Element} oTargetElement <p>ID of an element which becomes the new target of this targetElement association; alternatively, an element instance may be given</p>
-           * @returns sap.ui.core.dnd.DragDropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
-           */
-          setTargetElement(oTargetElement: sap.ui.core.ID | sap.ui.core.Element): sap.ui.core.dnd.DragDropInfo;
-        }
-        /**
-         * <p>Provides the configuration for drag operations. <b>Note:</b> This configuration might be ignored due to control <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.Element/methods/sap.ui.core.Element.extend">metadata</a> restrictions.</p>
-         */
-        export class DragInfo extends sap.ui.core.dnd.DragDropBase implements sap.ui.core.dnd.IDragInfo {
-          /**
-           * <p>Constructor for a new DragInfo.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
-           * @param {string} sId <p>ID for the new DragInfo, generated automatically if no ID is given</p>
-           * @param {any} mSettings <p>Initial settings for the DragInfo</p>
-           */
-          constructor(sId?: string, mSettings?: any);
-          /**
-           * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dragEnd" href="#/api/sap.ui.core.dnd.DragInfo/events/dragEnd">dragEnd</a> event of this <code>sap.ui.core.dnd.DragInfo</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.core.dnd.DragInfo</code> itself.</p><p>This event is fired when a drag operation is being ended.</p>
-           * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-           * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
-           * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.core.dnd.DragInfo</code> itself</p>
-           * @returns sap.ui.core.dnd.DragInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
-           */
-          attachDragEnd(oData: any, fnFunction: Function, oListener?: any): sap.ui.core.dnd.DragInfo;
-          /**
-           * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dragStart" href="#/api/sap.ui.core.dnd.DragInfo/events/dragStart">dragStart</a> event of this <code>sap.ui.core.dnd.DragInfo</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.core.dnd.DragInfo</code> itself.</p><p>This event is fired when the user starts dragging an element.</p>
-           * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-           * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
-           * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.core.dnd.DragInfo</code> itself</p>
-           * @returns sap.ui.core.dnd.DragInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
-           */
-          attachDragStart(oData: any, fnFunction: Function, oListener?: any): sap.ui.core.dnd.DragInfo;
-          /**
-           * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dragEnd" href="#/api/sap.ui.core.dnd.DragInfo/events/dragEnd">dragEnd</a> event of this <code>sap.ui.core.dnd.DragInfo</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
-           * @param {any} oListener <p>Context object on which the given function had to be called</p>
-           * @returns sap.ui.core.dnd.DragInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
-           */
-          detachDragEnd(fnFunction: Function, oListener?: any): sap.ui.core.dnd.DragInfo;
-          /**
-           * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dragStart" href="#/api/sap.ui.core.dnd.DragInfo/events/dragStart">dragStart</a> event of this <code>sap.ui.core.dnd.DragInfo</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
-           * @param {any} oListener <p>Context object on which the given function had to be called</p>
-           * @returns sap.ui.core.dnd.DragInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
-           */
-          detachDragStart(fnFunction: Function, oListener?: any): sap.ui.core.dnd.DragInfo;
-          /**
-           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dragEnd" href="#/api/sap.ui.core.dnd.DragInfo/events/dragEnd">dragEnd</a> to attached listeners.</p>
-           * @param {any} mParameters <p>Parameters to pass along with the event</p>
-           * @returns sap.ui.core.dnd.DragInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
-           */
-          protected fireDragEnd(mParameters?: any): sap.ui.core.dnd.DragInfo;
-          /**
-           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dragStart" href="#/api/sap.ui.core.dnd.DragInfo/events/dragStart">dragStart</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by using the <code>preventDefault</code>-method on the event object.</p>
-           * @param {any} mParameters <p>Parameters to pass along with the event</p>
-           * @returns boolean <p>Whether or not to prevent the default action</p>
-           */
-          protected fireDragStart(mParameters?: any): boolean;
-          /**
-           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSourceAggregation" href="#/api/sap.ui.core.dnd.DragInfo/methods/getSourceAggregation">sourceAggregation</a>.</p><p>The name of the aggregation from which all children can be dragged. If undefined, the control itself can be dragged.</p>
-           * @returns string <p>Value of property <code>sourceAggregation</code></p>
-           */
-          getSourceAggregation(): string;
-          /**
-           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSourceAggregation" href="#/api/sap.ui.core.dnd.DragInfo/methods/getSourceAggregation">sourceAggregation</a>.</p><p>The name of the aggregation from which all children can be dragged. If undefined, the control itself can be dragged.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
-           * @param {string} sSourceAggregation <p>New value for property <code>sourceAggregation</code></p>
-           * @returns sap.ui.core.dnd.DragInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
-           */
-          setSourceAggregation(sSourceAggregation: string): sap.ui.core.dnd.DragInfo;
-        }
-        /**
-         * <p>Configuration options for visual drop effects that are given during a drag and drop operation.</p>
-         */
-        export enum DropEffect {
-          /**
-           * <p>A copy of the source item is made at the new location.</p>
-           */
-          Copy = "Copy",
-          /**
-           * <p>A link is established to the source at the new location.</p>
-           */
-          Link = "Link",
-          /**
-           * <p>An item is moved to a new location.</p>
-           */
-          Move = "Move",
-          /**
-           * <p>The item cannot be dropped.</p>
-           */
-          None = "None",
-        }
-        /**
-         * <p>Provides the configuration for drop operations. <b>Note:</b> This configuration might be ignored due to control <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.Element/methods/sap.ui.core.Element.extend">metadata</a> restrictions.</p>
-         */
-        export class DropInfo extends sap.ui.core.dnd.DragDropBase implements sap.ui.core.dnd.IDropInfo {
-          /**
-           * <p>Constructor for a new DropInfo.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
-           * @param {string} sId <p>ID for the new DropInfo, generated automatically if no ID is given</p>
-           * @param {any} mSettings <p>Initial settings for the DropInfo</p>
-           */
-          constructor(sId?: string, mSettings?: any);
-          /**
-           * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dragEnter" href="#/api/sap.ui.core.dnd.DropInfo/events/dragEnter">dragEnter</a> event of this <code>sap.ui.core.dnd.DropInfo</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.core.dnd.DropInfo</code> itself.</p><p>This event is fired when a dragged element enters a drop target.</p>
-           * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-           * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
-           * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.core.dnd.DropInfo</code> itself</p>
-           * @returns sap.ui.core.dnd.DropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
-           */
-          attachDragEnter(oData: any, fnFunction: Function, oListener?: any): sap.ui.core.dnd.DropInfo;
-          /**
-           * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dragOver" href="#/api/sap.ui.core.dnd.DropInfo/events/dragOver">dragOver</a> event of this <code>sap.ui.core.dnd.DropInfo</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.core.dnd.DropInfo</code> itself.</p><p>This event is fired when an element is being dragged over a valid drop target.</p>
-           * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-           * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
-           * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.core.dnd.DropInfo</code> itself</p>
-           * @returns sap.ui.core.dnd.DropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
-           */
-          attachDragOver(oData: any, fnFunction: Function, oListener?: any): sap.ui.core.dnd.DropInfo;
-          /**
-           * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="drop" href="#/api/sap.ui.core.dnd.DropInfo/events/drop">drop</a> event of this <code>sap.ui.core.dnd.DropInfo</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.core.dnd.DropInfo</code> itself.</p><p>This event is fired when an element is dropped on a valid drop target, as specified by the drag-and-drop info.</p>
-           * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-           * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
-           * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.core.dnd.DropInfo</code> itself</p>
-           * @returns sap.ui.core.dnd.DropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
-           */
-          attachDrop(oData: any, fnFunction: Function, oListener?: any): sap.ui.core.dnd.DropInfo;
-          /**
-           * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dragEnter" href="#/api/sap.ui.core.dnd.DropInfo/events/dragEnter">dragEnter</a> event of this <code>sap.ui.core.dnd.DropInfo</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
-           * @param {any} oListener <p>Context object on which the given function had to be called</p>
-           * @returns sap.ui.core.dnd.DropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
-           */
-          detachDragEnter(fnFunction: Function, oListener?: any): sap.ui.core.dnd.DropInfo;
-          /**
-           * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dragOver" href="#/api/sap.ui.core.dnd.DropInfo/events/dragOver">dragOver</a> event of this <code>sap.ui.core.dnd.DropInfo</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
-           * @param {any} oListener <p>Context object on which the given function had to be called</p>
-           * @returns sap.ui.core.dnd.DropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
-           */
-          detachDragOver(fnFunction: Function, oListener?: any): sap.ui.core.dnd.DropInfo;
-          /**
-           * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="drop" href="#/api/sap.ui.core.dnd.DropInfo/events/drop">drop</a> event of this <code>sap.ui.core.dnd.DropInfo</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
-           * @param {any} oListener <p>Context object on which the given function had to be called</p>
-           * @returns sap.ui.core.dnd.DropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
-           */
-          detachDrop(fnFunction: Function, oListener?: any): sap.ui.core.dnd.DropInfo;
-          /**
-           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dragEnter" href="#/api/sap.ui.core.dnd.DropInfo/events/dragEnter">dragEnter</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by using the <code>preventDefault</code>-method on the event object.</p>
-           * @param {any} mParameters <p>Parameters to pass along with the event</p>
-           * @returns boolean <p>Whether or not to prevent the default action</p>
-           */
-          protected fireDragEnter(mParameters?: any): boolean;
-          /**
-           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dragOver" href="#/api/sap.ui.core.dnd.DropInfo/events/dragOver">dragOver</a> to attached listeners.</p>
-           * @param {any} mParameters <p>Parameters to pass along with the event</p>
-           * @returns sap.ui.core.dnd.DropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
-           */
-          protected fireDragOver(mParameters?: any): sap.ui.core.dnd.DropInfo;
-          /**
-           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="drop" href="#/api/sap.ui.core.dnd.DropInfo/events/drop">drop</a> to attached listeners.</p>
-           * @param {any} mParameters <p>Parameters to pass along with the event</p>
-           * @returns sap.ui.core.dnd.DropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
-           */
-          protected fireDrop(mParameters?: any): sap.ui.core.dnd.DropInfo;
-          /**
-           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getDropEffect" href="#/api/sap.ui.core.dnd.DropInfo/methods/getDropEffect">dropEffect</a>.</p><p>Defines the visual drop effect.</p><p>Default value is <code>Move</code>.</p>
-           * @returns sap.ui.core.dnd.DropEffect <p>Value of property <code>dropEffect</code></p>
-           */
-          getDropEffect(): sap.ui.core.dnd.DropEffect;
-          /**
-           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getDropLayout" href="#/api/sap.ui.core.dnd.DropInfo/methods/getDropLayout">dropLayout</a>.</p><p>Defines the layout of the droppable controls if <code>dropPosition</code> is set to <code>Between</code> or <code>OnOrBetween</code>.</p><p>Default value is <code>Default</code>.</p>
-           * @returns sap.ui.core.dnd.DropLayout <p>Value of property <code>dropLayout</code></p>
-           */
-          getDropLayout(): sap.ui.core.dnd.DropLayout;
-          /**
-           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getDropPosition" href="#/api/sap.ui.core.dnd.DropInfo/methods/getDropPosition">dropPosition</a>.</p><p>Defines the position for the drop action, visualized by a rectangle.</p><p>Default value is <code>On</code>.</p>
-           * @returns sap.ui.core.dnd.DropPosition <p>Value of property <code>dropPosition</code></p>
-           */
-          getDropPosition(): sap.ui.core.dnd.DropPosition;
-          /**
-           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTargetAggregation" href="#/api/sap.ui.core.dnd.DropInfo/methods/getTargetAggregation">targetAggregation</a>.</p><p>The aggregation name in the drop target control which is the target of this drag-and-drop action. If undefined, the entire control is the target. This can be handy if the target control does not have any aggregations or if the drop position within the target does not matter.</p>
-           * @returns string <p>Value of property <code>targetAggregation</code></p>
-           */
-          getTargetAggregation(): string;
-          /**
-           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getDropEffect" href="#/api/sap.ui.core.dnd.DropInfo/methods/getDropEffect">dropEffect</a>.</p><p>Defines the visual drop effect.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Move</code>.</p>
-           * @param {sap.ui.core.dnd.DropEffect} sDropEffect <p>New value for property <code>dropEffect</code></p>
-           * @returns sap.ui.core.dnd.DropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
-           */
-          setDropEffect(sDropEffect: sap.ui.core.dnd.DropEffect): sap.ui.core.dnd.DropInfo;
-          /**
-           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getDropLayout" href="#/api/sap.ui.core.dnd.DropInfo/methods/getDropLayout">dropLayout</a>.</p><p>Defines the layout of the droppable controls if <code>dropPosition</code> is set to <code>Between</code> or <code>OnOrBetween</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Default</code>.</p>
-           * @param {sap.ui.core.dnd.DropLayout} sDropLayout <p>New value for property <code>dropLayout</code></p>
-           * @returns sap.ui.core.dnd.DropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
-           */
-          setDropLayout(sDropLayout: sap.ui.core.dnd.DropLayout): sap.ui.core.dnd.DropInfo;
-          /**
-           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getDropPosition" href="#/api/sap.ui.core.dnd.DropInfo/methods/getDropPosition">dropPosition</a>.</p><p>Defines the position for the drop action, visualized by a rectangle.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>On</code>.</p>
-           * @param {sap.ui.core.dnd.DropPosition} sDropPosition <p>New value for property <code>dropPosition</code></p>
-           * @returns sap.ui.core.dnd.DropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
-           */
-          setDropPosition(sDropPosition: sap.ui.core.dnd.DropPosition): sap.ui.core.dnd.DropInfo;
-          /**
-           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTargetAggregation" href="#/api/sap.ui.core.dnd.DropInfo/methods/getTargetAggregation">targetAggregation</a>.</p><p>The aggregation name in the drop target control which is the target of this drag-and-drop action. If undefined, the entire control is the target. This can be handy if the target control does not have any aggregations or if the drop position within the target does not matter.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
-           * @param {string} sTargetAggregation <p>New value for property <code>targetAggregation</code></p>
-           * @returns sap.ui.core.dnd.DropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
-           */
-          setTargetAggregation(sTargetAggregation: string): sap.ui.core.dnd.DropInfo;
-        }
-        /**
-         * <p>Configuration options for the layout of the droppable controls.</p>
-         */
-        export enum DropLayout {
-          /**
-           * <p>Default <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.Element/methods/sap.ui.core.Element.extend">layout</a> definition of the aggregations.</p>
-           */
-          Default = "Default",
-          /**
-           * <p>Droppable controls are arranged horizontally.</p>
-           */
-          Horizontal = "Horizontal",
-          /**
-           * <p>Droppable controls are arranged vertically.</p>
-           */
-          Vertical = "Vertical",
-        }
-        /**
-         * <p>Configuration options for drop positions.</p>
-         */
-        export enum DropPosition {
-          /**
-           * <p>Drop between the controls.</p>
-           */
-          Between = "Between",
-          /**
-           * <p>Drop on the control.</p>
-           */
-          On = "On",
-          /**
-           * <p>Drop on the control or between the controls.</p>
-           */
-          OnOrBetween = "OnOrBetween",
-        }
-        /**
-         * <p>Marker interface for drag configuration providing information about the source of the drag operation.</p>
-         */
-        export interface IDragInfo {
-        }
-        /**
-         * <p>Marker interface for drop configuration providing information about the target of the drop operation.</p>
-         */
-        export interface IDropInfo {
-        }
-      }
-    }
-  }
-}
-declare namespace sap {
-  namespace ui {
-    namespace core {
-      /**
-       */
       namespace hyphenation {
         /**
          * <p>This class provides methods for evaluating the possibility of using browser-native hyphenation or initializing and using a third-party hyphenation module.</p><h3>Overview</h3><p> By using this API, a developer can check if browser-native hyphenation is supported for a particular language.</p><p>When browser-native hyphenation is not supported or if otherwise required, the API can be used to hyphenate texts. A third-party library "Hyphenopoly" is used in that case.</p><p>It is used internally by controls that support the <code>wrappingType:<a target="_self" class="jsdoclink" href="#/api/sap.m.WrappingType">WrappingType.Hyphenated</a></code> property.</p><p>As the class is singleton, an instance should be acquired from <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="sap.ui.core.hyphenation.Hyphenation.getInstance" href="#/api/sap.ui.core.hyphenation.Hyphenation/methods/sap.ui.core.hyphenation.Hyphenation.getInstance">Hyphenation.getInstance</a>.</p><h3>Usage</h3><h4>When to use:</h4><p> <ul> <li>To check if browser-native hyphenation is available for particular language.</li> <li>To hyphenate texts if browser-native hyphenation is not available.</li> </ul> </p><h4>When not to use:</h4><p> <ul> <li> If the use case is covered by controls that support the property <code>wrappingType:<a target="_self" class="jsdoclink" href="#/api/sap.m.WrappingType">WrappingType.Hyphenated</a></code>. This functionality is supported by <a target="_self" class="jsdoclink" href="#/api/sap.m.Title">sap.m.Title</a>, <a target="_self" class="jsdoclink" href="#/api/sap.m.Label">sap.m.Label</a> and <a target="_self" class="jsdoclink" href="#/api/sap.m.Text">sap.m.Text</a>. </li> <li>If browser-native hyphenation is available</li> </ul></p><h3>Example</h3><p> <pre>
@@ -18314,8 +18396,8 @@ declare namespace sap {
       namespace postmessage {
         /**
          * <h3>Overview</h3><p> This class is responsible for the communication between different window objects.</p><p>This class is a singleton. The class instance can be retrieved as follows: <ul> <li>via the constructor <code>new sap.ui.core.postmessage.Bus()</code></li> <li>via the static method <code>sap.ui.core.postmessage.Bus.getInstance()</code></li> </ul></p><p>For supported data types for payload messages see <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm">https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm</a>
-            <img src="./resources/sap/ui/documentation/sdk/images/link-external.png" 
-            title="Information published on non SAP site" class="sapUISDKExternalLink"/></p>
+        <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
+        title="Information published on non SAP site" class="sapUISDKExternalLink"/></p>
          */
         export class Bus extends sap.ui.core.EventBus {
           /**
@@ -18464,7 +18546,7 @@ declare namespace sap {
           getPreviousHash(): string;
         }
         /**
-         * <p>Enumaration for different HistoryDirections</p>
+         * <p><p>Enumaration for different HistoryDirections</p></p>
          */
         export enum HistoryDirection {
           /**
@@ -20212,11 +20294,11 @@ declare namespace sap {
           stop(): void;
         }
         /**
-         * <p>Class to parse data pasted from the clipboard on "paste" event. Used for importing from Spreadsheets to UI5 Tables.</p>
+         * <p>Parses and validates data on the <code>paste</code> event of an SAPUI5 table.</p>
          */
         export class PasteHelper {
           /**
-           * <p>A utility for converting data pasted from clipboard into a two-dimensional string array.</p>
+           * <p>A utility for converting and validating data pasted from the clipboard. This utility is used for importing data from spreadsheets to SAPUI5 tables.</p>
            */
           constructor();
         }
@@ -20355,7 +20437,7 @@ declare namespace sap {
        */
       namespace ws {
         /**
-         * <p>Defines the different ready states for a WebSocket connection.</p>
+         * <p><p>Defines the different ready states for a WebSocket connection.</p></p>
          */
         export enum ReadyState {
           /**
@@ -20413,7 +20495,7 @@ declare namespace sap {
         }
         namespace SapPcpWebSocket {
           /**
-           * <p>Protocol versions.</p><p>One (or more) of these have to be selected to create an SapPcpWebSocket connection (or no protocol at all).</p>
+           * <p><p>Protocol versions.</p><p>One (or more) of these have to be selected to create an SapPcpWebSocket connection (or no protocol at all).</p></p>
            */
           export enum SUPPORTED_PROTOCOLS {
             /**
@@ -20614,9 +20696,9 @@ declare namespace sap {
            * <p>Format the given value in model representation to an output value in the given internal type. This happens according to the format options, if target type is 'string'. If oValue is not defined or null, null will be returned.</p>
            * @param {any} oValue <p>the value to be formatted</p>
            * @param {string} sInternalType <p>the target type</p>
-           * @returns any <p>the formatted output value</p>
+           * @returns any|Promise <p>the formatted output value or a Promise resolving with the formatted value</p>
            */
-          formatValue(oValue: any, sInternalType: string): any;
+          formatValue(oValue: any, sInternalType: string): any | Promise<any>;
           /**
            * <p>Format the given set of values in model representation to an output value in the given internal type. This happens according to the format options, if target type is 'string'. If aValues is not defined or null, null will be returned.</p>
            * @param {any[]} aValues <p>the values to be formatted</p>
@@ -20635,9 +20717,9 @@ declare namespace sap {
            * <p>Parse a value of an internal type to the expected value of the model type.</p>
            * @param {any} oValue <p>the value to be parsed</p>
            * @param {string} sInternalType <p>the source type</p>
-           * @returns any <p>the parse result</p>
+           * @returns any|Promise <p>the parse result or a Promise resolving with the parse result</p>
            */
-          parseValue(oValue: any, sInternalType: string): any;
+          parseValue(oValue: any, sInternalType: string): any | Promise<any>;
           /**
            * <p>Parse a value of an internal type to the expected set of values of the model type.</p>
            * @param {any} oValue <p>the value to be parsed</p>
@@ -20680,9 +20762,9 @@ declare namespace sap {
            * <p>Format the given value in model representation to an output value in the given internal type. This happens according to the format options, if target type is 'string'. If oValue is not defined or null, null will be returned.</p>
            * @param {any} oValue <p>the value to be formatted</p>
            * @param {string} sInternalType <p>the target type</p>
-           * @returns any <p>the formatted output value</p>
+           * @returns any|Promise <p>the formatted output value or a Promise resolving with the formatted value</p>
            */
-          formatValue(oValue: any, sInternalType: string): any;
+          formatValue(oValue: any, sInternalType: string): any | Promise<any>;
           /**
            * <p>Format the given set of values in model representation to an output value in the given internal type. This happens according to the format options, if target type is 'string'. If aValues is not defined or null, null will be returned.</p>
            * @param {any[]} aValues <p>the values to be formatted</p>
@@ -20701,9 +20783,9 @@ declare namespace sap {
            * <p>Parse a value of an internal type to the expected value of the model type.</p>
            * @param {any} oValue <p>the value to be parsed</p>
            * @param {string} sInternalType <p>the source type</p>
-           * @returns any <p>the parse result</p>
+           * @returns any|Promise <p>the parse result or a Promise resolving with the parse result</p>
            */
-          parseValue(oValue: any, sInternalType: string): any;
+          parseValue(oValue: any, sInternalType: string): any | Promise<any>;
           /**
            * <p>Parse a value of an internal type to the expected set of values of the model type.</p>
            * @param {any} oValue <p>the value to be parsed</p>
@@ -20824,9 +20906,9 @@ declare namespace sap {
            * <p>Format the given value in model representation to an output value in the given internal type. This happens according to the format options, if target type is 'string'. If oValue is not defined or null, null will be returned.</p>
            * @param {any} oValue <p>the value to be formatted</p>
            * @param {string} sInternalType <p>the target type</p>
-           * @returns any <p>the formatted output value</p>
+           * @returns any|Promise <p>the formatted output value or a Promise resolving with the formatted value</p>
            */
-          formatValue(oValue: any, sInternalType: string): any;
+          formatValue(oValue: any, sInternalType: string): any | Promise<any>;
           /**
            * <p>Format the given set of values in model representation to an output value in the given internal type. This happens according to the format options, if target type is 'string'. If aValues is not defined or null, null will be returned.</p>
            * @param {any[]} aValues <p>the values to be formatted</p>
@@ -20845,9 +20927,9 @@ declare namespace sap {
            * <p>Parse a value of an internal type to the expected value of the model type.</p>
            * @param {any} oValue <p>the value to be parsed</p>
            * @param {string} sInternalType <p>the source type</p>
-           * @returns any <p>the parse result</p>
+           * @returns any|Promise <p>the parse result or a Promise resolving with the parse result</p>
            */
-          parseValue(oValue: any, sInternalType: string): any;
+          parseValue(oValue: any, sInternalType: string): any | Promise<any>;
           /**
            * <p>Parse a value of an internal type to the expected set of values of the model type.</p>
            * @param {any} oValue <p>the value to be parsed</p>

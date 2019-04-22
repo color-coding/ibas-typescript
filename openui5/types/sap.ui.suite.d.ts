@@ -8,7 +8,7 @@
 declare namespace sap {
     namespace ui {
         /**
-         * <p>Suite controls library.</p>
+         * <p><p>Suite controls library.</p></p>
          */
         namespace suite {
             /**
@@ -136,7 +136,7 @@ declare namespace sap {
                 setValue(iValue: number): sap.ui.suite.TaskCircle;
             }
             /**
-             * <p>Defined color values for the Task Circle Control</p>
+             * <p><p>Defined color values for the Task Circle Control</p></p>
              */
             export enum TaskCircleColor {
                 /**
