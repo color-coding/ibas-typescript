@@ -537,7 +537,7 @@ namespace shell {
                             }
                         } else {
                             if (!ibas.objects.isNull(this.busyDialog)) {
-                                this.busyDialog.close();
+                                this.busyDialog.close(false);
                             }
                         }
                     }

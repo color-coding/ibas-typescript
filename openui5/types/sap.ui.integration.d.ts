@@ -11,6 +11,19 @@ declare namespace sap {
      * <p><p>SAPUI5 library with controls specialized for SAP Fiori apps.</p></p>
      */
     namespace integration {
+      /**
+       * <p><p>Possible data modes for <code><a target="_self" class="jsdoclink" href="#/api/sap.ui.integration.widgets.Card">sap.ui.integration.widgets.Card</a></code>.</p></p>
+       */
+      export enum CardDataMode {
+        /**
+         * <p>When in this mode, the card can make requests.</p>
+         */
+        Active = "Active",
+        /**
+         * <p>When in this mode, the card cannot make requests.</p>
+         */
+        Inactive = "Inactive",
+      }
     }
   }
 }
@@ -31,7 +44,7 @@ declare namespace sap {
        */
       namespace widgets {
         /**
-         * <p>A control that represents a container with a header and content.</p><h3>Overview</h3><p> Cards are small user interface elements which provide the most important information from an application related to a specific role or task in a compact manner allowing for actions to be executed. Cards can be described as small representations of an application which can be integrated in different systems.</p><p>The integration card is defined in a declarative way by using a manifest.json allowing it to: <ul> <li>Be easily integrated in an applications</li> <li>Be easily reused across different applications.</li> <li>Be easily understandable by other technologies.</li> <li>Be self-contained. No need for external configuration.</li> <li>Be easily reconfigured in different application layers (including backend).</li> <li>Separate the roles of the card developer and the application developer.</li> </ul></p><p>Card developer role - Describe the card in a manifest.json defining: <ul> <li>Header</li> <li>Content</li> <li>Data source</li> <li>Possible actions</li> </ul></p><p>Application developer role - Integrate the card into an application defining: <ul> <li>Dimensions of the card inside a layout of choice, using the width and height properties.</li> <li>Behavior for the described actions in the manifest.json, using the action event.</li> </ul></p><h3>Usage</h3><p>The "sap.app" type property of the manifest have to be set to "card". The namespace used to define a card is "sap.card". Every card have a type. Which can be one of: List, Analytical, Timeline, Object.</p><p>Example manifest.json:</p><p><pre>
+         * <p>A control that represents a container with a header and content.</p><h3>Overview</h3><p> Cards are small user interface elements which provide the most important information from an app, related to a specific role or task. The information is represented in a compact manner, allowing for actions to be executed. Cards can be described as small representations of an app which can be integrated in different systems.</p><p>The integration card is defined in a declarative way, using a manifest.json to be: <ul> <li>Easily integrated into apps</li> <li>Easily reused across apps</li> <li>Understandable by other technologies</li> <li>Self-contained (without external configuration)</li> <li>Easily reconfigured in app layers (including backend)</li> <li>Easy to separate the roles of the card and the app developers</li> </ul></p><p>The role of the card developer is to describe the card in a manifest.json file and define: <ul> <li>Header</li> <li>Content</li> <li>Data source</li> <li>Possible actions</li> </ul></p><p>The role of the app developer is to integrate the card into the app and define: <ul> <li>The dimensions of the card inside a layout of choice, using the <code>width</code> and <code>height</code> properties</li> <li>The behavior for the actions described in the manifest.json file, using the action event</li> </ul></p><h3>Usage</h3><p>The <code>"sap.app"</code> <code>type</code> property in the manifest file must be set to <code>"card"</code>. The namespace used to define a card is <code>"sap.card"</code>. Every card has a type which can be one of the following: List, Analytical, Timeline, Object, Table, Component (experimental)</p><p>An example of a manifest.json:</p><p><pre>
         <code>
         {
           "sap.app": {
@@ -48,7 +61,7 @@ declare namespace sap {
           }
         }
         </code>
-        </pre></p><p>Examples of header sections:</p><p>The default header type can contain title, subtitle, icon and status. <pre>
+        </pre></p><p>Examples of header sections:</p><p>The default header type can contain title, subtitle, icon, and status. <pre>
          <code>
         {
           ...
@@ -67,7 +80,7 @@ declare namespace sap {
           }
         }
          </code>
-         </pre></p><p>The numeric header type can contain title, subtitle, unitOfMeasurement, details, main indicator and side indicators. <pre>
+         </pre></p><p>The numeric header type can contain title, subtitle, unitOfMeasurement, details, main indicator, and side indicators. <pre>
          <code>
         {
           ...
@@ -101,7 +114,7 @@ declare namespace sap {
           }
         }
          </code>
-         </pre></p><p>The content of the card is created based on the card type. Possible card types: <ul> <li>List</li> <li>Object</li> <li>Timeline</li> <li>Analytical</li> </ul></p><p>List card contains a set of items. "item" property defines the template for all the items of the list. "data" property provides the data. Example: <pre>
+         </pre></p><p>The content of the card is created based on the card type. Possible card types: <ul> <li>List</li> <li>Object</li> <li>Timeline</li> <li>Analytical</li> <li>Table</li> <li>Component (experimental)</li> </ul></p><p>List card contains a set of items. The <code>"item"</code> property defines the template for all the items of the list. The <code>"data"</code> property provides the displayed information.</p><p>Example: <pre>
         {
           "sap.app": {
             "type": "card"
@@ -115,12 +128,12 @@ declare namespace sap {
               "data": {
                 "json": [{
                     "Name": "Comfort Easy",
-                    "Description": "32 GB Digital Assistant with high-resolution color screen",
+                    "Description": "A 32 GB Digital Assistant with a high-resolution color screen",
                     "Highlight": "Error"
                   },
                   {
                     "Name": "ITelO Vault",
-                    "Description": "Digital Organizer with State-of-the-Art Storage Encryption",
+                    "Description": "A Digital Organizer with state-of-the-art Storage Encryption",
                     "Highlight": "Warning"
                   },
                   {
@@ -144,7 +157,7 @@ declare namespace sap {
             }
           }
         }
-        </pre></p><p>Analytical card contains a chart visualization configuration. Supported chart types are Line, StackedBar, StackedColumn, Donut. Example: <pre>
+        </pre></p><p>Analytical card contains a chart visualization configuration. Supported chart types are Line, StackedBar, StackedColumn, Donut.</p><p>Example: <pre>
         <code>
         {
           "sap.app": {
@@ -227,7 +240,7 @@ declare namespace sap {
           }
         }
         </code>
-        </pre></p><p>Object card contains information about an object. It is structured in groups. Every group can have a title and items. The items contain display name (label) and value. Example: <pre>
+        </pre></p><p>Object card contains information about an object. It is structured in groups. Every group can have a title and items. The items contain display name (label) and value.</p><p>Example: <pre>
         <code>
         {
           "sap.app": {
@@ -274,7 +287,7 @@ declare namespace sap {
           }
         }
         </code>
-        </pre></p><p>Timeline card contains a set of timeline items. "item" property defines the template for all the items of the timeline. Example: <pre>
+        </pre></p><p>Timeline card contains a set of timeline items. The "item" property defines the template for all the items of the timeline.</p><p>Example: <pre>
         <code>
         {
           "sap.app": {
@@ -324,7 +337,101 @@ declare namespace sap {
           }
         }
         </code>
-        </pre></p><p>Item based cards (Timeline and List) have an additional content property "maxItems" which defines the maximum number of items the card can have.</p><h3>Data handling</h3><p> In order to add data to the card you can add a data section to the card, header or content. The card will automatically create an unnamed model which then can be used to resolve binding syntaxes inside the card manifest.</p><p>Static data: <pre>
+        </pre></p><p>Table card displays a set of items in a table format. The <code>"row"</code> property defines the template for all rows of the table.</p><p>Example: <pre>
+        <code>
+        {
+          "sap.app": {
+            "type": "card"
+          },
+          "sap.card": {
+            "type": "Table",
+            "header": {
+              ...
+            },
+            "content": {
+              "data": {
+                "json": [
+                  {
+                   "salesOrder": "5000010050",
+                   "customerName": "Robert Brown Entertainment",
+                   "netAmount": "2K USD",
+                   "status": "Delivered",
+                   "statusState": "Success"
+                  },
+                  {
+                   "salesOrder": "5000010051",
+                   "customerName": "Entertainment Argentinia",
+                   "netAmount": "127k USD",
+                   "status": "Canceled",
+                   "statusState": "Error"
+                  },
+                  {
+                   "salesOrder": "5000010052",
+                   "customerName": "Brazil Technologies",
+                   "netAmount": "8K USD",
+                   "status": "In Progress",
+                   "statusState": "Warning"
+                  }
+                ]
+              },
+              "row": {
+                "columns": [{
+                   "title": "Sales Order",
+                   "value": "{salesOrder}",
+                   "identifier": true
+                  },
+                  {
+                    "title": "Customer",
+                    "value": "{customerName}"
+                  },
+                  {
+                     "title": "Net Amount",
+                     "value": "{netAmount}"
+                  },
+                  {
+                     "title": "Status",
+                     "value": "{status}",
+                     "state": "{statusState}"
+                  }
+                ]
+              }
+            }
+          }
+        }
+        </code>
+        </pre></p><p>Component card can be used to display multiple controls (inside one Component). It is used as a custom approach for use cases, which do not fit in other card types and structures. It provides much more flexibility and responsibility to the Card’s authors. Reusability is achieved on Component level and this type of Card is usable in LOB products that are based on the SAPUI5 Framework.</p><p>Example: <pre>
+        <code>
+        {
+          "sap.app": {
+            "id": "sap.ui.integration.sample.ComponentCard.cardContent",
+            "type": "card",
+            "applicationVersion": {
+            "version": "1.0.0"
+            }
+          },
+          "sap.ui5": {
+            "rootView": {
+              "viewName": "sap.ui.integration.sample.ComponentCard.cardContent.View",
+              "type": "XML",
+              "async": true,
+              "id": "app"
+            },
+            "dependencies": {
+              "minUI5Version": "1.38",
+              "libs": {
+                "sap.m": {}
+              }
+            }
+          },
+          "sap.card": {
+            "type": "Component",
+            "header": {
+              "title": "Visit our workshop"
+            }
+          }
+        }
+        </code>
+        </pre></p><p>Item-based cards (Timeline and List) have an additional <code>"maxItems"</code> content property, which defines the maximum number of items the card can have.</p><h3>Data Handling</h3><p> To add data to the card, you can add a data section, header or content. The card automatically creates an unnamed model which can be used to resolve binding syntaxes inside the card manifest.</p><p>Static data: <pre>
         <code>
         {
           ...
@@ -366,7 +473,7 @@ declare namespace sap {
           }
         }
         </code>
-        </pre></p><h3>Actions</h3><p> Actions adds behavior to the card. To add a navigation action to the header and to the items you can configure it inside the manifest. Actions have: <ul> <li>Type</li> <li>Parameters</li> <li>Enabled flag (true by default)</li> </ul></p><p>In the example below navigation action is added both to the header and the list items: <pre>
+        </pre></p><h3>Actions</h3><p> Actions add behavior to the card. To add a navigation action to the header and to the items, you can configure it inside the manifest.</p><p>Actions have: <ul> <li>Type</li> <li>Parameters</li> <li>Enabled flag (true by default)</li> </ul></p><p>In the example below, a navigation action is added both to the header and the list items: <pre>
         <code>
         {
           "sap.app": {
@@ -421,7 +528,7 @@ declare namespace sap {
           }
         }
         </code>
-        </pre></p><p><i>When to use</i> <ul> <li>When the card have to be reused across applications.</li> <li>When easy integration and configuration is needed.</li> </ul></p><p><i>When not to use</i> <ul> <li>When more header and content flexibility is needed.</li> <li>When you have to achieve simple card visualization. For such cases, use: <a target="_self" class="jsdoclink" href="#/api/sap.f.Card">Card</a>.</li> <li>When an application model have to be used. For such cases, use: <a target="_self" class="jsdoclink" href="#/api/sap.f.Card">Card</a>.</li> <li>When complex behavior is needed. For such cases, use: <a target="_self" class="jsdoclink" href="#/api/sap.f.Card">Card</a>.</li> </ul></p>
+        </pre></p><p><i>When to use</i> <ul> <li>When you want to reuse the card across apps.</li> <li>When you need easy integration and configuration.</li> </ul></p><p><i>When not to use</i> <ul> <li>When you need more header and content flexibility.</li> <li>When you have to achieve simple card visualization. For such cases, use: <a target="_self" class="jsdoclink" href="#/api/sap.f.Card">Card</a>.</li> <li>When you have to use an application model. For such cases, use: <a target="_self" class="jsdoclink" href="#/api/sap.f.Card">Card</a>.</li> <li>When you need complex behavior. For such cases, use: <a target="_self" class="jsdoclink" href="#/api/sap.f.Card">Card</a>.</li> </ul></p>
          */
         export class Card extends sap.ui.core.Control {
           /**
@@ -462,6 +569,16 @@ declare namespace sap {
            */
           protected getCardHeader(): sap.f.cards.IHeader;
           /**
+           * <p>Implements sap.f.ICard interface.</p>
+           * @returns sap.f.cards.HeaderPosition <p>The position of the header of the card.</p>
+           */
+          protected getCardHeaderPosition(): sap.f.cards.HeaderPosition;
+          /**
+           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getDataMode" href="#/api/sap.ui.integration.widgets.Card/methods/getDataMode">dataMode</a>.</p><p>Defines the state of the <code>Card</code>. When set to <code>Inactive</code>, the <code>Card</code> doesn't make requests.</p><p>Default value is <code>Active</code>.</p>
+           * @returns sap.ui.integration.CardDataMode <p>Value of property <code>dataMode</code></p>
+           */
+          getDataMode(): sap.ui.integration.CardDataMode;
+          /**
            * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getHeight" href="#/api/sap.ui.integration.widgets.Card/methods/getHeight">height</a>.</p><p>Defines the height of the card.</p><p>Default value is <code>auto</code>.</p>
            * @returns sap.ui.core.CSSSize <p>Value of property <code>height</code></p>
            */
@@ -472,15 +589,34 @@ declare namespace sap {
            */
           getHostConfigurationId(): sap.ui.core.ID;
           /**
-           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getManifest" href="#/api/sap.ui.integration.widgets.Card/methods/getManifest">manifest</a>.</p><p>The URL of the manifest or an object.</p><p>Default value is <code>empty string</code>.</p>
-           * @returns any <p>Value of property <code>manifest</code></p>
+           * <p>Overwrites getter for card manifest.</p>
+           * @returns string|Object <p>Cloned of the parameters.</p>
            */
-          getManifest(): any;
+          getManifest(): string | any;
+          /**
+           * <p>Overwrites getter for card parameters.</p>
+           * @returns any <p>A Clone of the parameters.</p>
+           */
+          getParameters(): any;
           /**
            * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getWidth" href="#/api/sap.ui.integration.widgets.Card/methods/getWidth">width</a>.</p><p>Defines the width of the card.</p><p>Default value is <code>100%</code>.</p>
            * @returns sap.ui.core.CSSSize <p>Value of property <code>width</code></p>
            */
           getWidth(): sap.ui.core.CSSSize;
+          /**
+           * @returns boolean <p>If the card is ready or not.</p>
+           */
+          isReady(): boolean;
+          /**
+           * <p>Refreshes the card by re-applying the manifest settings and triggering all data requests.</p>
+           */
+          refresh(): void;
+          /**
+           * <p>Sets a new value for the <code>dataMode</code> property.</p>
+           * @param {sap.ui.integration.CardDataMode} sMode <p>The mode to set to the Card.</p>
+           * @returns sap.ui.integration.widgets.Card <p>Pointer to the control instance to allow method chaining.</p>
+           */
+          setDataMode(sMode: sap.ui.integration.CardDataMode): sap.ui.integration.widgets.Card;
           /**
            * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getHeight" href="#/api/sap.ui.integration.widgets.Card/methods/getHeight">height</a>.</p><p>Defines the height of the card.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>auto</code>.</p>
            * @param {sap.ui.core.CSSSize} sHeight <p>New value for property <code>height</code></p>
@@ -494,11 +630,17 @@ declare namespace sap {
            */
           setHostConfigurationId(oHostConfigurationId: sap.ui.core.ID | sap.ui.core.Control): sap.ui.integration.widgets.Card;
           /**
-           * <p>Setter for card manifest.</p>
+           * <p>Overwrites setter for card manifest.</p>
            * @param {string | any} vValue <p>The manifest object or its URL.</p>
            * @returns sap.ui.integration.widgets.Card <p>Pointer to the control instance to allow method chaining.</p>
            */
           setManifest(vValue: string | any): sap.ui.integration.widgets.Card;
+          /**
+           * <p>Overwrites setter for card params.</p>
+           * @param {any} vValue <p>oParameters Parameters set in the card trough parameters property.</p>
+           * @returns sap.ui.integration.widgets.Card <p>Pointer to the control instance to allow method chaining.</p>
+           */
+          setParameters(vValue: any): sap.ui.integration.widgets.Card;
           /**
            * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getWidth" href="#/api/sap.ui.integration.widgets.Card/methods/getWidth">width</a>.</p><p>Defines the width of the card.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>100%</code>.</p>
            * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>

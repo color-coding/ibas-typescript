@@ -643,7 +643,7 @@ declare namespace sap {
              */
             protected fireTitleSelectorPress(mParameters?: any): sap.uxap.ObjectPageHeader;
             /**
-             * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getActions" href="#/api/sap.uxap.ObjectPageHeader/methods/getActions">actions</a>.</p><p>List of actions that will be displayed in the header. You can use ObjectPageHeaderActionButton controls to achieve a different visual representation of the action buttons in the action bar and the action sheet (overflow menu). You can use ObjectPageHeaderLayoutData to display a visual separator.</p>
+             * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getActions" href="#/api/sap.uxap.ObjectPageHeader/methods/getActions">actions</a>.</p><p>List of actions that will be displayed in the header. You can use ObjectPageHeaderActionButton controls to achieve a different visual representation of the action buttons in the action bar and the action sheet (overflow menu). You can use ObjectPageHeaderLayoutData to display a visual separator.</p><p><b>Note:</b> If an action is placed inside the overflow area, an additional <code>bInOverflow</code> parameter is passed along with the <code>press</code> event to indicate that a popup shouldn't be opened from that action and a dialog should be used instead.</p>
              * @returns sap.ui.core.Control[] 
              */
             getActions(): sap.ui.core.Control[];

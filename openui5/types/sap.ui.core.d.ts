@@ -976,7 +976,7 @@ declare namespace sap {
           constructor();
         }
         /**
-         * <p>The LabelFor matcher searches for given control associated with labelFor property. The matcher does automatically <ul> <li> retrieve control associated by label by given text </li> <li> retrieve control associated by label by given i18n key, modelName, parameters or propertyName. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.test.matchers.I18NText">sap.ui.test.matchers.I18NText</a> </li> <li> combination of text and key is not possible </li> </ul></p>
+         * <p>The LabelFor matcher checks if a given control has a label associated with it. For every Label on the page, the matcher checks if: <ul> <li> its labelFor association is to the given control </li> <li> its properties match a condition </li> </ul> Labels can be matched by: <ul> <li> text </li> <li> i18n key, modelName, parameters or propertyName. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.test.matchers.I18NText">sap.ui.test.matchers.I18NText</a> </li> <li> combination of text and key is not possible </li> </ul> Some control types cannot be in a labelFor association: <ul> <li> sap.ui.comp.navpopover.SmartLink </li> <li> sap.m.Link </li> <li> sap.m.Label </li> <li> sap.m.Text </li> </ul></p>
          */
         export class LabelFor extends sap.ui.test.matchers.Matcher {
           /**
@@ -1361,7 +1361,7 @@ declare namespace sap {
          */
         static escapeSettingsValue(vValue: any): any;
         /**
-         * <p>Constructs and initializes a managed object with the given <code>sId</code> and settings.</p><p>If the optional <code>mSettings</code> are given, they must be a simple object that defines values for properties, aggregations, associations or events keyed by their name.</p><p><b>Valid Names and Value Ranges:</b></p><p>The property (key) names supported in the object literal are exactly the (case sensitive) names documented in the JSDoc for the properties, aggregations, associations and events of the current class and its base classes. Note that for 0..n aggregations and associations this name usually is the plural name, whereas it is the singular name in case of 0..1 relations.</p><p>If a key name is ambiguous for a specific managed object class (e.g. a property has the same name as an event), then this method prefers property, aggregation, association and event in that order. To resolve such ambiguities, the keys can be prefixed with <code>aggregation:</code>, <code>association:</code> or <code>event:</code> (such keys containing a colon (':') must be quoted to be valid Javascript).</p><p>The possible values for a setting depend on its kind: <ul> <li>for simple properties, the value has to match the documented type of the property (no type conversion occurs)</li> <li>for 0..1 aggregations, the value has to be an instance of the aggregated type</li> <li>for 0..n aggregations, the value has to be an array of instances of the aggregated type or a single instance</li> <li>for 0..1 associations, an instance of the associated type or an id (string) is accepted</li> <li>for 0..n associations, an array of instances of the associated type or of IDs is accepted</li> <li>for events either a function (event handler) is accepted or an array of length 2 where the first element is a function and the 2nd element is an object to invoke the method on.</li> </ul></p><p>Each subclass should document the name and type of its supported settings in its constructor documentation.</p><p>Example usage: <pre>
+         * <p>Constructs and initializes a managed object with the given <code>sId</code> and settings.</p><p>If the optional <code>mSettings</code> are given, they must be a simple object that defines values for properties, aggregations, associations or events keyed by their name.</p><p><b>Valid Names and Value Ranges:</b></p><p>The property (key) names supported in the object literal are exactly the (case sensitive) names documented in the JSDoc for the properties, aggregations, associations and events of the current class and its base classes. Note that for 0..n aggregations and associations this name usually is the plural name, whereas it is the singular name in case of 0..1 relations.</p><p>If a key name is ambiguous for a specific managed object class (e.g. a property has the same name as an event), then this method prefers property, aggregation, association and event in that order. To resolve such ambiguities, the keys can be prefixed with <code>aggregation:</code>, <code>association:</code> or <code>event:</code> (such keys containing a colon (':') must be quoted to be valid Javascript).</p><p>The possible values for a setting depend on its kind: <ul> <li>for simple properties, the value has to match the documented type of the property (no type conversion occurs)</li> <li>for 0..1 aggregations, the value has to be an instance of the aggregated type</li> <li>for 0..n aggregations, the value has to be an array of instances of the aggregated type or a single instance</li> <li>for 0..1 associations, an instance of the associated type or an id (string) is accepted</li> <li>for 0..n associations, an array of instances of the associated type or of IDs is accepted</li> <li>for events, either a function (event handler) is accepted or an array of length 2 where the first element is a function and the 2nd element is an object to invoke the method on; or an array of length 3, where the first element is an arbitrary payload object, the second one is a function and the 3rd one is an object to invoke the method on; or an array of arrays where each nested array has the 2 or 3 element structure described before (multiple listeners).</li> </ul></p><p>Each subclass should document the name and type of its supported settings in its constructor documentation.</p><p>Example usage: <pre>
         new Dialog({
            title: "Some title text",            // property of type "string"
            showHeader: true,                    // property of type "boolean"
@@ -1496,7 +1496,7 @@ declare namespace sap {
          */
         destroy(): void;
         /**
-         * <p>Cleans up the resources associated with this object and all its aggregated children.</p><p>After an object has been destroyed, it can no longer be used in!</p><p>Applications should call this method if they don't need the object any longer.</p>
+         * <p>Cleans up the resources associated with this object and all its aggregated children.</p><p>After an object has been destroyed, it can no longer be used!</p><p>Applications should call this method if they don't need the object any longer.</p>
          * @param {boolean} bSuppressInvalidate <p>if true, this ManagedObject is not marked as changed</p>
          */
         destroy(bSuppressInvalidate?: boolean): void;
@@ -4007,7 +4007,7 @@ declare namespace sap {
          */
         destroy(): void;
         /**
-         * <p>Cleans up the resources associated with this object and all its aggregated children.</p><p>After an object has been destroyed, it can no longer be used in!</p><p>Applications should call this method if they don't need the object any longer.</p>
+         * <p>Cleans up the resources associated with this object and all its aggregated children.</p><p>After an object has been destroyed, it can no longer be used!</p><p>Applications should call this method if they don't need the object any longer.</p>
          * @param {boolean} bSuppressInvalidate <p>if true, this ManagedObject is not marked as changed</p>
          */
         destroy(bSuppressInvalidate?: boolean): void;
@@ -5605,6 +5605,19 @@ declare namespace sap {
        */
       export class Popup extends sap.ui.base.ManagedObject {
         /**
+         * <p>Attaches an event-handler <code>fnFunction</code> to the static 'blockLayerStateChange' event.</p><p>The event gets triggered in case of modal popups when the first of multiple popups opens and closes.</p>
+         * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
+         * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
+         * @param {any} oListener <p>Object on which to call the given function.</p>
+         */
+        static attachBlockLayerStateChange(oData: any, fnFunction: Function, oListener?: any): void;
+        /**
+         * <p>Removes a previously attached event handler <code>fnFunction</code> from the static 'blockLayerStateChange' event.</p><p>The event gets triggered in case of modal popups when the first of multiple popups opens and closes.</p>
+         * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
+         * @param {any} oListener <p>Object on which the given function had to be called.</p>
+         */
+        static detachBlockLayerStateChange(fnFunction: Function, oListener?: any): void;
+        /**
          * <p>Returns the last z-index that has been handed out. does not increase the internal z-index counter.</p>
          * @returns Number 
          */
@@ -5657,7 +5670,7 @@ declare namespace sap {
          */
         destroy(): void;
         /**
-         * <p>Cleans up the resources associated with this object and all its aggregated children.</p><p>After an object has been destroyed, it can no longer be used in!</p><p>Applications should call this method if they don't need the object any longer.</p>
+         * <p>Cleans up the resources associated with this object and all its aggregated children.</p><p>After an object has been destroyed, it can no longer be used!</p><p>Applications should call this method if they don't need the object any longer.</p>
          * @param {boolean} bSuppressInvalidate <p>if true, this ManagedObject is not marked as changed</p>
          */
         destroy(bSuppressInvalidate?: boolean): void;
@@ -9164,6 +9177,32 @@ declare namespace sap {
              */
             static enable(): void;
             /**
+             * <p>Returns the currently set Blacklist configuration. Returned object is copied from the original one. In case you modify it, you have to set it by using the <code>setEventBlacklist</code> setter in order for it to take effect.</p>
+             */
+            static getEventsBlacklist(): void;
+            /**
+             * <p>Sets a new Blacklist configuration.</p><p>BlackList configuration should have the following structure as in the example shown below.</p><p>In <code>global</code> object, we set all events that we don't want to track. In <code>controls</code> object, we can list different controls and include or exclude events for them.</p><p>For example, in this configuration the <code>load</code> event is exposed for the <code>sap.m.Image</code> control regardless of it being excluded globally for all other controls.</p><p>For <code>sap.m.Button</code> control, we don't want to track the <code>tap</code> event but we need to track the <code>afterRendering</code> event.</p><p>In the case where we write in the <code>controls</code> object a control without any excluded or included events, this control is NOT tracked at all.</p><p>In the example configuration events coming from control <code>sap.m.AccButton</code> are not be exposed.</p><p><pre><code>
+            {
+                global: ["modelContextChange", "beforeRendering", "afterRendering",
+                    "propertyChanged", "beforeGeometryChanged", "geometryChanged",
+                    "aggregationChanged", "componentCreated", "afterInit",
+                    "updateStarted", "updateFinished", "load", "scroll"
+                    ],
+                controls: {
+                  "sap.m.Image": {
+                    exclude: ["load"]
+                  },
+                  "sap.m.Button": {
+                    include: ["tap"],
+                    exclude: ["afterRendering"]
+                  },
+                  "sap.m.AccButton": {}
+                }
+              }
+            </pre></code> The set configuration object is copied from the given one.</p>
+             */
+            static setEventsBlacklist(): void;
+            /**
              * <p>Event broadcaster. This class is meant for private usages. Apps are not supposed to used it. It is created for an experimental purpose.</p>
              */
             constructor();
@@ -9246,33 +9285,48 @@ declare namespace sap {
       namespace util {
         namespace reflection {
           /**
-           * <p><p>Abstract static utility class to access ManageObjects and XMLNodes that represent ManagedObjects in a harmonized way.</p><p>The class mirrors the ManagedObject API so that code that needs to work with ManagedObjects in several representations can be written in a single way. The slight differences are handled by specifying a super set of parameters that might not be needed in all use cases. For example sap.ui.fl is using this class and its subtypes for change handlers that can be applied on XMLViews and normal ManagedObject instances.</p></p>
+           * <p><p>Abstract static utility class to access ManageObjects and XMLNodes that represent ManagedObjects in a harmonized way.</p><p>The class mirrors the ManagedObject API so that code that needs to work with ManagedObjects in several representations can be written in a single way. The slight differences are handled by specifying a super set of parameters that might not be needed in all use cases. For example sap.ui.fl uses this class and its subtypes for change handlers that can be applied on XMLViews and normal ManagedObject instances.</p></p>
            */
           namespace BaseTreeModifier {
             /**
-             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/applySettings">sap.ui.base.ManagedObject#applySettings</a> method</p>
-             * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>control representation</p>
+             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/applySettings">sap.ui.base.ManagedObject#applySettings</a> method.</p>
+             * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>Control representation</p>
              * @param {any} mSettings <p>Further settings or properties for the control</p>
              * @returns HTMLElement <p>XML node of the control being created</p>
              */
             function applySettings(vControl: sap.ui.base.ManagedObject | HTMLElement, mSettings: any): HTMLElement;
             /**
-             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/bindProperty">sap.ui.base.ManagedObject#bindProperty</a> method</p>
+             * <p>Attaches event on the specified ManagedObject.</p>
              * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>Control representation</p>
-             * @param {string} sPropertyName <p>property name</p>
-             * @param {any} vBindingInfos <p>binding info</p>
+             * @param {string} sEventName <p>Event name</p>
+             * @param {string} sFunctionPath <p>Absolute path to a function</p>
+             * @param {vData} vData <p>Predefined values for event handler function</p>
+             */
+            function attachEvent(vControl: sap.ui.base.ManagedObject | HTMLElement, sEventName: string, sFunctionPath: string, vData: any): void;
+            /**
+             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/bindAggregation">sap.ui.base.ManagedObject#bindAggregation</a> method.</p>
+             * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>Control representation</p>
+             * @param {string} sAggregationName <p>Aggregation name</p>
+             * @param {any} vBindingInfos <p>Binding info</p>
+             */
+            function bindAggregation(vControl: sap.ui.base.ManagedObject | HTMLElement, sAggregationName: string, vBindingInfos: any): void;
+            /**
+             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/bindProperty">sap.ui.base.ManagedObject#bindProperty</a> method.</p>
+             * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>Control representation</p>
+             * @param {string} sPropertyName <p>Property name</p>
+             * @param {any} vBindingInfos <p>Binding info</p>
              */
             function bindProperty(vControl: sap.ui.base.ManagedObject | HTMLElement, sPropertyName: string, vBindingInfos: any): void;
             /**
-             * <p>Function determining the control targeted by the change. The function differs between local IDs generated starting with 1.40 and the global IDs generated in previous versions.</p>
+             * <p>Function determining the control targeted by the change. The function distinguishes between local IDs generated starting with 1.40 and the global IDs generated in previous versions.</p>
              * @param {any} oSelector <p>Target of a flexibility change</p>
-             * @param {sap.ui.core.UIComponent} oAppComponent <p>asd</p>
+             * @param {sap.ui.core.UIComponent} oAppComponent <p>Application component</p>
              * @param {HTMLElement} oView <p>For XML processing only: XML node of the view</p>
              * @returns sap.ui.base.ManagedObject|Element <p>Control representation targeted within the selector</p>
              */
             function bySelector(oSelector: any, oAppComponent: sap.ui.core.UIComponent, oView: HTMLElement): sap.ui.base.ManagedObject | HTMLElement;
             /**
-             * <p>Creates the control in the corresponding representation</p>
+             * <p>Creates the control in the corresponding representation.</p>
              * @param {string} sClassName <p>Class name for the control (for example, <code>sap.m.Button</code>), ensure the class is loaded (no synchronous requests are called)</p>
              * @param {sap.ui.core.UIComponent} oAppComponent <p>Needed to calculate the correct ID in case you provide an ID</p>
              * @param {HTMLElement} oView <p>XML node of the view, required for XML case to create nodes and to find elements</p>
@@ -9283,177 +9337,210 @@ declare namespace sap {
              */
             function createControl(sClassName: string, oAppComponent: sap.ui.core.UIComponent, oView: HTMLElement, oSelector: any, mSettings: any, bAsync: boolean): HTMLElement | Promise<any>;
             /**
-             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/destroy">sap.ui.base.ManagedObject#destroy</a> method Cleans up the resources associated with this object and all its aggregated children.</p><p>After an object has been destroyed, it can no longer be used!</p><p>Applications should call this method if they don't need the object any longer.</p>
+             * <p>Cleans up the resources associated with this object and all its aggregated children. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/destroy">sap.ui.base.ManagedObject#destroy</a> method.</p><p>After an object has been destroyed, it can no longer be used! Applications should call this method if they don't need the object any longer.</p>
              * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>Control representation</p>
              */
             function destroy(vControl: sap.ui.base.ManagedObject | HTMLElement): void;
             /**
-             * <p>Finds the index of the control in it's parent aggregation</p>
-             * @param {sap.ui.base.ManagedObject | HTMLElement} vParent <p>control representation</p>
-             * @returns number <p>index of the control</p>
+             * <p>Detaches event from the specified ManagedObject.</p>
+             * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>Control representation</p>
+             * @param {string} sEventName <p>Event name</p>
+             * @param {string} sFunctionPath <p>Absolute path to a function</p>
+             */
+            function detachEvent(vControl: sap.ui.base.ManagedObject | HTMLElement, sEventName: string, sFunctionPath: string): void;
+            /**
+             * <p>Finds the index of the control in its parent aggregation.</p>
+             * @param {sap.ui.base.ManagedObject | HTMLElement} vParent <p>Control representation</p>
+             * @returns number <p>Index of the control</p>
              */
             function findIndexInParentAggregation(vParent: sap.ui.base.ManagedObject | HTMLElement): number;
             /**
-             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/getAggregation">sap.ui.base.ManagedObject#getAggregation</a> method</p>
-             * @param {sap.ui.base.ManagedObject | HTMLElement} vParent <p>The control which has the aggregation</p>
+             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/getAggregation">sap.ui.base.ManagedObject#getAggregation</a> method.</p>
+             * @param {sap.ui.base.ManagedObject | HTMLElement} vParent <p>Control which has the aggregation</p>
              * @param {string} sName <p>Aggregation name</p>
-             * @returns sap.ui.base.ManagedObject[]|Element[] <p>the aggregation content</p>
+             * @returns sap.ui.base.ManagedObject[]|Element[] <p>Aggregation content</p>
              */
             function getAggregation(vParent: sap.ui.base.ManagedObject | HTMLElement, sName: string): sap.ui.base.ManagedObject[] | HTMLElement[];
             /**
-             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObjectMetadata/methods/getAllAggregations">sap.ui.base.ManagedObjectMetadata#getAllAggregations</a> method</p>
+             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObjectMetadata/methods/getAllAggregations">sap.ui.base.ManagedObjectMetadata#getAllAggregations</a> method.</p>
              * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>Control representation</p>
              * @returns { [key: string]: any } <p>Map of aggregation info objects keyed by aggregation names</p>
              */
             function getAllAggregations(vControl: sap.ui.base.ManagedObject | HTMLElement): { [key: string]: any };
             /**
-             * <p>Get the binding template from an aggregation See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/getBindingInfo">sap.ui.base.ManagedObject#getBindingInfo</a> method</p>
-             * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>control representation</p>
-             * @param {string} sAggregationName <p>aggregation name</p>
+             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/getAssociation">sap.ui.base.ManagedObject#getAssociation</a> method.</p>
+             * @param {sap.ui.base.ManagedObject | HTMLElement} vParent <p>Control which has the association</p>
+             * @param {string} sName <p>Association name</p>
+             * @returns string|string[] <p>ID of the associated managed object or an array of such IDs; may be null if the association has not been populated</p>
+             */
+            function getAssociation(vParent: sap.ui.base.ManagedObject | HTMLElement, sName: string): string | string[];
+            /**
+             * <p>Get the binding template from an aggregation. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/getBindingInfo">sap.ui.base.ManagedObject#getBindingInfo</a> method.</p>
+             * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>Control representation</p>
+             * @param {string} sAggregationName <p>Aggregation name</p>
              */
             function getBindingTemplate(vControl: sap.ui.base.ManagedObject | HTMLElement, sAggregationName: string): void;
             /**
-             * <p>Returns the module path of an instance specific change handler</p>
-             * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>control representation</p>
-             * @returns string <p>module path</p>
+             * <p>Returns the module path of an instance specific change handler.</p>
+             * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>Control representation</p>
+             * @returns string <p>Module path</p>
              */
             function getChangeHandlerModulePath(vControl: sap.ui.base.ManagedObject | HTMLElement): string;
             /**
-             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.Metadata/methods/getName">sap.ui.base.Metadata#getName</a> method</p>
+             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.Metadata/methods/getName">sap.ui.base.Metadata#getName</a> method.</p>
              * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>Control representation</p>
-             * @returns string <p>control type</p>
+             * @returns string <p>Control type</p>
              */
             function getControlType(vControl: sap.ui.base.ManagedObject | HTMLElement): string;
             /**
-             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/getId">sap.ui.base.ManagedObject#getId</a> method</p>
+             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/getId">sap.ui.base.ManagedObject#getId</a> method.</p>
              * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>Control representation</p>
              * @returns string <p>ID</p>
              */
             function getId(vControl: sap.ui.base.ManagedObject | HTMLElement): string;
             /**
-             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/getParent">sap.ui.base.ManagedObject#getParent</a> method</p>
+             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/getParent">sap.ui.base.ManagedObject#getParent</a> method.</p>
              * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>Control representation</p>
-             * @returns sap.ui.base.ManagedObject|Element <p>parent control in it's representation</p>
+             * @returns sap.ui.base.ManagedObject|Element <p>Parent control in its representation</p>
              */
             function getParent(vControl: sap.ui.base.ManagedObject | HTMLElement): sap.ui.base.ManagedObject | HTMLElement;
             /**
-             * <p>Removes alls objects from the aggregation of the given control</p>
-             * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>control representation</p>
-             * @param {sap.ui.base.ManagedObject | HTMLElement} vParent <p>control representation of the parent only needed in XML case</p>
-             * @returns string <p>parent aggregation name</p>
+             * <p>Removes all objects from the aggregation of the given control.</p>
+             * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>Control representation</p>
+             * @param {sap.ui.base.ManagedObject | HTMLElement} vParent <p>Control representation of the parent only needed in XML case</p>
+             * @returns string <p>Parent aggregation name</p>
              */
             function getParentAggregationName(vControl: sap.ui.base.ManagedObject | HTMLElement, vParent?: sap.ui.base.ManagedObject | HTMLElement): string;
             /**
-             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/getProperty">sap.ui.base.ManagedObject#getProperty</a> method</p>
+             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/getProperty">sap.ui.base.ManagedObject#getProperty</a> method.</p>
              * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>Control representation</p>
-             * @param {string} sPropertyName <p>property name</p>
-             * @returns any <p>value of the property</p>
+             * @param {string} sPropertyName <p>Property name</p>
+             * @returns any <p>Value of the property</p>
              */
             function getProperty(vControl: sap.ui.base.ManagedObject | HTMLElement, sPropertyName: string): any;
             /**
-             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/getBindingInfo">sap.ui.base.ManagedObject#getBindingInfo</a> method</p>
+             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/getBindingInfo">sap.ui.base.ManagedObject#getBindingInfo</a> method.</p>
              * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>Control representation</p>
-             * @param {string} sPropertyName <p>property name</p>
-             * @returns any <p>binding Info</p>
+             * @param {string} sPropertyName <p>Property name</p>
+             * @returns any <p>Binding info</p>
              */
             function getPropertyBinding(vControl: sap.ui.base.ManagedObject | HTMLElement, sPropertyName: string): any;
             /**
-             * <p>Function for determining the selector later used to apply a change for a given control. The function differs between local IDs generated starting with 1.40 and the global IDs generated in previous versions.</p>
-             * @param {sap.ui.base.ManagedObject | HTMLElement | string} vControl <p>control or ID string for which the selector should be determined</p>
+             * <p>Function for determining the selector that is used later to apply a change for a given control. The function distinguishes between local IDs generated starting with 1.40 and the global IDs generated in previous versions.</p>
+             * @param {sap.ui.base.ManagedObject | HTMLElement | string} vControl <p>Control or ID string for which the selector should be determined</p>
              * @param {sap.ui.core.Component} oAppComponent <p>Application component, needed only if vControl is a string or XML node</p>
              * @param {any} mAdditionalSelectorInformation <p>Additional mapped data which is added to the selector</p>
              * @returns any <p>oSelector</p>
              */
             function getSelector(vControl: sap.ui.base.ManagedObject | HTMLElement | string, oAppComponent: sap.ui.core.Component, mAdditionalSelectorInformation?: any): any;
             /**
-             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.StashedControlSupport/methods/getVisible">sap.ui.core.StashedControlSupport#getVisible</a> method</p>
+             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.StashedControlSupport/methods/getVisible">sap.ui.core.StashedControlSupport#getVisible</a> method.</p>
              * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>Control representation</p>
-             * @returns boolean <p>whether the control is stashed or not</p>
+             * @returns boolean <p>Whether the control is stashed or not</p>
              */
             function getStashed(vControl: sap.ui.base.ManagedObject | HTMLElement): boolean;
             /**
-             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.Control/methods/getVisible">sap.ui.core.Control#getVisible</a> method</p>
+             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.Control/methods/getVisible">sap.ui.core.Control#getVisible</a> method.</p>
              * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>Control representation</p>
-             * @returns boolean <p>whether the control's visible property is set or not</p>
+             * @returns boolean <p>Whether the control's <code>visible</code> property is set or not</p>
              */
             function getVisible(vControl: sap.ui.base.ManagedObject | HTMLElement): boolean;
             /**
-             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/insertAggregation">sap.ui.base.ManagedObject#insertAggregation</a> method</p>
-             * @param {sap.ui.base.ManagedObject | HTMLElement} vParent <p>The control which has the aggregation</p>
+             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/insertAggregation">sap.ui.base.ManagedObject#insertAggregation</a> method.</p>
+             * @param {sap.ui.base.ManagedObject | HTMLElement} vParent <p>Control which has the aggregation</p>
              * @param {string} sAggregationName <p>Aggregation name</p>
              * @param {sap.ui.base.ManagedObject | HTMLElement} oObject <p>XML node or element of the control that will be inserted</p>
              * @param {number} iIndex <p>Index for <code>oObject</code> in the aggregation</p>
-             * @param {HTMLElement} oView <p>xml node/element of the view - needed in XML case to potentially create (aggregation) nodes</p>
+             * @param {HTMLElement} oView <p>XML node of the view - needed in XML case to potentially create (aggregation) nodes</p>
              */
             function insertAggregation(vParent: sap.ui.base.ManagedObject | HTMLElement, sAggregationName: string, oObject: sap.ui.base.ManagedObject | HTMLElement, iIndex: number, oView?: HTMLElement): void;
             /**
-             * <p>Loads a fragment and turns the result into an array of nodes. Also prefixes all the controls with a given namespace Throws an Error if there is at least one control in the fragment without stable ID</p>
-             * @param {string} sFragment <p>xml fragment as string</p>
-             * @param {string} sNamespace <p>namespace of the app</p>
-             * @param {sap.ui.core.mvc.View} oView <p>view for the fragment, only needed in JS case</p>
-             * @returns HTMLElement[] <p>Returns an array with the nodes of the controls of the fragment</p>
+             * <p>Loads a fragment and turns the result into an array of nodes; also prefixes all the controls with a given namespace; throws an error if there is at least one control in the fragment without a stable ID or has a duplicate ID in the given view.</p>
+             * @param {string} sFragment <p>XML fragment as string</p>
+             * @param {string} sNamespace <p>Namespace of the app</p>
+             * @param {sap.ui.core.mvc.View} oView <p>View for the fragment</p>
+             * @returns HTMLElement[] <p>Array with the nodes of the controls of the fragment</p>
              */
-            function instantiateFragment(sFragment: string, sNamespace: string, oView?: sap.ui.core.mvc.View): HTMLElement[];
+            function instantiateFragment(sFragment: string, sNamespace: string, oView: sap.ui.core.mvc.View): HTMLElement[];
             /**
-             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/isPropertyInitial">sap.ui.base.ManagedObject#isPropertyInitial</a> method</p>
+             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/isPropertyInitial">sap.ui.base.ManagedObject#isPropertyInitial</a> method.</p>
              * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>Control representation</p>
-             * @param {string} sPropertyName <p>property name</p>
+             * @param {string} sPropertyName <p>Property name</p>
              * @returns boolean <p><code>true</code> if the property is initial</p>
              */
             function isPropertyInitial(vControl: sap.ui.base.ManagedObject | HTMLElement, sPropertyName: string): boolean;
             /**
-             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/removeAggregation">sap.ui.base.ManagedObject#removeAggregation</a> method Removes the object from the aggregation of the given control</p>
-             * @param {sap.ui.base.ManagedObject | HTMLElement} vParent <p>control representation</p>
-             * @param {string} sAggregationName <p>aggregation name</p>
-             * @param {sap.ui.base.ManagedObject | HTMLElement} oObject <p>aggregated object to be set</p>
+             * <p>Removes the object from the aggregation of the given control. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/removeAggregation">sap.ui.base.ManagedObject#removeAggregation</a> method.</p>
+             * @param {sap.ui.base.ManagedObject | HTMLElement} vParent <p>Control representation</p>
+             * @param {string} sAggregationName <p>Aggregation name</p>
+             * @param {sap.ui.base.ManagedObject | HTMLElement} oObject <p>Aggregated object to be set</p>
              */
             function removeAggregation(vParent: sap.ui.base.ManagedObject | HTMLElement, sAggregationName: string, oObject: sap.ui.base.ManagedObject | HTMLElement): void;
             /**
-             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/removeAllAggregation">sap.ui.base.ManagedObject#removeAllAggregation</a> method Removes alls objects from the aggregation of the given control</p>
-             * @param {sap.ui.base.ManagedObject | HTMLElement} vParent <p>control representation</p>
-             * @param {string} sAggregationName <p>aggregation name</p>
+             * <p>Removes all objects from the aggregation of the given control. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/removeAllAggregation">sap.ui.base.ManagedObject#removeAllAggregation</a> method.</p>
+             * @param {sap.ui.base.ManagedObject | HTMLElement} vParent <p>Control representation</p>
+             * @param {string} sAggregationName <p>Aggregation name</p>
              */
             function removeAllAggregation(vParent: sap.ui.base.ManagedObject | HTMLElement, sAggregationName: string): void;
             /**
-             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/setProperty">sap.ui.base.ManagedObject#setProperty</a> method</p>
+             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/setAssociation">sap.ui.base.ManagedObject#setAssociation</a> method.</p>
+             * @param {sap.ui.base.ManagedObject | HTMLElement} vParent <p>Control which has the association</p>
+             * @param {string} sName <p>Association name</p>
+             * @param {string | sap.ui.base.ManagedObject | HTMLElement} sId <p>ID of the managed object that is set as an association, or the managed object or XML node itself or <code>null</code></p>
+             */
+            function setAssociation(vParent: sap.ui.base.ManagedObject | HTMLElement, sName: string, sId: string | sap.ui.base.ManagedObject | HTMLElement): void;
+            /**
+             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/setProperty">sap.ui.base.ManagedObject#setProperty</a> method.</p>
              * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>Control representation</p>
-             * @param {string} sPropertyName <p>property name</p>
-             * @param {any} vPropertyValue <p>new value for the property</p>
+             * @param {string} sPropertyName <p>Property name</p>
+             * @param {any} vPropertyValue <p>New value for the property</p>
              */
             function setProperty(vControl: sap.ui.base.ManagedObject | HTMLElement, sPropertyName: string, vPropertyValue: any): void;
             /**
-             * <p>Similar as <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="bindProperty" href="#/api/sap.ui.core.util.reflection.BaseTreeModifier/methods/bindProperty">#bindProperty</a>, but allows to specify binding like in control constructor</p>
+             * <p>Similar as <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="bindProperty" href="#/api/sap.ui.core.util.reflection.BaseTreeModifier/methods/bindProperty">#bindProperty</a>, but allows to specify binding like in control constructor.</p>
              * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>Control representation</p>
-             * @param {string} sPropertyName <p>property name</p>
+             * @param {string} sPropertyName <p>Property name</p>
              * @param {any} vPropertyBinding <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/extractBindingInfo">sap.ui.base.ManagedObject#extractBindingInfo</a> method</p>
              */
             function setPropertyBinding(vControl: sap.ui.base.ManagedObject | HTMLElement, sPropertyName: string, vPropertyBinding: any): void;
             /**
-             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.StashedControlSupport/methods/setVisible">sap.ui.core.StashedControlSupport#setVisible</a> method</p>
+             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.StashedControlSupport/methods/setVisible">sap.ui.core.StashedControlSupport#setVisible</a> method.</p>
              * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>Control representation</p>
-             * @param {boolean} bVisible <p>New value for property stashed</p>
+             * @param {boolean} bVisible <p>New value for <code>stashed</code> property</p>
              */
             function setStashed(vControl: sap.ui.base.ManagedObject | HTMLElement, bVisible: boolean): void;
             /**
-             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.Control/methods/setVisible">sap.ui.core.Control#setVisible</a> method</p>
+             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.Control/methods/setVisible">sap.ui.core.Control#setVisible</a> method.</p>
              * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>Control representation</p>
-             * @param {boolean} bVisible <p>New value for property visible</p>
+             * @param {boolean} bVisible <p>New value for <code>visible</code> property</p>
              */
             function setVisible(vControl: sap.ui.base.ManagedObject | HTMLElement, bVisible: boolean): void;
             /**
-             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/updateAggregation">sap.ui.base.ManagedObject#updateAggregation</a> method</p>
-             * @param {sap.ui.base.ManagedObject | HTMLElement} vParent <p>control representation</p>
-             * @param {string} sAggregationName <p>aggregation name</p>
+             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/unbindAggregation">sap.ui.base.ManagedObject#unbindAggregation</a> method.</p>
+             * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>Control representation</p>
+             * @param {string} sAggregationName <p>Aggregation name to be unbound</p>
+             */
+            function unbindAggregation(vControl: sap.ui.base.ManagedObject | HTMLElement, sAggregationName: string): void;
+            /**
+             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/unbindProperty">sap.ui.base.ManagedObject#unbindProperty</a> method.</p>
+             * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>Control representation</p>
+             * @param {string} sPropertyName <p>Property name to be unbound</p>
+             */
+            function unbindProperty(vControl: sap.ui.base.ManagedObject | HTMLElement, sPropertyName: string): void;
+            /**
+             * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/updateAggregation">sap.ui.base.ManagedObject#updateAggregation</a> method.</p>
+             * @param {sap.ui.base.ManagedObject | HTMLElement} vParent <p>Control representation</p>
+             * @param {string} sAggregationName <p>Aggregation name</p>
              */
             function updateAggregation(vParent: sap.ui.base.ManagedObject | HTMLElement, sAggregationName: string): void;
             /**
              * <p>Validates if the control has the correct type for the aggregation.</p>
-             * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>control whose type is to be checked</p>
+             * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>Control whose type is to be checked</p>
              * @param {any} mAggregationMetadata <p>Aggregation info object</p>
-             * @param {sap.ui.base.ManagedObject | HTMLElement} vParent <p>parent of the control</p>
-             * @param {string} sFragment <p>path to the fragment that contains the control, whose type is to be checked</p>
-             * @param {number} iIndex <p>index of the current control in the parent aggregation</p>
-             * @returns boolean <p>Returns true if the type matches</p>
+             * @param {sap.ui.base.ManagedObject | HTMLElement} vParent <p>Parent of the control</p>
+             * @param {string} sFragment <p>Path to the fragment that contains the control, whose type is to be checked</p>
+             * @param {number} iIndex <p>Index of the current control in the parent aggregation</p>
+             * @returns boolean <p><code>true</code> if the type matches</p>
              */
             function validateType(vControl: sap.ui.base.ManagedObject | HTMLElement, mAggregationMetadata: any, vParent: sap.ui.base.ManagedObject | HTMLElement, sFragment: string, iIndex: number): boolean;
           }
@@ -9471,17 +9558,6 @@ declare namespace sap {
            * <p><p>Static utility class to access ManagedObjects in a harmonized way with XMLNodes.</p></p>
            */
           namespace JsControlTreeModifier {
-            /**
-             * <p>Creates the control.</p>
-             * @param {string} sClassName <p>Class name for the control (for example, <code>sap.m.Button</code>), ensure that the class is loaded (no synchronous requests are called)</p>
-             * @param {sap.ui.core.UIComponent} oAppComponent <p>Needed to calculate the correct ID in case you provide an ID</p>
-             * @param {HTMLElement} oView <p>Empty in this case (XML node of the view, required for XML case to create nodes and to find elements)</p>
-             * @param {any} oSelector <p>Selector to calculate the ID for the control that is created</p>
-             * @param {any} mSettings <p>Further settings or properties for the control that is created</p>
-             * @param {boolean} bAsync <p>Determines whether a synchronous (promise) or an asynchronous value should be returned</p>
-             * @returns Element|Promise <p>Element or promise with element of the control that is created</p>
-             */
-            function createControl(sClassName: string, oAppComponent: sap.ui.core.UIComponent, oView: HTMLElement, oSelector: any, mSettings: any, bAsync: boolean): HTMLElement | Promise<any>;
           }
         }
       }
@@ -13392,11 +13468,11 @@ declare namespace sap {
           
           oControl.applySettings({"someProperty" : vPropertySetting});
           </pre></p>
-           * @param {any[]} vParts <p>array of parts</p>
+           * @param {any[]} aParts <p>array of parts</p>
            * @param {Function} fnRootFormatter <p>root formatter function; default: <code>Array.prototype.join(., " ")</code> in case of multiple parts, just like <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.CompositeBinding/methods/getExternalValue">getExternalValue</a></p>
            * @returns any|object <p>constant value or binding info object for a property as expected by <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/applySettings">applySettings</a></p>
            */
-          function createPropertySetting(vParts: any[], fnRootFormatter?: Function): any | any;
+          function createPropertySetting(aParts: any[], fnRootFormatter?: Function): any | any;
           /**
            * <p>A formatter function to be used in a complex binding inside an XML template view in order to interpret OData V4 annotations. It knows about <ul> <li> the "14.4 Constant Expressions" for "edm:Bool", "edm:Date", "edm:DateTimeOffset", "edm:Decimal", "edm:Float", "edm:Guid", "edm:Int", "edm:TimeOfDay". <li> the constant "14.4.11 Expression edm:String": This is turned into a fixed text (e.g. <code>"Width"</code>) or into a data binding expression (e.g. <code> "{/##/dataServices/schema/0/entityType/1/com.sap.vocabularies.UI.v1.FieldGroup#Dimensions/Data/0/Label/String}" </code>). Data binding expressions are used in case XML template processing has been started with the setting <code>bindTexts : true</code>. The purpose is to reference translatable texts from OData V4 annotations, especially for XML template processing at design time. Since 1.31.0, string constants that contain a simple binding <code>"{@i18n>...}"</code> to the hard-coded model name "@i18n" with arbitrary path are not turned into a fixed text, but kept as a data binding expression; this allows local annotation files to refer to a resource bundle for internationalization. <li> the dynamic "14.5.1 Comparison and Logical Operators": These are turned into expression bindings to perform the operations at run-time. <li> the dynamic "14.5.3 Expression edm:Apply": <ul> <li> "14.5.3.1.1 Function odata.concat": This is turned into a data binding expression relative to an entity. <li> "14.5.3.1.2 Function odata.fillUriTemplate": This is turned into an expression binding to fill the template at run-time. <li> "14.5.3.1.3 Function odata.uriEncode": This is turned into an expression binding to encode the parameter at run-time. <li> Apply functions may be nested arbitrarily. </ul> <li> the dynamic "14.5.6 Expression edm:If": This is turned into an expression binding to be evaluated at run-time. The expression is a conditional expression like <code>"{=condition ? expression1 : expression2}"</code>. <li> the dynamic "14.5.10 Expression edm:Null": This is turned into a <code>null</code> value. In <code>odata.concat</code> it is ignored. <li> the dynamic "14.5.12 Expression edm:Path" and "14.5.13 Expression edm:PropertyPath": This is turned into a data binding relative to an entity, including type information and constraints as available from metadata, e.g. <code>"{path : 'Name', type : 'sap.ui.model.odata.type.String', constraints : {'maxLength':'255'}}"</code>. Depending on the used type, some additional constraints of this type are set: <ul> <li>Edm.DateTime: The "displayFormat" constraint is set to the value of the "sap:display-format" annotation of the referenced property. <li>Edm.Decimal: The "precision" and "scale" constraints are set to the values of the corresponding attributes of the referenced property. The "minimum", "maximum", "minimumExclusive" and "maximumExlusive" constraints are set to the values of the corresponding "Org.OData.Validation.V1" annotation of the referenced property; note that in this case only constant expressions are supported to determine the annotation value. <li>Edm.String: The "maxLength" constraint is set to the value of the corresponding attribute of the referenced property and the "isDigitSequence" constraint is set to the value of the "com.sap.vocabularies.Common.v1.IsDigitSequence" annotation of the referenced property; note that in this case only constant expressions are supported to determine the annotation value. </ul> </ul> Unsupported or incorrect values are turned into a string nevertheless, but indicated as such. Proper escaping is used to make sure that data binding syntax is not corrupted. An error describing the problem is logged to the console in such a case.</p><p>Example: <pre>
           &lt;Text text="{path: 'meta>Value', formatter: 'sap.ui.model.odata.AnnotationHelper.format'}" />
@@ -14544,7 +14620,7 @@ declare namespace sap {
             formatValue(vValue: any[] | string, sInternalType: string): any;
             /**
              * <p>Formats the given values of the parts of the <code>Currency</code> composite type to the given target type.</p>
-             * @param {any[]} aValues <p>Array of part values to be formatted; contains amount, currency, currency customizing in this order. The first call to this method where all parts are set determines the currency customizing; subsequent calls use this customizing, so that the corresponding part may be omitted. Changes to the currency customizing part after this first method call are not considered: The currency customizing for this <code>Currency</code> instance remains unchanged.</p>
+             * @param {any[]} aValues <p>Array of part values to be formatted; contains in the following order: amount, currency, currency customizing. The first call to this method where all parts are set determines the currency customizing; subsequent calls use this customizing, so that the corresponding part may be omitted. Changes to the currency customizing part after this first method call are not considered: The currency customizing for this <code>Currency</code> instance remains unchanged.</p>
              * @param {string} sTargetType <p>The target type; must be "string" or a type with "string" as its <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.DataType/methods/getPrimitiveType">primitive type</a>. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type">sap.ui.model.odata.type</a> for more information.</p>
              * @returns string <p>The formatted output value; <code>null</code>, if <code>aValues</code> is <code>undefined</code> or <code>null</code> or if the amount, the currency or the currency customizing contained therein is <code>undefined</code>.</p>
              */
@@ -14611,7 +14687,7 @@ declare namespace sap {
              */
             validateValue(aValues: any[]): void;
             /**
-             * <p>Does nothing as the <code>Currency</code> type does not support constraints.</p>
+             * <p>Does nothing as the type does not support constraints.</p>
              * @param {string} vValue <p>The value to be validated</p>
              */
             validateValue(vValue: string): void;
@@ -15610,7 +15686,7 @@ declare namespace sap {
             formatValue(vValue: any[] | string, sInternalType: string): any;
             /**
              * <p>Formats the given values of the parts of the <code>Unit</code> composite type to the given target type.</p>
-             * @param {any[]} aValues <p>Array of part values to be formatted; contains measure, unit, unit customizing in this order. The first call to this method where all parts are set determines the unit customizing; subsequent calls use this customizing, so that the corresponding part may be omitted. Changes to the unit customizing part after this first method call are not considered: The unit customizing for this <code>Unit</code> instance remains unchanged.</p>
+             * @param {any[]} aValues <p>Array of part values to be formatted; contains in the following order: measure, unit, unit customizing. The first call to this method where all parts are set determines the unit customizing; subsequent calls use this customizing, so that the corresponding part may be omitted. Changes to the unit customizing part after this first method call are not considered: The unit customizing for this <code>Unit</code> instance remains unchanged.</p>
              * @param {string} sTargetType <p>The target type; must be "string" or a type with "string" as its <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.DataType/methods/getPrimitiveType">primitive type</a>. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type">sap.ui.model.odata.type</a> for more information.</p>
              * @returns string <p>The formatted output value; <code>null</code>, if <code>aValues</code> is <code>undefined</code> or <code>null</code> or if the measure, the unit or the unit customizing contained therein is <code>undefined</code>.</p>
              */
@@ -15677,7 +15753,7 @@ declare namespace sap {
              */
             validateValue(aValues: any[]): void;
             /**
-             * <p>Does nothing as the <code>Unit</code> type does not support constraints.</p>
+             * <p>Does nothing as the type does not support constraints.</p>
              * @param {string} vValue <p>The value to be validated</p>
              */
             validateValue(vValue: string): void;
@@ -16404,7 +16480,7 @@ declare namespace sap {
              */
             getOriginalProperty(sPath: string, oContext?: any): any;
             /**
-             * <p>Returns the changed properties of all changed entities in a map which are still pending. The key is the string name of the entity and the value is an object which contains the changed properties.</p>
+             * <p>Returns the changed properties of all changed entities in a map which are still pending. The key is the string name of the entity and the value is an object which contains the changed properties.</p><p>In contrast to the two related functions <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="hasPendingChanges" href="#/api/sap.ui.model.odata.v2.ODataModel/methods/hasPendingChanges">#hasPendingChanges</a> and <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="resetChanges" href="#/api/sap.ui.model.odata.v2.ODataModel/methods/resetChanges">#resetChanges</a>, only client data changes are supported.</p>
              * @returns { [key: string]: any } <p>the pending changes in a map</p>
              */
             getPendingChanges(): { [key: string]: any };
@@ -16442,10 +16518,11 @@ declare namespace sap {
              */
             getServiceMetadata(): any;
             /**
-             * <p>Checks if there exist pending changes in the model created by <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="setProperty" href="#/api/sap.ui.model.odata.v2.ODataModel/methods/setProperty">#setProperty</a> or <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="createEntry" href="#/api/sap.ui.model.odata.v2.ODataModel/methods/createEntry">#createEntry</a>.</p>
+             * <p>Checks if there exist pending changes in the model.</p><p>By default, only client data changes triggered through: <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="createEntry" href="#/api/sap.ui.model.odata.v2.ODataModel/methods/createEntry">#createEntry</a> <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="setProperty" href="#/api/sap.ui.model.odata.v2.ODataModel/methods/setProperty">#setProperty</a> are taken into account.</p><p>If <code>bAll</code> is set to <code>true</code>, also deferred requests triggered through: <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="create" href="#/api/sap.ui.model.odata.v2.ODataModel/methods/create">#create</a> <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="update" href="#/api/sap.ui.model.odata.v2.ODataModel/methods/update">#update</a> <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="remove" href="#/api/sap.ui.model.odata.v2.ODataModel/methods/remove">#remove</a> are taken into account.</p>
+             * @param {boolean} bAll <p>If set to true, deferred requests are also taken into account.</p>
              * @returns boolean <p><code>true</code> if there are pending changes, <code>false</code> otherwise.</p>
              */
-            hasPendingChanges(): boolean;
+            hasPendingChanges(bAll?: boolean): boolean;
             /**
              * <p>Checks if there are pending requests, either ongoing or sequential.</p>
              * @returns boolean <p>Whether there are pending requests</p>
@@ -16511,10 +16588,12 @@ declare namespace sap {
              */
             remove(sPath: string, mParameters?: any): any;
             /**
-             * <p>Resets the changes that have been collected by the <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="setProperty" href="#/api/sap.ui.model.odata.v2.ODataModel/methods/setProperty">#setProperty</a> method.</p>
+             * <p>Resets changes that have been collected.</p><p>By default, only client data changes triggered through: <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="createEntry" href="#/api/sap.ui.model.odata.v2.ODataModel/methods/createEntry">#createEntry</a> <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="setProperty" href="#/api/sap.ui.model.odata.v2.ODataModel/methods/setProperty">#setProperty</a> are taken into account.</p><p>If <code>bAll</code> is set to <code>true</code>, also deferred requests triggered through: <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="create" href="#/api/sap.ui.model.odata.v2.ODataModel/methods/create">#create</a> <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="update" href="#/api/sap.ui.model.odata.v2.ODataModel/methods/update">#update</a> <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="remove" href="#/api/sap.ui.model.odata.v2.ODataModel/methods/remove">#remove</a> are taken into account.</p>
              * @param {any[]} aPath <p>Array of paths that should be reset. If no array is passed, all changes will be reset.</p>
+             * @param {boolean} bAll <p>If set to true, also deferred requests are taken into account.</p>
+             * @returns Promise<any> <p>Resolves when all regarded changes have been reseted.</p>
              */
-            resetChanges(aPath?: any[]): void;
+            resetChanges(aPath?: any[], bAll?: boolean): Promise<any>;
             /**
              * <p>Returns a promise, which will resolve with the security token as soon as it is available.</p>
              * @returns Promise<any> <p>A promise on the CSRF security token</p>
@@ -16901,13 +16980,13 @@ declare namespace sap {
              */
             getProperty(sPath: string, bExternalFormat?: boolean): any;
             /**
-             * <p>Returns whether there are pending changes for bindings dependent on this context, or for unresolved bindings which were dependent on this context at the time the pending change was created.</p>
+             * <p>Returns whether there are pending changes for bindings dependent on this context, or for unresolved bindings which were dependent on this context at the time the pending change was created. This includes the context itself being transient (see <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="isTransient" href="#/api/sap.ui.model.odata.v4.Context/methods/isTransient">#isTransient</a>).</p>
              * @returns boolean <p>Whether there are pending changes</p>
              */
             hasPendingChanges(): boolean;
             /**
-             * <p>Returns <code>true</code> if this context is transient, which means that the promise returned by <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="created" href="#/api/sap.ui.model.odata.v4.Context/methods/created">#created</a> is not yet resolved or rejected.</p>
-             * @returns boolean <p>Whether this context is transient</p>
+             * <p>For a context created using <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataListBinding/methods/create">sap.ui.model.odata.v4.ODataListBinding#create</a>, the method returns <code>true</code> if the context is transient, meaning that the promise returned by <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="created" href="#/api/sap.ui.model.odata.v4.Context/methods/created">#created</a> is not yet resolved or rejected, and returns <code>false</code> if the context is not transient. The result of this function can also be accessed via instance annotation "@$ui5.context.isTransient" at the entity.</p>
+             * @returns boolean <p>Whether this context is transient if it is created using <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataListBinding/methods/create">sap.ui.model.odata.v4.ODataListBinding#create</a>; <code>undefined</code> if it is not created using <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataListBinding/methods/create">sap.ui.model.odata.v4.ODataListBinding#create</a></p>
              */
             isTransient(): boolean;
             /**
@@ -17098,7 +17177,7 @@ declare namespace sap {
              */
             changeParameters(mParameters: any): void;
             /**
-             * <p>Creates a new entity and inserts it at the beginning of the list. As long as the binding contains an entity created via this function, you cannot create another entity. This is only possible after the creation of the entity has been successfully sent to the server and you have called <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="refresh" href="#/api/sap.ui.model.odata.v4.ODataListBinding/methods/refresh">#refresh</a> at the (parent) binding, which is absolute or not relative to a <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.Context">sap.ui.model.odata.v4.Context</a>, or the new entity is deleted in between.</p><p>For creating the new entity, the binding's update group ID is used, see binding parameter $$updateGroupId of <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataModel/methods/bindList">sap.ui.model.odata.v4.ODataModel#bindList</a>.</p><p>You can call <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.Context/methods/delete">sap.ui.model.odata.v4.Context#delete</a> to delete the created context again. As long as the context is transient (see <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.Context/methods/isTransient">sap.ui.model.odata.v4.Context#isTransient</a>), <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="resetChanges" href="#/api/sap.ui.model.odata.v4.ODataListBinding/methods/resetChanges">#resetChanges</a> and a call to <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataModel/methods/resetChanges">sap.ui.model.odata.v4.ODataModel#resetChanges</a> with the update group ID as parameter also delete the created context together with other changes.</p><p>If the creation of the entity on the server failed, the creation is repeated automatically. If the binding's update group ID has <a target="_self" class="jsdoclink" href="#/api/API">sap.ui.model.odata.v4.SubmitMode.API</a>, it is repeated with the next call of <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataModel/methods/submitBatch">sap.ui.model.odata.v4.ODataModel#submitBatch</a>. Otherwise it is repeated with the next update for the entity.</p><p>The initial data for the created entity can be supplied via the parameter <code>oInitialData</code> and modified via property bindings. Properties that are not part of the initial data show the default value from the service metadata on the UI, but they are not sent to the server. If there is no default value, <code>null</code> is used instead, even if the property is not <code>Nullable</code>.</p><p>Note: If a server requires a property in the request, you must supply this property in the initial data, for example if the server requires a unit for an amount. This also applies if this property has a default value.</p><p>Note: After creation, the created entity is refreshed to ensure that the data specified in this list binding's $expand is available; to skip this refresh, set <code>bSkipRefresh</code> to <code>true</code>.</p>
+             * <p>Creates a new entity and inserts it at the beginning of the list.</p><p>For creating the new entity, the binding's update group ID is used, see binding parameter $$updateGroupId of <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataModel/methods/bindList">sap.ui.model.odata.v4.ODataModel#bindList</a>.</p><p>You can call <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.Context/methods/delete">sap.ui.model.odata.v4.Context#delete</a> to delete the created context again. As long as the context is transient (see <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.Context/methods/isTransient">sap.ui.model.odata.v4.Context#isTransient</a>), <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="resetChanges" href="#/api/sap.ui.model.odata.v4.ODataListBinding/methods/resetChanges">#resetChanges</a> and a call to <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataModel/methods/resetChanges">sap.ui.model.odata.v4.ODataModel#resetChanges</a> with the update group ID as parameter also delete the created context together with other changes.</p><p>If the creation of the entity on the server failed, the creation is repeated automatically. If the binding's update group ID has <a target="_self" class="jsdoclink" href="#/api/API">sap.ui.model.odata.v4.SubmitMode.API</a>, it is repeated with the next call of <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataModel/methods/submitBatch">sap.ui.model.odata.v4.ODataModel#submitBatch</a>. Otherwise it is repeated with the next update for the entity.</p><p>The initial data for the created entity can be supplied via the parameter <code>oInitialData</code> and modified via property bindings. Properties that are not part of the initial data show the default value from the service metadata on the UI, but they are not sent to the server. If there is no default value, <code>null</code> is used instead, even if the property is not <code>Nullable</code>.</p><p>Note: If a server requires a property in the request, you must supply this property in the initial data, for example if the server requires a unit for an amount. This also applies if this property has a default value.</p><p>Note: After creation, the created entity is refreshed to ensure that the data specified in this list binding's $expand is available; to skip this refresh, set <code>bSkipRefresh</code> to <code>true</code>.</p>
              * @param {any} oInitialData <p>The initial data for the created entity</p>
              * @param {boolean} bSkipRefresh <p>Whether an automatic refresh of the created entity will be skipped</p>
              * @returns sap.ui.model.odata.v4.Context <p>The context object for the created entity; its method <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.Context/methods/created">sap.ui.model.odata.v4.Context#created</a> returns a promise that is resolved when the creation is finished</p>
@@ -17172,7 +17251,7 @@ declare namespace sap {
              */
             getCurrentContexts(): sap.ui.model.odata.v4.Context[];
             /**
-             * <p>Returns the header context which allows binding to <code>$count</code>. If known, the value of such a binding is the element count of the collection on the server. Otherwise it is <code>undefined</code>. The value is a number and its type is <code>Edm.Int64</code>.</p><p>The count is known to the binding in the following situations: <ul> <li>It has been requested from the server via the system query option <code>$count</code>. <li>A "short read" in a paged collection (the server delivered less elements than requested) indicated that the server has no more unread elements. <li>It has been read completely in one request, for example an embedded collection via <code>$expand</code>. </ul></p><p>The <code>$count</code> is unknown, if the binding is relative, but has no context.</p>
+             * <p>Returns the header context which allows binding to <code>$count</code>. If known, the value of such a binding is the sum of the element count of the collection on the server and the number of transient entities created on the client. Otherwise it is <code>undefined</code>. The value is a number and its type is <code>Edm.Int64</code>.</p><p>The count is known to the binding in the following situations: <ul> <li>The server-side count has been requested via the system query option <code>$count</code>. <li>A "short read" in a paged collection (the server delivered less elements than requested) indicated that the server has no more unread elements. <li>It has been read completely in one request, for example an embedded collection via <code>$expand</code>. </ul></p><p>The <code>$count</code> is unknown, if the binding is relative, but has no context.</p>
              * @returns sap.ui.model.odata.v4.Context <p>The header context or <code>null</code> if the binding is relative and has no context</p>
              */
             getHeaderContext(): sap.ui.model.odata.v4.Context;
@@ -18218,7 +18297,7 @@ declare namespace sap {
          */
         destroy(): void;
         /**
-         * <p>Cleans up the resources associated with this object and all its aggregated children.</p><p>After an object has been destroyed, it can no longer be used in!</p><p>Applications should call this method if they don't need the object any longer.</p>
+         * <p>Cleans up the resources associated with this object and all its aggregated children.</p><p>After an object has been destroyed, it can no longer be used!</p><p>Applications should call this method if they don't need the object any longer.</p>
          * @param {boolean} bSuppressInvalidate <p>if true, this ManagedObject is not marked as changed</p>
          */
         destroy(bSuppressInvalidate?: boolean): void;
@@ -20208,12 +20287,12 @@ declare namespace sap {
            */
           destroy(): void;
           /**
-           * <p>Cleans up the resources associated with this object and all its aggregated children.</p><p>After an object has been destroyed, it can no longer be used in!</p><p>Applications should call this method if they don't need the object any longer.</p>
+           * <p>Cleans up the resources associated with this object and all its aggregated children.</p><p>After an object has been destroyed, it can no longer be used!</p><p>Applications should call this method if they don't need the object any longer.</p>
            * @param {boolean} bSuppressInvalidate <p>if true, this ManagedObject is not marked as changed</p>
            */
           destroy(bSuppressInvalidate?: boolean): void;
           /**
-           * <p>Cleans up the resources associated with this object and all its aggregated children.</p><p>After an object has been destroyed, it can no longer be used in!</p><p>Applications should call this method if they don't need the object any longer.<br><br>References: <ul><li>sap.ui.base.ManagedObject#destroy</li></ul></p>
+           * <p>Cleans up the resources associated with this object and all its aggregated children.</p><p>After an object has been destroyed, it can no longer be used!</p><p>Applications should call this method if they don't need the object any longer.<br><br>References: <ul><li>sap.ui.base.ManagedObject#destroy</li></ul></p>
            * @param {boolean} bSuppressInvalidate <p>if true, this ManagedObject is not marked as changed</p>
            */
           destroy(bSuppressInvalidate?: boolean): void;

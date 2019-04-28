@@ -100,6 +100,11 @@ declare namespace sap {
 			 */
 			getDisplaySize(): sap.f.AvatarSize;
 			/**
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getFallbackIcon" href="#/api/sap.f.Avatar/methods/getFallbackIcon">fallbackIcon</a>.</p><p>Defines the fallback icon displayed in case of wrong image src and no initials set.</p><p><b>Notes:</b> <ul> <li>If not set, a default fallback icon is displayed depending on the set <code>displayShape</code> property.</li> <li>Accepted values are only icons from the SAP icon font.</li> </ul></p>
+			 * @returns string <p>Value of property <code>fallbackIcon</code></p>
+			 */
+			getFallbackIcon(): string;
+			/**
 			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getImageFitType" href="#/api/sap.f.Avatar/methods/getImageFitType">imageFitType</a>.</p><p>Specifies how an image would fit in the <code>Avatar</code>.</p><p>Default value is <code>Cover</code>.</p>
 			 * @returns sap.f.AvatarImageFitType <p>Value of property <code>imageFitType</code></p>
 			 */
@@ -166,6 +171,12 @@ declare namespace sap {
 			 * @returns sap.f.Avatar <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
 			setDisplaySize(sDisplaySize: sap.f.AvatarSize): sap.f.Avatar;
+			/**
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getFallbackIcon" href="#/api/sap.f.Avatar/methods/getFallbackIcon">fallbackIcon</a>.</p><p>Defines the fallback icon displayed in case of wrong image src and no initials set.</p><p><b>Notes:</b> <ul> <li>If not set, a default fallback icon is displayed depending on the set <code>displayShape</code> property.</li> <li>Accepted values are only icons from the SAP icon font.</li> </ul></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+			 * @param {string} sFallbackIcon <p>New value for property <code>fallbackIcon</code></p>
+			 * @returns sap.f.Avatar <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setFallbackIcon(sFallbackIcon: string): sap.f.Avatar;
 			/**
 			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getImageFitType" href="#/api/sap.f.Avatar/methods/getImageFitType">imageFitType</a>.</p><p>Specifies how an image would fit in the <code>Avatar</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Cover</code>.</p>
 			 * @param {sap.f.AvatarImageFitType} sImageFitType <p>New value for property <code>imageFitType</code></p>
@@ -293,6 +304,11 @@ declare namespace sap {
 			 */
 			protected getCardHeader(): sap.f.cards.IHeader;
 			/**
+			 * <p>Implements sap.f.ICard interface.</p>
+			 * @returns sap.f.cards.HeaderPosition <p>The position of the header of the card.</p>
+			 */
+			protected getCardHeaderPosition(): sap.f.cards.HeaderPosition;
+			/**
 			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getContent" href="#/api/sap.f.Card/methods/getContent">content</a>.</p><p>Defines the content of the card.</p>
 			 * @returns sap.ui.core.Control 
 			 */
@@ -302,6 +318,11 @@ declare namespace sap {
 			 * @returns sap.f.cards.IHeader 
 			 */
 			getHeader(): sap.f.cards.IHeader;
+			/**
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getHeaderPosition" href="#/api/sap.f.Card/methods/getHeaderPosition">headerPosition</a>.</p><p>Defines the position of the Card Header.</p><p>Default value is <code>Top</code>.</p>
+			 * @returns sap.f.cards.HeaderPosition <p>Value of property <code>headerPosition</code></p>
+			 */
+			getHeaderPosition(): sap.f.cards.HeaderPosition;
 			/**
 			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getHeight" href="#/api/sap.f.Card/methods/getHeight">height</a>.</p><p>Defines the height of the card.</p><p>Default value is <code>auto</code>.</p>
 			 * @returns sap.ui.core.CSSSize <p>Value of property <code>height</code></p>
@@ -324,6 +345,12 @@ declare namespace sap {
 			 * @returns sap.f.Card <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
 			setHeader(oHeader: sap.f.cards.IHeader): sap.f.Card;
+			/**
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getHeaderPosition" href="#/api/sap.f.Card/methods/getHeaderPosition">headerPosition</a>.</p><p>Defines the position of the Card Header.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Top</code>.</p>
+			 * @param {sap.f.cards.HeaderPosition} sHeaderPosition <p>New value for property <code>headerPosition</code></p>
+			 * @returns sap.f.Card <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setHeaderPosition(sHeaderPosition: sap.f.cards.HeaderPosition): sap.f.Card;
 			/**
 			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getHeight" href="#/api/sap.f.Card/methods/getHeight">height</a>.</p><p>Defines the height of the card.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>auto</code>.</p>
 			 * @param {sap.ui.core.CSSSize} sHeight <p>New value for property <code>height</code></p>
@@ -415,6 +442,11 @@ declare namespace sap {
 			 */
 			getShowFooter(): boolean;
 			/**
+			 * <p>ID of the element which is the current target of the association <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getStickySubheaderProvider" href="#/api/sap.f.DynamicPage/methods/getStickySubheaderProvider">stickySubheaderProvider</a>, or <code>null</code>.</p>
+			 * @returns sap.ui.core.ID 
+			 */
+			getStickySubheaderProvider(): sap.ui.core.ID;
+			/**
 			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTitle" href="#/api/sap.f.DynamicPage/methods/getTitle">title</a>.</p><p><code>DynamicPage</code> title.</p>
 			 * @returns sap.f.DynamicPageTitle 
 			 */
@@ -472,6 +504,12 @@ declare namespace sap {
 			 * @returns sap.f.DynamicPage <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
 			setShowFooter(bShowFooter: boolean): sap.f.DynamicPage;
+			/**
+			 * <p>Sets the associated <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getStickySubheaderProvider" href="#/api/sap.f.DynamicPage/methods/getStickySubheaderProvider">stickySubheaderProvider</a>.</p>
+			 * @param {sap.ui.core.ID | sap.f.IDynamicPageStickyContent} oStickySubheaderProvider <p>ID of an element which becomes the new target of this stickySubheaderProvider association; alternatively, an element instance may be given</p>
+			 * @returns sap.f.DynamicPage <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setStickySubheaderProvider(oStickySubheaderProvider: sap.ui.core.ID | sap.f.IDynamicPageStickyContent): sap.f.DynamicPage;
 			/**
 			 * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTitle" href="#/api/sap.f.DynamicPage/methods/getTitle">title</a>.</p>
 			 * @param {sap.f.DynamicPageTitle} oTitle <p>The title to set</p>
@@ -1528,6 +1566,296 @@ declare namespace sap {
 			getNextUIState(iNextLevel: number): any;
 		}
 		/**
+		 * <p>A layout container control used for aligning items with various sizes in a simple grid.</p><h3>Overview</h3><p>The control is used to align tiles, cards and other controls in configuration, such as a home page or a dashboard. It represents a grid layout with specific row and column sizes, in which the items can take any number of rows and columns.</p><p>The number of columns and rows each item takes can be configured with the use of the <code><a target="_self" class="jsdoclink" href="#/api/sap.f.GridContainerItemLayoutData">sap.f.GridContainerItemLayoutData</a></code>.</p><p>All rows have the same height and all columns have the same width. Their sizes can be configured with the use of the <code>layout</code> aggregation and <code><a target="_self" class="jsdoclink" href="#/api/sap.f.GridContainerSettings">sap.f.GridContainerSettings</a></code>.</p><h3>Usage</h3><p><i>When to use</i> <ul> <li>For aligning home page and dashboard items like Tiles and Cards in a simple grid system with equally sized rows and columns.</li> </ul></p><p><i>When not to use</i> <ul> <li>If a more complex layout grid system, where columns and rows may vary in size, is needed.</li> </ul></p><h3>Example:</h3><p> <pre>
+		&lt;f:GridContainer&gt;
+			&lt;f:layout&gt;
+				&lt;f:GridContainerSettings rowSize=&quot;5rem&quot; columnSize=&quot;5rem&quot; gap=&quot;1rem&quot; /&gt;
+			&lt;/f:layout&gt;
+			&lt;f:layoutS&gt;
+				&lt;f:GridContainerSettings rowSize=&quot;4rem&quot; columnSize=&quot;4rem&quot; gap=&quot;0.5rem&quot; /&gt;
+			&lt;/f:layoutS&gt;
+			&lt;f:items&gt;
+				&lt;GenericTile header=&quot;Sales Fulfillment&quot;&gt;
+					&lt;layoutData&gt;
+						&lt;f:GridContainerItemLayoutData rows=&quot;2&quot; columns=&quot;2&quot; /&gt;
+					&lt;/layoutData&gt;
+				&lt;/GenericTile&gt;
+				&lt;w:Card manifest=&quot;url-to-manifest&quot;&gt;
+					&lt;w:layoutData&gt;
+						&lt;f:GridContainerItemLayoutData rows=&quot;6&quot; columns=&quot;3&quot; /&gt;
+					&lt;/w:layoutData&gt;
+				&lt;/w:Card&gt;
+				&lt;Panel&gt;
+					&lt;layoutData&gt;
+						&lt;f:GridContainerItemLayoutData columns=&quot;4&quot; /&gt;
+					&lt;/layoutData&gt;
+					&lt;Text text=&quot;Sales information&quot; /&gt;
+				&lt;/Panel&gt;
+			&lt;/f:items&gt;
+		&lt;/f:GridContainer&gt;
+		</pre><br><br><span>Documentation links:</span><ul><li><a target="_self" href="#/topic/32d4b9c2b981425dbc374d3e9d5d0c2e">Grid Controls</a></li><li><a target="_self" href="#/topic/5b46b03f024542ba802d99d67bc1a3f4">Cards</a></li></ul></p>
+		 */
+		export class GridContainer extends sap.ui.core.Control {
+			/**
+			 * <p>Constructor for a new <code>sap.f.GridContainer</code>.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+			 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
+			 * @param {any} mSettings <p>Initial settings for the new control</p>
+			 */
+			constructor(sId?: string, mSettings?: any);
+			/**
+			 * <p>Adds some item to the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.f.GridContainer/methods/getItems">items</a>.</p>
+			 * @param {sap.ui.core.Control} oItem <p>The item to add; if empty, nothing is inserted</p>
+			 * @returns sap.f.GridContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			addItem(oItem: sap.ui.core.Control): sap.f.GridContainer;
+			/**
+			 * <p>Destroys all the items in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.f.GridContainer/methods/getItems">items</a>.</p>
+			 * @returns sap.f.GridContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			destroyItems(): sap.f.GridContainer;
+			/**
+			 * <p>Destroys the layout in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLayout" href="#/api/sap.f.GridContainer/methods/getLayout">layout</a>.</p>
+			 * @returns sap.f.GridContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			destroyLayout(): sap.f.GridContainer;
+			/**
+			 * <p>Destroys the layoutL in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLayoutL" href="#/api/sap.f.GridContainer/methods/getLayoutL">layoutL</a>.</p>
+			 * @returns sap.f.GridContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			destroyLayoutL(): sap.f.GridContainer;
+			/**
+			 * <p>Destroys the layoutM in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLayoutM" href="#/api/sap.f.GridContainer/methods/getLayoutM">layoutM</a>.</p>
+			 * @returns sap.f.GridContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			destroyLayoutM(): sap.f.GridContainer;
+			/**
+			 * <p>Destroys the layoutS in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLayoutS" href="#/api/sap.f.GridContainer/methods/getLayoutS">layoutS</a>.</p>
+			 * @returns sap.f.GridContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			destroyLayoutS(): sap.f.GridContainer;
+			/**
+			 * <p>Destroys the layoutXL in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLayoutXL" href="#/api/sap.f.GridContainer/methods/getLayoutXL">layoutXL</a>.</p>
+			 * @returns sap.f.GridContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			destroyLayoutXL(): sap.f.GridContainer;
+			/**
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getHeight" href="#/api/sap.f.GridContainer/methods/getHeight">height</a>.</p><p>Defines the height of the control</p><p>Default value is <code>empty string</code>.</p>
+			 * @returns sap.ui.core.CSSSize <p>Value of property <code>height</code></p>
+			 */
+			getHeight(): sap.ui.core.CSSSize;
+			/**
+			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.f.GridContainer/methods/getItems">items</a>.</p><p>The items contained by the control.</p>
+			 * @returns sap.ui.core.Control[] 
+			 */
+			getItems(): sap.ui.core.Control[];
+			/**
+			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLayout" href="#/api/sap.f.GridContainer/methods/getLayout">layout</a>.</p><p>The sap.f.GridContainerSettings applied if no settings are provided for a specific size If no layout is given, a default layout will be used. See the default values for <code>sap.f.GridContainerSettings</code>.</p>
+			 * @returns sap.f.GridContainerSettings 
+			 */
+			getLayout(): sap.f.GridContainerSettings;
+			/**
+			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLayoutL" href="#/api/sap.f.GridContainer/methods/getLayoutL">layoutL</a>.</p><p>The sap.f.GridContainerSettings applied for size "L"</p>
+			 * @returns sap.f.GridContainerSettings 
+			 */
+			getLayoutL(): sap.f.GridContainerSettings;
+			/**
+			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLayoutM" href="#/api/sap.f.GridContainer/methods/getLayoutM">layoutM</a>.</p><p>The sap.f.GridContainerSettings applied for size "M"</p>
+			 * @returns sap.f.GridContainerSettings 
+			 */
+			getLayoutM(): sap.f.GridContainerSettings;
+			/**
+			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLayoutS" href="#/api/sap.f.GridContainer/methods/getLayoutS">layoutS</a>.</p><p>The sap.f.GridContainerSettings applied for size "S"</p>
+			 * @returns sap.f.GridContainerSettings 
+			 */
+			getLayoutS(): sap.f.GridContainerSettings;
+			/**
+			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLayoutXL" href="#/api/sap.f.GridContainer/methods/getLayoutXL">layoutXL</a>.</p><p>The sap.f.GridContainerSettings applied for size "XL"</p>
+			 * @returns sap.f.GridContainerSettings 
+			 */
+			getLayoutXL(): sap.f.GridContainerSettings;
+			/**
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSnapToRow" href="#/api/sap.f.GridContainer/methods/getSnapToRow">snapToRow</a>.</p><p>Should the items stretch to fill the rows which they occupy, or not. If set to true the items will stretch.</p><p>Default value is <code>false</code>.</p>
+			 * @returns boolean <p>Value of property <code>snapToRow</code></p>
+			 */
+			getSnapToRow(): boolean;
+			/**
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getWidth" href="#/api/sap.f.GridContainer/methods/getWidth">width</a>.</p><p>Defines the width of the control</p><p>Default value is <code>empty string</code>.</p>
+			 * @returns sap.ui.core.CSSSize <p>Value of property <code>width</code></p>
+			 */
+			getWidth(): sap.ui.core.CSSSize;
+			/**
+			 * <p>Checks for the provided <code>sap.ui.core.Control</code> in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.f.GridContainer/methods/getItems">items</a>. and returns its index if found or -1 otherwise.</p>
+			 * @param {sap.ui.core.Control} oItem <p>The item whose index is looked for</p>
+			 * @returns number <p>The index of the provided control in the aggregation if found, or -1 otherwise</p>
+			 */
+			indexOfItem(oItem: sap.ui.core.Control): number;
+			/**
+			 * <p>Inserts a item into the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.f.GridContainer/methods/getItems">items</a>.</p>
+			 * @param {sap.ui.core.Control} oItem <p>The item to insert; if empty, nothing is inserted</p>
+			 * @param {number} iIndex <p>The <code>0</code>-based index the item should be inserted at; for a negative value of <code>iIndex</code>, the item is inserted at position 0; for a value greater than the current size of the aggregation, the item is inserted at the last position</p>
+			 * @returns sap.f.GridContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			insertItem(oItem: sap.ui.core.Control, iIndex: number): sap.f.GridContainer;
+			/**
+			 * <p>Removes all the controls from the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.f.GridContainer/methods/getItems">items</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
+			 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
+			 */
+			removeAllItems(): sap.ui.core.Control[];
+			/**
+			 * <p>Removes a item from the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.f.GridContainer/methods/getItems">items</a>.</p>
+			 * @param {number | string | sap.ui.core.Control} vItem <p>The item to remove or its index or id</p>
+			 * @returns sap.ui.core.Control <p>The removed item or <code>null</code></p>
+			 */
+			removeItem(vItem: number | string | sap.ui.core.Control): sap.ui.core.Control;
+			/**
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getHeight" href="#/api/sap.f.GridContainer/methods/getHeight">height</a>.</p><p>Defines the height of the control</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
+			 * @param {sap.ui.core.CSSSize} sHeight <p>New value for property <code>height</code></p>
+			 * @returns sap.f.GridContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setHeight(sHeight: sap.ui.core.CSSSize): sap.f.GridContainer;
+			/**
+			 * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLayout" href="#/api/sap.f.GridContainer/methods/getLayout">layout</a>.</p>
+			 * @param {sap.f.GridContainerSettings} oLayout <p>The layout to set</p>
+			 * @returns sap.f.GridContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setLayout(oLayout: sap.f.GridContainerSettings): sap.f.GridContainer;
+			/**
+			 * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLayoutL" href="#/api/sap.f.GridContainer/methods/getLayoutL">layoutL</a>.</p>
+			 * @param {sap.f.GridContainerSettings} oLayoutL <p>The layoutL to set</p>
+			 * @returns sap.f.GridContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setLayoutL(oLayoutL: sap.f.GridContainerSettings): sap.f.GridContainer;
+			/**
+			 * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLayoutM" href="#/api/sap.f.GridContainer/methods/getLayoutM">layoutM</a>.</p>
+			 * @param {sap.f.GridContainerSettings} oLayoutM <p>The layoutM to set</p>
+			 * @returns sap.f.GridContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setLayoutM(oLayoutM: sap.f.GridContainerSettings): sap.f.GridContainer;
+			/**
+			 * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLayoutS" href="#/api/sap.f.GridContainer/methods/getLayoutS">layoutS</a>.</p>
+			 * @param {sap.f.GridContainerSettings} oLayoutS <p>The layoutS to set</p>
+			 * @returns sap.f.GridContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setLayoutS(oLayoutS: sap.f.GridContainerSettings): sap.f.GridContainer;
+			/**
+			 * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLayoutXL" href="#/api/sap.f.GridContainer/methods/getLayoutXL">layoutXL</a>.</p>
+			 * @param {sap.f.GridContainerSettings} oLayoutXL <p>The layoutXL to set</p>
+			 * @returns sap.f.GridContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setLayoutXL(oLayoutXL: sap.f.GridContainerSettings): sap.f.GridContainer;
+			/**
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSnapToRow" href="#/api/sap.f.GridContainer/methods/getSnapToRow">snapToRow</a>.</p><p>Should the items stretch to fill the rows which they occupy, or not. If set to true the items will stretch.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+			 * @param {boolean} bSnapToRow <p>New value for property <code>snapToRow</code></p>
+			 * @returns sap.f.GridContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setSnapToRow(bSnapToRow: boolean): sap.f.GridContainer;
+			/**
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getWidth" href="#/api/sap.f.GridContainer/methods/getWidth">width</a>.</p><p>Defines the width of the control</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
+			 * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
+			 * @returns sap.f.GridContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setWidth(sWidth: sap.ui.core.CSSSize): sap.f.GridContainer;
+		}
+		/**
+		 * <p>Holds layout data for an item inside a <code>sap.f.GridContainer</code>.</p>
+		 */
+		export class GridContainerItemLayoutData extends sap.ui.core.LayoutData {
+			/**
+			 * <p>Constructor for a new <code>sap.f.GridContainerItemLayoutData</code>.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+			 * @param {string} sId <p>ID for the new element, generated automatically if no ID is given</p>
+			 * @param {any} mSettings <p>Initial settings for the new element.</p>
+			 */
+			constructor(sId?: string, mSettings?: any);
+			/**
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getColumns" href="#/api/sap.f.GridContainerItemLayoutData/methods/getColumns">columns</a>.</p><p>Specifies the number of columns, which the item should take</p><p>Default value is <code>1</code>.</p>
+			 * @returns number <p>Value of property <code>columns</code></p>
+			 */
+			getColumns(): number;
+			/**
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMinRows" href="#/api/sap.f.GridContainerItemLayoutData/methods/getMinRows">minRows</a>.</p><p>Specifies the minimum number of rows, which the item should take.</p>
+			 * @returns number <p>Value of property <code>minRows</code></p>
+			 */
+			getMinRows(): number;
+			/**
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getRows" href="#/api/sap.f.GridContainerItemLayoutData/methods/getRows">rows</a>.</p><p>Specifies the number of rows, which the item should take.</p>
+			 * @returns number <p>Value of property <code>rows</code></p>
+			 */
+			getRows(): number;
+			/**
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getColumns" href="#/api/sap.f.GridContainerItemLayoutData/methods/getColumns">columns</a>.</p><p>Specifies the number of columns, which the item should take</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1</code>.</p>
+			 * @param {number} iColumns <p>New value for property <code>columns</code></p>
+			 * @returns sap.f.GridContainerItemLayoutData <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setColumns(iColumns: number): sap.f.GridContainerItemLayoutData;
+			/**
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMinRows" href="#/api/sap.f.GridContainerItemLayoutData/methods/getMinRows">minRows</a>.</p><p>Specifies the minimum number of rows, which the item should take.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+			 * @param {number} iMinRows <p>New value for property <code>minRows</code></p>
+			 * @returns sap.f.GridContainerItemLayoutData <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setMinRows(iMinRows: number): sap.f.GridContainerItemLayoutData;
+			/**
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getRows" href="#/api/sap.f.GridContainerItemLayoutData/methods/getRows">rows</a>.</p><p>Specifies the number of rows, which the item should take.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+			 * @param {number} iRows <p>New value for property <code>rows</code></p>
+			 * @returns sap.f.GridContainerItemLayoutData <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setRows(iRows: number): sap.f.GridContainerItemLayoutData;
+		}
+		/**
+		 * <p>Holds a set of settings that define the dimensions of <code>sap.f.GridContainer</code></p><p>Can be used to define the sizes of columns and rows for different screen sizes, by using the <code>layout</code> aggregations of <code>sap.f.GridContainer</code>.</p>
+		 */
+		export class GridContainerSettings extends sap.ui.base.ManagedObject {
+			/**
+			 * <p>Constructor for a new <code>sap.f.GridContainerSettings</code>.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+			 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
+			 * @param {any} mSettings <p>Initial settings for the new control</p>
+			 */
+			constructor(sId?: string, mSettings?: any);
+			/**
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getColumns" href="#/api/sap.f.GridContainerSettings/methods/getColumns">columns</a>.</p><p>How many columns to have on a row. If not defined, <code>sap.f.GridContainer</code> will position as many columns as they can fit in the container.</p>
+			 * @returns Number <p>Value of property <code>columns</code></p>
+			 */
+			getColumns(): Number;
+			/**
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getColumnSize" href="#/api/sap.f.GridContainerSettings/methods/getColumnSize">columnSize</a>.</p><p>The width of the columns.</p><p>Default value is <code>80px</code>.</p>
+			 * @returns sap.ui.core.CSSSize <p>Value of property <code>columnSize</code></p>
+			 */
+			getColumnSize(): sap.ui.core.CSSSize;
+			/**
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getGap" href="#/api/sap.f.GridContainerSettings/methods/getGap">gap</a>.</p><p>The size of the gap between columns and rows.</p><p>Default value is <code>16px</code>.</p>
+			 * @returns sap.ui.core.CSSSize <p>Value of property <code>gap</code></p>
+			 */
+			getGap(): sap.ui.core.CSSSize;
+			/**
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getRowSize" href="#/api/sap.f.GridContainerSettings/methods/getRowSize">rowSize</a>.</p><p>The height of the rows.</p><p>Default value is <code>80px</code>.</p>
+			 * @returns sap.ui.core.CSSSize <p>Value of property <code>rowSize</code></p>
+			 */
+			getRowSize(): sap.ui.core.CSSSize;
+			/**
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getColumns" href="#/api/sap.f.GridContainerSettings/methods/getColumns">columns</a>.</p><p>How many columns to have on a row. If not defined, <code>sap.f.GridContainer</code> will position as many columns as they can fit in the container.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+			 * @param {Number} sColumns <p>New value for property <code>columns</code></p>
+			 * @returns sap.f.GridContainerSettings <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setColumns(sColumns: Number): sap.f.GridContainerSettings;
+			/**
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getColumnSize" href="#/api/sap.f.GridContainerSettings/methods/getColumnSize">columnSize</a>.</p><p>The width of the columns.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>80px</code>.</p>
+			 * @param {sap.ui.core.CSSSize} sColumnSize <p>New value for property <code>columnSize</code></p>
+			 * @returns sap.f.GridContainerSettings <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setColumnSize(sColumnSize: sap.ui.core.CSSSize): sap.f.GridContainerSettings;
+			/**
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getGap" href="#/api/sap.f.GridContainerSettings/methods/getGap">gap</a>.</p><p>The size of the gap between columns and rows.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>16px</code>.</p>
+			 * @param {sap.ui.core.CSSSize} sGap <p>New value for property <code>gap</code></p>
+			 * @returns sap.f.GridContainerSettings <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setGap(sGap: sap.ui.core.CSSSize): sap.f.GridContainerSettings;
+			/**
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getRowSize" href="#/api/sap.f.GridContainerSettings/methods/getRowSize">rowSize</a>.</p><p>The height of the rows.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>80px</code>.</p>
+			 * @param {sap.ui.core.CSSSize} sRowSize <p>New value for property <code>rowSize</code></p>
+			 * @returns sap.f.GridContainerSettings <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setRowSize(sRowSize: sap.ui.core.CSSSize): sap.f.GridContainerSettings;
+		}
+		/**
 		 * <p>A list-based control with grid layout capabilities.</p><h3>Overview</h3><p>The control is based on <a target="_self" class="jsdoclink" href="#/api/sap.m.ListBase">sap.m.ListBase</a> and adds the flexibility to configure different grid layouts. The layout used is based on the CSS display grid and the control has a default configuration.</p><p>With <code>customLayout</code> aggregation it is possible to use: <ul> <li>Predefined simple grid layouts such as <a target="_self" class="jsdoclink" href="#/api/sap.ui.layout.cssgrid.GridBoxLayout">GridBoxLayout</a></li> <li>Flexible grid layouts, such as <a target="_self" class="jsdoclink" href="#/api/sap.ui.layout.cssgrid.GridBasicLayout">GridBasicLayout</a> or <a target="_self" class="jsdoclink" href="#/api/sap.ui.layout.cssgrid.GridResponsiveLayout">GridResponsiveLayout</a> which reveal the native-browser CSS display grid APIs. For more information, see <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout">MDN web docs: CSS Grid Layout</a>
 		<img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
 		title="Information published on non SAP site" class="sapUISDKExternalLink"/></li> </ul></p><p>Every item can override its size by specifying the number of columns and/or rows it will take in the grid. This is done using <a target="_self" class="jsdoclink" href="#/api/sap.ui.layout.cssgrid.GridItemLayoutData">GridItemLayoutData</a>.</p><h3>Usage</h3><p>For general cases, use the default grid configuration of the <code>GridList</code>. For Box case (equal sized items), use <code>customLayout</code> aggregation with <a target="_self" class="jsdoclink" href="#/api/sap.ui.layout.cssgrid.GridBoxLayout">GridBoxLayout</a> For Grids which need different configurations based on available width, use <code>customLayout</code> aggregation with <a target="_self" class="jsdoclink" href="#/api/sap.ui.layout.cssgrid.GridResponsiveLayout">GridResponsiveLayout</a> To set a specific position to an item or define its dimensions in the grid, pass <code>layoutData</code> of type <a target="_self" class="jsdoclink" href="#/api/sap.ui.layout.cssgrid.GridItemLayoutData">GridItemLayoutData</a></p><p><i>When to use</i> <ul> <li>If <a target="_self" class="jsdoclink" href="#/api/sap.m.ListBase">sap.m.ListBase</a> features are required and the items must be positioned in a grid layout</li> </ul></p><p><i>When not to use</i> <ul> <li>If a list layout is required, use <a target="_self" class="jsdoclink" href="#/api/sap.m.List">sap.m.List</a> instead. <li>If only the layout is required, use <a target="_self" class="jsdoclink" href="#/api/sap.ui.layout.cssgrid.CSSGrid">sap.ui.layout.cssgrid.CSSGrid</a> instead. </ul></p><h3>Current Limitations</h3><p> <ul> <li>For Microsoft Internet Explorer some layouts are not supported, due to browser specifics.</li> <li>For Microsoft Edge 15 and older versions some layouts are not supported, due to browser specifics.</li> </ul><br><br><span>Documentation links:</span><ul><li><a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout">MDN web docs: CSS Grid Layout</a>
@@ -1571,6 +1899,11 @@ declare namespace sap {
 		 * <p><p>Interface for card controls</p></p>
 		 */
 		export interface ICard {
+		}
+		/**
+		 * <p><p>Interface for controls suitable for the <code>stickySubheaderProvider</code> association of <code><a target="_self" class="jsdoclink" href="#/api/sap.f.DynamicPage">sap.f.DynamicPage</a></code>.</p><p>Controls that implemenet this interface should have the following methods: <ul> <li><code>_getStickyContent</code> - returns the content (control) used in the subheader</li> <li><code>_returnStickyContent</code> - accepts control as argument and ensures that the control is placed back in its place in the provider</li> <li><code>_getStickySubHeaderSticked</code> - returns boolean value that shows where the sticky content is placed (in its provider or in the <code>DynamicPage</code>)</li> <li><code>_setStickySubHeaderSticked</code> - accepts a boolean argument to notify the provider where its sticky content is placed</li> </ul></p></p>
+		 */
+		export interface IDynamicPageStickyContent {
 		}
 		/**
 		 * <p><p>Interface for controls suitable for the <code>additionalContent</code> aggregation of <code><a target="_self" class="jsdoclink" href="#/api/sap.f.ShellBar">sap.f.ShellBar</a></code>.</p></p>
@@ -1629,11 +1962,30 @@ declare namespace sap {
 			 */
 			constructor(sId?: string, mSettings?: any);
 			/**
+			 * <p>Gets the available Bar contexts.</p>
+			 */
+			protected getContext: any;
+			/**
+			 * <p>Sets classes according to the context of the page. Possible contexts are header, footer, and subheader.</p>
+			 * @returns sap.m.IBar <p><code>this</code> for chaining</p>
+			 */
+			protected _applyContextClassFor(): sap.m.IBar;
+			/**
+			 * <p>Sets the HTML tag according to the context of the page. Possible contexts are header, footer, and subheader.</p>
+			 * @returns sap.m.IBar <p><code>this</code> for chaining</p>
+			 */
+			protected _applyTag(): sap.m.IBar;
+			/**
 			 * <p>Adds some additionalContent to the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAdditionalContent" href="#/api/sap.f.ShellBar/methods/getAdditionalContent">additionalContent</a>.</p>
 			 * @param {sap.f.IShellBar} oAdditionalContent <p>The additionalContent to add; if empty, nothing is inserted</p>
 			 * @returns sap.f.ShellBar <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
 			addAdditionalContent(oAdditionalContent: sap.f.IShellBar): sap.f.ShellBar;
+			/**
+			 * <p>Sets classes and HTML tag according to the context of the page. Possible contexts are header, footer, and subheader</p>
+			 * @returns sap.m.IBar <p><code>this</code> for chaining</p>
+			 */
+			protected applyTagAndContextClassFor(): sap.m.IBar;
 			/**
 			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="avatarPressed" href="#/api/sap.f.ShellBar/events/avatarPressed">avatarPressed</a> event of this <code>sap.f.ShellBar</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.ShellBar</code> itself.</p><p>Fired when the profile avatar is pressed.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
@@ -1828,6 +2180,11 @@ declare namespace sap {
 			 */
 			getHomeIcon(): sap.ui.core.URI;
 			/**
+			 * <p>Gets the HTML tag of the root DOM Reference.</p>
+			 * @returns string <p>the HTML-tag</p>
+			 */
+			protected getHTMLTag(): string;
+			/**
 			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMenu" href="#/api/sap.f.ShellBar/methods/getMenu">menu</a>.</p><p>The menu attached to the main title.</p>
 			 * @returns sap.m.Menu 
 			 */
@@ -1896,6 +2253,11 @@ declare namespace sap {
 			 */
 			insertAdditionalContent(oAdditionalContent: sap.f.IShellBar, iIndex: number): sap.f.ShellBar;
 			/**
+			 * <p>Returns if the bar is sensitive to the container context. Implementation of the IBar interface</p>
+			 * @returns boolean <p>isContextSensitive</p>
+			 */
+			protected isContextSensitive(): boolean;
+			/**
 			 * <p>Removes a additionalContent from the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAdditionalContent" href="#/api/sap.f.ShellBar/methods/getAdditionalContent">additionalContent</a>.</p>
 			 * @param {number | string | sap.f.IShellBar} vAdditionalContent <p>The additionalContent to remove or its index or id</p>
 			 * @returns sap.f.IShellBar <p>The removed additionalContent or <code>null</code></p>
@@ -1912,6 +2274,12 @@ declare namespace sap {
 			 * @returns sap.f.ShellBar <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
 			setHomeIcon(sHomeIcon: sap.ui.core.URI): sap.f.ShellBar;
+			/**
+			 * <p>Sets the HTML tag of the root DOM Reference.</p>
+			 * @param {string} sTag 
+			 * @returns sap.m.IBar <p>this for chaining</p>
+			 */
+			protected setHTMLTag(sTag: string): sap.m.IBar;
 			/**
 			 * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMenu" href="#/api/sap.f.ShellBar/methods/getMenu">menu</a>.</p>
 			 * @param {sap.m.Menu} oMenu <p>The menu to set</p>
@@ -2054,6 +2422,10 @@ declare namespace sap {
 				 */
 				getTitle(): string;
 				/**
+				 * @returns boolean <p>If the header is ready or not.</p>
+				 */
+				isReady(): boolean;
+				/**
 				 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getIconDisplayShape" href="#/api/sap.f.cards.Header/methods/getIconDisplayShape">iconDisplayShape</a>.</p><p>Defines the shape of the icon.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Circle</code>.</p>
 				 * @param {sap.f.AvatarShape} sIconDisplayShape <p>New value for property <code>iconDisplayShape</code></p>
 				 * @returns sap.f.cards.Header <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -2089,6 +2461,19 @@ declare namespace sap {
 				 * @returns sap.f.cards.Header <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
 				setTitle(sTitle: string): sap.f.cards.Header;
+			}
+			/**
+			 * <p><p>Different options for the position of the <code>Card</code> header.</p></p>
+			 */
+			export enum HeaderPosition {
+				/**
+				 * <p>The Header is under the content.</p>
+				 */
+				Bottom = "Bottom",
+				/**
+				 * <p>The Header is over the content.</p>
+				 */
+				Top = "Top",
 			}
 			/**
 			 * <p><p>Marker interface for card headers</p></p>
@@ -2195,6 +2580,10 @@ declare namespace sap {
 				 * @returns sap.f.cards.NumericHeader <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
 				insertSideIndicator(oSideIndicator: sap.f.cards.NumericSideIndicator, iIndex: number): sap.f.cards.NumericHeader;
+				/**
+				 * @returns boolean <p>If the header is ready or not.</p>
+				 */
+				isReady(): boolean;
 				/**
 				 * <p>Removes all the controls from the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSideIndicators" href="#/api/sap.f.cards.NumericHeader/methods/getSideIndicators">sideIndicators</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 				 * @returns sap.f.cards.NumericSideIndicator[] <p>An array of the removed elements (might be empty)</p>
@@ -3046,7 +3435,7 @@ declare namespace sap {
 				 */
 				getTitleCustomIconActions(): sap.m.OverflowToolbarButton[];
 				/**
-				 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTitleCustomTextActions" href="#/api/sap.f.semantic.SemanticPage/methods/getTitleCustomTextActions">titleCustomTextActions</a>.</p><p>The <code>titleCustomTextActions</code> are placed in the <code>TextActions</code> area of the <code>SemanticPage</code> title, right before the semantic text action.</p><p><b>Note:</b> If the <code>titleSnappedOnMobile</code> aggregation is set, its content overrides this aggregation when the control is viewed on a phone mobile device and the <code>SemanticPage</code> header is in its collapsed (snapped) state.</p>
+				 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTitleCustomTextActions" href="#/api/sap.f.semantic.SemanticPage/methods/getTitleCustomTextActions">titleCustomTextActions</a>.</p><p>The <code>titleCustomTextActions</code> are placed in the <code>TextActions</code> area of the <code>SemanticPage</code> title, right before the semantic text action.</p><p><b>Notes:</b> <ul> <li>If the <code>titleSnappedOnMobile</code> aggregation is set, its content overrides this aggregation when the control is viewed on a phone mobile device and the <code>SemanticPage</code> header is in its collapsed (snapped) state.</li> <li>Buttons that are part of this aggregation will always have their <code>type</code> property set to <code>Transparent</code> by design.</li> </ul></p>
 				 * @returns sap.m.Button[] 
 				 */
 				getTitleCustomTextActions(): sap.m.Button[];

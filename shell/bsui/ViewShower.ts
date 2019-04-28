@@ -130,7 +130,7 @@ namespace shell {
                     this.busyDialog.open();
                 } else {
                     if (!ibas.objects.isNull(this.busyDialog)) {
-                        this.busyDialog.close();
+                        this.busyDialog.close(false);
                         this.busyDialog.destroy(true);
                         this.busyDialog = undefined;
                     }

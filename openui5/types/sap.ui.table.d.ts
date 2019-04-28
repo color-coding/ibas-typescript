@@ -342,7 +342,7 @@ declare namespace sap {
                  */
                 getDefaultFilterOperator(): string;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getFiltered" href="#/api/sap.ui.table.Column/methods/getFiltered">filtered</a>.</p><p>Indicates if the column is filtered. This property only controls if a filter indicator is displayed in the column header - it does not trigger the filter function. The column has to be filtered by calling <code>Column.sort()</code></p><p>Default value is <code>false</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getFiltered" href="#/api/sap.ui.table.Column/methods/getFiltered">filtered</a>.</p><p>Indicates if the column is filtered. This property only controls if a filter indicator is displayed in the column header - it does not trigger the filter function. The column can be filtered using <a target="_self" class="jsdoclink" href="#/api/sap.ui.table.Table/methods/filter">sap.ui.table.Table#filter</a>.</p><p>Default value is <code>false</code>.</p>
                  * @returns boolean <p>Value of property <code>filtered</code></p>
                  */
                 getFiltered(): boolean;
@@ -434,7 +434,7 @@ declare namespace sap {
                  */
                 getShowSortMenuEntry(): boolean;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSorted" href="#/api/sap.ui.table.Column/methods/getSorted">sorted</a>.</p><p>Indicates if the column is sorted. This property only controls if a sort indicator is displayed in the column header - it does not trigger the sort function. The column has to be sorted by calling <code>Column.sort()</code></p><p>Default value is <code>false</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSorted" href="#/api/sap.ui.table.Column/methods/getSorted">sorted</a>.</p><p>Indicates if the column is sorted. This property only controls if a sort indicator is displayed in the column header - it does not trigger the sort function. The column can be sorted using <a target="_self" class="jsdoclink" href="#/api/sap.ui.table.Table/methods/sort">sap.ui.table.Table#sort</a>.</p><p>Default value is <code>false</code>.</p>
                  * @returns boolean <p>Value of property <code>sorted</code></p>
                  */
                 getSorted(): boolean;
@@ -454,9 +454,9 @@ declare namespace sap {
                  */
                 getTemplate(): sap.ui.core.Control | string;
                 /**
-                 * <p>Returns a column template clone. It either finds an unused clone or clones a new one from the column template.</p>
-                 * @param {number} iIndex <p>Index of the column in the column aggregation of the table</p>
-                 * @returns sap.ui.core.Control|null <p>Clone of the column template, or <code>null</code> if no column template is defined</p>
+                 * <p>Returns a template clone. It either finds an unused clone or clones a new one from the template.</p>
+                 * @param {number} iIndex <p>Index of the column in the columns aggregation of the table</p>
+                 * @returns sap.ui.core.Control|null <p>Clone of the template, or <code>null</code> if no template is defined</p>
                  */
                 protected getTemplateClone(iIndex: number): sap.ui.core.Control | null;
                 /**
@@ -506,7 +506,7 @@ declare namespace sap {
                  */
                 setDefaultFilterOperator(sDefaultFilterOperator: string): sap.ui.table.Column;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getFiltered" href="#/api/sap.ui.table.Column/methods/getFiltered">filtered</a>.</p><p>Indicates if the column is filtered. This property only controls if a filter indicator is displayed in the column header - it does not trigger the filter function. The column has to be filtered by calling <code>Column.sort()</code></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getFiltered" href="#/api/sap.ui.table.Column/methods/getFiltered">filtered</a>.</p><p>Indicates if the column is filtered. This property only controls if a filter indicator is displayed in the column header - it does not trigger the filter function. The column can be filtered using <a target="_self" class="jsdoclink" href="#/api/sap.ui.table.Table/methods/filter">sap.ui.table.Table#filter</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bFiltered <p>New value for property <code>filtered</code></p>
                  * @returns sap.ui.table.Column <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
@@ -608,7 +608,7 @@ declare namespace sap {
                  */
                 setShowSortMenuEntry(bShowSortMenuEntry: boolean): sap.ui.table.Column;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSorted" href="#/api/sap.ui.table.Column/methods/getSorted">sorted</a>.</p><p>Indicates if the column is sorted. This property only controls if a sort indicator is displayed in the column header - it does not trigger the sort function. The column has to be sorted by calling <code>Column.sort()</code></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSorted" href="#/api/sap.ui.table.Column/methods/getSorted">sorted</a>.</p><p>Indicates if the column is sorted. This property only controls if a sort indicator is displayed in the column header - it does not trigger the sort function. The column can be sorted using <a target="_self" class="jsdoclink" href="#/api/sap.ui.table.Table/methods/sort">sap.ui.table.Table#sort</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bSorted <p>New value for property <code>sorted</code></p>
                  * @returns sap.ui.table.Column <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
@@ -659,6 +659,110 @@ declare namespace sap {
                  * @param {any} mSettings <p>initial settings for the new control</p>
                  */
                 constructor(sId?: string, mSettings?: any);
+            }
+            /**
+             * <p>Allows to enter data in a row shaped form, if placed inside a <a target="_self" class="jsdoclink" href="#/api/sap.ui.table.Table">sap.ui.table.Table</a>. The form elements (<code>cells</code> aggregation) are aligned with the columns of the table, and are created automatically based on the <a target="_self" class="jsdoclink" href="#/api/sap.ui.table.Column/methods/getCreationTemplate">creationTemplate</a> aggregation of the <a target="_self" class="jsdoclink" href="#/api/sap.ui.table.Column">sap.ui.table.Column</a>.</p><p><b>Note:</b> This control is compatible only with the <code>sap.m</code> library. Do not use it together with the <code>sap.ui.commons</code> library.</p>
+             */
+            export class CreationRow extends sap.ui.core.Control {
+                /**
+                 * <p>Constructor for a new CreationRow.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+                 * @param {string} sId <p>id for the new control, generated automatically if no id is given</p>
+                 * @param {any} mSettings <p>initial settings for the new control</p>
+                 */
+                constructor(sId?: string, mSettings?: any);
+                /**
+                 * <p>Adds some cell to the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getCells" href="#/api/sap.ui.table.CreationRow/methods/getCells">cells</a>.</p>
+                 * @param {sap.ui.core.Control} oCell <p>The cell to add; if empty, nothing is inserted</p>
+                 * @returns sap.ui.table.CreationRow <p>Reference to <code>this</code> in order to allow method chaining</p>
+                 */
+                addCell(oCell: sap.ui.core.Control): sap.ui.table.CreationRow;
+                /**
+                 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="apply" href="#/api/sap.ui.table.CreationRow/events/apply">apply</a> event of this <code>sap.ui.table.CreationRow</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.table.CreationRow</code> itself.</p><p>Fired when the corresponding keyboard shortcut or the apply button of the default toolbar are pressed.</p>
+                 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+                 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+                 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.table.CreationRow</code> itself</p>
+                 * @returns sap.ui.table.CreationRow <p>Reference to <code>this</code> in order to allow method chaining</p>
+                 */
+                attachApply(oData: any, fnFunction: Function, oListener?: any): sap.ui.table.CreationRow;
+                /**
+                 * <p>Destroys all the cells in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getCells" href="#/api/sap.ui.table.CreationRow/methods/getCells">cells</a>.</p>
+                 * @returns sap.ui.table.CreationRow <p>Reference to <code>this</code> in order to allow method chaining</p>
+                 */
+                destroyCells(): sap.ui.table.CreationRow;
+                /**
+                 * <p>Destroys the toolbar in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getToolbar" href="#/api/sap.ui.table.CreationRow/methods/getToolbar">toolbar</a>.</p>
+                 * @returns sap.ui.table.CreationRow <p>Reference to <code>this</code> in order to allow method chaining</p>
+                 */
+                destroyToolbar(): sap.ui.table.CreationRow;
+                /**
+                 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="apply" href="#/api/sap.ui.table.CreationRow/events/apply">apply</a> event of this <code>sap.ui.table.CreationRow</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+                 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+                 * @param {any} oListener <p>Context object on which the given function had to be called</p>
+                 * @returns sap.ui.table.CreationRow <p>Reference to <code>this</code> in order to allow method chaining</p>
+                 */
+                detachApply(fnFunction: Function, oListener?: any): sap.ui.table.CreationRow;
+                /**
+                 * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="apply" href="#/api/sap.ui.table.CreationRow/events/apply">apply</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by using the <code>preventDefault</code>-method on the event object.</p>
+                 * @param {any} mParameters <p>Parameters to pass along with the event</p>
+                 * @returns boolean <p>Whether or not to prevent the default action</p>
+                 */
+                protected fireApply(mParameters?: any): boolean;
+                /**
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getApplyEnabled" href="#/api/sap.ui.table.CreationRow/methods/getApplyEnabled">applyEnabled</a>.</p><p>If set to <code>false</code>, the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="apply" href="#/api/sap.ui.table.CreationRow/events/apply">apply</a> event is not fired. The corresponding keyboard shortcut and the apply button of the default toolbar are disabled.</p><p>Default value is <code>true</code>.</p>
+                 * @returns boolean <p>Value of property <code>applyEnabled</code></p>
+                 */
+                getApplyEnabled(): boolean;
+                /**
+                 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getCells" href="#/api/sap.ui.table.CreationRow/methods/getCells">cells</a>.</p><p>The actual cells are a table-internal construct. The controls in this aggregation are the content of the cells. This aggregation is managed by the table and must not be manipulated. Only read access is allowed.</p>
+                 * @returns sap.ui.core.Control[] 
+                 */
+                getCells(): sap.ui.core.Control[];
+                /**
+                 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getToolbar" href="#/api/sap.ui.table.CreationRow/methods/getToolbar">toolbar</a>.</p><p>The toolbar that is placed below the form. If no toolbar is set, a default toolbar is created. Basic buttons and functionality are provided only in the default toolbar.</p>
+                 * @returns sap.ui.core.Toolbar 
+                 */
+                getToolbar(): sap.ui.core.Toolbar;
+                /**
+                 * <p>Checks for the provided <code>sap.ui.core.Control</code> in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getCells" href="#/api/sap.ui.table.CreationRow/methods/getCells">cells</a>. and returns its index if found or -1 otherwise.</p>
+                 * @param {sap.ui.core.Control} oCell <p>The cell whose index is looked for</p>
+                 * @returns number <p>The index of the provided control in the aggregation if found, or -1 otherwise</p>
+                 */
+                indexOfCell(oCell: sap.ui.core.Control): number;
+                /**
+                 * <p>Inserts a cell into the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getCells" href="#/api/sap.ui.table.CreationRow/methods/getCells">cells</a>.</p>
+                 * @param {sap.ui.core.Control} oCell <p>The cell to insert; if empty, nothing is inserted</p>
+                 * @param {number} iIndex <p>The <code>0</code>-based index the cell should be inserted at; for a negative value of <code>iIndex</code>, the cell is inserted at position 0; for a value greater than the current size of the aggregation, the cell is inserted at the last position</p>
+                 * @returns sap.ui.table.CreationRow <p>Reference to <code>this</code> in order to allow method chaining</p>
+                 */
+                insertCell(oCell: sap.ui.core.Control, iIndex: number): sap.ui.table.CreationRow;
+                /**
+                 * <p>Removes all the controls from the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getCells" href="#/api/sap.ui.table.CreationRow/methods/getCells">cells</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
+                 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
+                 */
+                removeAllCells(): sap.ui.core.Control[];
+                /**
+                 * <p>Removes a cell from the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getCells" href="#/api/sap.ui.table.CreationRow/methods/getCells">cells</a>.</p>
+                 * @param {number | string | sap.ui.core.Control} vCell <p>The cell to remove or its index or id</p>
+                 * @returns sap.ui.core.Control <p>The removed cell or <code>null</code></p>
+                 */
+                removeCell(vCell: number | string | sap.ui.core.Control): sap.ui.core.Control;
+                /**
+                 * <p>Sets the focus to the first editable form element.</p>
+                 * @returns boolean <p>Whether the focus was set</p>
+                 */
+                resetFocus(): boolean;
+                /**
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getApplyEnabled" href="#/api/sap.ui.table.CreationRow/methods/getApplyEnabled">applyEnabled</a>.</p><p>If set to <code>false</code>, the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="apply" href="#/api/sap.ui.table.CreationRow/events/apply">apply</a> event is not fired. The corresponding keyboard shortcut and the apply button of the default toolbar are disabled.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+                 * @param {boolean} bApplyEnabled <p>New value for property <code>applyEnabled</code></p>
+                 * @returns sap.ui.table.CreationRow <p>Reference to <code>this</code> in order to allow method chaining</p>
+                 */
+                setApplyEnabled(bApplyEnabled: boolean): sap.ui.table.CreationRow;
+                /**
+                 * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getToolbar" href="#/api/sap.ui.table.CreationRow/methods/getToolbar">toolbar</a>.</p>
+                 * @param {sap.ui.core.Toolbar} oToolbar <p>The toolbar to set</p>
+                 * @returns sap.ui.table.CreationRow <p>Reference to <code>this</code> in order to allow method chaining</p>
+                 */
+                setToolbar(oToolbar: sap.ui.core.Toolbar): sap.ui.table.CreationRow;
             }
             /**
              * <p><p>Details about the group event to distinguish between different actions associated with grouping</p></p>
@@ -728,7 +832,7 @@ declare namespace sap {
                  */
                 destroyCells(): sap.ui.table.Row;
                 /**
-                 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getCells" href="#/api/sap.ui.table.Row/methods/getCells">cells</a>.</p><p>The controls for the cells.</p>
+                 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getCells" href="#/api/sap.ui.table.Row/methods/getCells">cells</a>.</p><p>The actual cells are a table-internal construct. The controls in this aggregation are the content of the cells. This aggregation is managed by the table and must not be manipulated. Only read access is allowed.</p>
                  * @returns sap.ui.core.Control[] 
                  */
                 getCells(): sap.ui.core.Control[];
@@ -1171,7 +1275,7 @@ declare namespace sap {
                  */
                 attachPaste(oData: any, fnFunction: Function, oListener?: any): sap.ui.table.Table;
                 /**
-                 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="rowSelectionChange" href="#/api/sap.ui.table.Table/events/rowSelectionChange">rowSelectionChange</a> event of this <code>sap.ui.table.Table</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.table.Table</code> itself.</p><p>fired when the row selection of the table has been changed (the event parameters can be used to determine selection changes - to find out the selected rows you should better use the table selection API)</p>
+                 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="rowSelectionChange" href="#/api/sap.ui.table.Table/events/rowSelectionChange">rowSelectionChange</a> event of this <code>sap.ui.table.Table</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.table.Table</code> itself.</p><p>fired when the row selection of the table has been changed (the event parameters can be used to determine selection changes - to find out the selected rows you should better use the table selection API)</p><p><b>Note:</b> When a selection plugin is applied to the table, this event won't be fired.</p>
                  * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
                  * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
                  * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.table.Table</code> itself</p>
@@ -1544,7 +1648,7 @@ declare namespace sap {
                  */
                 getEnableCustomFilter(): boolean;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEnableGrouping" href="#/api/sap.ui.table.Table/methods/getEnableGrouping">enableGrouping</a>.</p><p>Enables or disables grouping. If grouping is enabled, the table is grouped by the column which is defined in the <code>groupBy</code> association.</p><p>The following restrictions apply: <ul> <li>Only client models are supported (e.g. <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.json.JSONModel">sap.ui.model.json.JSONModel</a>). Grouping does not work with OData models.</li> <li>The table can only be grouped by <b>one</b> column at a time. Grouping by another column will remove the current grouping.</li> <li>If grouping has been done, sorting and filtering is not possible. Any existing sorting and filtering rules do no longer apply. The UI is not updated accordingly (e.g. menu items, sort and filter icons).</li> <li>The column, by which the table is grouped, is not visible. It will become visible again only if the table is grouped by another column or grouping is disabled.</li> </ul></p><p>Default value is <code>false</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEnableGrouping" href="#/api/sap.ui.table.Table/methods/getEnableGrouping">enableGrouping</a>.</p><p>Enables or disables grouping. If grouping is enabled, the table is grouped by the column which is defined in the <code>groupBy</code> association.</p><p>The following restrictions apply: <ul> <li>Only client models are supported (e.g. <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.json.JSONModel">sap.ui.model.json.JSONModel</a>). Grouping does not work with OData models.</li> <li>The table can only be grouped by <b>one</b> column at a time. Grouping by another column will remove the current grouping.</li> <li>For the grouping to work correctly, <a target="_self" class="jsdoclink" href="#/api/sap.ui.table.Column/methods/getSortProperty">sortProperty</a> must be set for the grouped column.</li> <li>If grouping has been done, sorting and filtering is not possible. Any existing sorting and filtering rules do no longer apply. The UI is not updated accordingly (e.g. menu items, sort and filter icons).</li> <li>The column, by which the table is grouped, is not visible. It will become visible again only if the table is grouped by another column or grouping is disabled.</li> </ul></p><p>Default value is <code>false</code>.</p>
                  * @returns boolean <p>Value of property <code>enableGrouping</code></p>
                  */
                 getEnableGrouping(): boolean;
@@ -1644,7 +1748,7 @@ declare namespace sap {
                  */
                 getSelectionBehavior(): sap.ui.table.SelectionBehavior;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSelectionMode" href="#/api/sap.ui.table.Table/methods/getSelectionMode">selectionMode</a>.</p><p>Selection mode of the Table. This property controls whether single or multiple rows can be selected and how the selection can be extended. It may also influence the visual appearance. When the selection mode is changed, the current selection is removed. <b>Note:</b> Since the group header visualization relies on the row selectors, the row selectors are always shown if the grouping functionality (depends on table type) is enabled, even if <code>sap.ui.table.SelectionMode.None</code> is set. <b>Note:</b> When the MultiSelectionPlugin is applied to the table, the selection mode is controlled by the plugin and cannot be changed manually.</p><p>Default value is <code>MultiToggle</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSelectionMode" href="#/api/sap.ui.table.Table/methods/getSelectionMode">selectionMode</a>.</p><p>Selection mode of the Table. This property controls whether single or multiple rows can be selected and how the selection can be extended. It may also influence the visual appearance. When the selection mode is changed, the current selection is removed. <b>Note:</b> Since the group header visualization relies on the row selectors, the row selectors are always shown if the grouping functionality (depends on table type) is enabled, even if <code>sap.ui.table.SelectionMode.None</code> is set. <b>Note:</b> When a selection plugin is applied to the table, the selection mode is controlled by the plugin and cannot be changed manually.</p><p>Default value is <code>MultiToggle</code>.</p>
                  * @returns sap.ui.table.SelectionMode <p>Value of property <code>selectionMode</code></p>
                  */
                 getSelectionMode(): sap.ui.table.SelectionMode;
@@ -1879,7 +1983,7 @@ declare namespace sap {
                  */
                 setEnableCustomFilter(bEnableCustomFilter: boolean): sap.ui.table.Table;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEnableGrouping" href="#/api/sap.ui.table.Table/methods/getEnableGrouping">enableGrouping</a>.</p><p>Enables or disables grouping. If grouping is enabled, the table is grouped by the column which is defined in the <code>groupBy</code> association.</p><p>The following restrictions apply: <ul> <li>Only client models are supported (e.g. <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.json.JSONModel">sap.ui.model.json.JSONModel</a>). Grouping does not work with OData models.</li> <li>The table can only be grouped by <b>one</b> column at a time. Grouping by another column will remove the current grouping.</li> <li>If grouping has been done, sorting and filtering is not possible. Any existing sorting and filtering rules do no longer apply. The UI is not updated accordingly (e.g. menu items, sort and filter icons).</li> <li>The column, by which the table is grouped, is not visible. It will become visible again only if the table is grouped by another column or grouping is disabled.</li> </ul></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEnableGrouping" href="#/api/sap.ui.table.Table/methods/getEnableGrouping">enableGrouping</a>.</p><p>Enables or disables grouping. If grouping is enabled, the table is grouped by the column which is defined in the <code>groupBy</code> association.</p><p>The following restrictions apply: <ul> <li>Only client models are supported (e.g. <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.json.JSONModel">sap.ui.model.json.JSONModel</a>). Grouping does not work with OData models.</li> <li>The table can only be grouped by <b>one</b> column at a time. Grouping by another column will remove the current grouping.</li> <li>For the grouping to work correctly, <a target="_self" class="jsdoclink" href="#/api/sap.ui.table.Column/methods/getSortProperty">sortProperty</a> must be set for the grouped column.</li> <li>If grouping has been done, sorting and filtering is not possible. Any existing sorting and filtering rules do no longer apply. The UI is not updated accordingly (e.g. menu items, sort and filter icons).</li> <li>The column, by which the table is grouped, is not visible. It will become visible again only if the table is grouped by another column or grouping is disabled.</li> </ul></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bEnableGrouping <p>New value for property <code>enableGrouping</code></p>
                  * @returns sap.ui.table.Table <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */

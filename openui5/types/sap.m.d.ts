@@ -731,7 +731,7 @@ declare namespace sap {
              * @param {boolean} isClosedFromUserInteraction <p>Indicates if the BusyDialog is closed from a user interaction.</p>
              * @returns sap.m.BusyDialog <p>The modified BusyDialog.</p>
              */
-            close(isClosedFromUserInteraction?: boolean): sap.m.BusyDialog;
+            close(isClosedFromUserInteraction: boolean): sap.m.BusyDialog;
             /**
              * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="close" href="#/api/sap.m.BusyDialog/events/close">close</a> event of this <code>sap.m.BusyDialog</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
              * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
@@ -1892,7 +1892,7 @@ declare namespace sap {
              */
             getMergeDuplicates(): boolean;
             /**
-             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMergeFunctionName" href="#/api/sap.m.Column/methods/getMergeFunctionName">mergeFunctionName</a>.</p><p>Defines the control serialization function if <code>mergeDuplicates<code> property is set to <code>true</code>. The control itself uses this function to compare values of two repeating cells. Default value "getText" is suitable for <code>sap.m.Label</code> and <code>sap.m.Text</code> controls but for the <code>sap.ui.core.Icon</code> control "getSrc" function should be used to merge icons. <b>Note:</b> You can pass one string parameter to given function after "#" sign. e.g. "data#myparameter"</p><p>Default value is <code>getText</code>.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMergeFunctionName" href="#/api/sap.m.Column/methods/getMergeFunctionName">mergeFunctionName</a>.</p><p>Defines the control serialization function if <code>mergeDuplicates</code> property is set to <code>true</code>. The control itself uses this function to compare values of two repeating cells. Default value "getText" is suitable for <code>sap.m.Label</code> and <code>sap.m.Text</code> controls but for the <code>sap.ui.core.Icon</code> control "getSrc" function should be used to merge icons. <b>Note:</b> You can pass one string parameter to given function after "#" sign. e.g. "data#myparameter"</p><p>Default value is <code>getText</code>.</p>
              * @returns string <p>Value of property <code>mergeFunctionName</code></p>
              */
             getMergeFunctionName(): string;
@@ -2006,7 +2006,7 @@ declare namespace sap {
              */
             setMergeDuplicates(bMergeDuplicates: boolean): sap.m.Column;
             /**
-             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMergeFunctionName" href="#/api/sap.m.Column/methods/getMergeFunctionName">mergeFunctionName</a>.</p><p>Defines the control serialization function if <code>mergeDuplicates<code> property is set to <code>true</code>. The control itself uses this function to compare values of two repeating cells. Default value "getText" is suitable for <code>sap.m.Label</code> and <code>sap.m.Text</code> controls but for the <code>sap.ui.core.Icon</code> control "getSrc" function should be used to merge icons. <b>Note:</b> You can pass one string parameter to given function after "#" sign. e.g. "data#myparameter"</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>getText</code>.</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMergeFunctionName" href="#/api/sap.m.Column/methods/getMergeFunctionName">mergeFunctionName</a>.</p><p>Defines the control serialization function if <code>mergeDuplicates</code> property is set to <code>true</code>. The control itself uses this function to compare values of two repeating cells. Default value "getText" is suitable for <code>sap.m.Label</code> and <code>sap.m.Text</code> controls but for the <code>sap.ui.core.Icon</code> control "getSrc" function should be used to merge icons. <b>Note:</b> You can pass one string parameter to given function after "#" sign. e.g. "data#myparameter"</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>getText</code>.</p>
              * @param {string} sMergeFunctionName <p>New value for property <code>mergeFunctionName</code></p>
              * @returns sap.m.Column <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
@@ -2170,11 +2170,6 @@ declare namespace sap {
              */
             protected _configureList(oList: sap.m.List): void;
             /**
-             * <p>Creates and configures a new instance of SuggestionsPopover and its internal controls.</p>
-             * @returns sap.m.Popover|sap.m.Dialog <p>The picker popup to be used.</p>
-             */
-            protected _createSuggestionsPopover(): sap.m.Popover | sap.m.Dialog;
-            /**
              * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="change" href="#/api/sap.m.InputBase/events/change">change</a> event of this <code>sap.m.InputBase</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.m.InputBase</code> itself.</p><p>Is fired when the text in the input field has changed and the focus leaves the input field or the enter key is pressed.</p>
              * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
              * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
@@ -2217,16 +2212,15 @@ declare namespace sap {
              */
             close(): sap.m.ComboBox;
             /**
-             * <p>Creates a picker popup container where the selection should take place. To be overwritten by subclasses.</p>
-             * @param {string} sPickerType <p>The picker type</p>
+             * <p>Base method for picker configuration</p>
+             * @param {sap.m.Popover | sap.m.Dialog} oPicker <p>Picker instance</p>
              */
-            protected createPicker(sPickerType: string): void;
+            protected configPicker(oPicker: sap.m.Popover | sap.m.Dialog): void;
             /**
-             * <p>Creates a picker popup container where the selection should take place.</p><p>To be overwritten by subclasses.</p>
-             * @param {string} sPickerType <p>The type of the picker</p>
-             * @returns sap.m.Popover|sap.m.Dialog <p>The picker popup to be used.</p>
+             * <p><code>ComboBox</code> picker configuration</p>
+             * @param {sap.m.Popover | sap.m.Dialog} oPicker <p>Picker instance</p>
              */
-            protected createPicker(sPickerType: string): sap.m.Popover | sap.m.Dialog;
+            protected configPicker(oPicker: sap.m.Popover | sap.m.Dialog): void;
             /**
              * <p>Destroys all the items in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.m.ComboBoxBase/methods/getItems">items</a>.</p>
              * @returns sap.m.ComboBoxBase <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -2258,6 +2252,10 @@ declare namespace sap {
              * @returns sap.m.ComboBox <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             detachSelectionChange(fnFunction: Function, oListener?: any): sap.m.ComboBox;
+            /**
+             * <p>This method will be called when the ComboBox is being destroyed.</p>
+             */
+            protected exit(): void;
             /**
              * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="change" href="#/api/sap.m.InputBase/events/change">change</a> to attached listeners.</p>
              * @param {any} mParameters <p>Parameters to pass along with the event</p>
@@ -2302,19 +2300,47 @@ declare namespace sap {
              */
             getSelectedKey(): string;
             /**
+             * <p>This method will be called when the ComboBox is initially created.</p>
+             */
+            protected init(): void;
+            /**
+             * <p>This event handler will be called after the ComboBox Picker's List is rendered.</p>
+             */
+            protected onAfterRenderingList(): void;
+            /**
+             * <p>This event handler will be called after the ComboBox's Picker is rendered.</p>
+             */
+            protected onAfterRenderingPicker(): void;
+            /**
              * <p>This event handler is called before the picker popup is opened.</p>
              */
             protected onBeforeOpen(): void;
             /**
+             * <p>This event handler will be called before the ComboBox is rendered.</p>
+             */
+            protected onBeforeRendering(): void;
+            /**
+             * <p>This event handler will be called before the ComboBox' Picker of type <code>sap.m.Popover</code> is rendered.</p>
+             */
+            protected onBeforeRenderingDropdown(): void;
+            /**
+             * <p>This event handler will be called before the ComboBox Picker's List is rendered.</p>
+             */
+            protected onBeforeRenderingList(): void;
+            /**
+             * <p>This event handler will be called before the ComboBox's Picker is rendered.</p>
+             */
+            protected onBeforeRenderingPicker(): void;
+            /**
              * <p>Opens the control's picker popup.</p>
              * @returns sap.m.ComboBoxBase <p><code>this</code> to allow method chaining.</p>
              */
             protected open(): sap.m.ComboBoxBase;
             /**
              * <p>Opens the control's picker popup.</p>
-             * @returns sap.m.ComboBoxBase <p><code>this</code> to allow method chaining.</p>
+             * @returns sap.m.ComboBox <p><code>this</code> to allow method chaining.</p>
              */
-            protected open(): sap.m.ComboBoxBase;
+            protected open(): sap.m.ComboBox;
             /**
              * <p>Removes an item from the aggregation named <code>items</code>.</p>
              * @param {number | string | sap.ui.core.Item} vItem <p>The item to remove or its index or ID.</p>
@@ -2381,6 +2407,16 @@ declare namespace sap {
              */
             constructor(sId?: string, mSettings?: any);
             /**
+             * <p>Gets the ID of the hidden label for the group header items</p>
+             * @returns string <p>Id of hidden text</p>
+             */
+            protected _getGroupHeaderInvisibleText(): string;
+            /**
+             * <p>Handles highlighting of items after filtering.</p>
+             * @param {string} sValue <p>The value of the item</p>
+             */
+            protected _highlightList(sValue: string): void;
+            /**
              * <p>Adds an item to the aggregation named <code>items</code>.</p>
              * @param {sap.ui.core.Item} oItem <p>The item to be added; if empty, nothing is added.</p>
              * @returns sap.m.ComboBoxBase <p><code>this</code> to allow method chaining.</p>
@@ -2410,15 +2446,25 @@ declare namespace sap {
              */
             close(): sap.m.ComboBoxBase;
             /**
+             * <p>Base method for picker configuration</p>
+             * @param {sap.m.Popover | sap.m.Dialog} oPicker <p>Picker instance</p>
+             */
+            protected configPicker(oPicker: sap.m.Popover | sap.m.Dialog): void;
+            /**
              * <p>Creates a picker popup container where the selection should take place. To be overwritten by subclasses.</p>
              * @param {string} sPickerType <p>The picker type</p>
+             * @returns sap.m.Popover|sap.m.Dialog <p>The picker popup to be used.</p>
              */
-            protected createPicker(sPickerType: string): void;
+            protected createPicker(sPickerType: string): sap.m.Popover | sap.m.Dialog;
             /**
              * <p>Creates an instance of <code>sap.m.Bar</code>.</p>
              * @returns sap.m.Bar <p>Picker's header</p>
              */
             protected createPickerHeader(): sap.m.Bar;
+            /**
+             * <p>Base method for picker text field creation</p>
+             */
+            protected createPickerTextField(): void;
             /**
              * <p>Destroys all the items in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.m.ComboBoxBase/methods/getItems">items</a>.</p>
              * @returns sap.m.ComboBoxBase <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -2574,11 +2620,22 @@ declare namespace sap {
              */
             protected setPickerType(sPickerType: string): void;
             /**
+             * <p>Sets the selectable property of <code>sap.ui.core.Item</code></p>
+             * @param {sap.ui.core.Item} oItem <p>The item to set the property</p>
+             * @param {boolean} bSelectable <p>The selectable value</p>
+             */
+            protected setSelectable(oItem: sap.ui.core.Item, bSelectable: boolean): void;
+            /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getShowSecondaryValues" href="#/api/sap.m.ComboBoxBase/methods/getShowSecondaryValues">showSecondaryValues</a>.</p><p>Indicates whether the text values of the <code>additionalText</code> property of a <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.ListItem">sap.ui.core.ListItem</a> are shown.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
              * @param {boolean} bShowSecondaryValues <p>New value for property <code>showSecondaryValues</code></p>
              * @returns sap.m.ComboBoxBase <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             setShowSecondaryValues(bShowSecondaryValues: boolean): sap.m.ComboBoxBase;
+            /**
+             * <p>Sets the TextField handler</p>
+             * @param {sap.m.TextField} oTextField <p>Text field instance</p>
+             */
+            protected setTextFieldHandler(oTextField: any): void;
             /**
              * <p>Opens the <code>SuggestionsPopover</code> with the available items.</p>
              * @param {Function} fnFilter <p>Function to filter the items shown in the SuggestionsPopover</p>
@@ -3999,6 +4056,11 @@ declare namespace sap {
              * @returns sap.m.Dialog <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             setVerticalScrolling(bVerticalScrolling: boolean): sap.m.Dialog;
+        }
+        /**
+         * <p><p>Enum for the ARIA role of <a target="_self" class="jsdoclink" href="#/api/sap.m.Dialog">sap.m.Dialog</a> control.</p></p>
+         */
+        export enum DialogRoleType {
         }
         /**
          * <p><p>Enum for the type of <a target="_self" class="jsdoclink" href="#/api/sap.m.Dialog">sap.m.Dialog</a> control.</p></p>
@@ -11862,11 +11924,6 @@ declare namespace sap {
              */
             constructor(sId?: string, mSettings?: any);
             /**
-             * <p>Creates a new sap.m.Input control for the SuggestionsPopover dialog.</p>
-             * @returns sap.m.Input <p>The newly created input control</p>
-             */
-            protected _createPickerTextField(): sap.m.Input;
-            /**
              * <p>Adds some item <code>oItem</code> to the association named <code>selectedItems</code>.</p>
              * @param {sap.ui.core.Item} oItem <p>The selected item to add; if empty, nothing is added.</p>
              * @returns sap.m.MultiComboBox <p><code>this</code> to allow method chaining.</p>
@@ -11903,16 +11960,15 @@ declare namespace sap {
              */
             protected clearSelection(): void;
             /**
-             * <p>Creates a picker popup container where the selection should take place. To be overwritten by subclasses.</p>
-             * @param {string} sPickerType <p>The picker type</p>
+             * <p>Base method for picker configuration</p>
+             * @param {sap.m.Popover | sap.m.Dialog} oPicker <p>Picker instance</p>
              */
-            protected createPicker(sPickerType: string): void;
+            protected configPicker(oPicker: sap.m.Popover | sap.m.Dialog): void;
             /**
-             * <p>Creates a picker. To be overwritten by subclasses.</p>
-             * @param {string} sPickerType <p>The picker type</p>
-             * @returns sap.m.Popover|sap.m.Dialog <p>The picker pop-up to be used</p>
+             * <p><code>MultiComboBox</code> picker configuration</p>
+             * @param {sap.m.Popover | sap.m.Dialog} oPicker <p>Picker instance</p>
              */
-            protected createPicker(sPickerType: string): sap.m.Popover | sap.m.Dialog;
+            protected configPicker(oPicker: sap.m.Popover | sap.m.Dialog): void;
             /**
              * <p>Destroys all the items in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.m.ComboBoxBase/methods/getItems">items</a>.</p>
              * @returns sap.m.ComboBoxBase <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -11950,15 +12006,19 @@ declare namespace sap {
              */
             protected fireSelectionFinish(mParameters?: any): sap.m.MultiComboBox;
             /**
+             * <p>References: <ul><li>sap.ui.core.Control#getAccessibilityInfo</li></ul></p>
+             */
+            protected getAccessibilityInfo(): any;
+            /**
+             * <p>Gets the accessibility info for the control<br><br>References: <ul><li>sap.ui.core.Control#getAccessibilityInfo</li></ul></p>
+             * @returns string <p>The accessibility text</p>
+             */
+            protected getAccessibilityInfo(): string;
+            /**
              * <p>Retrieves the selected item objects from the association named <code>selectedItems</code>.</p>
              * @returns sap.ui.core.Item[] <p>Array of sap.ui.core.Item instances. The current target of the <code>selectedItems</code> association.</p>
              */
             getSelectedItems(): sap.ui.core.Item[];
-            /**
-             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSelectedKeys" href="#/api/sap.m.MultiComboBox/methods/getSelectedKeys">selectedKeys</a>.</p><p>Keys of the selected items. If the key has no corresponding item, no changes will apply. If duplicate keys exists the first item matching the key is used.</p><p>Default value is <code>[]</code>.</p>
-             * @returns string[] <p>Value of property <code>selectedKeys</code></p>
-             */
-            getSelectedKeys(): string[];
             /**
              * <p>Inserts an item into the aggregation named <code>items</code>.</p>
              * @param {sap.ui.core.Item} oItem <p>The item to be inserted; if empty, nothing is inserted.</p>
@@ -11974,13 +12034,33 @@ declare namespace sap {
              */
             insertItem(oItem: sap.ui.core.Item, iIndex: number): sap.m.MultiComboBox;
             /**
+             * <p>Checks whether an item is selected.</p>
+             * @param {sap.ui.core.Item} oItem <p>The item to check.</p>
+             * @returns boolean <p>True if the item is selected.</p>
+             */
+            isItemSelected(oItem: sap.ui.core.Item): boolean;
+            /**
              * <p>This hook method is called after the MultiComboBox's Pop-up is rendered.</p>
              */
             protected onAfterRenderingPicker(): void;
             /**
+             * <p>This hook method is called before the MultiComboBox is rendered.</p>
+             */
+            protected onBeforeRendering(): void;
+            /**
              * <p>This hook method is called before the MultiComboBox's Pop-up is rendered.</p>
              */
             protected onBeforeRenderingPicker(): void;
+            /**
+             * <p>Opens the control's picker popup.</p>
+             * @returns sap.m.ComboBoxBase <p><code>this</code> to allow method chaining.</p>
+             */
+            protected open(): sap.m.ComboBoxBase;
+            /**
+             * <p>Opens the control's picker popup.</p>
+             * @returns sap.m.MultiComboBox <p><code>this</code> to allow method chaining.</p>
+             */
+            protected open(): sap.m.MultiComboBox;
             /**
              * <p>Removes all the controls in the aggregation named <code>items</code>. Additionally unregisters them from the hosting UIArea and clears the selection.</p>
              * @returns sap.ui.core.Item[] <p>An array of the removed items (might be empty).</p>
@@ -11992,7 +12072,7 @@ declare namespace sap {
              */
             removeAllItems(): sap.ui.core.Item[];
             /**
-             * <p>Removes all the controls in the association named <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSelectedItems" href="#/api/sap.m.MultiComboBox/methods/getSelectedItems">selectedItems</a>.</p>
+             * <p>Removes all the controls in the association named selectedItems.</p>
              * @returns sap.ui.core.ID[] <p>An array of the removed elements (might be empty)</p>
              */
             removeAllSelectedItems(): sap.ui.core.ID[];
@@ -12009,11 +12089,11 @@ declare namespace sap {
              */
             removeItem(oItem: number | string | sap.ui.core.Item): sap.ui.core.Item;
             /**
-             * <p>Removes an selectedItem from the association named <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSelectedItems" href="#/api/sap.m.MultiComboBox/methods/getSelectedItems">selectedItems</a>.</p>
-             * @param {number | sap.ui.core.ID | sap.ui.core.Item} vSelectedItem <p>The selectedItem to be removed or its index or ID</p>
-             * @returns sap.ui.core.ID <p>The removed selectedItem or <code>null</code></p>
+             * <p>Removes an selectedItem from the association named <code>selectedItems</code>.</p>
+             * @param {sap.ui.core.Item | sap.ui.core.ID | string} oItem <p>The item to be removed</p>
+             * @returns sap.ui.core.ID|null <p>The removed selectedItem or null</p>
              */
-            removeSelectedItem(vSelectedItem: number | sap.ui.core.ID | sap.ui.core.Item): sap.ui.core.ID;
+            removeSelectedItem(oItem: sap.ui.core.Item | sap.ui.core.ID | string): sap.ui.core.ID | null;
             /**
              * <p>Removes selected items. Only items with valid keys are removed.</p>
              * @param {string[]} aKeys <p>An array of item keys that identifies the items to be removed</p>
@@ -12026,12 +12106,6 @@ declare namespace sap {
              * @returns sap.m.MultiComboBox <p><code>this</code> to allow method chaining.</p>
              */
             setSelectedItems(aItems: string[] | sap.ui.core.Item[] | null): sap.m.MultiComboBox;
-            /**
-             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSelectedKeys" href="#/api/sap.m.MultiComboBox/methods/getSelectedKeys">selectedKeys</a>.</p><p>Keys of the selected items. If the key has no corresponding item, no changes will apply. If duplicate keys exists the first item matching the key is used.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>[]</code>.</p>
-             * @param {string[]} sSelectedKeys <p>New value for property <code>selectedKeys</code></p>
-             * @returns sap.m.MultiComboBox <p>Reference to <code>this</code> in order to allow method chaining</p>
-             */
-            setSelectedKeys(sSelectedKeys: string[]): sap.m.MultiComboBox;
         }
         /**
          * <p>This control allows you to add items to a sap.m.Select instance. In addition, based on the property set, a set of pre-filled entries is added.</p>
@@ -13661,7 +13735,7 @@ declare namespace sap {
              */
             getNumberUnit(): string;
             /**
-             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getResponsive" href="#/api/sap.m.ObjectHeader/methods/getResponsive">responsive</a>.</p><p>Determines whether the <code>ObjectHeader</code> is rendered with a different design that reacts responsively to the screen sizes.</p><p><b>Note:</b> Be aware that the design and behavior of the responsive <code>ObjectHeader</code> could change without further notification.</p><p>Default value is <code>false</code>.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getResponsive" href="#/api/sap.m.ObjectHeader/methods/getResponsive">responsive</a>.</p><p>Determines whether the <code>ObjectHeader</code> is rendered with a different design that reacts responsively to the screen sizes.</p><p>When the <code>responsive</code> property is set to <code>true</code>, the following behavior specifics for the control exist: <ul> <li>If an image (or an icon font) is set to the <code>icon</code> property, it is hidden in portrait mode on phone.</li> <li>The title is truncated to 80 characters if longer. For portrait mode on phone, the title is truncated to 50 characters.</li> </ul></p><p>Default value is <code>false</code>.</p>
              * @returns boolean <p>Value of property <code>responsive</code></p>
              */
             getResponsive(): boolean;
@@ -13955,7 +14029,7 @@ declare namespace sap {
              */
             setNumberUnit(sUnit: string): sap.m.ObjectHeader;
             /**
-             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getResponsive" href="#/api/sap.m.ObjectHeader/methods/getResponsive">responsive</a>.</p><p>Determines whether the <code>ObjectHeader</code> is rendered with a different design that reacts responsively to the screen sizes.</p><p><b>Note:</b> Be aware that the design and behavior of the responsive <code>ObjectHeader</code> could change without further notification.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getResponsive" href="#/api/sap.m.ObjectHeader/methods/getResponsive">responsive</a>.</p><p>Determines whether the <code>ObjectHeader</code> is rendered with a different design that reacts responsively to the screen sizes.</p><p>When the <code>responsive</code> property is set to <code>true</code>, the following behavior specifics for the control exist: <ul> <li>If an image (or an icon font) is set to the <code>icon</code> property, it is hidden in portrait mode on phone.</li> <li>The title is truncated to 80 characters if longer. For portrait mode on phone, the title is truncated to 50 characters.</li> </ul></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
              * @param {boolean} bResponsive <p>New value for property <code>responsive</code></p>
              * @returns sap.m.ObjectHeader <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
@@ -14810,7 +14884,7 @@ declare namespace sap {
             setTitle(sTitle: string): sap.m.ObjectStatus;
         }
         /**
-         * <p>A container control based on <a target="_self" class="jsdoclink" href="#/api/sap.m.Toolbar">sap.m.Toolbar</a>, that provides overflow when its content does not fit in the visible area.</p><h3>Overview</h3><p>The content of the <code>OverflowToolbar</code> moves into the overflow area from right to left when the available space is not enough in the visible area of the container. It can be accessed by the user through the overflow button that opens it in a popover.</p><p><b>Note:</b> It is recommended that you use <code>OverflowToolbar</code> over <a target="_self" class="jsdoclink" href="#/api/sap.m.Toolbar">sap.m.Toolbar</a>, unless you want to avoid overflow in favor of shrinking.</p><h3>Usage</h3><p>Different behavior and priorities can be set for each control inside the <code>OverflowToolbar</code>, such as certain controls to appear only in the overflow area or to never move there. For more information, see <a target="_self" class="jsdoclink" href="#/api/sap.m.OverflowToolbarLayoutData">sap.m.OverflowToolbarLayoutData</a> and <a target="_self" class="jsdoclink" href="#/api/sap.m.OverflowToolbarPriority">sap.m.OverflowToolbarPriority</a>.</p><h3>Overflow Behavior</h3><p> By default, only the following controls can move to the overflow area:</p><p><ul><li><a target="_self" class="jsdoclink" href="#/api/sap.m.Button">sap.m.Button</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.m.CheckBox">sap.m.CheckBox</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.m.ComboBox">sap.m.ComboBox</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.m.DatePicker">sap.m.DatePicker</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.m.DateTimeInput">sap.m.DateTimeInput</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.m.DateTimePicker">sap.m.DateTimePicker</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.m.GenericTag">sap.m.GenericTag</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.m.Input">sap.m.Input</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.m.Label">sap.m.Label</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.m.MenuButton">sap.m.MenuButton</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.m.OverflowToolbarButton">sap.m.OverflowToolbarButton</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.m.OverflowToolbarToggleButton">sap.m.OverflowToolbarToggleButton</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.m.SearchField">sap.m.SearchField</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.m.SegmentedButton">sap.m.SegmentedButton</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.m.Select">sap.m.Select</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.m.TimePicker">sap.m.TimePicker</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.m.ToggleButton">sap.m.ToggleButton</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.ui.comp.smartfield.SmartField">sap.ui.comp.smartfield.SmartField</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.ui.comp.smartfield.SmartLabel">sap.ui.comp.smartfield.SmartLabel</a></li></ul></p><p>Additionally, any control that implements the <a target="_self" class="jsdoclink" href="#/api/sap.m.IOverflowToolbarContent">sap.m.IOverflowToolbarContent</a> interface may define its behavior (most importantly overflow behavior) when placed inside <code>OverflowToolbar</code>.</p><p><b>Note:</b> The <code>OverflowToolbar</code> is an adaptive container that checks the available width and hides the part of its content that doesn't fit. It is intended that simple controls, such as <a target="_self" class="jsdoclink" href="#/api/sap.m.Button">sap.m.Button</a> and <a target="_self" class="jsdoclink" href="#/api/sap.m.Label">sap.m.Label</a> are used as content. Embedding other adaptive container controls, such as <a target="_self" class="jsdoclink" href="#/api/sap.m.Breadcrumbs">sap.m.Breadcrumbs</a>, results in competition for the available space - both controls calculate the available space based on the other one's size and both change their width at the same time, leading to incorrectly distributed space.</p><h3>Responsive behavior</h3><p>The height of the toolbar changes on desktop, tablet, and smartphones.</p>
+         * <p>A container control based on <a target="_self" class="jsdoclink" href="#/api/sap.m.Toolbar">sap.m.Toolbar</a>, that provides overflow when its content does not fit in the visible area.</p><h3>Overview</h3><p>The content of the <code>OverflowToolbar</code> moves into the overflow area from right to left when the available space is not enough in the visible area of the container. It can be accessed by the user through the overflow button that opens it in a popover.</p><p><b>Note:</b> It is recommended that you use <code>OverflowToolbar</code> over <a target="_self" class="jsdoclink" href="#/api/sap.m.Toolbar">sap.m.Toolbar</a>, unless you want to avoid overflow in favor of shrinking.</p><h3>Usage</h3><p>Different behavior and priorities can be set for each control inside the <code>OverflowToolbar</code>, such as certain controls to appear only in the overflow area or to never move there. For more information, see <a target="_self" class="jsdoclink" href="#/api/sap.m.OverflowToolbarLayoutData">sap.m.OverflowToolbarLayoutData</a> and <a target="_self" class="jsdoclink" href="#/api/sap.m.OverflowToolbarPriority">sap.m.OverflowToolbarPriority</a>.</p><h3>Overflow Behavior</h3><p> By default, only the following controls can move to the overflow area:</p><p><ul><li><a target="_self" class="jsdoclink" href="#/api/sap.m.Button">sap.m.Button</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.m.CheckBox">sap.m.CheckBox</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.m.ComboBox">sap.m.ComboBox</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.m.DatePicker">sap.m.DatePicker</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.m.DateTimeInput">sap.m.DateTimeInput</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.m.DateTimePicker">sap.m.DateTimePicker</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.m.GenericTag">sap.m.GenericTag</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.m.Input">sap.m.Input</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.m.Label">sap.m.Label</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.m.MenuButton">sap.m.MenuButton</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.m.OverflowToolbarButton">sap.m.OverflowToolbarButton</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.m.OverflowToolbarToggleButton">sap.m.OverflowToolbarToggleButton</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.m.SearchField">sap.m.SearchField</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.m.SegmentedButton">sap.m.SegmentedButton</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.m.Select">sap.m.Select</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.m.TimePicker">sap.m.TimePicker</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.m.ToggleButton">sap.m.ToggleButton</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.m.ToolbarSeparator">sap.m.ToolbarSeparator</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.ui.comp.smartfield.SmartField">sap.ui.comp.smartfield.SmartField</a></li> <li><a target="_self" class="jsdoclink" href="#/api/sap.ui.comp.smartfield.SmartLabel">sap.ui.comp.smartfield.SmartLabel</a></li></ul></p><p>Additionally, any control that implements the <a target="_self" class="jsdoclink" href="#/api/sap.m.IOverflowToolbarContent">sap.m.IOverflowToolbarContent</a> interface may define its behavior (most importantly overflow behavior) when placed inside <code>OverflowToolbar</code>.</p><p><b>Note:</b> The <code>OverflowToolbar</code> is an adaptive container that checks the available width and hides the part of its content that doesn't fit. It is intended that simple controls, such as <a target="_self" class="jsdoclink" href="#/api/sap.m.Button">sap.m.Button</a> and <a target="_self" class="jsdoclink" href="#/api/sap.m.Label">sap.m.Label</a> are used as content. Embedding other adaptive container controls, such as <a target="_self" class="jsdoclink" href="#/api/sap.m.Breadcrumbs">sap.m.Breadcrumbs</a>, results in competition for the available space - both controls calculate the available space based on the other one's size and both change their width at the same time, leading to incorrectly distributed space.</p><h3>Responsive behavior</h3><p>The height of the toolbar changes on desktop, tablet, and smartphones.</p>
          */
         export class OverflowToolbar extends sap.m.Toolbar {
             /**
@@ -23936,6 +24010,14 @@ declare namespace sap {
              */
             addView(oView: sap.m.SinglePlanningCalendarView): sap.m.SinglePlanningCalendar;
             /**
+             * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="appointmentCreate" href="#/api/sap.m.SinglePlanningCalendar/events/appointmentCreate">appointmentCreate</a> event of this <code>sap.m.SinglePlanningCalendar</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.m.SinglePlanningCalendar</code> itself.</p><p>Fired if an appointment is created.</p>
+             * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+             * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+             * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.m.SinglePlanningCalendar</code> itself</p>
+             * @returns sap.m.SinglePlanningCalendar <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            attachAppointmentCreate(oData: any, fnFunction: Function, oListener?: any): sap.m.SinglePlanningCalendar;
+            /**
              * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="appointmentDrop" href="#/api/sap.m.SinglePlanningCalendar/events/appointmentDrop">appointmentDrop</a> event of this <code>sap.m.SinglePlanningCalendar</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.m.SinglePlanningCalendar</code> itself.</p><p>Fired if an appointment is dropped.</p>
              * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
              * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
@@ -23944,6 +24026,14 @@ declare namespace sap {
              */
             attachAppointmentDrop(oData: any, fnFunction: Function, oListener?: any): sap.m.SinglePlanningCalendar;
             /**
+             * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="appointmentResize" href="#/api/sap.m.SinglePlanningCalendar/events/appointmentResize">appointmentResize</a> event of this <code>sap.m.SinglePlanningCalendar</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.m.SinglePlanningCalendar</code> itself.</p><p>Fired when an appointment is resized.</p>
+             * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+             * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+             * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.m.SinglePlanningCalendar</code> itself</p>
+             * @returns sap.m.SinglePlanningCalendar <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            attachAppointmentResize(oData: any, fnFunction: Function, oListener?: any): sap.m.SinglePlanningCalendar;
+            /**
              * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="appointmentSelect" href="#/api/sap.m.SinglePlanningCalendar/events/appointmentSelect">appointmentSelect</a> event of this <code>sap.m.SinglePlanningCalendar</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.m.SinglePlanningCalendar</code> itself.</p><p>Fired if an appointment is selected.</p>
              * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
              * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
@@ -23951,6 +24041,14 @@ declare namespace sap {
              * @returns sap.m.SinglePlanningCalendar <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             attachAppointmentSelect(oData: any, fnFunction: Function, oListener?: any): sap.m.SinglePlanningCalendar;
+            /**
+             * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="cellPress" href="#/api/sap.m.SinglePlanningCalendar/events/cellPress">cellPress</a> event of this <code>sap.m.SinglePlanningCalendar</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.m.SinglePlanningCalendar</code> itself.</p><p>Fired when a grid cell is focused.</p>
+             * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+             * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+             * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.m.SinglePlanningCalendar</code> itself</p>
+             * @returns sap.m.SinglePlanningCalendar <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            attachCellPress(oData: any, fnFunction: Function, oListener?: any): sap.m.SinglePlanningCalendar;
             /**
              * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="headerDateSelect" href="#/api/sap.m.SinglePlanningCalendar/events/headerDateSelect">headerDateSelect</a> event of this <code>sap.m.SinglePlanningCalendar</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.m.SinglePlanningCalendar</code> itself.</p><p>Fired if a date is selected in the calendar header.</p>
              * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
@@ -23983,6 +24081,13 @@ declare namespace sap {
              */
             destroyViews(): sap.m.SinglePlanningCalendar;
             /**
+             * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="appointmentCreate" href="#/api/sap.m.SinglePlanningCalendar/events/appointmentCreate">appointmentCreate</a> event of this <code>sap.m.SinglePlanningCalendar</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+             * @param {any} oListener <p>Context object on which the given function had to be called</p>
+             * @returns sap.m.SinglePlanningCalendar <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            detachAppointmentCreate(fnFunction: Function, oListener?: any): sap.m.SinglePlanningCalendar;
+            /**
              * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="appointmentDrop" href="#/api/sap.m.SinglePlanningCalendar/events/appointmentDrop">appointmentDrop</a> event of this <code>sap.m.SinglePlanningCalendar</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
              * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
              * @param {any} oListener <p>Context object on which the given function had to be called</p>
@@ -23990,12 +24095,26 @@ declare namespace sap {
              */
             detachAppointmentDrop(fnFunction: Function, oListener?: any): sap.m.SinglePlanningCalendar;
             /**
+             * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="appointmentResize" href="#/api/sap.m.SinglePlanningCalendar/events/appointmentResize">appointmentResize</a> event of this <code>sap.m.SinglePlanningCalendar</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+             * @param {any} oListener <p>Context object on which the given function had to be called</p>
+             * @returns sap.m.SinglePlanningCalendar <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            detachAppointmentResize(fnFunction: Function, oListener?: any): sap.m.SinglePlanningCalendar;
+            /**
              * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="appointmentSelect" href="#/api/sap.m.SinglePlanningCalendar/events/appointmentSelect">appointmentSelect</a> event of this <code>sap.m.SinglePlanningCalendar</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
              * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
              * @param {any} oListener <p>Context object on which the given function had to be called</p>
              * @returns sap.m.SinglePlanningCalendar <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             detachAppointmentSelect(fnFunction: Function, oListener?: any): sap.m.SinglePlanningCalendar;
+            /**
+             * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="cellPress" href="#/api/sap.m.SinglePlanningCalendar/events/cellPress">cellPress</a> event of this <code>sap.m.SinglePlanningCalendar</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+             * @param {any} oListener <p>Context object on which the given function had to be called</p>
+             * @returns sap.m.SinglePlanningCalendar <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            detachCellPress(fnFunction: Function, oListener?: any): sap.m.SinglePlanningCalendar;
             /**
              * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="headerDateSelect" href="#/api/sap.m.SinglePlanningCalendar/events/headerDateSelect">headerDateSelect</a> event of this <code>sap.m.SinglePlanningCalendar</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
              * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
@@ -24011,17 +24130,35 @@ declare namespace sap {
              */
             detachStartDateChange(fnFunction: Function, oListener?: any): sap.m.SinglePlanningCalendar;
             /**
+             * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="appointmentCreate" href="#/api/sap.m.SinglePlanningCalendar/events/appointmentCreate">appointmentCreate</a> to attached listeners.</p>
+             * @param {any} mParameters <p>Parameters to pass along with the event</p>
+             * @returns sap.m.SinglePlanningCalendar <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            protected fireAppointmentCreate(mParameters?: any): sap.m.SinglePlanningCalendar;
+            /**
              * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="appointmentDrop" href="#/api/sap.m.SinglePlanningCalendar/events/appointmentDrop">appointmentDrop</a> to attached listeners.</p>
              * @param {any} mParameters <p>Parameters to pass along with the event</p>
              * @returns sap.m.SinglePlanningCalendar <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             protected fireAppointmentDrop(mParameters?: any): sap.m.SinglePlanningCalendar;
             /**
+             * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="appointmentResize" href="#/api/sap.m.SinglePlanningCalendar/events/appointmentResize">appointmentResize</a> to attached listeners.</p>
+             * @param {any} mParameters <p>Parameters to pass along with the event</p>
+             * @returns sap.m.SinglePlanningCalendar <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            protected fireAppointmentResize(mParameters?: any): sap.m.SinglePlanningCalendar;
+            /**
              * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="appointmentSelect" href="#/api/sap.m.SinglePlanningCalendar/events/appointmentSelect">appointmentSelect</a> to attached listeners.</p>
              * @param {any} mParameters <p>Parameters to pass along with the event</p>
              * @returns sap.m.SinglePlanningCalendar <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             protected fireAppointmentSelect(mParameters?: any): sap.m.SinglePlanningCalendar;
+            /**
+             * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="cellPress" href="#/api/sap.m.SinglePlanningCalendar/events/cellPress">cellPress</a> to attached listeners.</p>
+             * @param {any} mParameters <p>Parameters to pass along with the event</p>
+             * @returns sap.m.SinglePlanningCalendar <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            protected fireCellPress(mParameters?: any): sap.m.SinglePlanningCalendar;
             /**
              * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="headerDateSelect" href="#/api/sap.m.SinglePlanningCalendar/events/headerDateSelect">headerDateSelect</a> to attached listeners.</p>
              * @param {any} mParameters <p>Parameters to pass along with the event</p>
@@ -24045,10 +24182,25 @@ declare namespace sap {
              */
             getAppointments(): sap.ui.unified.CalendarAppointment[];
             /**
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEnableAppointmentsCreate" href="#/api/sap.m.SinglePlanningCalendar/methods/getEnableAppointmentsCreate">enableAppointmentsCreate</a>.</p><p>Determines whether the appointments can be created by dragging on empty cells.</p><p>See <a target="_self" class="jsdoclink" href="#/api/%23property%3AenableAppointmentsResize">enableAppointmentsResize</a> for the specific points for events snapping</p><p>Default value is <code>false</code>.</p>
+             * @returns boolean <p>Value of property <code>enableAppointmentsCreate</code></p>
+             */
+            getEnableAppointmentsCreate(): boolean;
+            /**
              * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEnableAppointmentsDragAndDrop" href="#/api/sap.m.SinglePlanningCalendar/methods/getEnableAppointmentsDragAndDrop">enableAppointmentsDragAndDrop</a>.</p><p>Determines whether the appointments in the grid are draggable.</p><p>The drag and drop interaction is visualized by a placeholder highlighting the area where the appointment can be dropped by the user.</p><p>Default value is <code>false</code>.</p>
              * @returns boolean <p>Value of property <code>enableAppointmentsDragAndDrop</code></p>
              */
             getEnableAppointmentsDragAndDrop(): boolean;
+            /**
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEnableAppointmentsResize" href="#/api/sap.m.SinglePlanningCalendar/methods/getEnableAppointmentsResize">enableAppointmentsResize</a>.</p><p>Determines whether the appointments are resizable.</p><p>The resize interaction is visualized by making the appointment transparent.</p><p>The appointment snaps on every interval of 30 minutes. After the resize is finished, the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="appointmentResize" href="#/api/sap.m.SinglePlanningCalendar/events/appointmentResize">appointmentResize</a> event is fired, containing the new start and end JavaScript date objects.</p><p>Default value is <code>false</code>.</p>
+             * @returns boolean <p>Value of property <code>enableAppointmentsResize</code></p>
+             */
+            getEnableAppointmentsResize(): boolean;
+            /**
+             * <p>ID of the element which is the current target of the association <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLegend" href="#/api/sap.m.SinglePlanningCalendar/methods/getLegend">legend</a>, or <code>null</code>.</p>
+             * @returns sap.ui.core.ID 
+             */
+            getLegend(): sap.ui.core.ID;
             /**
              * <p>Holds the selected appointments. If no appointments are selected, an empty array is returned.</p>
              * @returns sap.ui.unified.CalendarAppointment[] <p>All selected appointments</p>
@@ -24152,11 +24304,29 @@ declare namespace sap {
              */
             removeView(vView: number | string | sap.m.SinglePlanningCalendarView): sap.m.SinglePlanningCalendarView;
             /**
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEnableAppointmentsCreate" href="#/api/sap.m.SinglePlanningCalendar/methods/getEnableAppointmentsCreate">enableAppointmentsCreate</a>.</p><p>Determines whether the appointments can be created by dragging on empty cells.</p><p>See <a target="_self" class="jsdoclink" href="#/api/%23property%3AenableAppointmentsResize">enableAppointmentsResize</a> for the specific points for events snapping</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+             * @param {boolean} bEnableAppointmentsCreate <p>New value for property <code>enableAppointmentsCreate</code></p>
+             * @returns sap.m.SinglePlanningCalendar <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            setEnableAppointmentsCreate(bEnableAppointmentsCreate: boolean): sap.m.SinglePlanningCalendar;
+            /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEnableAppointmentsDragAndDrop" href="#/api/sap.m.SinglePlanningCalendar/methods/getEnableAppointmentsDragAndDrop">enableAppointmentsDragAndDrop</a>.</p><p>Determines whether the appointments in the grid are draggable.</p><p>The drag and drop interaction is visualized by a placeholder highlighting the area where the appointment can be dropped by the user.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
              * @param {boolean} bEnableAppointmentsDragAndDrop <p>New value for property <code>enableAppointmentsDragAndDrop</code></p>
              * @returns sap.m.SinglePlanningCalendar <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             setEnableAppointmentsDragAndDrop(bEnableAppointmentsDragAndDrop: boolean): sap.m.SinglePlanningCalendar;
+            /**
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEnableAppointmentsResize" href="#/api/sap.m.SinglePlanningCalendar/methods/getEnableAppointmentsResize">enableAppointmentsResize</a>.</p><p>Determines whether the appointments are resizable.</p><p>The resize interaction is visualized by making the appointment transparent.</p><p>The appointment snaps on every interval of 30 minutes. After the resize is finished, the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="appointmentResize" href="#/api/sap.m.SinglePlanningCalendar/events/appointmentResize">appointmentResize</a> event is fired, containing the new start and end JavaScript date objects.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+             * @param {boolean} bEnableAppointmentsResize <p>New value for property <code>enableAppointmentsResize</code></p>
+             * @returns sap.m.SinglePlanningCalendar <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            setEnableAppointmentsResize(bEnableAppointmentsResize: boolean): sap.m.SinglePlanningCalendar;
+            /**
+             * <p>Sets the associated <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLegend" href="#/api/sap.m.SinglePlanningCalendar/methods/getLegend">legend</a>.</p>
+             * @param {sap.ui.core.ID | sap.m.PlanningCalendarLegend} oLegend <p>ID of an element which becomes the new target of this legend association; alternatively, an element instance may be given</p>
+             * @returns sap.m.SinglePlanningCalendar <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            setLegend(oLegend: sap.ui.core.ID | sap.m.PlanningCalendarLegend): sap.m.SinglePlanningCalendar;
             /**
              * <p>Sets the associated <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSelectedView" href="#/api/sap.m.SinglePlanningCalendar/methods/getSelectedView">selectedView</a>.</p>
              * @param {sap.ui.core.ID | sap.m.SinglePlanningCalendarView} oSelectedView <p>ID of an element which becomes the new target of this selectedView association; alternatively, an element instance may be given</p>
@@ -25665,7 +25835,7 @@ declare namespace sap {
             setTitle(sTitle: string): sap.m.StandardTreeItem;
         }
         /**
-         * <p>Allows the user to change the input values with predefined increments (steps).</p><h3>Overview</h3><p>The <code>StepInput</code> consists of an input field and buttons with icons to increase/decrease the value.</p><p>The user can change the value of the control by pressing the increase/decrease buttons, by typing a number directly, by using the keyboard up/down and page up/down, or by using the mouse scroll wheel. Decimal values are supported.</p><h3>Usage</h3><p>The default step is 1 but the app developer can set a different one.</p><p>On desktop, the control supports a larger step, when using the keyboard page up/down keys. You can set a multiple of the step with the use of the <code>largerStep</code> property. The default value is 2 (two times the set step). For example, when using the keyboard page up/down keys the value increases/decreases with a double of the default step. If the set step is 2, the larger step is also 2 and the current value is 1, using the page up key will increase the value to 5 (1 + 2*2).</p><p>App developers can set a maximum and minimum value for the <code>StepInput</code>. The increase/decrease button and the up/down keyboard navigation become disabled when the value reaches the max/min or a new value is entered from the input which is greater/less than the max/min.</p><p><i>When to use</i> <ul> <li>To adjust amounts, quantities, or other values quickly.</li> <li>To adjust values for a specific step.</li> </ul></p><p><i>When not to use</i> <ul> <li>To enter a static number (for example, postal code, phone number, or ID). In this case, use the regular <a target="_self" class="jsdoclink" href="#/api/sap.m.Input">sap.m.Input</a> instead.</li> <li>To display a value that rarely needs to be adjusted and does not pertain to a particular step. In this case, use the regular <a target="_self" class="jsdoclink" href="#/api/sap.m.Input">sap.m.Input</a> instead.</li> <li>To enter dates and times. In this case, use the <a target="_self" class="jsdoclink" href="#/api/sap.m.DatePicker">sap.m.DatePicker</a>, <a target="_self" class="jsdoclink" href="#/api/sap.m.DateRangeSelection">sap.m.DateRangeSelection</a>, <a target="_self" class="jsdoclink" href="#/api/sap.m.TimePicker">sap.m.TimePicker</a>, or <a target="_self" class="jsdoclink" href="#/api/sap.m.DateTimePicker">sap.m.DateTimePicker</a> instead.</li> </ul></p>
+         * <p>Allows the user to change the input values with predefined increments (steps).</p><h3>Overview</h3><p>The <code>StepInput</code> consists of an input field and buttons with icons to increase/decrease the value.</p><p>The user can change the value of the control by pressing the increase/decrease buttons, by typing a number directly, by using the keyboard up/down and page up/down, or by using the mouse scroll wheel. Decimal values are supported.</p><h3>Usage</h3><p>The default step is 1 but the app developer can set a different one.</p><p>On desktop, the control supports a larger step, when using the keyboard page up/down keys. You can set a multiple of the step with the use of the <code>largerStep</code> property. The default value is 2 (two times the set step). For example, when using the keyboard page up/down keys the value increases/decreases with a double of the default step. If the set step is 2, the larger step is also 2 and the current value is 1, using the page up key will increase the value to 5 (1 + 2*2).</p><p>App developers can set a maximum and minimum value for the <code>StepInput</code>. The increase/decrease button and the up/down keyboard navigation become disabled when the value reaches the max/min or a new value is entered from the input which is greater/less than the max/min.</p><p><i>When to use</i> <ul> <li>To adjust amounts, quantities, or other values quickly.</li> <li>To adjust values for a specific step.</li> </ul></p><p><i>When not to use</i> <ul> <li>To enter a static number (for example, postal code, phone number, or ID). In this case, use the regular <a target="_self" class="jsdoclink" href="#/api/sap.m.Input">sap.m.Input</a> instead.</li> <li>To display a value that rarely needs to be adjusted and does not pertain to a particular step. In this case, use the regular <a target="_self" class="jsdoclink" href="#/api/sap.m.Input">sap.m.Input</a> instead.</li> <li>To enter dates and times. In this case, use the <a target="_self" class="jsdoclink" href="#/api/sap.m.DatePicker">sap.m.DatePicker</a>, <a target="_self" class="jsdoclink" href="#/api/sap.m.DateRangeSelection">sap.m.DateRangeSelection</a>, <a target="_self" class="jsdoclink" href="#/api/sap.m.TimePicker">sap.m.TimePicker</a>, or <a target="_self" class="jsdoclink" href="#/api/sap.m.DateTimePicker">sap.m.DateTimePicker</a> instead.</li> </ul></p><p><b>Note:</b> The control uses a JavaScript number to keep its value, which has a certain precision limitation.</p><p>In general, exponential notation is used: <ul> <li>if there are more than 21 digits before the decimal point.</li> <li>if number starts with "0." followed by more than five zeros.</li> </ul></p><p>Exponential notation is not supported by the control and using it may lead to unpredictable behavior.</p><p>Also, the JavaScript number persists its precision up to 16 digits. If the user enters a number with a greater precision, the value will be rounded.</p><p>This limitation comes from JavaScript itself and it cannot be worked around in a feasible way.</p>
          */
         export class StepInput extends sap.ui.core.Control {
             /**
@@ -29356,6 +29526,11 @@ declare namespace sap {
              * @param {any} mSettings <p>Initial settings for the new control</p>
              */
             constructor(sId?: string, mSettings?: any);
+            /**
+             * <p>Sets the behavior of the <code>ToolbarSeparator</code> inside an <code>OverflowToolbar</code> configuration.</p>
+             * @returns any <p>Configuration information for the <code>sap.m.IOverflowToolbarContent</code> interface.</p>
+             */
+            getOverflowToolbarConfig(): any;
         }
         /**
          * <p>Adds horizontal space between the items used within a <a target="_self" class="jsdoclink" href="#/api/sap.m.Toolbar">sap.m.Toolbar</a>.</p><p><b>Note:</b> <code>ToolbarSpacer</code> should not be used together with <a target="_self" class="jsdoclink" href="#/api/sap.m.ToolbarLayoutData">sap.m.ToolbarLayoutData</a>.</p>
