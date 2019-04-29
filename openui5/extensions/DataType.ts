@@ -143,6 +143,21 @@ namespace sap {
                 /** 正则表达式 */
                 regExp?: RegExp;
                 /**
+                 * 格式化值到视图
+                 * @param oValue 值
+                 * @param sInternalType 视图类型
+                 */
+                formatValue(oValue: any, sInternalType: string): any {
+                    if (sInternalType === "string") {
+                        // 需要字符串类型
+                        if (ibas.objects.isNull(oValue)) {
+                            return undefined;
+                        }
+                        return ibas.strings.valueOf(oValue);
+                    }
+                    return oValue;
+                }
+                /**
                  * 格式化值到模型
                  * @param oValue 值
                  * @param sInternalType 视图类型
@@ -219,7 +234,7 @@ namespace sap {
                         if (ibas.objects.isNull(oValue)) {
                             return undefined;
                         }
-                        return ibas.strings.valueOf(oValue);
+                        return Number(oValue).toFixed(0);
                     }
                     return oValue;
                 }
@@ -229,15 +244,15 @@ namespace sap {
                  * @param sInternalType 视图类型
                  */
                 parseValue(oValue: any, sInternalType: string): any {
-                    if (sInternalType === "number") {
-                        return ibas.numbers.toInt(oValue);
-                    } else if (sInternalType === "string" || typeof oValue === "string") {
+                    if (typeof oValue === "number") {
+                        return Math.floor(oValue);
+                    } else if (typeof oValue === "string") {
                         if (ibas.strings.isEmpty(oValue)) {
                             return undefined;
                         }
-                        return ibas.numbers.toInt(oValue);
+                        return parseInt(oValue, 0);
                     }
-                    return oValue;
+                    return 0;
                 }
                 /** 验证数据 */
                 protected validate(oValue: any): void {
@@ -304,9 +319,9 @@ namespace sap {
                         if (ibas.objects.isNull(oValue)) {
                             return undefined;
                         }
-                        return ibas.strings.valueOf(ibas.numbers.round(oValue, this.decimalPlaces));
+                        return Number(oValue).toFixed(this.decimalPlaces);
                     }
-                    return ibas.numbers.round(oValue, this.decimalPlaces);
+                    return oValue;
                 }
                 /**
                  * 格式化值到模型
@@ -314,15 +329,15 @@ namespace sap {
                  * @param sInternalType 视图类型
                  */
                 parseValue(oValue: any, sInternalType: string): any {
-                    if (sInternalType === "number") {
+                    if (typeof oValue === "number") {
                         return ibas.numbers.round(oValue, this.decimalPlaces);
-                    } else if (sInternalType === "string" || typeof oValue === "string") {
+                    } else if (typeof oValue === "string") {
                         if (ibas.strings.isEmpty(oValue)) {
                             return undefined;
                         }
                         return ibas.numbers.round(parseFloat(oValue), this.decimalPlaces);
                     }
-                    return oValue;
+                    return 0.0;
                 }
                 /** 验证数据 */
                 protected validate(oValue: any): void {
@@ -433,20 +448,14 @@ namespace sap {
                  * @param sInternalType 视图类型
                  */
                 parseValue(oValue: any, sInternalType: string): any {
-                    if (sInternalType === "number") {
-                        return ibas.numbers.round(oValue, this.decimalPlaces);
-                    } else if (sInternalType === "string" || typeof oValue === "string") {
-                        if (ibas.strings.isEmpty(oValue)) {
-                            return undefined;
-                        }
-                        oValue = ibas.strings.valueOf(oValue);
+                    if (typeof oValue === "string") {
                         if (ibas.strings.isWith(oValue, undefined, "%")) {
                             oValue = oValue.substring(0, oValue.length - 1);
                         }
-                        oValue = parseFloat(oValue);
-                        return ibas.numbers.round(oValue, this.decimalPlaces);
+                        oValue = parseFloat(oValue) * 100;
+                        return super.parseValue(oValue, sInternalType);
                     }
-                    return oValue;
+                    return super.parseValue.apply(this, arguments);
                 }
             }
             /**
@@ -494,6 +503,12 @@ namespace sap {
                         } else {
                             return ibas.dates.toString(oValue);
                         }
+                    } else if (sInternalType === "number") {
+                        return ibas.dates.valueOf(oValue).getTime();
+                    } else if (sInternalType === "Date") {
+                        if (typeof oValue === "string" || typeof oValue === "number") {
+                            return ibas.dates.valueOf(oValue);
+                        }
                     }
                     return oValue;
                 }
@@ -503,15 +518,15 @@ namespace sap {
                  * @param sInternalType 视图类型
                  */
                 parseValue(oValue: any, sInternalType: string): any {
-                    if (sInternalType === "date" || ibas.dates.isDate(oValue)) {
+                    if (ibas.dates.isDate(oValue)) {
                         return oValue;
-                    } else if (sInternalType === "string" || typeof oValue === "string") {
+                    } else if (typeof oValue === "string" || typeof oValue === "number") {
                         if (ibas.strings.isEmpty(oValue)) {
                             return undefined;
                         }
                         return ibas.dates.valueOf(oValue);
                     }
-                    return oValue;
+                    return undefined;
                 }
                 /** 验证数据 */
                 protected validate(oValue: any): void {
@@ -552,19 +567,24 @@ namespace sap {
                  * @param sInternalType 视图类型
                  */
                 formatValue(oValue: any, sInternalType: string): any {
-                    if (ibas.objects.isNull(oValue)) {
-                        return undefined;
-                    }
                     if (sInternalType === "string") {
                         if (typeof oValue === "number") {
-                            let time: string = String(this.format);
                             let hour: number = Math.floor(oValue / 100);
                             let minute: number = oValue - (hour * 100);
-                            return time.replace("HH", ibas.strings.fill(hour, 2, "0"))
+                            return this.format.replace("HH", ibas.strings.fill(hour, 2, "0"))
                                 .replace("mm", ibas.strings.fill(minute, 2, "0"));
-                        } else {
-                            return oValue;
                         }
+                    } else if (sInternalType === "Date" && !ibas.objects.isNull(oValue)) {
+                        let value: number = 0;
+                        if (typeof oValue === "number") {
+                            value = oValue;
+                        } else if (typeof oValue === "string") {
+                            value = parseInt(oValue.replace(":", ""), 0);
+                        }
+                        let hour: number = Math.floor(value / 100);
+                        let minute: number = value - (hour * 100);
+                        value = (hour * 60 * 60 * 1000) + (minute * 60 * 1000);
+                        return ibas.dates.valueOf(ibas.dates.valueOf(0).setHours(hour, minute));
                     }
                     return oValue;
                 }
@@ -574,30 +594,32 @@ namespace sap {
                  * @param sInternalType 视图类型
                  */
                 parseValue(oValue: any, sInternalType: string): any {
-                    if (sInternalType === "string") {
+                    if (typeof oValue === "number") {
+                        return oValue;
+                    } else if (typeof oValue === "string") {
                         if (ibas.strings.isEmpty(oValue)) {
                             return undefined;
                         }
-                        if (typeof oValue === "string") {
-                            let builder: ibas.StringBuilder = new ibas.StringBuilder();
-                            for (let item of oValue) {
-                                if (!ibas.numbers.isNumber(item)) {
-                                    continue;
-                                }
-                                builder.append(item);
+                        let builder: ibas.StringBuilder = new ibas.StringBuilder();
+                        for (let item of oValue) {
+                            if (!ibas.numbers.isNumber(item)) {
+                                continue;
                             }
-                            oValue = builder.toString();
-                            if (oValue.length > 4) {
-                                if (oValue.length <= 6) {
-                                    oValue = oValue.substring(0, oValue.length - 2);
-                                } else {
-                                    oValue = oValue.substring(0, 4);
-                                }
+                            builder.append(item);
+                        }
+                        oValue = builder.toString();
+                        if (oValue.length > 4) {
+                            if (oValue.length <= 6) {
+                                oValue = oValue.substring(0, oValue.length - 2);
+                            } else {
+                                oValue = oValue.substring(0, 4);
                             }
                         }
                         return ibas.numbers.toInt(oValue);
+                    } else if (ibas.dates.isDate(oValue)) {
+                        return parseInt(ibas.dates.toString(oValue, "HHmm"), 0);
                     }
-                    return oValue;
+                    return undefined;
                 }
                 /** 验证数据 */
                 protected validate(oValue: any): void {
@@ -651,6 +673,12 @@ namespace sap {
                         } else {
                             return ibas.dates.toString(oValue);
                         }
+                    } else if (sInternalType === "number") {
+                        return ibas.dates.valueOf(oValue).getTime();
+                    } else if (sInternalType === "Date") {
+                        if (typeof oValue === "string" || typeof oValue === "number") {
+                            return ibas.dates.valueOf(oValue);
+                        }
                     }
                     return oValue;
                 }
@@ -660,15 +688,15 @@ namespace sap {
                  * @param sInternalType 视图类型
                  */
                 parseValue(oValue: any, sInternalType: string): any {
-                    if (sInternalType === "date" || ibas.dates.isDate(oValue)) {
+                    if (ibas.dates.isDate(oValue)) {
                         return oValue;
-                    } else if (sInternalType === "string" || typeof oValue === "string") {
+                    } else if (typeof oValue === "string" || typeof oValue === "number") {
                         if (ibas.strings.isEmpty(oValue)) {
                             return undefined;
                         }
                         return ibas.dates.valueOf(oValue);
                     }
-                    return oValue;
+                    return undefined;
                 }
                 /** 验证数据 */
                 protected validate(oValue: any): void {
@@ -718,9 +746,7 @@ namespace sap {
                  * @param sInternalType 视图类型
                  */
                 formatValue(oValue: any, sInternalType: string): any {
-                    if (ibas.objects.isNull(oValue)) {
-                        return undefined;
-                    } if (sInternalType === "string") {
+                    if (sInternalType === "string") {
                         if (this.describe === true) {
                             return ibas.enums.describe(this.enumType, oValue);
                         }
@@ -737,13 +763,15 @@ namespace sap {
                     if (this.describe === true) {
                         throw new Error("Method not implemented.");
                     }
-                    if (sInternalType === "string") {
+                    if (typeof oValue === "string") {
                         if (ibas.strings.isEmpty(oValue)) {
                             return undefined;
                         }
                         return ibas.enums.valueOf(this.enumType, oValue);
+                    } else if (typeof oValue === "number") {
+                        return oValue;
                     }
-                    return oValue;
+                    return undefined;
                 }
                 /** 验证数据 */
                 protected validate(oValue: any): void {
@@ -794,7 +822,7 @@ namespace sap {
                  * @param sInternalType 视图类型
                  */
                 parseValue(oValue: any, sInternalType: string): any {
-                    if (sInternalType === "boolean") {
+                    if (typeof oValue === "boolean") {
                         return oValue === true ? ibas.emYesNo.YES : ibas.emYesNo.NO;
                     } else {
                         return super.parseValue(oValue, sInternalType);

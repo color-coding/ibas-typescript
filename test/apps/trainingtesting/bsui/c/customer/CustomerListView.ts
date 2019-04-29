@@ -32,7 +32,7 @@ namespace trainingtesting {
                         chooseType: ibas.emChooseType.MULTIPLE,
                         visibleRowCount: ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 15),
                         visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Interactive,
-                        dataInfo: bo.Customer,
+                        dataInfo: this.queryTarget,
                         rows: "{/rows}",
                         columns: [
                             new sap.extension.table.DataColumn("", {
@@ -51,12 +51,13 @@ namespace trainingtesting {
                                     path: "name"
                                 })
                             }),
-                        ]
-                    });
-                    // 添加列表自动查询事件
-                    sap.extension.table.triggerNextResults({
-                        listener: this.table,
-                        next(data: any): void {
+                        ],
+                        nextDataSet(event: sap.ui.base.Event): void {
+                            // 查询下一个数据集
+                            let data: any = event.getParameter("data");
+                            if (ibas.objects.isNull(data)) {
+                                return;
+                            }
                             if (ibas.objects.isNull(that.lastCriteria)) {
                                 return;
                             }
@@ -143,11 +144,7 @@ namespace trainingtesting {
                             ]
                         }),
                         content: [
-                            new sap.ui.layout.form.SimpleForm("", {
-                                content: [
-                                    this.table,
-                                ]
-                            })
+                            this.table,
                         ]
                     });
                 }

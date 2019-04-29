@@ -28,7 +28,7 @@ namespace trainingtesting {
                         chooseType: ibas.emChooseType.SINGLE,
                         visibleRowCount: ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 15),
                         visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Interactive,
-                        dataInfo: bo.SalesOrder,
+                        dataInfo: this.queryTarget,
                         propertyFilter(property: shell.bo.IBOPropertyInfo): boolean {
                             if (!ibas.strings.isWith(property.property, "U_", undefined)) {
                                 return false;
@@ -81,12 +81,12 @@ namespace trainingtesting {
                                     type: new sap.extension.data.YesNo(true)
                                 })
                             })
-                        ]
-                    });
-                    // 添加列表自动查询事件
-                    sap.extension.table.triggerNextResults({
-                        listener: this.table,
-                        next(data: any): void {
+                        ],
+                        nextDataSet(event: sap.ui.base.Event): void {
+                            let data: any = event.getParameter("data");
+                            if (ibas.objects.isNull(data)) {
+                                return;
+                            }
                             if (ibas.objects.isNull(that.lastCriteria)) {
                                 return;
                             }
@@ -173,11 +173,7 @@ namespace trainingtesting {
                             ]
                         }),
                         content: [
-                            new sap.ui.layout.form.SimpleForm("", {
-                                content: [
-                                    this.table,
-                                ]
-                            })
+                            this.table,
                         ]
                     });
                 }

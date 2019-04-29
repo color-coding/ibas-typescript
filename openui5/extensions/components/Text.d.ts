@@ -64,6 +64,21 @@ declare namespace sap {
                  */
                 setDataInfo(value: repository.IDataInfo | any): this;
             }
+            /**
+             * 数据转换-文本框
+             */
+            class ConversionText extends Text {
+                /** 设置改变事件 */
+                attachConvert(oData: any, fnFunction: Function, oListener?: any): ConversionText;
+                /** 取消改变事件 */
+                detachConvert(fnFunction: Function, oListener?: any): ConversionText;
+                /** 触发改变事件 */
+                protected fireConvert(param: {
+                    value: string,
+                    done: (newValue: string) => void,
+                    bindingData?: any,
+                }): ConversionText;
+            }
         }
     }
 }

@@ -21,6 +21,7 @@ namespace sap {
                 },
                 renderer: {
                     writeInnerAttributes: function (oRm: any, oControl: Input): void {
+                        (<any>sap.m).InputRenderer.writeInnerAttributes.apply(this, arguments);
                         if (oControl.getShowValueHelp() === true) {
                             oRm.writeAttribute("readonly", "readonly");
                         }
@@ -135,10 +136,10 @@ namespace sap {
                     if (this.getSelectedKey() !== value) {
                         this.setProperty("selectedKey", value);
                         this.setProperty("bindingValue", value);
-                        let item: sap.ui.core.Item = this.getSuggestionItemByKey(String(value));
+                        let item: sap.ui.core.Item;
                         if (ibas.strings.isEmpty(value)) {
                             this.updateDomValue("");
-                        } else if (!ibas.objects.isNull(item)) {
+                        } else if (!ibas.objects.isNull(item = this.getSuggestionItemByKey(String(value)))) {
                             this.setSelectedItem(item);
                             this.updateDomValue(item.getText());
                         } else if (ibas.objects.isNull(item) && !ibas.strings.isEmpty(value)) {
@@ -252,9 +253,13 @@ namespace sap {
                     (<any>RepositoryInput.prototype).init.apply(this, arguments);
                     // 自身事件监听
                     this.attachValueHelpRequest(null, () => {
-                        let boCode: string = this.getDataInfo().type;
-                        if (typeof boCode === "function") {
-                            boCode = (<any>boCode).BUSINESS_OBJECT_CODE;
+                        let boCode: string, dataInfo: any = this.getDataInfo();
+                        if (typeof dataInfo.type === "function") {
+                            boCode = dataInfo.type.BUSINESS_OBJECT_CODE;
+                        } else if (typeof dataInfo.type === "object") {
+                            boCode = ibas.objects.getType(dataInfo.type).BUSINESS_OBJECT_CODE;
+                        } else if (typeof dataInfo.type === "string") {
+                            boCode = ibas.config.applyVariables(dataInfo.type);
                         }
                         if (ibas.strings.isEmpty(boCode)) {
                             throw new Error(ibas.i18n.prop("sys_invalid_parameter", "boCode"));

@@ -139,6 +139,53 @@ namespace sap {
                     return this;
                 },
             });
+            /**
+             * 数据转换-文本框
+             */
+            Text.extend("sap.extension.m.ConversionText", {
+                metadata: {
+                    properties: {
+                    },
+                    events: {
+                        "convert": {
+                            parameters: {
+                                value: {
+                                    type: "string",
+                                },
+                                done: {
+                                    type: "function",
+                                },
+                                bindingData: {
+                                    type: "any",
+                                }
+                            }
+                        },
+                    },
+                },
+                renderer: {
+                },
+                /**
+                 * 设置选中值
+                 * @param value 值
+                 */
+                setBindingValue(this: ConversionText, value: string): ConversionText {
+                    if (this.getBindingValue() !== value) {
+                        Text.prototype.setBindingValue.apply(this, arguments);
+                        if (!ibas.strings.isEmpty(value)) {
+                            let done: (newValue: string) => void = (newValue) => {
+                                this.setText(newValue);
+                            };
+                            let bindingData: any = this.getBindingContext().getObject();
+                            this.fireConvert({
+                                value: value,
+                                done: done,
+                                bindingData: bindingData,
+                            });
+                        }
+                    }
+                    return this;
+                }
+            });
         }
     }
 }

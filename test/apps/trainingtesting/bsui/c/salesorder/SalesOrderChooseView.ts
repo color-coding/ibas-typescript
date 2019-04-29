@@ -23,6 +23,7 @@ namespace trainingtesting {
                         enableSelectAll: false,
                         chooseType: this.chooseType,
                         visibleRowCount: ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 15),
+                        dataInfo: this.queryTarget,
                         rows: "{/rows}",
                         columns: [
                             new sap.extension.table.DataColumn("", {
@@ -69,12 +70,8 @@ namespace trainingtesting {
                                     type: new sap.extension.data.YesNo(true)
                                 })
                             })
-                        ]
-                    });
-                    // 添加列表自动查询事件
-                    sap.extension.table.triggerNextResults({
-                        listener: this.table,
-                        next(data: any): void {
+                        ],
+                        nextDataSet(data: any): void {
                             if (ibas.objects.isNull(that.lastCriteria)) {
                                 return;
                             }
@@ -90,10 +87,11 @@ namespace trainingtesting {
                         title: this.title,
                         type: sap.m.DialogType.Standard,
                         state: sap.ui.core.ValueState.None,
-                        stretchOnPhone: true,
                         horizontalScrolling: true,
                         verticalScrolling: true,
-                        content: [this.table],
+                        content: [
+                            this.table
+                        ],
                         buttons: [
                             new sap.m.Button("", {
                                 text: ibas.i18n.prop("shell_data_new"),

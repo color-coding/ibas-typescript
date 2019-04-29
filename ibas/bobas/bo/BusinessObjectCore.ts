@@ -39,9 +39,14 @@ namespace ibas {
          */
         removeListener(listener: IPropertyChangedListener): void;
         /**
+         * 移出监听事件
+         * @param id 标记
+         */
+        removeListener(id: string): void;
+        /**
          * 移出全部监听事件
          */
-        removeListener(recursive: boolean): void;
+        removeListener(): void;
     }
 
     /**
@@ -177,14 +182,31 @@ namespace ibas {
          * @param listener 监听者
          */
         registerListener(listener: IPropertyChangedListener): void {
+            if (!listener) {
+                return;
+            }
             if (this[PROPERTY_LISTENER] === undefined) {
                 this[PROPERTY_LISTENER] = new ArrayList<IPropertyChangedListener>();
             }
-            this[PROPERTY_LISTENER].push(listener);
+            let exists: boolean = false;
+            for (let item of this[PROPERTY_LISTENER]) {
+                if (listener.id && item.id === listener.id) {
+                    exists = true;
+                } else if (item === listener) {
+                    exists = true;
+                }
+            }
+            if (!exists) {
+                this[PROPERTY_LISTENER].push(listener);
+            }
         }
-
         /** 移出全部监听 */
-        removeListener(recursive: boolean): void;
+        removeListener(): void;
+        /**
+         * 移出监听事件
+         * @param id 标记
+         */
+        removeListener(id: string): void;
         /**
          * 移出监听事件
          * @param listener 监听者
@@ -195,11 +217,24 @@ namespace ibas {
             if (objects.isNull(this[PROPERTY_LISTENER])) {
                 return;
             }
-            let listener: IPropertyChangedListener = arguments[0];
-            if (!objects.isNull(listener)) {
+            let listener: any = arguments[0];
+            if (typeof listener === "undefined") {
+                // 移出全部
+                this[PROPERTY_LISTENER].splice(0, this[PROPERTY_LISTENER].length);
+            } else if (typeof listener === "string") {
+                // 移出指定id
+                for (let item of this[PROPERTY_LISTENER]) {
+                    if (item.id === listener) {
+                        this[PROPERTY_LISTENER].remove(item);
+                        break;
+                    }
+                }
+            } else {
+                // 移出监听
                 for (let item of this[PROPERTY_LISTENER]) {
                     if (item === listener) {
                         this[PROPERTY_LISTENER].remove(item);
+                        break;
                     }
                 }
             }
@@ -477,20 +512,7 @@ namespace ibas {
                 }
             }
         }
-        /** 移出监听实现 */
-        removeListener(): void {
-            super.removeListener(arguments[0]);
-            let recursive: boolean = arguments[0];
-            if (recursive === true) {
-                for (let item of this.getChildBOs()) {
-                    let value: any = item[1];
-                    if (value.removeListener !== undefined) {
-                        value.removeListener(false);
-                    }
-                }
-            }
-        }
-
+        /** 删除 */
         abstract delete(): void;
     }
     /**

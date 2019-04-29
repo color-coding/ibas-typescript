@@ -371,28 +371,6 @@ namespace ibas {
             }
             return services;
         }
-        /**
-         * 运行服务
-         * @param caller 调用者
-         * @returns 是否成功运行服务
-         */
-        private runService(caller: IServiceCaller<IServiceContract>): boolean {
-            if (objects.isNull(caller)) {
-                throw new Error(i18n.prop("sys_invalid_parameter", "caller"));
-            }
-            if (objects.isNull(caller.proxy) || !objects.instanceOf(caller.proxy, ServiceProxy)) {
-                throw new Error(i18n.prop("sys_invalid_parameter", "caller.proxy"));
-            }
-            this.viewShower().proceeding(undefined,
-                emMessageType.INFORMATION, i18n.prop("sys_getting_available_services", objects.getTypeName(caller.proxy)));
-            for (let service of this.getServices(caller)) {
-                // 运行服务
-                service.run();
-                return true;
-            }
-            // 没有找到服务
-            return false;
-        }
         /** 运行选择服务 */
         runChooseService<D>(caller: IBOChooseServiceCaller<D>): boolean {
             if (objects.isNull(caller)) {
@@ -408,7 +386,7 @@ namespace ibas {
             // 设置服务类别码
             caller.category = caller.boCode;
             // 调用服务
-            if (!this.runService(caller)) {
+            if (!runService.call(this, caller)) {
                 // 服务未运行
                 logger.log(emMessageLevel.WARN, "services: not found [{0}]'s choose service.", caller.boCode);
                 return false;
@@ -433,7 +411,7 @@ namespace ibas {
             // 设置服务类别码
             caller.category = caller.boCode;
             // 调用服务
-            if (!this.runService(caller)) {
+            if (!runService.call(this, caller)) {
                 // 服务未运行
                 logger.log(emMessageLevel.WARN, "services: not found [{0}]'s link service.", caller.boCode);
                 return false;
@@ -467,7 +445,7 @@ namespace ibas {
                 caller.category = caller.appId;
             }
             // 调用服务
-            if (!this.runService(caller)) {
+            if (!runService.call(this, caller)) {
                 // 服务未运行
                 logger.log(emMessageLevel.WARN, "services: not found [{0}]'s application service.", objects.getName(objects.getType(caller.proxy)));
                 return false;
@@ -504,6 +482,28 @@ namespace ibas {
                 shower.displayServices(services);
             }
         }
+    }
+    /**
+     * 运行服务
+     * @param caller 调用者
+     * @returns 是否成功运行服务
+     */
+    function runService(this: ServicesManager, caller: IServiceCaller<IServiceContract>): boolean {
+        if (objects.isNull(caller)) {
+            throw new Error(i18n.prop("sys_invalid_parameter", "caller"));
+        }
+        if (objects.isNull(caller.proxy) || !objects.instanceOf(caller.proxy, ServiceProxy)) {
+            throw new Error(i18n.prop("sys_invalid_parameter", "caller.proxy"));
+        }
+        this.viewShower().proceeding(undefined,
+            emMessageType.INFORMATION, i18n.prop("sys_getting_available_services", objects.getTypeName(caller.proxy)));
+        for (let service of this.getServices(caller)) {
+            // 运行服务
+            service.run();
+            return true;
+        }
+        // 没有找到服务
+        return false;
     }
     /** 服务管理员实例 */
     export const servicesManager: ServicesManager = new ServicesManager();

@@ -8,84 +8,19 @@
 namespace sap {
     export namespace extension {
         export namespace table {
-            /** 自动触发下一个结果集查询 */
-            export function triggerNextResults(trigger: {
-                /** 监听对象 */
-                listener: sap.ui.table.Table | sap.m.ListBase,
-                /** 触发方法 */
-                next(data: any): void,
-            }): void {
-                if (ibas.objects.isNull(trigger)) {
-                    return;
-                }
-                if (trigger.listener instanceof (sap.m.ListBase)) {
-                    // 绑定触发一次的事件
-                    trigger.listener.attachEvent("updateFinished", undefined, function (this: sap.m.ListBase): void {
-                        if (this.getBusy()) {
-                            // 忙状态不监听
-                            return;
-                        }
-                        let model: any = this.getModel(undefined);
-                        if (!ibas.objects.isNull(model)) {
-                            let data: any = model.getData();
-                            if (!ibas.objects.isNull(data) && !ibas.objects.isNull(this.getGrowingInfo())) {
-                                if (this.getGrowingInfo().total === this.getGrowingInfo().actual) {
-                                    if (data !== undefined && data !== null) {
-                                        let modelData: any = data.rows; // 与绑定对象的路径有关
-                                        let dataCount: number = modelData.length;
-                                        let visibleRow: number = this.getGrowingThreshold(); // 当前显示条数
-                                        if (dataCount <= 0 || dataCount < visibleRow) {
-                                            return;
-                                        }
-                                        // 调用事件
-                                        this.setBusy(true);
-                                        trigger.next.call(trigger.next, modelData[modelData.length - 1]);
-                                    }
-                                }
-                            }
-                        }
-                    });
-                } else if (trigger.listener instanceof (sap.ui.table.Table)) {
-                    trigger.listener.attachEvent("_rowsUpdated", undefined, function (this: sap.ui.table.Table): void {
-                        if (this.getBusy()) {
-                            // 忙状态不监听
-                            return;
-                        }
-                        let model: any = this.getModel(undefined);
-                        if (!ibas.objects.isNull(model)) {
-                            let data: any = model.getData();
-                            if (!ibas.objects.isNull(data)) {
-                                let dataCount: number = data.length;
-                                if (dataCount === undefined) {
-                                    // 存在绑定的对象路径问题
-                                    dataCount = data.rows.length;
-                                    if (dataCount !== undefined) {
-                                        // 此路径存在数据
-                                        data = data.rows;
-                                    }
-                                }
-                                let visibleRow: number = this.getVisibleRowCount();
-                                if (dataCount > 0 && dataCount > visibleRow) {
-                                    let firstRow: number = this.getFirstVisibleRow(); // 当前页的第一行
-                                    let lastPageCount: number = dataCount % visibleRow; // 最后一页行数
-                                    if ((lastPageCount > 0 && firstRow === (dataCount - lastPageCount))
-                                        || (lastPageCount === 0 && firstRow === (dataCount - visibleRow))) {
-                                        // 调用事件
-                                        this.setBusy(true);
-                                        trigger.next.call(trigger.next, data[data.length - 1]);
-                                    }
-                                }
-                            }
-                        }
-                    });
-                }
-            }
             /** 改变表格选择风格 */
             function changeSelectionStyle(this: Table): void {
                 if (!(this instanceof sap.ui.table.Table)) {
                     return;
                 }
                 this.setSelectedIndex(this.getSelectedIndex());
+            }
+            /**
+             * 获取可视行数
+             * @param defalutCount 默认值（未配置返回）
+             */
+            export function visibleRowCount(count: number): number {
+                return ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, count);
             }
             /**
              * 表格
@@ -98,7 +33,15 @@ namespace sap {
                         /** 选择方式 */
                         chooseType: { type: "int", defaultValue: ibas.emChooseType.MULTIPLE },
                     },
-                    events: {}
+                    events: {
+                        "nextDataSet": {
+                            parameters: {
+                                data: {
+                                    type: "any",
+                                }
+                            }
+                        }
+                    }
                 },
                 renderer: {},
                 /**
@@ -151,13 +94,67 @@ namespace sap {
                     }
                     return selecteds;
                 },
+                init(this: Table): void {
+                    // 基类初始化
+                    (<any>sap.ui.table.Table.prototype).init.apply(this, arguments);
+                    // 监听行变化事件
+                    this.attachEvent("_rowsUpdated", undefined, () => {
+                        if (!this.hasListeners("nextDataSet")) {
+                            // 没有下个数据集监听
+                            return;
+                        }
+                        if (this.getBusy()) {
+                            // 忙状态不监听
+                            return;
+                        }
+                        let model: any = this.getModel(undefined);
+                        if (!ibas.objects.isNull(model)) {
+                            let data: any = model.getData();
+                            if (!ibas.objects.isNull(data)) {
+                                let dataCount: number = data.length;
+                                if (dataCount === undefined) {
+                                    // 存在绑定的对象路径问题
+                                    dataCount = data.rows.length;
+                                    if (dataCount !== undefined) {
+                                        // 此路径存在数据
+                                        data = data.rows;
+                                    }
+                                }
+                                let visibleRow: number = this.getVisibleRowCount();
+                                if (dataCount > 0 && dataCount > visibleRow) {
+                                    let firstRow: number = this.getFirstVisibleRow(); // 当前页的第一行
+                                    let lastPageCount: number = dataCount % visibleRow; // 最后一页行数
+                                    if ((lastPageCount > 0 && firstRow === (dataCount - lastPageCount))
+                                        || (lastPageCount === 0 && firstRow === (dataCount - visibleRow))) {
+                                        // 调用事件
+                                        this.setBusy(true);
+                                        this.fireNextDataSet({ data: data[data.length - 1] });
+                                    }
+                                }
+                            }
+                        }
+                    });
+                },
+                /** 退出 */
+                exit(this: Table): void {
+                    let model: any = this.getModel();
+                    if (model instanceof sap.extension.model.JSONModel) {
+                        model.destroy();
+                    }
+                    (<any>sap.ui.table.Table.prototype).exit.apply(this, arguments);
+                }
             });
             /**
              * 表格列
              */
             sap.ui.table.Column.extend("sap.extension.table.Column", {
                 metadata: {
-                    properties: {},
+                    properties: {
+                        /** 列宽 */
+                        width: { type: "sap.ui.core.CSSSize", group: "Dimension", defaultValue: "10rem" },
+                        /** 自动改变列宽 */
+                        autoResizable: { type: "boolean", defalutValue: true },
+                    },
                     events: {}
                 },
                 setTemplate(this: Column, value: sap.ui.core.Control | string): Column {
@@ -231,7 +228,7 @@ namespace sap {
                             let info: { code: string, name?: string } = dataInfo;
                             let boRepository: shell.bo.IBORepositoryShell = ibas.boFactory.create(shell.bo.BO_REPOSITORY_SHELL);
                             boRepository.fetchBOInfos({
-                                boCode: info.code,
+                                boCode: ibas.config.applyVariables(info.code),
                                 boName: info.name,
                                 onCompleted: (opRslt) => {
                                     if (opRslt.resultCode !== 0) {
@@ -354,10 +351,6 @@ namespace sap {
                     properties: {
                         /** 属性信息 */
                         propertyInfo: { type: "any" },
-                        /** 列宽 */
-                        width: { type: "sap.ui.core.CSSSize", group: "Dimension", defaultValue: "10rem" },
-                        /** 自动改变列宽 */
-                        autoResizable: { type: "boolean", defalutValue: true },
                     },
                     events: {}
                 },

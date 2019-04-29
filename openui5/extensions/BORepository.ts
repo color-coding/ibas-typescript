@@ -11,7 +11,7 @@ namespace sap {
             /** 数据说明 */
             export interface IDataInfo {
                 /** 数据类型 */
-                type: string;
+                type: string | Function | object;
                 /** 属性-键 */
                 key: string;
                 /** 属性-描述 */
@@ -30,11 +30,13 @@ namespace sap {
                     if (!(boRepository instanceof ibas.BORepositoryApplication)) {
                         throw new Error(ibas.i18n.prop("sys_invalid_parameter", "boRepository"));
                     }
-                    let boName: string = dataInfo.type;
-                    if (typeof boName === "function") {
-                        boName = ibas.objects.getName(boName);
-                    } else if (typeof boName === "object") {
-                        boName = ibas.objects.getTypeName(boName);
+                    let boName: string;
+                    if (typeof dataInfo.type === "function") {
+                        boName = ibas.objects.getName(dataInfo.type);
+                    } else if (typeof dataInfo.type === "object") {
+                        boName = ibas.objects.getTypeName(dataInfo.type);
+                    } else if (typeof dataInfo.type === "string") {
+                        boName = dataInfo.type;
                     }
                     if (ibas.strings.isEmpty(boName)) {
                         throw new Error(ibas.i18n.prop("sys_invalid_parameter", "dataInfo.type"));
@@ -161,6 +163,7 @@ namespace sap {
                                 continue;
                             }
                             let rValues: ibas.IList<ibas.KeyText> = new ibas.ArrayList<ibas.KeyText>();
+                            let newItem: ibas.ICondition;
                             for (let item of task.criteria.conditions) {
                                 // 复制查询条件
                                 if (item.alias === task.dataInfo.key) {
@@ -170,15 +173,15 @@ namespace sap {
                                         continue;
                                     }
                                 }
-                                criteria.conditions.add(item = ibas.objects.clone(item));
+                                criteria.conditions.add(newItem = ibas.objects.clone(item));
                                 if (item === task.criteria.conditions.firstOrDefault()) {
-                                    item.relationship = ibas.emConditionRelationship.OR;
+                                    newItem.relationship = ibas.emConditionRelationship.OR;
                                     if (item.bracketOpen >= 0 && task.criteria.conditions.length > 1) {
-                                        item.bracketOpen++;
+                                        newItem.bracketOpen++;
                                     }
                                 } else if (item === task.criteria.conditions.lastOrDefault()) {
                                     if (item.bracketClose >= 0 && task.criteria.conditions.length > 1) {
-                                        item.bracketClose++;
+                                        newItem.bracketClose++;
                                     }
                                 }
                             }

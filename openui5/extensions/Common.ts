@@ -145,5 +145,14 @@ namespace sap {
                 values.set(key, value);
             }
         }
+        /** 页面操作集 */
+        export namespace pages {
+            /**
+             * 改变页面控件状态
+             */
+            export function changeStatus(page: sap.m.Page): void {
+
+            }
+        }
     }
 }

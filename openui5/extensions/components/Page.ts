@@ -28,6 +28,14 @@ namespace sap {
                     this.bindObject("/");
                     sap.m.Page.prototype.setModel.apply(this, arguments);
                     return this;
+                },
+                /** 退出 */
+                exit(this: Page): void {
+                    let model: any = this.getModel();
+                    if (model instanceof sap.extension.model.JSONModel) {
+                        model.destroy();
+                    }
+                    (<any>sap.m.Page.prototype).exit.apply(this, arguments);
                 }
             });
             /**
@@ -118,7 +126,7 @@ namespace sap {
                             let info: { code: string, name?: string } = dataInfo;
                             let boRepository: shell.bo.IBORepositoryShell = ibas.boFactory.create(shell.bo.BO_REPOSITORY_SHELL);
                             boRepository.fetchBOInfos({
-                                boCode: info.code,
+                                boCode: ibas.config.applyVariables(info.code),
                                 boName: info.name,
                                 onCompleted: (opRslt) => {
                                     if (opRslt.resultCode !== 0) {

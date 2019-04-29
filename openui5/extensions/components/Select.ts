@@ -73,10 +73,15 @@ namespace sap {
                  * @param value 值
                  */
                 setBindingValue(this: EnumSelect, value: string): EnumSelect {
+                    return Select.prototype.setBindingValue.apply(this, arguments);
+                },
+                /** 重构设置 */
+                applySettings(this: EnumSelect): EnumSelect {
+                    Select.prototype.applySettings.apply(this, arguments);
                     if (this.getItems().length === 0) {
                         this.loadItems();
                     }
-                    return Select.prototype.setBindingValue.apply(this, arguments);
+                    return this;
                 },
                 /**
                  * 加载可选值
@@ -183,10 +188,15 @@ namespace sap {
                  * @param value 值
                  */
                 setBindingValue(this: RepositorySelect, value: string): RepositorySelect {
+                    return Select.prototype.setBindingValue.apply(this, arguments);
+                },
+                /** 重构设置 */
+                applySettings(this: EnumSelect): EnumSelect {
+                    Select.prototype.applySettings.apply(this, arguments);
                     if (this.getItems().length === 0) {
                         this.loadItems();
                     }
-                    return Select.prototype.setBindingValue.apply(this, arguments);
+                    return this;
                 },
                 /**
                  * 加载可选值
@@ -276,10 +286,15 @@ namespace sap {
                  * @param value 值
                  */
                 setBindingValue(this: PropertySelect, value: string): PropertySelect {
+                    return Select.prototype.setBindingValue.apply(this, arguments);
+                },
+                /** 重构设置 */
+                applySettings(this: EnumSelect): EnumSelect {
+                    Select.prototype.applySettings.apply(this, arguments);
                     if (this.getItems().length === 0) {
                         this.loadItems();
                     }
-                    return Select.prototype.setBindingValue.apply(this, arguments);
+                    return this;
                 },
                 /**
                  * 加载可选值
@@ -354,10 +369,15 @@ namespace sap {
                  * @param value 值
                  */
                 setBindingValue(this: SeriesSelect, value: string): SeriesSelect {
+                    return Select.prototype.setBindingValue.apply(this, arguments);
+                },
+                /** 重构设置 */
+                applySettings(this: EnumSelect): EnumSelect {
+                    Select.prototype.applySettings.apply(this, arguments);
                     if (this.getItems().length === 0) {
                         this.loadItems();
                     }
-                    return Select.prototype.setBindingValue.apply(this, arguments);
+                    return this;
                 },
                 /**
                  * 加载可选值
@@ -370,7 +390,7 @@ namespace sap {
                     }
                     let boRepository: ibas.BORepositoryApplication = ibas.boFactory.create("BORepositoryInitialFantasy");
                     let dataInfo: repository.IDataInfo = {
-                        type: ibas.boFactory.classOf("BOSeriesNumbering"),
+                        type: "BOSeriesNumbering",
                         key: "Series",
                         text: "SeriesName",
                     };

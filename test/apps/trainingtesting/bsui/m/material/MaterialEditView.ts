@@ -142,7 +142,7 @@ namespace trainingtesting {
                                             showHeader: false,
                                             placement: sap.m.PlacementType.Bottom,
                                         });
-                                        (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
+                                        popover.addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
                                         popover.openBy(event.getSource(), true);
                                     }
                                 }),

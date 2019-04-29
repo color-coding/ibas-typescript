@@ -388,7 +388,7 @@ namespace trainingtesting {
                                                 popover.close();
                                             }
                                         }));
-                                        (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
+                                        popover.addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
                                         popover.openBy(event.getSource(), true);
                                     }
                                 }),

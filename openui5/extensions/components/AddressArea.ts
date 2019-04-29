@@ -217,12 +217,24 @@ namespace sap {
                     oRm.write("<div");
                     oRm.writeControlData(oControl);
                     oRm.write(">");
+                    oRm.write("<div>");
                     oRm.renderControl(<sap.ui.core.Control>oControl.getAggregation("_country", undefined));
+                    oRm.write("</div>");
+                    oRm.write("<div>");
                     oRm.renderControl(<sap.ui.core.Control>oControl.getAggregation("_province", undefined));
+                    oRm.write("</div>");
+                    oRm.write("<div>");
                     oRm.renderControl(<sap.ui.core.Control>oControl.getAggregation("_city", undefined));
+                    oRm.write("</div>");
+                    oRm.write("<div>");
                     oRm.renderControl(<sap.ui.core.Control>oControl.getAggregation("_district", undefined));
+                    oRm.write("</div>");
+                    oRm.write("<div>");
                     oRm.renderControl(<sap.ui.core.Control>oControl.getAggregation("_street", undefined));
+                    oRm.write("</div>");
+                    oRm.write("<div>");
                     oRm.renderControl(<sap.ui.core.Control>oControl.getAggregation("_zipcode", undefined));
+                    oRm.write("</div>");
                     oRm.write("</div>");
                 },
                 init(this: AddressArea): void {
