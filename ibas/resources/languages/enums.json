@@ -1,6 +1,6 @@
 {
-    "em_combination": "Desktop & Tablet",
-    "em_desktop": "Desktop",
-    "em_phone": "Phone",
-    "em_tablet": "Tablet"
+    "em_plantform_combination": "Desktop & Tablet",
+    "em_plantform_desktop": "Desktop",
+    "em_plantform_phone": "Phone",
+    "em_plantform_tablet": "Tablet"
 }

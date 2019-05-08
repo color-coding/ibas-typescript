@@ -116,7 +116,7 @@ namespace sap {
                     } else if (typeof dataInfo === "function") {
                         dataInfo = {
                             code: dataInfo.BUSINESS_OBJECT_CODE,
-                            name: ibas.objects.getName(dataInfo),
+                            name: ibas.objects.nameOf(dataInfo),
                         };
                     }
                     if (typeof dataInfo === "object") {

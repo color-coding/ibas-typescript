@@ -28,7 +28,7 @@ namespace ibas {
             let name: string = typeof this.getValue();
             if (name === "object") {
                 // 日期类型
-                name = objects.getName(objects.getType(this.getValue()));
+                name = objects.nameOf(this.getValue());
             }
             return name;
         }
@@ -51,7 +51,7 @@ namespace ibas {
         propertyName: string;
         /** 获取值 */
         getValue(): any {
-            return objects.getPropertyValue(super.getValue(), this.propertyName);
+            return objects.propertyValue(super.getValue(), this.propertyName);
         }
     }
     export class ValueConverterString implements IValueConverter<string> {

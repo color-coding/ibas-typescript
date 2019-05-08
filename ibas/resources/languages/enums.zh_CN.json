@@ -1,59 +1,144 @@
-{
-  "em_fatal": "严重错误",
-  "em_error": "错误",
-  "em_warn": "警告",
-  "em_info": "消息",
-  "em_debug": "调试信息",
-  "em_none": "无",
-  "em_equal": "等于",
-  "em_grater_than": "大于",
-  "em_less_than": "小于",
-  "em_grater_equal": "大于等于",
-  "em_less_equal": "小于等于",
-  "em_not_equal": "不等于",
-  "em_contain": "包含",
-  "em_not_contain": "不包含",
-  "em_start": "开始为",
-  "em_end": "结束为",
-  "em_is_null": "是空",
-  "em_not_null": "非空",
-  "em_and": "且",
-  "em_or": "或",
-  "em_descending": "降序",
-  "em_ascending": "升序",
-  "em_no": "否",
-  "em_yes": "是",
-  "em_planned": "计划",
-  "em_released": "下达",
-  "em_finished": "完成",
-  "em_closed": "结算",
-  "em_open": "未清",
-  "em_pending": "挂起的",
-  "em_processing": "审批中",
-  "em_approved": "已批准",
-  "em_rejected": "已拒绝",
-  "em_skipped": "已跳过",
-  "em_unaffected": "不影响",
-  "em_cancelled": "已取消",
-  "em_in": "入",
-  "em_out": "出",
-  "em_combination": "平板和桌面",
-  "em_desktop": "桌面",
-  "em_phone": "手机",
-  "em_tablet": "平板",
-  "em_information": "消息",
-  "em_success": "成功",
-  "em_warning": "警告",
-  "em_question": "问询",
-  "em_abort": "终止",
-  "em_cancel": "取消",
-  "em_close": "关闭",
-  "em_delete": "删除",
-  "em_ignore": "忽略",
-  "em_ok": "确定",
-  "em_retry": "重试",
-  "em_application": "应用设置",
-  "em_business_object": "业务对象设置",
-  "em_all": "全部",
-  "em_read": "只读/引用"
-}
+[
+  {
+    "em_messagelevel_fatal": "严重错误",
+    "em_messagelevel_error": "错误",
+    "em_messagelevel_warn": "警告",
+    "em_messagelevel_info": "消息",
+    "em_messagelevel_debug": "调试信息"
+  },
+  {
+    "em_conditionoperation_none": "无",
+    "em_conditionoperation_equal": "等于",
+    "em_conditionoperation_grater_than": "大于",
+    "em_conditionoperation_less_than": "小于",
+    "em_conditionoperation_grater_equal": "大于等于",
+    "em_conditionoperation_less_equal": "小于等于",
+    "em_conditionoperation_not_equal": "不等于",
+    "em_conditionoperation_contain": "包含",
+    "em_conditionoperation_not_contain": "不包含",
+    "em_conditionoperation_start": "开始为",
+    "em_conditionoperation_end": "结束为",
+    "em_conditionoperation_is_null": "是空",
+    "em_conditionoperation_not_null": "非空"
+  },
+  {
+    "em_conditionrelationship_none": "无",
+    "em_conditionrelationship_and": "且",
+    "em_conditionrelationship_or": "或"
+  },
+  {
+    "em_sorttype_descending": "降序",
+    "em_sorttype_ascending": "升序"
+  },
+  {
+    "em_yesno_no": "否",
+    "em_yesno_yes": "是"
+  },
+  {
+    "em_documentstatus_planned": "计划",
+    "em_documentstatus_released": "下达",
+    "em_documentstatus_finished": "完成",
+    "em_documentstatus_closed": "结算"
+  },
+  {
+    "em_bostatus_open": "未清",
+    "em_bostatus_closed": "结算"
+  },
+  {
+    "em_approvalstepstatus_pending": "挂起的",
+    "em_approvalstepstatus_processing": "审批中",
+    "em_approvalstepstatus_approved": "已批准",
+    "em_approvalstepstatus_rejected": "已拒绝",
+    "em_approvalstepstatus_skipped": "已跳过"
+  },
+  {
+    "em_approvalstatus_unaffected": "不影响",
+    "em_approvalstatus_cancelled": "已取消",
+    "em_approvalstatus_processing": "审批中",
+    "em_approvalstatus_approved": "已批准",
+    "em_approvalstatus_rejected": "已拒绝"
+  },
+  {
+    "em_approvalresult_processing": "审批中",
+    "em_approvalresult_approved": "已批准",
+    "em_approvalresult_rejected": "已拒绝"
+  },
+  {
+    "em_direction_in": "入",
+    "em_direction_out": "出"
+  },
+  {
+    "em_judmentoperation_equal": "等于",
+    "em_judmentoperation_not_equal": "不等于",
+    "em_judmentoperation_grater_than": "大于",
+    "em_judmentoperation_less_than": "小于",
+    "em_judmentoperation_grater_equal": "大于等于",
+    "em_judmentoperation_less_equal": "小于等于",
+    "em_judmentoperation_begin_with": "开始于",
+    "em_judmentoperation_not_begin_with": "不是开始于",
+    "em_judmentoperation_end_with": "结束于",
+    "em_judmentoperation_not_end_with": "不是结束于",
+    "em_judmentoperation_contain": "包含",
+    "em_judmentoperation_not_contain": "不包含",
+    "em_judmentoperation_and": "与",
+    "em_judmentoperation_or": "或"
+  },
+  {
+    "em_dbfieldtype_unknown": "未知",
+    "em_dbfieldtype_alphanumeric": "字母数字",
+    "em_dbfieldtype_memo": "长字符串",
+    "em_dbfieldtype_numeric": "数字",
+    "em_dbfieldtype_date": "日期",
+    "em_dbfieldtype_decimal": "小数",
+    "em_dbfieldtype_bytes": "字节"
+  },
+  {
+    "em_plantform_combination": "平板和桌面",
+    "em_plantform_desktop": "桌面",
+    "em_plantform_phone": "手机",
+    "em_plantform_tablet": "平板"
+  },
+  {
+    "em_messagetype_information": "消息",
+    "em_messagetype_success": "成功",
+    "em_messagetype_warning": "警告",
+    "em_messagetype_question": "问询"
+  },
+  {
+    "em_messageaction_abort": "终止",
+    "em_messageaction_cancel": "取消",
+    "em_messageaction_close": "关闭",
+    "em_messageaction_delete": "删除",
+    "em_messageaction_ignore": "忽略",
+    "em_messageaction_no": "否",
+    "em_messageaction_ok": "确定",
+    "em_messageaction_retry": "重试",
+    "em_messageaction_yes": "是"
+  },
+  {
+    "em_privilegesource_module": "模块设置",
+    "em_privilegesource_application": "应用设置",
+    "em_privilegesource_business_object": "业务对象设置"
+  },
+  {
+    "em_authorisetype_all": "全部",
+    "em_authorisetype_read": "只读/引用",
+    "em_authorisetype_none": "无"
+  },
+  {
+    "em_choosetype_single": "单选",
+    "em_choosetype_multiple": "多选",
+    "em_choosetype_no": "无选"
+  },
+  {
+    "em_viewmode_common": "一般",
+    "em_viewmode_view": "查看"
+  },
+  {
+    "em_touchmovedirection_up": "上",
+    "em_touchmovedirection_down": "下",
+    "em_touchmovedirection_left": "左",
+    "em_touchmovedirection_right": "右",
+    "em_touchmovedirection_none": "无"
+  }
+]

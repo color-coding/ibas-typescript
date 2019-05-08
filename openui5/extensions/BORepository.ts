@@ -32,9 +32,9 @@ namespace sap {
                     }
                     let boName: string;
                     if (typeof dataInfo.type === "function") {
-                        boName = ibas.objects.getName(dataInfo.type);
+                        boName = ibas.objects.nameOf(dataInfo.type);
                     } else if (typeof dataInfo.type === "object") {
-                        boName = ibas.objects.getTypeName(dataInfo.type);
+                        boName = ibas.objects.nameOf(dataInfo.type);
                     } else if (typeof dataInfo.type === "string") {
                         boName = dataInfo.type;
                     }
@@ -176,11 +176,11 @@ namespace sap {
                                 criteria.conditions.add(newItem = ibas.objects.clone(item));
                                 if (item === task.criteria.conditions.firstOrDefault()) {
                                     newItem.relationship = ibas.emConditionRelationship.OR;
-                                    if (item.bracketOpen >= 0 && task.criteria.conditions.length > 1) {
+                                    if (item.bracketOpen > 0 && task.criteria.conditions.length > 1) {
                                         newItem.bracketOpen++;
                                     }
                                 } else if (item === task.criteria.conditions.lastOrDefault()) {
-                                    if (item.bracketClose >= 0 && task.criteria.conditions.length > 1) {
+                                    if (item.bracketClose > 0 && task.criteria.conditions.length > 1) {
                                         newItem.bracketClose++;
                                     }
                                 }

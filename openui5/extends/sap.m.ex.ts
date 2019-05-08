@@ -130,7 +130,7 @@ namespace openui5 {
                 ibas.logger.log(ibas.emMessageLevel.DEBUG, ibas.i18n.prop("sap_m_ex_boType_null"));
                 return;
             }
-            let boName: string = ibas.objects.getName(boType);
+            let boName: string = ibas.objects.nameOf(boType);
             let boText: string = that.getBoText();
             if (ibas.strings.isEmpty(boKey)) {
                 ibas.logger.log(ibas.emMessageLevel.DEBUG, ibas.i18n.prop("sap_m_ex_bokey_null"));
@@ -300,7 +300,7 @@ namespace openui5 {
                 ibas.logger.log(ibas.emMessageLevel.DEBUG, ibas.i18n.prop("sap_m_ex_boType_null"));
                 return;
             }
-            let boName: string = ibas.objects.getName(boType);
+            let boName: string = ibas.objects.nameOf(boType);
             let boText: string = that.getBoText();
             if (ibas.strings.isEmpty(boKey)) {
                 ibas.logger.log(ibas.emMessageLevel.DEBUG, ibas.i18n.prop("sap_m_ex_bokey_null"));
@@ -489,7 +489,7 @@ namespace openui5 {
                 ibas.logger.log(ibas.emMessageLevel.DEBUG, ibas.i18n.prop("sap_m_ex_boType_null"));
                 return;
             }
-            let boName: string = ibas.objects.getName(boType);
+            let boName: string = ibas.objects.nameOf(boType);
             let boText: string = that.getBoText();
             if (ibas.strings.isEmpty(boKey)) {
                 ibas.logger.log(ibas.emMessageLevel.DEBUG, ibas.i18n.prop("sap_m_ex_bokey_null"));
@@ -894,7 +894,7 @@ namespace openui5 {
             let selectedKey: string = this.getSelectedKey();
             let boCode: string = this.getBoCode();
             let boType: any = ibas.boFactory.classOf(boCode);
-            let boName: string = ibas.objects.getName(boType);
+            let boName: string = ibas.objects.nameOf(boType);
             let boText: string = that.getBoText();
             if (ibas.strings.isEmpty(boKey)) {
                 ibas.logger.log(ibas.emMessageLevel.DEBUG, ibas.i18n.prop("sap_m_ex_bokey_null"));
@@ -1020,7 +1020,7 @@ namespace openui5 {
                 ibas.logger.log(ibas.emMessageLevel.DEBUG, ibas.i18n.prop("sap_m_ex_boType_null"));
                 return;
             }
-            let boName: string = ibas.objects.getName(boType);
+            let boName: string = ibas.objects.nameOf(boType);
             let boText: string = that.getBoText();
             let boRep: any = ibas.boFactory.create(this.getRepositoryName());
             if (!ibas.objects.instanceOf(boRep, ibas.BORepositoryApplication)) {

@@ -643,7 +643,7 @@ namespace ibas {
                 if (objects.isNull(bo)) {
                     return;
                 }
-                name = objects.getName(bo);
+                name = objects.nameOf(bo);
                 if (strings.isEmpty(name)) {
                     throw new Error(i18n.prop("sys_unrecognized_data"));
                 }

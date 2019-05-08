@@ -395,7 +395,7 @@ namespace ibas {
         }
         protected firePropertyChanged(property: string): void {
             if (this.isLoading) { return; }
-            let myRules: IBusinessRules = businessRulesManager.getRules(objects.getType(this));
+            let myRules: IBusinessRules = businessRulesManager.getRules(objects.typeOf(this));
             if (objects.isNull(myRules)) {
                 return;
             }
@@ -414,7 +414,7 @@ namespace ibas {
     }
     /** 初始化业务规则 */
     function initRules(this: BusinessObject<IBusinessObject>): void {
-        let myRules: IBusinessRules = businessRulesManager.getRules(objects.getType(this));
+        let myRules: IBusinessRules = businessRulesManager.getRules(objects.typeOf(this));
         if (objects.isNull(myRules)) {
             return;
         }
@@ -630,7 +630,7 @@ namespace ibas {
             return;
         }
         if (objects.isNull(this[PROPERTY_RULES])) {
-            this[PROPERTY_RULES] = businessRulesManager.getRules(objects.getType(this.parent));
+            this[PROPERTY_RULES] = businessRulesManager.getRules(objects.typeOf(this.parent));
         }
         if (objects.isNull(this[PROPERTY_RULES])) {
             return;
@@ -964,7 +964,7 @@ namespace ibas {
         }
         /** 注册全部用户字段 */
         registers(): void {
-            for (let item of userFieldManager.getInfos(objects.getType(this[PROPERTY_PARENT]))) {
+            for (let item of userFieldManager.getInfos(objects.typeOf(this[PROPERTY_PARENT]))) {
                 this.register(item.name, item.valueType);
             }
         }
@@ -975,7 +975,7 @@ namespace ibas {
                     return item;
                 }
             }
-            let info: UserFieldInfo = userFieldManager.register(objects.getType(this[PROPERTY_PARENT]), name, valueType);
+            let info: UserFieldInfo = userFieldManager.register(objects.typeOf(this[PROPERTY_PARENT]), name, valueType);
             let userField: IUserField = userFieldManager.create(info);
             userField.name = name;
             userField.valueType = valueType;
@@ -1021,7 +1021,7 @@ namespace ibas {
          */
         export function name(boCode: string): string {
             try {
-                return objects.getName(boFactory.classOf(boCode));
+                return objects.nameOf(boFactory.classOf(boCode));
             } catch (error) {
                 return boCode;
             }

@@ -53,7 +53,7 @@ namespace ibas {
          */
         static repositoryInfo(boRepository: IBORepositoryApplication, name: string = undefined): void {
             if (strings.isEmpty(name)) {
-                name = objects.getTypeName(boRepository);
+                name = objects.nameOf(boRepository);
             }
             // 获取全局离线状态
             boRepository.offline = config.get(CONFIG_ITEM_OFFLINE_MODE, false);

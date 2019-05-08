@@ -447,7 +447,7 @@ namespace ibas {
             // 调用服务
             if (!runService.call(this, caller)) {
                 // 服务未运行
-                logger.log(emMessageLevel.WARN, "services: not found [{0}]'s application service.", objects.getName(objects.getType(caller.proxy)));
+                logger.log(emMessageLevel.WARN, "services: not found [{0}]'s application service.", objects.nameOf(caller.proxy));
                 return false;
             }
             return true;
@@ -496,7 +496,7 @@ namespace ibas {
             throw new Error(i18n.prop("sys_invalid_parameter", "caller.proxy"));
         }
         this.viewShower().proceeding(undefined,
-            emMessageType.INFORMATION, i18n.prop("sys_getting_available_services", objects.getTypeName(caller.proxy)));
+            emMessageType.INFORMATION, i18n.prop("sys_getting_available_services", objects.nameOf(caller.proxy)));
         for (let service of this.getServices(caller)) {
             // 运行服务
             service.run();

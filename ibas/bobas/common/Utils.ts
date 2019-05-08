@@ -87,20 +87,26 @@ namespace ibas {
          * 获取类型名称
          * @param type 类型
          */
-        export function getName(type: any): string {
+        export function nameOf(type: Function | object): string {
             if (objects.isNull(type)) {
                 return undefined;
+            }
+            if (typeof type === "object") {
+                type = typeOf(type);
             }
             if (typeof type !== "function") {
                 throw new Error("is not a class.");
             }
-            return type.name;
+            if (type.name) {
+                return type.name;
+            }
+            return typeof type;
         }
         /**
          * 获取实例类型
          * @param 实例
          */
-        export function getType(instance: any): any {
+        export function typeOf(instance: object): any {
             if (objects.isNull(instance)) {
                 return undefined;
             }
@@ -108,13 +114,6 @@ namespace ibas {
                 throw new Error("is not a object.");
             }
             return instance.constructor;
-        }
-        /**
-         * 获取实例的类型名称
-         * @param instance 实例
-         */
-        export function getTypeName(instance: any): string {
-            return getName(getType(instance));
         }
         /**
          * 克隆对象
@@ -189,7 +188,7 @@ namespace ibas {
          * @param data 对象
          * @param propertyName 属性名称
          */
-        export function getPropertyValue(data: any, propertyName: string): any {
+        export function propertyValue(data: any, propertyName: string): any {
             if (isNull(data)) {
                 return undefined;
             }
@@ -434,6 +433,8 @@ namespace ibas {
      * 枚举
      */
     export namespace enums {
+        /** 配置项目-枚举最大级数 */
+        const CONFIG_ITEM_ENUM_MAX_LEVEL: string = "enumMaxLevel";
         /** 转换为枚举值
          * @param type 目标类型
          * @param value 值
@@ -488,18 +489,87 @@ namespace ibas {
             if (typeof sValue === "number") {
                 sValue = type[sValue];
             }
-            let dValue: string = sValue;
+            let dValue: string;
             // 获取枚举名称
-            let name: string = "em_";// type.name;
-            if (!objects.isNull(name)) {
-                dValue = i18n.prop((name + sValue).toLowerCase());
-                if (dValue.startsWith("[") && dValue.endsWith("]")) {
-                    // 没有找到语言描述
-                    dValue = sValue;
+            let name: string = nameOf(type);
+            if (!strings.isEmpty(name) && !strings.equals("object", name)) {
+                if (name.startsWith("em")) {
+                    name = "em_" + name.substring(2);
+                }
+                dValue = i18n.prop((name + "_" + sValue).toLowerCase());
+                if (!strings.isWith(dValue, "[", "]")) {
+                    return dValue;
                 }
             }
-            return dValue;
+            dValue = i18n.prop(("em_" + sValue).toLowerCase());
+            if (!strings.isWith(dValue, "[", "]")) {
+                return dValue;
+            }
+            return sValue;
         }
+        /**
+         * 获取名称
+         * @param type 类型
+         */
+        export function nameOf(type: any): string {
+            if (objects.isNull(type)) {
+                return undefined;
+            }
+            if (typeof type === "function") {
+                return objects.nameOf(type);
+            }
+            if (typeof type === "object") {
+                let name: string = ENUM_NAMES.get(type);
+                if (!objects.isNull(name)) {
+                    return name;
+                }
+                let maxLevel: number = config.get(CONFIG_ITEM_ENUM_MAX_LEVEL, 5);
+                let getName: Function = function (data: any, level: number = 0): string {
+                    for (let item in data) {
+                        if (strings.isWith(item, "webkit", undefined)) {
+                            continue;
+                        }
+                        if (!data.hasOwnProperty(item)) {
+                            continue;
+                        }
+                        let value: any = data[item];
+                        if (typeof value !== "object") {
+                            continue;
+                        }
+                        if (value === window.document || value === window.indexedDB || value === window.caches
+                            || value === window.applicationCache || value === window.localStorage
+                            || value === window.navigator || value === window.location || value === window.console
+                            || value === window.crypto || value === window.frames || value === window.frameElement
+                            || value === window.history || value === window.clientInformation || value === window.styleMedia
+                        ) {
+                            continue;
+                        }
+                        if (value === data || (level > 0 && value === window)) {
+                            continue;
+                        }
+                        if (value === type) {
+                            return item;
+                        }
+                        if (level >= maxLevel) {
+                            continue;
+                        }
+                        let name: string = getName(value, level + 1);
+                        if (!objects.isNull(name)) {
+                            return name;
+                        }
+                    }
+                    return undefined;
+                };
+                name = getName(window);
+                if (!objects.isNull(name)) {
+                    ENUM_NAMES.set(type, name);
+                    return name;
+                }
+            }
+            return typeof type;
+        }
+        /** 枚举名称 */
+        const ENUM_NAMES: Map<object, string> = new Map<object, string>();
     }
     /**
      * 日期
@@ -1010,8 +1080,8 @@ namespace ibas {
                 let compare: number = 0;
                 for (let sort of sorts) {
                     compare = 0;
-                    let cValue: any = objects.getPropertyValue(c, sort.alias);
-                    let bValue: any = objects.getPropertyValue(b, sort.alias);
+                    let cValue: any = objects.propertyValue(c, sort.alias);
+                    let bValue: any = objects.propertyValue(b, sort.alias);
                     if (objects.isNull(cValue) && objects.isNull(bValue)) {
                         // 均空，一样
                         compare = 0;

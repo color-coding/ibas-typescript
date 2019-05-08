@@ -191,7 +191,7 @@ namespace sap {
                             }
                         }
                     } else {
-                        throw new TypeError(ibas.strings.format("Value is not a {0}.", ibas.objects.getTypeName(this)));
+                        throw new TypeError(ibas.strings.format("Value is not a {0}.", ibas.objects.nameOf(this)));
                     }
                 }
             }
@@ -267,7 +267,7 @@ namespace sap {
                             throw new RangeError(ibas.strings.format("Value more than {0}.", this.maxValue));
                         }
                     } else {
-                        throw new TypeError(ibas.strings.format("Value is not a {0}.", ibas.objects.getTypeName(this)));
+                        throw new TypeError(ibas.strings.format("Value is not a {0}.", ibas.objects.nameOf(this)));
                     }
                 }
             }
@@ -299,7 +299,7 @@ namespace sap {
                     }
                     if (ibas.objects.isNull(this.decimalPlaces)) {
                         this.decimalPlaces = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES, 6);
-                        this.decimalPlaces = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES + "|" + ibas.objects.getTypeName(this), this.decimalPlaces);
+                        this.decimalPlaces = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES + "|" + ibas.objects.nameOf(this), this.decimalPlaces);
                     }
                 }
                 /** 最小值 */
@@ -352,7 +352,7 @@ namespace sap {
                             throw new RangeError(ibas.strings.format("Value more than {0}.", this.maxValue));
                         }
                     } else {
-                        throw new TypeError(ibas.strings.format("Value is not a {0}.", ibas.objects.getTypeName(this)));
+                        throw new TypeError(ibas.strings.format("Value is not a {0}.", ibas.objects.nameOf(this)));
                     }
                 }
             }
@@ -534,7 +534,7 @@ namespace sap {
                         return;
                     }
                     if (!ibas.dates.isDate(oValue)) {
-                        throw new TypeError(ibas.strings.format("Value is not a {0}.", ibas.objects.getTypeName(this)));
+                        throw new TypeError(ibas.strings.format("Value is not a {0}.", ibas.objects.nameOf(this)));
                     }
                 }
             }
@@ -631,7 +631,7 @@ namespace sap {
                             throw new RangeError("Value is not between 0 and 2400.");
                         }
                     } else {
-                        throw new TypeError(ibas.strings.format("Value is not a {0}.", ibas.objects.getTypeName(this)));
+                        throw new TypeError(ibas.strings.format("Value is not a {0}.", ibas.objects.nameOf(this)));
                     }
                 }
             }
@@ -704,7 +704,7 @@ namespace sap {
                         return;
                     }
                     if (!ibas.dates.isDate(oValue)) {
-                        throw new TypeError(ibas.strings.format("Value is not a {0}.", ibas.objects.getTypeName(this)));
+                        throw new TypeError(ibas.strings.format("Value is not a {0}.", ibas.objects.nameOf(this)));
                     }
                 }
             }
@@ -787,7 +787,7 @@ namespace sap {
                             return;
                         }
                     }
-                    throw new TypeError(ibas.strings.format("Value is not a {0}.", ibas.objects.getTypeName(this)));
+                    throw new TypeError(ibas.strings.format("Value is not a {0}.", ibas.objects.nameOf(this)));
                 }
             }
             /**

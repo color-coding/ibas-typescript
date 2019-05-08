@@ -181,7 +181,7 @@ namespace ibas {
                 // 尝试业务对象转换
                 return this.boConverter.convert(data);
             } else {
-                throw new Error(i18n.prop("sys_unable_to_convert_data", objects.getName(objects.getType(data))));
+                throw new Error(i18n.prop("sys_unable_to_convert_data", objects.nameOf(data)));
             }
         }
         /**

@@ -257,7 +257,7 @@ namespace sap {
                         if (typeof dataInfo.type === "function") {
                             boCode = dataInfo.type.BUSINESS_OBJECT_CODE;
                         } else if (typeof dataInfo.type === "object") {
-                            boCode = ibas.objects.getType(dataInfo.type).BUSINESS_OBJECT_CODE;
+                            boCode = ibas.objects.typeOf(dataInfo.type).BUSINESS_OBJECT_CODE;
                         } else if (typeof dataInfo.type === "string") {
                             boCode = ibas.config.applyVariables(dataInfo.type);
                         }

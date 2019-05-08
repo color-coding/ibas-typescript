@@ -35,7 +35,7 @@ namespace ibas {
             if (objects.isNull(result)) {
                 result = new TestResult();
             }
-            for (let item of Object.getOwnPropertyNames(objects.getType(this).prototype)) {
+            for (let item of Object.getOwnPropertyNames(objects.typeOf(this).prototype)) {
                 if (strings.isEmpty(item)) {
                     continue;
                 }
@@ -46,16 +46,16 @@ namespace ibas {
                     continue;
                 }
                 try {
-                    logger.log(emMessageLevel.WARN, "{0}: begin to run [{1}].", objects.getTypeName(this), item);
+                    logger.log(emMessageLevel.WARN, "{0}: begin to run [{1}].", objects.nameOf(this), item);
                     this[item]();
                 } catch (error) {
                     if (error instanceof AssertionError) {
                         // 断言错误
-                        logger.log(emMessageLevel.ERROR, "{0}: assertion faild, {1}.", objects.getTypeName(this), error.message);
+                        logger.log(emMessageLevel.ERROR, "{0}: assertion faild, {1}.", objects.nameOf(this), error.message);
                         result.addFailure(this, error);
                     } else {
                         // 执行错误
-                        logger.log(emMessageLevel.ERROR, "{0}: an error has occured, {1}", objects.getTypeName(this), error.message);
+                        logger.log(emMessageLevel.ERROR, "{0}: an error has occured, {1}", objects.nameOf(this), error.message);
                         result.addError(this, error);
                     }
                 }

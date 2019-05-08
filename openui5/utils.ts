@@ -59,7 +59,7 @@ namespace openui5 {
         export function describeBOCode(boCode: string): string {
             try {
                 let type: any = ibas.boFactory.classOf(boCode);
-                let name: string = ibas.objects.getName(type);
+                let name: string = ibas.objects.nameOf(type);
                 let descript: string = ibas.i18n.prop(ibas.strings.format("bo_{0}", name).toLowerCase());
                 if (descript.startsWith("[") && descript.endsWith("]")) {
                     return boCode;
@@ -903,7 +903,7 @@ namespace openui5 {
                                 return;
                             }
                             let boInfo: shell.bo.IBOInfo = opRslt.resultObjects.firstOrDefault(
-                                c => c.name === ibas.objects.getTypeName(data));
+                                c => c.name === ibas.objects.nameOf(data));
                             if (!ibas.objects.isNull(boInfo)) {
                                 for (let item of boInfo.properties) {
                                     data.userFields.register(item.property, ibas.enums.valueOf(ibas.emDbFieldType, item.dataType));

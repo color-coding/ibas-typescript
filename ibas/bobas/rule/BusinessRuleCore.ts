@@ -128,7 +128,7 @@ namespace ibas {
     /** 业务规则 */
     export abstract class BusinessRule implements IBusinessRule {
         constructor() {
-            this.name = objects.getName(objects.getType(this));
+            this.name = objects.nameOf(this);
             this.inputProperties = new ArrayList<string>();
             this.affectedProperties = new ArrayList<string>();
         }
@@ -165,7 +165,7 @@ namespace ibas {
                         context.inputValues.set(item, bo.getProperty(item));
                     }
                 }
-                logger.log(emMessageLevel.DEBUG, "rules: executing rule [{0} - {1}].", this.name, objects.getName(objects.getType(this)));
+                logger.log(emMessageLevel.DEBUG, "rules: executing rule [{0} - {1}].", this.name, objects.nameOf(this));
                 this.compute(context);
                 if (!objects.isNull(this.affectedProperties) && !objects.isNull(context.outputValues)) {
                     for (let item of this.affectedProperties) {
@@ -226,7 +226,7 @@ namespace ibas {
                         }
                     }
                 }
-                logger.log(emMessageLevel.DEBUG, "rules: executing rule [{0} - {1}].", this.name, objects.getName(objects.getType(this)));
+                logger.log(emMessageLevel.DEBUG, "rules: executing rule [{0} - {1}].", this.name, objects.nameOf(this));
                 this.compute(context);
                 if (!objects.isNull(this.affectedProperties) && !objects.isNull(context.outputValues)) {
                     for (let item of this.affectedProperties) {
