@@ -88,21 +88,6 @@ declare namespace sap {
                 setCriteria(value: ibas.ICriteria | ibas.ICondition[]): this;
             }
             /**
-             * 用户数据-输入框
-             */
-            class UserInput extends SelectionInput {
-            }
-            /**
-             * 组织数据-输入框
-             */
-            class OrganizationInput extends SelectionInput {
-            }
-            /**
-             * 项目数据-输入框
-             */
-            class ProjectInput extends SelectionInput {
-            }
-            /**
              * 超级文本框
              */
             class TextArea extends sap.m.TextArea {
@@ -128,6 +113,27 @@ declare namespace sap {
                  * @param value 值
                  */
                 setBindingValue(value: string): this;
+            }
+            /**
+             * 用户数据-输入框
+             * 未指定dataInfo.key时，根据绑定的type为数值类型或允许多选时使用DocEntry否则Code
+             */
+            class UserInput extends SelectionInput {
+            }
+            /**
+             * 组织数据-输入框
+             */
+            class OrganizationInput extends SelectionInput {
+            }
+            /**
+             * 角色数据-输入框
+             */
+            class RoleInput extends SelectionInput {
+            }
+            /**
+             * 业务对象数据-输入框
+             */
+            class BusinessObjectInput extends SelectionInput {
             }
         }
     }

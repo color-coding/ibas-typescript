@@ -49,6 +49,12 @@ namespace sap {
                 setValue(this: Input, value: string): Input {
                     return this.setBindingValue(value);
                 },
+                /** 重写绑定 */
+                bindProperty(this: Input, sName: string, oBindingInfo: any): Input {
+                    utils.checkBindingInfo.apply(this, arguments);
+                    sap.m.Input.prototype.bindProperty.apply(this, arguments);
+                    return this;
+                }
             });
             /**
              * 业务仓库数据-输入框
@@ -146,9 +152,10 @@ namespace sap {
                             // 没有此建议值
                             let dataInfo: repository.IDataInfo = this.getDataInfo();
                             if (ibas.objects.isNull(dataInfo)) {
-                                return;
+                                return this;
                             }
                             let criteria: ibas.ICriteria = new ibas.Criteria();
+                            criteria.noChilds = true;
                             for (let item of String(value).split(ibas.DATA_SEPARATOR)) {
                                 let condition: ibas.ICondition = criteria.conditions.create();
                                 condition.alias = dataInfo.key;
@@ -301,123 +308,6 @@ namespace sap {
                 }
             });
             /**
-             * 用户数据-输入框
-             */
-            SelectionInput.extend("sap.extension.m.UserInput", {
-                metadata: {
-                    properties: {
-                    },
-                    events: {}
-                },
-                renderer: {},
-                init(this: SelectionInput): void {
-                    let boRepository: ibas.BORepositoryApplication = variables.get(UserInput, "repository");
-                    if (!boRepository) {
-                        boRepository = ibas.boFactory.create("BORepositoryInitialFantasy");
-                        variables.set(boRepository, UserInput, "repository");
-                    }
-                    this.setRepository(boRepository);
-                    let dataInfo: repository.IDataInfo = variables.get(UserInput, "dataInfo");
-                    if (!dataInfo) {
-                        dataInfo = {
-                            type: ibas.boFactory.classOf(ibas.config.applyVariables("${Company}_SYS_USER")),
-                            key: "DocEntry",
-                            text: "Name",
-                        };
-                        variables.set(dataInfo, UserInput, "dataInfo");
-                    }
-                    this.setDataInfo(dataInfo);
-                    let criteria: ibas.ICriteria | ibas.ICondition[] = variables.get(UserInput, "criteria");
-                    if (!criteria) {
-                        criteria = [
-                            new ibas.Condition("Activated", ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES.toString())
-                        ];
-                        variables.set(criteria, UserInput, "criteria");
-                    }
-                    this.setCriteria(criteria);
-                    // 调用基类初始化
-                    SelectionInput.prototype.init.apply(this, arguments);
-                }
-            });
-            /**
-             * 组织数据-输入框
-             */
-            SelectionInput.extend("sap.extension.m.OrganizationInput", {
-                metadata: {
-                    properties: {
-                    },
-                    events: {}
-                },
-                renderer: {},
-                init(this: SelectionInput): void {
-                    let boRepository: ibas.BORepositoryApplication = variables.get(OrganizationInput, "repository");
-                    if (!boRepository) {
-                        boRepository = ibas.boFactory.create("BORepositoryInitialFantasy");
-                        variables.set(boRepository, OrganizationInput, "repository");
-                    }
-                    this.setRepository(boRepository);
-                    let dataInfo: repository.IDataInfo = variables.get(OrganizationInput, "dataInfo");
-                    if (!dataInfo) {
-                        dataInfo = {
-                            type: ibas.boFactory.classOf(ibas.config.applyVariables("${Company}_SYS_ORGANIZATION")),
-                            key: "Code",
-                            text: "Name",
-                        };
-                        variables.set(dataInfo, OrganizationInput, "dataInfo");
-                    }
-                    this.setDataInfo(dataInfo);
-                    let criteria: ibas.ICriteria | ibas.ICondition[] = variables.get(OrganizationInput, "criteria");
-                    if (!criteria) {
-                        criteria = [
-                            new ibas.Condition("Activated", ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES.toString())
-                        ];
-                        variables.set(criteria, OrganizationInput, "criteria");
-                    }
-                    this.setCriteria(criteria);
-                    // 调用基类初始化
-                    SelectionInput.prototype.init.apply(this, arguments);
-                }
-            });
-            /**
-             * 项目数据-输入框
-             */
-            SelectionInput.extend("sap.extension.m.ProjectInput", {
-                metadata: {
-                    properties: {
-                    },
-                    events: {}
-                },
-                renderer: {},
-                init(this: SelectionInput): void {
-                    let boRepository: ibas.BORepositoryApplication = variables.get(ProjectInput, "repository");
-                    if (!boRepository) {
-                        boRepository = ibas.boFactory.create("BORepositoryAccounting");
-                        variables.set(boRepository, ProjectInput, "repository");
-                    }
-                    this.setRepository(boRepository);
-                    let dataInfo: repository.IDataInfo = variables.get(ProjectInput, "dataInfo");
-                    if (!dataInfo) {
-                        dataInfo = {
-                            type: ibas.boFactory.classOf(ibas.config.applyVariables("${Company}_SYS_PROJECT")),
-                            key: "Code",
-                            text: "Name",
-                        };
-                        variables.set(dataInfo, ProjectInput, "dataInfo");
-                    }
-                    this.setDataInfo(dataInfo);
-                    let criteria: ibas.ICriteria | ibas.ICondition[] = variables.get(ProjectInput, "criteria");
-                    if (!criteria) {
-                        criteria = [
-                            new ibas.Condition("Activated", ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES.toString())
-                        ];
-                        variables.set(criteria, ProjectInput, "criteria");
-                    }
-                    this.setCriteria(criteria);
-                    // 调用基类初始化
-                    SelectionInput.prototype.init.apply(this, arguments);
-                }
-            });
-            /**
              * 超级文本框
              */
             sap.m.TextArea.extend("sap.extension.m.TextArea", {
@@ -452,6 +342,204 @@ namespace sap {
                 setValue(this: TextArea, value: string): TextArea {
                     return this.setBindingValue(value);
                 },
+                /** 重写绑定 */
+                bindProperty(this: TextArea, sName: string, oBindingInfo: any): TextArea {
+                    utils.checkBindingInfo.apply(this, arguments);
+                    sap.m.TextArea.prototype.bindProperty.apply(this, arguments);
+                    return this;
+                }
+            });
+            /**
+             * 用户数据-输入框
+             */
+            SelectionInput.extend("sap.extension.m.UserInput", {
+                metadata: {
+                    properties: {
+                    },
+                    events: {}
+                },
+                renderer: {},
+                /** 重构设置 */
+                applySettings(this: UserInput): UserInput {
+                    SelectionInput.prototype.applySettings.apply(this, arguments);
+                    let boRepository: ibas.BORepositoryApplication = this.getRepository();
+                    if (ibas.objects.isNull(boRepository)) {
+                        boRepository = variables.get(UserInput, "repository");
+                        if (ibas.objects.isNull(boRepository)) {
+                            boRepository = ibas.boFactory.create("BORepositoryInitialFantasy");
+                            variables.set(boRepository, UserInput, "repository");
+                        }
+                        this.setRepository(boRepository);
+                    }
+                    let criteria: ibas.ICriteria | ibas.ICondition[] = this.getCriteria();
+                    if (ibas.objects.isNull(criteria)) {
+                        criteria = variables.get(UserInput, "criteria");
+                        if (ibas.objects.isNull(criteria)) {
+                            criteria = [
+                                new ibas.Condition("Activated", ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES.toString())
+                            ];
+                            variables.set(criteria, UserInput, "criteria");
+                        }
+                        this.setCriteria(criteria);
+                    }
+                    return this;
+                },
+                /** 重写绑定 */
+                bindProperty(this: UserInput, sName: string, oBindingInfo: any): UserInput {
+                    if (ibas.strings.equals(sName, "bindingValue") && !ibas.objects.isNull(oBindingInfo)) {
+                        // 构建数据信息，根据绑定的数据类型
+                        let dataInfo: repository.IDataInfo = this.getDataInfo();
+                        if (ibas.objects.isNull(dataInfo)) {
+                            let infoName: string = "dataInfoCode", infoKey: string = "Code";
+                            // 允许多选或绑定类型为数值型时，使用DocEntry
+                            if (this.getChooseType() === ibas.emChooseType.MULTIPLE
+                                || oBindingInfo.type instanceof data.Numeric) {
+                                infoName = "dataInfo_DocEntry";
+                                infoKey = "DocEntry";
+                            }
+                            dataInfo = variables.get(UserInput, infoName);
+                            if (ibas.objects.isNull(dataInfo)) {
+                                dataInfo = {
+                                    type: ibas.boFactory.classOf(ibas.config.applyVariables("${Company}_SYS_USER")),
+                                    key: infoKey,
+                                    text: "Name",
+                                };
+                                variables.set(dataInfo, UserInput, infoName);
+                            }
+                            this.setDataInfo(dataInfo);
+                        } else {
+                            if (!dataInfo.type) {
+                                dataInfo.type = ibas.boFactory.classOf(ibas.config.applyVariables("${Company}_SYS_USER"));
+                            } else if (!dataInfo.key) {
+                                dataInfo.key = oBindingInfo.type instanceof data.Numeric ? "DocEntry" : "Code";
+                            } else if (!dataInfo.text) {
+                                dataInfo.text = "Name";
+                            }
+                        }
+                    }
+                    SelectionInput.prototype.bindProperty.apply(this, arguments);
+                    return this;
+                }
+            });
+            /**
+             * 组织数据-输入框
+             */
+            SelectionInput.extend("sap.extension.m.OrganizationInput", {
+                metadata: {
+                    properties: {
+                    },
+                    events: {}
+                },
+                renderer: {},
+                /** 重构设置 */
+                applySettings(this: OrganizationInput): OrganizationInput {
+                    SelectionInput.prototype.applySettings.apply(this, arguments);
+                    let boRepository: ibas.BORepositoryApplication = this.getRepository();
+                    if (ibas.objects.isNull(boRepository)) {
+                        boRepository = variables.get(OrganizationInput, "repository");
+                        if (ibas.objects.isNull(boRepository)) {
+                            boRepository = ibas.boFactory.create("BORepositoryInitialFantasy");
+                            variables.set(boRepository, OrganizationInput, "repository");
+                        }
+                        this.setRepository(boRepository);
+                    }
+                    let dataInfo: repository.IDataInfo = this.getDataInfo();
+                    if (ibas.objects.isNull(dataInfo)) {
+                        dataInfo = variables.get(OrganizationInput, "dataInfo");
+                        if (ibas.objects.isNull(dataInfo)) {
+                            dataInfo = {
+                                type: ibas.boFactory.classOf(ibas.config.applyVariables("${Company}_SYS_ORGANIZATION")),
+                                key: "Code",
+                                text: "Name",
+                            };
+                            variables.set(dataInfo, OrganizationInput, "dataInfo");
+                        }
+                        this.setDataInfo(dataInfo);
+                    } else {
+                        if (!dataInfo.type) {
+                            dataInfo.type = ibas.boFactory.classOf(ibas.config.applyVariables("${Company}_SYS_ORGANIZATION"));
+                        } else if (!dataInfo.key) {
+                            dataInfo.key = "Code";
+                        } else if (!dataInfo.text) {
+                            dataInfo.text = "Name";
+                        }
+                    }
+                    let criteria: ibas.ICriteria | ibas.ICondition[] = this.getCriteria();
+                    if (ibas.objects.isNull(criteria)) {
+                        criteria = variables.get(OrganizationInput, "criteria");
+                        if (ibas.objects.isNull(criteria)) {
+                            criteria = [
+                                new ibas.Condition("Activated", ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES.toString())
+                            ];
+                            variables.set(criteria, OrganizationInput, "criteria");
+                        }
+                        this.setCriteria(criteria);
+                    }
+                    return this;
+                }
+            });
+            /**
+             * 角色数据-输入框
+             */
+            OrganizationInput.extend("sap.extension.m.RoleInput", {
+                metadata: {
+                    properties: {
+                    },
+                    events: {}
+                },
+                renderer: {},
+                /** 重构设置 */
+                applySettings(this: RoleInput): RoleInput {
+                    // todo:角色非组织实现时
+                    (<any>OrganizationInput.prototype).applySettings.apply(this, arguments);
+                    return this;
+                }
+            });
+            /**
+             * 业务对象数据-输入框
+             */
+            SelectionInput.extend("sap.extension.m.BusinessObjectInput", {
+                metadata: {
+                    properties: {
+                    },
+                    events: {}
+                },
+                renderer: {},
+                /** 重构设置 */
+                applySettings(this: BusinessObjectInput): BusinessObjectInput {
+                    SelectionInput.prototype.applySettings.apply(this, arguments);
+                    let boRepository: ibas.BORepositoryApplication = this.getRepository();
+                    if (ibas.objects.isNull(boRepository)) {
+                        boRepository = variables.get(BusinessObjectInput, "repository");
+                        if (ibas.objects.isNull(boRepository)) {
+                            boRepository = ibas.boFactory.create("BORepositoryInitialFantasy");
+                            variables.set(boRepository, BusinessObjectInput, "repository");
+                        }
+                        this.setRepository(boRepository);
+                    }
+                    let dataInfo: repository.IDataInfo = this.getDataInfo();
+                    if (ibas.objects.isNull(dataInfo)) {
+                        dataInfo = variables.get(BusinessObjectInput, "dataInfo");
+                        if (ibas.objects.isNull(dataInfo)) {
+                            dataInfo = {
+                                type: ibas.boFactory.classOf(ibas.config.applyVariables("${Company}_SYS_BOINFO")),
+                                key: "Code",
+                                text: "Description"
+                            };
+                            variables.set(dataInfo, BusinessObjectInput, "dataInfo");
+                        }
+                        this.setDataInfo(dataInfo);
+                    } else {
+                        if (!dataInfo.type) {
+                            dataInfo.type = ibas.boFactory.classOf(ibas.config.applyVariables("${Company}_SYS_BOINFO"));
+                        } else if (!dataInfo.key) {
+                            dataInfo.key = "Code";
+                        } else if (!dataInfo.text) {
+                            dataInfo.text = "Description";
+                        }
+                    }
+                    return this;
+                }
             });
         }
     }

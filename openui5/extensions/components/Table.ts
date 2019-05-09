@@ -152,8 +152,6 @@ namespace sap {
                     properties: {
                         /** 列宽 */
                         width: { type: "sap.ui.core.CSSSize", group: "Dimension", defaultValue: "10rem" },
-                        /** 自动改变列宽 */
-                        autoResizable: { type: "boolean", defalutValue: true },
                     },
                     events: {}
                 },
@@ -165,6 +163,13 @@ namespace sap {
                     }
                     sap.ui.table.Column.prototype.setTemplate.apply(this, arguments);
                     return this;
+                },
+                /** 重构设置 */
+                applySettings(this: Column, mSettings: any, oScope?: any): Column {
+                    if (!mSettings.autoResizable) {
+                        mSettings.autoResizable = true;
+                    }
+                    return sap.ui.table.Column.prototype.applySettings.apply(this, arguments);
                 }
             });
             /**
@@ -310,27 +315,11 @@ namespace sap {
                 let readonly: boolean = true;
                 for (let column of this.getColumns()) {
                     if (column instanceof DataColumn) {
-                        let propertyInfo: shell.bo.IBOPropertyInfo = column.getPropertyInfo();
                         let template: sap.ui.core.Control | string = column.getTemplate();
                         if (template instanceof sap.ui.core.Control) {
                             if (template instanceof sap.m.InputBase) {
                                 readonly = false;
-                            }
-                            if (ibas.objects.isNull(propertyInfo)) {
-                                let path: string = (<any>template).getBindingPath("bindingValue");
-                                if (!ibas.strings.isEmpty(path)) {
-                                    propertyInfo = properties.firstOrDefault(c => ibas.strings.equalsIgnoreCase(path, c.property));
-                                    column.setPropertyInfo(propertyInfo);
-                                }
-                            }
-                        }
-                        if (ibas.objects.isNull(propertyInfo)) {
-                            continue;
-                        }
-                        for (let i: number = properties.length - 1; i >= 0; i--) {
-                            let item: shell.bo.IBOPropertyInfo = properties[i];
-                            if (item.property === propertyInfo.property) {
-                                properties.removeAt(i);
+                                break;
                             }
                         }
                     }
@@ -339,7 +328,7 @@ namespace sap {
                 for (let property of properties) {
                     this.addColumn(new DataColumn("", {
                         label: property.description,
-                        template: factories.newComponent(property, readonly),
+                        template: factories.newComponent(property, readonly ? "Text" : "Input"),
                     }));
                 }
             }

@@ -43,6 +43,12 @@ namespace sap {
                 setSelected(this: CheckBox, value: boolean): CheckBox {
                     return this.setBindingValue(value);
                 },
+                /** 重写绑定 */
+                bindProperty(this: CheckBox, sName: string, oBindingInfo: any): CheckBox {
+                    utils.checkBindingInfo.apply(this, arguments);
+                    sap.m.CheckBox.prototype.bindProperty.apply(this, arguments);
+                    return this;
+                }
             });
         }
     }

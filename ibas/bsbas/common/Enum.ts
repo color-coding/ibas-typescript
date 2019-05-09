@@ -74,7 +74,9 @@ namespace ibas {
         /** 单选 */
         SINGLE,
         /** 多选 */
-        MULTIPLE
+        MULTIPLE,
+        /** 不选择 */
+        NONE
     }
     /** 视图模式 */
     export enum emViewMode {

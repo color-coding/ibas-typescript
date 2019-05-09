@@ -20,9 +20,8 @@ namespace trainingtesting {
                 draw(): any {
                     let that: this = this;
                     this.table = new sap.extension.table.DataTable("", {
-                        enableSelectAll: false,
                         chooseType: this.chooseType,
-                        visibleRowCount: ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 15),
+                        visibleRowCount: sap.extension.table.visibleRowCount(15),
                         dataInfo: this.queryTarget,
                         rows: "{/rows}",
                         columns: [
@@ -30,7 +29,8 @@ namespace trainingtesting {
                                 label: ibas.i18n.prop("bo_salesorder_docentry"),
                                 template: new sap.extension.m.Text("", {
                                 }).bindProperty("bindingValue", {
-                                    path: "docEntry"
+                                    path: "docEntry",
+                                    type: new sap.extension.data.Numeric()
                                 })
                             }),
                             new sap.extension.table.DataColumn("", {
@@ -38,7 +38,8 @@ namespace trainingtesting {
                                 template: new sap.extension.m.DataLink("", {
                                     objectCode: bo.Customer.BUSINESS_OBJECT_CODE,
                                 }).bindProperty("bindingValue", {
-                                    path: "customerCode"
+                                    path: "customerCode",
+                                    type: new sap.extension.data.Alphanumeric()
                                 })
                             }),
                             new sap.extension.table.DataColumn("", {
@@ -52,6 +53,7 @@ namespace trainingtesting {
                                     },
                                 }).bindProperty("bindingValue", {
                                     path: "customerCode",
+                                    type: new sap.extension.data.Alphanumeric()
                                 })
                             }),
                             new sap.extension.table.DataColumn("", {

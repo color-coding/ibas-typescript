@@ -82,6 +82,16 @@ namespace sap {
                 }
                 return criteria;
             }
+            /** 检查绑定信息 */
+            export function checkBindingInfo(this: sap.ui.base.ManagedObject, sName: string, oBindingInfo: any): boolean {
+                if (ibas.strings.equals(sName, "bindingValue") && !ibas.objects.isNull(oBindingInfo) && !ibas.objects.isNull(oBindingInfo.path)) {
+                    if (!oBindingInfo.formatter && !oBindingInfo.type) {
+                        ibas.logger.log(ibas.emMessageLevel.WARN, "{0}: [{1} -> {2}] not specify the type of binding.", this.getId(), sName, oBindingInfo.path);
+                        return false;
+                    }
+                }
+                return true;
+            }
         }
         /**
          * 变量

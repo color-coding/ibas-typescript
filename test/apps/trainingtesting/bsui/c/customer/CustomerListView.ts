@@ -29,8 +29,7 @@ namespace trainingtesting {
                     let that: this = this;
                     this.table = new sap.extension.table.DataTable("", {
                         enableSelectAll: false,
-                        chooseType: ibas.emChooseType.MULTIPLE,
-                        visibleRowCount: ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 15),
+                        visibleRowCount: sap.extension.table.visibleRowCount(15),
                         visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Interactive,
                         dataInfo: this.queryTarget,
                         rows: "{/rows}",
@@ -40,7 +39,8 @@ namespace trainingtesting {
                                 template: new sap.extension.m.DataLink("", {
                                     objectCode: bo.Customer.BUSINESS_OBJECT_CODE,
                                 }).bindProperty("bindingValue", {
-                                    path: "code"
+                                    path: "code",
+                                    type: new sap.extension.data.Alphanumeric()
                                 })
                             }),
                             new sap.extension.table.DataColumn("", {
@@ -48,7 +48,8 @@ namespace trainingtesting {
                                 template: new sap.extension.m.Text("", {
                                     wrapping: false
                                 }).bindProperty("bindingValue", {
-                                    path: "name"
+                                    path: "name",
+                                    type: new sap.extension.data.Alphanumeric()
                                 })
                             }),
                         ],

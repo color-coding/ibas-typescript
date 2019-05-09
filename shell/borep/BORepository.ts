@@ -236,9 +236,9 @@ namespace shell {
             properties: [],
         };
         /** 过期时间 */
-        const EXPIRED_TIME: number = 600000;
+        const EXPIRED_TIME: number = 900000;
         /** 等待时间 */
-        const WAITING_TIME: number = 60;
+        const WAITING_TIME: number = 30;
         /** 业务对象信息缓存 */
         const boInfoCache: Map<string, DataWrapping> = new Map<string, DataWrapping>();
         /** 数据容器 */

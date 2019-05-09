@@ -8,9 +8,7 @@
 namespace trainingtesting {
     export namespace ui {
         export namespace c {
-            /**
-             * 查看视图-客户主数据
-             */
+            /** 查看视图-客户主数据 */
             export class CustomerViewView extends ibas.BOViewView implements app.ICustomerViewView {
 
                 /** 绘制视图 */
@@ -21,21 +19,28 @@ namespace trainingtesting {
                         content: [
                         ]
                     });
-                    return this.page = new sap.extension.m.Page("", {
+                    let formBottom: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
+                        editable: true,
+                        content: [
+                        ]
+                    });
+                    return this.page = new sap.extension.m.DataPage("", {
                         showHeader: false,
-                        subHeader: new sap.m.Bar("", {
-                            contentLeft: [
+                        dataInfo: {
+                            code: bo.Customer.BUSINESS_OBJECT_CODE,
+                        },
+                        subHeader: new sap.m.Toolbar("", {
+                            content: [
                                 new sap.m.Button("", {
                                     text: ibas.i18n.prop("shell_data_edit"),
-                                    visible: this.mode === ibas.emViewMode.VIEW ? false : true,
                                     type: sap.m.ButtonType.Transparent,
                                     icon: "sap-icon://edit",
+                                    visible: this.mode === ibas.emViewMode.VIEW ? false : true,
                                     press: function (): void {
                                         that.fireViewEvents(that.editDataEvent);
                                     }
-                                })
-                            ],
-                            contentRight: [
+                                }),
+                                new sap.m.ToolbarSpacer(""),
                                 new sap.m.Button("", {
                                     type: sap.m.ButtonType.Transparent,
                                     icon: "sap-icon://action",
@@ -73,7 +78,8 @@ namespace trainingtesting {
                             ]
                         }),
                         content: [
-                            formTop
+                            formTop,
+                            formBottom,
                         ]
                     });
                 }

@@ -44,6 +44,12 @@ namespace sap {
                     this.attachSelectionChange(undefined, () => {
                         this.setBindingValue(this.getSelectedKey());
                     });
+                },
+                /** 重写绑定 */
+                bindProperty(this: Input, sName: string, oBindingInfo: any): Input {
+                    utils.checkBindingInfo.apply(this, arguments);
+                    sap.m.SegmentedButton.prototype.bindProperty.apply(this, arguments);
+                    return this;
                 }
             });
             /**

@@ -70,9 +70,7 @@ declare namespace sap {
                  * 触发下一个数据集事件
                  * @param param 参数
                  */
-                protected fireNextDataSet(param: {
-                    data: any,
-                }): void;
+                protected fireNextDataSet(param: { data: any, }): void;
             }
             /**
              * 表格列

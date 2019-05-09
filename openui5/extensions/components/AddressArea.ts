@@ -54,7 +54,7 @@ namespace sap {
                     this.destroyItems();
                     let url: string = this.getDataUrl();
                     if (ibas.strings.isEmpty(url)) {
-                        return;
+                        return this;
                     }
                     let that: RegionComboBox = this;
                     jQuery.ajax({

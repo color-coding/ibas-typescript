@@ -148,9 +148,7 @@ declare namespace sap {
                 /** 取消监听地址改变事件 */
                 detachAddressChange(fnFunction: Function, oListener?: any): AddressArea;
                 /** 触发地址改变事件 */
-                protected fireAddressChange(param: {
-                    address: string,
-                }): AddressArea;
+                protected fireAddressChange(param: { address: string, }): AddressArea;
                 /** 设置地址 */
                 protected setAddress(): AddressArea;
             }

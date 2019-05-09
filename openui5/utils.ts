@@ -12,21 +12,19 @@ namespace openui5 {
         export const CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT: string = "tableRow|List";
         /** 配置项目-子项表格可视行数 */
         export const CONFIG_ITEM_ITEM_TABLE_VISIBLE_ROW_COUNT: string = "tableRow|Item";
-        let mapLanguage: Map<string, string> = new Map();
         /** 转换语言编码 */
         export function toLanguageCode(data: string): string {
-            if (ibas.objects.isNull(data)) {
-                return data;
-            }
-            if (mapLanguage.size === 0) {
-                // 正反
-                mapLanguage.set("zh_CN", "zh-CN");
-                mapLanguage.set("en_US", "en");
-                mapLanguage.set("zh-CN", "zh_CN");
-                mapLanguage.set("en", "en_US");
-            }
-            if (mapLanguage.has(data)) {
-                return mapLanguage.get(data);
+            switch (data) {
+                case "zh_CN":
+                    return "zh-CN";
+                case "zh-CN":
+                    return "zh_CN";
+                case "en_US":
+                    return "en";
+                case "en":
+                    return "en_US";
+                default:
+                    break;
             }
             return data;
         }
@@ -53,24 +51,6 @@ namespace openui5 {
             return map;
         }
         /**
-         * 描述业务对象
-         * @param boCode 业务对象编码
-         */
-        export function describeBOCode(boCode: string): string {
-            try {
-                let type: any = ibas.boFactory.classOf(boCode);
-                let name: string = ibas.objects.nameOf(type);
-                let descript: string = ibas.i18n.prop(ibas.strings.format("bo_{0}", name).toLowerCase());
-                if (descript.startsWith("[") && descript.endsWith("]")) {
-                    return boCode;
-                } else {
-                    return descript;
-                }
-            } catch (error) {
-                return boCode;
-            }
-        }
-        /**
          * 创建下拉框可选项
          * @param data 枚举类型
          * @param blank 是否创建空白项
@@ -89,22 +69,6 @@ namespace openui5 {
                     key: item[0],
                     text: ibas.enums.describe(data, item[1]),
                     additionalText: item[1]
-                }));
-            }
-            return items;
-        }
-        /**
-         * 创建SegmentedButtonItem
-         * @param data 枚举类型
-         */
-        export function createSegmentedButtonItems(data: any): sap.m.SegmentedButtonItem[] {
-            // 转换枚举内容
-            let items: Array<sap.m.SegmentedButtonItem> = new Array<sap.m.SegmentedButtonItem>();
-            for (let item of getEnumMap(data)) {
-                items.push(new sap.m.SegmentedButtonItem("", {
-                    width: "auto",
-                    key: item[0],
-                    text: ibas.enums.describe(data, item[1]),
                 }));
             }
             return items;
@@ -156,14 +120,6 @@ namespace openui5 {
                 for (let item of container.getSelectedIndices()) {
                     selecteds.remove(container.getContextByIndex(item).getObject());
                 }
-            }
-            return selecteds;
-        }
-        /** 获取表格选中的对象 */
-        export function getTableSelecteds<T>(table: sap.ui.table.Table): ibas.IList<T> {
-            let selecteds: ibas.IList<T> = new ibas.ArrayList<T>();
-            for (let item of table.getSelectedIndices()) {
-                selecteds.push(table.getContextByIndex(item).getObject());
             }
             return selecteds;
         }
@@ -272,7 +228,6 @@ namespace openui5 {
                             if (!ibas.objects.isNull(model)) {
                                 model.refresh(false);
                             }
-                            validateControlBoundProperty(managedObject);
                         }
                     });
                 }
@@ -352,7 +307,6 @@ namespace openui5 {
                 });
             }
             // 绑定触发一次的事件
-
         }
         /** 改变控件编辑状态 */
         export function changeControlEditable(ctrl: sap.ui.core.Control, editable: boolean): void {
@@ -602,85 +556,6 @@ namespace openui5 {
             }
             return validateResult;
         }
-        /**
-         * 桌面消息参数
-         */
-        export interface INotificationOptions {
-            /* 提示主体内容。字符串。会在标题的下面显示 */
-            body: string;
-            /* 标题 */
-            title?: string;
-            /* 默认值是auto, 可以是ltr或rtl，有点类似direction属性。表示提示主体内容的水平书写顺序 */
-            dir?: NotificationDirection;
-            /* 字符串。通知面板左侧那个图标地址 */
-            icon?: string;
-            /* 提示的语言 */
-            lang?: string;
-            /* 字符串。标记当前通知的标签 */
-            tag?: string;
-            /* 自动关闭通知时间（秒） */
-            autoCloseTime?: number;
-            /* 点击通知事件 */
-            onClick?: (oEvent?: Event) => any;
-            /* 关闭通知后触发事件 */
-            onClose?: (oEvent?: Event) => any;
-            /* 通知出错后触发事件 */
-            onError?: (oEvent?: Event) => any;
-            /* 通知显示后触发事件 */
-            onShow?: (oEvent?: Event) => any;
-        }
-        /**
-         * 发送桌面通知
-         */
-        export function sendDesktopNotification(notificationOptions: INotificationOptions): void {
-            let isNotificationSupported: Function = function (): boolean {
-                return !!Notification;
-            };
-            if (!isNotificationSupported) {
-                console.log(ibas.i18n.prop("ui5_utils_desktop_notification_not_supported", ""));
-                return;
-            }
-            Notification.requestPermission(function (permission: NotificationPermission): void {
-                // 在回掉函数中判断用户的选择,在这里不用为“拒绝”选项编写代码，因为既然拒绝，就什么都不做了，也不用为默认状态编写代码，因为既然已经弹出让用户选择的选项了，就没有所谓的默认状态了。所以只需要处理用户允许的状态就可以了
-                if (permission === "granted") {
-                    if (!notificationOptions.lang) {
-                        notificationOptions.lang = "utf-8";
-                    }
-                    if (!notificationOptions.icon) {
-                        notificationOptions.lang = "sap-icon://customer";
-                    }
-                    if (!notificationOptions.dir) {
-                        notificationOptions.lang = "auto";
-                    }
-                    if (!notificationOptions.title) {
-                        notificationOptions.title = ibas.i18n.prop("ui5_utils_desktop_notification_title", "");
-                    }
-                    let notification: Notification = new Notification(notificationOptions.title, {
-                        lang: notificationOptions.lang,
-                        icon: notificationOptions.icon,
-                        body: notificationOptions.body,
-                        tag: notificationOptions.tag,
-                        dir: notificationOptions.dir,
-                    });
-                    // 自动关闭
-                    if (notificationOptions.autoCloseTime > 0) {
-                        setTimeout(function (): void {
-                            notification.close();
-                        }, notificationOptions.autoCloseTime * 1000);
-                    }
-                    notification.onclick = notificationOptions.onClick;
-                    notification.onclose = notificationOptions.onClose;
-                    notification.onshow = notificationOptions.onShow;
-                    notification.onerror = function (oEvent?: Event): any {
-                        ibas.logger.log(ibas.i18n.prop("ui5_utils_desktop_notification_send_error", ""));
-                        if (!!notificationOptions.onError) {
-                            notificationOptions.onError(oEvent);
-                        }
-                    };
-                }
-            });
-        }
-
         /**
          * 初始化自定义字段UI
          * @param page 页面page

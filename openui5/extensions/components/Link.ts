@@ -43,6 +43,12 @@ namespace sap {
                 setText(this: Link, value: string): Link {
                     return sap.m.Link.prototype.setText.apply(this, arguments);
                 },
+                /** 重写绑定 */
+                bindProperty(this: Link, sName: string, oBindingInfo: any): Link {
+                    utils.checkBindingInfo.apply(this, arguments);
+                    sap.m.Link.prototype.bindProperty.apply(this, arguments);
+                    return this;
+                }
             });
             /**
              * 数据链接框
@@ -142,7 +148,7 @@ namespace sap {
                         if (!ibas.strings.isEmpty(value)) {
                             let dataInfo: repository.IDataInfo = this.getDataInfo();
                             if (ibas.objects.isNull(dataInfo)) {
-                                return;
+                                return this;
                             }
                             let criteria: ibas.ICriteria = new ibas.Criteria();
                             for (let item of String(value).split(ibas.DATA_SEPARATOR)) {

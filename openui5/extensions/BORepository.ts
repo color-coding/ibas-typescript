@@ -140,7 +140,7 @@ namespace sap {
                     // 过期回收
                     setTimeout(() => {
                         this.done();
-                    }, this.getConfig(BatchTask.CONFIG_ITEM_EXPIRATION_TIME, 600000));
+                    }, this.getConfig(BatchTask.CONFIG_ITEM_EXPIRATION_TIME, 900000));
                 }
                 boRepository: ibas.BORepositoryApplication;
                 dataInfo: IDataInfo;

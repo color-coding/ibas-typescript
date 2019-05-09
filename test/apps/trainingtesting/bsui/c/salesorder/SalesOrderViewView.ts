@@ -8,9 +8,7 @@
 namespace trainingtesting {
     export namespace ui {
         export namespace c {
-            /**
-             * 查看视图-销售订单
-             */
+            /** 查看视图-销售订单 */
             export class SalesOrderViewView extends ibas.BOViewView implements app.ISalesOrderViewView {
 
                 /** 绘制视图 */
@@ -19,76 +17,46 @@ namespace trainingtesting {
                     let formTop: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
                         editable: true,
                         content: [
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_customername") }),
-                            new sap.extension.m.Input("", {
-                                // editable: false,
-                            }).bindProperty("bindingValue", {
-                                path: "customerName",
-                                type: new sap.extension.data.Alphanumeric()
-                            }),
-                            new sap.m.Label("", { text: "A" }),
-                            new sap.extension.m.Input("", {
-                                // editable: false,
-                            }).bindProperty("bindingValue", {
-                                path: "userFields/0/value",
-                                type: new sap.extension.data.Alphanumeric()
-                            }),
-                            new sap.m.Label("", { text: "B" }),
-                            new sap.extension.m.Input("", {
-                                // editable: false,
-                                bindingValue: "{= " + "${}.customerName" + " }",
-                            }),
-                            new sap.m.Label("", { text: "C" }),
-                            new sap.extension.m.Input("", {
-                                // editable: false,
-                                bindingValue: "{= " + "${}.userFields.get('U_Address').value" + " }",
-                            }),
-                            new sap.m.Label("", { text: "D" }),
-                            new sap.extension.m.Input("", {
-                                // editable: false,
-                            }).bindProperty("bindingValue", {
-                                path: "{= userFields.get('U_Address').value }",
-                                type: new sap.extension.data.Alphanumeric()
-                            }),
-                            new sap.m.Label("", { text: "E" }),
-                            new sap.extension.m.Input("", {
-                                // editable: false,
-                            }).bindProperty("bindingValue", {
-                                path: "userFields/{= " + "${}/userFields.get('U_Address')" + " }/value",
-                                type: new sap.extension.data.Alphanumeric()
-                            }),
-                        ]
-                    });
-                    this.tableSalesOrderItem = new sap.extension.table.Table("", {
-                        enableSelectAll: false,
-                        selectionBehavior: sap.ui.table.SelectionBehavior.Row,
-                        visibleRowCount: ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 8),
-                        rows: "{/rows}",
-                        columns: [
                         ]
                     });
                     let formSalesOrderItem: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
                         editable: true,
                         content: [
                             new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_salesorderitem") }),
-                            this.tableSalesOrderItem,
+                            this.tableSalesOrderItem = new sap.extension.table.DataTable("", {
+                                visibleRowCount: sap.extension.table.visibleRowCount(8),
+                                dataInfo: {
+                                    code: bo.SalesOrder.BUSINESS_OBJECT_CODE,
+                                    name: bo.SalesOrderItem.name
+                                },
+                                rows: "{/rows}",
+                                columns: [
+                                ]
+                            }),
                         ]
                     });
-                    return this.page = new sap.extension.m.Page("", {
+                    let formBottom: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
+                        editable: true,
+                        content: [
+                        ]
+                    });
+                    return this.page = new sap.extension.m.DataPage("", {
                         showHeader: false,
-                        subHeader: new sap.m.Bar("", {
-                            contentLeft: [
+                        dataInfo: {
+                            code: bo.SalesOrder.BUSINESS_OBJECT_CODE,
+                        },
+                        subHeader: new sap.m.Toolbar("", {
+                            content: [
                                 new sap.m.Button("", {
                                     text: ibas.i18n.prop("shell_data_edit"),
-                                    visible: this.mode === ibas.emViewMode.VIEW ? false : true,
                                     type: sap.m.ButtonType.Transparent,
                                     icon: "sap-icon://edit",
+                                    visible: this.mode === ibas.emViewMode.VIEW ? false : true,
                                     press: function (): void {
                                         that.fireViewEvents(that.editDataEvent);
                                     }
-                                })
-                            ],
-                            contentRight: [
+                                }),
+                                new sap.m.ToolbarSpacer(""),
                                 new sap.m.Button("", {
                                     type: sap.m.ButtonType.Transparent,
                                     icon: "sap-icon://action",
@@ -128,6 +96,7 @@ namespace trainingtesting {
                         content: [
                             formTop,
                             formSalesOrderItem,
+                            formBottom,
                         ]
                     });
                 }
@@ -139,8 +108,7 @@ namespace trainingtesting {
                 showSalesOrder(data: bo.SalesOrder): void {
                     this.page.setModel(new sap.extension.model.JSONModel(data));
                 }
-
-                /** 显示数据 */
+                /** 显示数据-销售订单-行 */
                 showSalesOrderItems(datas: bo.SalesOrderItem[]): void {
                     this.tableSalesOrderItem.setModel(new sap.extension.model.JSONModel({ rows: datas }));
                 }

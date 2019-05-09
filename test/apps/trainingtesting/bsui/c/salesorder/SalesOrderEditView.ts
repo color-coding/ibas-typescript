@@ -149,12 +149,14 @@ namespace trainingtesting {
                                     code: bo.SalesOrder.BUSINESS_OBJECT_CODE,
                                     name: bo.SalesOrderItem.name
                                 },
+                                /*
                                 propertyFilter(property: shell.bo.IBOPropertyInfo): boolean {
                                     if (!ibas.strings.isWith(property.property, "U_", undefined)) {
                                         return false;
                                     }
                                     return true;
                                 },
+                                */
                                 rows: "{/rows}",
                                 columns: [
                                     new sap.extension.table.DataColumn("", {
@@ -235,12 +237,14 @@ namespace trainingtesting {
                                 showValueHelp: true,
                             }).bindProperty("bindingValue", {
                                 path: "dataOwner",
+                                type: new sap.extension.data.Numeric()
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_organization") }),
                             new sap.extension.m.OrganizationInput("", {
                                 showValueHelp: true,
                             }).bindProperty("bindingValue", {
                                 path: "organization",
+                                type: new sap.extension.data.Alphanumeric()
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_teammembers") }),
                             new sap.extension.m.UserInput("", {
@@ -248,12 +252,14 @@ namespace trainingtesting {
                                 chooseType: ibas.emChooseType.MULTIPLE,
                             }).bindProperty("bindingValue", {
                                 path: "teamMembers",
+                                type: new sap.extension.data.Alphanumeric()
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorder_remarks") }),
                             new sap.extension.m.TextArea("", {
                                 rows: 3,
                             }).bindProperty("bindingValue", {
                                 path: "remarks",
+                                type: new sap.extension.data.Alphanumeric()
                             }),
                             new sap.ui.core.Title("", {}),
                         ]
@@ -310,12 +316,14 @@ namespace trainingtesting {
                         dataInfo: {
                             code: bo.SalesOrder.BUSINESS_OBJECT_CODE,
                         },
+                        /*
                         propertyFilter(property: shell.bo.IBOPropertyInfo): boolean {
                             if (!ibas.strings.isWith(property.property, "U_", undefined)) {
                                 return false;
                             }
                             return true;
                         },
+                        */
                         content: [
                             formTop,
                             formSalesOrderItem,
@@ -323,39 +331,16 @@ namespace trainingtesting {
                         ]
                     });
                 }
-
                 private page: sap.extension.m.Page;
                 private tableSalesOrderItem: sap.extension.table.Table;
-
-                /** 改变视图状态 */
-                private changeViewStatus(data: bo.SalesOrder): void {
-                    if (ibas.objects.isNull(data)) {
-                        return;
-                    }
-                    // 新建时：禁用删除，
-                    if (data.isNew) {
-                        if (this.page.getSubHeader() instanceof sap.m.Toolbar) {
-                            openui5.utils.changeToolbarSavable(<sap.m.Toolbar>this.page.getSubHeader(), true);
-                            openui5.utils.changeToolbarDeletable(<sap.m.Toolbar>this.page.getSubHeader(), false);
-                        }
-                    }
-                    // 不可编辑：已批准，
-                    if (data.approvalStatus === ibas.emApprovalStatus.APPROVED) {
-                        if (this.page.getSubHeader() instanceof sap.m.Toolbar) {
-                            openui5.utils.changeToolbarSavable(<sap.m.Toolbar>this.page.getSubHeader(), false);
-                            openui5.utils.changeToolbarDeletable(<sap.m.Toolbar>this.page.getSubHeader(), false);
-                        }
-                        openui5.utils.changeFormEditable(this.page, false);
-                    }
-                }
 
                 /** 显示数据 */
                 showSalesOrder(data: bo.SalesOrder): void {
                     this.page.setModel(new sap.extension.model.JSONModel(data));
-                    // 改变视图状态
-                    this.changeViewStatus(data);
+                    // 改变页面状态
+                    sap.extension.pages.changeStatus(this.page);
                 }
-                /** 显示数据 */
+                /** 显示数据-销售订单-行 */
                 showSalesOrderItems(datas: bo.SalesOrderItem[]): void {
                     this.tableSalesOrderItem.setModel(new sap.extension.model.JSONModel({ rows: datas }));
                 }

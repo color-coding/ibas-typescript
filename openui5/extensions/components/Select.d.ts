@@ -109,14 +109,14 @@ declare namespace sap {
              */
             class PropertySelect extends Select {
                 /**
-                 * 获取对象编码
+                 * 获取数据信息
                  */
-                getObjectCode(): string;
+                getDataInfo(): { code: string, name?: string } | string | Function;
                 /**
-                 * 设置对象编码
-                 * @param value 对象编码
+                 * 设置数据信息
+                 * @param value 值
                  */
-                setObjectCode(value: string): this;
+                setDataInfo(value: { code: string, name?: string } | string | Function): this;
                 /**
                  * 获取属性名称
                  */

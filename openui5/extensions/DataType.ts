@@ -172,7 +172,7 @@ namespace sap {
                 protected validate(oValue: any): void {
                     if (this.notEmpty === true) {
                         if (ibas.strings.isEmpty(oValue)) {
-                            throw new RangeError("Value is empty.");
+                            throw new RangeError(ibas.i18n.prop("openui5_data_value_is_empty"));
                         }
                     }
                     if (ibas.objects.isNull(oValue)) {
@@ -180,18 +180,18 @@ namespace sap {
                     }
                     if (typeof oValue === "string") {
                         if (this.maxLength && oValue.length > this.maxLength) {
-                            throw new RangeError(ibas.strings.format("Value length more than {0}.", this.maxLength));
+                            throw new RangeError(ibas.i18n.prop("openui5_data_value_length_more_than", this.maxLength));
                         }
                         if (this.minLength && oValue.length < this.minLength) {
-                            throw new RangeError(ibas.strings.format("Value length less than {0}.", this.minLength));
+                            throw new RangeError(ibas.i18n.prop("openui5_data_value_length_less_than", this.minLength));
                         }
                         if (this.regExp) {
                             if (oValue.match(this.regExp) === null) {
-                                throw new RangeError(ibas.strings.format("Value not match {0}.", this.regExp.source));
+                                throw new RangeError(ibas.i18n.prop("openui5_data_value_not_match", this.regExp.source));
                             }
                         }
                     } else {
-                        throw new TypeError(ibas.strings.format("Value is not a {0}.", ibas.objects.nameOf(this)));
+                        throw new TypeError(ibas.i18n.prop("openui5_data_value_type_error", ibas.objects.nameOf(this)));
                     }
                 }
             }
@@ -259,15 +259,15 @@ namespace sap {
                     if (ibas.objects.isNull(oValue)) {
                         return;
                     }
-                    if (typeof oValue === "number") {
+                    if (typeof oValue === "number" && !isNaN(oValue)) {
                         if (this.minValue && oValue < this.minValue) {
-                            throw new RangeError(ibas.strings.format("Value less than {0}.", this.minValue));
+                            throw new RangeError(ibas.i18n.prop("openui5_data_value_less_than", this.minValue));
                         }
                         if (this.maxValue && oValue > this.maxValue) {
-                            throw new RangeError(ibas.strings.format("Value more than {0}.", this.maxValue));
+                            throw new RangeError(ibas.i18n.prop("openui5_data_value_more_than", this.maxValue));
                         }
                     } else {
-                        throw new TypeError(ibas.strings.format("Value is not a {0}.", ibas.objects.nameOf(this)));
+                        throw new TypeError(ibas.i18n.prop("openui5_data_value_type_error", ibas.objects.nameOf(this)));
                     }
                 }
             }
@@ -344,15 +344,15 @@ namespace sap {
                     if (ibas.objects.isNull(oValue)) {
                         return;
                     }
-                    if (typeof oValue === "number") {
+                    if (typeof oValue === "number" && !isNaN(oValue)) {
                         if (this.minValue && oValue < this.minValue) {
-                            throw new RangeError(ibas.strings.format("Value less than {0}.", this.minValue));
+                            throw new RangeError(ibas.i18n.prop("openui5_data_value_less_than", this.minValue));
                         }
                         if (this.maxValue && oValue > this.maxValue) {
-                            throw new RangeError(ibas.strings.format("Value more than {0}.", this.maxValue));
+                            throw new RangeError(ibas.i18n.prop("openui5_data_value_more_than", this.maxValue));
                         }
                     } else {
-                        throw new TypeError(ibas.strings.format("Value is not a {0}.", ibas.objects.nameOf(this)));
+                        throw new TypeError(ibas.i18n.prop("openui5_data_value_type_error", ibas.objects.nameOf(this)));
                     }
                 }
             }
@@ -452,7 +452,7 @@ namespace sap {
                         if (ibas.strings.isWith(oValue, undefined, "%")) {
                             oValue = oValue.substring(0, oValue.length - 1);
                         }
-                        oValue = parseFloat(oValue) * 100;
+                        oValue = parseFloat(oValue) / 100;
                         return super.parseValue(oValue, sInternalType);
                     }
                     return super.parseValue.apply(this, arguments);
@@ -534,7 +534,7 @@ namespace sap {
                         return;
                     }
                     if (!ibas.dates.isDate(oValue)) {
-                        throw new TypeError(ibas.strings.format("Value is not a {0}.", ibas.objects.nameOf(this)));
+                        throw new TypeError(ibas.i18n.prop("openui5_data_value_type_error", ibas.objects.nameOf(this)));
                     }
                 }
             }
@@ -628,10 +628,10 @@ namespace sap {
                     }
                     if (typeof oValue === "number") {
                         if (!(oValue >= 0 && oValue <= 2400)) {
-                            throw new RangeError("Value is not between 0 and 2400.");
+                            throw new RangeError(ibas.i18n.prop("openui5_data_value_not_between", 0, 2400));
                         }
                     } else {
-                        throw new TypeError(ibas.strings.format("Value is not a {0}.", ibas.objects.nameOf(this)));
+                        throw new TypeError(ibas.i18n.prop("openui5_data_value_type_error", ibas.objects.nameOf(this)));
                     }
                 }
             }
@@ -704,7 +704,7 @@ namespace sap {
                         return;
                     }
                     if (!ibas.dates.isDate(oValue)) {
-                        throw new TypeError(ibas.strings.format("Value is not a {0}.", ibas.objects.nameOf(this)));
+                        throw new TypeError(ibas.i18n.prop("openui5_data_value_type_error", ibas.objects.nameOf(this)));
                     }
                 }
             }
@@ -787,7 +787,7 @@ namespace sap {
                             return;
                         }
                     }
-                    throw new TypeError(ibas.strings.format("Value is not a {0}.", ibas.objects.nameOf(this)));
+                    throw new TypeError(ibas.i18n.prop("openui5_data_value_type_error", ibas.objects.nameOf(this)));
                 }
             }
             /**

@@ -128,7 +128,7 @@
   {
     "em_choosetype_single": "单选",
     "em_choosetype_multiple": "多选",
-    "em_choosetype_no": "无选"
+    "em_choosetype_none": "无选"
   },
   {
     "em_viewmode_common": "一般",

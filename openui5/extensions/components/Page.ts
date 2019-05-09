@@ -84,29 +84,24 @@ namespace sap {
                     Page.prototype.applySettings.apply(this, arguments);
                     // 重新构建区域
                     let content: any[] = this.removeAllContent();
-                    this.addContent(new sap.ui.layout.Splitter("", {
-                        orientation: sap.ui.core.Orientation.Horizontal,
-                        contentAreas: [
-                            new sap.ui.layout.Splitter(this.getId() + "_commonSplit", {
-                                orientation: sap.ui.core.Orientation.Vertical,
-                                layoutData: new sap.ui.layout.SplitterLayoutData("", {
-                                    resizable: true,
-                                    size: "100%",
+                    this.addContent(
+                        new sap.ui.layout.DynamicSideContent(this.getId() + "_contentSplit", {
+                            showMainContent: true,
+                            showSideContent: false,
+                            mainContent: [
+                                new sap.ui.layout.VerticalLayout(this.getId() + "_commonSplit", {
+                                    width: "100%",
+                                    content: content
+                                })
+                            ],
+                            sideContent: [
+                                new sap.ui.layout.form.SimpleForm(this.getId() + "_extendSplit", {
+                                    width: "100%",
+                                    editable: true,
                                 }),
-                                contentAreas: [
-                                    new sap.ui.layout.VerticalLayout(this.getId() + "_contentSplit", {
-                                        width: "100%",
-                                        content: content
-                                    })
-                                ]
-                            }),
-                            new sap.ui.layout.Splitter(this.getId() + "_extendSplit", {
-                                orientation: sap.ui.core.Orientation.Vertical,
-                                contentAreas: [
-                                ]
-                            }),
-                        ]
-                    }));
+                            ]
+                        })
+                    );
                     // 设置其他属性
                     let dataInfo: any = this.getDataInfo();
                     if (typeof dataInfo === "string") {
@@ -160,15 +155,11 @@ namespace sap {
                             let userFields: ibas.IUserFields = data.userFields;
                             if (!ibas.objects.isNull(userFields)) {
                                 let splitter: any = sap.ui.getCore().byId(this.getId() + "_extendSplit");
-                                if (splitter instanceof sap.ui.layout.Splitter) {
-                                    for (let form of splitter.getContentAreas()) {
-                                        if (form instanceof sap.ui.layout.form.SimpleForm) {
-                                            for (let item of form.getContent()) {
-                                                let bindingInfo: any = (<any>item).getBindingInfo("bindingValue");
-                                                if (!ibas.objects.isNull(bindingInfo)) {
-                                                    userfields.check(userFields, bindingInfo);
-                                                }
-                                            }
+                                if (splitter instanceof sap.ui.layout.form.SimpleForm) {
+                                    for (let item of splitter.getContent()) {
+                                        let bindingInfo: any = (<any>item).getBindingInfo("bindingValue");
+                                        if (!ibas.objects.isNull(bindingInfo)) {
+                                            userfields.check(userFields, bindingInfo);
                                         }
                                     }
                                 }
@@ -199,25 +190,6 @@ namespace sap {
                     }
                     properties.add(item);
                 }
-                // 只读列表（遍历列，存在输入框则非只读）
-                let propertyInfo: shell.bo.IBOPropertyInfo;
-                for (let control of this.getContent()) {
-                    if (control instanceof sap.ui.core.Control) {
-                        let path: string = (<any>control).getBindingPath("bindingValue");
-                        if (!ibas.strings.isEmpty(path)) {
-                            propertyInfo = properties.firstOrDefault(c => ibas.strings.equalsIgnoreCase(path, c.property));
-                        }
-                    }
-                    if (ibas.objects.isNull(propertyInfo)) {
-                        continue;
-                    }
-                    for (let i: number = properties.length - 1; i >= 0; i--) {
-                        let item: shell.bo.IBOPropertyInfo = properties[i];
-                        if (item.property === propertyInfo.property) {
-                            properties.removeAt(i);
-                        }
-                    }
-                }
                 // 创建自定义字段按钮
                 if (properties.length > 0) {
                     let shower: any = sap.ui.getCore().byId(this.getId() + "_shower");
@@ -226,16 +198,9 @@ namespace sap {
                             type: sap.m.ButtonType.Transparent,
                             icon: "sap-icon://filter-fields",
                             press: () => {
-                                let split: any = sap.ui.getCore().byId(this.getId() + "_commonSplit");
-                                if (split instanceof sap.ui.layout.Splitter) {
-                                    let splitLayout: any = split.getLayoutData();
-                                    if (splitLayout instanceof sap.ui.layout.SplitterLayoutData) {
-                                        if (splitLayout.getSize() === "100%") {
-                                            splitLayout.setSize("80%");
-                                        } else {
-                                            splitLayout.setSize("100%");
-                                        }
-                                    }
+                                let split: any = sap.ui.getCore().byId(this.getId() + "_contentSplit");
+                                if (split instanceof sap.ui.layout.DynamicSideContent) {
+                                    split.setShowSideContent(!split.getShowSideContent(), false);
                                 }
                             }
                         });
@@ -254,17 +219,13 @@ namespace sap {
                 }
                 // 创建未存在的控件
                 let splitter: any = sap.ui.getCore().byId(this.getId() + "_extendSplit");
-                if (splitter instanceof sap.ui.layout.Splitter) {
-                    let form: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
-                        editable: true,
-                    });
+                if (splitter instanceof sap.ui.layout.form.SimpleForm) {
                     for (let property of properties) {
-                        form.addContent(new sap.m.Label("", {
+                        splitter.addContent(new sap.m.Label("", {
                             text: property.description
                         }));
-                        form.addContent(factories.newComponent(property));
+                        splitter.addContent(factories.newComponent(property, "Input"));
                     }
-                    splitter.addContentArea(form);
                 }
             }
         }

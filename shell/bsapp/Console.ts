@@ -42,7 +42,6 @@ namespace shell {
                 let rootUrl: string = ibas.urls.rootUrl(Console.ROOT_FILE_NAME);
                 // 加载语言-壳
                 ibas.i18n.load(ibas.strings.format("{0}/resources/languages/shell.json", rootUrl));
-                ibas.i18n.load(ibas.strings.format("{0}/resources/languages/enums.json", rootUrl));
                 // 设置资源属性
                 this.description = ibas.i18n.prop(this.name);
                 this.icon = ibas.strings.format("{0}/resources/images/logo_small.png", rootUrl);

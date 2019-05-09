@@ -14,7 +14,7 @@ namespace sap {
              * @param property 属性信息
              * @param textView 文本视图
              */
-            export function newComponent(property: shell.bo.IBOPropertyInfo, textView?: boolean): sap.ui.core.Control {
+            export function newComponent(property: shell.bo.IBOPropertyInfo, mode: "Text" | "Input"): sap.ui.core.Control {
                 // 创建绑定信息
                 let bindInfo: {
                     path: string,
@@ -23,15 +23,15 @@ namespace sap {
                     path: property.property[0].toLowerCase() + property.property.substring(1)
                 };
                 if (property.property === "DocumentStatus" || property.property === "LineStatus") {
-                    bindInfo.type = new sap.extension.data.DocumentStatus(textView);
+                    bindInfo.type = new sap.extension.data.DocumentStatus(mode === "Text" ? true : false);
                 } else if (property.property === "ApprovalStatus") {
-                    bindInfo.type = new sap.extension.data.ApprovalStatus(textView);
+                    bindInfo.type = new sap.extension.data.ApprovalStatus(mode === "Text" ? true : false);
                 } else if (property.property === "Direction") {
-                    bindInfo.type = new sap.extension.data.Direction(textView);
+                    bindInfo.type = new sap.extension.data.Direction(mode === "Text" ? true : false);
                 } else if (property.property === "Canceled" || property.property === "Referenced"
                     || property.property === "Locked" || property.property === "Transfered"
                     || property.property === "Activated" || property.property === "Deleted") {
-                    bindInfo.type = new sap.extension.data.YesNo(textView);
+                    bindInfo.type = new sap.extension.data.YesNo(mode === "Text" ? true : false);
                 } else if (property.dataType === "Numeric") {
                     bindInfo.type = new sap.extension.data.Numeric();
                 } else if (property.dataType === "Date") {
@@ -59,7 +59,7 @@ namespace sap {
                 } else {
                     bindInfo.type = new sap.extension.data.Alphanumeric();
                 }
-                if (textView === true) {
+                if (mode === "Text") {
                     // 只读权限
                     if (property.values instanceof Array && property.values.length > 0) {
                         // 可选值
@@ -88,7 +88,7 @@ namespace sap {
                     }
                     return new sap.extension.m.Text("", {
                     }).bindProperty("bindingValue", bindInfo);
-                } else {
+                } else if (mode === "Input") {
                     // 读写权限
                     if (bindInfo.type instanceof sap.extension.data.Date) {
                         return new sap.extension.m.DatePicker("", {
@@ -129,6 +129,8 @@ namespace sap {
                             editable: property.authorised === ibas.emAuthoriseType.ALL ? true : false,
                         }).bindProperty("bindingValue", bindInfo);
                     }
+                } else {
+                    return null;
                 }
             }
         }

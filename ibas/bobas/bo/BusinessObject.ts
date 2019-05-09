@@ -396,10 +396,9 @@ namespace ibas {
         protected firePropertyChanged(property: string): void {
             if (this.isLoading) { return; }
             let myRules: IBusinessRules = businessRulesManager.getRules(objects.typeOf(this));
-            if (objects.isNull(myRules)) {
-                return;
+            if (!objects.isNull(myRules)) {
+                myRules.execute(this, property);
             }
-            myRules.execute(this, property);
             super.firePropertyChanged(property);
         }
         /** 用户字段 */

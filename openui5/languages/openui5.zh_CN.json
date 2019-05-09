@@ -42,5 +42,13 @@
     "openui5_street": "街道",
     "openui5_zipcode": "邮编",
     "openui5_manual_series": "手动编号",
-    "openui5_please_select_data": "请选择数据"
+    "openui5_please_select_data": "请选择数据",
+    "openui5_data_value_type_error": "值不是{0}类型",
+    "openui5_data_value_is_empty": "没有值",
+    "openui5_data_value_length_more_than": "值长度大于{0}",
+    "openui5_data_value_length_less_than": "值长度小于{0}",
+    "openui5_data_value_not_match": "值不匹配",
+    "openui5_data_value_more_than": "值大于{0}",
+    "openui5_data_value_less_than": "值小于{0}",
+    "openui5_data_value_not_between": "值没有处于{0} - {1}之间"
 }

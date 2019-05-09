@@ -28,13 +28,15 @@ namespace trainingtesting {
                             new sap.extension.m.Input("", {
                                 type: sap.m.InputType.Text
                             }).bindProperty("bindingValue", {
-                                path: "code"
+                                path: "code",
+                                type: new sap.extension.data.Alphanumeric()
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_customer_name") }),
                             new sap.extension.m.Input("", {
                                 type: sap.m.InputType.Text
                             }).bindProperty("bindingValue", {
-                                path: "name"
+                                path: "name",
+                                type: new sap.extension.data.Alphanumeric()
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_customer_activated") }),
                             new sap.extension.m.EnumSelect("", {
@@ -121,36 +123,13 @@ namespace trainingtesting {
                         ]
                     });
                 }
-
                 private page: sap.extension.m.Page;
-
-                /** 改变视图状态 */
-                private changeViewStatus(data: bo.Customer): void {
-                    if (ibas.objects.isNull(data)) {
-                        return;
-                    }
-                    // 新建时：禁用删除，
-                    if (data.isNew) {
-                        if (this.page.getSubHeader() instanceof sap.m.Toolbar) {
-                            openui5.utils.changeToolbarSavable(<sap.m.Toolbar>this.page.getSubHeader(), true);
-                            openui5.utils.changeToolbarDeletable(<sap.m.Toolbar>this.page.getSubHeader(), false);
-                        }
-                    }
-                    // 不可编辑：已批准，
-                    if (data.approvalStatus === ibas.emApprovalStatus.APPROVED) {
-                        if (this.page.getSubHeader() instanceof sap.m.Toolbar) {
-                            openui5.utils.changeToolbarSavable(<sap.m.Toolbar>this.page.getSubHeader(), false);
-                            openui5.utils.changeToolbarDeletable(<sap.m.Toolbar>this.page.getSubHeader(), false);
-                        }
-                        openui5.utils.changeFormEditable(this.page, false);
-                    }
-                }
 
                 /** 显示数据 */
                 showCustomer(data: bo.Customer): void {
                     this.page.setModel(new sap.extension.model.JSONModel(data));
-                    // 改变视图状态
-                    this.changeViewStatus(data);
+                    // 改变页面状态
+                    sap.extension.pages.changeStatus(this.page);
                 }
             }
         }

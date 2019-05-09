@@ -65,6 +65,29 @@ declare namespace sap {
                 setDataInfo(value: repository.IDataInfo | any): this;
             }
             /**
+             * 对象属性可选值-文本框
+             */
+            class PropertyText extends Text {
+                /**
+                 * 获取数据信息
+                 */
+                getDataInfo(): { code: string, name?: string } | string | Function;
+                /**
+                 * 设置数据信息
+                 * @param value 值
+                 */
+                setDataInfo(value: { code: string, name?: string } | string | Function): this;
+                /**
+                 * 获取属性名称
+                 */
+                getPropertyName(): string;
+                /**
+                 * 设置属性名称
+                 * @param value 属性名称
+                 */
+                setPropertyName(value: string): this;
+            }
+            /**
              * 数据转换-文本框
              */
             class ConversionText extends Text {
@@ -78,6 +101,26 @@ declare namespace sap {
                     done: (newValue: string) => void,
                     bindingData?: any,
                 }): ConversionText;
+            }
+            /**
+             * 用户数据-文本框
+             */
+            class UserText extends RepositoryText {
+            }
+            /**
+             * 组织数据-文本框
+             */
+            class OrganizationText extends RepositoryText {
+            }
+            /**
+             * 角色数据-文本框
+             */
+            class RoleText extends RepositoryText {
+            }
+            /**
+             * 业务对象数据-文本框
+             */
+            class BusinessObjectText extends RepositoryText {
             }
         }
     }

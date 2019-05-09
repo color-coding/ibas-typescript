@@ -57,6 +57,12 @@ namespace sap {
                             this.setProperty("bindingValue", newValue);
                         }
                     });
+                },
+                /** 重写绑定 */
+                bindProperty(this: DatePicker, sName: string, oBindingInfo: any): DatePicker {
+                    utils.checkBindingInfo.apply(this, arguments);
+                    sap.m.DatePicker.prototype.bindProperty.apply(this, arguments);
+                    return this;
                 }
             });
             /**
@@ -118,6 +124,12 @@ namespace sap {
                         mSettings.displayFormat = data.Time.DEFAULT_FORMAT;
                     }
                     sap.m.TimePicker.prototype.applySettings.apply(this, arguments);
+                    return this;
+                },
+                /** 重写绑定 */
+                bindProperty(this: TimePicker, sName: string, oBindingInfo: any): TimePicker {
+                    utils.checkBindingInfo.apply(this, arguments);
+                    sap.m.TimePicker.prototype.bindProperty.apply(this, arguments);
                     return this;
                 }
             });

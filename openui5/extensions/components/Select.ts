@@ -41,6 +41,12 @@ namespace sap {
                     (<any>sap.m.Select.prototype).setSelection.apply(this, arguments);
                     this.setProperty("bindingValue", this.getSelectedKey());
                     return this;
+                },
+                /** 重写绑定 */
+                bindProperty(this: Select, sName: string, oBindingInfo: any): Select {
+                    utils.checkBindingInfo.apply(this, arguments);
+                    sap.m.Select.prototype.bindProperty.apply(this, arguments);
+                    return this;
                 }
             });
             /**
@@ -245,8 +251,8 @@ namespace sap {
             Select.extend("sap.extension.m.PropertySelect", {
                 metadata: {
                     properties: {
-                        /** 对象编码 */
-                        objectCode: { type: "string" },
+                        /** 对象数据信息 */
+                        dataInfo: { type: "any" },
                         /** 属性名称 */
                         propertyName: { type: "string" },
                         /** 空白数据 */
@@ -256,17 +262,17 @@ namespace sap {
                 },
                 renderer: {},
                 /**
-                 * 获取对象编码
+                 * 获取数据信息
                  */
-                getObjectCode(this: PropertySelect): string {
-                    return this.getProperty("objectCode");
+                getDataInfo(this: PropertySelect): { code: string, name?: string } | string {
+                    return this.getProperty("dataInfo");
                 },
                 /**
-                 * 设置对象编码
-                 * @param value 对象编码
+                 * 设置数据信息
+                 * @param value 数据信息
                  */
-                setObjectCode(this: PropertySelect, value: string): PropertySelect {
-                    return this.setProperty("objectCode", ibas.config.applyVariables(value));
+                setDataInfo(this: PropertySelect, value: { code: string, name?: string } | string): PropertySelect {
+                    return this.setProperty("dataInfo", value);
                 },
                 /**
                  * 获取属性名称
@@ -300,17 +306,40 @@ namespace sap {
                  * 加载可选值
                  */
                 loadItems(this: PropertySelect): PropertySelect {
+                    let boInfo: { code: string, name?: string } | string | Function = this.getDataInfo();
+                    if (typeof boInfo === "string") {
+                        boInfo = {
+                            code: boInfo,
+                            name: undefined,
+                        };
+                    } else if (typeof boInfo === "function") {
+                        boInfo = {
+                            code: ibas.objects.typeOf(boInfo).BUSINESS_OBJECT_CODE,
+                            name: undefined,
+                        };
+                    }
+                    if (!boInfo || !boInfo.code) {
+                        return this;
+                    }
+                    let propertyName: string = this.getPropertyName();
+                    if (ibas.strings.isEmpty(propertyName)) {
+                        // 未设置属性则使用绑定的
+                        propertyName = this.getBindingPath("bindingValue");
+                    }
+                    if (ibas.strings.isEmpty(propertyName)) {
+                        return this;
+                    }
                     let boRepository: shell.bo.IBORepositoryShell = ibas.boFactory.create(shell.bo.BO_REPOSITORY_SHELL);
                     boRepository.fetchBOInfos({
-                        boCode: this.getObjectCode(),
+                        boCode: ibas.config.applyVariables(boInfo.code),
+                        boName: boInfo.name,
                         onCompleted: (opRslt) => {
                             try {
                                 if (opRslt.resultCode !== 0) {
                                     throw new Error(opRslt.message);
                                 }
                                 let boName: string;
-                                let propertyName: string = this.getPropertyName();
-                                if (propertyName && propertyName.indexOf(".") > 0) {
+                                if (propertyName.indexOf(".") > 0) {
                                     // 属性带路径，则取名称
                                     boName = propertyName.split(".")[0];
                                 }
@@ -318,6 +347,10 @@ namespace sap {
                                     if (boName && !ibas.strings.equalsIgnoreCase(data.name, boName)) {
                                         continue;
                                     }
+                                    this.addItem(new sap.ui.core.ListItem("", {
+                                        key: "",
+                                        text: ibas.i18n.prop("openui5_please_select_data")
+                                    }));
                                     for (let property of data.properties) {
                                         if (ibas.strings.equalsIgnoreCase(propertyName, property.property)) {
                                             if (property.values instanceof Array) {
@@ -330,6 +363,7 @@ namespace sap {
                                             }
                                         }
                                     }
+                                    return;
                                 }
                             } catch (error) {
                                 ibas.logger.log(error);

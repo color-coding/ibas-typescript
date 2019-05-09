@@ -43,6 +43,12 @@ namespace sap {
                 setState(this: Switch, value: boolean): Switch {
                     return this.setBindingValue(value);
                 },
+                /** 重写绑定 */
+                bindProperty(this: Switch, sName: string, oBindingInfo: any): Switch {
+                    utils.checkBindingInfo.apply(this, arguments);
+                    sap.m.Switch.prototype.bindProperty.apply(this, arguments);
+                    return this;
+                }
             });
         }
     }

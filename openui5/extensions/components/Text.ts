@@ -45,6 +45,12 @@ namespace sap {
                 setText(this: Text, value: string): Text {
                     return sap.m.Text.prototype.setText.apply(this, arguments);
                 },
+                /** 重写绑定 */
+                bindProperty(this: Text, sName: string, oBindingInfo: any): Text {
+                    utils.checkBindingInfo.apply(this, arguments);
+                    sap.m.Text.prototype.bindProperty.apply(this, arguments);
+                    return this;
+                }
             });
             /**
              * 业务仓库数据-文本框
@@ -97,9 +103,10 @@ namespace sap {
                         if (!ibas.strings.isEmpty(value)) {
                             let dataInfo: repository.IDataInfo = this.getDataInfo();
                             if (ibas.objects.isNull(dataInfo)) {
-                                return;
+                                return this;
                             }
                             let criteria: ibas.ICriteria = new ibas.Criteria();
+                            criteria.noChilds = true;
                             for (let item of String(value).split(ibas.DATA_SEPARATOR)) {
                                 let condition: ibas.ICondition = criteria.conditions.create();
                                 condition.alias = dataInfo.key;
@@ -137,6 +144,120 @@ namespace sap {
                         }
                     }
                     return this;
+                },
+            });
+            /**
+             * 对象属性可选值-文本框
+             */
+            Text.extend("sap.extension.m.PropertyText", {
+                metadata: {
+                    properties: {
+                        /** 对象数据信息 */
+                        dataInfo: { type: "any" },
+                        /** 属性名称 */
+                        propertyName: { type: "string" },
+                    },
+                    events: {}
+                },
+                renderer: {
+                },
+                /**
+                 * 获取数据信息
+                 */
+                getDataInfo(this: PropertyText): { code: string, name?: string } | string {
+                    return this.getProperty("dataInfo");
+                },
+                /**
+                 * 设置数据信息
+                 * @param value 数据信息
+                 */
+                setDataInfo(this: PropertyText, value: { code: string, name?: string } | string): PropertyText {
+                    return this.setProperty("dataInfo", value);
+                },
+                /**
+                 * 获取属性名称
+                 */
+                getPropertyName(this: PropertyText): string {
+                    return this.getProperty("propertyName");
+                },
+                /**
+                 * 设置属性名称
+                 * @param value 属性名称
+                 */
+                setPropertyName(this: PropertyText, value: string): PropertyText {
+                    return this.setProperty("propertyName", value);
+                },
+                /**
+                 * 设置选中值
+                 * @param value 值
+                 */
+                setBindingValue(this: PropertyText, value: string): PropertyText {
+                    if (this.getBindingValue() !== value) {
+                        Text.prototype.setBindingValue.apply(this, arguments);
+                        if (ibas.strings.isEmpty(value)) {
+                            return this;
+                        }
+                        let boInfo: { code: string, name?: string } | string | Function = this.getDataInfo();
+                        if (typeof boInfo === "string") {
+                            boInfo = {
+                                code: boInfo,
+                                name: undefined,
+                            };
+                        } else if (typeof boInfo === "function") {
+                            boInfo = {
+                                code: ibas.objects.typeOf(boInfo).BUSINESS_OBJECT_CODE,
+                                name: undefined,
+                            };
+                        }
+                        if (!boInfo || !boInfo.code) {
+                            return this;
+                        }
+                        let propertyName: string = this.getPropertyName();
+                        if (ibas.strings.isEmpty(propertyName)) {
+                            // 未设置属性则使用绑定的
+                            propertyName = this.getBindingPath("bindingValue");
+                        }
+                        if (ibas.strings.isEmpty(propertyName)) {
+                            return this;
+                        }
+                        let boRepository: shell.bo.IBORepositoryShell = ibas.boFactory.create(shell.bo.BO_REPOSITORY_SHELL);
+                        boRepository.fetchBOInfos({
+                            boCode: ibas.config.applyVariables(boInfo.code),
+                            boName: boInfo.name,
+                            onCompleted: (opRslt) => {
+                                try {
+                                    if (opRslt.resultCode !== 0) {
+                                        throw new Error(opRslt.message);
+                                    }
+                                    let boName: string;
+                                    if (propertyName.indexOf(".") > 0) {
+                                        // 属性带路径，则取名称
+                                        boName = propertyName.split(".")[0];
+                                    }
+                                    for (let data of opRslt.resultObjects) {
+                                        if (boName && !ibas.strings.equalsIgnoreCase(data.name, boName)) {
+                                            continue;
+                                        }
+                                        for (let property of data.properties) {
+                                            if (ibas.strings.equalsIgnoreCase(propertyName, property.property)) {
+                                                if (property.values instanceof Array) {
+                                                    for (let item of property.values) {
+                                                        if (ibas.strings.equals(item.value, value)) {
+                                                            this.setText(item.description);
+                                                            return;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        return;
+                                    }
+                                } catch (error) {
+                                    ibas.logger.log(error);
+                                }
+                            }
+                        });
+                    }
                 },
             });
             /**
@@ -181,6 +302,164 @@ namespace sap {
                                 done: done,
                                 bindingData: bindingData,
                             });
+                        }
+                    }
+                    return this;
+                }
+            });
+            /**
+             * 用户数据-文本框
+             */
+            RepositoryText.extend("sap.extension.m.UserText", {
+                metadata: {
+                    properties: {
+                    },
+                    events: {}
+                },
+                renderer: {
+                },
+                /** 重构设置 */
+                applySettings(this: UserText): UserText {
+                    RepositoryText.prototype.applySettings.apply(this, arguments);
+                    let boRepository: ibas.BORepositoryApplication = this.getRepository();
+                    if (ibas.objects.isNull(boRepository)) {
+                        boRepository = variables.get(UserText, "repository");
+                        if (ibas.objects.isNull(boRepository)) {
+                            boRepository = ibas.boFactory.create("BORepositoryInitialFantasy");
+                            variables.set(boRepository, UserText, "repository");
+                        }
+                        this.setRepository(boRepository);
+                    }
+                    let dataInfo: repository.IDataInfo = this.getDataInfo();
+                    if (ibas.objects.isNull(dataInfo)) {
+                        dataInfo = variables.get(UserText, "dataInfo");
+                        if (ibas.objects.isNull(dataInfo)) {
+                            dataInfo = {
+                                type: ibas.boFactory.classOf(ibas.config.applyVariables("${Company}_SYS_USER")),
+                                key: "DocEntry",
+                                text: "Name",
+                            };
+                            variables.set(dataInfo, UserText, "dataInfo");
+                        }
+                        this.setDataInfo(dataInfo);
+                    } else {
+                        if (!dataInfo.type) {
+                            dataInfo.type = ibas.boFactory.classOf(ibas.config.applyVariables("${Company}_SYS_USER"));
+                        } else if (!dataInfo.key) {
+                            dataInfo.key = "DocEntry";
+                        } else if (!dataInfo.text) {
+                            dataInfo.text = "Name";
+                        }
+                    }
+                    return this;
+                }
+            });
+            /**
+             * 组织数据-文本框
+             */
+            RepositoryText.extend("sap.extension.m.OrganizationText", {
+                metadata: {
+                    properties: {
+                    },
+                    events: {}
+                },
+                renderer: {
+                },
+                /** 重构设置 */
+                applySettings(this: OrganizationText): OrganizationText {
+                    RepositoryText.prototype.applySettings.apply(this, arguments);
+                    let boRepository: ibas.BORepositoryApplication = this.getRepository();
+                    if (ibas.objects.isNull(boRepository)) {
+                        boRepository = variables.get(OrganizationText, "repository");
+                        if (ibas.objects.isNull(boRepository)) {
+                            boRepository = ibas.boFactory.create("BORepositoryInitialFantasy");
+                            variables.set(boRepository, OrganizationText, "repository");
+                        }
+                        this.setRepository(boRepository);
+                    }
+                    let dataInfo: repository.IDataInfo = this.getDataInfo();
+                    if (ibas.objects.isNull(dataInfo)) {
+                        dataInfo = variables.get(OrganizationText, "dataInfo");
+                        if (ibas.objects.isNull(dataInfo)) {
+                            dataInfo = {
+                                type: ibas.boFactory.classOf(ibas.config.applyVariables("${Company}_SYS_ORGANIZATION")),
+                                key: "Code",
+                                text: "Name",
+                            };
+                            variables.set(dataInfo, OrganizationText, "dataInfo");
+                        }
+                        this.setDataInfo(dataInfo);
+                    } else {
+                        if (!dataInfo.type) {
+                            dataInfo.type = ibas.boFactory.classOf(ibas.config.applyVariables("${Company}_SYS_ORGANIZATION"));
+                        } else if (!dataInfo.key) {
+                            dataInfo.key = "Code";
+                        } else if (!dataInfo.text) {
+                            dataInfo.text = "Name";
+                        }
+                    }
+                    return this;
+                }
+            });
+            /**
+             * 角色数据-文本框
+             */
+            OrganizationText.extend("sap.extension.m.RoleText", {
+                metadata: {
+                    properties: {
+                    },
+                    events: {}
+                },
+                renderer: {
+                },
+                /** 重构设置 */
+                applySettings(this: RoleText): RoleText {
+                    OrganizationText.prototype.applySettings.apply(this, arguments);
+                    return this;
+                }
+            });
+            /**
+             * 业务对象数据-文本框
+             */
+            RepositoryText.extend("sap.extension.m.BusinessObjectText", {
+                metadata: {
+                    properties: {
+                    },
+                    events: {}
+                },
+                renderer: {
+                },
+                /** 重构设置 */
+                applySettings(this: BusinessObjectText): BusinessObjectText {
+                    RepositoryText.prototype.applySettings.apply(this, arguments);
+                    let boRepository: ibas.BORepositoryApplication = this.getRepository();
+                    if (ibas.objects.isNull(boRepository)) {
+                        boRepository = variables.get(BusinessObjectText, "repository");
+                        if (ibas.objects.isNull(boRepository)) {
+                            boRepository = ibas.boFactory.create("BORepositoryInitialFantasy");
+                            variables.set(boRepository, BusinessObjectText, "repository");
+                        }
+                        this.setRepository(boRepository);
+                    }
+                    let dataInfo: repository.IDataInfo = this.getDataInfo();
+                    if (ibas.objects.isNull(dataInfo)) {
+                        dataInfo = variables.get(BusinessObjectText, "dataInfo");
+                        if (ibas.objects.isNull(dataInfo)) {
+                            dataInfo = {
+                                type: ibas.boFactory.classOf(ibas.config.applyVariables("${Company}_SYS_BOINFO")),
+                                key: "Code",
+                                text: "Description",
+                            };
+                            variables.set(dataInfo, BusinessObjectText, "dataInfo");
+                        }
+                        this.setDataInfo(dataInfo);
+                    } else {
+                        if (!dataInfo.type) {
+                            dataInfo.type = ibas.boFactory.classOf(ibas.config.applyVariables("${Company}_SYS_BOINFO"));
+                        } else if (!dataInfo.key) {
+                            dataInfo.key = "Code";
+                        } else if (!dataInfo.text) {
+                            dataInfo.text = "Description";
                         }
                     }
                     return this;

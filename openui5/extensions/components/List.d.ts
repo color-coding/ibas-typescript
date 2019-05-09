@@ -25,6 +25,52 @@ declare namespace sap {
                  * @param oBindingInfo 绑定信息
                  */
                 bindProperty(sName: string, oBindingInfo: any): this;
+                /**
+                 * 获取选择的数据
+                 */
+                getSelecteds<T>(): ibas.IList<T>;
+                /**
+                 * 获取未选择的数据
+                 */
+                getUnSelecteds<T>(): ibas.IList<T>;
+                /**
+                 * 获取选择类型
+                 */
+                getChooseType(): ibas.emChooseType;
+                /**
+                 * 设置选择类型
+                 * @param value 选择类型
+                 */
+                setChooseType(value: ibas.emChooseType): this;
+                /**
+                 * 设置模型
+                 * @param oModel 数据模型
+                 * @param sName 名称
+                 */
+                setModel(oModel: model.JSONModel, sName?: string): this;
+                /**
+                 * 获取模型
+                 * @param sModelName 名称
+                 */
+                getModel(sModelName?: string | undefined): model.JSONModel;
+                /**
+                 * 监听下一个数据集事件
+                 * @param oData 数据
+                 * @param fnFunction 方法
+                 * @param oListener 监听者
+                 */
+                attachNextDataSet(oData: any, fnFunction: Function, oListener?: any): this;
+                /**
+                 * 移出下一个数据集事件
+                 * @param fnFunction 方法
+                 * @param oListener 监听者
+                 */
+                detachNextDataSet(fnFunction: Function, oListener?: any): this;
+                /**
+                 * 触发下一个数据集事件
+                 * @param param 参数
+                 */
+                protected fireNextDataSet(param: { data: any, }): void;
             }
         }
     }
