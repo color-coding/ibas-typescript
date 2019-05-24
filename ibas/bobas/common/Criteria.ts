@@ -506,18 +506,18 @@ namespace ibas {
                     }
                 }
                 // 复制查询条件
-                if (nCriteria.conditions.length > 0) {
+                if (nCriteria.conditions.length > 1) {
                     // 原始条件括号括起
                     let condition: ICondition = nCriteria.conditions.firstOrDefault();
                     condition.bracketOpen = condition.bracketOpen + 1;
-                    condition = nCriteria.conditions[nCriteria.conditions.length - 1];
+                    condition = nCriteria.conditions.lastOrDefault();
                     condition.bracketClose = condition.bracketClose + 1;
                 }
-                if (tmpCriteria.conditions.length > 0) {
+                if (tmpCriteria.conditions.length > 1) {
                     // 拷贝条件括号括起
                     let condition: ICondition = tmpCriteria.conditions.firstOrDefault();
                     condition.bracketOpen = condition.bracketOpen + 1;
-                    condition = tmpCriteria.conditions[tmpCriteria.conditions.length - 1];
+                    condition = tmpCriteria.conditions.lastOrDefault();
                     condition.bracketClose = condition.bracketClose + 1;
                 }
                 for (let condition of tmpCriteria.conditions) {

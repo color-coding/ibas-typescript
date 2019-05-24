@@ -369,8 +369,8 @@ namespace ibas {
             super.firePropertyChanged("isDeleted");
         }
         /** 克隆对象 */
-        clone(): T {
-            let newBO: T = objects.clone<T>(<T><any>this);
+        clone(): this {
+            let newBO: this = super.clone();
             // 设置为新对象
             newBO.markNew(true);
             // 重置部分属性值
@@ -433,8 +433,7 @@ namespace ibas {
     /**
      * 业务对象集合基类
      */
-    export abstract class BusinessObjects<T extends IBusinessObject, P extends IBusinessObject>
-        extends BusinessObjectsBase<T>
+    export abstract class BusinessObjects<T extends IBusinessObject, P extends IBusinessObject> extends BusinessObjectsBase<T>
         implements IBusinessObjects<T> {
         /**
          * 构造
@@ -444,7 +443,7 @@ namespace ibas {
             super();
             this[PROPERTY_LISTENER] = {
                 caller: this,
-                propertyChanged(name: string): void {
+                propertyChanged(this: BusinessObjects<T, P>, name: string): void {
                     // this指向业务对象集合基类,arguments[1]指向触发事件的BO
                     let bo: any = arguments[1];
                     if (objects.isNull(bo)) {
@@ -454,11 +453,11 @@ namespace ibas {
                         this.onParentPropertyChanged(name);
                     } else {
                         if (name === "isDeleted") {
-                            runRules.call(this, null);
+                            this.firePropertyChanged("length");
                         } else {
                             runRules.call(this, name);
                         }
-                        this.onChildPropertyChanged(bo, name);
+                        this.onItemPropertyChanged(bo, name);
                     }
                 }
             };
@@ -466,7 +465,6 @@ namespace ibas {
                 this.parent = parent;
             }
         }
-
         protected get parent(): P {
             return this[PROPERTY_PARENT];
         }
@@ -492,7 +490,6 @@ namespace ibas {
                             item.setProperty(BO_PROPERTY_NAME_OBJECTKEY, this.parent.getProperty(BO_PROPERTY_NAME_OBJECTKEY));
                         }
                     }
-
                 }
             } else if (strings.equalsIgnoreCase(name, BO_PROPERTY_NAME_CODE)) {
                 if (objects.instanceOf(this.parent, BOMasterData)
@@ -549,7 +546,7 @@ namespace ibas {
             }
         }
         /** 子项属性改变时 */
-        protected onChildPropertyChanged(item: T, name: string): void {
+        protected onItemPropertyChanged(item: T, name: string): void {
             // 子项属性改变时调用，可重载此函数加入业务逻辑
         }
         /**
@@ -604,7 +601,7 @@ namespace ibas {
             if (objects.instanceOf(item, Bindable)) {
                 (<any>item).registerListener(this[PROPERTY_LISTENER]);
             }
-            runRules.call(this, null);
+            super.afterAdd(item);
         }
         /**
          * 移出项目后
@@ -614,7 +611,17 @@ namespace ibas {
             if (objects.instanceOf(item, Bindable)) {
                 (<any>item).removeListener(this[PROPERTY_LISTENER]);
             }
-            runRules.call(this, null);
+            super.afterRemove(item);
+        }
+        /**
+         * 通知属性改变
+         * @param property 属性
+         */
+        protected firePropertyChanged(property: string): void {
+            super.firePropertyChanged.apply(this, arguments);
+            if (property === "length") {
+                runRules.call(this, null);
+            }
         }
     }
     /**

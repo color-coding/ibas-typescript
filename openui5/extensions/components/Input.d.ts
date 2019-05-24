@@ -15,7 +15,7 @@ declare namespace sap {
                 /**
                  * 构造
                  * @param {string} sId 唯一标记
-                 * @param {any} mSettings 绑定值属性：bindingValue； showValueHelp时为只读
+                 * @param {any} mSettings 绑定值属性：bindingValue； showValueHelp时不可输入除非（valueHelpOnly=false）
                  */
                 constructor(sId?: string, mSettings?: any);
                 /**

@@ -25,7 +25,8 @@
 /out/
 /test/apps/
 /node_modules/
-/openui5/resources*/
+/openui5/resources
+/openui5/resources/*
 /openui5/index.html
 /openui5/LICENSE.txt
 /openui5/NOTICE.txt
@@ -34,5 +35,6 @@
 
 # exceptions
 !ibas/3rdparty/*.js
-!openui5/types/*.ts
+!openui5/types/*.d.ts
+!openui5/extensions/components/*.d.ts
 !test/apps/trainingtesting/

@@ -141,6 +141,9 @@ namespace ibas {
 
         /** 删除 */
         delete(): void;
+
+        /** 克隆 */
+        clone(): this;
     }
 
     /**
@@ -172,16 +175,14 @@ namespace ibas {
         /** 创建对象实例，参数1：对象名称 */
         create<B extends IBusinessObject>(name: string): B;
     }
-    const PROPERTY_LISTENER: symbol = Symbol("listener");
-    /**
-     * 可监听的对象
-     */
-    export abstract class Bindable implements IBindable {
+    /** 绑定对象的私有方法 */
+    namespace bindables {
+        const PROPERTY_LISTENER: symbol = Symbol("listener");
         /**
          * 注册监听事件
          * @param listener 监听者
          */
-        registerListener(listener: IPropertyChangedListener): void {
+        export function registerListener(this: IBindable, listener: IPropertyChangedListener): void {
             if (!listener) {
                 return;
             }
@@ -200,20 +201,8 @@ namespace ibas {
                 this[PROPERTY_LISTENER].push(listener);
             }
         }
-        /** 移出全部监听 */
-        removeListener(): void;
-        /**
-         * 移出监听事件
-         * @param id 标记
-         */
-        removeListener(id: string): void;
-        /**
-         * 移出监听事件
-         * @param listener 监听者
-         */
-        removeListener(listener: IPropertyChangedListener): void;
         /** 移出监听实现 */
-        removeListener(): void {
+        export function removeListener(this: IBindable): void {
             if (objects.isNull(this[PROPERTY_LISTENER])) {
                 return;
             }
@@ -239,22 +228,13 @@ namespace ibas {
                 }
             }
         }
-
         /**
          * 通知属性改变
          * @param property 属性
          */
-        protected firePropertyChanged(property: string): void {
+        export function firePropertyChanged(this: IBindable, property: string): void {
             if (objects.isNull(this[PROPERTY_LISTENER])) {
                 return;
-            }
-            if (!objects.isNull(property) && property.length > 0) {
-                if (property.startsWith("_")) {
-                    // 除去映射符
-                    property = property.substring(1);
-                }
-                // 属性首字母小写
-                property = property[0].toLowerCase() + property.substring(1);
             }
             for (let item of this[PROPERTY_LISTENER]) {
                 if (objects.isNull(item.caller)) {
@@ -265,12 +245,54 @@ namespace ibas {
             }
         }
     }
+    /**
+     * 可监听的对象
+     */
+    export abstract class Bindable implements IBindable {
+        /**
+         * 注册监听事件
+         * @param listener 监听者
+         */
+        registerListener(listener: IPropertyChangedListener): void {
+            bindables.registerListener.apply(this, arguments);
+        }
+        /** 移出全部监听 */
+        removeListener(): void;
+        /**
+         * 移出监听事件
+         * @param id 标记
+         */
+        removeListener(id: string): void;
+        /**
+         * 移出监听事件
+         * @param listener 监听者
+         */
+        removeListener(listener: IPropertyChangedListener): void;
+        /** 移出监听实现 */
+        removeListener(): void {
+            bindables.removeListener.apply(this, arguments);
+        }
+        /**
+         * 通知属性改变
+         * @param property 属性
+         */
+        protected firePropertyChanged(property: string): void {
+            if (!objects.isNull(property) && property.length > 0) {
+                if (property.startsWith("_")) {
+                    // 除去映射符
+                    property = property.substring(1);
+                }
+                // 属性首字母小写
+                property = property[0].toLowerCase() + property.substring(1);
+            }
+            bindables.firePropertyChanged.call(this, property);
+        }
+    }
     const PROPERTY_ISLOADING: symbol = Symbol("isLoading");
     /**
      * 状态跟踪对象
      */
     export abstract class TrackableBase extends Bindable implements ITrackable {
-
         constructor() {
             super();
             this.isNew = true;
@@ -514,18 +536,19 @@ namespace ibas {
         }
         /** 删除 */
         abstract delete(): void;
+        /** 克隆 */
+        clone(): this {
+            return objects.clone(this);
+        }
     }
     /**
      * 业务对象集合基础
      */
-    export abstract class BusinessObjectsBase<T extends IBusinessObject>
-        extends ArrayList<T>
-        implements IBusinessObjects<T> {
-
+    export abstract class BusinessObjectsBase<T extends IBusinessObject> extends ArrayList<T>
+        implements IBusinessObjects<T>, IBindable {
         constructor() {
             super();
         }
-
         /**
          * 创建子项
          */
@@ -570,15 +593,14 @@ namespace ibas {
                 }
             }
         }
-
         /**
          * 添加项目后
          * @param item 项目
          */
         protected afterAdd(item: T): void {
             // 可重载
+            this.firePropertyChanged("length");
         }
-
         /**
          * 移出项目（新数据，则移出集合；否则，标记删除）
          * @param item 项目
@@ -607,6 +629,7 @@ namespace ibas {
          */
         protected afterRemove(item: T): void {
             // 可重载
+            this.firePropertyChanged("length");
         }
         /** 过滤删除的项目 */
         filterDeleted(): T[] {
@@ -615,6 +638,22 @@ namespace ibas {
                     return true;
                 }
             });
+        }
+        registerListener(listener: IPropertyChangedListener): void {
+            bindables.registerListener.apply(this, arguments);
+        }
+        removeListener(listener: IPropertyChangedListener): void;
+        removeListener(id: string): void;
+        removeListener(): void;
+        removeListener(id?: any): void {
+            bindables.removeListener.apply(this, arguments);
+        }
+        /**
+         * 通知属性改变
+         * @param property 属性
+         */
+        protected firePropertyChanged(property: string): void {
+            bindables.firePropertyChanged.apply(this, arguments);
         }
     }
     const PROPERTY_BO_MAP: symbol = Symbol("boMap");

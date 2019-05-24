@@ -846,8 +846,8 @@ namespace test {
             return item;
         }
         /** 子项属性改变时 */
-        protected onChildPropertyChanged(item: SalesOrderItem, name: string): void {
-            super.onChildPropertyChanged(item, name);
+        protected onItemPropertyChanged(item: SalesOrderItem, name: string): void {
+            super.onItemPropertyChanged(item, name);
             if (name.toLowerCase() === SalesOrderItem.PROPERTY_LINETOTAL_NAME.toLowerCase()) {
                 let total: number = 0;
                 for (let salesOrderItem of this.filterDeleted()) {

@@ -16,16 +16,12 @@ namespace sap {
                     properties: {
                         /** 绑定值 */
                         bindingValue: { type: "string" },
+                        /** 仅值选择，不可输入 */
+                        valueHelpOnly: { type: "boolean", defaultValue: true },
                     },
                     events: {}
                 },
                 renderer: {
-                    writeInnerAttributes: function (oRm: any, oControl: Input): void {
-                        (<any>sap.m).InputRenderer.writeInnerAttributes.apply(this, arguments);
-                        if (oControl.getShowValueHelp() === true) {
-                            oRm.writeAttribute("readonly", "readonly");
-                        }
-                    }
                 },
                 /**
                  * 获取绑定值
@@ -54,6 +50,17 @@ namespace sap {
                     utils.checkBindingInfo.apply(this, arguments);
                     sap.m.Input.prototype.bindProperty.apply(this, arguments);
                     return this;
+                },
+                /** 重新点击 */
+                ontap(oEvent: any): void {
+                    let control: any = oEvent ? oEvent.srcControl : null;
+                    if (control instanceof sap.ui.core.Control && ibas.strings.isWith(control.getId(), undefined, "-vhi")) {
+                        // 仅点击选择图标才调用，值选择
+                        (<any>sap.m.Input.prototype).ontap.apply(this, arguments);
+                    } else {
+                        // 不调用选值窗体
+                        (<any>sap.m.InputBase.prototype).ontap.apply(this, arguments);
+                    }
                 }
             });
             /**
