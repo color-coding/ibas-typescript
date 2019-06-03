@@ -20,6 +20,10 @@ declare namespace sap {
                 getDataUrl(): string;
                 /** 设置-数据地址 */
                 setDataUrl(value: string): RegionComboBox;
+                /** 获取-过滤器（属性名称或方法） */
+                getFilter(): string | Function;
+                /** 设置-过滤器（属性名称或方法） */
+                setFilter(value: string | Function): RegionComboBox;
                 /**
                  * 加载可选项
                  * @param group 组

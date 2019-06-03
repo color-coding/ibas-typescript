@@ -16,29 +16,12 @@ namespace sap {
                         language: { type: "string", defaultValue: ibas.config.get(ibas.CONFIG_ITEM_LANGUAGE_CODE, "zh_CN") },
                         /** 数据地址 */
                         dataUrl: { type: "string", },
+                        /** 过滤器（属性名称或方法） */
+                        filter: { type: "any", defaultValue: undefined },
                     },
                     events: {}
                 },
                 renderer: {
-                },
-                init(this: RegionComboBox): void {
-                    (<any>ComboBox.prototype).init.apply(this, arguments);
-                    let value: string = this.getDataUrl();
-                    if (!ibas.strings.isEmpty(value)) {
-                        if (!ibas.strings.isWith(value, "http", undefined)) {
-                            let builder: ibas.StringBuilder = new ibas.StringBuilder();
-                            builder.map(null, "");
-                            builder.map(undefined, "");
-                            builder.append(ibas.urls.rootUrl("/openui5/index"));
-                            builder.append("/");
-                            builder.append("datas");
-                            builder.append("/");
-                            builder.append(this.getLanguage());
-                            builder.append("/");
-                            builder.append(value);
-                            this.setDataUrl(builder.toString());
-                        }
-                    }
                 },
                 setSelectedItem(this: RegionComboBox, value: sap.ui.core.Item): RegionComboBox {
                     ComboBox.prototype.setSelectedItem.apply(this, arguments);
@@ -56,6 +39,19 @@ namespace sap {
                     if (ibas.strings.isEmpty(url)) {
                         return this;
                     }
+                    if (!ibas.strings.isWith(url, "http", undefined)) {
+                        let builder: ibas.StringBuilder = new ibas.StringBuilder();
+                        builder.map(null, "");
+                        builder.map(undefined, "");
+                        builder.append(ibas.urls.rootUrl("/openui5/index"));
+                        builder.append("/");
+                        builder.append("datas");
+                        builder.append("/");
+                        builder.append(this.getLanguage());
+                        builder.append("/");
+                        builder.append(url);
+                        url = builder.toString();
+                    }
                     let that: RegionComboBox = this;
                     jQuery.ajax({
                         url: url,
@@ -64,19 +60,23 @@ namespace sap {
                         dataType: "json",
                         async: true,
                         cache: true,
-                        success: function (this: RegionComboBox, data: any): void {
+                        success: function (data: any): void {
                             if (data instanceof Array) {
+                                let property: string = <string>that.getFilter();
+                                let filter: any = typeof property === "function" ? property
+                                    : typeof property === "string" ? (data: any): boolean => {
+                                        return data[property] === group;
+                                    } : undefined;
                                 for (let item of data) {
-                                    that.newItem(item);
-                                }
-                            } else if (data instanceof Object && !ibas.objects.isNull(group)) {
-                                let values: any = data[group];
-                                if (values instanceof Array) {
-                                    for (let value of values) {
-                                        that.newItem(value);
+                                    if (ibas.objects.isNull(item)) {
+                                        continue;
                                     }
-                                } else if (!ibas.objects.isNull(values)) {
-                                    that.newItem(values);
+                                    if (!ibas.strings.isEmpty(group)) {
+                                        if (filter instanceof Function && !filter(item)) {
+                                            continue;
+                                        }
+                                    }
+                                    that.newItem(item);
                                 }
                             }
                             if (selector instanceof Function) {
@@ -97,10 +97,10 @@ namespace sap {
                     });
                     return this;
                 },
-                newItem(this: RegionComboBox, data: { id: string, name: string }): RegionComboBox {
-                    if (data && data.id && data.name) {
+                newItem(this: RegionComboBox, data: { code: string, name: string }): RegionComboBox {
+                    if (data && data.code && data.name) {
                         this.addItem(new sap.ui.core.ListItem("", {
-                            key: data.id,
+                            key: data.code,
                             text: data.name,
                         }));
                     }
@@ -113,6 +113,8 @@ namespace sap {
                     properties: {
                         /** 数据地址 */
                         dataUrl: { type: "string", defaultValue: "country.json" },
+                        /** 过滤器（属性名称或方法） */
+                        filter: { type: "any", defaultValue: undefined },
                     },
                     events: {}
                 },
@@ -125,6 +127,8 @@ namespace sap {
                     properties: {
                         /** 数据地址 */
                         dataUrl: { type: "string", defaultValue: "province.json" },
+                        /** 过滤器（属性名称或方法） */
+                        filter: { type: "any", defaultValue: undefined },
                     },
                     events: {}
                 },
@@ -137,6 +141,8 @@ namespace sap {
                     properties: {
                         /** 数据地址 */
                         dataUrl: { type: "string", defaultValue: "city.json" },
+                        /** 过滤器（属性名称或方法） */
+                        filter: { type: "any", defaultValue: "provinceCode" },
                     },
                     events: {}
                 },
@@ -149,6 +155,8 @@ namespace sap {
                     properties: {
                         /** 数据地址 */
                         dataUrl: { type: "string", defaultValue: "district.json" },
+                        /** 过滤器（属性名称或方法） */
+                        filter: { type: "any", defaultValue: "cityCode" },
                     },
                     events: {}
                 },
@@ -247,19 +255,30 @@ namespace sap {
                         selectionChange: (event: sap.ui.base.Event) => {
                             this.setBusy(true);
                             let combobox: RegionComboBox = <RegionComboBox>event.getSource();
-                            (<RegionComboBox>this.getAggregation("_province", undefined)).initItems(combobox.getSelectedKey(), (combobox) => {
-                                let text: string = this.getProvince();
-                                if (!ibas.strings.isEmpty(text)) {
-                                    for (let item of combobox.getItems()) {
-                                        if (ibas.strings.equals(item.getText(), text)) {
-                                            combobox.setSelectedItem(item);
-                                            break;
+                            let country: string = combobox.getSelectedKey();
+                            if (ibas.objects.isNull(country)) {
+                                country = "";
+                            }
+                            (<RegionComboBox>this.getAggregation("_province", undefined))
+                                .setDataUrl(ibas.strings.format("{0}/{1}", country, "province.json"))
+                                .initItems(undefined, (combobox) => {
+                                    let text: string = this.getProvince();
+                                    if (!ibas.strings.isEmpty(text)) {
+                                        for (let item of combobox.getItems()) {
+                                            if (ibas.strings.equals(item.getText(), text)) {
+                                                combobox.setSelectedItem(item);
+                                                return;
+                                            }
                                         }
+                                        combobox.setValue(text);
                                     }
-                                }
-                            });
-                            (<RegionComboBox>this.getAggregation("_city", undefined)).destroyItems();
-                            (<RegionComboBox>this.getAggregation("_district", undefined)).destroyItems();
+                                });
+                            (<RegionComboBox>this.getAggregation("_city", undefined))
+                                .setDataUrl(ibas.strings.format("{0}/{1}", country, "city.json"))
+                                .destroyItems();
+                            (<RegionComboBox>this.getAggregation("_district", undefined))
+                                .setDataUrl(ibas.strings.format("{0}/{1}", country, "district.json"))
+                                .destroyItems();
                             (<Input>this.getAggregation("_zipcode", undefined)).setValue(undefined);
                             this.setBusy(false);
                         },
@@ -296,9 +315,10 @@ namespace sap {
                                     for (let item of combobox.getItems()) {
                                         if (ibas.strings.equals(item.getText(), text)) {
                                             combobox.setSelectedItem(item);
-                                            break;
+                                            return;
                                         }
                                     }
+                                    combobox.setValue(text);
                                 }
                             });
                             (<RegionComboBox>this.getAggregation("_district", undefined)).destroyItems();
@@ -324,9 +344,10 @@ namespace sap {
                                     for (let item of combobox.getItems()) {
                                         if (ibas.strings.equals(item.getText(), text)) {
                                             combobox.setSelectedItem(item);
-                                            break;
+                                            return;
                                         }
                                     }
+                                    combobox.setValue(text);
                                 }
                             });
                             (<Input>this.getAggregation("_zipcode", undefined)).setValue(undefined);
