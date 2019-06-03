@@ -27,7 +27,7 @@ declare namespace sap {
              */
             bindText(oBindingInfo: any): sap.tnt.InfoLabel;
             /**
-             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getColorScheme" href="#/api/sap.tnt.InfoLabel/methods/getColorScheme">colorScheme</a>.</p><p>Specifies the fill and text color of the control. Accepts a digit as a value. You can choose from 9 predefined background and text color combinations. The color schemes are non-semantic, you can select them according to your own preferences. The default <code>colorScheme</code> is 7.</p><p>Default value is <code>7</code>.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getColorScheme" href="#/api/sap.tnt.InfoLabel/methods/getColorScheme">colorScheme</a>.</p><p>Specifies the fill and text color of the control. Accepts a digit as a value. You can choose from 10 predefined background and text color combinations. The color schemes are non-semantic, you can select them according to your own preferences. ColorScheme 10 is available only in Fiori 3 theme. The default <code>colorScheme</code> is 7.</p><p>Default value is <code>7</code>.</p>
              * @returns number <p>Value of property <code>colorScheme</code></p>
              */
             getColorScheme(): number;
@@ -57,7 +57,7 @@ declare namespace sap {
              */
             getWidth(): sap.ui.core.CSSSize;
             /**
-             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getColorScheme" href="#/api/sap.tnt.InfoLabel/methods/getColorScheme">colorScheme</a>.</p><p>Specifies the fill and text color of the control. Accepts a digit as a value. You can choose from 9 predefined background and text color combinations. The color schemes are non-semantic, you can select them according to your own preferences. The default <code>colorScheme</code> is 7.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>7</code>.</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getColorScheme" href="#/api/sap.tnt.InfoLabel/methods/getColorScheme">colorScheme</a>.</p><p>Specifies the fill and text color of the control. Accepts a digit as a value. You can choose from 10 predefined background and text color combinations. The color schemes are non-semantic, you can select them according to your own preferences. ColorScheme 10 is available only in Fiori 3 theme. The default <code>colorScheme</code> is 7.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>7</code>.</p>
              * @param {number} iColorScheme <p>New value for property <code>colorScheme</code></p>
              * @returns sap.tnt.InfoLabel <p>Reference to <code>this</code> in order to allow method chaining</p>
              */

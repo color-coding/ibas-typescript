@@ -1603,11 +1603,82 @@ declare namespace sap {
 			 */
 			constructor(sId?: string, mSettings?: any);
 			/**
+			 * <p>Calculates absolute positions for items, so it mimics a css grid.</p>
+			 */
+			protected _applyIEPolyfillLayout(): void;
+			/**
+			 * <p>Increase rows span for item if it needs more space, based on it's height.</p>
+			 * @param {sap.ui.core.Control} oItem <p>The item for which to calculate</p>
+			 */
+			protected _applyItemAutoRows(oItem: sap.ui.core.Control): void;
+			/**
+			 * <p>Applies the current layout to the grid DOM element.</p>
+			 * @param {boolean} bSettingsAreChanged <p>Are the grid settings changed after passing a breakpoint.</p>
+			 */
+			protected _applyLayout(bSettingsAreChanged: boolean): void;
+			/**
+			 * <p>Removes any resize listeners. Both for the grid and for all items.</p>
+			 */
+			protected _deregisterResizeListeners(): void;
+			/**
+			 * <p>Detects what is the current layout breakpoint.</p>
+			 * @returns boolean <p>True if the layout settings were changed.</p>
+			 */
+			protected _detectActiveLayout(): boolean;
+			/**
+			 * <p>If one item has more columns than the total columns in the grid, it brakes the whole layout. Prevent this by reducing this item's column span.</p>
+			 */
+			protected _enforceMaxColumns(): void;
+			/**
+			 * <p>Gets a map of the CSS styles that should be applied to the grid, based on the current layout.</p>
+			 * @returns { [key: string]: any } <p>The current css styles</p>
+			 */
+			protected _getActiveGridStyles(): { [key: string]: any };
+			/**
+			 * <p>Handler for onAfterRendering for each item.</p>
+			 */
+			protected _onAfterItemRendering(): void;
+			/**
+			 * <p>Handler for onBeforeRendering for each item.</p>
+			 */
+			protected _onBeforeItemRendering(): void;
+			/**
+			 * <p>Handler for any change in the items aggregation.</p>
+			 * @param {any} changes <p>What was changed</p>
+			 */
+			protected _onItemChange(changes: any): void;
+			/**
+			 * <p>Handler for resize of the grid.</p>
+			 */
+			protected _resize(): void;
+			/**
+			 * <p>Handler for resize of a grid's item.</p>
+			 * @param {any} oEvent <p>ResizeHandler resize event</p>
+			 */
+			protected _resizeItem(oEvent: any): void;
+			/**
+			 * <p>Schedules the application of the IE polyfill for the next tick.</p>
+			 * @param {boolean} bImmediately <p>If set to true - apply the polyfill immediately.</p>
+			 */
+			protected _scheduleIEPolyfill(bImmediately: boolean): void;
+			/**
+			 * <p>Sets the DOM references for the items navigation.</p>
+			 */
+			protected _setItemNavigationItems(): void;
+			/**
 			 * <p>Adds some item to the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.f.GridContainer/methods/getItems">items</a>.</p>
 			 * @param {sap.ui.core.Control} oItem <p>The item to add; if empty, nothing is inserted</p>
 			 * @returns sap.f.GridContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
 			addItem(oItem: sap.ui.core.Control): sap.f.GridContainer;
+			/**
+			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="layoutChange" href="#/api/sap.f.GridContainer/events/layoutChange">layoutChange</a> event of this <code>sap.f.GridContainer</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.GridContainer</code> itself.</p><p>Fired when the currently active GridSettings change.</p>
+			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.GridContainer</code> itself</p>
+			 * @returns sap.f.GridContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			attachLayoutChange(oData: any, fnFunction: Function, oListener?: any): sap.f.GridContainer;
 			/**
 			 * <p>Destroys all the items in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.f.GridContainer/methods/getItems">items</a>.</p>
 			 * @returns sap.f.GridContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -1639,17 +1710,49 @@ declare namespace sap {
 			 */
 			destroyLayoutXL(): sap.f.GridContainer;
 			/**
-			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getHeight" href="#/api/sap.f.GridContainer/methods/getHeight">height</a>.</p><p>Defines the height of the control</p><p>Default value is <code>empty string</code>.</p>
-			 * @returns sap.ui.core.CSSSize <p>Value of property <code>height</code></p>
+			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="layoutChange" href="#/api/sap.f.GridContainer/events/layoutChange">layoutChange</a> event of this <code>sap.f.GridContainer</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
+			 * @returns sap.f.GridContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			getHeight(): sap.ui.core.CSSSize;
+			detachLayoutChange(fnFunction: Function, oListener?: any): sap.f.GridContainer;
+			/**
+			 * <p>Destroy hook.</p>
+			 */
+			protected exit(): void;
+			/**
+			 * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="layoutChange" href="#/api/sap.f.GridContainer/events/layoutChange">layoutChange</a> to attached listeners.</p>
+			 * @param {any} mParameters <p>Parameters to pass along with the event</p>
+			 * @returns sap.f.GridContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			protected fireLayoutChange(mParameters?: any): sap.f.GridContainer;
+			/**
+			 * <p>Gets the <code>GridContainerSettings</code> for the current layout breakpoint.</p>
+			 * @returns sap.f.GridContainerSettings <p>The settings for the current layout</p>
+			 */
+			getActiveLayoutSettings(): sap.f.GridContainerSettings;
+			/**
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAllowDenseFill" href="#/api/sap.f.GridContainer/methods/getAllowDenseFill">allowDenseFill</a>.</p><p>Increases the density when arranging the items. Smaller items will take up all of the available space, ignoring their order.</p><p><b>Note:</b> The order of the items is ignored. An item which is normally at the bottom, can appear on top.</p><p>Default value is <code>false</code>.</p>
+			 * @returns boolean <p>Value of property <code>allowDenseFill</code></p>
+			 */
+			getAllowDenseFill(): boolean;
+			/**
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getContainerQuery" href="#/api/sap.f.GridContainer/methods/getContainerQuery">containerQuery</a>.</p><p>If set to <code>true</code> the current range (large, medium or small) is defined by the size of the container surrounding the <code>GridContainer</code>, instead of the device screen size (media Query).</p><p>Default value is <code>false</code>.</p>
+			 * @returns boolean <p>Value of property <code>containerQuery</code></p>
+			 */
+			getContainerQuery(): boolean;
+			/**
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getInlineBlockLayout" href="#/api/sap.f.GridContainer/methods/getInlineBlockLayout">inlineBlockLayout</a>.</p><p>Makes the grid items act like an inline-block elements. They will be arranged in rows with height equal to the highest item in the row.</p><p><b>Note:</b> If set to <code>true</code> the properties <code>rowSize</code> for grid layout, and <code>minRows</code> and <code>rows</code> per item will be ignored.</p><p><b>Note:</b> Not supported in IE11, Edge 15.</p><p>Default value is <code>false</code>.</p>
+			 * @returns boolean <p>Value of property <code>inlineBlockLayout</code></p>
+			 */
+			getInlineBlockLayout(): boolean;
 			/**
 			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.f.GridContainer/methods/getItems">items</a>.</p><p>The items contained by the control.</p>
 			 * @returns sap.ui.core.Control[] 
 			 */
 			getItems(): sap.ui.core.Control[];
 			/**
-			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLayout" href="#/api/sap.f.GridContainer/methods/getLayout">layout</a>.</p><p>The sap.f.GridContainerSettings applied if no settings are provided for a specific size If no layout is given, a default layout will be used. See the default values for <code>sap.f.GridContainerSettings</code>.</p>
+			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLayout" href="#/api/sap.f.GridContainer/methods/getLayout">layout</a>.</p><p>The sap.f.GridContainerSettings applied if no settings are provided for a specific size.</p><p>If no layout is given, a default layout will be used. See the default values for <code>sap.f.GridContainerSettings</code>.</p>
 			 * @returns sap.f.GridContainerSettings 
 			 */
 			getLayout(): sap.f.GridContainerSettings;
@@ -1674,12 +1777,12 @@ declare namespace sap {
 			 */
 			getLayoutXL(): sap.f.GridContainerSettings;
 			/**
-			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSnapToRow" href="#/api/sap.f.GridContainer/methods/getSnapToRow">snapToRow</a>.</p><p>Should the items stretch to fill the rows which they occupy, or not. If set to true the items will stretch.</p><p>Default value is <code>false</code>.</p>
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSnapToRow" href="#/api/sap.f.GridContainer/methods/getSnapToRow">snapToRow</a>.</p><p>Should the items stretch to fill the rows that they occupy, or not.</p><p>If set to <code>true</code> the items will stretch.</p><p>Default value is <code>false</code>.</p>
 			 * @returns boolean <p>Value of property <code>snapToRow</code></p>
 			 */
 			getSnapToRow(): boolean;
 			/**
-			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getWidth" href="#/api/sap.f.GridContainer/methods/getWidth">width</a>.</p><p>Defines the width of the control</p><p>Default value is <code>empty string</code>.</p>
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getWidth" href="#/api/sap.f.GridContainer/methods/getWidth">width</a>.</p><p>Defines the width of the control.</p><p>Default value is <code>empty string</code>.</p>
 			 * @returns sap.ui.core.CSSSize <p>Value of property <code>width</code></p>
 			 */
 			getWidth(): sap.ui.core.CSSSize;
@@ -1690,12 +1793,24 @@ declare namespace sap {
 			 */
 			indexOfItem(oItem: sap.ui.core.Control): number;
 			/**
+			 * <p>Initialization hook.</p>
+			 */
+			protected init(): void;
+			/**
 			 * <p>Inserts a item into the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.f.GridContainer/methods/getItems">items</a>.</p>
 			 * @param {sap.ui.core.Control} oItem <p>The item to insert; if empty, nothing is inserted</p>
 			 * @param {number} iIndex <p>The <code>0</code>-based index the item should be inserted at; for a negative value of <code>iIndex</code>, the item is inserted at position 0; for a value greater than the current size of the aggregation, the item is inserted at the last position</p>
 			 * @returns sap.f.GridContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
 			insertItem(oItem: sap.ui.core.Control, iIndex: number): sap.f.GridContainer;
+			/**
+			 * <p>After rendering hook.</p>
+			 */
+			protected onAfterRendering(): void;
+			/**
+			 * <p>Before rendering hook.</p>
+			 */
+			protected onBeforeRendering(): void;
 			/**
 			 * <p>Removes all the controls from the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.f.GridContainer/methods/getItems">items</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 			 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
@@ -1708,11 +1823,23 @@ declare namespace sap {
 			 */
 			removeItem(vItem: number | string | sap.ui.core.Control): sap.ui.core.Control;
 			/**
-			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getHeight" href="#/api/sap.f.GridContainer/methods/getHeight">height</a>.</p><p>Defines the height of the control</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
-			 * @param {sap.ui.core.CSSSize} sHeight <p>New value for property <code>height</code></p>
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAllowDenseFill" href="#/api/sap.f.GridContainer/methods/getAllowDenseFill">allowDenseFill</a>.</p><p>Increases the density when arranging the items. Smaller items will take up all of the available space, ignoring their order.</p><p><b>Note:</b> The order of the items is ignored. An item which is normally at the bottom, can appear on top.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+			 * @param {boolean} bAllowDenseFill <p>New value for property <code>allowDenseFill</code></p>
 			 * @returns sap.f.GridContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			setHeight(sHeight: sap.ui.core.CSSSize): sap.f.GridContainer;
+			setAllowDenseFill(bAllowDenseFill: boolean): sap.f.GridContainer;
+			/**
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getContainerQuery" href="#/api/sap.f.GridContainer/methods/getContainerQuery">containerQuery</a>.</p><p>If set to <code>true</code> the current range (large, medium or small) is defined by the size of the container surrounding the <code>GridContainer</code>, instead of the device screen size (media Query).</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+			 * @param {boolean} bContainerQuery <p>New value for property <code>containerQuery</code></p>
+			 * @returns sap.f.GridContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setContainerQuery(bContainerQuery: boolean): sap.f.GridContainer;
+			/**
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getInlineBlockLayout" href="#/api/sap.f.GridContainer/methods/getInlineBlockLayout">inlineBlockLayout</a>.</p><p>Makes the grid items act like an inline-block elements. They will be arranged in rows with height equal to the highest item in the row.</p><p><b>Note:</b> If set to <code>true</code> the properties <code>rowSize</code> for grid layout, and <code>minRows</code> and <code>rows</code> per item will be ignored.</p><p><b>Note:</b> Not supported in IE11, Edge 15.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+			 * @param {boolean} bInlineBlockLayout <p>New value for property <code>inlineBlockLayout</code></p>
+			 * @returns sap.f.GridContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setInlineBlockLayout(bInlineBlockLayout: boolean): sap.f.GridContainer;
 			/**
 			 * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLayout" href="#/api/sap.f.GridContainer/methods/getLayout">layout</a>.</p>
 			 * @param {sap.f.GridContainerSettings} oLayout <p>The layout to set</p>
@@ -1744,13 +1871,13 @@ declare namespace sap {
 			 */
 			setLayoutXL(oLayoutXL: sap.f.GridContainerSettings): sap.f.GridContainer;
 			/**
-			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSnapToRow" href="#/api/sap.f.GridContainer/methods/getSnapToRow">snapToRow</a>.</p><p>Should the items stretch to fill the rows which they occupy, or not. If set to true the items will stretch.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSnapToRow" href="#/api/sap.f.GridContainer/methods/getSnapToRow">snapToRow</a>.</p><p>Should the items stretch to fill the rows that they occupy, or not.</p><p>If set to <code>true</code> the items will stretch.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
 			 * @param {boolean} bSnapToRow <p>New value for property <code>snapToRow</code></p>
 			 * @returns sap.f.GridContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
 			setSnapToRow(bSnapToRow: boolean): sap.f.GridContainer;
 			/**
-			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getWidth" href="#/api/sap.f.GridContainer/methods/getWidth">width</a>.</p><p>Defines the width of the control</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getWidth" href="#/api/sap.f.GridContainer/methods/getWidth">width</a>.</p><p>Defines the width of the control.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
 			 * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
 			 * @returns sap.f.GridContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
@@ -1767,7 +1894,7 @@ declare namespace sap {
 			 */
 			constructor(sId?: string, mSettings?: any);
 			/**
-			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getColumns" href="#/api/sap.f.GridContainerItemLayoutData/methods/getColumns">columns</a>.</p><p>Specifies the number of columns, which the item should take</p><p>Default value is <code>1</code>.</p>
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getColumns" href="#/api/sap.f.GridContainerItemLayoutData/methods/getColumns">columns</a>.</p><p>Specifies the number of columns, which the item should take</p><p><b>Note:</b> Make sure that the item does not have more columns than the total columns in the grid. Use <a target="_self" class="jsdoclink" href="#/api/sap.f.GridContainer/methods/attachLayoutChange">sap.f.GridContainer#attachLayoutChange</a> or a resize listener to handle when columns count is changed for the grid. If item has more columns at some point, they will be automatically reduced to the total grid columns. This is done to prevent broken layout (grid blowout) that affects all items.</p><p>Default value is <code>1</code>.</p>
 			 * @returns number <p>Value of property <code>columns</code></p>
 			 */
 			getColumns(): number;
@@ -1782,7 +1909,7 @@ declare namespace sap {
 			 */
 			getRows(): number;
 			/**
-			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getColumns" href="#/api/sap.f.GridContainerItemLayoutData/methods/getColumns">columns</a>.</p><p>Specifies the number of columns, which the item should take</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1</code>.</p>
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getColumns" href="#/api/sap.f.GridContainerItemLayoutData/methods/getColumns">columns</a>.</p><p>Specifies the number of columns, which the item should take</p><p><b>Note:</b> Make sure that the item does not have more columns than the total columns in the grid. Use <a target="_self" class="jsdoclink" href="#/api/sap.f.GridContainer/methods/attachLayoutChange">sap.f.GridContainer#attachLayoutChange</a> or a resize listener to handle when columns count is changed for the grid. If item has more columns at some point, they will be automatically reduced to the total grid columns. This is done to prevent broken layout (grid blowout) that affects all items.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1</code>.</p>
 			 * @param {number} iColumns <p>New value for property <code>columns</code></p>
 			 * @returns sap.f.GridContainerItemLayoutData <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
@@ -1811,45 +1938,45 @@ declare namespace sap {
 			 */
 			constructor(sId?: string, mSettings?: any);
 			/**
-			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getColumns" href="#/api/sap.f.GridContainerSettings/methods/getColumns">columns</a>.</p><p>How many columns to have on a row. If not defined, <code>sap.f.GridContainer</code> will position as many columns as they can fit in the container.</p>
-			 * @returns Number <p>Value of property <code>columns</code></p>
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getColumns" href="#/api/sap.f.GridContainerSettings/methods/getColumns">columns</a>.</p><p>How many columns to have on a row.</p><p>If not defined, <code>sap.f.GridContainer</code> will position as many columns as they can fit in the container.</p>
+			 * @returns number <p>Value of property <code>columns</code></p>
 			 */
-			getColumns(): Number;
+			getColumns(): number;
 			/**
-			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getColumnSize" href="#/api/sap.f.GridContainerSettings/methods/getColumnSize">columnSize</a>.</p><p>The width of the columns.</p><p>Default value is <code>80px</code>.</p>
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getColumnSize" href="#/api/sap.f.GridContainerSettings/methods/getColumnSize">columnSize</a>.</p><p>The width of the columns.</p><p><b>Note:</b> Use only 'px' or 'rem'. Some features may not work as expected otherwise.</p><p>Default value is <code>80px</code>.</p>
 			 * @returns sap.ui.core.CSSSize <p>Value of property <code>columnSize</code></p>
 			 */
 			getColumnSize(): sap.ui.core.CSSSize;
 			/**
-			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getGap" href="#/api/sap.f.GridContainerSettings/methods/getGap">gap</a>.</p><p>The size of the gap between columns and rows.</p><p>Default value is <code>16px</code>.</p>
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getGap" href="#/api/sap.f.GridContainerSettings/methods/getGap">gap</a>.</p><p>The size of the gap between columns and rows.</p><p><b>Note:</b> Use only 'px' or 'rem'. Some features may not work as expected otherwise.</p><p>Default value is <code>16px</code>.</p>
 			 * @returns sap.ui.core.CSSSize <p>Value of property <code>gap</code></p>
 			 */
 			getGap(): sap.ui.core.CSSSize;
 			/**
-			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getRowSize" href="#/api/sap.f.GridContainerSettings/methods/getRowSize">rowSize</a>.</p><p>The height of the rows.</p><p>Default value is <code>80px</code>.</p>
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getRowSize" href="#/api/sap.f.GridContainerSettings/methods/getRowSize">rowSize</a>.</p><p>The height of the rows.</p><p><b>Note:</b> Use only 'px' or 'rem'. Some features may not work as expected otherwise.</p><p>Default value is <code>80px</code>.</p>
 			 * @returns sap.ui.core.CSSSize <p>Value of property <code>rowSize</code></p>
 			 */
 			getRowSize(): sap.ui.core.CSSSize;
 			/**
-			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getColumns" href="#/api/sap.f.GridContainerSettings/methods/getColumns">columns</a>.</p><p>How many columns to have on a row. If not defined, <code>sap.f.GridContainer</code> will position as many columns as they can fit in the container.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
-			 * @param {Number} sColumns <p>New value for property <code>columns</code></p>
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getColumns" href="#/api/sap.f.GridContainerSettings/methods/getColumns">columns</a>.</p><p>How many columns to have on a row.</p><p>If not defined, <code>sap.f.GridContainer</code> will position as many columns as they can fit in the container.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+			 * @param {number} iColumns <p>New value for property <code>columns</code></p>
 			 * @returns sap.f.GridContainerSettings <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			setColumns(sColumns: Number): sap.f.GridContainerSettings;
+			setColumns(iColumns: number): sap.f.GridContainerSettings;
 			/**
-			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getColumnSize" href="#/api/sap.f.GridContainerSettings/methods/getColumnSize">columnSize</a>.</p><p>The width of the columns.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>80px</code>.</p>
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getColumnSize" href="#/api/sap.f.GridContainerSettings/methods/getColumnSize">columnSize</a>.</p><p>The width of the columns.</p><p><b>Note:</b> Use only 'px' or 'rem'. Some features may not work as expected otherwise.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>80px</code>.</p>
 			 * @param {sap.ui.core.CSSSize} sColumnSize <p>New value for property <code>columnSize</code></p>
 			 * @returns sap.f.GridContainerSettings <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
 			setColumnSize(sColumnSize: sap.ui.core.CSSSize): sap.f.GridContainerSettings;
 			/**
-			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getGap" href="#/api/sap.f.GridContainerSettings/methods/getGap">gap</a>.</p><p>The size of the gap between columns and rows.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>16px</code>.</p>
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getGap" href="#/api/sap.f.GridContainerSettings/methods/getGap">gap</a>.</p><p>The size of the gap between columns and rows.</p><p><b>Note:</b> Use only 'px' or 'rem'. Some features may not work as expected otherwise.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>16px</code>.</p>
 			 * @param {sap.ui.core.CSSSize} sGap <p>New value for property <code>gap</code></p>
 			 * @returns sap.f.GridContainerSettings <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
 			setGap(sGap: sap.ui.core.CSSSize): sap.f.GridContainerSettings;
 			/**
-			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getRowSize" href="#/api/sap.f.GridContainerSettings/methods/getRowSize">rowSize</a>.</p><p>The height of the rows.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>80px</code>.</p>
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getRowSize" href="#/api/sap.f.GridContainerSettings/methods/getRowSize">rowSize</a>.</p><p>The height of the rows.</p><p><b>Note:</b> Use only 'px' or 'rem'. Some features may not work as expected otherwise.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>80px</code>.</p>
 			 * @param {sap.ui.core.CSSSize} sRowSize <p>New value for property <code>rowSize</code></p>
 			 * @returns sap.f.GridContainerSettings <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
@@ -2697,53 +2824,55 @@ declare namespace sap {
 		 */
 		namespace routing {
 			/**
-			 * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.Router">sap.ui.core.routing.Router</a> for the constructor arguments.</p><p>The <code>sap.f.routing.Router</code> is intended to be used with <a target="_self" class="jsdoclink" href="#/api/sap.f.FlexibleColumnLayout">sap.f.FlexibleColumnLayout</a> as a root control.</p><p>The difference to the <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.Router">sap.ui.core.routing.Router</a> are the properties viewLevel, transition and transitionParameters you can specify in every Route or Target created by this router.</p><p>Additionally, the <code>layout</code> property can be specified in every Route, in which case it will be applied to the root control.</p>
+			 * <p><code>sap.f.routing.Router</code> is intended to be used with <code><a target="_self" class="jsdoclink" href="#/api/sap.f.FlexibleColumnLayout">sap.f.FlexibleColumnLayout</a></code> as a root control.</p><p>The difference to the <code><a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.Router">sap.ui.core.routing.Router</a></code> are the <code>viewLevel</code>, <code>transition</code>, and <code>transitionParameters</code> properties that you can specify in every Route or Target created by this router.</p><p>Additionally, the <code>layout</code> property can be specified in every Route, in which case it is applied to the root control.</p><p>See <code><a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.Router">sap.ui.core.routing.Router</a></code> for the constructor arguments.</p>
 			 */
 			export class Router extends sap.ui.core.routing.Router {
 				/**
-				 * <p>Instantiates a <code>sap.f.routing.Router</code>.</p>
+				 * <p>Constructor for a new <code>sap.f.routing.Router</code>.</p>
 				 * @param {any | object[]} oRoutes <p>may contain many Route configurations as <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.Route/constructor">sap.ui.core.routing.Route#constructor</a>.</p>
 				 * @param {sap.ui.core.UIComponent} oOwner <p>the Component of all the views that will be created by this Router, will get forwarded to the <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.Views/constructor">sap.ui.core.routing.Views#constructor</a>. If you are using the componentMetadata to define your routes you should skip this parameter.</p>
 				 * @param {any} oTargetsConfig <p>the target configuration, see <a target="_self" class="jsdoclink" href="#/api/sap.f.routing.Targets/constructor">sap.f.routing.Targets#constructor</a> documentation (the options object).</p>
 				 */
 				constructor(oRoutes?: any | object[], oOwner?: sap.ui.core.UIComponent, oTargetsConfig?: any);
 				/**
-				 * <p>Returns the TargetHandler instance.</p>
-				 * @returns sap.f.routing.TargetHandler <p>the TargetHandler instance</p>
+				 * <p>Returns the <code>TargetHandler</code> instance.</p>
+				 * @returns sap.f.routing.TargetHandler <p>The <code>TargetHandler</code> instance</p>
 				 */
 				getTargetHandler(): sap.f.routing.TargetHandler;
 			}
 			/**
+			 * <p>Used for closing dialogs and showing transitions in <code>NavContainers</code> when targets are displayed.</p><p><b>Note:</b> You should not create an own instance of this class. It is created when using <code><a target="_self" class="jsdoclink" href="#/api/sap.f.routing.Router">sap.f.routing.Router</a></code> or <code><a target="_self" class="jsdoclink" href="#/api/sap.f.routing.Targets">sap.f.routing.Targets</a></code>. You may use the <code><a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="setCloseDialogs" href="#/api/sap.f.routing.TargetHandler/methods/setCloseDialogs">#setCloseDialogs</a></code> function to specify if dialogs should be closed on displaying other views.</p>
 			 */
 			export class TargetHandler extends sap.ui.base.Object {
 				/**
-				 * <p>Instantiates a TargetHandler, a class used for closing dialogs and showing transitions in NavContainers when targets are displayed.<br/> <b>You should not create an own instance of this class.</b> It will be created when using <a target="_self" class="jsdoclink" href="#/api/sap.f.routing.Router">sap.f.routing.Router</a> or <a target="_self" class="jsdoclink" href="#/api/sap.f.routing.Targets">sap.f.routing.Targets</a>. You may use the <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="setCloseDialogs" href="#/api/sap.f.routing.TargetHandler/methods/setCloseDialogs">#setCloseDialogs</a> function to specify if dialogs should be closed on displaying other views.</p>
-				 * @param {boolean} closeDialogs <p>the default is true - will close all open dialogs before navigating, if set to true. If set to false it will just navigate without closing dialogs.</p>
+				 * <p>Constructor for a new <code>TargetHandler</code>.</p>
+				 * @param {boolean} bCloseDialogs <p>Closes all open dialogs before navigating, if set to <code>true</code> (default). If set to <code>false</code>, it just navigates without closing dialogs.</p>
 				 */
-				constructor(closeDialogs: boolean);
+				constructor(bCloseDialogs: boolean);
 				/**
-				 * <p>Gets if a navigation should close dialogs</p>
-				 * @returns boolean <p>a flag indication if dialogs will be closed</p>
+				 * <p>Gets if a navigation should close dialogs.</p>
+				 * @returns boolean <p>A flag indication if dialogs will be closed</p>
 				 */
 				getCloseDialogs(): boolean;
 				/**
-				 * <p>Sets if a navigation should close dialogs</p>
-				 * @param {boolean} bCloseDialogs <p>close dialogs if true</p>
-				 * @returns sap.f.routing.TargetHandler <p>for chaining</p>
+				 * <p>Sets if a navigation should close dialogs.</p>
+				 * @param {boolean} bCloseDialogs <p>Close dialogs if <code>true</code></p>
+				 * @returns sap.f.routing.TargetHandler <p>For chaining</p>
 				 */
 				setCloseDialogs(bCloseDialogs: boolean): sap.f.routing.TargetHandler;
 			}
 			/**
+			 * <p>Provides a convenient way for placing views into the correct containers of your app.</p><p>The <code>sap.f</code> extension of <code>Targets</code> also handles the triggering of page navigation when the target control is an <code><a target="_self" class="jsdoclink" href="#/api/sap.f.FlexibleColumnLayout">sap.f.FlexibleColumnLayout</a></code>. Other controls are also allowed, but the extra parameters <code>viewLevel</code>, <code>transition</code>, and <code>transitionParameters</code> are ignored and it behaves as <code><a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.Targets">sap.ui.core.routing.Targets</a></code>.</p><p>When a target is displayed, dialogs are being closed. To change this, use <code><a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTargetHandler" href="#/api/sap.f.routing.Targets/methods/getTargetHandler">#getTargetHandler</a></code> and <a target="_self" class="jsdoclink" href="#/api/sap.f.routing.TargetHandler/methods/setCloseDialogs">sap.f.routing.TargetHandler#setCloseDialogs</a>.</p>
 			 */
 			export class Targets extends sap.ui.core.routing.Targets {
 				/**
-				 * <p>Provides a convenient way for placing views into the correct containers of your application. The sap.f extension of Targets also handles the triggering of page navigation when the target control is a <a target="_self" class="jsdoclink" href="#/api/sap.f.FlexibleColumnLayout">sap.f.FlexibleColumnLayout</a>. Other controls are also allowed, but the extra parameters viewLevel, transition and transitionParameters are ignored and it will behave like <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.Targets">sap.ui.core.routing.Targets</a>. When a target is displayed, dialogs will be closed. To change this use <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTargetHandler" href="#/api/sap.f.routing.Targets/methods/getTargetHandler">#getTargetHandler</a> and <a target="_self" class="jsdoclink" href="#/api/sap.f.routing.TargetHandler/methods/setCloseDialogs">sap.f.routing.TargetHandler#setCloseDialogs</a>.</p>
+				 * <p>Constructor for a new <code>Targets</code> class.</p>
 				 * @param {any} oOptions undefined
 				 */
 				constructor(oOptions: any);
 				/**
-				 * <p>Returns the TargetHandler instance.</p>
-				 * @returns sap.f.routing.TargetHandler <p>the TargetHandler instance</p>
+				 * <p>Returns the <code>TargetHandler</code> instance.</p>
+				 * @returns sap.f.routing.TargetHandler <p>The <code>TargetHandler</code> instance</p>
 				 */
 				getTargetHandler(): sap.f.routing.TargetHandler;
 			}

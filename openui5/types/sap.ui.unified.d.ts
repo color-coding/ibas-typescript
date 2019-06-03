@@ -3091,6 +3091,12 @@ declare namespace sap {
                  */
                 open(bWithKeyboard: boolean, oOpenerRef: sap.ui.core.Element | HTMLElement, my: sap.ui.core.Dock, at: sap.ui.core.Dock, of: sap.ui.core.Element | HTMLElement, offset?: string, collision?: sap.ui.core.Collision): void;
                 /**
+                 * <p>Opens the menu as a context menu.</p>
+                 * @param {any | any} oEvent <p>The event object or an object containing offsetX, offsetY values and left, top values of the element's position</p>
+                 * @param {sap.ui.core.Element | HTMLElement} oOpenerRef <p>Might be UI5 Element or DOM Element</p>
+                 */
+                openAsContextMenu(oEvent: any | any, oOpenerRef: sap.ui.core.Element | HTMLElement): void;
+                /**
                  * <p>Removes all the controls in the association named <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAriaLabelledBy" href="#/api/sap.ui.unified.Menu/methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
                  * @returns sap.ui.core.ID[] <p>An array of the removed elements (might be empty)</p>
                  */

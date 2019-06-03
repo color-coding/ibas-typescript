@@ -838,7 +838,7 @@ declare namespace sap {
                 setVertical(bVertical: boolean): sap.ui.layout.FixFlex;
             }
             /**
-             * <p>A layout control which positions its child controls in a 12 column flow layout.</p><p>The <code>Grid</code> control's children can be specified to take on a variable amount of columns depending on available screen size. With this control it is possible to achieve flexible layouts and line-breaks for extra large-, large-, medium- and small-sized screens, such as large desktop, desktop, tablet, and mobile.</p><p>The <code>Grid</code> control's width can be percentage- or pixel-based and the spacing between its columns can be set to various predefined values.</p><p><b>Note:</b> The visibility of the child control does not affect the horizontal space it occupies. This means that even if the control is not visible, its horizontal space will still exist, even if it is empty.<br><br><span>Documentation links:</span><ul><li><a target="_self" href="#/topic/32d4b9c2b981425dbc374d3e9d5d0c2e">Grid Controls</a></li></ul></p>
+             * <p>A layout control which positions its child controls in a 12 column flow layout.</p><p>The <code>Grid</code> control's children can be specified to take on a variable amount of columns depending on available screen size. With this control it is possible to achieve flexible layouts and line-breaks for extra large-, large-, medium- and small-sized screens, such as large desktop, desktop, tablet, and mobile.</p><p>The <code>Grid</code> control's width can be percentage- or pixel-based and the spacing between its columns can be set to various predefined values.</p><p><b>Notes:</b> <ul> <li>The visibility of the child control does not affect the horizontal space it occupies, meaning that even if the control is not visible, its horizontal space still exists, even if it is empty.</li> <li> If it gets wider, the content of the columns is designed to overflow outside of its dimensions. An additional <code>sapUiRespGridOverflowHidden</code> CSS class should be added to the control in order to hide the overflowing part of it.</li> </ul><br><br><span>Documentation links:</span><ul><li><a target="_self" href="#/topic/32d4b9c2b981425dbc374d3e9d5d0c2e">Grid Controls</a></li></ul></p>
              */
             export class Grid extends sap.ui.core.Control {
                 /**
@@ -1959,7 +1959,9 @@ declare namespace sap {
         namespace layout {
             namespace cssgrid {
                 /**
-                 * <p><p>A string type that represents a short hand CSS grid gap.</p></p>
+                 * <p><p>A string type that represents a short hand CSS grid gap.</p><br><br>References: <ul><li><a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/gap">https://developer.mozilla.org/en-US/docs/Web/CSS/gap</a>
+                <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
+                title="Information published on non SAP site" class="sapUISDKExternalLink"/></li></ul></p>
                  */
                 export type CSSGridGapShortHand = string;
             }
@@ -1971,7 +1973,7 @@ declare namespace sap {
         namespace layout {
             namespace cssgrid {
                 /**
-                 * <p><p>A string type that represents one or two grid lines. Used to define the position and size of a single grid item.</p><p>Valid values: auto inherit 1 span 2 span 2 / 5 span 2 / -5 5 / 7 7 / span 5 span 7 / span 5</p><br><br>References: <ul><li><a target="_blank" href="https://developer.mozilla.org/en-US/docs/Glossary/Grid_lines">https://developer.mozilla.org/en-US/docs/Glossary/Grid_lines</a>
+                 * <p><p>A string type that represents one or two grid lines. Used to define the position and size of a single grid item.</p><p>Valid values: <ul> <li>auto</li> <li>inherit</li> <li>1</li> <li>span 2</li> <li>span 2 / 5</li> <li>span 2 / -5</li> <li>5 / 7</li> <li>7 / span 5</li> <li>span 7 / span 5</li> </ul></p><br><br>References: <ul><li><a target="_blank" href="https://developer.mozilla.org/en-US/docs/Glossary/Grid_lines">MDN web docs: grid lines</a>
                 <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
                 title="Information published on non SAP site" class="sapUISDKExternalLink"/></li></ul></p>
                  */
@@ -2546,67 +2548,91 @@ declare namespace sap {
                      */
                     constructor(sId?: string, mSettings?: any);
                     /**
-                     * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getGridColumn" href="#/api/sap.ui.layout.cssgrid.GridItemLayoutData/methods/getGridColumn">gridColumn</a>.</p><p>Sets the value for the CSS display:grid item property grid-column</p><p>Default value is <code>empty string</code>.</p>
+                     * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getGridColumn" href="#/api/sap.ui.layout.cssgrid.GridItemLayoutData/methods/getGridColumn">gridColumn</a>.</p><p>Sets the value for the CSS display:grid item property grid-column <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-column">MDN web docs: grid-column</a>
+                    <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
+                    title="Information published on non SAP site" class="sapUISDKExternalLink"/></p><p>Default value is <code>empty string</code>.</p>
                      * @returns sap.ui.layout.cssgrid.CSSGridLine <p>Value of property <code>gridColumn</code></p>
                      */
                     getGridColumn(): sap.ui.layout.cssgrid.CSSGridLine;
                     /**
-                     * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getGridColumnEnd" href="#/api/sap.ui.layout.cssgrid.GridItemLayoutData/methods/getGridColumnEnd">gridColumnEnd</a>.</p><p>Sets the value for the CSS display:grid item property grid-column-end</p><p>Default value is <code>empty string</code>.</p>
+                     * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getGridColumnEnd" href="#/api/sap.ui.layout.cssgrid.GridItemLayoutData/methods/getGridColumnEnd">gridColumnEnd</a>.</p><p>Sets the value for the CSS display:grid item property grid-column-end <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-column-end">MDN web docs: grid-column-end</a>
+                    <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
+                    title="Information published on non SAP site" class="sapUISDKExternalLink"/></p><p>Default value is <code>empty string</code>.</p>
                      * @returns sap.ui.layout.cssgrid.CSSGridLine <p>Value of property <code>gridColumnEnd</code></p>
                      */
                     getGridColumnEnd(): sap.ui.layout.cssgrid.CSSGridLine;
                     /**
-                     * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getGridColumnStart" href="#/api/sap.ui.layout.cssgrid.GridItemLayoutData/methods/getGridColumnStart">gridColumnStart</a>.</p><p>Sets the value for the CSS display:grid item property grid-column-start</p><p>Default value is <code>empty string</code>.</p>
+                     * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getGridColumnStart" href="#/api/sap.ui.layout.cssgrid.GridItemLayoutData/methods/getGridColumnStart">gridColumnStart</a>.</p><p>Sets the value for the CSS display:grid item property grid-column-start <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-column-start">MDN web docs: grid-column-start</a>
+                    <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
+                    title="Information published on non SAP site" class="sapUISDKExternalLink"/></p><p>Default value is <code>empty string</code>.</p>
                      * @returns sap.ui.layout.cssgrid.CSSGridLine <p>Value of property <code>gridColumnStart</code></p>
                      */
                     getGridColumnStart(): sap.ui.layout.cssgrid.CSSGridLine;
                     /**
-                     * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getGridRow" href="#/api/sap.ui.layout.cssgrid.GridItemLayoutData/methods/getGridRow">gridRow</a>.</p><p>Sets the value for the CSS display:grid item property grid-row</p><p>Default value is <code>empty string</code>.</p>
+                     * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getGridRow" href="#/api/sap.ui.layout.cssgrid.GridItemLayoutData/methods/getGridRow">gridRow</a>.</p><p>Sets the value for the CSS display:grid item property grid-row <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-row">MDN web docs: grid-row</a>
+                    <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
+                    title="Information published on non SAP site" class="sapUISDKExternalLink"/></p><p>Default value is <code>empty string</code>.</p>
                      * @returns sap.ui.layout.cssgrid.CSSGridLine <p>Value of property <code>gridRow</code></p>
                      */
                     getGridRow(): sap.ui.layout.cssgrid.CSSGridLine;
                     /**
-                     * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getGridRowEnd" href="#/api/sap.ui.layout.cssgrid.GridItemLayoutData/methods/getGridRowEnd">gridRowEnd</a>.</p><p>Sets the value for the CSS display:grid item property grid-row-end</p><p>Default value is <code>empty string</code>.</p>
+                     * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getGridRowEnd" href="#/api/sap.ui.layout.cssgrid.GridItemLayoutData/methods/getGridRowEnd">gridRowEnd</a>.</p><p>Sets the value for the CSS display:grid item property grid-row-end <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-row-end">MDN web docs: grid-row-end</a>
+                    <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
+                    title="Information published on non SAP site" class="sapUISDKExternalLink"/></p><p>Default value is <code>empty string</code>.</p>
                      * @returns sap.ui.layout.cssgrid.CSSGridLine <p>Value of property <code>gridRowEnd</code></p>
                      */
                     getGridRowEnd(): sap.ui.layout.cssgrid.CSSGridLine;
                     /**
-                     * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getGridRowStart" href="#/api/sap.ui.layout.cssgrid.GridItemLayoutData/methods/getGridRowStart">gridRowStart</a>.</p><p>Sets the value for the CSS display:grid item property grid-row-start</p><p>Default value is <code>empty string</code>.</p>
+                     * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getGridRowStart" href="#/api/sap.ui.layout.cssgrid.GridItemLayoutData/methods/getGridRowStart">gridRowStart</a>.</p><p>Sets the value for the CSS display:grid item property grid-row-start <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-row-start">MDN web docs: grid-row-start</a>
+                    <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
+                    title="Information published on non SAP site" class="sapUISDKExternalLink"/></p><p>Default value is <code>empty string</code>.</p>
                      * @returns sap.ui.layout.cssgrid.CSSGridLine <p>Value of property <code>gridRowStart</code></p>
                      */
                     getGridRowStart(): sap.ui.layout.cssgrid.CSSGridLine;
                     /**
-                     * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getGridColumn" href="#/api/sap.ui.layout.cssgrid.GridItemLayoutData/methods/getGridColumn">gridColumn</a>.</p><p>Sets the value for the CSS display:grid item property grid-column</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
+                     * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getGridColumn" href="#/api/sap.ui.layout.cssgrid.GridItemLayoutData/methods/getGridColumn">gridColumn</a>.</p><p>Sets the value for the CSS display:grid item property grid-column <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-column">MDN web docs: grid-column</a>
+                    <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
+                    title="Information published on non SAP site" class="sapUISDKExternalLink"/></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
                      * @param {sap.ui.layout.cssgrid.CSSGridLine} sGridColumn <p>New value for property <code>gridColumn</code></p>
                      * @returns sap.ui.layout.cssgrid.GridItemLayoutData <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
                     setGridColumn(sGridColumn: sap.ui.layout.cssgrid.CSSGridLine): sap.ui.layout.cssgrid.GridItemLayoutData;
                     /**
-                     * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getGridColumnEnd" href="#/api/sap.ui.layout.cssgrid.GridItemLayoutData/methods/getGridColumnEnd">gridColumnEnd</a>.</p><p>Sets the value for the CSS display:grid item property grid-column-end</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
+                     * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getGridColumnEnd" href="#/api/sap.ui.layout.cssgrid.GridItemLayoutData/methods/getGridColumnEnd">gridColumnEnd</a>.</p><p>Sets the value for the CSS display:grid item property grid-column-end <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-column-end">MDN web docs: grid-column-end</a>
+                    <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
+                    title="Information published on non SAP site" class="sapUISDKExternalLink"/></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
                      * @param {sap.ui.layout.cssgrid.CSSGridLine} sGridColumnEnd <p>New value for property <code>gridColumnEnd</code></p>
                      * @returns sap.ui.layout.cssgrid.GridItemLayoutData <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
                     setGridColumnEnd(sGridColumnEnd: sap.ui.layout.cssgrid.CSSGridLine): sap.ui.layout.cssgrid.GridItemLayoutData;
                     /**
-                     * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getGridColumnStart" href="#/api/sap.ui.layout.cssgrid.GridItemLayoutData/methods/getGridColumnStart">gridColumnStart</a>.</p><p>Sets the value for the CSS display:grid item property grid-column-start</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
+                     * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getGridColumnStart" href="#/api/sap.ui.layout.cssgrid.GridItemLayoutData/methods/getGridColumnStart">gridColumnStart</a>.</p><p>Sets the value for the CSS display:grid item property grid-column-start <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-column-start">MDN web docs: grid-column-start</a>
+                    <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
+                    title="Information published on non SAP site" class="sapUISDKExternalLink"/></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
                      * @param {sap.ui.layout.cssgrid.CSSGridLine} sGridColumnStart <p>New value for property <code>gridColumnStart</code></p>
                      * @returns sap.ui.layout.cssgrid.GridItemLayoutData <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
                     setGridColumnStart(sGridColumnStart: sap.ui.layout.cssgrid.CSSGridLine): sap.ui.layout.cssgrid.GridItemLayoutData;
                     /**
-                     * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getGridRow" href="#/api/sap.ui.layout.cssgrid.GridItemLayoutData/methods/getGridRow">gridRow</a>.</p><p>Sets the value for the CSS display:grid item property grid-row</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
+                     * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getGridRow" href="#/api/sap.ui.layout.cssgrid.GridItemLayoutData/methods/getGridRow">gridRow</a>.</p><p>Sets the value for the CSS display:grid item property grid-row <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-row">MDN web docs: grid-row</a>
+                    <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
+                    title="Information published on non SAP site" class="sapUISDKExternalLink"/></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
                      * @param {sap.ui.layout.cssgrid.CSSGridLine} sGridRow <p>New value for property <code>gridRow</code></p>
                      * @returns sap.ui.layout.cssgrid.GridItemLayoutData <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
                     setGridRow(sGridRow: sap.ui.layout.cssgrid.CSSGridLine): sap.ui.layout.cssgrid.GridItemLayoutData;
                     /**
-                     * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getGridRowEnd" href="#/api/sap.ui.layout.cssgrid.GridItemLayoutData/methods/getGridRowEnd">gridRowEnd</a>.</p><p>Sets the value for the CSS display:grid item property grid-row-end</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
+                     * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getGridRowEnd" href="#/api/sap.ui.layout.cssgrid.GridItemLayoutData/methods/getGridRowEnd">gridRowEnd</a>.</p><p>Sets the value for the CSS display:grid item property grid-row-end <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-row-end">MDN web docs: grid-row-end</a>
+                    <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
+                    title="Information published on non SAP site" class="sapUISDKExternalLink"/></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
                      * @param {sap.ui.layout.cssgrid.CSSGridLine} sGridRowEnd <p>New value for property <code>gridRowEnd</code></p>
                      * @returns sap.ui.layout.cssgrid.GridItemLayoutData <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
                     setGridRowEnd(sGridRowEnd: sap.ui.layout.cssgrid.CSSGridLine): sap.ui.layout.cssgrid.GridItemLayoutData;
                     /**
-                     * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getGridRowStart" href="#/api/sap.ui.layout.cssgrid.GridItemLayoutData/methods/getGridRowStart">gridRowStart</a>.</p><p>Sets the value for the CSS display:grid item property grid-row-start</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
+                     * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getGridRowStart" href="#/api/sap.ui.layout.cssgrid.GridItemLayoutData/methods/getGridRowStart">gridRowStart</a>.</p><p>Sets the value for the CSS display:grid item property grid-row-start <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-row-start">MDN web docs: grid-row-start</a>
+                    <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
+                    title="Information published on non SAP site" class="sapUISDKExternalLink"/></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
                      * @param {sap.ui.layout.cssgrid.CSSGridLine} sGridRowStart <p>New value for property <code>gridRowStart</code></p>
                      * @returns sap.ui.layout.cssgrid.GridItemLayoutData <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */

@@ -567,8 +567,7 @@ namespace shell {
                                     if (container.getItems().length === 1) {
                                         setTimeout(() => {
                                             pageContainer.back(null);
-                                            pageContainer.removePage(container.getId());
-                                            container.destroy(true);
+                                            container.destroy();
                                         }, 100);
                                     }
                                 }
@@ -915,7 +914,7 @@ namespace shell {
                         let parent: sap.ui.base.ManagedObject = viewContent.getParent();
                         if (parent instanceof sap.m.NavContainer) {
                             parent.back(null);
-                            parent.removePage(viewContent.getId());
+                            viewContent.destroy();
                         }
                         viewContent.destroy(true);
                     }

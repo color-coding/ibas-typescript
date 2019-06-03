@@ -1697,7 +1697,7 @@ declare namespace sap {
             setWrapping(bWrapping: boolean): sap.m.CheckBox;
         }
         /**
-         * <p>Represents a predefined range of colors for easier selection.</p><h3>Overview</h3><p> The <code>ColorPalette</code> provides the users with a range of predefined colors.</p><p>You can customize them with the use of the <code>colors</code> property. You can specify a <code>defaultColor</code> and display a "Default color" button for the user to choose directly. You can display a "More colors..." button that opens an additional color picker for the user to choose specific colors that are not present in the predefined range.</p><h3>Usage</h3><p>The palette is intended for users, who don't want to check and remember the different values of the colors and spend large amount of time to configure the right color through the color picker.</p><p>The control can be embedded in a form or can be opened as popover (by use of thin wrapper control <code>sap.m.ColorPalettePopover<code>).<br><br><span>Documentation links:</span><ul><li><a target="_self" class="jsdoclink" href="#/api/sap.m.ColorPalettePopover">sap.m.ColorPalettePopover</a></p><p><b>Note:</b> The <a target="_self" class="jsdoclink" href="#/api/sap.ui.unified.ColorPicker">sap.ui.unified.ColorPicker</a> is used internally only if the <code>ColorPicker</code>
+         * <p>Represents a predefined range of colors for easier selection.</p><h3>Overview</h3><p> The <code>ColorPalette</code> provides the users with a range of predefined colors.</p><p>You can customize them with the use of the <code>colors</code> property. You can specify a <code>defaultColor</code> and display a "Default color" button for the user to choose directly. You can display a "More colors..." button that opens an additional color picker for the user to choose specific colors that are not present in the predefined range.</p><h3>Usage</h3><p>The palette is intended for users, who don't want to check and remember the different values of the colors and spend large amount of time to configure the right color through the color picker.</p><p>The control can be embedded in a form or can be opened as popover (by use of thin wrapper control <code>sap.m.ColorPalettePopover</code>).<br><br><span>Documentation links:</span><ul><li><a target="_self" class="jsdoclink" href="#/api/sap.m.ColorPalettePopover">sap.m.ColorPalettePopover</a></p><p><b>Note:</b> The <a target="_self" class="jsdoclink" href="#/api/sap.ui.unified.ColorPicker">sap.ui.unified.ColorPicker</a> is used internally only if the <code>ColorPicker</code>
         is opened (not used for the initial rendering). If the <code>sap.ui.unified</code> library is not loaded
         before the <code>ColorPicker</code> is opened, it will be loaded upon opening. This could lead to a waiting
         time when the <code>ColorPicker</code> is opened for the first time. To prevent this, apps using the
@@ -2395,6 +2395,11 @@ declare namespace sap {
              * <p>Synchronizes the <code>selectedItem</code> association and the <code>selectedItemId</code> property.</p>
              */
             protected synchronizeSelection(): void;
+            /**
+             * <p>Creates picker if doesn't exist yet and sync with Control items</p>
+             * @returns Dialog|Popover 
+             */
+            protected syncPickerContent(): Dialog | Popover;
         }
         /**
          * <p>An abstract class for combo boxes.</p>
@@ -2495,6 +2500,11 @@ declare namespace sap {
              */
             getFirstItem(): sap.ui.core.Item;
             /**
+             * <p>Gets the input properties, which should be forwarded from the combobox text field to the picker text field</p>
+             * @returns any[] <p>Array of the forwardable properties</p>
+             */
+            protected getInputForwardableProperties(): any[];
+            /**
              * <p>Gets the item from the aggregation named <code>items</code> at the given 0-based index.</p>
              * @param {number} iIndex <p>Index of the item to return.</p>
              * @returns sap.ui.core.Item <p>Item at the given index, or null if none.</p>
@@ -2518,7 +2528,7 @@ declare namespace sap {
             getLastItem(): sap.ui.core.Item;
             /**
              * <p>Gets the control's picker popup.</p>
-             * @returns sap.m.Dialog|sap.m.Popover|null <p>The picker instance, creating it if necessary by calling the <code>createPicker()</code> method.</p>
+             * @returns sap.m.Dialog|sap.m.Popover|null <p>The picker instance the <code>createPicker()</code> method.</p>
              */
             protected getPicker(): sap.m.Dialog | sap.m.Popover | null;
             /**
@@ -2632,10 +2642,46 @@ declare namespace sap {
              */
             setShowSecondaryValues(bShowSecondaryValues: boolean): sap.m.ComboBoxBase;
             /**
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getShowValueStateMessage" href="#/api/sap.m.InputBase/methods/getShowValueStateMessage">showValueStateMessage</a>.</p><p>Indicates whether the value state message should be shown or not.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+             * @param {boolean} bShowValueStateMessage <p>New value for property <code>showValueStateMessage</code></p>
+             * @returns sap.m.InputBase <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            setShowValueStateMessage(bShowValueStateMessage: boolean): sap.m.InputBase;
+            /**
+             * <p>Sets whether the value state message should be shown or not</p>
+             * @param {boolean} bShow <p>The new value state text</p>
+             * @returns sap.m.InputBase <p>this for chaining</p>
+             */
+            setShowValueStateMessage(bShow?: boolean): sap.m.InputBase;
+            /**
              * <p>Sets the TextField handler</p>
              * @param {sap.m.TextField} oTextField <p>Text field instance</p>
              */
             protected setTextFieldHandler(oTextField: any): void;
+            /**
+             * <p>Setter for property <code>valueState</code>.</p><p>Default value is <code>None</code>.</p>
+             * @param {sap.ui.core.ValueState} sValueState <p>New value for property <code>valueState</code>.</p>
+             * @returns sap.m.InputBase <p><code>this</code> to allow method chaining.</p>
+             */
+            setValueState(sValueState: sap.ui.core.ValueState): sap.m.InputBase;
+            /**
+             * <p>Sets the visualization of the validation state of the control, e.g. <code>Error</code>, <code>Warning</code>, <code>Success</code>.</p>
+             * @param {sap.m.ValueState} sValueState <p>The new value state</p>
+             * @returns sap.m.InputBase <p>this for chaining</p>
+             */
+            setValueState(sValueState?: any): sap.m.InputBase;
+            /**
+             * <p>Setter for property <code>valueStateText</code>.</p><p>Default value is empty/<code>undefined</code>.</p>
+             * @param {string} sText <p>New value for property <code>valueStateText</code>.</p>
+             * @returns sap.m.InputBase <p><code>this</code> to allow method chaining</p>
+             */
+            setValueStateText(sText: string): sap.m.InputBase;
+            /**
+             * <p>Sets the value state text</p>
+             * @param {string} sValueStateText <p>The new value state text</p>
+             * @returns sap.m.InputBase <p>this for chaining</p>
+             */
+            setValueStateText(sValueStateText?: string): sap.m.InputBase;
             /**
              * <p>Opens the <code>SuggestionsPopover</code> with the available items.</p>
              * @param {Function} fnFilter <p>Function to filter the items shown in the SuggestionsPopover</p>
@@ -3062,7 +3108,7 @@ declare namespace sap {
              */
             setValue(sValue: string): sap.m.DatePicker;
             /**
-             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getWidth" href="#/api/sap.m.InputBase/methods/getWidth">width</a>.</p><p>Defines the width of the control.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getWidth" href="#/api/sap.m.InputBase/methods/getWidth">width</a>.</p><p>Defines the width of the control.</p><p><b>Note:</b> If the provided width is too small, the control gets stretched to its min width, which is needed in order for the control to be usable and well aligned.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
              * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
              * @returns sap.m.InputBase <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
@@ -3614,7 +3660,7 @@ declare namespace sap {
              */
             constructor(sId?: string, mSettings?: any);
             /**
-             * <p>Returns the custom header instance when the <code>customHeader</code> aggregation is set. Otherwise, it returns the internal managed header instance. This method can be called within composite controls which use <code>sap.m.Dialog<code> inside.</p>
+             * <p>Returns the custom header instance when the <code>customHeader</code> aggregation is set. Otherwise, it returns the internal managed header instance. This method can be called within composite controls which use <code>sap.m.Dialog</code> inside.</p>
              */
             protected _getAnyHeader(): void;
             /**
@@ -3805,7 +3851,7 @@ declare namespace sap {
              */
             getDraggable(): boolean;
             /**
-             * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEndButton" href="#/api/sap.m.Dialog/methods/getEndButton">endButton</a>.</p><p>The button which is rendered to the right side (left side in RTL mode) of the <code>beginButton</code> in the footer area inside the Dialog. As of version 1.21.1, there's a new aggregation <code>buttons<code> created with which more than 2 buttons can be added to the footer area of Dialog. If the new <code>buttons</code> aggregation is set, any change made to this aggregation has no effect anymore. When running on a phone, this <code>button</code> (and the <code>beginButton</code> together when set) is (are) rendered at the center of the footer area. When running on other platforms, this <code>button</code> (and the <code>beginButton</code> together when set) is (are) rendered at the right side (left side in RTL mode) of the footer area.</p>
+             * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEndButton" href="#/api/sap.m.Dialog/methods/getEndButton">endButton</a>.</p><p>The button which is rendered to the right side (left side in RTL mode) of the <code>beginButton</code> in the footer area inside the Dialog. As of version 1.21.1, there's a new aggregation <code>buttons</code> created with which more than 2 buttons can be added to the footer area of Dialog. If the new <code>buttons</code> aggregation is set, any change made to this aggregation has no effect anymore. When running on a phone, this <code>button</code> (and the <code>beginButton</code> together when set) is (are) rendered at the center of the footer area. When running on other platforms, this <code>button</code> (and the <code>beginButton</code> together when set) is (are) rendered at the right side (left side in RTL mode) of the footer area.</p>
              * @returns sap.m.Button 
              */
             getEndButton(): sap.m.Button;
@@ -7940,7 +7986,7 @@ declare namespace sap {
              */
             getValueStateText(): string;
             /**
-             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getWidth" href="#/api/sap.m.InputBase/methods/getWidth">width</a>.</p><p>Defines the width of the control.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getWidth" href="#/api/sap.m.InputBase/methods/getWidth">width</a>.</p><p>Defines the width of the control.</p><p><b>Note:</b> If the provided width is too small, the control gets stretched to its min width, which is needed in order for the control to be usable and well aligned.</p>
              * @returns sap.ui.core.CSSSize <p>Value of property <code>width</code></p>
              */
             getWidth(): sap.ui.core.CSSSize;
@@ -8182,11 +8228,11 @@ declare namespace sap {
              */
             setShowValueStateMessage(bShowValueStateMessage: boolean): sap.m.InputBase;
             /**
-             * <p>Setter for property <code>showValueStateMessage</code>.</p><p>Default value is <code>true</code></p>
-             * @param {boolean} bShowValueStateMessage <p>new value for property <code>showValueStateMessage</code></p>
-             * @returns sap.m.InputBase <p><code>this</code> to allow method chaining</p>
+             * <p>Sets whether the value state message should be shown or not</p>
+             * @param {boolean} bShow <p>The new value state text</p>
+             * @returns sap.m.InputBase <p>this for chaining</p>
              */
-            setShowValueStateMessage(bShowValueStateMessage: boolean): sap.m.InputBase;
+            setShowValueStateMessage(bShow?: boolean): sap.m.InputBase;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getStartSuggestion" href="#/api/sap.m.Input/methods/getStartSuggestion">startSuggestion</a>.</p><p>Minimum length of the entered text in input before suggest event is fired. The default value is 1 which means the suggest event is fired after user types in input. When it's set to 0, suggest event is fired when input with no text gets focus.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1</code>.</p>
              * @param {number} iStartSuggestion <p>New value for property <code>startSuggestion</code></p>
@@ -8242,19 +8288,31 @@ declare namespace sap {
              */
             setValueLiveUpdate(bValueLiveUpdate: boolean): sap.m.Input;
             /**
+             * <p>Setter for property <code>valueState</code>.</p><p>Default value is <code>None</code>.</p>
+             * @param {sap.ui.core.ValueState} sValueState <p>New value for property <code>valueState</code>.</p>
+             * @returns sap.m.InputBase <p><code>this</code> to allow method chaining.</p>
+             */
+            setValueState(sValueState: sap.ui.core.ValueState): sap.m.InputBase;
+            /**
+             * <p>Sets the visualization of the validation state of the control, e.g. <code>Error</code>, <code>Warning</code>, <code>Success</code>.</p>
+             * @param {sap.m.ValueState} sValueState <p>The new value state</p>
+             * @returns sap.m.InputBase <p>this for chaining</p>
+             */
+            setValueState(sValueState?: any): sap.m.InputBase;
+            /**
              * <p>Setter for property <code>valueStateText</code>.</p><p>Default value is empty/<code>undefined</code>.</p>
              * @param {string} sText <p>New value for property <code>valueStateText</code>.</p>
              * @returns sap.m.InputBase <p><code>this</code> to allow method chaining</p>
              */
             setValueStateText(sText: string): sap.m.InputBase;
             /**
-             * <p>Setter for property <code>valueStateText</code>.</p><p>Default value is empty/<code>undefined</code></p>
-             * @param {string} sValueStateText <p>new value for property <code>valueStateText</code></p>
-             * @returns sap.m.InputBase <p><code>this</code> to allow method chaining</p>
+             * <p>Sets the value state text</p>
+             * @param {string} sValueStateText <p>The new value state text</p>
+             * @returns sap.m.InputBase <p>this for chaining</p>
              */
-            setValueStateText(sValueStateText: string): sap.m.InputBase;
+            setValueStateText(sValueStateText?: string): sap.m.InputBase;
             /**
-             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getWidth" href="#/api/sap.m.InputBase/methods/getWidth">width</a>.</p><p>Defines the width of the control.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getWidth" href="#/api/sap.m.InputBase/methods/getWidth">width</a>.</p><p>Defines the width of the control.</p><p><b>Note:</b> If the provided width is too small, the control gets stretched to its min width, which is needed in order for the control to be usable and well aligned.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
              * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
              * @returns sap.m.InputBase <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
@@ -8449,7 +8507,7 @@ declare namespace sap {
              */
             getValueStateText(): string;
             /**
-             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getWidth" href="#/api/sap.m.InputBase/methods/getWidth">width</a>.</p><p>Defines the width of the control.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getWidth" href="#/api/sap.m.InputBase/methods/getWidth">width</a>.</p><p>Defines the width of the control.</p><p><b>Note:</b> If the provided width is too small, the control gets stretched to its min width, which is needed in order for the control to be usable and well aligned.</p>
              * @returns sap.ui.core.CSSSize <p>Value of property <code>width</code></p>
              */
             getWidth(): sap.ui.core.CSSSize;
@@ -8566,7 +8624,7 @@ declare namespace sap {
              */
             setValueStateText(sText: string): sap.m.InputBase;
             /**
-             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getWidth" href="#/api/sap.m.InputBase/methods/getWidth">width</a>.</p><p>Defines the width of the control.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getWidth" href="#/api/sap.m.InputBase/methods/getWidth">width</a>.</p><p>Defines the width of the control.</p><p><b>Note:</b> If the provided width is too small, the control gets stretched to its min width, which is needed in order for the control to be usable and well aligned.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
              * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
              * @returns sap.m.InputBase <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
@@ -8742,7 +8800,7 @@ declare namespace sap {
             Week = "Week",
         }
         /**
-         * <p><p>Interface for controls which can have special behavior inside <code>sap.m.OverflowToolbar</code>. Controls that implement this interface must provide a <code>getOverflowToolbarConfig</code> method that accepts no arguments and returns an object with the following fields: <ul> <li><code>canOverflow</code> - A boolean that tells whether the control can move to the overflow menu or not.</p><p><b>Note:</b> Even if <code>canOverflow</code> is set to <code>false</code>, the <code>propsUnrelatedToSize</code> field is taken into account, allowing to optimize the behavior of controls that do not need to overflow, but are used in an <code>sap.m.OverflowToolbar</code> regardless.</li></p><p><li><code>autoCloseEvents</code> - An array of strings, listing all of the control's events that should trigger the closing of the overflow menu, when fired.</li></p><p><li><code>invalidationEvents</code> - An array of strings, listing all of the control's events that should trigger the invalidation of the <code>sap.m.OverflowToolbar</code>, when fired.</li></p><p><li><code>propsUnrelatedToSize</code> - An array of strings, listing all of the control's properties that, when changed, should not cause the overflow toolbar to invalidate.</p><p><b>Note:</b> By default <code>sap.m.OverflowToolbar</code> invalidates whenever any property of a child control changes. This is to ensure that whenever the size of a child control changes, the overflow toolbar's layout is recalculated. Some properties however do not affect control size, making it unnecessary to invalidate the overflow toolbar when they change. You can list them here for optimization purposes.</li></p><p><li><code>onBeforeEnterOverflow(oControl)</code> - A callback function that will be invoked before moving the control into the overflow menu. The control instance will be passed as an argument.</p><p><b>Note:</b> The context of the function is not the control instance (use the <code>oControl</code> parameter for this purpose), but rather an internal helper object, associated with the current <code>sap.m.OverflowToolbar</code> instance. This object only needs to be manipulated in special cases (e.g. when you want to store state on it, rather than on the control instance).</li></p><p><li><code>onAfterExitOverflow(oControl)</code> - A callback function that will be invoked after taking the control out of the overflow menu (before moving it back to the toolbar itself). The control instance will be passed as an argument.</p><p><b>Note:</b> See: <code>onBeforeEnterOverflow</code> for details about the function's context.</li></p><p><li><code>getCustomImportance()</code> - A function that, if provided, will be called to determine the priority of the control. This function must return a value of type <code>sap.m.OverflowToolbarPriority</code>. The string "Medium" is also accepted and interpreted as priority between <code>Low</code> and <code>High<code>.</p><p><b>Note:</b> Normally priority in <code>sap.m.OverflowToolbar</code> is managed with the <code>priority</code> property of <code>sap.m.OverflowToolbarLayoutData</code>. However, some controls may have other means of defining priority, such as dedicated properties or other types of layout data for that purpose. In summary, implementing this function allows a control to override the default priority logic (<code>sap.m.OverflowToolbarLayoutData</code>) by providing its own.</li> </ul></p><p><b>Important:</b> In addition, the control can implement a CSS class, scoped with the <code>.sapMOverflowToolbarMenu-CTX</code> context selector, that will be applied whenever the control is inside the overflow menu. For example, to make your control take up the whole width of the overflow menu, you can add a context class to your control's base CSS file like this:</p><p><pre>
+         * <p><p>Interface for controls which can have special behavior inside <code>sap.m.OverflowToolbar</code>. Controls that implement this interface must provide a <code>getOverflowToolbarConfig</code> method that accepts no arguments and returns an object with the following fields: <ul> <li><code>canOverflow</code> - A boolean that tells whether the control can move to the overflow menu or not.</p><p><b>Note:</b> Even if <code>canOverflow</code> is set to <code>false</code>, the <code>propsUnrelatedToSize</code> field is taken into account, allowing to optimize the behavior of controls that do not need to overflow, but are used in an <code>sap.m.OverflowToolbar</code> regardless.</li></p><p><li><code>autoCloseEvents</code> - An array of strings, listing all of the control's events that should trigger the closing of the overflow menu, when fired.</li></p><p><li><code>invalidationEvents</code> - An array of strings, listing all of the control's events that should trigger the invalidation of the <code>sap.m.OverflowToolbar</code>, when fired.</li></p><p><li><code>propsUnrelatedToSize</code> - An array of strings, listing all of the control's properties that, when changed, should not cause the overflow toolbar to invalidate.</p><p><b>Note:</b> By default <code>sap.m.OverflowToolbar</code> invalidates whenever any property of a child control changes. This is to ensure that whenever the size of a child control changes, the overflow toolbar's layout is recalculated. Some properties however do not affect control size, making it unnecessary to invalidate the overflow toolbar when they change. You can list them here for optimization purposes.</li></p><p><li><code>onBeforeEnterOverflow(oControl)</code> - A callback function that will be invoked before moving the control into the overflow menu. The control instance will be passed as an argument.</p><p><b>Note:</b> The context of the function is not the control instance (use the <code>oControl</code> parameter for this purpose), but rather an internal helper object, associated with the current <code>sap.m.OverflowToolbar</code> instance. This object only needs to be manipulated in special cases (e.g. when you want to store state on it, rather than on the control instance).</li></p><p><li><code>onAfterExitOverflow(oControl)</code> - A callback function that will be invoked after taking the control out of the overflow menu (before moving it back to the toolbar itself). The control instance will be passed as an argument.</p><p><b>Note:</b> See: <code>onBeforeEnterOverflow</code> for details about the function's context.</li></p><p><li><code>getCustomImportance()</code> - A function that, if provided, will be called to determine the priority of the control. This function must return a value of type <code>sap.m.OverflowToolbarPriority</code>. The string "Medium" is also accepted and interpreted as priority between <code>Low</code> and <code>High</code>.</p><p><b>Note:</b> Normally priority in <code>sap.m.OverflowToolbar</code> is managed with the <code>priority</code> property of <code>sap.m.OverflowToolbarLayoutData</code>. However, some controls may have other means of defining priority, such as dedicated properties or other types of layout data for that purpose. In summary, implementing this function allows a control to override the default priority logic (<code>sap.m.OverflowToolbarLayoutData</code>) by providing its own.</li> </ul></p><p><b>Important:</b> In addition, the control can implement a CSS class, scoped with the <code>.sapMOverflowToolbarMenu-CTX</code> context selector, that will be applied whenever the control is inside the overflow menu. For example, to make your control take up the whole width of the overflow menu, you can add a context class to your control's base CSS file like this:</p><p><pre>
               .sapMOverflowToolbarMenu-CTX .sapMyControlClass {
                     width: 100%;
               }
@@ -10417,6 +10475,12 @@ declare namespace sap {
              * @returns sap.m.Menu <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             insertItem(oItem: sap.m.MenuItem, iIndex: number): sap.m.Menu;
+            /**
+             * <p>Opens the menu as a context menu.</p>
+             * @param {any | any} oEvent <p>The event object or an object containing offsetX, offsetY values and left, top values of the element's position</p>
+             * @param {any} oOpenerRef <p>The reference of the opener</p>
+             */
+            openAsContextMenu(oEvent: any | any, oOpenerRef: any): void;
             /**
              * <p>Opens the <code>Menu</code> next to the given control.</p>
              * @param {any} oControl <p>The control that defines the position for the menu</p>
@@ -12106,6 +12170,12 @@ declare namespace sap {
              * @returns sap.m.MultiComboBox <p><code>this</code> to allow method chaining.</p>
              */
             setSelectedItems(aItems: string[] | sap.ui.core.Item[] | null): sap.m.MultiComboBox;
+            /**
+             * <p>Creates picker if doesn't exist yet and sync with Control items</p>
+             * @param {boolean} bForceListSync <p>Force MultiComboBox to SuggestionPopover sync</p>
+             * @returns Dialog|Popover 
+             */
+            protected syncPickerContent(bForceListSync: boolean): Dialog | Popover;
         }
         /**
          * <p>This control allows you to add items to a sap.m.Select instance. In addition, based on the property set, a set of pre-filled entries is added.</p>
@@ -12640,7 +12710,7 @@ declare namespace sap {
              * @param {number | string | sap.ui.core.Control} vPage <p>the position or ID of the <code>Control</control> that should be removed or that <code>Control</control> itself; if <code>vPage</code> is invalid, a negative value or a value greater or equal than the current size of the aggregation, nothing is removed.</p>
              * @returns sap.ui.core.Control <p>the removed page or null</p>
              */
-            removePage(vPage: number | string | sap.ui.core.Control): sap.ui.core.Control;
+            protected removePage(vPage: number | string | sap.ui.core.Control): sap.ui.core.Control;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAutoFocus" href="#/api/sap.m.NavContainer/methods/getAutoFocus">autoFocus</a>.</p><p>Determines whether the initial focus is set automatically on first rendering and after navigating to a new page. This is useful when on touch devices the keyboard pops out due to the focus being automatically set on an input field. If necessary, the <code>afterShow</code> event can be used to focus another element, only if <code>autoFocus</code> is set to <code>false</code>.</p><p><b>Note:</b> The following scenarios are possible, depending on where the focus was before navigation to a new page: <ul><li>If <code>autoFocus</code> is set to <code>true</code> and the focus was inside the current page, the focus will be moved automatically on the new page.</li> <li>If <code>autoFocus</code> is set to <code>false</code> and the focus was inside the current page, the focus will disappear. <li>If the focus was outside the current page, after the navigation it will remain unchanged regardless of what is set to the <code>autoFocus</code> property.</li></ul></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
              * @param {boolean} bAutoFocus <p>New value for property <code>autoFocus</code></p>
@@ -14810,10 +14880,15 @@ declare namespace sap {
              */
             getIconDensityAware(): boolean;
             /**
-             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getState" href="#/api/sap.m.ObjectStatus/methods/getState">state</a>.</p><p>Defines the text value state.</p><p>Default value is <code>None</code>.</p>
-             * @returns sap.ui.core.ValueState <p>Value of property <code>state</code></p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getInverted" href="#/api/sap.m.ObjectStatus/methods/getInverted">inverted</a>.</p><p>Determines whether the background color reflects the set <code>state</code> instead of the control's text.</p><p>Default value is <code>false</code>.</p>
+             * @returns boolean <p>Value of property <code>inverted</code></p>
              */
-            getState(): sap.ui.core.ValueState;
+            getInverted(): boolean;
+            /**
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getState" href="#/api/sap.m.ObjectStatus/methods/getState">state</a>.</p><p>Defines the text value state.</p><p>Default value is <code>sap.ui.core.ValueState.None</code>.</p>
+             * @returns string <p>Value of property <code>state</code></p>
+             */
+            getState(): string;
             /**
              * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getText" href="#/api/sap.m.ObjectStatus/methods/getText">text</a>.</p><p>Defines the ObjectStatus text.</p>
              * @returns string <p>Value of property <code>text</code></p>
@@ -14859,11 +14934,17 @@ declare namespace sap {
              */
             setIconDensityAware(bIconDensityAware: boolean): sap.m.ObjectStatus;
             /**
-             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getState" href="#/api/sap.m.ObjectStatus/methods/getState">state</a>.</p><p>Defines the text value state.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>None</code>.</p>
-             * @param {sap.ui.core.ValueState} sState <p>New value for property <code>state</code></p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getInverted" href="#/api/sap.m.ObjectStatus/methods/getInverted">inverted</a>.</p><p>Determines whether the background color reflects the set <code>state</code> instead of the control's text.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+             * @param {boolean} bInverted <p>New value for property <code>inverted</code></p>
              * @returns sap.m.ObjectStatus <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setState(sState: sap.ui.core.ValueState): sap.m.ObjectStatus;
+            setInverted(bInverted: boolean): sap.m.ObjectStatus;
+            /**
+             * <p>Sets value for the <code>state</code> property. The default value is <code>ValueState.None</code>.</p>
+             * @param {string} sValue <p>New value for property state. It should be valid value of enumeration <code>sap.ui.core.ValueState</code> or <code>sap.ui.core.IndicationColor</code></p>
+             * @returns sap.m.ObjectStatus <p>this to allow method chaining</p>
+             */
+            setState(sValue: string): sap.m.ObjectStatus;
             /**
              * <p>Sets the text. The default value is empty/undefined.</p>
              * @param {string} sText <p>New value for property text</p>
@@ -15217,7 +15298,7 @@ declare namespace sap {
             constructor(sId?: string, mSettings?: any);
             /**
              * <p>add a single condition.</p>
-             * @param {any} oCondition <p>the new condition of type <code>{ "key": "007", "operation": sap.m.P13nConditionOperation.Ascending, "keyField": "keyFieldKey", "value1": "", "value2": ""};</code></p>
+             * @param {any} oCondition <p>the new condition of type <code>{ "key": "007", "operation": any.Ascending, "keyField": "keyFieldKey", "value1": "", "value2": ""};</code></p>
              */
             addCondition(oCondition: any): void;
             /**
@@ -15330,7 +15411,7 @@ declare namespace sap {
             getValidationExecutor(): any;
             /**
              * <p>insert a single condition.</p>
-             * @param {any} oCondition <p>the new condition of type <code>{ "key": "007", "operation": sap.m.P13nConditionOperation.Ascending, "keyField": "keyFieldKey", "value1": "", "value2": ""};</code></p>
+             * @param {any} oCondition <p>the new condition of type <code>{ "key": "007", "operation": any.Ascending, "keyField": "keyFieldKey", "value1": "", "value2": ""};</code></p>
              * @param {number} index <p>of the new condition</p>
              */
             insertCondition(oCondition: any, index: number): void;
@@ -21171,9 +21252,9 @@ declare namespace sap {
             clone(): sap.m.ResponsivePopover;
             /**
              * <p>Closes the ResponsivePopover.</p>
-             * @returns sap.ui.core.Control 
+             * @returns sap.m.ResponsivePopover <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            close(): sap.ui.core.Control;
+            close(): sap.m.ResponsivePopover;
             /**
              * <p>Destroys the beginButton in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getBeginButton" href="#/api/sap.m.ResponsivePopover/methods/getBeginButton">beginButton</a>.</p>
              * @returns sap.m.ResponsivePopover <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -21376,9 +21457,9 @@ declare namespace sap {
             insertContent(oContent: sap.ui.core.Control, iIndex: number): sap.m.ResponsivePopover;
             /**
              * <p>Checks whether the ResponsivePopover is currently open.</p>
-             * @returns sap.ui.core.Control 
+             * @returns boolean <p>whether the ResponsivePopover is currently opened</p>
              */
-            isOpen(): sap.ui.core.Control;
+            isOpen(): boolean;
             /**
              * <p>Opens the ResponsivePopover. The ResponsivePopover is positioned relatively to the control parameter on tablet or desktop and is full screen on phone. Therefore the control parameter is only used on tablet or desktop and is ignored on phone.</p>
              * @param {any} oParent <p>When this control is displayed on tablet or desktop, the ResponsivePopover is positioned relative to this control.</p>
@@ -22361,7 +22442,12 @@ declare namespace sap {
              */
             getAutoAdjustWidth(): boolean;
             /**
-             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEnabled" href="#/api/sap.m.Select/methods/getEnabled">enabled</a>.</p><p>Indicates whether the user can change the selection.</p><p>Default value is <code>true</code>.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEditable" href="#/api/sap.m.Select/methods/getEditable">editable</a>.</p><p>Determines whether the user can modify the selected item. When the property is set to <code>false</code>, the control appears as disabled but CAN still be focused.</p><p><b>Note:</b> When both <code>enabled</code> and <code>editable</code> properties are set to <code>false<code>, <code>enabled</code> has priority over <code>editable</code>.</p><p>Default value is <code>true</code>.</p>
+             * @returns boolean <p>Value of property <code>editable</code></p>
+             */
+            getEditable(): boolean;
+            /**
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEnabled" href="#/api/sap.m.Select/methods/getEnabled">enabled</a>.</p><p>Determines whether the user can modify the selected item. When the property is set to <code>false</code>, the control appears as disabled and CANNOT be focused.</p><p><b>Note:</b> When both <code>enabled</code> and <code>editable</code> properties are set to <code>false<code>, <code>enabled</code> has priority over <code>editable</code>.</p><p>Default value is <code>true</code>.</p>
              * @returns boolean <p>Value of property <code>enabled</code></p>
              */
             getEnabled(): boolean;
@@ -22530,7 +22616,13 @@ declare namespace sap {
              */
             setAutoAdjustWidth(bAutoAdjustWidth: boolean): sap.m.Select;
             /**
-             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEnabled" href="#/api/sap.m.Select/methods/getEnabled">enabled</a>.</p><p>Indicates whether the user can change the selection.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEditable" href="#/api/sap.m.Select/methods/getEditable">editable</a>.</p><p>Determines whether the user can modify the selected item. When the property is set to <code>false</code>, the control appears as disabled but CAN still be focused.</p><p><b>Note:</b> When both <code>enabled</code> and <code>editable</code> properties are set to <code>false<code>, <code>enabled</code> has priority over <code>editable</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+             * @param {boolean} bEditable <p>New value for property <code>editable</code></p>
+             * @returns sap.m.Select <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            setEditable(bEditable: boolean): sap.m.Select;
+            /**
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEnabled" href="#/api/sap.m.Select/methods/getEnabled">enabled</a>.</p><p>Determines whether the user can modify the selected item. When the property is set to <code>false</code>, the control appears as disabled and CANNOT be focused.</p><p><b>Note:</b> When both <code>enabled</code> and <code>editable</code> properties are set to <code>false<code>, <code>enabled</code> has priority over <code>editable</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
              * @param {boolean} bEnabled <p>New value for property <code>enabled</code></p>
              * @returns sap.m.Select <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
@@ -23982,7 +24074,7 @@ declare namespace sap {
             setTitleLevel(sTitleLevel: sap.ui.core.TitleLevel): sap.m.Shell;
         }
         /**
-         * <h3>Overview</h3><p>Displays a calendar of a single entity (such as person, resource) for the selected time interval.</p><p><b>Note:</b> The <code>SinglePlanningCalendar</code> uses parts of the <code>sap.ui.unified</code> library. This library will be loaded after the <code>SinglePlanningCalendar</code>, if it wasn't previously loaded. This could lead to a waiting time when a <code>SinglePlanningCalendar</code> is used for the first time. To prevent this, apps using the <code>SinglePlanningCalendar</code> must also load the <code>sap.ui.unified</code> library.</p><p><b>Disclaimer</b>: This control is in a beta state - incompatible API changes may be done before its official public release. Use at your own discretion.</p><h3>Usage</h3><p>The <code>SinglePlanningCalendar</code> has the following structure:</p><p><ul> <li>A <code>PlanningCalendarHeader</code> at the top. It contains the <code>title</code> set from the corresponding property, the <code>SegmentedButton</code>, which facilitates navigation through the views, controls, passed to the <code>actions</code> aggregation and the navigation, assisting the user in choosing the desired time period. The views can be configured and passed through the <code>views</code> aggregation.</li> <li>A <code>SinglePlanningCalendarGrid</code>, which displays the appointments, set to the visual time range. An all-day appointment is an appointment which starts at 00:00 and ends in 00:00 on any day in the future. </ul></p>
+         * <h3>Overview</h3><p>Displays a calendar of a single entity (such as person, resource) for the selected time interval.</p><p><b>Note:</b> The <code>SinglePlanningCalendar</code> uses parts of the <code>sap.ui.unified</code> library. This library will be loaded after the <code>SinglePlanningCalendar</code>, if it wasn't previously loaded. This could lead to a waiting time when a <code>SinglePlanningCalendar</code> is used for the first time. To prevent this, apps using the <code>SinglePlanningCalendar</code> must also load the <code>sap.ui.unified</code> library.</p><p><b>Disclaimer</b>: This control is in a beta state - incompatible API changes may be done before its official public release. Use at your own discretion.</p><h3>Usage</h3><p>The <code>SinglePlanningCalendar</code> has the following structure:</p><p><ul> <li>A <code>PlanningCalendarHeader</code> at the top. It contains the <code>title</code> set from the corresponding property, the <code>SegmentedButton</code>, which facilitates navigation through the views, controls, passed to the <code>actions</code> aggregation and the navigation, assisting the user in choosing the desired time period. The views, either custom or not, can be configured and passed through the <code>views</code> aggregation.</p><p>To create custom views, extend the <code>SinglePlanningCalendarView</code> basic view class. It defines three methods that should be overwritten: <code>getEntityCount</code>, <code>getScrollEntityCount</code> and <code>calculateStartDate</code> <ul> <li><code>getEntityCount</code> - returns number of columns to be displayed</li> <li><code>getScrollEntityCount</code> - used when next and previous arrows in the calendar are used. For example, in work week view, the <code>getEntityCount</code> returns 5 (5 columns from Monday to Friday), but when next arrow is selected, the control navigates 7 days ahead and <code>getScrollEntityCount</code> returns 7.</li> <li><code>calculateStartDate</code> - calculates the first day displayed in the calendar based on the <code>startDate</code> property of the <code>SinglePlanningCalendar</code>. For example, it returns the first date of a month or a week to display the first 10 days of the month.</li> </ul></p><p><li>A <code>SinglePlanningCalendarGrid</code>, which displays the appointments, set to the visual time range. An all-day appointment is an appointment which starts at 00:00 and ends in 00:00 on any day in the future. </ul></p>
          */
         export class SinglePlanningCalendar extends sap.ui.core.Control {
             /**
@@ -24003,6 +24095,12 @@ declare namespace sap {
              * @returns sap.m.SinglePlanningCalendar <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             addAppointment(oAppointment: sap.ui.unified.CalendarAppointment): sap.m.SinglePlanningCalendar;
+            /**
+             * <p>Adds some specialDate to the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSpecialDates" href="#/api/sap.m.SinglePlanningCalendar/methods/getSpecialDates">specialDates</a>.</p>
+             * @param {sap.ui.unified.DateTypeRange} oSpecialDate <p>The specialDate to add; if empty, nothing is inserted</p>
+             * @returns sap.m.SinglePlanningCalendar <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            addSpecialDate(oSpecialDate: sap.ui.unified.DateTypeRange): sap.m.SinglePlanningCalendar;
             /**
              * <p>Adds some view to the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getViews" href="#/api/sap.m.SinglePlanningCalendar/methods/getViews">views</a>.</p>
              * @param {sap.m.SinglePlanningCalendarView} oView <p>The view to add; if empty, nothing is inserted</p>
@@ -24075,6 +24173,11 @@ declare namespace sap {
              * @returns sap.m.SinglePlanningCalendar <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             destroyAppointments(): sap.m.SinglePlanningCalendar;
+            /**
+             * <p>Destroys all the specialDates in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSpecialDates" href="#/api/sap.m.SinglePlanningCalendar/methods/getSpecialDates">specialDates</a>.</p>
+             * @returns sap.m.SinglePlanningCalendar <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            destroySpecialDates(): sap.m.SinglePlanningCalendar;
             /**
              * <p>Destroys all the views in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getViews" href="#/api/sap.m.SinglePlanningCalendar/methods/getViews">views</a>.</p>
              * @returns sap.m.SinglePlanningCalendar <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -24212,6 +24315,11 @@ declare namespace sap {
              */
             getSelectedView(): sap.ui.core.ID;
             /**
+             * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSpecialDates" href="#/api/sap.m.SinglePlanningCalendar/methods/getSpecialDates">specialDates</a>.</p><p>Special days in the header visualized as a date range with type.</p><p><b>Note:</b> If one day is assigned to more than one type, only the first type is used.</p>
+             * @returns sap.ui.unified.DateTypeRange[] 
+             */
+            getSpecialDates(): sap.ui.unified.DateTypeRange[];
+            /**
              * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getStartDate" href="#/api/sap.m.SinglePlanningCalendar/methods/getStartDate">startDate</a>.</p><p>Determines the start date of the grid, as a JavaScript date object. It is considered as a local date. The time part will be ignored. The current date is used as default.</p>
              * @returns any <p>Value of property <code>startDate</code></p>
              */
@@ -24244,6 +24352,12 @@ declare namespace sap {
              */
             indexOfAppointment(oAppointment: sap.ui.unified.CalendarAppointment): number;
             /**
+             * <p>Checks for the provided <code>sap.ui.unified.DateTypeRange</code> in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSpecialDates" href="#/api/sap.m.SinglePlanningCalendar/methods/getSpecialDates">specialDates</a>. and returns its index if found or -1 otherwise.</p>
+             * @param {sap.ui.unified.DateTypeRange} oSpecialDate <p>The specialDate whose index is looked for</p>
+             * @returns number <p>The index of the provided control in the aggregation if found, or -1 otherwise</p>
+             */
+            indexOfSpecialDate(oSpecialDate: sap.ui.unified.DateTypeRange): number;
+            /**
              * <p>Checks for the provided <code>sap.m.SinglePlanningCalendarView</code> in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getViews" href="#/api/sap.m.SinglePlanningCalendar/methods/getViews">views</a>. and returns its index if found or -1 otherwise.</p>
              * @param {sap.m.SinglePlanningCalendarView} oView <p>The view whose index is looked for</p>
              * @returns number <p>The index of the provided control in the aggregation if found, or -1 otherwise</p>
@@ -24263,6 +24377,13 @@ declare namespace sap {
              * @returns sap.m.SinglePlanningCalendar <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             insertAppointment(oAppointment: sap.ui.unified.CalendarAppointment, iIndex: number): sap.m.SinglePlanningCalendar;
+            /**
+             * <p>Inserts a specialDate into the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSpecialDates" href="#/api/sap.m.SinglePlanningCalendar/methods/getSpecialDates">specialDates</a>.</p>
+             * @param {sap.ui.unified.DateTypeRange} oSpecialDate <p>The specialDate to insert; if empty, nothing is inserted</p>
+             * @param {number} iIndex <p>The <code>0</code>-based index the specialDate should be inserted at; for a negative value of <code>iIndex</code>, the specialDate is inserted at position 0; for a value greater than the current size of the aggregation, the specialDate is inserted at the last position</p>
+             * @returns sap.m.SinglePlanningCalendar <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            insertSpecialDate(oSpecialDate: sap.ui.unified.DateTypeRange, iIndex: number): sap.m.SinglePlanningCalendar;
             /**
              * <p>Inserts a view into the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getViews" href="#/api/sap.m.SinglePlanningCalendar/methods/getViews">views</a>.</p>
              * @param {sap.m.SinglePlanningCalendarView} oView <p>The view to insert; if empty, nothing is inserted</p>
@@ -24287,6 +24408,11 @@ declare namespace sap {
              */
             removeAllAppointments(): sap.ui.unified.CalendarAppointment[];
             /**
+             * <p>Removes all the controls from the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSpecialDates" href="#/api/sap.m.SinglePlanningCalendar/methods/getSpecialDates">specialDates</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
+             * @returns sap.ui.unified.DateTypeRange[] <p>An array of the removed elements (might be empty)</p>
+             */
+            removeAllSpecialDates(): sap.ui.unified.DateTypeRange[];
+            /**
              * <p>Removes all the controls from the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getViews" href="#/api/sap.m.SinglePlanningCalendar/methods/getViews">views</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
              * @returns sap.m.SinglePlanningCalendarView[] <p>An array of the removed elements (might be empty)</p>
              */
@@ -24297,6 +24423,12 @@ declare namespace sap {
              * @returns sap.ui.unified.CalendarAppointment <p>The removed appointment or <code>null</code></p>
              */
             removeAppointment(vAppointment: number | string | sap.ui.unified.CalendarAppointment): sap.ui.unified.CalendarAppointment;
+            /**
+             * <p>Removes a specialDate from the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSpecialDates" href="#/api/sap.m.SinglePlanningCalendar/methods/getSpecialDates">specialDates</a>.</p>
+             * @param {number | string | sap.ui.unified.DateTypeRange} vSpecialDate <p>The specialDate to remove or its index or id</p>
+             * @returns sap.ui.unified.DateTypeRange <p>The removed specialDate or <code>null</code></p>
+             */
+            removeSpecialDate(vSpecialDate: number | string | sap.ui.unified.DateTypeRange): sap.ui.unified.DateTypeRange;
             /**
              * <p>Removes a view from the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getViews" href="#/api/sap.m.SinglePlanningCalendar/methods/getViews">views</a>.</p>
              * @param {number | string | sap.m.SinglePlanningCalendarView} vView <p>The view to remove or its index or id</p>
@@ -25953,7 +26085,7 @@ declare namespace sap {
              */
             getStep(): number;
             /**
-             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getStepMode" href="#/api/sap.m.StepInput/methods/getStepMode">stepMode</a>.</p><p>Defines the calculation mode for the provided <code>step<code> and <code>largerStep</code>.</p><p>If the user increases/decreases the value by <code>largerStep</code>, this calculation will consider it as well. For example, if the current <code>value</code> is 3, <code>step</code> is 5, <code>largerStep</code> is 5 and the user chooses PageUp, the calculation logic will consider the value of 3x5=15 to decide what will be the next <code>value</code>.</p><p>Default value is <code>AdditionAndSubtraction</code>.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getStepMode" href="#/api/sap.m.StepInput/methods/getStepMode">stepMode</a>.</p><p>Defines the calculation mode for the provided <code>step</code> and <code>largerStep</code>.</p><p>If the user increases/decreases the value by <code>largerStep</code>, this calculation will consider it as well. For example, if the current <code>value</code> is 3, <code>step</code> is 5, <code>largerStep</code> is 5 and the user chooses PageUp, the calculation logic will consider the value of 3x5=15 to decide what will be the next <code>value</code>.</p><p>Default value is <code>AdditionAndSubtraction</code>.</p>
              * @returns sap.m.StepInputStepModeType <p>Value of property <code>stepMode</code></p>
              */
             getStepMode(): sap.m.StepInputStepModeType;
@@ -26082,7 +26214,7 @@ declare namespace sap {
              */
             setStep(fStep: number): sap.m.StepInput;
             /**
-             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getStepMode" href="#/api/sap.m.StepInput/methods/getStepMode">stepMode</a>.</p><p>Defines the calculation mode for the provided <code>step<code> and <code>largerStep</code>.</p><p>If the user increases/decreases the value by <code>largerStep</code>, this calculation will consider it as well. For example, if the current <code>value</code> is 3, <code>step</code> is 5, <code>largerStep</code> is 5 and the user chooses PageUp, the calculation logic will consider the value of 3x5=15 to decide what will be the next <code>value</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>AdditionAndSubtraction</code>.</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getStepMode" href="#/api/sap.m.StepInput/methods/getStepMode">stepMode</a>.</p><p>Defines the calculation mode for the provided <code>step</code> and <code>largerStep</code>.</p><p>If the user increases/decreases the value by <code>largerStep</code>, this calculation will consider it as well. For example, if the current <code>value</code> is 3, <code>step</code> is 5, <code>largerStep</code> is 5 and the user chooses PageUp, the calculation logic will consider the value of 3x5=15 to decide what will be the next <code>value</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>AdditionAndSubtraction</code>.</p>
              * @param {sap.m.StepInputStepModeType} sStepMode <p>New value for property <code>stepMode</code></p>
              * @returns sap.m.StepInput <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
@@ -29235,9 +29367,9 @@ declare namespace sap {
             setEditable(bEditable: boolean): sap.m.Tokenizer;
             /**
              * <p>Function sets the maximum width of the Tokenizer.</p>
-             * @param {number} nWidth <p>The new maximal width</p>
+             * @param {string} sWidth <p>The new maximal width</p>
              */
-            setMaxWidth(nWidth: number): void;
+            setMaxWidth(sWidth: string): void;
             /**
              * <p>Function sets the tokenizer's width in pixels</p>
              * @param {number} nWidth <p>The new width in pixels</p>
@@ -32336,10 +32468,11 @@ declare namespace sap {
                 setCloseDialogs(bCloseDialogs: boolean): sap.m.routing.RouteMatchedHandler;
             }
             /**
+             * <p>SAPUI5 mobile <code>Router</code>. The difference to the <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.Router">sap.ui.core.routing.Router</a> are the <code>viewLevel</code>, <code>transition</code>, and <code>transitionParameters</code> properties that you can specify in every Route or Target created by this router.</p>
              */
             export class Router extends sap.ui.core.routing.Router {
                 /**
-                 * <p>Instantiates a SAPUI5 mobile Router see <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.Router">sap.ui.core.routing.Router</a> for the constructor arguments The difference to the <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.Router">sap.ui.core.routing.Router</a> are the properties viewLevel, transition and transitionParameters you can specify in every Route or Target created by this router.</p>
+                 * <p>Constructor for a new <code>sap.m.routing.Router</code>. See <code><a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.Router">sap.ui.core.routing.Router</a></code> for the constructor arguments.</p>
                  * @param {any | object[]} oRoutes <p>may contain many Route configurations as <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.Route/constructor">sap.ui.core.routing.Route#constructor</a>.<br/> Each of the routes contained in the array/object will be added to the router.<br/></p><p>One way of defining routes is an array: <pre>
                 [
                     //Will create a route called 'firstRouter' you can later use this name in navTo to navigate to this route
@@ -32481,30 +32614,32 @@ declare namespace sap {
                 getTargetHandler(): sap.m.routing.TargetHandler;
             }
             /**
+             * <p>Used for closing dialogs and showing transitions in <code>NavContainers</code> when targets are displayed.</p><p><b>Note:</b> You should not create an own instance of this class. It is created when using <code><a target="_self" class="jsdoclink" href="#/api/sap.m.routing.Router">sap.m.routing.Router</a></code> or <code><a target="_self" class="jsdoclink" href="#/api/sap.m.routing.Targets">sap.m.routing.Targets</a></code>. You may use the <code><a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="setCloseDialogs" href="#/api/sap.m.routing.TargetHandler/methods/setCloseDialogs">#setCloseDialogs</a></code> function to specify if dialogs should be closed on displaying other views.</p>
              */
             export class TargetHandler extends sap.ui.base.Object {
                 /**
-                 * <p>Instantiates a TargetHandler, a class used for closing dialogs and showing transitions in NavContainers when targets are displayed.<br/> <b>You should not create an own instance of this class.</b> It will be created when using <a target="_self" class="jsdoclink" href="#/api/sap.m.routing.Router">sap.m.routing.Router</a> or <a target="_self" class="jsdoclink" href="#/api/sap.m.routing.Targets">sap.m.routing.Targets</a>. You may use the <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="setCloseDialogs" href="#/api/sap.m.routing.TargetHandler/methods/setCloseDialogs">#setCloseDialogs</a> function to specify if dialogs should be closed on displaying other views.</p>
-                 * @param {boolean} closeDialogs <p>the default is true - will close all open dialogs before navigating, if set to true. If set to false it will just navigate without closing dialogs.</p>
+                 * <p>Constructor for a new <code>TargetHandler</code>.</p>
+                 * @param {boolean} closeDialogs <p>Closes all open dialogs before navigating, if set to <code>true</code> (default). If set to <code>false</code>, it will just navigate without closing dialogs.</p>
                  */
                 constructor(closeDialogs: boolean);
                 /**
-                 * <p>Gets if a navigation should close dialogs</p>
-                 * @returns boolean <p>a flag indication if dialogs will be closed</p>
+                 * <p>Gets if a navigation should close dialogs.</p>
+                 * @returns boolean <p>A flag indication if dialogs will be closed.</p>
                  */
                 getCloseDialogs(): boolean;
                 /**
-                 * <p>Sets if a navigation should close dialogs</p>
-                 * @param {boolean} bCloseDialogs <p>close dialogs if true</p>
-                 * @returns sap.m.routing.TargetHandler <p>for chaining</p>
+                 * <p>Sets if a navigation should close dialogs.</p>
+                 * @param {boolean} bCloseDialogs <p>Close dialogs if <code>true</code></p>
+                 * @returns sap.m.routing.TargetHandler <p>For chaining</p>
                  */
                 setCloseDialogs(bCloseDialogs: boolean): sap.m.routing.TargetHandler;
             }
             /**
+             * <p>Provides a convenient way for placing views into the correct containers of your app.</p><p>The mobile extension of <code>Targets</code> also handles the triggering of page navigation when the target control is an <code><a target="_self" class="jsdoclink" href="#/api/sap.m.SplitContainer">sap.m.SplitContainer</a></code>, an <code><a target="_self" class="jsdoclink" href="#/api/sap.m.NavContainer">sap.m.NavContainer</a></code> or a control which extends one of these. Other controls are also allowed, but the extra parameters <code>viewLevel</code>, <code>transition</code> and <code>transitionParameters</code> are ignored and it behaves as <code><a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.Targets">sap.ui.core.routing.Targets</a></code>.</p><p>When a target is displayed, dialogs will be closed. To change this use <code><a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTargetHandler" href="#/api/sap.m.routing.Targets/methods/getTargetHandler">#getTargetHandler</a></code> and <code><a target="_self" class="jsdoclink" href="#/api/sap.m.routing.TargetHandler/methods/setCloseDialogs">sap.m.routing.TargetHandler#setCloseDialogs</a></code>.</p>
              */
             export class Targets extends sap.ui.core.routing.Targets {
                 /**
-                 * <p>Provides a convenient way for placing views into the correct containers of your application. The mobile extension of Targets also handles the triggering of page navigation when the target control is a <a target="_self" class="jsdoclink" href="#/api/sap.m.SplitContainer">sap.m.SplitContainer</a>, a <a target="_self" class="jsdoclink" href="#/api/sap.m.NavContainer">sap.m.NavContainer</a> or a control which extends one of these. Other controls are also allowed, but the extra parameters viewLevel, transition and transitionParameters are ignored and it will behave like <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.Targets">sap.ui.core.routing.Targets</a>. When a target is displayed, dialogs will be closed. To change this use <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTargetHandler" href="#/api/sap.m.routing.Targets/methods/getTargetHandler">#getTargetHandler</a> and <a target="_self" class="jsdoclink" href="#/api/sap.m.routing.TargetHandler/methods/setCloseDialogs">sap.m.routing.TargetHandler#setCloseDialogs</a>.</p>
+                 * <p>Constructor for a new <code>Targets</code> class.</p>
                  * @param {any} oOptions undefined
                  */
                 constructor(oOptions: any);
@@ -34793,7 +34928,7 @@ declare namespace sap {
                  * <p>Returns an instance of the default <code>sap.ui.unified.FileUploader</code> used for adding files using the operating system's open file dialog, so that it can be customized, for example made invisible or assigned a different icon.</p>
                  * @returns FileUploader <p>Instance of the default <code>sap.ui.unified.FileUploader</code>.</p>
                  */
-                getDefaultFileUploader(): any;
+                getDefaultFileUploader(): sap.ui.unified.FileUploader;
                 /**
                  * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getFileTypes" href="#/api/sap.m.upload.UploadSet/methods/getFileTypes">fileTypes</a>.</p><p>Allowed file types for files to be uploaded. <br>If this property is not set, any file can be uploaded.</p>
                  * @returns string[] <p>Value of property <code>fileTypes</code></p>

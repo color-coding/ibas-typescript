@@ -1574,14 +1574,6 @@ declare namespace sap {
                  */
                 getAriaLabelledBy(): sap.ui.core.ID[];
                 /**
-                 * <p>Returns the control inside the cell with the given row index (in the <code>rows</code> aggregation) and column index (in the <code>columns</code> aggregation or in the list of visible columns only, depending on parameter <code>bVisibleColumnIndex</code>).</p>
-                 * @param {number} iRowIndex <p>Index of row in the table's <code>rows</code> aggregation</p>
-                 * @param {number} iColumnIndex <p>Index of column in the list of visible columns or in the <code>columns</code> aggregation, as indicated with <code>bVisibleColumnIndex</code></p>
-                 * @param {boolean} bVisibleColumnIndex <p>If set to <code>true</code>, the given column index is interpreted as index in the list of visible columns, otherwise as index in the <code>columns</code> aggregation</p>
-                 * @returns sap.ui.core.Control <p>Control inside the cell with the given row and column index or <code>null</code> if no such control exists</p>
-                 */
-                protected getCellControl(iRowIndex: number, iColumnIndex: number, bVisibleColumnIndex: boolean): sap.ui.core.Control;
-                /**
                  * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getColumnHeaderHeight" href="#/api/sap.ui.table.Table/methods/getColumnHeaderHeight">columnHeaderHeight</a>.</p><p>Header row height in pixel. If a value greater than 0 is set, it overrides the height defined in the <code>rowHeight</code> property for the rows in the table's header. The value defines the minimum height, but it cannot be less than the default height based on the content density configuration. The actual height can increase based on the content.</p><p><b>Note</b>: In a <a target="_self" class="jsdoclink" href="#/api/sap.ui.table.Column/methods/getMultiLabels">MultiLabel</a> scenario, the height is applied to each individual row of the table's header.</p>
                  * @returns number <p>Value of property <code>columnHeaderHeight</code></p>
                  */
@@ -2536,7 +2528,7 @@ declare namespace sap {
                 /**
                  * <p>Implements the selection methods for a table.</p>
                  */
-                export abstract class SelectionPlugin extends sap.ui.base.ManagedObject {
+                export abstract class SelectionPlugin extends sap.ui.core.Element {
                     /**
                      * <p>Constructs an instance of sap.ui.table.plugins.SelectionPlugin</p><p>The following restrictions apply: <ul> <li>Do not create subclasses of the SelectionPlugin. The API is subject to change.</li> </ul></p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
                      */

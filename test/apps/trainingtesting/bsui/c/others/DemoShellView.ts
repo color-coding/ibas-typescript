@@ -134,7 +134,7 @@ namespace trainingtesting {
                     let page: sap.ui.core.Control = this.pageContainer.getPage(view.id);
                     if (!ibas.objects.isNull(page)) {
                         this.pageContainer.back(null);
-                        this.pageContainer.removePage(view.id);
+                        page.destroy();
                     } else {
                         let viewContent: sap.ui.core.Element = sap.ui.getCore().byId(view.id);
                         viewContent.destroy(true);

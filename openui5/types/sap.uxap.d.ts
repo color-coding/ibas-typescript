@@ -1825,7 +1825,7 @@ declare namespace sap {
              */
             destroyMoreBlocks(): sap.uxap.ObjectPageSubSection;
             /**
-             * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getActions" href="#/api/sap.uxap.ObjectPageSubSection/methods/getActions">actions</a>.</p><p>Actions available for this Subsection</p>
+             * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getActions" href="#/api/sap.uxap.ObjectPageSubSection/methods/getActions">actions</a>.</p><p>Actions available for this subsection.</p><p>Although this aggregation accepts type <code>sap.ui.core.Control</code>, it is strongly recommended to use only simple controls, such as buttons, so that the layout of the app is preserved.</p><p><b>Note:</b> Keep in mind that the controls set in the <code>actions</code> aggregation of <code>ObjectPageSubSection</code> do NOT have overflow behavior. If the available space is not enough, the controls will be displayed on more lines.</p>
              * @returns sap.ui.core.Control[] 
              */
             getActions(): sap.ui.core.Control[];
