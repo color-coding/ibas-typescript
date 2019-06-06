@@ -171,10 +171,9 @@ namespace sap {
                                     condition.relationship = ibas.emConditionRelationship.OR;
                                 }
                             }
-                            let editable: boolean = this.getEditable();
-                            let enabled: boolean = this.getEnabled();
-                            this.setEditable(true);
-                            this.setEnabled(true);
+                            let editable: boolean = false, enabled: boolean = false;
+                            !this.getEditable() ? this.setEditable(true) : editable = true;
+                            !this.getEnabled() ? this.setEnabled(true) : enabled = true;
                             repository.batchFetch(this.getRepository(), this.getDataInfo(), criteria,
                                 (values) => {
                                     if (values instanceof Error) {
@@ -212,8 +211,12 @@ namespace sap {
                                         this.setSelectedItem(item);
                                         this.updateDomValue(item.getText());
                                     }
-                                    this.setEditable(editable);
-                                    this.setEnabled(enabled);
+                                    if (this.getEditable() && editable === false) {
+                                        this.setEditable(editable);
+                                    }
+                                    if (this.getEnabled() && enabled === false) {
+                                        this.setEnabled(enabled);
+                                    }
                                 }
                             );
                         }

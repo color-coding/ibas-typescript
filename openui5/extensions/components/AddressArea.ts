@@ -166,13 +166,11 @@ namespace sap {
             /**
              * 地址区
              */
-            sap.ui.core.Control.extend("sap.extension.m.AddressArea", {
+            core.EditableControl.extend("sap.extension.m.AddressArea", {
                 metadata: {
                     properties: {
                         /** 语言 */
                         language: { type: "string", defaultValue: ibas.config.get(ibas.CONFIG_ITEM_LANGUAGE_CODE, "zh_CN") },
-                        /** 是否可编辑 */
-                        editable: { type: "boolean", defaultValue: true },
                         /** 国家 */
                         country: { type: "string" },
                         /** 省 */

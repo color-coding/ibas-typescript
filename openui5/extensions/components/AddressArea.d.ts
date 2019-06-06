@@ -61,7 +61,7 @@ declare namespace sap {
              * 
              * 地址区
              */
-            class AddressArea extends sap.ui.core.Control {
+            class AddressArea extends core.EditableControl {
                 /**
                  * 构造
                  * @param {string} sId 唯一标记，不要赋值
@@ -91,8 +91,6 @@ declare namespace sap {
 
                 /** 获取-语言 */
                 getLanguage(): string;
-                /** 获取-是否可编辑 */
-                getEditable(): string;
                 /** 获取-国家 */
                 getCountry(): string;
                 /** 获取-省 */
@@ -121,8 +119,6 @@ declare namespace sap {
                 getAddress(): string;
                 /** 设置-语言 */
                 setLanguage(value: string): AddressArea;
-                /** 设置-是否可编辑 */
-                setEditable(value: boolean): AddressArea;
                 /** 设置-国家 */
                 setCountry(value: string): AddressArea;
                 /** 设置-省 */

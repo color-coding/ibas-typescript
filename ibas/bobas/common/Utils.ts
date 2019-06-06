@@ -1108,7 +1108,7 @@ namespace ibas {
                             compare = dates.compare(cValue, bValue);
                         } else {
                             // 默认字符串比较
-                            compare = cValue.toString().localeCompare(bValue.toString());
+                            compare = 0 - cValue.toString().localeCompare(bValue.toString());
                         }
                     }
                     if (sort.sortType === emSortType.ASCENDING) {

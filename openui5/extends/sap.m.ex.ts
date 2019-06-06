@@ -48,7 +48,13 @@ namespace openui5 {
         },
         setBindingValue(value: string): void {
             this.setProperty("bindingValue", value);
-            this.bindProperty("selectedKey", this.getBindingInfo("bindingValue"));
+            if (!ibas.objects.isNull(this.getBinding("bindingValue"))) {
+                this.bindProperty("selectedKey", {
+                    path: this.getBinding("bindingValue").sPath,
+                    mode: this.getBinding("bindingValue").sMode,
+                    internalType: this.getBinding("bindingValue").sinternalType,
+                });
+            }
         },
         getBindingValue(): string {
             return this.getProperty("bindingValue");
@@ -216,7 +222,13 @@ namespace openui5 {
         },
         setBindingValue(value: string): void {
             this.setProperty("bindingValue", value);
-            this.bindProperty("selectedKey", this.getBindingInfo("bindingValue"));
+            if (!ibas.objects.isNull(this.getBinding("bindingValue"))) {
+                this.bindProperty("selectedKey", {
+                    path: this.getBinding("bindingValue").sPath,
+                    mode: this.getBinding("bindingValue").sMode,
+                    internalType: this.getBinding("bindingValue").sinternalType,
+                });
+            }
 
         },
         getBindingValue(): string {
@@ -567,7 +579,13 @@ namespace openui5 {
             this.setShowSuggestion(true);
             this.setShowValueHelp(true);
             this.setProperty("bindingValue", value);
-            this.bindProperty("selectedKey", this.getBindingInfo("bindingValue"));
+            if (!ibas.objects.isNull(this.getBinding("bindingValue"))) {
+                this.bindProperty("selectedKey", {
+                    path: this.getBinding("bindingValue").sPath,
+                    mode: this.getBinding("bindingValue").sMode,
+                    internalType: this.getBinding("bindingValue").sinternalType,
+                });
+            }
         },
         getBindingValue(): string {
             return this.getProperty("bindingValue");
@@ -977,7 +995,13 @@ namespace openui5 {
         },
         setBindingValue(value: string): void {
             this.setProperty("bindingValue", value);
-            this.bindProperty("selectedKey", this.getBindingInfo("bindingValue"));
+            if (!ibas.objects.isNull(this.getBinding("bindingValue"))) {
+                this.bindProperty("selectedKey", {
+                    path: this.getBinding("bindingValue").sPath,
+                    mode: this.getBinding("bindingValue").sMode,
+                    internalType: this.getBinding("bindingValue").sinternalType,
+                });
+            }
         },
         getBindingValue(): string {
             return this.getProperty("bindingValue");
@@ -1518,7 +1542,13 @@ namespace openui5 {
         setBindingValue(value: string): void {
             this.setProperty("bindingValue", value);
             if (this.getConsistent()) {
-                this.bindProperty("text", this.getBindingInfo("bindingValue"));
+                if (!ibas.objects.isNull(this.getBinding("bindingValue"))) {
+                    this.bindProperty("text", {
+                        path: this.getBinding("bindingValue").sPath,
+                        mode: this.getBinding("bindingValue").sMode,
+                        internalType: this.getBinding("bindingValue").sinternalType,
+                    });
+                }
             }
         },
         getBindingValue(): string {

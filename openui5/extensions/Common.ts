@@ -161,7 +161,153 @@ namespace sap {
              * 改变页面控件状态
              */
             export function changeStatus(page: sap.m.Page): void {
-
+                let model: any = page && page.getModel() ? (<any>page.getModel()).getData() : null;
+                if (model instanceof ibas.BOMasterData || model instanceof ibas.BOMasterDataLine) {
+                    if (!model.isNew) {
+                        nonEditable(page.getSubHeader(), ["!"]);
+                        for (let item of page.getContent()) {
+                            nonEditable(item, ["Code"]);
+                        }
+                    }
+                } else if (model instanceof ibas.BODocument) {
+                    if (model.getProperty("DocumentStatus") === ibas.emDocumentStatus.CLOSED) {
+                        nonEditable(page.getSubHeader(), ["sap-icon://save", "sap-icon://delete", "sap-icon://create"]);
+                        for (let item of page.getContent()) {
+                            nonEditable(item, []);
+                        }
+                    }
+                } else if (model instanceof ibas.BODocumentLine) {
+                    if (model.getProperty("LineStatus") === ibas.emDocumentStatus.CLOSED) {
+                        nonEditable(page.getSubHeader(), ["sap-icon://save", "sap-icon://delete", "sap-icon://create"]);
+                        for (let item of page.getContent()) {
+                            nonEditable(item, []);
+                        }
+                    }
+                }
+            }
+            function checkBinding(control: sap.ui.core.Control, properties: string[]): boolean {
+                if (control instanceof sap.m.Button || control instanceof sap.m.MenuButton) {
+                    let binding: any = control.getIcon();
+                    for (let item of properties) {
+                        if (ibas.strings.equalsIgnoreCase(item, binding)) {
+                            return true;
+                        }
+                    }
+                } else {
+                    let binding: any = control.getBinding("bindingValue");
+                    if (binding instanceof sap.ui.model.Binding) {
+                        let sPath: string = (<any>binding).getPath();
+                        for (let item of properties) {
+                            if (ibas.strings.equalsIgnoreCase(item, sPath)) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+                return false;
+            }
+            function nonEditable(control: any, properties?: string[]): void {
+                if (!(properties instanceof Array)) {
+                    properties = [];
+                }
+                if (control instanceof sap.m.InputBase) {
+                    if (properties.length > 0) {
+                        if (checkBinding(control, properties)) {
+                            control.setEditable(false);
+                        }
+                    } else {
+                        control.setEditable(false);
+                    }
+                } else if (control instanceof sap.m.Select) {
+                    if (properties.length > 0) {
+                        if (checkBinding(control, properties)) {
+                            try {
+                                control.setEditable(false);
+                            } catch (error) {
+                                control.setEnabled(false);
+                            }
+                        }
+                    } else {
+                        try {
+                            control.setEditable(false);
+                        } catch (error) {
+                            control.setEnabled(false);
+                        }
+                    }
+                } else if (control instanceof sap.m.CheckBox) {
+                    if (properties.length > 0) {
+                        if (checkBinding(control, properties)) {
+                            control.setEditable(false);
+                        }
+                    } else {
+                        control.setEditable(false);
+                    }
+                } else if (control instanceof sap.extension.core.EditableControl) {
+                    if (properties.length > 0) {
+                        if (checkBinding(control, properties)) {
+                            control.setEditable(false);
+                        }
+                    } else {
+                        control.setEditable(false);
+                    }
+                } else if (control instanceof sap.m.Button || control instanceof sap.m.MenuButton) {
+                    if (properties.length > 0) {
+                        if (checkBinding(control, properties)) {
+                            control.setEnabled(false);
+                        }
+                    } else {
+                        control.setEnabled(false);
+                    }
+                } else if (control instanceof sap.ui.table.Table) {
+                    if (properties.length > 0) {
+                        if (checkBinding(control, properties)) {
+                            control.setEditable(false);
+                        }
+                    } else {
+                        control.setEditable(false);
+                    }
+                    if (control.getEditable() === false) {
+                        for (let row of control.getRows()) {
+                            for (let cell of row.getCells()) {
+                                nonEditable(cell, properties);
+                            }
+                        }
+                        properties = Array.from(properties);
+                        properties.push("sap-icon://add");
+                        properties.push("sap-icon://less");
+                        if (control.getExtension instanceof Function) {
+                            for (let item of control.getExtension()) {
+                                nonEditable(item, properties);
+                            }
+                        }
+                        if ((<any>control).getToolbar instanceof Function) {
+                            nonEditable((<any>control).getToolbar(), properties);
+                        }
+                    }
+                } else if (control instanceof sap.m.Page) {
+                    for (let item of control.getContent()) {
+                        nonEditable(item, properties);
+                    }
+                } else if (control instanceof sap.ui.layout.form.SimpleForm) {
+                    for (let item of control.getContent()) {
+                        nonEditable(item, properties);
+                    }
+                } else if (control instanceof sap.ui.layout.VerticalLayout) {
+                    for (let item of control.getContent()) {
+                        nonEditable(item, properties);
+                    }
+                } else if (control instanceof sap.ui.layout.DynamicSideContent) {
+                    for (let item of control.getMainContent()) {
+                        nonEditable(item, properties);
+                    }
+                    for (let item of control.getSideContent()) {
+                        nonEditable(item, properties);
+                    }
+                } else if (control instanceof sap.m.Toolbar) {
+                    for (let item of control.getContent()) {
+                        nonEditable(item, properties);
+                    }
+                }
             }
         }
     }
