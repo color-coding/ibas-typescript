@@ -24,36 +24,9 @@ namespace shell {
                 super.registerView();
                 // 其他事件
                 this.view.loginEvent = this.login;
-                this.view.changeLanguageEvent = this.changeLanguage;
             }
             /** 视图显示后 */
             protected viewShowed(): void {
-                // 获取支持的语言列表
-                let address: string = ibas.urls.normalize(".../config.json");
-                let that: this = this;
-                let JQryAjxSetting: JQueryAjaxSettings = {
-                    url: address,
-                    type: "GET",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    async: true,
-                    success: function (data: any): void {
-                        if (!ibas.objects.isNull(data)
-                            && !ibas.objects.isNull(data.languages)
-                            && Array.isArray(data.languages)) {
-                            that.view.displayLanguages(data.languages);
-                            that.view.language = ibas.i18n.language;
-                        }
-                    },
-                };
-                jQuery.ajax(JQryAjxSetting);
-            }
-            changeLanguage(): void {
-                // 重置语言编码
-                ibas.i18n.language = this.view.language;
-                // 重置视图
-                this.destroy();
-                this.show();
             }
             /** 运行 */
             run(): void {
@@ -200,12 +173,6 @@ namespace shell {
             password: string;
             /** 登陆 */
             loginEvent: Function;
-            /** 显示语言列表 */
-            displayLanguages(list: string[]): void;
-            /** 改变语言 */
-            changeLanguageEvent: Function;
-            /** 语言 */
-            language: string;
         }
         interface IUserPrivilegeLoader {
             /** 用户 */

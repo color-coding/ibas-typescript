@@ -15,7 +15,6 @@ namespace shell {
                 /** 绘制视图 */
                 draw(): any {
                     let that: this = this;
-                    document.title = ibas.config.get(app.CONFIG_ITEM_APPLICATION_NAME, ibas.i18n.prop("shell_name"));
                     // 键盘按钮按下
                     ibas.browserEventManager.registerListener({
                         eventType: ibas.emBrowserEventType.KEYDOWN,
@@ -82,10 +81,17 @@ namespace shell {
                         onEventFired: touch.end
                     });
                     // 语言变化监听
-                    ibas.i18n.language = openui5.utils.toLanguageCode(sap.ui.getCore().getConfiguration().getLanguage());
+                    ibas.i18n.language = sap.ui.getCore().getConfiguration().getLanguageTag();
                     ibas.i18n.registerListener({
                         onLanguageChanged(language: string): void {
-                            sap.ui.getCore().getConfiguration().setLanguage(openui5.utils.toLanguageCode(language));
+                            if (ibas.strings.isEmpty(language)) {
+                                return;
+                            }
+                            if (ibas.strings.isWith(language, "zh_", "") || ibas.strings.isWith(language, "zh-", "")) {
+                                sap.ui.getCore().getConfiguration().setLanguage(language);
+                            } else {
+                                sap.ui.getCore().getConfiguration().setLanguage(language.split("-")[0]);
+                            }
                         }
                     });
                     return new sap.m.App(UI_APP, {

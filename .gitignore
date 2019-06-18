@@ -8,8 +8,9 @@
 *.sln
 *.log
 *_log_*.txt
-.project
+*.project
 *.d.ts
+*.config
 /.vs/
 /.vscode/
 /.metadata/

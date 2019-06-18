@@ -1,9 +1,9 @@
 {
   "appSettings": {
     "company": "CC",
+    "language": "zh_CN",
     "debug": false,
     "offline": false,
-    "language": "zh_CN",
     "application": "智能业务应用系统",
     "copyright": "© 2016-2017 Color-Coding Studio",
     "helpUrl": "https://ibas.colorcoding.org/help",
@@ -20,7 +20,7 @@
     "repositoryAddress|BORepositoryShell": ".../initialfantasy/services/rest/data"
   },
   "languages": [
-    "zh_CN",
-    "en_US"
+    "zh-CN",
+    "en-US"
   ]
 }

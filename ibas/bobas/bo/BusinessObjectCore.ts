@@ -656,11 +656,11 @@ namespace ibas {
             bindables.firePropertyChanged.apply(this, arguments);
         }
     }
-    const PROPERTY_BO_MAP: symbol = Symbol("boMap");
+    const BO_CLASS_MAP: Map<any, Map<string, any>> = new Map<any, Map<string, any>>();
     /** 业务对象工厂 */
     export class BOFactory implements IBOFactory {
         constructor() {
-            this[PROPERTY_BO_MAP] = new Map();
+            BO_CLASS_MAP.set(this, new Map<string, any>());
         }
         /**
          * 注册业务对象
@@ -686,7 +686,7 @@ namespace ibas {
                 if (strings.isEmpty(name)) {
                     throw new Error(i18n.prop("sys_unrecognized_data"));
                 }
-                this[PROPERTY_BO_MAP].set(name, bo);
+                BO_CLASS_MAP.get(this).set(name, bo);
             } else if (arguments.length === 2) {
                 // 提供名称，则注册到全局
                 name = arguments[0];
@@ -704,7 +704,7 @@ namespace ibas {
                     // 注册到全局
                     ibas.boFactory.register(name, bo);
                 } else {
-                    this[PROPERTY_BO_MAP].set(name, bo);
+                    BO_CLASS_MAP.get(this).set(name, bo);
                 }
             }
         }
@@ -712,8 +712,8 @@ namespace ibas {
         classOf(name: string): any {
             // 去除变量
             name = config.applyVariables(name);
-            if (this[PROPERTY_BO_MAP].has(name)) {
-                return this[PROPERTY_BO_MAP].get(name);
+            if (BO_CLASS_MAP.get(this).has(name)) {
+                return BO_CLASS_MAP.get(this).get(name);
             }
             throw new Error(i18n.prop("sys_bo_not_registered", name));
         }

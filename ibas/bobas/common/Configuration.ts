@@ -20,7 +20,7 @@ namespace ibas {
     export const CONFIG_ITEM_RUNTIME_VERSION: string = "runtimeVersion";
     /** 配置项目-使用最小库 */
     export const CONFIG_ITEM_USE_MINIMUM_LIBRARY: string = "minLibrary";
-    const _configs: Map<string, any> = new Map<string, any>();
+    const CONFIGS: Map<string, any> = new Map<string, any>();
     const PROPERTY_LISTENER: symbol = Symbol("listener");
     /**
      * 配置
@@ -63,7 +63,7 @@ namespace ibas {
          * @param value 值
          */
         set(key: string, value: any): void {
-            _configs.set(key, value);
+            CONFIGS.set(key, value);
             // 触发值改变事件
             this.fireConfigurationChanged(key, value);
         }
@@ -104,9 +104,9 @@ namespace ibas {
                 type = arguments[2];
             }
             let value: any;
-            if (_configs.has(key)) {
+            if (CONFIGS.has(key)) {
                 // 配置了
-                value = _configs.get(key);
+                value = CONFIGS.get(key);
                 if (defalut !== undefined) {
                     // 提供了默认值
                     if (typeof value !== typeof defalut) {
@@ -139,8 +139,8 @@ namespace ibas {
         /** 返回配置项目 */
         all(): IList<KeyValue> {
             let items: IList<KeyValue> = new ArrayList();
-            for (let item of _configs.keys()) {
-                items.add(new KeyValue(item, _configs.get(item)));
+            for (let item of CONFIGS.keys()) {
+                items.add(new KeyValue(item, CONFIGS.get(item)));
             }
             return items;
         }

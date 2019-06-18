@@ -1,7 +1,5 @@
 {
     "shell_name": "智能业务应用系统",
-    "shell_copyright": "© 2016-2019 Color-Coding Studio",
-    "shell_license": "© Color-Coding Studio, licensed under the Apache License, Version 2.0.",
     "shell_icon": "sap-icon://blur",
     "shell_app_main": "入口",
     "shell_app_login": "登录",

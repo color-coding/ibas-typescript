@@ -23,7 +23,7 @@
     "repositoryAddress|BORepositoryTrainingTestingOffline": ".../../test/repository"
   },
   "languages": [
-    "zh_CN",
-    "en_US"
+    "zh-CN",
+    "en-US"
   ]
 }

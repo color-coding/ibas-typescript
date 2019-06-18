@@ -12,22 +12,6 @@ namespace openui5 {
         export const CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT: string = "tableRow|List";
         /** 配置项目-子项表格可视行数 */
         export const CONFIG_ITEM_ITEM_TABLE_VISIBLE_ROW_COUNT: string = "tableRow|Item";
-        /** 转换语言编码 */
-        export function toLanguageCode(data: string): string {
-            switch (data) {
-                case "zh_CN":
-                    return "zh-CN";
-                case "zh-CN":
-                    return "zh_CN";
-                case "en_US":
-                    return "en";
-                case "en":
-                    return "en_US";
-                default:
-                    break;
-            }
-            return data;
-        }
         /**
          * 获取枚举类型map
          * @param data 枚举类型

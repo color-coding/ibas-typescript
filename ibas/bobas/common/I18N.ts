@@ -18,13 +18,8 @@ namespace ibas {
     const PROPERTY_LANGUAGE: symbol = Symbol("language");
     /** 多语言 */
     export class I18N {
-        /** 默认语言编码 */
-        private DEFAULT_LANGUAGE_CODE: string = "en_US";
         /** 语言 */
         get language(): string {
-            if (strings.isEmpty(this[PROPERTY_LANGUAGE])) {
-                this[PROPERTY_LANGUAGE] = config.get(CONFIG_ITEM_LANGUAGE_CODE, this.DEFAULT_LANGUAGE_CODE);
-            }
             return this[PROPERTY_LANGUAGE];
         }
         set language(value: string) {
@@ -106,8 +101,12 @@ namespace ibas {
             if (!objects.isNull(rtVersion)) {
                 address = address + (address.indexOf("?") === -1 ? "?" : "&") + "_=" + rtVersion;
             }
-            let loader: LanguageLoader = new LanguageLoader();
-            let caller: ILanguageLoaderCaller = {
+            let caller: {
+                /** 加载地址 */
+                address: string;
+                /** 加载完成通知 */
+                onCompleted(datas: any): void;
+            } = {
                 address: address,
                 onCompleted(resource: any): void {
                     if (objects.isNull(that.resources)) {
@@ -135,13 +134,14 @@ namespace ibas {
                 }
             };
             // 加载默认语言
-            loader.load(caller);
+            loadLanguage(caller);
             // 加载指定语言
-            if (this.language !== this.DEFAULT_LANGUAGE_CODE) {
+            if (!ibas.strings.isEmpty(this.language)
+                && !(ibas.strings.isWith(this.language, "en_", undefined) || ibas.strings.isWith(this.language, "en-", undefined))) {
                 let index: number = caller.address.lastIndexOf(".");
                 if (index > 0) {
-                    caller.address = caller.address.substring(0, index + 1) + this.language + caller.address.substring(index);
-                    loader.load(caller);
+                    caller.address = caller.address.substring(0, index + 1) + this.language.replace("-", "_") + caller.address.substring(index);
+                    loadLanguage(caller);
                 }
             }
         }
@@ -188,44 +188,35 @@ namespace ibas {
         /** 语言变化 */
         onLanguageChanged(value: string): void;
     }
-    /** 语言加载调用者 */
-    interface ILanguageLoaderCaller {
+    /** 语言加载 */
+    function loadLanguage(caller: {
         /** 加载地址 */
         address: string;
         /** 加载完成通知 */
         onCompleted(datas: any): void;
-    }
-    /** 语言加载者 */
-    class LanguageLoader {
-        /** 加载 */
-        load(caller: ILanguageLoaderCaller): void {
-            let JQryAjxSetting: JQueryAjaxSettings = {
-                url: caller.address,
-                type: "GET",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                async: false,
-                cache: true,
-                error: function (xhr: JQueryXHR, status: string, error: string): void {
-                    logger.log(emMessageLevel.ERROR, "i18n: get language file [{2}] faild [{0} - {1}].", status, error, caller.address);
+    }): void {
+        let JQryAjxSetting: JQueryAjaxSettings = {
+            url: caller.address,
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            cache: true,
+            error: function (xhr: JQueryXHR, status: string, error: string): void {
+                logger.log(emMessageLevel.ERROR, "i18n: get language file [{2}] faild [{0} - {1}].", status, error, caller.address);
+                caller.onCompleted({});
+            },
+            success: function (data: any): void {
+                if (!objects.isNull(data)) {
+                    caller.onCompleted(data);
+
+                } else {
                     caller.onCompleted({});
-                },
-                success: function (data: any): void {
-                    /*
-                    logger.log(emMessageLevel.DEBUG, "i18n: get language file [{0}] sucessful.", caller.address);
-                    */
-                    if (!objects.isNull(data)) {
-                        caller.onCompleted(data);
-
-                    } else {
-                        caller.onCompleted({});
-                    }
-                },
-            };
-            jQuery.ajax(JQryAjxSetting);
-        }
+                }
+            },
+        };
+        jQuery.ajax(JQryAjxSetting);
     }
-
     /** 语言实例 */
     export const i18n: I18N = new I18N();
 }

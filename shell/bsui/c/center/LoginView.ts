@@ -36,28 +36,10 @@ namespace shell {
                 set password(value: string) {
                     this.txtPassword.setValue(value);
                 }
-                /** 语言 */
-                get language(): string {
-                    return this.sltLanguages.getSelectedKey();
-                }
-                set language(value: string) {
-                    this.sltLanguages.setSelectedKey(value);
-                }
-                /** 显示语言列表 */
-                displayLanguages(list: string[]): void {
-                    this.sltLanguages.destroyItems();
-                    for (let item of list) {
-                        this.sltLanguages.addItem(new sap.ui.core.Item("", {
-                            text: item,
-                            // enabled: false,
-                            textDirection: sap.ui.core.TextDirection.Inherit,
-                            key: item
-                        }));
-                    }
-                }
                 /** 绘制视图 */
                 draw(): any {
                     // 设置应用名称
+                    document.title = ibas.config.get(app.CONFIG_ITEM_APPLICATION_NAME, ibas.i18n.prop("shell_name"));
                     let user: string = ibas.config.get(CONFIG_ITEM_DEFAULT_USER);
                     let password: string = ibas.config.get(CONFIG_ITEM_DEFAULT_PASSWORD);
                     let that: this = this;
@@ -85,16 +67,24 @@ namespace shell {
                             new sap.m.Label("", {
                                 text: ibas.i18n.prop("shell_language")
                             }),
-                            this.sltLanguages = new sap.m.Select("", {
-                                change: function (): void {
-                                    that.fireViewEvents(that.changeLanguageEvent);
-                                }
-                            }),
+                            this.getLanguageItems(
+                                new sap.m.Select("", {
+                                    items: [
+                                    ],
+                                    change: function (event: sap.ui.base.Event): void {
+                                        let selectedItem: any = event.getParameter("selectedItem");
+                                        if (selectedItem instanceof sap.ui.core.Item) {
+                                            ibas.i18n.language = selectedItem.getKey();
+                                            that.application.destroy();
+                                            that.application.show();
+                                        }
+                                    }
+                                })
+                            ),
                             new sap.m.Label("", {
                                 text: ibas.i18n.prop("shell_plantform")
                             }),
                             new sap.m.Select("", {
-                                // enabled: ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE, false) ? true : false,
                                 items: [
                                     new sap.ui.core.ListItem("", {
                                         key: ibas.emPlantform.DESKTOP,
@@ -146,7 +136,27 @@ namespace shell {
                 }
                 private txtUser: sap.m.Input;
                 private txtPassword: sap.m.Input;
-                private sltLanguages: sap.m.Select;
+                private getLanguageItems(select: sap.m.Select): sap.m.Select {
+                    jQuery.ajax({
+                        url: ibas.urls.normalize(".../config.json"),
+                        type: "GET",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        async: true,
+                        success: function (data: any): void {
+                            if (!ibas.objects.isNull(data) && Array.isArray(data.languages)) {
+                                for (let item of data.languages) {
+                                    select.addItem(new sap.ui.core.Item("", {
+                                        text: item,
+                                        key: item
+                                    }));
+                                }
+                            }
+                            select.setSelectedKey(ibas.i18n.language);
+                        },
+                    });
+                    return select;
+                }
             }
             /**
              * 视图-登陆
