@@ -5,6 +5,8 @@
  * Use of this source code is governed by an Apache License, Version 2.0
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
+/// <reference path ="../ibas/index.d.ts" />
+/// <reference path ="../openui5/types/index.d.ts" />
 namespace loader {
     // 解决方法缺失
     if (typeof String.prototype.startsWith === undefined) {
@@ -160,61 +162,72 @@ namespace loader {
             if (this.openui5Root === null || this.openui5Root === undefined) {
                 this.openui5Root = this.root;
             }
-            let that: this = this;
             requires.create("_", this.ibasRoot, this.noCache)([
                 URL_IBAS_INDEX + (this.minLibrary ? SIGN_MIN_LIBRARY : "")
-            ], function (): void {
-                // 加载成功，加载ui5
-                openui5.load({
-                    url: that.openui5Root,
-                    noCache: that.noCache,
-                    minLibrary: that.minLibrary,
-                    onError(): void {
-                        that.diagnose();
-                    },
-                    onSuccess(): void {
-                        that.show();
-                    },
+            ], () => {
+                // 不使用缓存，设置运行版本
+                if (this.noCache === true) {
+                    ibas.config.set(ibas.CONFIG_ITEM_RUNTIME_VERSION, requires.runtime);
+                }
+                // 使用最小库
+                if (this.minLibrary === true) {
+                    ibas.config.set(ibas.CONFIG_ITEM_USE_MINIMUM_LIBRARY, this.minLibrary);
+                }
+                // 初始化ibas
+                ibas.init(() => {
+                    // 加载成功，加载ui5
+                    openui5.load({
+                        url: this.openui5Root,
+                        noCache: this.noCache,
+                        minLibrary: this.minLibrary,
+                        onError: () => {
+                            this.diagnose();
+                        },
+                        onSuccess: () => {
+                            this.show();
+                        },
+                    });
                 });
-            }, function (): void {
-                that.diagnose();
+            }, () => {
+                this.diagnose();
             });
         }
         /** 显示视图 */
         private show(): void {
-            // 不使用缓存，设置运行版本
-            if (this.noCache === true) {
-                ibas.config.set(ibas.CONFIG_ITEM_RUNTIME_VERSION, requires.runtime);
-            }
-            // 使用最小库
-            if (this.minLibrary === true) {
-                ibas.config.set(ibas.CONFIG_ITEM_USE_MINIMUM_LIBRARY, this.minLibrary);
-            }
             // 模块require函数
             let require: Require = ibas.requires.create({
                 context: ibas.requires.naming(this.name),
                 baseUrl: this.root + this.name,
                 waitSeconds: ibas.config.get(ibas.requires.CONFIG_ITEM_WAIT_SECONDS, 30)
             });
-            let that: this = this;
             require([
                 Application.URL_INDEX + (this.minLibrary ? SIGN_MIN_LIBRARY : "")
-            ], function (): void {
+            ], () => {
                 // 加载成功
                 let shell: any = (<any>window).shell;
                 if (shell === undefined || shell === null) {
-                    that.diagnose();
+                    this.diagnose();
                 } else {
-                    try {
-                        let console: ibas.ModuleConsole = new shell.app.Console();
-                        console.module = that.name;
-                        console.run();
-                    } catch (error) {
-                        that.diagnose();
-                    }
+                    // 加载资源
+                    ibas.i18n.load([
+                        ibas.strings.format("{0}/languages/openui5.json", ibas.urls.rootUrl("/openui5/index")),
+                    ], () => {
+                        // 设置语言
+                        ibas.i18n.language = sap.ui.getCore().getConfiguration().getLanguageTag();
+                        // 重新加载语言
+                        ibas.i18n.reload(() => {
+                            try {
+                                let console: ibas.ModuleConsole = new shell.app.Console();
+                                console.module = this.name;
+                                console.run();
+                            } catch (error) {
+                                this.diagnose();
+                            }
+                        });
+                    });
                 }
-            }, function (): void {
-                that.diagnose();
+            }, () => {
+                this.diagnose();
             });
         }
         /** 诊断错误 */

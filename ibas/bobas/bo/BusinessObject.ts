@@ -371,10 +371,10 @@ namespace ibas {
         /** 克隆对象 */
         clone(): this {
             let newBO: this = super.clone();
-            // 设置为新对象
-            newBO.markNew(true);
             // 重置部分属性值
             newBO.isLoading = true;
+            // 设置为新对象
+            newBO.markNew(true);
             for (let item of NEED_BE_RESET_PROPERTIES) {
                 if (newBO[item] !== undefined) {
                     newBO[item] = undefined;

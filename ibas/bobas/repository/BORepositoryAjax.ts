@@ -14,8 +14,14 @@
 namespace ibas {
     /** 远程仓库 */
     export abstract class RemoteRepositoryAjax extends RemoteRepository implements IRemoteRepository {
-        /** 自动解析数据 */
-        autoParsing: boolean = true;
+        constructor() {
+            super();
+            this.autoParsing = true;
+        }
+        /**
+         * 自动解析数据
+         */
+        autoParsing: boolean;
         /**
          * 远程方法调用
          * 特殊调用参数可重载createAjaxSettings方法
@@ -24,49 +30,61 @@ namespace ibas {
          * @param caller 方法监听
          */
         callRemoteMethod(method: string, data: any, caller: IMethodCaller<any>): void {
-            let that: this = this;
-            let ajaxSetting: JQueryAjaxSettings = this.createAjaxSettings(method, data);
-            if (objects.isNull(ajaxSetting)) {
-                throw new Error(i18n.prop("sys_invalid_parameter", "AjaxSetting"));
+            let xhr: XMLHttpRequest = this.createHttpRequest(method);
+            if (!(xhr instanceof XMLHttpRequest)) {
+                throw new Error(i18n.prop("sys_invalid_parameter", "HttpRequest"));
             }
-            // 补充发生错误的事件
-            ajaxSetting.error = function (jqXHR: JQueryXHR, textStatus: string, errorThrown: string): void {
-                let opRslt: OperationResult<any> = new OperationResult();
-                opRslt.resultCode = 10000 + jqXHR.status;
-                opRslt.message = strings.format("{0} - {1}", textStatus, i18n.prop("sys_network_error"));
-                logger.log(emMessageLevel.ERROR,
-                    "repository: call method [{2}] faild, {0} - {1}.", textStatus, errorThrown, ajaxSetting.url);
-                caller.onCompleted.call(objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
-            };
-            // 补充成功的事件
-            ajaxSetting.success = function (data: any, textStatus: string, jqXHR: JQueryXHR): void {
-                if (that.autoParsing) {
-                    let opRslt: any = that.converter.parsing(data, method);
-                    if (objects.isNull(opRslt)) {
+            let that: this = this;
+            xhr.onreadystatechange = function (this: XMLHttpRequest, event: Event): void {
+                // 响应完成
+                if (this.readyState === 4) {
+                    let opRslt: IOperationResult<any>;
+                    if ((this.status >= 200 && this.status < 300) || this.status === 304) {
+                        // 成功
+                        if (that.autoParsing) {
+                            let opRslt: any = that.converter.parsing(this.response, method);
+                            if (objects.isNull(opRslt)) {
+                                opRslt = new OperationResult();
+                                opRslt.resultCode = 20000;
+                                opRslt.message = i18n.prop("sys_data_converter_parsing_faild");
+                                logger.log(emMessageLevel.WARN, "repository: call method [{1}] faild, {0}", opRslt.message, method);
+                            } else if (!(opRslt instanceof OperationResult)) {
+                                opRslt = new OperationResult().addResults(opRslt);
+                            }
+                            caller.onCompleted.call(objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
+                        } else {
+                            caller.onCompleted.call(objects.isNull(caller.caller) ? caller : caller.caller, this.response);
+                        }
+                        // 输出头
+                        let headers: string = this.getAllResponseHeaders();
+                        if (!ibas.strings.isEmpty(headers) && opRslt instanceof ibas.OperationResult) {
+                            headers = headers.replace("\r\n", "\n");
+                            for (let item of headers.split("\n")) {
+                                let values: string[] = item.split(":");
+                                if (values.length < 2) {
+                                    continue;
+                                }
+                                opRslt.informations.add(new ibas.OperationInformation(values[0].trim(), values[1].trim()));
+                            }
+                        }
+                    } else {
+                        // 出错了
                         opRslt = new OperationResult();
-                        opRslt.resultCode = 20000;
-                        opRslt.message = i18n.prop("sys_data_converter_parsing_faild");
-                        logger.log(emMessageLevel.ERROR,
-                            "repository: call method [{1}] faild, {0}", opRslt.message, ajaxSetting.url);
-                    } else if (!objects.instanceOf(opRslt, OperationResult) && !objects.instanceOf(opRslt, OperationMessage)) {
-                        let tmpOpRslt: OperationResult<any> = new OperationResult();
-                        tmpOpRslt.addResults(opRslt);
-                        opRslt = tmpOpRslt;
+                        opRslt.resultCode = 10000 + this.status;
+                        if (this.status === 500) {
+                            opRslt.message = strings.format("{0} - {1}", opRslt.resultCode, i18n.prop("sys_server_internal_error"));
+                        } else {
+                            opRslt.message = strings.format("{0} - {1}", opRslt.resultCode, i18n.prop("sys_network_error"));
+                        }
+                        logger.log(emMessageLevel.ERROR, "repository: call method [{0}] faild.", method);
+                        caller.onCompleted.call(objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
                     }
-                    caller.onCompleted.call(objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
-                } else {
-                    caller.onCompleted.call(objects.isNull(caller.caller) ? caller : caller.caller, data);
+                    that = null;
                 }
             };
-            // 调用远程方法
-            jQuery.ajax(ajaxSetting);
+            xhr.send(data);
         }
-        /**
-         * 创建调用参数，可重载
-         * @param method 方法名称
-         * @param data 调用数据
-         */
-        protected abstract createAjaxSettings(method: string, data: any): JQueryAjaxSettings;
+        protected abstract createHttpRequest(method: string): XMLHttpRequest;
     }
     /** 远程业务对象仓库 */
     export class BORepositoryAjax extends RemoteRepositoryAjax implements IBORepository {
@@ -89,8 +107,7 @@ namespace ibas {
                 }
                 caller.criteria = criteria;
             }
-            let data: string = JSON.stringify(this.converter.convert(caller.criteria, method));
-            this.callRemoteMethod(method, data, caller);
+            this.callRemoteMethod(method, JSON.stringify(this.converter.convert(caller.criteria, method)), caller);
         }
         /**
          * 保存数据
@@ -99,59 +116,38 @@ namespace ibas {
          */
         save<P>(boName: string, caller: ISaveCaller<P>): void {
             let method: string = "save" + boName;
-            let data: string = JSON.stringify(this.converter.convert(caller.beSaved, method));
-            this.callRemoteMethod(method, data, caller);
+            if (ibas.objects.isNull(caller.beSaved)) {
+                throw new Error(i18n.prop("sys_invalid_parameter", "beSaved"));
+            }
+            this.callRemoteMethod(method, JSON.stringify(this.converter.convert(caller.beSaved, method)), caller);
         }
         /**
-         * 创建调用参数，可重载
-         * @param method 方法名称
-         * @param data 调用数据
+         * 创建请求
+         * @param method 地址
          */
-        protected createAjaxSettings(method: string, data: string): JQueryAjaxSettings {
+        protected createHttpRequest(method: string): XMLHttpRequest {
             let methodUrl: string = this.methodUrl(method);
-            let ajaxSetting: JQueryAjaxSettings = {
-                url: methodUrl,
-                type: "POST",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                async: true,
-                data: data
-            };
-            return ajaxSetting;
+            let xhr: XMLHttpRequest = new XMLHttpRequest();
+            xhr.open("POST", methodUrl, true);
+            xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+            xhr.responseType = "json";
+            return xhr;
         }
     }
     /** 远程文件只读仓库 */
     export class FileRepositoryAjax extends RemoteRepositoryAjax implements IFileRepository {
-
         constructor() {
             super();
             // 关闭自动解析数据
             this.autoParsing = false;
         }
-        /**
-         * 创建调用参数，可重载
-         * @param fileName 文件名
-         * @param dataType 返回的数据类型
-         */
-        protected createAjaxSettings(fileName: string, caller: ILoadFileCaller): JQueryAjaxSettings {
-            let methodUrl: string = this.methodUrl(fileName);
-            let type: string = "GET";
-            let contentType: string = "application/json; charset=utf-8";
-            if (!objects.isNull(caller.contentType)) {
-                contentType = caller.contentType;
-            }
-            let dataType: string = "json";
-            if (!objects.isNull(caller.dataType)) {
-                dataType = caller.dataType;
-            }
-            let ajaxSetting: JQueryAjaxSettings = {
-                url: methodUrl,
-                type: type,
-                contentType: contentType,
-                dataType: dataType,
-                async: true
-            };
-            return ajaxSetting;
+        protected createHttpRequest(method: string): XMLHttpRequest {
+            let methodUrl: string = this.methodUrl(method);
+            let xhr: XMLHttpRequest = new XMLHttpRequest();
+            xhr.open("GET", methodUrl, true);
+            xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+            xhr.responseType = "json";
+            return xhr;
         }
         /**
          * 加载文件
@@ -159,7 +155,7 @@ namespace ibas {
          * @param caller 调用者
          */
         load(fileName: string, caller: ILoadFileCaller): void {
-            this.callRemoteMethod(fileName, caller, caller);
+            this.callRemoteMethod(fileName, null, caller);
         }
     }
     /** 远程文件业务对象仓库 */
@@ -236,13 +232,14 @@ namespace ibas {
                         // 未设置转换方法，不能进行查询过滤
                         if (data instanceof Array) {
                             for (let item of data) {
-                                opRslt.resultObjects.add(data);
+                                opRslt.resultObjects.add(item);
                             }
                         } else {
                             opRslt.resultObjects.add(data);
                         }
                     }
                     caller.onCompleted.call(objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
+                    that = null;
                 }
             };
             this.load(fileName, loadFileCaller);
@@ -267,23 +264,12 @@ namespace ibas {
     }
     /** 文件上传仓库 */
     export class FileRepositoryUploadAjax extends RemoteRepositoryAjax implements IFileRepositoryUpload {
-        /**
-         * 创建调用参数，可重载
-         * @param fileName 文件名
-         * @param dataType 返回的数据类型
-         */
-        protected createAjaxSettings(method: string, data: FormData): JQueryAjaxSettings {
+        protected createHttpRequest(method: string): XMLHttpRequest {
             let methodUrl: string = this.methodUrl(method);
-            let ajaxSetting: JQueryAjaxSettings = {
-                url: methodUrl,
-                type: "POST",
-                data: data,
-                async: true,
-                cache: false,
-                contentType: false,
-                processData: false
-            };
-            return ajaxSetting;
+            let xhr: XMLHttpRequest = new XMLHttpRequest();
+            xhr.open("POST", methodUrl, true);
+            xhr.responseType = "json";
+            return xhr;
         }
         /**
          * 上传文件
@@ -294,69 +280,8 @@ namespace ibas {
             this.callRemoteMethod(method, caller.fileData, caller);
         }
     }
-    /** 远程仓库 */
-    export abstract class RemoteRepositoryXhr extends RemoteRepository {
-        /** 自动解析数据 */
-        autoParsing: boolean = true;
-        /**
-         * 远程方法调用
-         * 特殊调用参数可重载createAjaxSettings方法
-         * @param method 方法名称
-         * @param data 数据
-         * @param caller 方法监听
-         */
-        callRemoteMethod(method: string, data: any, caller: IMethodCaller<any>): void {
-            let request: XMLHttpRequest = this.createHttpRequest(method, data);
-            if (objects.isNull(request)) {
-                throw new Error(i18n.prop("sys_invalid_parameter", "HttpRequest"));
-            }
-            let that: this = this;
-            request.onreadystatechange = function (): void {
-                if (this.readyState === 4) {
-                    let opRslt: IOperationResult<any> = new OperationResult();
-                    // 响应完成
-                    if ((this.status >= 200 && this.status < 300) || this.status === 304) {
-                        // 成功
-                        if (that.autoParsing) {
-                            let opRslt: any = that.converter.parsing(this.response, method);
-                            if (objects.isNull(opRslt)) {
-                                throw new Error(i18n.prop("sys_data_converter_parsing_faild"));
-                            }
-                            caller.onCompleted.call(objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
-                        } else {
-                            caller.onCompleted.call(objects.isNull(caller.caller) ? caller : caller.caller, this.response);
-                        }
-                        let headers: string = request.getAllResponseHeaders();
-                        if (!ibas.strings.isEmpty(headers)) {
-                            headers = headers.replace("\r\n", "\n");
-                            for (let item of headers.split("\n")) {
-                                let values: string[] = item.split(":");
-                                if (values.length < 2) {
-                                    continue;
-                                }
-                                opRslt.informations.add(new ibas.OperationInformation(values[0].trim(), values[1].trim()));
-                            }
-                        }
-                    } else {
-                        // 出错了
-                        opRslt.resultCode = 10000 + this.status;
-                        if (this.status === 500) {
-                            opRslt.message = strings.format("{0} - {1}", this.statusText, i18n.prop("sys_server_internal_error"));
-                        } else {
-                            opRslt.message = strings.format("{0} - {1}", this.statusText, i18n.prop("sys_network_error"));
-                        }
-                        logger.log(emMessageLevel.ERROR,
-                            "repository: call method [{2}] faild, {0} - {1}.", this.status, this.statusText, this.responseURL);
-                        caller.onCompleted.call(objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
-                    }
-                }
-            };
-            request.send(data);
-        }
-        protected abstract createHttpRequest(method: string, data: any): XMLHttpRequest;
-    }
     /** 文件下载仓库 */
-    export class FileRepositoryDownloadAjax extends RemoteRepositoryXhr implements IFileRepositoryDownload {
+    export class FileRepositoryDownloadAjax extends RemoteRepositoryAjax implements IFileRepositoryDownload {
         constructor() {
             super();
             this.autoParsing = false;
@@ -385,14 +310,12 @@ namespace ibas {
             }
             this.callRemoteMethod(method, data, methodCaller);
         }
-        protected createHttpRequest(method: string, data: any): XMLHttpRequest {
+        protected createHttpRequest(method: string): XMLHttpRequest {
             let methodUrl: string = this.methodUrl(method);
             let xhr: XMLHttpRequest = new XMLHttpRequest();
             xhr.open("POST", methodUrl, true);
             xhr.responseType = "blob";
-            if (!(data instanceof FormData)) {
-                xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-            }
+            xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
             return xhr;
         }
     }

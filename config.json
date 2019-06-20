@@ -1,7 +1,6 @@
 {
   "appSettings": {
     "company": "CC",
-    "language": "zh_CN",
     "debug": false,
     "offline": false,
     "application": "智能业务应用系统",

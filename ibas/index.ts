@@ -6,7 +6,6 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 /// <reference path="./3rdparty/crypto-js.d.ts" />
-/// <reference path="./3rdparty/jquery.d.ts" />
 /// <reference path="./3rdparty/require.d.ts" />
 /// <reference path="./bobas/common/Data.ts" />
 /// <reference path="./bobas/common/Enum.ts" />
@@ -62,11 +61,46 @@ namespace ibas {
         /** 维护者 */
         maintainer: "Niuren.Zhu <niuren.zhu@icloud.com>"
     };
-    // 加载配置
-    config.load(strings.format("{0}/{1}", urls.rootUrl("/ibas/index"), CONFIG_FILE_NAME));
-    config.load(strings.format("{0}/{1}", urls.rootUrl(), CONFIG_FILE_NAME));
-
-    // 加载资源
-    i18n.load(strings.format("{0}/resources/languages/ibas.json", urls.rootUrl("/ibas/index")));
-    i18n.load(strings.format("{0}/resources/languages/enums.json", urls.rootUrl("/ibas/index")));
+    /**
+     * 初始化（有回调方法时异步）
+     * @param callBack 回调方法
+     */
+    export function init(callBack?: (error?: Error) => void): void {
+        if (callBack instanceof Function) {
+            // 加载配置
+            config.load([
+                strings.format("{0}/{1}", urls.rootUrl("/ibas/index"), CONFIG_FILE_NAME),
+                strings.format("{0}/{1}", urls.rootUrl(), CONFIG_FILE_NAME)
+            ], () => {
+                // 设置默认语言
+                let language: string = ibas.config.get(ibas.CONFIG_ITEM_LANGUAGE_CODE);
+                if (!ibas.strings.isEmpty(language)) {
+                    ibas.i18n.language = language;
+                }
+                // 加载资源
+                i18n.load([
+                    strings.format("{0}/resources/languages/ibas.json", urls.rootUrl("/ibas/index")),
+                    strings.format("{0}/resources/languages/enums.json", urls.rootUrl("/ibas/index"))
+                ], () => {
+                    callBack();
+                });
+            });
+        } else {
+            // 加载配置
+            config.load([
+                strings.format("{0}/{1}", urls.rootUrl("/ibas/index"), CONFIG_FILE_NAME),
+                strings.format("{0}/{1}", urls.rootUrl(), CONFIG_FILE_NAME)
+            ]);
+            // 设置默认语言
+            let language: string = ibas.config.get(ibas.CONFIG_ITEM_LANGUAGE_CODE);
+            if (!ibas.strings.isEmpty(language)) {
+                ibas.i18n.language = language;
+            }
+            // 加载资源
+            i18n.load([
+                strings.format("{0}/resources/languages/ibas.json", urls.rootUrl("/ibas/index")),
+                strings.format("{0}/resources/languages/enums.json", urls.rootUrl("/ibas/index"))
+            ]);
+        }
+    }
 }

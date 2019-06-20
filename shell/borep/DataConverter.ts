@@ -190,9 +190,11 @@ namespace shell {
                     newData.name = remote.Name;
                     newData.type = remote.Type;
                     newData.properties = new Array<BOPropertyInfo>();
-                    for (let item of remote.Properties) {
-                        item.type = BOPropertyInfo.name;
-                        newData.properties.push(this.parsing(item, null));
+                    if (remote.Properties instanceof Array) {
+                        for (let item of remote.Properties) {
+                            item.type = BOPropertyInfo.name;
+                            newData.properties.push(this.parsing(item, null));
+                        }
                     }
                     return newData;
                 } else if (data.type === BOPropertyInfo.name) {
@@ -207,9 +209,11 @@ namespace shell {
                     newData.systemed = remote.Systemed;
                     newData.authorised = ibas.strings.isEmpty(remote.Authorised) ? ibas.emAuthoriseType.NONE : ibas.enums.valueOf(ibas.emAuthoriseType, remote.Authorised);
                     newData.values = new Array<BOPropertyValue>();
-                    for (let item of remote.Values) {
-                        item.type = BOPropertyValue.name;
-                        newData.values.push(this.parsing(item, null));
+                    if (remote.Values instanceof Array) {
+                        for (let item of remote.Values) {
+                            item.type = BOPropertyValue.name;
+                            newData.values.push(this.parsing(item, null));
+                        }
                     }
                     return newData;
                 } else if (data.type === BOPropertyValue.name) {

@@ -94,6 +94,4 @@ namespace openui5 {
             control.setValueState("None");
         }
     });
-    // 加载资源
-    ibas.i18n.load(ibas.strings.format("{0}/languages/openui5.json", ibas.urls.rootUrl("/openui5/index")));
 }

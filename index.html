@@ -7,10 +7,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <script type="text/javascript" src="./ibas/3rdparty/spin.min.js"></script>
-    <script type="text/javascript" src="./ibas/3rdparty/jquery.min.js"></script>
     <script type="text/javascript" src="./ibas/3rdparty/require.min.js"></script>
     <script type="text/javascript">
-        require([
+        require.config({
+            urlArgs: "_=" + (new Date()).getTime()
+        })([
             "./shell/loader.min"
         ], function () {
             // 加载成功

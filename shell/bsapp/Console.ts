@@ -41,36 +41,39 @@ namespace shell {
                 // 获取壳根地址
                 let rootUrl: string = ibas.urls.rootUrl(Console.ROOT_FILE_NAME);
                 // 加载语言-壳
-                ibas.i18n.load(ibas.strings.format("{0}/resources/languages/shell.json", rootUrl));
-                // 设置资源属性
-                this.description = ibas.i18n.prop(this.name);
-                this.icon = ibas.strings.format("{0}/resources/images/logo_small.png", rootUrl);
-                // 加载视图显示者
-                let uiModules: string[] = [];
-                if (!ibas.config.get(ibas.CONFIG_ITEM_DISABLE_PLATFORM_VIEW, false)) {
-                    if (this.plantform === ibas.emPlantform.PHONE) {
-                        // 使用m类型视图
-                        uiModules.push("index.ui.m");
+                ibas.i18n.load([
+                    ibas.strings.format("{0}/resources/languages/shell.json", rootUrl)
+                ], () => {
+                    // 设置资源属性
+                    this.description = ibas.i18n.prop(this.name);
+                    this.icon = ibas.strings.format("{0}/resources/images/logo_small.png", rootUrl);
+                    // 加载视图显示者
+                    let uiModules: string[] = [];
+                    if (!ibas.config.get(ibas.CONFIG_ITEM_DISABLE_PLATFORM_VIEW, false)) {
+                        if (this.plantform === ibas.emPlantform.PHONE) {
+                            // 使用m类型视图
+                            uiModules.push("index.ui.m");
+                        }
                     }
-                }
-                // 默认使用视图
-                if (uiModules.length === 0) {
-                    // 使用c类型视图
-                    uiModules.push("index.ui.c");
-                }
-                this.loadUI(uiModules, (ui) => {
-                    // 设置视图显示者
-                    this.viewShower = new ui.ViewShower();
-                    // 设置导航
-                    this[PROPERTY_NAVIGATION] = new ui.Navigation();
-                    // 调用初始化
-                    this.initialize();
-                    // 调用入口应用
-                    let app: ibas.IApplication<ibas.IView> = this.default().default();
-                    app.show();
+                    // 默认使用视图
+                    if (uiModules.length === 0) {
+                        // 使用c类型视图
+                        uiModules.push("index.ui.c");
+                    }
+                    this.loadUI(uiModules, (ui) => {
+                        // 设置视图显示者
+                        this.viewShower = new ui.ViewShower();
+                        // 设置导航
+                        this[PROPERTY_NAVIGATION] = new ui.Navigation();
+                        // 调用初始化
+                        this.initialize();
+                        // 调用入口应用
+                        let app: ibas.IApplication<ibas.IView> = this.default().default();
+                        app.show();
+                    });
+                    // 保留基类方法
+                    super.run();
                 });
-                // 保留基类方法
-                super.run();
             }
         }
 

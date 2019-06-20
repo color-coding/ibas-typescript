@@ -76,7 +76,9 @@ namespace shell {
                                         if (selectedItem instanceof sap.ui.core.Item) {
                                             ibas.i18n.language = selectedItem.getKey();
                                             that.application.destroy();
-                                            that.application.show();
+                                            ibas.i18n.reload(() => {
+                                                that.application.show();
+                                            });
                                         }
                                     }
                                 })

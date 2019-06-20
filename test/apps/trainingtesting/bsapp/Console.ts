@@ -47,33 +47,35 @@ namespace trainingtesting {
             /** 运行 */
             run(): void {
                 // 加载语言-框架默认
-                ibas.i18n.load(this.rootUrl + "resources/languages/trainingtesting.json");
-                ibas.i18n.load(this.rootUrl + "resources/languages/bos.json");
-                // 设置资源属性
-                this.description = ibas.i18n.prop(this.name.toLowerCase());
-                this.icon = ibas.i18n.prop(this.name.toLowerCase() + "_icon");
-                // 先加载ui导航
-                let uiModules: string[] = [];
-                if (!ibas.config.get(ibas.CONFIG_ITEM_DISABLE_PLATFORM_VIEW, false)) {
-                    if (this.plantform === ibas.emPlantform.PHONE) {
-                        // 使用m类型视图
-                        uiModules.push("index.ui.m");
+                ibas.i18n.load([this.rootUrl + "resources/languages/trainingtesting.json",
+                this.rootUrl + "resources/languages/bos.json"
+                ], () => {
+                    // 设置资源属性
+                    this.description = ibas.i18n.prop(this.name.toLowerCase());
+                    this.icon = ibas.i18n.prop(this.name.toLowerCase() + "_icon");
+                    // 先加载ui导航
+                    let uiModules: string[] = [];
+                    if (!ibas.config.get(ibas.CONFIG_ITEM_DISABLE_PLATFORM_VIEW, false)) {
+                        if (this.plantform === ibas.emPlantform.PHONE) {
+                            // 使用m类型视图
+                            uiModules.push("index.ui.m");
+                        }
                     }
-                }
-                // 默认使用视图
-                if (uiModules.length === 0) {
-                    // 使用c类型视图
-                    uiModules.push("index.ui.c");
-                }
-                // 加载视图库
-                this.loadUI(uiModules, (ui) => {
-                    // 设置导航
-                    this[PROPERTY_NAVIGATION] = new ui.Navigation();
-                    // 调用初始化
-                    this.initialize();
+                    // 默认使用视图
+                    if (uiModules.length === 0) {
+                        // 使用c类型视图
+                        uiModules.push("index.ui.c");
+                    }
+                    // 加载视图库
+                    this.loadUI(uiModules, (ui) => {
+                        // 设置导航
+                        this[PROPERTY_NAVIGATION] = new ui.Navigation();
+                        // 调用初始化
+                        this.initialize();
+                    });
+                    // 保留基类方法
+                    super.run();
                 });
-                // 保留基类方法
-                super.run();
             }
         }
         /** 模块控制台 */

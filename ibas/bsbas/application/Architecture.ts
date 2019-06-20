@@ -505,22 +505,17 @@ namespace ibas {
             let require: Require = ibas.requires.create({
                 context: ibas.requires.naming(this.module)
             });
-            let that: this = this;
-            require(
-                modules,
-                function (): void {
-                    if (typeof ready === "function") {
-                        let module: any = window[that.module];
-                        if (!ibas.objects.isNull(module)) {
-                            module = module[<string>"ui"];
-                        }
-                        ready(module);
+            require(modules, () => {
+                if (typeof ready === "function") {
+                    let module: any = window[this.module];
+                    if (!ibas.objects.isNull(module)) {
+                        module = module[<string>"ui"];
                     }
-                },
-                function (error: RequireError): void {
-                    ibas.logger.log(ibas.emMessageLevel.ERROR, error.message);
+                    ready(module);
                 }
-            );
+            }, (error: Error) => {
+                ibas.logger.log(ibas.emMessageLevel.ERROR, error.message);
+            });
         }
     }
     /** 模块控制台 */

@@ -8,7 +8,6 @@
 /// <reference path="./Data.ts" />
 /// <reference path="./Logger.ts" />
 /// <reference path="./Utils.ts" />
-
 namespace ibas {
     /** 配置项目-调试模式 */
     export const CONFIG_ITEM_DEBUG_MODE: string = "debug";
@@ -20,7 +19,7 @@ namespace ibas {
     export const CONFIG_ITEM_RUNTIME_VERSION: string = "runtimeVersion";
     /** 配置项目-使用最小库 */
     export const CONFIG_ITEM_USE_MINIMUM_LIBRARY: string = "minLibrary";
-    const CONFIGS: Map<string, any> = new Map<string, any>();
+    const CONFIG_VALUES: Map<string, any> = new Map<string, any>();
     const PROPERTY_LISTENER: symbol = Symbol("listener");
     /**
      * 配置
@@ -28,34 +27,50 @@ namespace ibas {
     export class Configuration {
         /**
          * 加载配置文件
+         * @param address 文件地址
+         * @param callBack 加载完成回调方法
          */
-        load(address: string): void {
-            let that: any = this;
-            let JQryAjxSetting: JQueryAjaxSettings = {
-                url: address,
-                type: "GET",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                async: false,
-                cache: false,
-                error: function (xhr: JQueryXHR, status: string, error: string): void {
-                    console.warn(strings.format("config: load file [{2}] faild [{0} - {1}].", status, error, address));
-                },
-                success: function (data: any): void {
-                    console.log(strings.format("config: load file [{0}] successful.", address));
-                    if (data !== undefined && data !== null) {
-                        if (data.appSettings !== undefined && data.appSettings !== null) {
-                            let setting: any = data.appSettings;
-                            for (let name in setting) {
-                                if (setting[name] !== undefined) {
-                                    that.set(name, setting[name]);
+        load(address: string | string[], callBack?: () => void): void {
+            address = ibas.arrays.create(address);
+            if (address.length === 0) {
+                return;
+            }
+            let that: this = this;
+            ibas.queues.execute(address, (address, next) => {
+                if (address.indexOf("_=") < 0) {
+                    address = address + (address.indexOf("?") < 0 ? "?" : "&") + "_=" + (new Date()).getTime();
+                }
+                let xhr: XMLHttpRequest = new XMLHttpRequest();
+                xhr.open("GET", address, callBack instanceof Function ? true : false);
+                xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+                xhr.onreadystatechange = function (this: XMLHttpRequest, event: Event): void {
+                    if (this.readyState === 4) {
+                        if ((this.status >= 200 && this.status < 300) || this.status === 304) {
+                            let data: any = JSON.parse(this.response);
+                            console.log(strings.format("config: load file [{0}] successful.", address));
+                            if (data !== undefined && data !== null) {
+                                if (data.appSettings !== undefined && data.appSettings !== null) {
+                                    let setting: any = data.appSettings;
+                                    for (let name in setting) {
+                                        if (setting[name] !== undefined) {
+                                            that.set(name, setting[name]);
+                                        }
+                                    }
                                 }
                             }
+                        } else {
+                            console.warn(strings.format("config: load file [{2}] faild [{0} - {1}].", this.status, this.statusText, address));
                         }
+                        next();
                     }
-                },
-            };
-            jQuery.ajax(JQryAjxSetting);
+                };
+                xhr.send(null);
+            }, () => {
+                if (callBack instanceof Function) {
+                    callBack();
+                }
+                that = null;
+            });
         }
         /**
          * 设置配置
@@ -63,7 +78,7 @@ namespace ibas {
          * @param value 值
          */
         set(key: string, value: any): void {
-            CONFIGS.set(key, value);
+            CONFIG_VALUES.set(key, value);
             // 触发值改变事件
             this.fireConfigurationChanged(key, value);
         }
@@ -104,9 +119,9 @@ namespace ibas {
                 type = arguments[2];
             }
             let value: any;
-            if (CONFIGS.has(key)) {
+            if (CONFIG_VALUES.has(key)) {
                 // 配置了
-                value = CONFIGS.get(key);
+                value = CONFIG_VALUES.get(key);
                 if (defalut !== undefined) {
                     // 提供了默认值
                     if (typeof value !== typeof defalut) {
@@ -139,8 +154,8 @@ namespace ibas {
         /** 返回配置项目 */
         all(): IList<KeyValue> {
             let items: IList<KeyValue> = new ArrayList();
-            for (let item of CONFIGS.keys()) {
-                items.add(new KeyValue(item, CONFIGS.get(item)));
+            for (let item of CONFIG_VALUES.keys()) {
+                items.add(new KeyValue(item, CONFIG_VALUES.get(item)));
             }
             return items;
         }

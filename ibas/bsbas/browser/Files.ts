@@ -26,18 +26,13 @@ namespace ibas {
                 } else {
                     let oURL: any = window.URL || (<any>window).webkitURL;
                     let sBlobUrl: string = oURL.createObjectURL(data);
-                    let oLink: any = window.document.createElement("a");
+                    let oLink: HTMLAnchorElement = window.document.createElement("a");
                     if ("download" in oLink) {
-                        // use an anchor link with download attribute for download
-                        let $body: any = jQuery(document.body);
-                        let $link: any = jQuery(oLink).attr({
-                            download: fileName,
-                            href: sBlobUrl,
-                            style: "display:none"
-                        });
-                        $body.append($link);
-                        $link.get(0).click();
-                        $link.remove();
+                        oLink.download = fileName;
+                        oLink.href = sBlobUrl;
+                        oLink.style.cssText = "display:none";
+                        oLink.click();
+                        oLink.remove();
                         logger.log(emMessageLevel.DEBUG, "files: save file as [{0}].", fileName);
                         return;
                     }

@@ -37,18 +37,17 @@ namespace ibas {
                 opener.onError(new Error(i18n.prop("sys_invalid_parameter", "indexedDB")));
                 return;
             }
-            let that: this = this;
             let dbRequest: IDBOpenDBRequest = dbFactory.open(this.name, 1);
-            dbRequest.onerror = function (e: Event): void {
+            dbRequest.onerror = (e: Event) => {
                 opener.onError((<any>e.currentTarget).error);
             };
-            dbRequest.onsuccess = function (e: Event): void {
-                that.db = (<any>e).target.result;
-                opener.onSuccess(that.db);
+            dbRequest.onsuccess = (e: Event) => {
+                this.db = (<any>e).target.result;
+                opener.onSuccess(this.db);
             };
-            dbRequest.onupgradeneeded = function (e: Event): void {
-                that.db = (<any>e).target.result;
-                opener.onSuccess(that.db);
+            dbRequest.onupgradeneeded = (e: Event) => {
+                this.db = (<any>e).target.result;
+                opener.onSuccess(this.db);
                 dbRequest.onsuccess = null;
             };
         }
@@ -97,26 +96,25 @@ namespace ibas {
          * @param caller 查询监听者
          */
         fetch<P>(boName: string, caller: ILocalFetchCaller<P>): void {
-            let that: this = this;
             this.openDB({
-                onError(error: Error): void {
+                onError: (error: Error) => {
                     caller.onCompleted(new OperationResult(error));
                 },
-                onSuccess(db: IDBDatabase): void {
+                onSuccess: (db: IDBDatabase) => {
                     let objectStore: IDBObjectStore = db.transaction(boName, "readonly").objectStore(boName);
                     let dbRequest: IDBRequest = objectStore.openCursor();
-                    dbRequest.onerror = function (e: Event): void {
+                    dbRequest.onerror = (e: Event) => {
                         caller.onCompleted(new OperationResult((<any>e.currentTarget).error));
                     };
                     let opRslt: OperationResult<P> = new OperationResult<P>();
-                    dbRequest.onsuccess = function (e: Event): void {
+                    dbRequest.onsuccess = (e: Event) => {
                         let cursor: IDBCursorWithValue = (<any>e.target).result;
                         if (cursor) {
                             let data: any = cursor.value;
-                            if (!objects.isNull(that.converter)) {
-                                data = that.converter.parsing(data, boName);
+                            if (!objects.isNull(this.converter)) {
+                                data = this.converter.parsing(data, boName);
                             }
-                            if (that.filter(caller.criteria, data)) {
+                            if (this.filter(caller.criteria, data)) {
                                 opRslt.resultObjects.add(data);
                             }
                             cursor.continue();
@@ -156,12 +154,11 @@ namespace ibas {
             let storeParameters: IDBObjectStoreParameters = {
                 autoIncrement: true,
             };
-            let that: this = this;
             this.openDB({
-                onError(error: Error): void {
+                onError: (error: Error) => {
                     caller.onCompleted(new OperationResult(error));
                 },
-                onSuccess(db: IDBDatabase): void {
+                onSuccess: (db: IDBDatabase) => {
                     let objectStore: IDBObjectStore = null;
                     if (db.objectStoreNames.contains(boName)) {
                         objectStore = db.transaction(boName, "readwrite").objectStore(boName);
@@ -177,8 +174,8 @@ namespace ibas {
                         return;
                     }
                     let data: any = caller.beSaved;
-                    if (!objects.isNull(that.converter)) {
-                        data = that.converter.convert(data, boName);
+                    if (!objects.isNull(this.converter)) {
+                        data = this.converter.convert(data, boName);
                     }
                     let dbRequest: IDBRequest = objectStore.put(data);
                     dbRequest.onerror = function (e: Event): void {

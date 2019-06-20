@@ -81,7 +81,6 @@ namespace shell {
                         onEventFired: touch.end
                     });
                     // 语言变化监听
-                    ibas.i18n.language = sap.ui.getCore().getConfiguration().getLanguageTag();
                     ibas.i18n.registerListener({
                         onLanguageChanged(language: string): void {
                             if (ibas.strings.isEmpty(language)) {
