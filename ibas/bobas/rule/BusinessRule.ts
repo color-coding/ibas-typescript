@@ -501,4 +501,45 @@ namespace ibas {
             }
         }
     }
+    /** 业务规则-日期计算 */
+    export class BusinessRuleDateCalculation extends BusinessRuleCommon {
+        /**
+         * 日期计算
+         * @param source 属性-源
+         * @param target 属性-目标
+         * @param changeValue 变化值
+         * @param unit 变化单位(天、小时)
+         */
+        constructor(source: string, target: string, changeValue: number, unit?: "day" | "hour") {
+            super();
+            this.source = source;
+            this.target = target;
+            this.changeValue = changeValue;
+            this.unit = unit;
+            if (strings.isEmpty(this.unit)) {
+                this.unit = "day";
+            }
+            this.inputProperties.add(this.source);
+            this.affectedProperties.add(this.target);
+        }
+        source: string;
+        target: string;
+        changeValue: number;
+        unit: "day" | "hour";
+        /** 计算规则 */
+        protected compute(context: BusinessRuleContextCommon): void {
+            let sValue: Date = context.inputValues.get(this.source), tValue: Date;
+            if (sValue instanceof Date) {
+                let value: number = this.changeValue * 1000 * 60 * 60;
+                if (this.unit === "day") {
+                    value = value * 24;
+                    tValue = ibas.dates.valueOf(sValue.getTime() + value);
+                    context.outputValues.set(this.target, tValue);
+                } else if (this.unit === "hour") {
+                    tValue = ibas.dates.valueOf(sValue.getTime() + value);
+                    context.outputValues.set(this.target, tValue);
+                }
+            }
+        }
+    }
 }

@@ -77,6 +77,7 @@ namespace shell {
                                             ibas.i18n.language = selectedItem.getKey();
                                             that.application.destroy();
                                             ibas.i18n.reload(() => {
+                                                that.application.description = ibas.i18n.prop(that.application.name);
                                                 that.application.show();
                                             });
                                         }
