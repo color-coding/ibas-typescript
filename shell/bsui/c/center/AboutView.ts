@@ -42,8 +42,9 @@ namespace shell {
                         headerText: "Libraries",
                     });
                     // 添加UI组件
+                    let version: any = sap.ui.getCore().getConfiguration().getVersion();
                     components.add(new app.Component("openui5",
-                        (<any>sap.ui).getVersionInfo().version,
+                        version.toString(),
                         "© SAP SE, made available under Apache License 2.0.",
                         "sap-icon://sap-ui5"));
                     for (let item of components) {

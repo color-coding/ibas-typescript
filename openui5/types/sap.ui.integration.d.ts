@@ -473,7 +473,7 @@ declare namespace sap {
           }
         }
         </code>
-        </pre></p><h3>Actions</h3><p> Actions add behavior to the card. To add a navigation action to the header and to the items, you can configure it inside the manifest.</p><p>Actions have: <ul> <li>Type</li> <li>Parameters</li> <li>Enabled flag (true by default)</li> </ul></p><p>In the example below, a navigation action is added both to the header and the list items: <pre>
+        </pre></p><h3>Actions</h3><p>Actions add behavior to the card. Actions have: <ul> <li>Type</li> <li>Parameters</li> <li>Enabled flag (true by default)</li> </ul></p><p>The available action types are:</p><p><ul> <li>Navigation</li> </ul></p><p>To add a navigation action, you need to configure it inside the manifest and the action itself can be set on:</p><p><ul> <li>Header</li> <li>Items of the list card</li> <li>Rows of the table card</li> <li>Analytical content</li> <li>Object content</li> </ul></p><p>In the example below, a navigation action is added both to the header and the list items: <pre>
         <code>
         {
           "sap.app": {
@@ -524,6 +524,38 @@ declare namespace sap {
                   }
                 ]
               }
+            }
+          }
+        }
+        </code>
+        </pre></p><p>In the example below, a navigation action is added on the Object content(same as Analytical content): <pre>
+        <code>
+        {
+          "sap.app": {
+            "type": "card"
+          },
+          "sap.card": {
+            "type": "Object",
+            ...
+            "content": {
+              "data": {
+                "request": {
+                  "url": "./objectitems_services2.json"
+                },
+                "path": "/items"
+              },
+               "groups": {
+                 ...
+               },
+               "actions": [
+                 {
+                   "type": "Navigation",
+                   "enabled": "{= ${url}}",
+                   "parameters": {
+                      "url": "{url}"
+                   }
+                }
+              ]
             }
           }
         }

@@ -22,6 +22,14 @@ namespace sap {
             export function visibleRowCount(count: number): number {
                 return ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, count);
             }
+            // 表格的选择插件
+            const ID_TABLE_PLUGIN_CHOOSE: string = function (): string {
+                let version: any = sap.ui.getCore().getConfiguration().getVersion();
+                if (version && version.getMajor() >= 1 && version.getMinor() >= 67) {
+                    return "{0}_plg_chs";
+                }
+                return undefined;
+            }();
             /**
              * 表格
              */
@@ -56,17 +64,38 @@ namespace sap {
                  */
                 setChooseType(this: Table, value: ibas.emChooseType): Table {
                     this.detachRowSelectionChange(changeSelectionStyle);
+                    this.setProperty("chooseType", value);
                     if (value === ibas.emChooseType.SINGLE) {
-                        this.setEnableSelectAll(false);
                         this.setSelectionMode(sap.ui.table.SelectionMode.MultiToggle);
+                        this.setEnableSelectAll(false);
                         this.attachRowSelectionChange(undefined, changeSelectionStyle);
                     } else if (value === ibas.emChooseType.MULTIPLE) {
-                        this.setEnableSelectAll(true);
                         this.setSelectionMode(sap.ui.table.SelectionMode.MultiToggle);
+                        this.setEnableSelectAll(true);
                     } else {
                         this.setSelectionMode(sap.ui.table.SelectionMode.None);
+                        this.setEnableSelectAll(false);
                     }
-                    return this.setProperty("chooseType", value);
+                    return this;
+                },
+                /**
+                 * 重写设置是否全选
+                 */
+                setEnableSelectAll(this: Table, value: boolean): Table {
+                    if (!ibas.strings.isEmpty(ID_TABLE_PLUGIN_CHOOSE)) {
+                        this.removePlugin(ibas.strings.format(ID_TABLE_PLUGIN_CHOOSE, this.getId()));
+                        if (this.getChooseType() === ibas.emChooseType.MULTIPLE) {
+                            if (value === false) {
+                                this.addPlugin(new sap.ui.table.plugins.MultiSelectionPlugin(
+                                    ibas.strings.format(ID_TABLE_PLUGIN_CHOOSE, this.getId()), {
+                                        showHeaderSelector: true,
+                                    })
+                                );
+                                return this.setProperty("enableSelectAll", value);
+                            }
+                        }
+                    }
+                    return sap.ui.table.Table.prototype.setEnableSelectAll.apply(this, arguments);
                 },
                 /**
                  * 获取选择的数据

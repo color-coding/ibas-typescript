@@ -10,7 +10,7 @@ declare namespace sap {
       namespace rta {
          namespace service {
             /**
-             * <p><p>Provides necessary functionality to get and execute actions on controls. Actions are UI operations available in RTA such as rename, remove, move etc.</p></p>
+             * <p><p>Provides necessary functionality to get and execute actions on controls. Actions are UI operations available in key user adaptation such as rename, remove, move etc.</p></p>
              */
             namespace Action {
                /**
@@ -89,20 +89,20 @@ declare namespace sap {
       namespace rta {
          namespace service {
             /**
-             * <p><p>Provides functionality to create ControllerExtensions</p></p>
+             * <p><p>Provides functionality to create <code>ControllerExtensions</code>.</p></p>
              */
             namespace ControllerExtension {
                /**
                 * <p>Creates a change that adds an extension to the controller associated with the given view. Throws an error if the information is not complete. As of now, this only creates the change with a reference to a file. The consumer has to take care of creating that file and adding it to the backend.</p>
-                * @param {any} sCodeRef <p>Name of the file, without path, with the extension '.js'. Must comply to UI5 module naming convention. Has to be unique and must not conflict with other already defined modules.</p>
+                * @param {string} sCodeRef <p>Name of the file, without path, with the extension <code>.js</code>. Must comply to UI5 module naming convention. Has to be unique and must not conflict with other already defined modules.</p>
                 * @param {string} sViewId <p>ID of the view whose controller should be extended</p>
-                * @returns any <p>Returns the definition of the newly created change</p>
+                * @returns any <p>Definition of the newly created change</p>
                 */
-               function add(sCodeRef: any, sViewId: string): any;
+               function add(sCodeRef: string, sViewId: string): any;
                /**
-                * <p>Gets the Controller Extension template from the DesignTimeMetadata of the given view and returns it as a string wrapped in a promise. If there is no template specified, a default template will be returned.</p>
+                * <p>Gets the controller extension template from the <code>DesignTimeMetadata</code> of the given view and returns it as a string wrapped in a promise. If there is no template specified, a default template will be returned.</p>
                 * @param {string} sViewId <p>ID of the view whose template should be retrieved</p>
-                * @returns Promise<any> <p>Returns a promise that resolves with the template as string or rejects when the file was not found</p>
+                * @returns Promise<any> <p>Promise that resolves with the template as string or rejects when the file was not found</p>
                 */
                function getTemplate(sViewId: string): Promise<any>;
             }
@@ -115,14 +115,14 @@ declare namespace sap {
       namespace rta {
          namespace service {
             /**
-             * <p><p>Provides necessary functionality to get tree model data for an outline. Takes into consideration different designtime root elements.</p></p>
+             * <p><p>Provides necessary functionality to get tree model data for an outline. Takes into consideration different design time root elements.</p></p>
              */
             namespace Outline {
                /**
-                * <p>Returns an outline model data associated with the rta instance, starting from the passed control. If no control is passed, the root control(s) of the respective rta instance is taken as the initial control. Throws an error if the control id parameter is not a valid control with a stable id.</p>
-                * @param {string} sId <p>the id of the control to start with. If omitted the root control(s) is used</p>
-                * @param {number} iDepth <p>the depth of childNode levels that should be returned based on the given control</p>
-                * @returns sap.ui.rta.service.Outline.OutlineObject <p>an array containing outline data for each root control</p>
+                * <p>Returns an outline model data associated with the key user adaptation instance, starting from the passed control. If no control is passed, the root control(s) of the respective key user adaptation instance is taken as the initial control. Throws an error if the control ID parameter is not a valid control with a stable ID.</p>
+                * @param {string} sId <p>ID of the control to start with. If omitted the root control(s) is used.</p>
+                * @param {number} iDepth <p>Depth of <code>childNode</code> levels that should be returned based on the given control</p>
+                * @returns sap.ui.rta.service.Outline.OutlineObject <p>Array containing outline data for each root control</p>
                 */
                function get(sId?: string, iDepth?: number): sap.ui.rta.service.Outline.OutlineObject;
                /**
@@ -144,7 +144,7 @@ declare namespace sap {
              */
             namespace Property {
                /**
-                * <p>Returns an object containing design time properties for the passed control's id. Throws an error if the control id parameter is not a valid control with a stable id.</p><p>Example:</p><p><pre>
+                * <p>Returns an object containing design time properties for the passed control's ID. Throws an error if the control ID parameter is not a valid control with a stable ID.</p><p>Example:</p><p><pre>
                    {
                       "properties": {
                          "dtMetadataProperty2": {
@@ -234,8 +234,8 @@ declare namespace sap {
                        }
                    }
                </pre></p>
-                * @param {string} sControlId <p>the id of the control to start with.</p>
-                * @returns sap.ui.rta.service.Property.PropertyObject <p>an object containing relevant property data for the passed control</p>
+                * @param {string} sControlId <p>ID of the control to start with</p>
+                * @returns sap.ui.rta.service.Property.PropertyObject <p>Object containing relevant property data for the passed control</p>
                 */
                function get(sControlId: string): sap.ui.rta.service.Property.PropertyObject;
                /**
@@ -259,7 +259,7 @@ declare namespace sap {
                /**
                 * <p>Adds the specified controls to the current selection.</p>
                 * @param {string | string[]} vControlIds <p>Control IDs to be selected</p>
-                * @returns boolean <p>true if the selection has changed</p>
+                * @returns boolean <p><code>true</code> if the selection has changed</p>
                 */
                static add(vControlIds: string | string[]): boolean;
                /**
@@ -270,18 +270,18 @@ declare namespace sap {
                /**
                 * <p>Removes the selection from the specified controls.</p>
                 * @param {string | string[]} vControlIds <p>Control IDs from which to remove the selection</p>
-                * @returns boolean <p>true if the selection has changed</p>
+                * @returns boolean <p><code>true</code> if the selection has changed</p>
                 */
                static remove(vControlIds: string | string[]): boolean;
                /**
                 * <p>Resets the current selection.</p>
-                * @returns boolean <p>true if completed successfully (false if there is nothing to reset)</p>
+                * @returns boolean <p><code>true</code> if completed successfully (<code>false</code> if there is nothing to reset)</p>
                 */
                static reset(): boolean;
                /**
                 * <p>Deselects the current selection and selects the specified list of controls.</p>
                 * @param {string | string[]} vControlIds <p>Control IDs to be selected</p>
-                * @returns boolean <p>true if the selection has changed</p>
+                * @returns boolean <p><code>true</code> if the selection has changed</p>
                 */
                static set(vControlIds: string | string[]): boolean;
             }

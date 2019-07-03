@@ -1695,7 +1695,7 @@ declare namespace sap {
                  */
                 getNoData(): sap.ui.core.Control | string;
                 /**
-                 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getPlugins" href="#/api/sap.ui.table.Table/methods/getPlugins">plugins</a>.</p><p>Plugin section of the table. Multiple plugins are possible, but always only <b>one</b> of a certain type.</p><p>The following restrictions apply: <ul> <li>Only one MultiSelectionPlugin can be applied. No other plugins can be applied.</li> </ul></p>
+                 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getPlugins" href="#/api/sap.ui.table.Table/methods/getPlugins">plugins</a>.</p><p>Plugin section of the table. Multiple plugins are possible, but always only <b>one</b> of a certain type.</p><p>The following restrictions apply: <ul> <li>If a selection plugin is applied to the table, the table's selection API must not be used. Instead, use the API of the plugin.</li> <li>Only one MultiSelectionPlugin can be applied. No other plugins can be applied.</li> </ul></p>
                  * @returns sap.ui.table.plugins.SelectionPlugin[] 
                  */
                 getPlugins(): sap.ui.table.plugins.SelectionPlugin[];
@@ -2464,13 +2464,15 @@ declare namespace sap {
              */
             namespace plugins {
                 /**
-                 * <p>Implements a plugin to enable a special multi-selection behavior: <ul> <li>No Select All button, select all can only be done via range selection</li> <li>Dedicated button to clear the selection</li> <li>The number of items which can be selected in a range is defined with the limit property by the application. If the user tries to select more items, the selection is automatically limited, and the table scrolls back to the last selected item</li> <li>If not already loaded, the table loads the selected items up to the given limit</li> <li>Multiple consecutive selections are possible</li> </ul></p><p>When this plugin is applied to the table, the selection mode is automatically set to MultiToggle and cannot be changed.</p>
+                 * <p>Implements a plugin to enable a special multi-selection behavior: <ul> <li>No Select All checkbox, select all can only be done via range selection</li> <li>Dedicated Deselect All button to clear the selection</li> <li>The number of items which can be selected in a range is defined with the limit property by the application. If the user tries to select more items, the selection is automatically limited, and the table scrolls back to the last selected item</li> <li>If not already loaded, the table loads the selected items up to the given limit</li> <li>Multiple consecutive selections are possible</li> </ul></p><p>When this plugin is applied to the table, the table's selection mode is automatically set to MultiToggle and cannot be changed.</p>
                  */
                 export class MultiSelectionPlugin extends sap.ui.table.plugins.SelectionPlugin {
                     /**
-                     * <p>Constructs an instance of sap.ui.table.plugins.MultiSelectionPlugin</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+                     * <p>Loads the context of the selected range and adds the given selection interval to the selection.</p>
+                     * @param {number} iIndexFrom <p>Index from which the selection starts</p>
+                     * @param {number} iIndexTo <p>Index up to which to select</p>
                      */
-                    constructor();
+                    addSelectionInterval(iIndexFrom: number, iIndexTo: number): void;
                     /**
                      * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="selectionChange" href="#/api/sap.ui.table.plugins.SelectionPlugin/events/selectionChange">selectionChange</a> event of this <code>sap.ui.table.plugins.SelectionPlugin</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.table.plugins.SelectionPlugin</code> itself.</p><p>This event is fired when the selection is changed.</p>
                      * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
@@ -2487,6 +2489,10 @@ declare namespace sap {
                      * @returns sap.ui.table.plugins.MultiSelectionPlugin <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
                     attachSelectionChange(oData: any, fnFunction: Function, oListener?: any): sap.ui.table.plugins.MultiSelectionPlugin;
+                    /**
+                     * <p>Removes the complete selection.</p>
+                     */
+                    clearSelection(): void;
                     /**
                      * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="selectionChange" href="#/api/sap.ui.table.plugins.SelectionPlugin/events/selectionChange">selectionChange</a> event of this <code>sap.ui.table.plugins.SelectionPlugin</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
                      * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
@@ -2514,25 +2520,59 @@ declare namespace sap {
                      */
                     protected fireSelectionChange(mParameters?: any): sap.ui.table.plugins.MultiSelectionPlugin;
                     /**
-                     * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLimit" href="#/api/sap.ui.table.plugins.MultiSelectionPlugin/methods/getLimit">limit</a>.</p><p>Number of items which can be selected in a range.</p><p>Default value is <code>200</code>.</p>
+                     * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLimit" href="#/api/sap.ui.table.plugins.MultiSelectionPlugin/methods/getLimit">limit</a>.</p><p>Number of items which can be selected in a range. Accepts positive integer values. If set to 0, the limit is disabled, and the Select All checkbox appears instead of the Deselect All button. The plugin loads all selected items. <b>Note:</b> To avoid severe performance problems, the limit should only be set to 0 in the following cases: <ul> <li>With client-side models</li> <li>With server-side models if they are used in client mode</li> <li>If the entity set is small</li> </ul></p><p>Default value is <code>200</code>.</p>
                      * @returns number <p>Value of property <code>limit</code></p>
                      */
                     getLimit(): number;
                     /**
-                     * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLimit" href="#/api/sap.ui.table.plugins.MultiSelectionPlugin/methods/getLimit">limit</a>.</p><p>Number of items which can be selected in a range.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>200</code>.</p>
+                     * <p>Zero-based indices of selected items, wrapped in an array. An empty array means nothing has been selected.</p>
+                     * @returns number[] <p>An array containing all selected indices</p>
+                     */
+                    getSelectedIndices(): number[];
+                    /**
+                     * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getShowHeaderSelector" href="#/api/sap.ui.table.plugins.MultiSelectionPlugin/methods/getShowHeaderSelector">showHeaderSelector</a>.</p><p>Show header selector</p><p>Default value is <code>true</code>.</p>
+                     * @returns boolean <p>Value of property <code>showHeaderSelector</code></p>
+                     */
+                    getShowHeaderSelector(): boolean;
+                    /**
+                     * <p>Returns the information whether the given index is selected.</p>
+                     * @param {number} iIndex <p>The index for which the selection state is retrieved</p>
+                     * @returns boolean <p><code>true</code> if the index is selected</p>
+                     */
+                    isIndexSelected(iIndex: number): boolean;
+                    /**
+                     * <p>Removes the given selection interval from the selection. In case of single selection, only <code>iIndexTo</code> is removed from the selection.</p>
+                     * @param {number} iIndexFrom <p>Index from which the deselection starts</p>
+                     * @param {number} iIndexTo <p>Index up to which to deselect</p>
+                     */
+                    removeSelectionInterval(iIndexFrom: number, iIndexTo: number): void;
+                    /**
+                     * <p>Loads all contexts and adds all indices to the selection if the limit is disabled.</p>
+                     */
+                    selectAll(): void;
+                    /**
+                     * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLimit" href="#/api/sap.ui.table.plugins.MultiSelectionPlugin/methods/getLimit">limit</a>.</p><p>Number of items which can be selected in a range. Accepts positive integer values. If set to 0, the limit is disabled, and the Select All checkbox appears instead of the Deselect All button. The plugin loads all selected items. <b>Note:</b> To avoid severe performance problems, the limit should only be set to 0 in the following cases: <ul> <li>With client-side models</li> <li>With server-side models if they are used in client mode</li> <li>If the entity set is small</li> </ul></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>200</code>.</p>
                      * @param {number} iLimit <p>New value for property <code>limit</code></p>
                      * @returns sap.ui.table.plugins.MultiSelectionPlugin <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
                     setLimit(iLimit: number): sap.ui.table.plugins.MultiSelectionPlugin;
+                    /**
+                     * <p>Loads the contexts of the selected range and sets the given selection interval as the selection.</p>
+                     * @param {number} iIndexFrom <p>Index from which the selection starts</p>
+                     * @param {number} iIndexTo <p>Index up to which to select</p>
+                     */
+                    setSelectionInterval(iIndexFrom: number, iIndexTo: number): void;
+                    /**
+                     * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getShowHeaderSelector" href="#/api/sap.ui.table.plugins.MultiSelectionPlugin/methods/getShowHeaderSelector">showHeaderSelector</a>.</p><p>Show header selector</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+                     * @param {boolean} bShowHeaderSelector <p>New value for property <code>showHeaderSelector</code></p>
+                     * @returns sap.ui.table.plugins.MultiSelectionPlugin <p>Reference to <code>this</code> in order to allow method chaining</p>
+                     */
+                    setShowHeaderSelector(bShowHeaderSelector: boolean): sap.ui.table.plugins.MultiSelectionPlugin;
                 }
                 /**
                  * <p>Implements the selection methods for a table.</p>
                  */
                 export abstract class SelectionPlugin extends sap.ui.core.Element {
-                    /**
-                     * <p>Constructs an instance of sap.ui.table.plugins.SelectionPlugin</p><p>The following restrictions apply: <ul> <li>Do not create subclasses of the SelectionPlugin. The API is subject to change.</li> </ul></p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
-                     */
-                    constructor();
                     /**
                      * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="selectionChange" href="#/api/sap.ui.table.plugins.SelectionPlugin/events/selectionChange">selectionChange</a> event of this <code>sap.ui.table.plugins.SelectionPlugin</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.table.plugins.SelectionPlugin</code> itself.</p><p>This event is fired when the selection is changed.</p>
                      * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>

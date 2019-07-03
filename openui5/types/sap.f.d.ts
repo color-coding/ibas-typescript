@@ -524,7 +524,7 @@ declare namespace sap {
 			setToggleHeaderOnTitleClick(bToggleHeaderOnTitleClick: boolean): sap.f.DynamicPage;
 		}
 		/**
-		 * <p>Settings for accessible landmarks which can be applied to the container elements of a <code>sap.f.DynamicPage</code> control. These landmarks are used by assistive technologies (such as screenreaders) to provide a meaningful page overview.</p>
+		 * <p>Settings for accessible landmarks which can be applied to the container elements of a <code>sap.f.DynamicPage</code> control.</p><p>These landmarks are used by assistive technologies (such as screen readers) to provide a meaningful page overview.</p>
 		 */
 		export class DynamicPageAccessibleLandmarkInfo extends sap.ui.core.Element {
 			/**
@@ -1030,7 +1030,7 @@ declare namespace sap {
 			setSnappedTitleOnMobile(oSnappedTitleOnMobile: sap.m.Title): sap.f.DynamicPageTitle;
 		}
 		/**
-		 * <p><p>Defines the areas within the <code>sap.f.DynamicPageTitle</code>.</p></p>
+		 * <p><p>Defines the areas within the <code>sap.f.DynamicPageTitle</code> control.</p></p>
 		 */
 		export enum DynamicPageTitleArea {
 			/**
@@ -1631,9 +1631,9 @@ declare namespace sap {
 			protected _enforceMaxColumns(): void;
 			/**
 			 * <p>Gets a map of the CSS styles that should be applied to the grid, based on the current layout.</p>
-			 * @returns { [key: string]: any } <p>The current css styles</p>
+			 * @returns any <p>The current CSS styles</p>
 			 */
-			protected _getActiveGridStyles(): { [key: string]: any };
+			protected _getActiveGridStyles(): any;
 			/**
 			 * <p>Handler for onAfterRendering for each item.</p>
 			 */
@@ -1928,7 +1928,7 @@ declare namespace sap {
 			setRows(iRows: number): sap.f.GridContainerItemLayoutData;
 		}
 		/**
-		 * <p>Holds a set of settings that define the dimensions of <code>sap.f.GridContainer</code></p><p>Can be used to define the sizes of columns and rows for different screen sizes, by using the <code>layout</code> aggregations of <code>sap.f.GridContainer</code>.</p>
+		 * <p>Holds a set of settings that define the dimensions of <code>sap.f.GridContainer</code>.</p><p>Can be used to define the sizes of columns and rows for different screen sizes, by using the <code>layout</code> aggregations of <code>sap.f.GridContainer</code>.</p>
 		 */
 		export class GridContainerSettings extends sap.ui.base.ManagedObject {
 			/**
@@ -2023,7 +2023,7 @@ declare namespace sap {
 			setCustomLayout(oCustomLayout: sap.ui.layout.cssgrid.GridLayoutBase): sap.f.GridList;
 		}
 		/**
-		 * <p><p>Interface for card controls</p></p>
+		 * <p><p>Interface that should be implemented by all card controls.</p></p>
 		 */
 		export interface ICard {
 		}
@@ -2077,6 +2077,186 @@ declare namespace sap {
 			 * <p>Desktop: 33/67/- Begin and Mid (expanded) columns are displayed</p><p>Tablet: 33/67/- Begin and Mid (expanded) columns are displayed</p><p>Phone: -/100/- only the Mid column is displayed</p><p>Use to display both a master and a detail page when the user should focus on the detail page.</p>
 			 */
 			TwoColumnsMidExpanded = "TwoColumnsMidExpanded",
+		}
+		/**
+		 * <p>Defines specific properties of the search that are applied to <code>sap.f.ShellBar</code>.</p>
+		 */
+		export class SearchManager extends sap.ui.core.Element {
+			/**
+			 * <p>Constructor for a new <code>SearchManager</code>.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+			 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
+			 * @param {any} mSettings <p>Initial settings for the new control</p>
+			 */
+			constructor(sId?: string, mSettings?: any);
+			/**
+			 * <p>Adds some suggestionItem to the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSuggestionItems" href="#/api/sap.f.SearchManager/methods/getSuggestionItems">suggestionItems</a>.</p>
+			 * @param {sap.m.SuggestionItem} oSuggestionItem <p>The suggestionItem to add; if empty, nothing is inserted</p>
+			 * @returns sap.f.SearchManager <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			addSuggestionItem(oSuggestionItem: sap.m.SuggestionItem): sap.f.SearchManager;
+			/**
+			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="liveChange" href="#/api/sap.f.SearchManager/events/liveChange">liveChange</a> event of this <code>sap.f.SearchManager</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.SearchManager</code> itself.</p><p>Fired when the value of the search field is changed by the user, for example at each key press.</p><p><b>Note:</b> Do not invalidate or re-render a focused search field, especially during the <code>liveChange</code> event.</p>
+			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.SearchManager</code> itself</p>
+			 * @returns sap.f.SearchManager <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			attachLiveChange(oData: any, fnFunction: Function, oListener?: any): sap.f.SearchManager;
+			/**
+			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="search" href="#/api/sap.f.SearchManager/events/search">search</a> event of this <code>sap.f.SearchManager</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.SearchManager</code> itself.</p><p>Fired when the user triggers a search.</p>
+			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.SearchManager</code> itself</p>
+			 * @returns sap.f.SearchManager <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			attachSearch(oData: any, fnFunction: Function, oListener?: any): sap.f.SearchManager;
+			/**
+			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="suggest" href="#/api/sap.f.SearchManager/events/suggest">suggest</a> event of this <code>sap.f.SearchManager</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.SearchManager</code> itself.</p><p>Fired when the search field is initially focused or its value is changed by the user. This event means that suggestion data should be updated, in case if suggestions are used. Use the value parameter to create new suggestions for it.</p>
+			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.SearchManager</code> itself</p>
+			 * @returns sap.f.SearchManager <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			attachSuggest(oData: any, fnFunction: Function, oListener?: any): sap.f.SearchManager;
+			/**
+			 * <p>Binds property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getValue" href="#/api/sap.f.SearchManager/methods/getValue">value</a> to model data.</p><p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/bindProperty">ManagedObject.bindProperty</a> for a detailed description of the possible properties of <code>oBindingInfo</code></p>
+			 * @param {any} oBindingInfo <p>The binding information</p>
+			 * @returns sap.f.SearchManager <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			bindValue(oBindingInfo: any): sap.f.SearchManager;
+			/**
+			 * <p>Destroys all the suggestionItems in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSuggestionItems" href="#/api/sap.f.SearchManager/methods/getSuggestionItems">suggestionItems</a>.</p>
+			 * @returns sap.f.SearchManager <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			destroySuggestionItems(): sap.f.SearchManager;
+			/**
+			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="liveChange" href="#/api/sap.f.SearchManager/events/liveChange">liveChange</a> event of this <code>sap.f.SearchManager</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
+			 * @returns sap.f.SearchManager <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			detachLiveChange(fnFunction: Function, oListener?: any): sap.f.SearchManager;
+			/**
+			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="search" href="#/api/sap.f.SearchManager/events/search">search</a> event of this <code>sap.f.SearchManager</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
+			 * @returns sap.f.SearchManager <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			detachSearch(fnFunction: Function, oListener?: any): sap.f.SearchManager;
+			/**
+			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="suggest" href="#/api/sap.f.SearchManager/events/suggest">suggest</a> event of this <code>sap.f.SearchManager</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
+			 * @returns sap.f.SearchManager <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			detachSuggest(fnFunction: Function, oListener?: any): sap.f.SearchManager;
+			/**
+			 * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="liveChange" href="#/api/sap.f.SearchManager/events/liveChange">liveChange</a> to attached listeners.</p>
+			 * @param {any} mParameters <p>Parameters to pass along with the event</p>
+			 * @returns sap.f.SearchManager <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			protected fireLiveChange(mParameters?: any): sap.f.SearchManager;
+			/**
+			 * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="search" href="#/api/sap.f.SearchManager/events/search">search</a> to attached listeners.</p>
+			 * @param {any} mParameters <p>Parameters to pass along with the event</p>
+			 * @returns sap.f.SearchManager <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			protected fireSearch(mParameters?: any): sap.f.SearchManager;
+			/**
+			 * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="suggest" href="#/api/sap.f.SearchManager/events/suggest">suggest</a> to attached listeners.</p>
+			 * @param {any} mParameters <p>Parameters to pass along with the event</p>
+			 * @returns sap.f.SearchManager <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			protected fireSuggest(mParameters?: any): sap.f.SearchManager;
+			/**
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEnabled" href="#/api/sap.f.SearchManager/methods/getEnabled">enabled</a>.</p><p>Determines whether the control is enabled.</p><p>Default value is <code>true</code>.</p>
+			 * @returns boolean <p>Value of property <code>enabled</code></p>
+			 */
+			getEnabled(): boolean;
+			/**
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEnableSuggestions" href="#/api/sap.f.SearchManager/methods/getEnableSuggestions">enableSuggestions</a>.</p><p>If true, a <code>suggest</code> event is fired when user types in the input and when the input is focused. On a phone device, a full screen dialog with suggestions is always shown even if the suggestions list is empty.</p><p>Default value is <code>false</code>.</p>
+			 * @returns boolean <p>Value of property <code>enableSuggestions</code></p>
+			 */
+			getEnableSuggestions(): boolean;
+			/**
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMaxLength" href="#/api/sap.f.SearchManager/methods/getMaxLength">maxLength</a>.</p><p>Determines the maximum number of characters. Value '0' means the feature is switched off.</p><p>Default value is <code>0</code>.</p>
+			 * @returns number <p>Value of property <code>maxLength</code></p>
+			 */
+			getMaxLength(): number;
+			/**
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getPlaceholder" href="#/api/sap.f.SearchManager/methods/getPlaceholder">placeholder</a>.</p><p>Defines the text that is displayed when no value is available. The default placeholder text is the word "Search" in the current local language (if supported) or in English.</p>
+			 * @returns string <p>Value of property <code>placeholder</code></p>
+			 */
+			getPlaceholder(): string;
+			/**
+			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSuggestionItems" href="#/api/sap.f.SearchManager/methods/getSuggestionItems">suggestionItems</a>.</p><p><code>SuggestionItems</code> are the items which are displayed in the suggestions list. The following properties can be used: <ul> <li><code>key</code> - it is not displayed and may be used as internal technical field</li> <li><code>text</code> - it is displayed as normal suggestion text</li> <li><code>icon</code></li> <li><code>description</code> - additional text that may be used to visually display search item type or category</li> </ul></p>
+			 * @returns sap.m.SuggestionItem[] 
+			 */
+			getSuggestionItems(): sap.m.SuggestionItem[];
+			/**
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getValue" href="#/api/sap.f.SearchManager/methods/getValue">value</a>.</p><p>Defines the input value.</p>
+			 * @returns string <p>Value of property <code>value</code></p>
+			 */
+			getValue(): string;
+			/**
+			 * <p>Checks for the provided <code>sap.m.SuggestionItem</code> in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSuggestionItems" href="#/api/sap.f.SearchManager/methods/getSuggestionItems">suggestionItems</a>. and returns its index if found or -1 otherwise.</p>
+			 * @param {sap.m.SuggestionItem} oSuggestionItem <p>The suggestionItem whose index is looked for</p>
+			 * @returns number <p>The index of the provided control in the aggregation if found, or -1 otherwise</p>
+			 */
+			indexOfSuggestionItem(oSuggestionItem: sap.m.SuggestionItem): number;
+			/**
+			 * <p>Inserts a suggestionItem into the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSuggestionItems" href="#/api/sap.f.SearchManager/methods/getSuggestionItems">suggestionItems</a>.</p>
+			 * @param {sap.m.SuggestionItem} oSuggestionItem <p>The suggestionItem to insert; if empty, nothing is inserted</p>
+			 * @param {number} iIndex <p>The <code>0</code>-based index the suggestionItem should be inserted at; for a negative value of <code>iIndex</code>, the suggestionItem is inserted at position 0; for a value greater than the current size of the aggregation, the suggestionItem is inserted at the last position</p>
+			 * @returns sap.f.SearchManager <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			insertSuggestionItem(oSuggestionItem: sap.m.SuggestionItem, iIndex: number): sap.f.SearchManager;
+			/**
+			 * <p>Removes all the controls from the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSuggestionItems" href="#/api/sap.f.SearchManager/methods/getSuggestionItems">suggestionItems</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
+			 * @returns sap.m.SuggestionItem[] <p>An array of the removed elements (might be empty)</p>
+			 */
+			removeAllSuggestionItems(): sap.m.SuggestionItem[];
+			/**
+			 * <p>Removes a suggestionItem from the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSuggestionItems" href="#/api/sap.f.SearchManager/methods/getSuggestionItems">suggestionItems</a>.</p>
+			 * @param {number | string | sap.m.SuggestionItem} vSuggestionItem <p>The suggestionItem to remove or its index or id</p>
+			 * @returns sap.m.SuggestionItem <p>The removed suggestionItem or <code>null</code></p>
+			 */
+			removeSuggestionItem(vSuggestionItem: number | string | sap.m.SuggestionItem): sap.m.SuggestionItem;
+			/**
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEnabled" href="#/api/sap.f.SearchManager/methods/getEnabled">enabled</a>.</p><p>Determines whether the control is enabled.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+			 * @param {boolean} bEnabled <p>New value for property <code>enabled</code></p>
+			 * @returns sap.f.SearchManager <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setEnabled(bEnabled: boolean): sap.f.SearchManager;
+			/**
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEnableSuggestions" href="#/api/sap.f.SearchManager/methods/getEnableSuggestions">enableSuggestions</a>.</p><p>If true, a <code>suggest</code> event is fired when user types in the input and when the input is focused. On a phone device, a full screen dialog with suggestions is always shown even if the suggestions list is empty.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+			 * @param {boolean} bEnableSuggestions <p>New value for property <code>enableSuggestions</code></p>
+			 * @returns sap.f.SearchManager <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setEnableSuggestions(bEnableSuggestions: boolean): sap.f.SearchManager;
+			/**
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMaxLength" href="#/api/sap.f.SearchManager/methods/getMaxLength">maxLength</a>.</p><p>Determines the maximum number of characters. Value '0' means the feature is switched off.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
+			 * @param {number} iMaxLength <p>New value for property <code>maxLength</code></p>
+			 * @returns sap.f.SearchManager <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setMaxLength(iMaxLength: number): sap.f.SearchManager;
+			/**
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getPlaceholder" href="#/api/sap.f.SearchManager/methods/getPlaceholder">placeholder</a>.</p><p>Defines the text that is displayed when no value is available. The default placeholder text is the word "Search" in the current local language (if supported) or in English.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+			 * @param {string} sPlaceholder <p>New value for property <code>placeholder</code></p>
+			 * @returns sap.f.SearchManager <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setPlaceholder(sPlaceholder: string): sap.f.SearchManager;
+			/**
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getValue" href="#/api/sap.f.SearchManager/methods/getValue">value</a>.</p><p>Defines the input value.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+			 * @param {string} sValue <p>New value for property <code>value</code></p>
+			 * @returns sap.f.SearchManager <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setValue(sValue: string): sap.f.SearchManager;
+			/**
+			 * <p>Unbinds property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getValue" href="#/api/sap.f.SearchManager/methods/getValue">value</a> from model data.</p>
+			 * @returns sap.f.SearchManager <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			unbindValue(): sap.f.SearchManager;
 		}
 		/**
 		 * <p>A horizontal bar control holding multiple child controls used as application shell header.</p><h3>Overview</h3><p>The <code>ShellBar</code> is used as the uppermost section (shell) of the app. It is fully responsive and adaptive, and corresponds to the SAP Fiori Design Guidelines.</p><h3>Usage</h3><p>Content specified in the <code>ShellBar</code> properties and aggregations is automatically positioned in dedicated places of the control.</p>
@@ -2193,6 +2373,11 @@ declare namespace sap {
 			 */
 			destroyProfile(): sap.f.ShellBar;
 			/**
+			 * <p>Destroys the searchManager in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSearchManager" href="#/api/sap.f.ShellBar/methods/getSearchManager">searchManager</a>.</p>
+			 * @returns sap.f.ShellBar <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			destroySearchManager(): sap.f.ShellBar;
+			/**
 			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="avatarPressed" href="#/api/sap.f.ShellBar/events/avatarPressed">avatarPressed</a> event of this <code>sap.f.ShellBar</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
 			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
@@ -2307,6 +2492,11 @@ declare namespace sap {
 			 */
 			getHomeIcon(): sap.ui.core.URI;
 			/**
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getHomeIconTooltip" href="#/api/sap.f.ShellBar/methods/getHomeIconTooltip">homeIconTooltip</a>.</p><p>Defines a custom tooltip for the home icon. If not set, a default tooltip is used.</p><p>Default value is <code>empty string</code>.</p>
+			 * @returns string <p>Value of property <code>homeIconTooltip</code></p>
+			 */
+			getHomeIconTooltip(): string;
+			/**
 			 * <p>Gets the HTML tag of the root DOM Reference.</p>
 			 * @returns string <p>the HTML-tag</p>
 			 */
@@ -2326,6 +2516,11 @@ declare namespace sap {
 			 * @returns sap.f.Avatar 
 			 */
 			getProfile(): sap.f.Avatar;
+			/**
+			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSearchManager" href="#/api/sap.f.ShellBar/methods/getSearchManager">searchManager</a>.</p><p>Configurable search.</p><p><b>Note:</b> If <code>showSearch</code> is set to <code>true</code>, two search buttons appear.</p>
+			 * @returns sap.f.SearchManager 
+			 */
+			getSearchManager(): sap.f.SearchManager;
 			/**
 			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSecondTitle" href="#/api/sap.f.ShellBar/methods/getSecondTitle">secondTitle</a>.</p><p>Defines the secondary title of the control.</p><p>Default value is <code>empty string</code>.</p>
 			 * @returns string <p>Value of property <code>secondTitle</code></p>
@@ -2402,6 +2597,12 @@ declare namespace sap {
 			 */
 			setHomeIcon(sHomeIcon: sap.ui.core.URI): sap.f.ShellBar;
 			/**
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getHomeIconTooltip" href="#/api/sap.f.ShellBar/methods/getHomeIconTooltip">homeIconTooltip</a>.</p><p>Defines a custom tooltip for the home icon. If not set, a default tooltip is used.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
+			 * @param {string} sHomeIconTooltip <p>New value for property <code>homeIconTooltip</code></p>
+			 * @returns sap.f.ShellBar <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setHomeIconTooltip(sHomeIconTooltip: string): sap.f.ShellBar;
+			/**
 			 * <p>Sets the HTML tag of the root DOM Reference.</p>
 			 * @param {string} sTag 
 			 * @returns sap.m.IBar <p>this for chaining</p>
@@ -2419,6 +2620,12 @@ declare namespace sap {
 			 * @returns sap.f.ShellBar <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
 			setProfile(oProfile: sap.f.Avatar): sap.f.ShellBar;
+			/**
+			 * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSearchManager" href="#/api/sap.f.ShellBar/methods/getSearchManager">searchManager</a>.</p>
+			 * @param {sap.f.SearchManager} oSearchManager <p>The searchManager to set</p>
+			 * @returns sap.f.ShellBar <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setSearchManager(oSearchManager: sap.f.SearchManager): sap.f.ShellBar;
 			/**
 			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSecondTitle" href="#/api/sap.f.ShellBar/methods/getSecondTitle">secondTitle</a>.</p><p>Defines the secondary title of the control.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
 			 * @param {string} sSecondTitle <p>New value for property <code>secondTitle</code></p>
@@ -2488,7 +2695,7 @@ declare namespace sap {
 		 */
 		namespace cards {
 			/**
-			 * <p>A control used to group a set of card attributes in a header.</p><h3>Overview</h3><p> The <code>Header</code> displays general information about the card. You can configure the title, subtitle, status text and icon, using properties.</p><h3>Usage</h3><p> You should always set a title. To show a KPI or any numeric information, use <a target="_self" class="jsdoclink" href="#/api/sap.f.cards.NumericHeader">NumericHeader</a> instead.</p>
+			 * <p>Displays general information in the header of the <a target="_self" class="jsdoclink" href="#/api/sap.f.Card">sap.f.Card</a>.</p><p>You can configure the title, subtitle, status text and icon, using the provided properties.</p><p><b>Notes:</b> <ul> <li>You should always set a title.</li> <li>To show a KPI or any numeric information, use <a target="_self" class="jsdoclink" href="#/api/sap.f.cards.NumericHeader">sap.f.cards.NumericHeader</a> instead.</li> <ul></p>
 			 */
 			export class Header extends sap.ui.core.Control implements sap.f.cards.IHeader {
 				/**
@@ -2590,7 +2797,7 @@ declare namespace sap {
 				setTitle(sTitle: string): sap.f.cards.Header;
 			}
 			/**
-			 * <p><p>Different options for the position of the <code>Card</code> header.</p></p>
+			 * <p><p>Different options for the position of the header in controls that implement the <a target="_self" class="jsdoclink" href="#/api/sap.f.ICard">sap.f.ICard</a> interface.</p></p>
 			 */
 			export enum HeaderPosition {
 				/**
@@ -2603,12 +2810,12 @@ declare namespace sap {
 				Top = "Top",
 			}
 			/**
-			 * <p><p>Marker interface for card headers</p></p>
+			 * <p><p>Marker interface for controls suitable as a header in controls that implement the <a target="_self" class="jsdoclink" href="#/api/sap.f.ICard">sap.f.ICard</a> interface.</p></p>
 			 */
 			export interface IHeader {
 			}
 			/**
-			 * <p>A control used to group a set of card attributes in a header.</p><h3>Overview</h3><p> The <code>NumericHeader</code> shows general information about the card and allows the configuration of a numeric value visualization. You can configure the title, subtitle, status text and icon, using properties.</p><h3>Usage</h3><p> To show only basic information, use <a target="_self" class="jsdoclink" href="#/api/sap.f.cards.Header">Header</a> instead. It is possible to add more side number indicators, using the <code>sideIndicators</code> aggregation. You should always set a title. You should always have a maximum of two side indicators.</p>
+			 * <p>Displays general information in the header of the <a target="_self" class="jsdoclink" href="#/api/sap.f.Card">sap.f.Card</a> and allows the configuration of a numeric value visualization..</p><p>You can configure the title, subtitle, status text and icon, using the provided properties. To add more side number indicators, use the <code>sideIndicators</code> aggregation.</p><p><b>Notes:</b> <ul> <li>You should always set a title.</li> <li>You should always have a maximum of two side indicators.</li> <li>To show only basic information, use <a target="_self" class="jsdoclink" href="#/api/sap.f.cards.Header">Header</a> instead.</li> </ul></p>
 			 */
 			export class NumericHeader extends sap.ui.core.Control {
 				/**
@@ -2674,6 +2881,11 @@ declare namespace sap {
 				 * @returns sap.m.ValueColor <p>Value of property <code>state</code></p>
 				 */
 				getState(): sap.m.ValueColor;
+				/**
+				 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getStatusText" href="#/api/sap.f.cards.NumericHeader/methods/getStatusText">statusText</a>.</p><p>Defines the status text.</p><p>Default value is <code>empty string</code>.</p>
+				 * @returns string <p>Value of property <code>statusText</code></p>
+				 */
+				getStatusText(): string;
 				/**
 				 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSubtitle" href="#/api/sap.f.cards.NumericHeader/methods/getSubtitle">subtitle</a>.</p><p>The subtitle of the card</p>
 				 * @returns string <p>Value of property <code>subtitle</code></p>
@@ -2747,6 +2959,12 @@ declare namespace sap {
 				 */
 				setState(sValue: sap.m.ValueColor): sap.f.cards.NumericHeader;
 				/**
+				 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getStatusText" href="#/api/sap.f.cards.NumericHeader/methods/getStatusText">statusText</a>.</p><p>Defines the status text.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
+				 * @param {string} sStatusText <p>New value for property <code>statusText</code></p>
+				 * @returns sap.f.cards.NumericHeader <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				setStatusText(sStatusText: string): sap.f.cards.NumericHeader;
+				/**
 				 * <p>Sets the subtitle.</p>
 				 * @param {string} sValue <p>The text of the subtitle</p>
 				 * @returns sap.f.cards.NumericHeader <p><code>this</code> pointer for chaining</p>
@@ -2772,7 +2990,7 @@ declare namespace sap {
 				setUnitOfMeasurement(sValue: string): sap.f.cards.NumericHeader;
 			}
 			/**
-			 * <p>A control used by <code>sap.f.cards.NumericHeader</code> to hold a set of side indicator attributes.</p>
+			 * <p>Holds a set of side indicator attributes used in the <a target="_self" class="jsdoclink" href="#/api/sap.f.cards.NumericHeader">sap.f.cards.NumericHeader</a> control.</p>
 			 */
 			export class NumericSideIndicator extends sap.ui.core.Control {
 				/**
@@ -2824,7 +3042,7 @@ declare namespace sap {
 		 */
 		namespace routing {
 			/**
-			 * <p><code>sap.f.routing.Router</code> is intended to be used with <code><a target="_self" class="jsdoclink" href="#/api/sap.f.FlexibleColumnLayout">sap.f.FlexibleColumnLayout</a></code> as a root control.</p><p>The difference to the <code><a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.Router">sap.ui.core.routing.Router</a></code> are the <code>viewLevel</code>, <code>transition</code>, and <code>transitionParameters</code> properties that you can specify in every Route or Target created by this router.</p><p>Additionally, the <code>layout</code> property can be specified in every Route, in which case it is applied to the root control.</p><p>See <code><a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.Router">sap.ui.core.routing.Router</a></code> for the constructor arguments.</p>
+			 * <p>The <code>sap.f.routing.Router</code> class is intended to be used with <code><a target="_self" class="jsdoclink" href="#/api/sap.f.FlexibleColumnLayout">sap.f.FlexibleColumnLayout</a></code> as a root control.</p><p>The difference to the <code><a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.Router">sap.ui.core.routing.Router</a></code> are the <code>viewLevel</code>, <code>transition</code>, and <code>transitionParameters</code> properties that you can specify in every Route or Target created by this router.</p><p>Additionally, the <code>layout</code> property can be specified in every Route, in which case it is applied to the root control.</p><p>See <code><a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.Router">sap.ui.core.routing.Router</a></code> for the constructor arguments.</p>
 			 */
 			export class Router extends sap.ui.core.routing.Router {
 				/**
