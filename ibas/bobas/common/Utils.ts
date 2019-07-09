@@ -187,14 +187,24 @@ namespace ibas {
          * 获取属性值
          * @param data 对象
          * @param propertyName 属性名称
+         * @param ignoreCase 忽略大小写
          */
-        export function propertyValue(data: any, propertyName: string): any {
+        export function propertyValue(data: any, propertyName: string, ignoreCase: boolean = true): any {
             if (isNull(data)) {
                 return undefined;
             }
+            if (strings.isEmpty(propertyName)) {
+                return undefined;
+            }
             for (let key in data) {
-                if (strings.equalsIgnoreCase(key, propertyName)) {
-                    return data[key];
+                if (ignoreCase === true) {
+                    if (strings.equalsIgnoreCase(key, propertyName)) {
+                        return data[key];
+                    }
+                } else {
+                    if (strings.equals(key, propertyName)) {
+                        return data[key];
+                    }
                 }
             }
             return undefined;
@@ -831,9 +841,10 @@ namespace ibas {
     export namespace numbers {
         /** 转为整数 */
         export function toInt(data: any): number {
-            if (typeof data === "number") {
-                data = data.toString();
+            if (typeof data !== "string") {
+                data = String(data);
             }
+            data = strings.remove(data, ",");
             let value: number = parseInt(data, 0);
             if (isNaN(value)) {
                 return 0;
@@ -844,7 +855,10 @@ namespace ibas {
         /**  数字 */
         export function valueOf(data: any): number {
             if (typeof data === "number") {
-                return <number>data;
+                return data;
+            }
+            if (typeof data === "string") {
+                data = strings.remove(data, ",");
             }
             let value: number = parseFloat(data);
             if (isNaN(value)) {
@@ -900,6 +914,47 @@ namespace ibas {
                 }
             }
             return false;
+        }
+        /**
+         * 格式为字符串
+         * @param value 值
+         * @param digits 保留小数位
+         * @param digits 保留小数位
+         */
+        export function toString(value: any, digits: number = 6, separate: boolean = false): string {
+            if (!isNumber(value)) {
+                return "NaN";
+            }
+            let sValue: string = Number(value).toFixed(digits);
+            if (separate !== true) {
+                return sValue;
+            }
+            let intValue: string, decValue: string, potIndex: number;
+            potIndex = sValue.indexOf(".");
+            if (potIndex > 0) {
+                intValue = sValue.substring(0, potIndex);
+                decValue = sValue.substring(potIndex + 1);
+            } else {
+                intValue = sValue;
+                decValue = null;
+            }
+            if (intValue.length <= 3) {
+                return sValue;
+            }
+            let builder: StringBuilder = new StringBuilder();
+            if (!strings.isEmpty(decValue)) {
+                for (let index: number = decValue.length - 1; index >= 0; index--) {
+                    builder.append(decValue[index]);
+                }
+                builder.append(".");
+            }
+            for (let index: number = intValue.length - 1; index >= 0; index--) {
+                builder.append(intValue[index]);
+                if ((intValue.length - index) % 3 === 0 && index > 0) {
+                    builder.append(",");
+                }
+            }
+            return builder.toString(true);
         }
     }
 

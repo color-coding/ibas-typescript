@@ -4391,6 +4391,7 @@
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
         "Referenced": "NO",
+        "Remarks": "你好我是超级牛，哈哈",
         "SalesOrderItems": [
             {
                 "isDirty": false,

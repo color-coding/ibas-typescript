@@ -10,7 +10,7 @@ namespace trainingtesting {
         /** 查看应用-销售订单 */
         export class SalesOrderViewApp extends ibas.BOViewService<ISalesOrderViewView, bo.SalesOrder> {
             /** 应用标识 */
-            static APPLICATION_ID: string = "f590c0e2-4af8-4287-ab8f-bf142bdb084b";
+            static APPLICATION_ID: string = "86583cdd-8927-4937-b3cc-83b53205a2ce";
             /** 应用名称 */
             static APPLICATION_NAME: string = "trainingtesting_app_salesorder_view";
             /** 业务对象编码 */
@@ -31,9 +31,15 @@ namespace trainingtesting {
             }
             /** 视图显示后 */
             protected viewShowed(): void {
-                // 视图加载完成
+                // 视图加载完成，基类方法更新地址
                 super.viewShowed();
+                if (ibas.objects.isNull(this.viewData)) {
+                    // 创建编辑对象实例
+                    this.viewData = new bo.SalesOrder();
+                    this.proceeding(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_data_created_new"));
+                }
                 this.view.showSalesOrder(this.viewData);
+                this.view.showSalesOrderItems(this.viewData.salesOrderItems.filterDeleted());
             }
             /** 编辑数据，参数：目标数据 */
             protected editData(): void {
@@ -63,9 +69,7 @@ namespace trainingtesting {
                     criteria = new ibas.Criteria();
                     criteria.result = 1;
                     // 添加查询条件
-                    let condition: ibas.ICondition = criteria.conditions.create();
-                    condition.alias = bo.SalesOrder.PROPERTY_DOCENTRY_NAME;
-                    condition.value = value;
+
                 }
                 let boRepository: bo.BORepositoryTrainingTesting = new bo.BORepositoryTrainingTesting();
                 boRepository.fetchSalesOrder({
@@ -95,6 +99,9 @@ namespace trainingtesting {
         export interface ISalesOrderViewView extends ibas.IBOViewView {
             /** 显示数据 */
             showSalesOrder(data: bo.SalesOrder): void;
+            /** 显示数据-销售订单-行 */
+            showSalesOrderItems(datas: bo.SalesOrderItem[]): void;
+
         }
         /** 销售订单连接服务映射 */
         export class SalesOrderLinkServiceMapping extends ibas.BOLinkServiceMapping {

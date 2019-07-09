@@ -10,7 +10,7 @@ namespace trainingtesting {
         /** 查看应用-客户主数据 */
         export class CustomerViewApp extends ibas.BOViewService<ICustomerViewView, bo.Customer> {
             /** 应用标识 */
-            static APPLICATION_ID: string = "7a03acaa-691e-414a-9a44-d079fbda1fb5";
+            static APPLICATION_ID: string = "79086134-a2c6-4f28-99da-6d155a2bd116";
             /** 应用名称 */
             static APPLICATION_NAME: string = "trainingtesting_app_customer_view";
             /** 业务对象编码 */
@@ -31,8 +31,14 @@ namespace trainingtesting {
             }
             /** 视图显示后 */
             protected viewShowed(): void {
-                // 视图加载完成
+                // 视图加载完成，基类方法更新地址
                 super.viewShowed();
+                if (ibas.objects.isNull(this.viewData)) {
+                    // 创建编辑对象实例
+                    this.viewData = new bo.Customer();
+                    this.proceeding(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_data_created_new"));
+                }
+                this.view.showCustomer(this.viewData);
             }
             /** 编辑数据，参数：目标数据 */
             protected editData(): void {
@@ -62,9 +68,7 @@ namespace trainingtesting {
                     criteria = new ibas.Criteria();
                     criteria.result = 1;
                     // 添加查询条件
-                    let condition: ibas.ICondition = criteria.conditions.create();
-                    condition.alias = bo.Customer.PROPERTY_CODE_NAME;
-                    condition.value = value;
+
                 }
                 let boRepository: bo.BORepositoryTrainingTesting = new bo.BORepositoryTrainingTesting();
                 boRepository.fetchCustomer({
@@ -92,6 +96,8 @@ namespace trainingtesting {
         }
         /** 视图-客户主数据 */
         export interface ICustomerViewView extends ibas.IBOViewView {
+            /** 显示数据 */
+            showCustomer(data: bo.Customer): void;
 
         }
         /** 客户主数据连接服务映射 */

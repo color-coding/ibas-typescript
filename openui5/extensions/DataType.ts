@@ -234,7 +234,7 @@ namespace sap {
                         if (ibas.objects.isNull(oValue)) {
                             return undefined;
                         }
-                        return Number(oValue).toFixed(0);
+                        return ibas.numbers.toString(oValue, 0);
                     }
                     return oValue;
                 }
@@ -250,7 +250,7 @@ namespace sap {
                         if (ibas.strings.isEmpty(oValue)) {
                             return undefined;
                         }
-                        return parseInt(oValue, 0);
+                        return ibas.numbers.toInt(oValue);
                     }
                     return 0;
                 }
@@ -319,7 +319,7 @@ namespace sap {
                         if (ibas.objects.isNull(oValue)) {
                             return undefined;
                         }
-                        return Number(oValue).toFixed(this.decimalPlaces);
+                        return ibas.numbers.toString(oValue, this.decimalPlaces);
                     }
                     return oValue;
                 }
@@ -335,7 +335,7 @@ namespace sap {
                         if (ibas.strings.isEmpty(oValue)) {
                             return undefined;
                         }
-                        return ibas.numbers.round(parseFloat(oValue), this.decimalPlaces);
+                        return ibas.numbers.round(ibas.numbers.valueOf(oValue), this.decimalPlaces);
                     }
                     return 0.0;
                 }

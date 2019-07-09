@@ -511,8 +511,19 @@ namespace shell {
                     if (ui instanceof sap.m.Page) {
                         // 视图自身可设置忙状态
                         for (let item of ui.getContent()) {
-                            if (item.getBusy() !== busy) {
-                                item.setBusy(busy);
+                            if (item instanceof sap.m.SplitContainer) {
+                                let page: any = item.getCurrentMasterPage();
+                                if (page instanceof sap.ui.core.Control) {
+                                    page.setBusy(busy);
+                                }
+                                page = item.getCurrentDetailPage();
+                                if (page instanceof sap.ui.core.Control) {
+                                    page.setBusy(busy);
+                                }
+                            } else {
+                                if (item.getBusy() !== busy) {
+                                    item.setBusy(busy);
+                                }
                             }
                         }
                     } else if (ui instanceof sap.m.TabContainerItem) {

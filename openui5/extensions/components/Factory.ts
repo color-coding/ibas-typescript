@@ -14,7 +14,7 @@ namespace sap {
              * @param property 属性信息
              * @param textView 文本视图
              */
-            export function newComponent(property: shell.bo.IBOPropertyInfo, mode: "Text" | "Input"): sap.ui.core.Control {
+            export function newComponent(property: shell.bo.IBOPropertyInfo, mode: "Text" | "Input" | "Object" | "Object.2"): sap.ui.core.Control {
                 // 创建绑定信息
                 let bindInfo: {
                     path: string,
@@ -60,7 +60,6 @@ namespace sap {
                     bindInfo.type = new sap.extension.data.Alphanumeric();
                 }
                 if (mode === "Text") {
-                    // 只读权限
                     if (property.values instanceof Array && property.values.length > 0) {
                         // 可选值
                         bindInfo.type = new sap.extension.data.Unknown({
@@ -89,7 +88,6 @@ namespace sap {
                     return new sap.extension.m.Text("", {
                     }).bindProperty("bindingValue", bindInfo);
                 } else if (mode === "Input") {
-                    // 读写权限
                     if (bindInfo.type instanceof sap.extension.data.Date) {
                         return new sap.extension.m.DatePicker("", {
                             editable: property.authorised === ibas.emAuthoriseType.ALL ? true : false,
@@ -129,6 +127,65 @@ namespace sap {
                             editable: property.authorised === ibas.emAuthoriseType.ALL ? true : false,
                         }).bindProperty("bindingValue", bindInfo);
                     }
+                } else if (mode === "Object") {
+                    if (property.values instanceof Array && property.values.length > 0) {
+                        // 可选值
+                        bindInfo.type = new sap.extension.data.Unknown({
+                            formatValue(oValue: any, sInternalType: string): any {
+                                if (sInternalType === "string") {
+                                    for (let item of property.values) {
+                                        if (item.value === oValue) {
+                                            return item.description;
+                                        }
+                                    }
+                                }
+                                return oValue;
+                            },
+                            parseValue(oValue: any, sInternalType: string): any {
+                                if (sInternalType === "string") {
+                                    for (let item of property.values) {
+                                        if (item.description === oValue) {
+                                            return item.value;
+                                        }
+                                    }
+                                }
+                                return oValue;
+                            }
+                        });
+                    }
+                    return new sap.extension.m.ObjectAttribute("", {
+                        title: property.description,
+                        text: bindInfo,
+                    });
+                } else if (mode === "Object.2") {
+                    if (property.values instanceof Array && property.values.length > 0) {
+                        // 可选值
+                        bindInfo.type = new sap.extension.data.Unknown({
+                            formatValue(oValue: any, sInternalType: string): any {
+                                if (sInternalType === "string") {
+                                    for (let item of property.values) {
+                                        if (item.value === oValue) {
+                                            return item.description;
+                                        }
+                                    }
+                                }
+                                return oValue;
+                            },
+                            parseValue(oValue: any, sInternalType: string): any {
+                                if (sInternalType === "string") {
+                                    for (let item of property.values) {
+                                        if (item.description === oValue) {
+                                            return item.value;
+                                        }
+                                    }
+                                }
+                                return oValue;
+                            }
+                        });
+                    }
+                    return new sap.extension.m.ObjectAttribute("", {
+                        text: bindInfo,
+                    });
                 } else {
                     return null;
                 }

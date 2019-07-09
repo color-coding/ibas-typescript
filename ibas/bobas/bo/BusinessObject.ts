@@ -373,15 +373,19 @@ namespace ibas {
             let newBO: this = super.clone();
             // 重置部分属性值
             newBO.isLoading = true;
-            // 设置为新对象
-            newBO.markNew(true);
-            for (let item of NEED_BE_RESET_PROPERTIES) {
-                if (newBO[item] !== undefined) {
-                    newBO[item] = undefined;
-                }
-            }
+            newBO.resetStatus();
             newBO.isLoading = false;
             return newBO;
+        }
+        /** 重置 */
+        protected resetStatus(): void {
+            // 设置为新对象
+            this.markNew(true);
+            for (let item of NEED_BE_RESET_PROPERTIES) {
+                if (this[item] !== undefined) {
+                    this[item] = undefined;
+                }
+            }
         }
         /** 属性改变时 */
         protected onPropertyChanged(name: string): void {

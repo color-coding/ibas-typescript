@@ -10,7 +10,7 @@ namespace trainingtesting {
         /** 查看应用-物料主数据 */
         export class MaterialViewApp extends ibas.BOViewService<IMaterialViewView, bo.Material> {
             /** 应用标识 */
-            static APPLICATION_ID: string = "16530a89-6ade-468c-b5fe-c14053326377";
+            static APPLICATION_ID: string = "3c385277-b267-4042-a2cd-c8047a1ac857";
             /** 应用名称 */
             static APPLICATION_NAME: string = "trainingtesting_app_material_view";
             /** 业务对象编码 */
@@ -31,8 +31,14 @@ namespace trainingtesting {
             }
             /** 视图显示后 */
             protected viewShowed(): void {
-                // 视图加载完成
+                // 视图加载完成，基类方法更新地址
                 super.viewShowed();
+                if (ibas.objects.isNull(this.viewData)) {
+                    // 创建编辑对象实例
+                    this.viewData = new bo.Material();
+                    this.proceeding(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_data_created_new"));
+                }
+                this.view.showMaterial(this.viewData);
             }
             /** 编辑数据，参数：目标数据 */
             protected editData(): void {
@@ -62,9 +68,7 @@ namespace trainingtesting {
                     criteria = new ibas.Criteria();
                     criteria.result = 1;
                     // 添加查询条件
-                    let condition: ibas.ICondition = criteria.conditions.create();
-                    condition.alias = bo.Material.PROPERTY_CODE_NAME;
-                    condition.value = value;
+
                 }
                 let boRepository: bo.BORepositoryTrainingTesting = new bo.BORepositoryTrainingTesting();
                 boRepository.fetchMaterial({
@@ -92,6 +96,8 @@ namespace trainingtesting {
         }
         /** 视图-物料主数据 */
         export interface IMaterialViewView extends ibas.IBOViewView {
+            /** 显示数据 */
+            showMaterial(data: bo.Material): void;
 
         }
         /** 物料主数据连接服务映射 */

@@ -50,5 +50,6 @@
     "openui5_data_value_not_match": "值不匹配",
     "openui5_data_value_more_than": "值大于{0}",
     "openui5_data_value_less_than": "值小于{0}",
-    "openui5_data_value_not_between": "值没有处于{0} - {1}之间"
+    "openui5_data_value_not_between": "值没有处于{0} - {1}之间",
+    "openui5_object_other_properties": "其他属性"
 }

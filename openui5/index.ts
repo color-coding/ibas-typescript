@@ -44,6 +44,18 @@
 /// <reference path="./extensions/components/Page.ts" />
 /// <reference path="./extensions/components/AddressArea.d.ts" />
 /// <reference path="./extensions/components/AddressArea.ts" />
+/// <reference path="./extensions/components/ObjectPageLayout.d.ts" />
+/// <reference path="./extensions/components/ObjectPageLayout.ts" />
+/// <reference path="./extensions/components/ObjectIdentifier.d.ts" />
+/// <reference path="./extensions/components/ObjectIdentifier.ts" />
+/// <reference path="./extensions/components/ObjectAttribute.d.ts" />
+/// <reference path="./extensions/components/ObjectAttribute.ts" />
+/// <reference path="./extensions/components/ObjectStatus.d.ts" />
+/// <reference path="./extensions/components/ObjectStatus.ts" />
+/// <reference path="./extensions/components/ObjectNumber.d.ts" />
+/// <reference path="./extensions/components/ObjectNumber.ts" />
+/// <reference path="./extensions/components/Table.m.d.ts" />
+/// <reference path="./extensions/components/Table.m.ts" />
 /// <reference path="./extensions/components/Factory.ts" />
 
 namespace openui5 {

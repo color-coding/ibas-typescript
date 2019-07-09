@@ -52,10 +52,16 @@ namespace ibas {
         /**
          * 生成字符串
          */
-        toString(): string {
+        toString(reverse: boolean = false): string {
             let str: string = "";
-            for (let item of this.values) {
-                str += item;
+            if (reverse === true) {
+                for (let item of this.values) {
+                    str = item + str;
+                }
+            } else {
+                for (let item of this.values) {
+                    str = str + item;
+                }
             }
             return str;
         }
