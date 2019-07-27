@@ -17,11 +17,11 @@ declare namespace sap {
                 * <p>Returns a list of available actions for the specified control(s).</p>
                 * @param {string | string[]} vControlIds <p>Control ID or an array of IDs to get actions for</p>
                 * @param {string} sActionId <p>Action ID to be executed on the specified controls</p>
-                * @returns any <p>Result of the operation</p>
+                * @returns any <p>Result of the operation wrapped in a promise.</p>
                 */
                function execute(vControlIds: string | string[], sActionId: string): any;
                /**
-                * <p>Returns a list of available actions for the specified control(s).</p><p>Example:</p><p><pre>
+                * <p>Returns a list of available actions for the specified control(s) wrapped in a promise.</p><p>Example:</p><p><pre>
                [
                    {
                        "id": "CTX_RENAME",
@@ -62,9 +62,9 @@ declare namespace sap {
                ]
                </pre></p>
                 * @param {string | string[]} vControlIds <p>Control ID or an array of IDs to get actions for</p>
-                * @returns sap.ui.rta.service.Action.ActionObject[] <p>List of available actions</p>
+                * @returns any <p>List of available actions wrapped in a promise</p>
                 */
-               function get(vControlIds: string | string[]): sap.ui.rta.service.Action.ActionObject[];
+               function get(vControlIds: string | string[]): any;
                /**
                 * <p><p>Object containing the detailed information about the action.</p><p><pre>
                {

@@ -1218,7 +1218,7 @@ declare namespace sap {
             Up = "Up",
         }
         /**
-         * <p>The carousel allows the user to browse through a set of items by swiping right or left. </p><h3>Overview</h3><p> The control is mostly used for showing a gallery of images, but can hold any sap.m control. </p><h3>Structure</h3><p> The carousel consists of a the following elements: <ul> <li>Content area - displays the different items.</li> <li>Navigation - arrows to the left and right for switching between items.</li> <li>(optional) Paging - indicator at the bottom to show the current position in the set.</li> </ul> The paging indicator can be configured as follows: <ul> <li><code>showPageIndicator</code> - determines if the indicator is displayed.</li> <li>If the pages are less than 9, the page indicator is represented with bullets.</li> <li>If the pages are 9 or more, the page indicator is numeric.</li> <li><code>pageIndicatorPlacement</code> - determines where the indicator is located. Default (<code>sap.m.PlacementType.Bottom</code>) - below the content.</li> </ul> Additionally, you can also change the location of the navigation arrows. By setting <code>arrowsPlacement</code> to <code>sap.m.CarouselArrowsPlacement.PageIndicator</code>, the arrows will be located at the bottom by the paging indicator. </p><h3>Usage</h3><h4> When to use</h4><p> <ul> <li>The items you want to display are very different from each other.</li> <li>You want to display the items one after the other.</li> </ul> </p><h4> When not to use</h4><p> <ul> <li>The items you want to display need to be visible at the same time.</li> <li>The items you want to display are uniform and very similar</li> </ul> </p><h3>Responsive Behavior</h3><p> <ul> <li>On touch devices, navigation is performed with swipe gestures (swipe right or swipe left).</li> <li>On desktop, navigation is done with the navigation arrows.</li> <li>The paging indicator (when activated) is visible on each form factor.</li> </ul></p>
+         * <p>The carousel allows the user to browse through a set of items by swiping right or left. </p><h3>Overview</h3><p> The control is mostly used for showing a gallery of images, but can hold any sap.m control. </p><h3>Structure</h3><p> The carousel consists of a the following elements: <ul> <li>Content area - displays the different items.</li> <li>Navigation - arrows to the left and right for switching between items.</li> <li>(optional) Paging - indicator at the bottom to show the current position in the set.</li> </ul> The paging indicator can be configured as follows: <ul> <li><code>showPageIndicator</code> - determines if the indicator is displayed.</li> <li>If the pages are less than 9, the page indicator is represented with bullets.</li> <li>If the pages are 9 or more, the page indicator is numeric.</li> <li><code>pageIndicatorPlacement</code> - determines where the indicator is located. Default (<code>sap.m.PlacementType.Bottom</code>) - below the content.</li> </ul> Additionally, you can also change the location of the navigation arrows. By setting <code>arrowsPlacement</code> to <code>sap.m.CarouselArrowsPlacement.PageIndicator</code>, the arrows will be located at the bottom by the paging indicator. Note: When the content is of type <code>sap.m.Image</code> add "Image" text at the end of the <code>"alt"</code> description in order to provide accessibility info for the UI element. </p><h3>Usage</h3><h4> When to use</h4><p> <ul> <li>The items you want to display are very different from each other.</li> <li>You want to display the items one after the other.</li> </ul> </p><h4> When not to use</h4><p> <ul> <li>The items you want to display need to be visible at the same time.</li> <li>The items you want to display are uniform and very similar</li> </ul> </p><h3>Responsive Behavior</h3><p> <ul> <li>On touch devices, navigation is performed with swipe gestures (swipe right or swipe left).</li> <li>On desktop, navigation is done with the navigation arrows.</li> <li>The paging indicator (when activated) is visible on each form factor.</li> </ul></p>
          */
         export class Carousel extends sap.ui.core.Control {
             /**
@@ -2340,6 +2340,16 @@ declare namespace sap {
              */
             protected open(): sap.m.ComboBox;
             /**
+             * <p>Removes all the controls in the aggregation named <code>items</code>. Additionally unregisters them from the hosting UIArea and clears the selection.</p>
+             * @returns sap.ui.core.Item[] <p>An array of the removed items (might be empty).</p>
+             */
+            removeAllItems(): sap.ui.core.Item[];
+            /**
+             * <p>Removes all the controls in the aggregation named <code>items</code>. Additionally unregisters them from the hosting UIArea and clears the selection.</p>
+             * @returns sap.ui.core.Item[] <p>An array of the removed items (might be empty).</p>
+             */
+            removeAllItems(): sap.ui.core.Item[];
+            /**
              * <p>Removes an item from the aggregation named <code>items</code>.</p>
              * @param {number | string | sap.ui.core.Item} vItem <p>The item to remove or its index or ID.</p>
              * @returns sap.ui.core.Item <p>The removed item or null.</p>
@@ -2393,6 +2403,10 @@ declare namespace sap {
              * <p>Synchronizes the <code>selectedItem</code> association and the <code>selectedItemId</code> property.</p>
              */
             protected synchronizeSelection(): void;
+            /**
+             * <p>Creates picker if doesn't exist yet and sync with Control items To be overwritten by subclasses.</p>
+             */
+            protected syncPickerContent(): void;
             /**
              * <p>Creates picker if doesn't exist yet and sync with Control items</p>
              * @returns sap.m.Dialog|sap.m.Popover 
@@ -2676,6 +2690,10 @@ declare namespace sap {
              * @param {Function} fnFilter <p>Function to filter the items shown in the SuggestionsPopover</p>
              */
             showItems(fnFilter: Function): void;
+            /**
+             * <p>Creates picker if doesn't exist yet and sync with Control items To be overwritten by subclasses.</p>
+             */
+            protected syncPickerContent(): void;
             /**
              * <p>Unbinds aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.m.ComboBoxBase/methods/getItems">items</a> from model data.</p>
              * @returns sap.m.ComboBoxBase <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -9727,7 +9745,7 @@ declare namespace sap {
              */
             getShowUnread(): boolean;
             /**
-             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSticky" href="#/api/sap.m.ListBase/methods/getSticky">sticky</a>.</p><p>Defines the section of the control that remains fixed at the top of the page during vertical scrolling as long as the control is in the viewport.</p><p><b>Note:</b> Enabling sticky column headers in List controls will not have any effect.</p><p>There is limited browser support. Browsers that do not support this feature are listed below: <ul> <li>IE</li> <li>Edge lower than version 41 (EdgeHTML 16)</li> <li>Firefox lower than version 59</li> </ul></p><p>There are also some known limitations with respect to the scrolling behavior. A few are given below: <ul> <li>If the control is placed in layout containers that have the <code>overflow: hidden</code> or <code>overflow: auto</code> style definition, this can prevent the sticky elements of the control from becoming fixed at the top of the viewport.</li> <li>If sticky column headers are enabled in the <code>sap.m.Table</code> control, setting focus on the column headers will let the table scroll to the top.</li> </ul></p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSticky" href="#/api/sap.m.ListBase/methods/getSticky">sticky</a>.</p><p>Defines the section of the control that remains fixed at the top of the page during vertical scrolling as long as the control is in the viewport.</p><p><b>Note:</b> Enabling sticky column headers in List controls will not have any effect.</p><p>There is limited browser support. Browsers that do not support this feature are listed below: <ul> <li>IE</li> <li>Edge lower than version 41 (EdgeHTML 16)</li> <li>Firefox lower than version 59</li> </ul></p><p>There are also some known limitations. A few are given below: <ul> <li>If the control is placed in layout containers that have the <code>overflow: hidden</code> or <code>overflow: auto</code> style definition, this can prevent the sticky elements of the control from becoming fixed at the top of the viewport.</li> <li>If sticky column headers are enabled in the <code>sap.m.Table</code> control, setting focus on the column headers will let the table scroll to the top.</li> <li>A transparent toolbar design is not supported for sticky bars. The toolbar will automatically get an intransparent background color.</li> </ul></p>
              * @returns sap.m.Sticky[] <p>Value of property <code>sticky</code></p>
              */
             getSticky(): sap.m.Sticky[];
@@ -9938,7 +9956,7 @@ declare namespace sap {
              */
             setShowUnread(bShowUnread: boolean): sap.m.ListBase;
             /**
-             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSticky" href="#/api/sap.m.ListBase/methods/getSticky">sticky</a>.</p><p>Defines the section of the control that remains fixed at the top of the page during vertical scrolling as long as the control is in the viewport.</p><p><b>Note:</b> Enabling sticky column headers in List controls will not have any effect.</p><p>There is limited browser support. Browsers that do not support this feature are listed below: <ul> <li>IE</li> <li>Edge lower than version 41 (EdgeHTML 16)</li> <li>Firefox lower than version 59</li> </ul></p><p>There are also some known limitations with respect to the scrolling behavior. A few are given below: <ul> <li>If the control is placed in layout containers that have the <code>overflow: hidden</code> or <code>overflow: auto</code> style definition, this can prevent the sticky elements of the control from becoming fixed at the top of the viewport.</li> <li>If sticky column headers are enabled in the <code>sap.m.Table</code> control, setting focus on the column headers will let the table scroll to the top.</li> </ul></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSticky" href="#/api/sap.m.ListBase/methods/getSticky">sticky</a>.</p><p>Defines the section of the control that remains fixed at the top of the page during vertical scrolling as long as the control is in the viewport.</p><p><b>Note:</b> Enabling sticky column headers in List controls will not have any effect.</p><p>There is limited browser support. Browsers that do not support this feature are listed below: <ul> <li>IE</li> <li>Edge lower than version 41 (EdgeHTML 16)</li> <li>Firefox lower than version 59</li> </ul></p><p>There are also some known limitations. A few are given below: <ul> <li>If the control is placed in layout containers that have the <code>overflow: hidden</code> or <code>overflow: auto</code> style definition, this can prevent the sticky elements of the control from becoming fixed at the top of the viewport.</li> <li>If sticky column headers are enabled in the <code>sap.m.Table</code> control, setting focus on the column headers will let the table scroll to the top.</li> <li>A transparent toolbar design is not supported for sticky bars. The toolbar will automatically get an intransparent background color.</li> </ul></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
              * @param {sap.m.Sticky[]} sSticky <p>New value for property <code>sticky</code></p>
              * @returns sap.m.ListBase <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
@@ -12091,6 +12109,11 @@ declare namespace sap {
              */
             getSelectedItems(): sap.ui.core.Item[];
             /**
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSelectedKeys" href="#/api/sap.m.MultiComboBox/methods/getSelectedKeys">selectedKeys</a>.</p><p>Keys of the selected items. If the key has no corresponding item, no changes will apply. If duplicate keys exists the first item matching the key is used.</p><p>Default value is <code>[]</code>.</p>
+             * @returns string[] <p>Value of property <code>selectedKeys</code></p>
+             */
+            getSelectedKeys(): string[];
+            /**
              * <p>Inserts an item into the aggregation named <code>items</code>.</p>
              * @param {sap.ui.core.Item} oItem <p>The item to be inserted; if empty, nothing is inserted.</p>
              * @param {number} iIndex <p>The <code>0</code>-based index the item should be inserted at; for a negative value of <code>iIndex</code>, the item is inserted at position 0; for a value greater than the current size of the aggregation, the item is inserted at the last position.</p>
@@ -12177,6 +12200,28 @@ declare namespace sap {
              * @returns sap.m.MultiComboBox <p><code>this</code> to allow method chaining.</p>
              */
             setSelectedItems(aItems: string[] | sap.ui.core.Item[] | null): sap.m.MultiComboBox;
+            /**
+             * <p>Setter for property <code>valueStateText</code>.</p><p>Default value is empty/<code>undefined</code>.</p>
+             * @param {string} sText <p>New value for property <code>valueStateText</code>.</p>
+             * @returns sap.m.InputBase <p><code>this</code> to allow method chaining</p>
+             */
+            setValueStateText(sText: string): sap.m.InputBase;
+            /**
+             * <p>Sets the value state text</p>
+             * @param {string} sValueStateText <p>The new value state text</p>
+             * @returns sap.m.InputBase <p>this for chaining</p>
+             */
+            setValueStateText(sValueStateText?: string): sap.m.InputBase;
+            /**
+             * <p>Sets the value state text</p>
+             * @param {string} sValueStateText <p>The new value state text</p>
+             * @returns sap.m.MultiComboBox <p>this for chaining</p>
+             */
+            setValueStateText(sValueStateText?: string): sap.m.MultiComboBox;
+            /**
+             * <p>Creates picker if doesn't exist yet and sync with Control items To be overwritten by subclasses.</p>
+             */
+            protected syncPickerContent(): void;
             /**
              * <p>Creates picker if doesn't exist yet and sync with Control items</p>
              * @param {boolean} bForceListSync <p>Force MultiComboBox to SuggestionPopover sync</p>
@@ -12381,16 +12426,6 @@ declare namespace sap {
              * @returns sap.m.MultiInput <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             attachTokenUpdate(oData: any, fnFunction: Function, oListener?: any): sap.m.MultiInput;
-            /**
-             * <p>Clones input.</p>
-             * @returns sap.m.Input <p>Cloned input.</p>
-             */
-            clone(): sap.m.Input;
-            /**
-             * <p>Function overwrites clone function to add tokens to MultiInput</p>
-             * @returns sap.ui.core.Element <p>reference to the newly created clone</p>
-             */
-            clone(): sap.ui.core.Element;
             /**
              * <p>Destroys all the tokens in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTokens" href="#/api/sap.m.MultiInput/methods/getTokens">tokens</a>.</p>
              * @returns sap.m.MultiInput <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -14800,17 +14835,17 @@ declare namespace sap {
              */
             setNumber(sNumber: string): sap.m.ObjectNumber;
             /**
-             * <p>Sets the ObjectNumber's value state.</p>
-             * @param {sap.ui.core.ValueState} sState <p>The state to be set to</p>
-             * @returns sap.m.ObjectNumber <p>this pointer for chaining</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getState" href="#/api/sap.m.ObjectNumber/methods/getState">state</a>.</p><p>Determines the object number's value state. Setting this state will cause the number to be rendered in state-specific colors.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>None</code>.</p>
+             * @param {sap.ui.core.ValueState} sState <p>New value for property <code>state</code></p>
+             * @returns sap.m.ObjectNumber <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             setState(sState: sap.ui.core.ValueState): sap.m.ObjectNumber;
             /**
-             * <p>Sets the text alignment of the control without re-rendering the whole ObjectNumber.</p>
-             * @param {sap.ui.core.TextAlign} sAlign <p>The new value</p>
-             * @returns sap.m.ObjectNumber <p><code>this</code> pointer for chaining</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTextAlign" href="#/api/sap.m.ObjectNumber/methods/getTextAlign">textAlign</a>.</p><p>Sets the horizontal alignment of the number and unit.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Begin</code>.</p>
+             * @param {sap.ui.core.TextAlign} sTextAlign <p>New value for property <code>textAlign</code></p>
+             * @returns sap.m.ObjectNumber <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setTextAlign(sAlign: sap.ui.core.TextAlign): sap.m.ObjectNumber;
+            setTextAlign(sTextAlign: sap.ui.core.TextAlign): sap.m.ObjectNumber;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTextDirection" href="#/api/sap.m.ObjectNumber/methods/getTextDirection">textDirection</a>.</p><p>Available options for the number and unit text direction are LTR(left-to-right) and RTL(right-to-left). By default, the control inherits the text direction from its parent control.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Inherit</code>.</p>
              * @param {sap.ui.core.TextDirection} sTextDirection <p>New value for property <code>textDirection</code></p>
@@ -14953,9 +14988,9 @@ declare namespace sap {
              */
             setState(sValue: string): sap.m.ObjectStatus;
             /**
-             * <p>Sets the text. The default value is empty/undefined.</p>
-             * @param {string} sText <p>New value for property text</p>
-             * @returns sap.m.ObjectStatus <p>this to allow method chaining</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getText" href="#/api/sap.m.ObjectStatus/methods/getText">text</a>.</p><p>Defines the ObjectStatus text.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+             * @param {string} sText <p>New value for property <code>text</code></p>
+             * @returns sap.m.ObjectStatus <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             setText(sText: string): sap.m.ObjectStatus;
             /**
@@ -14965,9 +15000,9 @@ declare namespace sap {
              */
             setTextDirection(sTextDirection: sap.ui.core.TextDirection): sap.m.ObjectStatus;
             /**
-             * <p>Sets the title. The default value is empty/undefined.</p>
-             * @param {string} sTitle <p>New value for property title</p>
-             * @returns sap.m.ObjectStatus <p>this to allow method chaining</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTitle" href="#/api/sap.m.ObjectStatus/methods/getTitle">title</a>.</p><p>Defines the ObjectStatus title.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+             * @param {string} sTitle <p>New value for property <code>title</code></p>
+             * @returns sap.m.ObjectStatus <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             setTitle(sTitle: string): sap.m.ObjectStatus;
         }
@@ -15316,7 +15351,7 @@ declare namespace sap {
             constructor(sId?: string, mSettings?: any);
             /**
              * <p>add a single condition.</p>
-             * @param {any} oCondition <p>the new condition of type <code>{ "key": "007", "operation": any.Ascending, "keyField": "keyFieldKey", "value1": "", "value2": ""};</code></p>
+             * @param {any} oCondition <p>the new condition of type <code>{ "key": "007", "operation": sap.m.P13nConditionOperation.Ascending, "keyField": "keyFieldKey", "value1": "", "value2": ""};</code></p>
              */
             addCondition(oCondition: any): void;
             /**
@@ -15429,7 +15464,7 @@ declare namespace sap {
             getValidationExecutor(): any;
             /**
              * <p>insert a single condition.</p>
-             * @param {any} oCondition <p>the new condition of type <code>{ "key": "007", "operation": any.Ascending, "keyField": "keyFieldKey", "value1": "", "value2": ""};</code></p>
+             * @param {any} oCondition <p>the new condition of type <code>{ "key": "007", "operation": sap.m.P13nConditionOperation.Ascending, "keyField": "keyFieldKey", "value1": "", "value2": ""};</code></p>
              * @param {number} index <p>of the new condition</p>
              */
             insertCondition(oCondition: any, index: number): void;
@@ -17912,7 +17947,7 @@ declare namespace sap {
              */
             getShowDownloadButton(): boolean;
             /**
-             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSource" href="#/api/sap.m.PDFViewer/methods/getSource">source</a>.</p><p>Specifies the path to the PDF file to display. Can be set to a relative or an absolute path.<br> Optionally, this property can also be set to a data URI path or a blob URL in all major web browsers except Internet Explorer and Microsoft Edge, provided that this data URI or blob URL is whitelisted in advance.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSource" href="#/api/sap.m.PDFViewer/methods/getSource">source</a>.</p><p>Specifies the path to the PDF file to display. Can be set to a relative or an absolute path.<br> Optionally, this property can also be set to a data URI path or a blob URL in all major web browsers except Internet Explorer and Microsoft Edge, provided that this data URI or blob URL is whitelisted in advance. For more information about whitelisting, see <a target="_self" href="#/topic/91f3768f6f4d1014b6dd926db0e91070">URL Whitelist Filtering</a>.</p>
              * @returns sap.ui.core.URI <p>Value of property <code>source</code></p>
              */
             getSource(): sap.ui.core.URI;
@@ -17990,7 +18025,7 @@ declare namespace sap {
              */
             setShowDownloadButton(bShowDownloadButton: boolean): sap.m.PDFViewer;
             /**
-             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSource" href="#/api/sap.m.PDFViewer/methods/getSource">source</a>.</p><p>Specifies the path to the PDF file to display. Can be set to a relative or an absolute path.<br> Optionally, this property can also be set to a data URI path or a blob URL in all major web browsers except Internet Explorer and Microsoft Edge, provided that this data URI or blob URL is whitelisted in advance.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSource" href="#/api/sap.m.PDFViewer/methods/getSource">source</a>.</p><p>Specifies the path to the PDF file to display. Can be set to a relative or an absolute path.<br> Optionally, this property can also be set to a data URI path or a blob URL in all major web browsers except Internet Explorer and Microsoft Edge, provided that this data URI or blob URL is whitelisted in advance. For more information about whitelisting, see <a target="_self" href="#/topic/91f3768f6f4d1014b6dd926db0e91070">URL Whitelist Filtering</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
              * @param {sap.ui.core.URI} sSource <p>New value for property <code>source</code></p>
              * @returns sap.m.PDFViewer <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
@@ -19954,6 +19989,11 @@ declare namespace sap {
              * @returns sap.m.QuickView <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             attachBeforeOpen(oData: any, fnFunction: Function, oListener?: any): sap.m.QuickView;
+            /**
+             * <p>Closes the QuickView.</p>
+             * @returns sap.m.QuickView <p>Pointer to the control instance for chaining</p>
+             */
+            close(): sap.m.QuickView;
             /**
              * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="afterClose" href="#/api/sap.m.QuickView/events/afterClose">afterClose</a> event of this <code>sap.m.QuickView</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
              * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
@@ -22839,6 +22879,11 @@ declare namespace sap {
              */
             attachSearch(oData: any, fnFunction: Function, oListener?: any): sap.m.SelectDialog;
             /**
+             * <p>Clears the selections in the <code>sap.m.SelectDialog</code> and its internally used <code>sap.m.List</code> control.</p><p>Use this method whenever the application logic expects changes in the model providing data for the SelectDialog that will modify the position of the items, or will change the set with completely new items.</p>
+             * @returns sap.m.SelectDialog <p><code>this</code> to allow method chaining.</p>
+             */
+            clearSelection(): sap.m.SelectDialog;
+            /**
              * <p>Destroys all the items in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.m.SelectDialog/methods/getItems">items</a>.</p>
              * @returns sap.m.SelectDialog <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
@@ -22895,6 +22940,11 @@ declare namespace sap {
              * @returns sap.m.SelectDialog <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             protected fireSearch(mParameters?: any): sap.m.SelectDialog;
+            /**
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getConfirmButtonText" href="#/api/sap.m.SelectDialog/methods/getConfirmButtonText">confirmButtonText</a>.</p><p>Overwrites the default text for the confirmation button.</p>
+             * @returns string <p>Value of property <code>confirmButtonText</code></p>
+             */
+            getConfirmButtonText(): string;
             /**
              * <p>Get the internal Dialog's contentHeight property <a target="_self" class="jsdoclink" href="#/api/sap.m.Dialog">sap.m.Dialog</a></p>
              * @returns sap.ui.core.CSSSize <p>sHeight The content width of the internal dialog</p>
@@ -23001,6 +23051,12 @@ declare namespace sap {
              * @returns sap.m.SelectDialog <p>this pointer for chaining</p>
              */
             setBusyIndicatorDelay(iValue: number): sap.m.SelectDialog;
+            /**
+             * <p>Sets the text of the confirmation button.</p>
+             * @param {string} sText <p>The text for the confirm button</p>
+             * @returns sap.m.SelectDialog <p><code>this</code> pointer for chaining</p>
+             */
+            setConfirmButtonText(sText: string): sap.m.SelectDialog;
             /**
              * <p>Set the internal Dialog's contentHeight property <a target="_self" class="jsdoclink" href="#/api/sap.m.Dialog">sap.m.Dialog</a></p>
              * @param {sap.ui.core.CSSSize} sHeight <p>The new content width value for the dialog</p>
@@ -27609,6 +27665,11 @@ declare namespace sap {
              */
             getColumns(): sap.m.Column[];
             /**
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getConfirmButtonText" href="#/api/sap.m.TableSelectDialog/methods/getConfirmButtonText">confirmButtonText</a>.</p><p>Overwrites the default text for the confirmation button.</p>
+             * @returns string <p>Value of property <code>confirmButtonText</code></p>
+             */
+            getConfirmButtonText(): string;
+            /**
              * <p>Retrieves content height of the select dialog <a target="_self" class="jsdoclink" href="#/api/sap.m.Dialog">sap.m.Dialog</a></p>
              * @returns sap.ui.core.CSSSize <p>sHeight the content height of the internal dialog</p>
              */
@@ -27744,6 +27805,12 @@ declare namespace sap {
              * @returns sap.m.TableSelectDialog <p>this pointer for chaining</p>
              */
             setBusyIndicatorDelay(iValue: number): sap.m.TableSelectDialog;
+            /**
+             * <p>Sets the text of the confirmation button.</p>
+             * @param {string} sText <p>The text for the confirm button</p>
+             * @returns sap.m.TableSelectDialog <p><code>this</code> pointer for chaining</p>
+             */
+            setConfirmButtonText(sText: string): sap.m.TableSelectDialog;
             /**
              * <p>Sets content height of the select dialog <a target="_self" class="jsdoclink" href="#/api/sap.m.Dialog">sap.m.Dialog</a></p>
              * @param {sap.ui.core.CSSSize} sHeight <p>the new content height value for the dialog</p>
@@ -29170,9 +29237,9 @@ declare namespace sap {
              */
             removeAriaLabelledBy(vAriaLabelledBy: number | sap.ui.core.ID | sap.ui.core.Control): sap.ui.core.ID;
             /**
-             * <p>Sets the editable status of the token.</p>
-             * @param {boolean} bEditable <p>Indicates if the token is editable.</p>
-             * @returns sap.m.Token <p>this instance for method chaining</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEditable" href="#/api/sap.m.Token/methods/getEditable">editable</a>.</p><p>Indicates the editable status of the token. If it is set to <code>true</code>, token displays a delete icon.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+             * @param {boolean} bEditable <p>New value for property <code>editable</code></p>
+             * @returns sap.m.Token <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             setEditable(bEditable: boolean): sap.m.Token;
             /**
@@ -29182,9 +29249,9 @@ declare namespace sap {
              */
             setKey(sKey: string): sap.m.Token;
             /**
-             * <p>Sets the selection status of the token.</p>
-             * @param {boolean} bSelected <p>Indicates if the token is selected.</p>
-             * @returns sap.m.Token <p>this instance for method chaining</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSelected" href="#/api/sap.m.Token/methods/getSelected">selected</a>.</p><p>Indicates the current selection status of the token.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+             * @param {boolean} bSelected <p>New value for property <code>selected</code></p>
+             * @returns sap.m.Token <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             setSelected(bSelected: boolean): sap.m.Token;
             /**
@@ -34547,6 +34614,14 @@ declare namespace sap {
              */
             export class Uploader extends sap.ui.core.Element {
                 /**
+                 * <p>Starts function for uploading one file object to given url. Returns promise that resolves when the upload is finished or rejects when the upload fails.</p>
+                 * @param {File | Blob} oFile <p>File or Blob object to be uploaded.</p>
+                 * @param {string} sUrl <p>Upload Url.</p>
+                 * @param {sap.ui.core.Item[]} aHeaderFields <p>Collection of request header fields to be send along.</p>
+                 * @returns Promise<any> <p>Promise that resolves when the upload is finished or rejects when the upload fails.</p>
+                 */
+                static uploadFile(oFile: File | Blob, sUrl: string, aHeaderFields?: sap.ui.core.Item[]): Promise<any>;
+                /**
                  * <p>Constructor for a new Uploader.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
                  */
                 constructor();
@@ -34674,7 +34749,7 @@ declare namespace sap {
                  * @param {sap.m.upload.UploadSetItem} oItem <p>Item representing the file to be uploaded.</p>
                  * @param {sap.ui.core.Item[]} aHeaderFields <p>Collection of request header fields to be send along.</p>
                  */
-                uploadItem(oItem: sap.m.upload.UploadSetItem, aHeaderFields: sap.ui.core.Item[]): void;
+                uploadItem(oItem: sap.m.upload.UploadSetItem, aHeaderFields?: sap.ui.core.Item[]): void;
             }
             /**
              * <p>This control allows you to upload one or more files from your devices (desktop, tablet, or phone) and attach them to your application.<br> This control builds on the <a target="_self" class="jsdoclink" href="#/api/sap.m.UploadCollection">sap.m.UploadCollection</a> control, providing better handling of headers and requests, unified behavior of instant and deferred uploads, as well as improved progress indication.</p>
@@ -35369,6 +35444,16 @@ declare namespace sap {
                  */
                 getFileName(): string;
                 /**
+                 * <p>Returns file object.</p>
+                 * @returns File|Blob <p>File object.</p>
+                 */
+                getFileObject(): File | Blob;
+                /**
+                 * <p>Returns list item.</p>
+                 * @returns sap.m.CustomListItem <p>List item.</p>
+                 */
+                getListItem(): sap.m.CustomListItem;
+                /**
                  * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMarkers" href="#/api/sap.m.upload.UploadSetItem/methods/getMarkers">markers</a>.</p><p>Markers of the item.</p>
                  * @returns sap.m.ObjectMarker[] 
                  */
@@ -35504,6 +35589,12 @@ declare namespace sap {
                  * @returns sap.m.upload.UploadSetItem <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
                 setMediaType(sMediaType: string): sap.m.upload.UploadSetItem;
+                /**
+                 * <p>Set current progress.</p>
+                 * @param {number} iProgress <p>Current progress.</p>
+                 * @returns sap.m.upload.UploadSetItem <p>Returns instance for chaining.</p>
+                 */
+                setProgress(iProgress: number): sap.m.upload.UploadSetItem;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getThumbnailUrl" href="#/api/sap.m.upload.UploadSetItem/methods/getThumbnailUrl">thumbnailUrl</a>.</p><p>Specifies the URL where the thumbnail of the file is located. Can also be set to an SAPUI5 icon URL.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {string} sThumbnailUrl <p>New value for property <code>thumbnailUrl</code></p>

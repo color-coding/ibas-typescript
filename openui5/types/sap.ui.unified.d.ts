@@ -121,7 +121,7 @@ declare namespace sap {
                  */
                 detachWeekNumberSelect(fnFunction: Function, oListener?: any): sap.ui.unified.Calendar;
                 /**
-                 * <p>Displays a date in the calendar but don't set the focus.</p>
+                 * <p>Displays a date in the calendar but doesn't set the focus.</p>
                  * @param {any} oDate <p>JavaScript date object for focused date.</p>
                  * @returns sap.ui.unified.Calendar <p><code>this</code> to allow method chaining</p>
                  */
@@ -2309,7 +2309,7 @@ declare namespace sap {
                  */
                 addParameter(oParameter: sap.ui.unified.FileUploaderParameter): sap.ui.unified.FileUploader;
                 /**
-                 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="change" href="#/api/sap.ui.unified.FileUploader/events/change">change</a> event of this <code>sap.ui.unified.FileUploader</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.unified.FileUploader</code> itself.</p><p>Event is fired when the value of the file path has been changed.</p>
+                 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="change" href="#/api/sap.ui.unified.FileUploader/events/change">change</a> event of this <code>sap.ui.unified.FileUploader</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.unified.FileUploader</code> itself.</p><p>Event is fired when the value of the file path has been changed.</p><p><b>Note:</b> Keep in mind that because of the HTML input element of type file, the event is also fired in Chrome browser when the Cancel button of the uploads window is pressed.</p>
                  * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
                  * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
                  * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.unified.FileUploader</code> itself</p>
@@ -2325,7 +2325,7 @@ declare namespace sap {
                  */
                 attachFileAllowed(oData: any, fnFunction: Function, oListener?: any): sap.ui.unified.FileUploader;
                 /**
-                 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="filenameLengthExceed" href="#/api/sap.ui.unified.FileUploader/events/filenameLengthExceed">filenameLengthExceed</a> event of this <code>sap.ui.unified.FileUploader</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.unified.FileUploader</code> itself.</p><p>Event is fired, if the filename of a chosen file is longer than the value specified with the maximumFilenameLength property.</p>
+                 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="filenameLengthExceed" href="#/api/sap.ui.unified.FileUploader/events/filenameLengthExceed">filenameLengthExceed</a> event of this <code>sap.ui.unified.FileUploader</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.unified.FileUploader</code> itself.</p><p>Event is fired, if the filename of a chosen file is longer than the value specified with the <code>maximumFilenameLength</code> property.</p>
                  * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
                  * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
                  * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.unified.FileUploader</code> itself</p>
@@ -2333,7 +2333,7 @@ declare namespace sap {
                  */
                 attachFilenameLengthExceed(oData: any, fnFunction: Function, oListener?: any): sap.ui.unified.FileUploader;
                 /**
-                 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="fileSizeExceed" href="#/api/sap.ui.unified.FileUploader/events/fileSizeExceed">fileSizeExceed</a> event of this <code>sap.ui.unified.FileUploader</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.unified.FileUploader</code> itself.</p><p>Event is fired when the size of a file is above the maximumFileSize property. This event is not supported by Internet Explorer 9 (same restriction as for the property maximumFileSize).</p>
+                 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="fileSizeExceed" href="#/api/sap.ui.unified.FileUploader/events/fileSizeExceed">fileSizeExceed</a> event of this <code>sap.ui.unified.FileUploader</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.unified.FileUploader</code> itself.</p><p>Event is fired when the size of a file is above the <code>maximumFileSize</code> property. This event is not supported by Internet Explorer 9 (same restriction as for the property <code>maximumFileSize</code>).</p>
                  * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
                  * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
                  * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.unified.FileUploader</code> itself</p>
@@ -2341,7 +2341,7 @@ declare namespace sap {
                  */
                 attachFileSizeExceed(oData: any, fnFunction: Function, oListener?: any): sap.ui.unified.FileUploader;
                 /**
-                 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="typeMissmatch" href="#/api/sap.ui.unified.FileUploader/events/typeMissmatch">typeMissmatch</a> event of this <code>sap.ui.unified.FileUploader</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.unified.FileUploader</code> itself.</p><p>Event is fired when the type of a file does not match the mimeType or fileType property.</p>
+                 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="typeMissmatch" href="#/api/sap.ui.unified.FileUploader/events/typeMissmatch">typeMissmatch</a> event of this <code>sap.ui.unified.FileUploader</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.unified.FileUploader</code> itself.</p><p>Event is fired when the type of a file does not match the <code>mimeType</code> or <code>fileType</code> property.</p>
                  * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
                  * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
                  * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.unified.FileUploader</code> itself</p>
@@ -2349,7 +2349,7 @@ declare namespace sap {
                  */
                 attachTypeMissmatch(oData: any, fnFunction: Function, oListener?: any): sap.ui.unified.FileUploader;
                 /**
-                 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="uploadAborted" href="#/api/sap.ui.unified.FileUploader/events/uploadAborted">uploadAborted</a> event of this <code>sap.ui.unified.FileUploader</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.unified.FileUploader</code> itself.</p><p>Event is fired after the current upload has been aborted. This is event is only supported with property sendXHR set to true, i.e. the event is not supported in Internet Explorer 9.</p>
+                 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="uploadAborted" href="#/api/sap.ui.unified.FileUploader/events/uploadAborted">uploadAborted</a> event of this <code>sap.ui.unified.FileUploader</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.unified.FileUploader</code> itself.</p><p>Event is fired after the current upload has been aborted.</p><p>This event is only supported with property <code>sendXHR</code> set to true, i.e. the event is not supported in Internet Explorer 9.</p>
                  * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
                  * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
                  * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.unified.FileUploader</code> itself</p>
@@ -2357,7 +2357,7 @@ declare namespace sap {
                  */
                 attachUploadAborted(oData: any, fnFunction: Function, oListener?: any): sap.ui.unified.FileUploader;
                 /**
-                 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="uploadComplete" href="#/api/sap.ui.unified.FileUploader/events/uploadComplete">uploadComplete</a> event of this <code>sap.ui.unified.FileUploader</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.unified.FileUploader</code> itself.</p><p>Event is fired as soon as the upload request is completed (either successful or unsuccessful). To see if the upload request was successful, check the 'state' parameter for a value 2xx. The uploads actual progress can be retrieved via the 'uploadProgress' Event. However this covers only the client side of the Upload process and does not give any success status from the server.</p>
+                 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="uploadComplete" href="#/api/sap.ui.unified.FileUploader/events/uploadComplete">uploadComplete</a> event of this <code>sap.ui.unified.FileUploader</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.unified.FileUploader</code> itself.</p><p>Event is fired as soon as the upload request is completed (either successful or unsuccessful).</p><p>To see if the upload request was successful, check the <code>status</code> parameter for a value 2xx. The actual progress of the upload can be monitored by listening to the <code>uploadProgress</code> event. However, this covers only the client side of the upload process and does not give any success status from the server.</p>
                  * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
                  * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
                  * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.unified.FileUploader</code> itself</p>
@@ -2365,7 +2365,7 @@ declare namespace sap {
                  */
                 attachUploadComplete(oData: any, fnFunction: Function, oListener?: any): sap.ui.unified.FileUploader;
                 /**
-                 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="uploadProgress" href="#/api/sap.ui.unified.FileUploader/events/uploadProgress">uploadProgress</a> event of this <code>sap.ui.unified.FileUploader</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.unified.FileUploader</code> itself.</p><p>Event is fired after the upload has started and before the upload is completed and contains progress information related to the running upload. Depending on file size, band width and used browser the event is fired once or multiple times. This is event is only supported with property sendXHR set to true, i.e. the event is not supported in Internet Explorer 9.</p>
+                 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="uploadProgress" href="#/api/sap.ui.unified.FileUploader/events/uploadProgress">uploadProgress</a> event of this <code>sap.ui.unified.FileUploader</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.unified.FileUploader</code> itself.</p><p>Event is fired after the upload has started and before the upload is completed.</p><p>It contains progress information related to the running upload. Depending on file size, band width and used browser the event is fired once or multiple times.</p><p>This event is only supported with property <code>sendXHR</code> set to true, i.e. the event is not supported in Internet Explorer 9.</p>
                  * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
                  * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
                  * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.unified.FileUploader</code> itself</p>
@@ -2518,7 +2518,7 @@ declare namespace sap {
                  */
                 protected fireUploadStart(mParameters?: any): sap.ui.unified.FileUploader;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAdditionalData" href="#/api/sap.ui.unified.FileUploader/methods/getAdditionalData">additionalData</a>.</p><p>Additional data that is sent to the back end service. Data will be transmitted as value of a hidden input where the name is derived from the name property with suffix -data.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAdditionalData" href="#/api/sap.ui.unified.FileUploader/methods/getAdditionalData">additionalData</a>.</p><p>Additional data that is sent to the back end service.</p><p>Data will be transmitted as value of a hidden input where the name is derived from the <code>name</code> property with suffix "-data".</p>
                  * @returns string <p>Value of property <code>additionalData</code></p>
                  */
                 getAdditionalData(): string;
@@ -2533,12 +2533,12 @@ declare namespace sap {
                  */
                 getAriaLabelledBy(): sap.ui.core.ID[];
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getButtonOnly" href="#/api/sap.ui.unified.FileUploader/methods/getButtonOnly">buttonOnly</a>.</p><p>If set to "true", the FileUploader will be rendered as Button only, without showing the InputField.</p><p>Default value is <code>false</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getButtonOnly" href="#/api/sap.ui.unified.FileUploader/methods/getButtonOnly">buttonOnly</a>.</p><p>If set to "true", the <code>FileUploader</code> will be rendered as Button only, without showing the input field.</p><p>Default value is <code>false</code>.</p>
                  * @returns boolean <p>Value of property <code>buttonOnly</code></p>
                  */
                 getButtonOnly(): boolean;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getButtonText" href="#/api/sap.ui.unified.FileUploader/methods/getButtonText">buttonText</a>.</p><p>The Button text can be overwritten using this property.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getButtonText" href="#/api/sap.ui.unified.FileUploader/methods/getButtonText">buttonText</a>.</p><p>The button's text can be overwritten using this property.</p>
                  * @returns string <p>Value of property <code>buttonText</code></p>
                  */
                 getButtonText(): string;
@@ -2548,17 +2548,17 @@ declare namespace sap {
                  */
                 getEnabled(): boolean;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getFileType" href="#/api/sap.ui.unified.FileUploader/methods/getFileType">fileType</a>.</p><p>The chosen files will be checked against an array of file types. If at least one file does not fit the file type restriction the upload is prevented. Example: ["jpg", "png", "bmp"].</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getFileType" href="#/api/sap.ui.unified.FileUploader/methods/getFileType">fileType</a>.</p><p>The chosen files will be checked against an array of file types.</p><p>If at least one file does not fit the file type restriction, the upload is prevented.</p><p>Example: <code>["jpg", "png", "bmp"]</code>.</p>
                  * @returns string[] <p>Value of property <code>fileType</code></p>
                  */
                 getFileType(): string[];
                 /**
-                 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getHeaderParameters" href="#/api/sap.ui.unified.FileUploader/methods/getHeaderParameters">headerParameters</a>.</p><p>The header parameters for the FileUploader which are only submitted with XHR requests. Header parameters are not supported by Internet Explorer 9.</p>
+                 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getHeaderParameters" href="#/api/sap.ui.unified.FileUploader/methods/getHeaderParameters">headerParameters</a>.</p><p>The header parameters for the <code>FileUploader</code> which are only submitted with XHR requests. Header parameters are not supported by Internet Explorer 9.</p>
                  * @returns sap.ui.unified.FileUploaderParameter[] 
                  */
                 getHeaderParameters(): sap.ui.unified.FileUploaderParameter[];
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getIcon" href="#/api/sap.ui.unified.FileUploader/methods/getIcon">icon</a>.</p><p>Icon to be displayed as graphical element within the button. This can be a URI to an image or an icon font URI.</p><p>Default value is <code>empty string</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getIcon" href="#/api/sap.ui.unified.FileUploader/methods/getIcon">icon</a>.</p><p>Icon to be displayed as graphical element within the button.</p><p>This can be a URI to an image or an icon font URI.</p><p>Default value is <code>empty string</code>.</p>
                  * @returns sap.ui.core.URI <p>Value of property <code>icon</code></p>
                  */
                 getIcon(): sap.ui.core.URI;
@@ -2568,7 +2568,7 @@ declare namespace sap {
                  */
                 getIconFirst(): boolean;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getIconHovered" href="#/api/sap.ui.unified.FileUploader/methods/getIconHovered">iconHovered</a>.</p><p>Icon to be displayed as graphical element within the button when it is hovered (only if also a base icon was specified). If not specified the base icon is used. If an icon font icon is used, this property is ignored.</p><p>Default value is <code>empty string</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getIconHovered" href="#/api/sap.ui.unified.FileUploader/methods/getIconHovered">iconHovered</a>.</p><p>Icon to be displayed as graphical element within the button when it is hovered (only if also a base icon was specified).</p><p>If not specified, the base icon is used. If an icon font icon is used, this property is ignored.</p><p>Default value is <code>empty string</code>.</p>
                  * @returns sap.ui.core.URI <p>Value of property <code>iconHovered</code></p>
                  */
                 getIconHovered(): sap.ui.core.URI;
@@ -2578,27 +2578,27 @@ declare namespace sap {
                  */
                 getIconOnly(): boolean;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getIconSelected" href="#/api/sap.ui.unified.FileUploader/methods/getIconSelected">iconSelected</a>.</p><p>Icon to be displayed as graphical element within the button when it is selected (only if also a base icon was specified). If not specified the base or hovered icon is used. If an icon font icon is used, this property is ignored.</p><p>Default value is <code>empty string</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getIconSelected" href="#/api/sap.ui.unified.FileUploader/methods/getIconSelected">iconSelected</a>.</p><p>Icon to be displayed as graphical element within the button when it is selected (only if also a base icon was specified).</p><p>If not specified, the base or hovered icon is used. If an icon font icon is used, this property is ignored.</p><p>Default value is <code>empty string</code>.</p>
                  * @returns sap.ui.core.URI <p>Value of property <code>iconSelected</code></p>
                  */
                 getIconSelected(): sap.ui.core.URI;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMaximumFilenameLength" href="#/api/sap.ui.unified.FileUploader/methods/getMaximumFilenameLength">maximumFilenameLength</a>.</p><p>The maximum length of a filename which the FileUploader will accept. If the maximum filename length is exceeded, the corresponding Event 'filenameLengthExceed' is fired.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMaximumFilenameLength" href="#/api/sap.ui.unified.FileUploader/methods/getMaximumFilenameLength">maximumFilenameLength</a>.</p><p>The maximum length of a filename which the <code>FileUploader</code> will accept.</p><p>If the maximum filename length is exceeded, the corresponding event <code>filenameLengthExceed</code> is fired.</p>
                  * @returns number <p>Value of property <code>maximumFilenameLength</code></p>
                  */
                 getMaximumFilenameLength(): number;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMaximumFileSize" href="#/api/sap.ui.unified.FileUploader/methods/getMaximumFileSize">maximumFileSize</a>.</p><p>A file size limit in megabytes which prevents the upload if at least one file exceeds it. This property is not supported by Internet Explorer 9.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMaximumFileSize" href="#/api/sap.ui.unified.FileUploader/methods/getMaximumFileSize">maximumFileSize</a>.</p><p>A file size limit in megabytes which prevents the upload if at least one file exceeds it.</p><p>This property is not supported by Internet Explorer 9.</p>
                  * @returns number <p>Value of property <code>maximumFileSize</code></p>
                  */
                 getMaximumFileSize(): number;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMimeType" href="#/api/sap.ui.unified.FileUploader/methods/getMimeType">mimeType</a>.</p><p>The chosen files will be checked against an array of mime types. If at least one file does not fit the mime type restriction the upload is prevented. <b>Note:</b> This property is not supported by Internet Explorer & Edge. Example: mimeType ["image/png", "image/jpeg"].</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMimeType" href="#/api/sap.ui.unified.FileUploader/methods/getMimeType">mimeType</a>.</p><p>The chosen files will be checked against an array of mime types.</p><p>If at least one file does not fit the mime type restriction, the upload is prevented. <b>Note:</b> This property is not supported by Internet Explorer & Edge.</p><p>Example: <code>["image/png", "image/jpeg"]</code>.</p>
                  * @returns string[] <p>Value of property <code>mimeType</code></p>
                  */
                 getMimeType(): string[];
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMultiple" href="#/api/sap.ui.unified.FileUploader/methods/getMultiple">multiple</a>.</p><p>Allows multiple files to be chosen and uploaded from the same folder. This property is not supported by Internet Explorer 9.</p><p><b>Note:</b> Keep in mind that the various operating systems for mobile devices can react differently to the property so that fewer upload functions may be available in some cases.</p><p>Default value is <code>false</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMultiple" href="#/api/sap.ui.unified.FileUploader/methods/getMultiple">multiple</a>.</p><p>Allows multiple files to be chosen and uploaded from the same folder.</p><p>This property is not supported by Internet Explorer 9.</p><p><b>Note:</b> Keep in mind that the various operating systems for mobile devices can react differently to the property so that fewer upload functions may be available in some cases.</p><p>Default value is <code>false</code>.</p>
                  * @returns boolean <p>Value of property <code>multiple</code></p>
                  */
                 getMultiple(): boolean;
@@ -2608,7 +2608,7 @@ declare namespace sap {
                  */
                 getName(): string;
                 /**
-                 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getParameters" href="#/api/sap.ui.unified.FileUploader/methods/getParameters">parameters</a>.</p><p>The parameters for the FileUploader which are rendered as a hidden inputfield.</p>
+                 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getParameters" href="#/api/sap.ui.unified.FileUploader/methods/getParameters">parameters</a>.</p><p>The parameters for the <code>FileUploader</code> which are rendered as a hidden input field.</p>
                  * @returns sap.ui.unified.FileUploaderParameter[] 
                  */
                 getParameters(): sap.ui.unified.FileUploaderParameter[];
@@ -2624,17 +2624,17 @@ declare namespace sap {
                  */
                 getProcessedBlobsFromArray(aBlobs: Blob[]): Promise<any>;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSameFilenameAllowed" href="#/api/sap.ui.unified.FileUploader/methods/getSameFilenameAllowed">sameFilenameAllowed</a>.</p><p>If the FileUploader is configured to upload the file directly after the file is selected it is not allowed to upload a file with the same name again. If a user should be allowed to upload a file with the same name again this parameter has to be "true". A typical use case would be if the files have different paths.</p><p>Default value is <code>false</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSameFilenameAllowed" href="#/api/sap.ui.unified.FileUploader/methods/getSameFilenameAllowed">sameFilenameAllowed</a>.</p><p>If the FileUploader is configured to upload the file directly after the file is selected, it is not allowed to upload a file with the same name again. If a user should be allowed to upload a file with the same name again this parameter has to be "true".</p><p>A typical use case would be if the files have different paths.</p><p>Default value is <code>false</code>.</p>
                  * @returns boolean <p>Value of property <code>sameFilenameAllowed</code></p>
                  */
                 getSameFilenameAllowed(): boolean;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSendXHR" href="#/api/sap.ui.unified.FileUploader/methods/getSendXHR">sendXHR</a>.</p><p>If set to "true", the request will be sent as XHR request instead of a form submit. This property is not supported by Internet Explorer 9.</p><p>Default value is <code>false</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSendXHR" href="#/api/sap.ui.unified.FileUploader/methods/getSendXHR">sendXHR</a>.</p><p>If set to "true", the request will be sent as XHR request instead of a form submit.</p><p>This property is not supported by Internet Explorer 9.</p><p>Default value is <code>false</code>.</p>
                  * @returns boolean <p>Value of property <code>sendXHR</code></p>
                  */
                 getSendXHR(): boolean;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getStyle" href="#/api/sap.ui.unified.FileUploader/methods/getStyle">style</a>.</p><p>Style of the button. "Transparent, "Accept", "Reject", or "Emphasized" is allowed.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getStyle" href="#/api/sap.ui.unified.FileUploader/methods/getStyle">style</a>.</p><p>Style of the button.</p><p>Values "Transparent, "Accept", "Reject", or "Emphasized" are allowed.</p>
                  * @returns string <p>Value of property <code>style</code></p>
                  */
                 getStyle(): string;
@@ -2649,7 +2649,7 @@ declare namespace sap {
                  */
                 getUploadUrl(): sap.ui.core.URI;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getUseMultipart" href="#/api/sap.ui.unified.FileUploader/methods/getUseMultipart">useMultipart</a>.</p><p>If set to "false", the request will be sent as file only request instead of a multipart/form-data request. Only one file could be uploaded using this type of request. Required for sending such a request is to set the property "sendXHR" to "true". This property is not supported by Internet Explorer 9.</p><p>Default value is <code>true</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getUseMultipart" href="#/api/sap.ui.unified.FileUploader/methods/getUseMultipart">useMultipart</a>.</p><p>If set to "false", the request will be sent as file only request instead of a multipart/form-data request.</p><p>Only one file could be uploaded using this type of request. Required for sending such a request is to set the property <code>sendXHR</code> to "true". This property is not supported by Internet Explorer 9.</p><p>Default value is <code>true</code>.</p>
                  * @returns boolean <p>Value of property <code>useMultipart</code></p>
                  */
                 getUseMultipart(): boolean;
@@ -2659,7 +2659,7 @@ declare namespace sap {
                  */
                 getValue(): string;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getValueState" href="#/api/sap.ui.unified.FileUploader/methods/getValueState">valueState</a>.</p><p>Visualizes warnings or errors related to the text field. Possible values: Warning, Error, Success, None.</p><p>Default value is <code>None</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getValueState" href="#/api/sap.ui.unified.FileUploader/methods/getValueState">valueState</a>.</p><p>Visualizes warnings or errors related to the text field.</p><p>Possible values: Warning, Error, Success, None.</p><p>Default value is <code>None</code>.</p>
                  * @returns sap.ui.core.ValueState <p>Value of property <code>valueState</code></p>
                  */
                 getValueState(): sap.ui.core.ValueState;
@@ -2749,19 +2749,19 @@ declare namespace sap {
                  */
                 removeParameter(vParameter: number | string | sap.ui.unified.FileUploaderParameter): sap.ui.unified.FileUploaderParameter;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAdditionalData" href="#/api/sap.ui.unified.FileUploader/methods/getAdditionalData">additionalData</a>.</p><p>Additional data that is sent to the back end service. Data will be transmitted as value of a hidden input where the name is derived from the name property with suffix -data.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAdditionalData" href="#/api/sap.ui.unified.FileUploader/methods/getAdditionalData">additionalData</a>.</p><p>Additional data that is sent to the back end service.</p><p>Data will be transmitted as value of a hidden input where the name is derived from the <code>name</code> property with suffix "-data".</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {string} sAdditionalData <p>New value for property <code>additionalData</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
                 setAdditionalData(sAdditionalData: string): sap.ui.unified.FileUploader;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getButtonOnly" href="#/api/sap.ui.unified.FileUploader/methods/getButtonOnly">buttonOnly</a>.</p><p>If set to "true", the FileUploader will be rendered as Button only, without showing the InputField.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getButtonOnly" href="#/api/sap.ui.unified.FileUploader/methods/getButtonOnly">buttonOnly</a>.</p><p>If set to "true", the <code>FileUploader</code> will be rendered as Button only, without showing the input field.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bButtonOnly <p>New value for property <code>buttonOnly</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
                 setButtonOnly(bButtonOnly: boolean): sap.ui.unified.FileUploader;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getButtonText" href="#/api/sap.ui.unified.FileUploader/methods/getButtonText">buttonText</a>.</p><p>The Button text can be overwritten using this property.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getButtonText" href="#/api/sap.ui.unified.FileUploader/methods/getButtonText">buttonText</a>.</p><p>The button's text can be overwritten using this property.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {string} sButtonText <p>New value for property <code>buttonText</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
@@ -2773,13 +2773,13 @@ declare namespace sap {
                  */
                 setEnabled(bEnabled: boolean): sap.ui.unified.FileUploader;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getFileType" href="#/api/sap.ui.unified.FileUploader/methods/getFileType">fileType</a>.</p><p>The chosen files will be checked against an array of file types. If at least one file does not fit the file type restriction the upload is prevented. Example: ["jpg", "png", "bmp"].</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getFileType" href="#/api/sap.ui.unified.FileUploader/methods/getFileType">fileType</a>.</p><p>The chosen files will be checked against an array of file types.</p><p>If at least one file does not fit the file type restriction, the upload is prevented.</p><p>Example: <code>["jpg", "png", "bmp"]</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {string[]} sFileType <p>New value for property <code>fileType</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
                 setFileType(sFileType: string[]): sap.ui.unified.FileUploader;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getIcon" href="#/api/sap.ui.unified.FileUploader/methods/getIcon">icon</a>.</p><p>Icon to be displayed as graphical element within the button. This can be a URI to an image or an icon font URI.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getIcon" href="#/api/sap.ui.unified.FileUploader/methods/getIcon">icon</a>.</p><p>Icon to be displayed as graphical element within the button.</p><p>This can be a URI to an image or an icon font URI.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
                  * @param {sap.ui.core.URI} sIcon <p>New value for property <code>icon</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
@@ -2791,7 +2791,7 @@ declare namespace sap {
                  */
                 setIconFirst(bIconFirst: boolean): sap.ui.unified.FileUploader;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getIconHovered" href="#/api/sap.ui.unified.FileUploader/methods/getIconHovered">iconHovered</a>.</p><p>Icon to be displayed as graphical element within the button when it is hovered (only if also a base icon was specified). If not specified the base icon is used. If an icon font icon is used, this property is ignored.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getIconHovered" href="#/api/sap.ui.unified.FileUploader/methods/getIconHovered">iconHovered</a>.</p><p>Icon to be displayed as graphical element within the button when it is hovered (only if also a base icon was specified).</p><p>If not specified, the base icon is used. If an icon font icon is used, this property is ignored.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
                  * @param {sap.ui.core.URI} sIconHovered <p>New value for property <code>iconHovered</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
@@ -2803,31 +2803,31 @@ declare namespace sap {
                  */
                 setIconOnly(bIconOnly: boolean): sap.ui.unified.FileUploader;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getIconSelected" href="#/api/sap.ui.unified.FileUploader/methods/getIconSelected">iconSelected</a>.</p><p>Icon to be displayed as graphical element within the button when it is selected (only if also a base icon was specified). If not specified the base or hovered icon is used. If an icon font icon is used, this property is ignored.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getIconSelected" href="#/api/sap.ui.unified.FileUploader/methods/getIconSelected">iconSelected</a>.</p><p>Icon to be displayed as graphical element within the button when it is selected (only if also a base icon was specified).</p><p>If not specified, the base or hovered icon is used. If an icon font icon is used, this property is ignored.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
                  * @param {sap.ui.core.URI} sIconSelected <p>New value for property <code>iconSelected</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
                 setIconSelected(sIconSelected: sap.ui.core.URI): sap.ui.unified.FileUploader;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMaximumFilenameLength" href="#/api/sap.ui.unified.FileUploader/methods/getMaximumFilenameLength">maximumFilenameLength</a>.</p><p>The maximum length of a filename which the FileUploader will accept. If the maximum filename length is exceeded, the corresponding Event 'filenameLengthExceed' is fired.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMaximumFilenameLength" href="#/api/sap.ui.unified.FileUploader/methods/getMaximumFilenameLength">maximumFilenameLength</a>.</p><p>The maximum length of a filename which the <code>FileUploader</code> will accept.</p><p>If the maximum filename length is exceeded, the corresponding event <code>filenameLengthExceed</code> is fired.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {number} iMaximumFilenameLength <p>New value for property <code>maximumFilenameLength</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
                 setMaximumFilenameLength(iMaximumFilenameLength: number): sap.ui.unified.FileUploader;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMaximumFileSize" href="#/api/sap.ui.unified.FileUploader/methods/getMaximumFileSize">maximumFileSize</a>.</p><p>A file size limit in megabytes which prevents the upload if at least one file exceeds it. This property is not supported by Internet Explorer 9.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMaximumFileSize" href="#/api/sap.ui.unified.FileUploader/methods/getMaximumFileSize">maximumFileSize</a>.</p><p>A file size limit in megabytes which prevents the upload if at least one file exceeds it.</p><p>This property is not supported by Internet Explorer 9.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {number} fMaximumFileSize <p>New value for property <code>maximumFileSize</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
                 setMaximumFileSize(fMaximumFileSize: number): sap.ui.unified.FileUploader;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMimeType" href="#/api/sap.ui.unified.FileUploader/methods/getMimeType">mimeType</a>.</p><p>The chosen files will be checked against an array of mime types. If at least one file does not fit the mime type restriction the upload is prevented. <b>Note:</b> This property is not supported by Internet Explorer & Edge. Example: mimeType ["image/png", "image/jpeg"].</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMimeType" href="#/api/sap.ui.unified.FileUploader/methods/getMimeType">mimeType</a>.</p><p>The chosen files will be checked against an array of mime types.</p><p>If at least one file does not fit the mime type restriction, the upload is prevented. <b>Note:</b> This property is not supported by Internet Explorer & Edge.</p><p>Example: <code>["image/png", "image/jpeg"]</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {string[]} sMimeType <p>New value for property <code>mimeType</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
                 setMimeType(sMimeType: string[]): sap.ui.unified.FileUploader;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMultiple" href="#/api/sap.ui.unified.FileUploader/methods/getMultiple">multiple</a>.</p><p>Allows multiple files to be chosen and uploaded from the same folder. This property is not supported by Internet Explorer 9.</p><p><b>Note:</b> Keep in mind that the various operating systems for mobile devices can react differently to the property so that fewer upload functions may be available in some cases.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMultiple" href="#/api/sap.ui.unified.FileUploader/methods/getMultiple">multiple</a>.</p><p>Allows multiple files to be chosen and uploaded from the same folder.</p><p>This property is not supported by Internet Explorer 9.</p><p><b>Note:</b> Keep in mind that the various operating systems for mobile devices can react differently to the property so that fewer upload functions may be available in some cases.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bMultiple <p>New value for property <code>multiple</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
@@ -2845,19 +2845,19 @@ declare namespace sap {
                  */
                 setPlaceholder(sPlaceholder: string): sap.ui.unified.FileUploader;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSameFilenameAllowed" href="#/api/sap.ui.unified.FileUploader/methods/getSameFilenameAllowed">sameFilenameAllowed</a>.</p><p>If the FileUploader is configured to upload the file directly after the file is selected it is not allowed to upload a file with the same name again. If a user should be allowed to upload a file with the same name again this parameter has to be "true". A typical use case would be if the files have different paths.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSameFilenameAllowed" href="#/api/sap.ui.unified.FileUploader/methods/getSameFilenameAllowed">sameFilenameAllowed</a>.</p><p>If the FileUploader is configured to upload the file directly after the file is selected, it is not allowed to upload a file with the same name again. If a user should be allowed to upload a file with the same name again this parameter has to be "true".</p><p>A typical use case would be if the files have different paths.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bSameFilenameAllowed <p>New value for property <code>sameFilenameAllowed</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
                 setSameFilenameAllowed(bSameFilenameAllowed: boolean): sap.ui.unified.FileUploader;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSendXHR" href="#/api/sap.ui.unified.FileUploader/methods/getSendXHR">sendXHR</a>.</p><p>If set to "true", the request will be sent as XHR request instead of a form submit. This property is not supported by Internet Explorer 9.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSendXHR" href="#/api/sap.ui.unified.FileUploader/methods/getSendXHR">sendXHR</a>.</p><p>If set to "true", the request will be sent as XHR request instead of a form submit.</p><p>This property is not supported by Internet Explorer 9.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bSendXHR <p>New value for property <code>sendXHR</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
                 setSendXHR(bSendXHR: boolean): sap.ui.unified.FileUploader;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getStyle" href="#/api/sap.ui.unified.FileUploader/methods/getStyle">style</a>.</p><p>Style of the button. "Transparent, "Accept", "Reject", or "Emphasized" is allowed.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getStyle" href="#/api/sap.ui.unified.FileUploader/methods/getStyle">style</a>.</p><p>Style of the button.</p><p>Values "Transparent, "Accept", "Reject", or "Emphasized" are allowed.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {string} sStyle <p>New value for property <code>style</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
@@ -2875,7 +2875,7 @@ declare namespace sap {
                  */
                 setUploadUrl(sUploadUrl: sap.ui.core.URI): sap.ui.unified.FileUploader;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getUseMultipart" href="#/api/sap.ui.unified.FileUploader/methods/getUseMultipart">useMultipart</a>.</p><p>If set to "false", the request will be sent as file only request instead of a multipart/form-data request. Only one file could be uploaded using this type of request. Required for sending such a request is to set the property "sendXHR" to "true". This property is not supported by Internet Explorer 9.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getUseMultipart" href="#/api/sap.ui.unified.FileUploader/methods/getUseMultipart">useMultipart</a>.</p><p>If set to "false", the request will be sent as file only request instead of a multipart/form-data request.</p><p>Only one file could be uploaded using this type of request. Required for sending such a request is to set the property <code>sendXHR</code> to "true". This property is not supported by Internet Explorer 9.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                  * @param {boolean} bUseMultipart <p>New value for property <code>useMultipart</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
@@ -2887,7 +2887,7 @@ declare namespace sap {
                  */
                 setValue(sValue: string): sap.ui.unified.FileUploader;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getValueState" href="#/api/sap.ui.unified.FileUploader/methods/getValueState">valueState</a>.</p><p>Visualizes warnings or errors related to the text field. Possible values: Warning, Error, Success, None.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>None</code>.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getValueState" href="#/api/sap.ui.unified.FileUploader/methods/getValueState">valueState</a>.</p><p>Visualizes warnings or errors related to the text field.</p><p>Possible values: Warning, Error, Success, None.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>None</code>.</p>
                  * @param {sap.ui.core.ValueState} sValueState <p>New value for property <code>valueState</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */

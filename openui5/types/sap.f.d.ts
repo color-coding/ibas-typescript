@@ -400,6 +400,11 @@ declare namespace sap {
 			 */
 			destroyTitle(): sap.f.DynamicPage;
 			/**
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getBackgroundDesign" href="#/api/sap.f.DynamicPage/methods/getBackgroundDesign">backgroundDesign</a>.</p><p>Determines the background color of <code>DynamicPage</code>.</p><p>Default value is <code>Standard</code>.</p>
+			 * @returns sap.m.PageBackgroundDesign <p>Value of property <code>backgroundDesign</code></p>
+			 */
+			getBackgroundDesign(): sap.m.PageBackgroundDesign;
+			/**
 			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getContent" href="#/api/sap.f.DynamicPage/methods/getContent">content</a>.</p><p><code>DynamicPage</code> content.</p><p><b>Note: </b> You can change the default paddings by adding the following CSS classes: <ul> <li><code>sapUiContentPadding</code></li> <li><code>sapUiNoContentPadding</code></li> <li><code>sapUiResponsiveContentPadding</code></li> </ul> For more information, see <a target="_self" href="#/topic/c71f6df62dae47ca8284310a6f5fc80a">Using Container Content Padding CSS Classes</a>.</p><p><b>Note:</b> The SAP Fiori Design guidelines require that the <code>DynamicPageHeader</code>'s content and the <code>DynamicPage</code>'s content are aligned vertically. When using <a target="_self" class="jsdoclink" href="#/api/sap.ui.layout.form.Form">sap.ui.layout.form.Form</a>, <a target="_self" class="jsdoclink" href="#/api/sap.m.Panel">sap.m.Panel</a>, <a target="_self" class="jsdoclink" href="#/api/sap.m.Table">sap.m.Table</a> and <a target="_self" class="jsdoclink" href="#/api/sap.m.List">sap.m.List</a> in the content area of <code>DynamicPage</code>, if the content is not already aligned, you need to adjust their left text offset to achieve the vertical alignment. To do this, apply the <code>sapFDynamicPageAlignContent</code> CSS class to them and set their <code>width</code> property to <code>auto</code> (if not set by default).</p><p>Example:</p><p><pre>
 			<code> &lt;Panel class=“sapFDynamicPageAlignContent” width=“auto”&gt;&lt;/Panel&gt; </code>
 			</pre></p><p>Please keep in mind that the alignment is not possible in the following cases: <ul> <li> When the controls are placed in an <a target="_self" class="jsdoclink" href="#/api/sap.ui.layout.Grid">sap.ui.layout.Grid</a> or other layout controls that use <code>overflow:hidden</code> CSS property</li> <li> In case any of the following CSS classes is applied to <code>DynamicPage</code>: <code>sapUiContentPadding</code>, <code>sapUiNoContentPadding</code> or <code>sapUiResponsiveContentPadding</code></li> </ul></p>
@@ -456,6 +461,12 @@ declare namespace sap {
 			 * @returns boolean <p>Value of property <code>toggleHeaderOnTitleClick</code></p>
 			 */
 			getToggleHeaderOnTitleClick(): boolean;
+			/**
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getBackgroundDesign" href="#/api/sap.f.DynamicPage/methods/getBackgroundDesign">backgroundDesign</a>.</p><p>Determines the background color of <code>DynamicPage</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Standard</code>.</p>
+			 * @param {sap.m.PageBackgroundDesign} sBackgroundDesign <p>New value for property <code>backgroundDesign</code></p>
+			 * @returns sap.f.DynamicPage <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setBackgroundDesign(sBackgroundDesign: sap.m.PageBackgroundDesign): sap.f.DynamicPage;
 			/**
 			 * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getContent" href="#/api/sap.f.DynamicPage/methods/getContent">content</a>.</p>
 			 * @param {sap.ui.core.Control} oContent <p>The content to set</p>
@@ -683,9 +694,9 @@ declare namespace sap {
 			 */
 			removeContent(vContent: number | string | sap.ui.core.Control): sap.ui.core.Control;
 			/**
-			 * <p>Sets the value of the <code>backgroundDesign</code> property.</p>
-			 * @param {sap.m.BackgroundDesign} sBackgroundDesign <p>new value of the <code>backgroundDesign</code></p>
-			 * @returns sap.f.DynamicPageHeader <p><code>this</code> to allow method chaining</p>
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getBackgroundDesign" href="#/api/sap.f.DynamicPageHeader/methods/getBackgroundDesign">backgroundDesign</a>.</p><p>Determines the background color of the <code>DynamicPageHeader</code>.</p><p><b>Note:</b> The default value of <code>backgroundDesign</code> property is null. If the property is not set, the color of the background is <code>@sapUiObjectHeaderBackground</code>, which depends on the specific theme.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+			 * @param {sap.m.BackgroundDesign} sBackgroundDesign <p>New value for property <code>backgroundDesign</code></p>
+			 * @returns sap.f.DynamicPageHeader <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
 			setBackgroundDesign(sBackgroundDesign: sap.m.BackgroundDesign): sap.f.DynamicPageHeader;
 			/**
@@ -993,9 +1004,9 @@ declare namespace sap {
 			 */
 			setAreaShrinkRatio(sAreaShrinkRatio: sap.f.DynamicPageTitleShrinkRatio): sap.f.DynamicPageTitle;
 			/**
-			 * <p>Sets the value of the <code>backgroundDesign</code> property.</p>
-			 * @param {sap.m.BackgroundDesign} sBackgroundDesign <p>new value of the <code>backgroundDesign</code></p>
-			 * @returns sap.f.DynamicPageTitle <p><code>this</code> to allow method chaining</p>
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getBackgroundDesign" href="#/api/sap.f.DynamicPageTitle/methods/getBackgroundDesign">backgroundDesign</a>.</p><p>Determines the background color of the <code>DynamicPageTitle</code>.</p><p><b>Note:</b> The default value of <code>backgroundDesign</code> property is null. If the property is not set, the color of the background is <code>@sapUiObjectHeaderBackground</code>, which depends on the specific theme.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+			 * @param {sap.m.BackgroundDesign} sBackgroundDesign <p>New value for property <code>backgroundDesign</code></p>
+			 * @returns sap.f.DynamicPageTitle <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
 			setBackgroundDesign(sBackgroundDesign: sap.m.BackgroundDesign): sap.f.DynamicPageTitle;
 			/**
@@ -1593,9 +1604,9 @@ declare namespace sap {
 				&lt;/Panel&gt;
 			&lt;/f:items&gt;
 		&lt;/f:GridContainer&gt;
-		</pre><br><br><span>Documentation links:</span><ul><li><a target="_self" href="#/topic/32d4b9c2b981425dbc374d3e9d5d0c2e">Grid Controls</a></li><li><a target="_self" href="#/topic/5b46b03f024542ba802d99d67bc1a3f4">Cards</a></li></ul></p>
+		</pre></p><h3>Drag and drop:</h3><p> The <code>items</code> aggregation of <code>sap.f.GridContainer</code> is valid drag and drop target. This can be configured with either the default <code><a target="_self" class="jsdoclink" href="#/api/sap.ui.core.dnd.DropInfo">sap.ui.core.dnd.DropInfo</a></code>, or with an extended version of it - <code><a target="_self" class="jsdoclink" href="#/api/sap.f.dnd.GridDropInfo">sap.f.dnd.GridDropInfo</a></code>. <code>GridDropInfo</code> will provide a different visualization more suitable for grids during drag over.<br><br><span>Documentation links:</span><ul><li><a target="_self" href="#/topic/32d4b9c2b981425dbc374d3e9d5d0c2e">Grid Controls</a></li><li><a target="_self" href="#/topic/5b46b03f024542ba802d99d67bc1a3f4">Cards</a></li><li><a target="_self" class="jsdoclink" href="#/api/sap.f.dnd.GridDropInfo">sap.f.dnd.GridDropInfo</a></li></ul></p>
 		 */
-		export class GridContainer extends sap.ui.core.Control {
+		export class GridContainer extends sap.ui.core.Control implements sap.f.dnd.IGridDroppable {
 			/**
 			 * <p>Constructor for a new <code>sap.f.GridContainer</code>.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
 			 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
@@ -1989,7 +2000,7 @@ declare namespace sap {
 		<img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
 		title="Information published on non SAP site" class="sapUISDKExternalLink"/></li></ul></p>
 		 */
-		export class GridList extends sap.m.ListBase {
+		export class GridList extends sap.m.ListBase implements sap.f.dnd.IGridDroppable {
 			/**
 			 * <p>Constructor for a new GridList.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
 			 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
@@ -3032,6 +3043,30 @@ declare namespace sap {
 				 * @returns sap.f.cards.NumericSideIndicator <p>this pointer for chaining</p>
 				 */
 				setUnit(sValue: string): sap.f.cards.NumericSideIndicator;
+			}
+		}
+	}
+}
+declare namespace sap {
+	namespace f {
+		/**
+		 */
+		namespace dnd {
+			/**
+			 * <p>Provides enhanced configuration for drop operations inside grid based controls. If drop position is "Between" and drop layout is "Horizontal", this drop configuration will provide enhanced user experience. This includes the display of a target drop indicator which represents the exact position and size of the dragged control. <b>Note:</b> This configuration might be ignored due to control <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.Element/methods/sap.ui.core.Element.extend">metadata</a> restrictions.</p>
+			 */
+			export class GridDropInfo extends sap.ui.core.dnd.DropInfo {
+				/**
+				 * <p>Constructor for a new GridDropInfo.</p>
+				 * @param {string} sId <p>ID for the new DropInfo, generated automatically if no ID is given</p>
+				 * @param {any} mSettings <p>Initial settings for the GridDropInfo</p>
+				 */
+				constructor(sId?: string, mSettings?: any);
+			}
+			/**
+			 * <p><p>Interface that should be implemented by grid controls, if they are working with the <code>sap.f.dnd.GridDropInfo</code>.</p><p>It is highly recommended that those grid controls have optimized <code>removeItem</code> and <code>insertItem</code> methods (if "items" is target drop aggregation). Meaning to override them in a way that they don't trigger invalidation.</p></p>
+			 */
+			export interface IGridDroppable {
 			}
 		}
 	}

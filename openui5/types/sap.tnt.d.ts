@@ -99,6 +99,11 @@ declare namespace sap {
             unbindText(): sap.tnt.InfoLabel;
         }
         /**
+         * <p><p>Interface for controls suitable for the <code>header</code> aggregation of <a target="_self" class="jsdoclink" href="#/api/sap.tnt.ToolPage">sap.tnt.ToolPage</a>.</p></p>
+         */
+        export interface IToolHeader {
+        }
+        /**
          * <p>The NavigationList control is an interactive control, which provides a choice of different items, ordered as a list.</p>
          */
         export class NavigationList extends sap.ui.core.Control {
@@ -566,9 +571,9 @@ declare namespace sap {
             destroySideContent(): sap.tnt.ToolPage;
             /**
              * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getHeader" href="#/api/sap.tnt.ToolPage/methods/getHeader">header</a>.</p><p>The control to appear in the header area.</p>
-             * @returns sap.tnt.ToolHeader 
+             * @returns sap.tnt.IToolHeader 
              */
-            getHeader(): sap.tnt.ToolHeader;
+            getHeader(): sap.tnt.IToolHeader;
             /**
              * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMainContents" href="#/api/sap.tnt.ToolPage/methods/getMainContents">mainContents</a>.</p><p>The content section.</p>
              * @returns sap.ui.core.Control[] 
@@ -610,10 +615,10 @@ declare namespace sap {
             removeMainContent(vMainContent: number | string | sap.ui.core.Control): sap.ui.core.Control;
             /**
              * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getHeader" href="#/api/sap.tnt.ToolPage/methods/getHeader">header</a>.</p>
-             * @param {sap.tnt.ToolHeader} oHeader <p>The header to set</p>
+             * @param {sap.tnt.IToolHeader} oHeader <p>The header to set</p>
              * @returns sap.tnt.ToolPage <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setHeader(oHeader: sap.tnt.ToolHeader): sap.tnt.ToolPage;
+            setHeader(oHeader: sap.tnt.IToolHeader): sap.tnt.ToolPage;
             /**
              * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSideContent" href="#/api/sap.tnt.ToolPage/methods/getSideContent">sideContent</a>.</p>
              * @param {sap.tnt.SideNavigation} oSideContent <p>The sideContent to set</p>
