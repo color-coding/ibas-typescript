@@ -133,9 +133,9 @@ namespace sap {
                             let data: any = model.getData();
                             if (!ibas.objects.isNull(data) && !ibas.objects.isNull(this.getGrowingInfo())) {
                                 if (this.getGrowingInfo().total === this.getGrowingInfo().actual) {
-                                    if (data !== undefined && data !== null) {
+                                    if (!ibas.objects.isNull(data)) {
                                         let modelData: any = data.rows; // 与绑定对象的路径有关
-                                        let dataCount: number = modelData.length;
+                                        let dataCount: number = modelData instanceof Array ? modelData.length : 0;
                                         let visibleRow: number = this.getGrowingThreshold(); // 当前显示条数
                                         if (dataCount <= 0 || dataCount < visibleRow) {
                                             return;
