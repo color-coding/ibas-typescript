@@ -107,10 +107,11 @@ namespace shell {
                             // 系统服务
                             new sap.m.Button("", {
                                 tooltip: this.title,
-                                icon: ibas.config.get(ibas.CONFIG_ITEM_OFFLINE_MODE) ?
-                                    "sap-icon://appear-offline" : "sap-icon://donut-chart",
-                                width: "50px",
                                 type: sap.m.ButtonType.Transparent,
+                                width: "auto",
+                                text: ibas.strings.isEmpty(ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_NAME)) ?
+                                    ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE) : ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_NAME),
+                                icon: ibas.config.get(ibas.CONFIG_ITEM_OFFLINE_MODE) ? "sap-icon://appear-offline" : "sap-icon://donut-chart",
                                 layoutData: new sap.m.OverflowToolbarLayoutData("", {
                                     priority: sap.m.OverflowToolbarPriority.NeverOverflow
                                 }),

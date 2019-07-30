@@ -17,9 +17,5 @@
     "defaultUser": "admin",
     "defaultPassword": "1q2w3e",
     "repositoryAddress|BORepositoryShell": ".../initialfantasy/services/rest/data"
-  },
-  "languages": [
-    "zh-CN",
-    "en-US"
-  ]
+  }
 }

@@ -64,11 +64,13 @@ namespace trainingtesting {
                 this.busy(true);
                 let that: this = this;
                 if (typeof criteria === "string") {
+                    let condition: ibas.ICondition;
                     let value: string = criteria;
                     criteria = new ibas.Criteria();
                     criteria.result = 1;
-                    // 添加查询条件
-
+                    condition = criteria.conditions.create();
+                    condition.alias = bo.Material.PROPERTY_CODE_NAME;
+                    condition.value = value;
                 }
                 let boRepository: bo.BORepositoryTrainingTesting = new bo.BORepositoryTrainingTesting();
                 boRepository.fetchMaterial({

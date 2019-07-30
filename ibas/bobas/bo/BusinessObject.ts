@@ -33,8 +33,10 @@ namespace ibas {
     export const BO_PROPERTY_NAME_LINESTATUS: string = "lineStatus";
     /** 需要被重置的属性名称 */
     const NEED_BE_RESET_PROPERTIES: string[] = [
-        "createDate", "createTime", "updateDate", "updateTime", "logInst", "createUserSign", "updateUserSign", "createActionId", "updateActionId",
-        "referenced", "canceled", "deleted", "approvalStatus", "lineStatus", "status", "documentStatus"
+        "CreateDate", "CreateTime", "UpdateDate", "UpdateTime", "LogInst", "CreateUserSign",
+        "UpdateUserSign", "CreateActionId", "UpdateActionId", "Referenced", "Canceled",
+        "Deleted", "ApprovalStatus", "LineStatus", "Status", "DocumentStatus", "DataSource",
+        "Period"
     ];
 
     /**
@@ -370,20 +372,31 @@ namespace ibas {
         }
         /** 克隆对象 */
         clone(): this {
-            let newBO: this = super.clone();
-            // 重置部分属性值
-            newBO.isLoading = true;
-            newBO.resetStatus();
-            newBO.isLoading = false;
-            return newBO;
+            let nData: any = super.clone();
+            if (nData instanceof BusinessObject) {
+                nData.reset();
+            }
+            return nData;
         }
         /** 重置 */
-        protected resetStatus(): void {
+        reset(): void {
             // 设置为新对象
             this.markNew(true);
-            for (let item of NEED_BE_RESET_PROPERTIES) {
-                if (this[item] !== undefined) {
-                    this[item] = undefined;
+            for (let property in this) {
+                if (strings.isEmpty(property)) {
+                    continue;
+                }
+                if (NEED_BE_RESET_PROPERTIES.indexOf(property) >= 0) {
+                    delete this[property];
+                    continue;
+                }
+                let value: any = this[property];
+                if (value instanceof BusinessObject) {
+                    value.reset();
+                } else if (value instanceof BusinessObjects) {
+                    for (let item of value) {
+                        item.reset();
+                    }
                 }
             }
         }

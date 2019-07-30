@@ -141,7 +141,7 @@ namespace shell {
                 private txtPassword: sap.m.Input;
                 private getLanguageItems(select: sap.m.Select): sap.m.Select {
                     jQuery.ajax({
-                        url: ibas.urls.normalize(".../languages.json"),
+                        url: ibas.urls.rootUrl("shell/index") + "/languages.json",
                         type: "GET",
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",

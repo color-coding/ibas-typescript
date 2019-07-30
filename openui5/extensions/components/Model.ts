@@ -117,6 +117,17 @@ namespace sap {
                     }
                     this.refresh(false);
                 },
+                size(this: JSONModel): number {
+                    let sData: any = this.getData();
+                    if (sData instanceof Array) {
+                        return sData.length;
+                    } else if (sData[DATA_ROWS] instanceof Array) {
+                        return sData[DATA_ROWS].length;
+                    } else if (!ibas.objects.isNull(sData)) {
+                        return 1;
+                    }
+                    return 0;
+                },
                 /** 退出 */
                 destroy(this: JSONModel): void {
                     let data: any = this.getData();
@@ -146,7 +157,7 @@ namespace sap {
                         }
                     }
                     sap.ui.model.json.JSONModel.prototype.destroy.apply(this, arguments);
-                }
+                },
             });
         }
     }

@@ -178,8 +178,10 @@ namespace trainingtesting {
                                     }),
                                     new sap.extension.table.DataColumn("", {
                                         label: ibas.i18n.prop("bo_salesorderitem_itemcode"),
+                                        width: "20rem",
                                         template: new sap.extension.m.RepositoryInput("", {
                                             showValueHelp: true,
+                                            textFormatMode: sap.m.InputTextFormatMode.ValueKey,
                                             repository: bo.BORepositoryTrainingTesting,
                                             dataInfo: {
                                                 type: bo.Material,

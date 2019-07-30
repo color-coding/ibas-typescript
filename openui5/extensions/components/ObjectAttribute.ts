@@ -105,7 +105,7 @@ namespace sap {
                                             keyBudilder.append(item.key);
                                             textBudilder.append(item.text);
                                         }
-                                        this.setText(textBudilder.toString());
+                                        ObjectAttribute.prototype.setText.call(this, textBudilder.toString());
                                     }
                                 }
                             );
@@ -211,7 +211,7 @@ namespace sap {
                                                 if (property.values instanceof Array) {
                                                     for (let item of property.values) {
                                                         if (ibas.strings.equals(item.value, value)) {
-                                                            this.setText(item.description);
+                                                            ObjectAttribute.prototype.setText.call(this, item.description);
                                                             return;
                                                         }
                                                     }
@@ -262,7 +262,7 @@ namespace sap {
                         ObjectAttribute.prototype.setText.apply(this, arguments);
                         if (!ibas.strings.isEmpty(value)) {
                             let done: (newValue: string) => void = (newValue) => {
-                                this.setText(newValue);
+                                ObjectAttribute.prototype.setText.call(this, newValue);
                             };
                             let bindingData: any = this.getBindingContext().getObject();
                             this.fireConvert({

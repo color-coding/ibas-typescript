@@ -28,6 +28,10 @@ declare namespace sap {
                  * 获取数据
                  */
                 getData<T>(): T;
+                /**
+                 * 数据大小
+                 */
+                size(): number;
             }
         }
     }

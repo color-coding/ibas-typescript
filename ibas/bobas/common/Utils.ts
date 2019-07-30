@@ -87,7 +87,7 @@ namespace ibas {
          * 获取类型名称
          * @param type 类型
          */
-        export function nameOf(type: Function | object): string {
+        export function nameOf(type: Function | Object): string {
             if (objects.isNull(type)) {
                 return undefined;
             }
@@ -106,7 +106,7 @@ namespace ibas {
          * 获取实例类型
          * @param 实例
          */
-        export function typeOf(instance: object): any {
+        export function typeOf(instance: Object): any {
             if (objects.isNull(instance)) {
                 return undefined;
             }
@@ -123,11 +123,11 @@ namespace ibas {
             if (objects.isNull(data)) {
                 return data;
             }
-            let type: any = Object.getPrototypeOf(data).constructor;
+            let type: any = objects.typeOf(<any>data);
             let newData: any = new type;
             // 置为加载数据状态，此状态不触发事件
-            if (newData.isLoding !== undefined) {
-                newData.isLoding = true;
+            if (newData instanceof BusinessObject) {
+                newData.isLoading = true;
             }
             for (let name in data) {
                 if (objects.isNull(name)) {
@@ -178,8 +178,8 @@ namespace ibas {
                 }
             }
             // 取消加载数据状态
-            if (newData.isLoding !== undefined) {
-                newData.isLoding = false;
+            if (newData instanceof BusinessObject) {
+                newData.isLoading = false;
             }
             return newData;
         }
