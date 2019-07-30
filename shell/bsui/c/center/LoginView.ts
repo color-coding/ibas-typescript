@@ -141,14 +141,14 @@ namespace shell {
                 private txtPassword: sap.m.Input;
                 private getLanguageItems(select: sap.m.Select): sap.m.Select {
                     jQuery.ajax({
-                        url: ibas.urls.normalize(".../config.json"),
+                        url: ibas.urls.normalize(".../languages.json"),
                         type: "GET",
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         async: true,
                         success: function (data: any): void {
-                            if (!ibas.objects.isNull(data) && Array.isArray(data.languages)) {
-                                for (let item of data.languages) {
+                            if (Array.isArray(data)) {
+                                for (let item of data) {
                                     select.addItem(new sap.ui.core.Item("", {
                                         text: item,
                                         key: item

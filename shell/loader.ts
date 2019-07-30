@@ -84,7 +84,10 @@ namespace loader {
             // 加载成功
             domScript.onload = (<any>domScript).onreadystatechange = function (): void {
                 if (!this.readyState || "loaded" === this.readyState || "complete" === this.readyState) {
-                    extend(caller);
+                    // 加载扩展库
+                    sap.ui.getCore().attachInit(() => {
+                        extend(caller);
+                    });
                 }
             };
             // 加载失败
@@ -96,7 +99,9 @@ namespace loader {
                 domScript.onload = (<any>domScript).onreadystatechange = function (): void {
                     if (!this.readyState || "loaded" === this.readyState || "complete" === this.readyState) {
                         // 加载扩展库
-                        extend(caller);
+                        sap.ui.getCore().attachInit(() => {
+                            extend(caller);
+                        });
                     }
                 };
                 // 加载失败
@@ -124,7 +129,7 @@ namespace loader {
             domScript.setAttribute("data-sap-ui-bindingSyntax", "complex");
             domScript.setAttribute("data-sap-ui-theme", "sap_belize");
             domScript.setAttribute("data-sap-ui-libs", "sap.m, sap.f, sap.tnt, sap.ui.layout, sap.ui.table, sap.uxap");
-            // domScript.setAttribute("data-sap-ui-preload", "async"); // 异步加载预加载库
+            domScript.setAttribute("data-sap-ui-async", "true");
             return domScript;
         }
     }
