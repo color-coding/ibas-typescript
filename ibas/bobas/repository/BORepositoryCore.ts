@@ -41,20 +41,15 @@ namespace ibas {
         onCompleted(opRslt: IOperationResult<P>): void;
     }
     /**
-     * 业务对象仓库，只读
+     * 业务对象仓库
      */
-    export interface IBORepositoryReadonly {
+    export interface IBORepository {
         /**
          * 查询数据
          * @param boName 业务对象名称
          * @param caller 查询监听者
          */
         fetch<P>(boName: string, caller: IFetchCaller<P>): void;
-    }
-    /**
-     * 业务对象仓库
-     */
-    export interface IBORepository extends IBORepositoryReadonly {
         /**
          * 保存数据
          * @param boName 业务对象名称

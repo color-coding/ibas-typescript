@@ -93,8 +93,8 @@ namespace ibas {
         token: string;
         /** 是否离线 */
         offline: boolean;
-        /** 创建只读业务仓库 */
-        protected createReadonlyRepository(): IBORepositoryReadonly {
+        /** 创建读写业务仓库 */
+        protected createRepository(): IBORepository {
             if (this.offline) {
                 // 离线状态，使用文件仓库
                 let boRepository: BOFileRepositoryAjax = new BOFileRepositoryAjax();
@@ -111,17 +111,9 @@ namespace ibas {
                 return boRepository;
             }
         }
-        /** 创建读写业务仓库 */
-        protected createRepository(): IBORepository {
-            let boRepository: BORepositoryAjax = new BORepositoryAjax();
-            boRepository.address = this.address;
-            boRepository.token = this.token;
-            boRepository.converter = this.createConverter();
-            return boRepository;
-        }
         /** 查询业务对象 */
         protected fetch<P>(boName: string, caller: IFetchCaller<P>): void {
-            let boRepository: IBORepositoryReadonly = this.createReadonlyRepository();
+            let boRepository: IBORepository = this.createRepository();
             if (objects.isNull(boRepository)) {
                 throw new Error(i18n.prop("sys_invalid_parameter", "boRepository"));
             }

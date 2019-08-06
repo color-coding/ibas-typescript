@@ -33,6 +33,7 @@ namespace ibas {
                         oLink.style.cssText = "display:none";
                         oLink.click();
                         oLink.remove();
+                        oURL.revokeObjectURL(sBlobUrl);
                         logger.log(emMessageLevel.DEBUG, "files: save file as [{0}].", fileName);
                         return;
                     }

@@ -10,8 +10,9 @@
 /// <reference path="../common/Configuration.ts" />
 /// <reference path="../expression/JudgmentLink.ts" />
 /// <reference path="./BORepositoryCore.ts" />
-
 namespace ibas {
+    /** HTTP头AUTHORIZATION形式口令 */
+    export const HTTP_HEADER_TOKEN_AUTHORIZATION: string = "Authorization:";
     /** 远程仓库 */
     export abstract class RemoteRepositoryAjax extends RemoteRepository implements IRemoteRepository {
         constructor() {
@@ -84,6 +85,27 @@ namespace ibas {
             };
             xhr.send(data);
         }
+        /**
+         * 返回方法地址
+         * @param method 方法名称
+         */
+        protected methodUrl(method: string): string {
+            let url: string = super.methodUrl(method);
+            if (strings.isWith(this.token, HTTP_HEADER_TOKEN_AUTHORIZATION, undefined)) {
+                let index: number = url.indexOf("?token=");
+                if (index < 0) {
+                    index = url.indexOf("&token=");
+                }
+                if (index > 0) {
+                    let end: number = url.indexOf("&", index + 1);
+                    if (end <= 0) {
+                        end = url.length;
+                    }
+                    url = strings.replace(url, url.substring(index, end), "");
+                }
+            }
+            return url;
+        }
         protected abstract createHttpRequest(method: string): XMLHttpRequest;
     }
     /** 远程业务对象仓库 */
@@ -129,8 +151,13 @@ namespace ibas {
             let methodUrl: string = this.methodUrl(method);
             let xhr: XMLHttpRequest = new XMLHttpRequest();
             xhr.open("POST", methodUrl, true);
-            xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
             xhr.responseType = "json";
+            xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+            // token为头认证形式
+            if (strings.isWith(this.token, HTTP_HEADER_TOKEN_AUTHORIZATION, undefined)) {
+                // xhr.withCredentials = true;
+                xhr.setRequestHeader("Authorization", this.token.substring(HTTP_HEADER_TOKEN_AUTHORIZATION.length));
+            }
             return xhr;
         }
     }
@@ -145,8 +172,13 @@ namespace ibas {
             let methodUrl: string = this.methodUrl(method);
             let xhr: XMLHttpRequest = new XMLHttpRequest();
             xhr.open("GET", methodUrl, true);
-            xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
             xhr.responseType = "json";
+            xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+            // token为头认证形式
+            if (strings.isWith(this.token, HTTP_HEADER_TOKEN_AUTHORIZATION, undefined)) {
+                // xhr.withCredentials = true;
+                xhr.setRequestHeader("Authorization", this.token.substring(HTTP_HEADER_TOKEN_AUTHORIZATION.length));
+            }
             return xhr;
         }
         /**
@@ -159,7 +191,7 @@ namespace ibas {
         }
     }
     /** 远程文件业务对象仓库 */
-    export class BOFileRepositoryAjax extends FileRepositoryAjax implements IBORepositoryReadonly {
+    export class BOFileRepositoryAjax extends FileRepositoryAjax implements IBORepository {
         /**
          * 查询数据
          * @param boName 业务对象名称
@@ -261,6 +293,14 @@ namespace ibas {
             judgmentLink.parsingConditions(criteria.conditions);
             return judgmentLink.judge(data);
         }
+        /**
+         * 保存方法
+         * @param boName 业务对象名称
+         * @param caller 查询监听者
+         */
+        save<P>(boName: string, caller: ISaveCaller<P>): void {
+            throw new Error("Method not implemented.");
+        }
     }
     /** 文件上传仓库 */
     export class FileRepositoryUploadAjax extends RemoteRepositoryAjax implements IFileRepositoryUpload {
@@ -269,6 +309,11 @@ namespace ibas {
             let xhr: XMLHttpRequest = new XMLHttpRequest();
             xhr.open("POST", methodUrl, true);
             xhr.responseType = "json";
+            // token为头认证形式
+            if (strings.isWith(this.token, HTTP_HEADER_TOKEN_AUTHORIZATION, undefined)) {
+                // xhr.withCredentials = true;
+                xhr.setRequestHeader("Authorization", this.token.substring(HTTP_HEADER_TOKEN_AUTHORIZATION.length));
+            }
             return xhr;
         }
         /**
@@ -316,6 +361,11 @@ namespace ibas {
             xhr.open("POST", methodUrl, true);
             xhr.responseType = "blob";
             xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+            // token为头认证形式
+            if (strings.isWith(this.token, HTTP_HEADER_TOKEN_AUTHORIZATION, undefined)) {
+                // xhr.withCredentials = true;
+                xhr.setRequestHeader("Authorization", this.token.substring(HTTP_HEADER_TOKEN_AUTHORIZATION.length));
+            }
             return xhr;
         }
     }
