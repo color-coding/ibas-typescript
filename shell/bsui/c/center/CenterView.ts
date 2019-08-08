@@ -922,6 +922,7 @@ namespace shell {
                         // 页签的不做处理
                     } else if (viewContent instanceof sap.m.Dialog) {
                         viewContent.close();
+                        viewContent.destroy();
                     } else if (!ibas.objects.isNull(viewContent)) {
                         let parent: sap.ui.base.ManagedObject = viewContent.getParent();
                         if (parent instanceof sap.m.NavContainer) {

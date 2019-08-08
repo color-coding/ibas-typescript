@@ -152,9 +152,7 @@ namespace sap {
                                 let visibleRow: number = this.getVisibleRowCount();
                                 if (dataCount > 0 && dataCount > visibleRow) {
                                     let firstRow: number = this.getFirstVisibleRow(); // 当前页的第一行
-                                    let lastPageCount: number = dataCount % visibleRow; // 最后一页行数
-                                    if ((lastPageCount > 0 && firstRow === (dataCount - lastPageCount))
-                                        || (lastPageCount === 0 && firstRow === (dataCount - visibleRow))) {
+                                    if (firstRow === (dataCount - visibleRow)) {
                                         // 调用事件
                                         this.setBusy(true);
                                         this.fireNextDataSet({ data: data[data.length - 1] });
