@@ -1030,9 +1030,6 @@ namespace ibas {
                     }
                 }
             }
-            if (objects.isNull(userField)) {
-                throw new Error(i18n.prop("sys_not_found_user_field", index));
-            }
             return userField;
         }
     }

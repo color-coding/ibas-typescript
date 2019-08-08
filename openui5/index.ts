@@ -56,6 +56,8 @@
 /// <reference path="./extensions/components/ObjectNumber.ts" />
 /// <reference path="./extensions/components/Table.m.d.ts" />
 /// <reference path="./extensions/components/Table.m.ts" />
+/// <reference path="./extensions/components/HTML.d.ts" />
+/// <reference path="./extensions/components/HTML.ts" />
 /// <reference path="./extensions/components/Factory.ts" />
 
 namespace openui5 {
