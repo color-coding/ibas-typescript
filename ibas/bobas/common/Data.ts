@@ -33,7 +33,7 @@ namespace ibas {
         /**
          * 第一个或默认
          */
-        where(lambda: (value: T) => boolean, thisArg?: any): T[];
+        where(lambda: (value: T) => boolean): T[];
         /**
          * 第一个或默认
          */
@@ -41,7 +41,7 @@ namespace ibas {
         /**
          * 第一个或默认
          */
-        firstOrDefault(lambda: (value: T) => boolean, thisArg?: any): T;
+        firstOrDefault(lambda: (value: T) => boolean): T;
         /**
          * 最后一个或默认
          */
@@ -49,12 +49,17 @@ namespace ibas {
         /**
          * 最后一个或默认
          */
-        lastOrDefault(lambda: (value: T) => boolean, thisArg?: any): T;
+        lastOrDefault(lambda: (value: T) => boolean): T;
         /**
          * 是否包含元素
          * @param item 元素
          */
         contain(item: T): boolean;
+        /**
+         * 是否包含元素
+         * @param item 元素表达式
+         */
+        contain(lambda: (item: T) => boolean): boolean;
         /**
          * 清理所有元素
          */
@@ -130,7 +135,7 @@ namespace ibas {
         /**
          * 返回符合条件的数组
          */
-        where(lambda: (value: T) => boolean, thisArg?: any): T[] {
+        where(lambda: (value: T) => boolean): T[] {
             let values: Array<T> = new Array<T>();
             if (lambda instanceof Function) {
                 for (let item of this) {
@@ -148,7 +153,7 @@ namespace ibas {
         /**
          * 第一个或默认
          */
-        firstOrDefault(lambda: (value: T) => boolean, thisArg?: any): T;
+        firstOrDefault(lambda: (value: T) => boolean): T;
         /**
          * 第一个或默认
          */
@@ -175,7 +180,7 @@ namespace ibas {
         /**
          * 最后一个或默认
          */
-        lastOrDefault(lambda: (value: T) => boolean, thisArg?: any): T;
+        lastOrDefault(lambda: (value: T) => boolean): T;
         /**
          * 最后一个或默认
          */
@@ -196,11 +201,29 @@ namespace ibas {
             return null;
         }
         /**
-         * 是否包含
+         * 是否包含元素
+         * @param item 元素
          */
-        contain(value: T): boolean {
+        contain(item: T): boolean;
+        /**
+         * 是否包含元素
+         * @param item 元素表达式
+         */
+        contain(lambda: (item: T) => boolean): boolean;
+        contain(): boolean {
+            let value: any = arguments[0];
+            let test: (item: T) => boolean;
+            if (value instanceof Function) {
+                test = value;
+            } else {
+                test = function (item: T): boolean {
+                    if (item === value) {
+                        return true;
+                    }
+                };
+            }
             for (let tmp of this) {
-                if (value === tmp) {
+                if (test(tmp)) {
                     return true;
                 }
             }

@@ -295,7 +295,7 @@ namespace sap {
                     return Select.prototype.setBindingValue.apply(this, arguments);
                 },
                 /** 重构设置 */
-                applySettings(this: EnumSelect): EnumSelect {
+                applySettings(this: EnumSelect, mSettings: any, oScope?: any): EnumSelect {
                     Select.prototype.applySettings.apply(this, arguments);
                     if (this.getItems().length === 0) {
                         this.loadItems();
@@ -403,10 +403,17 @@ namespace sap {
                  * @param value 值
                  */
                 setBindingValue(this: SeriesSelect, value: string): SeriesSelect {
+                    // 修正-1值
+                    if (ibas.strings.equals(value, "-1")) {
+                        value = "0";
+                    }
                     return Select.prototype.setBindingValue.apply(this, arguments);
                 },
                 /** 重构设置 */
-                applySettings(this: EnumSelect): EnumSelect {
+                applySettings(this: SeriesSelect, mSettings: any, oScope?: any): SeriesSelect {
+                    if (mSettings && mSettings.objectCode) {
+                        mSettings.objectCode = ibas.config.applyVariables(mSettings.objectCode);
+                    }
                     Select.prototype.applySettings.apply(this, arguments);
                     if (this.getItems().length === 0) {
                         this.loadItems();

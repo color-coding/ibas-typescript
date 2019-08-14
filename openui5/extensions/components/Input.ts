@@ -119,6 +119,9 @@ namespace sap {
                     sap.m.Input.prototype.setSelectedItem.apply(this, arguments);
                     if (value instanceof sap.ui.core.Item) {
                         this.setProperty("bindingValue", value.getKey());
+                        this.setTooltip(ibas.strings.format("{0} - {1}", value.getKey(), value.getText()));
+                    } else {
+                        this.destroyTooltip();
                     }
                     return this;
                 },

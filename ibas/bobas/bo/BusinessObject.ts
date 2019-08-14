@@ -1114,5 +1114,116 @@ namespace ibas {
             }
             return boKeys;
         }
+        /** 业务对象属性 */
+        export namespace properties {
+            /**
+             * 复制属性值
+             * @param source 源
+             * @param target 目标
+             * @param skip 跳过的属性
+             */
+            export function copy(source: IBusinessObject, target: IBusinessObject, skip: string[] = undefined): void {
+                if (objects.isNull(source) || objects.isNull(target)) {
+                    return;
+                }
+                let skips: IList<string> = arrays.create(skip);
+                skips.add(naming(BO_PROPERTY_NAME_OBJECTCODE));
+                skips.add(REMOTE_OBJECT_TYPE_PROPERTY_NAME);
+                skips.add("is*");
+                if (target instanceof BODocument) {
+                    skips.add("DocEntry");
+                } else if (target instanceof BODocumentLine) {
+                    skips.add("DocEntry");
+                    skips.add("LineId");
+                } else if (target instanceof BOMasterData) {
+                    skips.add("Code");
+                } else if (target instanceof BOMasterDataLine) {
+                    skips.add("Code");
+                    skips.add("LineId");
+                } else if (target instanceof BOSimple) {
+                    skips.add("ObjectKey");
+                } else if (target instanceof BOSimpleLine) {
+                    skips.add("ObjectKey");
+                    skips.add("LineId");
+                }
+                // 有业务逻辑的对象不赋值
+                for (let rule of businessRulesManager.getRules(objects.typeOf(target))) {
+                    for (let item of rule.affectedProperties) {
+                        skips.add(item);
+                    }
+                }
+                // 复制属性
+                for (let property in source) {
+                    if (strings.isEmpty(property)) {
+                        continue;
+                    }
+                    if (skips.contain((item) => {
+                        let index: number = item.indexOf("*");
+                        if (index > 0) {
+                            let has: boolean = false;
+                            let temps: string[] = item.split("*");
+                            index = -1;
+                            for (let item of temps) {
+                                index = property.indexOf(item, index + 1);
+                                if (index >= 0) {
+                                    has = true;
+                                } else {
+                                    has = false;
+                                    break;
+                                }
+                            }
+                            return has;
+                        } else if (item === property) {
+                            return true;
+                        }
+                        return false;
+                    })) {
+                        continue;
+                    }
+                    let value: any = source[property];
+                    if (!(typeof value === "number"
+                        || typeof value === "string"
+                        || typeof value === "boolean"
+                        || typeof value === "bigint"
+                        || value instanceof Date)) {
+                        continue;
+                    }
+                    target[property] = source[property];
+                }
+                // 重置状态
+                if (target instanceof BusinessObject) {
+                    target.reset();
+                }
+            }
+        }
+        /** 业务对象用户字段 */
+        export namespace userfields {
+            /**
+             * 复制属性值
+             * @param source 源
+             * @param target 目标
+             * @param skip 跳过的属性
+             */
+            export function copy(source: IBOUserFields, target: IBOUserFields, skip: string[] = undefined): void {
+                if (objects.isNull(source) || objects.isNull(target)) {
+                    return;
+                }
+                let skips: IList<string> = arrays.create(skip);
+                // 复制自定义字段
+                for (let item of source.userFields.forEach()) {
+                    if (skips.contain(item.name)) {
+                        continue;
+                    }
+                    let myItem: ibas.IUserField = target.userFields.get(item.name);
+                    if (ibas.objects.isNull(myItem)) {
+                        continue;
+                    }
+                    if (myItem.valueType !== item.valueType) {
+                        continue;
+                    }
+                    myItem.value = item.value;
+                }
+            }
+        }
     }
 }

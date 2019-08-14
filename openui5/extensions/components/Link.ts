@@ -75,6 +75,14 @@ namespace sap {
                 setObjectCode(this: DataLink, value: string): DataLink {
                     return this.setProperty("objectCode", ibas.config.applyVariables(value));
                 },
+                /** 重构设置 */
+                applySettings(this: DataLink, mSettings: any, oScope?: any): DataLink {
+                    if (mSettings && mSettings.objectCode) {
+                        mSettings.objectCode = ibas.config.applyVariables(mSettings.objectCode);
+                    }
+                    Link.prototype.applySettings.apply(this, arguments);
+                    return this;
+                },
                 /** 初始化 */
                 init(this: DataLink): void {
                     // 调用基类构造
