@@ -90,6 +90,15 @@ namespace shell {
                         }, 3000);
                     }
                 }
+                /** 按钮按下时 */
+                onKeyDown(event: KeyboardEvent): void {
+                    if (ibas.objects.isNull(event)) {
+                        return;
+                    }
+                    if (event.keyCode === 13) {
+                        this.fireViewEvents(this.closeEvent);
+                    }
+                }
             }
         }
     }

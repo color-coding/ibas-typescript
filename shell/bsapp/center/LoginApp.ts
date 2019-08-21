@@ -124,46 +124,6 @@ namespace shell {
                     this.messages(error);
                 }
             }
-            /**
-             * 显示消息对话框
-             * @param caller 消息调用者
-             */
-            protected messages(caller: ibas.IMessgesCaller): void;
-            /**
-             * 显示消息对话框
-             * @param type 消息类型
-             * @param message 消息内容
-             */
-            protected messages(type: ibas.emMessageType, message: string): void;
-            /**
-             * 显示消息对话框
-             * @param error 错误
-             */
-            protected messages(error: Error): void;
-            protected messages(): void {
-                if (arguments[0] instanceof Error) {
-                    let error: Error = arguments[0];
-                    if (this.view instanceof ibas.View) {
-                        this.view.isBusy = true;
-                    }
-                    super.messages({
-                        type: ibas.emMessageType.ERROR,
-                        title: ibas.strings.isEmpty(super.description) ? super.name : super.description,
-                        message: !ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE, false) ?
-                            error.message
-                            : ibas.strings.isWith(error.stack, "Error: ", undefined) ?
-                                error.stack
-                                : ibas.strings.format("Error: {0}\n{1}", error.message, error.stack),
-                        onCompleted: () => {
-                            if (this.view instanceof ibas.View) {
-                                this.view.isBusy = false;
-                            }
-                        }
-                    });
-                } else {
-                    super.messages.apply(this, arguments);
-                }
-            }
         }
         /** 登陆-视图 */
         export interface ILoginView extends ibas.IView {

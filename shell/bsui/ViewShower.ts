@@ -145,19 +145,12 @@ namespace shell {
             }
             /** 对话消息 */
             messages(caller: ibas.IMessgesCaller): void {
-                jQuery.sap.require("sap.m.MessageBox");
-                sap.m.MessageBox.show(
-                    caller.message, {
-                        title: caller.title,
-                        icon: openui5.utils.toMessageBoxIcon(caller.type),
-                        actions: openui5.utils.toMessageBoxAction(caller.actions),
-                        onClose(oAction: any): void {
-                            if (caller.onCompleted instanceof Function) {
-                                caller.onCompleted(openui5.utils.toMessageAction(oAction));
-                            }
-                        }
-                    }
-                );
+                sap.extension.m.MessageBox.show(caller.message, {
+                    type: caller.type,
+                    title: caller.title,
+                    actions: caller.actions,
+                    onCompleted: caller.onCompleted,
+                });
             }
         }
     }

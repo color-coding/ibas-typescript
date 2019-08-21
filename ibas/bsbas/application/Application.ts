@@ -197,6 +197,22 @@ namespace ibas {
                 caller.title = strings.isEmpty(this.description) ? this.name : this.description;
             }
             if (!objects.isNull(this.viewShower)) {
+                let onCompleted: Function = caller.onCompleted;
+                let view: View;
+                if (this.view instanceof View && this.view.isBusy !== true) {
+                    this.view.isBusy = true;
+                    view = this.view;
+                }
+                caller.onCompleted = function (action: emMessageAction): void {
+                    if (view instanceof View) {
+                        view.isBusy = false;
+                        view = undefined;
+                    }
+                    if (onCompleted instanceof Function) {
+                        onCompleted(action);
+                        onCompleted = undefined;
+                    }
+                };
                 this.viewShower.messages(caller);
             } else {
                 throw new Error(i18n.prop("sys_invalid_view_shower", this.name));

@@ -171,19 +171,11 @@ namespace trainingtesting {
                     });
                 }
                 showMessageBox(caller: ibas.IMessgesCaller): void {
-                    jQuery.sap.require("sap.m.MessageBox");
-                    let message: string = caller.message.replace(/\{(.+?)\}/g, function (value: string): string {
-                        return ibas.businessobjects.describe(value);
-                    });
-                    sap.m.MessageBox.show(message, {
-                        icon: openui5.utils.toMessageBoxIcon(caller.type),
+                    sap.extension.m.MessageBox.show(caller.message, {
+                        type: caller.type,
                         title: caller.title,
-                        actions: openui5.utils.toMessageBoxAction(caller.actions),
-                        onClose(oAction: any): void {
-                            if (!ibas.objects.isNull(caller.onCompleted)) {
-                                caller.onCompleted(openui5.utils.toMessageAction(oAction));
-                            }
-                        }
+                        actions: caller.actions,
+                        onCompleted: caller.onCompleted,
                     });
                 }
             }

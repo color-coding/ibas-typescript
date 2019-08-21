@@ -12,6 +12,59 @@
 /// <reference path="./Application.ts" />
 
 namespace ibas {
+    /** 地址hash值标记-视图 */
+    export const URL_HASH_SIGN_VIEWS: string = "#/views/";
+    function messageApplication<B extends IView>(this: Application<B>, error: Error): void {
+        (<any>this).messages(error);
+    }
+    /** 视图 */
+    export abstract class View extends AbstractView {
+        /** 是否已显示 */
+        isDisplayed: boolean;
+        /** 是否忙 */
+        isBusy: boolean;
+        /**
+         * 触发视图事件
+         * @param event 触发的事件
+         * @param pars 参数
+         */
+        protected fireViewEvents(event: Function, ...pars: any[]): void {
+            if (this.isBusy) {
+                ibas.logger.log(ibas.emMessageLevel.DEBUG, "view: event skipping, [{0} - {1}] is busy.", this.id, this.title);
+                return;
+            }
+            if (typeof event !== "function") {
+                throw new Error(i18n.prop("sys_invalid_parameter", "event"));
+            }
+            try {
+                event.apply(this.application, pars);
+            } catch (error) {
+                messageApplication.call(this.application, error);
+            }
+        }
+        /** 显示之后 */
+        onDisplayed(): void {
+            // 重载要回调
+        }
+        /** 关闭之后 */
+        onClosed(): void {
+            // 重载要回调
+        }
+        /** 按钮按下时 */
+        onKeyDown(event: KeyboardEvent): void {
+            // 可重载
+            // logger.log(emMessageLevel.DEBUG, "view: key [{0}] down at [{1}].", event.keyCode, this.id);
+        }
+        /** 地址栏哈希值变化 */
+        onHashChanged(event: HashChangeEvent): void {
+            // 可重载
+            logger.log(emMessageLevel.DEBUG, "view: hash change to [{0}] at [{1}].", event.newURL, this.id);
+        }
+        /** 手指触控移动 */
+        onTouchMove(direction: emTouchMoveDirection, event: TouchEvent): void {
+            // 可重载
+        }
+    }
     /** 地址视图 */
     export abstract class UrlView extends View implements IUrlView {
         /** 内部打开 */
