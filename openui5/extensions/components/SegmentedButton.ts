@@ -41,8 +41,11 @@ namespace sap {
                     // 调用基类构造
                     (<any>sap.m.SegmentedButton.prototype).init.apply(this, arguments);
                     // 监听事件
-                    this.attachSelectionChange(undefined, () => {
-                        this.setBindingValue(this.getSelectedKey());
+                    this.attachSelectionChange(undefined, function (event: sap.ui.base.Event): void {
+                        let source: any = event.getSource();
+                        if (source instanceof SegmentedButton) {
+                            source.setBindingValue(source.getSelectedKey());
+                        }
                     });
                 },
                 /** 重写绑定 */

@@ -59,6 +59,10 @@
 /// <reference path="./extensions/components/HTML.d.ts" />
 /// <reference path="./extensions/components/HTML.ts" />
 /// <reference path="./extensions/components/MessageBox.ts" />
+/// <reference path="./extensions/components/Tokenizer.d.ts" />
+/// <reference path="./extensions/components/Tokenizer.ts" />
+/// <reference path="./extensions/components/Wizard.d.ts" />
+/// <reference path="./extensions/components/Wizard.ts" />
 /// <reference path="./extensions/components/Factory.ts" />
 
 namespace openui5 {

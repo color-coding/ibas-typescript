@@ -88,20 +88,19 @@ namespace sap {
                     // 调用基类构造
                     (<any>Link.prototype).init.apply(this, arguments);
                     // 监听事件
-                    this.attachPress(undefined, (event: sap.ui.base.Event) => {
-                        let source: DataLink = <DataLink>event.getSource();
-                        if (ibas.objects.isNull(source)) {
-                            return;
+                    this.attachPress(undefined, function (event: sap.ui.base.Event): void {
+                        let source: any = event.getSource();
+                        if (source instanceof DataLink) {
+                            let objectCode: string = source.getObjectCode();
+                            let value: string = source.getBindingValue();
+                            if (ibas.strings.isEmpty(objectCode) || ibas.strings.isEmpty(value)) {
+                                return;
+                            }
+                            ibas.servicesManager.runLinkService({
+                                boCode: objectCode,
+                                linkValue: value
+                            });
                         }
-                        let objectCode: string = source.getObjectCode();
-                        let value: string = source.getBindingValue();
-                        if (ibas.strings.isEmpty(objectCode) || ibas.strings.isEmpty(value)) {
-                            return;
-                        }
-                        ibas.servicesManager.runLinkService({
-                            boCode: objectCode,
-                            linkValue: value
-                        });
                     });
                 }
             });

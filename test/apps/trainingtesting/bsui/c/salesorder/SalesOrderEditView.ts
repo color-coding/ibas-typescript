@@ -225,6 +225,15 @@ namespace trainingtesting {
                                             path: "lineTotal",
                                             type: new sap.extension.data.Sum(),
                                         })
+                                    }),
+                                    new sap.extension.table.DataColumn("", {
+                                        label: ibas.i18n.prop("bo_salesorderitem_reference1"),
+                                        width: "16rem",
+                                        template: new sap.extension.m.IconInput("", {
+                                        }).bindProperty("bindingValue", {
+                                            path: "reference1",
+                                            type: new sap.extension.data.Alphanumeric(),
+                                        })
                                     })
                                 ]
                             }),

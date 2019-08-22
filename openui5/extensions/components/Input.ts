@@ -272,51 +272,55 @@ namespace sap {
                     // 调用基类构造
                     (<any>RepositoryInput.prototype).init.apply(this, arguments);
                     // 自身事件监听
-                    this.attachValueHelpRequest(null, () => {
-                        let boCode: string, dataInfo: any = this.getDataInfo();
-                        if (typeof dataInfo.type === "function") {
-                            boCode = dataInfo.type.BUSINESS_OBJECT_CODE;
-                        } else if (typeof dataInfo.type === "object") {
-                            boCode = ibas.objects.typeOf(dataInfo.type).BUSINESS_OBJECT_CODE;
-                        } else if (typeof dataInfo.type === "string") {
-                            boCode = ibas.config.applyVariables(dataInfo.type);
-                        }
-                        if (ibas.strings.isEmpty(boCode)) {
-                            throw new Error(ibas.i18n.prop("sys_invalid_parameter", "boCode"));
-                        }
-                        ibas.servicesManager.runChooseService<any>({
-                            boCode: boCode,
-                            chooseType: this.getChooseType(),
-                            criteria: this.getCriteria(),
-                            onCompleted: (selecteds: ibas.IList<any>) => {
-                                let keyProperty: string = this.getDataInfo().key;
-                                let textProperty: string = this.getDataInfo().text;
-                                let keyBudilder: ibas.StringBuilder = new ibas.StringBuilder();
-                                keyBudilder.map(null, "");
-                                keyBudilder.map(undefined, "");
-                                let textBudilder: ibas.StringBuilder = new ibas.StringBuilder();
-                                textBudilder.map(null, "");
-                                textBudilder.map(undefined, "");
-                                for (let item of selecteds) {
-                                    if (keyBudilder.length > 0) {
-                                        keyBudilder.append(ibas.DATA_SEPARATOR);
-                                    }
-                                    if (textBudilder.length > 0) {
-                                        textBudilder.append(ibas.DATA_SEPARATOR);
-                                        textBudilder.append(" ");
-                                    }
-                                    keyBudilder.append(item[keyProperty]);
-                                    textBudilder.append(item[textProperty]);
-                                }
-                                let item: sap.ui.core.ListItem = new sap.ui.core.ListItem("", {
-                                    key: keyBudilder.toString(),
-                                    text: textBudilder.toString(),
-                                });
-                                this.addSuggestionItem(item);
-                                this.setSelectedItem(item);
-                                this.updateDomValue(item.getText());
+                    this.attachValueHelpRequest(null, function (event: sap.ui.base.Event): void {
+                        let that: any = event.getSource();
+                        if (that instanceof SelectionInput) {
+                            let boCode: string, dataInfo: any = that.getDataInfo();
+                            if (typeof dataInfo.type === "function") {
+                                boCode = dataInfo.type.BUSINESS_OBJECT_CODE;
+                            } else if (typeof dataInfo.type === "object") {
+                                boCode = ibas.objects.typeOf(dataInfo.type).BUSINESS_OBJECT_CODE;
+                            } else if (typeof dataInfo.type === "string") {
+                                boCode = ibas.config.applyVariables(dataInfo.type);
                             }
-                        });
+                            if (ibas.strings.isEmpty(boCode)) {
+                                throw new Error(ibas.i18n.prop("sys_invalid_parameter", "boCode"));
+                            }
+                            ibas.servicesManager.runChooseService<any>({
+                                boCode: boCode,
+                                chooseType: that.getChooseType(),
+                                criteria: that.getCriteria(),
+                                onCompleted: (selecteds: ibas.IList<any>) => {
+                                    let keyProperty: string = that.getDataInfo().key;
+                                    let textProperty: string = that.getDataInfo().text;
+                                    let keyBudilder: ibas.StringBuilder = new ibas.StringBuilder();
+                                    keyBudilder.map(null, "");
+                                    keyBudilder.map(undefined, "");
+                                    let textBudilder: ibas.StringBuilder = new ibas.StringBuilder();
+                                    textBudilder.map(null, "");
+                                    textBudilder.map(undefined, "");
+                                    for (let item of selecteds) {
+                                        if (keyBudilder.length > 0) {
+                                            keyBudilder.append(ibas.DATA_SEPARATOR);
+                                        }
+                                        if (textBudilder.length > 0) {
+                                            textBudilder.append(ibas.DATA_SEPARATOR);
+                                            textBudilder.append(" ");
+                                        }
+                                        keyBudilder.append(item[keyProperty]);
+                                        textBudilder.append(item[textProperty]);
+                                    }
+                                    let item: sap.ui.core.ListItem = new sap.ui.core.ListItem("", {
+                                        key: keyBudilder.toString(),
+                                        text: textBudilder.toString(),
+                                    });
+                                    that.addSuggestionItem(item);
+                                    that.setSelectedItem(item);
+                                    that.updateDomValue(item.getText());
+                                    that = null;
+                                }
+                            });
+                        }
                     });
                 }
             });
@@ -553,6 +557,106 @@ namespace sap {
                     }
                     return this;
                 }
+            });
+            /**
+             * 图标-输入框
+             */
+            Input.extend("sap.extension.m.IconInput", {
+                metadata: {
+                    properties: {
+                        /** 显示选择钮 */
+                        showValueHelp: { type: "boolean", defaultValue: true },
+                    },
+                    aggregations: {
+                        "_begin": { type: "sap.ui.core.Icon", multiple: false },
+                    },
+                    events: {}
+                },
+                renderer: {
+                },
+                /** 初始化 */
+                init(this: IconInput): void {
+                    // 调用基类构造
+                    (<any>Input.prototype).init.apply(this, arguments);
+                    // 自身事件监听
+                    this.attachValueHelpRequest(null, function (event: sap.ui.base.Event): void {
+                        let that: any = event.getSource();
+                        if (that instanceof IconInput) {
+                            let selectDialog: sap.m.SelectDialog = new sap.m.SelectDialog("", {
+                                title: ibas.i18n.prop("openui5_please_select_icon"),
+                                items: {
+                                    path: "/",
+                                    template: new sap.m.StandardListItem("", {
+                                        title: {
+                                            path: "name",
+                                        },
+                                        icon: {
+                                            path: "name",
+                                        }
+                                    })
+                                },
+                                search: function (event: sap.ui.base.Event): void {
+                                    let source: any = event.getSource();
+                                    if (source instanceof sap.m.SelectDialog) {
+                                        let oBinding: any = source.getBinding("items");
+                                        if (oBinding instanceof sap.ui.model.json.JSONListBinding) {
+                                            let value: string = event.getParameter("value");
+                                            oBinding.filter([
+                                                new sap.ui.model.Filter("name", sap.ui.model.FilterOperator.Contains, value)
+                                            ]);
+                                        }
+                                    }
+                                },
+                                confirm(event: sap.ui.base.Event): void {
+                                    let value: string = event.getParameter("selectedItem").getTitle();
+                                    that.setBindingValue(value);
+                                    setTimeout(() => {
+                                        selectDialog.destroy();
+                                        selectDialog = undefined;
+                                        that = undefined;
+                                    }, 5);
+                                },
+                                cancel(): void {
+                                    setTimeout(() => {
+                                        selectDialog.destroy();
+                                        selectDialog = undefined;
+                                        that = undefined;
+                                    }, 5);
+                                }
+                            });
+                            if (ibas.config.get(openui5.CONFIG_ITEM_COMPACT_SCREEN, false)) {
+                                selectDialog.addStyleClass("sapUiSizeCompact");
+                            }
+                            let icons: ibas.ArrayList<{ name: string }> = new ibas.ArrayList<{ name: string }>();
+                            for (let item of sap.ui.core.IconPool.getIconNames(undefined)) {
+                                icons.add({
+                                    name: ibas.strings.format("sap-icon://{0}", item)
+                                });
+                            }
+                            selectDialog.setModel(new sap.ui.model.json.JSONModel(icons));
+                            selectDialog.open(undefined);
+                        }
+                    });
+                },
+                /**
+                 * 设置绑定值
+                 * @param value 值
+                 */
+                setBindingValue(this: Input, value: string): IconInput {
+                    Input.prototype.setBindingValue.apply(this, arguments);
+                    if (ibas.strings.isWith(value, "sap-icon://", undefined)) {
+                        let icon: any = this.getAggregation("_beginIcon", undefined);
+                        if (icon instanceof Array && icon.length > 0) {
+                            icon = icon[0];
+                            if (icon instanceof sap.ui.core.Icon) {
+                                icon.setSrc(value);
+                            }
+                        } else {
+                            icon = this.addBeginIcon(value);
+                        }
+                    }
+                    return this;
+                },
             });
         }
     }

@@ -50,11 +50,15 @@ namespace sap {
                 /** 初始化 */
                 init(this: DatePicker): void {
                     (<any>sap.m.DatePicker.prototype).init.apply(this, arguments);
-                    this.attachChange(undefined, () => {
-                        let oldValue: any = this.getBindingValue();
-                        let newValue: any = this.getDateValue();
-                        if (oldValue !== newValue) {
-                            this.setProperty("bindingValue", newValue);
+                    this.attachChange(undefined, function (event: sap.ui.base.Event): void {
+                        let that: any = event.getSource();
+                        if (that instanceof DatePicker) {
+                            let oldValue: any = that.getBindingValue();
+                            let newValue: any = that.getDateValue();
+                            if (oldValue !== newValue) {
+                                (<any>that).setProperty("bindingValue", newValue);
+                            }
+                            that = null;
                         }
                     });
                 },
@@ -107,11 +111,15 @@ namespace sap {
                 /** 初始化 */
                 init(this: TimePicker): void {
                     (<any>sap.m.TimePicker.prototype).init.apply(this, arguments);
-                    this.attachChange(undefined, () => {
-                        let oldValue: any = this.getBindingValue();
-                        let newValue: any = this.getDateValue();
-                        if (oldValue !== newValue) {
-                            this.setProperty("bindingValue", newValue);
+                    this.attachChange(undefined, function (event: sap.ui.base.Event): void {
+                        let that: any = event.getSource();
+                        if (that instanceof TimePicker) {
+                            let oldValue: any = that.getBindingValue();
+                            let newValue: any = that.getDateValue();
+                            if (oldValue !== newValue) {
+                                (<any>that).setProperty("bindingValue", newValue);
+                            }
+                            that = null;
                         }
                     });
                 },

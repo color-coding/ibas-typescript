@@ -135,6 +135,11 @@ declare namespace sap {
              */
             class BusinessObjectInput extends SelectionInput {
             }
+            /**
+             * 图标-输入框
+             */
+            class IconInput extends Input {
+            }
         }
     }
 }

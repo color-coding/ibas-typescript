@@ -31,6 +31,7 @@ namespace shell {
             const UI_MAIN_MENU: string = "__UI_MAIN_MENU";
             const UI_MAIN_BACK: string = "__UI_MAIN_BACK";
             const UI_MAIN_TITLE: string = "__UI_MAIN_TITLE";
+            const UI_BUSY_DIALOG: string = "__UI_BUSY_DIALOG";
             /**
              * 视图-中心
              */
@@ -254,8 +255,6 @@ namespace shell {
                 private messageHistory: sap.m.MessagePopover;
                 /** 消息框 */
                 private messagePopover: sap.m.Popover;
-                /** 忙对话框 */
-                private busyDialog: sap.m.BusyDialog;
                 /** 创建窗体容器页 */
                 protected drawPage(view: ibas.IView): sap.m.Page {
                     let page: sap.m.Page = new sap.m.Page("", {
@@ -525,23 +524,26 @@ namespace shell {
                                 item.setBusy(busy);
                             }
                         }
+                    } else if (ui instanceof sap.m.Dialog) {
+                        for (let item of ui.getContent()) {
+                            if (item.getBusy() !== busy) {
+                                item.setBusy(busy);
+                            }
+                        }
                     } else {
                         // 视图不能设置忙状态，使用全局对话框
-                        if (busy) {
-                            if (ibas.objects.isNull(this.busyDialog)) {
-                                this.busyDialog = new sap.m.BusyDialog("");
-                                if (ibas.config.get(openui5.CONFIG_ITEM_COMPACT_SCREEN, false)) {
-                                    this.busyDialog.addStyleClass("sapUiSizeCompact");
-                                }
+                        let busyDialog: any = sap.ui.getCore().byId(UI_BUSY_DIALOG);
+                        if (busy === true) {
+                            if (!(busyDialog instanceof sap.m.BusyDialog)) {
+                                busyDialog = new sap.m.BusyDialog(UI_BUSY_DIALOG, {
+                                    title: view.title,
+                                    text: msg
+                                });
                             }
-                            if (!this.busyDialog.getVisible()) {
-                                this.busyDialog.setTitle(view.title);
-                                this.busyDialog.setText(msg);
-                                this.busyDialog.open();
-                            }
+                            busyDialog.open();
                         } else {
-                            if (!ibas.objects.isNull(this.busyDialog)) {
-                                this.busyDialog.close(false);
+                            if (busyDialog instanceof sap.m.BusyDialog) {
+                                busyDialog.destroy();
                             }
                         }
                     }
