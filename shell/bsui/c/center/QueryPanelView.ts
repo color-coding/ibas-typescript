@@ -263,7 +263,8 @@ namespace shell {
                     return table;
                 }
                 /** 关闭之后 */
-                onClosed(): void {
+                protected onClosed(): void {
+                    super.onClosed();
                     if (this.form != null) {
                         this.form.destroy(true);
                         this.form = null;

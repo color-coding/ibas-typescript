@@ -129,7 +129,7 @@ namespace shell {
                     });
                 }
                 /** 按钮按下时 */
-                onKeyDown(event: KeyboardEvent): void {
+                protected onKeyDown(event: KeyboardEvent): void {
                     if (ibas.objects.isNull(event)) {
                         return;
                     }

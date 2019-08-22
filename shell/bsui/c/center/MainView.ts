@@ -135,7 +135,7 @@ namespace shell {
                     return null;
                 }
                 /** 按钮按下时 */
-                onKeyDown(event: KeyboardEvent): void {
+                protected onKeyDown(event: KeyboardEvent): void {
                     let view: ibas.IView = this.currentView();
                     if (view instanceof ibas.View) {
                         if (!view.isDisplayed) {
@@ -144,11 +144,11 @@ namespace shell {
                         if (view.isBusy) {
                             return;
                         }
-                        view.onKeyDown(event);
+                        ibas.views.keyDown.call(view, event);
                     }
                 }
                 /** 地址栏哈希值变化 */
-                onHashChanged(event: HashChangeEvent): void {
+                protected onHashChanged(event: HashChangeEvent): void {
                     let view: ibas.IView = this.currentView();
                     if (view instanceof ibas.View) {
                         if (!view.isDisplayed) {
@@ -157,11 +157,11 @@ namespace shell {
                         if (view.isBusy) {
                             return;
                         }
-                        view.onHashChanged(event);
+                        ibas.views.hashChanged.call(view, event);
                     }
                 }
                 /** 手指触控移动 */
-                onTouchMove(direction: ibas.emTouchMoveDirection, event: TouchEvent): void {
+                protected onTouchMove(direction: ibas.emTouchMoveDirection, event: TouchEvent): void {
                     let view: ibas.IView = this.currentView();
                     if (view instanceof ibas.View) {
                         if (!view.isDisplayed) {
@@ -170,7 +170,7 @@ namespace shell {
                         if (view.isBusy) {
                             return;
                         }
-                        view.onTouchMove(direction, event);
+                        ibas.views.touchMove.call(view, direction, event);
                     }
                 }
             }

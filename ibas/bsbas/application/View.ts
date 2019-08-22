@@ -42,26 +42,26 @@ namespace ibas {
                 messageApplication.call(this.application, error);
             }
         }
-        /** 显示之后 */
-        onDisplayed(): void {
-            // 重载要回调
+        /** 显示之后（重载要回调） */
+        protected onDisplayed(): void {
+            this.isDisplayed = true;
         }
-        /** 关闭之后 */
-        onClosed(): void {
-            // 重载要回调
+        /** 关闭之后（重载要回调） */
+        protected onClosed(): void {
+            this.isDisplayed = false;
         }
         /** 按钮按下时 */
-        onKeyDown(event: KeyboardEvent): void {
+        protected onKeyDown(event: KeyboardEvent): void {
             // 可重载
             // logger.log(emMessageLevel.DEBUG, "view: key [{0}] down at [{1}].", event.keyCode, this.id);
         }
         /** 地址栏哈希值变化 */
-        onHashChanged(event: HashChangeEvent): void {
+        protected onHashChanged(event: HashChangeEvent): void {
             // 可重载
             logger.log(emMessageLevel.DEBUG, "view: hash change to [{0}] at [{1}].", event.newURL, this.id);
         }
         /** 手指触控移动 */
-        onTouchMove(direction: emTouchMoveDirection, event: TouchEvent): void {
+        protected onTouchMove(direction: emTouchMoveDirection, event: TouchEvent): void {
             // 可重载
         }
     }
@@ -196,5 +196,28 @@ namespace ibas {
     }
     /** 页签视图 */
     export abstract class TabView extends View implements IView {
+    }
+    export namespace views {
+        export function closed(this: ibas.View): void {
+            this.onClosed();
+            if (this.isDisplayed !== false) {
+                this.isDisplayed = false;
+            }
+        }
+        export function displayed(this: ibas.View): void {
+            this.onDisplayed();
+            if (this.isDisplayed !== true) {
+                this.isDisplayed = true;
+            }
+        }
+        export function hashChanged(this: ibas.View, event: HashChangeEvent): void {
+            this.onHashChanged(event);
+        }
+        export function keyDown(this: ibas.View, event: KeyboardEvent): void {
+            this.onKeyDown(event);
+        }
+        export function touchMove(this: ibas.View, direction: ibas.emTouchMoveDirection, event: TouchEvent): void {
+            this.onTouchMove(direction, event);
+        }
     }
 }

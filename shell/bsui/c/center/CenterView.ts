@@ -623,8 +623,7 @@ namespace shell {
                         }
                     }
                     if (view instanceof ibas.View) {
-                        view.isDisplayed = true;
-                        view.onDisplayed();
+                        ibas.views.displayed.call(view);
                     }
                 }
                 protected showShellView(view: app.ShellView): void {
@@ -728,8 +727,7 @@ namespace shell {
                     if (viewContent instanceof sap.m.QuickView) {
                         // 快速视图
                         viewContent.attachAfterClose(null, function (): void {
-                            view.isDisplayed = false;
-                            view.onClosed();
+                            ibas.views.closed.call(view);
                         });
                         view.id = viewContent.getId();
                         viewContent.openBy(<any>sap.ui.getCore().byId(view.barId));
@@ -737,8 +735,7 @@ namespace shell {
                         // 对话框视图
                         // 添加关闭事件
                         viewContent.attachAfterClose(null, function (): void {
-                            view.isDisplayed = false;
-                            view.onClosed();
+                            ibas.views.closed.call(view);
                         });
                         // 设置视图紧凑
                         if (ibas.config.get(openui5.CONFIG_ITEM_COMPACT_SCREEN, false)) {
@@ -761,8 +758,7 @@ namespace shell {
                         // 添加关闭事件
                         popover.attachAfterClose(null, function (): void {
                             // 设置视图未显示
-                            view.isDisplayed = false;
-                            view.onClosed();
+                            ibas.views.closed.call(view);
                             popover.destroy(false);
                         });
                         // 设置视图紧凑
@@ -775,8 +771,7 @@ namespace shell {
                         popover.openBy(<any>sap.ui.getCore().byId(view.barId));
                     } else {
                         setTimeout(function (): void {
-                            view.isDisplayed = false;
-                            view.onClosed();
+                            ibas.views.closed.call(view);
                         }, 100);
                     }
                 }
@@ -924,12 +919,11 @@ namespace shell {
                         viewContent.destroy(true);
                     }
                     if (view instanceof ibas.View) {
-                        view.isDisplayed = false;
-                        view.onClosed();
+                        ibas.views.closed.call(view);
                     }
                 }
                 /** 地址栏哈希值变化 */
-                onHashChanged(event: HashChangeEvent): void {
+                protected onHashChanged(event: HashChangeEvent): void {
                     if (ibas.objects.isNull(event) || ibas.objects.isNull(event.newURL)) {
                         return;
                     }
@@ -948,7 +942,7 @@ namespace shell {
                                 let data: any = cusData.getValue();
                                 if (data instanceof ibas.View) {
                                     // 通知视图事件
-                                    data.onHashChanged(event);
+                                    ibas.views.hashChanged.call(data, event);
                                 }
                                 break;
                             }
@@ -987,19 +981,19 @@ namespace shell {
                     return;
                 }
                 /** 按钮按下时 */
-                onKeyDown(event: KeyboardEvent): void {
+                protected onKeyDown(event: KeyboardEvent): void {
                     // 获取当前窗体
                     let view: ibas.View = this.currentPageView();
                     if (!ibas.objects.isNull(view)) {
-                        view.onKeyDown(event);
+                        ibas.views.keyDown.call(view, event);
                     }
                 }
                 /** 当手指移动时 */
-                onTouchMove(direction: ibas.emTouchMoveDirection, event: TouchEvent): void {
+                protected onTouchMove(direction: ibas.emTouchMoveDirection, event: TouchEvent): void {
                     // 获取当前窗体
                     let view: ibas.View = this.currentPageView();
                     if (!ibas.objects.isNull(view)) {
-                        view.onTouchMove(direction, event);
+                        ibas.views.touchMove.call(view, direction, event);
                     }
                 }
             }

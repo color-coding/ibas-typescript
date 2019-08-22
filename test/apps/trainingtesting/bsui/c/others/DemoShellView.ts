@@ -77,8 +77,7 @@ namespace trainingtesting {
                         if (viewContent instanceof sap.m.QuickView) {
                             // 快速视图
                             viewContent.attachAfterClose(null, function (): void {
-                                view.isDisplayed = false;
-                                view.onClosed();
+                                ibas.views.closed.call(view);
                             });
                             view.id = viewContent.getId();
                             viewContent.openBy(<any>sap.ui.getCore().byId(view.barId));
@@ -86,8 +85,7 @@ namespace trainingtesting {
                             // 对话框视图
                             // 添加关闭事件
                             viewContent.attachAfterClose(null, function (): void {
-                                view.isDisplayed = false;
-                                view.onClosed();
+                                ibas.views.closed.call(view);
                             });
                             // 设置视图紧凑
                             if (ibas.config.get(openui5.CONFIG_ITEM_COMPACT_SCREEN, false)) {
@@ -126,8 +124,7 @@ namespace trainingtesting {
                         this.pageContainer.to(page.getId());
                     }
                     if (view instanceof ibas.View) {
-                        view.isDisplayed = true;
-                        view.onDisplayed();
+                        ibas.views.displayed.call(view);
                     }
                 }
                 destroyView(view: ibas.IView): void {
@@ -137,11 +134,12 @@ namespace trainingtesting {
                         page.destroy();
                     } else {
                         let viewContent: sap.ui.core.Element = sap.ui.getCore().byId(view.id);
-                        viewContent.destroy(true);
+                        if (viewContent instanceof sap.ui.core.Element) {
+                            viewContent.destroy(true);
+                        }
                     }
                     if (view instanceof ibas.View) {
-                        view.isDisplayed = false;
-                        view.onClosed();
+                        ibas.views.closed.call(view);
                     }
                 }
                 busyView(view: ibas.IView, busy: boolean, msg: string): void {

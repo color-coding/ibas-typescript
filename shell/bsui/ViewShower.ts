@@ -85,8 +85,7 @@ namespace shell {
                     }
                 }
                 view.id = viewContent.getId();
-                view.isDisplayed = true;
-                view.onDisplayed();
+                ibas.views.displayed.call(view);
             }
             /** 清理资源 */
             destroy(view: ibas.IView): void {
@@ -104,8 +103,7 @@ namespace shell {
                         ui.destroy(true);
                     }
                     if (view instanceof ibas.View) {
-                        view.isDisplayed = false;
-                        view.onClosed();
+                        ibas.views.closed.call(view);
                     }
                 }
                 // 销毁忙对话框

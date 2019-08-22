@@ -247,7 +247,7 @@ namespace trainingtesting {
                     }
                 }
                 /** 手指触控滑动 */
-                onTouchMove(direction: ibas.emTouchMoveDirection, event: TouchEvent): void {
+                protected onTouchMove(direction: ibas.emTouchMoveDirection, event: TouchEvent): void {
                     if (direction === ibas.emTouchMoveDirection.UP) {
                         this.page.setShowFooter(false);
                     } else if (direction === ibas.emTouchMoveDirection.DOWN) {

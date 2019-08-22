@@ -172,7 +172,7 @@ namespace shell {
                     this.list.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
                 }
                 /** 关闭之后 */
-                onClosed(): void {
+                protected onClosed(): void {
                     super.onClosed();
                     if (this.list != null) {
                         this.list.destroy(true);
