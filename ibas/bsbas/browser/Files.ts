@@ -41,5 +41,38 @@ namespace ibas {
             }
             throw new Error(i18n.prop("sys_unsupported_operation"));
         }
+        /**
+         * 打开文件
+         * @param onCompleted 打开完成
+         * @param config 打开参数
+         */
+        export function open(onCompleted: (files: ibas.IList<File>) => void, config?: {
+            accept?: string,
+            multiple?: boolean,
+        }): void {
+            let input: HTMLInputElement = document.createElement("input");
+            input.type = "file";
+            input.style.visibility = "hidden";
+            if (config) {
+                if (config.accept) {
+                    input.accept = config.accept;
+                }
+                if (config.multiple) {
+                    input.multiple = config.multiple;
+                }
+            }
+            input.onchange = function (event: Event): void {
+                if (onCompleted instanceof Function) {
+                    let files: ibas.IList<File> = new ibas.ArrayList<File>(input.files.length);
+                    for (let i: number = 0; i < input.files.length; i++) {
+                        files[i] = input.files.item(i);
+                    }
+                    onCompleted(files);
+                }
+                input.remove();
+                input = null;
+            };
+            input.click();
+        }
     }
 }

@@ -283,6 +283,7 @@ namespace sap {
                         change: (event: sap.ui.base.Event) => {
                             let combobox: RegionComboBox = <RegionComboBox>event.getSource();
                             this.setProperty("country", combobox.getValue());
+                            this.setAddress();
                         }
                     }).initItems(undefined, (combobox) => {
                         let text: string = this.getCountry();
@@ -326,6 +327,7 @@ namespace sap {
                         change: (event: sap.ui.base.Event) => {
                             let combobox: RegionComboBox = <RegionComboBox>event.getSource();
                             this.setProperty("province", combobox.getValue());
+                            this.setAddress();
                         }
                     }));
                     this.setAggregation("_city", new CityComboBox("", {
@@ -354,6 +356,7 @@ namespace sap {
                         change: (event: sap.ui.base.Event) => {
                             let combobox: RegionComboBox = <RegionComboBox>event.getSource();
                             this.setProperty("city", combobox.getValue());
+                            this.setAddress();
                         }
                     }));
                     this.setAggregation("_district", new DistrictComboBox("", {
@@ -374,6 +377,7 @@ namespace sap {
                         change: (event: sap.ui.base.Event) => {
                             let combobox: RegionComboBox = <RegionComboBox>event.getSource();
                             this.setProperty("district", combobox.getValue());
+                            this.setAddress();
                         }
                     }));
                     this.setAggregation("_street", new Input("", {

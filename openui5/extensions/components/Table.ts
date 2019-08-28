@@ -315,6 +315,15 @@ namespace sap {
                         }
                     }
                     return Table.prototype.setModel.apply(this, arguments);
+                },
+                init(this: DataTable): void {
+                    (<any>Table.prototype).init.apply(this, arguments);
+                    this.attachPaste(undefined, function (event: sap.ui.base.Event): void {
+                        let table: any = event.getSource();
+                        if (table instanceof DataTable) {
+
+                        }
+                    });
                 }
             });
             function propertyColumns(this: DataTable, boInfo: shell.bo.IBOInfo): void {

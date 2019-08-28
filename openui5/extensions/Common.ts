@@ -310,5 +310,66 @@ namespace sap {
                 }
             }
         }
+        /** 表格操作集 */
+        export namespace tables {
+            interface IBindingInfo {
+                path: string;
+                type: sap.extension.data.Type;
+            }
+            /**
+             * 参照table列绑定，创建对象
+             * @param table 参照表格
+             * @param data 数据（csv转换数组）
+             * @param type 返回对象类型
+             */
+            export function parseObject<T>(table: table.Table, datas: any[], type: any = {}): T[] {
+                let jsons: ibas.IList<T> = new ibas.ArrayList<T>();
+                if (datas instanceof Array && datas.length > 1) {
+                    let titles: any[] = datas[0];
+                    if (titles instanceof Array && titles.length > 0) {
+                        let properties: IBindingInfo[] = new Array<IBindingInfo>(titles.length);
+                        for (let i: number = 0; i < titles.length; i++) {
+                            let title: string = titles[i];
+                            for (let column of table.getColumns()) {
+                                let label: any = column.getLabel();
+                                if (label instanceof sap.m.Label) {
+                                    if (title === label.getText()) {
+                                        let template: any = column.getTemplate();
+                                        if (template instanceof ui.core.Control) {
+                                            let bindingInfo: {
+                                                parts: IBindingInfo[]
+                                            } = (<any>template).getBindingInfo("bindingValue");
+                                            if (bindingInfo && bindingInfo.parts instanceof Array) {
+                                                properties[i] = bindingInfo.parts[0];
+                                            }
+                                        } break;
+                                    }
+                                }
+                            }
+                        }
+                        for (let i: number = 1; i < datas.length; i++) {
+                            let data: any[] = datas[i];
+                            if (data instanceof Array && data.length === properties.length) {
+                                let json: T = new type;
+                                for (let j: number = 0; j < data.length; j++) {
+                                    let value: any = data[j];
+                                    let property: IBindingInfo = properties[j];
+                                    if (!ibas.strings.isEmpty(property)) {
+                                        if (property.type instanceof sap.extension.data.Type) {
+                                            json[property.path] = property.type.parseValue(value, typeof value);
+                                        } else {
+                                            json[property.path] = value;
+                                        }
+                                    }
+                                }
+                                jsons.add(json);
+                            }
+                        }
+
+                    }
+                }
+                return jsons;
+            }
+        }
     }
 }

@@ -568,7 +568,6 @@ namespace sap {
                         showValueHelp: { type: "boolean", defaultValue: true },
                     },
                     aggregations: {
-                        "_begin": { type: "sap.ui.core.Icon", multiple: false },
                     },
                     events: {}
                 },
