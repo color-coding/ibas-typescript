@@ -792,92 +792,26 @@ namespace openui5 {
          * @param readOnly 是否只读
          */
         export function createUserFieldControl(userFieldInfo: shell.bo.IBOPropertyInfo, bindingPath?: string, readOnly: boolean = false): sap.ui.core.Control {
-            if (ibas.objects.isNull(bindingPath) || ibas.strings.isEmpty(bindingPath) || userFieldInfo.authorised === ibas.emAuthoriseType.NONE) {
-                return null;
-            }
-            // 属性信息中可编辑为NO时只读
             if (userFieldInfo.authorised === ibas.emAuthoriseType.READ) {
                 readOnly = true;
             }
-            // 只读显示Text控件
-            if (readOnly) {
-                let userFieldText: sap.m.ex.DescText = new sap.m.ex.DescText("", {
-                    wrapping: false
-                });
-                // 可选值显示描述
-                if (!ibas.objects.isNull(userFieldInfo.values) && userFieldInfo.values.length > 0) {
-                    let keyLists: ibas.ArrayList<ibas.KeyText> = new ibas.ArrayList<ibas.KeyText>();
-                    for (let item of userFieldInfo.values) {
-                        keyLists.add(new ibas.KeyText(item.value, item.description));
-                    }
-                    userFieldText.setDescList(keyLists);
-                    userFieldText.bindProperty("bindingValue", {
-                        path: bindingPath
-                    });
-                    return userFieldText;
-                }
-                // 如果是日期类型，设置日期显示格式
-                if (ibas.enums.valueOf(ibas.emDbFieldType, userFieldInfo.dataType) === ibas.emDbFieldType.DATE) {
-                    userFieldText.bindProperty("text", {
-                        path: bindingPath,
-                        type: new sap.ui.model.type.Date({
-                            pattern: "yyyy-MM-dd",
-                            strictParsing: true,
-                        })
-                    });
-                } else {
-                    userFieldText.bindProperty("text", {
-                        path: bindingPath
-                    });
-                }
-                return userFieldText;
-            } else {
-                // 日期控件
-                if (ibas.enums.valueOf(ibas.emDbFieldType, userFieldInfo.dataType) === ibas.emDbFieldType.DATE) {
-                    let userFieldDatePicker: sap.m.DatePicker = new sap.m.DatePicker("", {
-                        valueFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE),
-                        displayFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE),
-                    });
-                    userFieldDatePicker.bindProperty("dateValue", {
-                        path: bindingPath
-                    });
-                    return userFieldDatePicker;
-                } else {
-                    // 非日期类型判断可选值，有可选值显示为下拉控件
-                    if (!ibas.objects.isNull(userFieldInfo.values) && userFieldInfo.values.length > 0) {
-                        let userFieldSelect: sap.m.Select = new sap.m.Select("", {
-                            width: "100%",
-                        });
-                        // 添加空项
-                        userFieldSelect.addItem(new sap.ui.core.ListItem("", {
-                            key: "",
-                            text: ibas.i18n.prop("shell_please_chooose_data", ""),
-                            additionalText: ""
-                        }));
-                        for (let item of userFieldInfo.values) {
-                            let selectItem: sap.ui.core.ListItem = new sap.ui.core.ListItem("", {
-                                key: item.value,
-                                text: item.description,
-                                additionalText: item.value
-                            });
-                            userFieldSelect.addItem(selectItem);
+            let control: any = sap.extension.factories.newComponent(userFieldInfo, readOnly === true ? "Text" : "Input");
+            if (!ibas.strings.isEmpty(bindingPath)) {
+                if (control instanceof sap.ui.core.Control) {
+                    let bindingInfo: {
+                        parts: {
+                            path: string,
+                            type: sap.extension.data.Type,
+                        }[]
+                    } = (<any>control).getBindingInfo("bindingValue");
+                    if (bindingInfo && bindingInfo.parts instanceof Array) {
+                        for (let item of bindingInfo.parts) {
+                            item.path = bindingPath;
                         }
-                        userFieldSelect.bindProperty("selectedKey", {
-                            path: bindingPath,
-                        });
-                        return userFieldSelect;
                     }
                 }
-                // 默认返回文本控件
-                let userFieldInput: sap.m.Input = new sap.m.Input("", {
-                    // 根据属性大小设置最大输入值
-                    maxLength: userFieldInfo.editSize,
-                    value: {
-                        path: bindingPath
-                    }
-                });
-                return userFieldInput;
             }
+            return control;
         }
     }
 }
