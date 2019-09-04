@@ -241,9 +241,9 @@ namespace openui5 {
                         let data: any = model.getData();
                         if (!ibas.objects.isNull(data) && !ibas.objects.isNull(this.getGrowingInfo())) {
                             if (this.getGrowingInfo().total === this.getGrowingInfo().actual) {
-                                if (data !== undefined && data !== null) {
+                                if (!ibas.objects.isNull(data)) {
                                     let modelData: any = data.rows; // 与绑定对象的路径有关
-                                    let dataCount: number = modelData.length;
+                                    let dataCount: number = modelData instanceof Array ? modelData.length : 0;
                                     let visibleRow: number = this.getGrowingThreshold(); // 当前显示条数
                                     if (dataCount <= 0 || dataCount < visibleRow) {
                                         return;
@@ -278,9 +278,7 @@ namespace openui5 {
                             let visibleRow: number = this.getVisibleRowCount();
                             if (dataCount > 0 && dataCount > visibleRow) {
                                 let firstRow: number = this.getFirstVisibleRow(); // 当前页的第一行
-                                let lastPageCount: number = dataCount % visibleRow; // 最后一页行数
-                                if ((lastPageCount > 0 && firstRow === (dataCount - lastPageCount))
-                                    || (lastPageCount === 0 && firstRow === (dataCount - visibleRow))) {
+                                if (firstRow === (dataCount - visibleRow)) {
                                     // 调用事件
                                     this.setBusy(true);
                                     trigger.next.call(trigger.next, data[data.length - 1]);
@@ -792,6 +790,9 @@ namespace openui5 {
          * @param readOnly 是否只读
          */
         export function createUserFieldControl(userFieldInfo: shell.bo.IBOPropertyInfo, bindingPath?: string, readOnly: boolean = false): sap.ui.core.Control {
+            if (ibas.strings.isEmpty(bindingPath) || userFieldInfo.authorised === ibas.emAuthoriseType.NONE) {
+                return null;
+            }
             if (userFieldInfo.authorised === ibas.emAuthoriseType.READ) {
                 readOnly = true;
             }

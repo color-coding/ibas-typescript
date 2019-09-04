@@ -336,11 +336,15 @@ namespace ibas {
             if (content === undefined || content === null) { throw new Error("content is invalid."); }
             if (search === undefined || search === null) { throw new Error("search is invalid."); }
             if (replace === undefined || replace === null) { throw new Error("replace is invalid."); }
-
-            let pos: number = content.indexOf(search);
-            while (pos >= 0) {
-                content = content.replace(search, replace);
-                pos = content.indexOf(search);
+            let p: number = -1; // 字符出现位置
+            let s: number = 0; // 下一次起始位置
+            while ((p = content.indexOf(search, s)) > -1) {
+                s = p + replace.length; // 位置 + 值的长度
+                if (p === 0) {
+                    content = replace + content.substring(p + search.length);
+                } else {
+                    content = content.substring(0, p) + replace + content.substring(p + search.length);
+                }
             }
             return content;
         }
