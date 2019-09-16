@@ -434,7 +434,7 @@ declare namespace sap {
          * @param {undefined} oOptions <p>must contain ID property of type string, regex or array of strings; optionally it can contain a controlType property.</p>
          * @returns sap.ui.core.Element|sap.ui.core.Element[] <p>all matching controls <ul> <li>if a oOptions.id is a string, will return the single matching control or null if no controls match</li> <li>otherwise, will return an array of matching controls, or an empty array, if no controls match</li> </ul></p>
          */
-        getControlByGlobalId(oOptions: any | undefined): sap.ui.core.Element | sap.ui.core.Element[];
+        getControlByGlobalId(oOptions: any): sap.ui.core.Element | sap.ui.core.Element[];
         /**
          * <p>Gets the constructor function of a certain controlType</p>
          * @param {string} sControlType <p>the name of the type eg: "sap.m.Button"</p>
@@ -1239,31 +1239,31 @@ declare namespace sap {
       export class Event extends sap.ui.base.Object {
         /**
          * <p>Creates an event with the given <code>sId</code>, linked to the provided <code>oSource</code> and enriched with the <code>mParameters</code>.</p>
-         * @param {string} sId <p>The id of the event</p>
-         * @param {sap.ui.base.EventProvider} oSource <p>The source of the event</p>
-         * @param {any} mParameters <p>A map of parameters for this event</p>
+         * @param {string} sId <p>The ID of the event</p>
+         * @param {sap.ui.base.EventProvider} oSource <p>Source of the event</p>
+         * @param {any} oParameters <p>Parameters for this event</p>
          */
-        constructor(sId: string, oSource: sap.ui.base.EventProvider, mParameters: any);
+        constructor(sId: string, oSource: sap.ui.base.EventProvider, oParameters: any);
         /**
          * <p>Cancel bubbling of the event.</p><p><b>Note:</b> This function only has an effect if the bubbling of the event is supported by the event source.</p>
          */
         cancelBubble(): void;
         /**
          * <p>Returns the id of the event.</p>
-         * @returns string <p>The id of the event</p>
+         * @returns string <p>The ID of the event</p>
          */
         getId(): string;
         /**
-         * <p>Returns the value of the parameter with the given sName.</p>
-         * @param {string} sName <p>The name of the parameter to return</p>
-         * @returns any <p>The value for the named parameter</p>
+         * <p>Returns the value of the parameter with the given name.</p>
+         * @param {string} sName <p>Name of the parameter to return</p>
+         * @returns any <p>Value of the named parameter</p>
          */
         getParameter(sName: string): any;
         /**
-         * <p>Returns all parameter values of the event keyed by their names.</p>
-         * @returns { [key: string]: any } <p>All parameters of the event keyed by name</p>
+         * <p>Returns an object with all parameter values of the event.</p>
+         * @returns any <p>All parameters of the event</p>
          */
-        getParameters(): { [key: string]: any };
+        getParameters(): any;
         /**
          * <p>Returns the event provider on which the event was fired.</p>
          * @returns sap.ui.base.EventProvider <p>The source of the event</p>
@@ -1332,12 +1332,12 @@ declare namespace sap {
         /**
          * <p>Fires an <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.Event">event</a> with the given settings and notifies all attached event handlers.</p>
          * @param {string} sEventId <p>The identifier of the event to fire</p>
-         * @param {any} mParameters <p>The parameters which should be carried by the event</p>
+         * @param {any} oParameters <p>Parameters which should be carried by the event</p>
          * @param {boolean} bAllowPreventDefault <p>Defines whether function <code>preventDefault</code> is supported on the fired event</p>
          * @param {boolean} bEnableEventBubbling <p>Defines whether event bubbling is enabled on the fired event. Set to <code>true</code> the event is also forwarded to the parent(s) of the event provider (<a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEventingParent" href="#/api/sap.ui.base.EventProvider/methods/getEventingParent">#getEventingParent</a>) until the bubbling of the event is stopped or no parent is available anymore.</p>
          * @returns sap.ui.base.EventProvider|boolean <p>Returns <code>this</code> to allow method chaining. When <code>preventDefault</code> is supported on the fired event the function returns <code>true</code> if the default action should be executed, <code>false</code> otherwise.</p>
          */
-        protected fireEvent(sEventId: string, mParameters?: any, bAllowPreventDefault?: boolean, bEnableEventBubbling?: boolean): sap.ui.base.EventProvider | boolean;
+        protected fireEvent(sEventId: string, oParameters?: any, bAllowPreventDefault?: boolean, bEnableEventBubbling?: boolean): sap.ui.base.EventProvider | boolean;
         /**
          * <p>Returns the parent in the eventing hierarchy of this object.</p><p>Per default this returns null, but if eventing is used in objects, which are hierarchically structured, this can be overwritten to make the object hierarchy visible to the eventing and enables the use of event bubbling within this object hierarchy.</p>
          * @returns sap.ui.base.EventProvider <p>The parent event provider</p>
@@ -1713,7 +1713,7 @@ declare namespace sap {
          */
         protected insertAggregation(sAggregationName: string, oObject: sap.ui.base.ManagedObject, iIndex: number, bSuppressInvalidate?: boolean): sap.ui.base.ManagedObject;
         /**
-         * <p>This triggers rerendering of itself and its children.</p><p>As <code>sap.ui.base.ManagedObject</code> "bubbles up" the invalidate, changes to child-<code>Elements</code> will also result in rerendering of the whole sub tree.</p>
+         * <p>Marks this object and its aggregated children as 'invalid'.</p><p>The term 'invalid' originally was introduced by controls where a change to the object's state made the rendered DOM <i>invalid</i>. Later, the concept of invalidation was moved up in the inheritance hierarchy to <code>ManagedObject</code>, but the term was kept for compatibility reasons.</p><p>Managed settings (properties, aggregations, associations) invalidate the corresponding object automatically. Changing the state via the standard mutators, therefore, does not require an explicit call to <code>invalidate</code>. The same applies to changes made via data binding, as it internally uses the standard mutators.</p><p>By default, a <code>ManagedObject</code> propagates any invalidation to its parent. Controls or UIAreas handle invalidation on their own by triggering a re-rendering.</p>
          */
         protected invalidate(): void;
         /**
@@ -2142,39 +2142,58 @@ declare namespace sap {
         isA(vTypeName: string | string[]): boolean;
       }
       /**
-       * <p>Manages a pool of objects all of the same type; the type has to be specified at pool construction time.</p><p>Maintains a list of free objects of the given type. If <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ObjectPool/methods/borrowObject">sap.ui.base.ObjectPool.prototype.borrowObject</a> is called, an existing free object is taken from the pool and the <code>init</code> method is called on this object.</p><p>When no longer needed, any borrowed object should be returned to the pool by calling <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="returnObject" href="#/api/sap.ui.base.ObjectPool/methods/returnObject">#returnObject</a>. At that point in time, the reset method is called on the object and the object is added to the list of free objects.</p><p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.Poolable">sap.ui.base.Poolable</a> for a description of the contract for poolable objects.</p><p>Example: <pre>
-        this.oEventPool = new sap.ui.base.ObjectPool(sap.ui.base.Event);
-        var oEvent = this.oEventPool.borrowObject(iEventId, mParameters);
+       * <p>Manages a pool of objects for reuse, all of the same type; the type has to be specified at construction time.</p><p>Each pool maintains a list of free objects of the given type. If <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ObjectPool/methods/borrowObject">sap.ui.base.ObjectPool.prototype.borrowObject</a> is called, an existing free object is taken from the pool. When no free object is available, a new instance is created by calling the constructor without any arguments. In either case, the <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.Poolable/methods/init">sap.ui.base.Poolable#init</a> method is called on the object to initialize it with the data for the current caller.</p><p>When the object is no longer needed, it has to be returned to the pool by calling <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="returnObject" href="#/api/sap.ui.base.ObjectPool/methods/returnObject">#returnObject</a>. At that point in time, <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.Poolable/methods/reset">sap.ui.base.Poolable#reset</a> is called on the object to remove all data from it. Then it is is added back to the list of free objects for future reuse.</p><p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.Poolable">sap.ui.base.Poolable</a> for a description of the contract for poolable objects.</p><p>Example: <pre>
+        sap.ui.define([
+          "sap/ui/base/Event",
+          "sap/ui/base/ObjectPool"
+        ], function(Event, ObjectPool) {
+      
+          // create a pool for events
+          var oEventPool = new ObjectPool(Event);
+      
+          ...
+      
+          // borrow an instance and initialize it at the same time
+          var oEvent = oEventPool.borrowObject('myEvent', this, {foo: 'bar'});
+          // this internally calls oEvent.init('myEvent', this, {foo: 'bar'})
+      
+          // return the borrowed object
+          oEventPool.returnObject(oEvent);
+          // this internally calls oEvent.reset()
+      
+          ...
+      
+        }});
       </pre></p>
        */
       export class ObjectPool extends sap.ui.base.Object {
         /**
-         * <p>Creates an ObjectPool instance based on the given oObjectClass.<br/>; If there is a free pooled instance, returns that one, otherwise creates a new one.<br/>; In order to be maintained by the ObjectPool, oObjectClass must implement methods described in the class description.</p>
-         * @param {Function} oObjectClass <p>constructor for the class of objects that this pool should manage</p>
+         * <p>Creates an <code>ObjectPool</code> for maintaining instances of the given class <code>oObjectClass</code>.</p><p><code>oObjectClass</code> must implement the <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.Poolable">sap.ui.base.Poolable</a> interface.</p>
+         * @param {Function} oObjectClass <p>Constructor for the class of objects that this pool should manage</p>
          */
         constructor(oObjectClass: Function);
         /**
          * <p>Borrows a free object from the pool. Any arguments to this method are forwarded to the init method of the borrowed object.</p>
-         * @param {any} any <p>optional initialization parameters for the borrowed object</p>
-         * @returns any <p>the borrowed object of the same type that has been specified for this pool</p>
+         * @param {any} arg <p>optional initialization parameters for the borrowed object</p>
+         * @returns any <p>The borrowed object of the same type that has been specified for this pool</p>
          */
-        borrowObject(any?: any): any;
+        borrowObject(arg?: any): any;
         /**
          * <p>Returns an object to the pool. The object must have been borrowed from this pool beforehand. The reset method is called on the object before it is added to the set of free objects.</p>
-         * @param {any} oObject <p>the object to return to the pool</p>
+         * @param {any} oObject <p>The object to return to the pool</p>
          */
         returnObject(oObject: any): void;
       }
       /**
-       * <p><p>Contract for objects that can be pooled by <code>ObjectPool</code>.</p></p>
+       * <p><p>Contract for objects that can be pooled by an <code>ObjectPool</code>.</p><p>Poolable objects must provide a no-arg constructor which is used by the pool to construct new, unused objects.</p><p>To be more convenient to use, poolable objects should implement their constructor in a way that it either can be called with no arguments (used by the pool) or with the same signature as their <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="init" href="#/api/sap.ui.base.Poolable/methods/init">#init</a> method (to be used by applications).</p></p>
        */
       export interface Poolable {
         /**
-         * <p>Called by the object pool when this instance will be actived for a caller. The same method will be called after a new instance has been created by an otherwise exhausted pool.</p><p>If the caller provided any arguments to <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ObjectPool/methods/borrowObject">sap.ui.base.ObjectPool#borrowObject</a> all arguments will be propagated to this method.</p>
+         * <p>Called by the <code>ObjectPool</code> when this instance will be activated for a caller.</p><p>The same method will be called after a new instance has been created by an otherwise exhausted pool.</p><p>If the caller provided any arguments to <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ObjectPool/methods/borrowObject">sap.ui.base.ObjectPool#borrowObject</a>, all arguments will be propagated to this method.</p>
          */
         init(): void;
         /**
-         * <p>Called by the object pool when an instance is returned to the pool. While no specific implementation is required, poolable objects in general should clean all caller specific state (set to null) in this method to avoid memory leaks and to enforce garbage collection of the caller state.</p>
+         * <p>Called by the object pool when an instance is returned to the pool.</p><p>While no specific implementation is required, poolable objects in general should clean all caller specific state (set to null) in this method to avoid memory leaks and to enforce garbage collection of the caller state.</p>
          */
         reset(): void;
       }
@@ -2549,6 +2568,59 @@ declare namespace sap {
          * <p>The Persian Jalali calendar</p>
          */
         Persian = "Persian",
+      }
+      /**
+       */
+      export class CommandExecution extends sap.ui.core.Element {
+        /**
+         * <p>Creates and initializes a new CommandExecution.</p><p>The CommandExecution registers a shortcut when it is added to the dependent aggregation of a control. The shortcut information is retrieved from the owner components manifest (<code>/sap.ui5/commands/&lt;command&gt;</code>).</p><p>You can use a CommandExecution instead of an event handler in XMLViews by using <code>cmd:</code> plus the command name.</p><p>Example for <code>sap.m.Button</code>:</p><p><pre>
+        &lt;Button press="cmd:MyCommand" /&gt;
+        </pre></p><p>When the press event is fired, the CommandExecution will be triggered and the <code>execute</code> event is fired.</p><p>When using commands, the component will create a model named <code>$cmd</code>. The model data provides the enabled state of all CommandExecution. When binding a button's enabled state to this model, it follows the enabled state of the CommandExecution. The binding path must be relative like <code>myCommand/enabled</code>:</p><p><pre>
+        &lt;Button press="cmd:MyCommand" enabled="$cmd&gt;MyCommand/enabled" /&gt;
+        </pre></p><p><b>Note: The usage of the <code>$cmd</code> model is restricted to <code>sap.suite.ui.generic</code></b></p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+         */
+        constructor();
+        /**
+         * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="execute" href="#/api/sap.ui.core.CommandExecution/events/execute">execute</a> event of this <code>sap.ui.core.CommandExecution</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.core.CommandExecution</code> itself.</p><p>Execute will be fired when the CommandExecution will be triggered.</p>
+         * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+         * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+         * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.core.CommandExecution</code> itself</p>
+         * @returns sap.ui.core.CommandExecution <p>Reference to <code>this</code> in order to allow method chaining</p>
+         */
+        attachExecute(oData: any, fnFunction: Function, oListener?: any): sap.ui.core.CommandExecution;
+        /**
+         * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="execute" href="#/api/sap.ui.core.CommandExecution/events/execute">execute</a> event of this <code>sap.ui.core.CommandExecution</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+         * @param {any} oListener <p>Context object on which the given function had to be called</p>
+         * @returns sap.ui.core.CommandExecution <p>Reference to <code>this</code> in order to allow method chaining</p>
+         */
+        detachExecute(fnFunction: Function, oListener?: any): sap.ui.core.CommandExecution;
+        /**
+         * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="execute" href="#/api/sap.ui.core.CommandExecution/events/execute">execute</a> to attached listeners.</p>
+         * @param {any} mParameters <p>Parameters to pass along with the event</p>
+         * @returns sap.ui.core.CommandExecution <p>Reference to <code>this</code> in order to allow method chaining</p>
+         */
+        protected fireExecute(mParameters?: any): sap.ui.core.CommandExecution;
+        /**
+         * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getCommand" href="#/api/sap.ui.core.CommandExecution/methods/getCommand">command</a>.</p><p>The command's name, that has to be defined in the manifest. This property can only be applied initially.</p>
+         * @returns string <p>Value of property <code>command</code></p>
+         */
+        getCommand(): string;
+        /**
+         * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEnabled" href="#/api/sap.ui.core.CommandExecution/methods/getEnabled">enabled</a>.</p><p>Whether the CommandExecution is enabled or not. By default, it is enabled</p><p>Default value is <code>true</code>.</p>
+         * @returns boolean <p>Value of property <code>enabled</code></p>
+         */
+        getEnabled(): boolean;
+        /**
+         * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEnabled" href="#/api/sap.ui.core.CommandExecution/methods/getEnabled">enabled</a>.</p><p>Whether the CommandExecution is enabled or not. By default, it is enabled</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+         * @param {boolean} bEnabled <p>New value for property <code>enabled</code></p>
+         * @returns sap.ui.core.CommandExecution <p>Reference to <code>this</code> in order to allow method chaining</p>
+         */
+        setEnabled(bEnabled: boolean): sap.ui.core.CommandExecution;
+        /**
+         * <p>Fires the execute event and triggers the attached handler. If the CommandExecution is disabled, the handler will not be triggered.</p>
+         */
+        trigger(): void;
       }
       /**
        * <p>Base Class for Component.</p>
@@ -3410,7 +3482,7 @@ declare namespace sap {
          */
         protected getRenderer(): any;
         /**
-         * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getVisible" href="#/api/sap.ui.core.Control/methods/getVisible">visible</a>.</p><p>Whether the control should be visible on the screen.</p><p>If set to false, a placeholder will be rendered to mark the location of the invisible control in the DOM of the current page. The placeholder will be hidden and have zero dimensions (<code>display: none</code>).</p><p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.RenderManager/methods/writeInvisiblePlaceholderData">RenderManager#writeInvisiblePlaceholderData</a> for details.</p><p>Default value is <code>true</code>.</p>
+         * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getVisible" href="#/api/sap.ui.core.Control/methods/getVisible">visible</a>.</p><p>Whether the control should be visible on the screen.</p><p>If set to false, a placeholder will be rendered to mark the location of the invisible control in the DOM of the current page. The placeholder will be hidden and have zero dimensions (<code>display: none</code>).</p><p>Also see <a target="_self" class="jsdoclink" href="#/api/module%3Asap%2Fui%2Fcore%2FInvisibleRenderer">InvisibleRenderer</a>.</p><p>Default value is <code>true</code>.</p>
          * @returns boolean <p>Value of property <code>visible</code></p>
          */
         getVisible(): boolean;
@@ -3421,11 +3493,11 @@ declare namespace sap {
          */
         hasStyleClass(sStyleClass: string): boolean;
         /**
-         * <p>This triggers rerendering of itself and its children.</p><p>As <code>sap.ui.base.ManagedObject</code> "bubbles up" the invalidate, changes to child-<code>Elements</code> will also result in rerendering of the whole sub tree.</p>
+         * <p>Marks this object and its aggregated children as 'invalid'.</p><p>The term 'invalid' originally was introduced by controls where a change to the object's state made the rendered DOM <i>invalid</i>. Later, the concept of invalidation was moved up in the inheritance hierarchy to <code>ManagedObject</code>, but the term was kept for compatibility reasons.</p><p>Managed settings (properties, aggregations, associations) invalidate the corresponding object automatically. Changing the state via the standard mutators, therefore, does not require an explicit call to <code>invalidate</code>. The same applies to changes made via data binding, as it internally uses the standard mutators.</p><p>By default, a <code>ManagedObject</code> propagates any invalidation to its parent. Controls or UIAreas handle invalidation on their own by triggering a re-rendering.</p>
          */
         protected invalidate(): void;
         /**
-         * <p>Triggers rerendering of this element and its children.</p><p>As <code>sap.ui.core.Element</code> "bubbles up" the invalidate, changes to children potentially result in rerendering of the whole sub tree.</p><p>The <code>oOrigin</code> parameter was introduced to allow parent controls to limit their rerendering to certain areas that have been invalidated by their children. As there is no strong guideline for control developers to provide the parameter, it is not a reliable source of information. It is therefore not recommended in general to use it, only in scenarios where a control and its descendants know each other very well (e.g. complex controls where parent and children have the same code owner).</p>
+         * <p>Marks this control and its children for a re-rendering, usually because its state has changed and now differs from the rendered DOM.</p><p>Managed settings (properties, aggregations, associations) automatically invalidate the corresponding object. Changing the state via the standard mutators, therefore, does not require an explicit call to <code>invalidate</code>.</p><p>By default, all invalidations are buffered and processed together (asynchronously) in a new browser task.</p><p>The <code>oOrigin</code> parameter was introduced to allow parent controls to limit their re-rendering to certain areas that have been invalidated by their children. As there is no strong guideline for control developers whether or not to provide the parameter, it is not a reliable source of information. It is, therefore, not recommended in general to use it, only in scenarios where a control and its descendants know each other very well (e.g. complex controls where parent and children have the same code owner).</p>
          * @param {sap.ui.base.ManagedObject} oOrigin <p>Child control for which the method was called</p>
          */
         protected invalidate(oOrigin?: sap.ui.base.ManagedObject): void;
@@ -3455,10 +3527,6 @@ declare namespace sap {
          */
         protected rerender(): void;
         /**
-         * <p>Tries to replace its DOM reference by re-rendering.</p>
-         */
-        protected rerender(): void;
-        /**
          * <p>Set the controls busy state.</p>
          * @param {boolean} bBusy <p>The new busy state to be set</p>
          * @returns sap.ui.core.Control <p><code>this</code> to allow method chaining</p>
@@ -3483,7 +3551,7 @@ declare namespace sap {
          */
         setFieldGroupIds(sFieldGroupIds: string[]): sap.ui.core.Control;
         /**
-         * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getVisible" href="#/api/sap.ui.core.Control/methods/getVisible">visible</a>.</p><p>Whether the control should be visible on the screen.</p><p>If set to false, a placeholder will be rendered to mark the location of the invisible control in the DOM of the current page. The placeholder will be hidden and have zero dimensions (<code>display: none</code>).</p><p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.RenderManager/methods/writeInvisiblePlaceholderData">RenderManager#writeInvisiblePlaceholderData</a> for details.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+         * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getVisible" href="#/api/sap.ui.core.Control/methods/getVisible">visible</a>.</p><p>Whether the control should be visible on the screen.</p><p>If set to false, a placeholder will be rendered to mark the location of the invisible control in the DOM of the current page. The placeholder will be hidden and have zero dimensions (<code>display: none</code>).</p><p>Also see <a target="_self" class="jsdoclink" href="#/api/module%3Asap%2Fui%2Fcore%2FInvisibleRenderer">InvisibleRenderer</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
          * @param {boolean} bVisible <p>New value for property <code>visible</code></p>
          * @returns sap.ui.core.Control <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
@@ -3531,16 +3599,16 @@ declare namespace sap {
          */
         applyTheme(sThemeName: string, sThemeBaseUrl?: string): void;
         /**
-         * <p>Registers a listener for control events.</p>
-         * @param {Function} fnFunction <p>callback to be called for each control event</p>
-         * @param {any} oListener <p>optional context object to call the callback on.</p>
+         * <p>Registers a listener for control events.</p><p>When called, the context of the listener (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to a dummy event provider object.</p>
+         * @param {Function} fnFunction <p>Callback to be called for each control event</p>
+         * @param {any} oListener <p>Optional context object to call the callback on</p>
          */
         attachControlEvent(fnFunction: Function, oListener?: any): void;
         /**
-         * <p>Attach event-handler <code>fnFunction</code> to the 'formatError' event of <code>sap.ui.core.Core</code>.</p><p>Please note that this event is a bubbling event and may already be canceled before reaching the core.</p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-         * @param {any} oListener <p>Object on which to call the given function. If empty, an unspecified context object is used (listeners cannot expect this to be the <code>Core</code>).</p>
-         * @returns sap.ui.core.Core <p><code>this</code> to allow method chaining</p>
+         * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="formatError" href="#/api/sap.ui.core.Core/events/formatError">formatError</a> event of <code>sap.ui.core.Core</code>.</p><p>When called, the context of the listener (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to a dummy event provider object.</p><p>Please note that this event is a bubbling event and may already be canceled before reaching the core.</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+         * @param {any} oListener <p>Context object to call the event handler with. Defaults to a dummy event provider object</p>
+         * @returns sap.ui.core.Core <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
         attachFormatError(fnFunction: Function, oListener?: any): sap.ui.core.Core;
         /**
@@ -3549,39 +3617,39 @@ declare namespace sap {
          */
         attachInit(fnFunction: Function): void;
         /**
-         * <p>Register a listener for the <code>localizationChanged</code> event.</p>
-         * @param {Function} fnFunction <p>callback to be called</p>
-         * @param {any} oListener <p>context object to cal lthe function on.</p>
+         * <p>Register a listener for the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="localizationChanged" href="#/api/sap.ui.core.Core/events/localizationChanged">localizationChanged</a> event.</p><p>When called, the context of the listener (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to a dummy event provider object.</p>
+         * @param {Function} fnFunction <p>Callback to be called when the event occurs</p>
+         * @param {any} oListener <p>Context object to call the function on</p>
          */
-        attachLocalizationChanged(fnFunction: Function, oListener: any): void;
+        attachLocalizationChanged(fnFunction: Function, oListener?: any): void;
         /**
-         * <p>Attach event-handler <code>fnFunction</code> to the 'parseError' event of <code>sap.ui.core.Core</code>.</p><p>Please note that this event is a bubbling event and may already be canceled before reaching the core.</p>
-         * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event</p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-         * @param {any} oListener <p>Object on which to call the given function. If empty, an unspecified context object is used (listeners cannot expect this to be the <code>Core</code>).</p>
-         * @returns sap.ui.core.Core <p><code>this</code> to allow method chaining</p>
+         * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="parseError" href="#/api/sap.ui.core.Core/events/parseError">parseError</a> event of <code>sap.ui.core.Core</code>.</p><p>When called, the context of the listener (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to a dummy event provider object.</p><p>Please note that this event is a bubbling event and may already be canceled before reaching the core.</p>
+         * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+         * @param {any} oListener <p>Context object to call the event handler with. Defaults to a dummy event provider object</p>
+         * @returns sap.ui.core.Core <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
         attachParseError(oData: any, fnFunction: Function, oListener?: any): sap.ui.core.Core;
         /**
-         * <p>Attach event-handler <code>fnFunction</code> to the <code>ThemeChanged</code> event of this <code>sap.ui.core.Core</code>.</p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-         * @param {any} oListener <p>Object on which to call the given function.</p>
+         * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="ThemeChanged" href="#/api/sap.ui.core.Core/events/ThemeChanged">ThemeChanged</a> event of this <code>sap.ui.core.Core</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to a dummy event provider object.</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+         * @param {any} oListener <p>Context object to call the event handler with. Defaults to a dummy event provider object</p>
          */
         attachThemeChanged(fnFunction: Function, oListener?: any): void;
         /**
-         * <p>Attach event-handler <code>fnFunction</code> to the 'validationError' event of <code>sap.ui.core.Core</code>.</p><p>Please note that this event is a bubbling event and may already be canceled before reaching the core.</p>
-         * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event</p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-         * @param {any} oListener <p>Object on which to call the given function. If empty, an unspecified context object is used (listeners cannot expect this to be the <code>Core</code>).</p>
-         * @returns sap.ui.core.Core <p><code>this</code> to allow method chaining</p>
+         * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="validationError" href="#/api/sap.ui.core.Core/events/validationError">validationError</a> event of <code>sap.ui.core.Core</code>.</p><p>When called, the context of the listener (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to a dummy event provider object.</p><p>Please note that this event is a bubbling event and may already be canceled before reaching the core.</p>
+         * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+         * @param {any} oListener <p>Context object to call the event handler with. Defaults to a dummy event provider object</p>
+         * @returns sap.ui.core.Core <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
         attachValidationError(oData: any, fnFunction: Function, oListener?: any): sap.ui.core.Core;
         /**
-         * <p>Attach event-handler <code>fnFunction</code> to the 'validationSuccess' event of <code>sap.ui.core.Core</code>.</p><p>Please note that this event is a bubbling event and may already be canceled before reaching the core.</p>
+         * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="validationSuccess" href="#/api/sap.ui.core.Core/events/validationSuccess">validationSuccess</a> event of <code>sap.ui.core.Core</code>.</p><p>When called, the context of the listener (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to a dummy event provider object.</p><p>Please note that this event is a bubbling event and may already be canceled before reaching the core.</p>
          * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event</p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-         * @param {any} oListener <p>Object on which to call the given function. If empty, an unspecified context object is used (listeners cannot expect this to be the <code>Core</code>).</p>
-         * @returns sap.ui.core.Core <p><code>this</code> to allow method chaining</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+         * @param {any} oListener <p>Context object to call the event handler with. Defaults to a dummy event provider object</p>
+         * @returns sap.ui.core.Core <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
         attachValidationSuccess(oData: any, fnFunction: Function, oListener?: any): sap.ui.core.Core;
         /**
@@ -3616,75 +3684,75 @@ declare namespace sap {
          */
         createRenderManager(): sap.ui.core.RenderManager;
         /**
-         * <p>Unregisters a listener for control events.</p><p>A listener will only be unregistered if the same function/context combination is given as in the attachControlEvent call.</p>
-         * @param {Function} fnFunction <p>function to unregister</p>
-         * @param {any} oListener <p>context object given during registration</p>
+         * <p>Unregisters a listener for control events.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+         * @param {Function} fnFunction <p>Function to unregister</p>
+         * @param {any} oListener <p>Context object on which the given function had to be called</p>
          */
         detachControlEvent(fnFunction: Function, oListener?: any): void;
         /**
-         * <p>Detach event-handler <code>fnFunction</code> from the 'formatError' event of <code>sap.ui.core.Core</code>.</p><p>The passed function and listener object must match the ones previously used for event registration.</p>
+         * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="formatError" href="#/api/sap.ui.core.Core/events/formatError">formatError</a> event of <code>sap.ui.core.Core</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
          * @param {Function} fnFunction <p>The callback function to unregister</p>
-         * @param {any} oListener <p>Object on which the given function had to be called.</p>
-         * @returns sap.ui.core.Core <p><code>this</code> to allow method chaining</p>
+         * @param {any} oListener <p>Context object on which the given function had to be called</p>
+         * @returns sap.ui.core.Core <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        detachFormatError(fnFunction: Function, oListener: any): sap.ui.core.Core;
+        detachFormatError(fnFunction: Function, oListener?: any): sap.ui.core.Core;
         /**
-         * <p>Unregister a listener from the <code>localizationChanged</code> event.</p><p>The listener will only be unregistered if the same function/context combination is given as in the call to <code>attachLocalizationListener</code>.</p>
-         * @param {Function} fnFunction <p>callback to be deregistered</p>
-         * @param {any} oListener <p>context object given in a previous call to attachLocalizationChanged.</p>
+         * <p>Unregister a listener from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="localizationChanged" href="#/api/sap.ui.core.Core/events/localizationChanged">localizationChanged</a> event.</p><p>The listener will only be unregistered if the same function/context combination is given as in the call to <code>attachLocalizationListener</code>.</p>
+         * @param {Function} fnFunction <p>Callback to be deregistered</p>
+         * @param {any} oListener <p>Context object on which the given function had to be called</p>
          */
-        detachLocalizationChanged(fnFunction: Function, oListener: any): void;
+        detachLocalizationChanged(fnFunction: Function, oListener?: any): void;
         /**
-         * <p>Detach event-handler <code>fnFunction</code> from the 'parseError' event of <code>sap.ui.core.Core</code>.</p><p>The passed function and listener object must match the ones previously used for event registration.</p>
+         * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="parseError" href="#/api/sap.ui.core.Core/events/parseError">parseError</a> event of <code>sap.ui.core.Core</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
          * @param {Function} fnFunction <p>The callback function to unregister.</p>
-         * @param {any} oListener <p>Object on which the given function had to be called.</p>
-         * @returns sap.ui.core.Core <p><code>this</code> to allow method chaining</p>
+         * @param {any} oListener <p>Context object on which the given function had to be called</p>
+         * @returns sap.ui.core.Core <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        detachParseError(fnFunction: Function, oListener: any): sap.ui.core.Core;
+        detachParseError(fnFunction: Function, oListener?: any): sap.ui.core.Core;
         /**
-         * <p>Detach event-handler <code>fnFunction</code> from the <code>ThemeChanged</code> event of this <code>sap.ui.core.Core</code>.</p><p>The passed function and listener object must match the ones previously used for event registration.</p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
+         * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="ThemeChanged" href="#/api/sap.ui.core.Core/events/ThemeChanged">ThemeChanged</a> event of this <code>sap.ui.core.Core</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
          * @param {any} oListener <p>Object on which the given function had to be called.</p>
          */
         detachThemeChanged(fnFunction: Function, oListener?: any): void;
         /**
-         * <p>Detach event-handler <code>fnFunction</code> from the 'validationError' event of <code>sap.ui.core.Core</code>.</p><p>The passed function and listener object must match the ones previously used for event registration.</p>
+         * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="validationError" href="#/api/sap.ui.core.Core/events/validationError">validationError</a> event of <code>sap.ui.core.Core</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
          * @param {Function} fnFunction <p>The callback function to unregister</p>
-         * @param {any} oListener <p>Object on which the given function had to be called.</p>
-         * @returns sap.ui.core.Core <p><code>this</code> to allow method chaining</p>
+         * @param {any} oListener <p>Context object on which the given function had to be called</p>
+         * @returns sap.ui.core.Core <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        detachValidationError(fnFunction: Function, oListener: any): sap.ui.core.Core;
+        detachValidationError(fnFunction: Function, oListener?: any): sap.ui.core.Core;
         /**
-         * <p>Detach event-handler <code>fnFunction</code> from the 'validationSuccess' event of <code>sap.ui.core.Core</code>.</p><p>The passed function and listener object must match the ones previously used for event registration.</p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-         * @param {any} oListener <p>Object on which the given function had to be called.</p>
-         * @returns sap.ui.core.Core <p><code>this</code> to allow method chaining</p>
+         * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="validationSuccess" href="#/api/sap.ui.core.Core/events/validationSuccess">validationSuccess</a> event of <code>sap.ui.core.Core</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+         * @param {any} oListener <p>Context object on which the given function had to be called</p>
+         * @returns sap.ui.core.Core <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        detachValidationSuccess(fnFunction: Function, oListener: any): sap.ui.core.Core;
+        detachValidationSuccess(fnFunction: Function, oListener?: any): sap.ui.core.Core;
         /**
-         * <p>Fire event <code>formatError</code> to attached listeners.</p>
+         * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="formatError" href="#/api/sap.ui.core.Core/events/formatError">formatError</a> to attached listeners.</p>
          * @param {any} oParameters <p>Parameters to pass along with the event.</p>
-         * @returns sap.ui.core.Core <p><code>this</code> to allow method chaining</p>
+         * @returns sap.ui.core.Core <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
         protected fireFormatError(oParameters: any): sap.ui.core.Core;
         /**
-         * <p>Fire event <code>parseError</code> to attached listeners.</p>
-         * @param {any} oParameters <p>the arguments to pass along with the event.</p>
-         * @returns sap.ui.core.Core <p><code>this</code> to allow method chaining</p>
+         * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="parseError" href="#/api/sap.ui.core.Core/events/parseError">parseError</a> to attached listeners.</p>
+         * @param {any} oParameters <p>Parameters to pass along with the event.</p>
+         * @returns sap.ui.core.Core <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
         protected fireParseError(oParameters: any): sap.ui.core.Core;
         /**
-         * <p>Fire event <code>validationError</code> to attached listeners.</p>
-         * @param {any} oParameters <p>the arguments to pass along with the event.</p>
-         * @returns sap.ui.core.Core <p><code>this</code> to allow method chaining</p>
+         * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="validationError" href="#/api/sap.ui.core.Core/events/validationError">validationError</a> to attached listeners.</p>
+         * @param {any} oParameters <p>Parameters to pass along with the event.</p>
+         * @returns sap.ui.core.Core <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
         protected fireValidationError(oParameters: any): sap.ui.core.Core;
         /**
-         * <p>Fire event validationSuccess to attached listeners.</p><p>Expects following event parameters: <ul> <li>'element' of type <code>sap.ui.core.Element</code> </li> <li>'property' of type <code>string</code> </li> <li>'type' of type <code>string</code> </li> <li>'newValue' of type <code>object</code> </li> <li>'oldValue' of type <code>object</code> </li> </ul></p>
-         * @param {{ [key: string]: any }} mArguments <p>the arguments to pass along with the event.</p>
-         * @returns sap.ui.core.Core <p><code>this</code> to allow method chaining</p>
+         * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="validationSuccess" href="#/api/sap.ui.core.Core/events/validationSuccess">validationSuccess</a> to attached listeners.</p><p>Expects following event parameters: <ul> <li>'element' of type <code>sap.ui.core.Element</code> </li> <li>'property' of type <code>string</code> </li> <li>'type' of type <code>string</code> </li> <li>'newValue' of type <code>object</code> </li> <li>'oldValue' of type <code>object</code> </li> </ul></p>
+         * @param {any} oParameters <p>Parameters to pass along with the event</p>
+         * @returns sap.ui.core.Core <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        protected fireValidationSuccess(mArguments?: { [key: string]: any }): sap.ui.core.Core;
+        protected fireValidationSuccess(oParameters?: any): sap.ui.core.Core;
         /**
          * <p>Returns the registered component for the given id, if any.</p>
          * @param {string} sId 
@@ -3797,13 +3865,21 @@ declare namespace sap {
          */
         isThemeApplied(): boolean;
         /**
-         * <p>Loads the given library and its dependencies and makes it available to the application.</p><p>When library preloads are not suppressed for the given library, then a library-preload bundle will be loaded for it. By default, the bundle will be loaded synchronously (for compatibility reasons). Only when the optional parameter <code>vUrl</code> is given as <code>true</code> or as a configuration object with a property of <code>async:true</code>, then the bundle will be loaded asynchronously and a <code>Promise</code> will be returned (preferred usage).</p><p>After preloading the bundle, dependency information from the bundle is evaluated and any missing libraries are also preloaded.</p><p>Only then the library entry module (named <code><i>your/lib</i>/library.js</code>) will be required and executed. The module is supposed to call <code>sap.ui.getCore().initLibrary(...)</code> providing the framework with additional metadata about the library, e.g. its version, the set of contained enums, types, interfaces, controls and elements and whether the library requires CSS. If the library requires CSS, a &lt;link&gt; will be added to the page referring to the corresponding <code>library.css</code> stylesheet for the library and the current theme.</p><p>When the optional parameter <code>vUrl</code> is given as a string or when a configuration object is given with a non-empty, string-valued property <code>url</code>, then that URL will be registered for the namespace of the library and all resources will be loaded from that location. This is convenience for a call like <pre>
+         * <p>Loads the given library and its dependencies and makes its content available to the application.</p><h3>What it does</h3><p>When library preloads are not suppressed for the given library, then a library-preload bundle will be loaded for it. By default, the bundle will be loaded synchronously (for compatibility reasons). Only when the optional parameter <code>vUrl</code> is given as <code>true</code> or as a configuration object with a property of <code>async:true</code>, then the bundle will be loaded asynchronously and a <code>Promise</code> will be returned (preferred usage).</p><p>After preloading the bundle, dependency information from the bundle is evaluated and any missing libraries are also preloaded.</p><p>Only then the library entry module (named <code><i>your/lib</i>/library.js</code>) will be required and executed. The module is supposed to call <code>sap.ui.getCore().initLibrary(...)</code> providing the framework with additional metadata about the library, e.g. its version, the set of contained enums, types, interfaces, controls and elements and whether the library requires CSS. If the library requires CSS, a &lt;link&gt; will be added to the page referring to the corresponding <code>library.css</code> stylesheet for the library and the current theme.</p><p>When the optional parameter <code>vUrl</code> is given as a string or when a configuration object is given with a non-empty, string-valued property <code>url</code>, then that URL will be registered for the namespace of the library and all resources will be loaded from that location. This is convenience for a call like <pre>
           sap.ui.loader.config({
             paths: {
               "lib/with/slashes": vUrl
             }
           });
-        </pre></p><p>When the given library has been loaded already, no further action will be taken, especially, a given URL will not be registered! In the case of asynchronous loading, a Promise will be returned, but will be resolved immediately.</p>
+        </pre></p><p>When the given library has been loaded already, no further action will be taken, especially, a given URL will not be registered! In the case of asynchronous loading, a Promise will be returned, but will be resolved immediately.</p><h3>When to use</h3><p>For applications that follow the best practices and use components with component descriptors (manifest.json), the framework will load all declared mandatory libraries and their dependencies automatically before instantiating the application component.</p><p>The same is true for libraries that are listed in the bootstrap configuration (e.g. with the attribute <code>data-sap-ui-libs</code>). They will be loaded before the <code>init</code> event of the UI5 Core is fired.</p><p>Only when an app declares a library to be a lazy library dependency or when code does not use descriptors at all, then an explicit call to <code>loadLibrary</code> becomes necessary. The call should be made before artifacts (controls, elements, types, helpers, modules etc.) from the library are used or required. This allows the framework to optimize access to those artifacts.</p><p>For example, when an app uses a heavy-weight charting library that shouldn't be loaded during startup, it can declare it as "lazy" and load it just before it loads and displays a view that uses the charting library: <pre>
+          sap.ui.getCore().loadLibrary("heavy.charting", {async: true})
+            .then(function() {
+              View.create({
+                name: "myapp.views.HeavyChartingView",
+                type: ViewType.XML
+              });
+            });
+        </pre></p>
          * @param {string} sLibrary <p>name of the library to load</p>
          * @param {string | boolean | any} vUrl <p>URL to load the library from or the async flag or a complex configuration object</p>
          * @returns Object|Promise <p>An info object for the library (sync) or a Promise (async)</p>
@@ -3826,7 +3902,7 @@ declare namespace sap {
          * <p>Sets or unsets a model for the given model name.</p><p>The <code>sName</code> must either be <code>undefined</code> (or omitted) or a non-empty string. When the name is omitted, the default model is set/unset.</p><p>When <code>oModel</code> is <code>null</code> or <code>undefined</code>, a previously set model with that name is removed from the Core.</p><p>Any change (new model, removed model) is propagated to all existing UIAreas and their descendants as long as a descendant doesn't have its own model set for the given name.</p><p>Note: to be compatible with future versions of this API, applications must not use the value <code>null</code>, the empty string <code>""</code> or the string literals <code>"null"</code> or <code>"undefined"</code> as model name.</p>
          * @param {sap.ui.model.Model} oModel <p>the model to be set or <code>null</code> or <code>undefined</code></p>
          * @param {string} sName <p>the name of the model or <code>undefined</code></p>
-         * @returns sap.ui.core.Core <p><code>this</code> to allow method chaining</p>
+         * @returns sap.ui.core.Core <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
         setModel(oModel: sap.ui.model.Model, sName?: string): sap.ui.core.Core;
         /**
@@ -4459,7 +4535,7 @@ declare namespace sap {
          */
         getSanitizeContent(): boolean;
         /**
-         * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getVisible" href="#/api/sap.ui.core.Control/methods/getVisible">visible</a>.</p><p>Whether the control should be visible on the screen.</p><p>If set to false, a placeholder will be rendered to mark the location of the invisible control in the DOM of the current page. The placeholder will be hidden and have zero dimensions (<code>display: none</code>).</p><p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.RenderManager/methods/writeInvisiblePlaceholderData">RenderManager#writeInvisiblePlaceholderData</a> for details.</p><p>Default value is <code>true</code>.</p>
+         * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getVisible" href="#/api/sap.ui.core.Control/methods/getVisible">visible</a>.</p><p>Whether the control should be visible on the screen.</p><p>If set to false, a placeholder will be rendered to mark the location of the invisible control in the DOM of the current page. The placeholder will be hidden and have zero dimensions (<code>display: none</code>).</p><p>Also see <a target="_self" class="jsdoclink" href="#/api/module%3Asap%2Fui%2Fcore%2FInvisibleRenderer">InvisibleRenderer</a>.</p><p>Default value is <code>true</code>.</p>
          * @returns boolean <p>Value of property <code>visible</code></p>
          */
         getVisible(): boolean;
@@ -4493,7 +4569,7 @@ declare namespace sap {
          */
         setSanitizeContent(bSanitizeContent: boolean): sap.ui.core.HTML;
         /**
-         * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getVisible" href="#/api/sap.ui.core.Control/methods/getVisible">visible</a>.</p><p>Whether the control should be visible on the screen.</p><p>If set to false, a placeholder will be rendered to mark the location of the invisible control in the DOM of the current page. The placeholder will be hidden and have zero dimensions (<code>display: none</code>).</p><p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.RenderManager/methods/writeInvisiblePlaceholderData">RenderManager#writeInvisiblePlaceholderData</a> for details.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+         * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getVisible" href="#/api/sap.ui.core.Control/methods/getVisible">visible</a>.</p><p>Whether the control should be visible on the screen.</p><p>If set to false, a placeholder will be rendered to mark the location of the invisible control in the DOM of the current page. The placeholder will be hidden and have zero dimensions (<code>display: none</code>).</p><p>Also see <a target="_self" class="jsdoclink" href="#/api/module%3Asap%2Fui%2Fcore%2FInvisibleRenderer">InvisibleRenderer</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
          * @param {boolean} bVisible <p>New value for property <code>visible</code></p>
          * @returns sap.ui.core.Control <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
@@ -5636,20 +5712,31 @@ declare namespace sap {
         Vertical = "Vertical",
       }
       /**
-       * <p>Popup Class is a helper class for controls that want themselves or parts of themselves or even other aggregated or composed controls or plain HTML content to popup on the screen like menues, dialogs, drop down boxes.</p><p>It allows the controls to be aligned to other dom elements using the <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.Popup.Dock">sap.ui.core.Popup.Dock</a> method. With it you can define where the popup should be docked. One can dock the popup to the top bottom left or right side of a dom ref.</p><p>In the case that the popup has no space to show itself in the view port of the current window it tries to open itself to the inverted direction.</p><p><strong>Since 1.12.3</strong> it is possible to add further DOM-element-ids that can get the focus when 'autoclose' is enabled. E.g. the RichTextEditor with running TinyMCE uses this method to be able to focus the Popups of the TinyMCE if the RichTextEditor runs within a Popup/Dialog etc.</p><p>To provide an additional DOM-element that can get the focus the following should be done: // create an object with the corresponding DOM-id var oObject = { id : "this_is_the_most_valuable_id_of_the_DOM_element" };</p><p>// add the event prefix for adding an element to the ID of the corresponding Popup var sEventId = "sap.ui.core.Popup.addFocusableContent-" + oPopup.getId();</p><p>// fire the event with the created event-id and the object with the DOM-id sap.ui.getCore().getEventBus().publish("sap.ui", sEventId, oObject);</p>
+       * <p>Popup Class is a helper class for controls that want themselves or parts of themselves or even other aggregated or composed controls or plain HTML content to popup on the screen like menus, dialogs, drop down boxes.</p><p>It allows the controls to be aligned to other DOM elements using the <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.Popup.Dock">sap.ui.core.Popup.Dock</a> method. With it you can define where the popup should be docked. One can dock the popup to the top, bottom, left or right side of another DOM element.</p><p>In the case that the popup has no space to show itself in the view port of the current window, it tries to open itself to the inverted direction.</p><p><strong>Since 1.12.3</strong>, it is possible to add further DOM-element-IDs that can get the focus when <code>autoclose</code> is enabled. E.g. the <code>RichTextEditor</code> with running TinyMCE uses this method to be able to focus the popups of the TinyMCE if the <code>RichTextEditor</code> runs within a <code>Popup</code>/<code>Dialog</code> etc.</p><p>To provide an additional DOM element that can get the focus the following should be done: <pre>
+        // create an object with the corresponding DOM-ID
+        var oObject = {
+          id : "this_is_the_most_valuable_id_of_the_DOM_element"
+        };
+      
+        // add the event prefix for adding an element to the ID of the corresponding Popup
+        var sEventId = "sap.ui.core.Popup.addFocusableContent-" + oPopup.getId();
+      
+        // fire the event with the created event-ID and the object with the DOM-ID
+        sap.ui.getCore().getEventBus().publish("sap.ui", sEventId, oObject);
+      </pre></p>
        */
       export class Popup extends sap.ui.base.ManagedObject {
         /**
-         * <p>Attaches an event-handler <code>fnFunction</code> to the static 'blockLayerStateChange' event.</p><p>The event gets triggered in case of modal popups when the first of multiple popups opens and closes.</p>
-         * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-         * @param {any} oListener <p>Object on which to call the given function.</p>
+         * <p>Attaches event handler <code>fnFunction</code> to the static <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="sap.ui.core.Popup.blockLayerStateChange" href="#/api/sap.ui.core.Popup/methods/sap.ui.core.Popup.blockLayerStateChange">blockLayerStateChange</a> event.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to a dummy event provider object.</p><p>The event gets triggered in case of modal popups when the first of multiple popups opens and closes.</p>
+         * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+         * @param {any} oListener <p>Context object to call the event handler with. Defaults to a dummy event provider object</p>
          */
         static attachBlockLayerStateChange(oData: any, fnFunction: Function, oListener?: any): void;
         /**
-         * <p>Removes a previously attached event handler <code>fnFunction</code> from the static 'blockLayerStateChange' event.</p><p>The event gets triggered in case of modal popups when the first of multiple popups opens and closes.</p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-         * @param {any} oListener <p>Object on which the given function had to be called.</p>
+         * <p>Removes a previously attached event handler <code>fnFunction</code> from the static <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="sap.ui.core.Popup.blockLayerStateChange" href="#/api/sap.ui.core.Popup/methods/sap.ui.core.Popup.blockLayerStateChange">blockLayerStateChange</a> event.</p><p>The event gets triggered in case of modal popups when the first of multiple popups opens and closes.</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+         * @param {any} oListener <p>Context object on which the given function had to be called</p>
          */
         static detachBlockLayerStateChange(fnFunction: Function, oListener?: any): void;
         /**
@@ -5754,7 +5841,7 @@ declare namespace sap {
          */
         getContent(): sap.ui.core.Control | HTMLElement;
         /**
-         * <p>This returns true/false if the default followOf method should be used. If a separate followOf-handler was previously added the correspodning function is returned.</p>
+         * <p>This returns true/false if the default followOf method should be used. If a separate followOf-handler was previously added the corresponding function is returned.</p>
          * @returns boolean|function <p>if a function was set it is returned otherwise a boolean value whether the follow of is activated</p>
          */
         getFollowOf(): boolean | Function;
@@ -5774,7 +5861,7 @@ declare namespace sap {
          */
         getNextZIndex(): Number;
         /**
-         * <p>Returns whether the Popup is currently open, closed, or transitioning between these states.</p>
+         * <p>Returns whether the Popup is currently open, closed, or in a transition between these states.</p>
          * @returns sap.ui.core.OpenState <p>whether the Popup is opened</p>
          */
         getOpenState(): sap.ui.core.OpenState;
@@ -5802,7 +5889,7 @@ declare namespace sap {
          */
         setAnimations(fnOpen: Function, fnClose: Function): sap.ui.core.Popup;
         /**
-         * <p>Used to specify whether the Popup should close as soon as - for non-touch environment: the focus leaves - for touch environment: user clicks the area which is outside the popup itself, the dom elemnt which popup aligns to (except document), and one of the autoCloseAreas set by calling setAutoCloseAreas.</p>
+         * <p>Used to specify whether the Popup should close as soon as - for non-touch environment: the focus leaves - for touch environment: user clicks the area which is outside the popup itself, the DOM element which popup aligns to (except document), and one of the autoCloseAreas set by calling setAutoCloseAreas.</p>
          * @param {boolean} bAutoClose <p>whether the Popup should close as soon as the focus leaves</p>
          * @returns sap.ui.core.Popup <p><code>this</code> to allow method chaining</p>
          */
@@ -6102,8 +6189,8 @@ declare namespace sap {
          */
         text(sText: string): sap.ui.core.RenderManager;
         /**
-         * <p>Sets the given HTML markup without any encoding or sanitizing.</p>
-         * @param {string} sHtml <p>HTML markup</p>
+         * <p>Sets the given HTML markup without any encoding or sanitizing.</p><p>This must not be used for plain texts; use the <code>text</code> method instead.</p>
+         * @param {string} sHtml <p>Well-formed, valid HTML markup</p>
          * @returns sap.ui.core.RenderManager <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
         unsafeHtml(sHtml: string): sap.ui.core.RenderManager;
@@ -6736,11 +6823,11 @@ declare namespace sap {
          */
         insertDependent(oDependent: sap.ui.core.Control, iIndex: number): sap.ui.core.UIArea;
         /**
-         * <p>This triggers rerendering of itself and its children.</p><p>As <code>sap.ui.base.ManagedObject</code> "bubbles up" the invalidate, changes to child-<code>Elements</code> will also result in rerendering of the whole sub tree.</p>
+         * <p>Marks this object and its aggregated children as 'invalid'.</p><p>The term 'invalid' originally was introduced by controls where a change to the object's state made the rendered DOM <i>invalid</i>. Later, the concept of invalidation was moved up in the inheritance hierarchy to <code>ManagedObject</code>, but the term was kept for compatibility reasons.</p><p>Managed settings (properties, aggregations, associations) invalidate the corresponding object automatically. Changing the state via the standard mutators, therefore, does not require an explicit call to <code>invalidate</code>. The same applies to changes made via data binding, as it internally uses the standard mutators.</p><p>By default, a <code>ManagedObject</code> propagates any invalidation to its parent. Controls or UIAreas handle invalidation on their own by triggering a re-rendering.</p>
          */
         protected invalidate(): void;
         /**
-         * <p>Will be used as end-point for invalidate-bubbling from controls up their hierarchy.<br/> Triggers re-rendering of the UIAreas content.</p>
+         * <p>Triggers asynchronous re-rendering of the <code>UIArea</code>'s content.</p><p>Serves as an end-point for the bubbling of invalidation requests along the element/control aggregation hierarchy.</p>
          */
         protected invalidate(): void;
         /**
@@ -6790,8 +6877,8 @@ declare namespace sap {
          */
         removeDependent(vDependent: number | string | sap.ui.core.Control): sap.ui.core.Control;
         /**
-         * <p>Allows setting the Root Node hosting this instance of <code>UIArea</code>.<br/> The Dom Ref must have an Id that will be used as Id for this instance of <code>UIArea</code>.</p>
-         * @param {any} oRootNode <p>the hosting Dom Ref for this instance of <code>UIArea</code>.</p>
+         * <p>Allows setting the root node hosting this instance of <code>UIArea</code>.</p><p>The node must have an ID that will be used as ID for this instance of <code>UIArea</code>.</p>
+         * @param {any} oRootNode <p>the hosting DOM node for this instance of <code>UIArea</code>.</p>
          */
         setRootNode(oRootNode: any): void;
         /**
@@ -6804,7 +6891,14 @@ declare namespace sap {
        */
       export abstract class UIComponent extends sap.ui.core.Component {
         /**
-         * <p>Returns the reference to the router instance. The passed controller or view has to be created in the context of a UIComponent to return the router instance. Otherwise this function will return undefined. You may define the routerClass property in the config section of the routing to make the Component create your router extension. Example: routing: { config: { routerClass : myAppNamespace.MyRouterClass ... } ...</p>
+         * <p>Returns the reference to the router instance.</p><p>The passed controller or view has to be created in the context of a UIComponent to return the router instance. Otherwise this function will return undefined. You may define the routerClass property in the config section of the routing to make the Component create your router extension.</p><p>Example: <pre>
+        routing: {
+          config: {
+            routerClass : myAppNamespace.MyRouterClass
+            ...
+        }
+        ...
+        </pre></p>
          * @param {sap.ui.core.mvc.View | sap.ui.core.mvc.Controller} oControllerOrView <p>either a view or controller</p>
          * @returns sap.ui.core.routing.Router <p>the router instance</p>
          */
@@ -6844,7 +6938,7 @@ declare namespace sap {
          */
         getLocalId(sId: string): string;
         /**
-         * <p>Returns the content of <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.UIComponent/methods/createContent">sap.ui.core.UIComponent#createContent</a>. If you specified a <code>rootView</code> in your metadata or in the descriptor file (manifest.json), you will get the instance of the root view. This getter will only return something if the <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.UIComponent/methods/init">sap.ui.core.UIComponent#init</a> function was invoked. If <code>createContent</code> is not implemented, and there is no root view, it will return <code>null</code>. Here is an example: <code> <pre>
+         * <p>Returns the content of <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.UIComponent/methods/createContent">sap.ui.core.UIComponent#createContent</a>. If you specified a <code>rootView</code> in your metadata or in the descriptor file (manifest.json), you will get the instance of the root view. This getter will only return something if the <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.UIComponent/methods/init">sap.ui.core.UIComponent#init</a> function was invoked. If <code>createContent</code> is not implemented, and there is no root view, it will return <code>null</code>. Here is an example: <pre>
                  var MyExtension = UIComponent.extend("my.Component", {
                       metadata: {
                            rootView: "my.View"
@@ -6855,7 +6949,7 @@ declare namespace sap {
                            this.getRootControl(); // returns the view "my.View"
                       }
                  });
-            </pre> </code></p>
+            </pre></p>
          * @returns sap.ui.core.Control <p>the control created by <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.UIComponent/methods/createContent">sap.ui.core.UIComponent#createContent</a></p>
          */
         protected getRootControl(): sap.ui.core.Control;
@@ -6879,7 +6973,7 @@ declare namespace sap {
          */
         protected init(): void;
         /**
-         * <p>Initializes the Component instance after creation.</p><p>Applications must not call this hook method directly, it is called by the framework while the constructor of a Component is executed.</p><p>Subclasses of Component should override this hook to implement any necessary initialization. <b>When overriding this function make sure to invoke the init function of the UIComponent as well!</b></p>
+         * <p>Initializes the component instance after creation.</p><p>Applications must not call this hook method directly, it is called by the framework while the constructor of a Component is executed.</p><p>Subclasses of <code>UIComponent</code> should override this hook to implement any necessary initialization. <b>When overriding this function make sure to invoke the <code>init</code> function of the <code>UIComponent</code> as well!</b></p>
          */
         protected init(): void;
         /**
@@ -6901,6 +6995,85 @@ declare namespace sap {
          * @returns sap.ui.core.UIComponent <p>reference to this instance to allow method chaining</p>
          */
         setContainer(oContainer: sap.ui.core.ComponentContainer): sap.ui.core.UIComponent;
+      }
+      namespace UIComponent {
+        /**
+         * <p><p>An object containing the routing-relevant configurations, routes, targets, config.</p></p><h3>Example for a config:</h3><p><p><pre>
+            routing: {
+                "routes": {
+                    "welcome": {
+                        // If the URL has no hash e.g.: index.html or index.html# , this route will be matched.
+                        "pattern": "",
+                        // Displays the target called "welcome" specified in metadata.routing.targets.welcome.
+                        "target": "welcome"
+                    }
+                    "product": {
+                        "pattern": "Product/{id}",
+                        "target": "product"
+                    }
+                }
+                // Default values for targets
+                "config": {
+                    // For a detailed documentation of these parameters have a look at the sap.ui.core.routing.Targets documentation
+                    "viewType": "XML",
+                    "controlId": "App",
+                    "controlAggregation": "pages",
+                    "viewNamespace": "myApplication.namespace",
+                    // If you are using the mobile library, you have to use an sap.m.Router, to get support for
+                    // the controls sap.m.App, sap.m.SplitApp, sap.m.NavContainer and sap.m.SplitContainer.
+                    "routerClass": "sap.m.routing.Router"
+                    // What happens if no route matches the hash?
+                    "bypassed": {
+                        // the not found target gets displayed
+                        "target": "notFound"
+                    }
+                }
+                "targets": {
+                    "welcome": {
+                        // Referenced by the route "welcome"
+                        "viewName": "Welcome",
+                        "viewLevel": 0
+                    },
+                    "product": {
+                        // Referenced by the route "Product"
+                        "viewName": "Product",
+                        "viewLevel": 1
+                    }
+                    "notFound": {
+                        // Referenced by the bypassed section of the config
+                        "viewName": "NotFound"
+                    }
+                }
+            }
+        
+        </pre></p></p>
+         */
+        export interface RoutingMetadata {
+          /**
+           * <p>An object containing the routes that should be added to the router. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.Route">sap.ui.core.routing.Route</a> for the allowed properties.</p>
+           */
+          routes: any;
+          /**
+           * <p>Since 1.28.1. An object containing the targets that will be available for the router and the <code>Targets</code> instance. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.Targets">sap.ui.core.routing.Targets</a> for the allowed values.</p>
+           */
+          targets: any;
+          /**
+           * <p>Since 1.16. An object containing default values used for routes and targets. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.Router/constructor">sap.ui.core.routing.Router#constructor</a> and <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.Targets">sap.ui.core.routing.Targets</a> for more documentation.</p>
+           */
+          config: any;
+          /**
+           * <p>Since 1.20. The qualified name (in dot notation) or the constructor of the router class that should be used for the component's router. If you are using an own router extension, it has to be required before the constructor of the component is invoked. If you use <code>sap.m.routing.Router</code>, the component will automatically create an <a target="_self" class="jsdoclink" href="#/api/sap.m.routing.Targets">sap.m.routing.Targets</a> instance. If you pass a function, it has to be the constructor of a class that extends a router.</p>
+           */
+          routerClass: string | Function;
+          /**
+           * <p>Since 1.28.1. The qualified name (in dot notation) or the constructor of the <code>Targets</code> class that should be used by the component's router. If you are using an own <code>Targets</code> extension, it has to be required before the constructor of the component is invoked. If you define routes in your routing section, this parameter will be ignored and the <code>Targets</code> instance of the router will be taken, see {@lint #sap.ui.core.routing.Router#getTargets}.</p>
+           */
+          targetsClass: string | Function;
+          /**
+           * <p>By default, the root view will be set to the ID of the view returned by the <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.UIComponent/methods/getRootView">sap.ui.core.UIComponent#getRootView</a> function. You should not set this parameter if you create a view with the UIComponent.</p>
+           */
+          rootView: string;
+        }
       }
       /**
        * <p><p>Marker for the correctness of the current value.</p></p>
@@ -7206,33 +7379,33 @@ declare namespace sap {
        */
       export class BusyIndicator {
         /**
-         * <p>Registers a handler for the "close" event</p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-         * @param {any} oListener <p>Object on which to call the given function.</p>
-         * @returns sap.ui.core.BusyIndicator <p><code>this</code> to allow method chaining</p>
+         * <p>Registers a handler for the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="Close" href="#/api/sap.ui.core.BusyIndicator/events/Close">Close</a> event.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to <code>sap.ui.core.BusyIndicator</code>.</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+         * @param {any} oListener <p>Context object to call the event handler with; defaults to <code>sap.ui.core.BusyIndicator</code></p>
+         * @returns sap.ui.core.BusyIndicator <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
         static attachClose(fnFunction: Function, oListener?: any): sap.ui.core.BusyIndicator;
         /**
-         * <p>Registers a handler for the "open" event.</p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-         * @param {any} oListener <p>Object on which to call the given function.</p>
-         * @returns sap.ui.core.BusyIndicator <p><code>this</code> to allow method chaining</p>
+         * <p>Registers a handler for the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="Open" href="#/api/sap.ui.core.BusyIndicator/events/Open">Open</a> event.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to <code>sap.ui.core.BusyIndicator</code>.</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+         * @param {any} oListener <p>Context object to call the event handler with; defaults to <code>sap.ui.core.BusyIndicator</code></p>
+         * @returns sap.ui.core.BusyIndicator <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
         static attachOpen(fnFunction: Function, oListener?: any): sap.ui.core.BusyIndicator;
         /**
-         * <p>Unregisters a handler for the "close" event</p>
+         * <p>Unregisters a handler from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="Close" href="#/api/sap.ui.core.BusyIndicator/events/Close">Close</a> event.</p>
          * @param {Function} fnFunction <p>The callback function to unregister</p>
-         * @param {any} oListener <p>Object on which the given function had to be called.</p>
-         * @returns sap.ui.core.BusyIndicator <p><code>this</code> to allow method chaining</p>
+         * @param {any} oListener <p>Context object on which the given function had to be called</p>
+         * @returns sap.ui.core.BusyIndicator <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        static detachClose(fnFunction: Function, oListener: any): sap.ui.core.BusyIndicator;
+        static detachClose(fnFunction: Function, oListener?: any): sap.ui.core.BusyIndicator;
         /**
-         * <p>Unregisters a handler for the "open" event</p>
+         * <p>Unregisters a handler from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="Open" href="#/api/sap.ui.core.BusyIndicator/events/Open">Open</a> event.</p>
          * @param {Function} fnFunction <p>The callback function to unregister</p>
-         * @param {any} oListener <p>Object on which the given function had to be called.</p>
-         * @returns sap.ui.core.BusyIndicator <p><code>this</code> to allow method chaining</p>
+         * @param {any} oListener <p>Context object on which the given function had to be called</p>
+         * @returns sap.ui.core.BusyIndicator <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        static detachOpen(fnFunction: Function, oListener: any): sap.ui.core.BusyIndicator;
+        static detachOpen(fnFunction: Function, oListener?: any): sap.ui.core.BusyIndicator;
         /**
          * <p>Removes the BusyIndicator from the screen.</p>
          */
@@ -7279,7 +7452,7 @@ declare namespace sap {
            */
           var size: number;
           /**
-           * <p>Return am object with all instances of <code>sap.ui.core.Component</code>, keyed by their ID.</p><p>Each call creates a new snapshot object. Depending on the size of the UI, this operation therefore might be expensive. Consider to use the <code>forEach</code> or <code>filter</code> method instead of executing similar operations on the returned object.</p><p><b>Note</b>: The returned object is created by a call to <code>Object.create(null)</code>, and therefore lacks all methods of <code>Object.prototype</code>, e.g. <code>toString</code> etc.</p>
+           * <p>Return an object with all instances of <code>sap.ui.core.Component</code>, keyed by their ID.</p><p>Each call creates a new snapshot object. Depending on the size of the UI, this operation therefore might be expensive. Consider to use the <code>forEach</code> or <code>filter</code> method instead of executing similar operations on the returned object.</p><p><b>Note</b>: The returned object is created by a call to <code>Object.create(null)</code>, and therefore lacks all methods of <code>Object.prototype</code>, e.g. <code>toString</code> etc.</p>
            * @returns any <p>Object with all components, keyed by their ID</p>
            */
           function all(): any;
@@ -7293,9 +7466,9 @@ declare namespace sap {
            */
           function filter(callback: Function, thisArg?: any): sap.ui.core.Component[];
           /**
-           * <p>Calls the given <code>callback</code> for each Component.</p><p>The expected signature of the callback is <pre>
+           * <p>Calls the given <code>callback</code> for each existing component.</p><p>The expected signature of the callback is <pre>
              function callback(oComponent, sID)
-          </pre> where <code>oComponent</code> is the currently visited component instance and <code>sID</code> is the ID of that instance.</p><p>If components are created or destroyed within the <code>callback</code>, then the behavior is not specified. Newly added objects might or might not be visited. When a component is destroyed during the filtering and was not visited yet, it might or might not be visited. As the behavior for such concurrent modifications is not specified, it may change in newer releases.</p><p>If a <code>thisArg</code> is given, it will be provided as <code>this</code> context when calling <code>callback</code>. The <code>this</code> value that the implementation of <code>callback</code> sees, depends on the usual resolution mechanism. E.g. when <code>callback</code> was bound to some context object, that object wins over the given <code>thisArg</code>.</p>
+          </pre> where <code>oComponent</code> is the currently visited component instance and <code>sID</code> is the ID of that instance.</p><p>The order in which the callback is called for components is not specified and might change between calls (over time and across different versions of UI5).</p><p>If components are created or destroyed within the <code>callback</code>, then the behavior is not specified. Newly added objects might or might not be visited. When a component is destroyed during the filtering and was not visited yet, it might or might not be visited. As the behavior for such concurrent modifications is not specified, it may change in newer releases.</p><p>If a <code>thisArg</code> is given, it will be provided as <code>this</code> context when calling <code>callback</code>. The <code>this</code> value that the implementation of <code>callback</code> sees, depends on the usual resolution mechanism. E.g. when <code>callback</code> was bound to some context object, that object wins over the given <code>thisArg</code>.</p>
            * @param {Function} callback <p>Function to call for each Component</p>
            * @param {any} thisArg <p>Context object to provide as <code>this</code> in each call of <code>callback</code></p>
            */
@@ -7529,7 +7702,7 @@ declare namespace sap {
        */
       namespace dnd {
         /**
-         * <p>Provides the base class for all drag-and-drop configurations. This feature enables a native HTML5 drag-and-drop API for the controls, therefore it is limited to browser support. </p><h3>Limitations</h3><p> <ul> <li>There is no mobile device that supports drag and drop.</li> <li>There is no accessible alternative for drag and drop. Applications which use the drag-and-drop functionality must provide an accessible alternative UI (for example, action buttons or menus) to perform the same operations.</li> <li>A custom dragging ghost element is not possible in Internet Explorer.</li> <li>Transparency of the drag ghost element and the cursor during drag-and-drop operations depends on the browser implementation.</li> <li>Internet Explorer does only support plain text MIME type for the DataTransfer Object.</li> <li>Constraining a drag position is not possible, therefore there is no snap-to-grid or snap-to-element feature possible.</li> <li>Texts in draggable controls cannot be selected.</li> <li>The text of input fields in draggable controls can be selected, but not dragged.</li> </ul></p>
+         * <p>Provides the base class for all drag-and-drop configurations. This feature enables a native HTML5 drag-and-drop API for the controls, therefore it is limited to browser support. </p><h3>Limitations</h3><p> <ul> <li>There is no mobile device that supports drag and drop.</li> <li>There is no accessible alternative for drag and drop. Applications which use the drag-and-drop functionality must provide an accessible alternative UI (for example, action buttons or menus) to perform the same operations.</li> <li>A custom dragging ghost element is not possible in Internet Explorer.</li> <li>Transparency of the drag ghost element and the cursor during drag-and-drop operations depends on the browser implementation.</li> <li>Internet Explorer does only support plain text MIME type for the DataTransfer Object.</li> <li>In Internet Explorer, default visual drop effect is <code>copy</code> and <code>dropEffect</code> property of the <code>DropInfo</code> has no effect. <li>Constraining a drag position is not possible, therefore there is no snap-to-grid or snap-to-element feature possible.</li> <li>Texts in draggable controls cannot be selected.</li> <li>The text of input fields in draggable controls can be selected, but not dragged.</li> </ul></p>
          */
         export abstract class DragDropBase extends sap.ui.core.Element {
           /**
@@ -7789,7 +7962,7 @@ declare namespace sap {
            */
           protected fireDrop(mParameters?: any): sap.ui.core.dnd.DropInfo;
           /**
-           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getDropEffect" href="#/api/sap.ui.core.dnd.DropInfo/methods/getDropEffect">dropEffect</a>.</p><p>Defines the visual drop effect.</p><p>Default value is <code>Move</code>.</p>
+           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getDropEffect" href="#/api/sap.ui.core.dnd.DropInfo/methods/getDropEffect">dropEffect</a>.</p><p>Defines the visual drop effect.</p><p>In Internet Explorer, default visual drop effect is <code>Copy</code> and this property has no effect.</p><p>Default value is <code>Move</code>.</p>
            * @returns sap.ui.core.dnd.DropEffect <p>Value of property <code>dropEffect</code></p>
            */
           getDropEffect(): sap.ui.core.dnd.DropEffect;
@@ -7809,7 +7982,7 @@ declare namespace sap {
            */
           getTargetAggregation(): string;
           /**
-           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getDropEffect" href="#/api/sap.ui.core.dnd.DropInfo/methods/getDropEffect">dropEffect</a>.</p><p>Defines the visual drop effect.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Move</code>.</p>
+           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getDropEffect" href="#/api/sap.ui.core.dnd.DropInfo/methods/getDropEffect">dropEffect</a>.</p><p>Defines the visual drop effect.</p><p>In Internet Explorer, default visual drop effect is <code>Copy</code> and this property has no effect.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Move</code>.</p>
            * @param {sap.ui.core.dnd.DropEffect} sDropEffect <p>New value for property <code>dropEffect</code></p>
            * @returns sap.ui.core.dnd.DropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
@@ -7961,7 +8134,7 @@ declare namespace sap {
           /**
            * <p>Calls the given <code>callback</code> for each element.</p><p>The expected signature of the callback is <pre>
              function callback(oElement, sID)
-          </pre> where <code>oElement</code> is the currently visited element instance and <code>sID</code> is the ID of that instance.</p><p>If elements are created or destroyed within the <code>callback</code>, then the behavior is not specified. Newly added objects might or might not be visited. When an element is destroyed during the filtering and was not visited yet, it might or might not be visited. As the behavior for such concurrent modifications is not specified, it may change in newer releases.</p><p>If a <code>thisArg</code> is given, it will be provided as <code>this</code> context when calling <code>callback</code>. The <code>this</code> value that the implementation of <code>callback</code> sees, depends on the usual resolution mechanism. E.g. when <code>callback</code> was bound to some context object, that object wins over the given <code>thisArg</code>.</p>
+          </pre> where <code>oElement</code> is the currently visited element instance and <code>sID</code> is the ID of that instance.</p><p>The order in which the callback is called for elements is not specified and might change between calls (over time and across different versions of UI5).</p><p>If elements are created or destroyed within the <code>callback</code>, then the behavior is not specified. Newly added objects might or might not be visited. When an element is destroyed during the filtering and was not visited yet, it might or might not be visited. As the behavior for such concurrent modifications is not specified, it may change in newer releases.</p><p>If a <code>thisArg</code> is given, it will be provided as <code>this</code> context when calling <code>callback</code>. The <code>this</code> value that the implementation of <code>callback</code> sees, depends on the usual resolution mechanism. E.g. when <code>callback</code> was bound to some context object, that object wins over the given <code>thisArg</code>.</p>
            * @param {Function} callback <p>Function to call for each element</p>
            * @param {any} thisArg <p>Context object to provide as <code>this</code> in each call of <code>callback</code></p>
            */
@@ -8593,11 +8766,11 @@ declare namespace sap {
            */
           constructor();
           /**
-           * <p>Attach event-handler <code>fnFunction</code> to the 'messageChange' event of this <code>sap.ui.core.message.MessageProcessor</code>.<br/></p>
-           * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-           * @param {any} oListener <p>Object on which to call the given function. If empty, this MessageProcessor is used.</p>
-           * @returns sap.ui.core.message.MessageProcessor <p><code>this</code> to allow method chaining</p>
+           * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="messageChange" href="#/api/sap.ui.core.message.MessageProcessor/events/messageChange">messageChange</a> event of this <code>sap.ui.core.message.MessageProcessor</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.core.message.MessageProcessor</code> itself.</p>
+           * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object to call the event handler with, defaults to this <code>MessageProcessor</code> itself</p>
+           * @returns sap.ui.core.message.MessageProcessor <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
           attachMessageChange(oData: any, fnFunction: Function, oListener?: any): sap.ui.core.message.MessageProcessor;
           /**
@@ -8618,18 +8791,18 @@ declare namespace sap {
            */
           destroy(): void;
           /**
-           * <p>Detach event-handler <code>fnFunction</code> from the 'sap.ui.core.message.MessageProcessor' event of this <code>sap.ui.core.message.MessageProcessor</code>.<br/></p><p>The passed function and listener object must match the ones previously used for event registration.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-           * @param {any} oListener <p>Object on which the given function had to be called.</p>
-           * @returns sap.ui.core.message.MessageProcessor <p><code>this</code> to allow method chaining</p>
+           * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="messageChange" href="#/api/sap.ui.core.message.MessageProcessor/events/messageChange">messageChange</a> event of this <code>sap.ui.core.message.MessageProcessor</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object on which the given function had to be called</p>
+           * @returns sap.ui.core.message.MessageProcessor <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          detachMessageChange(fnFunction: Function, oListener: any): sap.ui.core.message.MessageProcessor;
+          detachMessageChange(fnFunction: Function, oListener?: any): sap.ui.core.message.MessageProcessor;
           /**
-           * <p>Fire event messageChange to attached listeners.</p>
-           * @param {any} mArguments <p>the arguments to pass along with the event.</p>
-           * @returns sap.ui.core.message.MessageProcessor <p><code>this</code> to allow method chaining</p>
+           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="messageChange" href="#/api/sap.ui.core.message.MessageProcessor/events/messageChange">messageChange</a> to attached listeners.</p>
+           * @param {any} oParameters <p>Parameters to pass along with the event</p>
+           * @returns sap.ui.core.message.MessageProcessor <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          protected fireMessageChange(mArguments?: any): sap.ui.core.message.MessageProcessor;
+          protected fireMessageChange(oParameters?: any): sap.ui.core.message.MessageProcessor;
           /**
            * <p>Returns the ID of the MessageProcessor instance</p>
            * @returns string <p>sId The MessageProcessor ID</p>
@@ -9270,7 +9443,7 @@ declare namespace sap {
     namespace core {
       namespace Popup {
         /**
-         * <p><p>Enumeration providing options for docking of some element to another. "Right" and "Left" will stay the same in RTL mode, but "Begin" and "End" will flip to the other side ("Begin" is "Right" in RTL).</p></p>
+         * <p><p>Enumeration providing options for docking of some element to another.</p><p>"Right" and "Left" will stay the same in RTL mode, but "Begin" and "End" will flip to the other side ("Begin" is "Right" in RTL).</p></p>
          */
         export enum Dock {
           /**
@@ -9486,7 +9659,7 @@ declare namespace sap {
              */
             static getEventsBlacklist(): void;
             /**
-             * <p>Sets a new Blacklist configuration.</p><p>BlackList configuration should have the following structure as in the example shown below.</p><p>In <code>global</code> object, we set all events that we don't want to track. In <code>controls</code> object, we can list different controls and include or exclude events for them.</p><p>For example, in this configuration the <code>load</code> event is exposed for the <code>sap.m.Image</code> control regardless of it being excluded globally for all other controls.</p><p>For <code>sap.m.Button</code> control, we don't want to track the <code>tap</code> event but we need to track the <code>afterRendering</code> event.</p><p>In the case where we write in the <code>controls</code> object a control without any excluded or included events, this control is NOT tracked at all.</p><p>In the example configuration events coming from control <code>sap.m.AccButton</code> are not be exposed.</p><p><pre><code>
+             * <p>Sets a new Blacklist configuration.</p><p>BlackList configuration should have the following structure as in the example shown below.</p><p>In <code>global</code> object, we set all events that we don't want to track. In <code>controls</code> object, we can list different controls and include or exclude events for them.</p><p>For example, in this configuration the <code>load</code> event is exposed for the <code>sap.m.Image</code> control regardless of it being excluded globally for all other controls.</p><p>For <code>sap.m.Button</code> control, we don't want to track the <code>tap</code> event but we need to track the <code>afterRendering</code> event.</p><p>In the case where we write in the <code>controls</code> object a control without any excluded or included events, this control is NOT tracked at all.</p><p>In the example configuration events coming from control <code>sap.m.AccButton</code> are not be exposed.</p><p><pre>
             {
                 global: ["modelContextChange", "beforeRendering", "afterRendering",
                     "propertyChanged", "beforeGeometryChanged", "geometryChanged",
@@ -9504,7 +9677,7 @@ declare namespace sap {
                   "sap.m.AccButton": {}
                 }
               }
-            </pre></code> The set configuration object is copied from the given one.</p>
+            </pre> The set configuration object is copied from the given one.</p>
              */
             static setEventsBlacklist(): void;
             /**
@@ -9590,7 +9763,7 @@ declare namespace sap {
       namespace util {
         namespace reflection {
           /**
-           * <p><p>Abstract static utility class to access ManageObjects and XMLNodes that represent ManagedObjects in a harmonized way.</p><p>The class mirrors the ManagedObject API so that code that needs to work with ManagedObjects in several representations can be written in a single way. The slight differences are handled by specifying a super set of parameters that might not be needed in all use cases. For example sap.ui.fl uses this class and its subtypes for change handlers that can be applied on XMLViews and normal ManagedObject instances.</p></p>
+           * <p><p>Abstract static utility class to access <code>ManageObjects</code> and <code>XMLNodes</code> that represent <code>ManagedObjects</code> in a harmonized way.</p><p>The class mirrors the <code>ManagedObject</code> API so that code that needs to work with <code>ManagedObjects</code> in several representations can be written in a harmonized way. The slight differences are handled by specifying a super set of parameters that might not be needed in all use cases. For example <code>sap.ui.fl</code> uses this class and its subtypes for change handlers that can be applied on <code>XMLViews</code> and normal <code>ManagedObject</code> instances.</p></p>
            */
           namespace BaseTreeModifier {
             /**
@@ -9601,7 +9774,7 @@ declare namespace sap {
              */
             function applySettings(vControl: sap.ui.base.ManagedObject | HTMLElement, mSettings: any): HTMLElement;
             /**
-             * <p>Attaches event on the specified ManagedObject.</p>
+             * <p>Attaches event on the specified <code>ManagedObject</code>.</p>
              * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>Control representation</p>
              * @param {string} sEventName <p>Event name</p>
              * @param {string} sFunctionPath <p>Absolute path to a function</p>
@@ -9632,7 +9805,7 @@ declare namespace sap {
             function bySelector(oSelector: any, oAppComponent: sap.ui.core.UIComponent, oView: HTMLElement): sap.ui.base.ManagedObject | HTMLElement;
             /**
              * <p>Creates the control in the corresponding representation.</p>
-             * @param {string} sClassName <p>Class name for the control (for example, <code>sap.m.Button</code>), ensure the class is loaded (no synchronous requests are called)</p>
+             * @param {string} sClassName <p>Class name for the control (for example, <code>sap.m.Button</code>), ensures that the class is loaded (no synchronous requests are called)</p>
              * @param {sap.ui.core.UIComponent} oAppComponent <p>Needed to calculate the correct ID in case you provide an ID</p>
              * @param {HTMLElement} oView <p>XML node of the view, required for XML case to create nodes and to find elements</p>
              * @param {any} oSelector <p>Selector to calculate the ID for the control that is created</p>
@@ -9680,7 +9853,7 @@ declare namespace sap {
              */
             function getAssociation(vParent: sap.ui.base.ManagedObject | HTMLElement, sName: string): string | string[];
             /**
-             * <p>Get the binding template from an aggregation. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/getBindingInfo">sap.ui.base.ManagedObject#getBindingInfo</a> method.</p>
+             * <p>Gets the binding template from an aggregation. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/getBindingInfo">sap.ui.base.ManagedObject#getBindingInfo</a> method.</p>
              * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>Control representation</p>
              * @param {string} sAggregationName <p>Aggregation name</p>
              */
@@ -9740,7 +9913,7 @@ declare namespace sap {
             /**
              * <p>Function for determining the selector that is used later to apply a change for a given control. The function distinguishes between local IDs generated starting with 1.40 and the global IDs generated in previous versions.</p>
              * @param {sap.ui.base.ManagedObject | HTMLElement | string} vControl <p>Control or ID string for which the selector should be determined</p>
-             * @param {sap.ui.core.Component} oAppComponent <p>Application component, needed only if vControl is a string or XML node</p>
+             * @param {sap.ui.core.Component} oAppComponent <p>Application component, needed only if <code>vControl</code> is a string or XML node</p>
              * @param {any} mAdditionalSelectorInformation <p>Additional mapped data which is added to the selector</p>
              * @returns any <p>oSelector</p>
              */
@@ -9748,13 +9921,13 @@ declare namespace sap {
             /**
              * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.StashedControlSupport/methods/getVisible">sap.ui.core.StashedControlSupport#getVisible</a> method.</p>
              * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>Control representation</p>
-             * @returns boolean <p>Whether the control is stashed or not</p>
+             * @returns boolean <p><code>true</code> if the control is stashed</p>
              */
             function getStashed(vControl: sap.ui.base.ManagedObject | HTMLElement): boolean;
             /**
              * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.Control/methods/getVisible">sap.ui.core.Control#getVisible</a> method.</p>
              * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>Control representation</p>
-             * @returns boolean <p>Whether the control's <code>visible</code> property is set or not</p>
+             * @returns boolean <p><code>true</code> if the control's <code>visible</code> property is set</p>
              */
             function getVisible(vControl: sap.ui.base.ManagedObject | HTMLElement): boolean;
             /**
@@ -9763,7 +9936,7 @@ declare namespace sap {
              * @param {string} sAggregationName <p>Aggregation name</p>
              * @param {sap.ui.base.ManagedObject | HTMLElement} oObject <p>XML node or element of the control that will be inserted</p>
              * @param {number} iIndex <p>Index for <code>oObject</code> in the aggregation</p>
-             * @param {HTMLElement} oView <p>XML node of the view - needed in XML case to potentially create (aggregation) nodes</p>
+             * @param {HTMLElement} oView <p>XML node of the view, needed in XML case to potentially create (aggregation) nodes</p>
              */
             function insertAggregation(vParent: sap.ui.base.ManagedObject | HTMLElement, sAggregationName: string, oObject: sap.ui.base.ManagedObject | HTMLElement, iIndex: number, oView?: HTMLElement): void;
             /**
@@ -9771,9 +9944,9 @@ declare namespace sap {
              * @param {string} sFragment <p>XML fragment as string</p>
              * @param {string} sNamespace <p>Namespace of the app</p>
              * @param {sap.ui.core.mvc.View} oView <p>View for the fragment</p>
-             * @returns HTMLElement[] <p>Array with the nodes of the controls of the fragment</p>
+             * @returns Element[]|sap.ui.core.Element[] <p>Array with the nodes/instances of the controls of the fragment</p>
              */
-            function instantiateFragment(sFragment: string, sNamespace: string, oView: sap.ui.core.mvc.View): HTMLElement[];
+            function instantiateFragment(sFragment: string, sNamespace: string, oView: sap.ui.core.mvc.View): HTMLElement[] | sap.ui.core.Element[];
             /**
              * <p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/isPropertyInitial">sap.ui.base.ManagedObject#isPropertyInitial</a> method.</p>
              * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>Control representation</p>
@@ -9857,7 +10030,7 @@ declare namespace sap {
              * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>Control whose type is to be checked</p>
              * @param {any} mAggregationMetadata <p>Aggregation info object</p>
              * @param {sap.ui.base.ManagedObject | HTMLElement} vParent <p>Parent of the control</p>
-             * @param {string} sFragment <p>Path to the fragment that contains the control, whose type is to be checked</p>
+             * @param {string} sFragment <p>Path to the fragment that contains the control whose type is to be checked</p>
              * @param {number} iIndex <p>Index of the current control in the parent aggregation</p>
              * @returns boolean <p><code>true</code> if the type matches</p>
              */
@@ -10108,7 +10281,7 @@ declare namespace sap {
          */
         function detachHandler(fnFunction: Function, oListener?: any, sName?: string): void;
         /**
-         * <p>Returns information about the current active range of the range set with the given name.</p><p>If the optional parameter <code>iWidth</iWidth> is given, the active range will be determined for that width, otherwise it is determined for the current window size.</p>
+         * <p>Returns information about the current active range of the range set with the given name.</p><p>If the optional parameter <code>iWidth</code> is given, the active range will be determined for that width, otherwise it is determined for the current window size.</p>
          * @param {string} sName <p>The name of the range set. The range set must be initialized beforehand (<a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="sap.ui.Device.media.initRangeSet" href="#/api/sap.ui.Device.media/methods/sap.ui.Device.media.initRangeSet">sap.ui.Device.media.initRangeSet</a>)</p>
          * @param {number} iWidth <p>An optional width, based on which the range should be determined; If <code>iWidth</code> is not a number, the window size will be used.</p>
          * @returns { [key: string]: any } <p>Information about the current active interval of the range set. The returned map has the same structure as the argument of the event handlers (<a target="_self" class="jsdoclink" href="#/api/sap.ui.Device.media/methods/sap.ui.Device.media.attachHandler">sap.ui.Device.media.attachHandler</a>)</p>
@@ -10465,33 +10638,33 @@ declare namespace sap {
          */
         constructor(oModel: sap.ui.model.Model, sPath: string, oContext: sap.ui.model.Context, mParameters?: any);
         /**
-         * <p>Attach event-handler <code>fnFunction</code> to the 'AggregatedDataStateChange' event of this <code>sap.ui.model.Binding</code>.<br/></p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-         * @param {any} oListener <p>object on which to call the given function.</p>
+         * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="AggregatedDataStateChange" href="#/api/sap.ui.model.Binding/events/AggregatedDataStateChange">AggregatedDataStateChange</a> event of this <code>sap.ui.model.Binding</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.model.Binding</code> itself.</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+         * @param {any} oListener <p>Context object to call the event handler with, defaults to this <code>sap.ui.model.Binding</code> itself</p>
          */
         protected attachAggregatedDataStateChange(fnFunction: Function, oListener?: any): void;
         /**
-         * <p>Attach event-handler <code>fnFunction</code> to the 'change' event of this <code>sap.ui.model.Model</code>.<br/></p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-         * @param {any} oListener <p>object on which to call the given function.</p>
+         * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="change" href="#/api/sap.ui.model.Binding/events/change">change</a> event of this <code>sap.ui.model.Model</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.model.Binding</code> itself.</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+         * @param {any} oListener <p>Context object to call the event handler with, defaults to this <code>sap.ui.model.Binding</code> itself</p>
          */
         attachChange(fnFunction: Function, oListener?: any): void;
         /**
-         * <p>Attach event-handler <code>fnFunction</code> to the 'dataReceived' event of this <code>sap.ui.model.Binding</code>.<br/></p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-         * @param {any} oListener <p>object on which to call the given function.</p>
+         * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dataReceived" href="#/api/sap.ui.model.Binding/events/dataReceived">dataReceived</a> event of this <code>sap.ui.model.Binding</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.model.Binding</code> itself.</p>
+         * @param {Function} fnFunction <p>Function to be called, when the event occurs</p>
+         * @param {any} oListener <p>Context object to call the event handler with, defaults to this <code>sap.ui.model.Binding</code> itself</p>
          */
         attachDataReceived(fnFunction: Function, oListener?: any): void;
         /**
-         * <p>Attach event-handler <code>fnFunction</code> to the 'dataRequested' event of this <code>sap.ui.model.Binding</code>.<br/></p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-         * @param {any} oListener <p>object on which to call the given function.</p>
+         * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dataRequested" href="#/api/sap.ui.model.Binding/events/dataRequested">dataRequested</a> event of this <code>sap.ui.model.Binding</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.model.Binding</code> itself.</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+         * @param {any} oListener <p>Context object to call the event handler with, defaults to this <code>sap.ui.model.Binding</code> itself</p>
          */
         attachDataRequested(fnFunction: Function, oListener?: any): void;
         /**
-         * <p>Attach event-handler <code>fnFunction</code> to the 'DataStateChange' event of this <code>sap.ui.model.Binding</code>.<br/></p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-         * @param {any} oListener <p>object on which to call the given function.</p>
+         * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="DataStateChange" href="#/api/sap.ui.model.Binding/events/DataStateChange">DataStateChange</a> event of this <code>sap.ui.model.Binding</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.model.Binding</code> itself.</p>
+         * @param {Function} fnFunction <p>Function to be called, when the event occurs</p>
+         * @param {any} oListener <p>Context object to call the event handler with, defaults to this <code>sap.ui.model.Binding</code> itself</p>
          */
         protected attachDataStateChange(fnFunction: Function, oListener?: any): void;
         /**
@@ -10500,9 +10673,9 @@ declare namespace sap {
          */
         protected attachEvents(oEvents: any): void;
         /**
-         * <p>Attach event-handler <code>fnFunction</code> to the 'refresh' event of this <code>sap.ui.model.Binding</code>.<br/></p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-         * @param {any} oListener <p>object on which to call the given function.</p>
+         * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="refresh" href="#/api/sap.ui.model.Binding/events/refresh">refresh</a> event of this <code>sap.ui.model.Binding</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.model.Binding</code> itself.</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+         * @param {any} oListener <p>Context object to call the event handler with, defaults to this <code>sap.ui.model.Binding</code> itself</p>
          */
         protected attachRefresh(fnFunction: Function, oListener?: any): void;
         /**
@@ -10518,33 +10691,33 @@ declare namespace sap {
          */
         destroy(): void;
         /**
-         * <p>Detach event-handler <code>fnFunction</code> from the 'AggregatedDataStateChange' event of this <code>sap.ui.model.Binding</code>.<br/></p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-         * @param {any} oListener <p>object on which to call the given function.</p>
+         * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="AggregatedDataStateChange" href="#/api/sap.ui.model.Binding/events/AggregatedDataStateChange">AggregatedDataStateChange</a> event of this <code>sap.ui.model.Binding</code>.</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+         * @param {any} oListener <p>Context object on which the given function had to be called</p>
          */
         protected detachAggregatedDataStateChange(fnFunction: Function, oListener?: any): void;
         /**
-         * <p>Detach event-handler <code>fnFunction</code> from the 'change' event of this <code>sap.ui.model.Model</code>.<br/></p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-         * @param {any} oListener <p>object on which to call the given function.</p>
+         * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="change" href="#/api/sap.ui.model.Binding/events/change">change</a> event of this <code>sap.ui.model.Binding</code>.</p>
+         * @param {Function} fnFunction <p>Function to be called, when the event occurs</p>
+         * @param {any} oListener <p>Context object on which the given function had to be called</p>
          */
         detachChange(fnFunction: Function, oListener?: any): void;
         /**
-         * <p>Detach event-handler <code>fnFunction</code> from the 'dataReceived' event of this <code>sap.ui.model.Binding</code>.<br/></p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-         * @param {any} oListener <p>object on which to call the given function.</p>
+         * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dataReceived" href="#/api/sap.ui.model.Binding/events/dataReceived">dataReceived</a> event of this <code>sap.ui.model.Binding</code>.</p>
+         * @param {Function} fnFunction <p>Function to be called, when the event occurs</p>
+         * @param {any} oListener <p>Context object on which the given function had to be called</p>
          */
         detachDataReceived(fnFunction: Function, oListener?: any): void;
         /**
-         * <p>Detach event-handler <code>fnFunction</code> from the 'dataRequested' event of this <code>sap.ui.model.Binding</code>.<br/></p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-         * @param {any} oListener <p>object on which to call the given function.</p>
+         * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dataRequested" href="#/api/sap.ui.model.Binding/events/dataRequested">dataRequested</a> event of this <code>sap.ui.model.Binding</code>.</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+         * @param {any} oListener <p>Context object on which the given function had to be called</p>
          */
         detachDataRequested(fnFunction: Function, oListener?: any): void;
         /**
-         * <p>Detach event-handler <code>fnFunction</code> from the 'DataStateChange' event of this <code>sap.ui.model.Binding</code>.<br/></p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-         * @param {any} oListener <p>object on which to call the given function.</p>
+         * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="DataStateChange" href="#/api/sap.ui.model.Binding/events/DataStateChange">DataStateChange</a> event of this <code>sap.ui.model.Binding</code>.</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+         * @param {any} oListener <p>Context object on which the given function had to be called</p>
          */
         protected detachDataStateChange(fnFunction: Function, oListener?: any): void;
         /**
@@ -10553,21 +10726,21 @@ declare namespace sap {
          */
         protected detachEvents(oEvents: any): void;
         /**
-         * <p>Detach event-handler <code>fnFunction</code> from the 'refresh' event of this <code>sap.ui.model.Binding</code>.<br/></p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
+         * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="refresh" href="#/api/sap.ui.model.Binding/events/refresh">refresh</a> event of this <code>sap.ui.model.Binding</code>.</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
          * @param {any} oListener <p>object on which to call the given function.</p>
          */
         protected detachRefresh(fnFunction: Function, oListener?: any): void;
         /**
-         * <p>Fire event dataReceived to attached listeners. This event may also be fired when an error occured.</p>
-         * @param {{ [key: string]: any }} mArguments <p>the arguments to pass along with the event.</p>
+         * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dataReceived" href="#/api/sap.ui.model.Binding/events/dataReceived">dataReceived</a> to attached listeners.</p><p>This event may also be fired when an error occurred.</p>
+         * @param {any} oParameters <p>Parameters to pass along with the event.</p>
          */
-        protected fireDataReceived(mArguments: { [key: string]: any }): void;
+        protected fireDataReceived(oParameters: any): void;
         /**
-         * <p>Fire event dataRequested to attached listeners.</p>
-         * @param {{ [key: string]: any }} mArguments <p>the arguments to pass along with the event.</p>
+         * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="dataRequested" href="#/api/sap.ui.model.Binding/events/dataRequested">dataRequested</a> to attached listeners.</p>
+         * @param {any} oParameters <p>Parameters to pass along with the event.</p>
          */
-        protected fireDataRequested(mArguments: { [key: string]: any }): void;
+        protected fireDataRequested(oParameters: any): void;
         /**
          * <p>Initialize the binding. The message should be called when creating a binding. The default implementation calls checkUpdate(true).</p>
          */
@@ -10736,7 +10909,7 @@ declare namespace sap {
          */
         destroy(): void;
         /**
-         * <p>Destroys the model and clears the model data. A model implementation may override this function and perform model specific cleanup tasks e.g. abort requests, prevent new requests, etc.<br><br>References: <ul><li>sap.ui.base.Object.prototype.destroy</li></ul></p>
+         * <p>Destroys the model and clears the model data.</p><p>A model implementation may override this function and perform model specific cleanup tasks e.g. abort requests, prevent new requests, etc.<br><br>References: <ul><li>sap.ui.base.Object.prototype.destroy</li></ul></p>
          */
         destroy(): void;
         /**
@@ -10840,51 +11013,51 @@ declare namespace sap {
          */
         constructor();
         /**
-         * <p>Attach event-handler <code>fnFunction</code> to the 'AggregatedDataStateChange' event of this <code>sap.ui.model.Binding</code>.<br/></p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
+         * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="AggregatedDataStateChange" href="#/api/sap.ui.model.Binding/events/AggregatedDataStateChange">AggregatedDataStateChange</a> event of this <code>sap.ui.model.Binding</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.model.Binding</code> itself.</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+         * @param {any} oListener <p>Context object to call the event handler with, defaults to this <code>sap.ui.model.Binding</code> itself</p>
+         */
+        protected attachAggregatedDataStateChange(fnFunction: Function, oListener?: any): void;
+        /**
+         * <p>Attaches event handler <code>fnFunction</code> to the <code>AggregatedDataStateChange</code> event of this <code>sap.ui.model.CompositeBinding</code>.</p><p>The <code>AggregatedDataStateChange</code> event is fired asynchronously, meaning that the <code>DataState</code> object given as parameter of the event contains all changes that were applied to the <code>DataState</code> in the running thread.</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
          * @param {any} oListener <p>object on which to call the given function.</p>
          */
         protected attachAggregatedDataStateChange(fnFunction: Function, oListener?: any): void;
         /**
-         * <p>Attach event-handler <code>fnFunction</code> to the 'AggregatedDataStateChange' event of this <code>sap.ui.model.CompositeBinding</code>. The 'AggregatedDataStateChange' event is fired asynchronously, meaning that the datastate object given as parameter of the event contains all changes that were applied to the datastate in the running thread.</p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-         * @param {any} oListener <p>object on which to call the given function.</p>
-         */
-        protected attachAggregatedDataStateChange(fnFunction: Function, oListener?: any): void;
-        /**
-         * <p>Attach event-handler <code>fnFunction</code> to the 'DataStateChange' event of this <code>sap.ui.model.Binding</code>.<br/></p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-         * @param {any} oListener <p>object on which to call the given function.</p>
+         * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="DataStateChange" href="#/api/sap.ui.model.Binding/events/DataStateChange">DataStateChange</a> event of this <code>sap.ui.model.Binding</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.model.Binding</code> itself.</p>
+         * @param {Function} fnFunction <p>Function to be called, when the event occurs</p>
+         * @param {any} oListener <p>Context object to call the event handler with, defaults to this <code>sap.ui.model.Binding</code> itself</p>
          */
         protected attachDataStateChange(fnFunction: Function, oListener?: any): void;
         /**
-         * <p>Attach event-handler <code>fnFunction</code> to the 'DataStateChange' event of this <code>sap.ui.model.CompositeBinding</code>.<br/></p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-         * @param {any} oListener <p>object on which to call the given function.</p>
+         * <p>Attaches event handler <code>fnFunction</code> to the <code>DataStateChange</code> event of this <code>sap.ui.model.CompositeBinding</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.model.CompositeBinding</code> itself.</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+         * @param {any} oListener <p>object on which to call the given function</p>
          */
         protected attachDataStateChange(fnFunction: Function, oListener?: any): void;
         /**
-         * <p>Detach event-handler <code>fnFunction</code> from the 'AggregatedDataStateChange' event of this <code>sap.ui.model.Binding</code>.<br/></p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-         * @param {any} oListener <p>object on which to call the given function.</p>
+         * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="AggregatedDataStateChange" href="#/api/sap.ui.model.Binding/events/AggregatedDataStateChange">AggregatedDataStateChange</a> event of this <code>sap.ui.model.Binding</code>.</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+         * @param {any} oListener <p>Context object on which the given function had to be called</p>
          */
         protected detachAggregatedDataStateChange(fnFunction: Function, oListener?: any): void;
         /**
-         * <p>Detach event-handler <code>fnFunction</code> from the 'AggregatedDataStateChange' event of this <code>sap.ui.model.CompositeBinding</code>.<br/></p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-         * @param {any} oListener <p>object on which to call the given function.</p>
+         * <p>Detaches event handler <code>fnFunction</code> from the <code>AggregatedDataStateChange</code> event of this <code>sap.ui.model.CompositeBinding</code>.</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+         * @param {any} oListener <p>object on which to call the given function</p>
          */
         protected detachAggregatedDataStateChange(fnFunction: Function, oListener?: any): void;
         /**
-         * <p>Detach event-handler <code>fnFunction</code> from the 'DataStateChange' event of this <code>sap.ui.model.Binding</code>.<br/></p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-         * @param {any} oListener <p>object on which to call the given function.</p>
+         * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="DataStateChange" href="#/api/sap.ui.model.Binding/events/DataStateChange">DataStateChange</a> event of this <code>sap.ui.model.Binding</code>.</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+         * @param {any} oListener <p>Context object on which the given function had to be called</p>
          */
         protected detachDataStateChange(fnFunction: Function, oListener?: any): void;
         /**
-         * <p>Detach event-handler <code>fnFunction</code> from the 'DataStateChange' event of this <code>sap.ui.model.CompositeBinding</code>.<br/></p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-         * @param {any} oListener <p>object on which to call the given function.</p>
+         * <p>Detaches event handler <code>fnFunction</code> from the <code>DataStateChange</code> event of this <code>sap.ui.model.CompositeBinding</code>.</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+         * @param {any} oListener <p>object on which to call the given function</p>
          */
         protected detachDataStateChange(fnFunction: Function, oListener?: any): void;
         /**
@@ -10937,7 +11110,7 @@ declare namespace sap {
          */
         protected initialize(): void;
         /**
-         * <p>Initialize the binding. The message should be called when creating a binding. The default implementation calls checkUpdate(true). Prevent checkUpdate to be triggered while initializing nestend bindings, it is sufficient to call checkUpdate when all nested bindings are initialized.</p>
+         * <p>Initialize the binding. The method should be called when creating a binding. The default implementation calls checkUpdate(true). Prevent checkUpdate to be triggered while initializing nestend bindings, it is sufficient to call checkUpdate when all nested bindings are initialized.</p>
          */
         protected initialize(): void;
         /**
@@ -11532,35 +11705,35 @@ declare namespace sap {
          */
         protected getContexts(iStartIndex?: number, iLength?: number): sap.ui.model.Context[];
         /**
-         * <p>Returns an array of currently used binding contexts of the bound control</p><p>This method does not trigger any data requests from the backend or delta calculation, but just returns the context array as last requested by the control. This can be used by the application to get access to the data currently displayed by a list control.</p>
+         * <p>Returns an array of currently used binding contexts of the bound control.</p><p>This method does not trigger any data requests from the backend or delta calculation, but just returns the context array as last requested by the control. This can be used by the application to get access to the data currently displayed by a list control.</p>
          * @returns sap.ui.model.Context[] <p>the array of contexts for each row of the bound list</p>
          */
         getCurrentContexts(): sap.ui.model.Context[];
         /**
-         * <p>Returns list of distinct values for the given relative binding path</p>
-         * @param {string} sPath <p>the relative binding path</p>
-         * @returns any[] <p>the array of distinct values.</p>
+         * <p>Returns list of distinct values for the given relative binding path.</p>
+         * @param {string} sPath <p>Relative binding path</p>
+         * @returns any[] <p>Array of distinct values.</p>
          */
         getDistinctValues(sPath: string): any[];
         /**
-         * <p>Gets the group for the given context. Must only be called if isGrouped() returns that grouping is enabled for this binding. The grouping will be performed using the first sorter (in case multiple sorters are defined).<br><br>References: <ul><li>sap.ui.model.Sorter#getGroup</li></ul></p>
-         * @param {sap.ui.model.Context} oContext <p>the binding context</p>
-         * @returns any <p>the group object containing a key property and optional custom properties</p>
+         * <p>Gets the group for the given context. Must only be called if <code>isGrouped()</code> returns that grouping is enabled for this binding. The grouping will be performed using the first sorter (in case multiple sorters are defined).<br><br>References: <ul><li>sap.ui.model.Sorter#getGroup</li></ul></p>
+         * @param {sap.ui.model.Context} oContext <p>The binding context</p>
+         * @returns any <p>The group object containing a key property and optional custom properties</p>
          */
         getGroup(oContext: sap.ui.model.Context): any;
         /**
-         * <p>Returns the number of entries in the list. This might be an estimated or preliminary length, in case the full length is not known yet, see method isLengthFinal().</p>
+         * <p>Returns the number of entries in the list.</p><p>This might be an estimated or preliminary length, in case the full length is not known yet, see method <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="isLengthFinal" href="#/api/sap.ui.model.ListBinding/methods/isLengthFinal">#isLengthFinal</a>.</p>
          * @returns number <p>returns the number of entries in the list</p>
          */
         getLength(): number;
         /**
          * <p>Indicates whether grouping is enabled for the binding. Grouping is enabled for a list binding, if at least one sorter exists on the binding and the first sorter is a grouping sorter.</p>
-         * @returns boolean <p>whether grouping is enabled</p>
+         * @returns boolean <p>Whether grouping is enabled</p>
          */
         isGrouped(): boolean;
         /**
          * <p>Returns whether the length which can be retrieved using getLength() is a known, final length, or a preliminary or estimated length which may change if further data is requested.</p>
-         * @returns boolean <p>returns whether the length is final</p>
+         * @returns boolean <p>Whether the length is final</p>
          */
         isLengthFinal(): boolean;
         /**
@@ -11588,47 +11761,47 @@ declare namespace sap {
          */
         constructor();
         /**
-         * <p>Attach event-handler <code>fnFunction</code> to the 'parseError' event of this <code>sap.ui.model.Model</code>.<br/></p>
-         * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-         * @param {any} oListener <p>Object on which to call the given function. If empty, the global context (window) is used.</p>
-         * @returns sap.ui.model.Model <p><code>this</code> to allow method chaining</p>
+         * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="parseError" href="#/api/sap.ui.model.Model/events/parseError">parseError</a> event of this <code>sap.ui.model.Model</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.model.Model</code> itself.</p>
+         * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+         * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.model.Model</code> itself.</p>
+         * @returns sap.ui.model.Model <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
         attachParseError(oData: any, fnFunction: Function, oListener?: any): sap.ui.model.Model;
         /**
-         * <p>Attach event-handler <code>fnFunction</code> to the 'propertyChange' event of this <code>sap.ui.model.Model</code>.</p>
-         * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-         * @param {any} oListener <p>Object on which to call the given function. If empty, the global context (window) is used.</p>
-         * @returns sap.ui.model.Model <p><code>this</code> to allow method chaining</p>
+         * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="propertyChange" href="#/api/sap.ui.model.Model/events/propertyChange">propertyChange</a> event of this <code>sap.ui.model.Model</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.model.Model</code> itself.</p>
+         * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+         * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.model.Model</code> itself</p>
+         * @returns sap.ui.model.Model <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
         attachPropertyChange(oData: any, fnFunction: Function, oListener?: any): sap.ui.model.Model;
         /**
-         * <p>Attach event-handler <code>fnFunction</code> to the 'requestCompleted' event of this <code>sap.ui.model.Model</code>.</p>
-         * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-         * @param {any} oListener <p>Object on which to call the given function. If empty, the global context (window) is used.</p>
-         * @returns sap.ui.model.Model <p><code>this</code> to allow method chaining</p>
+         * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="requestCompleted" href="#/api/sap.ui.model.Model/events/requestCompleted">requestCompleted</a> event of this <code>sap.ui.model.Model</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.model.Model</code> itself.</p>
+         * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+         * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.model.Model</code> itself</p>
+         * @returns sap.ui.model.Model <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
         attachRequestCompleted(oData: any, fnFunction: Function, oListener?: any): sap.ui.model.Model;
         /**
-         * <p>Attach event-handler <code>fnFunction</code> to the 'requestFailed' event of this <code>sap.ui.model.Model</code>.<br/></p>
-         * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-         * @param {any} oListener <p>Object on which to call the given function. If empty, this Model is used.</p>
-         * @returns sap.ui.model.Model <p><code>this</code> to allow method chaining</p>
+         * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="requestFailed" href="#/api/sap.ui.model.Model/events/requestFailed">requestFailed</a> event of this <code>sap.ui.model.Model</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.model.Model</code> itself.</p>
+         * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+         * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.model.Model</code> itself</p>
+         * @returns sap.ui.model.Model <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
         attachRequestFailed(oData: any, fnFunction: Function, oListener?: any): sap.ui.model.Model;
         /**
-         * <p>Attach event-handler <code>fnFunction</code> to the 'requestSent' event of this <code>sap.ui.model.Model</code>.</p>
-         * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-         * @param {any} oListener <p>Object on which to call the given function. If empty, the global context (window) is used.</p>
-         * @returns sap.ui.model.Model <p><code>this</code> to allow method chaining</p>
+         * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="requestSent" href="#/api/sap.ui.model.Model/events/requestSent">requestSent</a> event of this <code>sap.ui.model.Model</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.model.Model</code> itself.</p>
+         * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+         * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.model.Model</code> itself</p>
+         * @returns sap.ui.model.Model <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
         attachRequestSent(oData: any, fnFunction: Function, oListener?: any): sap.ui.model.Model;
         /**
-         * <p>Create ContextBinding</p>
+         * <p>Create ContextBinding.</p>
          * @param {string | any} sPath <p>the path pointing to the property that should be bound or an object which contains the following parameter properties: path, context, parameters</p>
          * @param {any} oContext <p>the context object for this databinding (optional)</p>
          * @param {any} mParameters <p>additional model specific parameters (optional)</p>
@@ -11637,7 +11810,7 @@ declare namespace sap {
          */
         bindContext(sPath: string | any, oContext?: any, mParameters?: any, oEvents?: any): sap.ui.model.ContextBinding;
         /**
-         * <p>Implement in inheriting classes</p>
+         * <p>Implement in inheriting classes.</p>
          * @param {string} sPath <p>the path pointing to the list / array that should be bound</p>
          * @param {any} oContext <p>the context object for this databinding (optional)</p>
          * @param {sap.ui.model.Sorter} aSorters <p>initial sort order (can be either a sorter or an array of sorters) (optional)</p>
@@ -11647,7 +11820,7 @@ declare namespace sap {
          */
         bindList(sPath: string, oContext?: any, aSorters?: sap.ui.model.Sorter, aFilters?: any[], mParameters?: any): sap.ui.model.ListBinding;
         /**
-         * <p>Implement in inheriting classes</p>
+         * <p>Implement in inheriting classes.</p>
          * @param {string} sPath <p>the path pointing to the property that should be bound</p>
          * @param {any} oContext <p>the context object for this databinding (optional)</p>
          * @param {any} mParameters <p>additional model specific parameters (optional)</p>
@@ -11655,7 +11828,7 @@ declare namespace sap {
          */
         bindProperty(sPath: string, oContext?: any, mParameters?: any): sap.ui.model.PropertyBinding;
         /**
-         * <p>Implement in inheriting classes</p>
+         * <p>Implement in inheriting classes.</p>
          * @param {string} sPath <p>the path pointing to the tree / array that should be bound</p>
          * @param {any} oContext <p>the context object for this databinding (optional)</p>
          * @param {any[]} aFilters <p>predefined filter/s contained in an array (optional)</p>
@@ -11665,12 +11838,7 @@ declare namespace sap {
          */
         bindTree(sPath: string, oContext?: any, aFilters?: any[], mParameters?: any, aSorters?: any[]): sap.ui.model.TreeBinding;
         /**
-         * <p>Checks whether the given filters contain an unsupported operator.</p><p>OData v1, v2 and Client Bindings cannot be filtered with <code>sap.ui.model.FilterOperator</code> <code>"Any"</code> and <code>"All"</code>. The model property <code>mUnsupportedFilterOperators</code> can be configured in each model subclass to describe the unsupported operators.</p><p>If any of the given filters contains nested filters, those are checked recursively.</p>
-         * @param {sap.ui.model.Filter | sap.ui.model.Filter[]} vFilters <p>Single filter or an array of filter instances</p>
-         */
-        protected checkFilterOperation(vFilters: sap.ui.model.Filter | sap.ui.model.Filter[]): void;
-        /**
-         * <p>Implement in inheriting classes</p>
+         * <p>Implement in inheriting classes.</p>
          * @param {string} sPath <p>the path to create the new context from</p>
          * @param {any} oContext <p>the context which should be used to create the new binding context</p>
          * @param {any} mParameters <p>the parameters used to create the new binding context</p>
@@ -11692,120 +11860,128 @@ declare namespace sap {
          */
         destroy(): void;
         /**
-         * <p>Destroys the model and clears the model data. A model implementation may override this function and perform model specific cleanup tasks e.g. abort requests, prevent new requests, etc.<br><br>References: <ul><li>sap.ui.base.Object.prototype.destroy</li></ul></p>
+         * <p>Destroys the model and clears the model data.</p><p>A model implementation may override this function and perform model specific cleanup tasks e.g. abort requests, prevent new requests, etc.<br><br>References: <ul><li>sap.ui.base.Object.prototype.destroy</li></ul></p>
          */
         destroy(): void;
         /**
-         * <p>Implement in inheriting classes</p>
+         * <p>Implement in inheriting classes.</p>
          * @param {any} oContext <p>to destroy</p>
          */
         destroyBindingContext(oContext: any): void;
         /**
-         * <p>Detach event-handler <code>fnFunction</code> from the 'parseError' event of this <code>sap.ui.model.Model</code>.<br/></p><p>The passed function and listener object must match the ones previously used for event registration.</p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-         * @param {any} oListener <p>Object on which the given function had to be called.</p>
-         * @returns sap.ui.model.Model <p><code>this</code> to allow method chaining</p>
+         * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="parseError" href="#/api/sap.ui.model.Model/events/parseError">parseError</a> event of this <code>sap.ui.model.Model</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+         * @param {any} oListener <p>Context object on which the given function had to be called</p>
+         * @returns sap.ui.model.Model <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        detachParseError(fnFunction: Function, oListener: any): sap.ui.model.Model;
+        detachParseError(fnFunction: Function, oListener?: any): sap.ui.model.Model;
         /**
-         * <p>Detach event-handler <code>fnFunction</code> from the 'propertyChange' event of this <code>sap.ui.model.Model</code>.</p><p>The passed function and listener object must match the ones previously used for event registration.</p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-         * @param {any} oListener <p>Object on which the given function had to be called.</p>
-         * @returns sap.ui.model.Model <p><code>this</code> to allow method chaining</p>
+         * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="propertyChange" href="#/api/sap.ui.model.Model/events/propertyChange">propertyChange</a> event of this <code>sap.ui.model.Model</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+         * @param {any} oListener <p>Context object on which the given function had to be called</p>
+         * @returns sap.ui.model.Model <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        detachPropertyChange(fnFunction: Function, oListener: any): sap.ui.model.Model;
+        detachPropertyChange(fnFunction: Function, oListener?: any): sap.ui.model.Model;
         /**
-         * <p>Detach event-handler <code>fnFunction</code> from the 'requestCompleted' event of this <code>sap.ui.model.Model</code>.</p><p>The passed function and listener object must match the ones previously used for event registration.</p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-         * @param {any} oListener <p>Object on which the given function had to be called.</p>
-         * @returns sap.ui.model.Model <p><code>this</code> to allow method chaining</p>
+         * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="requestCompleted" href="#/api/sap.ui.model.Model/events/requestCompleted">requestCompleted</a> event of this <code>sap.ui.model.Model</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+         * @param {any} oListener <p>Context object on which the given function had to be called</p>
+         * @returns sap.ui.model.Model <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        detachRequestCompleted(fnFunction: Function, oListener: any): sap.ui.model.Model;
+        detachRequestCompleted(fnFunction: Function, oListener?: any): sap.ui.model.Model;
         /**
-         * <p>Detach event-handler <code>fnFunction</code> from the 'requestFailed' event of this <code>sap.ui.model.Model</code>.<br/></p><p>The passed function and listener object must match the ones previously used for event registration.</p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-         * @param {any} oListener <p>Object on which the given function had to be called.</p>
-         * @returns sap.ui.model.Model <p><code>this</code> to allow method chaining</p>
+         * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="requestFailed" href="#/api/sap.ui.model.Model/events/requestFailed">requestFailed</a> event of this <code>sap.ui.model.Model</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+         * @param {any} oListener <p>Context object on which the given function had to be called</p>
+         * @returns sap.ui.model.Model <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        detachRequestFailed(fnFunction: Function, oListener: any): sap.ui.model.Model;
+        detachRequestFailed(fnFunction: Function, oListener?: any): sap.ui.model.Model;
         /**
-         * <p>Detach event-handler <code>fnFunction</code> from the 'requestSent' event of this <code>sap.ui.model.Model</code>.</p><p>The passed function and listener object must match the ones previously used for event registration.</p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-         * @param {any} oListener <p>Object on which the given function had to be called.</p>
-         * @returns sap.ui.model.Model <p><code>this</code> to allow method chaining</p>
+         * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="requestSent" href="#/api/sap.ui.model.Model/events/requestSent">requestSent</a> event of this <code>sap.ui.model.Model</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+         * @param {any} oListener <p>Context object on which the given function had to be called</p>
+         * @returns sap.ui.model.Model <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        detachRequestSent(fnFunction: Function, oListener: any): sap.ui.model.Model;
+        detachRequestSent(fnFunction: Function, oListener?: any): sap.ui.model.Model;
         /**
-         * <p>Fire event parseError to attached listeners.</p>
-         * @param {any} mArguments <p>the arguments to pass along with the event.</p>
-         * @returns sap.ui.model.Model <p><code>this</code> to allow method chaining</p>
+         * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="parseError" href="#/api/sap.ui.model.Model/events/parseError">parseError</a> to attached listeners.</p>
+         * @param {any} oParameters <p>Parameters to pass along with the event</p>
+         * @returns sap.ui.model.Model <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        protected fireParseError(mArguments?: any): sap.ui.model.Model;
+        protected fireParseError(oParameters?: any): sap.ui.model.Model;
         /**
-         * <p>Fire event propertyChange to attached listeners.</p>
-         * @param {any} mArguments <p>the arguments to pass along with the event.</p>
-         * @returns sap.ui.model.Model <p><code>this</code> to allow method chaining</p>
+         * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="propertyChange" href="#/api/sap.ui.model.Model/events/propertyChange">propertyChange</a> to attached listeners.</p>
+         * @param {any} oParameters <p>Parameters to pass along with the event</p>
+         * @returns sap.ui.model.Model <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        protected firePropertyChange(mArguments?: any): sap.ui.model.Model;
+        protected firePropertyChange(oParameters?: any): sap.ui.model.Model;
         /**
-         * <p>Fire event requestCompleted to attached listeners.</p>
-         * @param {any} mArguments <p>the arguments to pass along with the event.</p>
-         * @returns sap.ui.model.Model <p><code>this</code> to allow method chaining</p>
+         * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="requestCompleted" href="#/api/sap.ui.model.Model/events/requestCompleted">requestCompleted</a> to attached listeners.</p>
+         * @param {any} oParameters <p>Parameters to pass along with the event</p>
+         * @returns sap.ui.model.Model <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        protected fireRequestCompleted(mArguments?: any): sap.ui.model.Model;
+        protected fireRequestCompleted(oParameters?: any): sap.ui.model.Model;
         /**
-         * <p>Fire event requestFailed to attached listeners.</p>
-         * @param {any} mArguments <p>the arguments to pass along with the event.</p>
-         * @returns sap.ui.model.Model <p><code>this</code> to allow method chaining</p>
+         * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="requestFailed" href="#/api/sap.ui.model.Model/events/requestFailed">requestFailed</a> to attached listeners.</p>
+         * @param {any} oParameters <p>Parameters to pass along with the event</p>
+         * @returns sap.ui.model.Model <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        protected fireRequestFailed(mArguments?: any): sap.ui.model.Model;
+        protected fireRequestFailed(oParameters?: any): sap.ui.model.Model;
         /**
-         * <p>Fire event requestSent to attached listeners.</p>
-         * @param {any} mArguments <p>the arguments to pass along with the event.</p>
-         * @returns sap.ui.model.Model <p><code>this</code> to allow method chaining</p>
+         * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="requestSent" href="#/api/sap.ui.model.Model/events/requestSent">requestSent</a> to attached listeners.</p>
+         * @param {any} oParameters <p>Parameters to pass along with the event</p>
+         * @returns sap.ui.model.Model <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        protected fireRequestSent(mArguments?: any): sap.ui.model.Model;
+        protected fireRequestSent(oParameters?: any): sap.ui.model.Model;
         /**
-         * <p>Get the default binding mode for the model</p>
-         * @returns sap.ui.model.BindingMode <p>default binding mode of the model</p>
+         * <p>Get the default binding mode for the model.</p>
+         * @returns sap.ui.model.BindingMode <p>Default binding mode of the model</p>
          */
         getDefaultBindingMode(): sap.ui.model.BindingMode;
         /**
          * <p>Returns the meta model associated with this model if it is available for the concrete model type.</p>
-         * @returns sap.ui.model.MetaModel <p>The meta model or undefined if no meta model exists.</p>
+         * @returns sap.ui.model.MetaModel <p>The meta model or <code>undefined</code> if no meta model exists.</p>
          */
         getMetaModel(): sap.ui.model.MetaModel;
         /**
-         * <p>Returns the original value for the property with the given path and context. The original value is the value that was last responded by a server if using a server model implementation.</p>
-         * @param {string} sPath <p>the path/name of the property</p>
-         * @param {any} oContext <p>the context if available to access the property value</p>
-         * @returns any <p>vValue the value of the property</p>
+         * <p>Implement in inheriting classes.</p>
+         * @param {string} sPath <p>Path to where to read the object</p>
+         * @param {any} oContext <p>Context with which the path should be resolved</p>
+         * @param {any} mParameters <p>Additional model specific parameters</p>
+         * @returns any <p>The value for the given path/context or <code>undefined</code> if data could not be found</p>
+         */
+        getObject(sPath: string, oContext?: any, mParameters?: any): any;
+        /**
+         * <p>Returns the original value for the property with the given path and context.</p><p>The original value is the value that was last responded by a server if using a server model implementation.</p>
+         * @param {string} sPath <p>Path/name of the property</p>
+         * @param {any} oContext <p>Context if available to access the property value</p>
+         * @returns any <p>vValue The value of the property</p>
          */
         getOriginalProperty(sPath: string, oContext?: any): any;
         /**
          * <p>Check if the specified binding mode is supported by the model.</p>
-         * @param {sap.ui.model.BindingMode} sMode <p>the binding mode to check</p>
+         * @param {sap.ui.model.BindingMode} sMode <p>The binding mode to check</p>
          */
         isBindingModeSupported(sMode: sap.ui.model.BindingMode): void;
         /**
-         * <p>Returns whether legacy path syntax is used</p>
+         * <p>Returns whether legacy path syntax is used.</p>
          * @returns boolean 
          */
         isLegacySyntax(): boolean;
         /**
-         * <p>Refresh the model. This will check all bindings for updated data and update the controls if data has been changed.</p>
+         * <p>Refresh the model.</p><p>This will check all bindings for updated data and update the controls if data has been changed.</p>
          * @param {boolean} bForceUpdate <p>Update controls even if data has not been changed</p>
          */
         refresh(bForceUpdate: boolean): void;
         /**
-         * <p>Set the default binding mode for the model. If the default binding mode should be changed, this method should be called directly after model instance creation and before any binding creation. Otherwise it is not guaranteed that the existing bindings will be updated with the new binding mode.</p>
-         * @param {sap.ui.model.BindingMode} sMode <p>the default binding mode to set for the model</p>
-         * @returns sap.ui.model.Model <p>this pointer for chaining</p>
+         * <p>Set the default binding mode for the model.</p><p>If the default binding mode should be changed, this method should be called directly after model instance creation and before any binding creation. Otherwise it is not guaranteed that the existing bindings will be updated with the new binding mode.</p>
+         * @param {sap.ui.model.BindingMode} sMode <p>The default binding mode to set for the model</p>
+         * @returns sap.ui.model.Model <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
         setDefaultBindingMode(sMode: sap.ui.model.BindingMode): sap.ui.model.Model;
         /**
-         * <p>Enables legacy path syntax handling</p><p>This defines, whether relative bindings, which do not have a defined binding context, should be compatible to earlier releases which means they are resolved relative to the root element or handled strict and stay unresolved until a binding context is set</p>
-         * @param {boolean} bLegacySyntax <p>the path syntax to use</p>
+         * <p>Enables legacy path syntax handling.</p><p>This defines, whether relative bindings, which do not have a defined binding context, should be compatible to earlier releases which means they are resolved relative to the root element or handled strict and stay unresolved until a binding context is set.</p>
+         * @param {boolean} bLegacySyntax <p>The path syntax to use</p>
          */
         setLegacySyntax(bLegacySyntax: boolean): void;
         /**
@@ -11814,7 +11990,7 @@ declare namespace sap {
          */
         setMessages(vMessages: { [key: string]: any }): void;
         /**
-         * <p>Sets messages</p>
+         * <p>Sets messages.</p>
          * @param {any} mMessages <p>Messages for this model</p>
          */
         setMessages(mMessages: any): void;
@@ -11951,10 +12127,10 @@ declare namespace sap {
          */
         addSelectionInterval(iFromIndex: number, iToIndex: number): sap.ui.model.SelectionModel;
         /**
-         * <p>Attach event-handler <code>fnFunction</code> to the 'selectionChanged' event of this <code>sap.ui.model.SelectionModel</code>.<br/></p>
-         * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-         * @param {any} oListener <p>Object on which to call the given function. If empty, this Model is used.</p>
+         * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="selectionChanged" href="#/api/sap.ui.model.SelectionModel/events/selectionChanged">selectionChanged</a> event of this <code>sap.ui.model.SelectionModel</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.model.SelectionModel</code> itself.</p>
+         * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+         * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>SelectionModel</code> itself</p>
          * @returns sap.ui.model.SelectionModel <p><code>this</code> to allow method chaining</p>
          */
         attachSelectionChanged(oData: any, fnFunction: Function, oListener?: any): sap.ui.model.SelectionModel;
@@ -11964,18 +12140,18 @@ declare namespace sap {
          */
         clearSelection(): sap.ui.model.SelectionModel;
         /**
-         * <p>Detach event-handler <code>fnFunction</code> from the 'selectionChanged' event of this <code>sap.ui.model.SelectionModel</code>.<br/></p><p>The passed function and listener object must match the ones previously used for event registration.</p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-         * @param {any} oListener <p>Object on which the given function had to be called.</p>
-         * @returns sap.ui.model.SelectionModel <p><code>this</code> to allow method chaining</p>
+         * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="selectionChanged" href="#/api/sap.ui.model.SelectionModel/events/selectionChanged">selectionChanged</a> event of this <code>sap.ui.model.SelectionModel</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+         * @param {any} oListener <p>Context object on which the given function had to be called</p>
+         * @returns sap.ui.model.SelectionModel <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        detachSelectionChanged(fnFunction: Function, oListener: any): sap.ui.model.SelectionModel;
+        detachSelectionChanged(fnFunction: Function, oListener?: any): sap.ui.model.SelectionModel;
         /**
-         * <p>Fire event 'selectionChanged' to attached listeners.</p><p>Expects following event parameters: <ul> <li>'leadIndex' of type <code>int</code> Lead selection index.</li> <li>'rowIndices' of type <code>int[]</code> Other selected indices (if available)</li> </ul></p>
-         * @param {any} mArguments <p>the arguments to pass along with the event.</p>
-         * @returns sap.ui.model.SelectionModel <p><code>this</code> to allow method chaining</p>
+         * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="selectionChanged" href="#/api/sap.ui.model.SelectionModel/events/selectionChanged">selectionChanged</a> to attached listeners.</p><p>Expects following event parameters: <ul> <li>'leadIndex' of type <code>int</code> Lead selection index.</li> <li>'rowIndices' of type <code>int[]</code> Other selected indices (if available)</li> </ul></p>
+         * @param {any} oParameters <p>Parameters to pass along with the event.</p>
+         * @returns sap.ui.model.SelectionModel <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        protected fireSelectionChanged(mArguments: any): sap.ui.model.SelectionModel;
+        protected fireSelectionChanged(oParameters: any): sap.ui.model.SelectionModel;
         /**
          * <p>Return the second index argument from the most recent call to setSelectionInterval(), addSelectionInterval() or removeSelectionInterval().</p>
          * @returns number <p>lead selected index</p>
@@ -12012,13 +12188,13 @@ declare namespace sap {
          */
         removeSelectionInterval(iFromIndex: number, iToIndex: number): sap.ui.model.SelectionModel;
         /**
-         * <p>Selects all rows up to the <code>iToIndex</iToIndex>.</p><p>If this call results in a change to the current selection, then a <code>SelectionChanged</code> event is fired.</p>
+         * <p>Selects all rows up to the <code>iToIndex</code>.</p><p>If this call results in a change to the current selection, then a <code>SelectionChanged</code> event is fired.</p>
          * @param {number} iToIndex <p>end of the interval</p>
          * @returns sap.ui.model.SelectionModel <p><code>this</code> to allow method chaining</p>
          */
         selectAll(iToIndex: number): sap.ui.model.SelectionModel;
         /**
-         * <p>Changes the selection to be equal to the range <code>iFromIndex</code> and <code>iToIndex</code> inclusive. If <code>iFromIndex</code> is smaller than <code>iToIndex</code>, both parameters are swapped.</p><p>In <code>SINGLE_SELECTION</code> selection mode, only <code>iToIndex</iToIndex> is used.</p><p>If this call results in a change to the current selection, then a <code>SelectionChanged</code> event is fired.</p>
+         * <p>Changes the selection to be equal to the range <code>iFromIndex</code> and <code>iToIndex</code> inclusive. If <code>iFromIndex</code> is smaller than <code>iToIndex</code>, both parameters are swapped.</p><p>In <code>SINGLE_SELECTION</code> selection mode, only <code>iToIndex</code> is used.</p><p>If this call results in a change to the current selection, then a <code>SelectionChanged</code> event is fired.</p>
          * @param {number} iFromIndex <p>one end of the interval.</p>
          * @param {number} iToIndex <p>other end of the interval</p>
          * @returns sap.ui.model.SelectionModel <p><code>this</code> to allow method chaining</p>
@@ -12187,26 +12363,26 @@ declare namespace sap {
          */
         constructor();
         /**
-         * <p>Attach event-handler <code>fnFunction</code> to the 'selectionChanged' event of this <code>sap.ui.model.SelectionModel</code>.<br/> Event is fired if the selection of tree nodes is changed in any way.</p>
-         * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-         * @param {any} oListener <p>Object on which to call the given function. If empty, this <code>TreeBindingAdapter</code> is used.</p>
-         * @returns sap.ui.model.SelectionModel <p><code>this</code> to allow method chaining</p>
+         * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="selectionChanged" href="#/api/sap.ui.model.TreeBindingAdapter/events/selectionChanged">selectionChanged</a> event of this <code>sap.ui.model.TreeBindingAdapter</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.model.TreeBindingAdapter</code> itself.</p><p>Event is fired if the selection of tree nodes is changed in any way.</p>
+         * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+         * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>TreeBindingAdapter</code> itself</p>
+         * @returns sap.ui.model.TreeBindingAdapter <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        attachSelectionChanged(oData: any, fnFunction: Function, oListener?: any): sap.ui.model.SelectionModel;
+        attachSelectionChanged(oData: any, fnFunction: Function, oListener?: any): sap.ui.model.TreeBindingAdapter;
         /**
-         * <p>Detach event-handler <code>fnFunction</code> from the 'selectionChanged' event of this <code>sap.ui.model.SelectionModel</code>.<br/></p><p>The passed function and listener object must match the ones previously used for event registration.</p>
-         * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-         * @param {any} oListener <p>Object on which the given function had to be called.</p>
-         * @returns sap.ui.model.SelectionModel <p><code>this</code> to allow method chaining</p>
+         * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="selectionChanged" href="#/api/sap.ui.model.TreeBindingAdapter/events/selectionChanged">selectionChanged</a> event of this <code>sap.ui.model.TreeBindingAdapter</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+         * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+         * @param {any} oListener <p>Context object on which the given function had to be called</p>
+         * @returns sap.ui.model.TreeBindingAdapter <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        detachSelectionChanged(fnFunction: Function, oListener: any): sap.ui.model.SelectionModel;
+        detachSelectionChanged(fnFunction: Function, oListener?: any): sap.ui.model.TreeBindingAdapter;
         /**
-         * <p>Fire event 'selectionChanged' to attached listeners.</p><p>Expects following event parameters: <ul> <li>'leadIndex' of type <code>int</code> Lead selection index.</li> <li>'rowIndices' of type <code>int[]</code> Other selected indices (if available)</li> </ul></p>
-         * @param {any} mArguments <p>the arguments to pass along with the event.</p>
-         * @returns sap.ui.model.SelectionModel <p><code>this</code> to allow method chaining</p>
+         * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="selectionChanged" href="#/api/sap.ui.model.TreeBindingAdapter/events/selectionChanged">selectionChanged</a> to attached listeners.</p><p>Expects following event parameters: <ul> <li>'leadIndex' of type <code>int</code> Lead selection index.</li> <li>'rowIndices' of type <code>int[]</code> Other selected indices (if available)</li> </ul></p>
+         * @param {any} oParameters <p>Parameters to pass along with the event.</p>
+         * @returns sap.ui.model.TreeBindingAdapter <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        protected fireSelectionChanged(mArguments: any): sap.ui.model.SelectionModel;
+        protected fireSelectionChanged(oParameters: any): sap.ui.model.TreeBindingAdapter;
         /**
          * <p>Retrieves the requested part from the tree and returns node objects.</p>
          * @param {number} iStartIndex 
@@ -13633,7 +13809,7 @@ declare namespace sap {
            */
           getJSON(): string;
           /**
-           * <p>Implement in inheriting classes</p>
+           * <p>Implement in inheriting classes.</p>
            * @param {string} sPath <p>the path to where to read the attribute value</p>
            * @param {any} oContext <p>the context with which the path should be resolved</p>
            */
@@ -13727,7 +13903,7 @@ declare namespace sap {
            */
           constructor(oMessageManager: sap.ui.core.message.MessageManager);
           /**
-           * <p>Implement in inheriting classes</p>
+           * <p>Implement in inheriting classes.</p>
            * @param {string} sPath <p>the path to where to read the attribute value</p>
            * @param {any} oContext <p>the context with which the path should be resolved</p>
            */
@@ -13945,7 +14121,7 @@ declare namespace sap {
          */
         export class ODataAnnotations extends sap.ui.base.EventProvider {
           /**
-           * @param {string | string[]} aAnnotationURI <p>The annotation-URL or an array of URLS that should be parsed and merged</p>
+           * @param {string | string[]} aAnnotationURI <p>The annotation-URL or an array of URLs that should be parsed and merged</p>
            * @param {sap.ui.model.odata.ODataMetadata} oMetadata undefined
            * @param {any} mParams undefined
            */
@@ -13957,47 +14133,47 @@ declare namespace sap {
            */
           addUrl(vUrl: string | string[]): Promise<any>;
           /**
-           * <p>Attach event-handler <code>fnFunction</code> to the 'failed' event of this <code>sap.ui.model.odata.ODataAnnotations</code>.</p>
-           * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-           * @param {any} oListener <p>Object on which to call the given function. If empty, the global context (window) is used.</p>
-           * @returns sap.ui.model.odata.ODataAnnotations <p><code>this</code> to allow method chaining</p>
+           * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="failed" href="#/api/sap.ui.model.odata.ODataAnnotations/events/failed">failed</a> event of this <code>sap.ui.model.odata.ODataAnnotations</code>.</p>
+           * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.model.odata.ODataAnnotations</code> itself</p>
+           * @returns sap.ui.model.odata.ODataAnnotations <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
           attachFailed(oData: any, fnFunction: Function, oListener?: any): sap.ui.model.odata.ODataAnnotations;
           /**
-           * <p>Attach event-handler <code>fnFunction</code> to the 'loaded' event of this <code>sap.ui.model.odata.ODataAnnotations</code>.</p>
-           * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-           * @param {any} oListener <p>Object on which to call the given function. If empty, the global context (window) is used.</p>
-           * @returns sap.ui.model.odata.ODataAnnotations <p><code>this</code> to allow method chaining</p>
+           * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="loaded" href="#/api/sap.ui.model.odata.ODataAnnotations/events/loaded">loaded</a> event of this <code>sap.ui.model.odata.ODataAnnotations</code>.</p>
+           * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.model.odata.ODataAnnotations</code> itself</p>
+           * @returns sap.ui.model.odata.ODataAnnotations <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
           attachLoaded(oData: any, fnFunction: Function, oListener?: any): sap.ui.model.odata.ODataAnnotations;
           /**
-           * <p>Detach event-handler <code>fnFunction</code> from the 'failed' event of this <code>sap.ui.model.odata.ODataAnnotations</code>.</p><p>The passed function and listener object must match the ones previously used for event registration.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-           * @param {any} oListener <p>Object on which the given function had to be called.</p>
-           * @returns sap.ui.model.odata.ODataAnnotations <p><code>this</code> to allow method chaining</p>
+           * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="failed" href="#/api/sap.ui.model.odata.ODataAnnotations/events/failed">failed</a> event of this <code>sap.ui.model.odata.ODataAnnotations</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object on which the given function had to be called</p>
+           * @returns sap.ui.model.odata.ODataAnnotations <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          detachFailed(fnFunction: Function, oListener: any): sap.ui.model.odata.ODataAnnotations;
+          detachFailed(fnFunction: Function, oListener?: any): sap.ui.model.odata.ODataAnnotations;
           /**
-           * <p>Detach event-handler <code>fnFunction</code> from the 'loaded' event of this <code>sap.ui.model.odata.ODataAnnotations</code>.</p><p>The passed function and listener object must match the ones previously used for event registration.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-           * @param {any} oListener <p>Object on which the given function had to be called.</p>
-           * @returns sap.ui.model.odata.ODataAnnotations <p><code>this</code> to allow method chaining</p>
+           * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="loaded" href="#/api/sap.ui.model.odata.ODataAnnotations/events/loaded">loaded</a> event of this <code>sap.ui.model.odata.ODataAnnotations</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object on which the given function had to be called</p>
+           * @returns sap.ui.model.odata.ODataAnnotations <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          detachLoaded(fnFunction: Function, oListener: any): sap.ui.model.odata.ODataAnnotations;
+          detachLoaded(fnFunction: Function, oListener?: any): sap.ui.model.odata.ODataAnnotations;
           /**
-           * <p>Fire event failed to attached listeners.</p>
-           * @param {any} mArguments <p>the arguments to pass along with the event.</p>
-           * @returns sap.ui.model.odata.ODataAnnotations <p><code>this</code> to allow method chaining</p>
+           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="failed" href="#/api/sap.ui.model.odata.ODataAnnotations/events/failed">failed</a> to attached listeners.</p>
+           * @param {any} oParameters <p>Parameters to pass along with the event</p>
+           * @returns sap.ui.model.odata.ODataAnnotations <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          protected fireFailed(mArguments?: any): sap.ui.model.odata.ODataAnnotations;
+          protected fireFailed(oParameters?: any): sap.ui.model.odata.ODataAnnotations;
           /**
-           * <p>Fire event loaded to attached listeners.</p>
-           * @param {{ [key: string]: any }} mArguments <p>Map of arguments that will be given as parameters to the event handler</p>
+           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="loaded" href="#/api/sap.ui.model.odata.ODataAnnotations/events/loaded">loaded</a> to attached listeners.</p>
+           * @param {any} oParameters <p>Parameters that will be given as parameters to the event handler</p>
            * @returns sap.ui.model.odata.ODataAnnotations <p><code>this</code> to allow method chaining</p>
            */
-          protected fireLoaded(mArguments?: { [key: string]: any }): sap.ui.model.odata.ODataAnnotations;
+          protected fireLoaded(oParameters?: any): sap.ui.model.odata.ODataAnnotations;
           /**
            * <p>returns the raw annotation data</p>
            * @returns any <p>returns annotations data</p>
@@ -14154,49 +14330,50 @@ declare namespace sap {
            */
           constructor(sMetadataURI: string, mParams?: any);
           /**
-           * <p>Attach event-handler <code>fnFunction</code> to the 'failed' event of this <code>sap.ui.model.odata.ODataMetadata</code>.</p>
-           * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-           * @param {any} oListener <p>Object on which to call the given function. If empty, the global context (window) is used.</p>
-           * @returns sap.ui.model.odata.ODataMetadata <p><code>this</code> to allow method chaining</p>
+           * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="failed" href="#/api/sap.ui.model.odata.ODataMetadata/events/failed">failed</a> event of this <code>sap.ui.model.odata.ODataMetadata</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.model.odata.ODataMetadata</code> itself.</p>
+           * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.model.odata.ODataMetadata</code> itself</p>
+           * @returns sap.ui.model.odata.ODataMetadata <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
           attachFailed(oData: any, fnFunction: Function, oListener?: any): sap.ui.model.odata.ODataMetadata;
           /**
-           * <p>Attach event-handler <code>fnFunction</code> to the 'loaded' event of this <code>sap.ui.model.odata.ODataMetadata</code>.</p>
-           * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-           * @param {any} oListener <p>Object on which to call the given function. If empty, the global context (window) is used.</p>
-           * @returns sap.ui.model.odata.ODataMetadata <p><code>this</code> to allow method chaining</p>
+           * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="loaded" href="#/api/sap.ui.model.odata.ODataMetadata/events/loaded">loaded</a> event of this <code>sap.ui.model.odata.ODataMetadata</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.model.odata.ODataMetadata</code> itself.</p>
+           * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.model.odata.ODataMetadata</code> itself</p>
+           * @returns sap.ui.model.odata.ODataMetadata <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
           attachLoaded(oData: any, fnFunction: Function, oListener?: any): sap.ui.model.odata.ODataMetadata;
           /**
-           * <p>Detach event-handler <code>fnFunction</code> from the 'failed' event of this <code>sap.ui.model.odata.ODataMetadata</code>.</p><p>The passed function and listener object must match the ones previously used for event registration.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-           * @param {any} oListener <p>Object on which the given function had to be called.</p>
-           * @returns sap.ui.model.odata.ODataMetadata <p><code>this</code> to allow method chaining</p>
+           * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="failed" href="#/api/sap.ui.model.odata.ODataMetadata/events/failed">failed</a> event of this <code>sap.ui.model.odata.ODataMetadata</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object on which the given function had to be called</p>
+           * @returns sap.ui.model.odata.ODataMetadata <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          detachFailed(fnFunction: Function, oListener: any): sap.ui.model.odata.ODataMetadata;
+          detachFailed(fnFunction: Function, oListener?: any): sap.ui.model.odata.ODataMetadata;
           /**
-           * <p>Detach event-handler <code>fnFunction</code> from the 'loaded' event of this <code>sap.ui.model.odata.ODataMetadata</code>.</p><p>The passed function and listener object must match the ones previously used for event registration.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-           * @param {any} oListener <p>Object on which the given function had to be called.</p>
-           * @returns sap.ui.model.odata.ODataMetadata <p><code>this</code> to allow method chaining</p>
+           * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="loaded" href="#/api/sap.ui.model.odata.ODataMetadata/events/loaded">loaded</a> event of this <code>sap.ui.model.odata.ODataMetadata</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object on which the given function had to be called</p>
+           * @returns sap.ui.model.odata.ODataMetadata <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          detachLoaded(fnFunction: Function, oListener: any): sap.ui.model.odata.ODataMetadata;
+          detachLoaded(fnFunction: Function, oListener?: any): sap.ui.model.odata.ODataMetadata;
           /**
-           * <p>Fire event failed to attached listeners.</p>
-           * @param {any} mArguments <p>the arguments to pass along with the event.</p>
-           * @returns sap.ui.model.odata.ODataMetadata <p><code>this</code> to allow method chaining</p>
+           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="failed" href="#/api/sap.ui.model.odata.ODataMetadata/events/failed">failed</a> to attached listeners.</p>
+           * @param {any} oParameters <p>Parameters to pass along with the event</p>
+           * @returns sap.ui.model.odata.ODataMetadata <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          protected fireFailed(mArguments?: any): sap.ui.model.odata.ODataMetadata;
+          protected fireFailed(oParameters?: any): sap.ui.model.odata.ODataMetadata;
           /**
-           * <p>Fire event loaded to attached listeners.</p>
-           * @returns sap.ui.model.odata.ODataMetadata <p><code>this</code> to allow method chaining</p>
+           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="loaded" href="#/api/sap.ui.model.odata.ODataMetadata/events/loaded">loaded</a> to attached listeners.</p>
+           * @param {any} oParameters <p>Parameters to pass along with the event</p>
+           * @returns sap.ui.model.odata.ODataMetadata <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          protected fireLoaded(): sap.ui.model.odata.ODataMetadata;
+          protected fireLoaded(oParameters?: any): sap.ui.model.odata.ODataMetadata;
           /**
-           * <p>Return the metadata object</p>
-           * @returns any <p>metdata object</p>
+           * <p>Return the metadata object.</p>
+           * @returns any <p>Metadata object</p>
            */
           getServiceMetadata(): any;
           /**
@@ -14205,23 +14382,23 @@ declare namespace sap {
            */
           getUseBatch(): boolean;
           /**
-           * <p>Checks whether metadata loading has already failed</p>
-           * @returns boolean <p>returns whether metadata request has failed</p>
+           * <p>Checks whether metadata loading has already failed.</p>
+           * @returns boolean <p>Whether metadata request has failed</p>
            */
           isFailed(): boolean;
           /**
-           * <p>Checks whether metadata is available</p>
-           * @returns boolean <p>returns whether metadata is already loaded</p>
+           * <p>Checks whether metadata is available.</p>
+           * @returns boolean <p>Whether metadata is already loaded</p>
            */
           isLoaded(): boolean;
           /**
-           * <p>Returns a promise for the loaded state of the metadata</p>
-           * @returns Promise<any> <p>returns a promise on metadata loaded state</p>
+           * <p>Returns a promise for the loaded state of the metadata.</p>
+           * @returns Promise<any> <p>A promise on metadata loaded state</p>
            */
           loaded(): Promise<any>;
           /**
-           * <p>Refreshes the metadata creating a new request to the server. Returns a new promise which can be resolved or rejected depending on the metadata loading state.</p>
-           * @returns Promise<any> <p>returns a promise on metadata loaded state</p>
+           * <p>Refreshes the metadata creating a new request to the server.</p><p>Returns a new promise which can be resolved or rejected depending on the metadata loading state.</p>
+           * @returns Promise<any> <p>A promise on metadata loaded state</p>
            */
           refresh(): Promise<any>;
         }
@@ -14354,7 +14531,7 @@ declare namespace sap {
            */
           loaded(): Promise<any>;
           /**
-           * <p>Refresh the model. This will check all bindings for updated data and update the controls if data has been changed.</p>
+           * <p>Refresh the model.</p><p>This will check all bindings for updated data and update the controls if data has been changed.</p>
            * @param {boolean} bForceUpdate <p>Update controls even if data has not been changed</p>
            */
           refresh(bForceUpdate: boolean): void;
@@ -14363,8 +14540,8 @@ declare namespace sap {
            */
           refresh(): void;
           /**
-           * <p>Enables legacy path syntax handling</p><p>This defines, whether relative bindings, which do not have a defined binding context, should be compatible to earlier releases which means they are resolved relative to the root element or handled strict and stay unresolved until a binding context is set</p>
-           * @param {boolean} bLegacySyntax <p>the path syntax to use</p>
+           * <p>Enables legacy path syntax handling.</p><p>This defines, whether relative bindings, which do not have a defined binding context, should be compatible to earlier releases which means they are resolved relative to the root element or handled strict and stay unresolved until a binding context is set.</p>
+           * @param {boolean} bLegacySyntax <p>The path syntax to use</p>
            */
           setLegacySyntax(bLegacySyntax: boolean): void;
           /**
@@ -14407,39 +14584,39 @@ declare namespace sap {
            */
           addBatchReadOperations(aReadOperations: any[]): void;
           /**
-           * <p>Attach event-handler <code>fnFunction</code> to the 'annotationsFailed' event of this <code>sap.ui.model.odata.ODataModel</code>.</p>
-           * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-           * @param {any} oListener <p>Object on which to call the given function. If empty, the global context (window) is used.</p>
-           * @returns sap.ui.model.odata.ODataModel <p><code>this</code> to allow method chaining</p>
+           * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="annotationsFailed" href="#/api/sap.ui.model.odata.ODataModel/events/annotationsFailed">annotationsFailed</a> event of this <code>sap.ui.model.odata.ODataModel</code>.</p>
+           * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.model.odata.ODataModel</code> itself</p>
+           * @returns sap.ui.model.odata.ODataModel <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
           attachAnnotationsFailed(oData: any, fnFunction: Function, oListener?: any): sap.ui.model.odata.ODataModel;
           /**
-           * <p>Attach event-handler <code>fnFunction</code> to the 'annotationsLoaded' event of this <code>sap.ui.model.odata.ODataModel</code>.</p>
-           * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-           * @param {any} oListener <p>Object on which to call the given function. If empty, the global context (window) is used.</p>
-           * @returns sap.ui.model.odata.ODataModel <p><code>this</code> to allow method chaining</p>
+           * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="annotationsLoaded" href="#/api/sap.ui.model.odata.ODataModel/events/annotationsLoaded">annotationsLoaded</a> event of this <code>sap.ui.model.odata.ODataModel</code>.</p>
+           * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.model.odata.ODataModel</code> itself</p>
+           * @returns sap.ui.model.odata.ODataModel <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
           attachAnnotationsLoaded(oData: any, fnFunction: Function, oListener?: any): sap.ui.model.odata.ODataModel;
           /**
-           * <p>Attach event-handler <code>fnFunction</code> to the 'metadataFailed' event of this <code>sap.ui.model.odata.ODataModel</code>.</p>
-           * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-           * @param {any} oListener <p>Object on which to call the given function. If empty, the global context (window) is used.</p>
-           * @returns sap.ui.model.odata.ODataModel <p><code>this</code> to allow method chaining</p>
+           * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="metadataFailed" href="#/api/sap.ui.model.odata.ODataModel/events/metadataFailed">metadataFailed</a> event of this <code>sap.ui.model.odata.ODataModel</code>.</p>
+           * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.model.odata.ODataModel</code> itself</p>
+           * @returns sap.ui.model.odata.ODataModel <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
           attachMetadataFailed(oData: any, fnFunction: Function, oListener?: any): sap.ui.model.odata.ODataModel;
           /**
-           * <p>Attach event-handler <code>fnFunction</code> to the 'metadataLoaded' event of this <code>sap.ui.model.odata.ODataModel</code>.</p>
-           * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-           * @param {any} oListener <p>Object on which to call the given function. If empty, the global context (window) is used.</p>
-           * @returns sap.ui.model.odata.ODataModel <p><code>this</code> to allow method chaining</p>
+           * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="metadataLoaded" href="#/api/sap.ui.model.odata.ODataModel/events/metadataLoaded">metadataLoaded</a> event of this <code>sap.ui.model.odata.ODataModel</code>.</p>
+           * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.model.odata.ODataModel</code> itself</p>
+           * @returns sap.ui.model.odata.ODataModel <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
           attachMetadataLoaded(oData: any, fnFunction: Function, oListener?: any): sap.ui.model.odata.ODataModel;
           /**
-           * <p>Implement in inheriting classes</p>
+           * <p>Implement in inheriting classes.</p>
            * @param {string} sPath <p>the path pointing to the list / array that should be bound</p>
            * @param {any} oContext <p>the context object for this databinding (optional)</p>
            * @param {sap.ui.model.Sorter} aSorters <p>initial sort order (can be either a sorter or an array of sorters) (optional)</p>
@@ -14517,7 +14694,7 @@ declare namespace sap {
            */
           destroy(): void;
           /**
-           * <p>Destroys the model and clears the model data. A model implementation may override this function and perform model specific cleanup tasks e.g. abort requests, prevent new requests, etc.<br><br>References: <ul><li>sap.ui.base.Object.prototype.destroy</li></ul></p>
+           * <p>Destroys the model and clears the model data.</p><p>A model implementation may override this function and perform model specific cleanup tasks e.g. abort requests, prevent new requests, etc.<br><br>References: <ul><li>sap.ui.base.Object.prototype.destroy</li></ul></p>
            */
           destroy(): void;
           /**
@@ -14525,57 +14702,57 @@ declare namespace sap {
            */
           destroy(): void;
           /**
-           * <p>Detach event-handler <code>fnFunction</code> from the 'annotationsFailed' event of this <code>sap.ui.model.odata.ODataModel</code>.</p><p>The passed function and listener object must match the ones previously used for event registration.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-           * @param {any} oListener <p>Object on which the given function had to be called.</p>
-           * @returns sap.ui.model.odata.ODataModel <p><code>this</code> to allow method chaining</p>
+           * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="annotationsFailed" href="#/api/sap.ui.model.odata.ODataModel/events/annotationsFailed">annotationsFailed</a> event of this <code>sap.ui.model.odata.ODataModel</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object on which the given function had to be called</p>
+           * @returns sap.ui.model.odata.ODataModel <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          detachAnnotationsFailed(fnFunction: Function, oListener: any): sap.ui.model.odata.ODataModel;
+          detachAnnotationsFailed(fnFunction: Function, oListener?: any): sap.ui.model.odata.ODataModel;
           /**
-           * <p>Detach event-handler <code>fnFunction</code> from the 'annotationsLoaded' event of this <code>sap.ui.model.odata.ODataModel</code>.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-           * @param {any} oListener <p>Object on which the given function had to be called.</p>
-           * @returns sap.ui.model.odata.ODataModel <p><code>this</code> to allow method chaining</p>
+           * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="annotationsLoaded" href="#/api/sap.ui.model.odata.ODataModel/events/annotationsLoaded">annotationsLoaded</a> event of this <code>sap.ui.model.odata.ODataModel</code>.</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object on which the given function had to be called</p>
+           * @returns sap.ui.model.odata.ODataModel <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          detachAnnotationsLoaded(fnFunction: Function, oListener: any): sap.ui.model.odata.ODataModel;
+          detachAnnotationsLoaded(fnFunction: Function, oListener?: any): sap.ui.model.odata.ODataModel;
           /**
-           * <p>Detach event-handler <code>fnFunction</code> from the 'metadataFailed' event of this <code>sap.ui.model.odata.ODataModel</code>.</p><p>The passed function and listener object must match the ones previously used for event registration.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-           * @param {any} oListener <p>Object on which the given function had to be called.</p>
-           * @returns sap.ui.model.odata.ODataModel <p><code>this</code> to allow method chaining</p>
+           * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="metadataFailed" href="#/api/sap.ui.model.odata.ODataModel/events/metadataFailed">metadataFailed</a> event of this <code>sap.ui.model.odata.ODataModel</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object on which the given function had to be called</p>
+           * @returns sap.ui.model.odata.ODataModel <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          detachMetadataFailed(fnFunction: Function, oListener: any): sap.ui.model.odata.ODataModel;
+          detachMetadataFailed(fnFunction: Function, oListener?: any): sap.ui.model.odata.ODataModel;
           /**
-           * <p>Detach event-handler <code>fnFunction</code> from the 'metadataLoaded' event of this <code>sap.ui.model.odata.ODataModel</code>.</p><p>The passed function and listener object must match the ones previously used for event registration.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-           * @param {any} oListener <p>Object on which the given function had to be called.</p>
-           * @returns sap.ui.model.odata.ODataModel <p><code>this</code> to allow method chaining</p>
+           * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="metadataLoaded" href="#/api/sap.ui.model.odata.ODataModel/events/metadataLoaded">metadataLoaded</a> event of this <code>sap.ui.model.odata.ODataModel</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object on which the given function had to be called</p>
+           * @returns sap.ui.model.odata.ODataModel <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          detachMetadataLoaded(fnFunction: Function, oListener: any): sap.ui.model.odata.ODataModel;
+          detachMetadataLoaded(fnFunction: Function, oListener?: any): sap.ui.model.odata.ODataModel;
           /**
-           * <p>Fire event annotationsFailed to attached listeners.</p>
-           * @param {any} mArguments <p>the arguments to pass along with the event.</p>
+           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="annotationsFailed" href="#/api/sap.ui.model.odata.ODataModel/events/annotationsFailed">annotationsFailed</a> to attached listeners.</p>
+           * @param {any} oParameters <p>Parameters to pass along with the event</p>
            * @returns sap.ui.model.odata.ODataModel <p><code>this</code> to allow method chaining</p>
            */
-          protected fireAnnotationsFailed(mArguments?: any): sap.ui.model.odata.ODataModel;
+          protected fireAnnotationsFailed(oParameters?: any): sap.ui.model.odata.ODataModel;
           /**
-           * <p>Fire event annotationsLoaded to attached listeners.</p>
-           * @param {any} mArguments <p>the arguments to pass along with the event.</p>
+           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="annotationsLoaded" href="#/api/sap.ui.model.odata.ODataModel/events/annotationsLoaded">annotationsLoaded</a> to attached listeners.</p>
+           * @param {any} oParameters <p>Parameters to pass along with the event</p>
            * @returns sap.ui.model.odata.ODataModel <p><code>this</code> to allow method chaining</p>
            */
-          protected fireAnnotationsLoaded(mArguments?: any): sap.ui.model.odata.ODataModel;
+          protected fireAnnotationsLoaded(oParameters?: any): sap.ui.model.odata.ODataModel;
           /**
-           * <p>Fire event metadataFailed to attached listeners.</p>
-           * @param {any} mArguments <p>the arguments to pass along with the event.</p>
-           * @returns sap.ui.model.odata.ODataModel <p><code>this</code> to allow method chaining</p>
+           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="metadataFailed" href="#/api/sap.ui.model.odata.ODataModel/events/metadataFailed">metadataFailed</a> to attached listeners.</p>
+           * @param {any} oParameters <p>Parameters to pass along with the event</p>
+           * @returns sap.ui.model.odata.ODataModel <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          protected fireMetadataFailed(mArguments?: any): sap.ui.model.odata.ODataModel;
+          protected fireMetadataFailed(oParameters?: any): sap.ui.model.odata.ODataModel;
           /**
-           * <p>Fire event metadataLoaded to attached listeners.</p>
-           * @param {any} mArguments <p>the arguments to pass along with the event.</p>
-           * @returns sap.ui.model.odata.ODataModel <p><code>this</code> to allow method chaining</p>
+           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="metadataLoaded" href="#/api/sap.ui.model.odata.ODataModel/events/metadataLoaded">metadataLoaded</a> to attached listeners.</p>
+           * @param {any} oParameters <p>Parameters to pass along with the event</p>
+           * @returns sap.ui.model.odata.ODataModel <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          protected fireMetadataLoaded(mArguments?: any): sap.ui.model.odata.ODataModel;
+          protected fireMetadataLoaded(oParameters?: any): sap.ui.model.odata.ODataModel;
           /**
            * <p>Returns the default count mode for retrieving the count of collections</p>
            * @returns sap.ui.model.odata.CountMode 
@@ -14588,7 +14765,7 @@ declare namespace sap {
           getHeaders(): any;
           /**
            * <p>Returns the meta model associated with this model if it is available for the concrete model type.</p>
-           * @returns sap.ui.model.MetaModel <p>The meta model or undefined if no meta model exists.</p>
+           * @returns sap.ui.model.MetaModel <p>The meta model or <code>undefined</code> if no meta model exists.</p>
            */
           getMetaModel(): sap.ui.model.MetaModel;
           /**
@@ -14597,7 +14774,7 @@ declare namespace sap {
            */
           getMetaModel(): sap.ui.model.odata.ODataMetaModel;
           /**
-           * <p>Implement in inheriting classes</p>
+           * <p>Implement in inheriting classes.</p>
            * @param {string} sPath <p>the path to where to read the attribute value</p>
            * @param {any} oContext <p>the context with which the path should be resolved</p>
            */
@@ -14638,18 +14815,18 @@ declare namespace sap {
            */
           read(sPath: string, mParameters?: { [key: string]: any }): any;
           /**
-           * <p>Refresh the model. This will check all bindings for updated data and update the controls if data has been changed.</p>
+           * <p>Refresh the model.</p><p>This will check all bindings for updated data and update the controls if data has been changed.</p>
            * @param {boolean} bForceUpdate <p>Update controls even if data has not been changed</p>
            */
           refresh(bForceUpdate: boolean): void;
           /**
-           * <p>Refresh the model. This will check all bindings for updated data and update the controls if data has been changed.</p>
+           * <p>Refresh the model.</p><p>This will check all bindings for updated data and update the controls if data has been changed.</p>
            * @param {boolean} bForceUpdate <p>Force update of controls</p>
            * @param {boolean} bRemoveData <p>If set to true then the model data will be removed/cleared. Please note that the data might not be there when calling e.g. getProperty too early before the refresh call returned.</p>
            */
           refresh(bForceUpdate?: boolean, bRemoveData?: boolean): void;
           /**
-           * <p>refreshes the metadata for model, e.g. in case the first request for metadata has failed</p>
+           * <p>Refreshes the metadata for model, e.g. in case the first request for metadata has failed.</p>
            */
           refreshMetadata(): void;
           /**
@@ -14824,7 +15001,7 @@ declare namespace sap {
           &lt;Label text="valid through"/>
           &lt;Input value="{path : 'validThrough', type : 'sap.ui.model.odata.type.DateTime',
               constraints : {displayFormat : 'Date'}}"/>
-        </pre></p><p>All types support formatting from the representation used in ODataModel ("model format") to various representations used by UI elements ("target type") and vice versa. Additionally they support validating a given value against the type's constraints.</p><p>The following target types may be supported: <table> <tr><th>Type</th><th>Description</th></tr> <tr><td><code>string</code></td><td>The value is converted to a <code>string</code>, so that it can be displayed in an input field. Supported by all types.</td></tr> <tr><td><code>boolean</code></td><td>The value is converted to a <code>Boolean</code>, so that it can be displayed in a checkbox. Only supported by <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type.Boolean">sap.ui.model.odata.type.Boolean</a>.</td></tr> <tr><td><code>int</code></td><td>The value is converted to an integer (as <code>number</code>). May cause truncation of decimals and overruns. Supported by all numeric types.</td></tr> <tr><td><code>float</code></td><td>The value is converted to a <code>number</code>. Supported by all numeric types.</td></tr> <tr><td><code>any</code></td><td>A technical format. The value is simply passed through. Only supported by <code>format</code>, not by <code>parse</code>. Supported by all types.</td></tr> </table></p><p>All constraints relevant for OData V2 may be given as strings besides their natural types (e.g. <code>nullable : "false"</code> or <code>maxLength : "10"</code>). This makes the life of template processors easier, but is not needed for OData V4.</p><p><b>Handling of <code>null</code></b>:</p><p>All types handle <code>null</code> in the same way. When formatting to <code>string</code>, it is simply passed through (and <code>undefined</code> becomes <code>null</code>, too). When parsing from <code>string</code>, it is also passed through. Additionally, <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type.String">String</a> and <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type.Guid">Guid</a> convert the empty string to <code>null</code> when parsing. <code>validate</code> decides based on the constraint <code>nullable</code>: If <code>false</code>, <code>null</code> is not accepted and leads to a (locale-dependent) <code>ParseException</code>.</p><p>This ensures that the user cannot clear an input field bound to an attribute with non-nullable type. However it does not ensure that the user really entered something if the field was empty before.</p><p><b><code>Date</code> vs. <code>DateTime</code></b>:</p><p>The type <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type.Date">sap.ui.model.odata.type.Date</a> is only valid for an OData V4 service. If you use the type for an OData V2 service, displaying is possible but you get an error message from server if you try to save changes.</p><p>For an OData V2 service use <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type.DateTime">sap.ui.model.odata.type.DateTime</a> with the constraint <code>displayFormat: "Date"</code> to display only a date.</p></p>
+        </pre></p><p>All types support formatting from the representation used in ODataModel ("model format") to various representations used by UI elements ("target type") and vice versa. Additionally they support validating a given value against the type's constraints.</p><p>The following target types may be supported: <table> <tr><th>Type</th><th>Description</th></tr> <tr><td><code>string</code></td><td>The value is converted to a <code>string</code>, so that it can be displayed in an input field. Supported by all types.</td></tr> <tr><td><code>boolean</code></td><td>The value is converted to a <code>Boolean</code>, so that it can be displayed in a checkbox. Only supported by <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type.Boolean">sap.ui.model.odata.type.Boolean</a>.</td></tr> <tr><td><code>int</code></td><td>The value is converted to an integer (as <code>number</code>). May cause truncation of decimals and overruns. Supported by all numeric types.</td></tr> <tr><td><code>float</code></td><td>The value is converted to a <code>number</code>. Supported by all numeric types.</td></tr> <tr><td><code>object</code></td><td>The value is converted to a <code>Date</code> so that it can be displayed in a date or time picker. Supported by <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type.Date">sap.ui.model.odata.type.Date</a> and <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type.DateTimeOffset">sap.ui.model.odata.type.DateTimeOffset</a> since 1.69.0. </td></tr> <tr><td><code>any</code></td><td>A technical format. The value is simply passed through. Only supported by <code>format</code>, not by <code>parse</code>. Supported by all types.</td></tr> </table></p><p>All constraints relevant for OData V2 may be given as strings besides their natural types (e.g. <code>nullable : "false"</code> or <code>maxLength : "10"</code>). This makes the life of template processors easier, but is not needed for OData V4.</p><p><b>Handling of <code>null</code></b>:</p><p>All types handle <code>null</code> in the same way. When formatting to <code>string</code>, it is simply passed through (and <code>undefined</code> becomes <code>null</code>, too). When parsing from <code>string</code>, it is also passed through. Additionally, <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type.String">String</a> and <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type.Guid">Guid</a> convert the empty string to <code>null</code> when parsing. <code>validate</code> decides based on the constraint <code>nullable</code>: If <code>false</code>, <code>null</code> is not accepted and leads to a (locale-dependent) <code>ParseException</code>.</p><p>This ensures that the user cannot clear an input field bound to an attribute with non-nullable type. However it does not ensure that the user really entered something if the field was empty before.</p><p><b><code>Date</code> vs. <code>DateTime</code></b>:</p><p>The type <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type.Date">sap.ui.model.odata.type.Date</a> is only valid for an OData V4 service. If you use the type for an OData V2 service, displaying is possible but you get an error message from server if you try to save changes.</p><p>For an OData V2 service use <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type.DateTime">sap.ui.model.odata.type.DateTime</a> with the constraint <code>displayFormat: "Date"</code> to display only a date.</p></p>
          */
         namespace type {
           /**
@@ -15019,7 +15196,7 @@ declare namespace sap {
             validateValue(vValue: string): void;
           }
           /**
-           * <p>This class represents the OData V4 primitive type <code>Edm.Date</code>.</p><p>In <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataModel">sap.ui.model.odata.v4.ODataModel</a> this type is represented as a <code>string</code> in the format "yyyy-mm-dd".</p><p><b>Note: For an OData V2 service use <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type.DateTime">sap.ui.model.odata.type.DateTime</a> with the constraint <code>displayFormat: "Date"</code> to display only a date.</b><br><br><span>Documentation links:</span><ul><li><a target="_blank" href="http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part3-csdl.html">http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part3-csdl.html</a>
+           * <p>This class represents the OData V4 primitive type <code>Edm.Date</code>.</p><p>In <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataModel">sap.ui.model.odata.v4.ODataModel</a> this type is represented as a <code>string</code> in the format "yyyy-MM-dd".</p><p><b>Note: For an OData V2 service use <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type.DateTime">sap.ui.model.odata.type.DateTime</a> with the constraint <code>displayFormat: "Date"</code> to display only a date.</b><br><br><span>Documentation links:</span><ul><li><a target="_blank" href="http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part3-csdl.html">http://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part3-csdl.html</a>
           <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
           title="Information published on non SAP site" class="sapUISDKExternalLink"/></li></ul></p>
            */
@@ -15039,11 +15216,11 @@ declare namespace sap {
             formatValue(oValue: any, sInternalType: string): any | Promise<any>;
             /**
              * <p>Formats the given value to the given target type.</p>
-             * @param {string | Date} vValue <p>the value to be formatted</p>
-             * @param {string} sTargetType <p>the target type; may be "any", "string", or a type with one of these types as its <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.DataType/methods/getPrimitiveType">primitive type</a>. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type">sap.ui.model.odata.type</a> for more information.</p>
-             * @returns string <p>the formatted output value in the target type; <code>undefined</code> or <code>null</code> are formatted to <code>null</code></p>
+             * @param {string | Date} vValue <p>the value to be formatted; <code>string</code> values are expected in the format "yyyy-MM-dd" used by OData V4; <code>Date</code> objects are expected to represent UTC as used by OData V2</p>
+             * @param {string} sTargetType <p>the target type; may be "any", "object" (since 1.69.0), "string", or a type with one of these types as its <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.DataType/methods/getPrimitiveType">primitive type</a>; see <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type">sap.ui.model.odata.type</a> for more information.</p>
+             * @returns string|Date <p>the formatted output value in the target type; <code>undefined</code> or <code>null</code> are formatted to <code>null</code>; <code>Date</code> objects are returned for target type "object" and represent the given date with time "00:00:00" in local time</p>
              */
-            formatValue(vValue: string | Date, sTargetType: string): string;
+            formatValue(vValue: string | Date, sTargetType: string): string | Date;
             /**
              * <p>Returns the name of this type.</p>
              * @returns string <p>the name of this type</p>
@@ -15063,11 +15240,11 @@ declare namespace sap {
             parseValue(oValue: any, sInternalType: string): any | Promise<any>;
             /**
              * <p>Parses the given value to a date.</p>
-             * @param {string} sValue <p>the value to be parsed, maps <code>""</code> to <code>null</code></p>
-             * @param {string} sSourceType <p>the source type (the expected type of <code>sValue</code>); must be "string", or a type with "string" as its <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.DataType/methods/getPrimitiveType">primitive type</a>. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type">sap.ui.model.odata.type</a> for more information.</p>
-             * @returns string <p>the parsed value</p>
+             * @param {string | Date} vValue <p>the value to be parsed, maps <code>""</code> to <code>null</code>; <code>Date</code> objects are expected to represent local time and are supported if and only if source type is "object"</p>
+             * @param {string} sSourceType <p>the source type (the expected type of <code>vValue</code>); must be "object" (since 1.69.0), "string", or a type with one of these types as its <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.DataType/methods/getPrimitiveType">primitive type</a>; see <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type">sap.ui.model.odata.type</a> for more information.</p>
+             * @returns string <p>the parsed value in the format "yyyy-MM-dd" used by OData V4</p>
              */
-            parseValue(sValue: string, sSourceType: string): string;
+            parseValue(vValue: string | Date, sSourceType: string): string;
             /**
              * <p>Validate whether a given value in model representation is valid and meets the defined constraints (if any).</p>
              * @param {any} oValue <p>the value to be validated</p>
@@ -15121,7 +15298,7 @@ declare namespace sap {
             /**
              * <p>Formats the given value to the given target type.</p>
              * @param {Date} oValue <p>The value to be formatted, which is represented in the model as a <code>Date</code> instance (OData V2)</p>
-             * @param {string} sTargetType <p>The target type, may be "any", "string", or a type with one of these types as its <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.DataType/methods/getPrimitiveType">primitive type</a>. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type">sap.ui.model.odata.type</a> for more information.</p>
+             * @param {string} sTargetType <p>The target type, may be "any", "object" (since 1.69.0), "string", or a type with one of these types as its <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.DataType/methods/getPrimitiveType">primitive type</a>. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type">sap.ui.model.odata.type</a> for more information.</p>
              * @returns Date|string <p>The formatted output value in the target type; <code>undefined</code> or <code>null</code> are formatted to <code>null</code></p>
              */
             formatValue(oValue: Date, sTargetType: string): Date | string;
@@ -15134,11 +15311,11 @@ declare namespace sap {
             parseValue(oValue: any, sInternalType: string): any | Promise<any>;
             /**
              * <p>Parses the given value to a <code>Date</code> instance (OData V2).</p>
-             * @param {string} sValue <p>The value to be parsed; the empty string and <code>null</code> are parsed to <code>null</code></p>
-             * @param {string} sSourceType <p>The source type (the expected type of <code>sValue</code>), must be "string", or a type with "string" as its <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.DataType/methods/getPrimitiveType">primitive type</a>. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type">sap.ui.model.odata.type</a> for more information.</p>
+             * @param {string | Date} vValue <p>The value to be parsed; the empty string and <code>null</code> are parsed to <code>null</code></p>
+             * @param {string} sSourceType <p>The source type (the expected type of <code>vValue</code>), must be "object" (since 1.69.0), "string", or a type with one of these types as its <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.DataType/methods/getPrimitiveType">primitive type</a>. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type">sap.ui.model.odata.type</a> for more information.</p>
              * @returns Date <p>The parsed value</p>
              */
-            parseValue(sValue: string, sSourceType: string): Date;
+            parseValue(vValue: string | Date, sSourceType: string): Date;
             /**
              * <p>Validate whether a given value in model representation is valid and meets the defined constraints (if any).</p>
              * @param {any} oValue <p>the value to be validated</p>
@@ -15171,14 +15348,14 @@ declare namespace sap {
             /**
              * <p>Formats the given value to the given target type.</p>
              * @param {Date} oValue <p>The value to be formatted, which is represented in the model as a <code>Date</code> instance (OData V2)</p>
-             * @param {string} sTargetType <p>The target type, may be "any", "string", or a type with one of these types as its <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.DataType/methods/getPrimitiveType">primitive type</a>. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type">sap.ui.model.odata.type</a> for more information.</p>
+             * @param {string} sTargetType <p>The target type, may be "any", "object" (since 1.69.0), "string", or a type with one of these types as its <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.DataType/methods/getPrimitiveType">primitive type</a>. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type">sap.ui.model.odata.type</a> for more information.</p>
              * @returns Date|string <p>The formatted output value in the target type; <code>undefined</code> or <code>null</code> are formatted to <code>null</code></p>
              */
             formatValue(oValue: Date, sTargetType: string): Date | string;
             /**
              * <p>Formats the given value to the given target type.</p>
              * @param {Date | string} vValue <p>The value to be formatted, which is represented in the model as a <code>Date</code> instance (OData V2) or as a string like "1970-12-31T23:59:58Z" (OData V4); both representations are accepted independent of the model's OData version</p>
-             * @param {string} sTargetType <p>The target type, may be "any", "string", or a type with one of these types as its <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.DataType/methods/getPrimitiveType">primitive type</a>. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type">sap.ui.model.odata.type</a> for more information.</p>
+             * @param {string} sTargetType <p>The target type, may be "any", "object" (since 1.69.0), "string", or a type with one of these types as its <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.DataType/methods/getPrimitiveType">primitive type</a>. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type">sap.ui.model.odata.type</a> for more information.</p>
              * @returns Date|string <p>The formatted output value in the target type; <code>undefined</code> or <code>null</code> are formatted to <code>null</code></p>
              */
             formatValue(vValue: Date | string, sTargetType: string): Date | string;
@@ -15201,18 +15378,18 @@ declare namespace sap {
             parseValue(oValue: any, sInternalType: string): any | Promise<any>;
             /**
              * <p>Parses the given value to a <code>Date</code> instance (OData V2).</p>
-             * @param {string} sValue <p>The value to be parsed; the empty string and <code>null</code> are parsed to <code>null</code></p>
-             * @param {string} sSourceType <p>The source type (the expected type of <code>sValue</code>), must be "string", or a type with "string" as its <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.DataType/methods/getPrimitiveType">primitive type</a>. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type">sap.ui.model.odata.type</a> for more information.</p>
+             * @param {string | Date} vValue <p>The value to be parsed; the empty string and <code>null</code> are parsed to <code>null</code></p>
+             * @param {string} sSourceType <p>The source type (the expected type of <code>vValue</code>), must be "object" (since 1.69.0), "string", or a type with one of these types as its <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.DataType/methods/getPrimitiveType">primitive type</a>. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type">sap.ui.model.odata.type</a> for more information.</p>
              * @returns Date <p>The parsed value</p>
              */
-            parseValue(sValue: string, sSourceType: string): Date;
+            parseValue(vValue: string | Date, sSourceType: string): Date;
             /**
              * <p>Parses the given value to a <code>Date</code> instance (OData V2) or a string like "1970-12-31T23:59:58Z" (OData V4), depending on the model's OData version.</p>
-             * @param {string} sValue <p>The value to be parsed; the empty string and <code>null</code> are parsed to <code>null</code></p>
-             * @param {string} sSourceType <p>The source type (the expected type of <code>sValue</code>), must be "string", or a type with "string" as its <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.DataType/methods/getPrimitiveType">primitive type</a>. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type">sap.ui.model.odata.type</a> for more information.</p>
+             * @param {Date | string} vValue <p>The value to be parsed; the empty string and <code>null</code> are parsed to <code>null</code>; <code>Date</code> objects are expected to represent local time and are supported if and only if source type is "object".</p>
+             * @param {string} sSourceType <p>The source type (the expected type of <code>vValue</code>), must be "string", "object" (since 1.69.0), or a type with one of these types as its <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.DataType/methods/getPrimitiveType">primitive type</a>. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type">sap.ui.model.odata.type</a> for more information.</p>
              * @returns Date|string <p>The parsed value</p>
              */
-            parseValue(sValue: string, sSourceType: string): Date | string;
+            parseValue(vValue: Date | string, sSourceType: string): Date | string;
             /**
              * <p>Validate whether a given value in model representation is valid and meets the defined constraints (if any).</p>
              * @param {any} oValue <p>the value to be validated</p>
@@ -15938,10 +16115,10 @@ declare namespace sap {
             /**
              * <p>Formats the given value to the given target type.</p>
              * @param {string} sValue <p>The value to be formatted, which is represented as a string in the model</p>
-             * @param {string} sTargetType <p>The target type, may be "any", "string", or a type with one of these types as its <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.DataType/methods/getPrimitiveType">primitive type</a>. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type">sap.ui.model.odata.type</a> for more information</p>
-             * @returns string <p>The formatted output value in the target type; <code>undefined</code> or <code>null</code> are formatted to <code>null</code></p>
+             * @param {string} sTargetType <p>The target type, may be "any", "object" (since 1.69.0), "string", or a type with one of these types as its <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.DataType/methods/getPrimitiveType">primitive type</a>. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type">sap.ui.model.odata.type</a> for more information</p>
+             * @returns Date|string <p>The formatted output value in the target type; <code>undefined</code> or <code>null</code> are formatted to <code>null</code></p>
              */
-            formatValue(sValue: string, sTargetType: string): string;
+            formatValue(sValue: string, sTargetType: string): Date | string;
             /**
              * <p>Returns the name of this type.</p>
              * @returns string <p>the name of this type</p>
@@ -15961,11 +16138,11 @@ declare namespace sap {
             parseValue(oValue: any, sInternalType: string): any | Promise<any>;
             /**
              * <p>Parses the given value, which is expected to be of the given type, to a string with an OData V4 Edm.TimeOfDay value.</p>
-             * @param {string} sValue <p>The value to be parsed, maps <code>""</code> to <code>null</code></p>
-             * @param {string} sSourceType <p>The source type (the expected type of <code>sValue</code>), must be "string", or a type with "string" as its <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.DataType/methods/getPrimitiveType">primitive type</a>. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type">sap.ui.model.odata.type</a> for more information.</p>
+             * @param {Date | string} vValue <p>The value to be parsed, maps <code>""</code> to <code>null</code>; <code>Date</code> objects are expected to represent local time and are supported if and only if source type is "object".</p>
+             * @param {string} sSourceType <p>The source type (the expected type of <code>sValue</code>), must be "string", "object" (since 1.69.0) or a type with one of these types as its <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.DataType/methods/getPrimitiveType">primitive type</a>. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.type">sap.ui.model.odata.type</a> for more information.</p>
              * @returns string <p>The parsed value</p>
              */
-            parseValue(sValue: string, sSourceType: string): string;
+            parseValue(vValue: Date | string, sSourceType: string): string;
             /**
              * <p>Validate whether a given value in model representation is valid and meets the defined constraints (if any).</p>
              * @param {any} oValue <p>the value to be validated</p>
@@ -16119,93 +16296,93 @@ declare namespace sap {
              */
             addSource(vSource: string | string[] | sap.ui.model.odata.v2.ODataAnnotations.Source | sap.ui.model.odata.v2.ODataAnnotations.Source[]): Promise<any>;
             /**
-             * <p>This event exists for compatibility with the old Annotation loader Attaches the given callback to the <code>allFailed</code> event. This event is fired when no annotation from a group of sources was successfully (loaded,) parsed and merged. The parameter <code>result</code> will be set on the event argument and contains an array of Errors in the order in which the sources had been added.</p>
-             * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-             * @param {Function} fnFunction <p>The event callback. This function will be called in the context of the oListener object if given as the next argument.</p>
-             * @param {any} oListener <p>Object to use as context of the callback. If empty, the global context is used.</p>
-             * @returns sap.ui.model.odata.v2.ODataAnnotations <p><code>this</code>-reference to allow method chaining</p>
+             * <p>Attaches the given callback to the <code>allFailed</code> event.</p><p>This event exists for compatibility with the old Annotation loader. It is fired when no annotation from a group of sources was successfully (loaded,) parsed and merged. The parameter <code>result</code> will be set on the event argument and contains an array of Errors in the order in which the sources had been added.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.model.odata.v2.ODataAnnotations</code> itself.</p>
+             * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+             * @param {any} oListener <p>Context object to call the event handler with, defaults to this <code>ODataAnnotations</code> itself</p>
+             * @returns sap.ui.model.odata.v2.ODataAnnotations <p>Reference to <code>this</code> to allow method chaining</p>
              */
             attachAllFailed(oData: any, fnFunction: Function, oListener?: any): sap.ui.model.odata.v2.ODataAnnotations;
             /**
-             * <p>Attaches the given callback to the <code>error</code> event, which is fired whenever a source cannot be loaded, parsed or merged into the annotation data. The following parameters will be set on the event object that is given to the callback function: <code>source</code> - A map containing the properties <code>type</code> - containing either "url" or "xml" - and <code>data</code> containing the data given as source, either a URL or an XML string depending on how the source was added. <code>error</code> - An Error object describing the problem that occurred</p>
-             * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-             * @param {Function} fnFunction <p>The event callback. This function will be called in the context of the oListener object if given as the next argument.</p>
-             * @param {any} oListener <p>Object to use as context of the callback. If empty, the global context is used.</p>
-             * @returns sap.ui.model.odata.v2.ODataAnnotations <p><code>this</code>-reference to allow method chaining</p>
+             * <p>Attaches the given callback to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="error" href="#/api/sap.ui.model.odata.v2.ODataAnnotations/events/error">error</a> event, which is fired whenever a source cannot be loaded, parsed or merged into the annotation data.</p><p>The following parameters will be set on the event object that is given to the callback function: <code>source</code> - A map containing the properties <code>type</code> - containing either "url" or "xml" - and <code>data</code> containing the data given as source, either a URL or an XML string depending on how the source was added. <code>error</code> - An Error object describing the problem that occurred</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.model.odata.v2.ODataAnnotations</code> itself.</p>
+             * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+             * @param {any} oListener <p>Context object to call the event handler with, defaults to this <code>ODataAnnotations</code> itself</p>
+             * @returns sap.ui.model.odata.v2.ODataAnnotations <p>Reference to <code>this</code> to allow method chaining</p>
              */
             attachError(oData: any, fnFunction: Function, oListener?: any): sap.ui.model.odata.v2.ODataAnnotations;
             /**
-             * <p>Attaches the given callback to the <code>failed</code> event. This event is fired when at least one annotation from a group of sources was not successfully (loaded,) parsed or merged. The parameter <code>result</code> will be set on the event argument and contains an array of Errors in the order in which the sources had been added.</p>
-             * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-             * @param {Function} fnFunction <p>The event callback. This function will be called in the context of the oListener object if given as the next argument.</p>
-             * @param {any} oListener <p>Object to use as context of the callback. If empty, the global context is used.</p>
-             * @returns sap.ui.model.odata.v2.ODataAnnotations <p><code>this</code>-reference to allow method chaining</p>
+             * <p>Attaches the given callback to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="failed" href="#/api/sap.ui.model.odata.v2.ODataAnnotations/events/failed">failed</a> event.</p><p>This event is fired when at least one annotation from a group of sources was not successfully (loaded,) parsed or merged. The parameter <code>result</code> will be set on the event argument and contains an array of Errors in the order in which the sources had been added.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.model.odata.v2.ODataAnnotations</code> itself.</p>
+             * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+             * @param {any} oListener <p>Context object to call the event handler with, defaults to this <code>ODataAnnotations</code> itself</p>
+             * @returns sap.ui.model.odata.v2.ODataAnnotations <p>Reference to <code>this</code> to allow method chaining</p>
              */
             attachFailed(oData: any, fnFunction: Function, oListener?: any): sap.ui.model.odata.v2.ODataAnnotations;
             /**
-             * <p>Attaches the given callback to the <code>loaded</code> event. This event is fired when all annotations from a group of sources was successfully (loaded,) parsed and merged. The parameter <code>result</code> will be set on the event argument and contains an array of all loaded sources as well as Errors in the order in which they had been added.</p>
-             * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-             * @param {Function} fnFunction <p>The event callback. This function will be called in the context of the oListener object if given as the next argument.</p>
-             * @param {any} oListener <p>Object to use as context of the callback. If empty, the global context is used.</p>
-             * @returns sap.ui.model.odata.v2.ODataAnnotations <p><code>this</code>-reference to allow method chaining</p>
+             * <p>Attaches the given callback to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="loaded" href="#/api/sap.ui.model.odata.v2.ODataAnnotations/events/loaded">loaded</a> event.</p><p>This event is fired when all annotations from a group of sources was successfully (loaded,) parsed and merged. The parameter <code>result</code> will be set on the event argument and contains an array of all loaded sources as well as Errors in the order in which they had been added.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.model.odata.v2.ODataAnnotations</code> itself.</p>
+             * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+             * @param {any} oListener <p>Context object to call the event handler with, defaults to this <code>ODataAnnotations</code> itself</p>
+             * @returns sap.ui.model.odata.v2.ODataAnnotations <p>Reference to <code>this</code> to allow method chaining</p>
              */
             attachLoaded(oData: any, fnFunction: Function, oListener?: any): sap.ui.model.odata.v2.ODataAnnotations;
             /**
-             * <p>This event exists for compatibility with the old Annotation loader Attaches the given callback to the <code>someLoaded</code> event. This event is fired when at least one annotation from a group of sources was successfully (loaded,) parsed and merged. The parameter <code>result</code> will be set on the event argument and contains an array of all loaded sources as well as Errors in the order in which they had been added.</p>
-             * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-             * @param {Function} fnFunction <p>The event callback. This function will be called in the context of the oListener object if given as the next argument.</p>
-             * @param {any} oListener <p>Object to use as context of the callback. If empty, the global context is used.</p>
-             * @returns sap.ui.model.odata.v2.ODataAnnotations <p><code>this</code>-reference to allow method chaining</p>
+             * <p>Attaches the given callback to the <code>someLoaded</code> event.</p><p>This event exists for compatibility with the old annotation loader. It is fired when at least one annotation from a group of sources was successfully (loaded,) parsed and merged. The parameter <code>result</code> will be set on the event argument and contains an array of all loaded sources as well as Errors in the order in which they had been added.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.model.odata.v2.ODataAnnotations</code> itself.</p>
+             * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+             * @param {any} oListener <p>Context object to call the event handler with, defaults to this <code>ODataAnnotations</code> itself</p>
+             * @returns sap.ui.model.odata.v2.ODataAnnotations <p>Reference to <code>this</code> to allow method chaining</p>
              */
             attachSomeLoaded(oData: any, fnFunction: Function, oListener?: any): sap.ui.model.odata.v2.ODataAnnotations;
             /**
-             * <p>Attaches the given callback to the <code>success</code> event, which is fired whenever a source has been successfully (loaded,) parsed and merged into the annotation data. The following parameters will be set on the event object that is given to the callback function: <code>source</code> - A map containing the properties <code>type</code> - containing either "url" or "xml" - and <code>data</code> containing the data given as source, either a URL or an XML string depending on how the source was added.</p>
-             * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-             * @param {Function} fnFunction <p>The event callback. This function will be called in the context of the oListener object if given as the next argument.</p>
-             * @param {any} oListener <p>Object to use as context of the callback. If empty, the global context is used.</p>
-             * @returns sap.ui.model.odata.v2.ODataAnnotations <p><code>this</code>-reference to allow method chaining.</p>
+             * <p>Attaches the given callback to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="success" href="#/api/sap.ui.model.odata.v2.ODataAnnotations/events/success">success</a> event, which is fired whenever a source has been successfully (loaded,) parsed and merged into the annotation data.</p><p>The following parameters will be set on the event object that is given to the callback function: <code>source</code> - A map containing the properties <code>type</code> - containing either "url" or "xml" - and <code>data</code> containing the data given as source, either a URL or an XML string depending on how the source was added.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.model.odata.v2.ODataAnnotations</code> itself.</p>
+             * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+             * @param {any} oListener <p>Context object to call the event handler with, defaults to this <code>ODataAnnotations</code> itself</p>
+             * @returns sap.ui.model.odata.v2.ODataAnnotations <p>Reference to <code>this</code> to allow method chaining</p>
              */
             attachSuccess(oData: any, fnFunction: Function, oListener?: any): sap.ui.model.odata.v2.ODataAnnotations;
             /**
-             * <p>Detaches the given callback from the <code>allFailed</code> event. The passed function and listener object must match the ones previously used for attaching to the event.</p>
-             * @param {Function} fnFunction <p>The event callback previously used with <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v2.ODataAnnotations/methods/attachFailed">sap.ui.model.odata.v2.ODataAnnotations#attachFailed</a>.</p>
-             * @param {any} oListener <p>The same (if any) context object that was used when attaching to the <code>error</code> event.</p>
-             * @returns sap.ui.model.odata.v2.ODataAnnotations <p><code>this</code>-reference to allow method chaining.</p>
+             * <p>Detaches the given callback from the <code>allFailed</code> event.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+             * @param {any} oListener <p>Context object on which the given function had to be called</p>
+             * @returns sap.ui.model.odata.v2.ODataAnnotations <p>Reference to <code>this</code> to allow method chaining</p>
              */
             detachAllFailed(fnFunction: Function, oListener?: any): sap.ui.model.odata.v2.ODataAnnotations;
             /**
-             * <p>Detaches the given callback from the <code>error</code> event. The passed function and listener object must match the ones previously used for attaching to the event.</p>
-             * @param {Function} fnFunction <p>The event callback previously used with <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v2.ODataAnnotations/methods/attachError">sap.ui.model.odata.v2.ODataAnnotations#attachError</a>.</p>
-             * @param {any} oListener <p>The same (if any) context object that was used when attaching to the <code>error</code> event.</p>
-             * @returns sap.ui.model.odata.v2.ODataAnnotations <p><code>this</code>-reference to allow method chaining.</p>
+             * <p>Detaches the given callback from the <code>error</code> event.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+             * @param {any} oListener <p>Context object on which the given function had to be called</p>
+             * @returns sap.ui.model.odata.v2.ODataAnnotations <p>Reference to <code>this</code> to allow method chaining</p>
              */
             detachError(fnFunction: Function, oListener?: any): sap.ui.model.odata.v2.ODataAnnotations;
             /**
-             * <p>Detaches the given callback from the <code>failed</code> event. The passed function and listener object must match the ones previously used for attaching to the event.</p>
-             * @param {Function} fnFunction <p>The event callback previously used with <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v2.ODataAnnotations/methods/attachFailed">sap.ui.model.odata.v2.ODataAnnotations#attachFailed</a>.</p>
-             * @param {any} oListener <p>The same (if any) context object that was used when attaching to the <code>error</code> event.</p>
-             * @returns sap.ui.model.odata.v2.ODataAnnotations <p><code>this</code>-reference to allow method chaining.</p>
+             * <p>Detaches the given callback from the <code>failed</code> event.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+             * @param {any} oListener <p>Context object on which the given function had to be called</p>
+             * @returns sap.ui.model.odata.v2.ODataAnnotations <p>Reference to <code>this</code> to allow method chaining</p>
              */
             detachFailed(fnFunction: Function, oListener?: any): sap.ui.model.odata.v2.ODataAnnotations;
             /**
-             * <p>Detaches the given callback from the <code>loaded</code> event. The passed function and listener object must match the ones previously used for attaching to the event.</p>
-             * @param {Function} fnFunction <p>The event callback previously used with <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v2.ODataAnnotations/methods/attachLoaded">sap.ui.model.odata.v2.ODataAnnotations#attachLoaded</a>.</p>
-             * @param {any} oListener <p>The same (if any) context object that was used when attaching to the <code>error</code> event.</p>
-             * @returns sap.ui.model.odata.v2.ODataAnnotations <p><code>this</code>-reference to allow method chaining.</p>
+             * <p>Detaches the given callback from the <code>loaded</code> event.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+             * @param {any} oListener <p>Context object on which the given function had to be called</p>
+             * @returns sap.ui.model.odata.v2.ODataAnnotations <p>Reference to <code>this</code> to allow method chaining</p>
              */
             detachLoaded(fnFunction: Function, oListener?: any): sap.ui.model.odata.v2.ODataAnnotations;
             /**
-             * <p>Detaches the given callback from the <code>someLoaded</code> event. The passed function and listener object must match the ones previously used for attaching to the event.</p>
-             * @param {Function} fnFunction <p>The event callback previously used with <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v2.ODataAnnotations/methods/attachSomeLoaded">sap.ui.model.odata.v2.ODataAnnotations#attachSomeLoaded</a>.</p>
-             * @param {any} oListener <p>The same (if any) context object that was used when attaching to the <code>error</code> event.</p>
-             * @returns sap.ui.model.odata.v2.ODataAnnotations <p><code>this</code>-reference to allow method chaining.</p>
+             * <p>Detaches the given callback from the <code>someLoaded</code> event.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+             * @param {any} oListener <p>Context object on which the given function had to be called</p>
+             * @returns sap.ui.model.odata.v2.ODataAnnotations <p>Reference to <code>this</code> to allow method chaining</p>
              */
             detachSomeLoaded(fnFunction: Function, oListener?: any): sap.ui.model.odata.v2.ODataAnnotations;
             /**
-             * <p>Detaches the given callback from the <code>success</code> event. The passed function and listener object must match the ones previously used for attaching to the event.</p>
-             * @param {Function} fnFunction <p>The event callback previously used with <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v2.ODataAnnotations/methods/attachSuccess">sap.ui.model.odata.v2.ODataAnnotations#attachSuccess</a>.</p>
-             * @param {any} oListener <p>The same (if any) context object that was used when attaching to the <code>success</code> event.</p>
-             * @returns sap.ui.model.odata.v2.ODataAnnotations <p><code>this</code>-reference to allow method chaining.</p>
+             * <p>Detaches the given callback from the <code>success</code> event.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+             * @param {any} oListener <p>Context object on which the given function had to be called</p>
+             * @returns sap.ui.model.odata.v2.ODataAnnotations <p>Reference to <code>this</code> to allow method chaining</p>
              */
             detachSuccess(fnFunction: Function, oListener?: any): sap.ui.model.odata.v2.ODataAnnotations;
             /**
@@ -16231,16 +16408,16 @@ declare namespace sap {
           }
           namespace ODataAnnotations {
             /**
-             * <p><p>Parameters of the <code>error</code> event</p></p>
+             * <p><p>Parameters of the <code>error</code> event.</p></p>
              */
             export interface errorParameters {
               /**
-               * <p>The error that occurred. Also contains the properties from sap.ui.model.odata.v2.ODataAnnotations.Source that could be filled up to that point</p>
+               * <p>The error that occurred. Also contains the properties from <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v2.ODataAnnotations.Source">sap.ui.model.odata.v2.ODataAnnotations.Source</a> that could be filled up to that point</p>
                */
               result: Error;
             }
             /**
-             * <p><p>Parameters of the <code>failed</code> event</p></p>
+             * <p><p>Parameters of the <code>failed</code> event.</p></p>
              */
             export interface failedParameters {
               /**
@@ -16249,7 +16426,7 @@ declare namespace sap {
               result: Error[];
             }
             /**
-             * <p><p>Parameters of the <code>loaded</code> event</p></p>
+             * <p><p>Parameters of the <code>loaded</code> event.</p></p>
              */
             export interface loadedParameters {
               /**
@@ -16366,7 +16543,7 @@ declare namespace sap {
              */
             getDownloadUrl(sFormat: string): string;
             /**
-             * <p>Returns the number of entries in the list. This might be an estimated or preliminary length, in case the full length is not known yet, see method isLengthFinal().</p>
+             * <p>Returns the number of entries in the list.</p><p>This might be an estimated or preliminary length, in case the full length is not known yet, see method <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="isLengthFinal" href="#/api/sap.ui.model.ListBinding/methods/isLengthFinal">#isLengthFinal</a>.</p>
              * @returns number <p>returns the number of entries in the list</p>
              */
             getLength(): number;
@@ -16429,63 +16606,63 @@ declare namespace sap {
              */
             annotationsLoaded(): Promise<any>;
             /**
-             * <p>Attach event-handler <code>fnFunction</code> to the <code>annotationsFailed</code> event of this <code>sap.ui.model.odata.v2.ODataModel</code>.</p>
-             * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-             * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-             * @param {any} oListener <p>Object on which to call the given function. If empty, the global context (window) is used.</p>
-             * @returns sap.ui.model.odata.v2.ODataModel <p><code>this</code> to allow method chaining</p>
+             * <p>Attaches event handler <code>fnFunction</code> to the <code>annotationsFailed</code> event of this <code>sap.ui.model.odata.v2.ODataModel</code>.</p>
+             * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+             * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.model.odata.v2.ODataModel</code> itself</p>
+             * @returns sap.ui.model.odata.v2.ODataModel <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             attachAnnotationsFailed(oData: any, fnFunction: Function, oListener?: any): sap.ui.model.odata.v2.ODataModel;
             /**
-             * <p>Attach event-handler <code>fnFunction</code> to the <code>annotationsLoaded</code> event of this <code>sap.ui.model.odata.v2.ODataModel</code>.</p>
-             * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-             * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-             * @param {any} oListener <p>Object on which to call the given function. If empty, the global context (window) is used.</p>
-             * @returns sap.ui.model.odata.v2.ODataModel <p><code>this</code> to allow method chaining</p>
+             * <p>Attaches event handler <code>fnFunction</code> to the <code>annotationsLoaded</code> event of this <code>sap.ui.model.odata.v2.ODataModel</code>.</p>
+             * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+             * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.model.odata.v2.ODataModel</code> itself</p>
+             * @returns sap.ui.model.odata.v2.ODataModel <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             attachAnnotationsLoaded(oData: any, fnFunction: Function, oListener?: any): sap.ui.model.odata.v2.ODataModel;
             /**
-             * <p>Attach event-handler <code>fnFunction</code> to the <code>batchRequestCompleted</code> event of this <code>sap.ui.model.odata.v2.ODataModel</code>.</p>
-             * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-             * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-             * @param {any} oListener <p>Object on which to call the given function. If empty, the global context (window) is used.</p>
-             * @returns sap.ui.model.odata.v2.ODataModel <p><code>this</code> to allow method chaining</p>
+             * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="batchRequestCompleted" href="#/api/sap.ui.model.odata.v2.ODataModel/events/batchRequestCompleted">batchRequestCompleted</a> event of this <code>sap.ui.model.odata.v2.ODataModel</code>.</p>
+             * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+             * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.model.odata.v2.ODataModel</code> itself</p>
+             * @returns sap.ui.model.odata.v2.ODataModel <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             attachBatchRequestCompleted(oData: any, fnFunction: Function, oListener?: any): sap.ui.model.odata.v2.ODataModel;
             /**
-             * <p>Attach event-handler <code>fnFunction</code> to the <code>batchRequestFailed</code> event of this <code>sap.ui.model.odata.v2.ODataModel</code>.</p>
-             * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-             * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-             * @param {any} oListener <p>Object on which to call the given function. If empty, this Model is used.</p>
-             * @returns sap.ui.model.odata.v2.ODataModel <p><code>this</code> to allow method chaining</p>
+             * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="batchRequestFailed" href="#/api/sap.ui.model.odata.v2.ODataModel/events/batchRequestFailed">batchRequestFailed</a> event of this <code>sap.ui.model.odata.v2.ODataModel</code>.</p>
+             * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+             * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.model.odata.v2.ODataModel</code> itself</p>
+             * @returns sap.ui.model.odata.v2.ODataModel <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             attachBatchRequestFailed(oData: any, fnFunction: Function, oListener?: any): sap.ui.model.odata.v2.ODataModel;
             /**
-             * <p>Attach event-handler <code>fnFunction</code> to the <code>requestSent</code> event of this <code>sap.ui.model.odata.v2.ODataModel</code>.</p>
-             * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-             * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-             * @param {any} oListener <p>Object on which to call the given function. If empty, the global context (window) is used.</p>
-             * @returns sap.ui.model.odata.v2.ODataModel <p><code>this</code> to allow method chaining</p>
+             * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="batchRequestSent" href="#/api/sap.ui.model.odata.v2.ODataModel/events/batchRequestSent">batchRequestSent</a> event of this <code>sap.ui.model.odata.v2.ODataModel</code>.</p>
+             * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+             * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.model.odata.v2.ODataModel</code> itself</p>
+             * @returns sap.ui.model.odata.v2.ODataModel <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             attachBatchRequestSent(oData: any, fnFunction: Function, oListener?: any): sap.ui.model.odata.v2.ODataModel;
             /**
-             * <p>Attach event-handler <code>fnFunction</code> to the <code>metadataFailed</code> event of this <code>sap.ui.model.odata.v2.ODataModel</code>.</p>
-             * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-             * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-             * @param {any} oListener <p>Object on which to call the given function. If empty, the global context (window) is used.</p>
-             * @returns sap.ui.model.odata.v2.ODataModel <p><code>this</code> to allow method chaining</p>
+             * <p>Attaches event handler <code>fnFunction</code> to the <code>metadataFailed</code> event of this <code>sap.ui.model.odata.v2.ODataModel</code>.</p>
+             * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+             * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.model.odata.v2.ODataModel</code> itself</p>
+             * @returns sap.ui.model.odata.v2.ODataModel <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             attachMetadataFailed(oData: any, fnFunction: Function, oListener?: any): sap.ui.model.odata.v2.ODataModel;
             /**
-             * <p>Attach event-handler <code>fnFunction</code> to the <code>metadataLoaded</code> event of this <code>sap.ui.model.odata.v2.ODataModel</code>.</p>
-             * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-             * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-             * @param {any} oListener <p>Object on which to call the given function. If empty, the global context (window) is used.</p>
-             * @returns sap.ui.model.odata.v2.ODataModel <p><code>this</code> to allow method chaining</p>
+             * <p>Attaches event handler <code>fnFunction</code> to the <code>metadataLoaded</code> event of this <code>sap.ui.model.odata.v2.ODataModel</code>.</p>
+             * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+             * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.model.odata.v2.ODataModel</code> itself</p>
+             * @returns sap.ui.model.odata.v2.ODataModel <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             attachMetadataLoaded(oData: any, fnFunction: Function, oListener?: any): sap.ui.model.odata.v2.ODataModel;
             /**
-             * <p>Create ContextBinding</p>
+             * <p>Create ContextBinding.</p>
              * @param {string | any} sPath <p>the path pointing to the property that should be bound or an object which contains the following parameter properties: path, context, parameters</p>
              * @param {any} oContext <p>the context object for this databinding (optional)</p>
              * @param {any} mParameters <p>additional model specific parameters (optional)</p>
@@ -16502,7 +16679,7 @@ declare namespace sap {
              */
             bindContext(sPath: string, oContext: sap.ui.model.Context, mParameters?: { [key: string]: any }): sap.ui.model.ContextBinding;
             /**
-             * <p>Implement in inheriting classes</p>
+             * <p>Implement in inheriting classes.</p>
              * @param {string} sPath <p>the path pointing to the list / array that should be bound</p>
              * @param {any} oContext <p>the context object for this databinding (optional)</p>
              * @param {sap.ui.model.Sorter} aSorters <p>initial sort order (can be either a sorter or an array of sorters) (optional)</p>
@@ -16522,7 +16699,7 @@ declare namespace sap {
              */
             bindList(sPath: string, oContext?: sap.ui.model.Context, aSorters?: sap.ui.model.Sorter | sap.ui.model.Sorter[], aFilters?: sap.ui.model.Filter | sap.ui.model.Filter[], mParameters?: { [key: string]: any }): sap.ui.model.ListBinding;
             /**
-             * <p>Implement in inheriting classes</p>
+             * <p>Implement in inheriting classes.</p>
              * @param {string} sPath <p>the path pointing to the property that should be bound</p>
              * @param {any} oContext <p>the context object for this databinding (optional)</p>
              * @param {any} mParameters <p>additional model specific parameters (optional)</p>
@@ -16538,7 +16715,7 @@ declare namespace sap {
              */
             bindProperty(sPath: string, oContext?: any, mParameters?: { [key: string]: any }): sap.ui.model.PropertyBinding;
             /**
-             * <p>Implement in inheriting classes</p>
+             * <p>Implement in inheriting classes.</p>
              * @param {string} sPath <p>the path pointing to the tree / array that should be bound</p>
              * @param {any} oContext <p>the context object for this databinding (optional)</p>
              * @param {any[]} aFilters <p>predefined filter/s contained in an array (optional)</p>
@@ -16578,7 +16755,7 @@ declare namespace sap {
              */
             create(sPath: string, oData: any, mParameters?: { [key: string]: any }): any;
             /**
-             * <p>Implement in inheriting classes</p>
+             * <p>Implement in inheriting classes.</p>
              * @param {string} sPath <p>the path to create the new context from</p>
              * @param {any} oContext <p>the context which should be used to create the new binding context</p>
              * @param {any} mParameters <p>the parameters used to create the new binding context</p>
@@ -16629,7 +16806,7 @@ declare namespace sap {
              */
             destroy(): void;
             /**
-             * <p>Destroys the model and clears the model data. A model implementation may override this function and perform model specific cleanup tasks e.g. abort requests, prevent new requests, etc.<br><br>References: <ul><li>sap.ui.base.Object.prototype.destroy</li></ul></p>
+             * <p>Destroys the model and clears the model data.</p><p>A model implementation may override this function and perform model specific cleanup tasks e.g. abort requests, prevent new requests, etc.<br><br>References: <ul><li>sap.ui.base.Object.prototype.destroy</li></ul></p>
              */
             destroy(): void;
             /**
@@ -16637,96 +16814,96 @@ declare namespace sap {
              */
             destroy(): void;
             /**
-             * <p>Detach event-handler <code>fnFunction</code> from the <code>annotationsFailed</code> event of this <code>sap.ui.model.odata.v2.ODataModel</code>.</p><p>The passed function and listener object must match the ones previously used for event registration.</p>
-             * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-             * @param {any} oListener <p>Object on which the given function had to be called.</p>
-             * @returns sap.ui.model.odata.v2.ODataModel <p><code>this</code> to allow method chaining</p>
+             * <p>Detaches event handler <code>fnFunction</code> from the <code>annotationsFailed</code> event of this <code>sap.ui.model.odata.v2.ODataModel</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+             * @param {any} oListener <p>Context object on which the given function had to be called</p>
+             * @returns sap.ui.model.odata.v2.ODataModel <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            detachAnnotationsFailed(fnFunction: Function, oListener: any): sap.ui.model.odata.v2.ODataModel;
+            detachAnnotationsFailed(fnFunction: Function, oListener?: any): sap.ui.model.odata.v2.ODataModel;
             /**
-             * <p>Detach event-handler <code>fnFunction</code> from the <code>annotationsLoaded</code> event of this <code>sap.ui.model.odata.v2.ODataModel</code>.</p>
-             * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-             * @param {any} oListener <p>Object on which the given function had to be called.</p>
-             * @returns sap.ui.model.odata.v2.ODataModel <p><code>this</code> to allow method chaining</p>
+             * <p>Detaches event handler <code>fnFunction</code> from the <code>annotationsLoaded</code> event of this <code>sap.ui.model.odata.v2.ODataModel</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+             * @param {any} oListener <p>Context object on which the given function had to be called</p>
+             * @returns sap.ui.model.odata.v2.ODataModel <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            detachAnnotationsLoaded(fnFunction: Function, oListener: any): sap.ui.model.odata.v2.ODataModel;
+            detachAnnotationsLoaded(fnFunction: Function, oListener?: any): sap.ui.model.odata.v2.ODataModel;
             /**
-             * <p>Detach event-handler <code>fnFunction</code> from the <code>batchRequestCompleted</code> event of this <code>sap.ui.model.odata.v2.ODataModel</code>.</p><p>The passed function and listener object must match the ones previously used for event registration.</p>
-             * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-             * @param {any} oListener <p>Object on which the given function had to be called.</p>
-             * @returns sap.ui.model.odata.v2.ODataModel <p><code>this</code> to allow method chaining</p>
+             * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="batchRequestCompleted" href="#/api/sap.ui.model.odata.v2.ODataModel/events/batchRequestCompleted">batchRequestCompleted</a> event of this <code>sap.ui.model.odata.v2.ODataModel</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+             * @param {any} oListener <p>Context object on which the given function had to be called</p>
+             * @returns sap.ui.model.odata.v2.ODataModel <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            detachBatchRequestCompleted(fnFunction: Function, oListener: any): sap.ui.model.odata.v2.ODataModel;
+            detachBatchRequestCompleted(fnFunction: Function, oListener?: any): sap.ui.model.odata.v2.ODataModel;
             /**
-             * <p>Detach event-handler <code>fnFunction</code> from the <code>batchRequestFailed</code> event of this <code>sap.ui.model.odata.v2.ODataModel</code>.<br/></p><p>The passed function and listener object must match the ones previously used for event registration.</p>
-             * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-             * @param {any} oListener <p>Object on which the given function had to be called.</p>
-             * @returns sap.ui.model.odata.v2.ODataModel <p><code>this</code> to allow method chaining</p>
+             * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="batchRequestFailed" href="#/api/sap.ui.model.odata.v2.ODataModel/events/batchRequestFailed">batchRequestFailed</a> event of this <code>sap.ui.model.odata.v2.ODataModel</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+             * @param {any} oListener <p>Context object on which the given function had to be called</p>
+             * @returns sap.ui.model.odata.v2.ODataModel <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            detachBatchRequestFailed(fnFunction: Function, oListener: any): sap.ui.model.odata.v2.ODataModel;
+            detachBatchRequestFailed(fnFunction: Function, oListener?: any): sap.ui.model.odata.v2.ODataModel;
             /**
-             * <p>Detach event-handler <code>fnFunction</code> from the <code>batchRequestSent</code> event of this <code>sap.ui.model.odata.v2.ODataModel</code>.</p><p>The passed function and listener object must match the ones previously used for event registration.</p>
-             * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-             * @param {any} oListener <p>Object on which the given function had to be called.</p>
-             * @returns sap.ui.model.odata.v2.ODataModel <p><code>this</code> to allow method chaining</p>
+             * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="batchRequestSent" href="#/api/sap.ui.model.odata.v2.ODataModel/events/batchRequestSent">batchRequestSent</a> event of this <code>sap.ui.model.odata.v2.ODataModel</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+             * @param {any} oListener <p>Context object on which the given function had to be called</p>
+             * @returns sap.ui.model.odata.v2.ODataModel <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            detachBatchRequestSent(fnFunction: Function, oListener: any): sap.ui.model.odata.v2.ODataModel;
+            detachBatchRequestSent(fnFunction: Function, oListener?: any): sap.ui.model.odata.v2.ODataModel;
             /**
-             * <p>Detach event-handler <code>fnFunction</code> from the <code>metadataFailed</code> event of this <code>sap.ui.model.odata.v2.ODataModel</code>.</p><p>The passed function and listener object must match the ones previously used for event registration.</p>
-             * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-             * @param {any} oListener <p>Object on which the given function had to be called.</p>
-             * @returns sap.ui.model.odata.v2.ODataModel <p><code>this</code> to allow method chaining</p>
+             * <p>Detaches event handler <code>fnFunction</code> from the <code>metadataFailed</code> event of this <code>sap.ui.model.odata.v2.ODataModel</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+             * @param {any} oListener <p>Context object on which the given function had to be called</p>
+             * @returns sap.ui.model.odata.v2.ODataModel <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            detachMetadataFailed(fnFunction: Function, oListener: any): sap.ui.model.odata.v2.ODataModel;
+            detachMetadataFailed(fnFunction: Function, oListener?: any): sap.ui.model.odata.v2.ODataModel;
             /**
-             * <p>Detach event-handler <code>fnFunction</code> from the <code>metadataLoaded</code> event of this <code>sap.ui.model.odata.v2.ODataModel</code>.</p><p>The passed function and listener object must match the ones previously used for event registration.</p>
-             * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-             * @param {any} oListener <p>Object on which the given function had to be called.</p>
-             * @returns sap.ui.model.odata.v2.ODataModel <p><code>this</code> to allow method chaining</p>
+             * <p>Detaches event handler <code>fnFunction</code> from the <code>metadataLoaded</code> event of this <code>sap.ui.model.odata.v2.ODataModel</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+             * @param {any} oListener <p>Context object on which the given function had to be called</p>
+             * @returns sap.ui.model.odata.v2.ODataModel <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            detachMetadataLoaded(fnFunction: Function, oListener: any): sap.ui.model.odata.v2.ODataModel;
+            detachMetadataLoaded(fnFunction: Function, oListener?: any): sap.ui.model.odata.v2.ODataModel;
             /**
-             * <p>Fire event <code>annotationsFailed</code> to attached listeners.</p>
-             * @param {any} mArguments <p>The arguments to pass along with the event</p>
-             * @returns sap.ui.model.odata.v2.ODataModel <p><code>this</code> to allow method chaining</p>
+             * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="annotationsFailed" href="#/api/sap.ui.model.odata.v2.ODataModel/events/annotationsFailed">annotationsFailed</a> to attached listeners.</p>
+             * @param {any} oParameters <p>Parameters to pass along with the event</p>
+             * @returns sap.ui.model.odata.v2.ODataModel <p>Reference to <code>this</code> to allow method chaining</p>
              */
-            protected fireAnnotationsFailed(mArguments?: any): sap.ui.model.odata.v2.ODataModel;
+            protected fireAnnotationsFailed(oParameters?: any): sap.ui.model.odata.v2.ODataModel;
             /**
-             * <p>Fire event <code>annotationsLoaded</code> to attached listeners.</p>
-             * @param {any} mArguments <p>The arguments to pass along with the event</p>
-             * @returns sap.ui.model.odata.v2.ODataModel <p><code>this</code> to allow method chaining</p>
+             * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="annotationsLoaded" href="#/api/sap.ui.model.odata.v2.ODataModel/events/annotationsLoaded">annotationsLoaded</a> to attached listeners.</p>
+             * @param {any} oParameters <p>Parameters to pass along with the event</p>
+             * @returns sap.ui.model.odata.v2.ODataModel <p>Reference to <code>this</code> to allow method chaining</p>
              */
-            protected fireAnnotationsLoaded(mArguments?: any): sap.ui.model.odata.v2.ODataModel;
+            protected fireAnnotationsLoaded(oParameters?: any): sap.ui.model.odata.v2.ODataModel;
             /**
-             * <p>Fire event <code>batchRequestCompleted</code> to attached listeners.</p>
-             * @param {any} mArguments <p>parameters to add to the fired event</p>
-             * @returns sap.ui.model.odata.v2.ODataModel <p><code>this</code> to allow method chaining</p>
+             * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="batchRequestCompleted" href="#/api/sap.ui.model.odata.v2.ODataModel/events/batchRequestCompleted">batchRequestCompleted</a> to attached listeners.</p>
+             * @param {any} oParameters <p>parameters to add to the fired event</p>
+             * @returns sap.ui.model.odata.v2.ODataModel <p>Reference to <code>this</code> to allow method chaining</p>
              */
-            protected fireBatchRequestCompleted(mArguments: any): sap.ui.model.odata.v2.ODataModel;
+            protected fireBatchRequestCompleted(oParameters: any): sap.ui.model.odata.v2.ODataModel;
             /**
-             * <p>Fire event <code>batchRequestFailed</code> to attached listeners.</p>
-             * @param {any} mArguments <p>the arguments to pass along with the event.</p>
-             * @returns sap.ui.model.odata.v2.ODataModel <p><code>this</code> to allow method chaining</p>
+             * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="batchRequestFailed" href="#/api/sap.ui.model.odata.v2.ODataModel/events/batchRequestFailed">batchRequestFailed</a> to attached listeners.</p>
+             * @param {any} oParameters <p>Parameters to pass along with the event</p>
+             * @returns sap.ui.model.odata.v2.ODataModel <p>Reference to <code>this</code> to allow method chaining</p>
              */
-            protected fireBatchRequestFailed(mArguments: any): sap.ui.model.odata.v2.ODataModel;
+            protected fireBatchRequestFailed(oParameters: any): sap.ui.model.odata.v2.ODataModel;
             /**
-             * <p>Fire event <code>batchRequestSent</code> to attached listeners.</p>
-             * @param {any} mArguments <p>the arguments to pass along with the event.</p>
-             * @returns sap.ui.model.odata.v2.ODataModel <p><code>this</code> to allow method chaining</p>
+             * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="batchRequestSent" href="#/api/sap.ui.model.odata.v2.ODataModel/events/batchRequestSent">batchRequestSent</a> to attached listeners.</p>
+             * @param {any} oParameters <p>Parameters to pass along with the event</p>
+             * @returns sap.ui.model.odata.v2.ODataModel <p>Reference to <code>this</code> to allow method chaining</p>
              */
-            protected fireBatchRequestSent(mArguments: any): sap.ui.model.odata.v2.ODataModel;
+            protected fireBatchRequestSent(oParameters: any): sap.ui.model.odata.v2.ODataModel;
             /**
-             * <p>Fire event <code>metadataFailed</code> to attached listeners.</p>
-             * @param {any} mArguments <p>the arguments to pass along with the event.</p>
-             * @returns sap.ui.model.odata.v2.ODataModel <p><code>this</code> to allow method chaining</p>
+             * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="metadataFailed" href="#/api/sap.ui.model.odata.v2.ODataModel/events/metadataFailed">metadataFailed</a> to attached listeners.</p>
+             * @param {any} oParameters <p>Parameters to pass along with the event</p>
+             * @returns sap.ui.model.odata.v2.ODataModel <p>Reference to <code>this</code> to allow method chaining</p>
              */
-            protected fireMetadataFailed(mArguments?: any): sap.ui.model.odata.v2.ODataModel;
+            protected fireMetadataFailed(oParameters?: any): sap.ui.model.odata.v2.ODataModel;
             /**
-             * <p>Fire event <code>metadataLoaded</code> to attached listeners.</p>
-             * @param {any} mArguments <p>the arguments to pass along with the event.</p>
-             * @returns sap.ui.model.odata.v2.ODataModel <p><code>this</code> to allow method chaining</p>
+             * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="metadataLoaded" href="#/api/sap.ui.model.odata.v2.ODataModel/events/metadataLoaded">metadataLoaded</a> to attached listeners.</p>
+             * @param {any} oParameters <p>Parameters to pass along with the event</p>
+             * @returns sap.ui.model.odata.v2.ODataModel <p>Reference to <code>this</code> to allow method chaining</p>
              */
-            protected fireMetadataLoaded(mArguments?: any): sap.ui.model.odata.v2.ODataModel;
+            protected fireMetadataLoaded(oParameters?: any): sap.ui.model.odata.v2.ODataModel;
             /**
              * <p>Force the update on the server of an entity by setting its ETag to '*'.</p><p>ETag handling must be active so the force update will work.</p>
              * @param {string} sKey <p>The key to an Entity e.g.: Customer(4711)</p>
@@ -16768,7 +16945,7 @@ declare namespace sap {
             getKey(vValue: string | any | sap.ui.model.Context): string;
             /**
              * <p>Returns the meta model associated with this model if it is available for the concrete model type.</p>
-             * @returns sap.ui.model.MetaModel <p>The meta model or undefined if no meta model exists.</p>
+             * @returns sap.ui.model.MetaModel <p>The meta model or <code>undefined</code> if no meta model exists.</p>
              */
             getMetaModel(): sap.ui.model.MetaModel;
             /**
@@ -16777,14 +16954,15 @@ declare namespace sap {
              */
             getMetaModel(): sap.ui.model.odata.ODataMetaModel;
             /**
-             * <p>Implement in inheriting classes</p>
-             * @param {string} sPath <p>the path to where to read the object</p>
-             * @param {any} oContext <p>the context with which the path should be resolved</p>
-             * @param {any} mParameters <p>additional model specific parameters</p>
+             * <p>Implement in inheriting classes.</p>
+             * @param {string} sPath <p>Path to where to read the object</p>
+             * @param {any} oContext <p>Context with which the path should be resolved</p>
+             * @param {any} mParameters <p>Additional model specific parameters</p>
+             * @returns any <p>The value for the given path/context or <code>undefined</code> if data could not be found</p>
              */
             getObject(sPath: string, oContext?: any, mParameters?: any): any;
             /**
-             * <p>Returns the JSON object for an entity with the given <code>sPath</code> and optional <code>oContext</code>.</p><p>With the <code>mParameters.select</code> parameter it is possible to specify comma-separated property or navigation property names which should be included in the result object. This works like the OData <code>$select</code> parameter. With the <code>mParameters.expand</code> parameter it is possible to specify comma-separated navigation property names which should be included inline in the result object. This works like the OData <code>$expand</code> parameter.</p><p>This method will return a copy and not a reference of the entity. It does not load any data and may not return all requested data if it is not available/loaded. If select entries are contained in the parameters and not all selected properties are available, this method will return <code>undefined</code> instead of incomplete data. If no select entries are defined, all properties available on the client will be returned.</p><p>Example:<br> <code>{select: "Products/ProductName, Products", expand:"Products"}</code> will return no properties of the entity itself, but only the ProductName property of the Products navigation property. If Products/ProductName has not been loaded before, so is not available on the client, it will return <code>undefined</code>.</p><p>Note:<br> If <code>mParameters.select<code> is not specified, the returned object could contain model-internal attributes. This may lead to problems when submitting this data to the service for an update/create operation. To get a copy of the entity without containing such internal attributes, use <code>{select: "*"}</code> instead.</p>
+             * <p>Returns the JSON object for an entity with the given <code>sPath</code> and optional <code>oContext</code>.</p><p>With the <code>mParameters.select</code> parameter it is possible to specify comma-separated property or navigation property names which should be included in the result object. This works like the OData <code>$select</code> parameter. With the <code>mParameters.expand</code> parameter it is possible to specify comma-separated navigation property names which should be included inline in the result object. This works like the OData <code>$expand</code> parameter.</p><p>This method will return a copy and not a reference of the entity. It does not load any data and may not return all requested data if it is not available/loaded. If select entries are contained in the parameters and not all selected properties are available, this method will return <code>undefined</code> instead of incomplete data. If no select entries are defined, all properties available on the client will be returned.</p><p>Example:<br> <code>{select: "Products/ProductName, Products", expand:"Products"}</code> will return no properties of the entity itself, but only the ProductName property of the Products navigation property. If Products/ProductName has not been loaded before, so is not available on the client, it will return <code>undefined</code>.</p><p>Note:<br> If <code>mParameters.select</code> is not specified, the returned object could contain model-internal attributes. This may lead to problems when submitting this data to the service for an update/create operation. To get a copy of the entity without containing such internal attributes, use <code>{select: "*"}</code> instead.</p>
              * @param {string} sPath <p>Path referencing the object</p>
              * @param {any} oContext <p>Context the path should be resolved with, in case it is relative</p>
              * @param {{ [key: string]: any }} mParameters <p>Map of parameters</p>
@@ -16792,10 +16970,10 @@ declare namespace sap {
              */
             getObject(sPath: string, oContext?: any, mParameters?: { [key: string]: any }): any;
             /**
-             * <p>Returns the original value for the property with the given path and context. The original value is the value that was last responded by a server if using a server model implementation.</p>
-             * @param {string} sPath <p>the path/name of the property</p>
-             * @param {any} oContext <p>the context if available to access the property value</p>
-             * @returns any <p>vValue the value of the property</p>
+             * <p>Returns the original value for the property with the given path and context.</p><p>The original value is the value that was last responded by a server if using a server model implementation.</p>
+             * @param {string} sPath <p>Path/name of the property</p>
+             * @param {any} oContext <p>Context if available to access the property value</p>
+             * @returns any <p>vValue The value of the property</p>
              */
             getOriginalProperty(sPath: string, oContext?: any): any;
             /**
@@ -16811,7 +16989,7 @@ declare namespace sap {
              */
             getPendingChanges(): { [key: string]: any };
             /**
-             * <p>Implement in inheriting classes</p>
+             * <p>Implement in inheriting classes.</p>
              * @param {string} sPath <p>the path to where to read the attribute value</p>
              * @param {any} oContext <p>the context with which the path should be resolved</p>
              */
@@ -16887,7 +17065,7 @@ declare namespace sap {
              */
             read(sPath: string, mParameters?: { [key: string]: any }): any;
             /**
-             * <p>Refresh the model. This will check all bindings for updated data and update the controls if data has been changed.</p>
+             * <p>Refresh the model.</p><p>This will check all bindings for updated data and update the controls if data has been changed.</p>
              * @param {boolean} bForceUpdate <p>Update controls even if data has not been changed</p>
              */
             refresh(bForceUpdate: boolean): void;
@@ -17327,7 +17505,7 @@ declare namespace sap {
              */
             requestCanonicalPath(): Promise<any>;
             /**
-             * <p>Returns a promise on the value for the given path relative to this context. The function allows access to the complete data the context points to (if <code>sPath</code> is "") or any part thereof. The data is a JSON structure as described in <a href="http://docs.oasis-open.org/odata/odata-json-format/v4.0/odata-json-format-v4.0.html"> "OData JSON Format Version 4.0"</a>. Note that the function clones the result. Modify values via <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataPropertyBinding/methods/setValue">sap.ui.model.odata.v4.ODataPropertyBinding#setValue</a>.</p><p>If you want <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="requestObject" href="#/api/sap.ui.model.odata.v4.Context/methods/requestObject">#requestObject</a> to read fresh data, call <code>oContext.getBinding().refresh()</code> first.<br><br>References: <ul><li>#getBinding</li><li>sap.ui.model.odata.v4.ODataContextBinding#refresh</li><li>sap.ui.model.odata.v4.ODataListBinding#refresh</li></ul></p>
+             * <p>Returns a promise on the value for the given path relative to this context. The function allows access to the complete data the context points to (if <code>sPath</code> is "") or any part thereof. The data is a JSON structure as described in <a href="http://docs.oasis-open.org/odata/odata-json-format/v4.0/odata-json-format-v4.0.html"> "OData JSON Format Version 4.0"</a>. Note that the function clones the result. Modify values via <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.Context/methods/setProperty">sap.ui.model.odata.v4.Context#setProperty</a>.</p><p>If you want <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="requestObject" href="#/api/sap.ui.model.odata.v4.Context/methods/requestObject">#requestObject</a> to read fresh data, call <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="refresh" href="#/api/sap.ui.model.odata.v4.Context/methods/refresh">#refresh</a> first.<br><br>References: <ul><li>#getBinding</li><li>sap.ui.model.odata.v4.ODataContextBinding#refresh</li><li>sap.ui.model.odata.v4.ODataListBinding#refresh</li></ul></p>
              * @param {string} sPath <p>A relative path within the JSON structure</p>
              * @returns Promise<any> <p>A promise on the requested value</p>
              */
@@ -17340,11 +17518,12 @@ declare namespace sap {
              */
             requestProperty(sPath?: string, bExternalFormat?: boolean): Promise<any>;
             /**
-             * <p>Loads side effects for this context using the given "14.5.11 Expression edm:NavigationPropertyPath" or "14.5.13 Expression edm:PropertyPath" objects. Use this method to explicitly load side effects in case implicit loading is switched off via the binding-specific parameter <code>$$patchWithoutSideEffects</code>. The method can be called on <ul> <li> the bound context of a context binding, <li> the return value context of an operation binding, <li> a context of a list binding representing a single entity, <li> the header context of a list binding; side effects are loaded for the whole binding in this case. </ul> Key predicates must be available in this context's path. Avoid navigation properties as part of a binding's $select system query option as they may trigger pointless requests.</p><p>The request always uses the update group ID for this context's binding, see "$$updateGroupId" at <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataModel/methods/bindContext">sap.ui.model.odata.v4.ODataModel#bindContext</a>; this way, it can easily be part of the same batch request as the corresponding update. <b>Caution:</b> If a dependent binding uses a different update group ID, it may lose its pending changes.</p><p>The events 'dataRequested' and 'dataReceived' are not fired. Whatever should happen in the event handler attached to... <ul> <li>'dataRequested', can instead be done before calling <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="requestSideEffects" href="#/api/sap.ui.model.odata.v4.Context/methods/requestSideEffects">#requestSideEffects</a>.</li> <li>'dataReceived', can instead be done once the <code>oPromise</code> returned by <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="requestSideEffects" href="#/api/sap.ui.model.odata.v4.Context/methods/requestSideEffects">#requestSideEffects</a> fulfills or rejects (using <code>oPromise.then(function () {...}, function () {...})</code>).</li> </ul><br><br>References: <ul><li>sap.ui.model.odata.v4.ODataContextBinding#execute</li><li>sap.ui.model.odata.v4.ODataContextBinding#getBoundContext</li><li>sap.ui.model.odata.v4.ODataListBinding#getHeaderContext</li><li>sap.ui.model.odata.v4.ODataModel#bindContext</li></ul></p>
+             * <p>Loads side effects for this context using the given "14.5.11 Expression edm:NavigationPropertyPath" or "14.5.13 Expression edm:PropertyPath" objects. Use this method to explicitly load side effects in case implicit loading is switched off via the binding-specific parameter <code>$$patchWithoutSideEffects</code>. The method can be called on <ul> <li> the bound context of a context binding, <li> the return value context of an operation binding, <li> a context of a list binding representing a single entity, <li> the header context of a list binding; side effects are loaded for the whole binding in this case. </ul> Key predicates must be available in this context's path. Avoid navigation properties as part of a binding's $select system query option as they may trigger pointless requests.</p><p>By default, the request uses the update group ID for this context's binding; this way, it can easily be part of the same batch request as the corresponding update. <b>Caution:</b> If a dependent binding uses a different update group ID, it may lose its pending changes. The same will happen if a different group ID is provided, and the side effects affect properties for which there are pending changes.</p><p>All failed updates or creates for the group ID are repeated within the same batch request.</p><p>The events 'dataRequested' and 'dataReceived' are not fired. Whatever should happen in the event handler attached to... <ul> <li>'dataRequested', can instead be done before calling <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="requestSideEffects" href="#/api/sap.ui.model.odata.v4.Context/methods/requestSideEffects">#requestSideEffects</a>.</li> <li>'dataReceived', can instead be done once the <code>oPromise</code> returned by <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="requestSideEffects" href="#/api/sap.ui.model.odata.v4.Context/methods/requestSideEffects">#requestSideEffects</a> fulfills or rejects (using <code>oPromise.then(function () {...}, function () {...})</code>).</li> </ul><br><br>References: <ul><li>sap.ui.model.odata.v4.ODataContextBinding#execute</li><li>sap.ui.model.odata.v4.ODataContextBinding#getBoundContext</li><li>sap.ui.model.odata.v4.ODataListBinding#getHeaderContext</li><li>sap.ui.model.odata.v4.ODataModel#bindContext</li></ul></p>
              * @param {object[]} aPathExpressions <p>The "14.5.11 Expression edm:NavigationPropertyPath" or "14.5.13 Expression edm:PropertyPath" objects describing which properties need to be loaded because they may have changed due to side effects of a previous update, for example <code>[{$PropertyPath : "TEAM_ID"}, {$NavigationPropertyPath : "EMPLOYEE_2_MANAGER"}, {$PropertyPath : "EMPLOYEE_2_TEAM/Team_Id"}]</code></p>
+             * @param {string} sGroupId <p>The group ID to be used (since 1.69.0); if not specified, the update group ID for the context's binding is used, see "$$updateGroupId" at <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataModel/methods/bindList">sap.ui.model.odata.v4.ODataModel#bindList</a> and <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataModel/methods/bindContext">sap.ui.model.odata.v4.ODataModel#bindContext</a>. If a different group ID is specified, make sure that <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="requestSideEffects" href="#/api/sap.ui.model.odata.v4.Context/methods/requestSideEffects">#requestSideEffects</a> is called after the corresponding updates have been successfully processed by the server and that there are no pending changes for the affected properties.</p>
              * @returns Promise<any> <p>Promise resolved with <code>undefined</code>, or rejected with an error if loading of side effects fails. Use it to set fields affected by side effects to read-only before <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="requestSideEffects" href="#/api/sap.ui.model.odata.v4.Context/methods/requestSideEffects">#requestSideEffects</a> and make them editable again when the promise resolves; in the error handler, you can repeat the loading of side effects.</p>
              */
-            requestSideEffects(aPathExpressions: object[]): Promise<any>;
+            requestSideEffects(aPathExpressions: object[], sGroupId?: string): Promise<any>;
             /**
              * <p>Sets a new value for the property identified by the given path. The path is relative to this context and is expected to point to a structural property with primitive type.<br><br>References: <ul><li>#getProperty</li></ul></p>
              * @param {string} sPath <p>A relative path within the JSON structure</p>
@@ -17462,6 +17641,12 @@ declare namespace sap {
              */
             refresh(sGroupId?: string): void;
             /**
+             * <p>Returns a promise on the value for the given path relative to this binding. The function allows access to the complete data the binding points to (if <code>sPath</code> is "") or any part thereof. The data is a JSON structure as described in <a href="http://docs.oasis-open.org/odata/odata-json-format/v4.0/odata-json-format-v4.0.html"> "OData JSON Format Version 4.0"</a>. Note that the function clones the result. Modify values via <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.Context/methods/setProperty">sap.ui.model.odata.v4.Context#setProperty</a>.</p><p>If you want <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="requestObject" href="#/api/sap.ui.model.odata.v4.ODataContextBinding/methods/requestObject">#requestObject</a> to read fresh data, call <code>oBinding.refresh()</code> first.<br><br>References: <ul><li>sap.ui.model.odata.v4.ODataContext#requestObject</li></ul></p>
+             * @param {string} sPath <p>A relative path within the JSON structure</p>
+             * @returns Promise<any> <p>A promise on the requested value; in case there is no bound context this promise resolves with <code>undefined</code></p>
+             */
+            requestObject(sPath?: string): Promise<any>;
+            /**
              * <p>Resets all pending changes of this binding, see <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="hasPendingChanges" href="#/api/sap.ui.model.odata.v4.ODataContextBinding/methods/hasPendingChanges">#hasPendingChanges</a>. Resets also invalid user input.</p>
              */
             resetChanges(): void;
@@ -17578,7 +17763,7 @@ declare namespace sap {
              */
             filter(aFilters: sap.ui.model.Filter[], sFilterType?: sap.ui.model.FilterType): sap.ui.model.ListBinding;
             /**
-             * <p>Filters the list with the given filters.</p><p>If there are pending changes an error is thrown. Use <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="hasPendingChanges" href="#/api/sap.ui.model.odata.v4.ODataListBinding/methods/hasPendingChanges">#hasPendingChanges</a> to check if there are pending changes. If there are changes, call <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataModel/methods/submitBatch">sap.ui.model.odata.v4.ODataModel#submitBatch</a> to submit the changes or <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataModel/methods/resetChanges">sap.ui.model.odata.v4.ODataModel#resetChanges</a> to reset the changes before calling <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="filter" href="#/api/sap.ui.model.odata.v4.ODataListBinding/methods/filter">#filter</a>.<br><br>References: <ul><li>sap.ui.model.ListBinding#filter</li></ul></p>
+             * <p>Filters the list with the given filters.</p><p>If there are pending changes an error is thrown. Use <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="hasPendingChanges" href="#/api/sap.ui.model.odata.v4.ODataListBinding/methods/hasPendingChanges">#hasPendingChanges</a> to check if there are pending changes. If there are changes, call <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataModel/methods/submitBatch">sap.ui.model.odata.v4.ODataModel#submitBatch</a> to submit the changes or <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataModel/methods/resetChanges">sap.ui.model.odata.v4.ODataModel#resetChanges</a> to reset the changes before calling <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="filter" href="#/api/sap.ui.model.odata.v4.ODataListBinding/methods/filter">#filter</a>.</p><p>Filters are case sensitive unless the property <code>caseSensitive</code> is set to <code>false</code>. This property has to be set on each filter, it is not inherited from a multi-filter.<br><br>References: <ul><li>sap.ui.model.ListBinding#filter</li></ul></p>
              * @param {sap.ui.model.Filter | sap.ui.model.Filter[]} vFilters <p>The dynamic filters to be used; replaces the dynamic filters given in <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataModel/methods/bindList">sap.ui.model.odata.v4.ODataModel#bindList</a>. The filter executed on the list is created from the following parts, which are combined with a logical 'and': <ul> <li> Dynamic filters of type <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.FilterType.Application">sap.ui.model.FilterType.Application</a> <li> Dynamic filters of type <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.FilterType.Control">sap.ui.model.FilterType.Control</a> <li> The static filters, as defined in the '$filter' binding parameter </ul></p>
              * @param {sap.ui.model.FilterType} sFilterType <p>The filter type to be used</p>
              * @returns sap.ui.model.odata.v4.ODataListBinding <p><code>this</code> to facilitate method chaining</p>
@@ -17600,7 +17785,7 @@ declare namespace sap {
              */
             protected getContexts(iStart?: number, iLength?: number, iMaximumPrefetchSize?: number): sap.ui.model.odata.v4.Context[];
             /**
-             * <p>Returns an array of currently used binding contexts of the bound control</p><p>This method does not trigger any data requests from the backend or delta calculation, but just returns the context array as last requested by the control. This can be used by the application to get access to the data currently displayed by a list control.</p>
+             * <p>Returns an array of currently used binding contexts of the bound control.</p><p>This method does not trigger any data requests from the backend or delta calculation, but just returns the context array as last requested by the control. This can be used by the application to get access to the data currently displayed by a list control.</p>
              * @returns sap.ui.model.Context[] <p>the array of contexts for each row of the bound list</p>
              */
             getCurrentContexts(): sap.ui.model.Context[];
@@ -17615,7 +17800,7 @@ declare namespace sap {
              */
             getHeaderContext(): sap.ui.model.odata.v4.Context;
             /**
-             * <p>Returns the number of entries in the list. This might be an estimated or preliminary length, in case the full length is not known yet, see method isLengthFinal().</p>
+             * <p>Returns the number of entries in the list.</p><p>This might be an estimated or preliminary length, in case the full length is not known yet, see method <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="isLengthFinal" href="#/api/sap.ui.model.ListBinding/methods/isLengthFinal">#isLengthFinal</a>.</p>
              * @returns number <p>returns the number of entries in the list</p>
              */
             getLength(): number;
@@ -17659,12 +17844,12 @@ declare namespace sap {
             isInitial(): void;
             /**
              * <p>Returns whether the length which can be retrieved using getLength() is a known, final length, or a preliminary or estimated length which may change if further data is requested.</p>
-             * @returns boolean <p>returns whether the length is final</p>
+             * @returns boolean <p>Whether the length is final</p>
              */
             isLengthFinal(): boolean;
             /**
              * <p>Returns <code>true</code> if the length has been determined by the data returned from server. If the length is a client side estimation <code>false</code> is returned.<br><br>References: <ul><li>sap.ui.model.ListBinding#isLengthFinal</li></ul></p>
-             * @returns boolean <p>If <code>true</true> the length is determined by server side data</p>
+             * @returns boolean <p>If <code>true</code> the length is determined by server side data</p>
              */
             isLengthFinal(): boolean;
             /**
@@ -17677,6 +17862,14 @@ declare namespace sap {
              * @param {string} sGroupId <p>The group ID to be used for refresh; if not specified, the binding's group ID is used. For suspended bindings, only the binding's group ID is supported because <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="resume" href="#/api/sap.ui.model.odata.v4.ODataListBinding/methods/resume">#resume</a> uses the binding's group ID.</p><p>Valid values are <code>undefined</code>, '$auto', '$auto.*', '$direct' or application group IDs as specified in <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataModel">sap.ui.model.odata.v4.ODataModel</a>.</p>
              */
             refresh(sGroupId?: string): void;
+            /**
+             * <p>Requests the entities for the given index range of the binding's collection and resolves with the corresponding contexts.</p>
+             * @param {number} iStart <p>The index where to start the retrieval of contexts; must be greater than or equal to 0</p>
+             * @param {number} iLength <p>The number of contexts to retrieve beginning from the start index; defaults to the model's size limit, see <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.Model/methods/setSizeLimit">sap.ui.model.Model#setSizeLimit</a>; must be greater than 0, <code>Infinity</code> may be used to retrieve all data</p>
+             * @param {string} sGroupId <p>The group ID to be used for the request; if not specified, the group ID for this binding is used, see <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataListBinding/constructor">sap.ui.model.odata.v4.ODataListBinding#constructor</a>. Valid values are <code>undefined</code>, '$auto', '$auto.*', '$direct' or application group IDs as specified in <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataModel">sap.ui.model.odata.v4.ODataModel</a>.</p>
+             * @returns any <p>A promise which is resolved with the array of the contexts, the first entry containing the context for <code>iStart</code>; it is rejected if <code>iStart</code> or <code>iLength</code> are less than 0 or when requesting the data fails</p>
+             */
+            requestContexts(iStart?: number, iLength?: number, sGroupId?: string): any;
             /**
              * <p>Resets all pending changes of this binding, see <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="hasPendingChanges" href="#/api/sap.ui.model.odata.v4.ODataListBinding/methods/hasPendingChanges">#hasPendingChanges</a>. Resets also invalid user input.</p>
              */
@@ -17726,7 +17919,7 @@ declare namespace sap {
            */
           export class ODataMetaModel extends sap.ui.model.MetaModel {
             /**
-             * <p>Implement in inheriting classes</p>
+             * <p>Implement in inheriting classes.</p>
              * @param {string} sPath <p>the path pointing to the list / array that should be bound</p>
              * @param {any} oContext <p>the context object for this databinding (optional)</p>
              * @param {sap.ui.model.Sorter} aSorters <p>initial sort order (can be either a sorter or an array of sorters) (optional)</p>
@@ -17745,7 +17938,7 @@ declare namespace sap {
              */
             bindList(sPath: string, oContext?: sap.ui.model.Context, aSorters?: sap.ui.model.Sorter | sap.ui.model.Sorter[], aFilters?: sap.ui.model.Filter | sap.ui.model.Filter[]): sap.ui.model.ListBinding;
             /**
-             * <p>Implement in inheriting classes</p>
+             * <p>Implement in inheriting classes.</p>
              * @param {string} sPath <p>the path pointing to the property that should be bound</p>
              * @param {any} oContext <p>the context object for this databinding (optional)</p>
              * @param {any} mParameters <p>additional model specific parameters (optional)</p>
@@ -17761,7 +17954,7 @@ declare namespace sap {
              */
             bindProperty(sPath: string, oContext?: sap.ui.model.Context, mParameters?: any): sap.ui.model.PropertyBinding;
             /**
-             * <p>Implement in inheriting classes</p>
+             * <p>Implement in inheriting classes.</p>
              * @param {string} sPath <p>the path pointing to the tree / array that should be bound</p>
              * @param {any} oContext <p>the context object for this databinding (optional)</p>
              * @param {any[]} aFilters <p>predefined filter/s contained in an array (optional)</p>
@@ -17791,10 +17984,11 @@ declare namespace sap {
              */
             getMetaContext(sPath: string): sap.ui.model.Context;
             /**
-             * <p>Implement in inheriting classes</p>
-             * @param {string} sPath <p>the path to where to read the object</p>
-             * @param {any} oContext <p>the context with which the path should be resolved</p>
-             * @param {any} mParameters <p>additional model specific parameters</p>
+             * <p>Implement in inheriting classes.</p>
+             * @param {string} sPath <p>Path to where to read the object</p>
+             * @param {any} oContext <p>Context with which the path should be resolved</p>
+             * @param {any} mParameters <p>Additional model specific parameters</p>
+             * @returns any <p>The value for the given path/context or <code>undefined</code> if data could not be found</p>
              */
             getObject(sPath: string, oContext?: any, mParameters?: any): any;
             /**
@@ -17818,7 +18012,7 @@ declare namespace sap {
              */
             getValueListType(sPropertyPath: string): sap.ui.model.odata.v4.ValueListType;
             /**
-             * <p>Refresh the model. This will check all bindings for updated data and update the controls if data has been changed.</p>
+             * <p>Refresh the model.</p><p>This will check all bindings for updated data and update the controls if data has been changed.</p>
              * @param {boolean} bForceUpdate <p>Update controls even if data has not been changed</p>
              */
             refresh(bForceUpdate: boolean): void;
@@ -17911,7 +18105,7 @@ declare namespace sap {
              */
             attachSessionTimeout(fnFunction: Function, oListener?: any): sap.ui.model.odata.v4.ODataModel;
             /**
-             * <p>Create ContextBinding</p>
+             * <p>Create ContextBinding.</p>
              * @param {string | any} sPath <p>the path pointing to the property that should be bound or an object which contains the following parameter properties: path, context, parameters</p>
              * @param {any} oContext <p>the context object for this databinding (optional)</p>
              * @param {any} mParameters <p>additional model specific parameters (optional)</p>
@@ -17928,7 +18122,7 @@ declare namespace sap {
              */
             bindContext(sPath: string, oContext?: sap.ui.model.odata.v4.Context, mParameters?: any): sap.ui.model.odata.v4.ODataContextBinding;
             /**
-             * <p>Implement in inheriting classes</p>
+             * <p>Implement in inheriting classes.</p>
              * @param {string} sPath <p>the path pointing to the list / array that should be bound</p>
              * @param {any} oContext <p>the context object for this databinding (optional)</p>
              * @param {sap.ui.model.Sorter} aSorters <p>initial sort order (can be either a sorter or an array of sorters) (optional)</p>
@@ -17948,7 +18142,7 @@ declare namespace sap {
              */
             bindList(sPath: string, oContext?: sap.ui.model.Context, vSorters?: sap.ui.model.Sorter | sap.ui.model.Sorter[], vFilters?: sap.ui.model.Filter | sap.ui.model.Filter[], mParameters?: any): sap.ui.model.odata.v4.ODataListBinding;
             /**
-             * <p>Implement in inheriting classes</p>
+             * <p>Implement in inheriting classes.</p>
              * @param {string} sPath <p>the path pointing to the property that should be bound</p>
              * @param {any} oContext <p>the context object for this databinding (optional)</p>
              * @param {any} mParameters <p>additional model specific parameters (optional)</p>
@@ -17964,7 +18158,7 @@ declare namespace sap {
              */
             bindProperty(sPath: string, oContext?: sap.ui.model.Context, mParameters?: any): sap.ui.model.odata.v4.ODataPropertyBinding;
             /**
-             * <p>Implement in inheriting classes</p>
+             * <p>Implement in inheriting classes.</p>
              * @param {string} sPath <p>the path pointing to the tree / array that should be bound</p>
              * @param {any} oContext <p>the context object for this databinding (optional)</p>
              * @param {any[]} aFilters <p>predefined filter/s contained in an array (optional)</p>
@@ -17978,7 +18172,7 @@ declare namespace sap {
              */
             bindTree(): void;
             /**
-             * <p>Implement in inheriting classes</p>
+             * <p>Implement in inheriting classes.</p>
              * @param {string} sPath <p>the path to create the new context from</p>
              * @param {any} oContext <p>the context which should be used to create the new binding context</p>
              * @param {any} mParameters <p>the parameters used to create the new binding context</p>
@@ -18007,7 +18201,7 @@ declare namespace sap {
              */
             destroy(): void;
             /**
-             * <p>Destroys the model and clears the model data. A model implementation may override this function and perform model specific cleanup tasks e.g. abort requests, prevent new requests, etc.<br><br>References: <ul><li>sap.ui.base.Object.prototype.destroy</li></ul></p>
+             * <p>Destroys the model and clears the model data.</p><p>A model implementation may override this function and perform model specific cleanup tasks e.g. abort requests, prevent new requests, etc.<br><br>References: <ul><li>sap.ui.base.Object.prototype.destroy</li></ul></p>
              */
             destroy(): void;
             /**
@@ -18015,7 +18209,7 @@ declare namespace sap {
              */
             destroy(): void;
             /**
-             * <p>Implement in inheriting classes</p>
+             * <p>Implement in inheriting classes.</p>
              * @param {any} oContext <p>to destroy</p>
              */
             destroyBindingContext(oContext: any): void;
@@ -18037,7 +18231,7 @@ declare namespace sap {
             getGroupId(): string;
             /**
              * <p>Returns the meta model associated with this model if it is available for the concrete model type.</p>
-             * @returns sap.ui.model.MetaModel <p>The meta model or undefined if no meta model exists.</p>
+             * @returns sap.ui.model.MetaModel <p>The meta model or <code>undefined</code> if no meta model exists.</p>
              */
             getMetaModel(): sap.ui.model.MetaModel;
             /**
@@ -18057,11 +18251,12 @@ declare namespace sap {
             getUpdateGroupId(): string;
             /**
              * <p>Returns <code>true</code> if there are pending changes, meaning updates or created entities (see <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataListBinding/methods/create">sap.ui.model.odata.v4.ODataListBinding#create</a>) that have not yet been successfully sent to the server.</p>
+             * @param {string} sGroupId <p>A group ID as specified in <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataModel">sap.ui.model.odata.v4.ODataModel</a>, except group IDs having <a target="_self" class="jsdoclink" href="#/api/Direct">sap.ui.model.odata.v4.SubmitMode.Direct</a>; if specified, only pending changes related to that group ID are considered (since 1.70.0)</p>
              * @returns boolean <p><code>true</code> if there are pending changes</p>
              */
-            hasPendingChanges(): boolean;
+            hasPendingChanges(sGroupId?: string): boolean;
             /**
-             * <p>Refresh the model. This will check all bindings for updated data and update the controls if data has been changed.</p>
+             * <p>Refresh the model.</p><p>This will check all bindings for updated data and update the controls if data has been changed.</p>
              * @param {boolean} bForceUpdate <p>Update controls even if data has not been changed</p>
              */
             refresh(bForceUpdate: boolean): void;
@@ -18076,7 +18271,7 @@ declare namespace sap {
              */
             resetChanges(sGroupId?: string): void;
             /**
-             * <p>Submits the requests associated with the given group ID in one batch request. Requests from subsequent calls to this method for the same group ID may be combined in one batch request using separate change sets. For group IDs with <a target="_self" class="jsdoclink" href="#/api/Auto">sap.ui.model.odata.v4.SubmitMode.Auto</a>, only a single change set is used; this method is useful to repeat failed updates or creates (see <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataListBinding/methods/create">sap.ui.model.odata.v4.ODataListBinding#create</a>).</p>
+             * <p>Submits the requests associated with the given group ID in one batch request. Requests from subsequent calls to this method for the same group ID may be combined in one batch request using separate change sets. For group IDs with <a target="_self" class="jsdoclink" href="#/api/Auto">sap.ui.model.odata.v4.SubmitMode.Auto</a>, only a single change set is used; this method is useful to repeat failed updates or creates (see <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataListBinding/methods/create">sap.ui.model.odata.v4.ODataListBinding#create</a>) together with all other requests for the given group ID in one batch request.</p>
              * @param {string} sGroupId <p>A valid group ID as specified in <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataModel">sap.ui.model.odata.v4.ODataModel</a>.</p>
              * @returns Promise<any> <p>A promise on the outcome of the HTTP request resolving with <code>undefined</code>; it is rejected with an error if the batch request itself fails</p>
              */
@@ -18156,6 +18351,11 @@ declare namespace sap {
              * @param {string} sGroupId <p>The group ID to be used for refresh; if not specified, the binding's group ID is used. For suspended bindings, only the binding's group ID is supported because <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="resume" href="#/api/sap.ui.model.odata.v4.ODataPropertyBinding/methods/resume">#resume</a> uses the binding's group ID.</p><p>Valid values are <code>undefined</code>, '$auto', '$auto.*', '$direct' or application group IDs as specified in <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataModel">sap.ui.model.odata.v4.ODataModel</a>.</p>
              */
             refresh(sGroupId?: string): void;
+            /**
+             * <p>Requests the value of the property binding.</p>
+             * @returns Promise<any> <p>A promise resolving with the resulting value or <code>undefined</code> if it could not be determined</p>
+             */
+            requestValue(): Promise<any>;
             /**
              * <p>Requests information to retrieve a value list for this property.</p>
              * @param {boolean} bAutoExpandSelect <p>The value of the parameter <code>autoExpandSelect</code> for value list models created by this method. If the value list model is this binding's model, this flag has no effect. Supported since 1.68.0</p>
@@ -18315,7 +18515,7 @@ declare namespace sap {
            */
           enhance(oData: any | any | any): Promise<any>;
           /**
-           * <p>Implement in inheriting classes</p>
+           * <p>Implement in inheriting classes.</p>
            * @param {string} sPath <p>the path to where to read the attribute value</p>
            * @param {any} oContext <p>the context with which the path should be resolved</p>
            */
@@ -18370,10 +18570,11 @@ declare namespace sap {
            */
           constructor(oData: any);
           /**
-           * <p>Implement in inheriting classes</p>
-           * @param {string} sPath <p>the path to where to read the object</p>
-           * @param {any} oContext <p>the context with which the path should be resolved</p>
-           * @param {any} mParameters <p>additional model specific parameters</p>
+           * <p>Implement in inheriting classes.</p>
+           * @param {string} sPath <p>Path to where to read the object</p>
+           * @param {any} oContext <p>Context with which the path should be resolved</p>
+           * @param {any} mParameters <p>Additional model specific parameters</p>
+           * @returns any <p>The value for the given path/context or <code>undefined</code> if data could not be found</p>
            */
           getObject(sPath: string, oContext?: any, mParameters?: any): any;
           /**
@@ -18384,7 +18585,7 @@ declare namespace sap {
            */
           getObject(sPath: string, oContext?: any): any;
           /**
-           * <p>Implement in inheriting classes</p>
+           * <p>Implement in inheriting classes.</p>
            * @param {string} sPath <p>the path to where to read the attribute value</p>
            * @param {any} oContext <p>the context with which the path should be resolved</p>
            */
@@ -18982,7 +19183,6 @@ declare namespace sap {
           protected setHash(sHash: string): void;
         }
         /**
-         * <p>Used to determine the <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.HistoryDirection">sap.ui.core.routing.HistoryDirection</a> of the current or a future navigation, done with a <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.Router">sap.ui.core.routing.Router</a> or <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.HashChanger">sap.ui.core.routing.HashChanger</a>.</p><p><strong>ATTENTION:</strong> this class will not be accurate if someone does hash-replacement without the named classes above. If you are manipulating the hash directly, this class is not supported anymore.</p>
          */
         export class History {
           /**
@@ -18990,6 +19190,7 @@ declare namespace sap {
            */
           static getInstance(): sap.ui.core.routing.History;
           /**
+           * <p>Used to determine the <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.HistoryDirection">sap.ui.core.routing.HistoryDirection</a> of the current or a future navigation, done with a <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.Router">sap.ui.core.routing.Router</a> or <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.HashChanger">sap.ui.core.routing.HashChanger</a>.</p><p><strong>ATTENTION:</strong> this class will not be accurate if someone does hash-replacement without the named classes above. If you are manipulating the hash directly, this class is not supported anymore.</p>
            * @param {sap.ui.core.routing.HashChanger} oHashChanger <p>required, without a HashChanger this class cannot work. The class needs to be aware of the hash-changes.</p>
            */
           constructor(oHashChanger: sap.ui.core.routing.HashChanger);
@@ -18999,6 +19200,11 @@ declare namespace sap {
            * @returns sap.ui.core.routing.HistoryDirection <p>or undefined, if no navigation has taken place yet.</p>
            */
           getDirection(sNewHash?: string): sap.ui.core.routing.HistoryDirection;
+          /**
+           * <p>Returns the length difference between the history state stored in browser's pushState and the state maintained in this class.</p><p>The function returns <code>undefined</code> when <ul> <li>The current state in browser's history pushState isn't initialized, for example, between a new hash is set or replaced and the "hashChange" event is processed by this class</li> <li>History pushState isn't fully supported, for example, Internet Explorer.</li> <li>History pushState is already used before UI5 History is initialized, and UI5 can't maintain the hash history by using the browser pushState</li> </ul></p><p>Once the "hashChange" event is processed by this class, this method always returns 0. However, before a "hashChange" event reaches this class, it returns the offset between the new hash and the previous one within the history state.</p>
+           * @returns int|undefined <p>The length difference or returns <code>undefined</code> when browser pushState can't be used at the moment when this function is called</p>
+           */
+          getHistoryStateOffset(): number | undefined;
           /**
            * <p>gets the previous hash in the history - if the last direction was Unknown or there was no navigation yet, undefined will be returned</p>
            * @returns string <p>or undefined</p>
@@ -19037,27 +19243,27 @@ declare namespace sap {
            */
           constructor(oRouter: sap.ui.core.routing.Router, oConfig: any, oParent?: sap.ui.core.routing.Route);
           /**
-           * <p>Attach event-handler <code>fnFunction</code> to the 'beforeMatched' event of this <code>sap.ui.core.routing.Route</code>.<br/></p>
-           * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-           * @param {any} oListener <p>Object on which to call the given function. If empty, this route is used.</p>
-           * @returns sap.ui.core.routing.Route <p><code>this</code> to allow method chaining</p>
+           * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="beforeMatched" href="#/api/sap.ui.core.routing.Route/events/beforeMatched">beforeMatched</a> event of this <code>sap.ui.core.routing.Route</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.core.routing.Route</code> itself.</p>
+           * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>Route</code> itself</p>
+           * @returns sap.ui.core.routing.Route <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
           attachBeforeMatched(oData: any, fnFunction: Function, oListener?: any): sap.ui.core.routing.Route;
           /**
-           * <p>Attach event-handler <code>fnFunction</code> to the 'matched' event of this <code>sap.ui.core.routing.Route</code>.<br/></p>
-           * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-           * @param {any} oListener <p>Object on which to call the given function. If empty, this route is used.</p>
-           * @returns sap.ui.core.routing.Route <p><code>this</code> to allow method chaining</p>
+           * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="matched" href="#/api/sap.ui.core.routing.Route/events/matched">matched</a> event of this <code>sap.ui.core.routing.Route</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.core.routing.Route</code> itself.</p>
+           * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.core.routing.Route</code> itself</p>
+           * @returns sap.ui.core.routing.Route <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
           attachMatched(oData: any, fnFunction: Function, oListener?: any): sap.ui.core.routing.Route;
           /**
-           * <p>Attach event-handler <code>fnFunction</code> to the 'patternMatched' event of this <code>sap.ui.core.routing.Route</code>.<br/></p>
-           * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-           * @param {any} oListener <p>Object on which to call the given function. If empty, this route is used.</p>
-           * @returns sap.ui.core.routing.Route <p><code>this</code> to allow method chaining</p>
+           * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="patternMatched" href="#/api/sap.ui.core.routing.Route/events/patternMatched">patternMatched</a> event of this <code>sap.ui.core.routing.Route</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.core.routing.Route</code> itself.</p>
+           * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>Route</code> itself</p>
+           * @returns sap.ui.core.routing.Route <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
           attachPatternMatched(oData: any, fnFunction: Function, oListener?: any): sap.ui.core.routing.Route;
           /**
@@ -19074,32 +19280,32 @@ declare namespace sap {
            */
           destroy(): sap.ui.core.routing.Route;
           /**
-           * <p>Detach event-handler <code>fnFunction</code> from the 'beforeMatched' event of this <code>sap.ui.core.routing.Route</code>.<br/></p><p>The passed function and listener object must match the ones previously used for event registration.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-           * @param {any} oListener <p>Object on which the given function had to be called.</p>
-           * @returns sap.ui.core.routing.Route <p><code>this</code> to allow method chaining</p>
+           * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="beforeMatched" href="#/api/sap.ui.core.routing.Route/events/beforeMatched">beforeMatched</a> event of this <code>sap.ui.core.routing.Route</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object on which the given function had to be called</p>
+           * @returns sap.ui.core.routing.Route <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          detachBeforeMatched(fnFunction: Function, oListener: any): sap.ui.core.routing.Route;
+          detachBeforeMatched(fnFunction: Function, oListener?: any): sap.ui.core.routing.Route;
           /**
-           * <p>Detach event-handler <code>fnFunction</code> from the 'matched' event of this <code>sap.ui.core.routing.Route</code>.<br/></p><p>The passed function and listener object must match the ones previously used for event registration.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-           * @param {any} oListener <p>Object on which the given function had to be called.</p>
-           * @returns sap.ui.core.routing.Route <p><code>this</code> to allow method chaining</p>
+           * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="matched" href="#/api/sap.ui.core.routing.Route/events/matched">matched</a> event of this <code>sap.ui.core.routing.Route</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object on which the given function had to be called</p>
+           * @returns sap.ui.core.routing.Route <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          detachMatched(fnFunction: Function, oListener: any): sap.ui.core.routing.Route;
+          detachMatched(fnFunction: Function, oListener?: any): sap.ui.core.routing.Route;
           /**
-           * <p>Detach event-handler <code>fnFunction</code> from the 'patternMatched' event of this <code>sap.ui.core.routing.Route</code>.<br/></p><p>The passed function and listener object must match the ones previously used for event registration.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-           * @param {any} oListener <p>Object on which the given function had to be called.</p>
-           * @returns sap.ui.core.routing.Route <p><code>this</code> to allow method chaining</p>
+           * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="patternMatched" href="#/api/sap.ui.core.routing.Route/events/patternMatched">patternMatched</a> event of this <code>sap.ui.core.routing.Route</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object on which the given function had to be called</p>
+           * @returns sap.ui.core.routing.Route <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          detachPatternMatched(fnFunction: Function, oListener: any): sap.ui.core.routing.Route;
+          detachPatternMatched(fnFunction: Function, oListener?: any): sap.ui.core.routing.Route;
           /**
-           * <p>Fire event beforeMatched to attached listeners.</p>
-           * @param {any} mArguments <p>the arguments to pass along with the event.</p>
-           * @returns sap.ui.core.routing.Router <p><code>this</code> to allow method chaining</p>
+           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="beforeMatched" href="#/api/sap.ui.core.routing.Route/events/beforeMatched">beforeMatched</a> to attached listeners.</p>
+           * @param {any} oParameters <p>Parameters to pass along with the event</p>
+           * @returns sap.ui.core.routing.Router <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          protected fireBeforeMatched(mArguments?: any): sap.ui.core.routing.Router;
+          protected fireBeforeMatched(oParameters?: any): sap.ui.core.routing.Router;
           /**
            * <p>Returns the pattern of the route. If there are multiple patterns, the first pattern is returned</p>
            * @returns string <p>the routes pattern</p>
@@ -19122,7 +19328,7 @@ declare namespace sap {
          */
         export class Router extends sap.ui.base.EventProvider {
           /**
-           * <p>Get a registered router</p>
+           * <p>Get a registered router.</p>
            * @param {string} sName <p>Name of the router</p>
            * @returns sap.ui.core.routing.Router <p>The router with the specified name, else undefined</p>
            */
@@ -19205,7 +19411,6 @@ declare namespace sap {
           </pre></p><p>Since the xmlTarget does not specify its viewType, XML is taken from the config object. The jsTarget is specifying it, so the viewType will be JS.</p>
            * @param {sap.ui.core.UIComponent} oOwner <p>the Component of all the views that will be created by this Router,<br/> will get forwarded to the <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.Views/constructor">sap.ui.core.routing.Views#constructor</a>.<br/> If you are using the componentMetadata to define your routes you should skip this parameter.</p>
            * @param {any} oTargetsConfig <p>available @since 1.28 the target configuration, see <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.Targets/constructor">sap.ui.core.routing.Targets#constructor</a> documentation (the options object).<br/> You should use Targets to create and display views. Since 1.28 the route should only contain routing relevant properties.<br/> <b>Example:</b> <pre>
-          <code>
               new Router(
               // Routes
               [
@@ -19238,54 +19443,53 @@ declare namespace sap {
                        controlAggregation: "pages"
                    }
               })
-          </code>
           </pre></p>
            */
           constructor(oRoutes?: any | object[], oConfig?: any, oOwner?: sap.ui.core.UIComponent, oTargetsConfig?: any);
           /**
-           * <p>Adds a route to the router</p>
-           * @param {any} oConfig <p>configuration object for the route @see sap.ui.core.routing.Route#constructor</p>
-           * @param {sap.ui.core.routing.Route} oParent <p>The parent route - if a parent route is given, the routeMatched event of this route will also trigger the route matched of the parent and it will also create the view of the parent (if provided).</p>
+           * <p>Adds a route to the router.</p>
+           * @param {any} oConfig <p>Configuration object for the route @see sap.ui.core.routing.Route#constructor</p>
+           * @param {sap.ui.core.routing.Route} oParent <p>The parent route - if a parent route is given, the <code>routeMatched</code> event of this route will also trigger the <code>routeMatched</code> of the parent and it will also create the view of the parent (if provided).</p>
            */
           addRoute(oConfig: any, oParent: sap.ui.core.routing.Route): void;
           /**
-           * <p>Attach event-handler <code>fnFunction</code> to the 'beforeRouteMatched' event of this <code>sap.ui.core.routing.Router</code>.<br/></p>
-           * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-           * @param {any} oListener <p>Object on which to call the given function. If empty, this router is used.</p>
-           * @returns sap.ui.core.routing.Router <p><code>this</code> to allow method chaining</p>
+           * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="beforeRouteMatched" href="#/api/sap.ui.core.routing.Router/events/beforeRouteMatched">beforeRouteMatched</a> event of this <code>sap.ui.core.routing.Router</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.core.routing.Router</code> itself.</p>
+           * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+           * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+           * @param {any} oListener <p>Context object to call the event handler with, defaults to this <code>sap.ui.core.routing.Router</code> itself</p>
+           * @returns sap.ui.core.routing.Router <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
           attachBeforeRouteMatched(oData: any, fnFunction: Function, oListener?: any): sap.ui.core.routing.Router;
           /**
-           * <p>Attach event-handler <code>fnFunction</code> to the 'bypassed' event of this <code>sap.ui.core.routing.Router</code>.<br/> The event will get fired, if none of the routes of the routes is matching. <br/></p>
-           * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-           * @param {any} oListener <p>Object on which to call the given function. If empty, this router is used.</p>
-           * @returns sap.ui.core.routing.Router <p><code>this</code> to allow method chaining</p>
+           * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="bypassed" href="#/api/sap.ui.core.routing.Router/events/bypassed">bypassed</a> event of this <code>sap.ui.core.routing.Router</code>.</p><p>The event will get fired, if none of the routes of the router is matching.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.core.routing.Router</code> itself.</p>
+           * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+           * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+           * @param {any} oListener <p>Context object to call the event handler with, defaults to this <code>sap.ui.core.routing.Router</code> itself</p>
+           * @returns sap.ui.core.routing.Router <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
           attachBypassed(oData: any, fnFunction: Function, oListener?: any): sap.ui.core.routing.Router;
           /**
-           * <p>Attach event-handler <code>fnFunction</code> to the 'routeMatched' event of this <code>sap.ui.core.routing.Router</code>.<br/></p>
-           * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-           * @param {any} oListener <p>Object on which to call the given function. If empty, this router is used.</p>
-           * @returns sap.ui.core.routing.Router <p><code>this</code> to allow method chaining</p>
+           * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="routeMatched" href="#/api/sap.ui.core.routing.Router/events/routeMatched">routeMatched</a> event of this <code>sap.ui.core.routing.Router</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.core.routing.Router</code> itself.</p>
+           * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+           * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+           * @param {any} oListener <p>Context object to call the event handler with, defaults to this <code>sap.ui.core.routing.Router</code> itself</p>
+           * @returns sap.ui.core.routing.Router <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
           attachRouteMatched(oData: any, fnFunction: Function, oListener?: any): sap.ui.core.routing.Router;
           /**
-           * <p>Attach event-handler <code>fnFunction</code> to the 'routePatternMatched' event of this <code>sap.ui.core.routing.Router</code>.<br/> This event is similar to route matched. But it will only fire for the route that has a matching pattern, not for its parent Routes <br/></p>
-           * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-           * @param {any} oListener <p>Object on which to call the given function. If empty, this router is used.</p>
-           * @returns sap.ui.core.routing.Router <p><code>this</code> to allow method chaining</p>
+           * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="routePatternMatched" href="#/api/sap.ui.core.routing.Router/events/routePatternMatched">routePatternMatched</a> event of this <code>sap.ui.core.routing.Router</code>.</p><p>This event is similar to <code>routeMatched</code>. But it will only fire for the route that has a matching pattern, not for its parent routes.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.core.routing.Router</code> itself.</p>
+           * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+           * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+           * @param {any} oListener <p>Context object to call the event handler with, defaults to this <code>sap.ui.core.routing.Router</code> itself</p>
+           * @returns sap.ui.core.routing.Router <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
           attachRoutePatternMatched(oData: any, fnFunction: Function, oListener?: any): sap.ui.core.routing.Router;
           /**
-           * <p>Attach event-handler <code>fnFunction</code> to the 'titleChanged' event of this <code>sap.ui.core.routing.Router</code>.<br/></p>
-           * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-           * @param {any} oListener <p>Object on which to call the given function.</p>
-           * @returns sap.ui.core.routing.Router <p><code>this</code> to allow method chaining</p>
+           * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="titleChanged" href="#/api/sap.ui.core.routing.Router/events/titleChanged">titleChanged</a> event of this <code>sap.ui.core.routing.Router</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.core.routing.Router</code> itself.</p>
+           * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+           * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+           * @param {any} oListener <p>Context object to call the event handler with, defaults to this <code>sap.ui.core.routing.Router</code> itself</p>
+           * @returns sap.ui.core.routing.Router <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
           attachTitleChanged(oData: any, fnFunction: Function, oListener?: any): sap.ui.core.routing.Router;
           /**
@@ -19297,127 +19501,133 @@ declare namespace sap {
            */
           destroy(): void;
           /**
-           * <p>Removes the router from the hash changer @see sap.ui.core.routing.HashChanger</p>
+           * <p>Removes the router from the hash changer.</p><p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.HashChanger">sap.ui.core.routing.HashChanger</a>.</p>
            * @returns sap.ui.core.routing.Router <p>this for chaining.</p>
            */
           destroy(): sap.ui.core.routing.Router;
           /**
-           * <p>Detach event-handler <code>fnFunction</code> from the 'beforeRouteMatched' event of this <code>sap.ui.core.routing.Router</code>.<br/></p><p>The passed function and listener object must match the ones previously used for event registration.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-           * @param {any} oListener <p>Object on which the given function had to be called.</p>
-           * @returns sap.ui.core.routing.Router <p><code>this</code> to allow method chaining</p>
+           * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="beforeRouteMatched" href="#/api/sap.ui.core.routing.Router/events/beforeRouteMatched">beforeRouteMatched</a> event of this <code>sap.ui.core.routing.Router</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+           * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+           * @param {any} oListener <p>Context object on which the given function had to be called</p>
+           * @returns sap.ui.core.routing.Router <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
           detachBeforeRouteMatched(fnFunction: Function, oListener: any): sap.ui.core.routing.Router;
           /**
-           * <p>Detach event-handler <code>fnFunction</code> from the 'bypassed' event of this <code>sap.ui.core.routing.Router</code>.<br/> The event will get fired, if none of the routes of the routes is matching. <br/></p><p>The passed function and listener object must match the ones previously used for event registration.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-           * @param {any} oListener <p>Object on which the given function had to be called.</p>
-           * @returns sap.ui.core.routing.Router <p><code>this</code> to allow method chaining</p>
+           * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="bypassed" href="#/api/sap.ui.core.routing.Router/events/bypassed">bypassed</a> event of this <code>sap.ui.core.routing.Router</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p><p>The event will get fired, if none of the routes of the router is matching.</p>
+           * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+           * @param {any} oListener <p>Context object on which the given function had to be called</p>
+           * @returns sap.ui.core.routing.Router <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
           detachBypassed(fnFunction: Function, oListener: any): sap.ui.core.routing.Router;
           /**
-           * <p>Detach event-handler <code>fnFunction</code> from the 'routeMatched' event of this <code>sap.ui.core.routing.Router</code>.<br/></p><p>The passed function and listener object must match the ones previously used for event registration.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-           * @param {any} oListener <p>Object on which the given function had to be called.</p>
-           * @returns sap.ui.core.routing.Router <p><code>this</code> to allow method chaining</p>
+           * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="routeMatched" href="#/api/sap.ui.core.routing.Router/events/routeMatched">routeMatched</a> event of this <code>sap.ui.core.routing.Router</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+           * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+           * @param {any} oListener <p>Context object on which the given function had to be called</p>
+           * @returns sap.ui.core.routing.Router <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
           detachRouteMatched(fnFunction: Function, oListener: any): sap.ui.core.routing.Router;
           /**
-           * <p>Detach event-handler <code>fnFunction</code> from the 'routePatternMatched' event of this <code>sap.ui.core.routing.Router</code>.<br/> This event is similar to route matched. But it will only fire for the route that has a matching pattern, not for its parent Routes <br/></p><p>The passed function and listener object must match the ones previously used for event registration.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-           * @param {any} oListener <p>Object on which the given function had to be called.</p>
-           * @returns sap.ui.core.routing.Router <p><code>this</code> to allow method chaining</p>
+           * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="routePatternMatched" href="#/api/sap.ui.core.routing.Router/events/routePatternMatched">routePatternMatched</a> event of this <code>sap.ui.core.routing.Router</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p><p>This event is similar to <code>routeMatched</code>. But it will only fire for the route that has a matching pattern, not for its parent routes.</p>
+           * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+           * @param {any} oListener <p>Context object on which the given function had to be called</p>
+           * @returns sap.ui.core.routing.Router <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
           detachRoutePatternMatched(fnFunction: Function, oListener: any): sap.ui.core.routing.Router;
           /**
-           * <p>Detach event-handler <code>fnFunction</code> from the 'titleChanged' event of this <code>sap.ui.core.routing.Router</code>.<br/></p><p>The passed function and listener object must match the ones previously used for event registration.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-           * @param {any} oListener <p>Object on which the given function had to be called.</p>
-           * @returns sap.ui.core.routing.Router <p><code>this</code> to allow method chaining</p>
+           * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="titleChanged" href="#/api/sap.ui.core.routing.Router/events/titleChanged">titleChanged</a> event of this <code>sap.ui.core.routing.Router</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+           * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+           * @param {any} oListener <p>Context object on which the given function had to be called</p>
+           * @returns sap.ui.core.routing.Router <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
           detachTitleChanged(fnFunction: Function, oListener: any): sap.ui.core.routing.Router;
           /**
-           * <p>Fire event beforeRouteMatched to attached listeners.</p>
-           * @param {any} mArguments <p>the arguments to pass along with the event.</p>
-           * @returns sap.ui.core.routing.Router <p><code>this</code> to allow method chaining</p>
+           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="beforeRouteMatched" href="#/api/sap.ui.core.routing.Router/events/beforeRouteMatched">beforeRouteMatched</a> to attached listeners.</p>
+           * @param {any} oParameters <p>Parameters to pass along with the event</p>
+           * @returns sap.ui.core.routing.Router <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          protected fireBeforeRouteMatched(mArguments?: any): sap.ui.core.routing.Router;
+          protected fireBeforeRouteMatched(oParameters?: any): sap.ui.core.routing.Router;
           /**
-           * <p>Fire event bypassed to attached listeners. The event will get fired, if none of the routes of the routes is matching. <br/></p>
-           * @param {any} mArguments <p>the arguments to pass along with the event.</p>
-           * @returns sap.ui.core.routing.Router <p><code>this</code> to allow method chaining</p>
+           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="bypassed" href="#/api/sap.ui.core.routing.Router/events/bypassed">bypassed</a> to attached listeners.</p><p>The event will get fired, if none of the routes of the router is matching.</p>
+           * @param {any} oParameters <p>Parameters to pass along with the event</p>
+           * @returns sap.ui.core.routing.Router <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          protected fireBypassed(mArguments?: any): sap.ui.core.routing.Router;
+          protected fireBypassed(oParameters?: any): sap.ui.core.routing.Router;
           /**
-           * <p>Fire event routeMatched to attached listeners.</p>
-           * @param {any} mArguments <p>the arguments to pass along with the event.</p>
-           * @returns sap.ui.core.routing.Router <p><code>this</code> to allow method chaining</p>
+           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="routeMatched" href="#/api/sap.ui.core.routing.Router/events/routeMatched">routeMatched</a> to attached listeners.</p>
+           * @param {any} oParameters <p>Parameters to pass along with the event</p>
+           * @returns sap.ui.core.routing.Router <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          protected fireRouteMatched(mArguments?: any): sap.ui.core.routing.Router;
+          protected fireRouteMatched(oParameters?: any): sap.ui.core.routing.Router;
           /**
-           * <p>Fire event routePatternMatched to attached listeners. This event is similar to route matched. But it will only fire for the route that has a matching pattern, not for its parent Routes <br/></p>
-           * @param {any} mArguments <p>the arguments to pass along with the event.</p>
-           * @returns sap.ui.core.routing.Router <p><code>this</code> to allow method chaining</p>
+           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="routePatternMatched" href="#/api/sap.ui.core.routing.Router/events/routePatternMatched">routePatternMatched</a> to attached listeners.</p><p>This event is similar to <code>routeMatched</code>. But it will only fire for the route that has a matching pattern, not for its parent routes.</p>
+           * @param {any} oParameters <p>Parameters to pass along with the event</p>
+           * @returns sap.ui.core.routing.Router <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          protected fireRoutePatternMatched(mArguments?: any): sap.ui.core.routing.Router;
+          protected fireRoutePatternMatched(oParameters?: any): sap.ui.core.routing.Router;
           /**
-           * <p>Returns the Route with a name, if no route is found undefined is returned</p>
+           * <p>Returns the route with the given name or <code>undefined</code> if no route is found.</p>
            * @param {string} sName <p>Name of the route</p>
-           * @returns sap.ui.core.routing.Route <p>the route with the provided name or undefined.</p>
+           * @returns sap.ui.core.routing.Route <p>Route with the provided name or <code>undefined</code>.</p>
            */
           getRoute(sName: string): sap.ui.core.routing.Route;
           /**
-           * <p>Returns a target by its name (if you pass myTarget: { view: "myView" }) in the config myTarget is the name. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.Targets/methods/getTarget">sap.ui.core.routing.Targets#getTarget</a></p>
-           * @param {string | string[]} vName <p>the name of a single target or the name of multiple targets</p>
-           * @returns sap.ui.core.routing.Target|undefined|sap.ui.core.routing.Target[] <p>The target with the corresponding name or undefined. If an array way passed as name this will return an array with all found targets. Non existing targets will not be returned but will log an error.</p>
+           * <p>Returns a target by its name.</p><p>If you pass <code>myTarget: { view: "myView" })</code> in the config, <code>myTarget</code> is the name. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.Targets/methods/getTarget">sap.ui.core.routing.Targets#getTarget</a>.</p>
+           * @param {string | string[]} vName <p>Name of a single target or an array of names of multiple targets</p>
+           * @returns sap.ui.core.routing.Target|undefined|sap.ui.core.routing.Target[] <p>Target with the corresponding name or <code>undefined</code>. If an array of names was passed, this will return an array with all found targets. Non existing targets will not be returned but will log an error.</p>
            */
           getTarget(vName: string | string[]): sap.ui.core.routing.Target | undefined | sap.ui.core.routing.Target[];
           /**
-           * <p>Returns the instance of Targets, if you pass a targets config to the router</p>
-           * @returns sap.ui.core.routing.Targets|undefined <p>The instance of targets, the router uses to place views or undefined if you did not specify the targets parameter in the router's constructor.</p>
+           * <p>Returns the instance of <code>sap.ui.core.routing.Targets</code>, if you passed a <code>targets</code> configuration to the router.</p>
+           * @returns sap.ui.core.routing.Targets|undefined <p>Instance of <code>Targets</code> which the router uses to place views or <code>undefined</code> if you did not specify the <code>targets</code> parameter in the router's constructor.</p>
            */
           getTargets(): sap.ui.core.routing.Targets | undefined;
           /**
-           * <p>Returns the title history.</p><p>History entry example: <code> { title: "TITLE", // The displayed title hash: "HASH" // The url hash isHome: "true/false" // The app home indicator } </code></p>
+           * <p>Returns the title history.</p><p>History entry example: <pre>
+            {
+              title: "TITLE", // The displayed title
+              hash: "HASH" // The url hash
+              isHome: "true/false" // The app home indicator
+            }
+          </pre></p>
            * @returns any[] <p>An array which contains the history entries.</p>
            */
           getTitleHistory(): any[];
           /**
-           * <p>Returns the URL for the route and replaces the placeholders with the values in oParameters</p>
+           * <p>Returns the URL for the route and replaces the placeholders with the values in <code>oParameters</code>.</p>
            * @param {string} sName <p>Name of the route</p>
            * @param {any} oParameters <p>Parameters for the route</p>
-           * @returns string <p>the unencoded pattern with interpolated arguments</p>
+           * @returns string <p>The unencoded pattern with interpolated arguments</p>
            */
           getURL(sName: string, oParameters?: any): string;
           /**
-           * <p>Returns the views instance created by the router</p>
+           * <p>Returns the <code>sap.ui.core.routing.Views</code> instance created by the router.</p>
            * @returns sap.ui.core.routing.Views <p>the Views instance</p>
            */
           getViews(): sap.ui.core.routing.Views;
           /**
-           * <p>Attaches the router to the hash changer @see sap.ui.core.routing.HashChanger</p>
-           * @param {boolean} bIgnoreInitialHash <p>@since 1.48.0 whether the current url hash shouldn't be parsed after the router is initialized</p>
+           * <p>Attaches the router to the hash changer.</p><p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.HashChanger">sap.ui.core.routing.HashChanger</a>.</p>
+           * @param {boolean} bIgnoreInitialHash <p>@since 1.48.0 Whether the current URL hash shouldn't be parsed after the router is initialized</p>
            * @returns sap.ui.core.routing.Router <p>this for chaining.</p>
            */
           initialize(bIgnoreInitialHash?: boolean): sap.ui.core.routing.Router;
           /**
-           * <p>Returns whether the router is initialized by calling <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.Router/methods/initialize">sap.ui.core.routing.Router#initialize</a> function</p>
-           * @returns boolean <p>whether the router is initialized</p>
+           * <p>Returns whether the router is initialized by calling <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.Router/methods/initialize">sap.ui.core.routing.Router#initialize</a> function.</p>
+           * @returns boolean <p>Whether the router is initialized</p>
            */
           isInitialized(): boolean;
           /**
-           * <p>Returns whether the router is stopped by calling <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.Router/methods/stop">sap.ui.core.routing.Router#stop</a> function</p>
-           * @returns boolean <p>whether the router is stopped</p>
+           * <p>Returns whether the router is stopped by calling <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.Router/methods/stop">sap.ui.core.routing.Router#stop</a> function.</p>
+           * @returns boolean <p>Whether the router is stopped</p>
            */
           isStopped(): boolean;
           /**
-           * <p>Returns whether the given hash can be matched by any one of the Route in the Router.</p>
-           * @param {string} hash <p>which will be tested by the Router</p>
-           * @returns boolean <p>whether the hash can be matched</p>
+           * <p>Returns whether the given hash can be matched by any of the routes in the router.</p>
+           * @param {string} Hash <p>which will be tested by the Router</p>
+           * @returns boolean <p>Whether the hash can be matched</p>
            */
-          match(hash: string): boolean;
+          match(Hash: string): boolean;
           /**
-           * <p>Navigates to a specific route defining a set of parameters. The Parameters will be URI encoded - the characters ; , / ? : @ & = + $ are reserved and will not be encoded. If you want to use special characters in your oParameters, you have to encode them (encodeURIComponent).</p><p>IF the given route name can't be found, an error message is logged to the console and the hash will be changed to empty string.</p>
+           * <p>Navigates to a specific route defining a set of parameters.</p><p>The parameters will be URI encoded - the characters ; , / ? : @ & = + $ are reserved and will not be encoded. If you want to use special characters in your <code>oParameters</code>, you have to encode them (encodeURIComponent).</p><p>If the given route name can't be found, an error message is logged to the console and the hash will be changed to the empty string.</p>
            * @param {string} sName <p>Name of the route</p>
            * @param {any} oParameters <p>Parameters for the route</p>
            * @param {boolean} bReplace <p>If set to <code>true</code>, the hash is replaced, and there will be no entry in the browser history, if set to <code>false</code>, the hash is set and the entry is stored in the browser history.</p>
@@ -19425,17 +19635,17 @@ declare namespace sap {
            */
           navTo(sName: string, oParameters?: any, bReplace?: boolean): sap.ui.core.routing.Router;
           /**
-           * <p>Will trigger routing events + place targets for routes matching the string</p>
-           * @param {string} sNewHash <p>a new hash</p>
+           * <p>Will trigger routing events + place targets for routes matching the string.</p>
+           * @param {string} sNewHash <p>A new hash</p>
            */
           protected parse(sNewHash: string): void;
           /**
-           * <p>Registers the router to access it from another context. Use sap.ui.routing.Router.getRouter() to receive the instance</p>
+           * <p>Registers the router to access it from another context.</p><p>Use <code>sap.ui.routing.Router.getRouter()</code> to receive the instance.</p>
            * @param {string} sName <p>Name of the router</p>
            */
           register(sName: string): void;
           /**
-           * <p>Stops to listen to the hashChange of the browser.</br> If you want the router to start again, call initialize again.</p>
+           * <p>Stops to listen to the <code>hashChange</code> of the browser.</p><p>If you want the router to start again, call <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="initialize" href="#/api/sap.ui.core.routing.Router/methods/initialize">#initialize</a> again.</p>
            * @returns sap.ui.core.routing.Router <p>this for chaining.</p>
            */
           stop(): sap.ui.core.routing.Router;
@@ -19497,20 +19707,20 @@ declare namespace sap {
            */
           protected _beforePlacingViewIntoContainer(mArguments: any): void;
           /**
-           * <p>Attach event-handler <code>fnFunction</code> to the 'display' event of this <code>sap.ui.core.routing.Target</code>.<br/></p>
-           * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-           * @param {any} oListener <p>Object on which to call the given function.</p>
-           * @returns sap.ui.core.routing.Target <p><code>this</code> to allow method chaining</p>
+           * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="display" href="#/api/sap.ui.core.routing.Target/events/display">display</a> event of this <code>sap.ui.core.routing.Target</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.core.routing.Target</code> itself.</p>
+           * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.core.routing.Target</code> itself</p>
+           * @returns sap.ui.core.routing.Target <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
           attachDisplay(oData: any, fnFunction: Function, oListener?: any): sap.ui.core.routing.Target;
           /**
-           * <p>Detach event-handler <code>fnFunction</code> from the 'display' event of this <code>sap.ui.core.routing.Target</code>.<br/></p><p>The passed function and listener object must match the ones previously used for event registration.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-           * @param {any} oListener <p>Object on which the given function had to be called.</p>
-           * @returns sap.ui.core.routing.Target <p><code>this</code> to allow method chaining</p>
+           * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="display" href="#/api/sap.ui.core.routing.Target/events/display">display</a> event of this <code>sap.ui.core.routing.Target</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object on which the given function had to be called</p>
+           * @returns sap.ui.core.routing.Target <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          detachDisplay(fnFunction: Function, oListener: any): sap.ui.core.routing.Target;
+          detachDisplay(fnFunction: Function, oListener?: any): sap.ui.core.routing.Target;
           /**
            * <p>Creates a view and puts it in an aggregation of a control that has been defined in the <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.Target/constructor">sap.ui.core.routing.Target#constructor</a>.</p>
            * @param {any} vData <p>an object that will be passed to the display event in the data property. If the target has parents, the data will also be passed to them.</p>
@@ -19518,11 +19728,11 @@ declare namespace sap {
            */
           display(vData?: any): Promise<any>;
           /**
-           * <p>Fire event created to attached listeners.</p>
-           * @param {any} mArguments <p>the arguments to pass along with the event.</p>
-           * @returns sap.ui.core.routing.Target <p><code>this</code> to allow method chaining</p>
+           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="created" href="#/api/sap.ui.core.routing.Target/events/created">created</a> to attached listeners.</p>
+           * @param {any} oParameters <p>Parameters to pass along with the event</p>
+           * @returns sap.ui.core.routing.Target <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          protected fireDisplay(mArguments?: any): sap.ui.core.routing.Target;
+          protected fireDisplay(oParameters?: any): sap.ui.core.routing.Target;
         }
         /**
          * <p>Provides a convenient way for placing views into the correct containers of your application.</p><p>The main benefit of <code>Targets</code> is lazy loading: you do not have to create the views until you really need them. If you are using the mobile library, please use <a target="_self" class="jsdoclink" href="#/api/sap.m.routing.Targets">sap.m.routing.Targets</a> instead of this class.</p>
@@ -19534,26 +19744,26 @@ declare namespace sap {
            */
           constructor(oOptions: any);
           /**
-           * <p>Creates a target by using the given name and options. If there's already a target with the same name exists, the existing target is kept from being overwritten and an error log will be written to the development console.</p>
-           * @param {string} sName <p>the name of a target</p>
-           * @param {any} oTarget <p>the options of a target. The option names are the same as the ones in "oOptions.targets.anyName" of <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.Targets/constructor">#constructor</a>.</p>
-           * @returns sap.ui.core.routing.Targets <p>Targets itself for method chaining</p>
+           * <p>Creates a target by using the given name and options.</p><p>If there's already a target with the same name, the existing target is not overwritten and an error log will be written to the console.</p>
+           * @param {string} sName <p>Name of a target</p>
+           * @param {any} oTarget <p>Options of a target. The option names are the same as the ones in "oOptions.targets.anyName" of <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.Targets/constructor">#constructor</a>.</p>
+           * @returns sap.ui.core.routing.Targets <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
           addTarget(sName: string, oTarget: any): sap.ui.core.routing.Targets;
           /**
-           * <p>Attach event-handler <code>fnFunction</code> to the 'display' event of this <code>sap.ui.core.routing.Targets</code>.<br/></p>
-           * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-           * @param {any} oListener <p>Object on which to call the given function.</p>
-           * @returns sap.ui.core.routing.Targets <p><code>this</code> to allow method chaining</p>
+           * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="display" href="#/api/sap.ui.core.routing.Targets/events/display">display</a> event of this <code>sap.ui.core.routing.Targets</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.core.routing.Targets</code> itself.</p>
+           * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.core.routing.Targets</code> itself</p>
+           * @returns sap.ui.core.routing.Targets <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
           attachDisplay(oData: any, fnFunction: Function, oListener?: any): sap.ui.core.routing.Targets;
           /**
-           * <p>Attach event-handler <code>fnFunction</code> to the 'titleChanged' event of this <code>sap.ui.core.routing.Targets</code>.<br/></p>
-           * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-           * @param {any} oListener <p>Object on which to call the given function.</p>
-           * @returns sap.ui.core.routing.Targets <p><code>this</code> to allow method chaining</p>
+           * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="titleChanged" href="#/api/sap.ui.core.routing.Targets/events/titleChanged">titleChanged</a> event of this <code>sap.ui.core.routing.Targets</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.core.routing.Targets</code> itself.</p>
+           * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.core.routing.Targets</code> itself</p>
+           * @returns sap.ui.core.routing.Targets <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
           attachTitleChanged(oData: any, fnFunction: Function, oListener?: any): sap.ui.core.routing.Targets;
           /**
@@ -19570,33 +19780,33 @@ declare namespace sap {
            */
           destroy(): sap.ui.core.routing.Targets;
           /**
-           * <p>Detach event-handler <code>fnFunction</code> from the 'display' event of this <code>sap.ui.core.routing.Targets</code>.<br/></p><p>The passed function and listener object must match the ones previously used for event registration.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-           * @param {any} oListener <p>Object on which the given function had to be called.</p>
-           * @returns sap.ui.core.routing.Targets <p><code>this</code> to allow method chaining</p>
+           * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="display" href="#/api/sap.ui.core.routing.Targets/events/display">display</a> event of this <code>sap.ui.core.routing.Targets</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object on which the given function had to be called</p>
+           * @returns sap.ui.core.routing.Targets <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          detachDisplay(fnFunction: Function, oListener: any): sap.ui.core.routing.Targets;
+          detachDisplay(fnFunction: Function, oListener?: any): sap.ui.core.routing.Targets;
           /**
-           * <p>Detach event-handler <code>fnFunction</code> from the 'titleChanged' event of this <code>sap.ui.core.routing.Targets</code>.<br/></p><p>The passed function and listener object must match the ones previously used for event registration.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-           * @param {any} oListener <p>Object on which the given function had to be called.</p>
-           * @returns sap.ui.core.routing.Targets <p><code>this</code> to allow method chaining</p>
+           * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="titleChanged" href="#/api/sap.ui.core.routing.Targets/events/titleChanged">titleChanged</a> event of this <code>sap.ui.core.routing.Targets</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object on which the given function had to be called</p>
+           * @returns sap.ui.core.routing.Targets <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          detachTitleChanged(fnFunction: Function, oListener: any): sap.ui.core.routing.Targets;
+          detachTitleChanged(fnFunction: Function, oListener?: any): sap.ui.core.routing.Targets;
           /**
            * <p>Creates a view and puts it in an aggregation of the specified control.</p>
-           * @param {string | string[]} vTargets <p>the key of the target as specified in the <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.Targets/constructor">#constructor</a>. To display multiple targets you may also pass an array of keys.</p>
+           * @param {string | string[]} vTargets <p>Key of the target as specified in the <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.Targets/constructor">#constructor</a>. To display multiple targets you may also pass an array of keys.</p>
            * @param {any} oData <p>an object that will be passed to the display event in the data property. If the target has parents, the data will also be passed to them.</p>
            * @param {string} sTitleTarget <p>the name of the target from which the title option is taken for firing the <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.routing.Targets/events/titleChanged">titleChanged</a> event</p>
            * @returns sap.ui.core.routing.Targets|Promise <p>this pointer for chaining or a Promise</p>
            */
           display(vTargets: string | string[], oData?: any, sTitleTarget?: string): sap.ui.core.routing.Targets | Promise<any>;
           /**
-           * <p>Fire event created to attached listeners.</p>
-           * @param {any} mArguments <p>the arguments to pass along with the event.</p>
-           * @returns sap.ui.core.routing.Targets <p><code>this</code> to allow method chaining</p>
+           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="created" href="#/api/sap.ui.core.routing.Targets/events/created">created</a> to attached listeners.</p>
+           * @param {any} oParameters <p>Parameters to pass along with the event</p>
+           * @returns sap.ui.core.routing.Targets <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          fireDisplay(mArguments?: any): sap.ui.core.routing.Targets;
+          fireDisplay(oParameters?: any): sap.ui.core.routing.Targets;
           /**
            * <p>Returns a target by its name (if you pass myTarget: { view: "myView" }) in the config myTarget is the name.</p>
            * @param {string | string[]} vName <p>the name of a single target or the name of multiple targets</p>
@@ -19618,11 +19828,11 @@ declare namespace sap {
            */
           constructor(oOptions?: any);
           /**
-           * <p>Fire event created to attached listeners.</p>
-           * @param {any} mArguments <p>the arguments to pass along with the event.</p>
-           * @returns sap.ui.core.routing.Views <p><code>this</code> to allow method chaining</p>
+           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="created" href="#/api/sap.ui.core.routing.Views/events/created">created</a> to attached listeners.</p>
+           * @param {any} oParameters <p>Parameters to pass along with the event</p>
+           * @returns sap.ui.core.routing.Views <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          protected fireCreated(mArguments?: any): sap.ui.core.routing.Views;
+          protected fireCreated(oParameters?: any): sap.ui.core.routing.Views;
           /**
            * <p>Returns a cached view, for a given name. If it does not exist yet, it will create the view with the provided options. If you provide a viewId, it will be prefixed with the viewId of the component.</p>
            * @param {any} oOptions <p>see <a target="_self" class="jsdoclink" href="#/api/sap.ui/methods/sap.ui.view">sap.ui.view</a> for the documentation. The viewId you pass into the options will be prefixed with the id of the component you pass into the constructor. So you can retrieve the view later by calling the <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.UIComponent/methods/byId">sap.ui.core.UIComponent#byId</a> function of the UIComponent.</p>
@@ -20897,28 +21107,28 @@ declare namespace sap {
            */
           constructor(sUrl: string, aProtocols?: any[]);
           /**
-           * <p>Fire event 'message' to attached listeners.</p>
-           * @param {any} mArguments <p>the arguments to pass along with the event.</p>
-           * @returns sap.ui.core.ws.WebSocket <p><code>this</code> to allow method chaining</p>
+           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="message" href="#/api/sap.ui.core.ws.WebSocket/events/message">message</a> to attached listeners.</p>
+           * @param {any} oParameters <p>Parameters to pass along with the event</p>
+           * @returns sap.ui.core.ws.WebSocket <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          protected fireMessage(mArguments?: any): sap.ui.core.ws.WebSocket;
+          protected fireMessage(oParameters?: any): sap.ui.core.ws.WebSocket;
           /**
-           * <p>Fire event 'message' to attached listeners.</p>
-           * @param {any} mArguments <p>the arguments to pass along with the event.</p>
+           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="message" href="#/api/sap.ui.core.ws.SapPcpWebSocket/events/message">message</a> to attached listeners.</p>
+           * @param {any} oParameters <p>Parameters to pass along with the event</p>
            * @returns sap.ui.core.ws.SapPcpWebSocket <p><code>this</code> to allow method chaining</p>
            */
-          protected fireMessage(mArguments?: any): sap.ui.core.ws.SapPcpWebSocket;
+          protected fireMessage(oParameters?: any): sap.ui.core.ws.SapPcpWebSocket;
           /**
-           * <p>Sends a message.<br> <br> If the connection is not yet opened, the message will be queued and sent when the connection is established.</p>
+           * <p>Sends a message.</p><p>If the connection is not yet opened, the message will be queued and sent when the connection is established.</p>
            * @param {string} sMessage <p>Message to send</p>
-           * @returns sap.ui.core.ws.WebSocket <p><code>this</code> to allow method chaining</p>
+           * @returns sap.ui.core.ws.WebSocket <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
           send(sMessage: string): sap.ui.core.ws.WebSocket;
           /**
-           * <p>Sends a message and optional pcp-header-fields using the pcp-protocol.<br> <br> If the connection is not yet opened, the message will be queued and sent when the connection is established.</p>
+           * <p>Sends a message and optional pcp-header-fields using the pcp-protocol.</p><p>If the connection is not yet opened, the message will be queued and sent when the connection is established.</p>
            * @param {string | Blob | ArrayBuffer} message <p>message to send</p>
            * @param {any} oPcpFields <p>additional pcp-fields as key-value map</p>
-           * @returns sap.ui.core.ws.SapPcpWebSocket <p><code>this</code> to allow method chaining</p>
+           * @returns sap.ui.core.ws.SapPcpWebSocket <p>Reference to <code>this</code> to allow method chaining</p>
            */
           send(message: string | Blob | ArrayBuffer, oPcpFields?: any): sap.ui.core.ws.SapPcpWebSocket;
         }
@@ -20943,96 +21153,96 @@ declare namespace sap {
            */
           constructor(sUrl: string, aProtocols?: any[]);
           /**
-           * <p>Attach event-handler <code>fnFunction</code> to the 'close' event of this <code>sap.ui.core.ws.WebSocket</code>.<br></p>
-           * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-           * @param {any} oListener <p>Object on which to call the given function. If empty, this WebSocket is used.</p>
-           * @returns sap.ui.core.ws.WebSocket <p><code>this</code> to allow method chaining</p>
+           * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="close" href="#/api/sap.ui.core.ws.WebSocket/events/close">close</a> event of this <code>sap.ui.core.ws.WebSocket</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.core.ws.WebSocket</code> itself.</p>
+           * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>WebSocket</code> itself</p>
+           * @returns sap.ui.core.ws.WebSocket <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
           attachClose(oData: any, fnFunction: Function, oListener?: any): sap.ui.core.ws.WebSocket;
           /**
-           * <p>Attach event-handler <code>fnFunction</code> to the 'error' event of this <code>sap.ui.core.ws.WebSocket</code>.<br></p>
-           * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-           * @param {any} oListener <p>Object on which to call the given function. If empty, this WebSocket is used.</p>
-           * @returns sap.ui.core.ws.WebSocket <p><code>this</code> to allow method chaining</p>
+           * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="error" href="#/api/sap.ui.core.ws.WebSocket/events/error">error</a> event of this <code>sap.ui.core.ws.WebSocket</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.core.ws.WebSocket</code> itself.</p>
+           * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>WebSocket</code> itself</p>
+           * @returns sap.ui.core.ws.WebSocket <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
           attachError(oData: any, fnFunction: Function, oListener?: any): sap.ui.core.ws.WebSocket;
           /**
-           * <p>Attach event-handler <code>fnFunction</code> to the 'message' event of this <code>sap.ui.core.ws.WebSocket</code>.<br></p>
-           * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-           * @param {any} oListener <p>Object on which to call the given function. If empty, this WebSocket is used.</p>
-           * @returns sap.ui.core.ws.WebSocket <p><code>this</code> to allow method chaining</p>
+           * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="message" href="#/api/sap.ui.core.ws.WebSocket/events/message">message</a> event of this <code>sap.ui.core.ws.WebSocket</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.core.ws.WebSocket</code> itself.</p>
+           * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>WebSocket</code> itself</p>
+           * @returns sap.ui.core.ws.WebSocket <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
           attachMessage(oData: any, fnFunction: Function, oListener?: any): sap.ui.core.ws.WebSocket;
           /**
-           * <p>Attach event-handler <code>fnFunction</code> to the 'open' event of this <code>sap.ui.core.ws.WebSocket</code>.<br></p>
-           * @param {any} oData <p>The object, that should be passed along with the event-object when firing the event.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs. This function will be called on the oListener-instance (if present) or in a 'static way'.</p>
-           * @param {any} oListener <p>Object on which to call the given function. If empty, this WebSocket is used.</p>
-           * @returns sap.ui.core.ws.WebSocket <p><code>this</code> to allow method chaining</p>
+           * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="open" href="#/api/sap.ui.core.ws.WebSocket/events/open">open</a> event of this <code>sap.ui.core.ws.WebSocket</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.core.ws.WebSocket</code> itself.</p>
+           * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+           * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+           * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>WebSocket</code> itself</p>
+           * @returns sap.ui.core.ws.WebSocket <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
           attachOpen(oData: any, fnFunction: Function, oListener?: any): sap.ui.core.ws.WebSocket;
           /**
            * <p>Closes the connection.</p>
-           * @param {number} iCode <p>Status code that explains why the connection is closed. Must be either 1000, or between 3000 and 4999 (default 1000)</p>
+           * @param {number} iCode <p>Status code that explains why the connection is closed. Must either be 1000, or between 3000 and 4999 (default 1000)</p>
            * @param {string} sReason <p>Closing reason as a string</p>
-           * @returns sap.ui.core.ws.WebSocket <p><code>this</code> to allow method chaining</p>
+           * @returns sap.ui.core.ws.WebSocket <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
           close(iCode?: number, sReason?: string): sap.ui.core.ws.WebSocket;
           /**
-           * <p>Detach event-handler <code>fnFunction</code> from the 'close' event of this <code>sap.ui.core.ws.WebSocket</code>.<br></p><p>The passed function and listener object must match the ones previously used for event registration.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-           * @param {any} oListener <p>Object on which the given function had to be called.</p>
-           * @returns sap.ui.core.ws.WebSocket <p><code>this</code> to allow method chaining</p>
+           * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="close" href="#/api/sap.ui.core.ws.WebSocket/events/close">close</a> event of this <code>sap.ui.core.ws.WebSocket</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+           * @param {Function} fnFunction <p>The function to call, when the event occurs</p>
+           * @param {any} oListener <p>Context object on which the given function had to be called</p>
+           * @returns sap.ui.core.ws.WebSocket <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          detachClose(fnFunction: Function, oListener: any): sap.ui.core.ws.WebSocket;
+          detachClose(fnFunction: Function, oListener?: any): sap.ui.core.ws.WebSocket;
           /**
-           * <p>Detach event-handler <code>fnFunction</code> from the 'error' event of this <code>sap.ui.core.ws.WebSocket</code>.<br></p><p>The passed function and listener object must match the ones previously used for event registration.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-           * @param {any} oListener <p>Object on which the given function had to be called.</p>
-           * @returns sap.ui.core.ws.WebSocket <p><code>this</code> to allow method chaining</p>
+           * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="error" href="#/api/sap.ui.core.ws.WebSocket/events/error">error</a> event of this <code>sap.ui.core.ws.WebSocket</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+           * @param {Function} fnFunction <p>The function to call, when the event occurs</p>
+           * @param {any} oListener <p>Context object on which the given function had to be called</p>
+           * @returns sap.ui.core.ws.WebSocket <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          detachError(fnFunction: Function, oListener: any): sap.ui.core.ws.WebSocket;
+          detachError(fnFunction: Function, oListener?: any): sap.ui.core.ws.WebSocket;
           /**
-           * <p>Detach event-handler <code>fnFunction</code> from the 'message' event of this <code>sap.ui.core.ws.WebSocket</code>.<br></p><p>The passed function and listener object must match the ones previously used for event registration.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-           * @param {any} oListener <p>Object on which the given function had to be called.</p>
-           * @returns sap.ui.core.ws.WebSocket <p><code>this</code> to allow method chaining</p>
+           * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="message" href="#/api/sap.ui.core.ws.WebSocket/events/message">message</a> event of this <code>sap.ui.core.ws.WebSocket</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+           * @param {Function} fnFunction <p>The function to call, when the event occurs</p>
+           * @param {any} oListener <p>Context object on which the given function had to be called</p>
+           * @returns sap.ui.core.ws.WebSocket <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          detachMessage(fnFunction: Function, oListener: any): sap.ui.core.ws.WebSocket;
+          detachMessage(fnFunction: Function, oListener?: any): sap.ui.core.ws.WebSocket;
           /**
-           * <p>Detach event-handler <code>fnFunction</code> from the 'open' event of this <code>sap.ui.core.ws.WebSocket</code>.<br></p><p>The passed function and listener object must match the ones previously used for event registration.</p>
-           * @param {Function} fnFunction <p>The function to call, when the event occurs.</p>
-           * @param {any} oListener <p>Object on which the given function had to be called.</p>
-           * @returns sap.ui.core.ws.WebSocket <p><code>this</code> to allow method chaining</p>
+           * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="open" href="#/api/sap.ui.core.ws.WebSocket/events/open">open</a> event of this <code>sap.ui.core.ws.WebSocket</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+           * @param {Function} fnFunction <p>The function to call, when the event occurs</p>
+           * @param {any} oListener <p>Context object on which the given function had to be called</p>
+           * @returns sap.ui.core.ws.WebSocket <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          detachOpen(fnFunction: Function, oListener: any): sap.ui.core.ws.WebSocket;
+          detachOpen(fnFunction: Function, oListener?: any): sap.ui.core.ws.WebSocket;
           /**
-           * <p>Fire event 'close' to attached listeners.</p>
-           * @param {any} mArguments <p>the arguments to pass along with the event.</p>
-           * @returns sap.ui.core.ws.WebSocket <p><code>this</code> to allow method chaining</p>
+           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="close" href="#/api/sap.ui.core.ws.WebSocket/events/close">close</a> to attached listeners.</p>
+           * @param {any} oParameters <p>Parameters to pass along with the event</p>
+           * @returns sap.ui.core.ws.WebSocket <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          protected fireClose(mArguments?: any): sap.ui.core.ws.WebSocket;
+          protected fireClose(oParameters?: any): sap.ui.core.ws.WebSocket;
           /**
-           * <p>Fire event 'error' to attached listeners.</p>
-           * @param {any} mArguments <p>the arguments to pass along with the event.</p>
-           * @returns sap.ui.core.ws.WebSocket <p><code>this</code> to allow method chaining</p>
+           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="error" href="#/api/sap.ui.core.ws.WebSocket/events/error">error</a> to attached listeners.</p>
+           * @param {any} oParameters <p>Parameters to pass along with the event</p>
+           * @returns sap.ui.core.ws.WebSocket <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          protected fireError(mArguments?: any): sap.ui.core.ws.WebSocket;
+          protected fireError(oParameters?: any): sap.ui.core.ws.WebSocket;
           /**
-           * <p>Fire event 'message' to attached listeners.</p>
-           * @param {any} mArguments <p>the arguments to pass along with the event.</p>
-           * @returns sap.ui.core.ws.WebSocket <p><code>this</code> to allow method chaining</p>
+           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="message" href="#/api/sap.ui.core.ws.WebSocket/events/message">message</a> to attached listeners.</p>
+           * @param {any} oParameters <p>Parameters to pass along with the event</p>
+           * @returns sap.ui.core.ws.WebSocket <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          protected fireMessage(mArguments?: any): sap.ui.core.ws.WebSocket;
+          protected fireMessage(oParameters?: any): sap.ui.core.ws.WebSocket;
           /**
-           * <p>Fire event 'open' to attached listeners.</p>
-           * @param {any} mArguments <p>the arguments to pass along with the event.</p>
-           * @returns sap.ui.core.ws.WebSocket <p><code>this</code> to allow method chaining</p>
+           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="open" href="#/api/sap.ui.core.ws.WebSocket/events/open">open</a> to attached listeners.</p>
+           * @param {any} oParameters <p>Parameters to pass along with the event</p>
+           * @returns sap.ui.core.ws.WebSocket <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          protected fireOpen(mArguments?: any): sap.ui.core.ws.WebSocket;
+          protected fireOpen(oParameters?: any): sap.ui.core.ws.WebSocket;
           /**
            * <p>Getter for the protocol selected by the server once the connection is open.</p>
            * @returns string <p>protocol</p>
@@ -21044,9 +21254,9 @@ declare namespace sap {
            */
           getReadyState(): sap.ui.core.ws.ReadyState;
           /**
-           * <p>Sends a message.<br> <br> If the connection is not yet opened, the message will be queued and sent when the connection is established.</p>
+           * <p>Sends a message.</p><p>If the connection is not yet opened, the message will be queued and sent when the connection is established.</p>
            * @param {string} sMessage <p>Message to send</p>
-           * @returns sap.ui.core.ws.WebSocket <p><code>this</code> to allow method chaining</p>
+           * @returns sap.ui.core.ws.WebSocket <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
           send(sMessage: string): sap.ui.core.ws.WebSocket;
         }

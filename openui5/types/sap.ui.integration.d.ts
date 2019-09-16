@@ -75,6 +75,11 @@ declare namespace sap {
                      */
                     protected fireAction(mParameters?: any): sap.ui.integration.widgets.Card;
                     /**
+                     * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getBaseUrl" href="#/api/sap.ui.integration.widgets.Card/methods/getBaseUrl">baseUrl</a>.</p><p>Defines the base URL of the Card Manifest. It should be used when manifest property is an object instead of a URL.</p>
+                     * @returns sap.ui.core.URI <p>Value of property <code>baseUrl</code></p>
+                     */
+                    getBaseUrl(): sap.ui.core.URI;
+                    /**
                      * <p>Implements sap.f.ICard interface.</p>
                      * @returns sap.ui.core.Control <p>The content of the card</p>
                      */
@@ -128,6 +133,12 @@ declare namespace sap {
                      */
                     refresh(): void;
                     /**
+                     * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getBaseUrl" href="#/api/sap.ui.integration.widgets.Card/methods/getBaseUrl">baseUrl</a>.</p><p>Defines the base URL of the Card Manifest. It should be used when manifest property is an object instead of a URL.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+                     * @param {sap.ui.core.URI} sBaseUrl <p>New value for property <code>baseUrl</code></p>
+                     * @returns sap.ui.integration.widgets.Card <p>Reference to <code>this</code> in order to allow method chaining</p>
+                     */
+                    setBaseUrl(sBaseUrl: sap.ui.core.URI): sap.ui.integration.widgets.Card;
+                    /**
                      * <p>Sets a new value for the <code>dataMode</code> property.</p>
                      * @param {sap.ui.integration.CardDataMode} sMode <p>The mode to set to the Card.</p>
                      * @returns sap.ui.integration.widgets.Card <p>Pointer to the control instance to allow method chaining.</p>
@@ -146,17 +157,17 @@ declare namespace sap {
                      */
                     setHostConfigurationId(oHostConfigurationId: sap.ui.core.ID | sap.ui.core.Control): sap.ui.integration.widgets.Card;
                     /**
-                     * <p>Overwrites setter for card manifest.</p>
-                     * @param {string | any} vValue <p>The manifest object or its URL.</p>
-                     * @returns sap.ui.integration.widgets.Card <p>Pointer to the control instance to allow method chaining.</p>
+                     * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getManifest" href="#/api/sap.ui.integration.widgets.Card/methods/getManifest">manifest</a>.</p><p>The URL of the manifest or an object.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
+                     * @param {any} oManifest <p>New value for property <code>manifest</code></p>
+                     * @returns sap.ui.integration.widgets.Card <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setManifest(vValue: string | any): sap.ui.integration.widgets.Card;
+                    setManifest(oManifest: any): sap.ui.integration.widgets.Card;
                     /**
-                     * <p>Overwrites setter for card params.</p>
-                     * @param {any} vValue <p>oParameters Parameters set in the card trough parameters property.</p>
-                     * @returns sap.ui.integration.widgets.Card <p>Pointer to the control instance to allow method chaining.</p>
+                     * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getParameters" href="#/api/sap.ui.integration.widgets.Card/methods/getParameters">parameters</a>.</p><p>The parameters used in the manifest.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+                     * @param {any} oParameters <p>New value for property <code>parameters</code></p>
+                     * @returns sap.ui.integration.widgets.Card <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setParameters(vValue: any): sap.ui.integration.widgets.Card;
+                    setParameters(oParameters: any): sap.ui.integration.widgets.Card;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getWidth" href="#/api/sap.ui.integration.widgets.Card/methods/getWidth">width</a>.</p><p>Defines the width of the card.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>100%</code>.</p>
                      * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>

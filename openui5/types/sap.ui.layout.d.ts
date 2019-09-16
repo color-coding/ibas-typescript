@@ -2484,6 +2484,16 @@ declare namespace sap {
                      */
                     protected _getTemplateColumns(): string;
                     /**
+                     * <p>Implements polyfill for IE after drag end.</p>
+                     * @param {any} oEvent <p>After drag end event</p>
+                     */
+                    protected _polyfillAfterDragEnd(oEvent: any): void;
+                    /**
+                     * <p>Implements polyfill for IE after drag over.</p>
+                     * @param {any} oEvent <p>After drag over event</p>
+                     */
+                    protected _polyfillAfterDragOver(oEvent: any): void;
+                    /**
                      * <p>Sets all display:grid styles to the provided HTML element</p>
                      * @param {HTMLElement} oElement <p>The element to which to apply the grid styles</p>
                      * @param {sap.ui.layout.cssgrid.GridSettings} oGridSettings <p>The grid settings to apply</p>

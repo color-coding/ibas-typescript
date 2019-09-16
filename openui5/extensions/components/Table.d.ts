@@ -71,6 +71,11 @@ declare namespace sap {
                  * @param param 参数
                  */
                 protected fireNextDataSet(param: { data: any, }): void;
+                /**
+                 * 选中索引（兼容方法），-1 表示未选中
+                 * @returns number
+                 */
+                getSelectedIndex(): number;
             }
             /**
              * 表格列

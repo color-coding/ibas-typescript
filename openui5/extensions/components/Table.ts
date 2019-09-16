@@ -88,14 +88,35 @@ namespace sap {
                             if (value === false) {
                                 this.addPlugin(new sap.ui.table.plugins.MultiSelectionPlugin(
                                     ibas.strings.format(ID_TABLE_PLUGIN_CHOOSE, this.getId()), {
-                                        showHeaderSelector: true,
-                                    })
+                                    showHeaderSelector: true,
+                                })
                                 );
                                 return this.setProperty("enableSelectAll", value);
                             }
                         }
                     }
                     return sap.ui.table.Table.prototype.setEnableSelectAll.apply(this, arguments);
+                },
+                /**
+                 * 重写判断是否存在选择插件
+                 */
+                _hasSelectionPlugin(this: Table): boolean {
+                    // 永远返回false，解决1.70.0报错
+                    return false;
+                },
+                /**
+                 * 选中索引（兼容方法），-1 表示未选中
+                 * @returns number
+                 */
+                getSelectedIndex(this: Table): number {
+                    if ((<any>sap.ui.table.Table).prototype.getSelectedIndex) {
+                        return (<any>sap.ui.table.Table).prototype.getSelectedIndex.apply(this, arguments);
+                    }
+                    let selecteds: number[] = this.getSelectedIndices();
+                    if (selecteds && selecteds.length > 0) {
+                        return selecteds[0];
+                    }
+                    return -1;
                 },
                 /**
                  * 获取选择的数据

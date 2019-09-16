@@ -75,6 +75,11 @@ declare namespace sap {
 			 */
 			getAriaLabelledBy(): sap.ui.core.ID[];
 			/**
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getBackgroundColor" href="#/api/sap.f.Avatar/methods/getBackgroundColor">backgroundColor</a>.</p><p>Determines the background color of the control.</p><p><b>Note:</b> By using background colors from the predefined sets, your colors can later be customized from the Theme Designer.</p><p>Default value is <code>Accent6</code>.</p>
+			 * @returns sap.f.AvatarColor <p>Value of property <code>backgroundColor</code></p>
+			 */
+			getBackgroundColor(): sap.f.AvatarColor;
+			/**
 			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getCustomDisplaySize" href="#/api/sap.f.Avatar/methods/getCustomDisplaySize">customDisplaySize</a>.</p><p>Specifies custom display size of the <code>Avatar</code>.</p><p><b>Note:</b> It takes effect if the <code>displaySize</code> property is set to <code>Custom</code>.</p><p>Default value is <code>3rem</code>.</p>
 			 * @returns sap.ui.core.CSSSize <p>Value of property <code>customDisplaySize</code></p>
 			 */
@@ -115,6 +120,11 @@ declare namespace sap {
 			 */
 			getInitials(): string;
 			/**
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getShowBorder" href="#/api/sap.f.Avatar/methods/getShowBorder">showBorder</a>.</p><p>Determines whether the control is displayed with border.</p><p>Default value is <code>false</code>.</p>
+			 * @returns boolean <p>Value of property <code>showBorder</code></p>
+			 */
+			getShowBorder(): boolean;
+			/**
 			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSrc" href="#/api/sap.f.Avatar/methods/getSrc">src</a>.</p><p>Determines the path to the desired image or icon.</p>
 			 * @returns sap.ui.core.URI <p>Value of property <code>src</code></p>
 			 */
@@ -141,6 +151,12 @@ declare namespace sap {
 			 * @returns sap.ui.core.ID <p>The removed ariaLabelledBy or <code>null</code></p>
 			 */
 			removeAriaLabelledBy(vAriaLabelledBy: number | sap.ui.core.ID | sap.ui.core.Control): sap.ui.core.ID;
+			/**
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getBackgroundColor" href="#/api/sap.f.Avatar/methods/getBackgroundColor">backgroundColor</a>.</p><p>Determines the background color of the control.</p><p><b>Note:</b> By using background colors from the predefined sets, your colors can later be customized from the Theme Designer.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Accent6</code>.</p>
+			 * @param {sap.f.AvatarColor} sBackgroundColor <p>New value for property <code>backgroundColor</code></p>
+			 * @returns sap.f.Avatar <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setBackgroundColor(sBackgroundColor: sap.f.AvatarColor): sap.f.Avatar;
 			/**
 			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getCustomDisplaySize" href="#/api/sap.f.Avatar/methods/getCustomDisplaySize">customDisplaySize</a>.</p><p>Specifies custom display size of the <code>Avatar</code>.</p><p><b>Note:</b> It takes effect if the <code>displaySize</code> property is set to <code>Custom</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>3rem</code>.</p>
 			 * @param {sap.ui.core.CSSSize} sCustomDisplaySize <p>New value for property <code>customDisplaySize</code></p>
@@ -190,6 +206,12 @@ declare namespace sap {
 			 */
 			setInitials(sInitials: string): sap.f.Avatar;
 			/**
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getShowBorder" href="#/api/sap.f.Avatar/methods/getShowBorder">showBorder</a>.</p><p>Determines whether the control is displayed with border.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+			 * @param {boolean} bShowBorder <p>New value for property <code>showBorder</code></p>
+			 * @returns sap.f.Avatar <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setShowBorder(bShowBorder: boolean): sap.f.Avatar;
+			/**
 			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSrc" href="#/api/sap.f.Avatar/methods/getSrc">src</a>.</p><p>Determines the path to the desired image or icon.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
 			 * @param {sap.ui.core.URI} sSrc <p>New value for property <code>src</code></p>
 			 * @returns sap.f.Avatar <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -200,6 +222,55 @@ declare namespace sap {
 			 * @returns sap.f.Avatar <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
 			unbindDetailBox(): sap.f.Avatar;
+		}
+		/**
+		 * <p><p>Possible background color options for the <a target="_self" class="jsdoclink" href="#/api/sap.f.Avatar">sap.f.Avatar</a> control.</p><p><b>Note:</b> If the <code>Random</code> value is assigned, a random color is chosen from the other options (Accent1 to Accent10).</p></p>
+		 */
+		export enum AvatarColor {
+			/**
+			 * <p>Accent 1</p>
+			 */
+			Accent1 = "Accent1",
+			/**
+			 * <p>Accent 10</p>
+			 */
+			Accent10 = "Accent10",
+			/**
+			 * <p>Accent 2</p>
+			 */
+			Accent2 = "Accent2",
+			/**
+			 * <p>Accent 3</p>
+			 */
+			Accent3 = "Accent3",
+			/**
+			 * <p>Accent 4</p>
+			 */
+			Accent4 = "Accent4",
+			/**
+			 * <p>Accent 5</p>
+			 */
+			Accent5 = "Accent5",
+			/**
+			 * <p>Accent 6</p>
+			 */
+			Accent6 = "Accent6",
+			/**
+			 * <p>Accent 7</p>
+			 */
+			Accent7 = "Accent7",
+			/**
+			 * <p>Accent 8</p>
+			 */
+			Accent8 = "Accent8",
+			/**
+			 * <p>Accent 9</p>
+			 */
+			Accent9 = "Accent9",
+			/**
+			 * <p>Random color, chosen from the other options (Accent1 to Accent10)</p>
+			 */
+			Random = "Random",
 		}
 		/**
 		 * <p><p>Types of image size and position that determine how an image fits in the <a target="_self" class="jsdoclink" href="#/api/sap.f.Avatar">sap.f.Avatar</a> control area.</p></p>
@@ -1278,7 +1349,7 @@ declare namespace sap {
 			 */
 			getBackgroundDesign(): sap.m.BackgroundDesign;
 			/**
-			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getBeginColumnPages" href="#/api/sap.f.FlexibleColumnLayout/methods/getBeginColumnPages">beginColumnPages</a>.</p><p>The content entities between which the <code>FlexibleColumnLayout</code> navigates in the <code>Begin</code> column.</p><p>These should be any control with page semantics. These aggregated controls will receive navigation events like <a target="_self" class="jsdoclink" href="#/api/sap.m.NavContainerChild/methods/beforeShow">beforeShow</a>, they are documented in the pseudo interface <a target="_self" class="jsdoclink" href="#/api/sap.m.NavContainerChild">sap.m.NavContainerChild</a>.</p>
+			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getBeginColumnPages" href="#/api/sap.f.FlexibleColumnLayout/methods/getBeginColumnPages">beginColumnPages</a>.</p><p>The content entities between which the <code>FlexibleColumnLayout</code> navigates in the <code>Begin</code> column.</p><p>These should be any control with page semantics. These aggregated controls will receive navigation events like <a target="_self" class="jsdoclink" href="#/api/sap.m.NavContainerChild/events/beforeShow">beforeShow</a>, they are documented in the pseudo interface <a target="_self" class="jsdoclink" href="#/api/sap.m.NavContainerChild">sap.m.NavContainerChild</a>.</p>
 			 * @returns sap.ui.core.Control[] 
 			 */
 			getBeginColumnPages(): sap.ui.core.Control[];
@@ -1313,7 +1384,7 @@ declare namespace sap {
 			 */
 			getDefaultTransitionNameMidColumn(): string;
 			/**
-			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEndColumnPages" href="#/api/sap.f.FlexibleColumnLayout/methods/getEndColumnPages">endColumnPages</a>.</p><p>The content entities between which the <code>FlexibleColumnLayout</code> navigates in the <code>End</code> column.</p><p>These should be any control with page semantics. These aggregated controls will receive navigation events like <a target="_self" class="jsdoclink" href="#/api/sap.m.NavContainerChild/methods/beforeShow">beforeShow</a>, they are documented in the pseudo interface <a target="_self" class="jsdoclink" href="#/api/sap.m.NavContainerChild">sap.m.NavContainerChild</a>.</p>
+			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEndColumnPages" href="#/api/sap.f.FlexibleColumnLayout/methods/getEndColumnPages">endColumnPages</a>.</p><p>The content entities between which the <code>FlexibleColumnLayout</code> navigates in the <code>End</code> column.</p><p>These should be any control with page semantics. These aggregated controls will receive navigation events like <a target="_self" class="jsdoclink" href="#/api/sap.m.NavContainerChild/events/beforeShow">beforeShow</a>, they are documented in the pseudo interface <a target="_self" class="jsdoclink" href="#/api/sap.m.NavContainerChild">sap.m.NavContainerChild</a>.</p>
 			 * @returns sap.ui.core.Control[] 
 			 */
 			getEndColumnPages(): sap.ui.core.Control[];
@@ -1343,7 +1414,7 @@ declare namespace sap {
 			 */
 			getMaxColumnsCount(): number;
 			/**
-			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMidColumnPages" href="#/api/sap.f.FlexibleColumnLayout/methods/getMidColumnPages">midColumnPages</a>.</p><p>The content entities between which the <code>FlexibleColumnLayout</code> navigates in the <code>Mid</code> column.</p><p>These should be any control with page semantics. These aggregated controls will receive navigation events like <a target="_self" class="jsdoclink" href="#/api/sap.m.NavContainerChild/methods/beforeShow">beforeShow</a>, they are documented in the pseudo interface <a target="_self" class="jsdoclink" href="#/api/sap.m.NavContainerChild">sap.m.NavContainerChild</a>.</p>
+			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMidColumnPages" href="#/api/sap.f.FlexibleColumnLayout/methods/getMidColumnPages">midColumnPages</a>.</p><p>The content entities between which the <code>FlexibleColumnLayout</code> navigates in the <code>Mid</code> column.</p><p>These should be any control with page semantics. These aggregated controls will receive navigation events like <a target="_self" class="jsdoclink" href="#/api/sap.m.NavContainerChild/events/beforeShow">beforeShow</a>, they are documented in the pseudo interface <a target="_self" class="jsdoclink" href="#/api/sap.m.NavContainerChild">sap.m.NavContainerChild</a>.</p>
 			 * @returns sap.ui.core.Control[] 
 			 */
 			getMidColumnPages(): sap.ui.core.Control[];
@@ -1604,7 +1675,7 @@ declare namespace sap {
 				&lt;/Panel&gt;
 			&lt;/f:items&gt;
 		&lt;/f:GridContainer&gt;
-		</pre></p><h3>Drag and drop:</h3><p> The <code>items</code> aggregation of <code>sap.f.GridContainer</code> is valid drag and drop target. This can be configured with either the default <code><a target="_self" class="jsdoclink" href="#/api/sap.ui.core.dnd.DropInfo">sap.ui.core.dnd.DropInfo</a></code>, or with an extended version of it - <code><a target="_self" class="jsdoclink" href="#/api/sap.f.dnd.GridDropInfo">sap.f.dnd.GridDropInfo</a></code>. <code>GridDropInfo</code> will provide a different visualization more suitable for grids during drag over.<br><br><span>Documentation links:</span><ul><li><a target="_self" href="#/topic/32d4b9c2b981425dbc374d3e9d5d0c2e">Grid Controls</a></li><li><a target="_self" href="#/topic/5b46b03f024542ba802d99d67bc1a3f4">Cards</a></li><li><a target="_self" class="jsdoclink" href="#/api/sap.f.dnd.GridDropInfo">sap.f.dnd.GridDropInfo</a></li></ul></p>
+		</pre></p><h3>Drag and drop:</h3><p> Drag and drop is enabled for the <code>GridContainer</code> with enhanced visualization and interaction, better suited for grid items. This is configured by using the <code><a target="_self" class="jsdoclink" href="#/api/sap.f.dnd.GridDropInfo">sap.f.dnd.GridDropInfo</a></code>.</p><p>Similar to the <code><a target="_self" class="jsdoclink" href="#/api/sap.ui.core.dnd.DropInfo">sap.ui.core.dnd.DropInfo</a></code>, <code><a target="_self" class="jsdoclink" href="#/api/sap.f.dnd.GridDropInfo">sap.f.dnd.GridDropInfo</a></code> has to be added to the <code>dragDropConfig</code> aggregation, by using <code><a target="_self" class="jsdoclink" href="#/api/sap.ui.core.Element/methods/addDragDropConfig">sap.ui.core.Element#addDragDropConfig</a></code>.</p><p>Both <code><a target="_self" class="jsdoclink" href="#/api/sap.ui.core.dnd.DropInfo">sap.ui.core.dnd.DropInfo</a></code> and <code><a target="_self" class="jsdoclink" href="#/api/sap.f.dnd.GridDropInfo">sap.f.dnd.GridDropInfo</a></code> can be used to configure drag and drop. The difference is that the <code><a target="_self" class="jsdoclink" href="#/api/sap.f.dnd.GridDropInfo">sap.f.dnd.GridDropInfo</a></code> will provide a drop indicator, which mimics the size of the dragged item and shows the potential drop position inside the grid.<br><br><span>Documentation links:</span><ul><li><a target="_self" href="#/topic/32d4b9c2b981425dbc374d3e9d5d0c2e">Grid Controls</a></li><li><a target="_self" href="#/topic/5b46b03f024542ba802d99d67bc1a3f4">Cards</a></li><li><a target="_self" class="jsdoclink" href="#/api/sap.f.dnd.GridDropInfo">sap.f.dnd.GridDropInfo</a></li></ul></p>
 		 */
 		export class GridContainer extends sap.ui.core.Control implements sap.f.dnd.IGridDroppable {
 			/**
@@ -1628,9 +1699,17 @@ declare namespace sap {
 			 */
 			protected _applyLayout(bSettingsAreChanged: boolean): void;
 			/**
+			 * <p>Attaches polyfill methods for drag and drop for IE.</p>
+			 */
+			protected _attachDndPolyfill(): void;
+			/**
 			 * <p>Removes any resize listeners. Both for the grid and for all items.</p>
 			 */
 			protected _deregisterResizeListeners(): void;
+			/**
+			 * <p>Detaches polyfill methods for drag and drop for IE.</p>
+			 */
+			protected _detachDndPolyfill(): void;
 			/**
 			 * <p>Detects what is the current layout breakpoint.</p>
 			 * @returns boolean <p>True if the layout settings were changed.</p>
@@ -1646,6 +1725,11 @@ declare namespace sap {
 			 */
 			protected _getActiveGridStyles(): any;
 			/**
+			 * <p>Checks if the width of the grid or the viewport is different from the last time when it was checked. Use to avoid resize handling when not needed.</p>
+			 * @returns boolean <p>True if the width of the grid or of the viewport is changed since last check.</p>
+			 */
+			protected _isWidthChanged(): boolean;
+			/**
 			 * <p>Handler for onAfterRendering for each item.</p>
 			 */
 			protected _onAfterItemRendering(): void;
@@ -1659,7 +1743,17 @@ declare namespace sap {
 			 */
 			protected _onItemChange(changes: any): void;
 			/**
-			 * <p>Handler for resize of the grid.</p>
+			 * <p>Implements polyfill for IE after drag end.</p>
+			 * @param {any} oEvent <p>After drag end event</p>
+			 */
+			protected _polyfillAfterDragEnd(oEvent: any): void;
+			/**
+			 * <p>Implements polyfill for IE after drag over.</p>
+			 * @param {any} oEvent <p>After drag over event</p>
+			 */
+			protected _polyfillAfterDragOver(oEvent: any): void;
+			/**
+			 * <p>Handler for resize of the grid or the viewport</p>
 			 */
 			protected _resize(): void;
 			/**
@@ -1721,6 +1815,11 @@ declare namespace sap {
 			 */
 			destroyLayoutXL(): sap.f.GridContainer;
 			/**
+			 * <p>Destroys the layoutXS in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLayoutXS" href="#/api/sap.f.GridContainer/methods/getLayoutXS">layoutXS</a>.</p>
+			 * @returns sap.f.GridContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			destroyLayoutXS(): sap.f.GridContainer;
+			/**
 			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="layoutChange" href="#/api/sap.f.GridContainer/events/layoutChange">layoutChange</a> event of this <code>sap.f.GridContainer</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
 			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
@@ -1763,30 +1862,35 @@ declare namespace sap {
 			 */
 			getItems(): sap.ui.core.Control[];
 			/**
-			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLayout" href="#/api/sap.f.GridContainer/methods/getLayout">layout</a>.</p><p>The sap.f.GridContainerSettings applied if no settings are provided for a specific size.</p><p>If no layout is given, a default layout will be used. See the default values for <code>sap.f.GridContainerSettings</code>.</p>
+			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLayout" href="#/api/sap.f.GridContainer/methods/getLayout">layout</a>.</p><p>The sap.f.GridContainerSettings applied if no settings are provided for a specific size.</p><p>If no layout is given, a default layout will be used. See the default values for <code>sap.f.GridContainerSettings</code>.</p><p><b>Note:</b> It is not possible to reuse the same instance of <code>GridContainerSettings</code> for several layouts. New instance has to be created for each of them. This is caused by the fact that one object can exist in only a single aggregation.</p>
 			 * @returns sap.f.GridContainerSettings 
 			 */
 			getLayout(): sap.f.GridContainerSettings;
 			/**
-			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLayoutL" href="#/api/sap.f.GridContainer/methods/getLayoutL">layoutL</a>.</p><p>The sap.f.GridContainerSettings applied for size "L"</p>
+			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLayoutL" href="#/api/sap.f.GridContainer/methods/getLayoutL">layoutL</a>.</p><p>The sap.f.GridContainerSettings applied for size "L". Range: 1023px - 1439px.</p>
 			 * @returns sap.f.GridContainerSettings 
 			 */
 			getLayoutL(): sap.f.GridContainerSettings;
 			/**
-			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLayoutM" href="#/api/sap.f.GridContainer/methods/getLayoutM">layoutM</a>.</p><p>The sap.f.GridContainerSettings applied for size "M"</p>
+			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLayoutM" href="#/api/sap.f.GridContainer/methods/getLayoutM">layoutM</a>.</p><p>The sap.f.GridContainerSettings applied for size "M". Range: 600px - 1023px.</p>
 			 * @returns sap.f.GridContainerSettings 
 			 */
 			getLayoutM(): sap.f.GridContainerSettings;
 			/**
-			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLayoutS" href="#/api/sap.f.GridContainer/methods/getLayoutS">layoutS</a>.</p><p>The sap.f.GridContainerSettings applied for size "S"</p>
+			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLayoutS" href="#/api/sap.f.GridContainer/methods/getLayoutS">layoutS</a>.</p><p>The sap.f.GridContainerSettings applied for size "S". Range: 375px - 599px.</p>
 			 * @returns sap.f.GridContainerSettings 
 			 */
 			getLayoutS(): sap.f.GridContainerSettings;
 			/**
-			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLayoutXL" href="#/api/sap.f.GridContainer/methods/getLayoutXL">layoutXL</a>.</p><p>The sap.f.GridContainerSettings applied for size "XL"</p>
+			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLayoutXL" href="#/api/sap.f.GridContainer/methods/getLayoutXL">layoutXL</a>.</p><p>The sap.f.GridContainerSettings applied for size "XL". Range: from 1440px.</p>
 			 * @returns sap.f.GridContainerSettings 
 			 */
 			getLayoutXL(): sap.f.GridContainerSettings;
+			/**
+			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLayoutXS" href="#/api/sap.f.GridContainer/methods/getLayoutXS">layoutXS</a>.</p><p>The sap.f.GridContainerSettings applied for size "XS". Range: up to 374px.</p>
+			 * @returns sap.f.GridContainerSettings 
+			 */
+			getLayoutXS(): sap.f.GridContainerSettings;
 			/**
 			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSnapToRow" href="#/api/sap.f.GridContainer/methods/getSnapToRow">snapToRow</a>.</p><p>Should the items stretch to fill the rows that they occupy, or not.</p><p>If set to <code>true</code> the items will stretch.</p><p>Default value is <code>false</code>.</p>
 			 * @returns boolean <p>Value of property <code>snapToRow</code></p>
@@ -1808,12 +1912,12 @@ declare namespace sap {
 			 */
 			protected init(): void;
 			/**
-			 * <p>Inserts a item into the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.f.GridContainer/methods/getItems">items</a>.</p>
-			 * @param {sap.ui.core.Control} oItem <p>The item to insert; if empty, nothing is inserted</p>
-			 * @param {number} iIndex <p>The <code>0</code>-based index the item should be inserted at; for a negative value of <code>iIndex</code>, the item is inserted at position 0; for a value greater than the current size of the aggregation, the item is inserted at the last position</p>
-			 * @returns sap.f.GridContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 * <p>Inserts an item into the aggregation named <code>items</code>.</p>
+			 * @param {sap.ui.core.Item} oItem <p>The item to be inserted; if empty, nothing is inserted.</p>
+			 * @param {number} iIndex <p>The <code>0</code>-based index the item should be inserted at; for a negative value of <code>iIndex</code>, the item is inserted at position 0; for a value greater than the current size of the aggregation, the item is inserted at the last position.</p>
+			 * @returns sap.f.GridContainer <p><code>this</code> to allow method chaining.</p>
 			 */
-			insertItem(oItem: sap.ui.core.Control, iIndex: number): sap.f.GridContainer;
+			insertItem(oItem: sap.ui.core.Item, iIndex: number): sap.f.GridContainer;
 			/**
 			 * <p>After rendering hook.</p>
 			 */
@@ -1828,11 +1932,11 @@ declare namespace sap {
 			 */
 			removeAllItems(): sap.ui.core.Control[];
 			/**
-			 * <p>Removes a item from the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.f.GridContainer/methods/getItems">items</a>.</p>
-			 * @param {number | string | sap.ui.core.Control} vItem <p>The item to remove or its index or id</p>
-			 * @returns sap.ui.core.Control <p>The removed item or <code>null</code></p>
+			 * <p>Removes an item from the aggregation named <code>items</code>.</p>
+			 * @param {number | string | sap.ui.core.Item} vItem <p>The item to remove or its index or ID.</p>
+			 * @returns sap.ui.core.Control <p>The removed item or null.</p>
 			 */
-			removeItem(vItem: number | string | sap.ui.core.Control): sap.ui.core.Control;
+			removeItem(vItem: number | string | sap.ui.core.Item): sap.ui.core.Control;
 			/**
 			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAllowDenseFill" href="#/api/sap.f.GridContainer/methods/getAllowDenseFill">allowDenseFill</a>.</p><p>Increases the density when arranging the items. Smaller items will take up all of the available space, ignoring their order.</p><p><b>Note:</b> The order of the items is ignored. An item which is normally at the bottom, can appear on top.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
 			 * @param {boolean} bAllowDenseFill <p>New value for property <code>allowDenseFill</code></p>
@@ -1881,6 +1985,12 @@ declare namespace sap {
 			 * @returns sap.f.GridContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
 			setLayoutXL(oLayoutXL: sap.f.GridContainerSettings): sap.f.GridContainer;
+			/**
+			 * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLayoutXS" href="#/api/sap.f.GridContainer/methods/getLayoutXS">layoutXS</a>.</p>
+			 * @param {sap.f.GridContainerSettings} oLayoutXS <p>The layoutXS to set</p>
+			 * @returns sap.f.GridContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setLayoutXS(oLayoutXS: sap.f.GridContainerSettings): sap.f.GridContainer;
 			/**
 			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSnapToRow" href="#/api/sap.f.GridContainer/methods/getSnapToRow">snapToRow</a>.</p><p>Should the items stretch to fill the rows that they occupy, or not.</p><p>If set to <code>true</code> the items will stretch.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
 			 * @param {boolean} bSnapToRow <p>New value for property <code>snapToRow</code></p>
@@ -1954,7 +2064,7 @@ declare namespace sap {
 			 */
 			getColumns(): number;
 			/**
-			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getColumnSize" href="#/api/sap.f.GridContainerSettings/methods/getColumnSize">columnSize</a>.</p><p>The width of the columns.</p><p><b>Note:</b> Use only 'px' or 'rem'. Some features may not work as expected otherwise.</p><p>Default value is <code>80px</code>.</p>
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getColumnSize" href="#/api/sap.f.GridContainerSettings/methods/getColumnSize">columnSize</a>.</p><p>The width of the columns.</p><p><b>Note:</b> Values different than single size in 'px' or 'rem' are not supported for the polyfill for IE.</p><p>Default value is <code>80px</code>.</p>
 			 * @returns sap.ui.core.CSSSize <p>Value of property <code>columnSize</code></p>
 			 */
 			getColumnSize(): sap.ui.core.CSSSize;
@@ -1963,6 +2073,16 @@ declare namespace sap {
 			 * @returns sap.ui.core.CSSSize <p>Value of property <code>gap</code></p>
 			 */
 			getGap(): sap.ui.core.CSSSize;
+			/**
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMaxColumnSize" href="#/api/sap.f.GridContainerSettings/methods/getMaxColumnSize">maxColumnSize</a>.</p><p>Sets the maximum width of the columns. Setting this together with <code>minColumnSize</code> will allow the columns to breath between those two values.</p><p><b>Note:</b> Will not work in combination with <code>columnSize</code>.</p><p><b>Note:</b> Not supported for the polyfill for IE.</p>
+			 * @returns sap.ui.core.CSSSize <p>Value of property <code>maxColumnSize</code></p>
+			 */
+			getMaxColumnSize(): sap.ui.core.CSSSize;
+			/**
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMinColumnSize" href="#/api/sap.f.GridContainerSettings/methods/getMinColumnSize">minColumnSize</a>.</p><p>Sets the minimum width of the columns. Setting this together with <code>maxColumnSize</code> will allow the columns to breath between those two values.</p><p><b>Note:</b> Will not work in combination with <code>columnSize</code>.</p><p><b>Note:</b> Not supported for the polyfill for IE.</p>
+			 * @returns sap.ui.core.CSSSize <p>Value of property <code>minColumnSize</code></p>
+			 */
+			getMinColumnSize(): sap.ui.core.CSSSize;
 			/**
 			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getRowSize" href="#/api/sap.f.GridContainerSettings/methods/getRowSize">rowSize</a>.</p><p>The height of the rows.</p><p><b>Note:</b> Use only 'px' or 'rem'. Some features may not work as expected otherwise.</p><p>Default value is <code>80px</code>.</p>
 			 * @returns sap.ui.core.CSSSize <p>Value of property <code>rowSize</code></p>
@@ -1975,7 +2095,7 @@ declare namespace sap {
 			 */
 			setColumns(iColumns: number): sap.f.GridContainerSettings;
 			/**
-			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getColumnSize" href="#/api/sap.f.GridContainerSettings/methods/getColumnSize">columnSize</a>.</p><p>The width of the columns.</p><p><b>Note:</b> Use only 'px' or 'rem'. Some features may not work as expected otherwise.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>80px</code>.</p>
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getColumnSize" href="#/api/sap.f.GridContainerSettings/methods/getColumnSize">columnSize</a>.</p><p>The width of the columns.</p><p><b>Note:</b> Values different than single size in 'px' or 'rem' are not supported for the polyfill for IE.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>80px</code>.</p>
 			 * @param {sap.ui.core.CSSSize} sColumnSize <p>New value for property <code>columnSize</code></p>
 			 * @returns sap.f.GridContainerSettings <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
@@ -1987,6 +2107,18 @@ declare namespace sap {
 			 */
 			setGap(sGap: sap.ui.core.CSSSize): sap.f.GridContainerSettings;
 			/**
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMaxColumnSize" href="#/api/sap.f.GridContainerSettings/methods/getMaxColumnSize">maxColumnSize</a>.</p><p>Sets the maximum width of the columns. Setting this together with <code>minColumnSize</code> will allow the columns to breath between those two values.</p><p><b>Note:</b> Will not work in combination with <code>columnSize</code>.</p><p><b>Note:</b> Not supported for the polyfill for IE.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+			 * @param {sap.ui.core.CSSSize} sMaxColumnSize <p>New value for property <code>maxColumnSize</code></p>
+			 * @returns sap.f.GridContainerSettings <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setMaxColumnSize(sMaxColumnSize: sap.ui.core.CSSSize): sap.f.GridContainerSettings;
+			/**
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMinColumnSize" href="#/api/sap.f.GridContainerSettings/methods/getMinColumnSize">minColumnSize</a>.</p><p>Sets the minimum width of the columns. Setting this together with <code>maxColumnSize</code> will allow the columns to breath between those two values.</p><p><b>Note:</b> Will not work in combination with <code>columnSize</code>.</p><p><b>Note:</b> Not supported for the polyfill for IE.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+			 * @param {sap.ui.core.CSSSize} sMinColumnSize <p>New value for property <code>minColumnSize</code></p>
+			 * @returns sap.f.GridContainerSettings <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setMinColumnSize(sMinColumnSize: sap.ui.core.CSSSize): sap.f.GridContainerSettings;
+			/**
 			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getRowSize" href="#/api/sap.f.GridContainerSettings/methods/getRowSize">rowSize</a>.</p><p>The height of the rows.</p><p><b>Note:</b> Use only 'px' or 'rem'. Some features may not work as expected otherwise.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>80px</code>.</p>
 			 * @param {sap.ui.core.CSSSize} sRowSize <p>New value for property <code>rowSize</code></p>
 			 * @returns sap.f.GridContainerSettings <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -1996,7 +2128,7 @@ declare namespace sap {
 		/**
 		 * <p>A list-based control with grid layout capabilities.</p><h3>Overview</h3><p>The control is based on <a target="_self" class="jsdoclink" href="#/api/sap.m.ListBase">sap.m.ListBase</a> and adds the flexibility to configure different grid layouts. The layout used is based on the CSS display grid and the control has a default configuration.</p><p>With <code>customLayout</code> aggregation it is possible to use: <ul> <li>Predefined simple grid layouts such as <a target="_self" class="jsdoclink" href="#/api/sap.ui.layout.cssgrid.GridBoxLayout">GridBoxLayout</a></li> <li>Flexible grid layouts, such as <a target="_self" class="jsdoclink" href="#/api/sap.ui.layout.cssgrid.GridBasicLayout">GridBasicLayout</a> or <a target="_self" class="jsdoclink" href="#/api/sap.ui.layout.cssgrid.GridResponsiveLayout">GridResponsiveLayout</a> which reveal the native-browser CSS display grid APIs. For more information, see <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout">MDN web docs: CSS Grid Layout</a>
 		<img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
-		title="Information published on non SAP site" class="sapUISDKExternalLink"/></li> </ul></p><p>Every item can override its size by specifying the number of columns and/or rows it will take in the grid. This is done using <a target="_self" class="jsdoclink" href="#/api/sap.ui.layout.cssgrid.GridItemLayoutData">GridItemLayoutData</a>.</p><h3>Usage</h3><p>For general cases, use the default grid configuration of the <code>GridList</code>. For Box case (equal sized items), use <code>customLayout</code> aggregation with <a target="_self" class="jsdoclink" href="#/api/sap.ui.layout.cssgrid.GridBoxLayout">GridBoxLayout</a> For Grids which need different configurations based on available width, use <code>customLayout</code> aggregation with <a target="_self" class="jsdoclink" href="#/api/sap.ui.layout.cssgrid.GridResponsiveLayout">GridResponsiveLayout</a> To set a specific position to an item or define its dimensions in the grid, pass <code>layoutData</code> of type <a target="_self" class="jsdoclink" href="#/api/sap.ui.layout.cssgrid.GridItemLayoutData">GridItemLayoutData</a></p><p><i>When to use</i> <ul> <li>If <a target="_self" class="jsdoclink" href="#/api/sap.m.ListBase">sap.m.ListBase</a> features are required and the items must be positioned in a grid layout</li> </ul></p><p><i>When not to use</i> <ul> <li>If a list layout is required, use <a target="_self" class="jsdoclink" href="#/api/sap.m.List">sap.m.List</a> instead. <li>If only the layout is required, use <a target="_self" class="jsdoclink" href="#/api/sap.ui.layout.cssgrid.CSSGrid">sap.ui.layout.cssgrid.CSSGrid</a> instead. </ul></p><h3>Current Limitations</h3><p> <ul> <li>For Microsoft Internet Explorer some layouts are not supported, due to browser specifics.</li> <li>For Microsoft Edge 15 and older versions some layouts are not supported, due to browser specifics.</li> </ul><br><br><span>Documentation links:</span><ul><li><a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout">MDN web docs: CSS Grid Layout</a>
+		title="Information published on non SAP site" class="sapUISDKExternalLink"/></li> </ul></p><p>Every item can override its size by specifying the number of columns and/or rows it will take in the grid. This is done using <a target="_self" class="jsdoclink" href="#/api/sap.ui.layout.cssgrid.GridItemLayoutData">GridItemLayoutData</a>.</p><p>For best visualization, items of type <a target="_self" class="jsdoclink" href="#/api/sap.f.GridListItem">sap.f.GridListItem</a> should be used inside the <code>items</code> aggregation.</p><h3>Usage</h3><p>For general cases, use the default grid configuration of the <code>GridList</code>. For Box case (equal sized items), use <code>customLayout</code> aggregation with <a target="_self" class="jsdoclink" href="#/api/sap.ui.layout.cssgrid.GridBoxLayout">GridBoxLayout</a> For Grids which need different configurations based on available width, use <code>customLayout</code> aggregation with <a target="_self" class="jsdoclink" href="#/api/sap.ui.layout.cssgrid.GridResponsiveLayout">GridResponsiveLayout</a> To set a specific position to an item or define its dimensions in the grid, pass <code>layoutData</code> of type <a target="_self" class="jsdoclink" href="#/api/sap.ui.layout.cssgrid.GridItemLayoutData">GridItemLayoutData</a></p><p><i>When to use</i> <ul> <li>If <a target="_self" class="jsdoclink" href="#/api/sap.m.ListBase">sap.m.ListBase</a> features are required and the items must be positioned in a grid layout</li> </ul></p><p><i>When not to use</i> <ul> <li>If a list layout is required, use <a target="_self" class="jsdoclink" href="#/api/sap.m.List">sap.m.List</a> instead. <li>If only the layout is required, use <a target="_self" class="jsdoclink" href="#/api/sap.ui.layout.cssgrid.CSSGrid">sap.ui.layout.cssgrid.CSSGrid</a> instead. </ul></p><h3>Drag and drop:</h3><p> Drag and drop is enabled for the <code>GridList</code> with enhanced visualization and interaction, better suited for grid items. This is configured by using the <code><a target="_self" class="jsdoclink" href="#/api/sap.f.dnd.GridDropInfo">sap.f.dnd.GridDropInfo</a></code>.</p><p>Similar to the <code><a target="_self" class="jsdoclink" href="#/api/sap.ui.core.dnd.DropInfo">sap.ui.core.dnd.DropInfo</a></code>, <code><a target="_self" class="jsdoclink" href="#/api/sap.f.dnd.GridDropInfo">sap.f.dnd.GridDropInfo</a></code> has to be added to the <code>dragDropConfig</code> aggregation, by using <code><a target="_self" class="jsdoclink" href="#/api/sap.ui.core.Element/methods/addDragDropConfig">sap.ui.core.Element#addDragDropConfig</a></code>.</p><p>Both <code><a target="_self" class="jsdoclink" href="#/api/sap.ui.core.dnd.DropInfo">sap.ui.core.dnd.DropInfo</a></code> and <code><a target="_self" class="jsdoclink" href="#/api/sap.f.dnd.GridDropInfo">sap.f.dnd.GridDropInfo</a></code> can be used to configure drag and drop. The difference is that the <code><a target="_self" class="jsdoclink" href="#/api/sap.f.dnd.GridDropInfo">sap.f.dnd.GridDropInfo</a></code> will provide a drop indicator, which mimics the size of the dragged item and shows the potential drop position inside the grid.</p><h3>Current Limitations</h3><p> <ul> <li>For Microsoft Internet Explorer some layouts are not supported, due to browser specifics.</li> <li>For Microsoft Edge 15 and older versions some layouts are not supported, due to browser specifics.</li> </ul><br><br><span>Documentation links:</span><ul><li><a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout">MDN web docs: CSS Grid Layout</a>
 		<img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
 		title="Information published on non SAP site" class="sapUISDKExternalLink"/></li></ul></p>
 		 */
@@ -2032,6 +2164,68 @@ declare namespace sap {
 			 * @returns sap.f.GridList <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
 			setCustomLayout(oCustomLayout: sap.ui.layout.cssgrid.GridLayoutBase): sap.f.GridList;
+		}
+		/**
+		 * <p>The <code>GridListItem</code> with a content aggregation can be used to display all kind of information. It is used in <a target="_self" class="jsdoclink" href="#/api/sap.f.GridList">sap.f.GridList</a>. <b>Note:</b> Even though the content aggregation can be used for any control, complex responsive layout controls, such as <code>Table, Form</code>, etc, should not be aggregated as content.</p>
+		 */
+		export class GridListItem extends sap.m.ListItemBase {
+			/**
+			 * <p>Constructor for a new GridListItem.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+			 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
+			 * @param {any} mSettings <p>Initial settings for the new control</p>
+			 */
+			constructor(sId?: string, mSettings?: any);
+			/**
+			 * <p>Adds some content to the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getContent" href="#/api/sap.f.GridListItem/methods/getContent">content</a>.</p>
+			 * @param {sap.ui.core.Control} oContent <p>The content to add; if empty, nothing is inserted</p>
+			 * @returns sap.f.GridListItem <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			addContent(oContent: sap.ui.core.Control): sap.f.GridListItem;
+			/**
+			 * <p>Binds aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getContent" href="#/api/sap.f.GridListItem/methods/getContent">content</a> to model data.</p><p>See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/methods/bindAggregation">ManagedObject.bindAggregation</a> for a detailed description of the possible properties of <code>oBindingInfo</code>.</p>
+			 * @param {any} oBindingInfo <p>The binding information</p>
+			 * @returns sap.f.GridListItem <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			bindContent(oBindingInfo: any): sap.f.GridListItem;
+			/**
+			 * <p>Destroys all the content in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getContent" href="#/api/sap.f.GridListItem/methods/getContent">content</a>.</p>
+			 * @returns sap.f.GridListItem <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			destroyContent(): sap.f.GridListItem;
+			/**
+			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getContent" href="#/api/sap.f.GridListItem/methods/getContent">content</a>.</p><p>The content of this list item</p>
+			 * @returns sap.ui.core.Control[] 
+			 */
+			getContent(): sap.ui.core.Control[];
+			/**
+			 * <p>Checks for the provided <code>sap.ui.core.Control</code> in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getContent" href="#/api/sap.f.GridListItem/methods/getContent">content</a>. and returns its index if found or -1 otherwise.</p>
+			 * @param {sap.ui.core.Control} oContent <p>The content whose index is looked for</p>
+			 * @returns number <p>The index of the provided control in the aggregation if found, or -1 otherwise</p>
+			 */
+			indexOfContent(oContent: sap.ui.core.Control): number;
+			/**
+			 * <p>Inserts a content into the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getContent" href="#/api/sap.f.GridListItem/methods/getContent">content</a>.</p>
+			 * @param {sap.ui.core.Control} oContent <p>The content to insert; if empty, nothing is inserted</p>
+			 * @param {number} iIndex <p>The <code>0</code>-based index the content should be inserted at; for a negative value of <code>iIndex</code>, the content is inserted at position 0; for a value greater than the current size of the aggregation, the content is inserted at the last position</p>
+			 * @returns sap.f.GridListItem <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			insertContent(oContent: sap.ui.core.Control, iIndex: number): sap.f.GridListItem;
+			/**
+			 * <p>Removes all the controls from the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getContent" href="#/api/sap.f.GridListItem/methods/getContent">content</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
+			 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
+			 */
+			removeAllContent(): sap.ui.core.Control[];
+			/**
+			 * <p>Removes a content from the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getContent" href="#/api/sap.f.GridListItem/methods/getContent">content</a>.</p>
+			 * @param {number | string | sap.ui.core.Control} vContent <p>The content to remove or its index or id</p>
+			 * @returns sap.ui.core.Control <p>The removed content or <code>null</code></p>
+			 */
+			removeContent(vContent: number | string | sap.ui.core.Control): sap.ui.core.Control;
+			/**
+			 * <p>Unbinds aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getContent" href="#/api/sap.f.GridListItem/methods/getContent">content</a> from model data.</p>
+			 * @returns sap.f.GridListItem <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			unbindContent(): sap.f.GridListItem;
 		}
 		/**
 		 * <p><p>Interface that should be implemented by all card controls.</p></p>
@@ -3053,7 +3247,7 @@ declare namespace sap {
 		 */
 		namespace dnd {
 			/**
-			 * <p>Provides enhanced configuration for drop operations inside grid based controls. If drop position is "Between" and drop layout is "Horizontal", this drop configuration will provide enhanced user experience. This includes the display of a target drop indicator which represents the exact position and size of the dragged control. <b>Note:</b> This configuration might be ignored due to control <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.Element/methods/sap.ui.core.Element.extend">metadata</a> restrictions.</p>
+			 * <p>Provides enhanced configuration for drop operations inside grid-based controls.</p><p>If drop position is <code>Between</code> and drop layout is <code>Horizontal</code>, this drop configuration will provide enhanced visualization and interaction, better suited for grid items. It will show a drop indicator which mimics the size of the dragged item and shows the potential drop position inside the grid. The indicator will push away other grid items, showing the correct arrangement calculated by the grid’s auto-placement algorithm.</p><p>When position is different than <code>Between</code> or layout is not <code>Horizontal</code>, the drag and drop will look and behave like the general <code><a target="_self" class="jsdoclink" href="#/api/sap.ui.core.dnd.DropInfo">sap.ui.core.dnd.DropInfo</a></code>.</p><p><b>Note:</b> This configuration might be ignored due to control <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.Element/methods/sap.ui.core.Element.extend">metadata</a> restrictions.</p>
 			 */
 			export class GridDropInfo extends sap.ui.core.dnd.DropInfo {
 				/**
@@ -3412,7 +3606,7 @@ declare namespace sap {
 				setVisible(bVisible: boolean): sap.f.semantic.SemanticControl;
 			}
 			/**
-			 * <p>An enhanced <a target="_self" class="jsdoclink" href="#/api/sap.f.DynamicPage">sap.f.DynamicPage</a>, that contains controls with semantic-specific meaning.</p><h3>Overview</h3><p>Content specified in the <code>sap.f.semantic.SemanticPage</code> aggregations is automatically positioned in dedicated sections of the title or the footer of the page, depending on the control's semantics.</p><p>The actions in the <code>SemanticPage</code> title are grouped to text actions or icon actions. When an aggregation is set, the actions appear in the following predefined order (from left to right):</p><p><ul>Text actions: <li>The main semantic text action - <code>titleMainAction</code></li> <li>Any custom text actions - <code>titleCustomTextActions</code></li> <li>The semantic text actions - <code>editAction</code>, <code>deleteAction</code>, <code>copyAction</code> and <code>addAction</code></li></ul></p><p><ul>Icon actions: <li>Any custom icon actions - <code>titleCustomIconActions</code></li> <li>The simple semantic icon actions - <code>favoriteAction</code> and <code>flagAction</code></li> <li>The share menu semantic icon actions as a drop-down list with the following order: <ul><li><code>sendEmailAction</code></li> <li><code>discussInJamAction</code></li> <li><code>shareInJamAction</code></li> <li><code>sendMessageAction</code></li> <li><code>printAction</code></li> <li>Any <code>customShareActions</code></li></ul></li> <li>The navigation semantic actions - <code>fullScreenAction</code>, <code>exitFullScreenAction</code>, and <code>closeAction</li></code></ul></p><p>The actions in the <code>SemanticPage</code> footer are positioned either on its left or right area and have the following predefined order:</p><p><ul>Footer left area: <li>The semantic text action - <code>messagesIndicator</code></li> <li>The semantic label - <code>draftIndicator</code></li></ul></p><p><ul>Footer right area: <li>The main semantic text action - <code>footerMainAction</code></li> <li>The semantic text actions - <code>positiveAction</code> and <code>negativeAction</code></li> <li>Any custom text actions - <code>footerCustomActions</code></li></ul></p><h3>Usage</h3><p>Using the <code>SemanticPage</code> facilitates the implementation of the SAP Fiori 2.0 design guidelines.</p><h3>Responsive behavior</h3><p>The responsive behavior of the <code>SemanticPage</code> depends on the behavior of the content that is displayed. To adjust the <code>SemanticPage</code> content padding, the <code>sapUiContentPadding</code>, <code>sapUiNoContentPadding</code>, and <code>sapUiResponsiveContentPadding</code> CSS classes can be used.<br><br><span>Documentation links:</span><ul><li><a target="_self" href="#/topic/84f3d52f492648d5b594e4f45dca7727">Semantic Pages</a></li><li><a target="_self" href="#/topic/4a97a07ec8f5441d901994d82eaab1f5">Semantic Page (sap.m)</a></li></ul></p>
+			 * <p>An enhanced <a target="_self" class="jsdoclink" href="#/api/sap.f.DynamicPage">sap.f.DynamicPage</a>, that contains controls with semantic-specific meaning.</p><h3>Overview</h3><p>Content specified in the <code>sap.f.semantic.SemanticPage</code> aggregations is automatically positioned in dedicated sections of the title or the footer of the page, depending on the control's semantics.</p><p>The actions in the <code>SemanticPage</code> title are grouped to text actions or icon actions. When an aggregation is set, the actions appear in the following predefined order (from left to right):</p><p><ul>Text actions: <li>The main semantic text action - <code>titleMainAction</code></li> <li>Any custom text actions - <code>titleCustomTextActions</code></li> <li>The semantic text actions - <code>editAction</code>, <code>deleteAction</code>, <code>copyAction</code> and <code>addAction</code></li></ul></p><p><ul>Icon actions: <li>Any custom icon actions - <code>titleCustomIconActions</code></li> <li>The simple semantic icon actions - <code>favoriteAction</code> and <code>flagAction</code></li> <li>The share menu semantic icon actions as a drop-down list with the following order: <ul><li><code>sendEmailAction</code></li> <li><code>discussInJamAction</code></li> <li><code>shareInJamAction</code></li> <li><code>sendMessageAction</code></li> <li><code>printAction</code></li> <li>Any <code>customShareActions</code></li></ul></li> <li>The navigation semantic actions - <code>fullScreenAction</code>, <code>exitFullScreenAction</code>, and <code>closeAction</code></li></ul></p><p>The actions in the <code>SemanticPage</code> footer are positioned either on its left or right area and have the following predefined order:</p><p><ul>Footer left area: <li>The semantic text action - <code>messagesIndicator</code></li> <li>The semantic label - <code>draftIndicator</code></li></ul></p><p><ul>Footer right area: <li>The main semantic text action - <code>footerMainAction</code></li> <li>The semantic text actions - <code>positiveAction</code> and <code>negativeAction</code></li> <li>Any custom text actions - <code>footerCustomActions</code></li></ul></p><h3>Usage</h3><p>Using the <code>SemanticPage</code> facilitates the implementation of the SAP Fiori 2.0 design guidelines.</p><h3>Responsive behavior</h3><p>The responsive behavior of the <code>SemanticPage</code> depends on the behavior of the content that is displayed. To adjust the <code>SemanticPage</code> content padding, the <code>sapUiContentPadding</code>, <code>sapUiNoContentPadding</code>, and <code>sapUiResponsiveContentPadding</code> CSS classes can be used.<br><br><span>Documentation links:</span><ul><li><a target="_self" href="#/topic/84f3d52f492648d5b594e4f45dca7727">Semantic Pages</a></li><li><a target="_self" href="#/topic/4a97a07ec8f5441d901994d82eaab1f5">Semantic Page (sap.m)</a></li></ul></p>
 			 */
 			export class SemanticPage extends sap.ui.core.Control {
 				/**

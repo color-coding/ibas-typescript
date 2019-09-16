@@ -161,7 +161,7 @@ declare namespace sap {
              */
             attachBeforeOpen(oData: any, fnFunction: Function, oListener?: any): sap.m.ActionSheet;
             /**
-             * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="cancelButtonPress" href="#/api/sap.m.ActionSheet/events/cancelButtonPress">cancelButtonPress</a> event of this <code>sap.m.ActionSheet</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.m.ActionSheet</code> itself.</p><p>This event is fired when the cancelButton is clicked. For iPad, this event is also fired when showCancelButton is set to true, and Popover is closed by clicking outside.</p>
+             * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="cancelButtonPress" href="#/api/sap.m.ActionSheet/events/cancelButtonPress">cancelButtonPress</a> event of this <code>sap.m.ActionSheet</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.m.ActionSheet</code> itself.</p><p>This event is fired when the cancelButton is clicked.</p><p><b>Note: </b> For any device other than phones, this event would be fired always when the Popover closes. To prevent this behavior, the <code>showCancelButton</code> property needs to be set to <code>false</code>.</p>
              * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
              * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
              * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.m.ActionSheet</code> itself</p>
@@ -670,6 +670,11 @@ declare namespace sap {
              */
             getLinks(): sap.m.Link[];
             /**
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSeparatorStyle" href="#/api/sap.m.Breadcrumbs/methods/getSeparatorStyle">separatorStyle</a>.</p><p>Determines the visual style of the separator between the <code>Breadcrumbs</code> elements.</p><p>Default value is <code>Slash</code>.</p>
+             * @returns sap.m.BreadcrumbsSeparatorStyle <p>Value of property <code>separatorStyle</code></p>
+             */
+            getSeparatorStyle(): sap.m.BreadcrumbsSeparatorStyle;
+            /**
              * <p>Checks for the provided <code>sap.m.Link</code> in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLinks" href="#/api/sap.m.Breadcrumbs/methods/getLinks">links</a>. and returns its index if found or -1 otherwise.</p>
              * @param {sap.m.Link} oLink <p>The link whose index is looked for</p>
              * @returns number <p>The index of the provided control in the aggregation if found, or -1 otherwise</p>
@@ -699,6 +704,41 @@ declare namespace sap {
              * @returns sap.m.Breadcrumbs <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             setCurrentLocationText(sCurrentLocationText: string): sap.m.Breadcrumbs;
+            /**
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSeparatorStyle" href="#/api/sap.m.Breadcrumbs/methods/getSeparatorStyle">separatorStyle</a>.</p><p>Determines the visual style of the separator between the <code>Breadcrumbs</code> elements.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Slash</code>.</p>
+             * @param {sap.m.BreadcrumbsSeparatorStyle} sSeparatorStyle <p>New value for property <code>separatorStyle</code></p>
+             * @returns sap.m.Breadcrumbs <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            setSeparatorStyle(sSeparatorStyle: sap.m.BreadcrumbsSeparatorStyle): sap.m.Breadcrumbs;
+        }
+        /**
+         * <p><p>Variations of the <a target="_self" class="jsdoclink" href="#/api/sap.m.Breadcrumbs">sap.m.Breadcrumbs</a> separators.</p></p>
+         */
+        export enum BreadcrumbsSeparatorStyle {
+            /**
+             * <p>The separator will appear as "\"</p>
+             */
+            BackSlash = "BackSlash",
+            /**
+             * <p>The separator will appear as "\\"</p>
+             */
+            DoubleBackSlash = "DoubleBackSlash",
+            /**
+             * <p>The separator will appear as ">>"</p>
+             */
+            DoubleGreaterThan = "DoubleGreaterThan",
+            /**
+             * <p>The separator will appear as "//"</p>
+             */
+            DoubleSlash = "DoubleSlash",
+            /**
+             * <p>The separator will appear as ">"</p>
+             */
+            GreaterThan = "GreaterThan",
+            /**
+             * <p>The separator will appear as "/"</p>
+             */
+            Slash = "Slash",
         }
         /**
          * <p>BusyDialog is used to indicate that the system is busy. </p><h3>Overview</h3><p> When the busy dialog is displayed, the whole application is blocked. </p><h3>Structure</h3><p> The busy dialog can hold several elements, most of which are optional. <ul> <li><code>title</code> - A title for the dialog. By default, there is no title.</li> <li><code>text</code> - A text displayed above the busy animation.</li> <li><code>showCancelButton</code> - An optional Cancel button to stop the execution.</li> <li><code>customIcon</code> - An optional alternative icon to use as a busy animation.</li> </ul> </p><h3>Usage</h3><h4>When to use</h4><p> <ul> <li>The operation lasts more than one second.</li> <li>You want to indicate loading in a page-to-page navigation (lightweight version).</li> <li>Offer a Cancel button if you expect the process to run more than 10 seconds.</li> <li> If you do not show a title or text, use the <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.InvisibleText">invisible text</a> control to provide the reason for users with assistive technologies.</li> </ul> </p><h4>When not to use</h4><p> <ul> <li>The screen is not supposed to be blocked. Use a <a target="_self" class="jsdoclink" href="#/api/sap.m.BusyIndicator">sap.m.BusyIndicator</a> for the specific application part.</li> <li>Do not use the title of the busy dialog. Provide a precise text describing the operation in <code>text</code>.</li> </ul></p>
@@ -1060,7 +1100,7 @@ declare namespace sap {
              */
             getEnabled(): boolean;
             /**
-             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getIcon" href="#/api/sap.m.Button/methods/getIcon">icon</a>.</p><p>Defines the icon to be displayed as graphical element within the <code>Button</code>. It can be an image or an icon from the icon font.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getIcon" href="#/api/sap.m.Button/methods/getIcon">icon</a>.</p><p>Defines the icon to be displayed as graphical element within the <code>Button</code>. It can be an image or an icon from the icon font.</p><p>Default value is <code>empty string</code>.</p>
              * @returns sap.ui.core.URI <p>Value of property <code>icon</code></p>
              */
             getIcon(): sap.ui.core.URI;
@@ -1080,7 +1120,7 @@ declare namespace sap {
              */
             protected getPopupAnchorDomRef(): HTMLElement;
             /**
-             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getText" href="#/api/sap.m.Button/methods/getText">text</a>.</p><p>Determines the text of the <code>Button</code>.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getText" href="#/api/sap.m.Button/methods/getText">text</a>.</p><p>Determines the text of the <code>Button</code>.</p><p>Default value is <code>empty string</code>.</p>
              * @returns string <p>Value of property <code>text</code></p>
              */
             getText(): string;
@@ -1134,9 +1174,9 @@ declare namespace sap {
              */
             setEnabled(bEnabled: boolean): sap.m.Button;
             /**
-             * <p>Property setter for the icon</p>
-             * @param {sap.ui.core.URI} sIcon <p>new value of the Icon property</p>
-             * @returns sap.m.Button <p>this to allow method chaining</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getIcon" href="#/api/sap.m.Button/methods/getIcon">icon</a>.</p><p>Defines the icon to be displayed as graphical element within the <code>Button</code>. It can be an image or an icon from the icon font.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
+             * @param {sap.ui.core.URI} sIcon <p>New value for property <code>icon</code></p>
+             * @returns sap.m.Button <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             setIcon(sIcon: sap.ui.core.URI): sap.m.Button;
             /**
@@ -1152,9 +1192,9 @@ declare namespace sap {
              */
             setIconFirst(bIconFirst: boolean): sap.m.Button;
             /**
-             * <p>Property setter for the text</p>
-             * @param {string} sText <p>new value of the Text attribute</p>
-             * @returns sap.m.Button <p>this to allow method chaining</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getText" href="#/api/sap.m.Button/methods/getText">text</a>.</p><p>Determines the text of the <code>Button</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
+             * @param {string} sText <p>New value for property <code>text</code></p>
+             * @returns sap.m.Button <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             setText(sText: string): sap.m.Button;
             /**
@@ -1788,6 +1828,11 @@ declare namespace sap {
              */
             getDefaultColor(): sap.ui.core.CSSColor;
             /**
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getDisplayMode" href="#/api/sap.m.ColorPalettePopover/methods/getDisplayMode">displayMode</a>.</p><p>Determines the <code>displayMode</code> of the <code>ColorPicker</code> among three types - Default, Large and Simplified</p><p>Default value is <code>Default</code>.</p>
+             * @returns sap.ui.unified.ColorPickerDisplayMode <p>Value of property <code>displayMode</code></p>
+             */
+            getDisplayMode(): sap.ui.unified.ColorPickerDisplayMode;
+            /**
              * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getShowDefaultColorButton" href="#/api/sap.m.ColorPalettePopover/methods/getShowDefaultColorButton">showDefaultColorButton</a>.</p><p>Indicates if the button for default color selection is available.</p><p>Default value is <code>true</code>.</p>
              * @returns boolean <p>Value of property <code>showDefaultColorButton</code></p>
              */
@@ -1797,12 +1842,6 @@ declare namespace sap {
              * @returns boolean <p>Value of property <code>showMoreColorsButton</code></p>
              */
             getShowMoreColorsButton(): boolean;
-            /**
-             * <p>Opens the <code>ColorPalettePopover</code>. The popover is positioned relative to the control parameter on tablet or desktop and is full screen on phone. Therefore the control parameter is only used on tablet or desktop and is ignored on phone.</p>
-             * @param {any} openBy <p>When this control is displayed on tablet or desktop, the <code>ColorPalettePopover</code> is positioned relative to this control</p>
-             * @returns any <p>Reference to the opening control</p>
-             */
-            openBy(openBy: any): any;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getColors" href="#/api/sap.m.ColorPalettePopover/methods/getColors">colors</a>.</p><p>Defines the List of colors displayed in the palette. Minimum is 2 colors, maximum is 15 colors.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>gold,darkorange,indianred,darkmagenta,cornflowerblue,deepskyblue,darkcyan,olivedrab,darkslategray,azure,white,lightgray,darkgray,dimgray,black</code>.</p>
              * @param {sap.ui.core.CSSColor[]} sColors <p>New value for property <code>colors</code></p>
@@ -1815,6 +1854,12 @@ declare namespace sap {
              * @returns sap.m.ColorPalettePopover <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             setDefaultColor(sDefaultColor: sap.ui.core.CSSColor): sap.m.ColorPalettePopover;
+            /**
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getDisplayMode" href="#/api/sap.m.ColorPalettePopover/methods/getDisplayMode">displayMode</a>.</p><p>Determines the <code>displayMode</code> of the <code>ColorPicker</code> among three types - Default, Large and Simplified</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Default</code>.</p>
+             * @param {sap.ui.unified.ColorPickerDisplayMode} sDisplayMode <p>New value for property <code>displayMode</code></p>
+             * @returns sap.m.ColorPalettePopover <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            setDisplayMode(sDisplayMode: sap.ui.unified.ColorPickerDisplayMode): sap.m.ColorPalettePopover;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getShowDefaultColorButton" href="#/api/sap.m.ColorPalettePopover/methods/getShowDefaultColorButton">showDefaultColorButton</a>.</p><p>Indicates if the button for default color selection is available.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
              * @param {boolean} bShowDefaultColorButton <p>New value for property <code>showDefaultColorButton</code></p>
@@ -3012,6 +3057,11 @@ declare namespace sap {
              */
             getSecondaryCalendarType(): sap.ui.core.CalendarType;
             /**
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getShowFooter" href="#/api/sap.m.DatePicker/methods/getShowFooter">showFooter</a>.</p><p>Hides or shows the popover's footer.</p><p>Default value is <code>false</code>.</p>
+             * @returns boolean <p>Value of property <code>showFooter</code></p>
+             */
+            getShowFooter(): boolean;
+            /**
              * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSpecialDates" href="#/api/sap.m.DatePicker/methods/getSpecialDates">specialDates</a>.</p><p>Date Range with type to visualize special days in the Calendar. If one day is assigned to more than one Type, only the first one will be used.</p><p>To set a single date (instead of a range), set only the startDate property of the sap.ui.unified.DateRange class.</p><p><b>Note:</b> Since 1.48 you could set a non-working day via the sap.ui.unified.CalendarDayType.NonWorking enum type just as any other special date type using sap.ui.unified.DateRangeType.</p>
              * @returns sap.ui.core.Element[] 
              */
@@ -3102,6 +3152,11 @@ declare namespace sap {
              * @returns sap.m.DatePicker <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             setSecondaryCalendarType(sSecondaryCalendarType: sap.ui.core.CalendarType): sap.m.DatePicker;
+            /**
+             * <p>Sets <code>showFooter</code> property to the given boolean value</p>
+             * @param {undefined} bFlag <p>when true footer is displayed</p>
+             */
+            setShowFooter(bFlag: undefined): void;
             /**
              * <p>Setter for property <code>value</code>.</p><p>Default value is empty/<code>undefined</code>.</p>
              * @param {string} sValue <p>New value for property <code>value</code>.</p>
@@ -9745,7 +9800,7 @@ declare namespace sap {
              */
             getShowUnread(): boolean;
             /**
-             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSticky" href="#/api/sap.m.ListBase/methods/getSticky">sticky</a>.</p><p>Defines the section of the control that remains fixed at the top of the page during vertical scrolling as long as the control is in the viewport.</p><p><b>Note:</b> Enabling sticky column headers in List controls will not have any effect.</p><p>There is limited browser support. Browsers that do not support this feature are listed below: <ul> <li>IE</li> <li>Edge lower than version 41 (EdgeHTML 16)</li> <li>Firefox lower than version 59</li> </ul></p><p>There are also some known limitations. A few are given below: <ul> <li>If the control is placed in layout containers that have the <code>overflow: hidden</code> or <code>overflow: auto</code> style definition, this can prevent the sticky elements of the control from becoming fixed at the top of the viewport.</li> <li>If sticky column headers are enabled in the <code>sap.m.Table</code> control, setting focus on the column headers will let the table scroll to the top.</li> <li>A transparent toolbar design is not supported for sticky bars. The toolbar will automatically get an intransparent background color.</li> </ul></p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSticky" href="#/api/sap.m.ListBase/methods/getSticky">sticky</a>.</p><p>Defines the section of the control that remains fixed at the top of the page during vertical scrolling as long as the control is in the viewport.</p><p><b>Note:</b> Enabling sticky column headers in List controls will not have any effect.</p><p>There is limited browser support. Browsers that do not support this feature are listed below: <ul> <li>IE</li> <li>Edge lower than version 41 (EdgeHTML 16)</li> <li>Firefox lower than version 59</li> </ul></p><p>There are also some known limitations. A few are given below: <ul> <li>If the control is placed in layout containers that have the <code>overflow: hidden</code> or <code>overflow: auto</code> style definition, this can prevent the sticky elements of the control from becoming fixed at the top of the viewport.</li> <li>If sticky column headers are enabled in the <code>sap.m.Table</code> control, setting focus on the column headers will let the table scroll to the top.</li> <li>A transparent toolbar design is not supported for sticky bars. The toolbar will automatically get an intransparent background color.</li> <li>This feature supports only the default height of the toolbar control.<li> </ul></p>
              * @returns sap.m.Sticky[] <p>Value of property <code>sticky</code></p>
              */
             getSticky(): sap.m.Sticky[];
@@ -9956,7 +10011,7 @@ declare namespace sap {
              */
             setShowUnread(bShowUnread: boolean): sap.m.ListBase;
             /**
-             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSticky" href="#/api/sap.m.ListBase/methods/getSticky">sticky</a>.</p><p>Defines the section of the control that remains fixed at the top of the page during vertical scrolling as long as the control is in the viewport.</p><p><b>Note:</b> Enabling sticky column headers in List controls will not have any effect.</p><p>There is limited browser support. Browsers that do not support this feature are listed below: <ul> <li>IE</li> <li>Edge lower than version 41 (EdgeHTML 16)</li> <li>Firefox lower than version 59</li> </ul></p><p>There are also some known limitations. A few are given below: <ul> <li>If the control is placed in layout containers that have the <code>overflow: hidden</code> or <code>overflow: auto</code> style definition, this can prevent the sticky elements of the control from becoming fixed at the top of the viewport.</li> <li>If sticky column headers are enabled in the <code>sap.m.Table</code> control, setting focus on the column headers will let the table scroll to the top.</li> <li>A transparent toolbar design is not supported for sticky bars. The toolbar will automatically get an intransparent background color.</li> </ul></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSticky" href="#/api/sap.m.ListBase/methods/getSticky">sticky</a>.</p><p>Defines the section of the control that remains fixed at the top of the page during vertical scrolling as long as the control is in the viewport.</p><p><b>Note:</b> Enabling sticky column headers in List controls will not have any effect.</p><p>There is limited browser support. Browsers that do not support this feature are listed below: <ul> <li>IE</li> <li>Edge lower than version 41 (EdgeHTML 16)</li> <li>Firefox lower than version 59</li> </ul></p><p>There are also some known limitations. A few are given below: <ul> <li>If the control is placed in layout containers that have the <code>overflow: hidden</code> or <code>overflow: auto</code> style definition, this can prevent the sticky elements of the control from becoming fixed at the top of the viewport.</li> <li>If sticky column headers are enabled in the <code>sap.m.Table</code> control, setting focus on the column headers will let the table scroll to the top.</li> <li>A transparent toolbar design is not supported for sticky bars. The toolbar will automatically get an intransparent background color.</li> <li>This feature supports only the default height of the toolbar control.<li> </ul></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
              * @param {sap.m.Sticky[]} sSticky <p>New value for property <code>sticky</code></p>
              * @returns sap.m.ListBase <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
@@ -11305,7 +11360,7 @@ declare namespace sap {
             setTitle(sTitle: string): sap.m.MessagePage;
         }
         /**
-         * <p>A summarized list of different types of messages. </p><h3>Overview</h3><p> A message popover is used to display a summarized list of different types of messages (errors, warnings, success and information). It provides a handy and systemized way to navigate and explore details for every message. It also exposes an event <a target="_self" class="jsdoclink" href="#/api/sap.m.MessagePopover/methods/activeTitlePress">sap.m.MessagePopover#activeTitlePress</a>, which can be used for navigation from a message to the source of the issue. </p><h4>Notes:</h4><p> <ul> <li> Messages can have descriptions pre-formatted with HTML markup. In this case, the <code>markupDescription</code> has to be set to <code>true</code>.</li> <li> If the message cannot be fully displayed or includes a long description, the message popover provides navigation to the detailed description.</li> </ul> </p><h3>Structure</h3><p> The message popover stores all messages in an aggregation of type <a target="_self" class="jsdoclink" href="#/api/sap.m.MessageItem">sap.m.MessageItem</a> named <code>items</code>.</p><p>A set of properties determines how the items are rendered: <ul> <li> counter - An integer that is used to indicate the number of errors for each type </li> <li> type - The type of message </li> <li> title/subtitle - The title and subtitle of the message</li> <li> description - The long text description of the message</li> <li> activeTitle - Determines whether the title of the item is interactive</li> </ul> </p><h3>Usage</h3><p> With the message concept, MessagePopover provides a way to centrally manage messages and show them to the user without additional work for the developer. The message popover is triggered from a messaging button in the footer toolbar. If an error has occurred at any validation point, the total number of messages should be incremented, but the user's work shouldn't be interrupted. Navigation between the message item and the source of the error can be created, if needed by the application. This can be done by setting the <code>activeTitle</code> property to true and providing a handler for the <code>activeTitlePress</code> event. In addition, you can achieve the same functionality inside a different container using the sap.m.MessageView control. </p><h3>Responsive Behavior</h3><p> On mobile phones, the message popover is automatically shown in full screen mode.<br> On desktop and tablet, the message popover opens in a popover.<br> On desktop the opened popover is resizable if it is placed in a <a target="_self" class="jsdoclink" href="#/api/sap.m.Toolbar">sap.m.Toolbar</a>, <a target="_self" class="jsdoclink" href="#/api/sap.m.Bar">sap.m.Bar</a> or used in <a target="_self" class="jsdoclink" href="#/api/sap.f.semantic.SemanticPage">sap.f.semantic.SemanticPage</a></p>
+         * <h3>Overview</h3><p> A <code>MessagePopover</code> is used to display a summarized list of different types of messages (error, warning, success, and information messages). It provides a handy and systemized way to navigate and explore details for every message. It is adaptive and responsive. It renders as a dialog with a Close button in the header on phones, and as a popover on tablets and higher resolution devices. It also exposes an event <a target="_self" class="jsdoclink" href="#/api/sap.m.MessagePopover/events/activeTitlePress">sap.m.MessagePopover#event:activeTitlePress</a>, which can be used for navigation from a message to the source of the issue. </p><h3>Notes:</h3><p> <ul> <li> Messages can have descriptions pre-formatted with HTML markup. In this case, the <code>markupDescription</code> has to be set to <code>true</code>.</li> <li> If the message cannot be fully displayed or includes a long description, the message popover provides navigation to the detailed description.</li> </ul> </p><h3>Structure</h3><p> The message popover stores all messages in an aggregation of type <a target="_self" class="jsdoclink" href="#/api/sap.m.MessageItem">sap.m.MessageItem</a> named <code>items</code>.</p><p>A set of properties determines how the items are rendered: <ul> <li> counter - An integer that is used to indicate the number of errors for each type </li> <li> type - The type of message </li> <li> title/subtitle - The title and subtitle of the message</li> <li> description - The long text description of the message</li> <li> activeTitle - Determines whether the title of the item is interactive</li> </ul> </p><h3>Usage</h3><h4>When to use:</h4><p> <ul> <li>When you want to make sure that all content is visible on any device.</li> <li>When you want a way to centrally manage messages and show them to the user without additional work for the developer. The message popover is triggered from a messaging button in the footer toolbar. If an error has occurred at any validation point, the total number of messages should be incremented, but the user's work shouldn't be interrupted. Navigation between the message item and the source of the error can be created, if needed by the application. This can be done by setting the <code>activeTitle</code> property to true and providing a handler for the <code>activeTitlePress</code> event. In addition, you can achieve the same functionality inside a different container using the <a target="_self" class="jsdoclink" href="#/api/sap.m.MessageView">sap.m.MessageView</a> control.</li> </ul> </p><h3>Responsive Behavior</h3><p> On mobile phones, the message popover is automatically shown in full screen mode.<br> On desktop and tablet, the message popover opens in a popover.<br> On desktop the opened popover is resizable if it is placed in a <a target="_self" class="jsdoclink" href="#/api/sap.m.Toolbar">sap.m.Toolbar</a>, <a target="_self" class="jsdoclink" href="#/api/sap.m.Bar">sap.m.Bar</a> or used in <a target="_self" class="jsdoclink" href="#/api/sap.f.semantic.SemanticPage">sap.f.semantic.SemanticPage</a></p>
          */
         export class MessagePopover extends sap.ui.core.Control {
             /**
@@ -11540,7 +11595,7 @@ declare namespace sap {
              */
             getHeaderButton(): sap.m.Button;
             /**
-             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getInitiallyExpanded" href="#/api/sap.m.MessagePopover/methods/getInitiallyExpanded">initiallyExpanded</a>.</p><p>Sets the initial state of the control - expanded or collapsed. By default the control opens as expanded.</p><p>Default value is <code>true</code>.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getInitiallyExpanded" href="#/api/sap.m.MessagePopover/methods/getInitiallyExpanded">initiallyExpanded</a>.</p><p>Sets the initial state of the control - expanded or collapsed. By default the control opens as expanded. Note: If there is only one message in the control, this state will be ignored and the details page of the message will be shown.</p><p>Default value is <code>true</code>.</p>
              * @returns boolean <p>Value of property <code>initiallyExpanded</code></p>
              */
             getInitiallyExpanded(): boolean;
@@ -11608,7 +11663,7 @@ declare namespace sap {
              */
             setHeaderButton(oHeaderButton: sap.m.Button): sap.m.MessagePopover;
             /**
-             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getInitiallyExpanded" href="#/api/sap.m.MessagePopover/methods/getInitiallyExpanded">initiallyExpanded</a>.</p><p>Sets the initial state of the control - expanded or collapsed. By default the control opens as expanded.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getInitiallyExpanded" href="#/api/sap.m.MessagePopover/methods/getInitiallyExpanded">initiallyExpanded</a>.</p><p>Sets the initial state of the control - expanded or collapsed. By default the control opens as expanded. Note: If there is only one message in the control, this state will be ignored and the details page of the message will be shown.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
              * @param {boolean} bInitiallyExpanded <p>New value for property <code>initiallyExpanded</code></p>
              * @returns sap.m.MessagePopover <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
@@ -11756,7 +11811,7 @@ declare namespace sap {
             setType(sType: sap.ui.core.MessageType): sap.m.MessageStrip;
         }
         /**
-         * <p><strong><i>Overview</i></strong> <br><br> A <a target="_self" class="jsdoclink" href="#/api/sap.m.MessageView">sap.m.MessageView</a> is used to display a summarized list of different types of messages (errors, warnings, success and information). It provides a handy and systemized way to navigate and explore details for every message. It is meant to be embedded into container controls. If the MessageView contains only one item, which has either description, markupDescription or longTextUrl, its details page will be displayed initially. <br><br> <strong>Notes:</strong> <ul> <li>If your application changes its model between two interactions with the MessageView, this could lead to outdated messages being shown. To avoid this, you need to call <code>navigateBack</code> on the MessageView BEFORE opening its container.</li> <li> Messages can have descriptions pre-formatted with HTML markup. In this case, the <code>markupDescription</code> has to be set to <code>true</code>. </li> <li> If the message cannot be fully displayed or includes a long description, the MessageView provides navigation to the detailed description. </li> </ul> <strong><i>Structure</i></strong> <br><br> The MessageView stores all messages in an association of type <a target="_self" class="jsdoclink" href="#/api/sap.m.MessageItem">sap.m.MessageItem</a> named <code>items</code>. <br> A set of properties determines how the items are rendered: <ul> <li> counter - An integer that is used to indicate the number of errors for each type </li> <li> type - The type of message </li> <li> title/subtitle - The title and subtitle of the message</li> <li> description - The long text description of the message</li> <li> activeTitle - Determines whether the title of the item is interactive</li> </ul> <strong><i>Usage</i></strong> <br><br> As part of the messaging concept, MessageView provides a way to centrally manage messages and show them to the user without additional work for the developer.</p><p>It also exposes an event <a target="_self" class="jsdoclink" href="#/api/sap.m.MessageView/methods/activeTitlePress">sap.m.MessageView#activeTitlePress</a>, which can be used for navigation from a message to the source of the issue. <br><br></p>
+         * <h3>Overview</h3><p> A <code>MessageView</code> is used to display a summarized list of different types of messages (error, warning, success, and information messages). It is meant to be embedded into container controls (such as <a target="_self" class="jsdoclink" href="#/api/sap.m.Popover">sap.m.Popover</a>, <a target="_self" class="jsdoclink" href="#/api/sap.m.ResponsivePopover">sap.m.ResponsivePopover</a>, <a target="_self" class="jsdoclink" href="#/api/sap.m.Dialog">sap.m.Dialog</a>). It provides a handy and systemized way to navigate and explore details for every message. If the MessageView contains only one item, which has either description, markupDescription or longTextUrl, its details page will be displayed initially. It also exposes an event <a target="_self" class="jsdoclink" href="#/api/sap.m.MessageView/events/activeTitlePress">sap.m.MessageView#event:activeTitlePress</a>, which can be used for navigation from a message to its source. </p><h3>Notes:</h3><p> <ul> <li>If your application changes its model between two interactions with the MessageView, this could lead to outdated messages being shown. To avoid this, you need to call <code>navigateBack</code> on the MessageView BEFORE opening its container.</li> <li> Messages can have descriptions pre-formatted with HTML markup. In this case, the <code>markupDescription</code> has to be set to <code>true</code>. </li> <li> If the message cannot be fully displayed or includes a long description, the MessageView provides navigation to the detailed description. </li> </ul> </p><h3>Structure</h3><p> The MessageView stores all messages in an association of type <a target="_self" class="jsdoclink" href="#/api/sap.m.MessageItem">sap.m.MessageItem</a> named <code>items</code>. <br> A set of properties determines how the items are rendered: <ul> <li> counter - An integer that is used to indicate the number of errors for each type </li> <li> type - The type of message </li> <li> title/subtitle - The title and subtitle of the message</li> <li> description - The long text description of the message</li> <li> activeTitle - Determines whether the title of the item is interactive</li> </ul> </p><h3>Usage</h3><h4>When to use:</h4><p> <ul> <li>When you want a way to centrally manage messages and show them to the user without additional work for the developer. Navigation between the message item and the source of the error can be created, if needed by the application. This can be done by setting the <code>activeTitle</code> property to true and providing a handler for the <code>activeTitlePress</code> event.</li> </ul></p>
          */
         export class MessageView extends sap.ui.core.Control {
             /**
@@ -11997,7 +12052,7 @@ declare namespace sap {
             setShowDetailsPageHeader(bShowDetailsPageHeader: boolean): sap.m.MessageView;
         }
         /**
-         * <p>The MultiComboBox control provides a list box with items and a text field allowing the user to either type a value directly into the control or choose from the list of existing items.</p><p>A drop-down list for selecting and filtering values. </p><h3>Overview</h3><p> The MultiComboBox control is commonly used to enable users to select one or more options from a predefined list. The control provides an editable input field to filter the list, and a dropdown arrow of available options. The select options in the list have checkboxes that permit multi-selection. Entered values are displayed as <a target="_self" class="jsdoclink" href="#/api/sap.m.Token">tokens</a>. </p><h3>Structure</h3><p> The MultiComboBox consists of the following elements: <ul> <li> Input field - displays the selected option/s as token/s. Users can type to filter the list. <li> Drop-down arrow - expands\collapses the option list.</li> <li> Option list - the list of available options.</li> </ul> </p><h3>Usage</h3><h4>When to use:</h4><p> <ul> <li>The user needs to select one or more options from a long list of options (maximum of approximately 200).</li> </ul> </p><h4>When not to use:</h4><p> <ul> <li>The user needs to choose between two options such as ON or OFF and YES or NO. In this case, consider using a <a target="_self" class="jsdoclink" href="#/api/sap.m.Switch">switch</a> control instead</li> <li>You need to display more that one attribute. In this case, consider using the <a target="_self" class="jsdoclink" href="#/api/sap.m.SelectDialog">select dialog</a> or value help dialog instead.</li> <li>The user needs to search on multiple attributes. In this case, consider using the <a target="_self" class="jsdoclink" href="#/api/sap.m.SelectDialog">select dialog</a> or value help dialog instead.</li> <li>Your use case requires all available options to be displayed right away, without any user interaction. In this case, consider using the <a target="_self" class="jsdoclink" href="#/api/sap.m.Checkbox">checkboxes</a> instead.</li> </ul> </p><h3>Responsive Behavior</h3><p> If there are many tokens, the control shows only the last selected tokens that fit and for the others a label N-more is provided. In case the length of the last selected token is exceeding the width of the control, only a label N-Items is shown. In both cases, pressing on the label will show the tokens in a popup. <u>On Phones:</u> <ul> <li>A new full-screen dialog opens where all items from the option list are shown.</li> <li>You can select and deselect items from the option list.</li> <li>With the help of a toggle button you can switch between showing all tokens and only selected ones.</li> <li>You can filter the option list by entering a value in the input.</li> </ul> <u>On Tablets:</u> <ul> <li>The auto-complete suggestions appear below or above the input field.</li> <li>You can review the tokens by swiping them to left or right.</li> </ul> <u>On Desktop:</u> <ul> <li>The auto-complete suggestions appear below or above the input field.</li> <li>You can review the tokens by pressing the right or left arrows on the keyboard.</li> <li>You can select single tokens or a range of tokens and you can copy/cut/delete them.</li> </ul></p>
+         * <p>The MultiComboBox control provides a list box with items and a text field allowing the user to either type a value directly into the control or choose from the list of existing items.</p><p>A drop-down list for selecting and filtering values. </p><h3>Overview</h3><p> The MultiComboBox control is commonly used to enable users to select one or more options from a predefined list. The control provides an editable input field to filter the list, and a dropdown arrow of available options. The select options in the list have checkboxes that permit multi-selection. Entered values are displayed as <a target="_self" class="jsdoclink" href="#/api/sap.m.Token">tokens</a>. </p><h3>Structure</h3><p> The MultiComboBox consists of the following elements: <ul> <li> Input field - displays the selected option/s as token/s. Users can type to filter the list. <li> Drop-down arrow - expands\collapses the option list.</li> <li> Option list - the list of available options.</li> </ul> </p><h3>Usage</h3><h4>When to use:</h4><p> <ul> <li>The user needs to select one or more options from a long list of options (maximum of approximately 200).</li> </ul> </p><h4>When not to use:</h4><p> <ul> <li>The user needs to choose between two options such as ON or OFF and YES or NO. In this case, consider using a <a target="_self" class="jsdoclink" href="#/api/sap.m.Switch">switch</a> control instead</li> <li>You need to display more that one attribute. In this case, consider using the <a target="_self" class="jsdoclink" href="#/api/sap.m.SelectDialog">select dialog</a> or value help dialog instead.</li> <li>The user needs to search on multiple attributes. In this case, consider using the <a target="_self" class="jsdoclink" href="#/api/sap.m.SelectDialog">select dialog</a> or value help dialog instead.</li> <li>Your use case requires all available options to be displayed right away, without any user interaction. In this case, consider using the <a target="_self" class="jsdoclink" href="#/api/sap.m.CheckBox">checkboxes</a> instead.</li> </ul> </p><h3>Responsive Behavior</h3><p> If there are many tokens, the control shows only the last selected tokens that fit and for the others a label N-more is provided. In case the length of the last selected token is exceeding the width of the control, only a label N-Items is shown. In both cases, pressing on the label will show the tokens in a popup. <u>On Phones:</u> <ul> <li>A new full-screen dialog opens where all items from the option list are shown.</li> <li>You can select and deselect items from the option list.</li> <li>With the help of a toggle button you can switch between showing all tokens and only selected ones.</li> <li>You can filter the option list by entering a value in the input.</li> </ul> <u>On Tablets:</u> <ul> <li>The auto-complete suggestions appear below or above the input field.</li> <li>You can review the tokens by swiping them to left or right.</li> </ul> <u>On Desktop:</u> <ul> <li>The auto-complete suggestions appear below or above the input field.</li> <li>You can review the tokens by pressing the right or left arrows on the keyboard.</li> <li>You can select single tokens or a range of tokens and you can copy/cut/delete them.</li> </ul></p>
          */
         export class MultiComboBox extends sap.m.ComboBoxBase {
             /**
@@ -12201,6 +12256,12 @@ declare namespace sap {
              */
             setSelectedItems(aItems: string[] | sap.ui.core.Item[] | null): sap.m.MultiComboBox;
             /**
+             * <p>Sets a new value for property <code>selectedKeys</code>. Keys of the selected items. If the key has no corresponding item, no changes will apply. If duplicate keys exists the first item matching the key is used. When called with a value of null or undefined, the default value of the property will be restored. Default value is [].</p>
+             * @param {string[]} aKeys <p>Keys of items to be set as selected</p>
+             * @returns sap.m.MultiComboBox <p><code>this</code> to allow method chaining.</p>
+             */
+            setSelectedKeys(aKeys: string[]): sap.m.MultiComboBox;
+            /**
              * <p>Setter for property <code>valueStateText</code>.</p><p>Default value is empty/<code>undefined</code>.</p>
              * @param {string} sText <p>New value for property <code>valueStateText</code>.</p>
              * @returns sap.m.InputBase <p><code>this</code> to allow method chaining</p>
@@ -12398,7 +12459,7 @@ declare namespace sap {
             unbindItems(): sap.m.MultiEditField;
         }
         /**
-         * <h3>Overview</h3><p> A multi-input field allows the user to enter multiple values, which are displayed as <a target="_self" class="jsdoclink" href="#/api/sap.m.Token">tokens</a>. You can enable auto-complete suggestions or value help to help the user choose the correct entry. You can define validator functions to define what token values are accepted. <b>Notes:</b> <ul> <li> New valid tokens are created, when the user presses Enter, selects a value from the suggestions drop-down, or when the focus leaves the field.</li> <li> When multiple values are copied and pasted in the field, separate tokens are created for each of them.</li> <li> When a single value is copied and pasted in the field, it is shown as a text value, as further editing might be required before it is converted into a token.</li> <li> Provide meaningful labels for all input fields. Do not use the placeholder as a replacement for the label.</li> </ul> </p><h3>Usage</h3><h4>When to use:</h4><p> <ul> <li> You need to provide the value help option to help users select or search multiple business objects.</li> <li> The dataset to choose from is expected to increase over time (for example, to more than 200 values).</li> </ul> </p><h4>When not to use:</h4><p> <ul> <li> When you need to select only one value.</li> <li> When you want the user to select from a predefined set of options. Use <a target="_self" class="jsdoclink" href="#/api/sap.m.MultiComboBox">sap.m.MultiComboBox</a> instead.</li> </ul> </p><h3>Responsive Behavior</h3><p> If there are many tokens, the control shows only the last selected tokens that fit and for the others a label <i>N-more</i> is provided. In case the length of the last selected token is exceeding the width of the control, only a label <i>N-Items</i> is shown. In both cases, pressing on the label will show the tokens in a popup. <u>On Phones:</u> <ul> <li> Only the last entered token is displayed.</li> <li> A new full-screen dialog opens where the auto-complete suggestions can be selected.</li> <li> You can review the tokens by tapping on the token or the input field.</li> </ul> <u> On Tablets:</u> <ul> <li> The auto-complete suggestions appear below or above the multi-input field.</li> <li> You can review the tokens by swiping them to the left or right.</li> </ul> <u>On Desktop:</u> <ul> <li> The auto-complete suggestions appear below or above the multi-input field.</li> <li> You can review the tokens by pressing the right or left arrows on the keyboard.</li> <li> You can select single tokens or a range of tokens and you can copy/cut/delete them.</li> </ul></p>
+         * <h3>Overview</h3><p> A multi-input field allows the user to enter multiple values, which are displayed as <a target="_self" class="jsdoclink" href="#/api/sap.m.Token">tokens</a>. You can enable auto-complete suggestions or value help to help the user choose the correct entry. You can define validator functions to define what token values are accepted.</p><p><b>Notes:</b> <ul> <li> New valid tokens are created, when the user presses Enter, selects a value from the suggestions drop-down, or when the focus leaves the field.</li> <li> When multiple values are copied and pasted in the field, separate tokens are created for each of them.</li> <li> When a single value is copied and pasted in the field, it is shown as a text value, as further editing might be required before it is converted into a token.</li> <li> Provide meaningful labels for all input fields. Do not use the placeholder as a replacement for the label.</li> <li> The <code>showValueHelp</code> property is overwritten and after initialization of the control, its value becomes <code>truthy</code>.</li> </ul> </p><h3>Usage</h3><h4>When to use:</h4><p> <ul> <li> You need to provide the value help option to help users select or search multiple business objects.</li> <li> The dataset to choose from is expected to increase over time (for example, to more than 200 values).</li> </ul> </p><h4>When not to use:</h4><p> <ul> <li> When you need to select only one value.</li> <li> When you want the user to select from a predefined set of options. Use <a target="_self" class="jsdoclink" href="#/api/sap.m.MultiComboBox">sap.m.MultiComboBox</a> instead.</li> </ul> </p><h3>Responsive Behavior</h3><p> If there are many tokens, the control shows only the last selected tokens that fit and for the others a label <i>N-more</i> is provided. In case the length of the last selected token is exceeding the width of the control, only a label <i>N-Items</i> is shown. In both cases, pressing on the label will show the tokens in a popup. <u>On Phones:</u> <ul> <li> Only the last entered token is displayed.</li> <li> A new full-screen dialog opens where the auto-complete suggestions can be selected.</li> <li> You can review the tokens by tapping on the token or the input field.</li> </ul> <u> On Tablets:</u> <ul> <li> The auto-complete suggestions appear below or above the multi-input field.</li> <li> You can review the tokens by swiping them to the left or right.</li> </ul> <u>On Desktop:</u> <ul> <li> The auto-complete suggestions appear below or above the multi-input field.</li> <li> You can review the tokens by pressing the right or left arrows on the keyboard.</li> <li> You can select single tokens or a range of tokens and you can copy/cut/delete them.</li> </ul></p>
          */
         export class MultiInput extends sap.m.Input {
             /**
@@ -12415,7 +12476,7 @@ declare namespace sap {
             addToken(oToken: sap.m.Token): sap.m.MultiInput;
             /**
              * <p>Function adds a validation callback called before any new token gets added to the tokens aggregation</p>
-             * @param {Function} fValidator <p>The validation callback</p>
+             * @param {Function} fValidator <p>The validation callback whose parameter contains the following properties:</p>
              */
             addValidator(fValidator: Function): void;
             /**
@@ -12426,6 +12487,16 @@ declare namespace sap {
              * @returns sap.m.MultiInput <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             attachTokenUpdate(oData: any, fnFunction: Function, oListener?: any): sap.m.MultiInput;
+            /**
+             * <p>Clones input.</p>
+             * @returns sap.m.Input <p>Cloned input.</p>
+             */
+            clone(): sap.m.Input;
+            /**
+             * <p>Clones the <code>sap.m.MultiInput</code> control.</p>
+             * @returns sap.ui.core.Element <p>reference to the newly created clone</p>
+             */
+            clone(): sap.ui.core.Element;
             /**
              * <p>Destroys all the tokens in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTokens" href="#/api/sap.m.MultiInput/methods/getTokens">tokens</a>.</p>
              * @returns sap.m.MultiInput <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -12573,7 +12644,7 @@ declare namespace sap {
             protected updateInputField(): void;
         }
         /**
-         * <p>Handles hierarchical navigation between Pages or other fullscreen controls.</p><p>All children of this control receive navigation events, such as <a target="_self" class="jsdoclink" href="#/api/sap.m.NavContainerChild/methods/beforeShow">beforeShow</a>, they are documented in the pseudo interface <a target="_self" class="jsdoclink" href="#/api/sap.m.NavContainerChild">sap.m.NavContainerChild</a>.</p>
+         * <p>Handles hierarchical navigation between Pages or other fullscreen controls.</p><p>All children of this control receive navigation events, such as <a target="_self" class="jsdoclink" href="#/api/sap.m.NavContainerChild/events/beforeShow">beforeShow</a>, they are documented in the pseudo interface <a target="_self" class="jsdoclink" href="#/api/sap.m.NavContainerChild">sap.m.NavContainerChild</a>.</p>
          */
         export class NavContainer extends sap.ui.core.Control {
             /**
@@ -12671,7 +12742,7 @@ declare namespace sap {
              */
             protected fireNavigate(mParameters?: any): boolean;
             /**
-             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAutoFocus" href="#/api/sap.m.NavContainer/methods/getAutoFocus">autoFocus</a>.</p><p>Determines whether the initial focus is set automatically on first rendering and after navigating to a new page. This is useful when on touch devices the keyboard pops out due to the focus being automatically set on an input field. If necessary, the <code>afterShow</code> event can be used to focus another element, only if <code>autoFocus</code> is set to <code>false</code>.</p><p><b>Note:</b> The following scenarios are possible, depending on where the focus was before navigation to a new page: <ul><li>If <code>autoFocus</code> is set to <code>true</code> and the focus was inside the current page, the focus will be moved automatically on the new page.</li> <li>If <code>autoFocus</code> is set to <code>false</code> and the focus was inside the current page, the focus will disappear. <li>If the focus was outside the current page, after the navigation it will remain unchanged regardless of what is set to the <code>autoFocus</code> property.</li></ul></p><p>Default value is <code>true</code>.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAutoFocus" href="#/api/sap.m.NavContainer/methods/getAutoFocus">autoFocus</a>.</p><p>Determines whether the initial focus is set automatically on first rendering and after navigating to a new page. This is useful when on touch devices the keyboard pops out due to the focus being automatically set on an input field. If necessary, the <code>afterShow</code> event can be used to focus another element, only if <code>autoFocus</code> is set to <code>false</code>.</p><p><b>Note:</b> The following scenarios are possible, depending on where the focus was before navigation to a new page: <ul><li>If <code>autoFocus</code> is set to <code>true</code> and the focus was inside the current page, the focus will be moved automatically on the new page.</li> <li>If <code>autoFocus</code> is set to <code>false</code> and the focus was inside the current page, the focus will disappear. <li>If the focus was outside the current page, after the navigation it will remain unchanged regardless of what is set to the <code>autoFocus</code> property.</li> <li>If the <code>autoFocus</code> is set to <code>false</code> and at the same time another wrapping control has its own logic for focus restoring upon rerendering, the focus will still appear.</li></ul></p><p>Default value is <code>true</code>.</p>
              * @returns boolean <p>Value of property <code>autoFocus</code></p>
              */
             getAutoFocus(): boolean;
@@ -12702,7 +12773,7 @@ declare namespace sap {
              */
             getPage(pageId: string): sap.ui.core.Control;
             /**
-             * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getPages" href="#/api/sap.m.NavContainer/methods/getPages">pages</a>.</p><p>The content entities between which this NavContainer navigates. These can be of type sap.m.Page, sap.ui.core.View, sap.m.Carousel or any other control with fullscreen/page semantics.</p><p>These aggregated controls will receive navigation events like <a target="_self" class="jsdoclink" href="#/api/sap.m.NavContainerChild/methods/beforeShow">beforeShow</a>, they are documented in the pseudo interface <a target="_self" class="jsdoclink" href="#/api/sap.m.NavContainerChild">sap.m.NavContainerChild</a></p>
+             * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getPages" href="#/api/sap.m.NavContainer/methods/getPages">pages</a>.</p><p>The content entities between which this NavContainer navigates. These can be of type sap.m.Page, sap.ui.core.View, sap.m.Carousel or any other control with fullscreen/page semantics.</p><p>These aggregated controls will receive navigation events like <a target="_self" class="jsdoclink" href="#/api/sap.m.NavContainerChild/events/beforeShow">beforeShow</a>, they are documented in the pseudo interface <a target="_self" class="jsdoclink" href="#/api/sap.m.NavContainerChild">sap.m.NavContainerChild</a></p>
              * @returns sap.ui.core.Control[] 
              */
             getPages(): sap.ui.core.Control[];
@@ -12749,12 +12820,12 @@ declare namespace sap {
             removeAllPages(): sap.ui.core.Control[];
             /**
              * <p>Removes a page.</p>
-             * @param {number | string | sap.ui.core.Control} vPage <p>the position or ID of the <code>Control</control> that should be removed or that <code>Control</control> itself; if <code>vPage</code> is invalid, a negative value or a value greater or equal than the current size of the aggregation, nothing is removed.</p>
+             * @param {number | string | sap.ui.core.Control} vPage <p>the position or ID of the <code>Control</code> that should be removed or that <code>Control</code> itself; if <code>vPage</code> is invalid, a negative value or a value greater or equal than the current size of the aggregation, nothing is removed.</p>
              * @returns sap.ui.core.Control <p>the removed page or null</p>
              */
             protected removePage(vPage: number | string | sap.ui.core.Control): sap.ui.core.Control;
             /**
-             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAutoFocus" href="#/api/sap.m.NavContainer/methods/getAutoFocus">autoFocus</a>.</p><p>Determines whether the initial focus is set automatically on first rendering and after navigating to a new page. This is useful when on touch devices the keyboard pops out due to the focus being automatically set on an input field. If necessary, the <code>afterShow</code> event can be used to focus another element, only if <code>autoFocus</code> is set to <code>false</code>.</p><p><b>Note:</b> The following scenarios are possible, depending on where the focus was before navigation to a new page: <ul><li>If <code>autoFocus</code> is set to <code>true</code> and the focus was inside the current page, the focus will be moved automatically on the new page.</li> <li>If <code>autoFocus</code> is set to <code>false</code> and the focus was inside the current page, the focus will disappear. <li>If the focus was outside the current page, after the navigation it will remain unchanged regardless of what is set to the <code>autoFocus</code> property.</li></ul></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAutoFocus" href="#/api/sap.m.NavContainer/methods/getAutoFocus">autoFocus</a>.</p><p>Determines whether the initial focus is set automatically on first rendering and after navigating to a new page. This is useful when on touch devices the keyboard pops out due to the focus being automatically set on an input field. If necessary, the <code>afterShow</code> event can be used to focus another element, only if <code>autoFocus</code> is set to <code>false</code>.</p><p><b>Note:</b> The following scenarios are possible, depending on where the focus was before navigation to a new page: <ul><li>If <code>autoFocus</code> is set to <code>true</code> and the focus was inside the current page, the focus will be moved automatically on the new page.</li> <li>If <code>autoFocus</code> is set to <code>false</code> and the focus was inside the current page, the focus will disappear. <li>If the focus was outside the current page, after the navigation it will remain unchanged regardless of what is set to the <code>autoFocus</code> property.</li> <li>If the <code>autoFocus</code> is set to <code>false</code> and at the same time another wrapping control has its own logic for focus restoring upon rerendering, the focus will still appear.</li></ul></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
              * @param {boolean} bAutoFocus <p>New value for property <code>autoFocus</code></p>
              * @returns sap.m.NavContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
@@ -13159,11 +13230,11 @@ declare namespace sap {
              */
             setAutoPriority(bAutoPriority: boolean): sap.m.NotificationListGroup;
             /**
-             * <p>Overwrites the setter for collapsed property.</p>
-             * @param {boolean} Collapsed <p>Collapsed indicator.</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="collapsed" href="#/api/sap.m.NotificationListGroup/methods/collapsed">#collapsed</a>. Determines if the group is collapsed or expanded.</p>
+             * @param {boolean} bCollapsed <p>New value for property <code>collapsed</code>.</p>
              * @returns sap.m.NotificationListGroup <p>this NotificationListGroup reference for chaining.</p>
              */
-            setCollapsed(Collapsed: boolean): sap.m.NotificationListGroup;
+            setCollapsed(bCollapsed: boolean): sap.m.NotificationListGroup;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEnableCollapseButtonWhenEmpty" href="#/api/sap.m.NotificationListGroup/methods/getEnableCollapseButtonWhenEmpty">enableCollapseButtonWhenEmpty</a>.</p><p>Determines if the collapse/expand button should be enabled for an empty group.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
              * @param {boolean} bEnableCollapseButtonWhenEmpty <p>New value for property <code>enableCollapseButtonWhenEmpty</code></p>
@@ -15351,7 +15422,7 @@ declare namespace sap {
             constructor(sId?: string, mSettings?: any);
             /**
              * <p>add a single condition.</p>
-             * @param {any} oCondition <p>the new condition of type <code>{ "key": "007", "operation": sap.m.P13nConditionOperation.Ascending, "keyField": "keyFieldKey", "value1": "", "value2": ""};</code></p>
+             * @param {any} oCondition <p>the new condition of type <code>{ "key": "007", "operation": any.Ascending, "keyField": "keyFieldKey", "value1": "", "value2": ""};</code></p>
              */
             addCondition(oCondition: any): void;
             /**
@@ -15464,7 +15535,7 @@ declare namespace sap {
             getValidationExecutor(): any;
             /**
              * <p>insert a single condition.</p>
-             * @param {any} oCondition <p>the new condition of type <code>{ "key": "007", "operation": sap.m.P13nConditionOperation.Ascending, "keyField": "keyFieldKey", "value1": "", "value2": ""};</code></p>
+             * @param {any} oCondition <p>the new condition of type <code>{ "key": "007", "operation": any.Ascending, "keyField": "keyFieldKey", "value1": "", "value2": ""};</code></p>
              * @param {number} index <p>of the new condition</p>
              */
             insertCondition(oCondition: any, index: number): void;
@@ -19763,10 +19834,32 @@ declare namespace sap {
              */
             constructor(sId?: string, mSettings?: any);
             /**
+             * <p>Adds some ariaDescribedBy into the association <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAriaDescribedBy" href="#/api/sap.m.ProgressIndicator/methods/getAriaDescribedBy">ariaDescribedBy</a>.</p>
+             * @param {sap.ui.core.ID | sap.ui.core.Control} vAriaDescribedBy <p>The ariaDescribedBy to add; if empty, nothing is inserted</p>
+             * @returns sap.m.ProgressIndicator <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            addAriaDescribedBy(vAriaDescribedBy: sap.ui.core.ID | sap.ui.core.Control): sap.m.ProgressIndicator;
+            /**
+             * <p>Adds some ariaLabelledBy into the association <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAriaLabelledBy" href="#/api/sap.m.ProgressIndicator/methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
+             * @param {sap.ui.core.ID | sap.ui.core.Control} vAriaLabelledBy <p>The ariaLabelledBy to add; if empty, nothing is inserted</p>
+             * @returns sap.m.ProgressIndicator <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            addAriaLabelledBy(vAriaLabelledBy: sap.ui.core.ID | sap.ui.core.Control): sap.m.ProgressIndicator;
+            /**
              * <p>Returns the <code>sap.m.ProgressIndicator</code> accessibility information.<br><br>References: <ul><li>sap.ui.core.Control#getAccessibilityInfo</li></ul></p>
              * @returns any <p>The <code>sap.m.ProgressIndicator</code> accessibility information</p>
              */
             protected getAccessibilityInfo(): any;
+            /**
+             * <p>Returns array of IDs of the elements which are the current targets of the association <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAriaDescribedBy" href="#/api/sap.m.ProgressIndicator/methods/getAriaDescribedBy">ariaDescribedBy</a>.</p>
+             * @returns sap.ui.core.ID[] 
+             */
+            getAriaDescribedBy(): sap.ui.core.ID[];
+            /**
+             * <p>Returns array of IDs of the elements which are the current targets of the association <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAriaLabelledBy" href="#/api/sap.m.ProgressIndicator/methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
+             * @returns sap.ui.core.ID[] 
+             */
+            getAriaLabelledBy(): sap.ui.core.ID[];
             /**
              * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getDisplayOnly" href="#/api/sap.m.ProgressIndicator/methods/getDisplayOnly">displayOnly</a>.</p><p>Determines whether the control is in display-only state where the control has different visualization and cannot be focused.</p><p>Default value is <code>false</code>.</p>
              * @returns boolean <p>Value of property <code>displayOnly</code></p>
@@ -19812,6 +19905,28 @@ declare namespace sap {
              * @returns sap.ui.core.CSSSize <p>Value of property <code>width</code></p>
              */
             getWidth(): sap.ui.core.CSSSize;
+            /**
+             * <p>Removes all the controls in the association named <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAriaDescribedBy" href="#/api/sap.m.ProgressIndicator/methods/getAriaDescribedBy">ariaDescribedBy</a>.</p>
+             * @returns sap.ui.core.ID[] <p>An array of the removed elements (might be empty)</p>
+             */
+            removeAllAriaDescribedBy(): sap.ui.core.ID[];
+            /**
+             * <p>Removes all the controls in the association named <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAriaLabelledBy" href="#/api/sap.m.ProgressIndicator/methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
+             * @returns sap.ui.core.ID[] <p>An array of the removed elements (might be empty)</p>
+             */
+            removeAllAriaLabelledBy(): sap.ui.core.ID[];
+            /**
+             * <p>Removes an ariaDescribedBy from the association named <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAriaDescribedBy" href="#/api/sap.m.ProgressIndicator/methods/getAriaDescribedBy">ariaDescribedBy</a>.</p>
+             * @param {number | sap.ui.core.ID | sap.ui.core.Control} vAriaDescribedBy <p>The ariaDescribedBy to be removed or its index or ID</p>
+             * @returns sap.ui.core.ID <p>The removed ariaDescribedBy or <code>null</code></p>
+             */
+            removeAriaDescribedBy(vAriaDescribedBy: number | sap.ui.core.ID | sap.ui.core.Control): sap.ui.core.ID;
+            /**
+             * <p>Removes an ariaLabelledBy from the association named <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAriaLabelledBy" href="#/api/sap.m.ProgressIndicator/methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
+             * @param {number | sap.ui.core.ID | sap.ui.core.Control} vAriaLabelledBy <p>The ariaLabelledBy to be removed or its index or ID</p>
+             * @returns sap.ui.core.ID <p>The removed ariaLabelledBy or <code>null</code></p>
+             */
+            removeAriaLabelledBy(vAriaLabelledBy: number | sap.ui.core.ID | sap.ui.core.Control): sap.ui.core.ID;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getDisplayOnly" href="#/api/sap.m.ProgressIndicator/methods/getDisplayOnly">displayOnly</a>.</p><p>Determines whether the control is in display-only state where the control has different visualization and cannot be focused.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
              * @param {boolean} bDisplayOnly <p>New value for property <code>displayOnly</code></p>
@@ -20455,6 +20570,11 @@ declare namespace sap {
              */
             getDescription(): string;
             /**
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getFallbackIcon" href="#/api/sap.m.QuickViewPage/methods/getFallbackIcon">fallbackIcon</a>.</p><p>Defines the fallback icon displayed in case of wrong image src or loading issues.</p><p><b>Note</b> Accepted values are only icons from the SAP icon font.</p>
+             * @returns sap.ui.core.URI <p>Value of property <code>fallbackIcon</code></p>
+             */
+            getFallbackIcon(): sap.ui.core.URI;
+            /**
              * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getGroups" href="#/api/sap.m.QuickViewPage/methods/getGroups">groups</a>.</p><p>QuickViewGroup consists of a title (optional) and an entity of group elements.</p>
              * @returns sap.m.QuickViewGroup[] 
              */
@@ -20520,6 +20640,12 @@ declare namespace sap {
              * @returns sap.m.QuickViewPage <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             setDescription(sDescription: string): sap.m.QuickViewPage;
+            /**
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getFallbackIcon" href="#/api/sap.m.QuickViewPage/methods/getFallbackIcon">fallbackIcon</a>.</p><p>Defines the fallback icon displayed in case of wrong image src or loading issues.</p><p><b>Note</b> Accepted values are only icons from the SAP icon font.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+             * @param {sap.ui.core.URI} sFallbackIcon <p>New value for property <code>fallbackIcon</code></p>
+             * @returns sap.m.QuickViewPage <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            setFallbackIcon(sFallbackIcon: sap.ui.core.URI): sap.m.QuickViewPage;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getHeader" href="#/api/sap.m.QuickViewPage/methods/getHeader">header</a>.</p><p>Specifies the text displayed in the header of the control.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
              * @param {string} sHeader <p>New value for property <code>header</code></p>
@@ -22547,12 +22673,12 @@ declare namespace sap {
              */
             getAutoAdjustWidth(): boolean;
             /**
-             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEditable" href="#/api/sap.m.Select/methods/getEditable">editable</a>.</p><p>Determines whether the user can modify the selected item. When the property is set to <code>false</code>, the control appears as disabled but CAN still be focused.</p><p><b>Note:</b> When both <code>enabled</code> and <code>editable</code> properties are set to <code>false<code>, <code>enabled</code> has priority over <code>editable</code>.</p><p>Default value is <code>true</code>.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEditable" href="#/api/sap.m.Select/methods/getEditable">editable</a>.</p><p>Determines whether the user can modify the selected item. When the property is set to <code>false</code>, the control appears as disabled but CAN still be focused.</p><p><b>Note:</b> When both <code>enabled</code> and <code>editable</code> properties are set to <code>false</code>, <code>enabled</code> has priority over <code>editable</code>.</p><p>Default value is <code>true</code>.</p>
              * @returns boolean <p>Value of property <code>editable</code></p>
              */
             getEditable(): boolean;
             /**
-             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEnabled" href="#/api/sap.m.Select/methods/getEnabled">enabled</a>.</p><p>Determines whether the user can modify the selected item. When the property is set to <code>false</code>, the control appears as disabled and CANNOT be focused.</p><p><b>Note:</b> When both <code>enabled</code> and <code>editable</code> properties are set to <code>false<code>, <code>enabled</code> has priority over <code>editable</code>.</p><p>Default value is <code>true</code>.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEnabled" href="#/api/sap.m.Select/methods/getEnabled">enabled</a>.</p><p>Determines whether the user can modify the selected item. When the property is set to <code>false</code>, the control appears as disabled and CANNOT be focused.</p><p><b>Note:</b> When both <code>enabled</code> and <code>editable</code> properties are set to <code>false</code>, <code>enabled</code> has priority over <code>editable</code>.</p><p>Default value is <code>true</code>.</p>
              * @returns boolean <p>Value of property <code>enabled</code></p>
              */
             getEnabled(): boolean;
@@ -22670,6 +22796,11 @@ declare namespace sap {
              */
             getWidth(): sap.ui.core.CSSSize;
             /**
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getWrapItemsText" href="#/api/sap.m.Select/methods/getWrapItemsText">wrapItemsText</a>.</p><p>Determines whether the text in the items wraps on multiple lines when the available width is not enough.</p><p>Default value is <code>false</code>.</p>
+             * @returns boolean <p>Value of property <code>wrapItemsText</code></p>
+             */
+            getWrapItemsText(): boolean;
+            /**
              * <p>Checks for the provided <code>sap.ui.core.Item</code> in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.m.Select/methods/getItems">items</a>. and returns its index if found or -1 otherwise.</p>
              * @param {sap.ui.core.Item} oItem <p>The item whose index is looked for</p>
              * @returns number <p>The index of the provided control in the aggregation if found, or -1 otherwise</p>
@@ -22721,13 +22852,13 @@ declare namespace sap {
              */
             setAutoAdjustWidth(bAutoAdjustWidth: boolean): sap.m.Select;
             /**
-             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEditable" href="#/api/sap.m.Select/methods/getEditable">editable</a>.</p><p>Determines whether the user can modify the selected item. When the property is set to <code>false</code>, the control appears as disabled but CAN still be focused.</p><p><b>Note:</b> When both <code>enabled</code> and <code>editable</code> properties are set to <code>false<code>, <code>enabled</code> has priority over <code>editable</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEditable" href="#/api/sap.m.Select/methods/getEditable">editable</a>.</p><p>Determines whether the user can modify the selected item. When the property is set to <code>false</code>, the control appears as disabled but CAN still be focused.</p><p><b>Note:</b> When both <code>enabled</code> and <code>editable</code> properties are set to <code>false</code>, <code>enabled</code> has priority over <code>editable</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
              * @param {boolean} bEditable <p>New value for property <code>editable</code></p>
              * @returns sap.m.Select <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             setEditable(bEditable: boolean): sap.m.Select;
             /**
-             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEnabled" href="#/api/sap.m.Select/methods/getEnabled">enabled</a>.</p><p>Determines whether the user can modify the selected item. When the property is set to <code>false</code>, the control appears as disabled and CANNOT be focused.</p><p><b>Note:</b> When both <code>enabled</code> and <code>editable</code> properties are set to <code>false<code>, <code>enabled</code> has priority over <code>editable</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEnabled" href="#/api/sap.m.Select/methods/getEnabled">enabled</a>.</p><p>Determines whether the user can modify the selected item. When the property is set to <code>false</code>, the control appears as disabled and CANNOT be focused.</p><p><b>Note:</b> When both <code>enabled</code> and <code>editable</code> properties are set to <code>false</code>, <code>enabled</code> has priority over <code>editable</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
              * @param {boolean} bEnabled <p>New value for property <code>enabled</code></p>
              * @returns sap.m.Select <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
@@ -22817,13 +22948,19 @@ declare namespace sap {
              */
             setWidth(sWidth: sap.ui.core.CSSSize): sap.m.Select;
             /**
+             * <p>Sets the <code>wrapItemsText</code> property.</p>
+             * @param {boolean} bWrap 
+             * @returns sap.m.Select <p><code>this</code> to allow method chaining</p>
+             */
+            setWrapItemsText(bWrap: boolean): sap.m.Select;
+            /**
              * <p>Unbinds aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.m.Select/methods/getItems">items</a> from model data.</p>
              * @returns sap.m.Select <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             unbindItems(): sap.m.Select;
         }
         /**
-         * <h3>Overview</h3><p> A SelectDialog is a dialog containing a list, search functionality to filter it and a confirmation/cancel button. The list used in the dialog is a growing list and can be filled with any kind of list item. </p><h3>Structure</h3><h4>Dialog structure</h4><p> The select dialog has the following components: <ul> <li>Header - title of the dialog</li> <li>Search field - input field to enter search terms</li> <li>Info toolbar (only in multi-select) - displays the number of currently selected items</li> <li>Content - <a target="_self" class="jsdoclink" href="#/api/sap.m.StandardListItem">standard list items</a>, <a target="_self" class="jsdoclink" href="#/api/sap.m.DisplayListItem">display list items</a> or <a target="_self" class="jsdoclink" href="#/api/sap.m.FeedListItem">feed list items</a></li> <li>Button toolbar - for confirmation/cancellation buttons </li> </ul> </p><h4>List structure & selection</h4><p> <ul> <li> The search field triggers the events <code>search</code> and <code>liveChange</code> where a filter function can be applied to the list binding. </li> <li> The growing functionality of the list does not support two-way Binding, so if you use this control with a JSON model make sure the binding mode is set to <code>OneWay</code> and that you update the selection model manually with the items passed in the <code>confirm</code> event. </li> <li> In the multi-select mode of the select dialog, checkboxes are provided for choosing multiple entries. </li> <li> You can set <code>rememberSelections</code> to true to store the current selection and load this state when the dialog is opened again. </li> <li> When cancelling the selection, the event <code>change</code> will be fired and the selection is restored to the state when the dialog was opened. </li> </ul> </p><h3>Usage</h3><h4>When to use:</h4><p> <ul> <li>You need to select one or more entries from a comprehensive list that contains multiple attributes or values. </li> </ul> </p><h4>When not to use:</h4><p> <ul> <li> You need to pick one item from a predefined set of options. Use <a target="_self" class="jsdoclink" href="#/api/sap.m.Select">select</a> or <a target="_self" class="jsdoclink" href="#/api/sap.m.ComboBox">combobox</a> instead. </li> <li> You need to select a range of item. Use <a target="_self" class="jsdoclink" href="#/api/sap.ui.comp.valuehelpdialog.ValueHelpDialog">value help dialog</a> instead. </li> <li> You need to be able to add your own values to an existing list. Use a <a target="_self" class="jsdoclink" href="#/api/sap.m.Dialog">dialog</a> instead. </li> </ul> </p><h4>Note:</h4><p> The property <code>growing</code> determines the progressive loading. If it's set to true (the default value), the <code>selected count</code> in info bar and search will work only for the currently loaded items. To make sure that all items in the list are loaded at once and the above feature works properly, we recommend setting the <code>growing</code> property to false. </p><h3>Responsive Behavior</h3><p> <ul> <li> On phones, the select dialog takes up the whole screen. </li> <li> On desktop and tablet devices, the select dialog appears as a popover. </li> </ul></p>
+         * <h3>Overview</h3><p> A SelectDialog is a dialog containing a list, search functionality to filter it and a confirmation/cancel button. The list used in the dialog is a growing list and can be filled with any kind of list item. </p><h3>Structure</h3><h4>Dialog structure</h4><p> The select dialog has the following components: <ul> <li>Header - title of the dialog</li> <li>Search field - input field to enter search terms</li> <li>Info toolbar (only in multi-select) - displays the number of currently selected items</li> <li>Content - <a target="_self" class="jsdoclink" href="#/api/sap.m.StandardListItem">standard list items</a>, <a target="_self" class="jsdoclink" href="#/api/sap.m.DisplayListItem">display list items</a> or <a target="_self" class="jsdoclink" href="#/api/sap.m.FeedListItem">feed list items</a></li> <li>Button toolbar - for confirmation/cancellation buttons </li> </ul> </p><h4>List structure & selection</h4><p> <ul> <li> The search field triggers the events <code>search</code> and <code>liveChange</code> where a filter function can be applied to the list binding. </li> <li> The growing functionality of the list does not support two-way Binding, so if you use this control with a JSON model make sure the binding mode is set to <code>OneWay</code> and that you update the selection model manually with the items passed in the <code>confirm</code> event. </li> <li> In the multi-select mode of the select dialog, checkboxes are provided for choosing multiple entries. </li> <li> You can set <code>rememberSelections</code> to true to store the current selection and load this state when the dialog is opened again. </li> <li> When cancelling the selection, the event <code>change</code> will be fired and the selection is restored to the state when the dialog was opened. </li> <li>The SelectDialog is usually displayed at the center of the screen. Its size and position can be changed by the user. To enable this you need to set the <code>resizable</code> and <code>draggable</code> properties. Both properties are available only in desktop mode.</li> </ul> </p><h3>Usage</h3><h4>When to use:</h4><p> <ul> <li>You need to select one or more entries from a comprehensive list that contains multiple attributes or values. </li> </ul> </p><h4>When not to use:</h4><p> <ul> <li> You need to pick one item from a predefined set of options. Use <a target="_self" class="jsdoclink" href="#/api/sap.m.Select">select</a> or <a target="_self" class="jsdoclink" href="#/api/sap.m.ComboBox">combobox</a> instead. </li> <li> You need to select a range of item. Use <a target="_self" class="jsdoclink" href="#/api/sap.ui.comp.valuehelpdialog.ValueHelpDialog">value help dialog</a> instead. </li> <li> You need to be able to add your own values to an existing list. Use a <a target="_self" class="jsdoclink" href="#/api/sap.m.Dialog">dialog</a> instead. </li> </ul> </p><h4>Note:</h4><p> The property <code>growing</code> determines the progressive loading. If it's set to true (the default value), the <code>selected count</code> in info bar and search will work only for the currently loaded items. To make sure that all items in the list are loaded at once and the above feature works properly, we recommend setting the <code>growing</code> property to false. </p><h3>Responsive Behavior</h3><p> <ul> <li> On phones, the select dialog takes up the whole screen. </li> <li> On desktop and tablet devices, the select dialog appears as a popover. </li> </ul></p>
          */
         export class SelectDialog extends sap.ui.core.Control {
             /**
@@ -22961,6 +23098,11 @@ declare namespace sap {
              */
             getDomRef(): HTMLElement;
             /**
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getDraggable" href="#/api/sap.m.SelectDialog/methods/getDraggable">draggable</a>.</p><p>When set to <code>true</code>, the SelectDialog is draggable by its header. The default value is <code>false</code>. <b>Note</b>: The SelectDialog can be draggable only in desktop mode.</p><p>Default value is <code>false</code>.</p>
+             * @returns boolean <p>Value of property <code>draggable</code></p>
+             */
+            getDraggable(): boolean;
+            /**
              * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getGrowing" href="#/api/sap.m.SelectDialog/methods/getGrowing">growing</a>.</p><p>If set to <code>true</code>, enables the growing feature of the control to load more items by requesting from the bound model (progressive loading). <b>Note:</b> This feature only works when an <code>items</code> aggregation is bound. <b>Note:</b> Growing property, must not be used together with two-way binding.</p><p>Default value is <code>true</code>.</p>
              * @returns boolean <p>Value of property <code>growing</code></p>
              */
@@ -22990,6 +23132,11 @@ declare namespace sap {
              * @returns boolean <p>Value of property <code>rememberSelections</code></p>
              */
             getRememberSelections(): boolean;
+            /**
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getResizable" href="#/api/sap.m.SelectDialog/methods/getResizable">resizable</a>.</p><p>When set to <code>true</code>, the SelectDialog will have a resize handler in its bottom right corner. The default value is <code>false</code>. <b>Note</b>: The SelectDialog can be resizable only in desktop mode.</p><p>Default value is <code>false</code>.</p>
+             * @returns boolean <p>Value of property <code>resizable</code></p>
+             */
+            getResizable(): boolean;
             /**
              * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getShowClearButton" href="#/api/sap.m.SelectDialog/methods/getShowClearButton">showClearButton</a>.</p><p>This flag controls whether the Clear button is shown. When set to <code>true</code>, it provides a way to clear selection mode in Select Dialog. We recommended enabling of the Clear button in the following cases, where a mechanism to clear the value is needed: In case of single selection mode(default mode) for Select Dialog and <code>rememberSelections</code> is set to <code>true</code>. Clear button needs to be enabled in order to allow users to clear the selection. In case of using <code>sap.m.Input</code> with <code>valueHelpOnly</code> set to <code>true</code>, the Clear button could be used for clearing selection. In case the application stores a value and uses only Select Dialog to edit/maintain it. <b>Note:</b>When used with oData, only the loaded selections will be cleared.</p><p>Default value is <code>false</code>.</p>
              * @returns boolean <p>Value of property <code>showClearButton</code></p>
@@ -23070,6 +23217,12 @@ declare namespace sap {
              */
             setContentWidth(sWidth: sap.ui.core.CSSSize): sap.m.SelectDialog;
             /**
+             * <p>Sets the draggable property.</p>
+             * @param {boolean} bValue <p>Value for the draggable property</p>
+             * @returns sap.m.SelectDialog <p><code>this</code> pointer for chaining</p>
+             */
+            setDraggable(bValue: boolean): sap.m.SelectDialog;
+            /**
              * <p>Sets the growing to the internal list</p>
              * @param {boolean} bValue <p>Value for the list's growing.</p>
              * @returns sap.m.SelectDialog <p><code>this</code> pointer for chaining</p>
@@ -23099,6 +23252,12 @@ declare namespace sap {
              * @returns sap.m.SelectDialog <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             setRememberSelections(bRememberSelections: boolean): sap.m.SelectDialog;
+            /**
+             * <p>Sets the resizable property.</p>
+             * @param {boolean} bValue <p>Value for the resizable property</p>
+             * @returns sap.m.SelectDialog <p><code>this</code> pointer for chaining</p>
+             */
+            setResizable(bValue: boolean): sap.m.SelectDialog;
             /**
              * <p>Sets the Clear button visible state</p>
              * @param {boolean} bVisible <p>Value for the Clear button visible state.</p>
@@ -24195,7 +24354,7 @@ declare namespace sap {
             setTitleLevel(sTitleLevel: sap.ui.core.TitleLevel): sap.m.Shell;
         }
         /**
-         * <h3>Overview</h3><p>Displays a calendar of a single entity (such as person, resource) for the selected time interval.</p><p><b>Note:</b> The <code>SinglePlanningCalendar</code> uses parts of the <code>sap.ui.unified</code> library. This library will be loaded after the <code>SinglePlanningCalendar</code>, if it wasn't previously loaded. This could lead to a waiting time when a <code>SinglePlanningCalendar</code> is used for the first time. To prevent this, apps using the <code>SinglePlanningCalendar</code> must also load the <code>sap.ui.unified</code> library.</p><p><b>Disclaimer</b>: This control is in a beta state - incompatible API changes may be done before its official public release. Use at your own discretion.</p><h3>Usage</h3><p>The <code>SinglePlanningCalendar</code> has the following structure:</p><p><ul> <li>A <code>PlanningCalendarHeader</code> at the top. It contains the <code>title</code> set from the corresponding property, the <code>SegmentedButton</code>, which facilitates navigation through the views, controls, passed to the <code>actions</code> aggregation and the navigation, assisting the user in choosing the desired time period. The views, either custom or not, can be configured and passed through the <code>views</code> aggregation.</p><p>To create custom views, extend the <code>SinglePlanningCalendarView</code> basic view class. It defines three methods that should be overwritten: <code>getEntityCount</code>, <code>getScrollEntityCount</code> and <code>calculateStartDate</code> <ul> <li><code>getEntityCount</code> - returns number of columns to be displayed</li> <li><code>getScrollEntityCount</code> - used when next and previous arrows in the calendar are used. For example, in work week view, the <code>getEntityCount</code> returns 5 (5 columns from Monday to Friday), but when next arrow is selected, the control navigates 7 days ahead and <code>getScrollEntityCount</code> returns 7.</li> <li><code>calculateStartDate</code> - calculates the first day displayed in the calendar based on the <code>startDate</code> property of the <code>SinglePlanningCalendar</code>. For example, it returns the first date of a month or a week to display the first 10 days of the month.</li> </ul></p><p><li>A <code>SinglePlanningCalendarGrid</code>, which displays the appointments, set to the visual time range. An all-day appointment is an appointment which starts at 00:00 and ends in 00:00 on any day in the future. </ul></p>
+         * <p>Displays a calendar of a single entity (such as person, resource) for the selected time interval.</p><h3>Overview</h3><p><b>Note:</b> The <code>SinglePlanningCalendar</code> uses parts of the <code>sap.ui.unified</code> library. This library will be loaded after the <code>SinglePlanningCalendar</code>, if it wasn't previously loaded. This could lead to a waiting time when a <code>SinglePlanningCalendar</code> is used for the first time. To prevent this, apps using the <code>SinglePlanningCalendar</code> must also load the <code>sap.ui.unified</code> library.</p><p>The <code>SinglePlanningCalendar</code> has the following structure:</p><p><ul> <li>A <code>PlanningCalendarHeader</code> at the top. It contains the <code>title</code> set from the corresponding property, the <code>SegmentedButton</code>, which facilitates navigation through the views, controls, passed to the <code>actions</code> aggregation and the navigation, assisting the user in choosing the desired time period. The views, either custom or not, can be configured and passed through the <code>views</code> aggregation.</p><p>To create custom views, extend the <code>SinglePlanningCalendarView</code> basic view class. It defines three methods that should be overwritten: <code>getEntityCount</code>, <code>getScrollEntityCount</code> and <code>calculateStartDate</code> <ul> <li><code>getEntityCount</code> - returns number of columns to be displayed</li> <li><code>getScrollEntityCount</code> - used when next and previous arrows in the calendar are used. For example, in work week view, the <code>getEntityCount</code> returns 5 (5 columns from Monday to Friday), but when next arrow is selected, the control navigates 7 days ahead and <code>getScrollEntityCount</code> returns 7.</li> <li><code>calculateStartDate</code> - calculates the first day displayed in the calendar based on the <code>startDate</code> property of the <code>SinglePlanningCalendar</code>. For example, it returns the first date of a month or a week to display the first 10 days of the month.</li> </ul></p><p><li>A <code>SinglePlanningCalendarGrid</code> or <code>SinglePlanningCalendarMonthGrid</code>, which displays the appointments, set to the visual time range. An all-day appointment is an appointment which starts at 00:00 and ends in 00:00 on any day in the future. </ul></p>
          */
         export class SinglePlanningCalendar extends sap.ui.core.Control {
             /**
@@ -24277,6 +24436,14 @@ declare namespace sap {
              */
             attachHeaderDateSelect(oData: any, fnFunction: Function, oListener?: any): sap.m.SinglePlanningCalendar;
             /**
+             * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="moreLinkPress" href="#/api/sap.m.SinglePlanningCalendar/events/moreLinkPress">moreLinkPress</a> event of this <code>sap.m.SinglePlanningCalendar</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.m.SinglePlanningCalendar</code> itself.</p><p>Fired when a 'more' button is pressed. <b>Note:</b> The 'more' button appears in a month view cell when multiple appointments exist and the available space is not sufficient to display all of them.</p>
+             * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+             * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+             * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.m.SinglePlanningCalendar</code> itself</p>
+             * @returns sap.m.SinglePlanningCalendar <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            attachMoreLinkPress(oData: any, fnFunction: Function, oListener?: any): sap.m.SinglePlanningCalendar;
+            /**
              * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="startDateChange" href="#/api/sap.m.SinglePlanningCalendar/events/startDateChange">startDateChange</a> event of this <code>sap.m.SinglePlanningCalendar</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.m.SinglePlanningCalendar</code> itself.</p><p><code>startDate</code> is changed while navigating in the <code>SinglePlanningCalendar</code>.</p>
              * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
              * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
@@ -24347,6 +24514,13 @@ declare namespace sap {
              */
             detachHeaderDateSelect(fnFunction: Function, oListener?: any): sap.m.SinglePlanningCalendar;
             /**
+             * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="moreLinkPress" href="#/api/sap.m.SinglePlanningCalendar/events/moreLinkPress">moreLinkPress</a> event of this <code>sap.m.SinglePlanningCalendar</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+             * @param {any} oListener <p>Context object on which the given function had to be called</p>
+             * @returns sap.m.SinglePlanningCalendar <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            detachMoreLinkPress(fnFunction: Function, oListener?: any): sap.m.SinglePlanningCalendar;
+            /**
              * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="startDateChange" href="#/api/sap.m.SinglePlanningCalendar/events/startDateChange">startDateChange</a> event of this <code>sap.m.SinglePlanningCalendar</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
              * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
              * @param {any} oListener <p>Context object on which the given function had to be called</p>
@@ -24390,6 +24564,12 @@ declare namespace sap {
              */
             protected fireHeaderDateSelect(mParameters?: any): sap.m.SinglePlanningCalendar;
             /**
+             * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="moreLinkPress" href="#/api/sap.m.SinglePlanningCalendar/events/moreLinkPress">moreLinkPress</a> to attached listeners.</p>
+             * @param {any} mParameters <p>Parameters to pass along with the event</p>
+             * @returns sap.m.SinglePlanningCalendar <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            protected fireMoreLinkPress(mParameters?: any): sap.m.SinglePlanningCalendar;
+            /**
              * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="startDateChange" href="#/api/sap.m.SinglePlanningCalendar/events/startDateChange">startDateChange</a> to attached listeners.</p>
              * @param {any} mParameters <p>Parameters to pass along with the event</p>
              * @returns sap.m.SinglePlanningCalendar <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -24421,6 +24601,16 @@ declare namespace sap {
              */
             getEnableAppointmentsResize(): boolean;
             /**
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEndHour" href="#/api/sap.m.SinglePlanningCalendar/methods/getEndHour">endHour</a>.</p><p>Determines the end hour of the grid to be shown if the <code>fullDay</code> property is set to <code>false</code>. Otherwise the next hours are displayed as non-working. The passed hour is considered as 24-hour based.</p><p>Default value is <code>24</code>.</p>
+             * @returns number <p>Value of property <code>endHour</code></p>
+             */
+            getEndHour(): number;
+            /**
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getFullDay" href="#/api/sap.m.SinglePlanningCalendar/methods/getFullDay">fullDay</a>.</p><p>Determines if all of the hours in a day are displayed. If set to <code>false</code>, the hours shown are between the <code>startHour</code> and <code>endHour</code>.</p><p>Default value is <code>true</code>.</p>
+             * @returns boolean <p>Value of property <code>fullDay</code></p>
+             */
+            getFullDay(): boolean;
+            /**
              * <p>ID of the element which is the current target of the association <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLegend" href="#/api/sap.m.SinglePlanningCalendar/methods/getLegend">legend</a>, or <code>null</code>.</p>
              * @returns sap.ui.core.ID 
              */
@@ -24445,6 +24635,11 @@ declare namespace sap {
              * @returns any <p>Value of property <code>startDate</code></p>
              */
             getStartDate(): any;
+            /**
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getStartHour" href="#/api/sap.m.SinglePlanningCalendar/methods/getStartHour">startHour</a>.</p><p>Determines the start hour of the grid to be shown if the <code>fullDay</code> property is set to <code>false</code>. Otherwise the previous hours are displayed as non-working. The passed hour is considered as 24-hour based.</p><p>Default value is <code>0</code>.</p>
+             * @returns number <p>Value of property <code>startHour</code></p>
+             */
+            getStartHour(): number;
             /**
              * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getStickyMode" href="#/api/sap.m.SinglePlanningCalendar/methods/getStickyMode">stickyMode</a>.</p><p>Determines which part of the control will remain fixed at the top of the page during vertical scrolling as long as the control is in the viewport.</p><p><b>Note:</b> Limited browser support. Browsers which do not support this feature: <ul> <li>Microsoft Internet Explorer</li> <li>Microsoft Edge lower than version 41 (EdgeHTML 16)</li> <li>Mozilla Firefox lower than version 59</li> </ul></p><p>Default value is <code>None</code>.</p>
              * @returns sap.m.PlanningCalendarStickyMode <p>Value of property <code>stickyMode</code></p>
@@ -24575,6 +24770,18 @@ declare namespace sap {
              */
             setEnableAppointmentsResize(bEnableAppointmentsResize: boolean): sap.m.SinglePlanningCalendar;
             /**
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEndHour" href="#/api/sap.m.SinglePlanningCalendar/methods/getEndHour">endHour</a>.</p><p>Determines the end hour of the grid to be shown if the <code>fullDay</code> property is set to <code>false</code>. Otherwise the next hours are displayed as non-working. The passed hour is considered as 24-hour based.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>24</code>.</p>
+             * @param {number} iEndHour <p>New value for property <code>endHour</code></p>
+             * @returns sap.m.SinglePlanningCalendar <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            setEndHour(iEndHour: number): sap.m.SinglePlanningCalendar;
+            /**
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getFullDay" href="#/api/sap.m.SinglePlanningCalendar/methods/getFullDay">fullDay</a>.</p><p>Determines if all of the hours in a day are displayed. If set to <code>false</code>, the hours shown are between the <code>startHour</code> and <code>endHour</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+             * @param {boolean} bFullDay <p>New value for property <code>fullDay</code></p>
+             * @returns sap.m.SinglePlanningCalendar <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            setFullDay(bFullDay: boolean): sap.m.SinglePlanningCalendar;
+            /**
              * <p>Sets the associated <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLegend" href="#/api/sap.m.SinglePlanningCalendar/methods/getLegend">legend</a>.</p>
              * @param {sap.ui.core.ID | sap.m.PlanningCalendarLegend} oLegend <p>ID of an element which becomes the new target of this legend association; alternatively, an element instance may be given</p>
              * @returns sap.m.SinglePlanningCalendar <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -24593,6 +24800,12 @@ declare namespace sap {
              */
             setStartDate(oStartDate: any): sap.m.SinglePlanningCalendar;
             /**
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getStartHour" href="#/api/sap.m.SinglePlanningCalendar/methods/getStartHour">startHour</a>.</p><p>Determines the start hour of the grid to be shown if the <code>fullDay</code> property is set to <code>false</code>. Otherwise the previous hours are displayed as non-working. The passed hour is considered as 24-hour based.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
+             * @param {number} iStartHour <p>New value for property <code>startHour</code></p>
+             * @returns sap.m.SinglePlanningCalendar <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            setStartHour(iStartHour: number): sap.m.SinglePlanningCalendar;
+            /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getStickyMode" href="#/api/sap.m.SinglePlanningCalendar/methods/getStickyMode">stickyMode</a>.</p><p>Determines which part of the control will remain fixed at the top of the page during vertical scrolling as long as the control is in the viewport.</p><p><b>Note:</b> Limited browser support. Browsers which do not support this feature: <ul> <li>Microsoft Internet Explorer</li> <li>Microsoft Edge lower than version 41 (EdgeHTML 16)</li> <li>Mozilla Firefox lower than version 59</li> </ul></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>None</code>.</p>
              * @param {sap.m.PlanningCalendarStickyMode} sStickyMode <p>New value for property <code>stickyMode</code></p>
              * @returns sap.m.SinglePlanningCalendar <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -24606,7 +24819,7 @@ declare namespace sap {
             setTitle(sTitle: string): sap.m.SinglePlanningCalendar;
         }
         /**
-         * <h3>Overview</h3><p>A <a target="_self" class="jsdoclink" href="#/api/sap.m.SinglePlanningCalendarDayView">sap.m.SinglePlanningCalendarDayView</a> element represents a day view of the SinglePlanningCalendar. The purpose of the element is to decouple the view logic from parent control SinglePlanningCalendar</p><p><b>Disclaimer</b>: This control is in a beta state - incompatible API changes may be done before its official public release. Use at your own discretion.</p>
+         * <p>Represents a day view of the <a target="_self" class="jsdoclink" href="#/api/sap.m.SinglePlanningCalendar">sap.m.SinglePlanningCalendar</a>. The purpose of the element is to decouple the view logic from parent control <code>SinglePlanningCalendar</code>.</p>
          */
         export class SinglePlanningCalendarDayView extends sap.m.SinglePlanningCalendarView {
             /**
@@ -24617,7 +24830,18 @@ declare namespace sap {
             constructor(sId?: string, mSettings?: any);
         }
         /**
-         * <h3>Overview</h3><p>A <a target="_self" class="jsdoclink" href="#/api/sap.m.SinglePlanningCalendarView">sap.m.SinglePlanningCalendarView</a> element represents a day view of the SinglePlanningCalendar. The purpose of the element is to decouple the view logic from parent control <code>SinglePlanningCalendar</code>.</p><p><b>Disclaimer</b>: This control is in a beta state - incompatible API changes may be done before its official public release. Use at your own discretion.</p>
+         * <p>Represents a one month view of the <code>SinglePlanningCalendar</code>. The purpose of the element is to decouple the view logic from parent control <code>SinglePlanningCalendar</code>.</p>
+         */
+        export class SinglePlanningCalendarMonthView extends sap.m.SinglePlanningCalendarView {
+            /**
+             * <p>Constructor for a new <code>SinglePlanningCalendarMonthView</code>.</p>
+             * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
+             * @param {any} mSettings <p>Initial settings for the new control</p>
+             */
+            constructor(sId?: string, mSettings?: any);
+        }
+        /**
+         * <p>Represents a day view of the <a target="_self" class="jsdoclink" href="#/api/sap.m.SinglePlanningCalendar">sap.m.SinglePlanningCalendar</a>. The purpose of the element is to decouple the view logic from parent control <code>SinglePlanningCalendar</code>.</p>
          */
         export class SinglePlanningCalendarView extends sap.ui.core.Element {
             /**
@@ -24655,7 +24879,7 @@ declare namespace sap {
             setTitle(sTitle: string): sap.m.SinglePlanningCalendarView;
         }
         /**
-         * <h3>Overview</h3><p>A <a target="_self" class="jsdoclink" href="#/api/sap.m.SinglePlanningCalendarWeekView">sap.m.SinglePlanningCalendarWeekView</a> element represents a week view of the SinglePlanningCalendar. The purpose of the element is to decouple the view logic from parent control <code>SinglePlanningCalendar</code>.</p><p><b>Disclaimer</b>: This control is in a beta state - incompatible API changes may be done before its official public release. Use at your own discretion.</p>
+         * <p>Represents a week view of the <a target="_self" class="jsdoclink" href="#/api/sap.m.SinglePlanningCalendar">sap.m.SinglePlanningCalendar</a>. The purpose of the element is to decouple the view logic from parent control <code>SinglePlanningCalendar</code>.</p>
          */
         export class SinglePlanningCalendarWeekView extends sap.m.SinglePlanningCalendarView {
             /**
@@ -24666,7 +24890,7 @@ declare namespace sap {
             constructor(sId?: string, mSettings?: any);
         }
         /**
-         * <h3>Overview</h3><p>A <a target="_self" class="jsdoclink" href="#/api/sap.m.SinglePlanningCalendarWorkWeekView">sap.m.SinglePlanningCalendarWorkWeekView</a> element represents a week view of the SinglePlanningCalendar. The purpose of the element is to decouple the view logic from parent control <code>SinglePlanningCalendar</code>.</p><p><b>Disclaimer</b>: This control is in a beta state - incompatible API changes may be done before its official public release. Use at your own discretion.</p>
+         * <p>Represents a week view of the <a target="_self" class="jsdoclink" href="#/api/sap.m.SinglePlanningCalendar">sap.m.SinglePlanningCalendar</a>. The purpose of the element is to decouple the view logic from parent control <code>SinglePlanningCalendar</code>.</p>
          */
         export class SinglePlanningCalendarWorkWeekView extends sap.m.SinglePlanningCalendarView {
             /**
@@ -25239,6 +25463,196 @@ declare namespace sap {
             StretchCompressMode = "StretchCompressMode",
         }
         /**
+         * <p>Enables users to trigger actions. For the button UI, you can define some text or an icon, or both.</p>
+         */
+        export class SplitButton extends sap.ui.core.Control {
+            /**
+             * <p>Constructor for a new <code>SplitButton</code>.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+             * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
+             * @param {any} mSettings <p>Initial settings for the new control</p>
+             */
+            constructor(sId?: string, mSettings?: any);
+            /**
+             * <p>Adds some ariaDescribedBy into the association <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAriaDescribedBy" href="#/api/sap.m.SplitButton/methods/getAriaDescribedBy">ariaDescribedBy</a>.</p>
+             * @param {sap.ui.core.ID | sap.ui.core.Control} vAriaDescribedBy <p>The ariaDescribedBy to add; if empty, nothing is inserted</p>
+             * @returns sap.m.SplitButton <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            addAriaDescribedBy(vAriaDescribedBy: sap.ui.core.ID | sap.ui.core.Control): sap.m.SplitButton;
+            /**
+             * <p>Adds some ariaLabelledBy into the association <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAriaLabelledBy" href="#/api/sap.m.SplitButton/methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
+             * @param {sap.ui.core.ID | sap.ui.core.Control} vAriaLabelledBy <p>The ariaLabelledBy to add; if empty, nothing is inserted</p>
+             * @returns sap.m.SplitButton <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            addAriaLabelledBy(vAriaLabelledBy: sap.ui.core.ID | sap.ui.core.Control): sap.m.SplitButton;
+            /**
+             * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="arrowPress" href="#/api/sap.m.SplitButton/events/arrowPress">arrowPress</a> event of this <code>sap.m.SplitButton</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.m.SplitButton</code> itself.</p><p>Fired when the arrow button is pressed.</p>
+             * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+             * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+             * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.m.SplitButton</code> itself</p>
+             * @returns sap.m.SplitButton <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            attachArrowPress(oData: any, fnFunction: Function, oListener?: any): sap.m.SplitButton;
+            /**
+             * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="press" href="#/api/sap.m.SplitButton/events/press">press</a> event of this <code>sap.m.SplitButton</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.m.SplitButton</code> itself.</p><p>Fired when the user clicks on the control.</p>
+             * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+             * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+             * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.m.SplitButton</code> itself</p>
+             * @returns sap.m.SplitButton <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            attachPress(oData: any, fnFunction: Function, oListener?: any): sap.m.SplitButton;
+            /**
+             * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="arrowPress" href="#/api/sap.m.SplitButton/events/arrowPress">arrowPress</a> event of this <code>sap.m.SplitButton</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+             * @param {any} oListener <p>Context object on which the given function had to be called</p>
+             * @returns sap.m.SplitButton <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            detachArrowPress(fnFunction: Function, oListener?: any): sap.m.SplitButton;
+            /**
+             * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="press" href="#/api/sap.m.SplitButton/events/press">press</a> event of this <code>sap.m.SplitButton</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+             * @param {any} oListener <p>Context object on which the given function had to be called</p>
+             * @returns sap.m.SplitButton <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            detachPress(fnFunction: Function, oListener?: any): sap.m.SplitButton;
+            /**
+             * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="arrowPress" href="#/api/sap.m.SplitButton/events/arrowPress">arrowPress</a> to attached listeners.</p>
+             * @param {any} mParameters <p>Parameters to pass along with the event</p>
+             * @returns sap.m.SplitButton <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            protected fireArrowPress(mParameters?: any): sap.m.SplitButton;
+            /**
+             * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="press" href="#/api/sap.m.SplitButton/events/press">press</a> to attached listeners.</p>
+             * @param {any} mParameters <p>Parameters to pass along with the event</p>
+             * @returns sap.m.SplitButton <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            protected firePress(mParameters?: any): sap.m.SplitButton;
+            /**
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getActiveIcon" href="#/api/sap.m.SplitButton/methods/getActiveIcon">activeIcon</a>.</p><p>The source property of an alternative icon for the active (pressed) state of the button. Both active and default icon properties should be defined and of the same type - image or icon font. If the <code>icon</code> property is not set or has a different type, the active icon is not displayed.</p>
+             * @returns sap.ui.core.URI <p>Value of property <code>activeIcon</code></p>
+             */
+            getActiveIcon(): sap.ui.core.URI;
+            /**
+             * <p>Returns array of IDs of the elements which are the current targets of the association <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAriaDescribedBy" href="#/api/sap.m.SplitButton/methods/getAriaDescribedBy">ariaDescribedBy</a>.</p>
+             * @returns sap.ui.core.ID[] 
+             */
+            getAriaDescribedBy(): sap.ui.core.ID[];
+            /**
+             * <p>Returns array of IDs of the elements which are the current targets of the association <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAriaLabelledBy" href="#/api/sap.m.SplitButton/methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
+             * @returns sap.ui.core.ID[] 
+             */
+            getAriaLabelledBy(): sap.ui.core.ID[];
+            /**
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEnabled" href="#/api/sap.m.SplitButton/methods/getEnabled">enabled</a>.</p><p>Boolean property to enable the control (default is <code>true</code>). <b>Note:</b> Depending on custom settings, the buttons that are disabled have other colors than the enabled ones.</p><p>Default value is <code>true</code>.</p>
+             * @returns boolean <p>Value of property <code>enabled</code></p>
+             */
+            getEnabled(): boolean;
+            /**
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getIcon" href="#/api/sap.m.SplitButton/methods/getIcon">icon</a>.</p><p>Defines the icon to be displayed as graphical element within the button. This can be an image or an icon from the icon font.</p>
+             * @returns sap.ui.core.URI <p>Value of property <code>icon</code></p>
+             */
+            getIcon(): sap.ui.core.URI;
+            /**
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getIconDensityAware" href="#/api/sap.m.SplitButton/methods/getIconDensityAware">iconDensityAware</a>.</p><p>When set to <code>true</code (default), one or more requests are sent trying to get the density perfect version of image if this version of image doesn't exist on the server. If only one version of image is provided, set this value to <code>false</code> to avoid the attempt of fetching density perfect image.</p><p>Default value is <code>true</code>.</p>
+             * @returns boolean <p>Value of property <code>iconDensityAware</code></p>
+             */
+            getIconDensityAware(): boolean;
+            /**
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getText" href="#/api/sap.m.SplitButton/methods/getText">text</a>.</p><p>Define the text of the button.</p>
+             * @returns string <p>Value of property <code>text</code></p>
+             */
+            getText(): string;
+            /**
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTextDirection" href="#/api/sap.m.SplitButton/methods/getTextDirection">textDirection</a>.</p><p>This property specifies the element's text directionality with enumerated options. By default, the control inherits text direction from the DOM.</p><p>Default value is <code>Inherit</code>.</p>
+             * @returns sap.ui.core.TextDirection <p>Value of property <code>textDirection</code></p>
+             */
+            getTextDirection(): sap.ui.core.TextDirection;
+            /**
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getType" href="#/api/sap.m.SplitButton/methods/getType">type</a>.</p><p>Defines the type of the button (for example, Default, Accept, Reject, Transparent). Values <code>Back</code>, <code>Up</code> and <code>Unstyled</code> are ignored.</p><p>Default value is <code>Default</code>.</p>
+             * @returns sap.m.ButtonType <p>Value of property <code>type</code></p>
+             */
+            getType(): sap.m.ButtonType;
+            /**
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getWidth" href="#/api/sap.m.SplitButton/methods/getWidth">width</a>.</p><p>Defines the width of the button.</p>
+             * @returns sap.ui.core.CSSSize <p>Value of property <code>width</code></p>
+             */
+            getWidth(): sap.ui.core.CSSSize;
+            /**
+             * <p>Removes all the controls in the association named <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAriaDescribedBy" href="#/api/sap.m.SplitButton/methods/getAriaDescribedBy">ariaDescribedBy</a>.</p>
+             * @returns sap.ui.core.ID[] <p>An array of the removed elements (might be empty)</p>
+             */
+            removeAllAriaDescribedBy(): sap.ui.core.ID[];
+            /**
+             * <p>Removes all the controls in the association named <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAriaLabelledBy" href="#/api/sap.m.SplitButton/methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
+             * @returns sap.ui.core.ID[] <p>An array of the removed elements (might be empty)</p>
+             */
+            removeAllAriaLabelledBy(): sap.ui.core.ID[];
+            /**
+             * <p>Removes an ariaDescribedBy from the association named <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAriaDescribedBy" href="#/api/sap.m.SplitButton/methods/getAriaDescribedBy">ariaDescribedBy</a>.</p>
+             * @param {number | sap.ui.core.ID | sap.ui.core.Control} vAriaDescribedBy <p>The ariaDescribedBy to be removed or its index or ID</p>
+             * @returns sap.ui.core.ID <p>The removed ariaDescribedBy or <code>null</code></p>
+             */
+            removeAriaDescribedBy(vAriaDescribedBy: number | sap.ui.core.ID | sap.ui.core.Control): sap.ui.core.ID;
+            /**
+             * <p>Removes an ariaLabelledBy from the association named <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getAriaLabelledBy" href="#/api/sap.m.SplitButton/methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
+             * @param {number | sap.ui.core.ID | sap.ui.core.Control} vAriaLabelledBy <p>The ariaLabelledBy to be removed or its index or ID</p>
+             * @returns sap.ui.core.ID <p>The removed ariaLabelledBy or <code>null</code></p>
+             */
+            removeAriaLabelledBy(vAriaLabelledBy: number | sap.ui.core.ID | sap.ui.core.Control): sap.ui.core.ID;
+            /**
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getActiveIcon" href="#/api/sap.m.SplitButton/methods/getActiveIcon">activeIcon</a>.</p><p>The source property of an alternative icon for the active (pressed) state of the button. Both active and default icon properties should be defined and of the same type - image or icon font. If the <code>icon</code> property is not set or has a different type, the active icon is not displayed.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+             * @param {sap.ui.core.URI} sActiveIcon <p>New value for property <code>activeIcon</code></p>
+             * @returns sap.m.SplitButton <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            setActiveIcon(sActiveIcon: sap.ui.core.URI): sap.m.SplitButton;
+            /**
+             * <p>Sets the arrow state to down or not down.</p>
+             * @param {boolean} bIsDown <p>Is the arrow down</p>
+             */
+            setArrowState(bIsDown: boolean): void;
+            /**
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEnabled" href="#/api/sap.m.SplitButton/methods/getEnabled">enabled</a>.</p><p>Boolean property to enable the control (default is <code>true</code>). <b>Note:</b> Depending on custom settings, the buttons that are disabled have other colors than the enabled ones.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+             * @param {boolean} bEnabled <p>New value for property <code>enabled</code></p>
+             * @returns sap.m.SplitButton <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            setEnabled(bEnabled: boolean): sap.m.SplitButton;
+            /**
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getIcon" href="#/api/sap.m.SplitButton/methods/getIcon">icon</a>.</p><p>Defines the icon to be displayed as graphical element within the button. This can be an image or an icon from the icon font.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+             * @param {sap.ui.core.URI} sIcon <p>New value for property <code>icon</code></p>
+             * @returns sap.m.SplitButton <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            setIcon(sIcon: sap.ui.core.URI): sap.m.SplitButton;
+            /**
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getIconDensityAware" href="#/api/sap.m.SplitButton/methods/getIconDensityAware">iconDensityAware</a>.</p><p>When set to <code>true</code (default), one or more requests are sent trying to get the density perfect version of image if this version of image doesn't exist on the server. If only one version of image is provided, set this value to <code>false</code> to avoid the attempt of fetching density perfect image.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+             * @param {boolean} bIconDensityAware <p>New value for property <code>iconDensityAware</code></p>
+             * @returns sap.m.SplitButton <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            setIconDensityAware(bIconDensityAware: boolean): sap.m.SplitButton;
+            /**
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getText" href="#/api/sap.m.SplitButton/methods/getText">text</a>.</p><p>Define the text of the button.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+             * @param {string} sText <p>New value for property <code>text</code></p>
+             * @returns sap.m.SplitButton <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            setText(sText: string): sap.m.SplitButton;
+            /**
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTextDirection" href="#/api/sap.m.SplitButton/methods/getTextDirection">textDirection</a>.</p><p>This property specifies the element's text directionality with enumerated options. By default, the control inherits text direction from the DOM.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Inherit</code>.</p>
+             * @param {sap.ui.core.TextDirection} sTextDirection <p>New value for property <code>textDirection</code></p>
+             * @returns sap.m.SplitButton <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            setTextDirection(sTextDirection: sap.ui.core.TextDirection): sap.m.SplitButton;
+            /**
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getType" href="#/api/sap.m.SplitButton/methods/getType">type</a>.</p><p>Defines the type of the button (for example, Default, Accept, Reject, Transparent). Values <code>Back</code>, <code>Up</code> and <code>Unstyled</code> are ignored.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Default</code>.</p>
+             * @param {sap.m.ButtonType} sType <p>New value for property <code>type</code></p>
+             * @returns sap.m.SplitButton <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            setType(sType: sap.m.ButtonType): sap.m.SplitButton;
+            /**
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getWidth" href="#/api/sap.m.SplitButton/methods/getWidth">width</a>.</p><p>Defines the width of the button.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+             * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
+             * @returns sap.m.SplitButton <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            setWidth(sWidth: sap.ui.core.CSSSize): sap.m.SplitButton;
+        }
+        /**
          * <p>SplitContainer maintains two NavContainers if running on tablet or desktop and one NavContainer - on phone. The display of the master NavContainer depends on the portrait/landscape mode of the device and the mode of SplitContainer.</p><p>NOTE: This control must be rendered as a full screen control in order to make the show/hide master area work properly.</p>
          */
         export class SplitContainer extends sap.ui.core.Control {
@@ -25555,7 +25969,7 @@ declare namespace sap {
              */
             getDetailPage(sId: string): sap.ui.core.Control;
             /**
-             * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getDetailPages" href="#/api/sap.m.SplitContainer/methods/getDetailPages">detailPages</a>.</p><p>Determines the content entities, between which the SplitContainer navigates in detail area. These can be of type sap.m.Page, sap.ui.core.View, sap.m.Carousel or any other control with fullscreen/page semantics. These aggregated controls receive navigation events like <a target="_self" class="jsdoclink" href="#/api/sap.m.NavContainerChild/methods/beforeShow">beforeShow</a>, they are documented in the pseudo interface <a target="_self" class="jsdoclink" href="#/api/sap.m.NavContainerChild">sap.m.NavContainerChild</a>.</p>
+             * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getDetailPages" href="#/api/sap.m.SplitContainer/methods/getDetailPages">detailPages</a>.</p><p>Determines the content entities, between which the SplitContainer navigates in detail area. These can be of type sap.m.Page, sap.ui.core.View, sap.m.Carousel or any other control with fullscreen/page semantics. These aggregated controls receive navigation events like <a target="_self" class="jsdoclink" href="#/api/sap.m.NavContainerChild/events/beforeShow">beforeShow</a>, they are documented in the pseudo interface <a target="_self" class="jsdoclink" href="#/api/sap.m.NavContainerChild">sap.m.NavContainerChild</a>.</p>
              * @returns sap.ui.core.Control[] 
              */
             getDetailPages(): sap.ui.core.Control[];
@@ -25586,7 +26000,7 @@ declare namespace sap {
              */
             getMasterPage(sId: string): sap.ui.core.Control;
             /**
-             * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMasterPages" href="#/api/sap.m.SplitContainer/methods/getMasterPages">masterPages</a>.</p><p>Determines the content entities, between which the SplitContainer navigates in master area. These can be of type sap.m.Page, sap.ui.core.View, sap.m.Carousel or any other control with fullscreen/page semantics. These aggregated controls receive navigation events like <a target="_self" class="jsdoclink" href="#/api/sap.m.NavContainerChild/methods/beforeShow">beforeShow</a>, they are documented in the pseudo interface <a target="_self" class="jsdoclink" href="#/api/sap.m.NavContainerChild">sap.m.NavContainerChild</a>.</p>
+             * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMasterPages" href="#/api/sap.m.SplitContainer/methods/getMasterPages">masterPages</a>.</p><p>Determines the content entities, between which the SplitContainer navigates in master area. These can be of type sap.m.Page, sap.ui.core.View, sap.m.Carousel or any other control with fullscreen/page semantics. These aggregated controls receive navigation events like <a target="_self" class="jsdoclink" href="#/api/sap.m.NavContainerChild/events/beforeShow">beforeShow</a>, they are documented in the pseudo interface <a target="_self" class="jsdoclink" href="#/api/sap.m.NavContainerChild">sap.m.NavContainerChild</a>.</p>
              * @returns sap.ui.core.Control[] 
              */
             getMasterPages(): sap.ui.core.Control[];
@@ -26623,9 +27037,9 @@ declare namespace sap {
              */
             setName(sName: string): sap.m.Switch;
             /**
-             * <p>Change the switch state between on and off.</p>
-             * @param {boolean} bState <p>The new state - true for 'on' and false for 'off'</p>
-             * @returns sap.m.Switch <p><code>this</code> to allow method chaining.</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getState" href="#/api/sap.m.Switch/methods/getState">state</a>.</p><p>A boolean value indicating whether the switch is on or off.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+             * @param {boolean} bState <p>New value for property <code>state</code></p>
+             * @returns sap.m.Switch <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             setState(bState: boolean): sap.m.Switch;
             /**
@@ -27715,7 +28129,7 @@ declare namespace sap {
              */
             getRememberSelections(): boolean;
             /**
-             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getShowClearButton" href="#/api/sap.m.TableSelectDialog/methods/getShowClearButton">showClearButton</a>.</p><p>This flag controls whether the Clear button is shown. When set to <code>true</code>, it provides a way to clear a selection made in Table Select Dialog.</p><p>We recommend enabling of the Clear button in the following cases, where a mechanism to clear the value is needed: In case the Table Select Dialog is in single-selection mode (default mode) and <code>rememberSelections</code> is set to <code>true</code>. The Clear button needs to be enabled in order to allow users to clear the selection. In case of using <code>sap.m.Input</code> with <code>valueHelpOnly</code> set to <code>true</code>, the Clear button can be used for clearing the selection. In case the application stores a value and uses only Table Select Dialog to edit/maintain it.</p><p>Optional: In case <code>multiSelect</code> is set to <code>true</code>, the selection can be easily cleared with one click.</p><p><b>Note:</b> When used with oData, only the loaded selections will be cleared.</p><p>Default value is <code>false</code>.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getShowClearButton" href="#/api/sap.m.TableSelectDialog/methods/getShowClearButton">showClearButton</a>.</p><p>This flag controls whether the Clear button is shown. When set to <code>true</code>, it provides a way to clear a selection made in Table Select Dialog.</p><p>We recommend enabling of the Clear button in the following cases, where a mechanism to clear the value is needed: In case the Table Select Dialog is in single-selection mode (default mode) and <code>rememberSelections</code> is set to <code>true</code>. The Clear button needs to be enabled in order to allow users to clear the selection. In case of using <code>sap.m.Input</code> with <code>valueHelpOnly</code> set to <code>true</code>, the Clear button can be used for clearing the selection. In case the application stores a value and uses only Table Select Dialog to edit/maintain it.</p><p>Optional: In case <code>multiSelect</code> is set to <code>true</code>, the selection can be easily cleared with one click.</p><p><b>Note:</b> When used with OData, only the loaded selections will be cleared.</p><p>Default value is <code>false</code>.</p>
              * @returns boolean <p>Value of property <code>showClearButton</code></p>
              */
             getShowClearButton(): boolean;
@@ -27899,7 +28313,7 @@ declare namespace sap {
              */
             protected ellipsis: string;
             /**
-             * <p>Defines whether browser supports native line clamp or not and if browser is Chrome</p>
+             * <p>Defines whether browser supports native line clamp or not</p>
              */
             protected hasNativeLineClamp: any;
             /**
@@ -28882,15 +29296,15 @@ declare namespace sap {
              */
             setDisplayFormat(sFormat: string): sap.m.TimePickerSliders;
             /**
-             * <p>Sets the height of the <code>TimepickerSliders</code> container.</p>
-             * @param {sap.ui.core.CSSSize} sHeight <p>The height of the <code>TimepickerSliders</code> as CSS size</p>
-             * @returns sap.m.TimePickerSliders <p>Pointer to the control instance to allow method chaining</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getHeight" href="#/api/sap.m.TimePickerSliders/methods/getHeight">height</a>.</p><p>Sets the height of the container. If percentage value is used the parent container should have specified height</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+             * @param {sap.ui.core.CSSSize} sHeight <p>New value for property <code>height</code></p>
+             * @returns sap.m.TimePickerSliders <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             setHeight(sHeight: sap.ui.core.CSSSize): sap.m.TimePickerSliders;
             /**
-             * <p>Sets the text for the picker label.</p>
-             * @param {string} sLabelText <p>A text for the label</p>
-             * @returns sap.m.TimePickerSliders <p>this instance, used for chaining</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLabelText" href="#/api/sap.m.TimePickerSliders/methods/getLabelText">labelText</a>.</p><p>Defines the text of the picker label.</p><p>It is read by screen readers. It is visible only on phone.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+             * @param {string} sLabelText <p>New value for property <code>labelText</code></p>
+             * @returns sap.m.TimePickerSliders <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             setLabelText(sLabelText: string): sap.m.TimePickerSliders;
             /**
@@ -28930,9 +29344,9 @@ declare namespace sap {
              */
             setValueFormat(sValueFormat: string): sap.m.TimePickerSliders;
             /**
-             * <p>Sets the width of the <code>TimepickerSliders</code> container.</p>
-             * @param {sap.ui.core.CSSSize} sWidth <p>The width of the <code>TimepickerSliders</code< as CSS size</p>
-             * @returns sap.m.TimePickerSliders <p>Pointer to the control instance to allow method chaining</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getWidth" href="#/api/sap.m.TimePickerSliders/methods/getWidth">width</a>.</p><p>Sets the width of the container. The minimum width is 320px.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+             * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
+             * @returns sap.m.TimePickerSliders <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             setWidth(sWidth: sap.ui.core.CSSSize): sap.m.TimePickerSliders;
         }
@@ -29278,22 +29692,22 @@ declare namespace sap {
              */
             constructor(sId?: string, mSettings?: any);
             /**
-             * <p>Function gets whether the tokens visibility should be adjusted</p>
+             * <p>Function gets whether the tokens visibility should be adjusted.</p>
              * @returns boolean <p>If true the the tokenizer should adjust the tokens visibility</p>
              */
             protected _getAdjustable(): boolean;
             /**
-             * <p>Function returns whether the n-more indicator is visible</p>
-             * @param {boolean} If <p>true the indicator is visible</p>
+             * <p>Function returns whether the n-more indicator is visible.</p>
+             * @returns boolean <p>If true the indicator is visible</p>
              */
-            protected _getIndicatorVisibility(If: boolean): void;
+            protected _getIndicatorVisibility(): boolean;
             /**
-             * <p>Function removes all selected tokens</p>
+             * <p>Function removes all selected tokens.</p>
              * @returns sap.m.Tokenizer <p>this instance for method chaining</p>
              */
             _removeSelectedTokens(): sap.m.Tokenizer;
             /**
-             * <p>Function sets whether the tokens visibility should be adjusted</p>
+             * <p>Function sets whether the tokens visibility should be adjusted.</p>
              * @param {boolean} If <p>true the the tokenizer should adjust the tokens visibility</p>
              */
             protected _setAdjustable(If: boolean): void;
@@ -29316,12 +29730,12 @@ declare namespace sap {
              */
             addToken(oToken: sap.m.Token): sap.m.Tokenizer;
             /**
-             * <p>Function validates the given text and adds a new token if validation was successful</p>
-             * @param {any} oParameters <p>parameter bag containing following fields: {sap.m.String} text - the source text {sap.m.Token} [optional] token - a suggested token {object} [optional] suggestionObject - any object used to find the suggested token {function} [optional] validationCallback - callback which gets called after validation has finished</p>
+             * <p>Function validates the given text and adds a new token if validation was successful.</p>
+             * @param {any} oParameters <p>Parameter bag containing the following fields:</p>
              */
             addValidateToken(oParameters: any): void;
             /**
-             * <p>Function adds a validation callback called before any new token gets added to the tokens aggregation</p>
+             * <p>Function adds a validation callback called before any new token gets added to the tokens aggregation.</p>
              * @param {Function} fValidator <p>The validation function</p>
              */
             addValidator(fValidator: Function): void;
@@ -29393,17 +29807,17 @@ declare namespace sap {
              */
             getMaxWidth(): sap.ui.core.CSSSize;
             /**
-             * <p>Function returns the internally used scroll delegate</p>
+             * <p>Function returns the internally used scroll delegate.</p>
              * @returns sap.ui.core.delegate.ScrollEnablement <p>The scroll delegate</p>
              */
             getScrollDelegate(): sap.ui.core.delegate.ScrollEnablement;
             /**
-             * <p>Function returns the tokens' width</p>
+             * <p>Function returns the tokens' width.</p>
              * @returns number <p>The complete width of all tokens</p>
              */
             getScrollWidth(): number;
             /**
-             * <p>Function returns all currently selected tokens</p>
+             * <p>Function returns all currently selected tokens.</p>
              * @returns sap.m.Token[] <p>Array of selected tokens or empty array</p>
              */
             getSelectedTokens(): sap.m.Token[];
@@ -29413,7 +29827,7 @@ declare namespace sap {
              */
             getTokens(): sap.m.Token[];
             /**
-             * <p>Gets the accessibility text aggregation id</p>
+             * <p>Gets the accessibility text aggregation id.</p>
              * @returns string <p>Returns the InvisibleText control id</p>
              */
             protected getTokensInfoId(): string;
@@ -29436,7 +29850,7 @@ declare namespace sap {
              */
             insertToken(oToken: sap.m.Token, iIndex: number): sap.m.Tokenizer;
             /**
-             * <p>Handle the focus event on the control</p>
+             * <p>Handle the focus event on the control.</p>
              * @param {any} oEvent <p>The occuring event</p>
              */
             protected onclick(oEvent: any): void;
@@ -29478,37 +29892,38 @@ declare namespace sap {
              */
             removeToken(vToken: number | string | sap.m.Token): sap.m.Token;
             /**
-             * <p>Function removes a validation callback</p>
+             * <p>Function removes a validation callback.</p>
              * @param {Function} fValidator <p>The validation function</p>
              */
             removeValidator(fValidator: Function): void;
             /**
-             * <p>Function scrolls the tokens to the end</p>
+             * <p>Function scrolls the tokens to the end.</p>
              */
             scrollToEnd(): void;
             /**
-             * <p>Function scrolls the tokens to the start</p>
+             * <p>Function scrolls the tokens to the start.</p>
              */
             scrollToStart(): void;
             /**
-             * <p>Function selects all tokens</p>
+             * <p>Function selects all tokens.</p>
              * @param {boolean} bSelect <p>[optional] true for selecting, false for deselecting</p>
              * @returns sap.m.Tokenizer <p>this instance for method chaining</p>
              */
             selectAllTokens(bSelect: boolean): sap.m.Tokenizer;
             /**
-             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEditable" href="#/api/sap.m.Tokenizer/methods/getEditable">editable</a>.</p><p>true if tokens shall be editable otherwise false</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
-             * @param {boolean} bEditable <p>New value for property <code>editable</code></p>
-             * @returns sap.m.Tokenizer <p>Reference to <code>this</code> in order to allow method chaining</p>
+             * <p>Sets the editable property of the <code>sap.m.Tokenizer</code> and propagates it to its internal <code>sap.m.Token</code> controls. The value should be set to true, if tokens shall be editable; otherwise it should be set as false. When called with a value of null or undefined, the default value of the property will be restored. Default value is true.</p>
+             * @param {boolean} bEditable <p>Whether the control should be editable</p>
+             * @returns sap.m.Tokenizer <p>this instance for method chaining</p>
              */
             setEditable(bEditable: boolean): sap.m.Tokenizer;
             /**
              * <p>Function sets the maximum width of the Tokenizer.</p>
              * @param {string} sWidth <p>The new maximal width</p>
+             * @returns sap.m.Tokenizer <p>this instance for method chaining</p>
              */
-            setMaxWidth(sWidth: string): void;
+            setMaxWidth(sWidth: string): sap.m.Tokenizer;
             /**
-             * <p>Function sets the tokenizer's width in pixels</p>
+             * <p>Function sets the tokenizer's width in pixels.</p>
              * @param {number} nWidth <p>The new width in pixels</p>
              */
             setPixelWidth(nWidth: number): void;
@@ -29873,7 +30288,7 @@ declare namespace sap {
              */
             detachToggleOpenState(fnFunction: Function, oListener?: any): sap.m.Tree;
             /**
-             * <p>Expands one or multiple items.</p>
+             * <p>Expands one or multiple items. Note that items that are hidden at the time of calling this API can't be expanded.</p>
              * @param {number | number[]} vParam <p>The index or indices of the item to be expanded</p>
              * @returns sap.m.Tree <p>A reference to the Tree control</p>
              */
@@ -31560,10 +31975,10 @@ declare namespace sap {
             setSelectedGroupItem(vItemOrKey: sap.m.ViewSettingsItem | string): sap.m.ViewSettingsDialog;
             /**
              * <p>Sets the selected preset filter item.</p>
-             * @param {sap.m.ViewSettingsItem | string} vItemOrKey <p>The selected item or the item's key string</p>
+             * @param {sap.m.ViewSettingsItem | string | null} vItemOrKey <p>The selected item or the item's key string</p>
              * @returns sap.m.ViewSettingsDialog <p>this pointer for chaining</p>
              */
-            setSelectedPresetFilterItem(vItemOrKey: sap.m.ViewSettingsItem | string): sap.m.ViewSettingsDialog;
+            setSelectedPresetFilterItem(vItemOrKey: sap.m.ViewSettingsItem | string | null): sap.m.ViewSettingsDialog;
             /**
              * <p>Sets the selected sort item (either by key or by item).</p>
              * @param {sap.m.ViewSettingsItem | string} vItemOrKey <p>The selected item or the item's key string</p>
@@ -32147,7 +32562,7 @@ declare namespace sap {
 declare namespace sap {
     namespace m {
         /**
-         * <p><p>Suggestion helper for sap.m.Input fields: Creates a multi-column suggest list for an sap.m.Input field based on a ValueList annotation. The ValueList annotation will be resolved via the binding information of the Input field.</p><p>If the annotation describes multiple input parameter the suggest provider will resolve all of these relative to the context of the Input filed and use them for the suggestion query. The suggest provider will write all values that are described as output parameters back to the model (relative to the context of the Input field). This can only be done if the model runs in "TwoWay" binding mode. Both features can be switched of via the bResolveInput/bResolveOutput parameter of the suggest function:</p></p>
+         * <p><p>Suggestion helper for <code>sap.m.Input</code> fields when used with an OData model.</p><p>Creates a multi-column suggest list for an <code>sap.m.Input</code> field based on a <code>ValueList</code> annotation. The <code>ValueList</code> annotation will be resolved via the binding information of the input field.</p><p>If the annotation describes multiple input parameters, the suggest provider will resolve all of these relative to the context of the input field and use them for the suggest query. The suggest provider will write all values that are described as output parameters back to the model (relative to the context of the input field). This can only be done if the model runs in "TwoWay" binding mode. Both features can be switched off via the <code>bResolveInput/bResolveOutput</code> parameter of the suggest function.</p></p>
          */
         namespace InputODataSuggestProvider {
             /**
@@ -32163,9 +32578,14 @@ declare namespace sap {
 declare namespace sap {
     namespace m {
         /**
-         * <p><p>Provides methods to manage instances. This is specifically designed for managing the opened Popover, Dialog, ActionSheet, and it's possible to close all of the opened Popover, Dialog, ActionSheet in history handling.</p><p>As <code>InstanceManager</code> is a static class, a <code>jQuery.sap.require("sap.m.InstanceManager");</code> statement must be explicitly executed before the class can be used. Example: <pre>
-          jQuery.sap.require("sap.m.InstanceManager");
-          sap.m.InstanceManager.closeAllPopovers();
+         * <p><p>Provides methods to manage instances. This is specifically designed for managing the opened Popover, Dialog, ActionSheet, and it's possible to close all of the opened Popover, Dialog, ActionSheet in history handling.</p><p>Example: <pre>
+          sap.ui.define([
+             "sap/m/InstanceManager"
+          ], function(InstanceManager) {
+            ...
+            InstanceManager.closeAllPopovers();
+            ...
+          });
         </pre></p></p>
          */
         namespace InstanceManager {
@@ -34002,7 +34422,7 @@ declare namespace sap {
                  */
                 constructor(sId?: string, mSettings?: any);
                 /**
-                 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="press" href="#/api/sap.m.semantic.SemanticButton/events/press">press</a> event of this <code>sap.m.semantic.SemanticButton</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.m.semantic.SemanticButton</code> itself.</p><p>See <a target="_self" class="jsdoclink" href="#/api/sap.m.Button/methods/press">sap.m.Button#press</a></p>
+                 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="press" href="#/api/sap.m.semantic.SemanticButton/events/press">press</a> event of this <code>sap.m.semantic.SemanticButton</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.m.semantic.SemanticButton</code> itself.</p><p>See <a target="_self" class="jsdoclink" href="#/api/sap.m.Button/events/press">sap.m.Button#event:press</a></p>
                  * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
                  * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
                  * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.m.semantic.SemanticButton</code> itself</p>
