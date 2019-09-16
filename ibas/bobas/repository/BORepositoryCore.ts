@@ -212,7 +212,7 @@ namespace ibas {
                     methodUrl.append(strings.format("token={0}", this.token));
                 }
             }
-            return methodUrl.toString();
+            return urls.normalize(methodUrl.toString());
         }
         /**
          * 调用远程方法
