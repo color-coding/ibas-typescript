@@ -149,10 +149,20 @@ namespace shell {
                         success: function (data: any): void {
                             if (Array.isArray(data)) {
                                 for (let item of data) {
-                                    select.addItem(new sap.ui.core.Item("", {
-                                        text: item,
-                                        key: item
-                                    }));
+                                    if (typeof item === "string") {
+                                        select.addItem(new sap.ui.core.Item("", {
+                                            key: item,
+                                            text: item
+                                        }));
+                                    } else if (typeof item === "object") {
+                                        let names: string[] = Object.keys(item);
+                                        if (names.length > 0) {
+                                            select.addItem(new sap.ui.core.Item("", {
+                                                key: names[0],
+                                                text: item[names[0]]
+                                            }));
+                                        }
+                                    }
                                 }
                             }
                             select.setSelectedKey(ibas.i18n.language);

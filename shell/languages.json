@@ -1,4 +1,8 @@
 [
-  "zh-CN",
-  "en-US"
+  {
+    "zh-CN": "中文"
+  },
+  {
+    "en-US": "English"
+  }
 ]
