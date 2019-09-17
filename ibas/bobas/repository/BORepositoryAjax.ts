@@ -28,9 +28,9 @@ namespace ibas {
          * 特殊调用参数可重载createAjaxSettings方法
          * @param method 方法名称
          * @param data 数据
-         * @param caller 方法监听
+         * @param onCompleted 完成回调
          */
-        callRemoteMethod(method: string, data: any, caller: IMethodCaller<any>): void {
+        callRemoteMethod<T>(method: string, data: any, onCompleted: (opRslt: IOperationResult<T>) => void): void {
             let xhr: XMLHttpRequest = this.createHttpRequest(method);
             if (!(xhr instanceof XMLHttpRequest)) {
                 throw new Error(i18n.prop("sys_invalid_parameter", "HttpRequest"));
@@ -52,9 +52,13 @@ namespace ibas {
                             } else if (!(opRslt instanceof OperationResult)) {
                                 opRslt = new OperationResult().addResults(opRslt);
                             }
-                            caller.onCompleted.call(objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
+                            if (onCompleted instanceof Function) {
+                                onCompleted(opRslt);
+                            }
                         } else {
-                            caller.onCompleted.call(objects.isNull(caller.caller) ? caller : caller.caller, this.response);
+                            if (onCompleted instanceof Function) {
+                                onCompleted(this.response);
+                            }
                         }
                         // 输出头
                         let headers: string = this.getAllResponseHeaders();
@@ -78,7 +82,9 @@ namespace ibas {
                             opRslt.message = strings.format("{0} - {1}", opRslt.resultCode, i18n.prop("sys_network_error"));
                         }
                         logger.log(emMessageLevel.ERROR, "repository: call method [{0}] faild.", method);
-                        caller.onCompleted.call(objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
+                        if (onCompleted instanceof Function) {
+                            onCompleted(opRslt);
+                        }
                     }
                     that = null;
                 }
@@ -129,7 +135,15 @@ namespace ibas {
                 }
                 caller.criteria = criteria;
             }
-            this.callRemoteMethod(method, JSON.stringify(this.converter.convert(caller.criteria, method)), caller);
+            this.callRemoteMethod(method, JSON.stringify(this.converter.convert(caller.criteria, method)), (opRslt) => {
+                if (caller.onCompleted instanceof Function) {
+                    if (caller.caller) {
+                        caller.onCompleted.call(caller.caller, opRslt);
+                    } else {
+                        caller.onCompleted.call(caller.onCompleted, opRslt);
+                    }
+                }
+            });
         }
         /**
          * 保存数据
@@ -141,7 +155,15 @@ namespace ibas {
             if (ibas.objects.isNull(caller.beSaved)) {
                 throw new Error(i18n.prop("sys_invalid_parameter", "beSaved"));
             }
-            this.callRemoteMethod(method, JSON.stringify(this.converter.convert(caller.beSaved, method)), caller);
+            this.callRemoteMethod(method, JSON.stringify(this.converter.convert(caller.beSaved, method)), (opRslt) => {
+                if (caller.onCompleted instanceof Function) {
+                    if (caller.caller) {
+                        caller.onCompleted.call(caller.caller, opRslt);
+                    } else {
+                        caller.onCompleted.call(caller.onCompleted, opRslt);
+                    }
+                }
+            });
         }
         /**
          * 创建请求
@@ -187,7 +209,15 @@ namespace ibas {
          * @param caller 调用者
          */
         load(fileName: string, caller: ILoadFileCaller): void {
-            this.callRemoteMethod(fileName, null, caller);
+            this.callRemoteMethod(fileName, null, (opRslt) => {
+                if (caller.onCompleted instanceof Function) {
+                    if (caller.caller) {
+                        caller.onCompleted.call(caller.caller, opRslt);
+                    } else {
+                        caller.onCompleted.call(caller.onCompleted, opRslt);
+                    }
+                }
+            });
         }
     }
     /** 远程文件业务对象仓库 */
@@ -322,7 +352,15 @@ namespace ibas {
          * @param caller 调用者
          */
         upload<T>(method: string, caller: IUploadFileCaller<T>): void {
-            this.callRemoteMethod(method, caller.fileData, caller);
+            this.callRemoteMethod(method, caller.fileData, (opRslt) => {
+                if (caller.onCompleted instanceof Function) {
+                    if (caller.caller) {
+                        caller.onCompleted.call(caller.caller, opRslt);
+                    } else {
+                        caller.onCompleted.call(caller, opRslt);
+                    }
+                }
+            });
         }
     }
     /** 文件下载仓库 */
@@ -337,23 +375,26 @@ namespace ibas {
          * @param caller 调用者
          */
         download<T>(method: string, caller: IDownloadFileCaller<T>): void {
-            let methodCaller: IMethodCaller<any> = {
-                onCompleted(data: any): void {
-                    let opRslt: IOperationResult<any> = null;
-                    if (data instanceof OperationResult) {
-                        opRslt = data;
-                    } else {
-                        opRslt = new OperationResult();
-                        opRslt.resultObjects.add(data);
-                    }
-                    caller.onCompleted.call(objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
-                }
-            };
             let data: any = caller.criteria;
             if (!(data instanceof FormData)) {
                 data = JSON.stringify(this.converter.convert(data, method));
             }
-            this.callRemoteMethod(method, data, methodCaller);
+            this.callRemoteMethod(method, data, (data) => {
+                let opRslt: IOperationResult<any> = null;
+                if (data instanceof OperationResult) {
+                    opRslt = data;
+                } else {
+                    opRslt = new OperationResult();
+                    opRslt.resultObjects.add(data);
+                }
+                if (caller.onCompleted instanceof Function) {
+                    if (caller.caller) {
+                        caller.onCompleted.call(caller.caller, opRslt);
+                    } else {
+                        caller.onCompleted.call(caller, opRslt);
+                    }
+                }
+            });
         }
         protected createHttpRequest(method: string): XMLHttpRequest {
             let methodUrl: string = this.methodUrl(method);

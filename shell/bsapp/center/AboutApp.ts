@@ -101,7 +101,9 @@ namespace shell {
                         boRepository.address = address;
                         boRepository.token = token;
                         let method: string = ibas.strings.format("diagnosing?token={0}", token);
-                        boRepository.callRemoteMethod(method, undefined, caller);
+                        boRepository.callRemoteMethod(method, undefined, (opRslt) => {
+                            caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
+                        });
                     }
                 }
             }

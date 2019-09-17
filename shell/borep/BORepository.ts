@@ -61,14 +61,11 @@ namespace shell {
                     function (cryptoJS: CryptoJS.Hashes): void {
                         let method: string =
                             ibas.strings.format("userConnect?user={0}&password={1}", caller.user, cryptoJS.MD5(caller.password));
-                        remoteRepository.callRemoteMethod(method, undefined, {
-                            caller: caller.caller,
-                            onCompleted(opRslt: ibas.IOperationResult<IUser>): void {
-                                if (opRslt.resultCode === 0) {
-                                    ibas.config.set(CONFIG_ITEM_CONNECTION_WAY, CONNECTION_WAY_USER_PASSWORD);
-                                }
-                                caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
+                        remoteRepository.callRemoteMethod(method, undefined, (opRslt) => {
+                            if (opRslt.resultCode === 0) {
+                                ibas.config.set(CONFIG_ITEM_CONNECTION_WAY, CONNECTION_WAY_USER_PASSWORD);
                             }
+                            caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
                         });
                     }, function (error: RequireError): void {
                         // 加载js库失败
@@ -88,14 +85,11 @@ namespace shell {
                     throw new Error(ibas.i18n.prop("sys_invalid_parameter", "remoteRepository"));
                 }
                 let method: string = ibas.strings.format("tokenConnect?token={0}", caller.token);
-                remoteRepository.callRemoteMethod(method, undefined, {
-                    caller: caller.caller,
-                    onCompleted(opRslt: ibas.IOperationResult<IUser>): void {
-                        if (opRslt.resultCode === 0) {
-                            ibas.config.set(CONFIG_ITEM_CONNECTION_WAY, CONNECTION_WAY_USER_TOKEN);
-                        }
-                        caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
+                remoteRepository.callRemoteMethod(method, undefined, (opRslt) => {
+                    if (opRslt.resultCode === 0) {
+                        ibas.config.set(CONFIG_ITEM_CONNECTION_WAY, CONNECTION_WAY_USER_TOKEN);
                     }
+                    caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
                 });
             }
 
@@ -111,7 +105,9 @@ namespace shell {
                 let method: string =
                     ibas.strings.format("fetchUserModules?user={0}&platform={1}&token={2}",
                         caller.user, caller.platform, this.token);
-                remoteRepository.callRemoteMethod(method, undefined, caller);
+                remoteRepository.callRemoteMethod(method, undefined, (opRslt) => {
+                    caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
+                });
             }
 
             /**
@@ -126,7 +122,9 @@ namespace shell {
                 let method: string =
                     ibas.strings.format("fetchUserPrivileges?user={0}&platform={1}&token={2}",
                         caller.user, caller.platform, this.token);
-                remoteRepository.callRemoteMethod(method, undefined, caller);
+                remoteRepository.callRemoteMethod(method, undefined, (opRslt) => {
+                    caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
+                });
             }
 
             /**
@@ -141,7 +139,9 @@ namespace shell {
                 let method: string =
                     ibas.strings.format("fetchUserQueries?user={0}&queryId={1}&token={2}",
                         caller.user, caller.queryId, this.token);
-                remoteRepository.callRemoteMethod(method, undefined, caller);
+                remoteRepository.callRemoteMethod(method, undefined, (opRslt) => {
+                    caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
+                });
             }
 
             /**
@@ -198,32 +198,30 @@ namespace shell {
                     throw new Error(ibas.i18n.prop("sys_invalid_parameter", "remoteRepository"));
                 }
                 let method: string = ibas.strings.format("fetchBOInfos?boCode={0}&token={1}", caller.boCode, this.token);
-                remoteRepository.callRemoteMethod(method, undefined, {
-                    onCompleted(opRslt: ibas.IOperationResult<IBOInfo>): void {
-                        if (opRslt.resultCode === 0) {
-                            let opRsltInfo: ibas.OperationResult<IBOInfo> = new ibas.OperationResult<IBOInfo>();
-                            for (let item of opRslt.resultObjects) {
-                                boInfoCache.set(item.code, new DataWrapping(item));
-                                if (!ibas.strings.isEmpty(caller.boName)) {
-                                    if (!(ibas.strings.equals(item.code, caller.boCode)
-                                        || ibas.strings.isWith(item.code, caller.boCode + ".", null))) {
-                                        continue;
-                                    }
-                                    if (!ibas.strings.equals(item.name, caller.boName)) {
-                                        continue;
-                                    }
-                                } else {
-                                    if (!ibas.strings.equals(item.code, caller.boCode)) {
-                                        continue;
-                                    }
+                remoteRepository.callRemoteMethod(method, undefined, (opRslt: ibas.IOperationResult<IBOInfo>) => {
+                    if (opRslt.resultCode === 0) {
+                        let opRsltInfo: ibas.OperationResult<IBOInfo> = new ibas.OperationResult<IBOInfo>();
+                        for (let item of opRslt.resultObjects) {
+                            boInfoCache.set(item.code, new DataWrapping(item));
+                            if (!ibas.strings.isEmpty(caller.boName)) {
+                                if (!(ibas.strings.equals(item.code, caller.boCode)
+                                    || ibas.strings.isWith(item.code, caller.boCode + ".", null))) {
+                                    continue;
                                 }
-                                opRsltInfo.addResults(item);
+                                if (!ibas.strings.equals(item.name, caller.boName)) {
+                                    continue;
+                                }
+                            } else {
+                                if (!ibas.strings.equals(item.code, caller.boCode)) {
+                                    continue;
+                                }
                             }
-                            caller.onCompleted(opRsltInfo);
-                        } else {
-                            // 出错了
-                            caller.onCompleted(opRslt);
+                            opRsltInfo.addResults(item);
                         }
+                        caller.onCompleted(opRsltInfo);
+                    } else {
+                        // 出错了
+                        caller.onCompleted(opRslt);
                     }
                 });
             }

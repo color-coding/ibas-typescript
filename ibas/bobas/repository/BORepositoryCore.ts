@@ -77,9 +77,9 @@ namespace ibas {
          * 调用远程方法
          * @param method 方法地址
          * @param data 数据
-         * @param caller 调用者
+         * @param onCompleted 完成回调
          */
-        callRemoteMethod(method: string, data: any, caller: IMethodCaller<any>): void;
+        callRemoteMethod<T>(method: string, data: any, onCompleted: (opRslt: IOperationResult<T>) => void): void;
     }
     /**
      * 加载文件调用者
@@ -218,8 +218,8 @@ namespace ibas {
          * 调用远程方法
          * @param method 方法地址
          * @param data 数据
-         * @param caller 调用者
+         * @param onCompleted 完成回调
          */
-        abstract callRemoteMethod(method: string, data: any, caller: IMethodCaller<any>): void;
+        abstract callRemoteMethod<T>(method: string, data: any, onCompleted: (opRslt: IOperationResult<T>) => void): void;
     }
 }
