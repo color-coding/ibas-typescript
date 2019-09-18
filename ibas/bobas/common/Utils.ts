@@ -1186,15 +1186,22 @@ namespace ibas {
         /**
          * 创建数组
          * @param data 数据
+         * @param datas 数据组
          */
-        export function create<T>(data: T | T[] | Array<T>): IList<T> {
+        export function create<T>(data: T | T[], ...datas: T[] | T[][]): IList<T>;
+        /**
+         * 创建数组
+         */
+        export function create<T>(): IList<T> {
             let datas: ArrayList<T> = new ArrayList<T>();
-            if (data instanceof Array) {
-                for (let item of data) {
-                    datas.push(item);
+            for (let data of arguments) {
+                if (data instanceof Array) {
+                    for (let item of data) {
+                        datas.push(item);
+                    }
+                } else if (!objects.isNull(data)) {
+                    datas.add(data);
                 }
-            } else if (!objects.isNull(data)) {
-                datas.add(data);
             }
             return datas;
         }

@@ -506,6 +506,7 @@ namespace shell {
                         }
                     },
                     waitSeconds: ibas.config.get(ibas.requires.CONFIG_ITEM_WAIT_SECONDS, 10),
+                    // runtime: module.runtime, // 模块运行版本
                 },
                     module.index + (this.minLibrary ? ibas.SIGN_MIN_LIBRARY : ""),
                     success,

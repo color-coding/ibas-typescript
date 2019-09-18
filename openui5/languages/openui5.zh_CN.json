@@ -1,7 +1,4 @@
 {
-    "ui5_utils_desktop_notification_not_supported": "当前浏览器不支持Notification API",
-    "ui5_utils_desktop_notification_title": "消息",
-    "ui5_utils_desktop_notification_send_error": "发送消息发生内部错误",
     "ui5_data_types_not_empty_error": "{0} 不能为空",
     "ui5_data_types_min_length_error": "{0} 长度不能小于{1}",
     "ui5_data_types_max_length_error": "{0} 长度不能大于{1}",

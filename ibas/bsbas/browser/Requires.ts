@@ -9,6 +9,11 @@
 
 namespace ibas {
     export namespace requires {
+        /** 配置 */
+        export interface IRequireConfig extends RequireConfig {
+            /** 运行版本 */
+            runtime?: string;
+        }
         /** 加载器名称模板 */
         export const CONTEXT_NAME_TEMPLATE_IBAS: string = "ibas.{0}";
         /** 加载等待时间 */
@@ -21,13 +26,16 @@ namespace ibas {
          * 创建require实例
          * @param config 配置
          */
-        export function create(requireConfig: RequireConfig): Require {
+        export function create(requireConfig: IRequireConfig): Require {
             if ((<any>window).require === undefined || (<any>window).require === null) {
                 throw new Error("not found requirejs.");
             }
             // 运行时版本
             let rtVersion: string = config.get(CONFIG_ITEM_RUNTIME_VERSION);
-            if (!(objects.isNull(rtVersion)) && requireConfig.urlArgs === undefined) {
+            if (!objects.isNull(rtVersion) && !objects.isNull(requireConfig.runtime)) {
+                rtVersion = requireConfig.runtime;
+            }
+            if (!objects.isNull(rtVersion) && requireConfig.urlArgs === undefined) {
                 requireConfig.urlArgs = function (id: string, url: string): string {
                     return (url.indexOf("?") === -1 ? "?" : "&") + "_=" + rtVersion;
                 };
@@ -42,17 +50,8 @@ namespace ibas {
          * @param success 成功时
          * @param fail 失败时
          */
-        export function require(requireConfig: RequireConfig, module: string | string[], success: Function = undefined, fail: Function = undefined): void {
-            let modules: string[] = new ArrayList<string>();
-            if (module instanceof Array) {
-                for (let item of module) {
-                    modules.push(item);
-                }
-            } else {
-                modules.push(module);
-            }
-            let require: Require = create(requireConfig);
-            require(modules, success, fail);
+        export function require(requireConfig: IRequireConfig, module: string | string[], success: Function = undefined, fail: Function = undefined): void {
+            create(requireConfig)(arrays.create(module), success, fail);
         }
     }
 }
