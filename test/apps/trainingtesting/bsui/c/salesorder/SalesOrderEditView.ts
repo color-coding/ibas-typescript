@@ -205,7 +205,10 @@ namespace trainingtesting {
                                             type: sap.m.InputType.Number
                                         }).bindProperty("bindingValue", {
                                             path: "price",
-                                            type: new sap.extension.data.Price(),
+                                            type: new sap.extension.data.Price({
+                                                minValue: 10,
+                                                maxValue: 1000
+                                            }),
                                         })
                                     }),
                                     new sap.extension.table.DataColumn("", {
@@ -214,7 +217,9 @@ namespace trainingtesting {
                                             type: sap.m.InputType.Number
                                         }).bindProperty("bindingValue", {
                                             path: "quantity",
-                                            type: new sap.extension.data.Quantity(),
+                                            type: new sap.extension.data.Quantity({
+                                                minValue: 1,
+                                            }),
                                         })
                                     }),
                                     new sap.extension.table.DataColumn("", {
@@ -262,6 +267,10 @@ namespace trainingtesting {
                                     type: sap.m.ButtonType.Transparent,
                                     icon: "sap-icon://save",
                                     press: function (): void {
+                                        if (!sap.extension.datas.validate(that.page)) {
+                                            // 验证未通过
+                                            return;
+                                        }
                                         that.fireViewEvents(that.saveDataEvent);
                                     }
                                 }),

@@ -201,6 +201,15 @@ namespace trainingtesting {
                                     type: sap.m.ButtonType.Transparent,
                                     icon: "sap-icon://stethoscope",
                                     press: function (): void {
+                                        if (!sap.extension.datas.validate(that.page)) {
+                                            that.application.viewShower.messages(
+                                                {
+                                                    type: ibas.emMessageType.ERROR,
+                                                    title: that.title,
+                                                    message: "has errors."
+                                                }
+                                            );
+                                        }
                                     }
                                 }),
                                 new sap.m.Button("", {

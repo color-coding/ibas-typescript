@@ -277,7 +277,6 @@ namespace sap {
                             (<RegionComboBox>this.getAggregation("_district", undefined))
                                 .setDataUrl(ibas.strings.format("{0}/{1}", country, "district.json"))
                                 .destroyItems();
-                            (<Input>this.getAggregation("_zipcode", undefined)).setValue(undefined);
                             this.setBusy(false);
                         },
                         change: (event: sap.ui.base.Event) => {
@@ -321,7 +320,6 @@ namespace sap {
                                 }
                             });
                             (<RegionComboBox>this.getAggregation("_district", undefined)).destroyItems();
-                            (<Input>this.getAggregation("_zipcode", undefined)).setValue(undefined);
                             this.setBusy(false);
                         },
                         change: (event: sap.ui.base.Event) => {
@@ -350,7 +348,6 @@ namespace sap {
                                     combobox.setValue(text);
                                 }
                             });
-                            (<Input>this.getAggregation("_zipcode", undefined)).setValue(undefined);
                             this.setBusy(false);
                         },
                         change: (event: sap.ui.base.Event) => {
@@ -366,8 +363,6 @@ namespace sap {
                         placeholder: ibas.i18n.prop("openui5_district"),
                         selectionChange: (event: sap.ui.base.Event) => {
                             this.setBusy(true);
-                            let combobox: RegionComboBox = <RegionComboBox>event.getSource();
-                            this.setZipCode(combobox.getSelectedKey());
                             // 不显示街道时，触发地址变化
                             if (this.getStreetVisible() !== true) {
                                 this.setAddress();

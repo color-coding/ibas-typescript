@@ -371,5 +371,22 @@ namespace sap {
                 return jsons;
             }
         }
+        /** 数据操作集 */
+        export namespace datas {
+            /** 默认检查的属性 */
+            const CHECK_PROPERTIES: string[] = ["value", "dataValue", "selectedKey", "bindingValue"];
+            /**
+             * 验证数据
+             * @param element 被验证元素
+             * @returns 是否通过
+             */
+            export function validate(element: sap.ui.core.Control | sap.ui.core.Control[], chkProperies?: string[]): boolean {
+                return new data.Validator(
+                    ibas.arrays.create(element),
+                    ibas.arrays.create(CHECK_PROPERTIES, chkProperies)
+                ).valid();
+            }
+
+        }
     }
 }

@@ -979,6 +979,135 @@ namespace sap {
                     });
                 }
             }
+            class ValidatorItem {
+                constructor(element: sap.ui.core.Element, property: string) {
+                    this.element = element;
+                    this.property = property;
+                }
+                element: sap.ui.core.Element;
+                property: string;
+                error: Error;
+                check(): boolean {
+                    try {
+                        this.error = null;
+                        checkValueType.call(this.element, this.property);
+                    } catch (error) {
+                        this.error = error;
+                    }
+                    return this.error ? false : true;
+                }
+            }
+            function checkValueType(this: sap.ui.core.Element, property: string): void {
+                let bindingInfo: {
+                    parts: {
+                        path: string,
+                        type: sap.extension.data.Type,
+                    }[]
+                } = this.getBindingInfo(property);
+                if (bindingInfo && bindingInfo.parts instanceof Array) {
+                    let pValue: any = this.getProperty(property);
+                    for (let item of bindingInfo.parts) {
+                        let type: any = item.type;
+                        if (typeof type === "function") {
+                            type = new type;
+                        }
+                        if (type instanceof Type) {
+                            try {
+                                type.validateValue(type.parseValue(pValue, typeof pValue));
+                            } catch (error) {
+                                throw error;
+                            }
+                        }
+                    }
+                }
+            }
+            export class Validator {
+                constructor(elements: sap.ui.core.Element[], properties: string[]) {
+                    this.properties = ibas.arrays.create(properties);
+                    this.elements = ibas.arrays.create(elements);
+                }
+                /** 检查的属性 */
+                properties: string[];
+                /** 检查的属性 */
+                elements: sap.ui.core.Element[];
+                /** 校验项目 */
+                items: ValidatorItem[];
+
+                private validItems(elements: sap.ui.core.Element[]): void {
+                    if (elements instanceof Array) {
+                        for (let element of elements) {
+                            if (element instanceof sap.m.InputBase) {
+                                for (let property of this.properties) {
+                                    let vItem: ValidatorItem = new ValidatorItem(element, property);
+                                    if (!vItem.check()) {
+                                        this.items.push(vItem);
+                                        element.setValueState(sap.ui.core.ValueState.Error);
+                                        element.setValueStateText(vItem.error.message);
+                                    }
+                                }
+                            } else if (element instanceof sap.ui.layout.DynamicSideContent) {
+                                this.validItems(element.getMainContent());
+                                this.validItems(element.getSideContent());
+                            } else if (element instanceof sap.m.Page) {
+                                this.validItems(element.getContent());
+                            } else if (element instanceof sap.m.FlexBox) {
+                                this.validItems(element.getItems());
+                            } else if (element instanceof sap.m.ListBase) {
+                                this.validItems(element.getItems());
+                            } else if (element instanceof sap.m.Panel) {
+                                this.validItems(element.getContent());
+                            } else if (element instanceof sap.m.Wizard) {
+                                for (let item of element.getSteps()) {
+                                    this.validItems(item.getContent());
+                                }
+                            } else if (element instanceof sap.m.TabContainer) {
+                                this.validItems(element.getItems());
+                            } else if (element instanceof sap.m.TabContainerItem) {
+                                this.validItems(element.getContent());
+                            } else if (element instanceof sap.ui.layout.BlockLayout) {
+                                this.validItems(element.getContent());
+                            } else if (element instanceof sap.ui.layout.FixFlex) {
+                                this.validItems(element.getFixContent());
+                            } else if (element instanceof sap.ui.layout.Grid) {
+                                this.validItems(element.getContent());
+                            } else if (element instanceof sap.ui.layout.Splitter) {
+                                this.validItems(element.getContentAreas());
+                            } else if (element instanceof sap.ui.layout.HorizontalLayout) {
+                                this.validItems(element.getContent());
+                            } else if (element instanceof sap.ui.layout.VerticalLayout) {
+                                this.validItems(element.getContent());
+                            } else if (element instanceof sap.ui.layout.cssgrid.CSSGrid) {
+                                this.validItems(element.getItems());
+                            } else if (element instanceof sap.ui.layout.form.SimpleForm) {
+                                this.validItems(element.getContent());
+                            } else if (element instanceof sap.ui.table.Table) {
+                                for (let row of element.getRows()) {
+                                    this.validItems(row.getCells());
+                                }
+                            }
+                        }
+                    }
+                }
+                getErrors(): Error[] {
+                    let errors: Error[] = [];
+                    if (this.items instanceof Array) {
+                        for (let item of this.items) {
+                            if (item.error) {
+                                errors.push(item.error);
+                            }
+                        }
+                    }
+                    return errors;
+                }
+                valid(): boolean {
+                    this.items = [];
+                    this.validItems(this.elements);
+                    if (this.items && this.items.length > 0) {
+                        return false;
+                    }
+                    return true;
+                }
+            }
         }
     }
 }
