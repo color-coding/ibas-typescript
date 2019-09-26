@@ -161,5 +161,16 @@ namespace trainingtesting {
             /** 显示数据 */
             showData(datas: bo.Material[]): void;
         }
+
+        /** 物料浏览 */
+        export class MaterialBrowseApp extends MaterialListApp {
+            /** 应用标识 */
+            static APPLICATION_ID: string = "077e754a-1cb8-4e6a-bc9d-4f5c821d6bd7";
+            /** 构造函数 */
+            constructor() {
+                super();
+                this.id = MaterialBrowseApp.APPLICATION_ID;
+            }
+        }
     }
 }

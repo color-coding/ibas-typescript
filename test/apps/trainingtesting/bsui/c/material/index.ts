@@ -9,3 +9,4 @@
 /// <reference path="./MaterialChooseView.ts" />
 /// <reference path="./MaterialViewView.ts" />
 /// <reference path="./MaterialEditView.ts" />
+/// <reference path="./MaterialBrowseView.ts" />

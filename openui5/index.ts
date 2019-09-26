@@ -60,6 +60,8 @@
 /// <reference path="./extensions/components/Tokenizer.ts" />
 /// <reference path="./extensions/components/Wizard.d.ts" />
 /// <reference path="./extensions/components/Wizard.ts" />
+/// <reference path="./extensions/components/Card.d.ts" />
+/// <reference path="./extensions/components/Card.ts" />
 /// <reference path="./extensions/components/Factory.ts" />
 
 namespace openui5 {

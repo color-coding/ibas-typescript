@@ -29,7 +29,7 @@ namespace trainingtesting {
             protected viewShowed(): void {
                 super.viewShowed();
                 // 直接调用app
-                let app: SalesOrderListApp = new SalesOrderListApp();
+                let app: MaterialBrowseApp = new MaterialBrowseApp();
                 app.viewShower = this;
                 app.navigation = this.navigation;
                 app.run();
