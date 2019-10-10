@@ -89,20 +89,12 @@ namespace sap {
                                 this.addPlugin(new sap.ui.table.plugins.MultiSelectionPlugin(
                                     ibas.strings.format(ID_TABLE_PLUGIN_CHOOSE, this.getId()), {
                                     showHeaderSelector: true,
-                                })
-                                );
+                                }));
                                 return this.setProperty("enableSelectAll", value);
                             }
                         }
                     }
                     return sap.ui.table.Table.prototype.setEnableSelectAll.apply(this, arguments);
-                },
-                /**
-                 * 重写判断是否存在选择插件
-                 */
-                _hasSelectionPlugin(this: Table): boolean {
-                    // 永远返回false，解决1.70.0报错
-                    return false;
                 },
                 /**
                  * 选中索引（兼容方法），-1 表示未选中
@@ -190,7 +182,98 @@ namespace sap {
                         model.destroy();
                     }
                     (<any>sap.ui.table.Table.prototype).exit.apply(this, arguments);
-                }
+                },
+                // 1.70以上兼容问题
+                setSelectionMode(this: Table): Table {
+                    // tslint:disable-next-line: no-string-literal
+                    if (this["_hasSelectionPlugin"] && this.getChooseType() === ibas.emChooseType.MULTIPLE) {
+                        let plugin: any = this.getPlugins()[0];
+                        if (plugin instanceof sap.ui.table.plugins.MultiSelectionPlugin) {
+                            return plugin.setSelectionMode.apply(plugin, arguments);
+                        }
+                    }
+                    return sap.ui.table.Table.prototype.setSelectionMode.apply(this, arguments);
+                },
+                setSelectedIndex(this: Table): Table {
+                    // tslint:disable-next-line: no-string-literal
+                    if (this["_hasSelectionPlugin"] && this.getChooseType() === ibas.emChooseType.MULTIPLE) {
+                        let plugin: any = this.getPlugins()[0];
+                        if (plugin instanceof sap.ui.table.plugins.MultiSelectionPlugin) {
+                            return plugin.setSelectedIndex.apply(plugin, arguments);
+                        }
+                    }
+                    return sap.ui.table.Table.prototype.setSelectedIndex.apply(this, arguments);
+                },
+                clearSelection(this: Table): Table {
+                    // tslint:disable-next-line: no-string-literal
+                    if (this["_hasSelectionPlugin"] && this.getChooseType() === ibas.emChooseType.MULTIPLE) {
+                        let plugin: any = this.getPlugins()[0];
+                        if (plugin instanceof sap.ui.table.plugins.MultiSelectionPlugin) {
+                            return plugin.clearSelection.apply(plugin, arguments);
+                        }
+                    }
+                    return sap.ui.table.Table.prototype.clearSelection.apply(this, arguments);
+                },
+                selectAll(this: Table): Table {
+                    // tslint:disable-next-line: no-string-literal
+                    if (this["_hasSelectionPlugin"] && this.getChooseType() === ibas.emChooseType.MULTIPLE) {
+                        let plugin: any = this.getPlugins()[0];
+                        if (plugin instanceof sap.ui.table.plugins.MultiSelectionPlugin) {
+                            return plugin.selectAll.apply(plugin, arguments);
+                        }
+                    }
+                    return sap.ui.table.Table.prototype.selectAll.apply(this, arguments);
+                },
+                getSelectedIndices(this: Table): Table {
+                    // tslint:disable-next-line: no-string-literal
+                    if (this["_hasSelectionPlugin"] && this.getChooseType() === ibas.emChooseType.MULTIPLE) {
+                        let plugin: any = this.getPlugins()[0];
+                        if (plugin instanceof sap.ui.table.plugins.MultiSelectionPlugin) {
+                            return plugin.getSelectedIndices.apply(plugin, arguments);
+                        }
+                    }
+                    return sap.ui.table.Table.prototype.getSelectedIndices.apply(this, arguments);
+                },
+                addSelectionInterval(this: Table): Table {
+                    // tslint:disable-next-line: no-string-literal
+                    if (this["_hasSelectionPlugin"] && this.getChooseType() === ibas.emChooseType.MULTIPLE) {
+                        let plugin: any = this.getPlugins()[0];
+                        if (plugin instanceof sap.ui.table.plugins.MultiSelectionPlugin) {
+                            return plugin.addSelectionInterval.apply(plugin, arguments);
+                        }
+                    }
+                    return sap.ui.table.Table.prototype.addSelectionInterval.apply(this, arguments);
+                },
+                setSelectionInterval(this: Table): Table {
+                    // tslint:disable-next-line: no-string-literal
+                    if (this["_hasSelectionPlugin"] && this.getChooseType() === ibas.emChooseType.MULTIPLE) {
+                        let plugin: any = this.getPlugins()[0];
+                        if (plugin instanceof sap.ui.table.plugins.MultiSelectionPlugin) {
+                            return plugin.setSelectionInterval.apply(plugin, arguments);
+                        }
+                    }
+                    return sap.ui.table.Table.prototype.setSelectionInterval.apply(this, arguments);
+                },
+                removeSelectionInterval(this: Table): Table {
+                    // tslint:disable-next-line: no-string-literal
+                    if (this["_hasSelectionPlugin"] && this.getChooseType() === ibas.emChooseType.MULTIPLE) {
+                        let plugin: any = this.getPlugins()[0];
+                        if (plugin instanceof sap.ui.table.plugins.MultiSelectionPlugin) {
+                            return plugin.removeSelectionInterval.apply(plugin, arguments);
+                        }
+                    }
+                    return sap.ui.table.Table.prototype.removeSelectionInterval.apply(this, arguments);
+                },
+                isIndexSelected(this: Table): Table {
+                    // tslint:disable-next-line: no-string-literal
+                    if (this["_hasSelectionPlugin"] && this.getChooseType() === ibas.emChooseType.MULTIPLE) {
+                        let plugin: any = this.getPlugins()[0];
+                        if (plugin instanceof sap.ui.table.plugins.MultiSelectionPlugin) {
+                            return plugin.isIndexSelected.apply(plugin, arguments);
+                        }
+                    }
+                    return sap.ui.table.Table.prototype.isIndexSelected.apply(this, arguments);
+                },
             });
             /**
              * 表格列

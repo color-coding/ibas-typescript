@@ -76,6 +76,8 @@ declare namespace sap {
                  * @returns number
                  */
                 getSelectedIndex(): number;
+                /** 1.70以上方法 */
+                private _hasSelectionPlugin(): boolean;
             }
             /**
              * 表格列

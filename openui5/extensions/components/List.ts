@@ -291,16 +291,17 @@ namespace sap {
                     (<any>sap.m.List.prototype).exit.apply(this, arguments);
                 }
             });
-
-            sap.f.GridListItem.extend("sap.extension.f.GridListItem", {
-                metadata: {
-                    properties: {
+            if (sap.f.GridListItem) {
+                sap.f.GridListItem.extend("sap.extension.f.GridListItem", {
+                    metadata: {
+                        properties: {
+                        },
+                        events: {
+                        }
                     },
-                    events: {
-                    }
-                },
-                renderer: {},
-            });
+                    renderer: {},
+                });
+            }
         }
     }
 }
