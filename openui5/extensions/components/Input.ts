@@ -61,8 +61,31 @@ namespace sap {
                         // 不调用选值窗体
                         (<any>sap.m.InputBase.prototype).ontap.apply(this, arguments);
                     }
+                },
+                /** 初始化 */
+                init(this: Input): void {
+                    this.attachBrowserEvent("keydown", clearSelection);
+                    (<any>sap.m.Input.prototype).init.apply(this, arguments);
+                },
+                exit(this: Input): void {
+                    this.detachBrowserEvent("keydown", clearSelection);
+                    (<any>sap.m.Input.prototype).exit.apply(this, arguments);
                 }
             });
+            // 但仅选择数据时，清除已选择值
+            function clearSelection(event: KeyboardEvent): void {
+                if (event.keyCode === 8 || event.keyCode === 46) {
+                    // backspace key
+                    if (event.currentTarget && (<any>event.currentTarget).id) {
+                        let source: any = sap.ui.getCore().byId((<any>event.currentTarget).id);
+                        if (source instanceof Input) {
+                            if (source.getShowValueHelp() && source.getValueHelpOnly()) {
+                                source.setBindingValue(null);
+                            }
+                        }
+                    }
+                }
+            }
             /**
              * 业务仓库数据-输入框
              */
@@ -225,7 +248,7 @@ namespace sap {
                         }
                     }
                     return this;
-                },
+                }
             });
             /**
              * 业务仓库数据-选择输入框
