@@ -211,13 +211,15 @@ namespace ibas {
          * @param result 属性-结果
          * @param multiplicand 属性-被乘数
          * @param multiplier 属性-乘数
+         * @param decimalPlaces 结果保留小数位
          */
-        constructor(result: string, multiplicand: string, multiplier: string) {
+        constructor(result: string, multiplicand: string, multiplier: string, decimalPlaces: number = undefined) {
             super();
             this.name = i18n.prop("sys_business_rule_multiplication");
             this.result = result;
             this.multiplicand = multiplicand;
             this.multiplier = multiplier;
+            this.decimalPlaces = decimalPlaces;
             this.inputProperties.add(this.multiplicand);
             this.inputProperties.add(this.multiplier);
             this.affectedProperties.add(this.result);
@@ -228,12 +230,14 @@ namespace ibas {
         multiplicand: string;
         /** 乘数 */
         multiplier: string;
+        /** 结果保留小数位 */
+        decimalPlaces: number;
         /** 计算规则 */
         protected compute(context: BusinessRuleContextCommon): void {
             let multiplicand: number = numbers.valueOf(context.inputValues.get(this.multiplicand));
             let multiplier: number = numbers.valueOf(context.inputValues.get(this.multiplier));
             let result: number = multiplicand * multiplier;
-            context.outputValues.set(this.result, ibas.numbers.round(result));
+            context.outputValues.set(this.result, ibas.numbers.round(result, this.decimalPlaces));
         }
     }
     /** 业务规则-求商 */
@@ -243,13 +247,15 @@ namespace ibas {
          * @param result 属性-结果
          * @param dividend 属性-被除数
          * @param divisor 属性-除数
+         * @param decimalPlaces 结果保留小数位
          */
-        constructor(result: string, dividend: string, divisor: string) {
+        constructor(result: string, dividend: string, divisor: string, decimalPlaces: number = undefined) {
             super();
             this.name = i18n.prop("sys_business_rule_division");
             this.result = result;
             this.dividend = dividend;
             this.divisor = divisor;
+            this.decimalPlaces = decimalPlaces;
             this.inputProperties.add(this.dividend);
             this.inputProperties.add(this.divisor);
             this.affectedProperties.add(this.result);
@@ -260,12 +266,14 @@ namespace ibas {
         dividend: string;
         /** 乘数 */
         divisor: string;
+        /** 结果保留小数位 */
+        decimalPlaces: number;
         /** 计算规则 */
         protected compute(context: BusinessRuleContextCommon): void {
             let dividend: number = numbers.valueOf(context.inputValues.get(this.dividend));
             let divisor: number = numbers.valueOf(context.inputValues.get(this.divisor));
             let result: number = dividend / divisor;
-            context.outputValues.set(this.result, ibas.numbers.round(result));
+            context.outputValues.set(this.result, ibas.numbers.round(result, this.decimalPlaces));
         }
     }
     /** 业务规则-加减法推导 */
@@ -319,16 +327,20 @@ namespace ibas {
     export class BusinessRuleMultiplicativeDeduction extends BusinessRuleCommon {
         /**
          *
-         * @param augend 属性-被乘数
-         * @param addend 属性-乘数
+         * @param multiplicand 属性-被乘数
+         * @param multiplier 属性-乘数
          * @param result 属性-结果
+         * @param resultPlaces 结果保留小数位
+         * @param multiplierPlaces 乘数保留小数位
          */
-        constructor(multiplicand: string, multiplier: string, result: string) {
+        constructor(multiplicand: string, multiplier: string, result: string, resultPlaces: number = undefined, multiplierPlaces: number = undefined) {
             super();
             this.name = i18n.prop("sys_business_rule_multiplicative_deduction");
             this.result = result;
             this.multiplicand = multiplicand;
             this.multiplier = multiplier;
+            this.resultPlaces = resultPlaces;
+            this.multiplierPlaces = multiplierPlaces;
             this.inputProperties.add(this.result);
             this.inputProperties.add(this.multiplicand);
             this.inputProperties.add(this.multiplier);
@@ -341,6 +353,10 @@ namespace ibas {
         multiplicand: string;
         /** 乘数 */
         multiplier: string;
+        /** 结果保留小数位 */
+        resultPlaces: number;
+        /** 乘数保留小数位 */
+        multiplierPlaces: number;
         /** 计算规则 */
         protected compute(context: BusinessRuleContextCommon): void {
             let result: number = numbers.valueOf(context.inputValues.get(this.result));
@@ -348,17 +364,17 @@ namespace ibas {
             let multiplier: number = numbers.valueOf(context.inputValues.get(this.multiplier));
 
             if (multiplicand === 0) {
-                context.outputValues.set(this.result, ibas.numbers.round(multiplicand));
+                context.outputValues.set(this.result, ibas.numbers.round(multiplicand, this.resultPlaces));
                 return;
             }
             if (multiplier !== 0 && result === 0) {
                 // 结果 = 乘数 * 被乘数
                 result = multiplier * multiplicand;
-                context.outputValues.set(this.result, ibas.numbers.round(result));
+                context.outputValues.set(this.result, ibas.numbers.round(result, this.resultPlaces));
             } else if (multiplicand !== 0 && result !== 0) {
                 // 乘数 = 结果 / 被乘数
                 multiplier = result / multiplicand;
-                context.outputValues.set(this.multiplier, ibas.numbers.round(multiplier));
+                context.outputValues.set(this.multiplier, ibas.numbers.round(multiplier, this.multiplierPlaces));
             }
         }
     }
@@ -398,14 +414,21 @@ namespace ibas {
     export class BusinessRuleMultiplicativeDeductionEx extends BusinessRuleMultiplicativeDeduction {
         /**
          *
-         * @param augend 属性-被乘数
-         * @param addend 属性-乘数
+         * @param multiplicand 属性-被乘数
+         * @param multiplier 属性-乘数
          * @param result 属性-结果
+         * @param resultPlaces 结果保留小数位
+         * @param multiplierPlaces 乘数保留小数位
+         * @param multiplicandPlaces 被乘数保留小数位
          */
-        constructor(multiplicand: string, multiplier: string, result: string) {
-            super(multiplicand, multiplier, result);
+        constructor(multiplicand: string, multiplier: string, result: string,
+            resultPlaces: number = undefined, multiplierPlaces: number = undefined, multiplicandPlaces: number = undefined) {
+            super(multiplicand, multiplier, result, resultPlaces, multiplierPlaces);
+            this.multiplicandPlaces = multiplicandPlaces;
             this.affectedProperties.add(this.multiplicand);
         }
+        /** 被乘数保留小数位 */
+        multiplicandPlaces: number;
         /** 计算规则 */
         protected compute(context: BusinessRuleContextCommon): void {
             if (strings.isEmpty(context.trigger)) {
@@ -420,12 +443,12 @@ namespace ibas {
                         // 乘数 = 结果 / 被乘数
                         // 小于0时，重新计算
                         multiplier = result / multiplicand;
-                        context.outputValues.set(this.multiplier, ibas.numbers.round(multiplier));
+                        context.outputValues.set(this.multiplier, ibas.numbers.round(multiplier, this.multiplierPlaces));
                     } else if (multiplier !== 0) {
                         // 被乘数 = 结果 / 乘数
                         let newMultiplicand: number = result / multiplier;
                         if (Math.abs(newMultiplicand - multiplicand) > 0.00001) {
-                            context.outputValues.set(this.multiplicand, ibas.numbers.round(newMultiplicand));
+                            context.outputValues.set(this.multiplicand, ibas.numbers.round(newMultiplicand, this.multiplicandPlaces));
                         }
                     }
                 } else if (strings.equalsIgnoreCase(context.trigger, this.multiplicand)
@@ -434,7 +457,7 @@ namespace ibas {
                     // 结果 = 乘数 * 被乘数
                     let newResult: number = multiplier * multiplicand;
                     if (Math.abs(newResult - result) > 0.00001) {
-                        context.outputValues.set(this.result, ibas.numbers.round(newResult));
+                        context.outputValues.set(this.result, ibas.numbers.round(newResult, this.resultPlaces));
                     }
                 } else {
                     super.compute(context);
