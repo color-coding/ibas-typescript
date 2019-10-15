@@ -14,7 +14,7 @@ namespace shell {
             export class WelcomeView extends ibas.DialogView implements app.IWelcomeView {
                 /** 绘制视图 */
                 draw(): any {
-                    let form: sap.m.Dialog = new sap.m.Dialog("", {
+                    let form: sap.m.Dialog = new sap.extension.m.Dialog("", {
                         title: this.title,
                         type: sap.m.DialogType.Standard,
                         state: sap.ui.core.ValueState.None,

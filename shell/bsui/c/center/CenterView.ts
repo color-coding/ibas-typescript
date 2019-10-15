@@ -530,6 +530,10 @@ namespace shell {
                                 item.setBusy(busy);
                             }
                         }
+                    } else if (ui instanceof sap.ui.core.Control) {
+                        if (ui.getBusy() !== busy) {
+                            ui.setBusy(busy);
+                        }
                     } else {
                         // 视图不能设置忙状态，使用全局对话框
                         let busyDialog: any = sap.ui.getCore().byId(UI_BUSY_DIALOG);
@@ -671,7 +675,7 @@ namespace shell {
                     }
                     let viewContent: sap.m.Dialog = view.draw();
                     if (!(viewContent instanceof sap.m.Dialog)) {
-                        viewContent = new sap.m.Dialog("", {
+                        viewContent = new sap.extension.m.Dialog("", {
                             title: title,
                             type: sap.m.DialogType.Standard,
                             state: sap.ui.core.ValueState.None,
