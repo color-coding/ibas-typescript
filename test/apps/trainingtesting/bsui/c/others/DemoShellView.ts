@@ -87,10 +87,6 @@ namespace trainingtesting {
                             viewContent.attachAfterClose(null, function (): void {
                                 ibas.views.closed.call(view);
                             });
-                            // 设置视图紧凑
-                            if (ibas.config.get(openui5.CONFIG_ITEM_COMPACT_SCREEN, false)) {
-                                viewContent.addStyleClass("sapUiSizeCompact");
-                            }
                             view.id = viewContent.getId();
                             viewContent.open();
                         }

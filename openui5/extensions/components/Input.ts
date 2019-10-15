@@ -646,9 +646,6 @@ namespace sap {
                                     }, 5);
                                 }
                             });
-                            if (ibas.config.get(openui5.CONFIG_ITEM_COMPACT_SCREEN, false)) {
-                                selectDialog.addStyleClass("sapUiSizeCompact");
-                            }
                             let icons: ibas.ArrayList<{ name: string }> = new ibas.ArrayList<{ name: string }>();
                             for (let item of sap.ui.core.IconPool.getIconNames(undefined)) {
                                 icons.add({

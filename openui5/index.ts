@@ -67,32 +67,6 @@
 namespace openui5 {
     /** 配置项目-紧缩屏幕 */
     export const CONFIG_ITEM_COMPACT_SCREEN: string = "compactScreen";
-    // 监听配置变化
-    ibas.config.registerListener({
-        onConfigurationChanged(name: string, value: any): void {
-            if (name === ibas.CONFIG_ITEM_PLANTFORM) {
-                // 平台配置变化
-                if (value === ibas.emPlantform.DESKTOP) {
-                    // 桌面平台，使用紧凑视图
-                    ibas.config.set(CONFIG_ITEM_COMPACT_SCREEN, true);
-                } else {
-                    // 使用舒适视图
-                    ibas.config.set(CONFIG_ITEM_COMPACT_SCREEN, false);
-                }
-            }
-        }
-    });
-    // 设置默认平台
-    if (sap.ui.Device.system.phone) {
-        ibas.config.set(ibas.CONFIG_ITEM_PLANTFORM, ibas.emPlantform.PHONE);
-    } else if (sap.ui.Device.system.desktop) {
-        ibas.config.set(ibas.CONFIG_ITEM_PLANTFORM, ibas.emPlantform.DESKTOP);
-    } else if (sap.ui.Device.system.tablet) {
-        ibas.config.set(ibas.CONFIG_ITEM_PLANTFORM, ibas.emPlantform.TABLET);
-    } else {
-        ibas.config.set(ibas.CONFIG_ITEM_PLANTFORM, ibas.emPlantform.COMBINATION);
-    }
-
     // ui 触发错误验证
     sap.ui.getCore().attachValidationError(undefined, (oEvent: sap.ui.base.Event) => {
         let control: any = oEvent.getParameter("element");

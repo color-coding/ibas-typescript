@@ -653,9 +653,6 @@ namespace shell {
                                 view.draw()
                             ]
                         });
-                        if (ibas.config.get(openui5.CONFIG_ITEM_COMPACT_SCREEN, false)) {
-                            page.addStyleClass("sapUiSizeCompact");
-                        }
                         app.addPage(page);
                         app.to(page.getId());
                         view.id = page.getId();
@@ -704,10 +701,6 @@ namespace shell {
                             ]
                         });
                     }
-                    // 设置视图紧凑
-                    if (ibas.config.get(openui5.CONFIG_ITEM_COMPACT_SCREEN, false)) {
-                        viewContent.addStyleClass("sapUiSizeCompact");
-                    }
                     // 修改id号
                     view.id = viewContent.getId();
                     viewContent.open();
@@ -739,10 +732,6 @@ namespace shell {
                         viewContent.attachAfterClose(null, function (): void {
                             ibas.views.closed.call(view);
                         });
-                        // 设置视图紧凑
-                        if (ibas.config.get(openui5.CONFIG_ITEM_COMPACT_SCREEN, false)) {
-                            viewContent.addStyleClass("sapUiSizeCompact");
-                        }
                         view.id = viewContent.getId();
                         viewContent.open();
                     } else if (viewContent instanceof sap.ui.core.Control) {
@@ -764,11 +753,7 @@ namespace shell {
                             popover.destroy(false);
                         });
                         // 设置视图紧凑
-                        if (ibas.config.get(openui5.CONFIG_ITEM_COMPACT_SCREEN, false)) {
-                            popover.addStyleClass("sapUiSizeCompact sapMOTAPopover sapTntToolHeaderPopover");
-                        } else {
-                            popover.addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
-                        }
+                        popover.addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
                         view.id = popover.getId();
                         popover.openBy(<any>sap.ui.getCore().byId(view.barId));
                     } else {

@@ -66,18 +66,12 @@ namespace shell {
                         });
                     }
                 } else if (view.application instanceof app.LoginApp) {
-                    if (ibas.config.get(openui5.CONFIG_ITEM_COMPACT_SCREEN, false)) {
-                        viewContent.addStyleClass("sapUiSizeCompact");
-                    }
                     let app: sap.ui.core.Element = sap.ui.getCore().byId(UI_APP);
                     if (app instanceof sap.m.App) {
                         app.addPage(viewContent);
                         app.to(viewContent);
                     }
                 } else if (view.application instanceof app.CenterApp) {
-                    if (ibas.config.get(openui5.CONFIG_ITEM_COMPACT_SCREEN, false)) {
-                        viewContent.addStyleClass("sapUiSizeCompact");
-                    }
                     let app: sap.ui.core.Element = sap.ui.getCore().byId(UI_APP);
                     if (app instanceof sap.m.App) {
                         app.addPage(viewContent);
@@ -119,9 +113,6 @@ namespace shell {
                 if (busy) {
                     if (ibas.objects.isNull(this.busyDialog)) {
                         this.busyDialog = new sap.m.BusyDialog("");
-                        if (ibas.config.get(openui5.CONFIG_ITEM_COMPACT_SCREEN, false)) {
-                            this.busyDialog.addStyleClass("sapUiSizeCompact");
-                        }
                     }
                     this.busyDialog.setTitle(view.title);
                     this.busyDialog.setText(msg);

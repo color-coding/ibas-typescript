@@ -74,7 +74,6 @@ namespace sap {
                         title: mOptions.title,
                         icon: toMessageBoxIcon(mOptions.type),
                         actions: toMessageBoxAction(mOptions.actions),
-                        styleClass: ibas.config.get(openui5.CONFIG_ITEM_COMPACT_SCREEN, false) ? "sapUiSizeCompact" : "",
                         onClose(oAction: any): void {
                             if (mOptions.onCompleted instanceof Function) {
                                 mOptions.onCompleted(toMessageAction(oAction));
