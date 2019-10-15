@@ -705,11 +705,11 @@ declare namespace sap {
              */
             setCurrentLocationText(sCurrentLocationText: string): sap.m.Breadcrumbs;
             /**
-             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSeparatorStyle" href="#/api/sap.m.Breadcrumbs/methods/getSeparatorStyle">separatorStyle</a>.</p><p>Determines the visual style of the separator between the <code>Breadcrumbs</code> elements.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Slash</code>.</p>
-             * @param {sap.m.BreadcrumbsSeparatorStyle} sSeparatorStyle <p>New value for property <code>separatorStyle</code></p>
-             * @returns sap.m.Breadcrumbs <p>Reference to <code>this</code> in order to allow method chaining</p>
+             * <p>Custom setter for the <code>Breadcrumbs</code> separator style.</p>
+             * @param {string} sSeparatorStyle 
+             * @returns any <p>this</p>
              */
-            setSeparatorStyle(sSeparatorStyle: sap.m.BreadcrumbsSeparatorStyle): sap.m.Breadcrumbs;
+            setSeparatorStyle(sSeparatorStyle: string): any;
         }
         /**
          * <p><p>Variations of the <a target="_self" class="jsdoclink" href="#/api/sap.m.Breadcrumbs">sap.m.Breadcrumbs</a> separators.</p></p>
@@ -2637,6 +2637,11 @@ declare namespace sap {
              */
             protected isComposingCharacter(): boolean;
             /**
+             * <p>indicating if a character is currently composing.</p>
+             * @returns boolean <p>Whether or not a character is composing. True if after "compositionstart" event and before "compositionend" event.</p>
+             */
+            protected isComposingCharacter(): boolean;
+            /**
              * <p>Indicates whether the control's picker popup is open.</p>
              * @returns boolean <p>Determines whether the control's picker popup is currently open (this includes opening and closing animations).</p>
              */
@@ -3183,7 +3188,7 @@ declare namespace sap {
             setWidth(sWidth: string): sap.m.DatePicker;
         }
         /**
-         * <p>A single-field input control that enables the users to enter a localized date range (between 0001-01-01 and 9999-12-31).</p><h3>Overview</h3><p>The <code>DateRangeSelection</code> enables the users to enter a localized date range using touch, mouse, keyboard input, or by selecting a date range in the calendar. They can also navigate directly from one month or year to another.</p><p><b>Note:</b> The <a target="_self" class="jsdoclink" href="#/api/sap.ui.unified.Calendar">sap.ui.unified.Calendar</a> is used internally only if the <code>DateRangeSelection</code> is opened (not used for the initial rendering). If the <code>sap.ui.unified</code> library is not loaded before the <code>DateRangeSelection</code> is opened, it will be loaded upon opening. This could lead to a waiting time when the <code>DateRangeSelection</code> is opened for the first time. To prevent this, apps using the <code>DateRangeSelection</code> should also load the <code>sap.ui.unified</code> library.</p><h3>Usage</h3><p><i>When to use?</i></p><p>If you need a time range and know that your user is a power user who has to input lots of data. If the keyboard is the primary device used for navigating the app, use two input fields. This allows the user to quickly jump from field to field. By selecting a date in one of the fields, the other field should recognize the information and jump to the same selection.</p><p><i>When not to use?</i></p><p>If the user's primary goal is not to select ranges or if you just want to enter a date and a time. For such cases, use the <a target="_self" class="jsdoclink" href="#/api/sap.m.DatePicker">sap.m.DatePicker</a> or <a target="_self" class="jsdoclink" href="#/api/sap.m.TimePicker">sap.m.TimePicker</a>.</p><p>The user can enter a date by: <ul><li>Using the calendar that opens in a popup</li> <li>Typing it in directly in the input field (not available for mobile devices)</li></ul></p><p>On app level, there are two options to provide a date for the <code>DateRangeSelection</code> - date range as a string to the <code>value</code> property or JavaScript Date objects to the <code>dateValue</code> and <code>secondDateValue</code> properties (only one of these options should be used at a time):</p><p><ul><li>Use the <code>value</code> property if the date range is already provided as a formatted string</li> <li>Use the <code>dateValue</code> and <code>secondDateValue</code> properties if the date range is already provided as JavaScript Date objects or you want to work with JavaScript Date objects</li></ul></p><h3>Formatting</h3><p>All formatting and parsing of dates from and to strings is done using the <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.format.DateFormat">sap.ui.core.format.DateFormat</a>. If a date is entered by typing it into the input field, it must fit to the used date format and locale.</p><p>Supported format options are pattern-based on Unicode LDML Date Format notation. See <a target="_blank" href="http://unicode.org/reports/tr35/#Date_Field_Symbol_Table">http://unicode.org/reports/tr35/#Date_Field_Symbol_Table</a>
+         * <p>A single-field input control that enables the users to enter a localized date range (between 0001-01-01 and 9999-12-31).</p><h3>Overview</h3><p>The <code>DateRangeSelection</code> enables the users to enter a localized date range using touch, mouse, keyboard input, or by selecting a date range in the calendar. They can also navigate directly from one month or year to another.</p><p><b>Note:</b> The control is not UTC aware and the selected date range starts from 00:00:00:000 of the first date and ends in 23:59:59:999 on the second date.</p><p>The <a target="_self" class="jsdoclink" href="#/api/sap.ui.unified.Calendar">sap.ui.unified.Calendar</a> is used internally only if the <code>DateRangeSelection</code> is opened (not used for the initial rendering). If the <code>sap.ui.unified</code> library is not loaded before the <code>DateRangeSelection</code> is opened, it will be loaded upon opening. This could lead to a waiting time when the <code>DateRangeSelection</code> is opened for the first time. To prevent this, apps using the <code>DateRangeSelection</code> should also load the <code>sap.ui.unified</code> library.</p><h3>Usage</h3><p><i>When to use?</i></p><p>If you need a date range and know that your user is a power user who has to input lots of data. If the keyboard is the primary device used for navigating the app, use two input fields. This allows the user to quickly jump from field to field. By selecting a date in one of the fields, the other field should recognize the information and jump to the same selection.</p><p><i>When not to use?</i></p><p>If the user's primary goal is not to select ranges or if you just want to enter a date and a time. For such cases, use the <a target="_self" class="jsdoclink" href="#/api/sap.m.DatePicker">sap.m.DatePicker</a> or <a target="_self" class="jsdoclink" href="#/api/sap.m.TimePicker">sap.m.TimePicker</a>.</p><p>The user can enter a date by: <ul><li>Using the calendar that opens in a popup</li> <li>Typing it in directly in the input field (not available for mobile devices)</li></ul></p><p>On app level, there are two options to provide a date for the <code>DateRangeSelection</code> - date range as a string to the <code>value</code> property or JavaScript Date objects to the <code>dateValue</code> and <code>secondDateValue</code> properties (only one of these options should be used at a time):</p><p><ul><li>Use the <code>value</code> property if the date range is already provided as a formatted string</li> <li>Use the <code>dateValue</code> and <code>secondDateValue</code> properties if the date range is already provided as JavaScript Date objects or you want to work with JavaScript Date objects</li></ul></p><h3>Formatting</h3><p>All formatting and parsing of dates from and to strings is done using the <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.format.DateFormat">sap.ui.core.format.DateFormat</a>. If a date is entered by typing it into the input field, it must fit to the used date format and locale.</p><p>Supported format options are pattern-based on Unicode LDML Date Format notation. See <a target="_blank" href="http://unicode.org/reports/tr35/#Date_Field_Symbol_Table">http://unicode.org/reports/tr35/#Date_Field_Symbol_Table</a>
         <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
         title="Information published on non SAP site" class="sapUISDKExternalLink"/></p><p>For example, if the <code>displayFormat</code> is "MMM d, y", delimiter is "-", and the used locale is English, a valid value string is "Jul 29, 2015 - Jul 31, 2015" and it is displayed in the same way in the input field.</p><p>If no placeholder is set to the <code>DateRangeSelection</code>, the used <code>displayFormat</code> is displayed as a placeholder. If another placeholder is needed, it must be set.</p><p><b>Note:</b> If the string does NOT match the <code>displayFormat</code> (from user input) or the <code>valueFormat</code> (on app level), the <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.format.DateFormat">sap.ui.core.format.DateFormat</a> makes an attempt to parse it based on the locale settings. For more information, see the respective documentation in the API Reference.</p><h3>Responsive behavior</h3><p>The <code>DateRangeSelection</code> is fully responsive. It is smaller in compact mode and provides a touch-friendly size in cozy mode.</p>
          */
@@ -8591,6 +8596,11 @@ declare namespace sap {
              * @param {any} oEvent <p>The event object.</p>
              */
             protected handleInput(oEvent: any): void;
+            /**
+             * <p>indicating if a character is currently composing.</p>
+             * @returns boolean <p>Whether or not a character is composing. True if after "compositionstart" event and before "compositionend" event.</p>
+             */
+            protected isComposingCharacter(): boolean;
             /**
              * <p>Handles the change event.</p>
              * @param {any} oEvent 
@@ -19275,7 +19285,7 @@ declare namespace sap {
              */
             getIntervalsM(): number;
             /**
-             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getIntervalsS" href="#/api/sap.m.PlanningCalendarView/methods/getIntervalsS">intervalsS</a>.</p><p>Defines the number of intervals that are displayed for a <a target="_self" class="jsdoclink" href="#/api/sap.m.PlanningCalendar">sap.m.PlanningCalendar</a> that is less than 600 pixels wide.</p><p>Default value is <code>6</code>.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getIntervalsS" href="#/api/sap.m.PlanningCalendarView/methods/getIntervalsS">intervalsS</a>.</p><p>Defines the number of intervals that are displayed for a <a target="_self" class="jsdoclink" href="#/api/sap.m.PlanningCalendar">sap.m.PlanningCalendar</a> that is less than 600 pixels wide. <b>Note:</b> On a phone the maximum visible intervals are 8.</p><p>Default value is <code>6</code>.</p>
              * @returns number <p>Value of property <code>intervalsS</code></p>
              */
             getIntervalsS(): number;
@@ -19313,7 +19323,7 @@ declare namespace sap {
              */
             setIntervalsM(iIntervalsM: number): sap.m.PlanningCalendarView;
             /**
-             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getIntervalsS" href="#/api/sap.m.PlanningCalendarView/methods/getIntervalsS">intervalsS</a>.</p><p>Defines the number of intervals that are displayed for a <a target="_self" class="jsdoclink" href="#/api/sap.m.PlanningCalendar">sap.m.PlanningCalendar</a> that is less than 600 pixels wide.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>6</code>.</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getIntervalsS" href="#/api/sap.m.PlanningCalendarView/methods/getIntervalsS">intervalsS</a>.</p><p>Defines the number of intervals that are displayed for a <a target="_self" class="jsdoclink" href="#/api/sap.m.PlanningCalendar">sap.m.PlanningCalendar</a> that is less than 600 pixels wide. <b>Note:</b> On a phone the maximum visible intervals are 8.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>6</code>.</p>
              * @param {number} iIntervalsS <p>New value for property <code>intervalsS</code></p>
              * @returns sap.m.PlanningCalendarView <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
@@ -24452,6 +24462,14 @@ declare namespace sap {
              */
             attachStartDateChange(oData: any, fnFunction: Function, oListener?: any): sap.m.SinglePlanningCalendar;
             /**
+             * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="viewChange" href="#/api/sap.m.SinglePlanningCalendar/events/viewChange">viewChange</a> event of this <code>sap.m.SinglePlanningCalendar</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.m.SinglePlanningCalendar</code> itself.</p><p>The view was changed by user interaction.</p>
+             * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+             * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+             * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.m.SinglePlanningCalendar</code> itself</p>
+             * @returns sap.m.SinglePlanningCalendar <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            attachViewChange(oData: any, fnFunction: Function, oListener?: any): sap.m.SinglePlanningCalendar;
+            /**
              * <p>Destroys all the actions in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getActions" href="#/api/sap.m.SinglePlanningCalendar/methods/getActions">actions</a>.</p>
              * @returns sap.m.SinglePlanningCalendar <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
@@ -24528,6 +24546,13 @@ declare namespace sap {
              */
             detachStartDateChange(fnFunction: Function, oListener?: any): sap.m.SinglePlanningCalendar;
             /**
+             * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="viewChange" href="#/api/sap.m.SinglePlanningCalendar/events/viewChange">viewChange</a> event of this <code>sap.m.SinglePlanningCalendar</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+             * @param {any} oListener <p>Context object on which the given function had to be called</p>
+             * @returns sap.m.SinglePlanningCalendar <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            detachViewChange(fnFunction: Function, oListener?: any): sap.m.SinglePlanningCalendar;
+            /**
              * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="appointmentCreate" href="#/api/sap.m.SinglePlanningCalendar/events/appointmentCreate">appointmentCreate</a> to attached listeners.</p>
              * @param {any} mParameters <p>Parameters to pass along with the event</p>
              * @returns sap.m.SinglePlanningCalendar <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -24575,6 +24600,12 @@ declare namespace sap {
              * @returns sap.m.SinglePlanningCalendar <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             protected fireStartDateChange(mParameters?: any): sap.m.SinglePlanningCalendar;
+            /**
+             * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="viewChange" href="#/api/sap.m.SinglePlanningCalendar/events/viewChange">viewChange</a> to attached listeners.</p>
+             * @param {any} mParameters <p>Parameters to pass along with the event</p>
+             * @returns sap.m.SinglePlanningCalendar <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            protected fireViewChange(mParameters?: any): sap.m.SinglePlanningCalendar;
             /**
              * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getActions" href="#/api/sap.m.SinglePlanningCalendar/methods/getActions">actions</a>.</p><p>The controls to be passed to the toolbar.</p>
              * @returns sap.ui.core.Control[] 
@@ -27153,6 +27184,11 @@ declare namespace sap {
              */
             protected fireItemSelect(mParameters?: any): boolean;
             /**
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getBackgroundDesign" href="#/api/sap.m.TabContainer/methods/getBackgroundDesign">backgroundDesign</a>.</p><p>Determines the background color of the content in <code>TabContainer</code>.</p><p>Default value is <code>List</code>.</p>
+             * @returns sap.m.PageBackgroundDesign <p>Value of property <code>backgroundDesign</code></p>
+             */
+            getBackgroundDesign(): sap.m.PageBackgroundDesign;
+            /**
              * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.m.TabContainer/methods/getItems">items</a>.</p><p>The items displayed in the <code>TabContainer</code>.</p>
              * @returns sap.m.TabContainerItem[] 
              */
@@ -27191,6 +27227,12 @@ declare namespace sap {
              * @returns sap.m.TabContainerItem <p>The removed item or null</p>
              */
             removeItem(vItem: number | string | sap.m.TabContainerItem): sap.m.TabContainerItem;
+            /**
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getBackgroundDesign" href="#/api/sap.m.TabContainer/methods/getBackgroundDesign">backgroundDesign</a>.</p><p>Determines the background color of the content in <code>TabContainer</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>List</code>.</p>
+             * @param {sap.m.PageBackgroundDesign} sBackgroundDesign <p>New value for property <code>backgroundDesign</code></p>
+             * @returns sap.m.TabContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            setBackgroundDesign(sBackgroundDesign: sap.m.PageBackgroundDesign): sap.m.TabContainer;
             /**
              * <p>Sets the associated <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSelectedItem" href="#/api/sap.m.TabContainer/methods/getSelectedItem">selectedItem</a>.</p>
              * @param {sap.ui.core.ID | sap.m.TabContainerItem} oSelectedItem <p>ID of an element which becomes the new target of this selectedItem association; alternatively, an element instance may be given</p>
@@ -27937,7 +27979,7 @@ declare namespace sap {
         <img src="./resources/sap/ui/documentation/sdk/images/link-sap.png"
         title="Information published on SAP site" class="sapUISDKExternalLink"/> control instead.</li> <li>You need to filter a set of items without any selection. Use the <a target="_blank" href="https://experience.sap.com/fiori-design-web/filter-bar/">Filter Bar</a>
         <img src="./resources/sap/ui/documentation/sdk/images/link-sap.png"
-        title="Information published on SAP site" class="sapUISDKExternalLink"/> control instead.</li> </ul> </p><h4>Notes:</h4><p> <ul> <li>The property <code>growing</code> must not be used together with two-way binding. <li>When the property <code>growing</code> is set to <code>true</code> (default value), the features <code>selected count</code> in info bar, <code>search</code> and <code>select/deselect all</code>, if present, work only for the currently loaded items. To make sure that all items in the table are loaded at once and the above features work properly, set the property to <code>false</code>. <li>Since version 1.58, the columns headers and the info toolbar are sticky (remain fixed on top when scrolling). This feature is not supported in all browsers. For more information on browser support limitations, you can refer to the <a target="_self" class="jsdoclink" href="#/api/sap.m.ListBase">sap.m.ListBase</a> <code>sticky</code> property. </ul> </p><h3>Responsive Behavior</h3><p> <ul> <li>On smaller screens, the columns of the table wrap and build a list that shows all the information.</li> </ul></p>
+        title="Information published on SAP site" class="sapUISDKExternalLink"/> control instead.</li> </ul> </p><h4>Notes:</h4><p> <ul> <li>The property <code>growing</code> must not be used together with two-way binding. <li>When the property <code>growing</code> is set to <code>true</code> (default value), the features <code>selected count</code> in info bar, <code>search</code> and <code>select/deselect all</code>, if present, work only for the currently loaded items. To make sure that all items in the table are loaded at once and the above features work properly, set the property to <code>false</code>. <li>Since version 1.58, the columns headers and the info toolbar are sticky (remain fixed on top when scrolling). This feature is not supported in all browsers. <li>The TableSelectDialog is usually displayed at the center of the screen. Its size and position can be changed by the user. To enable this you need to set the <code>resizable</code> and <code>draggable</code> properties. Both properties are available only in desktop mode.</li> For more information on browser support limitations, you can refer to the <a target="_self" class="jsdoclink" href="#/api/sap.m.ListBase">sap.m.ListBase</a> <code>sticky</code> property. </ul> </p><h3>Responsive Behavior</h3><p> <ul> <li>On smaller screens, the columns of the table wrap and build a list that shows all the information.</li> </ul></p>
          */
         export class TableSelectDialog extends sap.ui.core.Control {
             /**
@@ -28099,6 +28141,11 @@ declare namespace sap {
              */
             getDomRef(): HTMLElement;
             /**
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getDraggable" href="#/api/sap.m.TableSelectDialog/methods/getDraggable">draggable</a>.</p><p>When set to <code>true</code>, the TableSelectDialog is draggable by its header. The default value is <code>false</code>. <b>Note</b>: The SelectDialog can be draggable only in desktop mode.</p><p>Default value is <code>false</code>.</p>
+             * @returns boolean <p>Value of property <code>draggable</code></p>
+             */
+            getDraggable(): boolean;
+            /**
              * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getGrowing" href="#/api/sap.m.TableSelectDialog/methods/getGrowing">growing</a>.</p><p>Determines the progressive loading. When set to <code>true</code>, enables the growing feature of the control to load more items by requesting from the bound model. <b>Note:</b> This feature only works when an <code>items</code> aggregation is bound. Growing must not be used together with two-way binding. <b>Note:</b> If the property is set to true, the features <code>selected count</code> in info bar, <code>search</code> and <code>select/deselect all</code>, if present, work only for the currently loaded items. To make sure that all items in the table are loaded at once and the above features work properly, we recommend setting the <code>growing</code> property to false.</p><p>Default value is <code>true</code>.</p>
              * @returns boolean <p>Value of property <code>growing</code></p>
              */
@@ -28128,6 +28175,11 @@ declare namespace sap {
              * @returns boolean <p>Value of property <code>rememberSelections</code></p>
              */
             getRememberSelections(): boolean;
+            /**
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getResizable" href="#/api/sap.m.TableSelectDialog/methods/getResizable">resizable</a>.</p><p>When set to <code>true</code>, the TableSelectDialog will have a resize handler in its bottom right corner. The default value is <code>false</code>. <b>Note</b>: The SelectDialog can be resizable only in desktop mode.</p><p>Default value is <code>false</code>.</p>
+             * @returns boolean <p>Value of property <code>resizable</code></p>
+             */
+            getResizable(): boolean;
             /**
              * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getShowClearButton" href="#/api/sap.m.TableSelectDialog/methods/getShowClearButton">showClearButton</a>.</p><p>This flag controls whether the Clear button is shown. When set to <code>true</code>, it provides a way to clear a selection made in Table Select Dialog.</p><p>We recommend enabling of the Clear button in the following cases, where a mechanism to clear the value is needed: In case the Table Select Dialog is in single-selection mode (default mode) and <code>rememberSelections</code> is set to <code>true</code>. The Clear button needs to be enabled in order to allow users to clear the selection. In case of using <code>sap.m.Input</code> with <code>valueHelpOnly</code> set to <code>true</code>, the Clear button can be used for clearing the selection. In case the application stores a value and uses only Table Select Dialog to edit/maintain it.</p><p>Optional: In case <code>multiSelect</code> is set to <code>true</code>, the selection can be easily cleared with one click.</p><p><b>Note:</b> When used with OData, only the loaded selections will be cleared.</p><p>Default value is <code>false</code>.</p>
              * @returns boolean <p>Value of property <code>showClearButton</code></p>
@@ -28238,6 +28290,12 @@ declare namespace sap {
              */
             setContentWidth(sWidth: sap.ui.core.CSSSize): sap.m.TableSelectDialog;
             /**
+             * <p>Sets the draggable property.</p>
+             * @param {boolean} bValue <p>Value for the draggable property</p>
+             * @returns sap.m.SelectDialog <p><code>this</code> pointer for chaining</p>
+             */
+            setDraggable(bValue: boolean): sap.m.SelectDialog;
+            /**
              * <p>Sets the growing to the internal table</p>
              * @param {boolean} bValue <p>Value for the table's growing.</p>
              * @returns sap.m.TableSelectDialog <p>this pointer for chaining</p>
@@ -28266,6 +28324,12 @@ declare namespace sap {
              * @returns sap.m.TableSelectDialog <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             setRememberSelections(bRememberSelections: boolean): sap.m.TableSelectDialog;
+            /**
+             * <p>Sets the resizable property.</p>
+             * @param {boolean} bValue <p>Value for the resizable property</p>
+             * @returns sap.m.SelectDialog <p><code>this</code> pointer for chaining</p>
+             */
+            setResizable(bValue: boolean): sap.m.SelectDialog;
             /**
              * <p>Sets the Clear button visible state</p>
              * @param {boolean} bVisible <p>Value for the Clear button visible state.</p>

@@ -1685,92 +1685,6 @@ declare namespace sap {
 			 */
 			constructor(sId?: string, mSettings?: any);
 			/**
-			 * <p>Calculates absolute positions for items, so it mimics a css grid.</p>
-			 */
-			protected _applyIEPolyfillLayout(): void;
-			/**
-			 * <p>Increase rows span for item if it needs more space, based on it's height.</p>
-			 * @param {sap.ui.core.Control} oItem <p>The item for which to calculate</p>
-			 */
-			protected _applyItemAutoRows(oItem: sap.ui.core.Control): void;
-			/**
-			 * <p>Applies the current layout to the grid DOM element.</p>
-			 * @param {boolean} bSettingsAreChanged <p>Are the grid settings changed after passing a breakpoint.</p>
-			 */
-			protected _applyLayout(bSettingsAreChanged: boolean): void;
-			/**
-			 * <p>Attaches polyfill methods for drag and drop for IE.</p>
-			 */
-			protected _attachDndPolyfill(): void;
-			/**
-			 * <p>Removes any resize listeners. Both for the grid and for all items.</p>
-			 */
-			protected _deregisterResizeListeners(): void;
-			/**
-			 * <p>Detaches polyfill methods for drag and drop for IE.</p>
-			 */
-			protected _detachDndPolyfill(): void;
-			/**
-			 * <p>Detects what is the current layout breakpoint.</p>
-			 * @returns boolean <p>True if the layout settings were changed.</p>
-			 */
-			protected _detectActiveLayout(): boolean;
-			/**
-			 * <p>If one item has more columns than the total columns in the grid, it brakes the whole layout. Prevent this by reducing this item's column span.</p>
-			 */
-			protected _enforceMaxColumns(): void;
-			/**
-			 * <p>Gets a map of the CSS styles that should be applied to the grid, based on the current layout.</p>
-			 * @returns any <p>The current CSS styles</p>
-			 */
-			protected _getActiveGridStyles(): any;
-			/**
-			 * <p>Checks if the width of the grid or the viewport is different from the last time when it was checked. Use to avoid resize handling when not needed.</p>
-			 * @returns boolean <p>True if the width of the grid or of the viewport is changed since last check.</p>
-			 */
-			protected _isWidthChanged(): boolean;
-			/**
-			 * <p>Handler for onAfterRendering for each item.</p>
-			 */
-			protected _onAfterItemRendering(): void;
-			/**
-			 * <p>Handler for onBeforeRendering for each item.</p>
-			 */
-			protected _onBeforeItemRendering(): void;
-			/**
-			 * <p>Handler for any change in the items aggregation.</p>
-			 * @param {any} changes <p>What was changed</p>
-			 */
-			protected _onItemChange(changes: any): void;
-			/**
-			 * <p>Implements polyfill for IE after drag end.</p>
-			 * @param {any} oEvent <p>After drag end event</p>
-			 */
-			protected _polyfillAfterDragEnd(oEvent: any): void;
-			/**
-			 * <p>Implements polyfill for IE after drag over.</p>
-			 * @param {any} oEvent <p>After drag over event</p>
-			 */
-			protected _polyfillAfterDragOver(oEvent: any): void;
-			/**
-			 * <p>Handler for resize of the grid or the viewport</p>
-			 */
-			protected _resize(): void;
-			/**
-			 * <p>Handler for resize of a grid's item.</p>
-			 * @param {any} oEvent <p>ResizeHandler resize event</p>
-			 */
-			protected _resizeItem(oEvent: any): void;
-			/**
-			 * <p>Schedules the application of the IE polyfill for the next tick.</p>
-			 * @param {boolean} bImmediately <p>If set to true - apply the polyfill immediately.</p>
-			 */
-			protected _scheduleIEPolyfill(bImmediately: boolean): void;
-			/**
-			 * <p>Sets the DOM references for the items navigation.</p>
-			 */
-			protected _setItemNavigationItems(): void;
-			/**
 			 * <p>Adds some item to the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.f.GridContainer/methods/getItems">items</a>.</p>
 			 * @param {sap.ui.core.Control} oItem <p>The item to add; if empty, nothing is inserted</p>
 			 * @returns sap.f.GridContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -1826,10 +1740,6 @@ declare namespace sap {
 			 * @returns sap.f.GridContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
 			detachLayoutChange(fnFunction: Function, oListener?: any): sap.f.GridContainer;
-			/**
-			 * <p>Destroy hook.</p>
-			 */
-			protected exit(): void;
 			/**
 			 * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="layoutChange" href="#/api/sap.f.GridContainer/events/layoutChange">layoutChange</a> to attached listeners.</p>
 			 * @param {any} mParameters <p>Parameters to pass along with the event</p>
@@ -1908,24 +1818,12 @@ declare namespace sap {
 			 */
 			indexOfItem(oItem: sap.ui.core.Control): number;
 			/**
-			 * <p>Initialization hook.</p>
-			 */
-			protected init(): void;
-			/**
 			 * <p>Inserts an item into the aggregation named <code>items</code>.</p>
 			 * @param {sap.ui.core.Item} oItem <p>The item to be inserted; if empty, nothing is inserted.</p>
 			 * @param {number} iIndex <p>The <code>0</code>-based index the item should be inserted at; for a negative value of <code>iIndex</code>, the item is inserted at position 0; for a value greater than the current size of the aggregation, the item is inserted at the last position.</p>
 			 * @returns sap.f.GridContainer <p><code>this</code> to allow method chaining.</p>
 			 */
 			insertItem(oItem: sap.ui.core.Item, iIndex: number): sap.f.GridContainer;
-			/**
-			 * <p>After rendering hook.</p>
-			 */
-			protected onAfterRendering(): void;
-			/**
-			 * <p>Before rendering hook.</p>
-			 */
-			protected onBeforeRendering(): void;
 			/**
 			 * <p>Removes all the controls from the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.f.GridContainer/methods/getItems">items</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 			 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
@@ -3251,11 +3149,22 @@ declare namespace sap {
 			 */
 			export class GridDropInfo extends sap.ui.core.dnd.DropInfo {
 				/**
-				 * <p>Constructor for a new GridDropInfo.</p>
+				 * <p>Constructor for a new GridDropInfo.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
 				 * @param {string} sId <p>ID for the new DropInfo, generated automatically if no ID is given</p>
 				 * @param {any} mSettings <p>Initial settings for the GridDropInfo</p>
 				 */
 				constructor(sId?: string, mSettings?: any);
+				/**
+				 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getDropIndicatorSize" href="#/api/sap.f.dnd.GridDropInfo/methods/getDropIndicatorSize">dropIndicatorSize</a>.</p><p>A function which will define the desired drop indicator size. The drop indicator shows the user how the grid will rearrange after drop.</p><p>Use when custom size needs to be defined. For example when an item is dragged from outside a grid and is dropped over the grid.</p><p>If not specified or if the function returns <code>null</code>, the indicator size will be calculated automatically.</p><p>This callback will be called when the indicator is displayed, that happens during the drag over movement.</p><p>The callback receives <code>draggedControl</code> as parameter and must return an object of type <code>{rows: <int>, columns: <int>}</code> or <code>null</code>.</p>
+				 * @returns Function <p>Value of property <code>dropIndicatorSize</code></p>
+				 */
+				getDropIndicatorSize(): Function;
+				/**
+				 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getDropIndicatorSize" href="#/api/sap.f.dnd.GridDropInfo/methods/getDropIndicatorSize">dropIndicatorSize</a>.</p><p>A function which will define the desired drop indicator size. The drop indicator shows the user how the grid will rearrange after drop.</p><p>Use when custom size needs to be defined. For example when an item is dragged from outside a grid and is dropped over the grid.</p><p>If not specified or if the function returns <code>null</code>, the indicator size will be calculated automatically.</p><p>This callback will be called when the indicator is displayed, that happens during the drag over movement.</p><p>The callback receives <code>draggedControl</code> as parameter and must return an object of type <code>{rows: <int>, columns: <int>}</code> or <code>null</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+				 * @param {Function} fnDropIndicatorSize <p>New value for property <code>dropIndicatorSize</code></p>
+				 * @returns sap.f.dnd.GridDropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				setDropIndicatorSize(fnDropIndicatorSize: Function): sap.f.dnd.GridDropInfo;
 			}
 			/**
 			 * <p><p>Interface that should be implemented by grid controls, if they are working with the <code>sap.f.dnd.GridDropInfo</code>.</p><p>It is highly recommended that those grid controls have optimized <code>removeItem</code> and <code>insertItem</code> methods (if "items" is target drop aggregation). Meaning to override them in a way that they don't trigger invalidation.</p></p>

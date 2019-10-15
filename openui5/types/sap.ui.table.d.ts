@@ -389,7 +389,7 @@ declare namespace sap {
                  */
                 getHAlign(): sap.ui.core.HorizontalAlign;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getHeaderSpan" href="#/api/sap.ui.table.Column/methods/getHeaderSpan">headerSpan</a>.</p><p>If this property is set, a span is applied for the header. When moving columns, all columns which are part of the header will be moved. The <code>headerSpan</code> can be either an integer or an array of integers (if you use the multi header feature of the table). If you only specify an integer, this span is applied for all header rows, with multiple integers you can specify a separate span for each header row.</p><p>Default value is <code>1</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getHeaderSpan" href="#/api/sap.ui.table.Column/methods/getHeaderSpan">headerSpan</a>.</p><p>If this property is set, a span is applied for the header. When moving columns, all columns which are part of the header will be moved. The <code>headerSpan</code> can be either an integer or an array of integers (if you use the multi header feature of the table). If you only specify an integer, this span is applied for all header rows, with multiple integers you can specify a separate span for each header row. <b>Note:</b> Only columns with a span equal to 1 can have a column menu. When setting a column to fixed, all columns which are part of the header with the greatest span will be set to fixed.</p><p>Default value is <code>1</code>.</p>
                  * @returns any <p>Value of property <code>headerSpan</code></p>
                  */
                 getHeaderSpan(): any;
@@ -560,7 +560,7 @@ declare namespace sap {
                  */
                 setHAlign(sHAlign: sap.ui.core.HorizontalAlign): sap.ui.table.Column;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getHeaderSpan" href="#/api/sap.ui.table.Column/methods/getHeaderSpan">headerSpan</a>.</p><p>If this property is set, a span is applied for the header. When moving columns, all columns which are part of the header will be moved. The <code>headerSpan</code> can be either an integer or an array of integers (if you use the multi header feature of the table). If you only specify an integer, this span is applied for all header rows, with multiple integers you can specify a separate span for each header row.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1</code>.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getHeaderSpan" href="#/api/sap.ui.table.Column/methods/getHeaderSpan">headerSpan</a>.</p><p>If this property is set, a span is applied for the header. When moving columns, all columns which are part of the header will be moved. The <code>headerSpan</code> can be either an integer or an array of integers (if you use the multi header feature of the table). If you only specify an integer, this span is applied for all header rows, with multiple integers you can specify a separate span for each header row. <b>Note:</b> Only columns with a span equal to 1 can have a column menu. When setting a column to fixed, all columns which are part of the header with the greatest span will be set to fixed.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1</code>.</p>
                  * @param {any} oHeaderSpan <p>New value for property <code>headerSpan</code></p>
                  * @returns sap.ui.table.Column <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
@@ -2515,6 +2515,11 @@ declare namespace sap {
                      */
                     protected fireSelectionChange(mParameters?: any): sap.ui.table.plugins.MultiSelectionPlugin;
                     /**
+                     * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEnableNotification" href="#/api/sap.ui.table.plugins.MultiSelectionPlugin/methods/getEnableNotification">enableNotification</a>.</p><p>Enables notifications that are displayed once a selection has been limited.</p><p>Default value is <code>false</code>.</p>
+                     * @returns boolean <p>Value of property <code>enableNotification</code></p>
+                     */
+                    getEnableNotification(): boolean;
+                    /**
                      * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLimit" href="#/api/sap.ui.table.plugins.MultiSelectionPlugin/methods/getLimit">limit</a>.</p><p>Number of indices which can be selected in a range. Accepts positive integer values. If set to 0, the limit is disabled, and the Select All checkbox appears instead of the Deselect All button. <b>Note:</b> To avoid severe performance problems, the limit should only be set to 0 in the following cases: <ul> <li>With client-side models</li> <li>With server-side models if they are used in client mode</li> <li>If the entity set is small</li> </ul></p><p>Default value is <code>200</code>.</p>
                      * @returns number <p>Value of property <code>limit</code></p>
                      */
@@ -2550,6 +2555,12 @@ declare namespace sap {
                      * <p>Requests the binding contexts and adds all indices to the selection if the limit is disabled.</p>
                      */
                     selectAll(): void;
+                    /**
+                     * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEnableNotification" href="#/api/sap.ui.table.plugins.MultiSelectionPlugin/methods/getEnableNotification">enableNotification</a>.</p><p>Enables notifications that are displayed once a selection has been limited.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+                     * @param {boolean} bEnableNotification <p>New value for property <code>enableNotification</code></p>
+                     * @returns sap.ui.table.plugins.MultiSelectionPlugin <p>Reference to <code>this</code> in order to allow method chaining</p>
+                     */
+                    setEnableNotification(bEnableNotification: boolean): sap.ui.table.plugins.MultiSelectionPlugin;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getLimit" href="#/api/sap.ui.table.plugins.MultiSelectionPlugin/methods/getLimit">limit</a>.</p><p>Number of indices which can be selected in a range. Accepts positive integer values. If set to 0, the limit is disabled, and the Select All checkbox appears instead of the Deselect All button. <b>Note:</b> To avoid severe performance problems, the limit should only be set to 0 in the following cases: <ul> <li>With client-side models</li> <li>With server-side models if they are used in client mode</li> <li>If the entity set is small</li> </ul></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>200</code>.</p>
                      * @param {number} iLimit <p>New value for property <code>limit</code></p>
