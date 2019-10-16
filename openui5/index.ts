@@ -64,11 +64,41 @@
 /// <reference path="./extensions/components/Card.ts" />
 /// <reference path="./extensions/components/Dialog.d.ts" />
 /// <reference path="./extensions/components/Dialog.ts" />
+/// <reference path="./extensions/components/MessageStrip.d.ts" />
+/// <reference path="./extensions/components/MessageStrip.ts" />
 /// <reference path="./extensions/components/Factory.ts" />
 
 namespace openui5 {
     /** 配置项目-紧缩屏幕 */
     export const CONFIG_ITEM_COMPACT_SCREEN: string = "compactScreen";
+    // 配置变化
+    ibas.config.registerListener({
+        onConfigurationChanged(name: string, value: any): void {
+            if (ibas.strings.equals(ibas.CONFIG_ITEM_PLANTFORM, name)) {
+                // 平台变化，修改控件紧缩模式
+                let body: JQuery = jQuery(document.body);
+                if (value === ibas.emPlantform.DESKTOP) {
+                    body.toggleClass("sapUiSizeCompact", true).toggleClass("sapUiSizeCozy", false).toggleClass("sapUiSizeCondensed", false);
+                    // 桌面平台，使用紧凑视图
+                    ibas.config.set(openui5.CONFIG_ITEM_COMPACT_SCREEN, true);
+                } else {
+                    body.toggleClass("sapUiSizeCompact", false).toggleClass("sapUiSizeCozy", true).toggleClass("sapUiSizeCondensed", false);
+                    // 使用舒适视图
+                    ibas.config.set(openui5.CONFIG_ITEM_COMPACT_SCREEN, false);
+                }
+            }
+        }
+    });
+    // 设置默认平台
+    if (sap.ui.Device.system.phone) {
+        ibas.config.set(ibas.CONFIG_ITEM_PLANTFORM, ibas.emPlantform.PHONE);
+    } else if (sap.ui.Device.system.desktop) {
+        ibas.config.set(ibas.CONFIG_ITEM_PLANTFORM, ibas.emPlantform.DESKTOP);
+    } else if (sap.ui.Device.system.tablet) {
+        ibas.config.set(ibas.CONFIG_ITEM_PLANTFORM, ibas.emPlantform.TABLET);
+    } else {
+        ibas.config.set(ibas.CONFIG_ITEM_PLANTFORM, ibas.emPlantform.COMBINATION);
+    }
     // ui 触发错误验证
     sap.ui.getCore().attachValidationError(undefined, (oEvent: sap.ui.base.Event) => {
         let control: any = oEvent.getParameter("element");

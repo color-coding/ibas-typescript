@@ -14,9 +14,6 @@
 namespace ibas {
     /** 地址hash值标记-视图 */
     export const URL_HASH_SIGN_VIEWS: string = "#/views/";
-    function messageApplication<B extends IView>(this: Application<B>, error: Error): void {
-        (<any>this).messages(error);
-    }
     /** 视图 */
     export abstract class View extends AbstractView {
         /** 是否已显示 */
@@ -39,7 +36,17 @@ namespace ibas {
             try {
                 event.apply(this.application, pars);
             } catch (error) {
-                messageApplication.call(this.application, error);
+                if (this.application instanceof Application) {
+                    (<any>Application).prototype.messages(error);
+                } else if (this.application.viewShower && this.application.viewShower.messages instanceof Function) {
+                    this.application.viewShower.messages({
+                        title: this.title,
+                        type: emMessageType.ERROR,
+                        message: error.message,
+                    });
+                } else {
+                    logger.log(emMessageLevel.ERROR, error.message);
+                }
             }
         }
         /** 显示之后（重载要回调） */

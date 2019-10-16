@@ -50,13 +50,13 @@ COMPILE_TS()
 # 启动监听
 # WATCHING_TS "${WORK_FOLDER}/ibas/tsconfig.json"
 # WATCHING_TS "${WORK_FOLDER}/openui5/tsconfig.json"
-# WATCHING_TS "${WORK_FOLDER}/shell/tsconfig.loader.json"
+# WATCHING_TS "${WORK_FOLDER}/shell/tsconfig.json"
 # WATCHING_TS "${WORK_FOLDER}/shell/tsconfig.ui.c.json"
 # WATCHING_TS "${WORK_FOLDER}/shell/tsconfig.ui.m.json"
 # 启动编译
 COMPILE_TS "${WORK_FOLDER}/ibas/tsconfig.json"
 COMPILE_TS "${WORK_FOLDER}/openui5/tsconfig.json"
-COMPILE_TS "${WORK_FOLDER}/shell/tsconfig.loader.json"
+COMPILE_TS "${WORK_FOLDER}/shell/tsconfig.json"
 COMPILE_TS "${WORK_FOLDER}/shell/tsconfig.ui.c.json"
 COMPILE_TS "${WORK_FOLDER}/shell/tsconfig.ui.m.json"
 COMPILE_TS "${WORK_FOLDER}/shell/tsconfig.loader.json"

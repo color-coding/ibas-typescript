@@ -28,6 +28,12 @@ namespace shell {
             export const CONFIG_ITEM_MAX_MESSAGE_COUNT: string = "messageCount";
             /** 配置项目-隐藏无功能模块 */
             export const CONFIG_ITEM_HIDE_NO_FUNCTION_MODULE: string = "hideModule";
+            /** 状态消息延迟时间（毫秒） */
+            const _STATUS_DELAY: number = ibas.config.get(CONFIG_ITEM_STATUS_MESSAGES_DELAY, 2) * 1000;
+            /** 消息数量 */
+            const _MESSAGE_COUNT: number = ibas.config.get(CONFIG_ITEM_MAX_MESSAGE_COUNT, 50);
+            /** 模块时间 */
+            let _MODULE_TIME: number = undefined;
             const UI_MAIN_MENU: string = "__UI_MAIN_MENU";
             const UI_MAIN_BACK: string = "__UI_MAIN_BACK";
             const UI_MAIN_TITLE: string = "__UI_MAIN_TITLE";
@@ -161,13 +167,6 @@ namespace shell {
                         initiallyExpanded: false,
                         placement: sap.m.VerticalPlacementType.Top,
                     });
-                    // 消息条
-                    this.messagePopover = new sap.m.Popover("", {
-                        contentWidth: "auto",
-                        showHeader: false,
-                        placement: sap.m.PlacementType.HorizontalPreferredRight,
-                    });
-                    this.messagePopover.addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
                     this.navigation = new sap.tnt.SideNavigation("", {
                         item: new sap.tnt.NavigationList(),
                         fixedItem: new sap.tnt.NavigationList("", {
@@ -240,9 +239,19 @@ namespace shell {
                             }
                         },
                     });
+                    this.messageStrip = new sap.extension.m.MessageStrip("", {
+                        showIcon: true,
+                        visible: false,
+                        showCloseButton: true,
+                        autoClosing: 3,
+                        position: "absolute",
+                        positionLeft: "10px",
+                        positionBottom: "5px",
+                    });
                     mainPage.setHeader(this.mainHeader);
                     mainPage.setSideContent(this.navigation);
                     mainPage.addMainContent(this.pageContainer);
+                    mainPage.addMainContent(this.messageStrip);
                     return mainPage;
                 }
                 /** 页面头部 */
@@ -254,7 +263,7 @@ namespace shell {
                 /** 消息历史框 */
                 private messageHistory: sap.m.MessagePopover;
                 /** 消息框 */
-                private messagePopover: sap.m.Popover;
+                private messageStrip: sap.extension.m.MessageStrip;
                 /** 创建窗体容器页 */
                 protected drawPage(view: ibas.IView): sap.m.Page {
                     let page: sap.m.Page = new sap.m.Page("", {
@@ -350,14 +359,6 @@ namespace shell {
                     });
                     return viewContent;
                 }
-                /** 状态消息延迟时间（毫秒） */
-                private statusDelay?: number;
-                /** 消息数量 */
-                private messageCount?: number;
-                /** 消息时间戳 */
-                private messageTime: number;
-                /** 模块时间 */
-                private moduleTime: number;
                 /** 显示状态消息 */
                 showStatusMessage(type: ibas.emMessageType, message: string): void {
                     // 记录历史消息
@@ -367,39 +368,15 @@ namespace shell {
                     let uiType: sap.ui.core.MessageType = openui5.utils.toMessageType(type);
                     this.messageHistory.insertItem(new sap.m.MessagePopoverItem("", {
                         type: uiType,
-                        title: message,
                     }).setTitle(message), 0);
-                    if (ibas.objects.isNull(this.messageCount)) {
-                        this.messageCount = ibas.config.get(CONFIG_ITEM_MAX_MESSAGE_COUNT, 50);
-                    }
-                    if (this.messageHistory.getItems().length > this.messageCount) {
+                    if (this.messageHistory.getItems().length > _MESSAGE_COUNT) {
                         this.messageHistory.removeItem(this.messageHistory.getItems().length - 1);
                     }
-                    this.messageTime = ibas.dates.now().getTime();
                     // 视图没有显示，则不显示消息
                     if (this.isDisplayed === false) {
                         return;
                     }
-                    this.messagePopover.destroyContent();
-                    this.messagePopover.addContent(new sap.m.MessageStrip("", {
-                        type: uiType,
-                        showIcon: true,
-                        showCloseButton: false
-                    }).setText(message));
-                    if (!this.messagePopover.isOpen()) {
-                        this.messagePopover.openBy(this.navigation.getFixedItem(), true);
-                    }
-                    // 延迟清除消息
-                    if (ibas.objects.isNull(this.statusDelay)) {
-                        this.statusDelay = ibas.config.get(CONFIG_ITEM_STATUS_MESSAGES_DELAY, 2) * 1000;
-                    }
-                    setTimeout(() => {
-                        if (ibas.dates.now().getTime() >= (this.messageTime + this.statusDelay)) {
-                            if (this.messagePopover.isOpen()) {
-                                this.messagePopover.close();
-                            }
-                        }
-                    }, this.statusDelay);
+                    this.messageStrip.open(uiType, message);
                 }
                 /** 对话消息 */
                 showMessageBox(caller: ibas.IMessgesCaller): void {
@@ -424,32 +401,26 @@ namespace shell {
                             this.setExpanded(!this.getExpanded());
                         }
                     }));
-                    // 延迟排序模块
-                    if (ibas.objects.isNull(this.statusDelay)) {
-                        this.statusDelay = ibas.config.get(CONFIG_ITEM_STATUS_MESSAGES_DELAY, 2) * 1000;
-                    }
                     // 计算模块位置并添加
-                    if (ibas.objects.isNull(this.moduleTime)) {
-                        this.moduleTime = ibas.dates.now().getTime();
+                    if (ibas.objects.isNull(_MODULE_TIME)) {
+                        _MODULE_TIME = ibas.dates.now().getTime();
                         setTimeout(() => {
-                            if (ibas.dates.now().getTime() >= this.messageTime + this.statusDelay / 2) {
-                                this.messageTime = ibas.dates.now().getTime();
-                                this.showStatusMessage(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_sorting_modules"));
-                                let items: ibas.ArrayList<any> = new ibas.ArrayList<any>();
-                                items.add(nvList.getItems());
-                                items = items.sort((c, b): number => {
-                                    return c.getKey().localeCompare(b.getKey());
-                                });
+                            // 重置
+                            _MODULE_TIME = undefined;
+                            this.showStatusMessage(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_sorting_modules"));
+                            let items: ibas.ArrayList<any> = new ibas.ArrayList<any>();
+                            items.add(nvList.getItems());
+                            // 排序
+                            items = items.sort((c, b): number => {
+                                return c.getKey().localeCompare(b.getKey());
+                            });
+                            if (ibas.objects.isNull(_MODULE_TIME)) {
                                 nvList.removeAllItems();
                                 for (let item of items) {
                                     nvList.addItem(item);
                                 }
-                                // 重置
-                                delete (this.moduleTime);
                             }
-                        }, this.statusDelay / 2);
-                    } else {
-                        this.moduleTime = ibas.dates.now().getTime();
+                        }, _STATUS_DELAY / 2);
                     }
                 }
                 /** 显示模块功能 */
