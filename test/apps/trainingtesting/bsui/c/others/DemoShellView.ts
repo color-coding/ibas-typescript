@@ -7,7 +7,6 @@
  */
 namespace trainingtesting {
     export namespace ui {
-        export const UI_DATA_KEY_VIEW: string = "__UI_DATA_KEY_VIEW";
         export namespace c {
             export class DemoShellView extends shell.app.ShellView implements app.IDemoShellView {
                 /** 激活地图应用 */
@@ -53,16 +52,9 @@ namespace trainingtesting {
                             })
                         ],
                         navButtonPress(): void {
-                            let page: sap.ui.core.Control = that.pageContainer.getCurrentPage();
-                            if (!ibas.objects.isNull(page)) {
-                                for (let item of page.getCustomData()) {
-                                    if (item.getKey() === UI_DATA_KEY_VIEW) {
-                                        let value: any = item.getValue();
-                                        if (value instanceof ibas.View) {
-                                            value.closeEvent.apply(value.application);
-                                        }
-                                    }
-                                }
+                            let view: ibas.View = sap.extension.customdatas.getView(that.pageContainer.getCurrentPage());
+                            if (view instanceof ibas.View) {
+                                view.closeEvent.apply(view.application);
                             }
                         }
                     });
@@ -100,7 +92,7 @@ namespace trainingtesting {
                             ],
                             customData: [
                                 new sap.ui.core.CustomData("", {
-                                    key: UI_DATA_KEY_VIEW,
+                                    key: sap.extension.customdatas.UI_DATA_KEY_VIEW,
                                     value: view,
                                     writeToDom: false,
                                 })

@@ -78,18 +78,10 @@ namespace shell {
                                     priority: sap.m.OverflowToolbarPriority.NeverOverflow
                                 }),
                                 press: function (): void {
-                                    let page: sap.ui.core.Control = that.pageContainer.getCurrentPage();
-                                    if (page instanceof sap.m.Page) {
-                                        for (let item of page.getCustomData()) {
-                                            if (ibas.strings.equals(item.getKey(), UI_DATA_KEY_VIEW)) {
-                                                let data: any = item.getValue();
-                                                if (data instanceof ibas.View) {
-                                                    if (data.closeEvent instanceof Function) {
-                                                        data.closeEvent.apply(data.application);
-                                                    }
-                                                }
-                                                break;
-                                            }
+                                    let view: ibas.View = sap.extension.customdatas.getView(that.pageContainer.getCurrentPage());
+                                    if (view instanceof ibas.View) {
+                                        if (view.closeEvent instanceof Function) {
+                                            view.closeEvent.apply(view.application);
                                         }
                                     }
                                 }
@@ -186,56 +178,55 @@ namespace shell {
                         pages: [
                             this.drawWelcomePage()
                         ],
-                        afterNavigate(): void {
-                            let page: any = this.getCurrentPage();
-                            if (page instanceof sap.m.Page) {
-                                if (page.getShowHeader() === false && page.getCustomData().length > 0) {
-                                    // 全屏模式
-                                    let title: any = sap.ui.getCore().byId(UI_MAIN_TITLE);
-                                    if (title instanceof sap.m.Title) {
-                                        title.setVisible(true);
-                                        title.setText(page.getTitle());
+                        afterNavigate(event: sap.ui.base.Event): void {
+                            let source: any = event.getSource();
+                            if (source instanceof sap.m.NavContainer) {
+                                let page: any = source.getCurrentPage();
+                                if (page instanceof sap.m.Page) {
+                                    if (page.getShowHeader() === false && page.getCustomData().length > 0) {
+                                        // 全屏模式
+                                        let title: any = sap.ui.getCore().byId(UI_MAIN_TITLE);
+                                        if (title instanceof sap.m.Title) {
+                                            title.setVisible(true);
+                                            title.setText(page.getTitle());
+                                        }
+                                        let button: any = sap.ui.getCore().byId(UI_MAIN_BACK);
+                                        if (button instanceof sap.m.Button) {
+                                            button.setVisible(true);
+                                        }
+                                        if (mainPage.getSideExpanded() === false && ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM) === ibas.emPlantform.PHONE) {
+                                            // 手机模式，全屏时隐藏menu按钮
+                                            let button: any = sap.ui.getCore().byId(UI_MAIN_MENU);
+                                            if (button instanceof sap.m.Button) {
+                                                button.setVisible(false);
+                                            }
+                                        }
                                     }
-                                    let button: any = sap.ui.getCore().byId(UI_MAIN_BACK);
+                                    // 切换hash值
+                                    let hash: string = sap.extension.customdatas.getHash(page);
+                                    if (typeof hash === "string") {
+                                        if (!(ibas.strings.equals(hash, window.location.hash))) {
+                                            window.history.pushState(null, null, hash);
+                                        }
+                                    }
+                                } else if (page instanceof sap.m.MessagePage) {
+                                    let button: any = sap.ui.getCore().byId(UI_MAIN_MENU);
                                     if (button instanceof sap.m.Button) {
                                         button.setVisible(true);
                                     }
-                                    if (mainPage.getSideExpanded() === false && ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM) === ibas.emPlantform.PHONE) {
-                                        // 手机模式，全屏时隐藏menu按钮
-                                        let button: any = sap.ui.getCore().byId(UI_MAIN_MENU);
-                                        if (button instanceof sap.m.Button) {
-                                            button.setVisible(false);
-                                        }
+                                    let title: any = sap.ui.getCore().byId(UI_MAIN_TITLE);
+                                    if (title instanceof sap.m.Title) {
+                                        title.setVisible(false);
+                                        title.setText(null);
                                     }
-                                }
-                                // 切换hash值
-                                for (let item of page.getCustomData()) {
-                                    if (ibas.strings.equals(item.getKey(), UI_DATA_KEY_HASH)) {
-                                        let data: any = item.getValue();
-                                        if (typeof data === "string") {
-                                            if (!(ibas.strings.equals(data, window.location.hash))) {
-                                                window.history.pushState(null, null, data);
-                                            }
-                                        }
-                                        break;
+                                    button = sap.ui.getCore().byId(UI_MAIN_BACK);
+                                    if (button instanceof sap.m.Button) {
+                                        button.setVisible(false);
                                     }
+                                    // 切换hash值
+                                    window.history.pushState(null, null, "#");
                                 }
-                            } else if (page instanceof sap.m.MessagePage) {
-                                let button: any = sap.ui.getCore().byId(UI_MAIN_MENU);
-                                if (button instanceof sap.m.Button) {
-                                    button.setVisible(true);
-                                }
-                                let title: any = sap.ui.getCore().byId(UI_MAIN_TITLE);
-                                if (title instanceof sap.m.Title) {
-                                    title.setVisible(false);
-                                    title.setText(null);
-                                }
-                                button = sap.ui.getCore().byId(UI_MAIN_BACK);
-                                if (button instanceof sap.m.Button) {
-                                    button.setVisible(false);
-                                }
-                                // 切换hash值
-                                window.history.pushState(null, null, "#");
+
                             }
                         },
                     });
@@ -272,12 +263,12 @@ namespace shell {
                         showNavButton: false,
                         customData: [
                             new sap.ui.core.CustomData("", {
-                                key: UI_DATA_KEY_VIEW,
+                                key: sap.extension.customdatas.UI_DATA_KEY_VIEW,
                                 value: view,
                                 writeToDom: false,
                             }),
                             new sap.ui.core.CustomData("", {
-                                key: UI_DATA_KEY_HASH,
+                                key: sap.extension.customdatas.UI_DATA_KEY_HASH,
                                 value: window.location.hash,
                                 writeToDom: false,
                             })
@@ -355,7 +346,7 @@ namespace shell {
                         showHeader: false,
                         showNavButton: false,
                         icon: welcomeImage,
-                        textDirection: sap.ui.core.TextDirection.Inherit
+                        textDirection: sap.ui.core.TextDirection.Inherit,
                     });
                     return viewContent;
                 }
@@ -566,7 +557,7 @@ namespace shell {
                             ],
                             customData: [
                                 new sap.ui.core.CustomData("", {
-                                    key: UI_DATA_KEY_VIEW,
+                                    key: sap.extension.customdatas.UI_DATA_KEY_VIEW,
                                     value: view,
                                     writeToDom: false,
                                 })
@@ -619,7 +610,7 @@ namespace shell {
                             showNavButton: false,
                             customData: [
                                 new sap.ui.core.CustomData("", {
-                                    key: UI_DATA_KEY_VIEW,
+                                    key: sap.extension.customdatas.UI_DATA_KEY_VIEW,
                                     value: view,
                                     writeToDom: false,
                                 }),
@@ -897,16 +888,10 @@ namespace shell {
                             if (!(ibas.strings.equals(item.getId(), viewId))) {
                                 continue;
                             }
-                            for (let cusData of item.getCustomData()) {
-                                if (!(ibas.strings.equals(cusData.getKey(), UI_DATA_KEY_VIEW))) {
-                                    continue;
-                                }
-                                let data: any = cusData.getValue();
-                                if (data instanceof ibas.View) {
-                                    // 通知视图事件
-                                    ibas.views.hashChanged.call(data, event);
-                                }
-                                break;
+                            let view: ibas.View = sap.extension.customdatas.getView(item);
+                            if (view instanceof ibas.View) {
+                                // 通知视图事件
+                                ibas.views.hashChanged.call(view, event);
                             }
                             break;
                         }
@@ -920,7 +905,7 @@ namespace shell {
                 private currentPageView(): ibas.View {
                     let page: sap.ui.core.Element = this.pageContainer.getCurrentPage();
                     if (ibas.objects.isNull(page)) {
-                        return;
+                        return undefined;
                     }
                     if (page instanceof sap.m.Page && page.getContent()[0] instanceof sap.m.TabContainer) {
                         // 当前页面是页签时，则为选中的页签
@@ -928,19 +913,11 @@ namespace shell {
                         if (page instanceof sap.m.TabContainer) {
                             page = sap.ui.getCore().byId(page.getSelectedItem());
                             if (ibas.objects.isNull(page)) {
-                                return;
+                                return undefined;
                             }
                         }
                     }
-                    for (let item of page.getCustomData()) {
-                        if (ibas.strings.equals(item.getKey(), UI_DATA_KEY_VIEW)) {
-                            let data: any = item.getValue();
-                            if (data instanceof ibas.View) {
-                                return data;
-                            }
-                        }
-                    }
-                    return;
+                    return sap.extension.customdatas.getView(page);
                 }
                 /** 按钮按下时 */
                 protected onKeyDown(event: KeyboardEvent): void {

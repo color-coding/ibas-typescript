@@ -80,34 +80,34 @@ namespace shell {
                         eventType: ibas.emBrowserEventType.TOUCHEND,
                         onEventFired: touch.end
                     });
-                    // 语言变化监听
-                    ibas.i18n.registerListener({
-                        onLanguageChanged(language: string): void {
-                            if (ibas.strings.isEmpty(language)) {
-                                return;
-                            }
-                            if (ibas.strings.isWith(language, "zh_", "") || ibas.strings.isWith(language, "zh-", "")) {
-                                sap.ui.getCore().getConfiguration().setLanguage(language);
-                            } else {
-                                sap.ui.getCore().getConfiguration().setLanguage(language.split("-")[0]);
-                            }
-                        }
-                    });
                     return new sap.m.App(UI_APP, {
                         autoFocus: false,
-                        afterNavigate(): void {
-                            let page: any = this.getCurrentPage();
-                            if (!ibas.objects.isNull(page)) {
-                                for (let item of page.getCustomData()) {
-                                    if (ibas.strings.equals(item.getKey(), UI_DATA_KEY_VIEW)) {
-                                        let data: any = item.getValue();
-                                        if (data instanceof ibas.View) {
-                                            if (data.application instanceof app.CenterApp
-                                                || data.application instanceof app.ShellApplication) {
-                                                // 主页改变，切换服务显示者
-                                                ibas.servicesManager.viewShower = function (): ibas.IViewShower {
-                                                    return data.application;
-                                                };
+                        afterNavigate(event: sap.ui.base.Event): void {
+                            let source: any = event.getSource();
+                            if (source instanceof sap.m.App) {
+                                // 切换视图
+                                let view: any = sap.extension.customdatas.getView(source.getCurrentPage());
+                                if (view instanceof ibas.View) {
+                                    if (view.application instanceof app.CenterApp
+                                        || view.application instanceof app.ShellApplication) {
+                                        // 主页改变，切换服务显示者
+                                        ibas.servicesManager.viewShower = function (): ibas.IViewShower {
+                                            return view.application;
+                                        };
+                                    }
+                                }
+                                if (view instanceof c.CenterView && view.isDisplayed === true) {
+                                    let page: any = source.getCurrentPage();
+                                    if (page instanceof sap.tnt.ToolPage) {
+                                        for (let item of page.getMainContents()) {
+                                            if (item instanceof sap.m.NavContainer) {
+                                                let hash: string = sap.extension.customdatas.getHash(item.getCurrentPage());
+                                                if (ibas.strings.isEmpty(hash)) {
+                                                    hash = "#";
+                                                }
+                                                if (!(ibas.strings.equals(hash, window.location.hash))) {
+                                                    window.history.pushState(null, null, hash);
+                                                }
                                             }
                                         }
                                     }
@@ -120,17 +120,7 @@ namespace shell {
                 private currentView(): ibas.IView {
                     let app: any = sap.ui.getCore().byId(UI_APP);
                     if (app instanceof sap.m.App) {
-                        let page: sap.ui.core.Control = app.getCurrentPage();
-                        if (!ibas.objects.isNull(page)) {
-                            for (let item of page.getCustomData()) {
-                                if (ibas.strings.equals(item.getKey(), UI_DATA_KEY_VIEW)) {
-                                    let data: any = item.getValue();
-                                    if (data instanceof ibas.View) {
-                                        return data;
-                                    }
-                                }
-                            }
-                        }
+                        return sap.extension.customdatas.getView(app.getCurrentPage());
                     }
                     return null;
                 }

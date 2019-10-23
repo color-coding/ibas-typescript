@@ -9,8 +9,37 @@
 namespace shell {
     export namespace ui {
         export const UI_APP: string = "__UI_APP";
-        export const UI_DATA_KEY_VIEW: string = "__UI_DATA_KEY_VIEW";
-        export const UI_DATA_KEY_HASH: string = "__UI_DATA_KEY_HASH";
+        // 语言变化监听
+        ibas.i18n.registerListener({
+            onLanguageChanged(language: string): void {
+                if (ibas.strings.isEmpty(language)) {
+                    return;
+                }
+                if (ibas.strings.isWith(language, "zh_", "") || ibas.strings.isWith(language, "zh-", "")) {
+                    sap.ui.getCore().getConfiguration().setLanguage(language);
+                } else {
+                    sap.ui.getCore().getConfiguration().setLanguage(language.split("-")[0]);
+                }
+            }
+        });
+        // 配置变化
+        ibas.config.registerListener({
+            onConfigurationChanged(name: string, value: any): void {
+                if (ibas.strings.equals(ibas.CONFIG_ITEM_PLANTFORM, name)) {
+                    // 平台变化，修改控件紧缩模式
+                    let body: JQuery = jQuery(document.body);
+                    if (value === ibas.emPlantform.DESKTOP) {
+                        body.toggleClass("sapUiSizeCompact", true).toggleClass("sapUiSizeCozy", false).toggleClass("sapUiSizeCondensed", false);
+                        // 桌面平台，使用紧凑视图
+                        ibas.config.set(openui5.CONFIG_ITEM_COMPACT_SCREEN, true);
+                    } else {
+                        body.toggleClass("sapUiSizeCompact", false).toggleClass("sapUiSizeCozy", true).toggleClass("sapUiSizeCondensed", false);
+                        // 使用舒适视图
+                        ibas.config.set(openui5.CONFIG_ITEM_COMPACT_SCREEN, false);
+                    }
+                }
+            }
+        });
         /**
          * 视图-显示者-默认
          */
@@ -26,11 +55,7 @@ namespace shell {
                     return;
                 }
                 if (viewContent instanceof sap.ui.core.Element) {
-                    viewContent.addCustomData(new sap.ui.core.CustomData("", {
-                        key: UI_DATA_KEY_VIEW,
-                        value: view,
-                        writeToDom: false,
-                    }));
+                    sap.extension.customdatas.setView(viewContent, view);
                 }
                 if (view.application instanceof app.MainApp) {
                     viewContent.placeAt("content");
@@ -42,12 +67,7 @@ namespace shell {
                         let app: sap.ui.core.Element = sap.ui.getCore().byId(UI_APP);
                         if (app instanceof sap.m.App) {
                             app.setVisible(false);
-                            let page: sap.ui.core.Control = app.getCurrentPage();
-                            for (let item of page.getCustomData()) {
-                                if (item.getKey() === UI_DATA_KEY_VIEW) {
-                                    pView = item.getValue();
-                                }
-                            }
+                            pView = sap.extension.customdatas.getView(app.getCurrentPage());
                             if (pView instanceof ibas.View) {
                                 pView.isDisplayed = false;
                             }

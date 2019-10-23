@@ -388,5 +388,72 @@ namespace sap {
             }
 
         }
+        /** 自定义数据 */
+        export namespace customdatas {
+            export const UI_DATA_KEY_VIEW: string = "__UI_DATA_KEY_VIEW";
+            export const UI_DATA_KEY_HASH: string = "__UI_DATA_KEY_HASH";
+            /**
+             * 获取控件自定义数据
+             * @param control 控件或控件数组
+             * @param key 数据名称
+             */
+            export function where<T>(element: sap.ui.core.Element | sap.ui.core.Element[], key: string): ibas.IList<T> {
+                let values: ibas.ArrayList<T> = new ibas.ArrayList<T>();
+                for (let eItem of ibas.arrays.create(element)) {
+                    for (let dItem of eItem.getCustomData()) {
+                        if (ibas.strings.equals(dItem.getKey(), key)) {
+                            values.add(dItem.getValue());
+                        }
+                    }
+                }
+                return values;
+            }
+            /**
+             * 设置控件数据
+             * @param control 控件
+             * @param key 名称
+             * @param value 数据
+             */
+            export function set<C>(element: C, key: string, value: any): C {
+                if (element instanceof sap.ui.core.Element) {
+                    element.addCustomData(new sap.ui.core.CustomData("", {
+                        key: key,
+                        value: value,
+                        writeToDom: false,
+                    }));
+                }
+                return element;
+            }
+            /**
+             * 获取Hash值
+             * @param element 元素
+             */
+            export function getHash(element: sap.ui.core.Element): string {
+                return where<string>(element, UI_DATA_KEY_HASH).firstOrDefault();
+            }
+            /**
+             * 获取View值
+             * @param element 元素
+             */
+            export function getView<T extends ibas.IView>(element: sap.ui.core.Element): T {
+                return where<T>(element, UI_DATA_KEY_VIEW).firstOrDefault();
+            }
+            /**
+             * 设置Hash值
+             * @param element 元素
+             * @param value hash值
+             */
+            export function setHash<C>(element: C, value: string): C {
+                return set(element, UI_DATA_KEY_HASH, value);
+            }
+            /**
+             * 设置View值
+             * @param element 元素
+             * @param value view值
+             */
+            export function setView<C>(element: C, value: ibas.IView): C {
+                return set(element, UI_DATA_KEY_VIEW, value);
+            }
+        }
     }
 }
