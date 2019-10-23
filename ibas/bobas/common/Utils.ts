@@ -584,6 +584,43 @@ namespace ibas {
         }
         /** 枚举名称 */
         const ENUM_NAMES: Map<object, string> = new Map<object, string>();
+        /**
+         * 枚举值比较
+         * @param type 类型
+         * @param value1 字符1
+         * @param value2 字符2
+         */
+        export function equals(type: any, value1: string | number, value2: string | number): boolean {
+            if (objects.isNull(type)) {
+                return false;
+            }
+            if (objects.isNull(value1)) {
+                return false;
+            }
+            if (objects.isNull(value2)) {
+                return false;
+            }
+            if (!objects.hasProperty(type, String(value1))) {
+                return false;
+            }
+            if (!objects.hasProperty(type, String(value2))) {
+                return false;
+            }
+            if (value1 === value2) {
+                return true;
+            }
+            let tValue1: any = objects.propertyValue(type, String(value1));
+            let tValue2: any = objects.propertyValue(type, String(value2));
+            let sValue1: any = objects.propertyValue(type, String(tValue1));
+            let sValue2: any = objects.propertyValue(type, String(tValue2));
+            if (tValue1 === tValue2 || tValue1 === sValue2) {
+                return true;
+            }
+            if (tValue2 === tValue1 || tValue2 === sValue1) {
+                return true;
+            }
+            return false;
+        }
     }
     /**
      * 日期

@@ -199,6 +199,16 @@ namespace loader {
         }
         /** 显示视图 */
         private show(): void {
+            // 设置默认平台
+            if (sap.ui.Device.system.phone) {
+                ibas.config.set(ibas.CONFIG_ITEM_PLANTFORM, ibas.emPlantform.PHONE);
+            } else if (sap.ui.Device.system.desktop) {
+                ibas.config.set(ibas.CONFIG_ITEM_PLANTFORM, ibas.emPlantform.DESKTOP);
+            } else if (sap.ui.Device.system.tablet) {
+                ibas.config.set(ibas.CONFIG_ITEM_PLANTFORM, ibas.emPlantform.TABLET);
+            } else {
+                ibas.config.set(ibas.CONFIG_ITEM_PLANTFORM, ibas.emPlantform.COMBINATION);
+            }
             // 模块require函数
             let require: Require = ibas.requires.create({
                 context: ibas.requires.naming(this.name),

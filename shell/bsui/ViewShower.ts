@@ -40,6 +40,8 @@ namespace shell {
                 }
             }
         });
+        // 激活平台设置
+        ibas.config.set(ibas.CONFIG_ITEM_PLANTFORM, ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM));
         /**
          * 视图-显示者-默认
          */

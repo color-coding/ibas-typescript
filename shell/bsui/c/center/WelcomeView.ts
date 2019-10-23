@@ -22,6 +22,8 @@ namespace shell {
                         // showHeader: false,
                         horizontalScrolling: false,
                         verticalScrolling: true,
+                        contentHeight: "auto",
+                        contentWidth: "auto",
                         content: [
                             this.page = new sap.m.Page("", {
                                 enableScrolling: false,

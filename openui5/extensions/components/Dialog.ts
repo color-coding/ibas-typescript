@@ -22,8 +22,10 @@ namespace sap {
                 onAfterRendering(this: Dialog): void {
                     (<any>sap.m.Dialog.prototype).onAfterRendering.apply(this, arguments);
                     let dom: JQuery = this.$("scrollCont");
+                    dom = this.$("scrollCont");
                     if (dom) {
                         dom.css("padding", "0rem");
+                        dom.css("height", "100%");
                     }
                 }
             });
