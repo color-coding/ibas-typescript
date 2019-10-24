@@ -149,6 +149,60 @@ declare namespace sap {
                  */
                 loadItems(): this;
             }
+            /**
+             * 重复字符计数-选择框
+             */
+            class RepeatCountSelect extends Select {
+                /**
+                 * 获取最大数
+                 */
+                getMaxCount(): number;
+                /**
+                 * 设置最大数
+                 * @param value 最大数
+                 */
+                setMaxCount(value: number): this;
+                /**
+                 * 获取重复内容
+                 */
+                getRepeateText(): string;
+                /**
+                 * 设置重复内容
+                 * @param value 重复内容
+                 */
+                setRepeateText(value: string): this;
+                /**
+                 * 加载可选值
+                 */
+                loadItems(): this;
+            }
+            /**
+             * 对象属性别名-选择框
+             */
+            class AliasSelect extends Select {
+                /**
+                 * 获取对象信息
+                 */
+                getObjectInfo(): string | { code: string, name: string };
+                /**
+                 * 设置对象信息
+                 * @param value 对象信息
+                 */
+                setObjectInfo(value: string | { code: string, name: string }): this;
+                /**
+                 * 获取别名值属性
+                 */
+                getAliasProperty(): string;
+                /**
+                 * 设置别名值属性
+                 * @param value 别名值属性
+                 */
+                setAliasProperty(value: string): this;
+                /**
+                 * 加载可选值
+                 */
+                loadItems(): this;
+            }
         }
     }
 }

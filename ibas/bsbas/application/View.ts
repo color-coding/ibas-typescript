@@ -37,7 +37,7 @@ namespace ibas {
                 event.apply(this.application, pars);
             } catch (error) {
                 if (this.application instanceof Application) {
-                    (<any>Application).prototype.messages(error);
+                    (<any>Application).prototype.messages.call(this.application, error);
                 } else if (this.application.viewShower && this.application.viewShower.messages instanceof Function) {
                     this.application.viewShower.messages({
                         title: this.title,

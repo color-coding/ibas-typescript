@@ -83,7 +83,13 @@ namespace sap {
                     oRm.write("</div>");
                     if (oControl.getToolbar()) {
                         oRm.write("<div");
-                        oRm.addStyle("padding", "0 0.75rem 0.5rem 0.75rem");
+                        let parent: any = oControl.getParent();
+                        if (parent instanceof sap.f.Card && parent.getHeaderPosition() === sap.f.cards.HeaderPosition.Top) {
+                            oRm.addStyle("padding", "0 0.75rem 0rem 0.75rem");
+                            oRm.addStyle("border-bottom", "1px solid #cccccc;");
+                        } else {
+                            oRm.addStyle("padding", "0 0.75rem 0.5rem 0.75rem");
+                        }
                         oRm.writeStyles();
                         oRm.write(">");
                         oRm.renderControl(oControl.getToolbar());

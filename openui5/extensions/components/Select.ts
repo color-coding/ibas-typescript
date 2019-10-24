@@ -472,6 +472,135 @@ namespace sap {
                     return this;
                 }
             });
+            /**
+             * 重复字符计数-选择框
+             */
+            Select.extend("sap.extension.m.RepeatCountSelect", {
+                metadata: {
+                    properties: {
+                        /** 选择内容数量 */
+                        maxCount: { type: "int", defaultValue: 0 },
+                        /** 重复内容 */
+                        repeateText: { type: "string" },
+                    },
+                    events: {}
+                },
+                renderer: {},
+                /** 重构设置 */
+                applySettings(this: RepeatCountSelect): RepeatCountSelect {
+                    Select.prototype.applySettings.apply(this, arguments);
+                    if (this.getItems().length === 0) {
+                        this.loadItems();
+                    }
+                    return this;
+                },
+                /**
+                 * 加载可选值
+                 */
+                loadItems(this: RepeatCountSelect): RepeatCountSelect {
+                    this.destroyItems();
+                    let vChar: string = this.getRepeateText();
+                    if (ibas.strings.isEmpty(vChar)) {
+                        return;
+                    }
+                    let count: number = this.getMaxCount();
+                    this.addItem(new sap.ui.core.ListItem("", {
+                        key: 0,
+                        text: "",
+                    }));
+                    let builder: ibas.StringBuilder = new ibas.StringBuilder();
+                    for (let i: number = 1; i < count; i++) {
+                        builder.append(vChar);
+                        this.addItem(new sap.ui.core.ListItem("", {
+                            key: i,
+                            text: builder.toString(),
+                        }));
+                    }
+                    return this;
+                }
+            });
+            /**
+             * 对象属性别名-选择框
+             */
+            Select.extend("sap.extension.m.AliasSelect", {
+                metadata: {
+                    properties: {
+                        /** 对象信息 */
+                        objectInfo: { type: "any" },
+                        /** 别名值属性 */
+                        aliasProperty: { type: "string", defaultValue: "property" },
+                    },
+                    events: {}
+                },
+                renderer: {},
+                /** 重构设置 */
+                applySettings(this: AliasSelect): AliasSelect {
+                    Select.prototype.applySettings.apply(this, arguments);
+                    if (this.getItems().length === 0) {
+                        setTimeout(() => {
+                            this.loadItems();
+                        }, 100);
+                    }
+                    return this;
+                },
+                /** 设置对象信息 */
+                setObjectInfo(this: AliasSelect, value: string | { code: string, name: string }): AliasSelect {
+                    this.setProperty("objectInfo", value);
+                    setTimeout(() => {
+                        this.loadItems();
+                    }, 100);
+                    return this;
+                },
+                /**
+                 * 加载可选值
+                 */
+                loadItems(this: AliasSelect): AliasSelect {
+                    this.destroyItems();
+                    let tmp: any = this.getObjectInfo();
+                    let objectInfo: { code: string, name: string }
+                        = typeof tmp === "string" ? { code: tmp, name: undefined } : tmp;
+                    let boRepository: shell.bo.IBORepositoryShell = shell.bo.repository.create();
+                    boRepository.fetchBOInfos({
+                        boCode: objectInfo.code,
+                        boName: objectInfo.name,
+                        onCompleted: (opRslt) => {
+                            for (let oItem of opRslt.resultObjects) {
+                                if (!ibas.strings.isWith(oItem.code, objectInfo.code, undefined)) {
+                                    continue;
+                                }
+                                if (!ibas.strings.isEmpty(objectInfo.name) && !ibas.strings.equalsIgnoreCase(oItem.name, objectInfo.name)) {
+                                    continue;
+                                }
+                                if (!(oItem.properties instanceof Array)) {
+                                    continue;
+                                }
+                                let property: string = this.getAliasProperty();
+                                if (ibas.strings.isEmpty(property)) {
+                                    property = "property";
+                                }
+                                for (let pItem of oItem.properties) {
+                                    if (ibas.strings.isEmpty(pItem.editType)) {
+                                        continue;
+                                    }
+                                    if (pItem.editSize < 0) {
+                                        continue;
+                                    }
+                                    let key: string = ibas.objects.propertyValue(pItem, property);
+                                    let text: string = ibas.i18n.prop(ibas.strings.format("bo_{0}_{1}", oItem.name, pItem.property).toLowerCase());
+                                    if (ibas.strings.isWith(text, "[", "]")) {
+                                        text = pItem.description;
+                                    }
+                                    this.addItem(new sap.ui.core.ListItem("", {
+                                        key: key,
+                                        text: text,
+                                    }));
+                                }
+                            }
+                        }
+                    });
+                    return this;
+                }
+            });
         }
     }
 }
