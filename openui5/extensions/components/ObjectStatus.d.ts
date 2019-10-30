@@ -88,6 +88,52 @@ declare namespace sap {
             class ObjectBOStatus extends ObjectEnumStatus {
 
             }
+            /**
+             * 业务仓库数据-对象状态
+             */
+            class RepositoryObjectStatus extends ObjectStatus {
+                /**
+                 * 获取业务仓库实例
+                 */
+                getRepository(): ibas.BORepositoryApplication;
+                /**
+                 * 设置业务仓库
+                 * @param value 业务仓库实例；业务仓库名称
+                 */
+                setRepository(value: ibas.BORepositoryApplication | string): this;
+                /**
+                 * 获取数据信息
+                 */
+                getDataInfo(): repository.IDataInfo;
+                /**
+                 * 设置数据信息
+                 * @param value 数据信息
+                 */
+                setDataInfo(value: repository.IDataInfo | any): this;
+            }
+            /**
+             * 对象状态可选值-对象状态
+             */
+            class PropertyObjectStatus extends ObjectStatus {
+                /**
+                 * 获取数据信息
+                 */
+                getDataInfo(): { code: string, name?: string } | string | Function;
+                /**
+                 * 设置数据信息
+                 * @param value 值
+                 */
+                setDataInfo(value: { code: string, name?: string } | string | Function): this;
+                /**
+                 * 获取属性名称
+                 */
+                getPropertyName(): string;
+                /**
+                 * 设置属性名称
+                 * @param value 属性名称
+                 */
+                setPropertyName(value: string): this;
+            }
         }
     }
 }

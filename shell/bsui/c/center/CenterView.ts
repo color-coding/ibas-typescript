@@ -108,8 +108,9 @@ namespace shell {
                                 tooltip: this.title,
                                 type: sap.m.ButtonType.Transparent,
                                 width: "auto",
-                                text: ibas.strings.isEmpty(ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_NAME)) ?
-                                    ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE) : ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_NAME),
+                                text: ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM) === ibas.emPlantform.PHONE ? "" :
+                                    ibas.strings.isEmpty(ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_NAME)) ?
+                                        ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE) : ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_NAME),
                                 icon: ibas.config.get(ibas.CONFIG_ITEM_OFFLINE_MODE) ? "sap-icon://appear-offline" : "sap-icon://donut-chart",
                                 layoutData: new sap.m.OverflowToolbarLayoutData("", {
                                     priority: sap.m.OverflowToolbarPriority.NeverOverflow

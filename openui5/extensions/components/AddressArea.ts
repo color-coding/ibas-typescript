@@ -395,10 +395,8 @@ namespace sap {
                         width: "100%",
                         placeholder: ibas.i18n.prop("openui5_zipcode"),
                         change: (event: sap.ui.base.Event) => {
-                            this.setBusy(true);
                             let input: Input = <Input>event.getSource();
-                            this.setProperty("zipcode", input.getValue());
-                            this.setBusy(false);
+                            this.setProperty("zipCode", input.getValue());
                         }
                     }));
                 },

@@ -258,6 +258,214 @@ namespace sap {
                     }
                 }
             });
+            /**
+             * 业务仓库数据-对象状态
+             */
+            ObjectStatus.extend("sap.extension.m.RepositoryObjectStatus", {
+                metadata: {
+                    properties: {
+                        /** 业务仓库 */
+                        repository: { type: "any" },
+                        /** 数据信息 */
+                        dataInfo: { type: "any" },
+                    },
+                    events: {}
+                },
+                renderer: {
+                },
+                /**
+                 * 获取业务仓库实例
+                 */
+                getRepository(this: RepositoryObjectStatus): ibas.BORepositoryApplication {
+                    return this.getProperty("repository");
+                },
+                /**
+                 * 设置业务仓库
+                 * @param value 业务仓库实例；业务仓库名称
+                 */
+                setRepository(this: RepositoryObjectStatus, value: ibas.BORepositoryApplication | string): RepositoryObjectStatus {
+                    return this.setProperty("repository", utils.repository(value));
+                },
+                /**
+                 * 获取数据信息
+                 */
+                getDataInfo(this: RepositoryObjectStatus): repository.IDataInfo {
+                    return this.getProperty("dataInfo");
+                },
+                /**
+                 * 设置数据信息
+                 * @param value 数据信息
+                 */
+                setDataInfo(this: RepositoryObjectStatus, value: repository.IDataInfo | any): RepositoryObjectStatus {
+                    return this.setProperty("dataInfo", utils.dataInfo(value));
+                },
+                /**
+                 * 设置选中值
+                 * @param value 值
+                 */
+                setText(this: RepositoryObjectStatus, value: string): RepositoryObjectStatus {
+                    if (this.getText() !== value) {
+                        ObjectStatus.prototype.setText.apply(this, arguments);
+                        if (!ibas.strings.isEmpty(value)) {
+                            let dataInfo: repository.IDataInfo = this.getDataInfo();
+                            if (ibas.objects.isNull(dataInfo)) {
+                                return this;
+                            }
+                            let criteria: ibas.ICriteria = new ibas.Criteria();
+                            criteria.noChilds = true;
+                            for (let item of String(value).split(ibas.DATA_SEPARATOR)) {
+                                let condition: ibas.ICondition = criteria.conditions.create();
+                                condition.alias = dataInfo.key;
+                                condition.value = item;
+                                if (criteria.conditions.length > 0) {
+                                    condition.relationship = ibas.emConditionRelationship.OR;
+                                }
+                            }
+                            repository.batchFetch(this.getRepository(), this.getDataInfo(), criteria,
+                                (values) => {
+                                    if (values instanceof Error) {
+                                        ibas.logger.log(values);
+                                    } else {
+                                        let keyBudilder: ibas.StringBuilder = new ibas.StringBuilder();
+                                        keyBudilder.map(null, "");
+                                        keyBudilder.map(undefined, "");
+                                        let textBudilder: ibas.StringBuilder = new ibas.StringBuilder();
+                                        textBudilder.map(null, "");
+                                        textBudilder.map(undefined, "");
+                                        for (let item of values) {
+                                            if (keyBudilder.length > 0) {
+                                                keyBudilder.append(ibas.DATA_SEPARATOR);
+                                            }
+                                            if (textBudilder.length > 0) {
+                                                textBudilder.append(ibas.DATA_SEPARATOR);
+                                                textBudilder.append(" ");
+                                            }
+                                            keyBudilder.append(item.key);
+                                            textBudilder.append(item.text);
+                                        }
+                                        ObjectStatus.prototype.setText.call(this, textBudilder.toString());
+                                    }
+                                }
+                            );
+                        }
+                    }
+                    return this;
+                },
+            });
+            /**
+             * 对象状态可选值-对象状态
+             */
+            ObjectStatus.extend("sap.extension.m.PropertyObjectStatus", {
+                metadata: {
+                    properties: {
+                        /** 对象数据信息 */
+                        dataInfo: { type: "any" },
+                        /** 属性名称 */
+                        propertyName: { type: "string" },
+                    },
+                    events: {}
+                },
+                renderer: {
+                },
+                /**
+                 * 获取数据信息
+                 */
+                getDataInfo(this: PropertyObjectStatus): { code: string, name?: string } | string {
+                    return this.getProperty("dataInfo");
+                },
+                /**
+                 * 设置数据信息
+                 * @param value 数据信息
+                 */
+                setDataInfo(this: PropertyObjectStatus, value: { code: string, name?: string } | string): PropertyObjectStatus {
+                    return this.setProperty("dataInfo", value);
+                },
+                /**
+                 * 获取属性名称
+                 */
+                getPropertyName(this: PropertyObjectStatus): string {
+                    return this.getProperty("propertyName");
+                },
+                /**
+                 * 设置属性名称
+                 * @param value 属性名称
+                 */
+                setPropertyName(this: PropertyObjectStatus, value: string): PropertyObjectStatus {
+                    return this.setProperty("propertyName", value);
+                },
+                /**
+                 * 设置选中值
+                 * @param value 值
+                 */
+                setText(this: PropertyObjectStatus, value: string): PropertyObjectStatus {
+                    if (this.getText() !== value) {
+                        ObjectStatus.prototype.setText.apply(this, arguments);
+                        if (ibas.strings.isEmpty(value)) {
+                            return this;
+                        }
+                        let boInfo: { code: string, name?: string } | string | Function = this.getDataInfo();
+                        if (typeof boInfo === "string") {
+                            boInfo = {
+                                code: boInfo,
+                                name: undefined,
+                            };
+                        } else if (typeof boInfo === "function") {
+                            boInfo = {
+                                code: ibas.objects.typeOf(boInfo).BUSINESS_OBJECT_CODE,
+                                name: undefined,
+                            };
+                        }
+                        if (!boInfo || !boInfo.code) {
+                            return this;
+                        }
+                        let propertyName: string = this.getPropertyName();
+                        if (ibas.strings.isEmpty(propertyName)) {
+                            // 未设置属性则使用绑定的
+                            propertyName = this.getBindingPath("bindingValue");
+                        }
+                        if (ibas.strings.isEmpty(propertyName)) {
+                            return this;
+                        }
+                        let boRepository: shell.bo.IBORepositoryShell = ibas.boFactory.create(shell.bo.BO_REPOSITORY_SHELL);
+                        boRepository.fetchBOInfos({
+                            boCode: ibas.config.applyVariables(boInfo.code),
+                            boName: boInfo.name,
+                            onCompleted: (opRslt) => {
+                                try {
+                                    if (opRslt.resultCode !== 0) {
+                                        throw new Error(opRslt.message);
+                                    }
+                                    let boName: string;
+                                    if (propertyName.indexOf(".") > 0) {
+                                        // 属性带路径，则取名称
+                                        boName = propertyName.split(".")[0];
+                                    }
+                                    for (let data of opRslt.resultObjects) {
+                                        if (boName && !ibas.strings.equalsIgnoreCase(data.name, boName)) {
+                                            continue;
+                                        }
+                                        for (let property of data.properties) {
+                                            if (ibas.strings.equalsIgnoreCase(propertyName, property.property)) {
+                                                if (property.values instanceof Array) {
+                                                    for (let item of property.values) {
+                                                        if (ibas.strings.equals(item.value, value)) {
+                                                            ObjectStatus.prototype.setText.call(this, item.description);
+                                                            return;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        return;
+                                    }
+                                } catch (error) {
+                                    ibas.logger.log(error);
+                                }
+                            }
+                        });
+                    }
+                },
+            });
         }
     }
 }
