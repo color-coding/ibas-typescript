@@ -461,15 +461,36 @@ namespace sap {
                                     }));
                                 }
                                 if (this.getItems().length > 0) {
-                                    if (!ibas.strings.isEmpty(this.getSelectedKey())) {
-                                    } else {
-                                        this.setSelectedItem(this.getFirstItem());
-                                    }
+                                    setTimeout(() => {
+                                        this.fireModelContextChange(undefined);
+                                    }, 50);
                                 }
                             }
                         }
                     );
                     return this;
+                },
+                init(this: SeriesSelect): void {
+                    (<any>Select.prototype).init.apply(this, arguments);
+                    this.attachModelContextChange(undefined, function (event: sap.ui.base.Event): void {
+                        let source: any = event.getSource();
+                        if (source instanceof Select && source.getItems().length > 1) {
+                            let content: any = source.getBindingContext();
+                            if (content instanceof sap.ui.model.Context) {
+                                let data: any = content.getObject();
+                                if (data instanceof ibas.BusinessObject) {
+                                    if (data.isNew === true) {
+                                        let binding: any = source.getBinding("bindingValue");
+                                        if (binding instanceof sap.ui.model.PropertyBinding) {
+                                            if (!(binding.getRawValue() > 0)) {
+                                                binding.setValue(source.getLastItem().getKey());
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
                 }
             });
             /**
