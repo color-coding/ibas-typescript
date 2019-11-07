@@ -80,6 +80,47 @@ namespace shell {
             user: string;
         }
         /** 业务对象信息 */
+        export class BizObjectInfo implements IBizObjectInfo {
+            /** 名称 */
+            name: string;
+            /** 编码 */
+            code: string;
+            /** 类型 */
+            type: string;
+            /** 属性集合 */
+            properties: Array<BizPropertyInfo>;
+        }
+        /** 业务对象属性信息 */
+        export class BizPropertyInfo implements IBizPropertyInfo {
+            /** 属性 */
+            name: string;
+            /** 描述 */
+            description: string;
+            /** 别名 */
+            alias: string;
+            /** 数据类型 */
+            dataType: string;
+            /** 编辑类型 */
+            editType: string;
+            /** 长度 */
+            editSize: number;
+            /** 查询 */
+            searched: boolean;
+            /** 系统的 */
+            systemed: boolean;
+            /** 授权的 */
+            authorised: ibas.emAuthoriseType;
+            /** 属性值集合 */
+            values: Array<BizPropertyValue>;
+        }
+        /** 业务对象属性值 */
+        export class BizPropertyValue implements IBizPropertyValue {
+            /** 值 */
+            value: string;
+            /** 描述 */
+            description: string;
+        }
+        /** 业务对象信息 */
         export class BOInfo implements IBOInfo {
             /** 名称 */
             name: string;

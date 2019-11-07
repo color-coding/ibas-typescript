@@ -77,6 +77,48 @@ namespace shell {
                         Criteria: JSON.stringify(rCriteria)
                     };
                     return remote;
+                } else if (ibas.objects.instanceOf(data, BizObjectInfo)) {
+                    let newData: BizObjectInfo = data;
+                    let properties: bo4j.IBizPropertyInfo[] = [];
+                    for (let item of newData.properties) {
+                        properties.push(this.convert(item, null));
+                    }
+                    let remote: bo4j.IBizObjectInfo = {
+                        type: BOInfo.name,
+                        Code: newData.code,
+                        Name: newData.name,
+                        Type: newData.type,
+                        Properties: properties
+                    };
+                    return remote;
+                } else if (ibas.objects.instanceOf(data, BizPropertyInfo)) {
+                    let newData: BizPropertyInfo = data;
+                    let values: bo4j.IBizPropertyValue[] = [];
+                    for (let item of newData.values) {
+                        values.push(this.convert(item, null));
+                    }
+                    let remote: bo4j.IBizPropertyInfo = {
+                        type: BOPropertyInfo.name,
+                        Name: newData.name,
+                        Alias: newData.alias,
+                        DataType: newData.dataType,
+                        EditType: newData.editType,
+                        EditSize: newData.editSize,
+                        Searched: newData.searched,
+                        Systemed: newData.systemed,
+                        Description: newData.description,
+                        Authorised: newData.authorised ? ibas.enums.toString(ibas.emAuthoriseType, newData.authorised) : undefined,
+                        Values: values
+                    };
+                    return remote;
+                } else if (ibas.objects.instanceOf(data, BizPropertyValue)) {
+                    let newData: BizPropertyValue = data;
+                    let remote: bo4j.IBizPropertyValue = {
+                        type: BOPropertyInfo.name,
+                        Value: newData.value,
+                        Description: newData.description
+                    };
+                    return remote;
                 } else if (ibas.objects.instanceOf(data, BOInfo)) {
                     let newData: BOInfo = data;
                     let properties: bo4j.IBOPropertyInfo[] = [];
@@ -182,6 +224,46 @@ namespace shell {
                             newData.criteria = this.parsing(jCriteria, null);
                         }
                     }
+                    return newData;
+                } else if (data.type === BizObjectInfo.name) {
+                    let remote: bo4j.IBizObjectInfo = data;
+                    let newData: BizObjectInfo = new BizObjectInfo();
+                    newData.code = remote.Code;
+                    newData.name = remote.Name;
+                    newData.type = remote.Type;
+                    newData.properties = new Array<BizPropertyInfo>();
+                    if (remote.Properties instanceof Array) {
+                        for (let item of remote.Properties) {
+                            item.type = BOPropertyInfo.name;
+                            newData.properties.push(this.parsing(item, null));
+                        }
+                    }
+                    return newData;
+                } else if (data.type === BizPropertyInfo.name) {
+                    let remote: bo4j.IBizPropertyInfo = data;
+                    let newData: BizPropertyInfo = new BizPropertyInfo();
+                    newData.name = remote.Name;
+                    newData.description = remote.Description;
+                    newData.alias = remote.Alias;
+                    newData.dataType = remote.DataType;
+                    newData.editType = remote.EditType;
+                    newData.editSize = remote.EditSize;
+                    newData.searched = remote.Searched;
+                    newData.systemed = remote.Systemed;
+                    newData.authorised = ibas.strings.isEmpty(remote.Authorised) ? undefined : ibas.enums.valueOf(ibas.emAuthoriseType, remote.Authorised);
+                    newData.values = new Array<BizPropertyValue>();
+                    if (remote.Values instanceof Array) {
+                        for (let item of remote.Values) {
+                            item.type = BizPropertyValue.name;
+                            newData.values.push(this.parsing(item, null));
+                        }
+                    }
+                    return newData;
+                } else if (data.type === BizPropertyValue.name) {
+                    let remote: bo4j.IBizPropertyValue = data;
+                    let newData: BizPropertyValue = new BizPropertyValue();
+                    newData.value = remote.Value;
+                    newData.description = remote.Description;
                     return newData;
                 } else if (data.type === BOInfo.name) {
                     let remote: bo4j.IBOInfo = data;

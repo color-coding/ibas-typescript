@@ -78,6 +78,47 @@ namespace shell {
             User: string;
         }
         /** 业务对象 */
+        export interface IBizObjectInfo extends IDataDeclaration {
+            /** 名称 */
+            Name: string;
+            /** 编码 */
+            Code: string;
+            /** 类型 */
+            Type: string;
+            /** 属性集合 */
+            Properties: IBizPropertyInfo[];
+        }
+        /** 业务对象属性 */
+        export interface IBizPropertyInfo extends IDataDeclaration {
+            /** 属性 */
+            Name: string;
+            /** 描述 */
+            Description: string;
+            /** 别名 */
+            Alias: string;
+            /** 数据类型 */
+            DataType: string;
+            /** 编辑类型 */
+            EditType: string;
+            /** 长度 */
+            EditSize: number;
+            /** 查询 */
+            Searched: boolean;
+            /** 系统的 */
+            Systemed: boolean;
+            /** 授权的 */
+            Authorised: string;
+            /** 值集合 */
+            Values: IBizPropertyValue[];
+        }
+        /** 业务对象属性值 */
+        export interface IBizPropertyValue extends IDataDeclaration {
+            /** 值 */
+            Value: string;
+            /** 描述 */
+            Description: string;
+        }
+        /** 业务对象 */
         export interface IBOInfo extends IDataDeclaration {
             /** 名称 */
             Name: string;

@@ -60,6 +60,24 @@ namespace shell {
              */
             onCompleted(opRslt: ibas.IOperationResult<IBOInfo>): void;
         }
+        /**
+         * 业务对象信息调用者
+         */
+        export interface IBizObjectInfoCaller extends ibas.IMethodCaller<IBizObjectInfo> {
+            /** 业务对象编码（主） */
+            boCode: string;
+            /** 用户 */
+            user: string;
+            /** 对象名称（主或子项） */
+            boName?: string;
+            /** 不使用缓存 */
+            noCached?: boolean;
+            /**
+             * 调用完成
+             * @param opRslt
+             */
+            onCompleted(opRslt: ibas.IOperationResult<IBizObjectInfo>): void;
+        }
         /** 登录仓库 */
         export interface IBORepositoryConnect {
             /**
@@ -110,6 +128,11 @@ namespace shell {
              * @param caller 调用者
              */
             fetchBOInfos(caller: IBOInfoCaller): void;
+            /**
+             * 业务对象信息查询
+             * @param caller 调用者
+             */
+            fetchBizObjectInfo(caller: IBizObjectInfoCaller): void;
         }
     }
 }
