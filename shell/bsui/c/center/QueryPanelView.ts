@@ -106,10 +106,11 @@ namespace shell {
                         if (!ibas.objects.isNull(this.boName)) {
                             let that: this = this;
                             let boRepository: bo.IBORepositoryShell = bo.repository.create();
-                            boRepository.fetchBOInfos({
+                            boRepository.fetchBizObjectInfo({
+                                user: ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE),
                                 boCode: this.boName,
-                                onCompleted(opRslt: ibas.IOperationResult<bo.IBOInfo>): void {
-                                    let boInfo: bo.IBOInfo = opRslt.resultObjects.firstOrDefault();
+                                onCompleted(opRslt: ibas.IOperationResult<bo.IBizObjectInfo>): void {
+                                    let boInfo: bo.IBizObjectInfo = opRslt.resultObjects.firstOrDefault();
                                     if (ibas.objects.isNull(boInfo)) {
                                         that.table = that.createTable([]);
                                         that.form.addContent(that.table);
@@ -148,7 +149,7 @@ namespace shell {
                     return items;
                 }
                 private table: sap.ui.table.Table;
-                protected getPropertyListItem(properies: bo.IBOPropertyInfo[]): sap.ui.core.ListItem[] {
+                protected getPropertyListItem(properies: bo.IBizPropertyInfo[]): sap.ui.core.ListItem[] {
                     let items: Array<sap.ui.core.ListItem> = [];
                     items.push(new sap.ui.core.ListItem("", {
                         key: "",
@@ -160,14 +161,14 @@ namespace shell {
                                 continue;
                             }
                             items.push(new sap.ui.core.ListItem("", {
-                                key: property.property,
+                                key: property.name,
                                 text: property.description,
                             }));
                         }
                     }
                     return items;
                 }
-                private createTable(properies: bo.IBOPropertyInfo[]): sap.ui.table.Table {
+                private createTable(properies: bo.IBizPropertyInfo[]): sap.ui.table.Table {
                     let that: this = this;
                     let table: sap.ui.table.Table = new sap.ui.table.Table("", {
                         toolbar: new sap.m.Toolbar("", {

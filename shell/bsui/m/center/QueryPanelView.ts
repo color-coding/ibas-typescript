@@ -22,10 +22,11 @@ namespace shell {
                         // 尚未初始化表格
                         // 获取列描述
                         let boRepository: bo.IBORepositoryShell = bo.repository.create();
-                        boRepository.fetchBOInfos({
+                        boRepository.fetchBizObjectInfo({
+                            user: ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE),
                             boCode: this.boName,
-                            onCompleted(opRslt: ibas.IOperationResult<bo.IBOInfo>): void {
-                                let properies: bo.IBOPropertyInfo[] = [];
+                            onCompleted(opRslt: ibas.IOperationResult<bo.IBizObjectInfo>): void {
+                                let properies: bo.IBizPropertyInfo[] = [];
                                 if (opRslt.resultObjects.length > 0) {
                                     properies = opRslt.resultObjects.firstOrDefault().properties;
                                 }

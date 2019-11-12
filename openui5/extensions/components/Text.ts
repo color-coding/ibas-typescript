@@ -47,7 +47,7 @@ namespace sap {
                 },
                 /** 重写绑定 */
                 bindProperty(this: Text, sName: string, oBindingInfo: any): Text {
-                    utils.checkBindingInfo.apply(this, arguments);
+                    managedobjects.checkBinding.apply(this, arguments);
                     sap.m.Text.prototype.bindProperty.apply(this, arguments);
                     return this;
                 }
@@ -221,7 +221,8 @@ namespace sap {
                             return this;
                         }
                         let boRepository: shell.bo.IBORepositoryShell = ibas.boFactory.create(shell.bo.BO_REPOSITORY_SHELL);
-                        boRepository.fetchBOInfos({
+                        boRepository.fetchBizObjectInfo({
+                            user: ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE),
                             boCode: ibas.config.applyVariables(boInfo.code),
                             boName: boInfo.name,
                             onCompleted: (opRslt) => {
@@ -239,7 +240,7 @@ namespace sap {
                                             continue;
                                         }
                                         for (let property of data.properties) {
-                                            if (ibas.strings.equalsIgnoreCase(propertyName, property.property)) {
+                                            if (ibas.strings.equalsIgnoreCase(propertyName, property.name)) {
                                                 if (property.values instanceof Array) {
                                                     for (let item of property.values) {
                                                         if (ibas.strings.equals(item.value, value)) {

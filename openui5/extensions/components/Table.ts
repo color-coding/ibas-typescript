@@ -320,14 +320,14 @@ namespace sap {
                 /**
                  * 获取数据信息
                  */
-                getDataInfo(this: DataTable): { code: string, name?: string } | string | Function | shell.bo.IBOInfo {
+                getDataInfo(this: DataTable): { code: string, name?: string } | string | Function | shell.bo.IBizObjectInfo {
                     return this.getProperty("dataInfo");
                 },
                 /**
                  * 设置数据信息
                  * @param value 数据信息
                  */
-                setDataInfo(this: DataTable, value: { code: string, name?: string } | string | Function | shell.bo.IBOInfo): DataTable {
+                setDataInfo(this: DataTable, value: { code: string, name?: string } | string | Function | shell.bo.IBizObjectInfo): DataTable {
                     return this.setProperty("dataInfo", value);
                 },
                 /**
@@ -340,7 +340,7 @@ namespace sap {
                  * 设置属性过滤器
                  * @param value 过滤器
                  */
-                setPropertyFilter(value: (property: shell.bo.IBOPropertyInfo) => boolean): DataTable {
+                setPropertyFilter(value: (property: shell.bo.IBizPropertyInfo) => boolean): DataTable {
                     return this.setProperty("propertyFilter", value);
                 },
                 /** 重构设置 */
@@ -363,7 +363,8 @@ namespace sap {
                         } else {
                             let info: { code: string, name?: string } = dataInfo;
                             let boRepository: shell.bo.IBORepositoryShell = ibas.boFactory.create(shell.bo.BO_REPOSITORY_SHELL);
-                            boRepository.fetchBOInfos({
+                            boRepository.fetchBizObjectInfo({
+                                user: ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE),
                                 boCode: ibas.config.applyVariables(info.code),
                                 boName: info.name,
                                 onCompleted: (opRslt) => {
@@ -408,7 +409,7 @@ namespace sap {
                                     if (column instanceof DataColumn) {
                                         let template: sap.ui.core.Control | string = column.getTemplate();
                                         if (template instanceof sap.ui.core.Control) {
-                                            let bindingInfo: any = (<any>template).getBindingInfo("bindingValue");
+                                            let bindingInfo: any = managedobjects.bindingInfo(template, "bindingValue");
                                             if (!ibas.objects.isNull(bindingInfo)) {
                                                 userfields.check(userFields, bindingInfo);
                                             }
@@ -430,45 +431,60 @@ namespace sap {
                     });
                 }
             });
-            function propertyColumns(this: DataTable, boInfo: shell.bo.IBOInfo): void {
+            function propertyColumns(this: DataTable, boInfo: shell.bo.IBizObjectInfo): void {
                 if (!boInfo || !(boInfo.properties instanceof Array)) {
                     return;
                 }
                 // 查询未存在的属性
-                let filter: Function = this.getPropertyFilter();
-                let properties: ibas.IList<shell.bo.IBOPropertyInfo> = new ibas.ArrayList<shell.bo.IBOPropertyInfo>();
-                for (let item of boInfo.properties) {
-                    if (item.editSize <= 0) {
-                        continue;
-                    }
-                    if (item.authorised === ibas.emAuthoriseType.NONE) {
-                        continue;
-                    }
-                    if (filter instanceof Function) {
-                        if (filter(item) === false) {
-                            continue;
-                        }
-                    }
-                    properties.add(item);
-                }
+                let properties: shell.bo.IBizPropertyInfo[] = boInfo.properties.splice(0);
                 // 只读列表（遍历列，存在输入框则非只读）
                 let readonly: boolean = true;
                 for (let column of this.getColumns()) {
                     if (column instanceof DataColumn) {
                         let template: sap.ui.core.Control | string = column.getTemplate();
                         if (template instanceof sap.ui.core.Control) {
-                            if (template instanceof sap.m.InputBase) {
-                                readonly = false;
-                                break;
+                            let bindingPath: string = managedobjects.bindingPath(template, "bindingValue");
+                            let index: number = properties.findIndex(c => ibas.strings.equalsIgnoreCase(c.name, bindingPath));
+                            if (index < 0) {
+                                continue;
+                            }
+                            let propertyInfo: shell.bo.IBizPropertyInfo = properties[index];
+                            if (!ibas.objects.isNull(propertyInfo)) {
+                                column.setPropertyInfo(propertyInfo);
+                                if (propertyInfo.authorised === ibas.emAuthoriseType.NONE) {
+                                    column.setVisible(false);
+                                } else if (propertyInfo.authorised === ibas.emAuthoriseType.READ) {
+                                    controls.nonEditable(template);
+                                }
+                                if (propertyInfo.searched === true) {
+                                    column.setSortProperty(propertyInfo.name);
+                                    column.setFilterProperty(propertyInfo.name);
+                                }
+                                if (template instanceof sap.m.InputBase) {
+                                    readonly = false;
+                                }
+                                properties[index] = null;
                             }
                         }
                     }
                 }
                 // 创建未存在的列
                 for (let property of properties) {
+                    if (ibas.objects.isNull(property)) {
+                        continue;
+                    }
+                    if (ibas.objects.isNull(property.authorised)) {
+                        continue;
+                    }
+                    if (property.authorised === ibas.emAuthoriseType.NONE) {
+                        continue;
+                    }
                     this.addColumn(new DataColumn("", {
+                        propertyInfo: property,
                         label: property.description,
                         template: factories.newComponent(property, readonly ? "Text" : "Input"),
+                        sortProperty: property.searched === true ? property.name : undefined,
+                        filterProperty: property.searched === true ? property.name : undefined,
                     }));
                 }
             }
@@ -486,14 +502,14 @@ namespace sap {
                 /**
                  * 获取属性信息
                  */
-                getPropertyInfo(this: Column): shell.bo.IBOPropertyInfo {
+                getPropertyInfo(this: Column): shell.bo.IBizPropertyInfo {
                     return this.getProperty("propertyInfo");
                 },
                 /**
                  * 设置属性信息
                  * @param value 值
                  */
-                setPropertyInfo(this: Column, value: shell.bo.IBOPropertyInfo): Column {
+                setPropertyInfo(this: Column, value: shell.bo.IBizPropertyInfo): Column {
                     return this.setProperty("propertyInfo", value);
                 }
             });

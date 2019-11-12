@@ -104,21 +104,12 @@ declare namespace sap {
                 /**
                  * 获取数据信息
                  */
-                getDataInfo(): { code: string, name?: string } | string | shell.bo.IBOInfo;
+                getDataInfo(): { code: string, name?: string } | string | shell.bo.IBizObjectInfo;
                 /**
                  * 设置数据信息
                  * @param value 值
                  */
-                setDataInfo(value: { code: string, name?: string } | string | shell.bo.IBOInfo): this;
-                /**
-                 * 获取属性过滤器
-                 */
-                getPropertyFilter(): Function;
-                /**
-                 * 设置属性过滤器
-                 * @param value 过滤器
-                 */
-                setPropertyFilter(value: (property: shell.bo.IBOPropertyInfo) => boolean): this;
+                setDataInfo(value: { code: string, name?: string } | string | shell.bo.IBizObjectInfo): this;
             }
             /**
              * 数据表格列
@@ -127,12 +118,12 @@ declare namespace sap {
                 /**
                  * 获取属性信息
                  */
-                getPropertyInfo(): shell.bo.IBOPropertyInfo;
+                getPropertyInfo(): shell.bo.IBizPropertyInfo;
                 /**
                  * 设置属性信息
                  * @param value 值
                  */
-                setPropertyInfo(value: shell.bo.IBOPropertyInfo): this;
+                setPropertyInfo(value: shell.bo.IBizPropertyInfo): this;
             }
         }
     }

@@ -82,16 +82,6 @@ namespace sap {
                 }
                 return criteria;
             }
-            /** 检查绑定信息 */
-            export function checkBindingInfo(this: sap.ui.base.ManagedObject, sName: string, oBindingInfo: any): boolean {
-                if (ibas.strings.equals(sName, "bindingValue") && !ibas.objects.isNull(oBindingInfo) && !ibas.objects.isNull(oBindingInfo.path)) {
-                    if (!oBindingInfo.formatter && !oBindingInfo.type) {
-                        ibas.logger.log(ibas.emMessageLevel.WARN, "{0}: [{1} -> {2}] not specify the type of binding.", this.getId(), sName, oBindingInfo.path);
-                        return false;
-                    }
-                }
-                return true;
-            }
         }
         /**
          * 变量
@@ -155,6 +145,144 @@ namespace sap {
                 values.set(key, value);
             }
         }
+        /** 用户字段相关 */
+        export namespace userfields {
+            function toDbFieldType(type: sap.extension.data.Type): ibas.emDbFieldType {
+                if (type instanceof sap.extension.data.Numeric) {
+                    return ibas.emDbFieldType.NUMERIC;
+                } else if (type instanceof sap.extension.data.Decimal) {
+                    return ibas.emDbFieldType.DECIMAL;
+                } else if (type instanceof sap.extension.data.Date) {
+                    return ibas.emDbFieldType.DATE;
+                } else if (type instanceof sap.extension.data.DateTime) {
+                    return ibas.emDbFieldType.DATE;
+                } else if (type instanceof sap.extension.data.Time) {
+                    return ibas.emDbFieldType.NUMERIC;
+                }
+                return ibas.emDbFieldType.ALPHANUMERIC;
+            }
+            /**
+             * 检查用户字段（注册或更新绑定信息）
+             * @param bindingInfo 绑定信息
+             * @param userFields 用户字段
+             * @returns 是否更新绑定信息
+             */
+            export function check(userFields: ibas.IUserFields, bindingInfo: managedobjects.IBindingInfo | managedobjects.IBindingInfo[]): boolean {
+                for (let item of ibas.arrays.create(bindingInfo)) {
+                    if (ibas.strings.isWith(item.path, "u_", undefined)) {
+                        let name: string = item.path;
+                        name = name[0].toUpperCase() + name.substring(1);
+                        let userField: ibas.IUserField = userFields.register(name, toDbFieldType(item.type instanceof sap.extension.data.Type ? item.type : undefined));
+                        if (!ibas.objects.isNull(userField)) {
+                            let index: number = userFields.indexOf(userField);
+                            item.path = ibas.strings.format("userFields/{0}/value", index);
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+        }
+        /** 管理对象 */
+        export namespace managedobjects {
+            /** 绑定信息 */
+            export interface IBindingInfo {
+                path: string;
+                type?: sap.ui.model.Type | string;
+            }
+            /**
+             * 检查绑定信息
+             * @param mObject 对象
+             * @param path 路径
+             * @param bindingInfo 绑定信息
+             */
+            export function checkBinding(mObject: sap.ui.base.ManagedObject, path: string, bindingInfo: any): boolean {
+                if (this instanceof sap.ui.base.ManagedObject) {
+                    mObject = this;
+                    path = arguments[0];
+                    bindingInfo = arguments[1];
+                }
+                return function (this: sap.ui.base.ManagedObject): boolean {
+                    if (!(this instanceof sap.ui.base.ManagedObject)) {
+                        return undefined;
+                    }
+                    if (ibas.strings.equals(path, "bindingValue") && !ibas.objects.isNull(bindingInfo) && !ibas.objects.isNull(bindingInfo.path)) {
+                        if (!bindingInfo.formatter && !bindingInfo.type) {
+                            ibas.logger.log(ibas.emMessageLevel.WARN, "{0}: [{1} -> {2}] not specify the type of binding.", this.getId(), path, bindingInfo.path);
+                            return false;
+                        }
+                    }
+                    return true;
+                }.call(mObject);
+            }
+            /**
+             * 绑定信息
+             * @param mObject 对象
+             * @param property 绑定的属性
+             */
+            export function bindingInfo(mObject: sap.ui.base.ManagedObject, property: string): IBindingInfo | IBindingInfo[] {
+                if (this instanceof sap.ui.base.ManagedObject) {
+                    mObject = this;
+                    property = arguments[0];
+                }
+                return function (this: sap.ui.base.ManagedObject): IBindingInfo | IBindingInfo[] {
+                    if (!(this instanceof sap.ui.base.ManagedObject)) {
+                        return undefined;
+                    }
+                    let bindings: IBindingInfo[] = [];
+                    let bindingInfo: {
+                        parts: IBindingInfo[]
+                    } = this.getBindingInfo(property);
+                    if (bindingInfo) {
+                        if (bindingInfo.parts instanceof Array) {
+                            for (let item of bindingInfo.parts) {
+                                bindings.push(item);
+                            }
+                        } else {
+                            bindings.push(<IBindingInfo><any>bindingInfo);
+                        }
+                    }
+                    return bindings;
+                }.call(mObject);
+            }
+            export function bindingPath(mObject: sap.ui.base.ManagedObject, property: string): string {
+                if (this instanceof sap.ui.base.ManagedObject) {
+                    mObject = this;
+                    property = arguments[0];
+                }
+                return function (this: sap.ui.base.ManagedObject): string {
+                    if (!(this instanceof sap.ui.base.ManagedObject)) {
+                        return undefined;
+                    }
+                    return this.getBindingPath(property);
+                }.call(mObject);
+            }
+        }
+        export namespace controls {
+            /**
+             * 设置控件不可编辑
+             * @param contorl 控件
+             */
+            export function nonEditable(control: sap.ui.core.Control): void {
+                if (control instanceof sap.m.InputBase) {
+                    control.setEditable(false);
+                } else if (control instanceof sap.m.Select) {
+                    try {
+                        control.setEditable(false);
+                    } catch (error) {
+                        control.setEnabled(false);
+                    }
+                } else if (control instanceof sap.m.CheckBox) {
+                    control.setEditable(false);
+                } else if (control instanceof sap.extension.core.EditableControl) {
+                    control.setEditable(false);
+                } else if (control instanceof sap.m.Button || control instanceof sap.m.MenuButton) {
+                    control.setEnabled(false);
+                } else if (control instanceof sap.ui.table.Table) {
+                    control.setEditable(false);
+                }
+            }
+        }
         /** 页面操作集 */
         export namespace pages {
             /**
@@ -194,13 +322,10 @@ namespace sap {
                         }
                     }
                 } else {
-                    let binding: any = control.getBinding("bindingValue");
-                    if (binding instanceof sap.ui.model.Binding) {
-                        let sPath: string = (<any>binding).getPath();
-                        for (let item of properties) {
-                            if (ibas.strings.equalsIgnoreCase(item, sPath)) {
-                                return true;
-                            }
+                    let sPath: string = managedobjects.bindingPath(control, "bindingValue");
+                    for (let item of properties) {
+                        if (ibas.strings.equalsIgnoreCase(item, sPath)) {
+                            return true;
                         }
                     }
                 }
@@ -210,61 +335,13 @@ namespace sap {
                 if (!(properties instanceof Array)) {
                     properties = [];
                 }
-                if (control instanceof sap.m.InputBase) {
+                if (control instanceof sap.ui.table.Table) {
                     if (properties.length > 0) {
                         if (checkBinding(control, properties)) {
-                            control.setEditable(false);
+                            controls.nonEditable(control);
                         }
                     } else {
-                        control.setEditable(false);
-                    }
-                } else if (control instanceof sap.m.Select) {
-                    if (properties.length > 0) {
-                        if (checkBinding(control, properties)) {
-                            try {
-                                control.setEditable(false);
-                            } catch (error) {
-                                control.setEnabled(false);
-                            }
-                        }
-                    } else {
-                        try {
-                            control.setEditable(false);
-                        } catch (error) {
-                            control.setEnabled(false);
-                        }
-                    }
-                } else if (control instanceof sap.m.CheckBox) {
-                    if (properties.length > 0) {
-                        if (checkBinding(control, properties)) {
-                            control.setEditable(false);
-                        }
-                    } else {
-                        control.setEditable(false);
-                    }
-                } else if (control instanceof sap.extension.core.EditableControl) {
-                    if (properties.length > 0) {
-                        if (checkBinding(control, properties)) {
-                            control.setEditable(false);
-                        }
-                    } else {
-                        control.setEditable(false);
-                    }
-                } else if (control instanceof sap.m.Button || control instanceof sap.m.MenuButton) {
-                    if (properties.length > 0) {
-                        if (checkBinding(control, properties)) {
-                            control.setEnabled(false);
-                        }
-                    } else {
-                        control.setEnabled(false);
-                    }
-                } else if (control instanceof sap.ui.table.Table) {
-                    if (properties.length > 0) {
-                        if (checkBinding(control, properties)) {
-                            control.setEditable(false);
-                        }
-                    } else {
-                        control.setEditable(false);
+                        controls.nonEditable(control);
                     }
                     if (control.getEditable() === false) {
                         for (let row of control.getRows()) {
@@ -307,15 +384,19 @@ namespace sap {
                     for (let item of control.getContent()) {
                         nonEditable(item, properties);
                     }
+                } else {
+                    if (properties.length > 0) {
+                        if (checkBinding(control, properties)) {
+                            controls.nonEditable(control);
+                        }
+                    } else {
+                        controls.nonEditable(control);
+                    }
                 }
             }
         }
         /** 表格操作集 */
         export namespace tables {
-            interface IBindingInfo {
-                path: string;
-                type: sap.extension.data.Type;
-            }
             /**
              * 参照table列绑定，创建对象
              * @param table 参照表格
@@ -327,7 +408,7 @@ namespace sap {
                 if (datas instanceof Array && datas.length > 1) {
                     let titles: any[] = datas[0];
                     if (titles instanceof Array && titles.length > 0) {
-                        let properties: IBindingInfo[] = new Array<IBindingInfo>(titles.length);
+                        let properties: managedobjects.IBindingInfo[] = new Array<managedobjects.IBindingInfo>(titles.length);
                         for (let i: number = 0; i < titles.length; i++) {
                             let title: string = titles[i];
                             for (let column of table.getColumns()) {
@@ -336,11 +417,9 @@ namespace sap {
                                     if (title === label.getText()) {
                                         let template: any = column.getTemplate();
                                         if (template instanceof ui.core.Control) {
-                                            let bindingInfo: {
-                                                parts: IBindingInfo[]
-                                            } = (<any>template).getBindingInfo("bindingValue");
-                                            if (bindingInfo && bindingInfo.parts instanceof Array) {
-                                                properties[i] = bindingInfo.parts[0];
+                                            let bindingInfo: any = managedobjects.bindingInfo(template, "bindingValue");
+                                            if (bindingInfo instanceof Array && bindingInfo.length > 0) {
+                                                properties[i] = bindingInfo[0];
                                             }
                                         } break;
                                     }
@@ -353,7 +432,7 @@ namespace sap {
                                 let json: T = new type;
                                 for (let j: number = 0; j < data.length; j++) {
                                     let value: any = data[j];
-                                    let property: IBindingInfo = properties[j];
+                                    let property: managedobjects.IBindingInfo = properties[j];
                                     if (!ibas.strings.isEmpty(property)) {
                                         if (property.type instanceof sap.extension.data.Type) {
                                             json[property.path] = property.type.parseValue(value, typeof value);

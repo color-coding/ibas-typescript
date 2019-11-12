@@ -66,14 +66,14 @@ namespace sap {
                 /**
                  * 获取数据信息
                  */
-                getDataInfo(this: DataObjectPageLayout): { code: string, name?: string } | string | Function | shell.bo.IBOInfo {
+                getDataInfo(this: DataObjectPageLayout): { code: string, name?: string } | string | Function | shell.bo.IBizObjectInfo {
                     return this.getProperty("dataInfo");
                 },
                 /**
                  * 设置数据信息
                  * @param value 数据信息
                  */
-                setDataInfo(this: DataObjectPageLayout, value: { code: string, name?: string } | string | Function | shell.bo.IBOInfo): DataObjectPageLayout {
+                setDataInfo(this: DataObjectPageLayout, value: { code: string, name?: string } | string | Function | shell.bo.IBizObjectInfo): DataObjectPageLayout {
                     return this.setProperty("dataInfo", value);
                 },
                 /**
@@ -86,7 +86,7 @@ namespace sap {
                  * 设置属性过滤器
                  * @param value 过滤器
                  */
-                setPropertyFilter(value: (property: shell.bo.IBOPropertyInfo) => boolean): DataObjectPageLayout {
+                setPropertyFilter(value: (property: shell.bo.IBizPropertyInfo) => boolean): DataObjectPageLayout {
                     return this.setProperty("propertyFilter", value);
                 },
                 /** 重构设置 */
@@ -110,7 +110,8 @@ namespace sap {
                         } else {
                             let info: { code: string, name?: string } = dataInfo;
                             let boRepository: shell.bo.IBORepositoryShell = ibas.boFactory.create(shell.bo.BO_REPOSITORY_SHELL);
-                            boRepository.fetchBOInfos({
+                            boRepository.fetchBizObjectInfo({
+                                user: ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE),
                                 boCode: ibas.config.applyVariables(info.code),
                                 boName: info.name,
                                 onCompleted: (opRslt) => {
@@ -147,7 +148,7 @@ namespace sap {
                                 let section: any = sap.ui.getCore().byId(this.getId() + "_extendSection");
                                 if (section instanceof sap.uxap.ObjectPageSubSection) {
                                     for (let item of section.getBlocks()) {
-                                        let bindingInfo: any = (<any>item).getBindingInfo("text");
+                                        let bindingInfo: any = managedobjects.bindingInfo(item, "text");
                                         if (!ibas.objects.isNull(bindingInfo)) {
                                             userfields.check(userFields, bindingInfo);
                                         }
@@ -159,35 +160,32 @@ namespace sap {
                     return ObjectPageLayout.prototype.setModel.apply(this, arguments);
                 },
             });
-            function propertyControls(this: DataObjectPageLayout, boInfo: shell.bo.IBOInfo): void {
+            function propertyControls(this: DataObjectPageLayout, boInfo: shell.bo.IBizObjectInfo): void {
                 if (!boInfo || !(boInfo.properties instanceof Array)) {
                     return;
                 }
                 // 查询未存在的属性
-                let filter: Function = this.getPropertyFilter();
-                let properties: ibas.IList<shell.bo.IBOPropertyInfo> = new ibas.ArrayList<shell.bo.IBOPropertyInfo>();
-                for (let item of boInfo.properties) {
-                    if (item.editSize <= 0) {
+                let properties: shell.bo.IBizPropertyInfo[] = boInfo.properties.splice(0);
+                let section: sap.uxap.ObjectPageSubSection;
+                for (let property of properties) {
+                    if (ibas.objects.isNull(property)) {
                         continue;
                     }
-                    if (item.authorised === ibas.emAuthoriseType.NONE) {
+                    if (ibas.objects.isNull(property.authorised)) {
                         continue;
                     }
-                    if (filter instanceof Function) {
-                        if (filter(item) === false) {
-                            continue;
-                        }
+                    if (property.authorised === ibas.emAuthoriseType.NONE) {
+                        continue;
                     }
-                    properties.add(item);
+                    if (ibas.objects.isNull(section)) {
+                        section = new sap.uxap.ObjectPageSubSection(this.getId() + "_extendSection", {
+                            blocks: [
+                            ],
+                        });
+                    }
+                    section.addBlock(factories.newComponent(property, "Object"));
                 }
-                if (properties.length > 0) {
-                    let section: sap.uxap.ObjectPageSubSection = new sap.uxap.ObjectPageSubSection(this.getId() + "_extendSection", {
-                        blocks: [
-                        ],
-                    });
-                    for (let property of properties) {
-                        section.addBlock(factories.newComponent(property, "Object"));
-                    }
+                if (!ibas.objects.isNull(section)) {
                     this.addSection(new sap.uxap.ObjectPageSection("", {
                         title: ibas.i18n.prop("openui5_object_other_properties"),
                         subSections: [

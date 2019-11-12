@@ -14,23 +14,23 @@ namespace sap {
              * @param property 属性信息
              * @param textView 文本视图
              */
-            export function newComponent(property: shell.bo.IBOPropertyInfo, mode: "Text" | "Input" | "Object" | "Object.2"): sap.ui.core.Control {
+            export function newComponent(property: shell.bo.IBizPropertyInfo, mode: "Text" | "Input" | "Object" | "Object.2"): sap.ui.core.Control {
                 // 创建绑定信息
                 let bindInfo: {
                     path: string,
                     type?: sap.extension.data.Type
                 } = {
-                    path: property.property[0].toLowerCase() + property.property.substring(1)
+                    path: property.name[0].toLowerCase() + property.name.substring(1)
                 };
-                if (property.property === "DocumentStatus" || property.property === "LineStatus") {
+                if (property.name === "DocumentStatus" || property.name === "LineStatus") {
                     bindInfo.type = new sap.extension.data.DocumentStatus(mode === "Text" ? true : false);
-                } else if (property.property === "ApprovalStatus") {
+                } else if (property.name === "ApprovalStatus") {
                     bindInfo.type = new sap.extension.data.ApprovalStatus(mode === "Text" ? true : false);
-                } else if (property.property === "Direction") {
+                } else if (property.name === "Direction") {
                     bindInfo.type = new sap.extension.data.Direction(mode === "Text" ? true : false);
-                } else if (property.property === "Canceled" || property.property === "Referenced"
-                    || property.property === "Locked" || property.property === "Transfered"
-                    || property.property === "Activated" || property.property === "Deleted") {
+                } else if (property.name === "Canceled" || property.name === "Referenced"
+                    || property.name === "Locked" || property.name === "Transfered"
+                    || property.name === "Activated" || property.name === "Deleted") {
                     bindInfo.type = new sap.extension.data.YesNo(mode === "Text" ? true : false);
                 } else if (property.dataType === "Numeric") {
                     bindInfo.type = new sap.extension.data.Numeric();
@@ -189,52 +189,6 @@ namespace sap {
                 } else {
                     return null;
                 }
-            }
-        }
-        /** 用户字段相关 */
-        export namespace userfields {
-
-            function toDbFieldType(type: sap.extension.data.Type): ibas.emDbFieldType {
-                if (type instanceof sap.extension.data.Numeric) {
-                    return ibas.emDbFieldType.NUMERIC;
-                } else if (type instanceof sap.extension.data.Decimal) {
-                    return ibas.emDbFieldType.DECIMAL;
-                } else if (type instanceof sap.extension.data.Date) {
-                    return ibas.emDbFieldType.DATE;
-                } else if (type instanceof sap.extension.data.DateTime) {
-                    return ibas.emDbFieldType.DATE;
-                } else if (type instanceof sap.extension.data.Time) {
-                    return ibas.emDbFieldType.NUMERIC;
-                }
-                return ibas.emDbFieldType.ALPHANUMERIC;
-            }
-            /**
-             * 检查用户字段（注册或更新绑定信息）
-             * @param bindingInfo 绑定信息
-             * @param userFields 用户字段
-             * @returns 是否更新绑定信息
-             */
-            export function check(userFields: ibas.IUserFields, bindingInfo: {
-                parts: {
-                    path: string,
-                    type: sap.extension.data.Type,
-                }[]
-            }): boolean {
-                if (bindingInfo && bindingInfo.parts instanceof Array) {
-                    for (let item of bindingInfo.parts) {
-                        if (ibas.strings.isWith(item.path, "u_", undefined)) {
-                            let name: string = item.path;
-                            name = name[0].toUpperCase() + name.substring(1);
-                            let userField: ibas.IUserField = userFields.register(name, toDbFieldType(item.type));
-                            if (!ibas.objects.isNull(userField)) {
-                                let index: number = userFields.indexOf(userField);
-                                item.path = ibas.strings.format("userFields/{0}/value", index);
-                                return true;
-                            }
-                        }
-                    }
-                }
-                return false;
             }
         }
     }

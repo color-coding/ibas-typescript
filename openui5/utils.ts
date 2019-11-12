@@ -603,18 +603,19 @@ namespace openui5 {
                 return;
             }
             let boRepository: shell.bo.IBORepositoryShell = ibas.boFactory.create(shell.bo.BO_REPOSITORY_SHELL);
-            boRepository.fetchBOInfos({
+            boRepository.fetchBizObjectInfo({
+                user: ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE),
                 boCode: boCode,
                 boName: boName,
-                onCompleted(opRslt: ibas.IOperationResult<shell.bo.IBOInfo>): void {
-                    let boInfo: shell.bo.IBOInfo = opRslt.resultObjects.firstOrDefault();
+                onCompleted(opRslt: ibas.IOperationResult<shell.bo.IBizObjectInfo>): void {
+                    let boInfo: shell.bo.IBizObjectInfo = opRslt.resultObjects.firstOrDefault();
                     if (ibas.objects.isNull(boInfo)) {
                         return;
                     }
                     if (ibas.objects.isNull(boInfo.properties)) {
                         return;
                     }
-                    let properties: ibas.IList<shell.bo.IBOPropertyInfo> = new ibas.ArrayList();
+                    let properties: ibas.IList<shell.bo.IBizPropertyInfo> = new ibas.ArrayList();
                     for (let item of boInfo.properties) {
                         if (item.systemed) {
                             continue;
@@ -648,7 +649,7 @@ namespace openui5 {
                                     }
                                 } else {
                                     for (let index: number = 0; index < properties.length; index++) {
-                                        let property: shell.bo.IBOPropertyInfo = properties[index];
+                                        let property: shell.bo.IBizPropertyInfo = properties[index];
                                         userFieldForm.addContent(new sap.m.Label("", { text: property.description }));
                                         let control: sap.ui.core.Control = createUserFieldControl(property, ibas.strings.format("userFields/{0}/value", index), readOnly);
                                         if (!ibas.objects.isNull(control)) {
@@ -678,7 +679,7 @@ namespace openui5 {
                         // 查询属性信息回调函数
                         registerUserField(bo, properties);
                         for (let index: number = 0; index < properties.length; index++) {
-                            let property: shell.bo.IBOPropertyInfo = properties[index];
+                            let property: shell.bo.IBizPropertyInfo = properties[index];
                             let column: sap.ui.table.Column = new sap.ui.table.Column("", {
                                 label: property.description
                             });
@@ -705,7 +706,7 @@ namespace openui5 {
                             }
                         } else {
                             for (let index: number = 0; index < properties.length; index++) {
-                                let property: shell.bo.IBOPropertyInfo = properties[index];
+                                let property: shell.bo.IBizPropertyInfo = properties[index];
                                 container.addContent(new sap.m.Label("", { text: property.description }));
                                 let control: any = createUserFieldControl(property, ibas.strings.format("userFields/{0}/value", index), readOnly);
                                 if (!ibas.objects.isNull(control)) {
@@ -728,7 +729,7 @@ namespace openui5 {
          * @param bo 对象实例
          * @param properties 对象自定义字段信息
          */
-        export function registerUserField(bo: any, properties?: Array<shell.bo.IBOPropertyInfo>): void {
+        export function registerUserField(bo: any, properties?: Array<shell.bo.IBizPropertyInfo>): void {
             if (ibas.objects.isNull(bo)) {
                 return;
             }
@@ -739,7 +740,7 @@ namespace openui5 {
                     return;
                 }
                 for (let item of properties) {
-                    bo.userFields.register(item.property, ibas.enums.valueOf(ibas.emDbFieldType, item.dataType));
+                    bo.userFields.register(item.name, ibas.enums.valueOf(ibas.emDbFieldType, item.dataType));
                 }
             } else if (boType instanceof Function) {
                 // 对象类型
@@ -752,18 +753,19 @@ namespace openui5 {
                     boCode = (<any>bo).name;
                 }
                 let boRepository: shell.bo.IBORepositoryShell = ibas.boFactory.create(shell.bo.BO_REPOSITORY_SHELL);
-                boRepository.fetchBOInfos({
+                boRepository.fetchBizObjectInfo({
+                    user: ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE),
                     boCode: boCode,
-                    onCompleted(opRslt: ibas.IOperationResult<shell.bo.IBOInfo>): void {
+                    onCompleted(opRslt: ibas.IOperationResult<shell.bo.IBizObjectInfo>): void {
                         let register: Function = function (data: any): void {
                             if (!(data instanceof ibas.BusinessObject)) {
                                 return;
                             }
-                            let boInfo: shell.bo.IBOInfo = opRslt.resultObjects.firstOrDefault(
+                            let boInfo: shell.bo.IBizObjectInfo = opRslt.resultObjects.firstOrDefault(
                                 c => c.name === ibas.objects.nameOf(data));
                             if (!ibas.objects.isNull(boInfo)) {
                                 for (let item of boInfo.properties) {
-                                    data.userFields.register(item.property, ibas.enums.valueOf(ibas.emDbFieldType, item.dataType));
+                                    data.userFields.register(item.name, ibas.enums.valueOf(ibas.emDbFieldType, item.dataType));
                                 }
                             }
                             for (let item in data) {
@@ -789,7 +791,7 @@ namespace openui5 {
          * @param bindingPath 属性绑定路径 bindProperty("dateValue", { path: bindingPath});
          * @param readOnly 是否只读
          */
-        export function createUserFieldControl(userFieldInfo: shell.bo.IBOPropertyInfo, bindingPath?: string, readOnly: boolean = false): sap.ui.core.Control {
+        export function createUserFieldControl(userFieldInfo: shell.bo.IBizPropertyInfo, bindingPath?: string, readOnly: boolean = false): sap.ui.core.Control {
             if (ibas.strings.isEmpty(bindingPath) || userFieldInfo.authorised === ibas.emAuthoriseType.NONE) {
                 return null;
             }

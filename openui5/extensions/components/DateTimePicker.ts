@@ -64,7 +64,7 @@ namespace sap {
                 },
                 /** 重写绑定 */
                 bindProperty(this: DatePicker, sName: string, oBindingInfo: any): DatePicker {
-                    utils.checkBindingInfo.apply(this, arguments);
+                    managedobjects.checkBinding.apply(this, arguments);
                     sap.m.DatePicker.prototype.bindProperty.apply(this, arguments);
                     return this;
                 }
@@ -136,7 +136,7 @@ namespace sap {
                 },
                 /** 重写绑定 */
                 bindProperty(this: TimePicker, sName: string, oBindingInfo: any): TimePicker {
-                    utils.checkBindingInfo.apply(this, arguments);
+                    managedobjects.checkBinding.apply(this, arguments);
                     sap.m.TimePicker.prototype.bindProperty.apply(this, arguments);
                     return this;
                 }

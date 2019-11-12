@@ -47,7 +47,7 @@ namespace sap {
                 },
                 /** 重写绑定 */
                 bindProperty(this: Input, sName: string, oBindingInfo: any): Input {
-                    utils.checkBindingInfo.apply(this, arguments);
+                    managedobjects.checkBinding.apply(this, arguments);
                     sap.m.Input.prototype.bindProperty.apply(this, arguments);
                     return this;
                 },
@@ -384,7 +384,7 @@ namespace sap {
                 },
                 /** 重写绑定 */
                 bindProperty(this: TextArea, sName: string, oBindingInfo: any): TextArea {
-                    utils.checkBindingInfo.apply(this, arguments);
+                    managedobjects.checkBinding.apply(this, arguments);
                     sap.m.TextArea.prototype.bindProperty.apply(this, arguments);
                     return this;
                 }

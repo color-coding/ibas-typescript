@@ -261,9 +261,10 @@ namespace shell {
                     let boName: string = this.targetName;
                     if (!ibas.objects.isNull(boName)) {
                         let boRepository: bo.IBORepositoryShell = bo.repository.create();
-                        boRepository.fetchBOInfos({
+                        boRepository.fetchBizObjectInfo({
+                            user: ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE),
                             boCode: boName,
-                            onCompleted(opRslt: ibas.IOperationResult<bo.IBOInfo>): void {
+                            onCompleted(opRslt: ibas.IOperationResult<bo.IBizObjectInfo>): void {
                                 if (opRslt.resultCode !== 0) {
                                     that.messages(ibas.emMessageType.WARNING, opRslt.message);
                                 }
@@ -280,7 +281,7 @@ namespace shell {
                                             continue;
                                         }
                                         let condition: ibas.ICondition = criteria.conditions.create();
-                                        condition.alias = boProperty.property;
+                                        condition.alias = boProperty.name;
                                         condition.value = that.view.searchContent;
                                         condition.operation = ibas.emConditionOperation.CONTAIN;
                                         // 修正查询关系为或
