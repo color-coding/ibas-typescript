@@ -677,6 +677,39 @@ namespace sap {
                     return this;
                 },
             });
+            /**
+             * 数据所有者-输入框
+             */
+            UserInput.extend("sap.extension.m.DataOwnerInput", {
+                metadata: {
+                    properties: {
+                    },
+                    events: {}
+                },
+                renderer: {},
+                init(this: DataOwnerInput): void {
+                    (<any>UserInput.prototype).init.apply(this, arguments);
+                    this.attachModelContextChange(undefined, function (event: sap.ui.base.Event): void {
+                        let source: any = event.getSource();
+                        if (source instanceof UserInput) {
+                            let content: any = source.getBindingContext();
+                            if (content instanceof sap.ui.model.Context) {
+                                let data: any = content.getObject();
+                                if (data instanceof ibas.BusinessObject) {
+                                    if (data.isNew === true) {
+                                        let binding: any = source.getBinding("bindingValue");
+                                        if (binding instanceof sap.ui.model.PropertyBinding) {
+                                            if (!(binding.getRawValue() > 0)) {
+                                                binding.setValue(ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_ID));
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            });
         }
     }
 }
