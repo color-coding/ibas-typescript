@@ -245,10 +245,30 @@ namespace sap {
                     return bindings;
                 }.call(mObject);
             }
-            export function bindingPath(mObject: sap.ui.base.ManagedObject, property: string): string {
+            export function bindingPath(mObject: sap.ui.base.ManagedObject, property: string = undefined): string {
                 if (this instanceof sap.ui.base.ManagedObject) {
                     mObject = this;
                     property = arguments[0];
+                }
+                if (ibas.objects.isNull(property)) {
+                    let metadata: any = (<any>mObject).getMetadata();
+                    if (metadata instanceof sap.ui.base.ManagedObjectMetadata) {
+                        if (metadata.hasProperty("bindingValue")) {
+                            property = "bindingValue";
+                        } else if (metadata.hasProperty("value")) {
+                            property = "value";
+                        } else if (metadata.hasProperty("dataValue")) {
+                            property = "dataValue";
+                        } else if (metadata.hasProperty("number")) {
+                            property = "number";
+                        } else if (metadata.hasProperty("text")) {
+                            property = "text";
+                        } else if (metadata.hasProperty("selectedKey")) {
+                            property = "selectedKey";
+                        } else if (metadata.hasProperty("selected")) {
+                            property = "selected";
+                        }
+                    }
                 }
                 return function (this: sap.ui.base.ManagedObject): string {
                     if (!(this instanceof sap.ui.base.ManagedObject)) {
@@ -322,7 +342,7 @@ namespace sap {
                         }
                     }
                 } else {
-                    let sPath: string = managedobjects.bindingPath(control, "bindingValue");
+                    let sPath: string = managedobjects.bindingPath(control);
                     for (let item of properties) {
                         if (ibas.strings.equalsIgnoreCase(item, sPath)) {
                             return true;

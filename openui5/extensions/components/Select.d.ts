@@ -152,7 +152,7 @@ declare namespace sap {
             /**
              * 重复字符计数-选择框
              */
-            class RepeatCountSelect extends Select {
+            class RepeatCharSelect extends Select {
                 /**
                  * 获取最大数
                  */
@@ -171,33 +171,6 @@ declare namespace sap {
                  * @param value 重复内容
                  */
                 setRepeateText(value: string): this;
-                /**
-                 * 加载可选值
-                 */
-                loadItems(): this;
-            }
-            /**
-             * 对象属性别名-选择框
-             */
-            class BizPropertySelect extends Select {
-                /**
-                 * 获取对象信息
-                 */
-                getObjectInfo(): string | { code: string, name: string };
-                /**
-                 * 设置对象信息
-                 * @param value 对象信息
-                 */
-                setObjectInfo(value: string | { code: string, name: string }): this;
-                /**
-                 * 获取名称类型
-                 */
-                getNamingType(): emPropertyNamingType;
-                /**
-                 * 设置别名值属性
-                 * @param value 别名值属性
-                 */
-                setNamingType(value: emPropertyNamingType): this;
                 /**
                  * 加载可选值
                  */

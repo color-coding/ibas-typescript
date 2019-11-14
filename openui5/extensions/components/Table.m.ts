@@ -172,11 +172,29 @@ namespace sap {
                     return;
                 }
                 // 查询未存在的属性
-                let properties: shell.bo.IBizPropertyInfo[] = boInfo.properties.splice(0);
+                let properties: shell.bo.IBizPropertyInfo[] = Object.assign([], boInfo.properties);
                 // 创建未存在的列
                 let bindingInfo: any = this.getBindingInfo("items");
                 if (bindingInfo && bindingInfo.template instanceof sap.m.ColumnListItem) {
                     let template: sap.m.ColumnListItem = bindingInfo.template;
+                    for (let item of template.getCells()) {
+                        let bindingPath: string = managedobjects.bindingPath(item);
+                        let index: number = properties.findIndex(c => c && ibas.strings.equalsIgnoreCase(c.name, bindingPath));
+                        if (index < 0) {
+                            continue;
+                        }
+                        let propertyInfo: shell.bo.IBizPropertyInfo = properties[index];
+                        if (!ibas.objects.isNull(propertyInfo)) {
+                            properties[index] = null;
+                            if (propertyInfo.authorised === ibas.emAuthoriseType.NONE) {
+                                index = template.indexOfCell(item);
+                                if (index > 0 && index < this.getColumns().length) {
+                                    this.getColumns()[index].setVisible(false);
+                                }
+                                item.setVisible(false);
+                            }
+                        }
+                    }
                     for (let property of properties) {
                         if (ibas.objects.isNull(property)) {
                             continue;
@@ -187,10 +205,17 @@ namespace sap {
                         if (property.authorised === ibas.emAuthoriseType.NONE) {
                             continue;
                         }
-                        this.addColumn(new Column("", {
+                        let column: any = new Column("", {
                             header: property.description,
-                        }));
-                        template.addCell(factories.newComponent(property, "Object.2"));
+                        });
+                        let component: any = factories.newComponent(property, "Object.2");
+                        if (property.position > 0) {
+                            this.insertColumn(column, property.position);
+                            template.insertCell(component, property.position);
+                        } else {
+                            this.addColumn(column);
+                            template.addCell(component);
+                        }
                     }
                 }
             }

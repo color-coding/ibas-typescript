@@ -96,6 +96,8 @@ namespace shell {
             Description: string;
             /** 别名 */
             Alias: string;
+            /** 位置 */
+            Position: number;
             /** 数据类型 */
             DataType: string;
             /** 编辑类型 */

@@ -497,7 +497,7 @@ namespace sap {
             /**
              * 重复字符计数-选择框
              */
-            Select.extend("sap.extension.m.RepeatCountSelect", {
+            Select.extend("sap.extension.m.RepeatCharSelect", {
                 metadata: {
                     properties: {
                         /** 选择内容数量 */
@@ -509,7 +509,7 @@ namespace sap {
                 },
                 renderer: {},
                 /** 重构设置 */
-                applySettings(this: RepeatCountSelect): RepeatCountSelect {
+                applySettings(this: RepeatCharSelect): RepeatCharSelect {
                     Select.prototype.applySettings.apply(this, arguments);
                     if (this.getItems().length === 0) {
                         this.loadItems();
@@ -519,7 +519,7 @@ namespace sap {
                 /**
                  * 加载可选值
                  */
-                loadItems(this: RepeatCountSelect): RepeatCountSelect {
+                loadItems(this: RepeatCharSelect): RepeatCharSelect {
                     this.destroyItems();
                     let vChar: string = this.getRepeateText();
                     if (ibas.strings.isEmpty(vChar)) {
@@ -538,97 +538,6 @@ namespace sap {
                             text: builder.toString(),
                         }));
                     }
-                    return this;
-                }
-            });
-            export enum emPropertyNamingType {
-                PROPERTY,
-                ALIAS
-            }
-            /**
-             * 对象属性别名-选择框
-             */
-            Select.extend("sap.extension.m.BizPropertySelect", {
-                metadata: {
-                    properties: {
-                        /** 对象信息 */
-                        objectInfo: { type: "any" },
-                        /** 命名方式 */
-                        namingType: { type: "int" },
-                    },
-                    events: {}
-                },
-                renderer: {},
-                /** 重构设置 */
-                applySettings(this: BizPropertySelect): BizPropertySelect {
-                    Select.prototype.applySettings.apply(this, arguments);
-                    if (this.getItems().length === 0) {
-                        setTimeout(() => {
-                            this.loadItems();
-                        }, 100);
-                    }
-                    return this;
-                },
-                /** 设置对象信息 */
-                setObjectInfo(this: BizPropertySelect, value: string | { code: string, name: string }): BizPropertySelect {
-                    this.setProperty("objectInfo", value);
-                    setTimeout(() => {
-                        this.loadItems();
-                    }, 100);
-                    return this;
-                },
-                /**
-                 * 加载可选值
-                 */
-                loadItems(this: BizPropertySelect): BizPropertySelect {
-                    this.destroyItems();
-                    let tmp: any = this.getObjectInfo();
-                    let objectInfo: { code: string, name: string }
-                        = typeof tmp === "string" ? { code: tmp, name: undefined } : tmp;
-                    let boRepository: shell.bo.IBORepositoryShell = shell.bo.repository.create();
-                    boRepository.fetchBizObjectInfo({
-                        user: ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE),
-                        boCode: objectInfo.code,
-                        boName: objectInfo.name,
-                        onCompleted: (opRslt) => {
-                            for (let oItem of opRslt.resultObjects) {
-                                if (!ibas.strings.isWith(oItem.code, objectInfo.code, undefined)) {
-                                    continue;
-                                }
-                                if (!ibas.strings.isEmpty(objectInfo.name) && !ibas.strings.equalsIgnoreCase(oItem.name, objectInfo.name)) {
-                                    continue;
-                                }
-                                if (!(oItem.properties instanceof Array)) {
-                                    continue;
-                                }
-                                let namingType: emPropertyNamingType = this.getNamingType();
-                                for (let pItem of oItem.properties) {
-                                    if (ibas.strings.isEmpty(pItem.editType)) {
-                                        continue;
-                                    }
-                                    if (pItem.editSize < 0) {
-                                        continue;
-                                    }
-                                    let key: string;
-                                    if (namingType === emPropertyNamingType.ALIAS) {
-                                        key = pItem.alias;
-                                    } else if (namingType === emPropertyNamingType.PROPERTY) {
-                                        key = pItem.name;
-                                    } else {
-                                        continue;
-                                    }
-                                    let text: string = ibas.i18n.prop(ibas.strings.format("bo_{0}_{1}", oItem.name, pItem.name).toLowerCase());
-                                    if (ibas.strings.isWith(text, "[", "]")) {
-                                        text = pItem.description;
-                                    }
-                                    this.addItem(new sap.ui.core.ListItem("", {
-                                        key: key,
-                                        text: text,
-                                    }));
-                                }
-                            }
-                        }
-                    });
                     return this;
                 }
             });

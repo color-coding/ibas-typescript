@@ -436,15 +436,15 @@ namespace sap {
                     return;
                 }
                 // 查询未存在的属性
-                let properties: shell.bo.IBizPropertyInfo[] = boInfo.properties.splice(0);
+                let properties: shell.bo.IBizPropertyInfo[] = Object.assign([], boInfo.properties);
                 // 只读列表（遍历列，存在输入框则非只读）
                 let readonly: boolean = true;
                 for (let column of this.getColumns()) {
                     if (column instanceof DataColumn) {
                         let template: sap.ui.core.Control | string = column.getTemplate();
                         if (template instanceof sap.ui.core.Control) {
-                            let bindingPath: string = managedobjects.bindingPath(template, "bindingValue");
-                            let index: number = properties.findIndex(c => ibas.strings.equalsIgnoreCase(c.name, bindingPath));
+                            let bindingPath: string = managedobjects.bindingPath(template);
+                            let index: number = properties.findIndex(c => c && ibas.strings.equalsIgnoreCase(c.name, bindingPath));
                             if (index < 0) {
                                 continue;
                             }
@@ -479,13 +479,18 @@ namespace sap {
                     if (property.authorised === ibas.emAuthoriseType.NONE) {
                         continue;
                     }
-                    this.addColumn(new DataColumn("", {
+                    let column: DataColumn = new DataColumn("", {
                         propertyInfo: property,
                         label: property.description,
                         template: factories.newComponent(property, readonly ? "Text" : "Input"),
                         sortProperty: property.searched === true ? property.name : undefined,
                         filterProperty: property.searched === true ? property.name : undefined,
-                    }));
+                    });
+                    if (property.position > 0) {
+                        this.insertColumn(column, property.position);
+                    } else {
+                        this.addColumn(column);
+                    }
                 }
             }
             /**

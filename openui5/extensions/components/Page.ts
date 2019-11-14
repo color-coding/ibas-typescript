@@ -66,19 +66,6 @@ namespace sap {
                 setDataInfo(this: DataPage, value: { code: string, name?: string } | string | Function | shell.bo.IBizObjectInfo): DataPage {
                     return this.setProperty("dataInfo", value);
                 },
-                /**
-                 * 获取属性过滤器
-                 */
-                getPropertyFilter(): Function {
-                    return this.getProperty("propertyFilter");
-                },
-                /**
-                 * 设置属性过滤器
-                 * @param value 过滤器
-                 */
-                setPropertyFilter(value: (property: shell.bo.IBizPropertyInfo) => boolean): DataPage {
-                    return this.setProperty("propertyFilter", value);
-                },
                 /** 重构设置 */
                 applySettings(this: DataPage): DataPage {
                     Page.prototype.applySettings.apply(this, arguments);
@@ -175,8 +162,49 @@ namespace sap {
                     return;
                 }
                 // 查询未存在的属性
+                let properties: shell.bo.IBizPropertyInfo[] = Object.assign([], boInfo.properties);
+                let layout: any = sap.ui.getCore().byId(this.getId() + "_commonSplit");
+                if (layout instanceof sap.ui.layout.VerticalLayout) {
+                    for (let lyItem of layout.getContent()) {
+                        if (lyItem instanceof sap.ui.layout.form.SimpleForm) {
+                            for (let fmItem of lyItem.getContent()) {
+                                if (fmItem instanceof sap.m.Label) {
+                                    continue;
+                                }
+                                if (fmItem instanceof sap.m.Title) {
+                                    continue;
+                                }
+                                if (fmItem instanceof sap.m.Button) {
+                                    continue;
+                                }
+                                if (fmItem instanceof sap.ui.table.Table) {
+                                    continue;
+                                }
+                                if (fmItem instanceof sap.ui.core.Control) {
+                                    let bindingPath: string = managedobjects.bindingPath(fmItem);
+                                    let index: number = properties.findIndex(c => c && ibas.strings.equalsIgnoreCase(c.name, bindingPath));
+                                    if (index < 0) {
+                                        continue;
+                                    }
+                                    let propertyInfo: shell.bo.IBizPropertyInfo = properties[index];
+                                    if (!ibas.objects.isNull(propertyInfo)) {
+                                        if (propertyInfo.authorised === ibas.emAuthoriseType.NONE) {
+                                            fmItem.setVisible(false);
+                                            let label: any = sap.ui.getCore().byId(fmItem.getIdForLabel());
+                                            if (label instanceof sap.ui.core.Control) {
+                                                label.setVisible(false);
+                                            }
+                                        } else if (propertyInfo.authorised === ibas.emAuthoriseType.READ) {
+                                            controls.nonEditable(fmItem);
+                                        }
+                                        properties[index] = null;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
                 let splitter: any;
-                let properties: shell.bo.IBizPropertyInfo[] = boInfo.properties.splice(0);
                 for (let property of properties) {
                     if (ibas.objects.isNull(property)) {
                         continue;

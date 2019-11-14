@@ -101,6 +101,7 @@ namespace shell {
                         type: BizPropertyInfo.name,
                         Name: newData.name,
                         Alias: newData.alias,
+                        Position: newData.position,
                         DataType: newData.dataType,
                         EditType: newData.editType,
                         EditSize: newData.editSize,
@@ -204,6 +205,7 @@ namespace shell {
                     newData.name = remote.Name;
                     newData.description = remote.Description;
                     newData.alias = remote.Alias;
+                    newData.position = remote.Position;
                     newData.dataType = remote.DataType;
                     newData.editType = remote.EditType;
                     newData.editSize = remote.EditSize;

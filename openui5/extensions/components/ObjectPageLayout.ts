@@ -76,19 +76,6 @@ namespace sap {
                 setDataInfo(this: DataObjectPageLayout, value: { code: string, name?: string } | string | Function | shell.bo.IBizObjectInfo): DataObjectPageLayout {
                     return this.setProperty("dataInfo", value);
                 },
-                /**
-                 * 获取属性过滤器
-                 */
-                getPropertyFilter(): Function {
-                    return this.getProperty("propertyFilter");
-                },
-                /**
-                 * 设置属性过滤器
-                 * @param value 过滤器
-                 */
-                setPropertyFilter(value: (property: shell.bo.IBizPropertyInfo) => boolean): DataObjectPageLayout {
-                    return this.setProperty("propertyFilter", value);
-                },
                 /** 重构设置 */
                 applySettings(this: DataObjectPageLayout): DataObjectPageLayout {
                     ObjectPageLayout.prototype.applySettings.apply(this, arguments);
@@ -165,7 +152,60 @@ namespace sap {
                     return;
                 }
                 // 查询未存在的属性
-                let properties: shell.bo.IBizPropertyInfo[] = boInfo.properties.splice(0);
+                let properties: shell.bo.IBizPropertyInfo[] = Object.assign([], boInfo.properties);
+                let authorising: (control: sap.ui.core.Control) => void = (control) => {
+                    if (control instanceof sap.m.Table
+                        || control instanceof sap.m.ListBase) {
+                        return;
+                    }
+                    if (!(control instanceof sap.ui.core.Control)) {
+                        return;
+                    }
+                    if (control instanceof sap.ui.layout.VerticalLayout) {
+                        for (let item of control.getContent()) {
+                            authorising(item);
+                        } return;
+                    }
+                    if (control instanceof sap.uxap.ObjectPageSection) {
+                        for (let item of control.getSubSections()) {
+                            for (let sItem of item.getBlocks()) {
+                                authorising(sItem);
+                            }
+                            for (let sItem of item.getActions()) {
+                                authorising(sItem);
+                            }
+                            for (let sItem of item.getMoreBlocks()) {
+                                authorising(sItem);
+                            }
+                        } return;
+                    }
+                    let bindingPath: string = managedobjects.bindingPath(control);
+                    let index: number = properties.findIndex(c => c && ibas.strings.equalsIgnoreCase(c.name, bindingPath));
+                    if (index < 0) {
+                        return;
+                    }
+                    let propertyInfo: shell.bo.IBizPropertyInfo = properties[index];
+                    if (!ibas.objects.isNull(propertyInfo)) {
+                        if (propertyInfo.authorised === ibas.emAuthoriseType.NONE) {
+                            control.setVisible(false);
+                        } else if (propertyInfo.authorised === ibas.emAuthoriseType.READ) {
+                            controls.nonEditable(control);
+                        }
+                        properties[index] = null;
+                    }
+                };
+                let title: any = this.getHeaderTitle();
+                if (title instanceof sap.uxap.ObjectPageHeader) {
+                    for (let item of title.getActions()) {
+                        authorising(item);
+                    }
+                }
+                for (let item of this.getHeaderContent()) {
+                    authorising(item);
+                }
+                for (let item of this.getSections()) {
+                    authorising(item);
+                }
                 let section: sap.uxap.ObjectPageSubSection;
                 for (let property of properties) {
                     if (ibas.objects.isNull(property)) {

@@ -56,15 +56,6 @@ declare namespace sap {
                  * @param value 值
                  */
                 setDataInfo(value: { code: string, name?: string } | string | shell.bo.IBizObjectInfo): this;
-                /**
-                 * 获取属性过滤器
-                 */
-                getPropertyFilter(): Function;
-                /**
-                 * 设置属性过滤器
-                 * @param value 过滤器
-                 */
-                setPropertyFilter(value: (property: shell.bo.IBizPropertyInfo) => boolean): this;
             }
         }
     }
