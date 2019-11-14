@@ -118,44 +118,5 @@ namespace shell {
             /** 描述 */
             Description: string;
         }
-        /** 业务对象 */
-        export interface IBOInfo extends IDataDeclaration {
-            /** 名称 */
-            Name: string;
-            /** 编码 */
-            Code: string;
-            /** 类型 */
-            Type: string;
-            /** 属性集合 */
-            Properties: IBOPropertyInfo[];
-        }
-        /** 业务对象属性 */
-        export interface IBOPropertyInfo extends IDataDeclaration {
-            /** 属性 */
-            Property: string;
-            /** 描述 */
-            Description: string;
-            /** 数据类型 */
-            DataType: string;
-            /** 编辑类型 */
-            EditType: string;
-            /** 长度 */
-            EditSize: number;
-            /** 查询 */
-            Searched: boolean;
-            /** 系统的 */
-            Systemed: boolean;
-            /** 授权的 */
-            Authorised: string;
-            /** 值集合 */
-            Values: IBOPropertyValue[];
-        }
-        /** 业务对象属性值 */
-        export interface IBOPropertyValue extends IDataDeclaration {
-            /** 值 */
-            Value: string;
-            /** 描述 */
-            Description: string;
-        }
     }
 }

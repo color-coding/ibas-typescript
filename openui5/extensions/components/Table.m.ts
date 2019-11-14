@@ -66,14 +66,14 @@ namespace sap {
                 /**
                  * 获取数据信息
                  */
-                getDataInfo(this: DataTable): { code: string, name?: string } | string | Function | shell.bo.IBOInfo {
+                getDataInfo(this: DataTable): { code: string, name?: string } | string | Function | shell.bo.IBizObjectInfo {
                     return this.getProperty("dataInfo");
                 },
                 /**
                  * 设置数据信息
                  * @param value 数据信息
                  */
-                setDataInfo(this: DataTable, value: { code: string, name?: string } | string | Function | shell.bo.IBOInfo): DataTable {
+                setDataInfo(this: DataTable, value: { code: string, name?: string } | string | Function | shell.bo.IBizObjectInfo): DataTable {
                     return this.setProperty("dataInfo", value);
                 },
                 /**
@@ -86,7 +86,7 @@ namespace sap {
                  * 设置属性过滤器
                  * @param value 过滤器
                  */
-                setPropertyFilter(value: (property: shell.bo.IBOPropertyInfo) => boolean): DataTable {
+                setPropertyFilter(value: (property: shell.bo.IBizPropertyInfo) => boolean): DataTable {
                     return this.setProperty("propertyFilter", value);
                 },
                 /** 重构设置 */
@@ -109,7 +109,8 @@ namespace sap {
                         } else {
                             let info: { code: string, name?: string } = dataInfo;
                             let boRepository: shell.bo.IBORepositoryShell = ibas.boFactory.create(shell.bo.BO_REPOSITORY_SHELL);
-                            boRepository.fetchBOInfos({
+                            boRepository.fetchBizObjectInfo({
+                                user: ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE),
                                 boCode: ibas.config.applyVariables(info.code),
                                 boName: info.name,
                                 onCompleted: (opRslt) => {
@@ -154,7 +155,7 @@ namespace sap {
                                 if (bindingInfo && bindingInfo.template instanceof sap.m.ColumnListItem) {
                                     let template: sap.m.ColumnListItem = bindingInfo.template;
                                     for (let item of template.getCells()) {
-                                        let bindingInfo: any = (<any>item).getBindingInfo("text");
+                                        let bindingInfo: any = managedobjects.bindingInfo(item, "text");
                                         if (!ibas.objects.isNull(bindingInfo)) {
                                             userfields.check(userFields, bindingInfo);
                                         }
@@ -166,32 +167,26 @@ namespace sap {
                     return Table.prototype.setModel.apply(this, arguments);
                 }
             });
-            function propertyColumns(this: DataTable, boInfo: shell.bo.IBOInfo): void {
+            function propertyColumns(this: DataTable, boInfo: shell.bo.IBizObjectInfo): void {
                 if (!boInfo || !(boInfo.properties instanceof Array)) {
                     return;
                 }
                 // 查询未存在的属性
-                let filter: Function = this.getPropertyFilter();
-                let properties: ibas.IList<shell.bo.IBOPropertyInfo> = new ibas.ArrayList<shell.bo.IBOPropertyInfo>();
-                for (let item of boInfo.properties) {
-                    if (item.editSize <= 0) {
-                        continue;
-                    }
-                    if (item.authorised === ibas.emAuthoriseType.NONE) {
-                        continue;
-                    }
-                    if (filter instanceof Function) {
-                        if (filter(item) === false) {
-                            continue;
-                        }
-                    }
-                    properties.add(item);
-                }
+                let properties: shell.bo.IBizPropertyInfo[] = boInfo.properties.splice(0);
                 // 创建未存在的列
                 let bindingInfo: any = this.getBindingInfo("items");
                 if (bindingInfo && bindingInfo.template instanceof sap.m.ColumnListItem) {
                     let template: sap.m.ColumnListItem = bindingInfo.template;
                     for (let property of properties) {
+                        if (ibas.objects.isNull(property)) {
+                            continue;
+                        }
+                        if (ibas.objects.isNull(property.authorised)) {
+                            continue;
+                        }
+                        if (property.authorised === ibas.emAuthoriseType.NONE) {
+                            continue;
+                        }
                         this.addColumn(new Column("", {
                             header: property.description,
                         }));

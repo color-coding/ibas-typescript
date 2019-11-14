@@ -179,7 +179,7 @@ declare namespace sap {
             /**
              * 对象属性别名-选择框
              */
-            class AliasSelect extends Select {
+            class BizPropertySelect extends Select {
                 /**
                  * 获取对象信息
                  */
@@ -190,14 +190,14 @@ declare namespace sap {
                  */
                 setObjectInfo(value: string | { code: string, name: string }): this;
                 /**
-                 * 获取别名值属性
+                 * 获取名称类型
                  */
-                getAliasProperty(): string;
+                getNamingType(): emPropertyNamingType;
                 /**
                  * 设置别名值属性
                  * @param value 别名值属性
                  */
-                setAliasProperty(value: string): this;
+                setNamingType(value: emPropertyNamingType): this;
                 /**
                  * 加载可选值
                  */

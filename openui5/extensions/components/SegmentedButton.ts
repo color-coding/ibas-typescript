@@ -50,7 +50,7 @@ namespace sap {
                 },
                 /** 重写绑定 */
                 bindProperty(this: Input, sName: string, oBindingInfo: any): Input {
-                    utils.checkBindingInfo.apply(this, arguments);
+                    managedobjects.checkBinding.apply(this, arguments);
                     sap.m.SegmentedButton.prototype.bindProperty.apply(this, arguments);
                     return this;
                 }

@@ -155,80 +155,6 @@ namespace shell {
              * 业务对象信息查询
              * @param caller 调用者
              */
-            fetchBOInfos(caller: IBOInfoCaller): void {
-                if (ibas.objects.isNull(caller.boCode)) {
-                    // 没有查询条件，直接返回
-                    caller.onCompleted(new ibas.OperationResult<IBOInfo>());
-                    return;
-                }
-                if (!caller.noCached) {
-                    // 优先使用缓存数据
-                    let data: DataWrapping = boInfoCache.get(caller.boCode);
-                    if (data instanceof DataWrapping) {
-                        if (data.check() && data.data === EMPTY_BOINFO) {
-                            // 代理数据，等待返回方法
-                            setTimeout(() => this.fetchBOInfos(caller), WAITING_TIME);
-                        } else {
-                            let opRsltInfo: ibas.OperationResult<any> = new ibas.OperationResult<IBOInfo>();
-                            if (ibas.strings.isEmpty(caller.boName)) {
-                                // 不要求名称，则直接返回
-                                opRsltInfo.addResults(data.data);
-                            } else {
-                                // 要求名称，则全局查询
-                                for (let item of boInfoCache.values()) {
-                                    if (!(ibas.strings.equals(item.data.code, caller.boCode)
-                                        || ibas.strings.isWith(item.data.code, caller.boCode + ".", null))) {
-                                        continue;
-                                    }
-                                    if (!ibas.strings.equals(item.data.name, caller.boName)) {
-                                        continue;
-                                    }
-                                    opRsltInfo.addResults(item.data);
-                                }
-                            }
-                            caller.onCompleted(opRsltInfo);
-                        } return;
-                    } else {
-                        // 创建代理数据，减少方法请求次数
-                        boInfoCache.set(caller.boCode, new DataWrapping(EMPTY_BOINFO));
-                    }
-                }
-                let remoteRepository: ibas.IRemoteRepository = this.createRemoteRepository();
-                if (ibas.objects.isNull(remoteRepository)) {
-                    throw new Error(ibas.i18n.prop("sys_invalid_parameter", "remoteRepository"));
-                }
-                let method: string = ibas.strings.format("fetchBOInfos?boCode={0}&token={1}", caller.boCode, this.token);
-                remoteRepository.callRemoteMethod(method, undefined, (opRslt: ibas.IOperationResult<IBOInfo>) => {
-                    if (opRslt.resultCode === 0) {
-                        let opRsltInfo: ibas.OperationResult<IBOInfo> = new ibas.OperationResult<IBOInfo>();
-                        for (let item of opRslt.resultObjects) {
-                            boInfoCache.set(item.code, new DataWrapping(item));
-                            if (!ibas.strings.isEmpty(caller.boName)) {
-                                if (!(ibas.strings.equals(item.code, caller.boCode)
-                                    || ibas.strings.isWith(item.code, caller.boCode + ".", null))) {
-                                    continue;
-                                }
-                                if (!ibas.strings.equals(item.name, caller.boName)) {
-                                    continue;
-                                }
-                            } else {
-                                if (!ibas.strings.equals(item.code, caller.boCode)) {
-                                    continue;
-                                }
-                            }
-                            opRsltInfo.addResults(item);
-                        }
-                        caller.onCompleted(opRsltInfo);
-                    } else {
-                        // 出错了
-                        caller.onCompleted(opRslt);
-                    }
-                });
-            }
-            /**
-             * 业务对象信息查询
-             * @param caller 调用者
-             */
             fetchBizObjectInfo(caller: IBizObjectInfoCaller): void {
                 if (ibas.objects.isNull(caller.boCode)) {
                     // 没有查询条件，直接返回
@@ -302,7 +228,7 @@ namespace shell {
             }
         }
         /** 空数据 */
-        const EMPTY_BOINFO: IBOInfo | IBizObjectInfo = {
+        const EMPTY_BOINFO: IBizObjectInfo = {
             name: "__EMPTY__",
             code: "__EMPTY__",
             type: "__EMPTY__",
@@ -316,7 +242,7 @@ namespace shell {
         const boInfoCache: Map<string, DataWrapping> = new Map<string, DataWrapping>();
         /** 数据容器 */
         class DataWrapping {
-            constructor(data: IBOInfo | IBizObjectInfo) {
+            constructor(data: IBizObjectInfo) {
                 this.data = data;
                 if (this.data === null || this.data === EMPTY_BOINFO) {
                     this.time = (WAITING_TIME * 3) + ibas.dates.now().getTime();
@@ -327,7 +253,7 @@ namespace shell {
             /** 时间 */
             time: number;
             /** 数据 */
-            data: IBOInfo | IBizObjectInfo;
+            data: IBizObjectInfo;
             /** 检查数据是否有效 */
             check(): boolean {
                 if (ibas.objects.isNull(this.data)) {
@@ -459,27 +385,6 @@ namespace shell {
                     onCompleted: caller.onCompleted,
                 };
                 this.fetch("UserQuery", fetchCaller);
-            }
-            /**
-             * 业务对象信息查询
-             * @param caller 调用者
-             */
-            fetchBOInfos(caller: IBOInfoCaller): void {
-                let criteria: ibas.ICriteria = new ibas.Criteria();
-                if (!ibas.strings.isEmpty(caller.boCode)) {
-                    let condition: ibas.ICondition = criteria.conditions.create();
-                    condition.alias = "code";
-                    condition.value = caller.boCode;
-                }
-                if (criteria.conditions.length === 0) {
-                    // 无效的参数
-                    throw new Error(ibas.i18n.prop("sys_invalid_parameter", "boCode"));
-                }
-                let fetchCaller: ibas.IFetchCaller<BOInfo> = {
-                    criteria: criteria,
-                    onCompleted: caller.onCompleted,
-                };
-                this.fetch("BOInfo", fetchCaller);
             }
             /**
              * 业务对象信息查询

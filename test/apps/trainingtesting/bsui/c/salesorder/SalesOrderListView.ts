@@ -28,12 +28,6 @@ namespace trainingtesting {
                         visibleRowCount: sap.extension.table.visibleRowCount(15),
                         visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Interactive,
                         dataInfo: this.queryTarget,
-                        propertyFilter(property: shell.bo.IBOPropertyInfo): boolean {
-                            if (!ibas.strings.isWith(property.property, "U_", undefined)) {
-                                return false;
-                            }
-                            return true;
-                        },
                         rows: "{/rows}",
                         columns: [
                             new sap.extension.table.DataColumn("", {

@@ -52,7 +52,7 @@ namespace sap {
                 },
                 /** 重写绑定 */
                 bindProperty(this: ComboBox, sName: string, oBindingInfo: any): ComboBox {
-                    utils.checkBindingInfo.apply(this, arguments);
+                    managedobjects.checkBinding.apply(this, arguments);
                     sap.m.ComboBox.prototype.bindProperty.apply(this, arguments);
                     return this;
                 }

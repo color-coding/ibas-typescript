@@ -45,7 +45,7 @@ namespace sap {
                 },
                 /** 重写绑定 */
                 bindProperty(this: Switch, sName: string, oBindingInfo: any): Switch {
-                    utils.checkBindingInfo.apply(this, arguments);
+                    managedobjects.checkBinding.apply(this, arguments);
                     sap.m.Switch.prototype.bindProperty.apply(this, arguments);
                     return this;
                 }

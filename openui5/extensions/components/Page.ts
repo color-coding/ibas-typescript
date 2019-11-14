@@ -56,14 +56,14 @@ namespace sap {
                 /**
                  * 获取数据信息
                  */
-                getDataInfo(this: DataPage): { code: string, name?: string } | string | Function | shell.bo.IBOInfo {
+                getDataInfo(this: DataPage): { code: string, name?: string } | string | Function | shell.bo.IBizObjectInfo {
                     return this.getProperty("dataInfo");
                 },
                 /**
                  * 设置数据信息
                  * @param value 数据信息
                  */
-                setDataInfo(this: DataPage, value: { code: string, name?: string } | string | Function | shell.bo.IBOInfo): DataPage {
+                setDataInfo(this: DataPage, value: { code: string, name?: string } | string | Function | shell.bo.IBizObjectInfo): DataPage {
                     return this.setProperty("dataInfo", value);
                 },
                 /**
@@ -76,7 +76,7 @@ namespace sap {
                  * 设置属性过滤器
                  * @param value 过滤器
                  */
-                setPropertyFilter(value: (property: shell.bo.IBOPropertyInfo) => boolean): DataPage {
+                setPropertyFilter(value: (property: shell.bo.IBizPropertyInfo) => boolean): DataPage {
                     return this.setProperty("propertyFilter", value);
                 },
                 /** 重构设置 */
@@ -120,7 +120,8 @@ namespace sap {
                         } else {
                             let info: { code: string, name?: string } = dataInfo;
                             let boRepository: shell.bo.IBORepositoryShell = ibas.boFactory.create(shell.bo.BO_REPOSITORY_SHELL);
-                            boRepository.fetchBOInfos({
+                            boRepository.fetchBizObjectInfo({
+                                user: ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE),
                                 boCode: ibas.config.applyVariables(info.code),
                                 boName: info.name,
                                 onCompleted: (opRslt) => {
@@ -157,7 +158,7 @@ namespace sap {
                                 let splitter: any = sap.ui.getCore().byId(this.getId() + "_extendSplit");
                                 if (splitter instanceof sap.ui.layout.form.SimpleForm) {
                                     for (let item of splitter.getContent()) {
-                                        let bindingInfo: any = (<any>item).getBindingInfo("bindingValue");
+                                        let bindingInfo: any = managedobjects.bindingInfo(item, "bindingValue");
                                         if (!ibas.objects.isNull(bindingInfo)) {
                                             userfields.check(userFields, bindingInfo);
                                         }
@@ -169,58 +170,53 @@ namespace sap {
                     return Page.prototype.setModel.apply(this, arguments);
                 },
             });
-            function propertyControls(this: DataPage, boInfo: shell.bo.IBOInfo): void {
+            function propertyControls(this: DataPage, boInfo: shell.bo.IBizObjectInfo): void {
                 if (!boInfo || !(boInfo.properties instanceof Array)) {
                     return;
                 }
                 // 查询未存在的属性
-                let filter: Function = this.getPropertyFilter();
-                let properties: ibas.IList<shell.bo.IBOPropertyInfo> = new ibas.ArrayList<shell.bo.IBOPropertyInfo>();
-                for (let item of boInfo.properties) {
-                    if (item.editSize <= 0) {
+                let splitter: any;
+                let properties: shell.bo.IBizPropertyInfo[] = boInfo.properties.splice(0);
+                for (let property of properties) {
+                    if (ibas.objects.isNull(property)) {
                         continue;
                     }
-                    if (item.authorised === ibas.emAuthoriseType.NONE) {
+                    if (ibas.objects.isNull(property.authorised)) {
                         continue;
                     }
-                    if (filter instanceof Function) {
-                        if (filter(item) === false) {
-                            continue;
-                        }
+                    if (property.authorised === ibas.emAuthoriseType.NONE) {
+                        continue;
                     }
-                    properties.add(item);
-                }
-                // 创建自定义字段按钮
-                if (properties.length > 0) {
-                    let shower: any = sap.ui.getCore().byId(this.getId() + "_shower");
-                    if (ibas.objects.isNull(shower)) {
-                        shower = new sap.m.Button(this.getId() + "_shower", {
-                            type: sap.m.ButtonType.Transparent,
-                            icon: "sap-icon://filter-fields",
-                            press: () => {
-                                let split: any = sap.ui.getCore().byId(this.getId() + "_contentSplit");
-                                if (split instanceof sap.ui.layout.DynamicSideContent) {
-                                    split.setShowSideContent(!split.getShowSideContent(), false);
+                    if (ibas.objects.isNull(splitter)) {
+                        // 创建自定义字段按钮
+                        let shower: any = sap.ui.getCore().byId(this.getId() + "_shower");
+                        if (ibas.objects.isNull(shower)) {
+                            shower = new sap.m.Button(this.getId() + "_shower", {
+                                type: sap.m.ButtonType.Transparent,
+                                icon: "sap-icon://filter-fields",
+                                press: () => {
+                                    let split: any = sap.ui.getCore().byId(this.getId() + "_contentSplit");
+                                    if (split instanceof sap.ui.layout.DynamicSideContent) {
+                                        split.setShowSideContent(!split.getShowSideContent(), false);
+                                    }
                                 }
+                            });
+                            let bar: sap.m.IBar = this.getSubHeader();
+                            if (ibas.objects.isNull(bar)) {
+                                this.setSubHeader(bar = new sap.m.Toolbar("", {
+                                }));
                             }
-                        });
-                        let bar: sap.m.IBar = this.getSubHeader();
-                        if (ibas.objects.isNull(bar)) {
-                            this.setSubHeader(bar = new sap.m.Toolbar("", {
-                            }));
+                            if (bar instanceof sap.m.Toolbar) {
+                                bar.addContent(new sap.m.ToolbarSpacer(""));
+                                bar.addContent(shower);
+                            } else if (bar instanceof sap.m.Bar) {
+                                bar.insertContentRight(shower, bar.getContentRight().length - 1);
+                            }
                         }
-                        if (bar instanceof sap.m.Toolbar) {
-                            bar.addContent(new sap.m.ToolbarSpacer(""));
-                            bar.addContent(shower);
-                        } else if (bar instanceof sap.m.Bar) {
-                            bar.insertContentRight(shower, bar.getContentRight().length - 1);
-                        }
+                        splitter = sap.ui.getCore().byId(this.getId() + "_extendSplit");
                     }
-                }
-                // 创建未存在的控件
-                let splitter: any = sap.ui.getCore().byId(this.getId() + "_extendSplit");
-                if (splitter instanceof sap.ui.layout.form.SimpleForm) {
-                    for (let property of properties) {
+                    // 创建未存在的控件
+                    if (splitter instanceof sap.ui.layout.form.SimpleForm) {
                         splitter.addContent(new sap.m.Label("", {
                             text: property.description
                         }));

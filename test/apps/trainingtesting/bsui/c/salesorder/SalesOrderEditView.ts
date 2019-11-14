@@ -149,14 +149,6 @@ namespace trainingtesting {
                                     code: bo.SalesOrder.BUSINESS_OBJECT_CODE,
                                     name: bo.SalesOrderItem.name
                                 },
-                                /*
-                                propertyFilter(property: shell.bo.IBOPropertyInfo): boolean {
-                                    if (!ibas.strings.isWith(property.property, "U_", undefined)) {
-                                        return false;
-                                    }
-                                    return true;
-                                },
-                                */
                                 rows: "{/rows}",
                                 columns: [
                                     new sap.extension.table.DataColumn("", {
@@ -314,14 +306,6 @@ namespace trainingtesting {
                         dataInfo: {
                             code: bo.SalesOrder.BUSINESS_OBJECT_CODE,
                         },
-                        /*
-                        propertyFilter(property: shell.bo.IBOPropertyInfo): boolean {
-                            if (!ibas.strings.isWith(property.property, "U_", undefined)) {
-                                return false;
-                            }
-                            return true;
-                        },
-                        */
                         content: [
                             formTop,
                             formSalesOrderItem,

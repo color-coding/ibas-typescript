@@ -84,7 +84,7 @@ namespace shell {
                         properties.push(this.convert(item, null));
                     }
                     let remote: bo4j.IBizObjectInfo = {
-                        type: BOInfo.name,
+                        type: BizObjectInfo.name,
                         Code: newData.code,
                         Name: newData.name,
                         Type: newData.type,
@@ -98,7 +98,7 @@ namespace shell {
                         values.push(this.convert(item, null));
                     }
                     let remote: bo4j.IBizPropertyInfo = {
-                        type: BOPropertyInfo.name,
+                        type: BizPropertyInfo.name,
                         Name: newData.name,
                         Alias: newData.alias,
                         DataType: newData.dataType,
@@ -114,48 +114,7 @@ namespace shell {
                 } else if (ibas.objects.instanceOf(data, BizPropertyValue)) {
                     let newData: BizPropertyValue = data;
                     let remote: bo4j.IBizPropertyValue = {
-                        type: BOPropertyInfo.name,
-                        Value: newData.value,
-                        Description: newData.description
-                    };
-                    return remote;
-                } else if (ibas.objects.instanceOf(data, BOInfo)) {
-                    let newData: BOInfo = data;
-                    let properties: bo4j.IBOPropertyInfo[] = [];
-                    for (let item of newData.properties) {
-                        properties.push(this.convert(item, null));
-                    }
-                    let remote: bo4j.IBOInfo = {
-                        type: BOInfo.name,
-                        Code: newData.code,
-                        Name: newData.name,
-                        Type: newData.type,
-                        Properties: properties
-                    };
-                    return remote;
-                } else if (ibas.objects.instanceOf(data, BOPropertyInfo)) {
-                    let newData: BOPropertyInfo = data;
-                    let values: bo4j.IBOPropertyValue[] = [];
-                    for (let item of newData.values) {
-                        values.push(this.convert(item, null));
-                    }
-                    let remote: bo4j.IBOPropertyInfo = {
-                        type: BOPropertyInfo.name,
-                        Property: newData.property,
-                        DataType: newData.dataType,
-                        EditType: newData.editType,
-                        EditSize: newData.editSize,
-                        Searched: newData.searched,
-                        Systemed: newData.systemed,
-                        Description: newData.description,
-                        Authorised: ibas.enums.toString(ibas.emAuthoriseType, newData.authorised),
-                        Values: values
-                    };
-                    return remote;
-                } else if (ibas.objects.instanceOf(data, BOPropertyValue)) {
-                    let newData: BOPropertyValue = data;
-                    let remote: bo4j.IBOPropertyValue = {
-                        type: BOPropertyInfo.name,
+                        type: BizPropertyValue.name,
                         Value: newData.value,
                         Description: newData.description
                     };
@@ -234,7 +193,7 @@ namespace shell {
                     newData.properties = new Array<BizPropertyInfo>();
                     if (remote.Properties instanceof Array) {
                         for (let item of remote.Properties) {
-                            item.type = BOPropertyInfo.name;
+                            item.type = BizPropertyInfo.name;
                             newData.properties.push(this.parsing(item, null));
                         }
                     }
@@ -262,45 +221,6 @@ namespace shell {
                 } else if (data.type === BizPropertyValue.name) {
                     let remote: bo4j.IBizPropertyValue = data;
                     let newData: BizPropertyValue = new BizPropertyValue();
-                    newData.value = remote.Value;
-                    newData.description = remote.Description;
-                    return newData;
-                } else if (data.type === BOInfo.name) {
-                    let remote: bo4j.IBOInfo = data;
-                    let newData: BOInfo = new BOInfo();
-                    newData.code = remote.Code;
-                    newData.name = remote.Name;
-                    newData.type = remote.Type;
-                    newData.properties = new Array<BOPropertyInfo>();
-                    if (remote.Properties instanceof Array) {
-                        for (let item of remote.Properties) {
-                            item.type = BOPropertyInfo.name;
-                            newData.properties.push(this.parsing(item, null));
-                        }
-                    }
-                    return newData;
-                } else if (data.type === BOPropertyInfo.name) {
-                    let remote: bo4j.IBOPropertyInfo = data;
-                    let newData: BOPropertyInfo = new BOPropertyInfo();
-                    newData.property = remote.Property;
-                    newData.description = remote.Description;
-                    newData.dataType = remote.DataType;
-                    newData.editType = remote.EditType;
-                    newData.editSize = remote.EditSize;
-                    newData.searched = remote.Searched;
-                    newData.systemed = remote.Systemed;
-                    newData.authorised = ibas.strings.isEmpty(remote.Authorised) ? ibas.emAuthoriseType.NONE : ibas.enums.valueOf(ibas.emAuthoriseType, remote.Authorised);
-                    newData.values = new Array<BOPropertyValue>();
-                    if (remote.Values instanceof Array) {
-                        for (let item of remote.Values) {
-                            item.type = BOPropertyValue.name;
-                            newData.values.push(this.parsing(item, null));
-                        }
-                    }
-                    return newData;
-                } else if (data.type === BOPropertyValue.name) {
-                    let remote: bo4j.IBOPropertyValue = data;
-                    let newData: BOPropertyValue = new BOPropertyValue();
                     newData.value = remote.Value;
                     newData.description = remote.Description;
                     return newData;

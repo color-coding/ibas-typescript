@@ -44,7 +44,7 @@ namespace sap {
                 },
                 /** 重写绑定 */
                 bindProperty(this: Select, sName: string, oBindingInfo: any): Select {
-                    utils.checkBindingInfo.apply(this, arguments);
+                    managedobjects.checkBinding.apply(this, arguments);
                     sap.m.Select.prototype.bindProperty.apply(this, arguments);
                     return this;
                 }
@@ -330,7 +330,8 @@ namespace sap {
                         return this;
                     }
                     let boRepository: shell.bo.IBORepositoryShell = ibas.boFactory.create(shell.bo.BO_REPOSITORY_SHELL);
-                    boRepository.fetchBOInfos({
+                    boRepository.fetchBizObjectInfo({
+                        user: ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE),
                         boCode: ibas.config.applyVariables(boInfo.code),
                         boName: boInfo.name,
                         onCompleted: (opRslt) => {
@@ -352,7 +353,7 @@ namespace sap {
                                         text: ibas.i18n.prop("openui5_please_select_data")
                                     }));
                                     for (let property of data.properties) {
-                                        if (ibas.strings.equalsIgnoreCase(propertyName, property.property)) {
+                                        if (ibas.strings.equalsIgnoreCase(propertyName, property.name)) {
                                             if (property.values instanceof Array) {
                                                 for (let item of property.values) {
                                                     this.addItem(new sap.ui.core.ListItem("", {
@@ -540,22 +541,26 @@ namespace sap {
                     return this;
                 }
             });
+            export enum emPropertyNamingType {
+                PROPERTY,
+                ALIAS
+            }
             /**
              * 对象属性别名-选择框
              */
-            Select.extend("sap.extension.m.AliasSelect", {
+            Select.extend("sap.extension.m.BizPropertySelect", {
                 metadata: {
                     properties: {
                         /** 对象信息 */
                         objectInfo: { type: "any" },
-                        /** 别名值属性 */
-                        aliasProperty: { type: "string", defaultValue: "property" },
+                        /** 命名方式 */
+                        namingType: { type: "int" },
                     },
                     events: {}
                 },
                 renderer: {},
                 /** 重构设置 */
-                applySettings(this: AliasSelect): AliasSelect {
+                applySettings(this: BizPropertySelect): BizPropertySelect {
                     Select.prototype.applySettings.apply(this, arguments);
                     if (this.getItems().length === 0) {
                         setTimeout(() => {
@@ -565,7 +570,7 @@ namespace sap {
                     return this;
                 },
                 /** 设置对象信息 */
-                setObjectInfo(this: AliasSelect, value: string | { code: string, name: string }): AliasSelect {
+                setObjectInfo(this: BizPropertySelect, value: string | { code: string, name: string }): BizPropertySelect {
                     this.setProperty("objectInfo", value);
                     setTimeout(() => {
                         this.loadItems();
@@ -575,13 +580,14 @@ namespace sap {
                 /**
                  * 加载可选值
                  */
-                loadItems(this: AliasSelect): AliasSelect {
+                loadItems(this: BizPropertySelect): BizPropertySelect {
                     this.destroyItems();
                     let tmp: any = this.getObjectInfo();
                     let objectInfo: { code: string, name: string }
                         = typeof tmp === "string" ? { code: tmp, name: undefined } : tmp;
                     let boRepository: shell.bo.IBORepositoryShell = shell.bo.repository.create();
-                    boRepository.fetchBOInfos({
+                    boRepository.fetchBizObjectInfo({
+                        user: ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE),
                         boCode: objectInfo.code,
                         boName: objectInfo.name,
                         onCompleted: (opRslt) => {
@@ -595,10 +601,7 @@ namespace sap {
                                 if (!(oItem.properties instanceof Array)) {
                                     continue;
                                 }
-                                let property: string = this.getAliasProperty();
-                                if (ibas.strings.isEmpty(property)) {
-                                    property = "property";
-                                }
+                                let namingType: emPropertyNamingType = this.getNamingType();
                                 for (let pItem of oItem.properties) {
                                     if (ibas.strings.isEmpty(pItem.editType)) {
                                         continue;
@@ -606,8 +609,15 @@ namespace sap {
                                     if (pItem.editSize < 0) {
                                         continue;
                                     }
-                                    let key: string = ibas.objects.propertyValue(pItem, property);
-                                    let text: string = ibas.i18n.prop(ibas.strings.format("bo_{0}_{1}", oItem.name, pItem.property).toLowerCase());
+                                    let key: string;
+                                    if (namingType === emPropertyNamingType.ALIAS) {
+                                        key = pItem.alias;
+                                    } else if (namingType === emPropertyNamingType.PROPERTY) {
+                                        key = pItem.name;
+                                    } else {
+                                        continue;
+                                    }
+                                    let text: string = ibas.i18n.prop(ibas.strings.format("bo_{0}_{1}", oItem.name, pItem.name).toLowerCase());
                                     if (ibas.strings.isWith(text, "[", "]")) {
                                         text = pItem.description;
                                     }
