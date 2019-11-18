@@ -130,24 +130,6 @@ namespace shell {
                         this.table.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
                     }
                 }
-                protected getCharListItem(char: string): sap.ui.core.ListItem[] {
-                    // 获取重复的字符
-                    let count: number = 4;
-                    let items: Array<sap.ui.core.ListItem> = [];
-                    items.push(new sap.ui.core.ListItem("", {
-                        key: 0,
-                        text: "",
-                    }));
-                    let vChar: string = char;
-                    for (let i: number = 1; i < count; i++) {
-                        items.push(new sap.ui.core.ListItem("", {
-                            key: i,
-                            text: vChar,
-                        }));
-                        vChar = vChar + char;
-                    }
-                    return items;
-                }
                 private table: sap.ui.table.Table;
                 protected getPropertyListItem(properies: bo.IBizPropertyInfo[]): sap.ui.core.ListItem[] {
                     let items: Array<sap.ui.core.ListItem> = [];
@@ -211,9 +193,9 @@ namespace shell {
                             new sap.ui.table.Column("", {
                                 label: ibas.i18n.prop("shell_query_condition_bracketopen"),
                                 width: "100px",
-                                template: new sap.m.Select("", {
-                                    width: "100%",
-                                    items: this.getCharListItem("(")
+                                template: new sap.extension.m.RepeatCharSelect("", {
+                                    repeatText: "(",
+                                    maxCount: 5,
                                 }).bindProperty("selectedKey", {
                                     path: "bracketOpen",
                                     type: "sap.ui.model.type.Integer"
@@ -251,9 +233,9 @@ namespace shell {
                             new sap.ui.table.Column("", {
                                 label: ibas.i18n.prop("shell_query_condition_bracketclose"),
                                 width: "100px",
-                                template: new sap.m.Select("", {
-                                    width: "100%",
-                                    items: this.getCharListItem(")")
+                                template: new sap.extension.m.RepeatCharSelect("", {
+                                    repeatText: ")",
+                                    maxCount: 5,
                                 }).bindProperty("selectedKey", {
                                     path: "bracketClose",
                                     type: "sap.ui.model.type.Integer"

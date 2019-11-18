@@ -165,12 +165,12 @@ declare namespace sap {
                 /**
                  * 获取重复内容
                  */
-                getRepeateText(): string;
+                getRepeatText(): string;
                 /**
                  * 设置重复内容
                  * @param value 重复内容
                  */
-                setRepeateText(value: string): this;
+                setRepeatText(value: string): this;
                 /**
                  * 加载可选值
                  */

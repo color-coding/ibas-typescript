@@ -97,10 +97,9 @@ namespace shell {
                                                             fitContainer: true,
                                                             width: "14%",
                                                             items: [
-                                                                new sap.m.Select("", {
-                                                                    width: "100%",
-                                                                    height: "100%",
-                                                                    items: that.getCharListItem("(")
+                                                                new sap.extension.m.RepeatCharSelect("", {
+                                                                    repeatText: "(",
+                                                                    maxCount: 5,
                                                                 }).bindProperty("selectedKey", {
                                                                     path: "bracketOpen",
                                                                     type: "sap.ui.model.type.Integer"
@@ -145,10 +144,9 @@ namespace shell {
                                                             justifyContent: sap.m.FlexJustifyContent.Center,
                                                             width: "14%",
                                                             items: [
-                                                                new sap.m.Select("", {
-                                                                    width: "100%",
-                                                                    height: "100%",
-                                                                    items: that.getCharListItem(")")
+                                                                new sap.extension.m.RepeatCharSelect("", {
+                                                                    repeatText: ")",
+                                                                    maxCount: 5,
                                                                 }).bindProperty("selectedKey", {
                                                                     path: "bracketClose",
                                                                     type: "sap.ui.model.type.Integer"

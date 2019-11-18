@@ -272,7 +272,7 @@ namespace ibas {
         }
     }
     /** 服务映射 */
-    const _mappings: Map<string, IServiceMapping> = new Map<string, IServiceMapping>();
+    const SERVICE_MAPPINGS: Map<string, IServiceMapping> = new Map<string, IServiceMapping>();
     /** 服务管理员 */
     export class ServicesManager {
         constructor() {
@@ -319,24 +319,24 @@ namespace ibas {
             if (objects.isNull(mapping)) {
                 return;
             }
-            _mappings.set(mapping.id, mapping);
+            SERVICE_MAPPINGS.set(mapping.id, mapping);
         }
         /** 获取服务映射 */
         getServiceMapping(id: string): IServiceMapping {
-            if (objects.isNull(_mappings)) {
+            if (objects.isNull(SERVICE_MAPPINGS)) {
                 return null;
             }
-            if (_mappings.has(id)) {
-                return _mappings.get(id);
+            if (SERVICE_MAPPINGS.has(id)) {
+                return SERVICE_MAPPINGS.get(id);
             }
             return null;
         }
         /** 获取服务 */
         getServices(caller: IServiceCaller<IServiceContract>): IServiceAgent[] {
             let services: Array<IServiceAgent> = new Array<IServiceAgent>();
-            if (!objects.isNull(_mappings)) {
+            if (!objects.isNull(SERVICE_MAPPINGS)) {
                 let viewShower: IViewShower = this.viewShower();
-                for (let mapping of _mappings.values()) {
+                for (let mapping of SERVICE_MAPPINGS.values()) {
                     if (!objects.instanceOf(caller.proxy, mapping.proxy)) {
                         continue;
                     }

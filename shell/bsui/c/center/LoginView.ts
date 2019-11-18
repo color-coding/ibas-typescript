@@ -14,6 +14,8 @@ namespace shell {
             export const CONFIG_ITEM_DEFAULT_PASSWORD: string = "defaultPassword";
             /** 配置项目-覆盖的版权声明 */
             export const CONFIG_ITEM_COVERED_COPYRIGHT: string = "copyright";
+            /** 配置项目-副标题 */
+            export const CONFIG_ITEM_SUBHEADING: string = "subheading";
             /**
              * 视图-登陆
              */
@@ -42,14 +44,28 @@ namespace shell {
                     document.title = ibas.config.get(app.CONFIG_ITEM_APPLICATION_NAME, ibas.i18n.prop("shell_name"));
                     let user: string = ibas.config.get(CONFIG_ITEM_DEFAULT_USER);
                     let password: string = ibas.config.get(CONFIG_ITEM_DEFAULT_PASSWORD);
+                    let subheading: string = ibas.config.get(CONFIG_ITEM_SUBHEADING);
                     let that: this = this;
                     return new sap.ui.layout.form.SimpleForm("", {
                         content: [
-                            new sap.m.Title("", {
-                                text: document.title,
-                                level: sap.ui.core.TitleLevel.H1,
-                                titleStyle: sap.ui.core.TitleLevel.H1,
-                                textAlign: sap.ui.core.TextAlign.Center,
+                            new sap.m.VBox("", {
+                                items: [
+                                    new sap.m.Title("", {
+                                        text: document.title,
+                                        level: sap.ui.core.TitleLevel.H1,
+                                        titleStyle: sap.ui.core.TitleLevel.H1,
+                                        textAlign: sap.ui.core.TextAlign.Center,
+                                        width: "100%",
+                                    }),
+                                    new sap.m.Title("", {
+                                        text: subheading,
+                                        level: sap.ui.core.TitleLevel.H4,
+                                        titleStyle: sap.ui.core.TitleLevel.H4,
+                                        textAlign: sap.ui.core.TextAlign.Right,
+                                        visible: ibas.strings.isEmpty(subheading) ? false : true,
+                                        width: "100%",
+                                    }),
+                                ]
                             }),
                             new sap.m.Label("", {
                                 text: ibas.i18n.prop("shell_user")

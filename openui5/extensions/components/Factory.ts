@@ -96,7 +96,7 @@ namespace sap {
                         return new sap.extension.m.TimePicker("", {
                             editable: property.authorised === ibas.emAuthoriseType.ALL ? true : false,
                         }).bindProperty("bindingValue", bindInfo);
-                    } else if (bindInfo.type instanceof sap.extension.data.Decimal) {
+                    } else if (bindInfo.type instanceof sap.extension.data.Decimal && !(bindInfo.type instanceof sap.extension.data.Percentage)) {
                         return new sap.extension.m.Input("", {
                             type: sap.m.InputType.Number,
                             editable: property.authorised === ibas.emAuthoriseType.ALL ? true : false,

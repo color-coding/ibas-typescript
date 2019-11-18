@@ -503,7 +503,7 @@ namespace sap {
                         /** 选择内容数量 */
                         maxCount: { type: "int", defaultValue: 0 },
                         /** 重复内容 */
-                        repeateText: { type: "string" },
+                        repeatText: { type: "string" },
                     },
                     events: {}
                 },
@@ -521,7 +521,7 @@ namespace sap {
                  */
                 loadItems(this: RepeatCharSelect): RepeatCharSelect {
                     this.destroyItems();
-                    let vChar: string = this.getRepeateText();
+                    let vChar: string = this.getRepeatText();
                     if (ibas.strings.isEmpty(vChar)) {
                         return;
                     }
