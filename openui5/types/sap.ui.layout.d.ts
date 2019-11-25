@@ -2955,6 +2955,80 @@ declare namespace sap {
                  */
                 export interface IGridConfigurable {
                 }
+                /**
+                 * <p>Holds layout data for an item inside a responsive column layout.</p>
+                 */
+                export class ResponsiveColumnItemLayoutData extends sap.ui.core.LayoutData {
+                    /**
+                     * <p>Constructor for a new <code>sap.ui.layout.cssgrid.ResponsiveColumnItemLayoutData</code>.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+                     * @param {string} sId <p>ID for the new element, generated automatically if no ID is given</p>
+                     * @param {any} mSettings <p>Initial settings for the new element.</p>
+                     */
+                    constructor(sId?: string, mSettings?: any);
+                    /**
+                     * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getColumns" href="#/api/sap.ui.layout.cssgrid.ResponsiveColumnItemLayoutData/methods/getColumns">columns</a>.</p><p>Specifies the number of columns, which the item should take.</p><p>Default value is <code>1</code>.</p>
+                     * @returns number <p>Value of property <code>columns</code></p>
+                     */
+                    getColumns(): number;
+                    /**
+                     * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getRows" href="#/api/sap.ui.layout.cssgrid.ResponsiveColumnItemLayoutData/methods/getRows">rows</a>.</p><p>Specifies the number of rows, which the item should take.</p><p>Default value is <code>1</code>.</p>
+                     * @returns number <p>Value of property <code>rows</code></p>
+                     */
+                    getRows(): number;
+                    /**
+                     * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getColumns" href="#/api/sap.ui.layout.cssgrid.ResponsiveColumnItemLayoutData/methods/getColumns">columns</a>.</p><p>Specifies the number of columns, which the item should take.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1</code>.</p>
+                     * @param {number} iColumns <p>New value for property <code>columns</code></p>
+                     * @returns sap.ui.layout.cssgrid.ResponsiveColumnItemLayoutData <p>Reference to <code>this</code> in order to allow method chaining</p>
+                     */
+                    setColumns(iColumns: number): sap.ui.layout.cssgrid.ResponsiveColumnItemLayoutData;
+                    /**
+                     * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getRows" href="#/api/sap.ui.layout.cssgrid.ResponsiveColumnItemLayoutData/methods/getRows">rows</a>.</p><p>Specifies the number of rows, which the item should take.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1</code>.</p>
+                     * @param {number} iRows <p>New value for property <code>rows</code></p>
+                     * @returns sap.ui.layout.cssgrid.ResponsiveColumnItemLayoutData <p>Reference to <code>this</code> in order to allow method chaining</p>
+                     */
+                    setRows(iRows: number): sap.ui.layout.cssgrid.ResponsiveColumnItemLayoutData;
+                }
+                /**
+                 * <p>Represents a layout which displays variable number of columns, depending on available screen size. With that it achieves flexible layouts and line breaks for large, medium, and small-sized screens, such as desktop, tablet, and mobile.</p><p>Grid row's height is dynamically determined by the height of the highest grid element on this row.</p><p><b>Note:</b> This layout is not supported by Microsoft Internet Explorer.</p>
+                 */
+                export class ResponsiveColumnLayout extends sap.ui.layout.cssgrid.GridLayoutBase {
+                    /**
+                     * <p>Constructor for a new <code>ResponsiveColumnLayout</code>.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+                     * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
+                     * @param {any} mSettings <p>Initial settings for the new control</p>
+                     */
+                    constructor(sId?: string, mSettings?: any);
+                    /**
+                     * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="layoutChange" href="#/api/sap.ui.layout.cssgrid.ResponsiveColumnLayout/events/layoutChange">layoutChange</a> event of this <code>sap.ui.layout.cssgrid.ResponsiveColumnLayout</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.layout.cssgrid.ResponsiveColumnLayout</code> itself.</p><p>Fired when the currently active layout changes</p>
+                     * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+                     * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+                     * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.layout.cssgrid.ResponsiveColumnLayout</code> itself</p>
+                     * @returns sap.ui.layout.cssgrid.ResponsiveColumnLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
+                     */
+                    attachLayoutChange(oData: any, fnFunction: Function, oListener?: any): sap.ui.layout.cssgrid.ResponsiveColumnLayout;
+                    /**
+                     * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="layoutChange" href="#/api/sap.ui.layout.cssgrid.ResponsiveColumnLayout/events/layoutChange">layoutChange</a> event of this <code>sap.ui.layout.cssgrid.ResponsiveColumnLayout</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+                     * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+                     * @param {any} oListener <p>Context object on which the given function had to be called</p>
+                     * @returns sap.ui.layout.cssgrid.ResponsiveColumnLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
+                     */
+                    detachLayoutChange(fnFunction: Function, oListener?: any): sap.ui.layout.cssgrid.ResponsiveColumnLayout;
+                    /**
+                     * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="layoutChange" href="#/api/sap.ui.layout.cssgrid.ResponsiveColumnLayout/events/layoutChange">layoutChange</a> to attached listeners.</p>
+                     * @param {any} mParameters <p>Parameters to pass along with the event</p>
+                     * @returns sap.ui.layout.cssgrid.ResponsiveColumnLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
+                     */
+                    protected fireLayoutChange(mParameters?: any): sap.ui.layout.cssgrid.ResponsiveColumnLayout;
+                    /**
+                     * @returns boolean <p>If the Grid Layout is responsive.</p>
+                     */
+                    isResponsive(): boolean;
+                    /**
+                     * <p>Returns if the Grid Layout is responsive.</p>
+                     * @returns boolean <p>If the Grid Layout is responsive.</p>
+                     */
+                    isResponsive(): boolean;
+                }
             }
         }
     }

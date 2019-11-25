@@ -399,8 +399,8 @@ declare namespace sap {
          */
         iWaitForPromise(oPromise: any | Promise<any>): any;
         /**
-         * <p>Takes the same parameters as <a target="_self" class="jsdoclink" href="#/api/sap.ui.test.Opa/methods/waitFor">sap.ui.test.Opa#waitFor</a>. Also allows you to specify additional parameters:</p>
-         * @param {any} options <p>An Object containing conditions for waiting and callbacks</p>
+         * <p>Takes a superset of the parameters of <a target="_self" class="jsdoclink" href="#/api/sap.ui.test.Opa/methods/waitFor">sap.ui.test.Opa#waitFor</a>.</p>
+         * @param {any} options <p>An object containing conditions for waiting and callbacks.</p><p>The allowed keys are listed below. If a key is not allowed, an error is thrown, stating that "the parameter is not defined in the API".</p><p>As of version 1.72, in addition to the listed keys, declarative matchers are also allowed. Any matchers declared on the root level of the options object are merged with those declared in <code>options.matchers</code>. For details on declarative matchers, see the <code>options.matchers</code> property.</p>
          * @returns any <p>A promise that gets resolved on success. If an error occurs, the promise is rejected with the options object. A detailed error message containing the stack trace and Opa logs is available in options.errorMessage.</p>
          */
         waitFor(options: any): any;
@@ -434,7 +434,7 @@ declare namespace sap {
          * @param {undefined} oOptions <p>must contain ID property of type string, regex or array of strings; optionally it can contain a controlType property.</p>
          * @returns sap.ui.core.Element|sap.ui.core.Element[] <p>all matching controls <ul> <li>if a oOptions.id is a string, will return the single matching control or null if no controls match</li> <li>otherwise, will return an array of matching controls, or an empty array, if no controls match</li> </ul></p>
          */
-        getControlByGlobalId(oOptions: any): sap.ui.core.Element | sap.ui.core.Element[];
+        getControlByGlobalId(oOptions: any | undefined): sap.ui.core.Element | sap.ui.core.Element[];
         /**
          * <p>Gets the constructor function of a certain controlType</p>
          * @param {string} sControlType <p>the name of the type eg: "sap.m.Button"</p>
@@ -757,7 +757,14 @@ declare namespace sap {
        */
       namespace matchers {
         /**
-         * <p>Checks if an aggregation contains at least one item that has a property set to a certain value.</p>
+         * <p>Checks if an aggregation contains at least one item that has a property set to a certain value.</p><p>As of version 1.72, it is available as a declarative matcher with the following syntax: <pre><code>{
+            aggregationContainsPropertyEqual: {
+                aggregationName: "string",
+                propertyName: "string",
+                propertyValue: "string"
+            }
+        }
+        </code></pre></p>
          */
         export class AggregationContainsPropertyEqual extends sap.ui.test.matchers.Matcher {
           /**
@@ -800,7 +807,12 @@ declare namespace sap {
           setPropertyValue(oPropertyValue: any): sap.ui.test.matchers.AggregationContainsPropertyEqual;
         }
         /**
-         * <p>Checks if an aggregation is empty.</p>
+         * <p>Checks if an aggregation is empty.</p><p>As of version 1.72, it is available as a declarative matcher with the following syntax: <code><pre>{
+            aggregationEmpty: {
+                name: "string"
+            }
+        }
+        </code></p>
          */
         export class AggregationEmpty extends sap.ui.test.matchers.Matcher {
           /**
@@ -821,7 +833,12 @@ declare namespace sap {
           setName(sName: string): sap.ui.test.matchers.AggregationEmpty;
         }
         /**
-         * <p>Checks if an aggregation contains at least one entry.</p>
+         * <p>Checks if an aggregation contains at least one entry.</p><p>As of version 1.72, it is available as a declarative matcher with the following syntax: <code><pre>{
+            aggregationFilled: {
+                name: "string"
+            }
+        }
+        </code></pre></p>
          */
         export class AggregationFilled extends sap.ui.test.matchers.Matcher {
           /**
@@ -842,7 +859,13 @@ declare namespace sap {
           setName(sName: string): sap.ui.test.matchers.AggregationFilled;
         }
         /**
-         * <p>Checks if an aggregation contains a specified number of entries.</p>
+         * <p>Checks if an aggregation contains a specified number of entries.</p><p>As of version 1.72, it is available as a declarative matcher with the following syntax: <code><pre>{
+            aggregationLengthEquals: {
+                name: "string",
+                length: "integer"
+            }
+        }
+        </code></pre></p>
          */
         export class AggregationLengthEquals extends sap.ui.test.matchers.Matcher {
           /**
@@ -874,7 +897,10 @@ declare namespace sap {
           setName(sName: string): sap.ui.test.matchers.AggregationLengthEquals;
         }
         /**
-         * <p>Checks if a control has a defined ancestor.</p>
+         * <p>Checks if a control has a defined ancestor.</p><p>As of version 1.72, it is available as a declarative matcher with the following syntax: <code><pre>{
+            ancestor: "object" // where "object" is a declarative matcher for the ancestor
+        }
+        </code></pre></p>
          */
         export class Ancestor {
           /**
@@ -884,7 +910,14 @@ declare namespace sap {
           constructor(vAncestor: any | string, bDirect?: boolean);
         }
         /**
-         * <p>Checks if a control has a binding context with the exact same binding path.</p><p>As of version 1.60, comparison is strict and can include one or more binding criteria: <ul> <li>context path (matches children of bound controls, eg: items in a table)</li> <li>property path (matches controls with no context and a single bound property, eg: Text with binding for property text)</li> <li>context path + property path (matches children of bound controls, where the child has a binding for a certain property within the context)</li> </ul></p><p><b>Note:</b> Before version 1.60, the only available criteria is binding context path.</p>
+         * <p>Checks if a control has a binding context with the exact same binding path.</p><p>As of version 1.60, comparison is strict and can include one or more binding criteria: <ul> <li>context path (matches children of bound controls, eg: items in a table)</li> <li>property path (matches controls with no context and a single bound property, eg: Text with binding for property text)</li> <li>context path + property path (matches children of bound controls, where the child has a binding for a certain property within the context)</li> </ul></p><p><b>Note:</b> Before version 1.60, the only available criteria is binding context path.</p><p>As of version 1.72, it is available as a declarative matcher with the following syntax: <code><pre>{
+            bindingPath: {
+                path: "string",
+                modelName: "string",
+                propertyPath: "string"
+            }
+        }
+        </code></pre></p>
          */
         export class BindingPath extends sap.ui.test.matchers.Matcher {
           /**
@@ -927,7 +960,10 @@ declare namespace sap {
           setPropertyPath(sPropertyPath: string): sap.ui.test.matchers.BindingPath;
         }
         /**
-         * <p>Checks if a control has a given descendant.</p>
+         * <p>Checks if a control has a given descendant.</p><p>As of version 1.72, it is available as a declarative matcher with the following syntax: <code><pre>{
+            descendant: "object" // where "object" is a declarative matcher for the descendant
+        }
+        </code></pre></p>
          */
         export class Descendant {
           /**
@@ -937,7 +973,15 @@ declare namespace sap {
           constructor(vDescendantControl: any | string, bDirect?: boolean);
         }
         /**
-         * <p>The I18NText matcher checks if a control property has the same value as a text from an I18N file.</p><p>The matcher automatically: <ul> <li> retrieves the text from the assigned 'i18n' model (name can be changed) </li> <li> checks that the I18N key does actually exist in the file </li> <li> checks if asynchronously loaded I18N have actually been loaded </li> </ul></p>
+         * <p>The I18NText matcher checks if a control property has the same value as a text from an I18N file.</p><p>The matcher automatically: <ul> <li> retrieves the text from the assigned 'i18n' model (name can be changed) </li> <li> checks that the I18N key does actually exist in the file </li> <li> checks if asynchronously loaded I18N have actually been loaded </li> </ul></p><p>As of version 1.72, it is available as a declarative matcher with the following syntax: <code><pre>{
+            i18NText: {
+                propertyName: "string",
+                key: "string",
+                parameters: "any",
+                modelName: "string"
+            }
+        }
+        </code></pre></p>
          */
         export class I18NText extends sap.ui.test.matchers.Matcher {
           /**
@@ -999,7 +1043,16 @@ declare namespace sap {
           constructor();
         }
         /**
-         * <p>The LabelFor matcher checks if a given control has a label associated with it. For every Label on the page, the matcher checks if: <ul> <li> its labelFor association is to the given control </li> <li> its properties match a condition </li> </ul> Labels can be matched by: <ul> <li> text </li> <li> i18n key, modelName, parameters or propertyName. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.test.matchers.I18NText">sap.ui.test.matchers.I18NText</a> </li> <li> combination of text and key is not possible </li> </ul> Some control types cannot be in a labelFor association: <ul> <li> sap.ui.comp.navpopover.SmartLink </li> <li> sap.m.Link </li> <li> sap.m.Label </li> <li> sap.m.Text </li> </ul></p>
+         * <p>The LabelFor matcher checks if a given control has a label associated with it. For every Label on the page, the matcher checks if: <ul> <li> its labelFor association is to the given control </li> <li> its properties match a condition </li> </ul> Labels can be matched by: <ul> <li> text </li> <li> i18n key, modelName, parameters or propertyName. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.test.matchers.I18NText">sap.ui.test.matchers.I18NText</a> </li> <li> combination of text and key is not possible </li> </ul> Some control types cannot be in a labelFor association: <ul> <li> sap.ui.comp.navpopover.SmartLink </li> <li> sap.m.Link </li> <li> sap.m.Label </li> <li> sap.m.Text </li> </ul></p><p>As of version 1.72, it is available as a declarative matcher with the following syntax: <code><pre>{
+            labelFor: {
+                text: "string",
+                modelName: "string",
+                key: "string",
+                parameters: "any",
+                propertyName: "string"
+            }
+        }
+        </code></pre></p>
          */
         export class LabelFor extends sap.ui.test.matchers.Matcher {
           /**
@@ -1079,7 +1132,12 @@ declare namespace sap {
           protected isMatching(oControl: sap.ui.core.Control): boolean;
         }
         /**
-         * <p>Checks if a control's properties have the provided values - all properties have to match their values.</p>
+         * <p>Checks if a control's properties have the provided values - all properties have to match their values.</p><p>As of version 1.72, it is available as a declarative matcher with the following syntax: <code><pre>{
+            properties: {
+                propertyName: "propertyValue"
+            }
+        }
+        </code></pre></p>
          */
         export class Properties {
           /**
@@ -1096,7 +1154,13 @@ declare namespace sap {
           constructor(oProperties: any);
         }
         /**
-         * <p>Checks if a property has the exact same value.</p>
+         * <p>Checks if a property has the exact same value.</p><p>As of version 1.72, it is available as a declarative matcher with the following syntax: <code><pre>{
+            propertyStrictEquals: {
+                name: "string",
+                value: "any"
+            }
+        }
+        </code></pre></p>
          */
         export class PropertyStrictEquals extends sap.ui.test.matchers.Matcher {
           /**
@@ -2612,11 +2676,22 @@ declare namespace sap {
          */
         getEnabled(): boolean;
         /**
+         * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getVisible" href="#/api/sap.ui.core.CommandExecution/methods/getVisible">visible</a>.</p><p>Whether the CommandExecution is visible, or not. By default, it is visible. If not visible, the CommandExecution will not be triggered even if it is enabled.</p><p>Default value is <code>true</code>.</p>
+         * @returns boolean <p>Value of property <code>visible</code></p>
+         */
+        getVisible(): boolean;
+        /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getEnabled" href="#/api/sap.ui.core.CommandExecution/methods/getEnabled">enabled</a>.</p><p>Whether the CommandExecution is enabled or not. By default, it is enabled</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
          * @param {boolean} bEnabled <p>New value for property <code>enabled</code></p>
          * @returns sap.ui.core.CommandExecution <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
         setEnabled(bEnabled: boolean): sap.ui.core.CommandExecution;
+        /**
+         * <p>Sets whether the <code>CommandExecution</code> is visible, or not. If set to false, the <code>CommandExecution</code> will unregister the shortcut. If not visible, the CommandExecution will not be triggered even if it is enabled.</p>
+         * @param {boolean} bValue <p>Whether the CommandExecution is visible, or not.</p>
+         * @returns sap.ui.core.Element <p>The CommandExecution</p>
+         */
+        setVisible(bValue: boolean): sap.ui.core.Element;
         /**
          * <p>Fires the execute event and triggers the attached handler. If the CommandExecution is disabled, the handler will not be triggered.</p>
          */
@@ -6022,9 +6097,9 @@ declare namespace sap {
         /**
          * <p>Returns the renderer class for a given control instance</p>
          * @param {sap.ui.core.Control} oControl <p>the control that should be rendered</p>
-         * @returns Function <p>the renderer class for a given control instance</p>
+         * @returns any <p>the renderer class for a given control instance</p>
          */
-        static getRenderer(oControl: sap.ui.core.Control): Function;
+        static getRenderer(oControl: sap.ui.core.Control): any;
         /**
          * <p>Collects descendants of the given root node that need to be preserved before the root node is wiped out. The "to-be-preserved" nodes are moved to a special, hidden 'preserve' area.</p><p>A node is declared "to-be-preserved" when it has the <code>data-sap-ui-preserve</code> attribute set. When the optional parameter <code>bPreserveNodesWithId</code> is set to true, then nodes with an id are preserved as well and their <code>data-sap-ui-preserve</code> attribute is set automatically. This option is used by UIAreas when they render for the first time and simplifies the handling of predefined HTML content in a web page.</p><p>The "to-be-preserved" nodes are searched with a depth first search and moved to the 'preserve' area in the order that they are found. So for direct siblings the order should be stable.</p>
          * @param {HTMLElement} oRootNode <p>to search for "to-be-preserved" nodes</p>
@@ -10428,7 +10503,7 @@ declare namespace sap {
          */
         var linux: boolean;
         /**
-         * <p>If this flag is set to <code>true</code>, a Mac operating system is used.</p>
+         * <p>If this flag is set to <code>true</code>, a Mac operating system is used.</p><p><b>Note:</b> An iPad using Safari browser, which is requesting desktop sites, is also recognized as Macintosh.</p>
          */
         var macintosh: boolean;
         /**
@@ -17548,7 +17623,7 @@ declare namespace sap {
              */
             requestProperty(sPath?: string, bExternalFormat?: boolean): Promise<any>;
             /**
-             * <p>Loads side effects for this context using the given "14.5.11 Expression edm:NavigationPropertyPath" or "14.5.13 Expression edm:PropertyPath" objects. Use this method to explicitly load side effects in case implicit loading is switched off via the binding-specific parameter <code>$$patchWithoutSideEffects</code>. The method can be called on <ul> <li> the bound context of a context binding, <li> the return value context of an operation binding, <li> a context of a list binding representing a single entity, <li> the header context of a list binding; side effects are loaded for the whole binding in this case. </ul> Key predicates must be available in this context's path. Avoid navigation properties as part of a binding's $select system query option as they may trigger pointless requests. There must be only context bindings between this context and its first ancestor binding which uses own data service requests.</p><p>By default, the request uses the update group ID for this context's binding; this way, it can easily be part of the same batch request as the corresponding update. <b>Caution:</b> If a dependent binding uses a different update group ID, it may lose its pending changes. The same will happen if a different group ID is provided, and the side effects affect properties for which there are pending changes.</p><p>All failed updates or creates for the group ID are repeated within the same batch request. If the group ID has submit mode <a target="_self" class="jsdoclink" href="#/api/Auto">sap.ui.model.odata.v4.SubmitMode.Auto</a> and there are currently running updates or creates this method first waits for them to be processed.</p><p>The events 'dataRequested' and 'dataReceived' are not fired. Whatever should happen in the event handler attached to... <ul> <li>'dataRequested', can instead be done before calling <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="requestSideEffects" href="#/api/sap.ui.model.odata.v4.Context/methods/requestSideEffects">#requestSideEffects</a>.</li> <li>'dataReceived', can instead be done once the <code>oPromise</code> returned by <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="requestSideEffects" href="#/api/sap.ui.model.odata.v4.Context/methods/requestSideEffects">#requestSideEffects</a> fulfills or rejects (using <code>oPromise.then(function () {...}, function () {...})</code>).</li> </ul><br><br>References: <ul><li>sap.ui.model.odata.v4.ODataContextBinding#execute</li><li>sap.ui.model.odata.v4.ODataContextBinding#getBoundContext</li><li>sap.ui.model.odata.v4.ODataListBinding#getHeaderContext</li><li>sap.ui.model.odata.v4.ODataModel#bindContext</li></ul></p>
+             * <p>Loads side effects for this context using the given "14.5.11 Expression edm:NavigationPropertyPath" or "14.5.13 Expression edm:PropertyPath" objects. Use this method to explicitly load side effects in case implicit loading is switched off via the binding-specific parameter <code>$$patchWithoutSideEffects</code>. The method can be called on <ul> <li> the bound context of a context binding, <li> the return value context of an operation binding, <li> a context of a list binding representing a single entity, <li> the header context of a list binding; side effects are loaded for the whole binding in this case. </ul> Key predicates must be available in this context's path. Avoid navigation properties as part of a binding's $select system query option as they may trigger pointless requests. There must be only context bindings between this context and its first ancestor binding which uses own data service requests.</p><p>If the first ancestor binding has an empty path, it is a context binding. In this case, we look for the farthest ancestor binding with the following characteristics: It uses own data service requests, it can be reached via a sequence of only empty paths, and it is actually being used. This way, side effects are loaded also for siblings of that first ancestor binding which show the same data, but useless requests are avoided.</p><p>By default, the request uses the update group ID for this context's binding; this way, it can easily be part of the same batch request as the corresponding update. <b>Caution:</b> If a dependent binding uses a different update group ID, it may lose its pending changes. The same will happen if a different group ID is provided, and the side effects affect properties for which there are pending changes.</p><p>All failed updates or creates for the group ID are repeated within the same batch request. If the group ID has submit mode <a target="_self" class="jsdoclink" href="#/api/Auto">sap.ui.model.odata.v4.SubmitMode.Auto</a> and there are currently running updates or creates this method first waits for them to be processed.</p><p>The events 'dataRequested' and 'dataReceived' are not fired. Whatever should happen in the event handler attached to... <ul> <li>'dataRequested', can instead be done before calling <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="requestSideEffects" href="#/api/sap.ui.model.odata.v4.Context/methods/requestSideEffects">#requestSideEffects</a>.</li> <li>'dataReceived', can instead be done once the <code>oPromise</code> returned by <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="requestSideEffects" href="#/api/sap.ui.model.odata.v4.Context/methods/requestSideEffects">#requestSideEffects</a> fulfills or rejects (using <code>oPromise.then(function () {...}, function () {...})</code>).</li> </ul><br><br>References: <ul><li>sap.ui.model.odata.v4.ODataContextBinding#execute</li><li>sap.ui.model.odata.v4.ODataContextBinding#getBoundContext</li><li>sap.ui.model.odata.v4.ODataListBinding#getHeaderContext</li><li>sap.ui.model.odata.v4.ODataModel#bindContext</li></ul></p>
              * @param {object[]} aPathExpressions <p>The "14.5.11 Expression edm:NavigationPropertyPath" or "14.5.13 Expression edm:PropertyPath" objects describing which properties need to be loaded because they may have changed due to side effects of a previous update, for example <code>[{$PropertyPath : "TEAM_ID"}, {$NavigationPropertyPath : "EMPLOYEE_2_MANAGER"}, {$PropertyPath : "EMPLOYEE_2_TEAM/Team_Id"}]</code></p>
              * @param {string} sGroupId <p>The group ID to be used (since 1.69.0); if not specified, the update group ID for the context's binding is used, see "$$updateGroupId" at <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataModel/methods/bindList">sap.ui.model.odata.v4.ODataModel#bindList</a> and <a target="_self" class="jsdoclink" href="#/api/sap.ui.model.odata.v4.ODataModel/methods/bindContext">sap.ui.model.odata.v4.ODataModel#bindContext</a>. If a different group ID is specified, make sure that <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="requestSideEffects" href="#/api/sap.ui.model.odata.v4.Context/methods/requestSideEffects">#requestSideEffects</a> is called after the corresponding updates have been successfully processed by the server and that there are no pending changes for the affected properties.</p>
              * @returns Promise<any> <p>Promise resolved with <code>undefined</code>, or rejected with an error if loading of side effects fails. Use it to set fields affected by side effects to read-only before <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="requestSideEffects" href="#/api/sap.ui.model.odata.v4.Context/methods/requestSideEffects">#requestSideEffects</a> and make them editable again when the promise resolves; in the error handler, you can repeat the loading of side effects.</p>
@@ -17678,8 +17753,9 @@ declare namespace sap {
             requestObject(sPath?: string): Promise<any>;
             /**
              * <p>Resets all pending changes of this binding, see <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="hasPendingChanges" href="#/api/sap.ui.model.odata.v4.ODataContextBinding/methods/hasPendingChanges">#hasPendingChanges</a>. Resets also invalid user input.</p>
+             * @returns Promise<any> <p>A promise which is resolved without a defined result as soon as all changes in the binding itself and all dependent bindings are canceled (since 1.72.0)</p>
              */
-            resetChanges(): void;
+            resetChanges(): Promise<any>;
             /**
              * <p>Resumes the binding update. Change events will be fired again.</p><p>When the binding is resumed, a change event will be fired immediately, if the data has changed while the binding was suspended. For serverside models, a request to the server will be triggered, if a refresh was requested while the binding was suspended.</p>
              */
@@ -17902,8 +17978,9 @@ declare namespace sap {
             requestContexts(iStart?: number, iLength?: number, sGroupId?: string): any;
             /**
              * <p>Resets all pending changes of this binding, see <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="hasPendingChanges" href="#/api/sap.ui.model.odata.v4.ODataListBinding/methods/hasPendingChanges">#hasPendingChanges</a>. Resets also invalid user input.</p>
+             * @returns Promise<any> <p>A promise which is resolved without a defined result as soon as all changes in the binding itself and all dependent bindings are canceled (since 1.72.0)</p>
              */
-            resetChanges(): void;
+            resetChanges(): Promise<any>;
             /**
              * <p>Resumes the binding update. Change events will be fired again.</p><p>When the binding is resumed, a change event will be fired immediately, if the data has changed while the binding was suspended. For serverside models, a request to the server will be triggered, if a refresh was requested while the binding was suspended.</p>
              */
@@ -18409,8 +18486,9 @@ declare namespace sap {
             requestValueListType(): Promise<any>;
             /**
              * <p>Resets all pending changes of this binding, see <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="hasPendingChanges" href="#/api/sap.ui.model.odata.v4.ODataPropertyBinding/methods/hasPendingChanges">#hasPendingChanges</a>. Resets also invalid user input.</p>
+             * @returns Promise<any> <p>A promise which is resolved without a defined result as soon as all changes in the binding itself and all dependent bindings are canceled (since 1.72.0)</p>
              */
-            resetChanges(): void;
+            resetChanges(): Promise<any>;
             /**
              * <p>Resumes the binding update. Change events will be fired again.</p><p>When the binding is resumed, a change event will be fired immediately, if the data has changed while the binding was suspended. For serverside models, a request to the server will be triggered, if a refresh was requested while the binding was suspended.</p>
              */
@@ -19648,10 +19726,11 @@ declare namespace sap {
            * <p>Navigates to a specific route defining a set of parameters.</p><p>The parameters will be URI encoded - the characters ; , / ? : @ & = + $ are reserved and will not be encoded. If you want to use special characters in your <code>oParameters</code>, you have to encode them (encodeURIComponent).</p><p>If the given route name can't be found, an error message is logged to the console and the hash will be changed to the empty string.</p>
            * @param {string} sName <p>Name of the route</p>
            * @param {any} oParameters <p>Parameters for the route</p>
+           * @param {any} oComponentTargetInfo <p>Information for route name and parameters of the router in nested components. When any target of the route which is specified with the <code>sName</code> parameter loads a component and a route of this component whose pattern is different than an empty string should be matched directly with this navTo call, the route name and its parameters can be given by using this parameter. Information for deeper nested component target can be given within the <code>componentTargetInfo</code> property which contains the same properties as the top level.</p>
            * @param {boolean} bReplace <p>If set to <code>true</code>, the hash is replaced, and there will be no entry in the browser history, if set to <code>false</code>, the hash is set and the entry is stored in the browser history.</p>
            * @returns sap.ui.core.routing.Router <p>this for chaining.</p>
            */
-          navTo(sName: string, oParameters?: any, bReplace?: boolean): sap.ui.core.routing.Router;
+          navTo(sName: string, oParameters?: any, oComponentTargetInfo?: any, bReplace?: boolean): sap.ui.core.routing.Router;
           /**
            * <p>Will trigger routing events + place targets for routes matching the string.</p>
            * @param {string} sNewHash <p>A new hash</p>
@@ -19695,8 +19774,16 @@ declare namespace sap {
           /**
            * <p>Replaces the hash with a certain value. When using the replace function, no browser history entry is written. If you want to have an entry in the browser history, please use the <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="setHash" href="#/api/sap.ui.core.routing.RouterHashChanger/methods/setHash">#setHash</a> function.</p>
            * @param {string} sHash <p>New hash</p>
+           * @param {Promise<any>} pNestedHashChange <p>When this parameter is given, this RouterHashChanger switchs to collect mode and all hash changes from its children will be collected. When this promise resolves, this RouterHashChanger fires a "hashReplaced" event with its own hash and the hashes which are collected from the child RouterHashChanger(s).</p>
+           * @param {boolean} bSuppressActiveHashCollect <p>Whether this RouterHashChanger shouldn't collect the prefixes from its active child RouterHashChanger(s) and forward them as delete prefixes within the next "hashReplaced" event</p>
+           * @returns Promise|undefined <p>When <code>pNestedHashChange</code> is given as a Promise, this function also returns a Promise which resolves after the given promise resolves. Otherwise it returns <code>undefined</code>.</p>
            */
-          protected replaceHash(sHash: string): void;
+          protected replaceHash(sHash: string, pNestedHashChange?: Promise<any>, bSuppressActiveHashCollect?: boolean): Promise<any> | undefined;
+          /**
+           * <p>Reset the hash</p><p>This is needed for allowing to fire the hashChanged event with the previous hash again after displaying a Target without involving a Router.</p>
+           * @returns sap.ui.core.routing.RouterHashChanger <p>The current RouterHashChanger for chaining the method</p>
+           */
+          protected resetHash(): sap.ui.core.routing.RouterHashChanger;
           /**
            * <p>Sets the hash to a certain value. When using this function, a browser history entry is written. If you do not want to have an entry in the browser history, please use the <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="replaceHash" href="#/api/sap.ui.core.routing.HashChangerBase/methods/replaceHash">#replaceHash</a> function.</p>
            * @param {string} sHash <p>New hash</p>
@@ -19705,8 +19792,11 @@ declare namespace sap {
           /**
            * <p>Sets the hash to a certain value. When using this function, a browser history entry is written. If you do not want to have an entry in the browser history, please use the <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="replaceHash" href="#/api/sap.ui.core.routing.RouterHashChanger/methods/replaceHash">#replaceHash</a> function.</p>
            * @param {string} sHash <p>New hash</p>
+           * @param {Promise<any>} pNestedHashChange <p>When this parameter is given, this RouterHashChanger switchs to collect mode and all hash changes from its children will be collected. When this promise resolves, this RouterHashChanger fires a "hashSet" event with its own hash and the hashes which are collected from the child RouterHashChanger(s).</p>
+           * @param {boolean} bSuppressActiveHashCollect <p>Whether this RouterHashChanger shouldn't collect the prefixes from its active child RouterHashChanger(s) and forward them as delete prefixes within the next "hashSet" event</p>
+           * @returns Promise|undefined <p>When <code>pNestedHashChange</code> is given as a Promise, this function also returns a Promise which resolves after the given promise resolves. Otherwise it returns <code>undefined</code>.</p>
            */
-          protected setHash(sHash: string): void;
+          protected setHash(sHash: string, pNestedHashChange?: Promise<any>, bSuppressActiveHashCollect?: boolean): Promise<any> | undefined;
         }
         /**
          * <p>Provides a convenient way for placing views into the correct containers of your application.</p><p>The main benefit of Targets is lazy loading: you do not have to create the views until you really need them.</p>

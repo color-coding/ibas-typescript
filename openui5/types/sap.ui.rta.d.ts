@@ -369,6 +369,16 @@ declare namespace sap {
       namespace rta {
          /**
           */
+         namespace api {
+         }
+      }
+   }
+}
+declare namespace sap {
+   namespace ui {
+      namespace rta {
+         /**
+          */
          namespace service {
          }
       }

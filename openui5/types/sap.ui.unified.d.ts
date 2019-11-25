@@ -2325,6 +2325,14 @@ declare namespace sap {
                  */
                 attachFileAllowed(oData: any, fnFunction: Function, oListener?: any): sap.ui.unified.FileUploader;
                 /**
+                 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="fileEmpty" href="#/api/sap.ui.unified.FileUploader/events/fileEmpty">fileEmpty</a> event of this <code>sap.ui.unified.FileUploader</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.unified.FileUploader</code> itself.</p><p>Event is fired when the size of the file is 0</p>
+                 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+                 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+                 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.unified.FileUploader</code> itself</p>
+                 * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
+                 */
+                attachFileEmpty(oData: any, fnFunction: Function, oListener?: any): sap.ui.unified.FileUploader;
+                /**
                  * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="filenameLengthExceed" href="#/api/sap.ui.unified.FileUploader/events/filenameLengthExceed">filenameLengthExceed</a> event of this <code>sap.ui.unified.FileUploader</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.unified.FileUploader</code> itself.</p><p>Event is fired, if the filename of a chosen file is longer than the value specified with the <code>maximumFilenameLength</code> property.</p>
                  * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
                  * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
@@ -2415,6 +2423,13 @@ declare namespace sap {
                  */
                 detachFileAllowed(fnFunction: Function, oListener?: any): sap.ui.unified.FileUploader;
                 /**
+                 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="fileEmpty" href="#/api/sap.ui.unified.FileUploader/events/fileEmpty">fileEmpty</a> event of this <code>sap.ui.unified.FileUploader</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+                 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+                 * @param {any} oListener <p>Context object on which the given function had to be called</p>
+                 * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
+                 */
+                detachFileEmpty(fnFunction: Function, oListener?: any): sap.ui.unified.FileUploader;
+                /**
                  * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="filenameLengthExceed" href="#/api/sap.ui.unified.FileUploader/events/filenameLengthExceed">filenameLengthExceed</a> event of this <code>sap.ui.unified.FileUploader</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
                  * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
                  * @param {any} oListener <p>Context object on which the given function had to be called</p>
@@ -2475,6 +2490,12 @@ declare namespace sap {
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
                 protected fireFileAllowed(mParameters?: any): sap.ui.unified.FileUploader;
+                /**
+                 * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="fileEmpty" href="#/api/sap.ui.unified.FileUploader/events/fileEmpty">fileEmpty</a> to attached listeners.</p>
+                 * @param {any} mParameters <p>Parameters to pass along with the event</p>
+                 * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
+                 */
+                protected fireFileEmpty(mParameters?: any): sap.ui.unified.FileUploader;
                 /**
                  * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="filenameLengthExceed" href="#/api/sap.ui.unified.FileUploader/events/filenameLengthExceed">filenameLengthExceed</a> to attached listeners.</p>
                  * @param {any} mParameters <p>Parameters to pass along with the event</p>

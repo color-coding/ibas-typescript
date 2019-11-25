@@ -1047,6 +1047,11 @@ declare namespace sap {
                  */
                 getHighlightText(): string;
                 /**
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getNavigated" href="#/api/sap.ui.table.RowSettings/methods/getNavigated">navigated</a>.</p><p>The navigated state of a row.</p><p>If set to <code>true</code>, a navigation indicator is displayed at the end of the row. <b>Note:</b> The navigation indicator is only visible if row actions are available.</p><p>Default value is <code>false</code>.</p>
+                 * @returns boolean <p>Value of property <code>navigated</code></p>
+                 */
+                getNavigated(): boolean;
+                /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getHighlight" href="#/api/sap.ui.table.RowSettings/methods/getHighlight">highlight</a>.</p><p>The highlight state of the rows.</p><p>If the highlight is set to <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.MessageType">sap.ui.core.MessageType.None</a> (default), no highlights are visible. Valid values for the <code>highlight</code> property are values of the enumerations <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.MessageType">sap.ui.core.MessageType</a> or <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.IndicationColor">sap.ui.core.IndicationColor</a>.</p><p>Accessibility support is provided through the associated <a target="_self" class="jsdoclink" href="#/api/sap.ui.table.RowSettings/methods/setHighlightText">highlightText</a> property. If the <code>highlight</code> property is set to a value of <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.MessageType">sap.ui.core.MessageType</a>, the <code>highlightText</code> property does not need to be set because a default text is used. However, the default text can be overridden by setting the <code>highlightText</code> property. In all other cases the <code>highlightText</code> property must be set.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>None</code>.</p>
                  * @param {string} sHighlight <p>New value for property <code>highlight</code></p>
                  * @returns sap.ui.table.RowSettings <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -1058,6 +1063,12 @@ declare namespace sap {
                  * @returns sap.ui.table.RowSettings <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
                 setHighlightText(sHighlightText: string): sap.ui.table.RowSettings;
+                /**
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getNavigated" href="#/api/sap.ui.table.RowSettings/methods/getNavigated">navigated</a>.</p><p>The navigated state of a row.</p><p>If set to <code>true</code>, a navigation indicator is displayed at the end of the row. <b>Note:</b> The navigation indicator is only visible if row actions are available.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+                 * @param {boolean} bNavigated <p>New value for property <code>navigated</code></p>
+                 * @returns sap.ui.table.RowSettings <p>Reference to <code>this</code> in order to allow method chaining</p>
+                 */
+                setNavigated(bNavigated: boolean): sap.ui.table.RowSettings;
             }
             /**
              * <p><p>Selection behavior of the table</p></p>
@@ -1357,11 +1368,6 @@ declare namespace sap {
                  * @returns sap.ui.table.Table <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
                 destroyRowSettingsTemplate(): sap.ui.table.Table;
-                /**
-                 * <p>Destroys the title in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTitle" href="#/api/sap.ui.table.Table/methods/getTitle">title</a>.</p>
-                 * @returns sap.ui.table.Table <p>Reference to <code>this</code> in order to allow method chaining</p>
-                 */
-                destroyTitle(): sap.ui.table.Table;
                 /**
                  * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="beforeOpenContextMenu" href="#/api/sap.ui.table.Table/events/beforeOpenContextMenu">beforeOpenContextMenu</a> event of this <code>sap.ui.table.Table</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
                  * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
@@ -1715,7 +1721,7 @@ declare namespace sap {
                  */
                 getRowHeight(): number;
                 /**
-                 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getRows" href="#/api/sap.ui.table.Table/methods/getRows">rows</a>.</p><p>Rows of the Table</p>
+                 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getRows" href="#/api/sap.ui.table.Table/methods/getRows">rows</a>.</p><p>This aggregation is managed by the table itself. It can only be used with data binding, is read-only, and does not support templates or factories.</p><p>Rows are created and rendered only for a subset of the available data and reused for performance reasons. When scrolling, only the binding contexts are updated to show the correct section of the data. This makes it possible to bind the rows to large data sets. But you must not change rows and their children programmatically, as these changes might get lost when the table updates the rows the next time. Also, properties must not be set to static values, as these would not change when scrolling.</p><p>The cells of rows can be defined with the <a target="_self" class="jsdoclink" href="#/api/sap.ui.table.Column/methods/setTemplate">template</a> aggregation of the columns in the <a target="_self" class="jsdoclink" href="#/api/sap.ui.table.Table/methods/setColumns">columns</a> aggregation of the table. The actions of rows can be defined with the <a target="_self" class="jsdoclink" href="#/api/sap.ui.table.Table/methods/setRowActionTemplate">rowActionTemplate</a> aggregation of the table. Furthermore, row-specific settings can be defined with the <a target="_self" class="jsdoclink" href="#/api/sap.ui.table.Table/methods/setRowSettingsTemplate">rowSettingsTemplate</a> aggregation of the table.</p>
                  * @returns sap.ui.table.Row[] 
                  */
                 getRows(): sap.ui.table.Row[];
@@ -1764,11 +1770,6 @@ declare namespace sap {
                  * @returns number <p>Value of property <code>threshold</code></p>
                  */
                 getThreshold(): number;
-                /**
-                 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTitle" href="#/api/sap.ui.table.Table/methods/getTitle">title</a>.</p><p>Control or text of title section of the Table (if not set it will be hidden)</p>
-                 * @returns sap.ui.core.Control|string 
-                 */
-                getTitle(): sap.ui.core.Control | string;
                 /**
                  * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getVisibleRowCount" href="#/api/sap.ui.table.Table/methods/getVisibleRowCount">visibleRowCount</a>.</p><p>Number of visible rows of the table.</p><p>Default value is <code>10</code>.</p>
                  * @returns number <p>Value of property <code>visibleRowCount</code></p>
@@ -2102,12 +2103,6 @@ declare namespace sap {
                  * @returns sap.ui.table.Table <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
                 setThreshold(iThreshold: number): sap.ui.table.Table;
-                /**
-                 * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTitle" href="#/api/sap.ui.table.Table/methods/getTitle">title</a>.</p>
-                 * @param {sap.ui.core.Control | string} vTitle <p>The title to set</p>
-                 * @returns sap.ui.table.Table <p>Reference to <code>this</code> in order to allow method chaining</p>
-                 */
-                setTitle(vTitle: sap.ui.core.Control | string): sap.ui.table.Table;
                 /**
                  * <p>Sets a new tooltip for this object. The tooltip can either be a simple string (which in most cases will be rendered as the <code>title</code> attribute of this Element) or an instance of <a target="_self" class="jsdoclink" href="#/api/sap.ui.core.TooltipBase">sap.ui.core.TooltipBase</a>.</p><p>If a new tooltip is set, any previously set tooltip is deactivated.</p><p>Please note that tooltips are not rendered for the table. The tooltip property will be set but it won't effect the DOM.</p>
                  * @param {string | sap.ui.core.TooltipBase} vTooltip <p>The tooltip</p>

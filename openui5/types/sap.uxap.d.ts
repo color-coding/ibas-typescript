@@ -33,9 +33,9 @@ declare namespace sap {
             getBackgroundDesign(): sap.m.BackgroundDesign;
             /**
              * <p>Returns an sap.ui.core.delegate.ScrollEnablement object used to handle scrolling.</p>
-             * @returns any <p>The <code>sap.ui.core.delegate.ScrollEnablement</code> instance</p>
+             * @returns sap.ui.core.delegate.ScrollEnablement <p>The <code>sap.ui.core.delegate.ScrollEnablement</code> instance</p>
              */
-            getScrollDelegate(): any;
+            getScrollDelegate(): sap.ui.core.delegate.ScrollEnablement;
             /**
              * <p>ID of the element which is the current target of the association <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSelectedButton" href="#/api/sap.uxap.AnchorBar/methods/getSelectedButton">selectedButton</a>, or <code>null</code>.</p>
              * @returns sap.ui.core.ID 
@@ -99,10 +99,38 @@ declare namespace sap {
              */
             addMapping(oMapping: sap.uxap.ModelMapping): sap.uxap.BlockBase;
             /**
+             * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="viewInit" href="#/api/sap.uxap.BlockBase/events/viewInit">viewInit</a> event of this <code>sap.uxap.BlockBase</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.uxap.BlockBase</code> itself.</p><p>Fired when an aggregated view is instantiated.</p>
+             * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+             * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+             * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.uxap.BlockBase</code> itself</p>
+             * @returns sap.uxap.BlockBase <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            attachViewInit(oData: any, fnFunction: Function, oListener?: any): sap.uxap.BlockBase;
+            /**
+             * <p>Create view</p>
+             * @param {any} mParameter, <p>the view metadata</p>
+             * @param {string} sMode, <p>the mode associated with the view</p>
+             * @returns any <p>Promise</p>
+             */
+            protected createView(mParameter: any, sMode: string): any;
+            /**
              * <p>Destroys all the mappings in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMappings" href="#/api/sap.uxap.BlockBase/methods/getMappings">mappings</a>.</p>
              * @returns sap.uxap.BlockBase <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             destroyMappings(): sap.uxap.BlockBase;
+            /**
+             * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="viewInit" href="#/api/sap.uxap.BlockBase/events/viewInit">viewInit</a> event of this <code>sap.uxap.BlockBase</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+             * @param {any} oListener <p>Context object on which the given function had to be called</p>
+             * @returns sap.uxap.BlockBase <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            detachViewInit(fnFunction: Function, oListener?: any): sap.uxap.BlockBase;
+            /**
+             * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="viewInit" href="#/api/sap.uxap.BlockBase/events/viewInit">viewInit</a> to attached listeners.</p>
+             * @param {any} mParameters <p>Parameters to pass along with the event</p>
+             * @returns sap.uxap.BlockBase <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            protected fireViewInit(mParameters?: any): sap.uxap.BlockBase;
             /**
              * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getColumnLayout" href="#/api/sap.uxap.BlockBase/methods/getColumnLayout">columnLayout</a>.</p><p>Determines on how many columns the layout will be rendered. Allowed values are integers from 1 to 4 and "auto".</p><p>Default value is <code>auto</code>.</p>
              * @returns sap.uxap.BlockBaseColumnLayout <p>Value of property <code>columnLayout</code></p>
@@ -119,7 +147,7 @@ declare namespace sap {
              */
             getMappings(): sap.uxap.ModelMapping[];
             /**
-             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMode" href="#/api/sap.uxap.BlockBase/methods/getMode">mode</a>.</p><p>Determines the mode of the block. When block is used inside ObjectPage this mode is inherited my the SubSection. The mode of the block is changed when SubSection mode changes.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getMode" href="#/api/sap.uxap.BlockBase/methods/getMode">mode</a>.</p><p>Determines the mode of the block. See <a target="_self" class="jsdoclink" href="#/api/sap.uxap.ObjectPageSubSectionMode">ObjectPageSubSectionMode</a>. When <code>BlockBase</code> is used inside an <code>ObjectPageLayout</code>, the <code>mode</code> property is inherited from the respective <a target="_self" class="jsdoclink" href="#/api/sap.uxap.ObjectPageSubSection">SubSection</a>. The <code>mode</code> property of <code>BlockBase</code> changes when the <code>mode</code> property of <code>ObjectPageSubSection</code> changes.</p>
              * @returns string <p>Value of property <code>mode</code></p>
              */
             getMode(): string;
@@ -1830,7 +1858,7 @@ declare namespace sap {
              */
             getActions(): sap.ui.core.Control[];
             /**
-             * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getBlocks" href="#/api/sap.uxap.ObjectPageSubSection/methods/getBlocks">blocks</a>.</p><p>Controls to be displayed in the subsection</p><p><b>Note:</b> The SAP Fiori Design guidelines require that the <code>ObjectPageHeader</code>'s content and the <code>ObjectPage</code>'s subsection content are aligned vertically. When using <a target="_self" class="jsdoclink" href="#/api/sap.ui.layout.form.Form">sap.ui.layout.form.Form</a>, <a target="_self" class="jsdoclink" href="#/api/sap.m.Panel">sap.m.Panel</a>, <a target="_self" class="jsdoclink" href="#/api/sap.m.Table">sap.m.Table</a> and <a target="_self" class="jsdoclink" href="#/api/sap.m.List">sap.m.List</a> in the subsection content area of <code>ObjectPage</code>, if the content is not already aligned, you need to adjust their left text offset to achieve the vertical alignment. To do this, apply the <code>sapUxAPObjectPageSubSectionAlignContent</code> CSS class to them and set their <code>width</code> property to <code>auto</code> (if not set by default).</p><p>Example:</p><p><pre>
+             * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getBlocks" href="#/api/sap.uxap.ObjectPageSubSection/methods/getBlocks">blocks</a>.</p><p>Controls to be displayed in the subsection</p><p><b>Note:</b> The SAP Fiori Design guidelines require that the <code>ObjectPageHeader</code>'s content and the <code>ObjectPage</code>'s subsection content are aligned vertically. When using <a target="_self" class="jsdoclink" href="#/api/sap.ui.layout.form.Form">sap.ui.layout.form.Form</a>, <a target="_self" class="jsdoclink" href="#/api/sap.m.Panel">sap.m.Panel</a>, <a target="_self" class="jsdoclink" href="#/api/sap.m.Table">sap.m.Table</a> and <a target="_self" class="jsdoclink" href="#/api/sap.m.List">sap.m.List</a> in the subsection content area of <code>ObjectPage</code>, if the content is not already aligned, you need to adjust their left text offset to achieve the vertical alignment. To do this, apply the <code>sapUxAPObjectPageSubSectionAlignContent</code> CSS class to them and set their <code>width</code> property to <code>auto</code> (if not set by default).</p><p>Avoid using this class in combination with <code>ResponsiveLayout</code> because <code>ResponsiveLayout</code> applies custom paddings. To align items with <code>sapUxAPObjectPageSubSectionAlignContent</code>, use <code>ColumnLayout</code>.</p><p>Example:</p><p><pre>
             <code> &lt;Panel class="sapUxAPObjectPageSubSectionAlignContent" width="auto"&gt;&lt;/Panel&gt; </code>
             </pre></p>
              * @returns sap.ui.core.Control[] 

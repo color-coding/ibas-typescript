@@ -224,7 +224,7 @@ declare namespace sap {
 			unbindDetailBox(): sap.f.Avatar;
 		}
 		/**
-		 * <p><p>Possible background color options for the <a target="_self" class="jsdoclink" href="#/api/sap.f.Avatar">sap.f.Avatar</a> control.</p><p><b>Note:</b> If the <code>Random</code> value is assigned, a random color is chosen from the other options (Accent1 to Accent10).</p></p>
+		 * <p><p>Possible background color options for the <a target="_self" class="jsdoclink" href="#/api/sap.f.Avatar">sap.f.Avatar</a> control.</p><p><b>Notes:</b> <ul> <li>Keep in mind that the colors are theme-dependent and can differ based on the currently used theme.</li> <li> If the <code>Random</code> value is assigned, a random color is chosen from the accent options (Accent1 to Accent10).</li> </ul></p></p>
 		 */
 		export enum AvatarColor {
 			/**
@@ -268,9 +268,21 @@ declare namespace sap {
 			 */
 			Accent9 = "Accent9",
 			/**
-			 * <p>Random color, chosen from the other options (Accent1 to Accent10)</p>
+			 * <p>Recommended when used as a placeholder (no image or initials are provided).</p>
+			 */
+			Placeholder = "Placeholder",
+			/**
+			 * <p>Random color, chosen from the accent options (Accent1 to Accent10)</p>
 			 */
 			Random = "Random",
+			/**
+			 * <p>Recommended when used as an icon in a tile.</p>
+			 */
+			TileIcon = "TileIcon",
+			/**
+			 * <p>Transparent</p>
+			 */
+			Transparent = "Transparent",
 		}
 		/**
 		 * <p><p>Types of image size and position that determine how an image fits in the <a target="_self" class="jsdoclink" href="#/api/sap.f.Avatar">sap.f.Avatar</a> control area.</p></p>
@@ -1600,7 +1612,7 @@ declare namespace sap {
 			 */
 			constructor(oFlexibleColumnLayout: sap.f.FlexibleColumnLayout, oSettings: any);
 			/**
-			 * <p>Returns an object, describing the current state of the control and the expected action buttons for each column.</p><p><ul>The returned object has the following structure: <li>layout - the value of the <code>layout</code> property</li> <li>maxColumnsCount - the maximum number of columns that can be displayed at once based on the control width. See <a target="_self" class="jsdoclink" href="#/api/sap.f.FlexibleColumnLayout/methods/getMaxColumnsCount">sap.f.FlexibleColumnLayout#getMaxColumnsCount</a></li> <li>columnsSizes - an object with fields <code>beginColumn, midColumn, endColumn</code>, representing the relative percentage sizes of the three columns as integers</li> <li>columnsVisibility - an object with fields <code>beginColumn, midColumn, endColumn</code>, representing the visibility of the three columns</li> <li>isFullScreen - <code>true</code> if only one column is visible at the moment, <code>false</code> otherwise <b>Note:</b> This may be due to small screen size (phone) or due to a layout, for which a single column takes up the whole width</li> <li>isLogicallyFullScreen - <code>true</code> if the current <code>layout</code> is one of the following: <code>sap.f.LayoutType.OneColumn, sap.f.LayoutType.MidColumnFullScreen, sap.f.LayoutType.EndColumnFullScreen</code>, <code>false</code> otherwise <b>Note:</b> While <code>isFullScreen</code> can be <code>true</code> for any layout, due to small screen size, <code>isLogicallyFullScreen</code> will only be <code>true</code> for the layout values, listed above.</li> <li>actionButtonsInfo - an object with fields <code>midColumn, endColumn</code>, each containing an object, telling whether action buttons should be shown in the <code>mid</code> and <code>end</code> columns, and what value of the <code>layout</code> property should be set upon clicking these buttons. Each of these objects has the following fields: <code>closeColumn, fullScreen, exitFullScreen</code>. If <code>null</code>, then the respective action button should not be shown, otherwise provides the value of <code>layout</code> property for the action button.</li></ul></p><p>Example value:</p><p><pre>
+			 * <p>Returns an object, describing the current state of the control and the expected action buttons for each column.</p><p><ul>The returned object has the following structure: <li>layout - the value of the <code>layout</code> property</li> <li>maxColumnsCount - the maximum number of columns that can be displayed at once based on the control width. See <a target="_self" class="jsdoclink" href="#/api/sap.f.FlexibleColumnLayout/methods/getMaxColumnsCount">sap.f.FlexibleColumnLayout#getMaxColumnsCount</a></li> <li>columnsSizes - an object with fields <code>beginColumn, midColumn, endColumn</code>, representing the relative percentage sizes of the three columns as integers</li> <li>columnsVisibility - an object with fields <code>beginColumn, midColumn, endColumn</code>, representing the visibility of the three columns</li> <li>isFullScreen - <code>true</code> if only one column is visible at the moment, <code>false</code> otherwise <b>Note:</b> This may be due to small screen size (phone) or due to a layout, for which a single column takes up the whole width</li> <li>isLogicallyFullScreen - <code>true</code> if the current <code>layout</code> is one of the following: <code>sap.f.LayoutType.OneColumn, sap.f.LayoutType.MidColumnFullScreen, sap.f.LayoutType.EndColumnFullScreen</code>, <code>false</code> otherwise <b>Note:</b> While <code>isFullScreen</code> can be <code>true</code> for any layout, due to small screen size, <code>isLogicallyFullScreen</code> will only be <code>true</code> for the layout values, listed above.</li> <li>actionButtonsInfo - an object with fields <code>midColumn, endColumn</code>, each containing an object, telling whether action buttons should be shown in the <code>mid</code> and <code>end</code> columns, and what value of the <code>layout</code> property should be set upon clicking these buttons. Each of these objects has the following fields: <code>closeColumn, fullScreen, exitFullScreen</code>. If <code>null</code>, then the respective action button should not be shown, otherwise provides the value of <code>layout</code> property for the action button.</li></ul></p><p><b>Note:</b> This method relies on the internal <code>FlexibleColumnLayout</code> reference to be rendered in the DOM tree. For convenience, use methods <a target="_self" class="jsdoclink" href="#/api/sap.f.FlexibleColumnLayout/methods/isDOMReady">sap.f.FlexibleColumnLayout#isDOMReady</a> and <a target="_self" class="jsdoclink" href="#/api/sap.f.FlexibleColumnLayout/methods/whenDOMReady">sap.f.FlexibleColumnLayout#whenDOMReady</a>.</p><p>Example value:</p><p><pre>
 			 <code>
 			 {
 				   "layout":"ThreeColumnsMidExpanded",
@@ -1646,6 +1658,26 @@ declare namespace sap {
 			 * @returns any <p>The object describing the next UI state</p>
 			 */
 			getNextUIState(iNextLevel: number): any;
+			/**
+			 * <p>Returns <code>true</code> if internal <code>FlexibleColumnLayout</code> reference is rendered in the DOM tree.</p>
+			 * @returns boolean <p>true if the associated <code>FlexibleColumnLayout</code> is rendered</p>
+			 */
+			isDOMReady(): boolean;
+			/**
+			 * <p>Abstract wrapper for <a target="_self" class="jsdoclink" href="#/api/sap.f.FlexibleColumnLayout/methods/isDOMReady">sap.f.FlexibleColumnLayout#isDOMReady</a>. Returns <code>true</code> if criteria are met for the APIs in this helper to be used.</p>
+			 * @returns boolean <p>true if this helper's API reliability criteria are met</p>
+			 */
+			isReady(): boolean;
+			/**
+			 * <p>Returns promise which can be used to find out when the internal <code>FlexibleColumnLayout</code> is rendered. This is needed because methods in <code>FlexibleColumnLayout</code> rely on the control being rendered.</p>
+			 * @returns Promise<any> <p>A promise that resolves after <code>FlexibleColumnLayout</code> is rendered</p>
+			 */
+			whenDOMReady(): Promise<any>;
+			/**
+			 * <p>Returns promise which can be used to find out when internal criteria for this helper's API reliability are met.</p>
+			 * @returns Promise<any> <p>A promise that resolves after internal criteria are met</p>
+			 */
+			whenReady(): Promise<any>;
 		}
 		/**
 		 * <p>A layout container control used for aligning items with various sizes in a simple grid.</p><h3>Overview</h3><p>The control is used to align tiles, cards and other controls in configuration, such as a home page or a dashboard. It represents a grid layout with specific row and column sizes, in which the items can take any number of rows and columns.</p><p>The number of columns and rows each item takes can be configured with the use of the <code><a target="_self" class="jsdoclink" href="#/api/sap.f.GridContainerItemLayoutData">sap.f.GridContainerItemLayoutData</a></code>.</p><p>All rows have the same height and all columns have the same width. Their sizes can be configured with the use of the <code>layout</code> aggregation and <code><a target="_self" class="jsdoclink" href="#/api/sap.f.GridContainerSettings">sap.f.GridContainerSettings</a></code>.</p><h3>Usage</h3><p><i>When to use</i> <ul> <li>For aligning home page and dashboard items like Tiles and Cards in a simple grid system with equally sized rows and columns.</li> </ul></p><p><i>When not to use</i> <ul> <li>If a more complex layout grid system, where columns and rows may vary in size, is needed.</li> </ul></p><h3>Example:</h3><p> <pre>
@@ -2180,6 +2212,155 @@ declare namespace sap {
 			 * <p>Desktop: 33/67/- Begin and Mid (expanded) columns are displayed</p><p>Tablet: 33/67/- Begin and Mid (expanded) columns are displayed</p><p>Phone: -/100/- only the Mid column is displayed</p><p>Use to display both a master and a detail page when the user should focus on the detail page.</p>
 			 */
 			TwoColumnsMidExpanded = "TwoColumnsMidExpanded",
+		}
+		/**
+		 * <p>A layout control that provides specific configuration about how the items should be displayed.</p>
+		 */
+		export class ProductSwitch extends sap.ui.core.Control {
+			/**
+			 * <p>Constructor for a new <code>ProductSwitch</code>.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+			 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
+			 * @param {any} mSettings <p>Initial settings for the new control</p>
+			 */
+			constructor(sId?: string, mSettings?: any);
+			/**
+			 * <p>Adds some item to the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.f.ProductSwitch/methods/getItems">items</a>.</p>
+			 * @param {sap.f.ProductSwitchItem} oItem <p>The item to add; if empty, nothing is inserted</p>
+			 * @returns sap.f.ProductSwitch <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			addItem(oItem: sap.f.ProductSwitchItem): sap.f.ProductSwitch;
+			/**
+			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="change" href="#/api/sap.f.ProductSwitch/events/change">change</a> event of this <code>sap.f.ProductSwitch</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.ProductSwitch</code> itself.</p><p>Fires when an unselected item is pressed.</p>
+			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.ProductSwitch</code> itself</p>
+			 * @returns sap.f.ProductSwitch <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			attachChange(oData: any, fnFunction: Function, oListener?: any): sap.f.ProductSwitch;
+			/**
+			 * <p>Destroys all the items in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.f.ProductSwitch/methods/getItems">items</a>.</p>
+			 * @returns sap.f.ProductSwitch <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			destroyItems(): sap.f.ProductSwitch;
+			/**
+			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="change" href="#/api/sap.f.ProductSwitch/events/change">change</a> event of this <code>sap.f.ProductSwitch</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
+			 * @returns sap.f.ProductSwitch <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			detachChange(fnFunction: Function, oListener?: any): sap.f.ProductSwitch;
+			/**
+			 * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-sap-ui-target="change" href="#/api/sap.f.ProductSwitch/events/change">change</a> to attached listeners.</p>
+			 * @param {any} mParameters <p>Parameters to pass along with the event</p>
+			 * @returns sap.f.ProductSwitch <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			protected fireChange(mParameters?: any): sap.f.ProductSwitch;
+			/**
+			 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.f.ProductSwitch/methods/getItems">items</a>.</p><p><code>ProductSwitch</code> content.</p>
+			 * @returns sap.f.ProductSwitchItem[] 
+			 */
+			getItems(): sap.f.ProductSwitchItem[];
+			/**
+			 * <p>ID of the element which is the current target of the association <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSelectedItem" href="#/api/sap.f.ProductSwitch/methods/getSelectedItem">selectedItem</a>, or <code>null</code>.</p>
+			 * @returns sap.ui.core.ID 
+			 */
+			getSelectedItem(): sap.ui.core.ID;
+			/**
+			 * <p>Checks for the provided <code>sap.f.ProductSwitchItem</code> in the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.f.ProductSwitch/methods/getItems">items</a>. and returns its index if found or -1 otherwise.</p>
+			 * @param {sap.f.ProductSwitchItem} oItem <p>The item whose index is looked for</p>
+			 * @returns number <p>The index of the provided control in the aggregation if found, or -1 otherwise</p>
+			 */
+			indexOfItem(oItem: sap.f.ProductSwitchItem): number;
+			/**
+			 * <p>Inserts a item into the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.f.ProductSwitch/methods/getItems">items</a>.</p>
+			 * @param {sap.f.ProductSwitchItem} oItem <p>The item to insert; if empty, nothing is inserted</p>
+			 * @param {number} iIndex <p>The <code>0</code>-based index the item should be inserted at; for a negative value of <code>iIndex</code>, the item is inserted at position 0; for a value greater than the current size of the aggregation, the item is inserted at the last position</p>
+			 * @returns sap.f.ProductSwitch <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			insertItem(oItem: sap.f.ProductSwitchItem, iIndex: number): sap.f.ProductSwitch;
+			/**
+			 * <p>Removes all the controls from the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.f.ProductSwitch/methods/getItems">items</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
+			 * @returns sap.f.ProductSwitchItem[] <p>An array of the removed elements (might be empty)</p>
+			 */
+			removeAllItems(): sap.f.ProductSwitchItem[];
+			/**
+			 * <p>Removes a item from the aggregation <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getItems" href="#/api/sap.f.ProductSwitch/methods/getItems">items</a>.</p>
+			 * @param {number | string | sap.f.ProductSwitchItem} vItem <p>The item to remove or its index or id</p>
+			 * @returns sap.f.ProductSwitchItem <p>The removed item or <code>null</code></p>
+			 */
+			removeItem(vItem: number | string | sap.f.ProductSwitchItem): sap.f.ProductSwitchItem;
+			/**
+			 * <p>Sets the <code>selectedItem</code> association.</p>
+			 * @param {string | sap.f.ProductSwitchItem | null} vItem <p>New value for the <code>selectedItem</code> association. If an ID of a <code>sap.f.ProductSwitchItem</code> instance is given, the item with this ID becomes the <code>selectedItem</code> association. Alternatively, a <code>sap.f.ProductSwitchItem</code> instance may be given or <code>null</code> to clear the selection.</p>
+			 * @returns sap.f.ProductSwitch <p><code>this</code> to allow method chaining</p>
+			 */
+			setSelectedItem(vItem: string | sap.f.ProductSwitchItem | null): sap.f.ProductSwitch;
+		}
+		/**
+		 * <p>A control that is used as a child of <code>ProductSwitch</code></p><p><b>Note:</b> <code>ProductSwitchItem</code> is not supported when used outside of <code>ProductSwitch</code>.</p>
+		 */
+		export class ProductSwitchItem extends sap.ui.core.Control {
+			/**
+			 * <p>Constructor for a new <code>ProductSwitchItem</code>.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+			 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
+			 * @param {any} mSettings <p>Initial settings for the new control</p>
+			 */
+			constructor(sId?: string, mSettings?: any);
+			/**
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSrc" href="#/api/sap.f.ProductSwitchItem/methods/getSrc">src</a>.</p><p>Defines the icon to be displayed as graphical element within the <code>ProductSwitchItem</code>. It can be an image or an icon from the SAP icon font.</p>
+			 * @returns sap.ui.core.URI <p>Value of property <code>src</code></p>
+			 */
+			getSrc(): sap.ui.core.URI;
+			/**
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSubTitle" href="#/api/sap.f.ProductSwitchItem/methods/getSubTitle">subTitle</a>.</p><p>Determines the subtitle of the <code>ProductSwitchItem</code>.</p>
+			 * @returns string <p>Value of property <code>subTitle</code></p>
+			 */
+			getSubTitle(): string;
+			/**
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTarget" href="#/api/sap.f.ProductSwitchItem/methods/getTarget">target</a>.</p><p>Specifies a target where the <code>targetSrc</code> content must be open.</p><p>Options are the standard values for window.open() supported by browsers: <code>_self</code>, <code>_top</code>, <code>_blank</code>, <code>_parent</code>, <code>_search</code>. Alternatively, a frame name can be entered.</p>
+			 * @returns string <p>Value of property <code>target</code></p>
+			 */
+			getTarget(): string;
+			/**
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTargetSrc" href="#/api/sap.f.ProductSwitchItem/methods/getTargetSrc">targetSrc</a>.</p><p>Defines the <code>ProductSwitchItem</code> target URI. Supports standard hyperlink behavior.</p>
+			 * @returns sap.ui.core.URI <p>Value of property <code>targetSrc</code></p>
+			 */
+			getTargetSrc(): sap.ui.core.URI;
+			/**
+			 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTitle" href="#/api/sap.f.ProductSwitchItem/methods/getTitle">title</a>.</p><p>Determines the title of the <code>ProductSwitchItem</code>.</p>
+			 * @returns string <p>Value of property <code>title</code></p>
+			 */
+			getTitle(): string;
+			/**
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSrc" href="#/api/sap.f.ProductSwitchItem/methods/getSrc">src</a>.</p><p>Defines the icon to be displayed as graphical element within the <code>ProductSwitchItem</code>. It can be an image or an icon from the SAP icon font.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+			 * @param {sap.ui.core.URI} sSrc <p>New value for property <code>src</code></p>
+			 * @returns sap.f.ProductSwitchItem <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setSrc(sSrc: sap.ui.core.URI): sap.f.ProductSwitchItem;
+			/**
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getSubTitle" href="#/api/sap.f.ProductSwitchItem/methods/getSubTitle">subTitle</a>.</p><p>Determines the subtitle of the <code>ProductSwitchItem</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+			 * @param {string} sSubTitle <p>New value for property <code>subTitle</code></p>
+			 * @returns sap.f.ProductSwitchItem <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setSubTitle(sSubTitle: string): sap.f.ProductSwitchItem;
+			/**
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTarget" href="#/api/sap.f.ProductSwitchItem/methods/getTarget">target</a>.</p><p>Specifies a target where the <code>targetSrc</code> content must be open.</p><p>Options are the standard values for window.open() supported by browsers: <code>_self</code>, <code>_top</code>, <code>_blank</code>, <code>_parent</code>, <code>_search</code>. Alternatively, a frame name can be entered.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+			 * @param {string} sTarget <p>New value for property <code>target</code></p>
+			 * @returns sap.f.ProductSwitchItem <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setTarget(sTarget: string): sap.f.ProductSwitchItem;
+			/**
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTargetSrc" href="#/api/sap.f.ProductSwitchItem/methods/getTargetSrc">targetSrc</a>.</p><p>Defines the <code>ProductSwitchItem</code> target URI. Supports standard hyperlink behavior.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+			 * @param {sap.ui.core.URI} sTargetSrc <p>New value for property <code>targetSrc</code></p>
+			 * @returns sap.f.ProductSwitchItem <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setTargetSrc(sTargetSrc: sap.ui.core.URI): sap.f.ProductSwitchItem;
+			/**
+			 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getTitle" href="#/api/sap.f.ProductSwitchItem/methods/getTitle">title</a>.</p><p>Determines the title of the <code>ProductSwitchItem</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+			 * @param {string} sTitle <p>New value for property <code>title</code></p>
+			 * @returns sap.f.ProductSwitchItem <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setTitle(sTitle: string): sap.f.ProductSwitchItem;
 		}
 		/**
 		 * <p>Defines specific properties of the search that are applied to <code>sap.f.ShellBar</code>.</p>
@@ -3515,7 +3696,7 @@ declare namespace sap {
 				setVisible(bVisible: boolean): sap.f.semantic.SemanticControl;
 			}
 			/**
-			 * <p>An enhanced <a target="_self" class="jsdoclink" href="#/api/sap.f.DynamicPage">sap.f.DynamicPage</a>, that contains controls with semantic-specific meaning.</p><h3>Overview</h3><p>Content specified in the <code>sap.f.semantic.SemanticPage</code> aggregations is automatically positioned in dedicated sections of the title or the footer of the page, depending on the control's semantics.</p><p>The actions in the <code>SemanticPage</code> title are grouped to text actions or icon actions. When an aggregation is set, the actions appear in the following predefined order (from left to right):</p><p><ul>Text actions: <li>The main semantic text action - <code>titleMainAction</code></li> <li>Any custom text actions - <code>titleCustomTextActions</code></li> <li>The semantic text actions - <code>editAction</code>, <code>deleteAction</code>, <code>copyAction</code> and <code>addAction</code></li></ul></p><p><ul>Icon actions: <li>Any custom icon actions - <code>titleCustomIconActions</code></li> <li>The simple semantic icon actions - <code>favoriteAction</code> and <code>flagAction</code></li> <li>The share menu semantic icon actions as a drop-down list with the following order: <ul><li><code>sendEmailAction</code></li> <li><code>discussInJamAction</code></li> <li><code>shareInJamAction</code></li> <li><code>sendMessageAction</code></li> <li><code>printAction</code></li> <li>Any <code>customShareActions</code></li></ul></li> <li>The navigation semantic actions - <code>fullScreenAction</code>, <code>exitFullScreenAction</code>, and <code>closeAction</code></li></ul></p><p>The actions in the <code>SemanticPage</code> footer are positioned either on its left or right area and have the following predefined order:</p><p><ul>Footer left area: <li>The semantic text action - <code>messagesIndicator</code></li> <li>The semantic label - <code>draftIndicator</code></li></ul></p><p><ul>Footer right area: <li>The main semantic text action - <code>footerMainAction</code></li> <li>The semantic text actions - <code>positiveAction</code> and <code>negativeAction</code></li> <li>Any custom text actions - <code>footerCustomActions</code></li></ul></p><h3>Usage</h3><p>Using the <code>SemanticPage</code> facilitates the implementation of the SAP Fiori 2.0 design guidelines.</p><h3>Responsive behavior</h3><p>The responsive behavior of the <code>SemanticPage</code> depends on the behavior of the content that is displayed. To adjust the <code>SemanticPage</code> content padding, the <code>sapUiContentPadding</code>, <code>sapUiNoContentPadding</code>, and <code>sapUiResponsiveContentPadding</code> CSS classes can be used.<br><br><span>Documentation links:</span><ul><li><a target="_self" href="#/topic/84f3d52f492648d5b594e4f45dca7727">Semantic Pages</a></li><li><a target="_self" href="#/topic/4a97a07ec8f5441d901994d82eaab1f5">Semantic Page (sap.m)</a></li></ul></p>
+			 * <p>Provides enhanced functionality by internally aggregating <a target="_self" class="jsdoclink" href="#/api/sap.f.DynamicPage">sap.f.DynamicPage</a> and contains controls with semantic-specific meaning.</p><h3>Overview</h3><p>Content specified in the <code>sap.f.semantic.SemanticPage</code> aggregations is automatically positioned in dedicated sections of the title or the footer of the page, depending on the control's semantics.</p><p>The actions in the <code>SemanticPage</code> title are grouped to text actions or icon actions. When an aggregation is set, the actions appear in the following predefined order (from left to right):</p><p><ul>Text actions: <li>The main semantic text action - <code>titleMainAction</code></li> <li>Any custom text actions - <code>titleCustomTextActions</code></li> <li>The semantic text actions - <code>editAction</code>, <code>deleteAction</code>, <code>copyAction</code> and <code>addAction</code></li></ul></p><p><ul>Icon actions: <li>Any custom icon actions - <code>titleCustomIconActions</code></li> <li>The simple semantic icon actions - <code>favoriteAction</code> and <code>flagAction</code></li> <li>The share menu semantic icon actions as a drop-down list with the following order: <ul><li><code>sendEmailAction</code></li> <li><code>discussInJamAction</code></li> <li><code>shareInJamAction</code></li> <li><code>sendMessageAction</code></li> <li><code>printAction</code></li> <li>Any <code>customShareActions</code></li></ul></li> <li>The navigation semantic actions - <code>fullScreenAction</code>, <code>exitFullScreenAction</code>, and <code>closeAction</code></li></ul></p><p>The actions in the <code>SemanticPage</code> footer are positioned either on its left or right area and have the following predefined order:</p><p><ul>Footer left area: <li>The semantic text action - <code>messagesIndicator</code></li> <li>The semantic label - <code>draftIndicator</code></li></ul></p><p><ul>Footer right area: <li>The main semantic text action - <code>footerMainAction</code></li> <li>The semantic text actions - <code>positiveAction</code> and <code>negativeAction</code></li> <li>Any custom text actions - <code>footerCustomActions</code></li></ul></p><h3>Usage</h3><p>Using the <code>SemanticPage</code> facilitates the implementation of the SAP Fiori 2.0 design guidelines.</p><h3>Responsive behavior</h3><p>The responsive behavior of the <code>SemanticPage</code> depends on the behavior of the content that is displayed. To adjust the <code>SemanticPage</code> content padding, the <code>sapUiContentPadding</code>, <code>sapUiNoContentPadding</code>, and <code>sapUiResponsiveContentPadding</code> CSS classes can be used.<br><br><span>Documentation links:</span><ul><li><a target="_self" href="#/topic/84f3d52f492648d5b594e4f45dca7727">Semantic Pages</a></li><li><a target="_self" href="#/topic/4a97a07ec8f5441d901994d82eaab1f5">Semantic Page (sap.m)</a></li></ul></p>
 			 */
 			export class SemanticPage extends sap.ui.core.Control {
 				/**
