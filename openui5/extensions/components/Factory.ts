@@ -108,14 +108,15 @@ namespace sap {
                         }).bindProperty("bindingValue", bindInfo);
                     } else if (property.values instanceof Array && property.values.length > 0) {
                         let items: ibas.IList<sap.ui.core.Item> = new ibas.ArrayList<sap.ui.core.Item>();
-                        items.add(new sap.ui.core.ListItem("", {
+                        items.add(new sap.extension.m.SelectItem("", {
                             key: "",
                             text: ibas.i18n.prop("openui5_please_select_data")
                         }));
                         for (let item of property.values) {
-                            items.add(new sap.ui.core.ListItem("", {
+                            items.add(new sap.extension.m.SelectItem("", {
                                 key: item.value,
-                                text: item.description
+                                text: item.description,
+                                default: item.default,
                             }));
                         }
                         return new sap.extension.m.Select("", {

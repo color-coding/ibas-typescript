@@ -47,8 +47,62 @@ namespace sap {
                     managedobjects.checkBinding.apply(this, arguments);
                     sap.m.Select.prototype.bindProperty.apply(this, arguments);
                     return this;
+                },
+                isEmptyValue(value: any): boolean {
+                    return ibas.strings.isEmpty(value);
+                },
+                init(this: Select): void {
+                    (<any>sap.m.Select.prototype).init.apply(this, arguments);
+                    this.attachModelContextChange(undefined, function (event: sap.ui.base.Event): void {
+                        let source: any = event.getSource();
+                        if (source instanceof Select && source.getItems().length > 1) {
+                            let defaultItem: SelectItem = defaultSelectItem(source);
+                            if (defaultItem instanceof SelectItem) {
+                                let content: any = source.getBindingContext();
+                                if (content instanceof sap.ui.model.Context) {
+                                    let data: any = content.getObject();
+                                    if (data instanceof ibas.BusinessObject) {
+                                        if (data.isNew === true) {
+                                            let binding: any = source.getBinding("bindingValue");
+                                            if (binding instanceof sap.ui.model.PropertyBinding) {
+                                                if (source.isEmptyValue(binding.getRawValue())) {
+                                                    binding.setValue(defaultItem.getKey());
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
                 }
             });
+            sap.ui.core.ListItem.extend("sap.extension.m.SelectItem", {
+                metadata: {
+                    properties: {
+                        default: { type: "boolean" },
+                    },
+                    events: {}
+                },
+                /** 是否为默认值 */
+                isDefault(): boolean {
+                    return this.getProperty("default");
+                },
+                /** 设置为默认值 */
+                setDefault(value: boolean): SelectItem {
+                    return this.setProperty("default", value);
+                },
+            });
+            function defaultSelectItem(select: Select): SelectItem {
+                for (let item of select.getItems()) {
+                    if (item instanceof SelectItem) {
+                        if (item.isDefault() === true) {
+                            return item;
+                        }
+                    }
+                }
+                return undefined;
+            }
             /**
              * 枚举数据-选择框
              */
@@ -110,7 +164,7 @@ namespace sap {
                         if (!isNaN(Number(key))) {
                             key = Number(key);
                         }
-                        this.addItem(new sap.ui.core.ListItem("", {
+                        this.addItem(new SelectItem("", {
                             key: key,
                             text: ibas.enums.describe(enumType, key),
                             additionalText: text
@@ -222,13 +276,13 @@ namespace sap {
                                     if (!blankData.text) {
                                         blankData.text = ibas.i18n.prop("openui5_please_select_data");
                                     }
-                                    this.addItem(new sap.ui.core.ListItem("", {
+                                    this.addItem(new SelectItem("", {
                                         key: blankData.key,
                                         text: blankData.text
                                     }));
                                 }
                                 for (let item of values) {
-                                    this.addItem(new sap.ui.core.ListItem("", {
+                                    this.addItem(new SelectItem("", {
                                         key: item.key,
                                         text: item.text
                                     }));
@@ -348,7 +402,7 @@ namespace sap {
                                     if (boName && !ibas.strings.equalsIgnoreCase(data.name, boName)) {
                                         continue;
                                     }
-                                    this.addItem(new sap.ui.core.ListItem("", {
+                                    this.addItem(new SelectItem("", {
                                         key: "",
                                         text: ibas.i18n.prop("openui5_please_select_data")
                                     }));
@@ -356,13 +410,19 @@ namespace sap {
                                         if (ibas.strings.equalsIgnoreCase(propertyName, property.name)) {
                                             if (property.values instanceof Array) {
                                                 for (let item of property.values) {
-                                                    this.addItem(new sap.ui.core.ListItem("", {
+                                                    this.addItem(new SelectItem("", {
                                                         key: item.value,
-                                                        text: item.description
+                                                        text: item.description,
+                                                        default: item.default,
                                                     }));
                                                 }
                                             }
                                         }
+                                    }
+                                    if (this.getItems().length > 0) {
+                                        setTimeout(() => {
+                                            this.fireModelContextChange(undefined);
+                                        }, 50);
                                     }
                                     return;
                                 }
@@ -448,7 +508,7 @@ namespace sap {
                     sort.sortType = ibas.emSortType.DESCENDING;
                     repository.fetch(boRepository, dataInfo, criteria,
                         (values) => {
-                            this.addItem(new sap.ui.core.ListItem("", {
+                            this.addItem(new SelectItem("", {
                                 key: 0,
                                 text: ibas.i18n.prop("openui5_manual_series")
                             }));
@@ -456,9 +516,10 @@ namespace sap {
                                 ibas.logger.log(values);
                             } else {
                                 for (let item of values) {
-                                    this.addItem(new sap.ui.core.ListItem("", {
+                                    this.addItem(new SelectItem("", {
                                         key: item.key,
-                                        text: item.text
+                                        text: item.text,
+                                        default: values.lastOrDefault() === item ? true : undefined,
                                     }));
                                 }
                                 if (this.getItems().length > 0) {
@@ -471,28 +532,9 @@ namespace sap {
                     );
                     return this;
                 },
-                init(this: SeriesSelect): void {
-                    (<any>Select.prototype).init.apply(this, arguments);
-                    this.attachModelContextChange(undefined, function (event: sap.ui.base.Event): void {
-                        let source: any = event.getSource();
-                        if (source instanceof Select && source.getItems().length > 1) {
-                            let content: any = source.getBindingContext();
-                            if (content instanceof sap.ui.model.Context) {
-                                let data: any = content.getObject();
-                                if (data instanceof ibas.BusinessObject) {
-                                    if (data.isNew === true) {
-                                        let binding: any = source.getBinding("bindingValue");
-                                        if (binding instanceof sap.ui.model.PropertyBinding) {
-                                            if (!(binding.getRawValue() > 0)) {
-                                                binding.setValue(source.getLastItem().getKey());
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    });
-                }
+                isEmptyValue(value: any): boolean {
+                    return !(value > 0);
+                },
             });
             /**
              * 重复字符计数-选择框
@@ -526,14 +568,14 @@ namespace sap {
                         return;
                     }
                     let count: number = this.getMaxCount();
-                    this.addItem(new sap.ui.core.ListItem("", {
+                    this.addItem(new SelectItem("", {
                         key: 0,
                         text: "",
                     }));
                     let builder: ibas.StringBuilder = new ibas.StringBuilder();
                     for (let i: number = 1; i < count; i++) {
                         builder.append(vChar);
-                        this.addItem(new sap.ui.core.ListItem("", {
+                        this.addItem(new SelectItem("", {
                             key: i,
                             text: builder.toString(),
                         }));

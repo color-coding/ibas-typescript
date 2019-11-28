@@ -109,6 +109,8 @@ namespace shell {
             value: string;
             /** 描述 */
             description: string;
+            /** 默认值 */
+            default: boolean;
         }
     }
 }

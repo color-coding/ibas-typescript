@@ -117,7 +117,8 @@ namespace shell {
                     let remote: bo4j.IBizPropertyValue = {
                         type: BizPropertyValue.name,
                         Value: newData.value,
-                        Description: newData.description
+                        Description: newData.description,
+                        Default: newData.default,
                     };
                     return remote;
                 } else {
@@ -225,6 +226,7 @@ namespace shell {
                     let newData: BizPropertyValue = new BizPropertyValue();
                     newData.value = remote.Value;
                     newData.description = remote.Description;
+                    newData.default = remote.Default;
                     return newData;
                 } else if (sign === "saveUserQuery") {
                     // 此方法返回值，没有标记类型

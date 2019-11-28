@@ -40,6 +40,15 @@ declare namespace sap {
                  * @param value 值
                  */
                 setBindingValue(value: string): this;
+                /** 是否没有值 */
+                isEmptyValue(value: any): boolean;
+            }
+            /** 选择框项目 */
+            class SelectItem extends sap.ui.core.ListItem {
+                /** 是否为默认值 */
+                isDefault(): boolean;
+                /** 设置为默认值 */
+                setDefault(value: boolean): SelectItem;
             }
             /**
              * 枚举数据-选择框
