@@ -385,9 +385,10 @@ namespace ibas {
          * @param result 属性-结果
          * @param collection 属性-集合
          * @param summing 属性-求和
+         * @param filter 集合过滤器，ture保留；false过滤
          */
-        constructor(result: string, collection: string, summing: string) {
-            super(collection);
+        constructor(result: string, collection: string, summing: string, filter?: (data: any) => boolean) {
+            super(collection, filter);
             this.name = i18n.prop("sys_business_rule_sum_elements");
             this.result = result;
             this.summing = summing;

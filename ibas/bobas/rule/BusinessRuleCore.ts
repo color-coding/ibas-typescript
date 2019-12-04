@@ -198,16 +198,24 @@ namespace ibas {
     }
     /** 集合属性业务规则 */
     export abstract class BusinessRuleCollection extends BusinessRule {
-        constructor(collection: string) {
+        /**
+         * 构造
+         * @param collection 集合属性名称
+         * @param filter 集合过滤器，ture保留；false过滤
+         */
+        constructor(collection: string, filter?: (data: any) => boolean) {
             super();
             this.collection = collection;
+            this.collectionFilter = filter;
         }
         /** 集合属性 */
         collection: string;
+        /** 集合过滤器 */
+        collectionFilter: <T>(data: T) => boolean;
         /** 运行业务逻辑 */
         execute(bo: IBusinessObject): void {
             try {
-                let context: BusinessRuleContextCommon = new BusinessRuleContextCommon();
+                let context: BusinessRuleContextCollection = new BusinessRuleContextCollection();
                 context.source = bo;
                 if (!objects.isNull(this.collection) && !objects.isNull(this.inputProperties)) {
                     let boValues: any = bo.getProperty(this.collection);
@@ -217,6 +225,11 @@ namespace ibas {
                             for (let boValue of boValues) {
                                 if (boValue instanceof TrackableBase) {
                                     if (boValue.isDeleted) {
+                                        continue;
+                                    }
+                                }
+                                if (this.collectionFilter instanceof Function) {
+                                    if (!this.collectionFilter(boValue)) {
                                         continue;
                                     }
                                 }
@@ -245,7 +258,7 @@ namespace ibas {
             }
         }
         /** 计算规则 */
-        protected abstract compute(context: BusinessRuleContextCommon): void;
+        protected abstract compute(context: BusinessRuleContextCollection): void;
     }
     export const businessRulesManager: IBusinessRulesManager = new BusinessRulesManager();
 }
