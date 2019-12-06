@@ -41,7 +41,6 @@ namespace shell {
                 /** 绘制视图 */
                 draw(): any {
                     // 设置应用名称
-                    document.title = ibas.config.get(app.CONFIG_ITEM_APPLICATION_NAME, ibas.i18n.prop("shell_name"));
                     let user: string = ibas.config.get(CONFIG_ITEM_DEFAULT_USER);
                     let password: string = ibas.config.get(CONFIG_ITEM_DEFAULT_PASSWORD);
                     let subheading: string = ibas.config.get(CONFIG_ITEM_SUBHEADING);

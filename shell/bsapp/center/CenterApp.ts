@@ -156,15 +156,13 @@ namespace shell {
                                     this.view.showModuleFunction(console.name, func);
                                     if (ibas.strings.equals(func.id, hashFuncId)) {
                                         // hash值是当前功能，则激活
-                                        setTimeout(() => {
-                                            this.activateFunction(func.id);
-                                            // 功能加载后，自动关闭欢迎
-                                            if (appWelcome instanceof ibas.Application) {
-                                                setTimeout(() => {
-                                                    appWelcome.destroy();
-                                                }, 1000);
-                                            }
-                                        }, 1000);
+                                        this.activateFunction(func.id);
+                                        // 功能加载后，自动关闭欢迎
+                                        if (appWelcome instanceof ibas.Application) {
+                                            setTimeout(() => {
+                                                appWelcome.destroy();
+                                            }, 1000);
+                                        }
                                     }
                                 }
                                 // 处理应用

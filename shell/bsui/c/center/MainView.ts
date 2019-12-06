@@ -7,6 +7,14 @@
  */
 namespace shell {
     export namespace ui {
+        /** 配置项目-进入地址 */
+        export const CONFIG_ITEM_ENTRY_URL: string = "entryUrl";
+        /** 配置项目-界面背景 */
+        export const CONFIG_ITEM_BACKGROUND_IMAGE: string = "backgroundImage";
+        /** 配置项目-界面透明度 */
+        export const CONFIG_ITEM_BACKGROUND_OPACITY: string = "backgroundOpacity";
+        /** 配置项目-图标 */
+        export const CONFIG_ITEM_HOME_ICON: string = "homeIcon";
         export namespace c {
             /**
              * 视图-入口
@@ -15,6 +23,10 @@ namespace shell {
                 /** 绘制视图 */
                 draw(): any {
                     let that: this = this;
+                    // 记录起始地址
+                    ibas.config.set(CONFIG_ITEM_ENTRY_URL, document.URL);
+                    // 设置浏览器标题
+                    document.title = ibas.config.get(app.CONFIG_ITEM_APPLICATION_NAME, ibas.i18n.prop("shell_name"));
                     // 键盘按钮按下
                     ibas.browserEventManager.registerListener({
                         eventType: ibas.emBrowserEventType.KEYDOWN,
@@ -80,8 +92,22 @@ namespace shell {
                         eventType: ibas.emBrowserEventType.TOUCHEND,
                         onEventFired: touch.end
                     });
+                    history.pushState(null, null, document.URL);
+                    ibas.browserEventManager.registerListener({
+                        eventType: ibas.emBrowserEventType.POPSTATE,
+                        onEventFired: (event) => {
+                            let firstUrl: string = ibas.config.get(CONFIG_ITEM_ENTRY_URL);
+                            let currentUrl: string = document.URL;
+                            if (ibas.strings.equalsIgnoreCase(firstUrl, currentUrl)) {
+                                history.pushState(null, null, firstUrl);
+                            }
+                        }
+                    });
                     return new sap.m.App(UI_APP, {
                         autoFocus: false,
+                        homeIcon: ibas.config.get(CONFIG_ITEM_HOME_ICON, undefined),
+                        backgroundImage: ibas.config.get(CONFIG_ITEM_BACKGROUND_IMAGE, undefined),
+                        backgroundOpacity: ibas.config.get(CONFIG_ITEM_BACKGROUND_OPACITY, undefined),
                         afterNavigate(event: sap.ui.base.Event): void {
                             let source: any = event.getSource();
                             if (source instanceof sap.m.App) {
