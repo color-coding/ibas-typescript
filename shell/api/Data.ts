@@ -19,4 +19,9 @@ namespace shell {
         /** 登录仓库名称 */
         export const BO_REPOSITORY_CONNECT: string = ibas.strings.format(ibas.MODULE_REPOSITORY_NAME_TEMPLATE, "Connect");
     }
+
+    export namespace app {
+        /** 配置项目-进入地址 */
+        export const CONFIG_ITEM_ENTRY_URL: string = "entryUrl";
+    }
 }

@@ -7,6 +7,12 @@
  */
 namespace shell {
     export namespace ui {
+        /** 配置项目-界面背景 */
+        export const CONFIG_ITEM_BACKGROUND_IMAGE: string = "backgroundImage";
+        /** 配置项目-界面透明度 */
+        export const CONFIG_ITEM_BACKGROUND_OPACITY: string = "backgroundOpacity";
+        /** 配置项目-图标 */
+        export const CONFIG_ITEM_HOME_ICON: string = "homeIcon";
         export namespace c {
             /**
              * 视图-入口
@@ -15,6 +21,10 @@ namespace shell {
                 /** 绘制视图 */
                 draw(): any {
                     let that: this = this;
+                    // 记录起始地址
+                    ibas.config.set(app.CONFIG_ITEM_ENTRY_URL, document.URL);
+                    // 设置浏览器标题
+                    document.title = ibas.config.get(app.CONFIG_ITEM_APPLICATION_NAME, ibas.i18n.prop("shell_name"));
                     // 键盘按钮按下
                     ibas.browserEventManager.registerListener({
                         eventType: ibas.emBrowserEventType.KEYDOWN,
@@ -40,26 +50,24 @@ namespace shell {
                             touch.direction = ibas.emTouchMoveDirection.NONE;
                         },
                         move: function (event: TouchEvent): void {
-                            if (touch.target === event.target) {
-                                if (touch.direction === ibas.emTouchMoveDirection.NONE) { // do once at start
-                                    let point: Touch = event.touches[0];
-                                    let offsetX: number = point.screenX - touch.startPoint.screenX;
-                                    let offsetY: number = point.screenY - touch.startPoint.screenY;
-                                    if (Math.abs(offsetY) > Math.abs(offsetX)) {
-                                        if (offsetY > 0) {
-                                            touch.direction = ibas.emTouchMoveDirection.DOWN;
-                                        } else {
-                                            touch.direction = ibas.emTouchMoveDirection.UP;
-                                        }
+                            if (touch.target === event.target && touch.direction === ibas.emTouchMoveDirection.NONE) {
+                                let point: Touch = event.touches[0];
+                                let offsetX: number = point.screenX - touch.startPoint.screenX;
+                                let offsetY: number = point.screenY - touch.startPoint.screenY;
+                                if (Math.abs(offsetY) > Math.abs(offsetX)) {
+                                    if (offsetY > 0) {
+                                        touch.direction = ibas.emTouchMoveDirection.DOWN;
                                     } else {
-                                        if (offsetX > 0) {
-                                            touch.direction = ibas.emTouchMoveDirection.RIGHT;
-                                        } else {
-                                            touch.direction = ibas.emTouchMoveDirection.LEFT;
-                                        }
+                                        touch.direction = ibas.emTouchMoveDirection.UP;
                                     }
-                                    that.onTouchMove(touch.direction, event);
+                                } else {
+                                    if (offsetX > 0) {
+                                        touch.direction = ibas.emTouchMoveDirection.RIGHT;
+                                    } else {
+                                        touch.direction = ibas.emTouchMoveDirection.LEFT;
+                                    }
                                 }
+                                that.onTouchMove(touch.direction, event);
                             }
                         },
                         end: function (event: TouchEvent): void {
@@ -80,8 +88,23 @@ namespace shell {
                         eventType: ibas.emBrowserEventType.TOUCHEND,
                         onEventFired: touch.end
                     });
+                    window.history.pushState(null, null, document.URL);
+                    ibas.browserEventManager.registerListener({
+                        eventType: ibas.emBrowserEventType.POPSTATE,
+                        onEventFired: (event) => {
+                            let firstUrl: string = ibas.config.get(app.CONFIG_ITEM_ENTRY_URL);
+                            let currentUrl: string = document.URL;
+                            if (ibas.strings.equalsIgnoreCase(firstUrl, currentUrl)) {
+                                window.history.pushState(null, null, firstUrl);
+                            }
+                            that.closeView();
+                        }
+                    });
                     return new sap.m.App(UI_APP, {
                         autoFocus: false,
+                        homeIcon: ibas.config.get(CONFIG_ITEM_HOME_ICON, undefined),
+                        backgroundImage: ibas.config.get(CONFIG_ITEM_BACKGROUND_IMAGE, undefined),
+                        backgroundOpacity: ibas.config.get(CONFIG_ITEM_BACKGROUND_OPACITY, undefined),
                         afterNavigate(event: sap.ui.base.Event): void {
                             let source: any = event.getSource();
                             if (source instanceof sap.m.App) {
@@ -96,7 +119,7 @@ namespace shell {
                                         };
                                     }
                                 }
-                                if (view instanceof c.CenterView && view.isDisplayed === true) {
+                                if (view instanceof CenterView && view.isDisplayed === true) {
                                     let page: any = source.getCurrentPage();
                                     if (page instanceof sap.tnt.ToolPage) {
                                         for (let item of page.getMainContents()) {
@@ -106,7 +129,7 @@ namespace shell {
                                                     hash = "#";
                                                 }
                                                 if (!(ibas.strings.equals(hash, window.location.hash))) {
-                                                    window.history.pushState(null, null, hash);
+                                                    window.history.replaceState(null, null, hash);
                                                 }
                                             }
                                         }
@@ -161,6 +184,23 @@ namespace shell {
                             return;
                         }
                         ibas.views.touchMove.call(view, direction, event);
+                    }
+                }
+                /** 手指触控移动 */
+                protected closeView(): void {
+                    let view: ibas.IView = this.currentView();
+                    if (view instanceof ibas.View) {
+                        if (!view.isDisplayed) {
+                            return;
+                        }
+                        if (view.isBusy) {
+                            return;
+                        }
+                        if (view instanceof CenterView) {
+                            view.destroyView(undefined);
+                        } else if (view instanceof app.ShellView) {
+                            view.destroyView(undefined);
+                        }
                     }
                 }
             }

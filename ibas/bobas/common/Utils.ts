@@ -1021,6 +1021,8 @@ namespace ibas {
         export const PARENT_URL_SIGN: string = "../";
         /** 当前标记 */
         export const CURRENT_URL_SIGN: string = "./";
+        /** Meta根地址 */
+        export const HTML_META_ROOT_URL: string = "meta[name=rootUrl]";
         /** 正常化地址 */
         export function normalize(value: string): string {
             if (objects.isNull(value) || value.length === 0) {
@@ -1028,8 +1030,15 @@ namespace ibas {
             }
             let url: string;
             if (value.startsWith(ROOT_URL_SIGN)) {
-                // 存在根目录标记，则取文档地址作为根
-                url = document.location.origin + document.location.pathname;
+                // 优先使用配置
+                let element: any = document.querySelector(HTML_META_ROOT_URL);
+                if (element instanceof HTMLElement) {
+                    url = element.getAttribute("content");
+                }
+                if (ibas.objects.isNull(url)) {
+                    // 存在根目录标记，则取文档地址作为根
+                    url = document.location.origin + document.location.pathname;
+                }
                 // 去除文档.html
                 let last: number = url.lastIndexOf(".");
                 if (last > 0 && url.lastIndexOf("/", last) <= last) {
@@ -1067,9 +1076,17 @@ namespace ibas {
          */
         export function rootUrl(type: string): string;
         export function rootUrl(): string {
+            // 未提供类型，则返回文档地址
             if (strings.isEmpty(arguments[0])) {
-                // 未提供类型，则返回文档地址
-                let url: string = document.location.origin + document.location.pathname;
+                // 优先使用配置
+                let url: string;
+                let element: any = document.querySelector(HTML_META_ROOT_URL);
+                if (element instanceof HTMLElement) {
+                    url = element.getAttribute("content");
+                }
+                if (ibas.objects.isNull(url)) {
+                    url = document.location.origin + document.location.pathname;
+                }
                 return url.substring(0, url.lastIndexOf("/"));
             }
             let fileName: string = arguments[0];
@@ -1153,7 +1170,7 @@ namespace ibas {
             }
             let oldHash: string = window.location.hash;
             if (!strings.equalsIgnoreCase(oldHash, newHash)) {
-                window.history.pushState(null, null, newHash);
+                window.history.replaceState(null, null, newHash);
             }
             let event: HashChangeEvent = new HashChangeEvent("hashchange", { oldURL: oldHash, newURL: newHash });
             window.dispatchEvent(event);

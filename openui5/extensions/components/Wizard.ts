@@ -29,7 +29,13 @@ namespace sap {
                 },
                 _handleStepChanged: function (event: any): void {
                     let previousStepIndex: any = ((typeof event === "number") ? event : event.getParameter("current")) - 2;
-                    let previousStep: any = this._stepPath[previousStepIndex];
+                    if (ibas.objects.isNull(this._aStepPath)) {
+                        return;
+                    }
+                    let previousStep: any = this._aStepPath[previousStepIndex];
+                    if (ibas.objects.isNull(this._getNextStep)) {
+                        return;
+                    }
                     let subsequentStep: any = this._getNextStep(previousStep, previousStepIndex);
                     let focusFirstElement: any = sap.ui.Device.system.desktop ? true : false;
                     this.goToStep(subsequentStep, focusFirstElement);

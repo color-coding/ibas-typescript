@@ -207,7 +207,7 @@ namespace shell {
                                     let hash: string = sap.extension.customdatas.getHash(page);
                                     if (typeof hash === "string") {
                                         if (!(ibas.strings.equals(hash, window.location.hash))) {
-                                            window.history.pushState(null, null, hash);
+                                            window.history.replaceState(null, null, hash);
                                         }
                                     }
                                 } else if (page instanceof sap.m.MessagePage) {
@@ -225,7 +225,7 @@ namespace shell {
                                         button.setVisible(false);
                                     }
                                     // 切换hash值
-                                    window.history.pushState(null, null, "#");
+                                    window.history.replaceState(null, null, "#");
                                 }
 
                             }
@@ -848,6 +848,10 @@ namespace shell {
                 }
                 /** 清理资源 */
                 destroyView(view: ibas.IView): void {
+                    if (ibas.objects.isNull(view)) {
+                        // 未指定，则关闭当前页面
+                        view = this.currentPageView();
+                    }
                     if (ibas.objects.isNull(view)) {
                         return;
                     }

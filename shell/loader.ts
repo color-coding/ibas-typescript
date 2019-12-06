@@ -167,6 +167,9 @@ namespace loader {
             if (this.openui5Root === null || this.openui5Root === undefined) {
                 this.openui5Root = this.root;
             }
+            // chrome禁用下拉刷新
+            document.body.style["overscroll-behavior-y"] = "contain";
+
             requires.create("_", this.ibasRoot, this.noCache)([
                 URL_IBAS_INDEX + (this.minLibrary ? SIGN_MIN_LIBRARY : "")
             ], () => {
