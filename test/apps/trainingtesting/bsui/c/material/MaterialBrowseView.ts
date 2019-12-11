@@ -8,7 +8,14 @@
 namespace trainingtesting {
     export namespace ui {
         export namespace c {
-            // sap.ui.require("sap/ui/layout/cssgrid/GridBoxLayout");
+            try {
+                if (!sap.ui.layout.cssgrid.GridBasicLayout) {
+                    (<any>sap.ui).requireSync("sap/ui/layout/cssgrid/GridBasicLayout");
+                }
+            } catch (error) {
+            }
+
+
             /**
              * 物料浏览
              */
@@ -29,18 +36,18 @@ namespace trainingtesting {
                         growingThreshold: sap.extension.table.visibleRowCount(15),
                         growingScrollToLoad: true,
                         mode: sap.m.ListMode.None,
-                        /*
-                        customLayout: new sap.ui.layout.cssgrid.GridBoxLayout("", {
-                            boxWidth: "20rem",
+                        showNoData: false,
+                        customLayout: new sap.ui.layout.cssgrid.GridBasicLayout("", {
+                            gridTemplateColumns: "repeat(auto-fit, minmax(30rem,max-content))",
+                            gridGap: "0.25rem 0.25rem",
                         }),
-                        */
                         items: {
                             path: "/rows",
                             template: new sap.extension.f.GridListItem("", {
                                 content: [
                                     new sap.extension.f.Card("", {
-                                        width: "auto",
-                                        height: "auto",
+                                        width: "100%",
+                                        height: "100%",
                                         headerPosition: sap.f.cards.HeaderPosition.Bottom,
                                         header: new sap.extension.f.cards.ToolbarHeader("", {
                                             title: "{name}",
@@ -114,7 +121,7 @@ namespace trainingtesting {
                                                 ]
                                             })
                                         ]
-                                    }).addStyleClass("sapUiMediumMargin")
+                                    })
                                 ]
                             })
                         },
