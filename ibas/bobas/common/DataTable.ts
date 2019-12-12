@@ -45,7 +45,7 @@ namespace ibas {
                     }
                     if (param.nameAs === "index") {
                         data[index.toString()] = value;
-                    } else if (param.nameAs === "description" && !ibas.strings.isEmpty(col.description)) {
+                    } else if (param.nameAs === "description" && !strings.isEmpty(col.description)) {
                         data[col.description] = value;
                     } else {
                         data[col.name] = value;

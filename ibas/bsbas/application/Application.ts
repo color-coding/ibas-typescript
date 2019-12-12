@@ -19,16 +19,29 @@ namespace ibas {
         readonly queryId: string;
         /** 查询目标 */
         readonly queryTarget?: any;
+        /** 查询面板 */
+        queryPanel(): IQueryPanel;
         /** 使用的查询 */
         readonly usingCriteria?: ICriteria;
-        /** 可配置查询 */
-        readonly configurable?: boolean;
-        /** 可选择查询 */
-        readonly selectable?: boolean;
         /** 查询数据 */
         query(criteria: ICriteria): void;
         /** 嵌入下拉条 */
         embeddedPuller?(view: any): void;
+    }
+    /** 使用查询面板 */
+    export interface IQueryPanel {
+        /** 可见的 */
+        visible: boolean;
+        /** 可配置 */
+        configurable: boolean;
+        /** 可选择 */
+        selectable: boolean;
+        /** 查询内容 */
+        searchContent: string;
+        /** 使用的查询 */
+        usingQuery: string;
+        /** 查询 */
+        search(): void;
     }
     /** 嵌入查询面板 */
     export interface IEmbeddedQueryPanel {

@@ -5,12 +5,12 @@
         "Type": "MasterData",
         "Properties": [
             {
-                "Property": "Code",
+                "Name": "Code",
                 "Description": "编码",
                 "Searched": true
             },
             {
-                "Property": "Name",
+                "Name": "Name",
                 "Description": "名称",
                 "Searched": true
             }
@@ -22,12 +22,12 @@
         "Type": "MasterData",
         "Properties": [
             {
-                "Property": "Code",
+                "Name": "Code",
                 "Description": "编码",
                 "Searched": true
             },
             {
-                "Property": "Name",
+                "Name": "Name",
                 "Description": "名称",
                 "Searched": true
             }
@@ -39,22 +39,22 @@
         "Type": "Document",
         "Properties": [
             {
-                "Property": "DocEntry",
+                "Name": "DocEntry",
                 "Description": "凭证编号",
                 "Searched": true
             },
             {
-                "Property": "CustomerCode",
+                "Name": "CustomerCode",
                 "Description": "客户编码",
                 "Searched": true
             },
             {
-                "Property": "CustomerName",
+                "Name": "CustomerName",
                 "Description": "客户名称",
                 "Searched": true
             },
             {
-                "Property": "DocumentDate",
+                "Name": "DocumentDate",
                 "Description": "单据日期",
                 "Searched": false
             }

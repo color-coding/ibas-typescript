@@ -29,6 +29,7 @@
   "sys_invalid_view": "应用[{0}]的视图无效",
   "sys_invalid_view_data": "应用[{0}]的视图数据无效",
   "sys_invalid_view_navigation": "应用[{0}]的视图导航无效",
+  "sys_invalid_view_query_panel": "无效的查询面板",
   "sys_not_provided_display_service_method": "没有提供显示服务的方法",
   "sys_business_rule_required": "要求值验证",
   "sys_business_rule_required_error": "[{0}]没有输入值",

@@ -12,10 +12,6 @@ namespace shell {
              * 视图-查询面板
              */
             export class QueryPanelView extends ibas.PanelView implements app.IQueryPanelView {
-                /** 可配置查询 */
-                configurable: boolean;
-                /** 可配置查询 */
-                selectable: boolean;
                 /** 查询 */
                 searchEvent: Function;
                 /** 删除查询 */
@@ -28,10 +24,31 @@ namespace shell {
                 removeQueryConditionEvent: Function;
                 /** 查询内容 */
                 get searchContent(): string {
-                    return this.search.getValue();
+                    return this.content.getValue();
                 }
                 set searchContent(value: string) {
-                    this.search.setValue(value);
+                    this.content.setValue(value);
+                }
+                /** 可配置 */
+                get configurable(): boolean {
+                    return this.config.getVisible();
+                }
+                set configurable(value: boolean) {
+                    this.config.setVisible(value);
+                }
+                /** 可选择 */
+                get selectable(): boolean {
+                    return this.baseOn.getVisible();
+                }
+                set selectable(value: boolean) {
+                    this.baseOn.setVisible(value);
+                }
+                /** 可见的 */
+                get visible(): boolean {
+                    return this.bar.getVisible();
+                }
+                set visible(value: boolean) {
+                    this.bar.setVisible(value);
                 }
                 /** 查询内容 */
                 get usingQuery(): string {
@@ -43,19 +60,18 @@ namespace shell {
                 /** 绘制工具条视图 */
                 drawBar(): any {
                     let that: this = this;
-                    return new sap.m.Toolbar("", {
+                    return this.bar = new sap.m.Toolbar("", {
                         width: "100%",
                         design: sap.m.ToolbarDesign.Auto,
                         content: [
-                            this.search = new sap.m.SearchField("", {
+                            this.content = new sap.m.SearchField("", {
                                 search: function (): void {
-                                    that.fireViewEvents(that.searchEvent);
+                                    that.search();
                                 }
                             }),
                             this.baseOn = new sap.m.Select("", {
                                 width: "55%",
                                 maxWidth: "55%",
-                                visible: this.selectable
                             }),
                             this.config = new sap.m.Button("", {
                                 icon: "sap-icon://filter",
@@ -63,7 +79,6 @@ namespace shell {
                                 press: function (): void {
                                     that.fireViewEvents(that.showFullViewEvent);
                                 },
-                                visible: this.configurable
                             })
                         ]
                     });
@@ -77,7 +92,11 @@ namespace shell {
                         }
                     });
                 }
-                private search: sap.m.SearchField;
+                search(): void {
+                    this.fireViewEvents(this.searchEvent);
+                }
+                private bar: sap.m.Toolbar;
+                private content: sap.m.SearchField;
                 private config: sap.m.Button;
                 private baseOn: sap.m.Select;
                 /** 显示可用查询 */

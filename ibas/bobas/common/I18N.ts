@@ -128,7 +128,7 @@ namespace ibas {
          * @param callBack 加载完成回掉方法
          */
         load(address: string | string[], callBack?: () => void): void {
-            address = ibas.arrays.create(address);
+            address = arrays.create(address);
             if (address.length === 0) {
                 return;
             }
@@ -137,7 +137,7 @@ namespace ibas {
             let rtVersion: string = config.get(CONFIG_ITEM_RUNTIME_VERSION);
             // 获取语言
             let language: string =
-                (ibas.strings.isWith(this.language, "en_", undefined) || ibas.strings.isWith(this.language, "en-", undefined))
+                (strings.isWith(this.language, "en_", undefined) || strings.isWith(this.language, "en-", undefined))
                     ? null : this.language;
             if (!strings.isEmpty(language)) {
                 language = language.replace("-", "_");
@@ -162,7 +162,7 @@ namespace ibas {
             }
             // 加载语言文件
             let that: this = this;
-            ibas.queues.execute(addresses, (address, next) => {
+            queues.execute(addresses, (address, next) => {
                 let xhr: XMLHttpRequest = new XMLHttpRequest();
                 xhr.open("GET", address, callBack instanceof Function ? true : false);
                 xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");

@@ -396,7 +396,7 @@ namespace ibas {
                 let stringBuilder: StringBuilder = new StringBuilder();
                 for (let item of value) {
                     if (stringBuilder.length > 0) {
-                        stringBuilder.append(ibas.DATA_SEPARATOR);
+                        stringBuilder.append(DATA_SEPARATOR);
                     }
                     stringBuilder.append(valueOf(item));
                 }
@@ -461,9 +461,9 @@ namespace ibas {
             if (typeof value === "string") {
                 // 字符串，首先尝试转为数值
                 if (numbers.isNumber(value)) {
-                    value = ibas.numbers.toInt(value);
+                    value = numbers.toInt(value);
                     // 判断是否存在值
-                    if (!ibas.objects.isNull(type[value])) {
+                    if (!objects.isNull(type[value])) {
                         return value;
                     }
                 }
@@ -1035,7 +1035,7 @@ namespace ibas {
                 if (element instanceof HTMLElement) {
                     url = element.getAttribute("content");
                 }
-                if (ibas.objects.isNull(url)) {
+                if (objects.isNull(url)) {
                     // 存在根目录标记，则取文档地址作为根
                     url = document.location.origin + document.location.pathname;
                 }
@@ -1084,7 +1084,7 @@ namespace ibas {
                 if (element instanceof HTMLElement) {
                     url = element.getAttribute("content");
                 }
-                if (ibas.objects.isNull(url)) {
+                if (objects.isNull(url)) {
                     url = document.location.origin + document.location.pathname;
                 }
                 return url.substring(0, url.lastIndexOf("/"));

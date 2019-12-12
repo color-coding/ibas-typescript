@@ -46,7 +46,7 @@ namespace ibas {
          * @param onCompleted 打开完成
          * @param config 打开参数
          */
-        export function open(onCompleted: (files: ibas.IList<File>) => void, config?: {
+        export function open(onCompleted: (files: IList<File>) => void, config?: {
             accept?: string,
             multiple?: boolean,
         }): void {
@@ -63,7 +63,7 @@ namespace ibas {
             }
             input.onchange = function (event: Event): void {
                 if (onCompleted instanceof Function) {
-                    let files: ibas.IList<File> = new ibas.ArrayList<File>(input.files.length);
+                    let files: IList<File> = new ArrayList<File>(input.files.length);
                     for (let i: number = 0; i < input.files.length; i++) {
                         files[i] = input.files.item(i);
                     }

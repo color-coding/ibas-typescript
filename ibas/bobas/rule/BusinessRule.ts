@@ -161,7 +161,7 @@ namespace ibas {
                 let value: number = numbers.valueOf(context.inputValues.get(property));
                 sum += value;
             }
-            context.outputValues.set(this.result, ibas.numbers.round(sum));
+            context.outputValues.set(this.result, numbers.round(sum));
         }
     }
     /** 业务规则-求差 */
@@ -201,7 +201,7 @@ namespace ibas {
                 let value: number = numbers.valueOf(context.inputValues.get(property));
                 total -= value;
             }
-            context.outputValues.set(this.result, ibas.numbers.round(total));
+            context.outputValues.set(this.result, numbers.round(total));
         }
     }
     /** 业务规则-求积 */
@@ -237,7 +237,7 @@ namespace ibas {
             let multiplicand: number = numbers.valueOf(context.inputValues.get(this.multiplicand));
             let multiplier: number = numbers.valueOf(context.inputValues.get(this.multiplier));
             let result: number = multiplicand * multiplier;
-            context.outputValues.set(this.result, ibas.numbers.round(result, this.decimalPlaces));
+            context.outputValues.set(this.result, numbers.round(result, this.decimalPlaces));
         }
     }
     /** 业务规则-求商 */
@@ -273,7 +273,7 @@ namespace ibas {
             let dividend: number = numbers.valueOf(context.inputValues.get(this.dividend));
             let divisor: number = numbers.valueOf(context.inputValues.get(this.divisor));
             let result: number = dividend / divisor;
-            context.outputValues.set(this.result, ibas.numbers.round(result, this.decimalPlaces));
+            context.outputValues.set(this.result, numbers.round(result, this.decimalPlaces));
         }
     }
     /** 业务规则-加减法推导 */
@@ -309,17 +309,17 @@ namespace ibas {
             let addend: number = numbers.valueOf(context.inputValues.get(this.addend));
 
             if (augend === 0) {
-                context.outputValues.set(this.result, ibas.numbers.round(addend));
+                context.outputValues.set(this.result, numbers.round(addend));
                 return;
             }
             if (addend !== 0 && result === 0) {
                 // 结果 = 加数 + 被加数
                 result = addend + augend;
-                context.outputValues.set(this.result, ibas.numbers.round(result));
+                context.outputValues.set(this.result, numbers.round(result));
             } else if (addend === 0 && result !== 0) {
                 // 加数 = 结果 - 被加数
                 addend = result - augend;
-                context.outputValues.set(this.addend, ibas.numbers.round(addend));
+                context.outputValues.set(this.addend, numbers.round(addend));
             }
         }
     }
@@ -364,17 +364,17 @@ namespace ibas {
             let multiplier: number = numbers.valueOf(context.inputValues.get(this.multiplier));
 
             if (multiplicand === 0) {
-                context.outputValues.set(this.result, ibas.numbers.round(multiplicand, this.resultPlaces));
+                context.outputValues.set(this.result, numbers.round(multiplicand, this.resultPlaces));
                 return;
             }
             if (multiplier !== 0 && result === 0) {
                 // 结果 = 乘数 * 被乘数
                 result = multiplier * multiplicand;
-                context.outputValues.set(this.result, ibas.numbers.round(result, this.resultPlaces));
+                context.outputValues.set(this.result, numbers.round(result, this.resultPlaces));
             } else if (multiplicand !== 0 && result !== 0) {
                 // 乘数 = 结果 / 被乘数
                 multiplier = result / multiplicand;
-                context.outputValues.set(this.multiplier, ibas.numbers.round(multiplier, this.multiplierPlaces));
+                context.outputValues.set(this.multiplier, numbers.round(multiplier, this.multiplierPlaces));
             }
         }
     }
@@ -408,7 +408,7 @@ namespace ibas {
                     result += numbers.valueOf(item);
                 }
             }
-            context.outputValues.set(this.result, ibas.numbers.round(result));
+            context.outputValues.set(this.result, numbers.round(result));
         }
     }
     /** 业务规则-乘除法推导，增强 */
@@ -444,12 +444,12 @@ namespace ibas {
                         // 乘数 = 结果 / 被乘数
                         // 小于0时，重新计算
                         multiplier = result / multiplicand;
-                        context.outputValues.set(this.multiplier, ibas.numbers.round(multiplier, this.multiplierPlaces));
+                        context.outputValues.set(this.multiplier, numbers.round(multiplier, this.multiplierPlaces));
                     } else if (multiplier !== 0) {
                         // 被乘数 = 结果 / 乘数
                         let newMultiplicand: number = result / multiplier;
                         if (Math.abs(newMultiplicand - multiplicand) > 0.00001) {
-                            context.outputValues.set(this.multiplicand, ibas.numbers.round(newMultiplicand, this.multiplicandPlaces));
+                            context.outputValues.set(this.multiplicand, numbers.round(newMultiplicand, this.multiplicandPlaces));
                         }
                     }
                 } else if (strings.equalsIgnoreCase(context.trigger, this.multiplicand)
@@ -458,7 +458,7 @@ namespace ibas {
                     // 结果 = 乘数 * 被乘数
                     let newResult: number = multiplier * multiplicand;
                     if (Math.abs(newResult - result) > 0.00001) {
-                        context.outputValues.set(this.result, ibas.numbers.round(newResult, this.resultPlaces));
+                        context.outputValues.set(this.result, numbers.round(newResult, this.resultPlaces));
                     }
                 } else {
                     super.compute(context);
@@ -483,11 +483,11 @@ namespace ibas {
             this.place = place;
             this.enabled = enabled;
             if (typeof this.place !== "number") {
-                this.place = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES);
+                this.place = config.get(CONFIG_ITEM_DECIMAL_PLACES);
             }
             // 设置输入输出参数
             this.inputProperties.add(this.original);
-            if (!ibas.strings.isEmpty(this.enabled)) {
+            if (!strings.isEmpty(this.enabled)) {
                 this.inputProperties.add(this.enabled);
             }
             // 设置输出参数
@@ -505,7 +505,7 @@ namespace ibas {
         /** 计算规则 */
         protected compute(context: BusinessRuleContextCommon): void {
             let enabled: boolean = false;
-            if (!ibas.strings.isEmpty(this.enabled)) {
+            if (!strings.isEmpty(this.enabled)) {
                 enabled = Boolean(context.inputValues.get(this.enabled));
             }
             if (enabled !== true) {
@@ -516,7 +516,7 @@ namespace ibas {
             if (isNaN(original)) {
                 return;
             }
-            let value: number = ibas.numbers.round(original, place);
+            let value: number = numbers.round(original, place);
             if (original !== value) {
                 context.outputValues.set(this.rounding, value - original);
                 context.outputValues.set(this.original, value);
@@ -557,10 +557,10 @@ namespace ibas {
                 let value: number = this.changeValue * 1000 * 60 * 60;
                 if (this.unit === "day") {
                     value = value * 24;
-                    tValue = ibas.dates.valueOf(sValue.getTime() + value);
+                    tValue = dates.valueOf(sValue.getTime() + value);
                     context.outputValues.set(this.target, tValue);
                 } else if (this.unit === "hour") {
-                    tValue = ibas.dates.valueOf(sValue.getTime() + value);
+                    tValue = dates.valueOf(sValue.getTime() + value);
                     context.outputValues.set(this.target, tValue);
                 }
             }

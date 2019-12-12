@@ -698,11 +698,11 @@ namespace ibas {
                 if (objects.isNull(bo)) {
                     return;
                 }
-                if (this !== ibas.boFactory) {
+                if (this !== boFactory) {
                     // 注册到模块
                     this.register(bo);
                     // 注册到全局
-                    ibas.boFactory.register(name, bo);
+                    boFactory.register(name, bo);
                 } else {
                     BO_CLASS_MAP.get(this).set(name, bo);
                 }

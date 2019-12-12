@@ -1214,8 +1214,8 @@ namespace ibas {
                     if (skips.contain(item.name)) {
                         continue;
                     }
-                    let myItem: ibas.IUserField = target.userFields.get(item.name);
-                    if (ibas.objects.isNull(myItem)) {
+                    let myItem: IUserField = target.userFields.get(item.name);
+                    if (objects.isNull(myItem)) {
                         continue;
                     }
                     if (myItem.valueType !== item.valueType) {

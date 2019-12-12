@@ -442,7 +442,7 @@ namespace ibas {
         }
         /** 加载视图 */
         protected loadUI(ui: string | string[], ready: (ui: any) => void): void {
-            let minLibrary: boolean = ibas.config.get(ibas.CONFIG_ITEM_USE_MINIMUM_LIBRARY, false);
+            let minLibrary: boolean = config.get(CONFIG_ITEM_USE_MINIMUM_LIBRARY, false);
             let modules: string[] = [];
             if (ui instanceof Array) {
                 for (let item of ui) {
@@ -451,19 +451,19 @@ namespace ibas {
             } else {
                 modules.push(ui + (minLibrary ? SIGN_MIN_LIBRARY : ""));
             }
-            let require: Require = ibas.requires.create({
-                context: ibas.requires.naming(this.module)
+            let require: Require = requires.create({
+                context: requires.naming(this.module)
             });
             require(modules, () => {
                 if (typeof ready === "function") {
                     let module: any = window[this.module];
-                    if (!ibas.objects.isNull(module)) {
+                    if (!objects.isNull(module)) {
                         module = module[<string>"ui"];
                     }
                     ready(module);
                 }
             }, (error: Error) => {
-                ibas.logger.log(ibas.emMessageLevel.ERROR, error.message);
+                logger.log(emMessageLevel.ERROR, error.message);
             });
         }
     }

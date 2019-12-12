@@ -31,12 +31,12 @@ namespace ibas {
          * @param callBack 加载完成回调方法
          */
         load(address: string | string[], callBack?: () => void): void {
-            address = ibas.arrays.create(address);
+            address = arrays.create(address);
             if (address.length === 0) {
                 return;
             }
             let that: this = this;
-            ibas.queues.execute(address, (address, next) => {
+            queues.execute(address, (address, next) => {
                 if (address.indexOf("_=") < 0) {
                     address = address + (address.indexOf("?") < 0 ? "?" : "&") + "_=" + (new Date()).getTime();
                 }

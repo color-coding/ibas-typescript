@@ -58,7 +58,7 @@ namespace shell {
                     this.showQueries();
                     this.view.usingQuery = (this.queries.length - 1).toString();
                 }
-                this.editQuery.target = this.targetName;
+                this.editQuery.target = this.targetName();
                 if (ibas.objects.isNull(this.editQuery.criteria)) {
                     this.editQuery.criteria = new ibas.Criteria();
                     this.editQuery.criteria.businessObject = this.editQuery.target;
@@ -68,6 +68,19 @@ namespace shell {
             }
             /** 工具条显示完成 */
             protected barShowed(): void {
+                let selectable: boolean = ibas.config.get(CONFIG_ITEM_QUERY_PANEL_SELECTABLE, true);
+                this.view.selectable = ibas.config.get(
+                    ibas.strings.format(CONFIG_ITEM_QUERY_PANEL_SELECTABLE_ON_PLANTFORM,
+                        ibas.enums.toString(ibas.emPlantform, ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM)))
+                    , selectable);
+                let configurable: boolean = ibas.config.get(CONFIG_ITEM_QUERY_PANEL_CONFIGURABLE, true);
+                this.view.configurable = ibas.config.get(
+                    ibas.strings.format(CONFIG_ITEM_QUERY_PANEL_CONFIGURABLE_ON_PLANTFORM,
+                        ibas.enums.toString(ibas.emPlantform, ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM)))
+                    , configurable);
+                this.listener.queryPanel = () => {
+                    return this.view;
+                };
                 this.showQueries();
             }
 
@@ -139,15 +152,28 @@ namespace shell {
             /** 运行 */
             run(): void;
             /** 运行 参数，初始化回调 */
-            run(callBack: Function): void;
+            run(caller: {
+                view: ibas.IUseQueryPanel & ibas.IBOQueryView,
+                onInitialized?(): void,
+            }): void;
             /** 运行 参数，初始化回调 */
             run(): void {
-                let callBack: any = arguments[0];
-                if (!(callBack instanceof Function)) {
-                    callBack = function (): void {
+                let caller: {
+                    view: ibas.IUseQueryPanel & ibas.IBOQueryView,
+                    onInitialized?(): void,
+                } = arguments[0];
+                if (ibas.objects.isNull(caller)) {
+                    throw new Error(ibas.i18n.prop("sys_invalid_parameter", "caller"));
+                }
+                if (ibas.objects.isNull(caller.view)) {
+                    throw new Error(ibas.i18n.prop("sys_invalid_parameter", "caller.view"));
+                }
+                if (!(caller.onInitialized instanceof Function)) {
+                    caller.onInitialized = function (): void {
                         // 回掉方法
                     };
                 }
+                this.listener = caller.view;
                 if (!ibas.objects.isNull(this.listener) && !ibas.objects.isNull(this.listener.usingCriteria)) {
                     this.queries = new ibas.ArrayList<bo.IUserQuery>();
                     this.queries.add({
@@ -156,56 +182,31 @@ namespace shell {
                         criteria: this.listener.usingCriteria,
                         order: 0,
                     });
-                    this.init(callBack);
+                    this.init(caller.onInitialized);
                 } else {
-                    let that: this = this;
                     let boRepository: bo.IBORepositoryShell = bo.repository.create();
                     boRepository.fetchUserQueries({
                         user: ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE),
                         queryId: this.listener.queryId,
-                        onCompleted: function (opRslt: ibas.IOperationResult<bo.IUserQuery>): void {
+                        onCompleted: (opRslt) => {
                             try {
                                 if (opRslt.resultCode !== 0) {
                                     throw new Error(opRslt.message);
                                 }
-                                that.queries = new ibas.ArrayList<bo.IUserQuery>();
+                                this.queries = new ibas.ArrayList<bo.IUserQuery>();
                                 for (let item of opRslt.resultObjects) {
-                                    that.queries.add(item);
+                                    this.queries.add(item);
                                 }
-                                that.init(callBack);
+                                this.init(caller.onInitialized);
                             } catch (error) {
-                                that.messages(error);
+                                this.messages(error);
                             }
                         }
                     });
                 }
             }
-            protected listener: ibas.IUseQueryPanel;
-            /** 注册监听 */
-            register(listener: ibas.IUseQueryPanel): void {
-                this.listener = listener;
-                if (!ibas.objects.isNull(this.listener)) {
-                    this.view.configurable = this.listener.configurable;
-                    this.view.selectable = this.listener.selectable;
-                }
-                if (typeof this.view.selectable !== "boolean") {
-                    this.view.selectable = ibas.config.get(
-                        ibas.strings.format(CONFIG_ITEM_QUERY_PANEL_SELECTABLE_ON_PLANTFORM,
-                            ibas.enums.toString(ibas.emPlantform, ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM))));
-                }
-                if (typeof this.view.selectable !== "boolean") {
-                    this.view.selectable = ibas.config.get(CONFIG_ITEM_QUERY_PANEL_SELECTABLE, true);
-                }
-                if (typeof this.view.configurable !== "boolean") {
-                    this.view.configurable = ibas.config.get(
-                        ibas.strings.format(CONFIG_ITEM_QUERY_PANEL_CONFIGURABLE_ON_PLANTFORM,
-                            ibas.enums.toString(ibas.emPlantform, ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM))));
-                }
-                if (typeof this.view.configurable !== "boolean") {
-                    this.view.configurable = ibas.config.get(CONFIG_ITEM_QUERY_PANEL_CONFIGURABLE, true);
-                }
-            }
-            protected get targetName(): string {
+            private listener: ibas.IUseQueryPanel;
+            private targetName(): string {
                 let boName: any = null;
                 if (!ibas.objects.isNull(this.listener.queryTarget)) {
                     boName = this.listener.queryTarget;
@@ -221,8 +222,8 @@ namespace shell {
                 }
                 return boName;
             }
-            protected queries: ibas.ArrayList<bo.IUserQuery>;
-            protected currentQuery(): bo.IUserQuery {
+            private queries: ibas.ArrayList<bo.IUserQuery>;
+            private currentQuery(): bo.IUserQuery {
                 if (!ibas.objects.isNull(this.queries)) {
                     for (let index: number = 0; index < this.queries.length; index++) {
                         if (index.toString() === this.view.usingQuery) {
@@ -232,7 +233,7 @@ namespace shell {
                 }
                 return null;
             }
-            protected currentCriteria(): ibas.ICriteria {
+            private currentCriteria(): ibas.ICriteria {
                 let query: bo.IUserQuery = this.currentQuery();
                 let criteria: ibas.ICriteria;
                 if (!ibas.objects.isNull(query)) {
@@ -254,19 +255,18 @@ namespace shell {
                 // 根据目标类型，修正排序条件
                 ibas.criterias.sorts(criteria, this.listener.queryTarget);
                 // 没有查询条件且有查询内容，尝试从注册信息添加
-                let that: this = this;
                 if ((criteria.conditions.length === 0
                     || criteria.conditions.firstOrDefault(c => c.operation === ibas.emConditionOperation.CONTAIN) == null)
                     && !ibas.objects.isNull(this.listener.queryTarget) && !ibas.strings.isEmpty(this.view.searchContent)) {
-                    let boName: string = this.targetName;
+                    let boName: string = this.targetName();
                     if (!ibas.objects.isNull(boName)) {
                         let boRepository: bo.IBORepositoryShell = bo.repository.create();
                         boRepository.fetchBizObjectInfo({
                             user: ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE),
                             boCode: boName,
-                            onCompleted(opRslt: ibas.IOperationResult<bo.IBizObjectInfo>): void {
+                            onCompleted: (opRslt: ibas.IOperationResult<bo.IBizObjectInfo>) => {
                                 if (opRslt.resultCode !== 0) {
-                                    that.messages(ibas.emMessageType.WARNING, opRslt.message);
+                                    this.messages(ibas.emMessageType.WARNING, opRslt.message);
                                 }
                                 if (criteria.conditions.length > 1) {
                                     criteria.conditions.firstOrDefault().bracketOpen += 1;
@@ -282,7 +282,7 @@ namespace shell {
                                         }
                                         let condition: ibas.ICondition = criteria.conditions.create();
                                         condition.alias = boProperty.name;
-                                        condition.value = that.view.searchContent;
+                                        condition.value = this.view.searchContent;
                                         condition.operation = ibas.emConditionOperation.CONTAIN;
                                         // 修正查询关系为或
                                         condition.relationship = ibas.emConditionRelationship.OR;
@@ -299,9 +299,9 @@ namespace shell {
                                 }
                                 // 没有查询字段，则查询主键
                                 if (criteria.conditions.length === 0) {
-                                    ibas.criterias.conditions(criteria, that.listener.queryTarget, that.view.searchContent);
+                                    ibas.criterias.conditions(criteria, this.listener.queryTarget, this.view.searchContent);
                                 }
-                                that.fireQuery(criteria);
+                                this.fireQuery(criteria);
                             }
                         });
                     }
@@ -331,19 +331,9 @@ namespace shell {
             }
         }
         /** 查询面板-视图 */
-        export interface IQueryPanelView extends ibas.IBarView {
-            /** 可配置查询 */
-            configurable: boolean;
-            /** 可配置查询 */
-            selectable: boolean;
+        export interface IQueryPanelView extends ibas.IBarView, ibas.IQueryPanel {
             /** 查询事件 */
             searchEvent: Function;
-            /** 查询内容 */
-            searchContent: string;
-            /** 使用的查询 */
-            usingQuery: string;
-            /** 绘制下拉条 */
-            drawPuller(): any;
             /** 显示可用查询 */
             showQueries(datas: ibas.KeyValue[]): void;
             /** 删除查询 */
@@ -358,6 +348,8 @@ namespace shell {
             addQueryConditionEvent: Function;
             /** 移出查询 */
             removeQueryConditionEvent: Function;
+            /** 绘制下拉条 */
+            drawPuller(): any;
         }
     }
 }

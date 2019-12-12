@@ -24,7 +24,7 @@ namespace ibas {
             let next: Function = function (error: Error = undefined): void {
                 if (!objects.isNull(error)) {
                     // 出现错误，任务终止
-                    ibas.logger.log(error);
+                    logger.log(error);
                     if (done instanceof Function) {
                         done.apply(done, [error]);
                     }

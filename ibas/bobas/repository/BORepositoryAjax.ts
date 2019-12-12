@@ -62,14 +62,14 @@ namespace ibas {
                         }
                         // 输出头
                         let headers: string = this.getAllResponseHeaders();
-                        if (!ibas.strings.isEmpty(headers) && opRslt instanceof ibas.OperationResult) {
+                        if (!strings.isEmpty(headers) && opRslt instanceof OperationResult) {
                             headers = headers.replace("\r\n", "\n");
                             for (let item of headers.split("\n")) {
                                 let values: string[] = item.split(":");
                                 if (values.length < 2) {
                                     continue;
                                 }
-                                opRslt.informations.add(new ibas.OperationInformation(values[0].trim(), values[1].trim()));
+                                opRslt.informations.add(new OperationInformation(values[0].trim(), values[1].trim()));
                             }
                         }
                     } else {
@@ -152,7 +152,7 @@ namespace ibas {
          */
         save<P>(boName: string, caller: ISaveCaller<P>): void {
             let method: string = "save" + boName;
-            if (ibas.objects.isNull(caller.beSaved)) {
+            if (objects.isNull(caller.beSaved)) {
                 throw new Error(i18n.prop("sys_invalid_parameter", "beSaved"));
             }
             this.callRemoteMethod(method, JSON.stringify(this.converter.convert(caller.beSaved, method)), (opRslt) => {

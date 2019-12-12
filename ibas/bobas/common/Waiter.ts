@@ -13,11 +13,11 @@ namespace ibas {
     }
     /** 等待者 */
     export abstract class Waiter {
-        private listeners: ibas.IList<IWaitingListener<any>>;
+        private listeners: IList<IWaitingListener<any>>;
         /** 注册监听 */
         register(listener: IWaitingListener<any>): void {
             if (!(this.listeners instanceof Array)) {
-                this.listeners = new ibas.ArrayList<IWaitingListener<any>>();
+                this.listeners = new ArrayList<IWaitingListener<any>>();
             }
             this.listeners.add(listener);
         }

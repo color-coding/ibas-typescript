@@ -813,23 +813,25 @@ namespace shell {
                                 })]
                         });
                         embeddedView.embedded(strip);
-                        // 运行查询面板，初始化完成添加到视图
-                        // 监听查询面板
-                        queryPanel.register(view);
-                        queryPanel.run(function (): void {
-                            // 清理提示
-                            strip.destroy(true);
-                            // 嵌入查询面板
-                            embeddedView.embedded(queryPanel.view.drawBar());
-                            // 嵌入刷新条
-                            if (typeof (<ibas.IUseQueryPanel>view).embeddedPuller === "function") {
-                                (<ibas.IUseQueryPanel>view).embeddedPuller(queryPanel.view.drawPuller());
-                            }
-                            // 触发工具条显示完成事件
-                            queryPanel.view.barShowedEvent.apply(queryPanel);
-                            // 如果自动查询，则调用
-                            if (view.autoQuery === true) {
-                                queryPanel.view.searchEvent.apply(queryPanel);
+                        // 运行查询面板
+                        queryPanel.run({
+                            view: view,
+                            onInitialized: () => {
+                                // 清理提示
+                                strip.destroy(true);
+                                let content: any = queryPanel.view.drawBar();
+                                // 触发工具条显示完成事件
+                                queryPanel.view.barShowedEvent.apply(queryPanel);
+                                // 嵌入查询面板
+                                embeddedView.embedded(content);
+                                // 嵌入刷新条
+                                if (typeof (<ibas.IUseQueryPanel>view).embeddedPuller === "function") {
+                                    (<ibas.IUseQueryPanel>view).embeddedPuller(queryPanel.view.drawPuller());
+                                }
+                                // 如果自动查询，则调用
+                                if (view.autoQuery === true) {
+                                    queryPanel.view.search();
+                                }
                             }
                         });
                     }

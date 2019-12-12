@@ -25,7 +25,7 @@ namespace ibas {
          * 断言相等的实现
          */
         protected assertEquals(): void {
-            ibas.asserts.equals.apply(this, arguments);
+            asserts.equals.apply(this, arguments);
         }
         /**
          * 运行测试

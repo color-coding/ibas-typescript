@@ -27,7 +27,7 @@ namespace ibas {
          */
         protected fireViewEvents(event: Function, ...pars: any[]): void {
             if (this.isBusy) {
-                ibas.logger.log(ibas.emMessageLevel.DEBUG, "view: event skipping, [{0} - {1}] is busy.", this.id, this.title);
+                logger.log(emMessageLevel.DEBUG, "view: event skipping, [{0} - {1}] is busy.", this.id, this.title);
                 return;
             }
             if (typeof event !== "function") {
@@ -100,7 +100,10 @@ namespace ibas {
         }
         /** 自动查询 */
         get autoQuery(): boolean {
-            return ibas.config.get(CONFIG_ITEM_AUTO_QUERY, false);
+            return config.get(CONFIG_ITEM_AUTO_QUERY, false);
+        }
+        queryPanel(): IQueryPanel {
+            throw new Error(i18n.prop("sys_invalid_view_query_panel"));
         }
         /** 上一次使用的查询 */
         protected lastCriteria: ICriteria;
@@ -125,6 +128,9 @@ namespace ibas {
         /** 自动查询 */
         get autoQuery(): boolean {
             return false;
+        }
+        queryPanel(): IQueryPanel {
+            throw new Error(i18n.prop("sys_invalid_view_query_panel"));
         }
         /** 上一次使用的查询 */
         protected lastCriteria: ICriteria;
@@ -205,25 +211,25 @@ namespace ibas {
     export abstract class TabView extends View implements IView {
     }
     export namespace views {
-        export function closed(this: ibas.View): void {
+        export function closed(this: View): void {
             this.onClosed();
             if (this.isDisplayed !== false) {
                 this.isDisplayed = false;
             }
         }
-        export function displayed(this: ibas.View): void {
+        export function displayed(this: View): void {
             this.onDisplayed();
             if (this.isDisplayed !== true) {
                 this.isDisplayed = true;
             }
         }
-        export function hashChanged(this: ibas.View, event: HashChangeEvent): void {
+        export function hashChanged(this: View, event: HashChangeEvent): void {
             this.onHashChanged(event);
         }
-        export function keyDown(this: ibas.View, event: KeyboardEvent): void {
+        export function keyDown(this: View, event: KeyboardEvent): void {
             this.onKeyDown(event);
         }
-        export function touchMove(this: ibas.View, direction: ibas.emTouchMoveDirection, event: TouchEvent): void {
+        export function touchMove(this: View, direction: emTouchMoveDirection, event: TouchEvent): void {
             this.onTouchMove(direction, event);
         }
     }

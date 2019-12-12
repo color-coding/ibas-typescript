@@ -121,7 +121,7 @@ namespace ibas {
                 }
             }
             for (let rule of rules) {
-                rule.execute(bo, ibas.strings.valueOf(properties));
+                rule.execute(bo, strings.valueOf(properties));
             }
         }
     }

@@ -8,14 +8,7 @@
 namespace trainingtesting {
     export namespace ui {
         export namespace c {
-            try {
-                if (!sap.ui.layout.cssgrid.GridBasicLayout) {
-                    (<any>sap.ui).requireSync("sap/ui/layout/cssgrid/GridBasicLayout");
-                }
-            } catch (error) {
-            }
-
-
+            jQuery.sap.require("sap.ui.layout.cssgrid.GridBasicLayout");
             /**
              * 物料浏览
              */
@@ -38,7 +31,7 @@ namespace trainingtesting {
                         mode: sap.m.ListMode.None,
                         showNoData: false,
                         customLayout: new sap.ui.layout.cssgrid.GridBasicLayout("", {
-                            gridTemplateColumns: "repeat(auto-fit, minmax(30rem,max-content))",
+                            gridTemplateColumns: "repeat(auto-fill, minmax(22rem,auto))",
                             gridGap: "0.25rem 0.25rem",
                         }),
                         items: {
