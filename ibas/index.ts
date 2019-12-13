@@ -40,6 +40,7 @@
 /// <reference path="./bsbas/browser/Requires.ts" />
 /// <reference path="./bsbas/browser/Events.ts" />
 /// <reference path="./bsbas/browser/Files.ts" />
+/// <reference path="./bsbas/browser/Cookies.ts" />
 /// <reference path="./bsbas/application/Architecture.ts" />
 /// <reference path="./bsbas/application/Application.ts" />
 /// <reference path="./bsbas/application/BOApplication.ts" />

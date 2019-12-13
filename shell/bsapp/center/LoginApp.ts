@@ -30,18 +30,28 @@ namespace shell {
             }
             /** 运行 */
             run(): void {
+                let userToken: string;
                 let userTokenParam: ibas.KeyText = ibas.urls.param(ibas.CONFIG_ITEM_USER_TOKEN);
                 if (!ibas.objects.isNull(userTokenParam)) {
-                    let userToken: string = userTokenParam.text;
-                    ibas.logger.log(ibas.emMessageLevel.DEBUG, "app: user login system,token is [{0}].", userToken);
+                    userToken = userTokenParam.text;
+                    ibas.logger.log(ibas.emMessageLevel.DEBUG, "app: got token from urls.");
+                }
+                if (ibas.strings.isEmpty(userToken)) {
+                    userToken = ibas.cookies.get(ibas.CONFIG_ITEM_USER_TOKEN);
+                    ibas.logger.log(ibas.emMessageLevel.DEBUG, "app: got token from cookies.");
+                }
+                if (!ibas.strings.isEmpty(userToken)) {
+                    ibas.logger.log(ibas.emMessageLevel.DEBUG, "app: use token login system.");
                     let boRepository: bo.IBORepositoryShell = bo.repository.create();
                     boRepository.tokenConnect({
                         caller: this, // 设置调用者，则onCompleted修正this
                         token: userToken,
                         onCompleted: this.onConnectCompleted,
                     });
-                    // 发送登录连接请求后,清除地址栏中的查询参数信息,并且不保留浏览器历史记录
+                    // 发送登录连接请求后，清除地址栏中的查询参数信息，并且不保留浏览器历史记录
                     window.history.replaceState(null, null, window.location.pathname + window.location.hash);
+                    // 发送登录连接请求后，清理Cookies
+                    ibas.cookies.remove(ibas.CONFIG_ITEM_USER_TOKEN);
                 } else {
                     super.run.apply(this, arguments);
                 }
