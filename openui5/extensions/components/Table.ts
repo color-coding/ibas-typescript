@@ -300,6 +300,26 @@ namespace sap {
                     if (!mSettings.autoResizable) {
                         mSettings.autoResizable = true;
                     }
+                    if (!mSettings.width) {
+                        let template: any = mSettings.template;
+                        if (template instanceof sap.ui.core.Control) {
+                            let path: string = managedobjects.bindingPath(template, "bindingValue");
+                            if (path) {
+                                if (path === ibas.BO_PROPERTY_NAME_DOCENTRY
+                                    || path === ibas.BO_PROPERTY_NAME_LINEID
+                                    || path === ibas.BO_PROPERTY_NAME_OBJECTKEY) {
+                                    mSettings.width = "6rem";
+                                } else if (path === ibas.BO_PROPERTY_NAME_APPROVALSTATUS
+                                    || path === ibas.BO_PROPERTY_NAME_DOCUMENTSTATUS
+                                    || path === ibas.BO_PROPERTY_NAME_LINESTATUS) {
+                                    mSettings.width = "8rem";
+                                } else if (path === ibas.BO_PROPERTY_NAME_CANCELED
+                                    || path === ibas.BO_PROPERTY_NAME_DELETED) {
+                                    mSettings.width = "6rem";
+                                }
+                            }
+                        }
+                    }
                     return sap.ui.table.Column.prototype.applySettings.apply(this, arguments);
                 }
             });
@@ -459,6 +479,18 @@ namespace sap {
                                 if (propertyInfo.searched === true) {
                                     column.setSortProperty(propertyInfo.name);
                                     column.setFilterProperty(propertyInfo.name);
+                                }
+                                // 修正位置
+                                if (propertyInfo.position > 0) {
+                                    let index: number = this.indexOfColumn(column);
+                                    let position: number = propertyInfo.position - 1;
+                                    if (position < index) {
+                                        this.removeColumn(column);
+                                        this.insertColumn(column, position);
+                                    } else if (position > index) {
+                                        this.removeColumn(column);
+                                        this.insertColumn(column, position - 1);
+                                    }
                                 }
                                 if (template instanceof sap.m.InputBase) {
                                     readonly = false;

@@ -286,6 +286,9 @@ namespace sap {
             export function nonEditable(control: sap.ui.core.Control): void {
                 if (control instanceof sap.m.InputBase) {
                     control.setEditable(false);
+                    if (control instanceof sap.m.Input) {
+                        control.setShowValueHelp(false);
+                    }
                 } else if (control instanceof sap.m.Select) {
                     try {
                         control.setEditable(false);
