@@ -428,6 +428,71 @@ namespace ibas {
             }
             return true;
         }
+        /**
+         * utf-8字符转为utf-16字符
+         * @param value utf-8字符串
+         */
+        export function utf8To16(value: string): string {
+            let char1: number, char2: number, char3: number;
+            let i: number = 0, len: number = value.length;
+            let builder: StringBuilder = new StringBuilder;
+            builder.map(null, "");
+            builder.map(undefined, "");
+            while (i < len) {
+                char1 = value.charCodeAt(i++);
+                // tslint:disable-next-line: no-bitwise
+                switch (char1 >> 4) {
+                    case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7:
+                        // 0xxxxxxx
+                        builder.append(value.charAt(i - 1));
+                        break;
+                    case 12: case 13:
+                        // 110x xxxx   10xx xxxx
+                        char2 = value.charCodeAt(i++);
+                        // tslint:disable-next-line: no-bitwise
+                        builder.append(String.fromCharCode(((char1 & 0x1F) << 6) | (char2 & 0x3F)));
+                        break;
+                    case 14:
+                        // 1110 xxxx  10xx xxxx  10xx xxxx
+                        char2 = value.charCodeAt(i++);
+                        char3 = value.charCodeAt(i++);
+                        // tslint:disable-next-line: no-bitwise
+                        builder.append(String.fromCharCode(((char1 & 0x0F) << 12) | ((char2 & 0x3F) << 6) | ((char3 & 0x3F) << 0)));
+                        break;
+                }
+            }
+            return builder.toString();
+        }
+        /**
+         * utf-16字符转为utf-8字符
+         * @param value utf-16字符串
+         */
+        export function utf16To8(value: string): string {
+            let char1: number;
+            let i: number = 0, len: number = value.length;
+            let builder: StringBuilder = new StringBuilder;
+            builder.map(null, "");
+            builder.map(undefined, "");
+            for (i = 0; i < len; i++) {
+                char1 = value.charCodeAt(i);
+                if ((char1 >= 0x0001) && (char1 <= 0x007F)) {
+                    builder.append(value.charAt(i));
+                } else if (char1 > 0x07FF) {
+                    // tslint:disable-next-line: no-bitwise
+                    builder.append(String.fromCharCode(0xE0 | ((char1 >> 12) & 0x0F)));
+                    // tslint:disable-next-line: no-bitwise
+                    builder.append(String.fromCharCode(0x80 | ((char1 >> 6) & 0x3F)));
+                    // tslint:disable-next-line: no-bitwise
+                    builder.append(String.fromCharCode(0x80 | ((char1 >> 0) & 0x3F)));
+                } else {
+                    // tslint:disable-next-line: no-bitwise
+                    builder.append(String.fromCharCode(0xC0 | ((char1 >> 6) & 0x1F)));
+                    // tslint:disable-next-line: no-bitwise
+                    builder.append(String.fromCharCode(0x80 | ((char1 >> 0) & 0x3F)));
+                }
+            }
+            return builder.toString();
+        }
     }
     /**
      * 唯一标识

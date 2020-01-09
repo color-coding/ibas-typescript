@@ -16,6 +16,7 @@
 /.metadata/
 /.recommenders/
 /.settings/
+.DS_Store
 /RemoteSystemsTempFiles/
 /Servers/
 /tomcat/
