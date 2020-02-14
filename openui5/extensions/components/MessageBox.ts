@@ -66,9 +66,27 @@ namespace sap {
                 export function show(vMessage: string, mOptions?: IMessageBoxOptions): void {
                     jQuery.sap.require("sap.m.MessageBox");
                     if (!ibas.strings.isEmpty(vMessage)) {
+                        let boCode: string;
                         vMessage = vMessage.replace(/\{(.+?)\}/g, function (value: string): string {
+                            if (value.startsWith("{[") && value.endsWith("]}")) {
+                                let values: string[] = value.substring(2).split("].[");
+                                if (values.length === 2) {
+                                    boCode = values[0];
+                                }
+                            }
                             return ibas.businessobjects.describe(value);
                         });
+                        if (!ibas.strings.isEmpty(boCode)) {
+                            vMessage = vMessage.replace(/\[[0-9a-zA-Z]+.\]/g, function (value: string): string {
+                                if (value.startsWith("[") && value.endsWith("]")) {
+                                    let boName = ibas.businessobjects.name(boCode);
+                                    if (!ibas.strings.equals(boCode, boName)) {
+                                        return ibas.strings.format("[{0}]", ibas.businessobjects.resource(boName, value.substring(1, value.length - 1)));
+                                    }
+                                }
+                                return value;
+                            });
+                        }
                     }
                     sap.m.MessageBox.show(vMessage, {
                         title: mOptions.title,

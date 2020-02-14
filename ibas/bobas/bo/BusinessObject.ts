@@ -1046,8 +1046,12 @@ namespace ibas {
                 return boCode;
             }
         }
-        /** 获取资源 */
-        function resource(boName: string, field: string = undefined): string {
+        /**
+         * 获取资源
+         * @param boName 对象名称
+         * @param field 字段名
+         */
+        export function resource(boName: string, field: string = undefined): string {
             if (objects.isNull(field)) {
                 // 对象
                 let key: string = strings.format("bo_{0}", boName).toLowerCase();
