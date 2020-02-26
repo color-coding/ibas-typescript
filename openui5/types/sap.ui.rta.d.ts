@@ -327,7 +327,7 @@ declare namespace sap {
           */
          export class Client extends sap.ui.base.ManagedObject {
             /**
-             * <p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="#/api/sap.ui.base.ManagedObject/constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+             * <p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
              */
             constructor();
             /**
@@ -335,19 +335,19 @@ declare namespace sap {
              */
             destroy(): void;
             /**
-             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getOrigin" href="#/api/sap.ui.rta.Client/methods/getOrigin">origin</a>.</p><p>Receiving window origin; a valid origin has to be specified, see <a target="_blank" href="https://html.spec.whatwg.org/multipage/origin.html#origin">https://html.spec.whatwg.org/multipage/origin.html#origin</a>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getOrigin" href="api/sap.ui.rta.Client#methods/getOrigin">origin</a>.</p><p>Receiving window origin; a valid origin has to be specified, see <a target="_blank" rel="noopener" href="https://html.spec.whatwg.org/multipage/origin.html#origin">https://html.spec.whatwg.org/multipage/origin.html#origin</a>
             <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
             title="Information published on non SAP site" class="sapUISDKExternalLink"/></p>
              * @returns string <p>Value of property <code>origin</code></p>
              */
             getOrigin(): string;
             /**
-             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getWindow" href="#/api/sap.ui.rta.Client/methods/getWindow">window</a>.</p><p>Receiving window object; has to be a different window than the window in which this client is used</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWindow" href="api/sap.ui.rta.Client#methods/getWindow">window</a>.</p><p>Receiving window object; has to be a different window than the window in which this client is used</p>
              * @returns any <p>Value of property <code>window</code></p>
              */
             getWindow(): any;
             /**
-             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getOrigin" href="#/api/sap.ui.rta.Client/methods/getOrigin">origin</a>.</p><p>Receiving window origin; a valid origin has to be specified, see <a target="_blank" href="https://html.spec.whatwg.org/multipage/origin.html#origin">https://html.spec.whatwg.org/multipage/origin.html#origin</a>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getOrigin" href="api/sap.ui.rta.Client#methods/getOrigin">origin</a>.</p><p>Receiving window origin; a valid origin has to be specified, see <a target="_blank" rel="noopener" href="https://html.spec.whatwg.org/multipage/origin.html#origin">https://html.spec.whatwg.org/multipage/origin.html#origin</a>
             <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
             title="Information published on non SAP site" class="sapUISDKExternalLink"/></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
              * @param {string} sOrigin <p>New value for property <code>origin</code></p>
@@ -355,7 +355,7 @@ declare namespace sap {
              */
             setOrigin(sOrigin: string): sap.ui.rta.Client;
             /**
-             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-sap-ui-target="getWindow" href="#/api/sap.ui.rta.Client/methods/getWindow">window</a>.</p><p>Receiving window object; has to be a different window than the window in which this client is used</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWindow" href="api/sap.ui.rta.Client#methods/getWindow">window</a>.</p><p>Receiving window object; has to be a different window than the window in which this client is used</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
              * @param {any} oWindow <p>New value for property <code>window</code></p>
              * @returns sap.ui.rta.Client <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
