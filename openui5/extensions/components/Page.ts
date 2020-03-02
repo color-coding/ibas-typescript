@@ -245,6 +245,7 @@ namespace sap {
                     }
                     // 创建未存在的控件
                     if (splitter instanceof sap.ui.layout.form.SimpleForm) {
+                        property = factories.newProperty(property, boInfo);
                         splitter.addContent(new sap.m.Label("", {
                             text: property.description
                         }));

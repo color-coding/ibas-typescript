@@ -511,6 +511,7 @@ namespace sap {
                     if (property.authorised === ibas.emAuthoriseType.NONE) {
                         continue;
                     }
+                    property = factories.newProperty(property, boInfo);
                     let column: DataColumn = new DataColumn("", {
                         propertyInfo: property,
                         label: property.description,

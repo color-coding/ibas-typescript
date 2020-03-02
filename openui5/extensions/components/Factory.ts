@@ -10,6 +10,30 @@ namespace sap {
         /** 组件工厂 */
         export namespace factories {
             /**
+             * 创建对象属性
+             * @param property 属性
+             * @param bo 对象
+             */
+            export function newProperty(property: shell.bo.IBizPropertyInfo, bo: shell.bo.IBizObjectInfo): shell.bo.IBizPropertyInfo {
+                let description: string = ibas.businessobjects.resource(bo.name, property.name);
+                if (description === property.name) {
+                    description = property.description;
+                }
+                return {
+                    name: property.name,
+                    description: description,
+                    alias: property.alias,
+                    position: property.position,
+                    dataType: property.dataType,
+                    editType: property.editType,
+                    editSize: property.editSize,
+                    searched: property.searched,
+                    systemed: property.systemed,
+                    authorised: property.authorised,
+                    values: property.values
+                };
+            }
+            /**
              * 创建属性组件
              * @param property 属性信息
              * @param textView 文本视图

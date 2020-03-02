@@ -223,6 +223,7 @@ namespace sap {
                             ],
                         });
                     }
+                    property = factories.newProperty(property, boInfo);
                     section.addBlock(factories.newComponent(property, "Object"));
                 }
                 if (!ibas.objects.isNull(section)) {
