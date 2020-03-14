@@ -41,6 +41,20 @@ declare namespace sap {
                  */
                 setBindingValue(value: boolean): this;
             }
+            /**
+             * 带提示-复选框
+             */
+            class TipsCheckBox extends CheckBox {
+                /**
+                 * 获取选择时提示
+                 */
+                getTipsOnSelection(): string;
+                /**
+                 * 设置选择时提示
+                 * @param value 提示
+                 */
+                setTipsOnSelection(value: string): TipsCheckBox;
+            }
         }
     }
 }

@@ -851,6 +851,38 @@ namespace ibas {
             return NaN;
         }
         /**
+         * 日期增加
+         * @param type 计算类型
+         * @param date 原始日期
+         * @param value 增加值
+         */
+        export function add(type: emDifferenceType, date: Date, value: number): Date {
+            if (!objects.instanceOf(date, Date)) {
+                return date;
+            }
+            let add: number = 0;
+            if (type === emDifferenceType.DAY) {
+                add = value * 24 * 60 * 60 * 1000;
+            } else if (type === emDifferenceType.HOUR) {
+                add = value * 60 * 1000;
+            } else if (type === emDifferenceType.MINUTE) {
+                add = value * 60 * 60 * 1000;
+            } else if (type === emDifferenceType.SECOND) {
+                add = value * 1000;
+            }
+            return dates.valueOf(date.getTime() + add);
+        }
+        /**
+         * 日期减少
+         * @param type 计算类型
+         * @param date 原始日期
+         * @param value 减少值
+         */
+        export function subtract(type: emDifferenceType, date: Date, value: number): Date {
+            return add(type, date, -value);
+        }
+
+        /**
          * 比较大小
          * @param left
          * @param right

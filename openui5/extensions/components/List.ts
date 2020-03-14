@@ -107,13 +107,13 @@ namespace sap {
                 },
                 /** 重构设置 */
                 applySettings(this: List, mSettings: any, oScope?: any): List {
-                    if (!mSettings.includeItemInSelection) {
+                    if (ibas.objects.isNull(mSettings.includeItemInSelection)) {
                         mSettings.includeItemInSelection = true;
                     }
-                    if (!mSettings.growing) {
+                    if (ibas.objects.isNull(mSettings.growing)) {
                         mSettings.growing = true;
                     }
-                    if (!mSettings.growingScrollToLoad) {
+                    if (ibas.objects.isNull(mSettings.growingScrollToLoad)) {
                         mSettings.growingScrollToLoad = true;
                     }
                     sap.m.List.prototype.applySettings.apply(this, arguments);
@@ -124,6 +124,10 @@ namespace sap {
                     (<any>sap.m.List.prototype).init.apply(this, arguments);
                     // 监听行变化事件
                     this.attachEvent("updateFinished", undefined, () => {
+                        if (!this.hasListeners("nextDataSet")) {
+                            // 没有注册事件，则退出
+                            return;
+                        }
                         if (this.getBusy()) {
                             // 忙状态不监听
                             return;
@@ -257,6 +261,10 @@ namespace sap {
                     (<any>sap.f.GridList.prototype).init.apply(this, arguments);
                     // 监听行变化事件
                     this.attachEvent("updateFinished", undefined, () => {
+                        if (!this.hasListeners("nextDataSet")) {
+                            // 没有注册事件，则退出
+                            return;
+                        }
                         if (this.getBusy()) {
                             // 忙状态不监听
                             return;

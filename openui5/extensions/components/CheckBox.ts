@@ -50,6 +50,49 @@ namespace sap {
                     return this;
                 }
             });
+            /**
+             * 带提示-复选框
+             */
+            CheckBox.extend("sap.extension.m.TipsCheckBox", {
+                metadata: {
+                    properties: {
+                        /** 选择时的提示 */
+                        tipsOnSelection: { type: "string" },
+                    }
+                },
+                renderer: {
+                },
+                /**
+                 * 设置绑定值
+                 * @param value 值
+                 */
+                setSelected(this: TipsCheckBox, value: boolean): TipsCheckBox {
+                    if (ibas.strings.isEmpty(this.getTipsOnSelection())) {
+                        return this.setBindingValue(value);
+                    } else {
+                        MessageBox.show(
+                            ibas.i18n.prop(
+                                value === true ?
+                                    "openui5_do_action_continue" :
+                                    "openui5_undo_action_continue",
+                                this.getTipsOnSelection()),
+                            {
+                                type: ibas.emMessageType.WARNING,
+                                title: this.getText(),
+                                actions: [
+                                    ibas.emMessageAction.YES,
+                                    ibas.emMessageAction.NO,
+                                ],
+                                onCompleted: (action) => {
+                                    if (action === ibas.emMessageAction.YES) {
+                                        this.setBindingValue(value);
+                                    }
+                                }
+                            });
+                    }
+                    return this;
+                },
+            });
         }
     }
 }

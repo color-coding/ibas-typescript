@@ -98,7 +98,14 @@ namespace ibas {
          * @param key 检索值
          * @param args 替代内容
          */
-        prop(key: string, ...args: any[]): string {
+        prop(key: string | string[], ...args: any[]): string {
+            if (key instanceof Array) {
+                let value: string = "";
+                for (let item of key) {
+                    value += this.prop(item);
+                }
+                return value;
+            }
             if (strings.isEmpty(key)) {
                 return key;
             }
