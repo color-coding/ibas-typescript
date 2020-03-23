@@ -92,5 +92,22 @@ namespace trainingtesting {
                 return app;
             }
         }
+        /** 功能-控件示例 */
+        export class DemoControlsFunc extends ibas.ModuleFunction {
+            static FUNCTION_ID = "9daadb42-f985-4371-a4fc-79b35a6744ca";
+            static FUNCTION_NAME = "trainingtestingothers_func_controls";
+            constructor() {
+                super();
+                this.id = DemoControlsFunc.FUNCTION_ID;
+                this.name = DemoControlsFunc.FUNCTION_NAME;
+                this.description = ibas.i18n.prop(this.name);
+            }
+            /** 默认功能 */
+            default(): ibas.IApplication<ibas.IView> {
+                let app: DemoControlsApp = new DemoControlsApp();
+                app.navigation = this.navigation;
+                return app;
+            }
+        }
     }
 }

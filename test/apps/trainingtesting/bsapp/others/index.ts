@@ -12,3 +12,4 @@
 /// <reference path="./DemoMapApp.ts" />
 /// <reference path="./DemoShellApp.ts" />
 /// <reference path="./DemoDataApp.ts" />
+/// <reference path="./DemoControlsApp.ts" />

@@ -84,6 +84,9 @@ namespace trainingtesting {
                     case app.MaterialBrowseApp.APPLICATION_ID:
                         view = new c.MaterialBrowseView();
                         break;
+                    case app.DemoControlsApp.APPLICATION_ID:
+                        view = new c.DemoControlsView();
+                        break;
                     default:
                         break;
                 }
