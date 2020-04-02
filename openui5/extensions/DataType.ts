@@ -260,10 +260,10 @@ namespace sap {
                         return;
                     }
                     if (typeof oValue === "number" && !isNaN(oValue)) {
-                        if (this.minValue && oValue < this.minValue) {
+                        if (typeof this.minValue === "number" && oValue < this.minValue) {
                             throw new RangeError(ibas.i18n.prop("openui5_data_value_less_than", this.minValue));
                         }
-                        if (this.maxValue && oValue > this.maxValue) {
+                        if (typeof this.maxValue === "number" && oValue > this.maxValue) {
                             throw new RangeError(ibas.i18n.prop("openui5_data_value_more_than", this.maxValue));
                         }
                     } else {
@@ -345,10 +345,10 @@ namespace sap {
                         return;
                     }
                     if (typeof oValue === "number" && !isNaN(oValue)) {
-                        if (this.minValue && oValue < this.minValue) {
+                        if (typeof this.minValue === "number" && oValue < this.minValue) {
                             throw new RangeError(ibas.i18n.prop("openui5_data_value_less_than", this.minValue));
                         }
-                        if (this.maxValue && oValue > this.maxValue) {
+                        if (typeof this.maxValue === "number" && oValue > this.maxValue) {
                             throw new RangeError(ibas.i18n.prop("openui5_data_value_more_than", this.maxValue));
                         }
                     } else {

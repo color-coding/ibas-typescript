@@ -165,7 +165,7 @@ namespace shell {
                     // 优先使用缓存数据
                     let data: DataWrapping = boInfoCache.get(caller.boCode);
                     if (data instanceof DataWrapping) {
-                        if (data.check() && data.data === EMPTY_BOINFO) {
+                        if (!data.check() || data.data === EMPTY_BOINFO) {
                             // 代理数据，等待返回方法
                             setTimeout(() => this.fetchBizObjectInfo(caller), WAITING_TIME);
                         } else {
@@ -257,6 +257,9 @@ namespace shell {
             /** 检查数据是否有效 */
             check(): boolean {
                 if (ibas.objects.isNull(this.data)) {
+                    return false;
+                }
+                if (this.data === EMPTY_BOINFO) {
                     return false;
                 }
                 if (this.time < ibas.dates.now().getTime()) {

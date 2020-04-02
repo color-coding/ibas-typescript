@@ -49,7 +49,7 @@ namespace ibas {
                                 opRslt.resultCode = 20000;
                                 opRslt.message = i18n.prop("sys_data_converter_parsing_faild");
                                 logger.log(emMessageLevel.WARN, "repository: call method [{1}] faild, {0}", opRslt.message, method);
-                            } else if (!(opRslt instanceof OperationResult)) {
+                            } else if (!ibas.objects.instanceOf(opRslt, OperationMessage)) {
                                 opRslt = new OperationResult().addResults(opRslt);
                             }
                             if (onCompleted instanceof Function) {
@@ -381,8 +381,8 @@ namespace ibas {
             }
             this.callRemoteMethod(method, data, (data) => {
                 let opRslt: IOperationResult<any> = null;
-                if (data instanceof OperationResult) {
-                    opRslt = data;
+                if (data instanceof OperationResult || data instanceof OperationMessage) {
+                    opRslt = <any>data;
                 } else {
                     opRslt = new OperationResult();
                     opRslt.resultObjects.add(data);
