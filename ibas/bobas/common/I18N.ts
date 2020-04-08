@@ -58,10 +58,10 @@ namespace ibas {
          * @param key 键
          * @param value 值
          */
-        add(key: string, value: string): string;
-        add(value: object): string;
-        add(value: object[]): string;
-        add(): string {
+        add(key: string, value: string): void;
+        add(value: object): void;
+        add(value: object[]): void;
+        add(): void {
             if (objects.isNull(this.resources)) {
                 this.resources = new Map<string, Map<string, string>>();
             }

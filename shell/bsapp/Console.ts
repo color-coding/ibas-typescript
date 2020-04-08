@@ -24,6 +24,9 @@ namespace shell {
                 this.name = CONSOLE_NAME;
                 this.version = CONSOLE_VERSION;
                 this.copyright = ibas.i18n.prop("shell_license");
+                if (ibas.strings.isWith(this.copyright, "[", "]")) {
+                    ibas.i18n.add("shell_license", this.copyright = ibas.strings.format("© {0}, licensed under the {1}.", ibas.about.copyright, ibas.about.license));
+                }
             }
             /** 视图显示者 */
             viewShower: ibas.IViewShower;

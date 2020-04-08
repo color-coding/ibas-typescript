@@ -165,9 +165,13 @@ namespace shell {
                     // 优先使用缓存数据
                     let data: DataWrapping = boInfoCache.get(caller.boCode);
                     if (data instanceof DataWrapping) {
-                        if (!data.check() || data.data === EMPTY_BOINFO) {
-                            // 代理数据，等待返回方法
+                        if (data.data === EMPTY_BOINFO) {
+                            // 代理数据，则稍后重试
                             setTimeout(() => this.fetchBizObjectInfo(caller), WAITING_TIME);
+                        } else if (!data.check()) {
+                            // 数据无效，则直接重试
+                            caller.noCached = true;
+                            this.fetchBizObjectInfo(caller);
                         } else {
                             let opRsltInfo: ibas.OperationResult<any> = new ibas.OperationResult<IBizObjectInfo>();
                             if (ibas.strings.isEmpty(caller.boName)) {
@@ -257,9 +261,6 @@ namespace shell {
             /** 检查数据是否有效 */
             check(): boolean {
                 if (ibas.objects.isNull(this.data)) {
-                    return false;
-                }
-                if (this.data === EMPTY_BOINFO) {
                     return false;
                 }
                 if (this.time < ibas.dates.now().getTime()) {

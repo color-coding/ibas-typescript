@@ -118,6 +118,12 @@ namespace sap {
                                         ibas.logger.log(new Error(opRslt.message));
                                     } else {
                                         propertyColumns.call(this, opRslt.resultObjects.firstOrDefault());
+                                        // 已加载数据，则重置
+                                        let model: any = this.getModel();
+                                        if (model !== undefined) {
+                                            this.setModel(undefined);
+                                            this.setModel(model);
+                                        }
                                     }
                                 }
                             });
@@ -183,15 +189,35 @@ namespace sap {
                         if (index < 0) {
                             continue;
                         }
+                        let column: sap.m.Column;
                         let propertyInfo: shell.bo.IBizPropertyInfo = properties[index];
                         if (!ibas.objects.isNull(propertyInfo)) {
+                            column = null;
                             properties[index] = null;
+                            index = template.indexOfCell(item);
+                            if (index > 0 && index < this.getColumns().length) {
+                                column = this.getColumns()[index];
+                            }
                             if (propertyInfo.authorised === ibas.emAuthoriseType.NONE) {
-                                index = template.indexOfCell(item);
-                                if (index > 0 && index < this.getColumns().length) {
-                                    this.getColumns()[index].setVisible(false);
-                                }
                                 item.setVisible(false);
+                                if (!ibas.objects.isNull(column)) {
+                                    column.setVisible(false);
+                                }
+                            }
+                            // 修正位置
+                            if (propertyInfo.position > 0) {
+                                let position: number = propertyInfo.position - 1;
+                                if (position < index) {
+                                    this.removeColumn(column);
+                                    this.insertColumn(column, position);
+                                    template.removeCell(item);
+                                    template.insertCell(item, position);
+                                } else if (position > index) {
+                                    this.removeColumn(column);
+                                    this.insertColumn(column, position - 1);
+                                    template.removeCell(item);
+                                    template.insertCell(item, position - 1);
+                                }
                             }
                         }
                     }
