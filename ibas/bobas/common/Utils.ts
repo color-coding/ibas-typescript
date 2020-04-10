@@ -1339,14 +1339,15 @@ namespace ibas {
          * @param data 数据
          * @param datas 数据组
          */
-        export function create<T>(data: T | T[], ...datas: T[] | T[][]): IList<T>;
+        export function create<T>(data: T | T[] | Iterable<T>, ...datas: T[] | T[][] | Iterable<T>[] | Iterable<T>[][]): IList<T>;
         /**
          * 创建数组
          */
         export function create<T>(): IList<T> {
             let datas: ArrayList<T> = new ArrayList<T>();
             for (let data of arguments) {
-                if (data instanceof Array) {
+                if (data instanceof Array
+                    || (typeof data === "object" && !objects.isNull(data[Symbol.iterator]))) {
                     for (let item of data) {
                         datas.push(item);
                     }

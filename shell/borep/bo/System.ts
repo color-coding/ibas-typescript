@@ -62,6 +62,15 @@ namespace shell {
             /** 自动运行 */
             automatic: boolean;
         }
+        /** 用户配置 */
+        export class UserConfig implements IUserConfig {
+            /** 组 */
+            group: string;
+            /** 键 */
+            key: string;
+            /** 值 */
+            value: string;
+        }
         /**
          * 用户查询
          */

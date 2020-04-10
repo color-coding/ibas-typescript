@@ -128,6 +128,22 @@ namespace shell {
             }
 
             /**
+             * 查询用户角色配置
+             * @param caller 用户检索调用者
+             */
+            fetchUserConfigs(caller: IUserMethodCaller<IUserConfig>): void {
+                let remoteRepository: ibas.IRemoteRepository = this.createRemoteRepository();
+                if (ibas.objects.isNull(remoteRepository)) {
+                    throw new Error(ibas.i18n.prop("sys_invalid_parameter", "remoteRepository"));
+                }
+                let method: string =
+                    ibas.strings.format("fetchUserConfigs?user={0}&platform={1}&token={2}",
+                        caller.user, caller.platform, this.token);
+                remoteRepository.callRemoteMethod(method, undefined, (opRslt) => {
+                    caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
+                });
+            }
+            /**
              * 查询用户查询
              * @param caller 调用者
              */

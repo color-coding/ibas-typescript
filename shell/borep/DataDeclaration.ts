@@ -64,6 +64,15 @@ namespace shell {
             /** 自动运行 */
             Automatic: string;
         }
+        /** 用户配置 */
+        export interface IUserConfig extends IDataDeclaration {
+            /** 组 */
+            Group: string;
+            /** 键 */
+            Key: string;
+            /** 值 */
+            Value: string;
+        }
         /** 用户查询 */
         export interface IUserQuery extends IDataDeclaration {
             /** 标记 */

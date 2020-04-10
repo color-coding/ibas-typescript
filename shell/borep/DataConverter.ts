@@ -62,6 +62,15 @@ namespace shell {
                         Automatic: newData.automatic === true ? "YES" : "NO"
                     };
                     return remote;
+                } else if (ibas.objects.instanceOf(data, UserConfig)) {
+                    let newData: UserConfig = data;
+                    let remote: bo4j.IUserConfig = {
+                        type: UserConfig.name,
+                        Group: newData.group,
+                        Key: newData.key,
+                        Value: newData.value
+                    };
+                    return remote;
                 } else if (ibas.objects.instanceOf(data, UserQuery)) {
                     let newData: UserQuery = data;
                     let rCriteria: any = undefined;
@@ -171,6 +180,13 @@ namespace shell {
                     newData.target = remote.Target;
                     newData.value = ibas.enums.valueOf(ibas.emAuthoriseType, remote.Value);
                     newData.automatic = remote.Automatic === "YES" ? true : false;
+                    return newData;
+                } else if (data.type === UserConfig.name) {
+                    let remote: bo4j.IUserConfig = data;
+                    let newData: UserConfig = new UserConfig();
+                    newData.group = remote.Group;
+                    newData.key = remote.Key;
+                    newData.value = remote.Value;
                     return newData;
                 } else if (data.type === UserQuery.name) {
                     let remote: bo4j.IUserQuery = data;

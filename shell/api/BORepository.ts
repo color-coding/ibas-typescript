@@ -95,6 +95,12 @@ namespace shell {
             fetchUserPrivileges(caller: IUserMethodCaller<IUserPrivilege>): void;
 
             /**
+             * 查询用户配置
+             * @param caller 调用者
+             */
+            fetchUserConfigs(caller: IUserMethodCaller<IUserConfig>): void;
+
+            /**
              * 查询用户查询
              * @param caller 调用者
              */

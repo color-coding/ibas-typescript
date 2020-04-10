@@ -113,20 +113,43 @@ namespace shell {
                     ibas.variablesManager.register(ibas.VARIABLE_NAME_USER_BELONG, user.belong);
                     ibas.variablesManager.register(ibas.VARIABLE_NAME_USER_TOKEN, user.token);
                     ibas.variablesManager.register(ibas.VARIABLE_NAME_USER_IDENTITIES, user.identities);
-                    // 加载权限
-                    userPrivilegeManager.load({
+                    // 加载用户配置
+                    let boRepository: bo.IBORepositoryShell = bo.repository.create();
+                    boRepository.fetchUserConfigs({
                         user: user.code,
                         platform: ibas.enums.toString(ibas.emPlantform, this.plantform),
-                        onCompleted: (error: Error) => {
-                            if (error instanceof Error) {
+                        onCompleted: (opRslt) => {
+                            try {
+                                if (opRslt.resultCode !== 0) {
+                                    throw new Error(opRslt.message);
+                                }
+                                // 配置赋值
+                                for (let item of opRslt.resultObjects) {
+                                    if (ibas.strings.isEmpty(item.group)) {
+                                        ibas.config.set(item.key, item.value);
+                                    } else {
+                                        ibas.config.set(ibas.strings.format("{0}|{1}", item.group, item.key), item.value);
+                                    }
+                                }
+                                // 加载权限
+                                userPrivilegeManager.load({
+                                    user: user.code,
+                                    platform: ibas.enums.toString(ibas.emPlantform, this.plantform),
+                                    onCompleted: (error: Error) => {
+                                        if (error instanceof Error) {
+                                            this.messages(error);
+                                        } else {
+                                            // 启动系统中心
+                                            let centerApp: CenterApp = new CenterApp();
+                                            centerApp.viewShower = this.viewShower;
+                                            centerApp.navigation = this.navigation;
+                                            centerApp.run(user);
+                                            this.destroy();
+                                        }
+                                    }
+                                });
+                            } catch (error) {
                                 this.messages(error);
-                            } else {
-                                // 启动系统中心
-                                let centerApp: CenterApp = new CenterApp();
-                                centerApp.viewShower = this.viewShower;
-                                centerApp.navigation = this.navigation;
-                                centerApp.run(user);
-                                this.destroy();
                             }
                         }
                     });

@@ -13,6 +13,16 @@ namespace trainingtesting {
     /** 模块-版本 */
     export const CONSOLE_VERSION: string = "0.1.0";
 
+    export namespace config {
+        /**
+         * 获取此模块配置
+         * @param key 配置项
+         * @param defalut 默认值
+         */
+        export function get<T>(key: string, defalut?: T): T {
+            return ibas.config.get(ibas.strings.format("{0}|{1}", CONSOLE_ID, key), defalut);
+        }
+    }
     export namespace bo {
         /** 业务仓库名称 */
         export const BO_REPOSITORY_TRAININGTESTING: string = ibas.strings.format(ibas.MODULE_REPOSITORY_NAME_TEMPLATE, CONSOLE_NAME);

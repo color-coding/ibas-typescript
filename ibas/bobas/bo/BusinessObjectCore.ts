@@ -436,7 +436,7 @@ namespace ibas {
                             }
                             index++;
                         }
-                    } else if (value.getProperties !== undefined) {
+                    } else if (value instanceof Object && value.getProperties !== undefined) {
                         // 存在此方法，则调用，生成格式： user.userCode
                         for (let sub of value.getProperties(recursive)) {
                             let subName: string = name + "." + sub[0];
