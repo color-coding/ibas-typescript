@@ -100,6 +100,15 @@ namespace ibas {
         /** 视图模式 */
         viewMode?: emViewMode;
     }
+    /** 业务对象编辑服务的契约 */
+    export interface IBOEditServiceContract<D> extends IServiceContract {
+        /** 业务对象编码 */
+        boCode?: string;
+        /** 编辑的对象 */
+        editData?: D;
+        /** 何时触发完成，默认：CLOSED */
+        when?: "SAVED" | "CLOSED";
+    }
     /** 查询编辑服务契约 */
     export interface ICriteriaEditorServiceContract extends IServiceContract {
         /** 查询或查询条件 */
@@ -133,6 +142,12 @@ namespace ibas {
         extends IServiceWithResultCaller<IBOChooseServiceContract, IList<D>>, IBOChooseServiceContract {
         /** 服务契约代理 */
         proxy?: IServiceProxy<IBOChooseServiceContract>;
+    }
+    /** 业务对象编辑服务调用者 */
+    export interface IBOEditServiceCaller<D>
+        extends IServiceWithResultCaller<IBOEditServiceContract<D>, D>, IBOEditServiceContract<D> {
+        /** 服务契约代理 */
+        proxy?: IServiceProxy<IBOEditServiceContract<D>>;
     }
     /** 业务对象连接服务调用者 */
     export interface IBOLinkServiceCaller extends IServiceCaller<IBOLinkServiceContract>, IBOLinkServiceContract {
@@ -185,6 +200,22 @@ namespace ibas {
         constructor() {
             super();
             this.proxy = BOChooseServiceProxy;
+        }
+        /** 重写此属性到boCode */
+        get category(): string {
+            return this.boCode;
+        }
+        set category(value: string) {
+            this.boCode = value;
+        }
+        /** 业务对象编码 */
+        boCode: string;
+    }
+    /** 业务对象编辑服务映射 */
+    export abstract class BOEditServiceMapping extends ServiceMapping {
+        constructor() {
+            super();
+            this.proxy = BOEditServiceProxy;
         }
         /** 重写此属性到boCode */
         get category(): string {
@@ -260,6 +291,13 @@ namespace ibas {
     /** 业务对象选择服务代理 */
     export class BOChooseServiceProxy extends ServiceProxy<IBOChooseServiceContract> {
         constructor(contract: IBOChooseServiceContract);
+        constructor() {
+            super(arguments[0]);
+        }
+    }
+    /** 业务对象选择服务代理 */
+    export class BOEditServiceProxy<D> extends ServiceProxy<IBOEditServiceContract<D>> {
+        constructor(contract: IBOEditServiceContract<D>);
         constructor() {
             super(arguments[0]);
         }
@@ -388,7 +426,35 @@ namespace ibas {
             // 调用服务
             if (!runService.call(this, caller)) {
                 // 服务未运行
-                logger.log(emMessageLevel.WARN, "services: not found [{0}]'s choose service.", caller.boCode);
+                logger.log(emMessageLevel.WARN, "services: not found [{0}]'s choose service.", config.applyVariables(caller.boCode));
+                return false;
+            }
+            return true;
+        }
+        /** 运行编辑服务 */
+        runEditService<D>(caller: IBOEditServiceCaller<D>): boolean {
+            if (objects.isNull(caller)) {
+                throw new Error(i18n.prop("sys_invalid_parameter", "caller"));
+            }
+            if (caller.editData instanceof BusinessObject && objects.isNull(caller.boCode)) {
+                let boCode: string = objects.propertyValue(caller.editData, BO_PROPERTY_NAME_OBJECTCODE);
+                if (!strings.isEmpty(boCode)) {
+                    caller.boCode = boCode;
+                }
+            }
+            if (objects.isNull(caller.boCode)) {
+                throw new Error(i18n.prop("sys_invalid_parameter", "caller.boCode"));
+            }
+            if (objects.isNull(caller.proxy)) {
+                // 设置代理
+                caller.proxy = new BOEditServiceProxy(caller);
+            }
+            // 设置服务类别码
+            caller.category = caller.boCode;
+            // 调用服务
+            if (!runService.call(this, caller)) {
+                // 服务未运行
+                logger.log(emMessageLevel.WARN, "services: not found [{0}]'s edit service.", config.applyVariables(caller.boCode));
                 return false;
             }
             return true;
@@ -413,7 +479,7 @@ namespace ibas {
             // 调用服务
             if (!runService.call(this, caller)) {
                 // 服务未运行
-                logger.log(emMessageLevel.WARN, "services: not found [{0}]'s link service.", caller.boCode);
+                logger.log(emMessageLevel.WARN, "services: not found [{0}]'s link service.", config.applyVariables(caller.boCode));
                 return false;
             }
             return true;

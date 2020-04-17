@@ -58,7 +58,6 @@ namespace trainingtesting {
                     super.run.apply(this, arguments);
                 }
             }
-            protected viewData: bo.Customer;
             /** 查询数据 */
             protected fetchData(criteria: ibas.ICriteria | string): void {
                 this.busy(true);

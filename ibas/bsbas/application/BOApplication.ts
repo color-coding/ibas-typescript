@@ -107,6 +107,8 @@ namespace ibas {
     }
     /** 配置项目-自动选择数据 */
     export const CONFIG_ITEM_AUTO_CHOOSE_DATA: string = "autoChooseData";
+
+    const PROPERTY_ON_COMPLETED: symbol = Symbol("onCompleted");
     /**
      * 业务对象选择服务
      * 类型参数：视图，选择数据
@@ -128,7 +130,7 @@ namespace ibas {
                 if (objects.instanceOf(caller.proxy, BOChooseServiceProxy)) {
                     // 设置返回方法
                     if (typeof caller.onCompleted === "function") {
-                        this.onCompleted = caller.onCompleted;
+                        this[PROPERTY_ON_COMPLETED] = caller.onCompleted;
                     }
                     // 设置标题
                     if (!strings.isEmpty(caller.title)) {
@@ -194,13 +196,11 @@ namespace ibas {
             // 保持参数原样传递
             super.run.apply(this, arguments);
         }
-        /** 完成 */
-        private onCompleted: Function;
         /** 触发完成事件 */
         private fireCompleted(selecteds: D[] | D): void {
             // 关闭视图
             this.close();
-            if (objects.isNull(this.onCompleted)) {
+            if (objects.isNull(this[PROPERTY_ON_COMPLETED])) {
                 return;
             }
             // 转换返回类型
@@ -220,7 +220,7 @@ namespace ibas {
             }
             try {
                 // 调用完成事件
-                this.onCompleted.call(this.onCompleted, list);
+                this[PROPERTY_ON_COMPLETED].call(this[PROPERTY_ON_COMPLETED], list);
             } catch (error) {
                 // 完成事件出错
                 this.messages(error);
@@ -289,7 +289,7 @@ namespace ibas {
         /** 查看数据，参数：目标数据 */
         protected abstract viewData(data: D): void;
     }
-
+    const PROPERTY_EDIT_DATA: symbol = Symbol("editData");
     /**
      * 业务对象编辑应用
      */
@@ -300,7 +300,12 @@ namespace ibas {
             this.view.saveDataEvent = this.saveData;
         }
         /** 当前编辑的数据 */
-        protected abstract editData: D;
+        protected get editData(): D {
+            return this[PROPERTY_EDIT_DATA];
+        }
+        protected set editData(value: D) {
+            this[PROPERTY_EDIT_DATA] = value;
+        }
         /** 选择数据，参数：数据 */
         protected abstract saveData(): void;
         /** 视图显示后 */
@@ -317,6 +322,78 @@ namespace ibas {
             }
         }
     }
+
+    const PROPERTY_ON_COMPLETED_SAVED: symbol = Symbol("onCompletedClose");
+
+    const PROPERTY_ON_COMPLETED_CLOSED: symbol = Symbol("onCompletedSaved");
+    /**
+     * 业务对象编辑应用服务
+     */
+    export abstract class BOEditService<T extends IBOEditView, D> extends BOEditApplication<T, D> {
+        /** 运行 */
+        run(): void;
+        /**
+         * 运行
+         * @param caller 服务调用者
+         */
+        run(caller: IBOEditServiceCaller<D>): void;
+        /** 运行 */
+        run(): void {
+            if (arguments.length === 1) {
+                // 判断是否为选择契约
+                let caller: IBOEditServiceCaller<D> = arguments[0];
+                // 选择服务代理或其子类
+                if (objects.instanceOf(caller.proxy, BOEditServiceProxy)) {
+                    // 设置返回方法
+                    if (typeof caller.onCompleted === "function") {
+                        if (caller.when === "SAVED") {
+                            this[PROPERTY_ON_COMPLETED_SAVED] = caller.onCompleted;
+                        } else {
+                            this[PROPERTY_ON_COMPLETED_CLOSED] = caller.onCompleted;
+                        }
+                    }
+                    if (!objects.isNull(caller.editData)) {
+                        // 不能调用基类方法
+                        this.run.call(this, caller.editData);
+                        return;
+                    }
+                }
+            }
+            // 保持参数原样传递
+            super.run.apply(this, arguments);
+        }
+        /** 当前编辑的数据 */
+        protected get editData(): D {
+            return this[PROPERTY_EDIT_DATA];
+        }
+        protected set editData(value: D) {
+            let oldData: D = this.editData;
+            this[PROPERTY_EDIT_DATA] = value;
+            if (this[PROPERTY_ON_COMPLETED_SAVED] instanceof Function) {
+                if (oldData instanceof BusinessObject && oldData.isDirty === true &&
+                    ((value instanceof BusinessObject && value.isDirty === false) || value === undefined)
+                ) {
+                    this[PROPERTY_ON_COMPLETED_SAVED](this.editData);
+                }
+            }
+        }
+        /** 关闭视图 */
+        close(): void {
+            if (!objects.isNull(this.view)) {
+                if (!objects.isNull(this.viewShower)) {
+                    this.viewShower.destroy(this.view);
+                }
+            }
+            if (!objects.isNull(this.editData) && this[PROPERTY_ON_COMPLETED_CLOSED] instanceof Function) {
+                if (this.editData instanceof BusinessObject && this.editData.isDirty === false) {
+                    this[PROPERTY_ON_COMPLETED_CLOSED](this.editData);
+                } else {
+                    this[PROPERTY_ON_COMPLETED_CLOSED](this.editData);
+                }
+            }
+        }
+    }
+    const PROPERTY_VIEW_DATA: symbol = Symbol("viewData");
     /**
      * 业务对象查看应用
      */
@@ -326,7 +403,13 @@ namespace ibas {
             super.registerView();
         }
         /** 当前查看的数据 */
-        protected abstract viewData: D;
+        /** 当前编辑的数据 */
+        protected get viewData(): D {
+            return this[PROPERTY_VIEW_DATA];
+        }
+        protected set viewData(value: D) {
+            this[PROPERTY_VIEW_DATA] = value;
+        }
         /** 视图显示后 */
         protected viewShowed(): void {
             // 修改标题

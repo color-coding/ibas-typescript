@@ -86,8 +86,6 @@ namespace trainingtesting {
                 }
                 super.run.apply(this, arguments);
             }
-            /** 待编辑的数据 */
-            protected editData: bo.Material;
             /** 保存数据 */
             protected saveData(): void {
                 this.busy(true);

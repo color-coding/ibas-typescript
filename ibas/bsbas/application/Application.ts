@@ -286,6 +286,7 @@ namespace ibas {
         /** 运行服务 */
         protected abstract runService(contract: C): void;
     }
+    const PROPERTY_ON_COMPLETED: symbol = Symbol("onCompleted");
     /**
      * 服务（带结果）应用
      */
@@ -308,7 +309,7 @@ namespace ibas {
                 // 判断是否为选择契约
                 let caller: IServiceWithResultCaller<C, D> = arguments[0];
                 if (objects.instanceOf(caller.proxy, ServiceProxy)) {
-                    this.onCompleted = caller.onCompleted;
+                    this[PROPERTY_ON_COMPLETED] = caller.onCompleted;
                     this.runService(caller.proxy.contract);
                     return;
                 }
@@ -318,18 +319,16 @@ namespace ibas {
         }
         /** 运行服务 */
         protected abstract runService(contract: C): void;
-        /** 完成事件 */
-        private onCompleted: Function;
         /** 触发完成事件 */
         protected fireCompleted(result: D): void {
             // 关闭视图
             this.close();
-            if (!(this.onCompleted instanceof Function)) {
+            if (!(this[PROPERTY_ON_COMPLETED] instanceof Function)) {
                 return;
             }
             try {
                 // 调用完成事件
-                this.onCompleted.call(this.onCompleted, result);
+                this[PROPERTY_ON_COMPLETED].call(this[PROPERTY_ON_COMPLETED], result);
             } catch (error) {
                 // 完成事件出错
                 this.messages(error);
