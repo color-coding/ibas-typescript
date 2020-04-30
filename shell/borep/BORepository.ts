@@ -126,7 +126,6 @@ namespace shell {
                     caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
                 });
             }
-
             /**
              * 查询用户角色配置
              * @param caller 用户检索调用者
@@ -244,7 +243,6 @@ namespace shell {
                         caller.onCompleted(opRslt);
                     }
                 });
-
             }
         }
         /** 空数据 */
@@ -376,7 +374,6 @@ namespace shell {
                 };
                 this.fetch("UserModule", fetchCaller);
             }
-
             /**
              * 查询用户角色权限
              * @param caller 用户检索者
@@ -425,6 +422,19 @@ namespace shell {
                     criteria: criteria,
                     onCompleted: caller.onCompleted,
                 });
+            }
+            /**
+             * 查询用户角色配置
+             * @param caller 用户检索调用者
+             */
+            fetchUserConfigs(caller: IUserMethodCaller<IUserConfig>): void {
+                let fetchCaller: ibas.IFetchCaller<UserPrivilege> = {
+                    criteria: null,
+                    onCompleted(opRslt: ibas.IOperationResult<UserPrivilege>): void {
+                        caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
+                    }
+                };
+                this.fetch("UserConfig", fetchCaller);
             }
         }
 

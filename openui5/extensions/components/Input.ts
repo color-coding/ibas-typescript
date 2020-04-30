@@ -73,15 +73,13 @@ namespace sap {
                 }
             });
             // 但仅选择数据时，清除已选择值
-            function clearSelection(event: KeyboardEvent): void {
+            function clearSelection(this: Input, event: KeyboardEvent): void {
                 if (event.keyCode === 8 || event.keyCode === 46) {
                     // backspace key
-                    if (event.currentTarget && (<any>event.currentTarget).id) {
-                        let source: any = sap.ui.getCore().byId((<any>event.currentTarget).id);
-                        if (source instanceof Input) {
-                            if (source.getShowValueHelp() && source.getValueHelpOnly()) {
-                                source.setBindingValue(null);
-                            }
+                    if (this instanceof Input) {
+                        if (this.getShowValueHelp() && this.getValueHelpOnly()) {
+                            this.setBindingValue(null);
+                            this.fireChange();
                         }
                     }
                 }

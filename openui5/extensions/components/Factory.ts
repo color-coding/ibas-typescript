@@ -215,6 +215,175 @@ namespace sap {
                     return null;
                 }
             }
+            /**
+             * 创建输入框
+             * 1. #{CC_SYS_USER}.{Code} => Input
+             * 2. {"type":"Criteria","BusinessObject":"CC_SYS_USER.Name", "Conditions":[]} => Input
+             * 3. [1,2,3] => Input
+             * 4. [{"key1","value1"},{"key2","value2"}] => Input
+             * 5. yyyy-MM-dd => DatePicker
+             * 5. hh:mm or hh:mm:ss => TimePicker
+             * @param value 值模板
+             */
+            export function newInput(value: string, onChanged?: (event: sap.ui.base.Event) => void): sap.m.InputBase {
+                let property: string;
+                let input: sap.m.InputBase;
+                let criteria: ibas.ICriteria;
+                if (!ibas.strings.isEmpty(value) && (
+                    (value.length === 5 && value.indexOf(":") === 2) ||
+                    (value.length === 8 && value.indexOf(":") === 2 && value.lastIndexOf(":") === 5)
+                )) {
+                    // 时间类型
+                    input = new sap.extension.m.TimePicker("", {
+                        valueFormat: value,
+                        displayFormat: value,
+                        tooltip: value,
+                    });
+                } else if (!ibas.strings.isEmpty(value) && (
+                    (value.length === 10 && value.indexOf("-") === 4 && value.lastIndexOf("-") === 7) ||
+                    (value.length === 10 && value.indexOf("/") === 4 && value.lastIndexOf("/") === 7)
+                )) {
+                    // 日期类型
+                    input = new sap.extension.m.DatePicker("", {
+                        valueFormat: value,
+                        displayFormat: value,
+                        tooltip: value,
+                    });
+                } else if (ibas.strings.isWith(value, "#{", "}")) {
+                    // 对象选择：#{CC_SYS_USER}.{Code}
+                    try {
+                        let values: string[] = ibas.config.applyVariables(value).split(".");
+                        if (values.length > 1) {
+                            criteria = new ibas.Criteria();
+                            if (!ibas.strings.isEmpty(values[0])) {
+                                criteria.businessObject = ibas.strings.remove(values[0], "#", "{", "}");
+                            }
+                            if (!ibas.strings.isEmpty(values[1])) {
+                                property = ibas.strings.remove(values[1], "#", "{", "}");
+                            }
+                        }
+                    } catch (error) {
+                        criteria = null;
+                        property = null;
+                    }
+                } else if (ibas.strings.isWith(value, "{", "}")) {
+                    // 对象选择：Criteria对象{"businessObject":"CC_SYS_USER", "conditions":[]}
+                    try {
+                        criteria = ibas.criterias.valueOf(ibas.config.applyVariables(value));
+                        if (ibas.strings.isEmpty(criteria.businessObject)) {
+                            criteria = null;
+                        }
+                        if (criteria.businessObject.indexOf(".") > 0) {
+                            property = criteria.businessObject.split(".")[1];
+                            criteria.businessObject = criteria.businessObject.split(".")[0];
+                        }
+                    } catch (error) {
+                        criteria = null;
+                        property = null;
+                    }
+                } else if (ibas.strings.isWith(value, "[", "]")) {
+                    // 数组
+                    let oValue: any;
+                    try {
+                        oValue = JSON.parse(value);
+                    } catch (error) {
+                        oValue = [];
+                    }
+                    if (oValue instanceof Array) {
+                        let items: ibas.IList<sap.ui.core.Item> = new ibas.ArrayList<sap.ui.core.Item>();
+                        for (let item of oValue) {
+                            if (item instanceof Object) {
+                                let properties: string[] = [];
+                                for (let pItem in item) {
+                                    properties.push(pItem);
+                                }
+                                if (properties.length > 1) {
+                                    items.add(new sap.ui.core.ListItem("", {
+                                        key: item[properties[0]],
+                                        text: item[properties[1]],
+                                        additionalText: item[properties[0]],
+                                    }));
+                                } else if (properties.length > 0) {
+                                    items.add(new sap.ui.core.ListItem("", {
+                                        key: item[properties[0]],
+                                        text: item[properties[0]],
+                                    }));
+                                } else {
+                                    items.add(new sap.ui.core.ListItem("", {
+                                        key: item,
+                                        text: item,
+                                    }));
+                                }
+                            } else {
+                                items.add(new sap.ui.core.ListItem("", {
+                                    key: item,
+                                    text: item,
+                                }));
+                            }
+                        }
+                        input = new sap.extension.m.Input("", {
+                            showValueHelp: true,
+                            valueHelpRequest(event: sap.ui.base.Event): void {
+                                let source: any = event.getSource();
+                                if (source instanceof sap.m.Input) {
+                                    source.showItems(undefined);
+                                }
+                            },
+                            tooltip: value,
+                            suggestionItems: items,
+                            selectedItem: items.length > 0 ? items.firstOrDefault() : undefined,
+                        });
+                    }
+                }
+                if (ibas.objects.isNull(input)) {
+                    input = new sap.extension.m.Input("", {
+                    });
+                    input.setPlaceholder(ibas.config.applyVariables(value));
+                }
+                // 对象选择
+                if (input instanceof sap.m.Input && criteria instanceof ibas.Criteria) {
+                    input.setTooltip(input.getPlaceholder());
+                    input.setPlaceholder(undefined);
+                    input.setShowValueHelp(true);
+                    input.attachValueHelpRequest(undefined, function (event: sap.ui.base.Event): void {
+                        if (ibas.objects.isNull(criteria)
+                            || ibas.strings.isEmpty(criteria.businessObject)) {
+                            return;
+                        }
+                        let source: any = event.getSource();
+                        ibas.servicesManager.runChooseService<any>({
+                            boCode: criteria.businessObject,
+                            criteria: criteria,
+                            chooseType: ibas.emChooseType.MULTIPLE,
+                            onCompleted: (selecteds) => {
+                                let builder: ibas.StringBuilder = new ibas.StringBuilder();
+                                for (let item of selecteds) {
+                                    if (builder.length > 0) {
+                                        builder.append(ibas.DATA_SEPARATOR);
+                                    }
+                                    if (ibas.strings.isEmpty(property)) {
+                                        builder.append(item);
+                                    } else {
+                                        builder.append(item[property]);
+                                    }
+                                }
+                                if (source instanceof sap.m.InputBase) {
+                                    source.setValue(builder.toString());
+                                    if (onChanged instanceof Function) {
+                                        onChanged(new sap.ui.base.Event("changed", source, undefined));
+                                    }
+                                }
+                            }
+                        });
+                    })
+                }
+                if (onChanged instanceof Function) {
+                    input.attachChange(undefined, onChanged);
+                    // 初始化数据
+                    onChanged(new sap.ui.base.Event("init", input, undefined));
+                }
+                return input;
+            }
         }
     }
 }

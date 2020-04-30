@@ -32,7 +32,12 @@ namespace trainingtesting {
                         content: [
                             this.container = new sap.m.NavContainer("", {
                                 pages: [
-                                    this.address(),
+                                    new sap.m.Page("", {
+                                        content: [
+                                            this.address(),
+                                            this.input()
+                                        ]
+                                    }),
                                 ]
                             })
                         ]
@@ -87,6 +92,46 @@ namespace trainingtesting {
                                         this.application.viewShower.proceeding(this, ibas.emMessageType.SUCCESS, event.getParameter("address"));
                                     }
                                 }),
+                                new sap.ui.core.Title("", {}),
+                            ]
+                        });
+                    });
+
+
+
+                }
+                private input(): sap.m.GenericTile {
+                    return this.drawTile({
+                        header: "Inputs",
+                        headerImage: "sap-icon://shelf",
+                        notes: "",
+                    }, () => {
+                        let onChanged: (event: sap.ui.base.Event) => void = (event) => {
+                            let source: any = event.getSource();
+                            if (source instanceof sap.m.InputBase) {
+                                this.application.viewShower.proceeding(this, ibas.emMessageType.SUCCESS, ibas.strings.format("{0}: {1}", source.getId(), source.getValue()));
+                            } else if (source instanceof sap.m.Select) {
+                                this.application.viewShower.proceeding(this, ibas.emMessageType.SUCCESS, ibas.strings.format("{0}: {1}", source.getId(), source.getSelectedKey()));
+                            }
+                        };
+                        return new sap.ui.layout.form.SimpleForm("", {
+                            editable: true,
+                            content: [
+                                new sap.ui.core.Title("", {}),
+                                new sap.m.Label("", { text: "Time" }),
+                                sap.extension.factories.newInput("hh:mm", onChanged),
+                                new sap.m.Label("", { text: "Time" }),
+                                sap.extension.factories.newInput("hh:mm:ss", onChanged),
+                                new sap.m.Label("", { text: "Date" }),
+                                sap.extension.factories.newInput("yyyy-MM-dd", onChanged),
+                                new sap.m.Label("", { text: "Choose" }),
+                                sap.extension.factories.newInput("#{${Company}_SYS_USER}.{Code}", onChanged),
+                                new sap.m.Label("", { text: "Choose" }),
+                                sap.extension.factories.newInput(`{"type":"Criteria","BusinessObject":"$\{Company\}_MM_SPEC.ObjectKey","Conditions":[]}`, onChanged),
+                                new sap.m.Label("", { text: "Array" }),
+                                sap.extension.factories.newInput("[1,2,3]", onChanged),
+                                new sap.m.Label("", { text: "Array" }),
+                                sap.extension.factories.newInput(`[{"key":"Y","value":"YES"},{"key":"N","value":"NO"}]`, onChanged),
                                 new sap.ui.core.Title("", {}),
                             ]
                         });

@@ -213,12 +213,15 @@ namespace shell {
                     if (!ibas.objects.isNull(boName) && typeof boName !== "string") {
                         if (!ibas.objects.isNull(boName.BUSINESS_OBJECT_CODE)) {
                             // 如果目标是对象，则尝试使用其编码
-                            boName = ibas.config.applyVariables(boName.BUSINESS_OBJECT_CODE);
+                            boName = boName.BUSINESS_OBJECT_CODE;
                         } else if (!ibas.objects.isNull(boName.name)) {
                             // 如果目标是对象，则尝试使用其名称
                             boName = boName.name;
                         }
                     }
+                }
+                if (typeof boName === "string") {
+                    boName = ibas.config.applyVariables(boName);
                 }
                 return boName;
             }
