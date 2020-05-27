@@ -377,6 +377,9 @@ namespace shell {
                         title: caller.title,
                         actions: caller.actions,
                         onCompleted: caller.onCompleted,
+                        details: caller.details,
+                        latencyTime: caller.latencyTime,
+                        initialFocus: caller.initialFocus,
                     });
                 }
                 /** 显示模块 */

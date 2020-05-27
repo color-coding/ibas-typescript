@@ -109,6 +109,12 @@ namespace ibas {
         actions?: emMessageAction[];
         /** 调用完成 */
         onCompleted?(action: emMessageAction): void;
+        /** 详情 */
+        details?: string;
+        /** 延迟选择时间 */
+        latencyTime?: number;
+        /** 默认项 */
+        initialFocus?: ibas.emMessageAction;
     }
     /**
      * 视图-显示者

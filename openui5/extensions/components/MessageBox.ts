@@ -10,6 +10,10 @@ namespace sap {
         export namespace m {
             export namespace MessageBox {
                 export interface IMessageBoxOptions {
+                    /** id */
+                    id?: string;
+                    /** id */
+                    timeOut?: number;
                     /** 类型 */
                     type: ibas.emMessageType;
                     /** 标题 */
@@ -18,6 +22,12 @@ namespace sap {
                     actions?: ibas.emMessageAction[];
                     /** 调用完成 */
                     onCompleted?(action: ibas.emMessageAction): void;
+                    /** 详情 */
+                    details?: string;
+                    /** 延迟选择时间 */
+                    latencyTime?: number;
+                    /** 默认项 */
+                    initialFocus?: ibas.emMessageAction;
                 }
                 export function error(vMessage: string, mOptions?: IMessageBoxOptions): void {
                     if (ibas.objects.isNull(mOptions)) {
@@ -88,17 +98,59 @@ namespace sap {
                             });
                         }
                     }
+                    if (mOptions.latencyTime > 0) {
+                        // 超时后自动选择
+                        mOptions.id = ibas.strings.format("msgbox-{0}", ibas.dates.now().getTime());
+                        if (!mOptions.initialFocus) {
+                            mOptions.initialFocus = mOptions.actions[0];
+                        }
+                    }
+                    // 普通显示
                     sap.m.MessageBox.show(vMessage, {
+                        id: mOptions.id,
                         title: mOptions.title,
                         icon: toMessageBoxIcon(mOptions.type),
                         actions: toMessageBoxAction(mOptions.actions),
+                        details: mOptions.details,
                         onClose(oAction: any): void {
+                            if (mOptions.timeOut > 0) {
+                                clearTimeout(mOptions.timeOut);
+                            }
                             if (mOptions.onCompleted instanceof Function) {
                                 mOptions.onCompleted(toMessageAction(oAction));
                             }
                         }
                     });
-
+                    // 自动选择
+                    if (mOptions.id) {
+                        let footer: any = sap.ui.getCore().byId(ibas.strings.format("{0}-footer", mOptions.id));
+                        if (footer instanceof sap.m.Toolbar) {
+                            let button: any = footer.getContent()[mOptions.actions.indexOf(mOptions.initialFocus) + 1];
+                            if (button instanceof sap.m.Button) {
+                                let func: Function = function (): void {
+                                    mOptions.latencyTime--;
+                                    if (mOptions.latencyTime < 0) {
+                                        let element: any = sap.ui.getCore().byId(mOptions.id);
+                                        if (element instanceof sap.ui.core.Element) {
+                                            element.destroy();
+                                        }
+                                        if (mOptions.onCompleted instanceof Function) {
+                                            mOptions.onCompleted(mOptions.initialFocus);
+                                        }
+                                    } else {
+                                        let text: string = button.getText();
+                                        let index: number = text.lastIndexOf("(");
+                                        if (index > 0) {
+                                            text = text.substring(0, index);
+                                        }
+                                        button.setText(ibas.strings.format("{0} ({1})", text, mOptions.latencyTime))
+                                        mOptions.timeOut = setTimeout(func, 1000);
+                                    }
+                                };
+                                mOptions.timeOut = setTimeout(func, 1000);
+                            }
+                        }
+                    }
                 }
                 /** 转换消息类型值  */
                 function toMessageBoxIcon(data: ibas.emMessageType): any {
