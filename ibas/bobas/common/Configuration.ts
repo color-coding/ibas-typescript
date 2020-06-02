@@ -78,7 +78,11 @@ namespace ibas {
          * @param value 值
          */
         set(key: string, value: any): void {
-            CONFIG_VALUES.set(key, value);
+            if (value === null || value === undefined) {
+                CONFIG_VALUES.delete(key);
+            } else {
+                CONFIG_VALUES.set(key, value);
+            }
             // 触发值改变事件
             this.fireConfigurationChanged(key, value);
         }
