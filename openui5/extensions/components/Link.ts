@@ -159,6 +159,9 @@ namespace sap {
                             }
                             let criteria: ibas.ICriteria = new ibas.Criteria();
                             for (let item of String(value).split(ibas.DATA_SEPARATOR)) {
+                                if (ibas.strings.isEmpty(item)) {
+                                    continue;
+                                }
                                 let condition: ibas.ICondition = criteria.conditions.create();
                                 condition.alias = dataInfo.key;
                                 condition.value = item;

@@ -27,6 +27,7 @@
         "Period": 0,
         "PostingDate": "2017-04-17T00:00:00",
         "Referenced": "NO",
+        "Reference1": "I00001,I00002,",
         "SalesOrderItems": [
             {
                 "isDirty": false,
