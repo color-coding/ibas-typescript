@@ -144,7 +144,13 @@ namespace shell {
                                             centerApp.viewShower = this.viewShower;
                                             centerApp.navigation = this.navigation;
                                             centerApp.run(user);
-                                            this.destroy();
+                                            if (this.isViewShowed()) {
+                                                this.destroy();
+                                            } else {
+                                                ibas.servicesManager.viewShower = function (): ibas.IViewShower {
+                                                    return centerApp;
+                                                };
+                                            }
                                         }
                                     }
                                 });

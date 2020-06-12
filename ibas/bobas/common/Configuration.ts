@@ -142,7 +142,11 @@ namespace ibas {
                         } else if (typeof defalut === "number") {
                             value = numbers.valueOf(value);
                         } else if (typeof defalut === "boolean") {
-                            value = booleans.valueOf(value);
+                            if (strings.equalsIgnoreCase("false", value)) {
+                                value = false;
+                            } else {
+                                value = booleans.valueOf(value);
+                            }
                         }
                     }
                 }
