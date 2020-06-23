@@ -197,6 +197,8 @@ namespace sap {
                         streetVisible: { type: "boolean", defaultValue: true },
                         /** 邮编-是否可见 */
                         zipCodeVisible: { type: "boolean", defaultValue: false },
+                        /** 排列方向 */
+                        orientation: { type: "sap.ui.core.Orientation", defaultValue: sap.ui.core.Orientation.Vertical },
                     },
                     aggregations: {
                         "_country": { type: "sap.extension.m.CountryComboBox", multiple: false },
@@ -222,6 +224,12 @@ namespace sap {
                 renderer: function (this: AddressArea, oRm: sap.ui.core.RenderManager, oControl: AddressArea): void {
                     oRm.write("<div");
                     oRm.writeControlData(oControl);
+                    if (oControl && oControl.getOrientation() === sap.ui.core.Orientation.Horizontal) {
+                        // 水平显示
+                        oRm.style("display", "inline-flex");
+                        oRm.style("vertical-align", "bottom");
+                        oRm.writeStyles();
+                    }
                     oRm.write(">");
                     oRm.write("<div>");
                     oRm.renderControl(<sap.ui.core.Control>oControl.getAggregation("_country", undefined));
@@ -243,8 +251,8 @@ namespace sap {
                     oRm.write("</div>");
                     oRm.write("</div>");
                 },
-                init(this: AddressArea): void {
-                    (<any>sap.ui.core.Control.prototype).init.apply(this, arguments);
+                applySettings(this: AddressArea): void {
+                    (<any>core.EditableControl.prototype).applySettings.apply(this, arguments);
                     this.setAggregation("_country", new CountryComboBox("", {
                         visible: this.getCountryVisible(),
                         language: this.getLanguage(),
@@ -546,37 +554,55 @@ namespace sap {
                 /** 国家 */
                 setCountryVisible(this: AddressArea, value: boolean): AddressArea {
                     this.setProperty("countryVisible", value);
-                    (<RegionComboBox>this.getAggregation("_country", undefined)).setVisible(value);
+                    let region: any = this.getAggregation("_country", undefined);
+                    if (region instanceof RegionComboBox) {
+                        region.setVisible(value);
+                    }
                     return this;
                 },
                 /** 省 */
                 setProvinceVisible(this: AddressArea, value: boolean): AddressArea {
                     this.setProperty("provinceVisible", value);
-                    (<RegionComboBox>this.getAggregation("_province", undefined)).setVisible(value);
+                    let region: any = this.getAggregation("_province", undefined);
+                    if (region instanceof RegionComboBox) {
+                        region.setVisible(value);
+                    }
                     return this;
                 },
                 /** 市 */
                 setCityVisible(this: AddressArea, value: boolean): AddressArea {
                     this.setProperty("cityVisible", value);
-                    (<RegionComboBox>this.getAggregation("_city", undefined)).setVisible(value);
+                    let region: any = this.getAggregation("_city", undefined);
+                    if (region instanceof RegionComboBox) {
+                        region.setVisible(value);
+                    }
                     return this;
                 },
                 /** 区 */
                 setDistrictVisible(this: AddressArea, value: boolean): AddressArea {
                     this.setProperty("districtVisible", value);
-                    (<RegionComboBox>this.getAggregation("_district", undefined)).setVisible(value);
+                    let region: any = this.getAggregation("_district", undefined);
+                    if (region instanceof RegionComboBox) {
+                        region.setVisible(value);
+                    }
                     return this;
                 },
                 /** 街道 */
                 setStreetVisible(this: AddressArea, value: boolean): AddressArea {
                     this.setProperty("streetVisible", value);
-                    (<Input>this.getAggregation("_street", undefined)).setVisible(value);
+                    let region: any = this.getAggregation("_street", undefined);
+                    if (region instanceof RegionComboBox) {
+                        region.setVisible(value);
+                    }
                     return this;
                 },
                 /** 邮编 */
                 setZipCodeVisible(this: AddressArea, value: boolean): AddressArea {
                     this.setProperty("zipCodeVisible", value);
-                    (<Input>this.getAggregation("_zipcode", undefined)).setVisible(value);
+                    let region: any = this.getAggregation("_zipcode", undefined);
+                    if (region instanceof RegionComboBox) {
+                        region.setVisible(value);
+                    }
                     return this;
                 },
                 /** 设置监听地址改变事件 */

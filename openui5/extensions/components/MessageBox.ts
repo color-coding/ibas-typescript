@@ -89,7 +89,7 @@ namespace sap {
                         if (!ibas.strings.isEmpty(boCode)) {
                             vMessage = vMessage.replace(/\[[0-9a-zA-Z]+.\]/g, function (value: string): string {
                                 if (value.startsWith("[") && value.endsWith("]")) {
-                                    let boName = ibas.businessobjects.name(boCode);
+                                    let boName: string = ibas.businessobjects.name(boCode);
                                     if (!ibas.strings.equals(boCode, boName)) {
                                         return ibas.strings.format("[{0}]", ibas.businessobjects.resource(boName, value.substring(1, value.length - 1)));
                                     }
@@ -143,7 +143,7 @@ namespace sap {
                                         if (index > 0) {
                                             text = text.substring(0, index);
                                         }
-                                        button.setText(ibas.strings.format("{0} ({1})", text, mOptions.latencyTime))
+                                        button.setText(ibas.strings.format("{0} ({1})", text, mOptions.latencyTime));
                                         mOptions.timeOut = setTimeout(func, 1000);
                                     }
                                 };

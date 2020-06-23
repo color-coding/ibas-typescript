@@ -117,6 +117,8 @@ declare namespace sap {
                 getZipCodeVisible(): boolean;
                 /** 获取-全地址 */
                 getAddress(): string;
+                /** 获取-排列方向 */
+                getOrientation(): sap.ui.core.Orientation;
                 /** 设置-语言 */
                 setLanguage(value: string): AddressArea;
                 /** 设置-国家 */
@@ -143,6 +145,8 @@ declare namespace sap {
                 setStreetVisible(value: boolean): AddressArea;
                 /** 设置-邮编是否可见 */
                 setZipCodeVisible(value: boolean): AddressArea;
+                /** 设置-排列方向 */
+                setOrientation(value: sap.ui.core.Orientation): AddressArea;
                 /** 设置监听地址改变事件 */
                 attachAddressChange(oData: any, fnFunction: Function, oListener?: any): AddressArea;
                 /** 取消监听地址改变事件 */

@@ -295,7 +295,9 @@ namespace sap {
                             if (item instanceof Object) {
                                 let properties: string[] = [];
                                 for (let pItem in item) {
-                                    properties.push(pItem);
+                                    if (pItem) {
+                                        properties.push(pItem);
+                                    }
                                 }
                                 if (properties.length > 1) {
                                     items.add(new sap.ui.core.ListItem("", {
@@ -375,7 +377,7 @@ namespace sap {
                                 }
                             }
                         });
-                    })
+                    });
                 }
                 if (onChanged instanceof Function) {
                     input.attachChange(undefined, onChanged);
