@@ -164,11 +164,52 @@ namespace shell {
                         item: new sap.tnt.NavigationList(),
                         fixedItem: new sap.tnt.NavigationList("", {
                             items: [
+                                new component.NavigationListSearchItem("", {
+                                    text: ibas.i18n.prop(["shell_query", "shell_apply"]),
+                                    icon: "sap-icon://browse-folder",
+                                    select(event: sap.ui.base.Event): void {
+                                        if (mainPage.getSideExpanded() !== true) {
+                                            mainPage.setSideExpanded(true);
+                                        }
+                                    },
+                                    search(event: sap.ui.base.Event): void {
+                                        let searchText: string = event.getParameter("searchValue");
+                                        that.navigation.getItem().getItems().forEach((item) => {
+                                            if (item.getVisible() === false) {
+                                                item.setVisible(true);
+                                            }
+                                            item.setExpanded(false);
+                                            let visible: boolean = false;
+                                            item.getItems().forEach((sItem) => {
+                                                if (sItem.getVisible() === false) {
+                                                    sItem.setVisible(true);
+                                                }
+                                                if (!ibas.strings.isEmpty(searchText)) {
+                                                    if (sItem.getText().indexOf(searchText) < 0) {
+                                                        sItem.setVisible(false);
+                                                        return;
+                                                    }
+                                                    item.setExpanded(true);
+                                                }
+                                                visible = true;
+                                            });
+                                            if (!ibas.strings.isEmpty(searchText) && item.getText().indexOf(searchText) >= 0) {
+                                                visible = true;
+                                                item.getItems().forEach((sItem) => {
+                                                    if (sItem.getVisible() === false) {
+                                                        sItem.setVisible(true);
+                                                    }
+                                                });
+                                            }
+                                            item.setVisible(visible);
+                                        });
+                                    }
+                                }),
                                 new sap.tnt.NavigationListItem("", {
                                     text: ibas.i18n.prop("shell_messages_history"),
                                     icon: "sap-icon://message-popup",
-                                    select: function (event: any): void {
-                                        that.messageHistory.openBy(event.getSource());
+                                    select(event: sap.ui.base.Event): void {
+                                        that.messageHistory.openBy(<any>event.getSource());
                                     }
                                 }),
                             ],
