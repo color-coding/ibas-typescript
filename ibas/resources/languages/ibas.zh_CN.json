@@ -48,5 +48,10 @@
   "sys_business_rule_sum_elements": "集合元素属性求和",
   "sys_business_rule_multiplicative_deduction": "乘除法推导",
   "sys_business_rule_additive_deduction": "加减法推导",
-  "sys_business_rule_rounding_off": "数值小数位舍入"
+  "sys_business_rule_rounding_off": "数值小数位舍入",
+  "sys_action_new_config_item": "新增配置项[{0} - {1}]",
+  "sys_action_starting": "开始执行，时间[{0}]",
+  "sys_action_occurred_error": "发生错误，[{0}]",
+  "sys_action_not_running": "没有运行",
+  "sys_action_completed": "执行结束，时间[{0}]，耗时[{1}]秒"
 }

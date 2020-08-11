@@ -38,7 +38,7 @@ namespace ibas {
                 this[PROPERTY_CONFIG] = new Configuration();
             }
             this[PROPERTY_CONFIG].set(key, value);
-            this.log(emMessageLevel.INFO, "new config item [{1} - {2}].", objects.isNull(this.name) ? this.id : this.name, key, value);
+            this.log(emMessageLevel.INFO, ibas.i18n.prop("sys_action_new_config_item", key, value));
         }
         /**
          * 获取配置
@@ -126,16 +126,16 @@ namespace ibas {
         /** 进行 */
         do(): void {
             if (this.isRunning()) {
-                throw new Error("action is running.");
+                throw new Error(i18n.prop("sys_action_not_running"));
             }
             let done: boolean = false;
             this[PROPERTY_STARTTIME] = new Date();
             this[PROPERTY_ENDTIME] = undefined;
-            this.log(emMessageLevel.INFO, "action is starting at [{0}].", this.startTime.toLocaleString());
+            this.log(emMessageLevel.INFO, i18n.prop("sys_action_starting", dates.toString(this.startTime, "yyyy-MM-dd HH:mm:ss")));
             try {
                 done = this.run();
             } catch (error) {
-                this.log(emMessageLevel.ERROR, "occurred error [{0}].", error);
+                this.log(emMessageLevel.ERROR, i18n.prop("sys_action_occurred_error", error));
             }
             if (done) {
                 // 任务完成
@@ -146,12 +146,13 @@ namespace ibas {
         protected done(): void {
             // 任务执行完成
             if (!this.isRunning()) {
-                throw new Error("action is not running.");
+                throw new Error(i18n.prop("sys_action_not_running"));
             }
             this[PROPERTY_ENDTIME] = new Date();
-            this.log(emMessageLevel.INFO, "action was completed at [{0}], during [{1}]s.",
-                this.endTime.toLocaleString(),
-                dates.difference(dates.emDifferenceType.SECOND, this.endTime, this.startTime));
+            this.log(emMessageLevel.INFO,
+                i18n.prop("sys_action_completed",
+                    dates.toString(this.endTime, "yyyy-MM-dd HH:mm:ss"),
+                    dates.difference(dates.emDifferenceType.SECOND, this.endTime, this.startTime)));
             if (this.onDone instanceof Function) {
                 this.onDone.apply(this);
             }
