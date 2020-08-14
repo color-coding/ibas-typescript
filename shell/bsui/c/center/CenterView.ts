@@ -833,7 +833,7 @@ namespace shell {
                     container.addContent(viewContent);
                 }
                 /** 显示查询面板 */
-                protected showQueryPanel(view: ibas.BOQueryView | ibas.BOQueryDialogView, embeddedView: ibas.IEmbeddedQueryPanel): void {
+                protected showQueryPanel(view: ibas.BOQueryView | ibas.BOQueryDialogView | ibas.BOQueryDialogViewWithPanel, embeddedView: ibas.IEmbeddedQueryPanel): void {
                     let queryPanel: app.QueryPanel = new app.QueryPanel();
                     if (ibas.objects.isNull(queryPanel)) {
                         // 查询面板无效，不添加
@@ -843,7 +843,7 @@ namespace shell {
                         queryPanel.navigation = this.application.navigation;
                         queryPanel.viewShower = <any>this.application;
                         // 判断面板嵌入位置
-                        if (view instanceof ibas.BOQueryViewWithPanel) {
+                        if (view instanceof ibas.BOQueryViewWithPanel || view instanceof ibas.BOQueryDialogViewWithPanel) {
                             // 视图继承嵌入接口
                             embeddedView = view;
                         }

@@ -14,11 +14,82 @@ namespace sap {
             sap.m.Table.extend("sap.extension.m.Table", {
                 metadata: {
                     properties: {
+                        /** 选择方式 */
+                        chooseType: { type: "int", defaultValue: ibas.emChooseType.MULTIPLE },
                     },
                     events: {
                     }
                 },
                 renderer: {},
+                /**
+                 * 获取选择类型
+                 */
+                getChooseType(this: Table): ibas.emChooseType {
+                    return this.getProperty("chooseType");
+                },
+                /**
+                 * 设置选择类型
+                 * @param value 选择类型
+                 */
+                setChooseType(this: Table, value: ibas.emChooseType): Table {
+                    this.detachSelectionChange(changeSelectionStyle);
+                    if (value === ibas.emChooseType.SINGLE) {
+                        this.setMode(sap.m.ListMode.MultiSelect);
+                        this.attachSelectionChange(undefined, changeSelectionStyle);
+                    } else if (value === ibas.emChooseType.MULTIPLE) {
+                        this.setMode(sap.m.ListMode.MultiSelect);
+                    } else {
+                        this.setMode(sap.m.ListMode.None);
+                    }
+                    return this.setProperty("chooseType", value);
+                },
+                /**
+                 * 获取选择的数据
+                 */
+                getSelecteds<T>(this: Table): ibas.IList<T> {
+                    let selecteds: ibas.IList<T> = new ibas.ArrayList<T>();
+                    if (this.getMode() === sap.m.ListMode.None) {
+                        let item: sap.m.ListItemBase = this.getSwipedItem();
+                        if (!ibas.objects.isNull(item)) {
+                            selecteds.push(item.getBindingContext().getObject());
+                        }
+                    } else {
+                        for (let item of this.getSelectedContexts(undefined)) {
+                            selecteds.push((<any>item).getObject());
+                        }
+                    }
+                    return selecteds;
+                },
+                /**
+                 * 获取未选择的数据
+                 */
+                getUnSelecteds<T>(this: Table): ibas.IList<T> {
+                    let selecteds: ibas.IList<T> = new ibas.ArrayList<T>();
+                    for (let item of this.getItems()) {
+                        selecteds.push(item.getBindingContext().getObject());
+                    }
+                    if (this.getMode() === sap.m.ListMode.None) {
+                        if (!ibas.objects.isNull(this.getSwipedItem())) {
+                            selecteds.remove(this.getSwipedItem().getBindingContext().getObject());
+                        }
+                    } else {
+                        for (let item of this.getSelectedContexts(undefined)) {
+                            selecteds.remove((<any>item).getObject());
+                        }
+                    }
+                    return selecteds;
+                },
+                /** 重构设置 */
+                applySettings(this: Table, mSettings: any, oScope?: any): Table {
+                    if (mSettings) {
+                        if (ibas.objects.isNull(mSettings.sticky)) {
+                            mSettings.sticky = [
+                                sap.m.Sticky.ColumnHeaders
+                            ];
+                        }
+                    }
+                    return sap.m.Table.prototype.applySettings.apply(this, arguments);
+                },
                 /** 退出 */
                 exit(this: Table): void {
                     let model: any = this.getModel();

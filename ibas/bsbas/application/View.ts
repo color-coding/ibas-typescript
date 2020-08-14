@@ -147,6 +147,11 @@ namespace ibas {
         /** 嵌入查询面板，返回值：是否需要初始化 */
         abstract embedded(view: any): void;
     }
+    /** 业务对象查询视图，带查询面板 */
+    export abstract class BOQueryDialogViewWithPanel extends BOQueryDialogView implements IEmbeddedQueryPanel {
+        /** 嵌入查询面板，返回值：是否需要初始化 */
+        abstract embedded(view: any): void;
+    }
     /** 业务对象列表视图 */
     export abstract class BOListView extends BOQueryView implements IBOListView {
         /** 新建数据事件 */

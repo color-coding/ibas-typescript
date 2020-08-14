@@ -26,6 +26,23 @@ declare namespace sap {
                  */
                 bindProperty(sName: string, oBindingInfo: any): this;
                 /**
+                 * 获取选择的数据
+                 */
+                getSelecteds<T>(): ibas.IList<T>;
+                /**
+                 * 获取未选择的数据
+                 */
+                getUnSelecteds<T>(): ibas.IList<T>;
+                /**
+                 * 获取选择类型
+                 */
+                getChooseType(): ibas.emChooseType;
+                /**
+                 * 设置选择类型
+                 * @param value 选择类型
+                 */
+                setChooseType(value: ibas.emChooseType): this;
+                /**
                  * 设置模型
                  * @param oModel 数据模型
                  * @param sName 名称
