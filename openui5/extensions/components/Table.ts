@@ -10,10 +10,9 @@ namespace sap {
         export namespace table {
             /** 改变表格选择风格 */
             function changeSelectionStyle(this: Table): void {
-                if (!(this instanceof sap.ui.table.Table)) {
-                    return;
+                if (this instanceof sap.ui.table.Table) {
+                    this.setSelectedIndex(this.getSelectedIndex());
                 }
-                this.setSelectedIndex(this.getSelectedIndex());
             }
             /**
              * 获取可视行数
@@ -556,6 +555,216 @@ namespace sap {
                 setPropertyInfo(this: Column, value: shell.bo.IBizPropertyInfo): Column {
                     return this.setProperty("propertyInfo", value);
                 }
+            });
+            /**
+             * 表格树
+             */
+            sap.ui.table.TreeTable.extend("sap.extension.table.TreeTable", {
+                metadata: {
+                    properties: {
+                        /** 行选择 */
+                        selectionBehavior: { type: "string", defaultValue: sap.ui.table.SelectionBehavior.Row },
+                        /** 选择方式 */
+                        chooseType: { type: "int", defaultValue: ibas.emChooseType.MULTIPLE },
+                    },
+                    events: {
+                    }
+                },
+                renderer: {},
+                /**
+                 * 获取选择类型
+                 */
+                getChooseType(this: TreeTable): ibas.emChooseType {
+                    return this.getProperty("chooseType");
+                },
+                /**
+                 * 设置选择类型
+                 * @param value 选择类型
+                 */
+                setChooseType(this: TreeTable, value: ibas.emChooseType): TreeTable {
+                    this.setProperty("chooseType", value);
+                    if (value === ibas.emChooseType.SINGLE) {
+                        this.setSelectionMode(sap.ui.table.SelectionMode.MultiToggle);
+                        this.setEnableSelectAll(false);
+                    } else if (value === ibas.emChooseType.MULTIPLE) {
+                        this.setSelectionMode(sap.ui.table.SelectionMode.MultiToggle);
+                        this.setEnableSelectAll(true);
+                    } else {
+                        this.setSelectionMode(sap.ui.table.SelectionMode.None);
+                        this.setEnableSelectAll(false);
+                    }
+                    return this;
+                },
+                /**
+                 * 重写设置是否全选
+                 */
+                setEnableSelectAll(this: Table, value: boolean): Table {
+                    if (!ibas.strings.isEmpty(ID_TABLE_PLUGIN_CHOOSE)) {
+                        this.removePlugin(ibas.strings.format(ID_TABLE_PLUGIN_CHOOSE, this.getId()));
+                        if (this.getPlugins().length === 0) {
+                            if (this.getChooseType() === ibas.emChooseType.SINGLE) {
+                                this.addPlugin(new sap.ui.table.plugins.MultiSelectionPlugin(
+                                    ibas.strings.format(ID_TABLE_PLUGIN_CHOOSE, this.getId()), {
+                                    showHeaderSelector: value,
+                                    selectionChange: (event: sap.ui.base.Event) => {
+                                        let source: any = event.getSource();
+                                        if (source instanceof sap.ui.table.plugins.MultiSelectionPlugin) {
+                                            let indices: number[] = source.getSelectedIndices();
+                                            if (indices instanceof Array && indices.length > 1) {
+                                                if (this.getChooseType() === ibas.emChooseType.SINGLE) {
+                                                    let index: number = event.getParameter("rowIndices")[0];
+                                                    this.clearSelection();
+                                                    this.setSelectedIndex(index);
+                                                }
+                                            }
+                                        }
+                                    },
+                                }));
+                            }
+                        }
+                    }
+                    return sap.ui.table.Table.prototype.setEnableSelectAll.apply(this, arguments);
+                },
+                /**
+                 * 获取选择的数据
+                 */
+                getSelecteds<T>(this: TreeTable): ibas.IList<T> {
+                    let selecteds: ibas.IList<T> = new ibas.ArrayList<T>();
+                    for (let item of this.getSelectedIndices()) {
+                        selecteds.push(this.getContextByIndex(item).getObject());
+                    }
+                    return selecteds;
+                },
+                /**
+                 * 获取未选择的数据
+                 */
+                getUnSelecteds<T>(this: TreeTable): ibas.IList<T> {
+                    let selecteds: ibas.IList<T> = new ibas.ArrayList<T>();
+                    let index: number = 0;
+                    let context: sap.ui.model.Context = this.getContextByIndex(index);
+                    while (!ibas.objects.isNull(context)) {
+                        selecteds.push(context.getObject());
+                        context = this.getContextByIndex(++index);
+                    }
+                    for (let item of this.getSelectedIndices()) {
+                        selecteds.remove(this.getContextByIndex(item).getObject());
+                    }
+                    return selecteds;
+                },
+                /** 退出 */
+                exit(this: TreeTable): void {
+                    let model: any = this.getModel();
+                    if (model instanceof sap.extension.model.JSONModel) {
+                        model.destroy();
+                    }
+                    (<any>sap.ui.table.TreeTable.prototype).exit.apply(this, arguments);
+                },
+                // 1.70以上兼容问题
+                setSelectionMode(this: Table): Table {
+                    // tslint:disable-next-line: no-string-literal
+                    if (this["_hasSelectionPlugin"] && this["_hasSelectionPlugin"]() === true) {
+                        let plugin: any = this.getPlugins()[0];
+                        if (plugin instanceof sap.ui.table.plugins.MultiSelectionPlugin) {
+                            return plugin.setSelectionMode.apply(plugin, arguments);
+                        }
+                    }
+                    return sap.ui.table.Table.prototype.setSelectionMode.apply(this, arguments);
+                },
+                setSelectedIndex(this: Table): Table {
+                    // tslint:disable-next-line: no-string-literal
+                    if (this["_hasSelectionPlugin"] && this["_hasSelectionPlugin"]() === true) {
+                        let plugin: any = this.getPlugins()[0];
+                        if (plugin instanceof sap.ui.table.plugins.MultiSelectionPlugin) {
+                            return plugin.setSelectedIndex.apply(plugin, arguments);
+                        }
+                    }
+                    return sap.ui.table.Table.prototype.setSelectedIndex.apply(this, arguments);
+                },
+                clearSelection(this: Table): Table {
+                    // tslint:disable-next-line: no-string-literal
+                    if (this["_hasSelectionPlugin"] && this["_hasSelectionPlugin"]() === true) {
+                        let plugin: any = this.getPlugins()[0];
+                        if (plugin instanceof sap.ui.table.plugins.MultiSelectionPlugin) {
+                            return plugin.clearSelection.apply(plugin, arguments);
+                        }
+                    }
+                    return sap.ui.table.Table.prototype.clearSelection.apply(this, arguments);
+                },
+                selectAll(this: Table): Table {
+                    // tslint:disable-next-line: no-string-literal
+                    if (this["_hasSelectionPlugin"] && this["_hasSelectionPlugin"]() === true) {
+                        let plugin: any = this.getPlugins()[0];
+                        if (plugin instanceof sap.ui.table.plugins.MultiSelectionPlugin) {
+                            return plugin.selectAll.apply(plugin, arguments);
+                        }
+                    }
+                    return sap.ui.table.Table.prototype.selectAll.apply(this, arguments);
+                },
+                /**
+                 * 选中索引（兼容方法），-1 表示未选中
+                 * @returns number
+                 */
+                getSelectedIndex(this: TreeTable): number {
+                    // tslint:disable-next-line: no-string-literal
+                    if (this["_hasSelectionPlugin"] && this["_hasSelectionPlugin"]() === true) {
+                        let selecteds: number[] = this.getSelectedIndices();
+                        if (selecteds && selecteds.length > 0) {
+                            return selecteds[0];
+                        }
+                        return -1;
+                    }
+                    return (<any>sap.ui.table.TreeTable).prototype.getSelectedIndex.apply(this, arguments);
+                },
+                getSelectedIndices(this: Table): Table {
+                    // tslint:disable-next-line: no-string-literal
+                    if (this["_hasSelectionPlugin"] && this["_hasSelectionPlugin"]() === true) {
+                        let plugin: any = this.getPlugins()[0];
+                        if (plugin instanceof sap.ui.table.plugins.MultiSelectionPlugin) {
+                            return plugin.getSelectedIndices.apply(plugin, arguments);
+                        }
+                    }
+                    return sap.ui.table.Table.prototype.getSelectedIndices.apply(this, arguments);
+                },
+                addSelectionInterval(this: Table): Table {
+                    // tslint:disable-next-line: no-string-literal
+                    if (this["_hasSelectionPlugin"] && this["_hasSelectionPlugin"]() === true) {
+                        let plugin: any = this.getPlugins()[0];
+                        if (plugin instanceof sap.ui.table.plugins.MultiSelectionPlugin) {
+                            return plugin.addSelectionInterval.apply(plugin, arguments);
+                        }
+                    }
+                    return sap.ui.table.Table.prototype.addSelectionInterval.apply(this, arguments);
+                },
+                setSelectionInterval(this: Table): Table {
+                    // tslint:disable-next-line: no-string-literal
+                    if (this["_hasSelectionPlugin"] && this["_hasSelectionPlugin"]() === true) {
+                        let plugin: any = this.getPlugins()[0];
+                        if (plugin instanceof sap.ui.table.plugins.MultiSelectionPlugin) {
+                            return plugin.setSelectionInterval.apply(plugin, arguments);
+                        }
+                    }
+                    return sap.ui.table.Table.prototype.setSelectionInterval.apply(this, arguments);
+                },
+                removeSelectionInterval(this: Table): Table {
+                    // tslint:disable-next-line: no-string-literal
+                    if (this["_hasSelectionPlugin"] && this["_hasSelectionPlugin"]() === true) {
+                        let plugin: any = this.getPlugins()[0];
+                        if (plugin instanceof sap.ui.table.plugins.MultiSelectionPlugin) {
+                            return plugin.removeSelectionInterval.apply(plugin, arguments);
+                        }
+                    }
+                    return sap.ui.table.Table.prototype.removeSelectionInterval.apply(this, arguments);
+                },
+                isIndexSelected(this: Table): Table {
+                    // tslint:disable-next-line: no-string-literal
+                    if (this["_hasSelectionPlugin"] && this["_hasSelectionPlugin"]() === true) {
+                        let plugin: any = this.getPlugins()[0];
+                        if (plugin instanceof sap.ui.table.plugins.MultiSelectionPlugin) {
+                            return plugin.isIndexSelected.apply(plugin, arguments);
+                        }
+                    }
+                    return sap.ui.table.Table.prototype.isIndexSelected.apply(this, arguments);
+                },
             });
         }
     }

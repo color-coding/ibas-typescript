@@ -125,6 +125,57 @@ declare namespace sap {
                  */
                 setPropertyInfo(value: shell.bo.IBizPropertyInfo): this;
             }
+            /**
+             * 表格树
+             */
+            class TreeTable extends sap.ui.table.TreeTable {
+                /**
+                 * 设置属性值
+                 * @param sPropertyName 属性名称
+                 * @param oValue 值
+                 * @param bSuppressInvalidate 立即
+                 */
+                protected setProperty(sPropertyName: string, oValue: any, bSuppressInvalidate?: boolean): this;
+                /**
+                 * 绑定属性
+                 * @param sName 属性名称
+                 * @param oBindingInfo 绑定信息
+                 */
+                bindProperty(sName: string, oBindingInfo: any): this;
+                /**
+                 * 获取选择的数据
+                 */
+                getSelecteds<T>(): ibas.IList<T>;
+                /**
+                 * 获取未选择的数据
+                 */
+                getUnSelecteds<T>(): ibas.IList<T>;
+                /**
+                 * 获取选择类型
+                 */
+                getChooseType(): ibas.emChooseType;
+                /**
+                 * 设置选择类型
+                 * @param value 选择类型
+                 */
+                setChooseType(value: ibas.emChooseType): this;
+                /**
+                 * 设置模型
+                 * @param oModel 数据模型
+                 * @param sName 名称
+                 */
+                setModel(oModel: model.JSONModel, sName?: string): this;
+                /**
+                 * 获取模型
+                 * @param sModelName 名称
+                 */
+                getModel(sModelName?: string | undefined): model.JSONModel;
+                /**
+                 * 选中索引（兼容方法），-1 表示未选中
+                 * @returns number
+                 */
+                getSelectedIndex(): number;
+            }
         }
     }
 }
