@@ -458,7 +458,7 @@ namespace ibas {
          */
         constructor(parent: P) {
             super();
-            this[PROPERTY_LISTENER] = {
+            this.registerListener(this[PROPERTY_LISTENER] = {
                 caller: this,
                 propertyChanged(this: BusinessObjects<T, P>, name: string): void {
                     // this指向业务对象集合基类,arguments[1]指向触发事件的BO
@@ -471,13 +471,15 @@ namespace ibas {
                     } else {
                         if (name === "isDeleted") {
                             this.firePropertyChanged("length");
+                        } else if (name === "length") {
+                            runRules.call(this, null);
                         } else {
                             runRules.call(this, name);
                         }
                         this.onItemPropertyChanged(bo, name);
                     }
                 }
-            };
+            });
             if (!objects.isNull(parent)) {
                 this.parent = parent;
             }
@@ -625,19 +627,9 @@ namespace ibas {
          * @param item 项目
          */
         protected afterRemove(item: T): void {
+            super.afterRemove(item);
             if (objects.instanceOf(item, Bindable)) {
                 (<any>item).removeListener(this[PROPERTY_LISTENER]);
-            }
-            super.afterRemove(item);
-        }
-        /**
-         * 通知属性改变
-         * @param property 属性
-         */
-        protected firePropertyChanged(property: string): void {
-            super.firePropertyChanged.apply(this, arguments);
-            if (property === "length") {
-                runRules.call(this, null);
             }
         }
     }
