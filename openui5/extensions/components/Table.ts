@@ -182,6 +182,16 @@ namespace sap {
                     }
                     (<any>sap.ui.table.Table.prototype).exit.apply(this, arguments);
                 },
+                // 1.80以上兼容问题
+                setModel(this: Table, oModel: model.JSONModel, sName?: string): Table {
+                    let version: any = sap.ui.getCore().getConfiguration().getVersion();
+                    if (version && version.getMajor() >= 1 && version.getMinor() >= 80) {
+                        if (!ibas.objects.isNull(this.getModel(sName))) {
+                            this.clearSelection();
+                        }
+                    }
+                    return sap.ui.table.Table.prototype.setModel.apply(this, arguments);
+                },
                 // 1.70以上兼容问题
                 setSelectionMode(this: Table): Table {
                     // tslint:disable-next-line: no-string-literal
