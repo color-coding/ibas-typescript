@@ -710,13 +710,7 @@ namespace ibas {
          * 当前日期（不含时间）
          */
         export function today(): Date {
-            let date: Date = now();
-            // 月份从0开始
-            return valueOf(strings.format("{0}-{1}-{2}",
-                date.getFullYear(),
-                strings.fill(date.getMonth() + 1, 2, "0"),
-                strings.fill(date.getDate(), 2, "0"))
-            );
+            return valueOf(now().setHours(0, 0, 0, 0));
         }
         /**
          * 时间（1155）
@@ -748,7 +742,7 @@ namespace ibas {
             }
             if (typeof value === "string") {
                 if (value.indexOf("/") > 0) {
-                    strings.replace(value, "/", "-");
+                    value = strings.replace(value, "/", "-");
                 }
             }
             let time: number = Date.parse(value);

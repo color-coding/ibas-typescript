@@ -569,10 +569,13 @@ namespace sap {
                 formatValue(oValue: any, sInternalType: string): any {
                     if (sInternalType === "string") {
                         if (typeof oValue === "number") {
-                            let hour: number = Math.floor(oValue / 100);
-                            let minute: number = oValue - (hour * 100);
-                            return this.format.replace("HH", ibas.strings.fill(hour, 2, "0"))
-                                .replace("mm", ibas.strings.fill(minute, 2, "0"));
+                            if (oValue >= 0) {
+                                let hour: number = Math.floor(oValue / 100);
+                                let minute: number = oValue - (hour * 100);
+                                return this.format.replace("HH", ibas.strings.fill(hour, 2, "0")).replace("mm", ibas.strings.fill(minute, 2, "0"));
+                            } else {
+                                return null;
+                            }
                         }
                     } else if (sInternalType === "Date" && !ibas.objects.isNull(oValue)) {
                         let value: number = 0;
@@ -581,10 +584,14 @@ namespace sap {
                         } else if (typeof oValue === "string") {
                             value = parseInt(oValue.replace(":", ""), 0);
                         }
-                        let hour: number = Math.floor(value / 100);
-                        let minute: number = value - (hour * 100);
-                        value = (hour * 60 * 60 * 1000) + (minute * 60 * 1000);
-                        return ibas.dates.valueOf(ibas.dates.valueOf(0).setHours(hour, minute));
+                        if (value >= 0) {
+                            let hour: number = Math.floor(value / 100);
+                            let minute: number = value - (hour * 100);
+                            value = (hour * 60 * 60 * 1000) + (minute * 60 * 1000);
+                            return ibas.dates.valueOf(ibas.dates.valueOf(0).setHours(hour, minute));
+                        } else {
+                            return null;
+                        }
                     }
                     return oValue;
                 }
