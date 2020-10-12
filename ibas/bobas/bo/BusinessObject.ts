@@ -36,7 +36,7 @@ namespace ibas {
         "CreateDate", "CreateTime", "UpdateDate", "UpdateTime", "LogInst", "CreateUserSign",
         "UpdateUserSign", "CreateActionId", "UpdateActionId", "Referenced", "Canceled",
         "Deleted", "ApprovalStatus", "LineStatus", "Status", "DocumentStatus", "DataSource",
-        "Period"
+        "Period", "DataOwner", "Organization"
     ];
 
     /**

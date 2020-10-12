@@ -50,7 +50,7 @@ namespace shell {
                             new sap.m.VBox("", {
                                 items: [
                                     new sap.m.Title("", {
-                                        text: document.title,
+                                        text: ibas.config.get(app.CONFIG_ITEM_APPLICATION_NAME, ibas.i18n.prop("shell_name")),
                                         level: sap.ui.core.TitleLevel.H1,
                                         titleStyle: sap.ui.core.TitleLevel.H1,
                                         textAlign: sap.ui.core.TextAlign.Center,

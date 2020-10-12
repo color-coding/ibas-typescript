@@ -24,7 +24,14 @@ namespace shell {
                     // 记录起始地址
                     ibas.config.set(app.CONFIG_ITEM_ENTRY_URL, document.URL);
                     // 设置浏览器标题
-                    document.title = ibas.config.get(app.CONFIG_ITEM_APPLICATION_NAME, ibas.i18n.prop("shell_name"));
+                    let title: string = ibas.config.get(app.CONFIG_ITEM_APPLICATION_NAME, ibas.i18n.prop("shell_name"));
+                    if (!ibas.strings.isEmpty(title)) {
+                        let subheading: string = ibas.config.get(CONFIG_ITEM_SUBHEADING);
+                        if (!ibas.strings.isEmpty(subheading)) {
+                            title = ibas.strings.format("{0} | {1}", title, subheading);
+                        }
+                        document.title = title;
+                    }
                     // 键盘按钮按下
                     ibas.browserEventManager.registerListener({
                         eventType: ibas.emBrowserEventType.KEYDOWN,
