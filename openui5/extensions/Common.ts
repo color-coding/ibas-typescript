@@ -451,9 +451,9 @@ namespace sap {
                         }
                         for (let i: number = 1; i < datas.length; i++) {
                             let data: any[] = datas[i];
-                            if (data instanceof Array && data.length === properties.length) {
+                            if (data instanceof Array && data.length >= properties.length) {
                                 let json: T = new type;
-                                for (let j: number = 0; j < data.length; j++) {
+                                for (let j: number = 0; j < properties.length; j++) {
                                     let value: any = data[j];
                                     let property: managedobjects.IBindingInfo = properties[j];
                                     if (!ibas.strings.isEmpty(property)) {

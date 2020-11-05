@@ -608,11 +608,11 @@ namespace ibas {
                         if (strings.isWith(item, "webkit", undefined)) {
                             continue;
                         }
-                        if (!data.hasOwnProperty(item)) {
-                            continue;
-                        }
                         let value: any = data[item];
                         if (typeof value !== "object") {
+                            continue;
+                        }
+                        if (!(value instanceof Object)) {
                             continue;
                         }
                         if (value === window.document || value === window.indexedDB || value === window.caches

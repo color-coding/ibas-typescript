@@ -13,7 +13,7 @@ namespace ibas {
         /** 格式化数据 */
         format: boolean;
         /** 使用名称 */
-        nameAs: "name" | "index" | "description";
+        nameAs: "name" | "index" | "description" | "none";
     }
     /** 数据表 */
     export class DataTable {
@@ -51,6 +51,18 @@ namespace ibas {
                         } else {
                             data[col.description] = value;
                         }
+                    } else if (param.nameAs === "none") {
+                        if (!(data instanceof Array)) {
+                            data = [];
+                        }
+                        if (datas.length === 0) {
+                            for (let item of this.columns) {
+                                data.push(item.name);
+                            }
+                            datas.push(data);
+                            data = [];
+                        }
+                        data[index] = value;
                     } else {
                         if (ibas.objects.hasProperty(data, col.name)) {
                             data[col.name + "~" + index] = value;
