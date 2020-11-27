@@ -304,7 +304,8 @@ namespace sap {
                         }
                         property = factories.newProperty(property, boInfo);
                         let column: any = new Column("", {
-                            header: property.description,
+                            header: property.systemed !== true ? property.description :
+                                ibas.i18n.prop(ibas.strings.format("bo_{0}_{1}", boInfo.name, property.name).toLowerCase())
                         });
                         let component: any = factories.newComponent(property, "Object.2");
                         if (property.position > 0) {

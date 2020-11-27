@@ -224,7 +224,11 @@ namespace sap {
                         });
                     }
                     property = factories.newProperty(property, boInfo);
-                    section.addBlock(factories.newComponent(property, "Object"));
+                    let element: any = factories.newComponent(property, "Object");
+                    if (property.systemed === true && element instanceof sap.m.ObjectAttribute) {
+                        element.setTitle(ibas.i18n.prop(ibas.strings.format("bo_{0}_{1}", boInfo.name, property.name).toLowerCase()));
+                    }
+                    section.addBlock(element);
                 }
                 if (!ibas.objects.isNull(section)) {
                     this.addSection(new sap.uxap.ObjectPageSection("", {

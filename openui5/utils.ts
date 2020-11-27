@@ -650,7 +650,10 @@ namespace openui5 {
                                 } else {
                                     for (let index: number = 0; index < properties.length; index++) {
                                         let property: shell.bo.IBizPropertyInfo = properties[index];
-                                        userFieldForm.addContent(new sap.m.Label("", { text: property.description }));
+                                        userFieldForm.addContent(new sap.m.Label("", {
+                                            text: property.systemed !== true ? property.description :
+                                                ibas.i18n.prop(ibas.strings.format("bo_{0}_{1}", boInfo.name, property.name).toLowerCase())
+                                        }));
                                         let control: sap.ui.core.Control = createUserFieldControl(property, ibas.strings.format("userFields/{0}/value", index), readOnly);
                                         if (!ibas.objects.isNull(control)) {
                                             userFieldForm.addContent(control);
@@ -681,7 +684,8 @@ namespace openui5 {
                         for (let index: number = 0; index < properties.length; index++) {
                             let property: shell.bo.IBizPropertyInfo = properties[index];
                             let column: sap.ui.table.Column = new sap.ui.table.Column("", {
-                                label: property.description
+                                label: property.systemed !== true ? property.description :
+                                    ibas.i18n.prop(ibas.strings.format("bo_{0}_{1}", boInfo.name, property.name).toLowerCase())
                             });
                             let control: any = createUserFieldControl(property, ibas.strings.format("userFields/{0}/value", index), readOnly);
                             if (!ibas.objects.isNull(control)) {
@@ -707,7 +711,10 @@ namespace openui5 {
                         } else {
                             for (let index: number = 0; index < properties.length; index++) {
                                 let property: shell.bo.IBizPropertyInfo = properties[index];
-                                container.addContent(new sap.m.Label("", { text: property.description }));
+                                container.addContent(new sap.m.Label("", {
+                                    text: property.systemed !== true ? property.description :
+                                        ibas.i18n.prop(ibas.strings.format("bo_{0}_{1}", boInfo.name, property.name).toLowerCase())
+                                }));
                                 let control: any = createUserFieldControl(property, ibas.strings.format("userFields/{0}/value", index), readOnly);
                                 if (!ibas.objects.isNull(control)) {
                                     container.addContent(control);

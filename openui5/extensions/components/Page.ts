@@ -247,7 +247,8 @@ namespace sap {
                     if (splitter instanceof sap.ui.layout.form.SimpleForm) {
                         property = factories.newProperty(property, boInfo);
                         splitter.addContent(new sap.m.Label("", {
-                            text: property.description
+                            text: property.systemed !== true ? property.description :
+                                ibas.i18n.prop(ibas.strings.format("bo_{0}_{1}", boInfo.name, property.name).toLowerCase())
                         }));
                         splitter.addContent(factories.newComponent(property, "Input"));
                     }
