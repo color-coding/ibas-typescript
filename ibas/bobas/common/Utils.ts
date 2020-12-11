@@ -744,6 +744,10 @@ namespace ibas {
                 if (value.indexOf("/") > 0) {
                     value = strings.replace(value, "/", "-");
                 }
+                if (value.indexOf(":") < 0) {
+                    // 补充时间部分，否则会被加时区时间
+                    value = value + "T00:00:00";
+                }
             }
             let time: number = Date.parse(value);
             if (!isNaN(time)) {
@@ -902,6 +906,10 @@ namespace ibas {
          * @param right
          */
         export function equals(left: Date, right: Date): boolean {
+            if (!isDate(left) || !isDate(right)) {
+                // 非日期类型，返回false
+                return false;
+            }
             let value: number = compare(left, right);
             if (isNaN(value)) {
                 throw new Error(i18n.prop("sys_unrecognized_data"));

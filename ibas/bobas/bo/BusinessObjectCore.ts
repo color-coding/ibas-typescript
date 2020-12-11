@@ -401,10 +401,17 @@ namespace ibas {
                 let oldValue: any = this[property];
                 this[property] = value;
                 if (oldValue !== value) {
-                    // 值发生变化触发属性改变
-                    this.firePropertyChanged(property);
+                    if (oldValue instanceof Date && value instanceof Date) {
+                        // 如果是日期类型，则按时间值再比较此
+                        if (oldValue.getTime() !== value.getTime()) {
+                            // 值发生变化触发属性改变
+                            this.firePropertyChanged(property);
+                        }
+                    } else {
+                        // 值发生变化触发属性改变
+                        this.firePropertyChanged(property);
+                    }
                 }
-
             }
         }
 

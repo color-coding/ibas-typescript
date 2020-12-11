@@ -29,6 +29,11 @@ declare namespace sap {
                  */
                 getData<T>(): T;
                 /**
+                 * 获取数据
+                 * @param sPath 路径
+                 */
+                getData<T>(sPath: string): T;
+                /**
                  * 数据大小
                  */
                 size(): number;

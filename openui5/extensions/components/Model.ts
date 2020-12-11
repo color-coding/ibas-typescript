@@ -71,6 +71,19 @@ namespace sap {
                     sap.ui.model.json.JSONModel.prototype.setData.apply(this, arguments);
                 },
                 /**
+                 * 获取数据
+                 * @param sPath 路径
+                 */
+                getData(this: JSONModel, path?: string): void {
+                    let data: any = sap.ui.model.json.JSONModel.prototype.getData.apply(this, arguments);
+                    if (typeof path === "string" && path.length > 0) {
+                        if (data) {
+                            return data[path];
+                        }
+                    }
+                    return data;
+                },
+                /**
                  * 增加数据
                  * @param oData 数据
                  */
