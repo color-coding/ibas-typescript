@@ -268,6 +268,8 @@ namespace sap {
                         repository: { type: "any" },
                         /** 数据信息 */
                         dataInfo: { type: "any" },
+                        /** 绑定值 */
+                        bindingValue: { type: "string" },
                     },
                     events: {}
                 },
@@ -300,12 +302,18 @@ namespace sap {
                     return this.setProperty("dataInfo", utils.dataInfo(value));
                 },
                 /**
+                 * 获取绑定值
+                 */
+                getBindingValue(this: ObjectAttribute): string {
+                    return this.getProperty("bindingValue");
+                },
+                /**
                  * 设置选中值
                  * @param value 值
                  */
-                setText(this: RepositoryObjectStatus, value: string): RepositoryObjectStatus {
-                    if (this.getText() !== value) {
-                        ObjectStatus.prototype.setText.apply(this, arguments);
+                setBindingValue(this: RepositoryObjectStatus, value: string): RepositoryObjectStatus {
+                    if (this.getBindingValue() !== value) {
+                        this.setProperty("bindingValue", value);
                         if (!ibas.strings.isEmpty(value)) {
                             let dataInfo: repository.IDataInfo = this.getDataInfo();
                             if (ibas.objects.isNull(dataInfo)) {
@@ -346,7 +354,7 @@ namespace sap {
                                             keyBudilder.append(item.key);
                                             textBudilder.append(item.text);
                                         }
-                                        ObjectStatus.prototype.setText.call(this, textBudilder.toString());
+                                        this.setText(textBudilder.toString());
                                     }
                                 }
                             );
@@ -365,6 +373,8 @@ namespace sap {
                         dataInfo: { type: "any" },
                         /** 属性名称 */
                         propertyName: { type: "string" },
+                        /** 绑定值 */
+                        bindingValue: { type: "string" },
                     },
                     events: {}
                 },
@@ -397,12 +407,18 @@ namespace sap {
                     return this.setProperty("propertyName", value);
                 },
                 /**
+                 * 获取绑定值
+                 */
+                getBindingValue(this: ObjectAttribute): string {
+                    return this.getProperty("bindingValue");
+                },
+                /**
                  * 设置选中值
                  * @param value 值
                  */
-                setText(this: PropertyObjectStatus, value: string): PropertyObjectStatus {
-                    if (this.getText() !== value) {
-                        ObjectStatus.prototype.setText.apply(this, arguments);
+                setBindingValue(this: PropertyObjectStatus, value: string): PropertyObjectStatus {
+                    if (this.getBindingValue() !== value) {
+                        this.setProperty("bindingValue", value);
                         if (ibas.strings.isEmpty(value)) {
                             return this;
                         }
@@ -453,7 +469,7 @@ namespace sap {
                                                 if (property.values instanceof Array) {
                                                     for (let item of property.values) {
                                                         if (ibas.strings.equals(item.value, value)) {
-                                                            ObjectStatus.prototype.setText.call(this, item.description);
+                                                            this.setText(item.description);
                                                             return;
                                                         }
                                                     }

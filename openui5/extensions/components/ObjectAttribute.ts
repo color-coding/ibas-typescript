@@ -14,11 +14,41 @@ namespace sap {
             sap.m.ObjectAttribute.extend("sap.extension.m.ObjectAttribute", {
                 metadata: {
                     properties: {
+                        /** 绑定值 */
+                        bindingValue: { type: "string" },
                     },
                     events: {}
                 },
                 renderer: {
                 },
+                /**
+                 * 获取绑定值
+                 */
+                getBindingValue(this: ObjectAttribute): string {
+                    return this.getProperty("bindingValue");
+                },
+                /**
+                 * 设置绑定值
+                 * @param value 值
+                 */
+                setBindingValue(this: ObjectAttribute, value: string): ObjectAttribute {
+                    sap.m.ObjectAttribute.prototype.setText.apply(this, arguments);
+                    this.setProperty("bindingValue", value);
+                    return this;
+                },
+                /**
+                 * 设置值
+                 * @param value 值
+                 */
+                setText(this: ObjectAttribute, value: string): Text {
+                    return sap.m.ObjectAttribute.prototype.setText.apply(this, arguments);
+                },
+                /** 重写绑定 */
+                bindProperty(this: ObjectAttribute, sName: string, oBindingInfo: any): ObjectAttribute {
+                    managedobjects.checkBinding.apply(this, arguments);
+                    sap.m.ObjectAttribute.prototype.bindProperty.apply(this, arguments);
+                    return this;
+                }
             });
             /**
              * 业务仓库数据-对象属性
@@ -65,9 +95,9 @@ namespace sap {
                  * 设置选中值
                  * @param value 值
                  */
-                setText(this: RepositoryObjectAttribute, value: string): RepositoryObjectAttribute {
-                    if (this.getText() !== value) {
-                        ObjectAttribute.prototype.setText.apply(this, arguments);
+                setBindingValue(this: RepositoryObjectAttribute, value: string): RepositoryObjectAttribute {
+                    if (this.getBindingValue() !== value) {
+                        ObjectAttribute.prototype.setBindingValue.apply(this, arguments);
                         if (!ibas.strings.isEmpty(value)) {
                             let dataInfo: repository.IDataInfo = this.getDataInfo();
                             if (ibas.objects.isNull(dataInfo)) {
@@ -108,7 +138,7 @@ namespace sap {
                                             keyBudilder.append(item.key);
                                             textBudilder.append(item.text);
                                         }
-                                        ObjectAttribute.prototype.setText.call(this, textBudilder.toString());
+                                        this.setText(textBudilder.toString());
                                     }
                                 }
                             );
@@ -162,9 +192,9 @@ namespace sap {
                  * 设置选中值
                  * @param value 值
                  */
-                setText(this: PropertyObjectAttribute, value: string): PropertyObjectAttribute {
-                    if (this.getText() !== value) {
-                        ObjectAttribute.prototype.setText.apply(this, arguments);
+                setBindingValue(this: PropertyObjectAttribute, value: string): PropertyObjectAttribute {
+                    if (this.getBindingValue() !== value) {
+                        ObjectAttribute.prototype.setBindingValue.apply(this, arguments);
                         if (ibas.strings.isEmpty(value)) {
                             return this;
                         }
@@ -215,7 +245,7 @@ namespace sap {
                                                 if (property.values instanceof Array) {
                                                     for (let item of property.values) {
                                                         if (ibas.strings.equals(item.value, value)) {
-                                                            ObjectAttribute.prototype.setText.call(this, item.description);
+                                                            this.setText(item.description);
                                                             return;
                                                         }
                                                     }
@@ -261,12 +291,12 @@ namespace sap {
                  * 设置选中值
                  * @param value 值
                  */
-                setText(this: ConversionObjectAttribute, value: string): ConversionObjectAttribute {
-                    if (this.getText() !== value) {
-                        ObjectAttribute.prototype.setText.apply(this, arguments);
+                setBindingValue(this: ConversionObjectAttribute, value: string): ConversionObjectAttribute {
+                    if (this.getBindingValue() !== value) {
+                        ObjectAttribute.prototype.setBindingValue.apply(this, arguments);
                         if (!ibas.strings.isEmpty(value)) {
                             let done: (newValue: string) => void = (newValue) => {
-                                ObjectAttribute.prototype.setText.call(this, newValue);
+                                this.setText(newValue);
                             };
                             let bindingData: any = this.getBindingContext().getObject();
                             this.fireConvert({

@@ -15,7 +15,7 @@ declare namespace sap {
                 /**
                  * 构造
                  * @param {string} sId 唯一标记，不要赋值
-                 * @param {any} mSettings 构造设置
+                 * @param {any} mSettings 绑定值属性：bindingValue
                  */
                 constructor(sId?: string, mSettings?: any);
                 /**
@@ -31,6 +31,15 @@ declare namespace sap {
                  * @param oBindingInfo 绑定信息
                  */
                 bindProperty(sName: string, oBindingInfo: any): this;
+                /**
+                 * 获取绑定值
+                 */
+                getBindingValue(): string;
+                /**
+                 * 设置绑定值
+                 * @param value 值
+                 */
+                setBindingValue(value: string): this;
             }
             /**
              * 业务仓库数据-对象属性

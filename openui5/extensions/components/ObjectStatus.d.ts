@@ -93,6 +93,21 @@ declare namespace sap {
              */
             class RepositoryObjectStatus extends ObjectStatus {
                 /**
+                 * 构造
+                 * @param {string} sId 唯一标记，不要赋值
+                 * @param {any} mSettings 绑定值属性：bindingValue
+                 */
+                constructor(sId?: string, mSettings?: any);
+                /**
+                 * 获取绑定值
+                 */
+                getBindingValue(): string;
+                /**
+                 * 设置绑定值
+                 * @param value 值
+                 */
+                setBindingValue(value: string): this;
+                /**
                  * 获取业务仓库实例
                  */
                 getRepository(): ibas.BORepositoryApplication;
@@ -115,6 +130,21 @@ declare namespace sap {
              * 对象状态可选值-对象状态
              */
             class PropertyObjectStatus extends ObjectStatus {
+                /**
+                 * 构造
+                 * @param {string} sId 唯一标记，不要赋值
+                 * @param {any} mSettings 绑定值属性：bindingValue
+                 */
+                constructor(sId?: string, mSettings?: any);
+                /**
+                 * 获取绑定值
+                 */
+                getBindingValue(): string;
+                /**
+                 * 设置绑定值
+                 * @param value 值
+                 */
+                setBindingValue(value: string): this;
                 /**
                  * 获取数据信息
                  */

@@ -66,6 +66,8 @@
 /// <reference path="./extensions/components/Dialog.ts" />
 /// <reference path="./extensions/components/MessageStrip.d.ts" />
 /// <reference path="./extensions/components/MessageStrip.ts" />
+/// <reference path="./extensions/components/Form.d.ts" />
+/// <reference path="./extensions/components/Form.ts" />
 /// <reference path="./extensions/components/Factory.ts" />
 
 namespace openui5 {

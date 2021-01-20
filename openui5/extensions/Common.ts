@@ -311,27 +311,29 @@ namespace sap {
             /**
              * 改变页面控件状态
              */
-            export function changeStatus(page: sap.m.Page): void {
+            export function changeStatus(page: sap.m.Page | sap.uxap.ObjectPageLayout): void {
                 let model: any = page && page.getModel() ? (<any>page.getModel()).getData() : null;
-                if (model instanceof ibas.BOMasterData || model instanceof ibas.BOMasterDataLine) {
-                    if (!model.isNew) {
-                        nonEditable(page.getSubHeader(), ["!"]);
-                        for (let item of page.getContent()) {
-                            nonEditable(item, ["Code"]);
+                if (page instanceof sap.m.Page) {
+                    if (model instanceof ibas.BOMasterData || model instanceof ibas.BOMasterDataLine) {
+                        if (!model.isNew) {
+                            nonEditable(page.getSubHeader(), ["!"]);
+                            for (let item of page.getContent()) {
+                                nonEditable(item, ["Code"]);
+                            }
                         }
-                    }
-                } else if (model instanceof ibas.BODocument) {
-                    if (model.getProperty("DocumentStatus") === ibas.emDocumentStatus.CLOSED) {
-                        nonEditable(page.getSubHeader(), ["sap-icon://save", "sap-icon://delete", "sap-icon://create"]);
-                        for (let item of page.getContent()) {
-                            nonEditable(item, []);
+                    } else if (model instanceof ibas.BODocument) {
+                        if (model.getProperty("DocumentStatus") === ibas.emDocumentStatus.CLOSED) {
+                            nonEditable(page.getSubHeader(), ["sap-icon://save", "sap-icon://delete", "sap-icon://create"]);
+                            for (let item of page.getContent()) {
+                                nonEditable(item, []);
+                            }
                         }
-                    }
-                } else if (model instanceof ibas.BODocumentLine) {
-                    if (model.getProperty("LineStatus") === ibas.emDocumentStatus.CLOSED) {
-                        nonEditable(page.getSubHeader(), ["sap-icon://save", "sap-icon://delete", "sap-icon://create"]);
-                        for (let item of page.getContent()) {
-                            nonEditable(item, []);
+                    } else if (model instanceof ibas.BODocumentLine) {
+                        if (model.getProperty("LineStatus") === ibas.emDocumentStatus.CLOSED) {
+                            nonEditable(page.getSubHeader(), ["sap-icon://save", "sap-icon://delete", "sap-icon://create"]);
+                            for (let item of page.getContent()) {
+                                nonEditable(item, []);
+                            }
                         }
                     }
                 }

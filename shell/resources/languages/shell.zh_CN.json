@@ -56,6 +56,7 @@
     "shell_data_saved_first": "请先保存数据",
     "shell_data_not_saved_continue": "数据未保存，是否继续？",
     "shell_data_status": "状态",
+    "shell_data_services": "数据服务",
     "shell_upload": "上传",
     "shell_uploading_file": "文件上传中，请稍后",
     "shell_download": "下载",

@@ -36,6 +36,26 @@ namespace sap {
                         if (oHeaderTitle.getNavigationBar() instanceof sap.ui.core.Control) {
                             oHeaderTitle.getNavigationBar().addStyleClass("sapMTBStandard");
                         }
+                        if (oHeaderTitle.hasStyleClass("sapUiNoContentPadding")) {
+                            (<any>oHeaderTitle).onAfterRendering = function (): void {
+                                (<any>sap.uxap.ObjectPageHeader.prototype).onAfterRendering.apply(this, arguments);
+                                let dom: JQuery = this.$("identifierLine");
+                                if (dom) {
+                                    dom.css("padding-top", "0rem");
+                                    dom.css("padding-bottom", "0rem");
+                                }
+                                dom = this.$("identifierLineContainer");
+                                if (dom) {
+                                    dom.css("padding-top", "0.5rem");
+                                    dom.css("padding-bottom", "0.5rem");
+                                }
+                                dom = this.$("actions");
+                                if (dom) {
+                                    dom.css("padding-top", "0rem");
+                                    dom.css("padding-bottom", "0rem");
+                                }
+                            };
+                        }
                     }
                     return this;
                 },
