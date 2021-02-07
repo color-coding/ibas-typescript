@@ -1017,7 +1017,7 @@ namespace ibas {
                 if (isNaN(scale)) {
                     scale = config.get(CONFIG_ITEM_DECIMAL_PLACES, 6);
                 }
-                if (Math.pow(0.1, 6) > value) {
+                if (Math.pow(0.1, 6) > Math.abs(value)) {
                     return 0;
                 }
                 let sign: number = Math.sign(value);
