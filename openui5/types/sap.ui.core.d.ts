@@ -175,7 +175,7 @@ declare namespace sap {
          */
         constructor(extensionObject?: any);
         /**
-         * <p>A map of QUnit-style assertions to be used in an opaTest. Contains all methods available on QUnit.assert for the running QUnit version. Available assertions are: ok, equal, propEqual, deepEqual, strictEqual and their negative counterparts.</p><p>For more information, see <a target="_self" class="jsdoclink" href="api/sap.ui.test.opaQunit">sap.ui.test.opaQunit</a>.</p>
+         * <p>A map of QUnit-style assertions to be used in an opaTest. Contains all methods available on QUnit.assert for the running QUnit version. Available assertions are: ok, equal, propEqual, deepEqual, strictEqual and their negative counterparts.</p><p>For more information, see <a target="_self" class="jsdoclink" href="api/module:sap/ui/test/opaQunit">module:sap/ui/test/opaQunit</a>.</p>
          */
         assert: any;
         /**
@@ -202,7 +202,7 @@ declare namespace sap {
          */
         iWaitForPromise(oPromise: any | Promise<any>): any;
         /**
-         * <p>Queues up a waitFor command for Opa. The Queue will not be emptied until <a target="_self" class="jsdoclink scrollToMethod" data-target="emptyQueue" href="api/sap.ui.test.Opa#methods/emptyQueue">sap.ui.test.Opa.emptyQueue</a> is called. If you are using <a target="_self" class="jsdoclink" href="api/sap.ui.test.opaQunit">sap.ui.test.opaQunit</a>, emptyQueue will be called by the wrapped tests.</p><p>If you are using Opa5, waitFor takes additional parameters. They can be found here: <a target="_self" class="jsdoclink" href="api/sap.ui.test.Opa5#methods/waitFor">sap.ui.test.Opa5#waitFor</a>. Waits for a check condition to return true, in which case a success function will be called. If the timeout is reached before the check returns true, an error function will be called.</p>
+         * <p>Queues up a waitFor command for Opa. The Queue will not be emptied until <a target="_self" class="jsdoclink scrollToMethod" data-target="emptyQueue" href="api/sap.ui.test.Opa#methods/emptyQueue">sap.ui.test.Opa.emptyQueue</a> is called. If you are using <a target="_self" class="jsdoclink" href="api/module:sap/ui/test/opaQunit">module:sap/ui/test/opaQunit</a>, emptyQueue will be called by the wrapped tests.</p><p>If you are using Opa5, waitFor takes additional parameters. They can be found here: <a target="_self" class="jsdoclink" href="api/sap.ui.test.Opa5#methods/waitFor">sap.ui.test.Opa5#waitFor</a>. Waits for a check condition to return true, in which case a success function will be called. If the timeout is reached before the check returns true, an error function will be called.</p>
          * @param {any} options <p>These contain check, success and error functions</p>
          * @returns any <p>an object extending a jQuery promise. The object is essentially a jQuery promise with an additional "and" method that can be used for chaining waitFor statements. The promise is resolved when the waitFor completes successfully. The promise is rejected with the options object, if an error occurs. In this case, options.errorMessage will contain a detailed error message containing the stack trace and Opa logs.</p>
          */
@@ -332,7 +332,7 @@ declare namespace sap {
          */
         static iTeardownMyAppFrame(): any;
         /**
-         * <p>Resets Opa.config to its default values. See <a target="_self" class="jsdoclink" href="api/sap.ui.test.Opa5#methods/waitFor">sap.ui.test.Opa5#waitFor</a> for the description Default values for OPA5 are: <ul> <li>viewNamespace: empty string</li> <li>arrangements: instance of OPA5</li> <li>actions: instance of OPA5</li> <li>assertions: instance of OPA5</li> <li>visible: true</li> <li>enabled: false</li> <li>timeout : 15 seconds, 0 for infinite timeout</li> <li>pollingInterval: 400 milliseconds</li> <li>debugTimeout: 0 seconds, infinite timeout by default. This will be used instead of timeout if running in debug mode.</li> <li>autoWait: false - since 1.42</li> <li>appParams: object with URI parameters for the tested app - since 1.48</li> </ul></p>
+         * <p>Resets Opa.config to its default values. See <a target="_self" class="jsdoclink" href="api/sap.ui.test.Opa5#methods/waitFor">sap.ui.test.Opa5#waitFor</a> for the description Default values for OPA5 are: <ul> <li>viewNamespace: empty string</li> <li>arrangements: instance of OPA5</li> <li>actions: instance of OPA5</li> <li>assertions: instance of OPA5</li> <li>visible: true</li> <li>enabled: false</li> <li>editable: false</li> <li>timeout : 15 seconds, 0 for infinite timeout</li> <li>pollingInterval: 400 milliseconds</li> <li>debugTimeout: 0 seconds, infinite timeout by default. This will be used instead of timeout if running in debug mode.</li> <li>autoWait: false - since 1.42</li> <li>appParams: object with URI parameters for the tested app - since 1.48</li> </ul></p>
          */
         static resetConfig(): void;
         /**
@@ -349,7 +349,7 @@ declare namespace sap {
               Opa5.assert.ok(true, "Should be true");
             }
           });
-        </pre></p><p>For more information, see <a target="_self" class="jsdoclink" href="api/sap.ui.test.opaQunit">sap.ui.test.opaQunit</a>.</p>
+        </pre></p><p>For more information, see <a target="_self" class="jsdoclink" href="api/module:sap/ui/test/opaQunit">module:sap/ui/test/opaQunit</a>.</p>
          */
         assert: any;
         /**
@@ -499,29 +499,30 @@ declare namespace sap {
          */
         description(sDescription: string): sap.ui.test.OpaBuilder;
         /**
-         * <p>Add an action to be performed on all matched controls. When providing an OpaBuilder, the action will execute it.</p>
-         * @param {sap.ui.test.actions.Action | Function | any[] | sap.ui.test.OpaBuilder} vActionsOrBuilder <p>the action(s) to be performed on matched controls</p>
+         * <p>Add an action to be performed on all matched controls.</p>
+         * @param {sap.ui.test.actions.Action | Function | any[]} vActions <p>the action(s) to be performed on matched controls</p>
          * @param {boolean} bReplace <p>true to replace all previous defined actions, false to add it (default)</p>
          * @returns sap.ui.test.OpaBuilder <p>this OpaBuilder instance</p>
          */
-        do(vActionsOrBuilder: sap.ui.test.actions.Action | Function | any[] | sap.ui.test.OpaBuilder, bReplace?: boolean): sap.ui.test.OpaBuilder;
+        do(vActions: sap.ui.test.actions.Action | Function | any[], bReplace?: boolean): sap.ui.test.OpaBuilder;
         /**
          * <p>Add an action that is only performed if target control fulfills the conditions. It is internally using <a target="_self" class="jsdoclink" href="api/sap.ui.test.OpaBuilder.Actions#methods/sap.ui.test.OpaBuilder.Actions.conditional">sap.ui.test.OpaBuilder.Actions.conditional</a>.</p>
-         * @param {sap.ui.test.matchers.Matcher | Function | any[] | any} vConditions <p>target control is checked against these given conditions</p>
-         * @param {sap.ui.test.actions.Action | Function | any[] | sap.ui.test.OpaBuilder} vSuccessBuilderOrOptions <p>the actions to be performed when conditions are fulfilled</p>
-         * @param {sap.ui.test.actions.Action | Function | any[] | sap.ui.test.OpaBuilder} vElseBuilderOptions <p>the action(s) to be performed when conditions are not fulfilled</p>
+         * @param {sap.ui.test.matchers.Matcher | Function | any[] | any | boolean} vConditions <p>target control is checked against these given conditions</p>
+         * @param {sap.ui.test.actions.Action | Function | any[]} vSuccessActions <p>the actions to be performed when conditions are fulfilled</p>
+         * @param {sap.ui.test.actions.Action | Function | any[]} vElseActions <p>the action(s) to be performed when conditions are not fulfilled</p>
          * @returns sap.ui.test.OpaBuilder <p>this OpaBuilder instance</p>
          */
-        doConditional(vConditions: sap.ui.test.matchers.Matcher | Function | any[] | any, vSuccessBuilderOrOptions: sap.ui.test.actions.Action | Function | any[] | sap.ui.test.OpaBuilder, vElseBuilderOptions?: sap.ui.test.actions.Action | Function | any[] | sap.ui.test.OpaBuilder): sap.ui.test.OpaBuilder;
+        doConditional(vConditions: sap.ui.test.matchers.Matcher | Function | any[] | any | boolean, vSuccessActions: sap.ui.test.actions.Action | Function | any[], vElseActions?: sap.ui.test.actions.Action | Function | any[]): sap.ui.test.OpaBuilder;
         /**
          * <p>Performs a <a target="_self" class="jsdoclink" href="api/sap.ui.test.actions.EnterText">sap.ui.test.actions.EnterText</a> on target control(s).</p>
-         * @param {string} sText <p>the text to be entered</p>
-         * @param {boolean} bClearFirst <p>true to clear already existing text, false to keep it (default)</p>
-         * @param {boolean} bKeepFocus <p>true to keep focus on target control, false to focus out (default)</p>
-         * @param {string} sIdSuffix <p>the id suffix of the DOM Element the action will be executed on</p>
+         * @param {string} sText <p>defines the <a target="_self" class="jsdoclink" href="api/sap.ui.test.actions.EnterText#methods/setText">sap.ui.test.actions.EnterText#setText</a> setting</p>
+         * @param {boolean} bClearTextFirst <p>defines the <a target="_self" class="jsdoclink" href="api/sap.ui.test.actions.EnterText#methods/setClearTextFirst">sap.ui.test.actions.EnterText#setClearTextFirst</a> setting</p>
+         * @param {boolean} bKeepFocus <p>defines the <a target="_self" class="jsdoclink" href="api/sap.ui.test.actions.EnterText#methods/setKeepFocus">sap.ui.test.actions.EnterText#setKeepFocus</a> setting</p>
+         * @param {boolean} bPressEnterKey <p>defines the <a target="_self" class="jsdoclink" href="api/sap.ui.test.actions.EnterText#methods/setPressEnterKey">sap.ui.test.actions.EnterText#setPressEnterKey</a> setting</p>
+         * @param {string} sIdSuffix <p>defines the <a target="_self" class="jsdoclink" href="api/sap.ui.test.actions.Action#methods/setIdSuffix">sap.ui.test.actions.Action#setIdSuffix</a> setting</p>
          * @returns sap.ui.test.OpaBuilder <p>this OpaBuilder instance</p>
          */
-        doEnterText(sText: string, bClearFirst?: boolean, bKeepFocus?: boolean, sIdSuffix?: string): sap.ui.test.OpaBuilder;
+        doEnterText(sText: string, bClearTextFirst?: boolean, bKeepFocus?: boolean, bPressEnterKey?: boolean, sIdSuffix?: string): sap.ui.test.OpaBuilder;
         /**
          * <p>Performs given actions on all items of an aggregation fulfilling the matchers.</p>
          * @param {string} sAggregationName <p>the aggregation name</p>
@@ -532,11 +533,12 @@ declare namespace sap {
         doOnAggregation(sAggregationName: string, vMatchers: sap.ui.test.matchers.Matcher | Function | any[] | any, vActions: sap.ui.test.actions.Action | Function | any[]): sap.ui.test.OpaBuilder;
         /**
          * <p>Executes a builder with matching controls being descendants of matching target control(s). Children are any controls in the control tree beneath this target control(s).</p>
-         * @param {any | sap.ui.test.OpaBuilder} vChildBuilder <p>the child builder or options</p>
+         * @param {sap.ui.test.matchers.Matcher | Function | any[] | any | sap.ui.test.OpaBuilder} vChildBuilderOrMatcher <p>the child builder or child matcher</p>
+         * @param {sap.ui.test.actions.Action | Function | any[]} vActions <p>the actions to be performed on matching child items</p>
          * @param {boolean} bDirect <p>specifies if the ancestor should be a direct ancestor (parent)</p>
          * @returns sap.ui.test.OpaBuilder <p>this OpaBuilder instance</p>
          */
-        doOnChildren(vChildBuilder: any | sap.ui.test.OpaBuilder, bDirect?: boolean): sap.ui.test.OpaBuilder;
+        doOnChildren(vChildBuilderOrMatcher?: sap.ui.test.matchers.Matcher | Function | any[] | any | sap.ui.test.OpaBuilder, vActions?: sap.ui.test.actions.Action | Function | any[], bDirect?: boolean): sap.ui.test.OpaBuilder;
         /**
          * <p>Executes a <a target="_self" class="jsdoclink" href="api/sap.ui.test.actions.Press">sap.ui.test.actions.Press</a> action on target control(s).</p>
          * @param {string} sIdSuffix <p>the id suffix of the DOM Element the press action will be executed on</p>
@@ -553,15 +555,20 @@ declare namespace sap {
         /**
          * <p>Executes the definition on the given or previously defined Opa5 instance.</p>
          * @param {sap.ui.test.Opa5} oOpaInstance <p>the Opa5 instance to call <a target="_self" class="jsdoclink" href="api/sap.ui.test.Opa5#methods/waitFor">sap.ui.test.Opa5#waitFor</a> on</p>
-         * @returns sap.ui.test.OpaBuilder <p>this OpaBuilder instance</p>
+         * @returns any <p>an object extending a jQuery promise, corresponding to the result of <a target="_self" class="jsdoclink" href="api/sap.ui.test.Opa5#methods/waitFor">sap.ui.test.Opa5#waitFor</a></p>
          */
-        execute(oOpaInstance?: sap.ui.test.Opa5): sap.ui.test.OpaBuilder;
+        execute(oOpaInstance?: sap.ui.test.Opa5): any;
         /**
          * <p>Sets the <code>fragmentId</code> parameter.</p>
          * @param {string} sFragmentId <p>the fragment id</p>
          * @returns sap.ui.test.OpaBuilder <p>this OpaBuilder instance</p>
          */
         fragmentId(sFragmentId: string): sap.ui.test.OpaBuilder;
+        /**
+         * <p>Get the Opa5 instance that will be used for <a target="_self" class="jsdoclink" href="api/sap.ui.test.OpaBuilder#methods/execute">sap.ui.test.OpaBuilder#execute</a>. If no {sap.ui.test.Opa5} instance was set before, this function creates a new one lazily.</p>
+         * @returns sap.ui.test.Opa5 <p>the Opa5 instance</p>
+         */
+        getOpaInstance(): sap.ui.test.Opa5;
         /**
          * <p>Defines additional matchers for the target control(s).</p>
          * @param {sap.ui.test.matchers.Matcher | Function | any[] | any} vMatchers <p>additional matchers to filter target control(s)</p>
@@ -591,13 +598,20 @@ declare namespace sap {
          */
         hasAggregationProperties(sAggregationName: string, oProperties: any): sap.ui.test.OpaBuilder;
         /**
+         * <p>Adds a matcher that checks whether at least one child fulfilling given matcher(s).</p>
+         * @param {sap.ui.test.matchers.Matcher | Function | any[] | any | sap.ui.test.OpaBuilder} vBuilderOrMatcher <p>the matchers to filter child items</p>
+         * @param {boolean} bDirect <p>specifies if the ancestor should be a direct ancestor (parent)</p>
+         * @returns sap.ui.test.OpaBuilder <p>this OpaBuilder instance</p>
+         */
+        hasChildren(vBuilderOrMatcher?: sap.ui.test.matchers.Matcher | Function | any[] | any | sap.ui.test.OpaBuilder, bDirect?: boolean): sap.ui.test.OpaBuilder;
+        /**
          * <p>Adds a matcher that checks states for given conditions. It is internally using <a target="_self" class="jsdoclink" href="api/OpaBuilder.Matchers.conditional">OpaBuilder.Matchers.conditional</a>.</p>
-         * @param {sap.ui.test.matchers.Matcher | Function | any[] | any} vConditions <p>conditions to pre-check</p>
+         * @param {sap.ui.test.matchers.Matcher | Function | any[] | any | boolean} vConditions <p>conditions to pre-check</p>
          * @param {sap.ui.test.matchers.Matcher | Function | any[] | any} vSuccessMatcher <p>actual matcher that is executed if conditions are met</p>
          * @param {sap.ui.test.matchers.Matcher | Function | any[] | any} vElseMatcher <p>actual matcher that is executed if conditions are not met</p>
          * @returns sap.ui.test.OpaBuilder <p>this OpaBuilder instance</p>
          */
-        hasConditional(vConditions: sap.ui.test.matchers.Matcher | Function | any[] | any, vSuccessMatcher: sap.ui.test.matchers.Matcher | Function | any[] | any, vElseMatcher?: sap.ui.test.matchers.Matcher | Function | any[] | any): sap.ui.test.OpaBuilder;
+        hasConditional(vConditions: sap.ui.test.matchers.Matcher | Function | any[] | any | boolean, vSuccessMatcher: sap.ui.test.matchers.Matcher | Function | any[] | any, vElseMatcher?: sap.ui.test.matchers.Matcher | Function | any[] | any): sap.ui.test.OpaBuilder;
         /**
          * <p>Adds a matcher for given properties.</p>
          * @param {string} sPropertyName <p>the name of the property to check for i18n text</p>
@@ -667,12 +681,17 @@ declare namespace sap {
          */
         pollingInterval(iPollingInterval: number): sap.ui.test.OpaBuilder;
         /**
-         * <p>Adds a success message or function.</p>
-         * @param {string | Function} vSuccessMessage <p>the message that will be shown (or function executed) on success</p>
+         * <p>Set the Opa5 instance to be used for <a target="_self" class="jsdoclink" href="api/sap.ui.test.OpaBuilder#methods/execute">sap.ui.test.OpaBuilder#execute</a>. Please note that this function does not return the OpaBuilder instance and can therefore not be chained. Use the <code>oOpaInstance</code> argument of <a target="_self" class="jsdoclink" href="api/sap.ui.test.OpaBuilder#methods/create">sap.ui.test.OpaBuilder#create</a>, <a target="_self" class="jsdoclink" href="api/sap.ui.test.OpaBuilder#constructor">sap.ui.test.OpaBuilder#constructor</a> or <a target="_self" class="jsdoclink" href="api/sap.ui.test.OpaBuilder#methods/execute">sap.ui.test.OpaBuilder#execute</a> to provide the Opa5 instance within the builder chain.</p>
+         * @param {sap.ui.test.Opa5} oOpaInstance <p>the Opa5 instance to operate on</p>
+         */
+        setOpaInstance(oOpaInstance?: sap.ui.test.Opa5): void;
+        /**
+         * <p>Adds a success message or function. When providing an OpaBuilder, the action will execute it.</p>
+         * @param {string | Function | sap.ui.test.OpaBuilder} vSuccess <p>the message that will be shown (or function executed) on success</p>
          * @param {boolean} bReplace <p>true to replace all previous defined success functions, false to add it (default)</p>
          * @returns sap.ui.test.OpaBuilder <p>this OpaBuilder instance</p>
          */
-        success(vSuccessMessage: string | Function, bReplace?: boolean): sap.ui.test.OpaBuilder;
+        success(vSuccess: string | Function | sap.ui.test.OpaBuilder, bReplace?: boolean): sap.ui.test.OpaBuilder;
         /**
          * <p>Sets the <code>timeout</code> parameter.</p>
          * @param {number} iTimeout <p>the timeout in seconds</p>
@@ -705,21 +724,28 @@ declare namespace sap {
         namespace Actions {
           /**
            * <p>Creates an action that is only performed if target control fulfills the conditions.</p>
-           * @param {sap.ui.test.matchers.Matcher | Function | any[] | any} vConditions <p>target control is checked against these given conditions</p>
+           * @param {sap.ui.test.matchers.Matcher | Function | any[] | any | boolean} vConditions <p>target control is checked against these given conditions</p>
            * @param {sap.ui.test.actions.Action | Function | any[] | sap.ui.test.OpaBuilder} vSuccessBuilderOrOptions <p>the actions to be performed when conditions are fulfilled</p>
            * @param {sap.ui.test.actions.Action | Function | any[] | sap.ui.test.OpaBuilder} vElseBuilderOptions <p>the action(s) to be performed when conditions are not fulfilled</p>
            * @returns Function <p>an action function</p>
            */
-          function conditional(vConditions: sap.ui.test.matchers.Matcher | Function | any[] | any, vSuccessBuilderOrOptions: sap.ui.test.actions.Action | Function | any[] | sap.ui.test.OpaBuilder, vElseBuilderOptions?: sap.ui.test.actions.Action | Function | any[] | sap.ui.test.OpaBuilder): Function;
+          function conditional(vConditions: sap.ui.test.matchers.Matcher | Function | any[] | any | boolean, vSuccessBuilderOrOptions: sap.ui.test.actions.Action | Function | any[] | sap.ui.test.OpaBuilder, vElseBuilderOptions?: sap.ui.test.actions.Action | Function | any[] | sap.ui.test.OpaBuilder): Function;
           /**
            * <p>Creates a <a target="_self" class="jsdoclink" href="api/sap.ui.test.actions.EnterText">sap.ui.test.actions.EnterText</a> action.</p>
-           * @param {string} sText <p>defines the <a target="_self" class="jsdoclink" href="api/sap.ui.test.actions.EnterText#methods/text">sap.ui.test.actions.EnterText#text</a> setting</p>
-           * @param {boolean} bClearTextFirst <p>defines the <a target="_self" class="jsdoclink" href="api/sap.ui.test.actions.EnterText#methods/clearTextFirst">sap.ui.test.actions.EnterText#clearTextFirst</a> setting</p>
-           * @param {boolean} bKeepFocus <p>defines the <a target="_self" class="jsdoclink" href="api/sap.ui.test.actions.EnterText#methods/keepFocus">sap.ui.test.actions.EnterText#keepFocus</a> setting</p>
-           * @param {string} sIdSuffix <p>the id suffix of the DOM Element the action will be executed on</p>
+           * @param {string} sText <p>defines the <a target="_self" class="jsdoclink" href="api/sap.ui.test.actions.EnterText#methods/setText">sap.ui.test.actions.EnterText#setText</a> setting</p>
+           * @param {boolean} bClearTextFirst <p>defines the <a target="_self" class="jsdoclink" href="api/sap.ui.test.actions.EnterText#methods/setClearTextFirst">sap.ui.test.actions.EnterText#setClearTextFirst</a> setting</p>
+           * @param {boolean} bKeepFocus <p>defines the <a target="_self" class="jsdoclink" href="api/sap.ui.test.actions.EnterText#methods/setKeepFocus">sap.ui.test.actions.EnterText#setKeepFocus</a> setting</p>
+           * @param {boolean} bPressEnterKey <p>defines the <a target="_self" class="jsdoclink" href="api/sap.ui.test.actions.EnterText#methods/setPressEnterKey">sap.ui.test.actions.EnterText#setPressEnterKey</a> setting</p>
+           * @param {string} sIdSuffix <p>defines the <a target="_self" class="jsdoclink" href="api/sap.ui.test.actions.Action#methods/setIdSuffix">sap.ui.test.actions.Action#setIdSuffix</a> setting</p>
            * @returns sap.ui.test.actions.EnterText <p>an instance of the <a target="_self" class="jsdoclink" href="api/sap.ui.test.actions.EnterText">sap.ui.test.actions.EnterText</a> action</p>
            */
-          function enterText(sText: string, bClearTextFirst?: boolean, bKeepFocus?: boolean, sIdSuffix?: string): sap.ui.test.actions.EnterText;
+          function enterText(sText: string, bClearTextFirst?: boolean, bKeepFocus?: boolean, bPressEnterKey?: boolean, sIdSuffix?: string): sap.ui.test.actions.EnterText;
+          /**
+           * <p>Creates an action function that executes all given actions on a single or an array of controls. This method can be used as a helper for handling the different kinds of action definitions and inputs.</p>
+           * @param {sap.ui.test.actions.Action | Function | any[]} vActions <p>the actions to be executed</p>
+           * @returns Function <p>an action function</p>
+           */
+          function executor(vActions: sap.ui.test.actions.Action | Function | any[]): Function;
           /**
            * <p>Creates a <a target="_self" class="jsdoclink" href="api/sap.ui.test.actions.Press">sap.ui.test.actions.Press</a> action.</p>
            * @param {string} sIdSuffix <p>the id suffix of the DOM Element the press action will be executed on</p>
@@ -739,6 +765,13 @@ declare namespace sap {
            * <p>A matcher function that always returns <code>true</code>.</p><p><code> <pre>var fnTruthyMatcher = OpaBuilder.Matchers.TRUE;</pre> </code></p>
            */
           var TRUE: Function;
+          /**
+           * <p>Creates a matcher function that returns all aggregation items fulfilling given matcher(s). The result will always be an array, even if it is a non-multiple aggregation.</p>
+           * @param {string} sAggregationName <p>the aggregation name</p>
+           * @param {sap.ui.test.matchers.Matcher | Function | any[] | any} vMatchers <p>the matchers to filter aggregation items</p>
+           * @returns Function <p>matcher function returning all matching aggregation items</p>
+           */
+          function aggregation(sAggregationName: string, vMatchers?: sap.ui.test.matchers.Matcher | Function | any[] | any): Function;
           /**
            * <p>Creates a matcher function that returns an aggregation element of a control at a given index.</p>
            * @param {string} sAggregationName <p>the name of the aggregation that is used for matching</p>
@@ -775,20 +808,34 @@ declare namespace sap {
            */
           function bindingPath(sModelPropertyPath: string, sPropertyPath: string): any;
           /**
-           * <p>Creates a matcher that checks whether the bound context has the given properties.</p>
+           * <p>Creates a matcher that checks whether the bound context or model has the given properties.</p>
            * @param {string} sModelName <p>the name of the model to get the binding context for</p>
            * @param {any} oProperties <p>the property-path map with expected values</p>
            * @returns Function <p>the matcher function checks all path in the properties object against the binding context</p>
            */
           function bindingProperties(sModelName: string, oProperties: any): Function;
           /**
+           * <p>Creates a matcher function that returns all children fulfilling given matcher(s). The result will always be an array, even if only one child was found.</p>
+           * @param {sap.ui.test.matchers.Matcher | Function | any[] | any | sap.ui.test.OpaBuilder} vBuilderOrMatcher <p>the matchers to filter child items</p>
+           * @param {boolean} bDirect <p>specifies if the ancestor should be a direct ancestor (parent)</p>
+           * @returns Function <p>matcher function returning all matching children</p>
+           */
+          function children(vBuilderOrMatcher?: sap.ui.test.matchers.Matcher | Function | any[] | any | sap.ui.test.OpaBuilder, bDirect?: boolean): Function;
+          /**
+           * <p>Creates a matcher function that checks whether one children fulfilling given matcher(s).</p>
+           * @param {sap.ui.test.matchers.Matcher | Function | any[] | any | sap.ui.test.OpaBuilder} vBuilderOrMatcher <p>the matchers to filter child items</p>
+           * @param {boolean} bDirect <p>specifies if the ancestor should be a direct ancestor (parent)</p>
+           * @returns Function <p>matcher function</p>
+           */
+          function childrenMatcher(vBuilderOrMatcher?: sap.ui.test.matchers.Matcher | Function | any[] | any | sap.ui.test.OpaBuilder, bDirect?: boolean): Function;
+          /**
            * <p>Creates a matcher that checks states for given conditions.</p>
-           * @param {sap.ui.test.matchers.Matcher | Function | any[] | any} vConditions <p>conditions to pre-check</p>
+           * @param {sap.ui.test.matchers.Matcher | Function | any[] | any | boolean} vConditions <p>conditions to pre-check</p>
            * @param {sap.ui.test.matchers.Matcher | Function | any[] | any} vSuccessMatcher <p>actual matcher that is executed if conditions are met</p>
            * @param {sap.ui.test.matchers.Matcher | Function | any[] | any} vElseMatcher <p>actual matcher that is executed if conditions are not met</p>
            * @returns Function <p>a matcher function</p>
            */
-          function conditional(vConditions: sap.ui.test.matchers.Matcher | Function | any[] | any, vSuccessMatcher: sap.ui.test.matchers.Matcher | Function | any[] | any, vElseMatcher?: sap.ui.test.matchers.Matcher | Function | any[] | any): Function;
+          function conditional(vConditions: sap.ui.test.matchers.Matcher | Function | any[] | any | boolean, vSuccessMatcher: sap.ui.test.matchers.Matcher | Function | any[] | any, vElseMatcher?: sap.ui.test.matchers.Matcher | Function | any[] | any): Function;
           /**
            * <p>Creates a matcher that checks whether a control has all given custom data.</p>
            * @param {any} oCustomData <p>the map of custom data keys and their values to check against</p>
@@ -837,6 +884,17 @@ declare namespace sap {
            * @returns Function <p>the matcher function returns the result of the matcher chain</p>
            */
           function match(vMatchers?: sap.ui.test.matchers.Matcher | Function | any[] | any): Function;
+          /**
+           * <p>Creates a matcher function which is negating the result of provided matchers. The matcher function returns a boolean value but never a control.</p><p>Example usage for only matching controls without a certain text: <code> <pre>new OpaBuilder().hasType("sap.m.Text").has(
+                       OpaBuilder.Matchers.not(
+                           OpaBuilder.Matchers.properties({ text: "Ignore controls with this text"})
+                      )
+                  );
+              </pre> </code></p>
+           * @param {sap.ui.test.matchers.Matcher | Function | any[] | any} vMatchers <p>the matchers that will actually be executed</p>
+           * @returns Function <p>the matcher function returns the negated result of the matcher chain</p>
+           */
+          function not(vMatchers?: sap.ui.test.matchers.Matcher | Function | any[] | any): Function;
           /**
            * <p>Creates a <a target="_self" class="jsdoclink" href="api/sap.ui.test.matchers.Properties">sap.ui.test.matchers.Properties</a> matcher.</p>
            * @param {any} oProperties <p>the object with the properties to be checked</p>
@@ -903,7 +961,7 @@ declare namespace sap {
          */
         getControlInView(oOptions: any): sap.ui.core.Element | sap.ui.core.Element[] | null;
         /**
-         * <p>Find a control matching the provided options autowait and Interactable matcher will be enforced if neccessary</p>
+         * <p>Find a control matching the provided options</p>
          * @param {any} oOptions <p>a map of options used to describe the control you are looking for.</p>
          * @returns sap.ui.core.Element|sap.ui.core.Element[]|null <p><ul> <li>if a oOptions.id is a string, will return the single matching control or null if no controls match</li> <li>otherwise, will return an array of matching controls, or an empty array, if no controls match</li> </ul></p>
          */
@@ -1084,6 +1142,56 @@ declare namespace sap {
           setIdSuffix(sIdSuffix: string): sap.ui.test.actions.Action;
         }
         /**
+         * <p>The <code>Drag</code> action is used to simulate a drag interaction with a control. The control should be draggable, as defined by its dnd aggregation configuration. The drop location will be defined by a consequtive <a target="_self" class="jsdoclink" href="api/sap.ui.test.actions.Drop">sap.ui.test.actions.Drop</a> action.</p><p>The <code>Drag</code> action targets the DOM focus reference of the control.</p><p>The <code>Drag</code> action is not supported in IE11!</p>
+         */
+        export class Drag extends sap.ui.test.actions.Action {
+          /**
+           */
+          constructor();
+        }
+        /**
+         * <p>The <code>Drop</code> action is used to simulate drop on a control. The control should be droppable, as defined by its dnd aggregation configuration. The dropped control should be defined in a preceding <a target="_self" class="jsdoclink" href="api/sap.ui.test.actions.Drag">sap.ui.test.actions.Drag</a> action.</p><p>The <code>Drop</code> action targets a special DOM element representing the control. This DOM element can be customized.</p><p>For most most controls, the target will be the DOM focus reference. You can choose a different DOM element by specifying its ID suffix. You can do this by directly passing the ID suffix to the Drop constructor, or by defining a control adapter function. You can also set the traget to be the root DOM element of a given aggregation, by specifying the aggregation name in the Drop constructor.</p><p>* The <code>Drop</code> action is not supported in IE11!</p>
+         */
+        export class Drop extends sap.ui.test.actions.Action {
+          /**
+           * <p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+           */
+          constructor();
+          /**
+           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getAfter" href="api/sap.ui.test.actions.Drop#methods/getAfter">after</a>.</p><p>Set `after` to true, to drop the source immediately before the target element.</p>
+           * @returns boolean <p>Value of property <code>after</code></p>
+           */
+          getAfter(): boolean;
+          /**
+           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getAggregationName" href="api/sap.ui.test.actions.Drop#methods/getAggregationName">aggregationName</a>.</p><p>name of the droppable aggregation, whose root to use as drop target. This makes sense only for some controls, where this root DOM element is droppable.</p>
+           * @returns string <p>Value of property <code>aggregationName</code></p>
+           */
+          getAggregationName(): string;
+          /**
+           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getBefore" href="api/sap.ui.test.actions.Drop#methods/getBefore">before</a>.</p><p>specify a position for the drop event, relative to the position of the control's representative DOM element. This makes sense only for the case when dropping right on top of the DOM element makes no sense, and instead, the drop should happen right before or after the element. e.g. sap.m.IconTabBar. Default position is "center", meaning the drop will be directly on the element. Set `before` to true, to drop the source immediately before the target element.</p>
+           * @returns boolean <p>Value of property <code>before</code></p>
+           */
+          getBefore(): boolean;
+          /**
+           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getAfter" href="api/sap.ui.test.actions.Drop#methods/getAfter">after</a>.</p><p>Set `after` to true, to drop the source immediately before the target element.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+           * @param {boolean} bAfter <p>New value for property <code>after</code></p>
+           * @returns sap.ui.test.actions.Drop <p>Reference to <code>this</code> in order to allow method chaining</p>
+           */
+          setAfter(bAfter: boolean): sap.ui.test.actions.Drop;
+          /**
+           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getAggregationName" href="api/sap.ui.test.actions.Drop#methods/getAggregationName">aggregationName</a>.</p><p>name of the droppable aggregation, whose root to use as drop target. This makes sense only for some controls, where this root DOM element is droppable.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+           * @param {string} sAggregationName <p>New value for property <code>aggregationName</code></p>
+           * @returns sap.ui.test.actions.Drop <p>Reference to <code>this</code> in order to allow method chaining</p>
+           */
+          setAggregationName(sAggregationName: string): sap.ui.test.actions.Drop;
+          /**
+           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getBefore" href="api/sap.ui.test.actions.Drop#methods/getBefore">before</a>.</p><p>specify a position for the drop event, relative to the position of the control's representative DOM element. This makes sense only for the case when dropping right on top of the DOM element makes no sense, and instead, the drop should happen right before or after the element. e.g. sap.m.IconTabBar. Default position is "center", meaning the drop will be directly on the element. Set `before` to true, to drop the source immediately before the target element.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+           * @param {boolean} bBefore <p>New value for property <code>before</code></p>
+           * @returns sap.ui.test.actions.Drop <p>Reference to <code>this</code> in order to allow method chaining</p>
+           */
+          setBefore(bBefore: boolean): sap.ui.test.actions.Drop;
+        }
+        /**
          * <p>The <code>EnterText</code> action is used to simulate a user entering texts to inputs. <code>EnterText</code> will be executed on a control's focus dom ref. Supported controls are (for other controls this action still might work): <ul> <li><code>sap.m.Input</code></li> <li><code>sap.m.SearchField</code></li> <li><code>sap.m.TextArea</code></li> </ul></p>
          */
         export class EnterText extends sap.ui.test.actions.Action {
@@ -1102,6 +1210,11 @@ declare namespace sap {
            */
           getKeepFocus(): boolean;
           /**
+           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getPressEnterKey" href="api/sap.ui.test.actions.EnterText#methods/getPressEnterKey">pressEnterKey</a>.</p><p>Default value is <code>false</code>.</p>
+           * @returns boolean <p>Value of property <code>pressEnterKey</code></p>
+           */
+          getPressEnterKey(): boolean;
+          /**
            * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getText" href="api/sap.ui.test.actions.EnterText#methods/getText">text</a>.</p><p>The Text that is going to be typed to the control. If you are entering an empty string, the value will be cleared.</p>
            * @returns string <p>Value of property <code>text</code></p>
            */
@@ -1111,13 +1224,19 @@ declare namespace sap {
            * @param {boolean} bClearTextFirst <p>New value for property <code>clearTextFirst</code></p>
            * @returns sap.ui.test.actions.EnterText <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          setClearTextFirst(bClearTextFirst: boolean): sap.ui.test.actions.EnterText;
+          setClearTextFirst(bClearTextFirst?: boolean): sap.ui.test.actions.EnterText;
           /**
            * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getKeepFocus" href="api/sap.ui.test.actions.EnterText#methods/getKeepFocus">keepFocus</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
            * @param {boolean} bKeepFocus <p>New value for property <code>keepFocus</code></p>
            * @returns sap.ui.test.actions.EnterText <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          setKeepFocus(bKeepFocus: boolean): sap.ui.test.actions.EnterText;
+          setKeepFocus(bKeepFocus?: boolean): sap.ui.test.actions.EnterText;
+          /**
+           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getPressEnterKey" href="api/sap.ui.test.actions.EnterText#methods/getPressEnterKey">pressEnterKey</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+           * @param {boolean} bPressEnterKey <p>New value for property <code>pressEnterKey</code></p>
+           * @returns sap.ui.test.actions.EnterText <p>Reference to <code>this</code> in order to allow method chaining</p>
+           */
+          setPressEnterKey(bPressEnterKey?: boolean): sap.ui.test.actions.EnterText;
           /**
            * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getText" href="api/sap.ui.test.actions.EnterText#methods/getText">text</a>.</p><p>The Text that is going to be typed to the control. If you are entering an empty string, the value will be cleared.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
            * @param {string} sText <p>New value for property <code>text</code></p>
@@ -1426,6 +1545,16 @@ declare namespace sap {
                 propertyPath: "string"
             }
         }
+        </code></pre> As of version 1.81, you can use regular expressions in declarative syntax: <code><pre>{
+            bindingPath: {
+                path: {
+                    regex: {
+                        source: "binding.*PathValue$",
+                        flags: "ig"
+                    }
+                }
+            }
+        }
         </code></pre></p>
          */
         export class BindingPath extends sap.ui.test.matchers.Matcher {
@@ -1440,15 +1569,15 @@ declare namespace sap {
            */
           getModelName(): string;
           /**
-           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getPath" href="api/sap.ui.test.matchers.BindingPath#methods/getPath">path</a>.</p><p>The value of the binding context path that is used for matching.</p>
-           * @returns string <p>Value of property <code>path</code></p>
+           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getPath" href="api/sap.ui.test.matchers.BindingPath#methods/getPath">path</a>.</p><p>The value of the binding context path that is used for matching. As of version 1.81, it can also be a regular expression.</p>
+           * @returns any <p>Value of property <code>path</code></p>
            */
-          getPath(): string;
+          getPath(): any;
           /**
-           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getPropertyPath" href="api/sap.ui.test.matchers.BindingPath#methods/getPropertyPath">propertyPath</a>.</p><p>The value of the binding property path that is used for matching. If (context) path is also set, propertyPath will be assumed to be relative to the binding context path</p>
-           * @returns string <p>Value of property <code>propertyPath</code></p>
+           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getPropertyPath" href="api/sap.ui.test.matchers.BindingPath#methods/getPropertyPath">propertyPath</a>.</p><p>The value of the binding property path that is used for matching. If (context) path is also set, propertyPath will be assumed to be relative to the binding context path As of version 1.81, it can also be a regular expression.</p>
+           * @returns any <p>Value of property <code>propertyPath</code></p>
            */
-          getPropertyPath(): string;
+          getPropertyPath(): any;
           /**
            * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getModelName" href="api/sap.ui.test.matchers.BindingPath#methods/getModelName">modelName</a>.</p><p>The name of the binding model that is used for matching.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
            * @param {string} sModelName <p>New value for property <code>modelName</code></p>
@@ -1456,17 +1585,17 @@ declare namespace sap {
            */
           setModelName(sModelName: string): sap.ui.test.matchers.BindingPath;
           /**
-           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getPath" href="api/sap.ui.test.matchers.BindingPath#methods/getPath">path</a>.</p><p>The value of the binding context path that is used for matching.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
-           * @param {string} sPath <p>New value for property <code>path</code></p>
+           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getPath" href="api/sap.ui.test.matchers.BindingPath#methods/getPath">path</a>.</p><p>The value of the binding context path that is used for matching. As of version 1.81, it can also be a regular expression.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+           * @param {any} oPath <p>New value for property <code>path</code></p>
            * @returns sap.ui.test.matchers.BindingPath <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          setPath(sPath: string): sap.ui.test.matchers.BindingPath;
+          setPath(oPath: any): sap.ui.test.matchers.BindingPath;
           /**
-           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getPropertyPath" href="api/sap.ui.test.matchers.BindingPath#methods/getPropertyPath">propertyPath</a>.</p><p>The value of the binding property path that is used for matching. If (context) path is also set, propertyPath will be assumed to be relative to the binding context path</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
-           * @param {string} sPropertyPath <p>New value for property <code>propertyPath</code></p>
+           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getPropertyPath" href="api/sap.ui.test.matchers.BindingPath#methods/getPropertyPath">propertyPath</a>.</p><p>The value of the binding property path that is used for matching. If (context) path is also set, propertyPath will be assumed to be relative to the binding context path As of version 1.81, it can also be a regular expression.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+           * @param {any} oPropertyPath <p>New value for property <code>propertyPath</code></p>
            * @returns sap.ui.test.matchers.BindingPath <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          setPropertyPath(sPropertyPath: string): sap.ui.test.matchers.BindingPath;
+          setPropertyPath(oPropertyPath: any): sap.ui.test.matchers.BindingPath;
         }
         /**
          * <p>Checks if a control has a given descendant.</p><p>As of version 1.72, it is available as a declarative matcher with the following syntax: <code><pre>{
@@ -1499,17 +1628,17 @@ declare namespace sap {
            */
           constructor(mSettings?: any);
           /**
-           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getKey" href="api/sap.ui.test.matchers.I18NText#methods/getKey">key</a>.</p><p>The key of the I18N text in the containing <a target="_self" class="jsdoclink" href="api/jQuery.sap.util.ResourceBundle">jQuery.sap.util.ResourceBundle</a>.</p>
+           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getKey" href="api/sap.ui.test.matchers.I18NText#methods/getKey">key</a>.</p><p>The key of the I18N text in the containing <a target="_self" class="jsdoclink" href="api/module:sap/base/i18n/ResourceBundle">module:sap/base/i18n/ResourceBundle</a>.</p>
            * @returns string <p>Value of property <code>key</code></p>
            */
           getKey(): string;
           /**
-           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getModelName" href="api/sap.ui.test.matchers.I18NText#methods/getModelName">modelName</a>.</p><p>The name of the <a target="_self" class="jsdoclink" href="api/sap.ui.model.resource.ResourceModel">sap.ui.model.resource.ResourceModel</a> assigned to the control.</p><p>Default value is <code>i18n</code>.</p>
+           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getModelName" href="api/sap.ui.test.matchers.I18NText#methods/getModelName">modelName</a>.</p><p>The name of the <a target="_self" class="jsdoclink" href="api/sap.ui.model.resource.ResourceModel">sap.ui.model.resource.ResourceModel</a> assigned to the control.</p><p>Default value is <code>"i18n"</code>.</p>
            * @returns string <p>Value of property <code>modelName</code></p>
            */
           getModelName(): string;
           /**
-           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getParameters" href="api/sap.ui.test.matchers.I18NText#methods/getParameters">parameters</a>.</p><p>The parameters for replacing the placeholders of the I18N text. See <a target="_self" class="jsdoclink" href="api/jQuery.sap.util.ResourceBundle#methods/getText">jQuery.sap.util.ResourceBundle#getText</a>.</p>
+           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getParameters" href="api/sap.ui.test.matchers.I18NText#methods/getParameters">parameters</a>.</p><p>The parameters for replacing the placeholders of the I18N text. See <a target="_self" class="jsdoclink" href="api/module:sap/base/i18n/ResourceBundle#methods/getText">module:sap/base/i18n/ResourceBundle#getText</a>.</p>
            * @returns any <p>Value of property <code>parameters</code></p>
            */
           getParameters(): any;
@@ -1519,19 +1648,19 @@ declare namespace sap {
            */
           getPropertyName(): string;
           /**
-           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getKey" href="api/sap.ui.test.matchers.I18NText#methods/getKey">key</a>.</p><p>The key of the I18N text in the containing <a target="_self" class="jsdoclink" href="api/jQuery.sap.util.ResourceBundle">jQuery.sap.util.ResourceBundle</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getKey" href="api/sap.ui.test.matchers.I18NText#methods/getKey">key</a>.</p><p>The key of the I18N text in the containing <a target="_self" class="jsdoclink" href="api/module:sap/base/i18n/ResourceBundle">module:sap/base/i18n/ResourceBundle</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
            * @param {string} sKey <p>New value for property <code>key</code></p>
            * @returns sap.ui.test.matchers.I18NText <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
           setKey(sKey: string): sap.ui.test.matchers.I18NText;
           /**
-           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getModelName" href="api/sap.ui.test.matchers.I18NText#methods/getModelName">modelName</a>.</p><p>The name of the <a target="_self" class="jsdoclink" href="api/sap.ui.model.resource.ResourceModel">sap.ui.model.resource.ResourceModel</a> assigned to the control.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>i18n</code>.</p>
+           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getModelName" href="api/sap.ui.test.matchers.I18NText#methods/getModelName">modelName</a>.</p><p>The name of the <a target="_self" class="jsdoclink" href="api/sap.ui.model.resource.ResourceModel">sap.ui.model.resource.ResourceModel</a> assigned to the control.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"i18n"</code>.</p>
            * @param {string} sModelName <p>New value for property <code>modelName</code></p>
            * @returns sap.ui.test.matchers.I18NText <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          setModelName(sModelName: string): sap.ui.test.matchers.I18NText;
+          setModelName(sModelName?: string): sap.ui.test.matchers.I18NText;
           /**
-           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getParameters" href="api/sap.ui.test.matchers.I18NText#methods/getParameters">parameters</a>.</p><p>The parameters for replacing the placeholders of the I18N text. See <a target="_self" class="jsdoclink" href="api/jQuery.sap.util.ResourceBundle#methods/getText">jQuery.sap.util.ResourceBundle#getText</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getParameters" href="api/sap.ui.test.matchers.I18NText#methods/getParameters">parameters</a>.</p><p>The parameters for replacing the placeholders of the I18N text. See <a target="_self" class="jsdoclink" href="api/module:sap/base/i18n/ResourceBundle#methods/getText">module:sap/base/i18n/ResourceBundle#getText</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
            * @param {any} oParameters <p>New value for property <code>parameters</code></p>
            * @returns sap.ui.test.matchers.I18NText <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
@@ -1544,7 +1673,7 @@ declare namespace sap {
           setPropertyName(sPropertyName: string): sap.ui.test.matchers.I18NText;
         }
         /**
-         * <p>Checks if a control is currently able to take user interactions. OPA5 will automatically apply this matcher if you specify actions in <a target="_self" class="jsdoclink" href="api/sap.ui.test.Opa5#methods/waitFor">sap.ui.test.Opa5#waitFor</a>. A control will be filtered out by this matcher when: <ul> <li> The control is invisible (using the visible matcher) </li> <li> The control or its parents are busy </li> <li> The control or its parents are not enabled </li> <li> The control is hidden behind a dialog </li> <li> The UIArea of the control needs new rendering </li> </ul> Since 1.53, Interactable no longer uses internal autoWait functionality. Interactable matcher might be made private in the near future. It is recommended to enable autoWait OPA option instead of using the Interactable matcher directly.</p>
+         * <p>Checks if a control is currently able to take user interactions. OPA5 will automatically apply this matcher if you specify actions in <a target="_self" class="jsdoclink" href="api/sap.ui.test.Opa5#methods/waitFor">sap.ui.test.Opa5#waitFor</a>. A control will be filtered out by this matcher when: <ul> <li> The control is invisible </li> <li> The control or its parents are busy </li> <li> The control is hidden behind a dialog </li> <li> The UIArea of the control needs new rendering </li> </ul> <ul> <li> As of version 1.53, the Interactable matcher no longer uses internal autoWait functionality. </li> <li> Interactable matcher might be made private in the near future. </li> <li> It is recommended to enable autoWait OPA option instead of using the Interactable matcher directly. </li> <li> The Interactable matcher doesn't check if a control is enabled or editable. One way to check for these properties is with matchers such as the <a target="_self" class="jsdoclink" href="api/sap.ui.test.matchers.PropertyStrictEquals">sap.ui.test.matchers.PropertyStrictEquals</a> and <a target="_self" class="jsdoclink" href="api/sap.ui.test.matchers.Properties">sap.ui.test.matchers.Properties</a> matchers. Another way is to use the `enabled` and `editable` properties of <a target="_self" class="jsdoclink" href="api/sap.ui.test.Opa5#methods/waitFor">sap.ui.test.Opa5#waitFor</a>. Note that `enabled` is available as of version 1.66, and `editable` is available as of version 1.80. </li> </ul></p>
          */
         export class Interactable extends sap.ui.test.matchers.Matcher {
           /**
@@ -1570,22 +1699,22 @@ declare namespace sap {
            */
           constructor(mSettings?: any);
           /**
-           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getKey" href="api/sap.ui.test.matchers.LabelFor#methods/getKey">key</a>.</p><p>The key of the I18N text in the containing <a target="_self" class="jsdoclink" href="api/jQuery.sap.util.ResourceBundle">jQuery.sap.util.ResourceBundle</a>.</p>
+           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getKey" href="api/sap.ui.test.matchers.LabelFor#methods/getKey">key</a>.</p><p>The key of the I18N text in the containing <a target="_self" class="jsdoclink" href="api/module:sap/base/i18n/ResourceBundle">module:sap/base/i18n/ResourceBundle</a>.</p>
            * @returns string <p>Value of property <code>key</code></p>
            */
           getKey(): string;
           /**
-           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getModelName" href="api/sap.ui.test.matchers.LabelFor#methods/getModelName">modelName</a>.</p><p>The name of the <a target="_self" class="jsdoclink" href="api/sap.ui.model.resource.ResourceModel">sap.ui.model.resource.ResourceModel</a> assigned to the control.</p><p>Default value is <code>i18n</code>.</p>
+           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getModelName" href="api/sap.ui.test.matchers.LabelFor#methods/getModelName">modelName</a>.</p><p>The name of the <a target="_self" class="jsdoclink" href="api/sap.ui.model.resource.ResourceModel">sap.ui.model.resource.ResourceModel</a> assigned to the control.</p><p>Default value is <code>"i18n"</code>.</p>
            * @returns string <p>Value of property <code>modelName</code></p>
            */
           getModelName(): string;
           /**
-           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getParameters" href="api/sap.ui.test.matchers.LabelFor#methods/getParameters">parameters</a>.</p><p>The parameters for replacing the placeholders of the I18N text. See <a target="_self" class="jsdoclink" href="api/jQuery.sap.util.ResourceBundle#methods/getText">jQuery.sap.util.ResourceBundle#getText</a>.</p>
+           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getParameters" href="api/sap.ui.test.matchers.LabelFor#methods/getParameters">parameters</a>.</p><p>The parameters for replacing the placeholders of the I18N text. See <a target="_self" class="jsdoclink" href="api/module:sap/base/i18n/ResourceBundle#methods/getText">module:sap/base/i18n/ResourceBundle#getText</a>.</p>
            * @returns any <p>Value of property <code>parameters</code></p>
            */
           getParameters(): any;
           /**
-           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getPropertyName" href="api/sap.ui.test.matchers.LabelFor#methods/getPropertyName">propertyName</a>.</p><p>The name of the control property to match the I18N text with.</p><p>Default value is <code>text</code>.</p>
+           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getPropertyName" href="api/sap.ui.test.matchers.LabelFor#methods/getPropertyName">propertyName</a>.</p><p>The name of the control property to match the I18N text with.</p><p>Default value is <code>"text"</code>.</p>
            * @returns string <p>Value of property <code>propertyName</code></p>
            */
           getPropertyName(): string;
@@ -1595,29 +1724,29 @@ declare namespace sap {
            */
           getText(): string;
           /**
-           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getKey" href="api/sap.ui.test.matchers.LabelFor#methods/getKey">key</a>.</p><p>The key of the I18N text in the containing <a target="_self" class="jsdoclink" href="api/jQuery.sap.util.ResourceBundle">jQuery.sap.util.ResourceBundle</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getKey" href="api/sap.ui.test.matchers.LabelFor#methods/getKey">key</a>.</p><p>The key of the I18N text in the containing <a target="_self" class="jsdoclink" href="api/module:sap/base/i18n/ResourceBundle">module:sap/base/i18n/ResourceBundle</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
            * @param {string} sKey <p>New value for property <code>key</code></p>
            * @returns sap.ui.test.matchers.LabelFor <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
           setKey(sKey: string): sap.ui.test.matchers.LabelFor;
           /**
-           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getModelName" href="api/sap.ui.test.matchers.LabelFor#methods/getModelName">modelName</a>.</p><p>The name of the <a target="_self" class="jsdoclink" href="api/sap.ui.model.resource.ResourceModel">sap.ui.model.resource.ResourceModel</a> assigned to the control.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>i18n</code>.</p>
+           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getModelName" href="api/sap.ui.test.matchers.LabelFor#methods/getModelName">modelName</a>.</p><p>The name of the <a target="_self" class="jsdoclink" href="api/sap.ui.model.resource.ResourceModel">sap.ui.model.resource.ResourceModel</a> assigned to the control.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"i18n"</code>.</p>
            * @param {string} sModelName <p>New value for property <code>modelName</code></p>
            * @returns sap.ui.test.matchers.LabelFor <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          setModelName(sModelName: string): sap.ui.test.matchers.LabelFor;
+          setModelName(sModelName?: string): sap.ui.test.matchers.LabelFor;
           /**
-           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getParameters" href="api/sap.ui.test.matchers.LabelFor#methods/getParameters">parameters</a>.</p><p>The parameters for replacing the placeholders of the I18N text. See <a target="_self" class="jsdoclink" href="api/jQuery.sap.util.ResourceBundle#methods/getText">jQuery.sap.util.ResourceBundle#getText</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getParameters" href="api/sap.ui.test.matchers.LabelFor#methods/getParameters">parameters</a>.</p><p>The parameters for replacing the placeholders of the I18N text. See <a target="_self" class="jsdoclink" href="api/module:sap/base/i18n/ResourceBundle#methods/getText">module:sap/base/i18n/ResourceBundle#getText</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
            * @param {any} oParameters <p>New value for property <code>parameters</code></p>
            * @returns sap.ui.test.matchers.LabelFor <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
           setParameters(oParameters: any): sap.ui.test.matchers.LabelFor;
           /**
-           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getPropertyName" href="api/sap.ui.test.matchers.LabelFor#methods/getPropertyName">propertyName</a>.</p><p>The name of the control property to match the I18N text with.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>text</code>.</p>
+           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getPropertyName" href="api/sap.ui.test.matchers.LabelFor#methods/getPropertyName">propertyName</a>.</p><p>The name of the control property to match the I18N text with.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"text"</code>.</p>
            * @param {string} sPropertyName <p>New value for property <code>propertyName</code></p>
            * @returns sap.ui.test.matchers.LabelFor <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          setPropertyName(sPropertyName: string): sap.ui.test.matchers.LabelFor;
+          setPropertyName(sPropertyName?: string): sap.ui.test.matchers.LabelFor;
           /**
            * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getText" href="api/sap.ui.test.matchers.LabelFor#methods/getText">text</a>.</p><p>The text of the <a target="_self" class="jsdoclink" href="api/sap.m.Label">sap.m.Label</a> which have the labelFor property.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
            * @param {string} sText <p>New value for property <code>text</code></p>
@@ -1646,7 +1775,17 @@ declare namespace sap {
                 propertyName: "propertyValue"
             }
         }
-        </code></pre></p>
+        </pre></code> As of version 1.74, you can use regular expressions in declarative syntax: <code><pre>{
+            properties: {
+                propertyName: {
+                    regex: {
+                        source: "propertyValue$",
+                        flags: "ig"
+                    }
+                }
+            }
+        }
+        </pre></code></p>
          */
         export class Properties {
           /**
@@ -1920,7 +2059,7 @@ declare namespace sap {
       /**
        * <p>An Event object consisting of an ID, a source and a map of parameters. Implements <a target="_self" class="jsdoclink" href="api/sap.ui.base.Poolable">sap.ui.base.Poolable</a> and therefore an event object in the event handler will be reset by <a target="_self" class="jsdoclink" href="api/sap.ui.base.ObjectPool">sap.ui.base.ObjectPool</a> after the event handler is done.</p>
        */
-      export class Event extends sap.ui.base.Object {
+      export class Event extends sap.ui.base.Object implements sap.ui.base.Poolable {
         /**
          * <p>Creates an event with the given <code>sId</code>, linked to the provided <code>oSource</code> and enriched with the <code>mParameters</code>.</p>
          * @param {string} sId <p>The ID of the event</p>
@@ -1928,6 +2067,8 @@ declare namespace sap {
          * @param {any} oParameters <p>Parameters for this event</p>
          */
         constructor(sId: string, oSource: sap.ui.base.EventProvider, oParameters: any);
+        init(): void;
+        reset(): void;
         /**
          * <p>Cancel bubbling of the event.</p><p><b>Note:</b> This function only has an effect if the bubbling of the event is supported by the event source.</p>
          */
@@ -2068,7 +2209,7 @@ declare namespace sap {
          */
         static escapeSettingsValue(vValue: any): any;
         /**
-         * <p>Constructs and initializes a managed object with the given <code>sId</code> and settings.</p><p>If the optional <code>mSettings</code> are given, they must be a simple object that defines values for properties, aggregations, associations or events keyed by their name.</p><p><b>Valid Names and Value Ranges:</b></p><p>The property (key) names supported in the object literal are exactly the (case sensitive) names documented in the JSDoc for the properties, aggregations, associations and events of the current class and its base classes. Note that for 0..n aggregations and associations this name usually is the plural name, whereas it is the singular name in case of 0..1 relations.</p><p>If a key name is ambiguous for a specific managed object class (e.g. a property has the same name as an event), then this method prefers property, aggregation, association and event in that order. To resolve such ambiguities, the keys can be prefixed with <code>aggregation:</code>, <code>association:</code> or <code>event:</code> (such keys containing a colon (':') must be quoted to be valid Javascript).</p><p>The possible values for a setting depend on its kind: <ul> <li>for simple properties, the value has to match the documented type of the property (no type conversion occurs)</li> <li>for 0..1 aggregations, the value has to be an instance of the aggregated type</li> <li>for 0..n aggregations, the value has to be an array of instances of the aggregated type or a single instance</li> <li>for 0..1 associations, an instance of the associated type or an id (string) is accepted</li> <li>for 0..n associations, an array of instances of the associated type or of IDs is accepted</li> <li>for events, either a function (event handler) is accepted or an array of length 2 where the first element is a function and the 2nd element is an object to invoke the method on; or an array of length 3, where the first element is an arbitrary payload object, the second one is a function and the 3rd one is an object to invoke the method on; or an array of arrays where each nested array has the 2 or 3 element structure described before (multiple listeners).</li> </ul></p><p>Each subclass should document the name and type of its supported settings in its constructor documentation.</p><p>Example usage: <pre>
+         * <p>Constructs and initializes a managed object with the given <code>sId</code> and settings.</p><p>If the optional <code>mSettings</code> are given, they must be a simple object that defines values for properties, aggregations, associations or events keyed by their name.</p><p><b>Valid Names and Value Ranges:</b></p><p>The property (key) names supported in the object literal are exactly the (case sensitive) names documented in the JSDoc for the properties, aggregations, associations and events of the current class and its base classes. Note that for 0..n aggregations and associations this name usually is the plural name, whereas it is the singular name in case of 0..1 relations.</p><p>The possible values for a setting depend on its kind: <ul> <li>for simple properties, the value has to match the documented type of the property (no type conversion occurs)</li> <li>for 0..1 aggregations, the value has to be an instance of the aggregated type</li> <li>for 0..n aggregations, the value has to be an array of instances of the aggregated type or a single instance</li> <li>for 0..1 associations, an instance of the associated type or an id (string) is accepted</li> <li>for 0..n associations, an array of instances of the associated type or of IDs is accepted</li> <li>for events, either a function (event handler) is accepted or an array of length 2 where the first element is a function and the 2nd element is an object to invoke the method on; or an array of length 3, where the first element is an arbitrary payload object, the second one is a function and the 3rd one is an object to invoke the method on; or an array of arrays where each nested array has the 2 or 3 element structure described before (multiple listeners).</li> </ul></p><p>Each subclass should document the name and type of its supported settings in its constructor documentation.</p><p>Example usage: <pre>
         new Dialog({
            title: "Some title text",            // property of type "string"
            showHeader: true,                    // property of type "boolean"
@@ -2165,7 +2306,7 @@ declare namespace sap {
          */
         bindAggregation(sName: string, oBindingInfo: any): sap.ui.base.ManagedObject;
         /**
-         * <p>Bind the object to the referenced entity in the model.</p><p>The entity is used as the binding context to resolve bound properties or aggregations of the object itself and all of its children relatively to the given path. If a relative binding path is used, it will be evaluated anew whenever the parent context changes.</p><p>Whenever the corresponding model becomes available or changes (either via a call to <a target="_self" class="jsdoclink scrollToMethod" data-target="setModel" href="api/sap.ui.base.ManagedObject#methods/setModel">setModel</a> or propagated from a <a target="_self" class="jsdoclink scrollToMethod" data-target="getParent" href="api/sap.ui.base.ManagedObject#methods/getParent">parent</a>), its <a target="_self" class="jsdoclink" href="api/sap.ui.model.Model#methods/bindContext">bindContext</a> method will be called to create a new <a target="_self" class="jsdoclink" href="api/sap.ui.model.ContextBinding">ContextBinding</a> with the configured binding options.</p><p>There is no difference between <code>bindObject</code> and <a target="_self" class="jsdoclink" href="api/sap.ui.core.Element#methods/bindElement">bindElement</a>. Method <code>bindElement</code> was deprecated and renamed to <code>bindObject</code> when this kind of binding was no longer limited to <code>sap.ui.core.Element</code>s.</p><p>Also see <a target="_self" href="topic/91f05e8b6f4d1014b6dd926db0e91070">Context Binding</a> in the documentation.</p>
+         * <p>Bind the object to the referenced entity in the model.</p><p>The entity is used as the binding context to resolve bound properties or aggregations of the object itself and all of its children relatively to the given path. If a relative binding path is used, it will be evaluated anew whenever the parent context changes.</p><p>Whenever the corresponding model becomes available or changes (either via a call to <a target="_self" class="jsdoclink scrollToMethod" data-target="setModel" href="api/sap.ui.base.ManagedObject#methods/setModel">setModel</a> or propagated from a <a target="_self" class="jsdoclink scrollToMethod" data-target="getParent" href="api/sap.ui.base.ManagedObject#methods/getParent">parent</a>), its <a target="_self" class="jsdoclink" href="api/sap.ui.model.Model#methods/bindContext">bindContext</a> method will be called to create a new <a target="_self" class="jsdoclink" href="api/sap.ui.model.ContextBinding">ContextBinding</a> with the configured binding options.</p><p>There's no difference between <code>bindObject</code> and <a target="_self" class="jsdoclink" href="api/sap.ui.core.Element#methods/bindElement">bindElement</a>. Method <code>bindObject</code> was introduced together with <code>ManagedObject</code> to make context bindings also available on <code>ManagedObject</code>s. The new name was chosen to reflect that the binding is not necessarily applied to an <code>Element</code>, it also could be applied to a component or some other <code>ManagedObject</code>.</p><p>Also see <a target="_self" href="topic/91f05e8b6f4d1014b6dd926db0e91070">Context Binding</a> in the documentation.</p>
          * @param {any} oBindingInfo <p>An object describing the binding</p>
          * @returns sap.ui.base.ManagedObject <p>Returns <code>this</code> to allow method chaining</p>
          */
@@ -2286,11 +2427,11 @@ declare namespace sap {
         protected fireValidationSuccess(mParameters?: any): sap.ui.base.ManagedObject;
         /**
          * <p>Returns the aggregated object(s) for the named aggregation of this ManagedObject.</p><p>If the aggregation does not contain any objects(s), the given <code>oDefaultForCreation</code> (or <code>null</code>) is set as new value of the aggregation and returned to the caller.</p><p><b>Note:</b> the need to specify a default value and the fact that it is stored as new value of a so far empty aggregation is recognized as a shortcoming of this API but can no longer be changed for compatibility reasons.</p><p><b>Note:</b> This method is a low-level API as described in <a href="#lowlevelapi">the class documentation</a>. Applications or frameworks must not use this method to generically read the content of an aggregation. Use the concrete method get<i>XYZ</i> for aggregation 'XYZ' instead.</p>
-         * @param {string} sAggregationName <p>the name of the aggregation</p>
-         * @param {sap.ui.base.ManagedObject | any[]} oDefaultForCreation <p>the object that is used in case the current aggregation is empty</p>
-         * @returns sap.ui.base.ManagedObject|Array <p>the aggregation array in case of 0..n-aggregations or the managed object or null in case of 0..1-aggregations</p>
+         * @param {string} sAggregationName <p>Name of the aggregation</p>
+         * @param {sap.ui.base.ManagedObject | any[]} oDefaultForCreation <p>Object that is used in case the current aggregation is empty. If provided, it must be null for 0..1 aggregations or an empty array for 0..n aggregations. If not provided, null is used.</p><p><b>Note:</b> When an empty array is given and used because the aggregation was not set before, then this array will be used for the aggregation from thereon. Sharing the same empty array between different calls to this method therefore is not possible and will result in inconsistencies.</p>
+         * @returns sap.ui.base.ManagedObject|sap.ui.base.ManagedObject[]|null <p>Aggregation array in case of 0..n-aggregations or the managed object or null in case of 0..1-aggregations</p>
          */
-        protected getAggregation(sAggregationName: string, oDefaultForCreation: sap.ui.base.ManagedObject | any[]): sap.ui.base.ManagedObject | any[];
+        protected getAggregation(sAggregationName: string, oDefaultForCreation?: sap.ui.base.ManagedObject | any[]): sap.ui.base.ManagedObject | sap.ui.base.ManagedObject[] | null;
         /**
          * <p>Returns the content of the association with the given name.</p><p>For associations of cardinality 0..1, a single string with the ID of an associated object is returned (if any). For cardinality 0..n, an array with the IDs of the associated objects is returned.</p><p>If the association does not contain any objects(s), the given <code>oDefaultForCreation</code> is set as new value of the association and returned to the caller. The only supported values for <code>oDefaultForCreation</code> are <code>null</code> and <code>undefined</code> in the case of cardinality 0..1 and <code>null</code>, <code>undefined</code> or an empty array (<code>[]</code>) in case of cardinality 0..n. If the argument is omitted, <code>null</code> is used independently from the cardinality.</p><p><b>Note:</b> the need to specify a default value and the fact that it is stored as new value of a so far empty association is recognized as a shortcoming of this API but can no longer be changed for compatibility reasons.</p><p><b>Note:</b> This method is a low-level API as described in <a href="#lowlevelapi">the class documentation</a>. Applications or frameworks must not use this method to generically retrieve the content of an association. Use the concrete method get<i>XYZ</i> for association 'XYZ' instead.</p>
          * @param {string} sAssociationName <p>the name of the association</p>
@@ -2496,11 +2637,11 @@ declare namespace sap {
         setBindingContext(oContext: sap.ui.model.Context, sModelName?: string): sap.ui.base.ManagedObject;
         /**
          * <p>Sets or unsets a model for the given model name for this ManagedObject.</p><p>The <code>sName</code> must either be <code>undefined</code> (or omitted) or a non-empty string. When the name is omitted, the default model is set/unset. To be compatible with future versions of this API, you must not use the following model names: <ul> <li><code>null</code></li> <li>empty string <code>""</code></li> <li>string literals <code>"null"</code> or <code>"undefined"</code></li> </ul></p><p>When <code>oModel</code> is <code>null</code> or <code>undefined</code>, a previously set model with that name is removed from this ManagedObject. If an ancestor (parent, UIArea or Core) has a model with that name, this ManagedObject will immediately inherit that model from its ancestor.</p><p>All local bindings that depend on the given model name are updated (created if the model references became complete now; updated, if any model reference has changed; removed if the model references became incomplete now).</p><p>Any change (new model, removed model, inherited model) is also applied to all aggregated descendants as long as a descendant doesn't have its own model set for the given name.</p><p><b>Note:</b> By design, it is not possible to hide an inherited model by setting a <code>null</code> or <code>undefined</code> model. Applications can set an empty model to achieve the same.</p><p><b>Note:</b> A ManagedObject inherits models from the Core only when it is a descendant of a UIArea.</p>
-         * @param {sap.ui.model.Model} oModel <p>the model to be set or <code>null</code> or <code>undefined</code></p>
+         * @param {sap.ui.model.Model | null | undefined} oModel <p>Model to be set or <code>null</code> or <code>undefined</code></p>
          * @param {string} sName <p>the name of the model or <code>undefined</code></p>
          * @returns sap.ui.base.ManagedObject <p><code>this</code> to allow method chaining</p>
          */
-        setModel(oModel: sap.ui.model.Model, sName?: string): sap.ui.base.ManagedObject;
+        setModel(oModel: sap.ui.model.Model | null | undefined, sName?: string): sap.ui.base.ManagedObject;
         /**
          * <p>Sets the given value for the given property after validating and normalizing it, marks this object as changed.</p><p>If the value is not valid with regard to the declared data type of the property, an Error is thrown. In case <code>null</code> or <code>undefined</code> is passed, the default value for this property is used (see <a target="_self" class="jsdoclink scrollToMethod" data-target="validateProperty" href="api/sap.ui.base.ManagedObject#methods/validateProperty">#validateProperty</a>). To fully reset the property to initial state, use <a target="_self" class="jsdoclink scrollToMethod" data-target="resetProperty" href="api/sap.ui.base.ManagedObject#methods/resetProperty">#resetProperty</a> instead. If the validated and normalized <code>oValue</code> equals the current value of the property, the internal state of this object is not changed (apart from the result of <a target="_self" class="jsdoclink scrollToMethod" data-target="isPropertyInitial" href="api/sap.ui.base.ManagedObject#methods/isPropertyInitial">#isPropertyInitial</a>). If the value changes, it is stored internally and the <a target="_self" class="jsdoclink scrollToMethod" data-target="invalidate" href="api/sap.ui.base.ManagedObject#methods/invalidate">#invalidate</a> method is called on this object. In the case of TwoWay databinding, the bound model is informed about the property change.</p><p>Note that ManagedObject only implements a single level of change tracking: if a first call to setProperty recognizes a change, 'invalidate' is called. If another call to setProperty reverts that change, invalidate() will be called again, the new status is not recognized as being 'clean' again.</p><p><b>Note:</b> This method is a low level API as described in <a href="#lowlevelapi">the class documentation</a>. Applications or frameworks must not use this method to generically set a property. Use the concrete method set<i>XYZ</i> for property 'XYZ' or the generic <a target="_self" class="jsdoclink scrollToMethod" data-target="applySettings" href="api/sap.ui.base.ManagedObject#methods/applySettings">#applySettings</a> instead.</p>
          * @param {string} sPropertyName <p>name of the property to set</p>
@@ -2540,10 +2681,12 @@ declare namespace sap {
          */
         unbindProperty(sName: string, bSuppressReset: boolean): sap.ui.base.ManagedObject;
         /**
-         * <p>Generic method which is called whenever an aggregation binding has changed.</p><p>Depending on the type of the list binding and on additional configuration, this method either destroys all elements in the aggregation <code>sName</code> and recreates them anew or tries to reuse as many existing objects as possible. It is up to the method which strategy it uses.</p><p>In case a managed object needs special handling for an aggregation binding, it can create a named update method (e.g. <code>update<i>Rows</i></code> for an aggregation <code>rows</code>) which then will be called by the framework instead of this generic method.</p><p>Subclasses should call this method only in the implementation of such a named update method and for no other purposes. The framework might change the conditions under which the method is called and the method implementation might rely on those conditions.</p>
-         * @param {string} sName <p>name of the aggregation to update</p>
+         * <p>Generic method which is called whenever an aggregation binding has changed.</p><p>Depending on the type of the list binding and on additional configuration, this method either destroys all elements in the aggregation <code>sName</code> and recreates them anew or tries to reuse as many existing objects as possible. It is up to the method which strategy it uses.</p><p>In case a managed object needs special handling for an aggregation binding, it can create a named update method (e.g. <code>update<i>Rows</i></code> for an aggregation <code>rows</code>) which then will be called by the framework instead of this generic method. THe method will be called with two arguments <code>sChangeReason</code> and <code>oEventInfo</code>.</p><p>Subclasses should call this method only in the implementation of such a named update method and for no other purposes. The framework might change the conditions under which the method is called and the method implementation might rely on those conditions.</p>
+         * @param {string} sName <p>Name of the aggregation to update</p>
+         * @param {sap.ui.model.ChangeReason} sChangeReason <p>One of the predefined reasons for the change event</p>
+         * @param {any} oEventInfo <p>Additional information about the change event</p>
          */
-        protected updateAggregation(sName: string): void;
+        protected updateAggregation(sName: string, sChangeReason: sap.ui.model.ChangeReason, oEventInfo: any): void;
         /**
          * <p>Checks whether the given value is of the proper type for the given aggregation name.</p><p>This method is already called by <a target="_self" class="jsdoclink scrollToMethod" data-target="setAggregation" href="api/sap.ui.base.ManagedObject#methods/setAggregation">#setAggregation</a>, <a target="_self" class="jsdoclink scrollToMethod" data-target="addAggregation" href="api/sap.ui.base.ManagedObject#methods/addAggregation">#addAggregation</a> and <a target="_self" class="jsdoclink scrollToMethod" data-target="insertAggregation" href="api/sap.ui.base.ManagedObject#methods/insertAggregation">#insertAggregation</a>. In many cases, subclasses of ManagedObject don't need to call it again in their mutator methods.</p>
          * @param {string} sAggregationName <p>the name of the aggregation</p>
@@ -2828,6 +2971,11 @@ declare namespace sap {
          * <p>Destructor method for objects.</p>
          */
         destroy(): void;
+        /**
+         * <p>Returns the public facade of this object.</p><p>By default, the public facade is implemented as an instance of <a target="_self" class="jsdoclink" href="api/sap.ui.base.Interface">sap.ui.base.Interface</a>, exposing the <code>publicMethods</code> as defined in the metadata of the class of this object.</p><p>See the documentation of the <a target="_self" class="jsdoclink scrollToMethod" data-target="sap.ui.base.Object.extend" href="api/sap.ui.base.Object#methods/sap.ui.base.Object.extend">extend</a> method for an explanation of <code>publicMethods</code>.</p><p>The facade is created on the first call of <code>getInterface</code> and reused for all later calls.</p>
+         * @returns sap.ui.base.Object <p>A facade for this object, with at least the public methods of the class of this.</p>
+         */
+        getInterface(): sap.ui.base.Object;
         /**
          * <p>Checks whether this object is an instance of the named type.</p><p>This check is solely based on the type names as declared in the class metadata. It compares the given <code>vTypeName</code> with the name of the class of this object, with the names of any base class of that class and with the names of all interfaces implemented by any of the aforementioned classes.</p><p>Instead of a single type name, an array of type names can be given and the method will check if this object is an instance of any of the listed types (logical or).</p><p>Should the UI5 class system in future implement additional means of associating classes with type names (e.g. by introducing mixins), then this method might detect matches for those names as well.</p>
          * @param {string | string[]} vTypeName <p>Type or types to check for</p>
@@ -3328,11 +3476,11 @@ declare namespace sap {
         trigger(): void;
       }
       /**
-       * <p>Base Class for Component.</p>
+       * <p>Base Class for Components. Components are independent and reusable parts of UI5 applications. They facilitate the encapsulation of closely related parts of an application, thus enabling developers to structure and maintain their applications more easily.</p>
        */
       export abstract class Component extends sap.ui.base.ManagedObject {
         /**
-         * <p>Asynchronously creates a new component instance from the given configuration.</p><p>To optimize the loading process, additional <code>asyncHints</code> can be provided. The structure of these hints and how they impact the loading of components is an internal feature of this API and reserved for UI5 internal use only. Code that wants to be safe wrt. version updates, should not use the <code>asyncHints</code> property.</p><p>If Components and/or libraries are listed in the <code>asyncHints</code>, all the corresponding preload files will be requested in parallel, loading errors (404s) will be ignored. The constructor class will only be required after all preloads have been rejected or resolved. Only then, the new instance will be created.</p>
+         * <p>Asynchronously creates a new component instance from the given configuration.</p><p>If the component class does not already exists, the component class is loaded and afterwards the new component instance is created.</p><p>To optimize the loading process, additional <code>asyncHints</code> can be provided. The structure of these hints and how they impact the loading of components is an internal feature of this API and reserved for UI5 internal use only. Code that wants to be safe wrt. version updates, should not use the <code>asyncHints</code> property.</p><p>If Components and/or libraries are listed in the <code>asyncHints</code>, all the corresponding preload files will be requested in parallel, loading errors (404s) will be ignored. The constructor class will only be required after all preloads have been rejected or resolved. Only then, the new instance will be created.</p>
          * @param {any} mOptions <p>Configuration options</p>
          * @returns any <p>A Promise that resolves with the newly created component instance</p>
          */
@@ -3402,6 +3550,11 @@ declare namespace sap {
          * <p>Cleans up the Component instance before destruction.</p><p>Applications must not call this hook method directly, it is called by the framework when the element is <a target="_self" class="jsdoclink scrollToMethod" data-target="destroy" href="api/sap.ui.core.Component#methods/destroy">destroyed</a>.</p><p>Subclasses of Component should override this hook to implement any necessary cleanup.</p>
          */
         protected exit(): void;
+        /**
+         * <p>Returns the list of active terminologies. See the <a target="_self" class="jsdoclink" href="api/sap.ui.core.Component#methods/sap.ui.core.Component.create">Component.create</a> factory API documentation for more detail.</p>
+         * @returns string[]|undefined <p>List of active terminologies</p>
+         */
+        getActiveTerminologies(): string[] | undefined;
         /**
          * <p>Returns user specific data object</p>
          * @returns any <p>componentData</p>
@@ -3501,7 +3654,7 @@ declare namespace sap {
               manifest="true"
               async="true"
           />
-      </pre></p><p>See also <a target="_self" class="jsdoclink" href="api/sap.ui.core.ComponentSupport">sap.ui.core.ComponentSupport</a>.</p>
+      </pre></p><p>See also <a target="_self" class="jsdoclink" href="api/module:sap/ui/core/ComponentSupport">module:sap/ui/core/ComponentSupport</a>.</p>
        */
       export class ComponentContainer extends sap.ui.core.Control {
         /**
@@ -3519,7 +3672,7 @@ declare namespace sap {
          */
         attachComponentCreated(oData: any, fnFunction: Function, oListener?: any): sap.ui.core.ComponentContainer;
         /**
-         * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-target="componentFailed" href="api/sap.ui.core.ComponentContainer#events/componentFailed">componentFailed</a> event of this <code>sap.ui.core.ComponentContainer</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.core.ComponentContainer</code> itself.</p><p>Fired when the creation of the component instance has failed.</p>
+         * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-target="componentFailed" href="api/sap.ui.core.ComponentContainer#events/componentFailed">componentFailed</a> event of this <code>sap.ui.core.ComponentContainer</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.core.ComponentContainer</code> itself.</p><p>Fired when the creation of the component instance has failed.</p><p>By default, the <code>ComponentContainer</code> also logs the error that occurred. Since 1.83, this default behavior can be prevented by calling <code>preventDefault()</code> on the event object.</p>
          * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
          * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
          * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.core.ComponentContainer</code> itself</p>
@@ -3547,11 +3700,11 @@ declare namespace sap {
          */
         protected fireComponentCreated(mParameters?: any): sap.ui.core.ComponentContainer;
         /**
-         * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="componentFailed" href="api/sap.ui.core.ComponentContainer#events/componentFailed">componentFailed</a> to attached listeners.</p>
+         * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="componentFailed" href="api/sap.ui.core.ComponentContainer#events/componentFailed">componentFailed</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by calling the <code>preventDefault</code> method on the event object. The return value of this method indicates whether the default action should be executed.</p>
          * @param {any} mParameters <p>Parameters to pass along with the event</p>
-         * @returns sap.ui.core.ComponentContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
+         * @returns boolean <p>Whether or not to prevent the default action</p>
          */
-        protected fireComponentFailed(mParameters?: any): sap.ui.core.ComponentContainer;
+        protected fireComponentFailed(mParameters?: any): boolean;
         /**
          * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getAsync" href="api/sap.ui.core.ComponentContainer#methods/getAsync">async</a>.</p><p>Flag whether the component should be created sync (default) or async. The default will be async when initially the property <code>manifest</code> is set to a truthy value and for the property <code>async</code> no value has been specified. This property can only be applied initially.</p><p>Default value is <code>false</code>.</p>
          * @returns boolean <p>Value of property <code>async</code></p>
@@ -3608,7 +3761,7 @@ declare namespace sap {
          */
         getUrl(): sap.ui.core.URI;
         /**
-         * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getUsage" href="api/sap.ui.core.ComponentContainer#methods/getUsage">usage</a>.</p><p>The component usage. If the ComponentContainer is used inside a Component, this Component can define a usage which will be used for creating the Component. This property can only be applied initially.</p>
+         * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getUsage" href="api/sap.ui.core.ComponentContainer#methods/getUsage">usage</a>.</p><p>The name of a component usage as configured in the app descriptor of the component owning this <code>ComponentContainer</code>.</p><p>The configuration from the named usage will be used to create a component instance for this <code>ComponentContainer</code>. If there's no owning component or if its app descriptor does not contain a usage with the given name, an error will be logged.</p><p>See <a target="_self" href="topic/346599f0890d4dfaaa11c6b4ffa96312">Using and Nesting Components</a> for more information about component usages.</p><p>This property can only be applied initially.</p>
          * @returns string <p>Value of property <code>usage</code></p>
          */
         getUsage(): string;
@@ -3622,13 +3775,13 @@ declare namespace sap {
          * @param {boolean} bAsync <p>New value for property <code>async</code></p>
          * @returns sap.ui.core.ComponentContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setAsync(bAsync: boolean): sap.ui.core.ComponentContainer;
+        setAsync(bAsync?: boolean): sap.ui.core.ComponentContainer;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getAutoPrefixId" href="api/sap.ui.core.ComponentContainer#methods/getAutoPrefixId">autoPrefixId</a>.</p><p>Flag, whether to auto-prefix the ID of the nested Component or not. If this property is set to true the ID of the Component will be prefixed with the ID of the ComponentContainer followed by a single dash. This property can only be applied initially.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
          * @param {boolean} bAutoPrefixId <p>New value for property <code>autoPrefixId</code></p>
          * @returns sap.ui.core.ComponentContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setAutoPrefixId(bAutoPrefixId: boolean): sap.ui.core.ComponentContainer;
+        setAutoPrefixId(bAutoPrefixId?: boolean): sap.ui.core.ComponentContainer;
         /**
          * <p>Sets the component of the container. Depending on the ComponentContainer's lifecycle this might destroy the old associated Component.</p><p>Once the component is associated with the container the cross connection to the component will be set and the models will be propagated if defined. If the <code>usage</code> property is set the ComponentLifecycle is processed like a "Container" lifecycle.</p>
          * @param {string | sap.ui.core.UIComponent} vComponent <p>ID of an element which becomes the new target of this component association. Alternatively, an element instance may be given.</p>
@@ -3640,76 +3793,76 @@ declare namespace sap {
          * @param {boolean} bHandleValidation <p>New value for property <code>handleValidation</code></p>
          * @returns sap.ui.core.ComponentContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setHandleValidation(bHandleValidation: boolean): sap.ui.core.ComponentContainer;
+        setHandleValidation(bHandleValidation?: boolean): sap.ui.core.ComponentContainer;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHeight" href="api/sap.ui.core.ComponentContainer#methods/getHeight">height</a>.</p><p>Container height in CSS size</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
          * @param {sap.ui.core.CSSSize} sHeight <p>New value for property <code>height</code></p>
          * @returns sap.ui.core.ComponentContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setHeight(sHeight: sap.ui.core.CSSSize): sap.ui.core.ComponentContainer;
+        setHeight(sHeight?: sap.ui.core.CSSSize): sap.ui.core.ComponentContainer;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getLifecycle" href="api/sap.ui.core.ComponentContainer#methods/getLifecycle">lifecycle</a>.</p><p>Lifecycle behavior for the Component associated by the <code>ComponentContainer</code>. The default behavior is <code>Legacy</code>. This means that the <code>ComponentContainer</code> takes care that the Component is destroyed when the <code>ComponentContainer</code> is destroyed, but it is <b>not</b> destroyed when a new Component is associated. If you use the <code>usage</code> property to create the Component, the default behavior is <code>Container</code>. This means that the Component is destroyed when the <code>ComponentContainer</code> is destroyed or a new Component is associated. This property must only be applied before a component instance is created.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Legacy</code>.</p>
          * @param {sap.ui.core.ComponentLifecycle} sLifecycle <p>New value for property <code>lifecycle</code></p>
          * @returns sap.ui.core.ComponentContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setLifecycle(sLifecycle: sap.ui.core.ComponentLifecycle): sap.ui.core.ComponentContainer;
+        setLifecycle(sLifecycle?: sap.ui.core.ComponentLifecycle): sap.ui.core.ComponentContainer;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getManifest" href="api/sap.ui.core.ComponentContainer#methods/getManifest">manifest</a>.</p><p>Controls when and from where to load the manifest for the Component. When set to any truthy value, the manifest will be loaded asynchronously by default and evaluated before the Component controller, if it is set to a falsy value other than <code>undefined</code>, the manifest will be loaded after the controller. A non-empty string value will be interpreted as the URL location from where to load the manifest. A non-null object value will be interpreted as manifest content. This property can only be applied initially.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
          * @param {any} oManifest <p>New value for property <code>manifest</code></p>
          * @returns sap.ui.core.ComponentContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setManifest(oManifest: any): sap.ui.core.ComponentContainer;
+        setManifest(oManifest?: any): sap.ui.core.ComponentContainer;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getName" href="api/sap.ui.core.ComponentContainer#methods/getName">name</a>.</p><p>Component name, the package where the component is contained. This property can only be applied initially.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
          * @param {string} sName <p>New value for property <code>name</code></p>
          * @returns sap.ui.core.ComponentContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setName(sName: string): sap.ui.core.ComponentContainer;
+        setName(sName?: string): sap.ui.core.ComponentContainer;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getPropagateModel" href="api/sap.ui.core.ComponentContainer#methods/getPropagateModel">propagateModel</a>.</p><p>Defines whether binding information is propagated to the component.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
          * @param {boolean} bPropagateModel <p>New value for property <code>propagateModel</code></p>
          * @returns sap.ui.core.ComponentContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setPropagateModel(bPropagateModel: boolean): sap.ui.core.ComponentContainer;
+        setPropagateModel(bPropagateModel?: boolean): sap.ui.core.ComponentContainer;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSettings" href="api/sap.ui.core.ComponentContainer#methods/getSettings">settings</a>.</p><p>The settings object passed to the component when created. This property can only be applied initially.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
          * @param {any} oSettings <p>New value for property <code>settings</code></p>
          * @returns sap.ui.core.ComponentContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setSettings(oSettings: any): sap.ui.core.ComponentContainer;
+        setSettings(oSettings?: any): sap.ui.core.ComponentContainer;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getUrl" href="api/sap.ui.core.ComponentContainer#methods/getUrl">url</a>.</p><p>The URL of the component. This property can only be applied initially.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
          * @param {sap.ui.core.URI} sUrl <p>New value for property <code>url</code></p>
          * @returns sap.ui.core.ComponentContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setUrl(sUrl: sap.ui.core.URI): sap.ui.core.ComponentContainer;
+        setUrl(sUrl?: sap.ui.core.URI): sap.ui.core.ComponentContainer;
         /**
-         * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getUsage" href="api/sap.ui.core.ComponentContainer#methods/getUsage">usage</a>.</p><p>The component usage. If the ComponentContainer is used inside a Component, this Component can define a usage which will be used for creating the Component. This property can only be applied initially.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+         * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getUsage" href="api/sap.ui.core.ComponentContainer#methods/getUsage">usage</a>.</p><p>The name of a component usage as configured in the app descriptor of the component owning this <code>ComponentContainer</code>.</p><p>The configuration from the named usage will be used to create a component instance for this <code>ComponentContainer</code>. If there's no owning component or if its app descriptor does not contain a usage with the given name, an error will be logged.</p><p>See <a target="_self" href="topic/346599f0890d4dfaaa11c6b4ffa96312">Using and Nesting Components</a> for more information about component usages.</p><p>This property can only be applied initially.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
          * @param {string} sUsage <p>New value for property <code>usage</code></p>
          * @returns sap.ui.core.ComponentContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setUsage(sUsage: string): sap.ui.core.ComponentContainer;
+        setUsage(sUsage?: string): sap.ui.core.ComponentContainer;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.core.ComponentContainer#methods/getWidth">width</a>.</p><p>Container width in CSS size</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
          * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
          * @returns sap.ui.core.ComponentContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setWidth(sWidth: sap.ui.core.CSSSize): sap.ui.core.ComponentContainer;
+        setWidth(sWidth?: sap.ui.core.CSSSize): sap.ui.core.ComponentContainer;
       }
       /**
-       * <p><p>Enumeration for different lifecycle behaviors of Components created by the ComponentContainer.</p></p>
+       * <p><p>Enumeration for different lifecycle behaviors of components created by the <code>ComponentContainer</code>.</p></p>
        */
       export enum ComponentLifecycle {
         /**
-         * <p>Application managed lifecycle means that the Application takes care to destroy the Components associated with the ComponentContainer.</p>
+         * <p>Application managed lifecycle means that the application takes care to destroy the components associated with the <code>ComponentContainer</code>.</p>
          */
         Application = "Application",
         /**
-         * <p>Container managed lifecycle means that the ComponentContainer takes care to destroy the Components associated with the ComponentContainer once the ComponentContainer is destroyed or a new Component is associated.</p>
+         * <p>Container managed lifecycle means that the <code>ComponentContainer</code> takes care to destroy the components associated with the <code>ComponentContainer</code> once the <code>ComponentContainer</code> is destroyed or a new component is associated.</p>
          */
         Container = "Container",
         /**
-         * <p>Legacy lifecycle means that the ComponentContainer takes care to destroy the Component which is associated with the ComponentContainer once the ComponentContainer is destroyed but not when a new Component is associated.</p>
+         * <p>Legacy lifecycle means that the <code>ComponentContainer</code> takes care to destroy the component which is associated with the <code>ComponentContainer</code> once the <code>ComponentContainer</code> is destroyed, but not when a new component is associated.</p>
          */
         Legacy = "Legacy",
       }
@@ -3762,6 +3915,11 @@ declare namespace sap {
          * @returns boolean <p>whether the accessibility mode is used or not</p>
          */
         getAccessibility(): boolean;
+        /**
+         * <p>Returns the list of active terminologies defined via the Configuration.</p>
+         * @returns string[] <p>if no active terminologies are set, the default value <code>undefined</code> is returned.</p>
+         */
+        getActiveTerminologies(): string[];
         /**
          * <p>Returns the current animation mode.</p>
          * @returns sap.ui.core.Configuration.AnimationMode <p>The current animationMode</p>
@@ -4071,7 +4229,7 @@ declare namespace sap {
          * @param {string} sStyleClass <p>the CSS class name to be added</p>
          * @returns sap.ui.core.Control <p>Returns <code>this</code> to allow method chaining</p>
          */
-        addStyleClass(sStyleClass: string): sap.ui.core.Control;
+        addStyleClass(sStyleClass: string): this;
         /**
          * <p>Defines whether the user can select text inside this control. Defaults to <code>true</code> as long as this method has not been called.</p><p><b>Note:</b>This only works in IE and Safari; for Firefox the element's style must be set to: <pre>
           -moz-user-select: none;
@@ -4180,7 +4338,7 @@ declare namespace sap {
          */
         getBusyIndicatorDelay(): number;
         /**
-         * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getBusyIndicatorSize" href="api/sap.ui.core.Control#methods/getBusyIndicatorSize">busyIndicatorSize</a>.</p><p>The size of the BusyIndicator. For controls with a width smaller 3rem a <code>sap.ui.core.BusyIndicatorSize.Small</code> should be used. If the size could vary in width and the width could get smaller than 3rem, the <code>sap.ui.core.BusyIndicatorSize.Auto</code> option could be used. The default is set to <code>sap.ui.core.BusyIndicatorSize.Medium</code> For a full screen BusyIndicator use <code>sap.ui.core.BusyIndicatorSize.Large</code>.</p><p>Default value is <code>Medium</code>.</p>
+         * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getBusyIndicatorSize" href="api/sap.ui.core.Control#methods/getBusyIndicatorSize">busyIndicatorSize</a>.</p><p>The size of the BusyIndicator. For controls with a width smaller 3rem a <code>sap.ui.core.BusyIndicatorSize.Small</code> should be used. If the size could vary in width and the width could get smaller than 3rem, the <code>sap.ui.core.BusyIndicatorSize.Auto</code> option could be used. The default is set to <code>sap.ui.core.BusyIndicatorSize.Medium</code> For a full screen BusyIndicator use <code>sap.ui.core.BusyIndicatorSize.Large</code>.</p><p>Default value is <code>'Medium'</code>.</p>
          * @returns sap.ui.core.BusyIndicatorSize <p>Value of property <code>busyIndicatorSize</code></p>
          */
         getBusyIndicatorSize(): sap.ui.core.BusyIndicatorSize;
@@ -4251,7 +4409,7 @@ declare namespace sap {
          */
         protected rerender(): void;
         /**
-         * <p>Set the controls busy state.</p>
+         * <p>Set the controls busy state.</p><p><b>Note:</b> The busy state can't be set on controls (e.g. sap.m.ColumnListItem) which renderings have the following tags as DOM root element: area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr|tr</p>
          * @param {boolean} bBusy <p>The new busy state to be set</p>
          * @returns sap.ui.core.Control <p><code>this</code> to allow method chaining</p>
          */
@@ -4263,23 +4421,23 @@ declare namespace sap {
          */
         setBusyIndicatorDelay(iDelay: number): sap.ui.core.Control;
         /**
-         * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getBusyIndicatorSize" href="api/sap.ui.core.Control#methods/getBusyIndicatorSize">busyIndicatorSize</a>.</p><p>The size of the BusyIndicator. For controls with a width smaller 3rem a <code>sap.ui.core.BusyIndicatorSize.Small</code> should be used. If the size could vary in width and the width could get smaller than 3rem, the <code>sap.ui.core.BusyIndicatorSize.Auto</code> option could be used. The default is set to <code>sap.ui.core.BusyIndicatorSize.Medium</code> For a full screen BusyIndicator use <code>sap.ui.core.BusyIndicatorSize.Large</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Medium</code>.</p>
+         * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getBusyIndicatorSize" href="api/sap.ui.core.Control#methods/getBusyIndicatorSize">busyIndicatorSize</a>.</p><p>The size of the BusyIndicator. For controls with a width smaller 3rem a <code>sap.ui.core.BusyIndicatorSize.Small</code> should be used. If the size could vary in width and the width could get smaller than 3rem, the <code>sap.ui.core.BusyIndicatorSize.Auto</code> option could be used. The default is set to <code>sap.ui.core.BusyIndicatorSize.Medium</code> For a full screen BusyIndicator use <code>sap.ui.core.BusyIndicatorSize.Large</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>'Medium'</code>.</p>
          * @param {sap.ui.core.BusyIndicatorSize} sBusyIndicatorSize <p>New value for property <code>busyIndicatorSize</code></p>
          * @returns sap.ui.core.Control <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setBusyIndicatorSize(sBusyIndicatorSize: sap.ui.core.BusyIndicatorSize): sap.ui.core.Control;
+        setBusyIndicatorSize(sBusyIndicatorSize?: sap.ui.core.BusyIndicatorSize): sap.ui.core.Control;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getFieldGroupIds" href="api/sap.ui.core.Control#methods/getFieldGroupIds">fieldGroupIds</a>.</p><p>The IDs of a logical field group that this control belongs to.</p><p>All fields in a logical field group should share the same <code>fieldGroupId</code>. Once a logical field group is left, the <code>validateFieldGroup</code> event is fired.</p><p>For backward compatibility with older releases, field group IDs are syntactically not limited, but it is suggested to use only valid <a target="_self" class="jsdoclink" href="api/sap.ui.core.ID">sap.ui.core.ID</a>s.</p><p>See <a target="_self" class="jsdoclink scrollToMethod" data-target="attachValidateFieldGroup" href="api/sap.ui.core.Control#methods/attachValidateFieldGroup">#attachValidateFieldGroup</a> or consult the <a target="_self" href="topic/5b0775397e394b1fb973fa207554003e">Field Group</a> documentation.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>[]</code>.</p>
          * @param {string[]} sFieldGroupIds <p>New value for property <code>fieldGroupIds</code></p>
          * @returns sap.ui.core.Control <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setFieldGroupIds(sFieldGroupIds: string[]): sap.ui.core.Control;
+        setFieldGroupIds(sFieldGroupIds?: string[]): sap.ui.core.Control;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getVisible" href="api/sap.ui.core.Control#methods/getVisible">visible</a>.</p><p>Whether the control should be visible on the screen.</p><p>If set to false, a placeholder will be rendered to mark the location of the invisible control in the DOM of the current page. The placeholder will be hidden and have zero dimensions (<code>display: none</code>).</p><p>Also see <a target="_self" class="jsdoclink" href="api/module:sap/ui/core/InvisibleRenderer">InvisibleRenderer</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
          * @param {boolean} bVisible <p>New value for property <code>visible</code></p>
          * @returns sap.ui.core.Control <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setVisible(bVisible: boolean): sap.ui.core.Control;
+        setVisible(bVisible?: boolean): sap.ui.core.Control;
         /**
          * <p>The string given as "sStyleClass" will be be either added to or removed from the "class" attribute of this control's root HTML element, depending on the value of "bAdd": if bAdd is true, sStyleClass will be added. If bAdd is not given, sStyleClass will be removed if it is currently present and will be added if not present. If sStyleClass is null or empty string, the call is ignored.</p><p>See addStyleClass and removeStyleClass for further documentation.</p>
          * @param {string} sStyleClass <p>the CSS class name to be added or removed</p>
@@ -4383,11 +4541,11 @@ declare namespace sap {
          */
         byFieldGroupId(vFieldGroupIds?: string | string[]): sap.ui.core.Control[];
         /**
-         * <p>Returns the registered element with the given ID, if any.</p><p>The ID must be the globally unique ID of an element, the same as returned by <code>oElement.getId()</code>. When the element has been created from a declarative source (e.g. XMLView), that source might have used a shorter, non-unique local ID. A search for such a local ID cannot be executed with this method. It can only be executed on the corresponding scope (e.g. on an XMLView instance), by using the <a target="_self" class="jsdoclink" href="api/sap.ui.core.mvc.View#methods/byId">View#byId</a> method of that scope.</p>
-         * @param {string} sId <p>ID of the element to search for</p>
-         * @returns sap.ui.core.Element <p>Element with the given ID or <code>undefined</code></p>
+         * <p>Returns the registered element with the given ID, if any.</p><p>The ID must be the globally unique ID of an element, the same as returned by <code>oElement.getId()</code>.</p><p>When the element has been created from a declarative source (e.g. XMLView), that source might have used a shorter, non-unique local ID. A search for such a local ID cannot be executed with this method. It can only be executed on the corresponding scope (e.g. on an XMLView instance), by using the <a target="_self" class="jsdoclink" href="api/sap.ui.core.mvc.View#methods/byId">View#byId</a> method of that scope.</p>
+         * @param {sap.ui.core.ID | null | undefined} sId <p>ID of the element to search for</p>
+         * @returns sap.ui.core.Element|undefined <p>Element with the given ID or <code>undefined</code></p>
          */
-        byId(sId: string): sap.ui.core.Element;
+        byId(sId: sap.ui.core.ID | null | undefined): sap.ui.core.Element | undefined;
         /**
          * <p>Creates a component with the provided id and settings.</p><p>When the optional parameter <code>sUrl</code> is given, then all request for resources of the library will be redirected to the given URL. This is convenience for a call to <pre>
           sap.ui.loader.config({
@@ -4614,7 +4772,7 @@ declare namespace sap {
          */
         lock(): void;
         /**
-         * <p>This method can be called to trigger realignment of controls after changing the cozy/compact CSS class of a DOM element, for example, the <code>&lt;body&gt;</code> tag.</p>
+         * <p>Triggers a realignment of controls</p><p>This method should be called after changing the cozy/compact CSS class of a DOM element at runtime, for example at the <code>&lt;body&gt;</code> tag. Controls can listen to the themeChanged event to realign their appearance after changing the theme. Changing the cozy/compact CSS class should then also be handled as a theme change. In more simple scenarios where the cozy/compact CSS class is added to a DOM element which contains only a few controls it might not be necessary to trigger the realigment of all controls placed in the DOM, for example changing the cozy/compact CSS class at a single control</p>
          */
         notifyContentDensityChanged(): void;
         /**
@@ -4684,13 +4842,13 @@ declare namespace sap {
          * @param {string} sKey <p>New value for property <code>key</code></p>
          * @returns sap.ui.core.CustomData <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setKey(sKey: string): sap.ui.core.CustomData;
+        setKey(sKey?: string): sap.ui.core.CustomData;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getValue" href="api/sap.ui.core.CustomData#methods/getValue">value</a>.</p><p>The data stored in this CustomData object. When the data is just stored, it can be any JS type, but when it is to be written to HTML (<code>writeToDom == true</code>) then it must be a string. If this restriction is violated, a warning will be logged and nothing will be written to the DOM.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
          * @param {any} oValue <p>New value for property <code>value</code></p>
          * @returns sap.ui.core.CustomData <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setValue(oValue: any): sap.ui.core.CustomData;
+        setValue(oValue?: any): sap.ui.core.CustomData;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWriteToDom" href="api/sap.ui.core.CustomData#methods/getWriteToDom">writeToDom</a>.</p><p>If set to "true" and the value is of type "string" and the key conforms to the documented restrictions, this custom data is written to the HTML root element of the control as a "data-*" attribute. If the key is "abc" and the value is "cde", the HTML will look as follows:</p><p><pre>
           &lt;SomeTag ... data-abc="cde" ... &gt;
@@ -4698,7 +4856,7 @@ declare namespace sap {
          * @param {boolean} bWriteToDom <p>New value for property <code>writeToDom</code></p>
          * @returns sap.ui.core.CustomData <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setWriteToDom(bWriteToDom: boolean): sap.ui.core.CustomData;
+        setWriteToDom(bWriteToDom?: boolean): sap.ui.core.CustomData;
       }
       /**
        * <p>Static class for enabling declarative UI support.</p>
@@ -4729,11 +4887,11 @@ declare namespace sap {
         Standard = "Standard",
       }
       /**
-       * <p>Base Class for Elements.</p>
+       * <p>Base Class for UI Elements.</p><p><code>Element</code> is the most basic building block for UI5 UIs. An <code>Element</code> has state like a <code>ManagedObject</code>, it has a unique ID by which the framework remembers it. It can have associated DOM, but it can't render itself. Only <a target="_self" class="jsdoclink" href="api/sap.ui.core.Control">Controls</a> can render themselves and also take care of rendering <code>Elements</code> that they aggregate as children. If an <code>Element</code> has been rendered, its related DOM gets the same ID as the <code>Element</code> and thereby can be retrieved via API. When the state of an <code>Element</code> changes, it informs its parent <code>Control</code> which usually re-renders then.</p><h3>Dispatching Events</h3><p>The UI5 framework already registers generic listeners for common browser events, such as <code>click</code> or <code>keydown</code>. When called, the generic listener first determines the corresponding target element using <a target="_self" class="jsdoclink" href="api/jQuery#methods/control">jQuery#control</a>. Then it checks whether the element has an event handler method for the event. An event handler method by convention has the same name as the event, but prefixed with "on": Method <code>onclick</code> is the handler for the <code>click</code> event, method <code>onkeydown</code> the handler for the <code>keydown</code> event and so on. If there is such a method, it will be called with the original event as the only parameter. If the element has a list of delegates registered, their handler functions will be called the same way, where present. The set of implemented handlers might differ between element and delegates. Not each handler implemented by an element has to be implemented by its delegates, and delegates can implement handlers that the corresponding element doesn't implement.</p><p>A list of browser events that are handled that way can be found in <a target="_self" class="jsdoclink" href="api/module:sap/ui/events/ControlEvents">module:sap/ui/events/ControlEvents</a>. Additionally, the framework dispatches pseudo events (<a target="_self" class="jsdoclink" href="api/module:sap/ui/events/PseudoEvents">module:sap/ui/events/PseudoEvents</a>) using the same naming convention. Last but not least, some framework events are also dispatched that way, e.g. <code>BeforeRendering</code>, <code>AfterRendering</code> (only for controls) and <code>ThemeChanged</code>.</p><p>If further browser events are needed, controls can register listeners on the DOM using native APIs in their <code>onAfterRendering</code> handler. If needed, they can do this for their aggregated elements as well. If events might fire often (e.g. <code>mousemove</code>), it is best practice to register them only while needed, and deregister afterwards. Anyhow, any registered listeners must be cleaned up in the <code>onBeforeRendering</code> listener and before destruction in the <code>exit</code> hook.</p>
        */
       export abstract class Element extends sap.ui.base.ManagedObject {
         /**
-         * <p>Constructs and initializes a UI Element with the given <code>sId</code> and settings.</p><h3>Uniqueness of IDs</h3><p>Each <code>Element</code> must have an ID. If no <code>sId</code> or <code>mSettings.id</code> is given at construction time, a new ID will be created automatically. The IDs of all elements that exist at the same time in the same window must be different. Providing an ID which is already used by another element throws an error.</p><p>When an element is created from a declarative source (e.g. XMLView), then an ID defined in that declarative source needs to be unique only within the declarative source. Declarative views will prefix that ID with their own ID (and some separator) before constructing the element. Programmatically created views (JSViews) can do the same with the <a target="_self" class="jsdoclink" href="api/sap.ui.core.mvc.View#methods/createId">sap.ui.core.mvc.View#createId</a> API. Similarly, UIComponents can prefix the IDs of elements created in their context with their own ID. Also see <a target="_self" class="jsdoclink" href="api/sap.ui.core.UIComponent#methods/getAutoPrefixId">UIComponent#getAutoPrefixId</a>.</p><h3>Settings</h3><p> If the optional <code>mSettings</code> are given, they must be a JSON-like object (object literal) that defines values for properties, aggregations, associations or events keyed by their name.</p><p><b>Valid Names:</b></p><p>The property (key) names supported in the object literal are exactly the (case sensitive) names documented in the JSDoc for the properties, aggregations, associations and events of the control and its base classes. Note that for 0..n aggregations and associations this usually is the plural name, whereas it is the singular name in case of 0..1 relations.</p><p>If a key name is ambiguous for a specific control class (e.g. a property has the same name as an event), then this method prefers property, aggregation, association and event in that order. To resolve such ambiguities, the keys can be prefixed with <code>aggregation:</code>, <code>association:</code> or <code>event:</code>. In that case the keys must be quoted due to the ':'.</p><p>Each subclass should document the set of supported names in its constructor documentation.</p><p><b>Valid Values:</b></p><p><ul> <li>for normal properties, the value has to be of the correct simple type (no type conversion occurs)</li> <li>for 0..1 aggregations, the value has to be an instance of the aggregated control or element type</li> <li>for 0..n aggregations, the value has to be an array of instances of the aggregated type</li> <li>for 0..1 associations, an instance of the associated type or an id (string) is accepted</li> <li>0..n associations are not supported yet</li> <li>for events either a function (event handler) is accepted or an array of length 2 where the first element is a function and the 2nd element is an object to invoke the method on.</li> </ul></p><p>Special aggregation <code>dependents</code> is connected to the lifecycle management and databinding, but not rendered automatically and can be used for popups or other dependent controls or elements. This allows the definition of popup controls in declarative views and enables propagation of model and context information to them.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+         * <p>Constructs and initializes a UI Element with the given <code>sId</code> and settings.</p><h3>Uniqueness of IDs</h3><p>Each <code>Element</code> must have an ID. If no <code>sId</code> or <code>mSettings.id</code> is given at construction time, a new ID will be created automatically. The IDs of all elements that exist at the same time in the same window must be different. Providing an ID which is already used by another element throws an error.</p><p>When an element is created from a declarative source (e.g. XMLView), then an ID defined in that declarative source needs to be unique only within the declarative source. Declarative views will prefix that ID with their own ID (and some separator) before constructing the element. Programmatically created views (JSViews) can do the same with the <a target="_self" class="jsdoclink" href="api/sap.ui.core.mvc.View#methods/createId">sap.ui.core.mvc.View#createId</a> API. Similarly, UIComponents can prefix the IDs of elements created in their context with their own ID. Also see <a target="_self" class="jsdoclink" href="api/sap.ui.core.UIComponent#methods/getAutoPrefixId">UIComponent#getAutoPrefixId</a>.</p><h3>Settings</h3><p> If the optional <code>mSettings</code> are given, they must be a JSON-like object (object literal) that defines values for properties, aggregations, associations or events keyed by their name.</p><p><b>Valid Names:</b></p><p>The property (key) names supported in the object literal are exactly the (case sensitive) names documented in the JSDoc for the properties, aggregations, associations and events of the control and its base classes. Note that for 0..n aggregations and associations this usually is the plural name, whereas it is the singular name in case of 0..1 relations.</p><p>Each subclass should document the set of supported names in its constructor documentation.</p><p><b>Valid Values:</b></p><p><ul> <li>for normal properties, the value has to be of the correct simple type (no type conversion occurs)</li> <li>for 0..1 aggregations, the value has to be an instance of the aggregated control or element type</li> <li>for 0..n aggregations, the value has to be an array of instances of the aggregated type</li> <li>for 0..1 associations, an instance of the associated type or an id (string) is accepted</li> <li>0..n associations are not supported yet</li> <li>for events either a function (event handler) is accepted or an array of length 2 where the first element is a function and the 2nd element is an object to invoke the method on.</li> </ul></p><p>Special aggregation <code>dependents</code> is connected to the lifecycle management and databinding, but not rendered automatically and can be used for popups or other dependent controls or elements. This allows the definition of popup controls in declarative views and enables propagation of model and context information to them.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
          * @param {string} sId <p>id for the new control; generated automatically if no non-empty id is given Note: this can be omitted, no matter whether <code>mSettings</code> will be given or not!</p>
          * @param {any} mSettings <p>optional map/JSON-object with initial property values, aggregated objects etc. for the new element</p>
          */
@@ -4763,9 +4921,9 @@ declare namespace sap {
          */
         addDragDropConfig(oDragDropConfig: sap.ui.core.dnd.DragDropBase): sap.ui.core.Element;
         /**
-         * <p>Adds a delegate that listens to the events that are fired on this element (as opposed to events which are fired BY this element).</p><p>When this element is cloned, the same delegate will be added to all clones. This behavior is well-suited for applications which want to add delegates that also work with templates in aggregation bindings. For control development the internal "addDelegate" method which does not clone delegates by default may be more suitable, as typically each control instance takes care of its own delegates.</p><p>To avoid double registrations, all registrations of the given delegate are first removed and then the delegate is added.</p><p><strong>Important:</strong> If event delegates were added the delegate will still be called even if the event was processed and/or cancelled via <code>preventDefault</code> by the Element or another event delegate. <code>preventDefault</code> only prevents the event from bubbling. It should be checked e.g. in the event delegate's listener whether an Element is still enabled via <code>getEnabled</code>. Additionally there might be other things that delegates need to check depending on the event (e.g. not adding a key twice to an output string etc.).</p>
-         * @param {any} oDelegate <p>the delegate object</p>
-         * @param {any} oThis <p>if given, this object will be the "this" context in the listener methods; default is the delegate object itself</p>
+         * <p>Adds a delegate that can listen to the browser-, pseudo- and framework events that are handled by this <code>Element</code> (as opposed to events which are fired by this <code>Element</code>).</p><p>Delegates are simple objects that can have an arbitrary number of event handler methods. See the section "Handling of Events" in the <a target="_self" class="jsdoclink" href="api/sap.ui.core.Element#constructor">#constructor</a> documentation to learn how events will be dispatched and how event handler methods have to be named to be found.</p><p>If multiple delegates are registered for the same element, they will be called in the order of their registration. Double registrations are prevented. Before a delegate is added, all registrations of the same delegate (no matter what value for <code>oThis</code> was used for their registration) are removed and only then the delegate is added. Note that this might change the position of the delegate in the list of delegates.</p><p>When an element is cloned, all its event delegates will be added to the clone. This behavior is well-suited for applications which want to add delegates that also work with templates in aggregation bindings. For control development, the internal <code>addDelegate</code> method may be more suitable. Delegates added via that method are not cloned automatically, as typically each control instance takes care of adding its own delegates.</p><p><strong>Important:</strong> If event delegates were added, the delegate will still be called even if the event was processed and/or cancelled via <code>preventDefault</code> by the Element or another event delegate. <code>preventDefault</code> only prevents the event from bubbling. It should be checked e.g. in the event delegate's listener whether an Element is still enabled via <code>getEnabled</code>. Additionally there might be other things that delegates need to check depending on the event (e.g. not adding a key twice to an output string etc.).</p><p>See <a target="_self" href="topic/bdf3e9818cd84d37a18ee5680e97e1c1">Event Handler Methods</a> for a general explanation of event handling in controls.</p>
+         * @param {any} oDelegate <p>The delegate object which consists of the event handler names and the corresponding event handler functions</p>
+         * @param {any} oThis <p>If given, this object will be the "this" context in the listener methods; default is the delegate object itself</p>
          * @returns sap.ui.core.Element <p>Returns <code>this</code> to allow method chaining</p>
          */
         addEventDelegate(oDelegate: any, oThis?: any): sap.ui.core.Element;
@@ -4775,7 +4933,7 @@ declare namespace sap {
          */
         protected applyFocusInfo(oFocusInfo: any): void;
         /**
-         * <p>Bind the object to the referenced entity in the model, which is used as the binding context to resolve bound properties or aggregations of the object itself and all of its children relatively to the given path. If a relative binding path is used, this will be applied whenever the parent context changes. There is no difference between <a target="_self" class="jsdoclink" href="api/sap.ui.core.Element#methods/bindElement">sap.ui.core.Element#bindElement</a> and <a target="_self" class="jsdoclink" href="api/sap.ui.base.ManagedObject#methods/bindObject">sap.ui.base.ManagedObject#bindObject</a>.</p>
+         * <p>Bind the object to the referenced entity in the model, which is used as the binding context to resolve bound properties or aggregations of the object itself and all of its children relatively to the given path.</p><p>If a relative binding path is used, this will be applied whenever the parent context changes.</p><p>There's no difference between <code>bindElement</code> and <a target="_self" class="jsdoclink" href="api/sap.ui.base.ManagedObject#methods/bindObject">sap.ui.base.ManagedObject#bindObject</a>.<br><br>References: <ul><li><a target="_self" class="jsdoclink" href="api/sap.ui.base.ManagedObject#methods/bindObject">sap.ui.base.ManagedObject#bindObject</a></li></ul></p>
          * @param {string | any} vPath <p>the binding path or an object with more detailed binding options</p>
          * @param {any} mParameters <p>map of additional parameters for this binding (only taken into account when vPath is a string in that case it corresponds to vPath.parameters). The supported parameters are listed in the corresponding model-specific implementation of <code>sap.ui.model.ContextBinding</code>.</p>
          * @returns sap.ui.core.Element <p>reference to the instance itself</p>
@@ -4863,14 +5021,23 @@ declare namespace sap {
          */
         destroyTooltip(): sap.ui.core.Element;
         /**
-         * <p>Allows the parent of a control to enhance the aria information during rendering.</p><p>This function is called by the RenderManager's writeAccessibilityState method for the parent of the currently rendered control - if the parent implements it.</p>
+         * <p>Allows the parent of a control to enhance the aria information during rendering.</p><p>This function is called by the RenderManager's <a target="_self" class="jsdoclink" href="api/sap.ui.core.RenderManager#methods/accessibilityState">accessibilityState</a> and <a target="_self" class="jsdoclink" href="api/sap.ui.core.RenderManager#methods/writeAccessibilityState">writeAccessibilityState</a> methods for the parent of the currently rendered control - if the parent implements it.</p>
          * @param {sap.ui.core.Element} oElement <p>the Control/Element for which aria properties are rendered</p>
          * @param {any} mAriaProps <p>map of aria properties keyed by there name (without prefix "aria-")</p>
          * @returns any <p>map of enhanced aria properties</p>
          */
         protected enhanceAccessibilityState(oElement: sap.ui.core.Element, mAriaProps: any): any;
         /**
-         * <p>Cleans up the element instance before destruction.</p><p>Applications must not call this hook method directly, it is called by the framework when the element is <a target="_self" class="jsdoclink scrollToMethod" data-target="destroy" href="api/sap.ui.core.Element#methods/destroy">destroyed</a>.</p><p>Subclasses of Element should override this hook to implement any necessary cleanup.</p>
+         * <p>Hook method for cleaning up the element instance before destruction.</p><p>Applications must not call this hook method directly, it is called by the framework when the element is <a target="_self" class="jsdoclink scrollToMethod" data-target="destroy" href="api/sap.ui.core.Element#methods/destroy">destroyed</a>.</p><p>Subclasses of Element should override this hook to implement any necessary cleanup.</p><p><pre>
+        exit: function() {
+            // ... do any further cleanups of your subclass e.g. detach events...
+            this.$().off("click", this.handleClick);
+        
+            if (Element.prototype.exit) {
+                Element.prototype.exit.apply(this, arguments);
+            }
+        }
+        </pre></p><p>For a more detailed description how to to use the exit hook, see Section <a target="_self" href="topic/d4ac0edbc467483585d0c53a282505a5">exit() Method</a> in the documentation.</p>
          */
         protected exit(): void;
         /**
@@ -5019,7 +5186,7 @@ declare namespace sap {
         removeDragDropConfig(vDragDropConfig: number | string | sap.ui.core.dnd.DragDropBase): sap.ui.core.dnd.DragDropBase;
         /**
          * <p>Removes the given delegate from this element.</p><p>This method will remove all registrations of the given delegate, not only one.</p>
-         * @param {any} oDelegate <p>the delegate object</p>
+         * @param {any} oDelegate <p>The delegate object which consists of the event handler names and the corresponding event handler functions</p>
          * @returns sap.ui.core.Element <p>Returns <code>this</code> to allow method chaining</p>
          */
         removeEventDelegate(oDelegate: any): sap.ui.core.Element;
@@ -5100,7 +5267,7 @@ declare namespace sap {
         constructor(bDefault?: boolean, bLegacy?: boolean);
       }
       /**
-       * <p>Provides eventing capabilities for applications like firing events and attaching or detaching event handlers for events which are notified when events are fired.</p>
+       * <p>Provides eventing capabilities for applications like firing events and attaching or detaching event handlers for events which are notified when events are fired.</p><p>It is recommended to use the EventBus only when there is no other option to communicate between different instances, e.g. native UI5 events. Custom events can be fired by classes that extend <a target="_self" class="jsdoclink" href="api/sap.ui.base.EventProvider">sap.ui.base.EventProvider</a>, such as sap.ui.core.Control, sap.ui.core.mvc.View or sap.ui.core.Component, and the events can be consumed by other classes to achieve communication between different instances.</p><p>Heavily using the EventBus can easily result in code which is hard to read and maintain because it's difficult to keep an overview of all event publishers and subscribers.</p>
        */
       export class EventBus extends sap.ui.base.Object {
         /**
@@ -5156,18 +5323,18 @@ declare namespace sap {
       export class Fragment extends sap.ui.base.ManagedObject {
         /**
          * <p>Returns an Element/Control by its ID in the context of the Fragment with the given ID</p>
-         * @param {string} sFragmentId 
-         * @param {string} sId 
-         * @returns undefined <p>Element by its ID and Fragment ID</p>
+         * @param {string} sFragmentId <p>ID of the Fragment from which to retrieve the Control</p>
+         * @param {string} sId <p>ID of the Element/Control to retrieve</p>
+         * @returns sap.ui.core.Element|undefined <p>Element by its ID and Fragment ID</p>
          */
-        static byId(sFragmentId: string, sId: string): undefined;
+        static byId(sFragmentId: string, sId: string): sap.ui.core.Element | undefined;
         /**
-         * <p>Returns the ID which a Control with the given ID in the context of the Fragment with the given ID would have</p>
-         * @param {string} sFragmentId 
-         * @param {string} sId 
-         * @returns undefined <p>the prefixed ID</p>
+         * <p>Returns the ID which a Control with the given ID in the context of the Fragment with the given ID would have.</p>
+         * @param {string} sFragmentId <p>ID of the Fragment for which to calculate the Control ID</p>
+         * @param {string} sId <p>Fragment-local ID of the Control to calculate the ID for</p>
+         * @returns string <p>the prefixed ID</p>
          */
-        static createId(sFragmentId: string, sId: string): undefined;
+        static createId(sFragmentId: string, sId: string): string;
         /**
          * <p>Loads and instantiates a Fragment. A Promise is returned, which resolves with the Fragments content.</p><p>The Fragment object itself is not an entity with significance beyond this factory.</p><p>The Fragment types "XML", "JS" and "HTML" are available by default; additional Fragment types can be added using the sap.ui.core.Fragment.registerType() function.</p><p>Further properties may be supported by future or custom Fragment types. Any given properties will be forwarded to the Fragment implementation.</p><p>If no fixed ID is given, the Fragment ID is generated. In any case, the Fragment ID will be used as prefix for the IDs of all contained controls.</p>
          * @param {any} mOptions <p>options map</p>
@@ -5264,7 +5431,7 @@ declare namespace sap {
          */
         protected fireAfterRendering(mParameters?: any): sap.ui.core.HTML;
         /**
-         * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getContent" href="api/sap.ui.core.HTML#methods/getContent">content</a>.</p><p>HTML content to be displayed, defined as a string.</p><p>The content is converted to DOM nodes with a call to <code>new jQuery(content)</code>, so any restrictions for the jQuery constructor apply to the content of the HTML control as well.</p><p>Some of these restrictions (there might be others!) are: <ul> <li>the content must be enclosed in tags, pure text is not supported. </li> <li>if the content contains script tags, they will be executed but they will not appear in the resulting DOM tree. When the contained code tries to find the corresponding script tag, it will fail.</li> </ul></p><p>Please consider to consult the jQuery documentation as well.</p><p>The HTML control currently doesn't prevent the usage of multiple root nodes in its DOM content (e.g. <code>setContent("&lt;div/>&lt;div/>")</code>), but this is not a guaranteed feature. The accepted content might be restricted to single root nodes in future versions. To notify applications about this fact, a warning is written in the log when multiple root nodes are used.</p><p>When changing the content dynamically, ensure that the ID of the root node remains the same as the HTML control's ID. Otherwise it cannot be guaranteed that certain lifecycle events take place.</p>
+         * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getContent" href="api/sap.ui.core.HTML#methods/getContent">content</a>.</p><p>HTML content to be displayed, defined as a string.</p><p>The content is converted to DOM nodes with a call to <code>new jQuery(content)</code>, so any restrictions for the jQuery constructor apply to the content of the HTML control as well.</p><p>Some of these restrictions (there might be others!) are: <ul> <li>the content must be enclosed in tags, pure text is not supported. </li> <li>if the content contains script tags, they will be executed but they will not appear in the resulting DOM tree. When the contained code tries to find the corresponding script tag, it will fail.</li> </ul></p><p>Please consider to consult the jQuery documentation as well.</p><p>The HTML control currently doesn't prevent the usage of multiple root nodes in its DOM content (e.g. <code>setContent("&lt;div>&lt;/div>&lt;div>&lt;/div>")</code>), but this is not a guaranteed feature. The accepted content might be restricted to single root nodes in future versions. To notify applications about this fact, a warning is written in the log when multiple root nodes are used.</p><p>When changing the content dynamically, ensure that the ID of the root node remains the same as the HTML control's ID. Otherwise it cannot be guaranteed that certain lifecycle events take place.</p>
          * @returns string <p>Value of property <code>content</code></p>
          */
         getContent(): string;
@@ -5289,11 +5456,11 @@ declare namespace sap {
          */
         getVisible(): boolean;
         /**
-         * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getContent" href="api/sap.ui.core.HTML#methods/getContent">content</a>.</p><p>HTML content to be displayed, defined as a string.</p><p>The content is converted to DOM nodes with a call to <code>new jQuery(content)</code>, so any restrictions for the jQuery constructor apply to the content of the HTML control as well.</p><p>Some of these restrictions (there might be others!) are: <ul> <li>the content must be enclosed in tags, pure text is not supported. </li> <li>if the content contains script tags, they will be executed but they will not appear in the resulting DOM tree. When the contained code tries to find the corresponding script tag, it will fail.</li> </ul></p><p>Please consider to consult the jQuery documentation as well.</p><p>The HTML control currently doesn't prevent the usage of multiple root nodes in its DOM content (e.g. <code>setContent("&lt;div/>&lt;div/>")</code>), but this is not a guaranteed feature. The accepted content might be restricted to single root nodes in future versions. To notify applications about this fact, a warning is written in the log when multiple root nodes are used.</p><p>When changing the content dynamically, ensure that the ID of the root node remains the same as the HTML control's ID. Otherwise it cannot be guaranteed that certain lifecycle events take place.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+         * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getContent" href="api/sap.ui.core.HTML#methods/getContent">content</a>.</p><p>HTML content to be displayed, defined as a string.</p><p>The content is converted to DOM nodes with a call to <code>new jQuery(content)</code>, so any restrictions for the jQuery constructor apply to the content of the HTML control as well.</p><p>Some of these restrictions (there might be others!) are: <ul> <li>the content must be enclosed in tags, pure text is not supported. </li> <li>if the content contains script tags, they will be executed but they will not appear in the resulting DOM tree. When the contained code tries to find the corresponding script tag, it will fail.</li> </ul></p><p>Please consider to consult the jQuery documentation as well.</p><p>The HTML control currently doesn't prevent the usage of multiple root nodes in its DOM content (e.g. <code>setContent("&lt;div>&lt;/div>&lt;div>&lt;/div>")</code>), but this is not a guaranteed feature. The accepted content might be restricted to single root nodes in future versions. To notify applications about this fact, a warning is written in the log when multiple root nodes are used.</p><p>When changing the content dynamically, ensure that the ID of the root node remains the same as the HTML control's ID. Otherwise it cannot be guaranteed that certain lifecycle events take place.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
          * @param {string} sContent <p>New value for property <code>content</code></p>
          * @returns sap.ui.core.HTML <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setContent(sContent: string): sap.ui.core.HTML;
+        setContent(sContent?: string): sap.ui.core.HTML;
         /**
          * <p>Sets some new DOM content for this HTML control. The content will replace the existing content after the next rendering. Properties are not modified, but preferDOM should be set to true.</p>
          * @param {HTMLElement} oDom <p>the new DOM content</p>
@@ -5305,25 +5472,25 @@ declare namespace sap {
          * @param {boolean} bPreferDOM <p>New value for property <code>preferDOM</code></p>
          * @returns sap.ui.core.HTML <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setPreferDOM(bPreferDOM: boolean): sap.ui.core.HTML;
+        setPreferDOM(bPreferDOM?: boolean): sap.ui.core.HTML;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSanitizeContent" href="api/sap.ui.core.HTML#methods/getSanitizeContent">sanitizeContent</a>.</p><p>Whether to run the HTML sanitizer once the content (HTML markup) is applied or not.</p><p>To configure the set of allowed URLs, you can use the <a target="_self" class="jsdoclink" href="api/jQuery.sap#methods/jQuery.sap.addUrlWhitelist">whitelist API</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
          * @param {boolean} bSanitizeContent <p>New value for property <code>sanitizeContent</code></p>
          * @returns sap.ui.core.HTML <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setSanitizeContent(bSanitizeContent: boolean): sap.ui.core.HTML;
+        setSanitizeContent(bSanitizeContent?: boolean): sap.ui.core.HTML;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getVisible" href="api/sap.ui.core.Control#methods/getVisible">visible</a>.</p><p>Whether the control should be visible on the screen.</p><p>If set to false, a placeholder will be rendered to mark the location of the invisible control in the DOM of the current page. The placeholder will be hidden and have zero dimensions (<code>display: none</code>).</p><p>Also see <a target="_self" class="jsdoclink" href="api/module:sap/ui/core/InvisibleRenderer">InvisibleRenderer</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
          * @param {boolean} bVisible <p>New value for property <code>visible</code></p>
          * @returns sap.ui.core.Control <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setVisible(bVisible: boolean): sap.ui.core.Control;
+        setVisible(bVisible?: boolean): sap.ui.core.Control;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getVisible" href="api/sap.ui.core.HTML#methods/getVisible">visible</a>.</p><p>Specifies whether the control is visible. Invisible controls are not rendered.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
          * @param {boolean} bVisible <p>New value for property <code>visible</code></p>
          * @returns sap.ui.core.HTML <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setVisible(bVisible: boolean): sap.ui.core.HTML;
+        setVisible(bVisible?: boolean): sap.ui.core.HTML;
       }
       /**
        * <p>Icon uses embedded font instead of pixel image. Comparing to image, Icon is easily scalable, color can be altered live and various effects can be added using css.</p><p>A set of built in Icons is available and they can be fetched by calling sap.ui.core.IconPool.getIconURI and set this value to the src property on the Icon.</p>
@@ -5453,85 +5620,85 @@ declare namespace sap {
          * @param {string} sActiveBackgroundColor <p>New value for property <code>activeBackgroundColor</code></p>
          * @returns sap.ui.core.Icon <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setActiveBackgroundColor(sActiveBackgroundColor: string): sap.ui.core.Icon;
+        setActiveBackgroundColor(sActiveBackgroundColor?: string): sap.ui.core.Icon;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getActiveColor" href="api/sap.ui.core.Icon#methods/getActiveColor">activeColor</a>.</p><p>This color is shown when icon is pressed/activated by the user.</p><p>The property can be set with <a target="_self" class="jsdoclink" href="api/sap.ui.core.CSSColor">CSS Color</a> or <a target="_self" class="jsdoclink" href="api/sap.ui.core.IconColor">Semantic Icon Color</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
          * @param {string} sActiveColor <p>New value for property <code>activeColor</code></p>
          * @returns sap.ui.core.Icon <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setActiveColor(sActiveColor: string): sap.ui.core.Icon;
+        setActiveColor(sActiveColor?: string): sap.ui.core.Icon;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getAlt" href="api/sap.ui.core.Icon#methods/getAlt">alt</a>.</p><p>This defines the alternative text which is used for outputting the aria-label attribute on the DOM.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
          * @param {string} sAlt <p>New value for property <code>alt</code></p>
          * @returns sap.ui.core.Icon <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setAlt(sAlt: string): sap.ui.core.Icon;
+        setAlt(sAlt?: string): sap.ui.core.Icon;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getBackgroundColor" href="api/sap.ui.core.Icon#methods/getBackgroundColor">backgroundColor</a>.</p><p>Background color of the Icon in normal state.</p><p>The property can be set with <a target="_self" class="jsdoclink" href="api/sap.ui.core.CSSColor">CSS Color</a> or <a target="_self" class="jsdoclink" href="api/sap.ui.core.IconColor">Semantic Icon Color</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
          * @param {string} sBackgroundColor <p>New value for property <code>backgroundColor</code></p>
          * @returns sap.ui.core.Icon <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setBackgroundColor(sBackgroundColor: string): sap.ui.core.Icon;
+        setBackgroundColor(sBackgroundColor?: string): sap.ui.core.Icon;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getColor" href="api/sap.ui.core.Icon#methods/getColor">color</a>.</p><p>The color of the Icon. If color is not defined here, the Icon inherits the color from its DOM parent.</p><p>The property can be set with <a target="_self" class="jsdoclink" href="api/sap.ui.core.CSSColor">CSS Color</a> or <a target="_self" class="jsdoclink" href="api/sap.ui.core.IconColor">Semantic Icon Color</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
          * @param {string} sColor <p>New value for property <code>color</code></p>
          * @returns sap.ui.core.Icon <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setColor(sColor: string): sap.ui.core.Icon;
+        setColor(sColor?: string): sap.ui.core.Icon;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getDecorative" href="api/sap.ui.core.Icon#methods/getDecorative">decorative</a>.</p><p>A decorative icon is included for design reasons. Accessibility tools will ignore decorative icons. Tab stop isn't affected by this property anymore and it's now controlled by the existence of press event handler and the noTabStop property.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
          * @param {boolean} bDecorative <p>New value for property <code>decorative</code></p>
          * @returns sap.ui.core.Icon <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setDecorative(bDecorative: boolean): sap.ui.core.Icon;
+        setDecorative(bDecorative?: boolean): sap.ui.core.Icon;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHeight" href="api/sap.ui.core.Icon#methods/getHeight">height</a>.</p><p>This is the height of the DOM element which contains the Icon. Setting this property doesn't affect the size of the font. If you want to make the font bigger, increase the size property.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
          * @param {sap.ui.core.CSSSize} sHeight <p>New value for property <code>height</code></p>
          * @returns sap.ui.core.Icon <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setHeight(sHeight: sap.ui.core.CSSSize): sap.ui.core.Icon;
+        setHeight(sHeight?: sap.ui.core.CSSSize): sap.ui.core.Icon;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHoverBackgroundColor" href="api/sap.ui.core.Icon#methods/getHoverBackgroundColor">hoverBackgroundColor</a>.</p><p>Background color for Icon in hover state. This property has no visual effect when run on mobile device.</p><p>The property can be set with <a target="_self" class="jsdoclink" href="api/sap.ui.core.CSSColor">CSS Color</a> or <a target="_self" class="jsdoclink" href="api/sap.ui.core.IconColor">Semantic Icon Color</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
          * @param {string} sHoverBackgroundColor <p>New value for property <code>hoverBackgroundColor</code></p>
          * @returns sap.ui.core.Icon <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setHoverBackgroundColor(sHoverBackgroundColor: string): sap.ui.core.Icon;
+        setHoverBackgroundColor(sHoverBackgroundColor?: string): sap.ui.core.Icon;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHoverColor" href="api/sap.ui.core.Icon#methods/getHoverColor">hoverColor</a>.</p><p>This color is shown when icon is hovered. This property has no visual effect when run on mobile device.</p><p>The property can be set with <a target="_self" class="jsdoclink" href="api/sap.ui.core.CSSColor">CSS Color</a> or <a target="_self" class="jsdoclink" href="api/sap.ui.core.IconColor">Semantic Icon Color</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
          * @param {string} sHoverColor <p>New value for property <code>hoverColor</code></p>
          * @returns sap.ui.core.Icon <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setHoverColor(sHoverColor: string): sap.ui.core.Icon;
+        setHoverColor(sHoverColor?: string): sap.ui.core.Icon;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getNoTabStop" href="api/sap.ui.core.Icon#methods/getNoTabStop">noTabStop</a>.</p><p>Defines whether the tab stop of icon is controlled by the existence of press event handler. When it's set to false, Icon control has tab stop when press event handler is attached. If it's set to true, Icon control never has tab stop no matter whether press event handler exists or not.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
          * @param {boolean} bNoTabStop <p>New value for property <code>noTabStop</code></p>
          * @returns sap.ui.core.Icon <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setNoTabStop(bNoTabStop: boolean): sap.ui.core.Icon;
+        setNoTabStop(bNoTabStop?: boolean): sap.ui.core.Icon;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSize" href="api/sap.ui.core.Icon#methods/getSize">size</a>.</p><p>Since Icon uses font, this property will be applied to the css font-size property on the rendered DOM element.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
          * @param {sap.ui.core.CSSSize} sSize <p>New value for property <code>size</code></p>
          * @returns sap.ui.core.Icon <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setSize(sSize: sap.ui.core.CSSSize): sap.ui.core.Icon;
+        setSize(sSize?: sap.ui.core.CSSSize): sap.ui.core.Icon;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSrc" href="api/sap.ui.core.Icon#methods/getSrc">src</a>.</p><p>This property should be set by the return value of calling sap.ui.core.IconPool.getIconURI with an Icon name parameter and an optional collection parameter which is required when using application extended Icons. A list of standard FontIcon is available here.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
          * @param {sap.ui.core.URI} sSrc <p>New value for property <code>src</code></p>
          * @returns sap.ui.core.Icon <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setSrc(sSrc: sap.ui.core.URI): sap.ui.core.Icon;
+        setSrc(sSrc?: sap.ui.core.URI): sap.ui.core.Icon;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getUseIconTooltip" href="api/sap.ui.core.Icon#methods/getUseIconTooltip">useIconTooltip</a>.</p><p>Decides whether a default Icon tooltip should be used if no tooltip is set.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
          * @param {boolean} bUseIconTooltip <p>New value for property <code>useIconTooltip</code></p>
          * @returns sap.ui.core.Icon <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setUseIconTooltip(bUseIconTooltip: boolean): sap.ui.core.Icon;
+        setUseIconTooltip(bUseIconTooltip?: boolean): sap.ui.core.Icon;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.core.Icon#methods/getWidth">width</a>.</p><p>This is the width of the DOM element which contains the Icon. Setting this property doesn't affect the size of the font. If you want to make the font bigger, increase the size property.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
          * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
          * @returns sap.ui.core.Icon <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setWidth(sWidth: sap.ui.core.CSSSize): sap.ui.core.Icon;
+        setWidth(sWidth?: sap.ui.core.CSSSize): sap.ui.core.Icon;
       }
       /**
        * <p><p>Semantic Colors of an icon.</p></p>
@@ -5550,6 +5717,10 @@ declare namespace sap {
          */
         Default = "Default",
         /**
+         * <p>Color for icon used as a marker</p>
+         */
+        Marker = "Marker",
+        /**
          * <p>Negative color</p>
          */
         Negative = "Negative",
@@ -5558,9 +5729,17 @@ declare namespace sap {
          */
         Neutral = "Neutral",
         /**
+         * <p>Color that indicates an icon which isn't interactive</p>
+         */
+        NonInteractive = "NonInteractive",
+        /**
          * <p>Positive color</p>
          */
         Positive = "Positive",
+        /**
+         * <p>Color for icon used in a Tile</p>
+         */
+        Tile = "Tile",
       }
       /**
        * <p><p>Marker interface for controls that can serve as a context menu.</p><p>Implementation of this interface should implement the <code>openAsContextMenu</code> method.</p></p>
@@ -5599,7 +5778,9 @@ declare namespace sap {
         Inactive = "Inactive",
       }
       /**
-       * <p><p>Colors to highlight certain UI elements.</p><p>In contrast to the <code>ValueState</code>, the semantic meaning must be defined by the application.</p></p>
+       * <p><p>Colors to highlight certain UI elements.</p><p>In contrast to the <code>ValueState</code>, the semantic meaning must be defined by the application.</p><br><br>References: <ul><li><a target="_blank" rel="noopener" href="https://experience.sap.com/fiori-design-web/how-to-use-semantic-colors">Semantic Colors</a>
+      <img src="./resources/sap/ui/documentation/sdk/images/link-sap.png"
+      title="Information published on SAP site" class="sapUISDKExternalLink"/></li></ul></p>
        */
       export enum IndicationColor {
         /**
@@ -5683,6 +5864,35 @@ declare namespace sap {
         setInterval(iInterval: number): void;
       }
       /**
+       * <p>The InvisibleMessage provides a way to programmatically expose dynamic content changes in a way that can be announced by screen readers.</p><h3>Overview</h3><p> This class is a singleton. The class instance can be retrieved via the static method <a target="_self" class="jsdoclink scrollToMethod" data-target="sap.ui.core.InvisibleMessage.getInstance" href="api/sap.ui.core.InvisibleMessage#methods/sap.ui.core.InvisibleMessage.getInstance">sap.ui.core.InvisibleMessage.getInstance</a>.</p><p><b>Note:</b> Keep in mind that, according to the ARIA standard, the live regions should be presented and should be empty. Thus, we recommend to instantiate <code>InvisibleMessage</code> via <code>sap.ui.core.InvisibleMessage.getInstance()</code> as early as possible in the application logic, e.g. with the Component initialization, with the main Controller initialization, after Core initialization, etc. Then, you should specify the text that has to be announced by the screen reader and the live region’s mode using the <code>announce</code> method.</p>
+       */
+      export class InvisibleMessage extends sap.ui.base.ManagedObject {
+        /**
+         * <p>Returns the instance of the class.</p>
+         * @returns sap.ui.core.InvisibleMessage <p>oInstance</p>
+         */
+        static getInstance(): sap.ui.core.InvisibleMessage;
+        /**
+         * <p>Inserts the string into the respective span, depending on the mode provided.</p>
+         * @param {string} sText <p>String to be announced by the screen reader.</p>
+         * @param {sap.ui.core.InvisibleMessageMode} sMode <p>The mode to be inserted in the aria-live attribute.</p>
+         */
+        announce(sText: string, sMode: sap.ui.core.InvisibleMessageMode): void;
+      }
+      /**
+       * <p><p>Enumeration for different mode behaviors of the <code>InvisibleMessage</code>.</p></p>
+       */
+      export enum InvisibleMessageMode {
+        /**
+         * <p>Indicates that updates to the region have the highest priority and should be presented to the user immediately.</p>
+         */
+        Assertive = "Assertive",
+        /**
+         * <p>Indicates that updates to the region should be presented at the next graceful opportunity, such as at the end of reading the current sentence, or when the user pauses typing.</p>
+         */
+        Polite = "Polite",
+      }
+      /**
        * <p>An InvisibleText is used to bring hidden texts to the UI for screen reader support. The hidden text can e.g. be referenced in the ariaLabelledBy or ariaDescribedBy associations of other controls.</p><p>The inherited properties busy, busyIndicatorDelay and visible and the aggregation tooltip is not supported by this control.</p>
        */
       export class InvisibleText extends sap.ui.core.Control {
@@ -5709,7 +5919,7 @@ declare namespace sap {
          * @param {string} sText <p>New value for property <code>text</code></p>
          * @returns sap.ui.core.InvisibleText <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setText(sText: string): sap.ui.core.InvisibleText;
+        setText(sText?: string): sap.ui.core.InvisibleText;
         /**
          * <p>Adds <code>this</code> control into the static, hidden area UI area container.<br><br>References: <ul><li>sap.ui.core.Control#placeAt</li></ul></p>
          * @returns sap.ui.core.InvisibleText <p>Returns <code>this</code> to allow method chaining</p>
@@ -5756,25 +5966,25 @@ declare namespace sap {
          * @param {boolean} bEnabled <p>New value for property <code>enabled</code></p>
          * @returns sap.ui.core.Item <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setEnabled(bEnabled: boolean): sap.ui.core.Item;
+        setEnabled(bEnabled?: boolean): sap.ui.core.Item;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getKey" href="api/sap.ui.core.Item#methods/getKey">key</a>.</p><p>Can be used as input for subsequent actions.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
          * @param {string} sKey <p>New value for property <code>key</code></p>
          * @returns sap.ui.core.Item <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setKey(sKey: string): sap.ui.core.Item;
+        setKey(sKey?: string): sap.ui.core.Item;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getText" href="api/sap.ui.core.Item#methods/getText">text</a>.</p><p>The text to be displayed for the item.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
          * @param {string} sText <p>New value for property <code>text</code></p>
          * @returns sap.ui.core.Item <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setText(sText: string): sap.ui.core.Item;
+        setText(sText?: string): sap.ui.core.Item;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getTextDirection" href="api/sap.ui.core.Item#methods/getTextDirection">textDirection</a>.</p><p>Options are RTL and LTR. Alternatively, an item can inherit its text direction from its parent control.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Inherit</code>.</p>
          * @param {sap.ui.core.TextDirection} sTextDirection <p>New value for property <code>textDirection</code></p>
          * @returns sap.ui.core.Item <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setTextDirection(sTextDirection: sap.ui.core.TextDirection): sap.ui.core.Item;
+        setTextDirection(sTextDirection?: sap.ui.core.TextDirection): sap.ui.core.Item;
       }
       /**
        * <p><p>Marker interface for controls which are suitable for use as label.</p></p>
@@ -5817,13 +6027,13 @@ declare namespace sap {
          * @param {string} sAdditionalText <p>New value for property <code>additionalText</code></p>
          * @returns sap.ui.core.ListItem <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setAdditionalText(sAdditionalText: string): sap.ui.core.ListItem;
+        setAdditionalText(sAdditionalText?: string): sap.ui.core.ListItem;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getIcon" href="api/sap.ui.core.ListItem#methods/getIcon">icon</a>.</p><p>The icon belonging to this list item instance. This can be a URI to an image or an icon font URI.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
          * @param {string} sIcon <p>New value for property <code>icon</code></p>
          * @returns sap.ui.core.ListItem <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setIcon(sIcon: string): sap.ui.core.ListItem;
+        setIcon(sIcon?: string): sap.ui.core.ListItem;
       }
       /**
        * <p>The LocalBusyIndicator is a special version of the BusyIndicator. This one doesn't block the whole screen - it just blocks the corresponding control and puts a local animation over the control. To use the functionality of this control the corresponding control needs to be enabled via the 'LocalBusyIndicatorSupport' accordingly to the ListBox control (see the init-function of the ListBox).</p>
@@ -5836,27 +6046,27 @@ declare namespace sap {
          */
         constructor(sId?: string, mSettings?: any);
         /**
-         * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHeight" href="api/sap.ui.core.LocalBusyIndicator#methods/getHeight">height</a>.</p><p>This property is the height of the control that has to be covered. With this height the position of the animation can be properly set.</p><p>Default value is <code>100px</code>.</p>
+         * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHeight" href="api/sap.ui.core.LocalBusyIndicator#methods/getHeight">height</a>.</p><p>This property is the height of the control that has to be covered. With this height the position of the animation can be properly set.</p><p>Default value is <code>'100px'</code>.</p>
          * @returns sap.ui.core.CSSSize <p>Value of property <code>height</code></p>
          */
         getHeight(): sap.ui.core.CSSSize;
         /**
-         * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.core.LocalBusyIndicator#methods/getWidth">width</a>.</p><p>This property is the width of the control that has to be covered. With this width the position of the animation can be properly set.</p><p>Default value is <code>100px</code>.</p>
+         * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.core.LocalBusyIndicator#methods/getWidth">width</a>.</p><p>This property is the width of the control that has to be covered. With this width the position of the animation can be properly set.</p><p>Default value is <code>'100px'</code>.</p>
          * @returns sap.ui.core.CSSSize <p>Value of property <code>width</code></p>
          */
         getWidth(): sap.ui.core.CSSSize;
         /**
-         * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHeight" href="api/sap.ui.core.LocalBusyIndicator#methods/getHeight">height</a>.</p><p>This property is the height of the control that has to be covered. With this height the position of the animation can be properly set.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>100px</code>.</p>
+         * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHeight" href="api/sap.ui.core.LocalBusyIndicator#methods/getHeight">height</a>.</p><p>This property is the height of the control that has to be covered. With this height the position of the animation can be properly set.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>'100px'</code>.</p>
          * @param {sap.ui.core.CSSSize} sHeight <p>New value for property <code>height</code></p>
          * @returns sap.ui.core.LocalBusyIndicator <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setHeight(sHeight: sap.ui.core.CSSSize): sap.ui.core.LocalBusyIndicator;
+        setHeight(sHeight?: sap.ui.core.CSSSize): sap.ui.core.LocalBusyIndicator;
         /**
-         * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.core.LocalBusyIndicator#methods/getWidth">width</a>.</p><p>This property is the width of the control that has to be covered. With this width the position of the animation can be properly set.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>100px</code>.</p>
+         * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.core.LocalBusyIndicator#methods/getWidth">width</a>.</p><p>This property is the width of the control that has to be covered. With this width the position of the animation can be properly set.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>'100px'</code>.</p>
          * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
          * @returns sap.ui.core.LocalBusyIndicator <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setWidth(sWidth: sap.ui.core.CSSSize): sap.ui.core.LocalBusyIndicator;
+        setWidth(sWidth?: sap.ui.core.CSSSize): sap.ui.core.LocalBusyIndicator;
       }
       /**
        * <p>Locale represents a locale setting, consisting of a language, script, region, variants, extensions and private use section.</p>
@@ -5965,7 +6175,7 @@ declare namespace sap {
          */
         getCurrencyFormat(sStyle: string, sNumber: string, sPlural: string): string;
         /**
-         * <p>Get currency format pattern.</p>
+         * <p>Get currency format pattern.</p><p>CLDR format pattern:<br><br>References: <ul><li>http://cldr.unicode.org/translation/numbers-currency/number-patterns</li></ul></p>
          * @param {string} sContext <p>the context of the currency pattern (standard or accounting)</p>
          * @returns string <p>The pattern</p>
          */
@@ -6353,11 +6563,11 @@ declare namespace sap {
          */
         compareByType(oOther: sap.ui.core.Message): number;
         /**
-         * <p>Returns the icon's default URI depending on given size.</p><p>There are default icons for messages available that can be used this way. If no parameter is given, the size will be 16x16 per default. If larger icons are needed, the parameter "32x32" might be given.</p>
-         * @param {string} sSize <p>If parameter is not set the default icon's size will be 16x16. If parameter is set to "32x32" the icon size will be 32x32.</p>
+         * <p>Returns the icon's default URI depending on given size.</p>
+         * @param {string} sSize <p>Only the values "16x16" or "32x32" are allowed. Otherwise the default value is used.</p>
          * @returns sap.ui.core.URI <p>URI of the default icon.</p>
          */
-        getDefaultIcon(sSize: string): sap.ui.core.URI;
+        getDefaultIcon(sSize?: string): sap.ui.core.URI;
         /**
          * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getIcon" href="api/sap.ui.core.Message#methods/getIcon">icon</a>.</p><p>A possible icon URI of the message</p>
          * @returns sap.ui.core.URI <p>Value of property <code>icon</code></p>
@@ -6388,31 +6598,31 @@ declare namespace sap {
          * @param {sap.ui.core.URI} sIcon <p>New value for property <code>icon</code></p>
          * @returns sap.ui.core.Message <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setIcon(sIcon: sap.ui.core.URI): sap.ui.core.Message;
+        setIcon(sIcon?: sap.ui.core.URI): sap.ui.core.Message;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getLevel" href="api/sap.ui.core.Message#methods/getLevel">level</a>.</p><p>Setting the message's level.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>None</code>.</p>
          * @param {sap.ui.core.MessageType} sLevel <p>New value for property <code>level</code></p>
          * @returns sap.ui.core.Message <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setLevel(sLevel: sap.ui.core.MessageType): sap.ui.core.Message;
+        setLevel(sLevel?: sap.ui.core.MessageType): sap.ui.core.Message;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getReadOnly" href="api/sap.ui.core.Message#methods/getReadOnly">readOnly</a>.</p><p>Determines whether the message should be read only. This helps the application to handle a message a different way if the application differentiates between read-only and common messages.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
          * @param {boolean} bReadOnly <p>New value for property <code>readOnly</code></p>
          * @returns sap.ui.core.Message <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setReadOnly(bReadOnly: boolean): sap.ui.core.Message;
+        setReadOnly(bReadOnly?: boolean): sap.ui.core.Message;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getText" href="api/sap.ui.core.Message#methods/getText">text</a>.</p><p>Message text</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
          * @param {string} sText <p>New value for property <code>text</code></p>
          * @returns sap.ui.core.Message <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setText(sText: string): sap.ui.core.Message;
+        setText(sText?: string): sap.ui.core.Message;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getTimestamp" href="api/sap.ui.core.Message#methods/getTimestamp">timestamp</a>.</p><p>Message's timestamp. It is just a simple String that will be used without any transformation. So the application that uses messages needs to format the timestamp to its own needs.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
          * @param {string} sTimestamp <p>New value for property <code>timestamp</code></p>
          * @returns sap.ui.core.Message <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setTimestamp(sTimestamp: string): sap.ui.core.Message;
+        setTimestamp(sTimestamp?: string): sap.ui.core.Message;
       }
       /**
        * <p><p>Defines the different message types.</p></p>
@@ -6491,8 +6701,9 @@ declare namespace sap {
         /**
          * <p>Adds a DOM query selector for determining additional external popup content.</p><p>When the browser focus is switched from the main popup content (which is set by calling <a target="_self" class="jsdoclink scrollToMethod" data-target="setContent" href="api/sap.ui.core.Popup#methods/setContent">#setContent</a>) to another DOM element, this DOM element is tested against the selector to determine:</p><p><ul> <li>Autoclose popup: whether the popup should be kept open</li> <li>Modal popup: whether the focus is allowed to be taken away</li> </ul></p>
          * @param {string[] | string} vSelectors <p>One query selector or an array of query selectors to be added</p>
+         * @param {boolean} bMarkAsSelectable <p>Whether the external content should be marked instantly as user selectable. If the external content which matches the given or default selector is added after a modal popup is opened, this parameter needs to be set to <code>true</code> to make the external content user selectable.</p>
          */
-        static addExternalContent(vSelectors: string[] | string): void;
+        static addExternalContent(vSelectors: string[] | string, bMarkAsSelectable?: boolean): void;
         /**
          * <p>Attaches event handler <code>fnFunction</code> to the static <a target="_self" class="jsdoclink scrollToMethod" data-target="sap.ui.core.Popup.blockLayerStateChange" href="api/sap.ui.core.Popup#methods/sap.ui.core.Popup.blockLayerStateChange">blockLayerStateChange</a> event.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to a dummy event provider object.</p><p>The event gets triggered in case of modal popups when the first of multiple popups opens and closes.</p>
          * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
@@ -6517,10 +6728,19 @@ declare namespace sap {
          */
         static getNextZIndex(): number;
         /**
+         * <p>Marks the external content as not user selectable</p>
+         */
+        static markExternalContentAsNotSelectable(): void;
+        /**
+         * <p>Marks the external content as user selectable</p>
+         */
+        static markExternalContentAsSelectable(): void;
+        /**
          * <p>Removes a DOM query selector which has been added by <a target="_self" class="jsdoclink" href="api/sap.ui.core.Popup#methods/sap.ui.core.Popup.addExternalContent">sap.ui.core.Popup.addExternalContent</a>.</p><p>The default query selector <code>[data-sap-ui-integration-popup-content]</code> can't be deleted.</p>
          * @param {string[] | string} vSelectors <p>One query selector or an array of query selectors to be deleted</p>
+         * @param {boolean} bMarkAsNotSelectable <p>Whether the external content should be marked instantly as not user selectable. If the selector is removed while a modal popup is still open, this parameter needs to be set to <code>true</code> to make the external content not user selectable.</p>
          */
-        static removeExternalContent(vSelectors: string[] | string): void;
+        static removeExternalContent(vSelectors: string[] | string, bMarkAsNotSelectable?: boolean): void;
         /**
          * <p>Set an initial z-index that should be used by all Popup so all Popups start at least with the set z-index. If the given z-index is lower than any current available z-index the highest z-index will be used.</p>
          * @param {number} iInitialZIndex <p>is the initial z-index</p>
@@ -6556,7 +6776,7 @@ declare namespace sap {
         attachOpened(oData: any, fnFunction: Function, oListener?: any): sap.ui.core.Popup;
         /**
          * <p>Closes the popup.</p><p>If the Popup is already closed or in the process of closing, calling this method does nothing. If the Popup is in the process of being opened and closed with a duration of 0, calling this method does nothing. If the Popup is in the process of being opened and closed with an animation duration, the animation will be chained, but this functionality is dangerous, may lead to inconsistent behavior and is thus not recommended and may even be removed.</p>
-         * @param {number} iDuration <p>animation duration in milliseconds; default is the jQuery preset "fast". For iDuration == 0 the closing happens synchronously without animation.</p>
+         * @param {number} iDuration <p>Animation duration in milliseconds. For <code>iDuration</code> == 0 the closing happens synchronously without animation.</p>
          */
         close(iDuration?: number): void;
         /**
@@ -6648,7 +6868,7 @@ declare namespace sap {
         isOpen(): boolean;
         /**
          * <p>Opens the popup's content at the position either specified here or beforehand via <a target="_self" class="jsdoclink scrollToMethod" data-target="setPosition" href="api/sap.ui.core.Popup#methods/setPosition">#setPosition</a>. Content must be capable of being positioned via "position:absolute;" All parameters are optional (open() may be called without any parameters). iDuration may just be omitted, but if any of "at", "of", "offset", "collision" is given, also the preceding positioning parameters ("my", at",...) must be given.</p><p>If the Popup's OpenState is different from "CLOSED" (i.e. if the Popup is already open, opening or closing), the call is ignored.</p>
-         * @param {number} iDuration <p>animation duration in milliseconds; default is the jQuery preset "fast". For iDuration == 0 the opening happens synchronously without animation.</p>
+         * @param {number} iDuration <p>animation duration in milliseconds. For <code>iDuration</code> == 0 the opening happens synchronously without animation.</p>
          * @param {sap.ui.core.Popup.Dock} my <p>the popup content's reference position for docking</p>
          * @param {sap.ui.core.Popup.Dock} at <p>the "of" element's reference point for docking to</p>
          * @param {string | sap.ui.core.Element | HTMLElement | any | any} of <p>specifies the reference element to which the given content should dock to</p>
@@ -6677,12 +6897,12 @@ declare namespace sap {
          */
         setContent(oContent: sap.ui.core.Control | HTMLElement): sap.ui.core.Popup;
         /**
-         * <p>Sets the durations for opening and closing animations. Null values and values < 0 are ignored. A duration of 0 means no animation. Default value is "fast" which is the jQuery constant for "200 ms".</p>
+         * <p>Sets the durations for opening and closing animations. Null values and values < 0 are ignored. A duration of 0 means no animation.</p>
          * @param {number} iOpenDuration <p>in milliseconds</p>
          * @param {number} iCloseDuration <p>in milliseconds</p>
          * @returns sap.ui.core.Popup <p><code>this</code> to allow method chaining</p>
          */
-        setDurations(iOpenDuration: number, iCloseDuration: number): sap.ui.core.Popup;
+        setDurations(iOpenDuration?: number, iCloseDuration?: number): sap.ui.core.Popup;
         /**
          * <p>Sets additional content that are considered part of the Popup.</p><p>A popup with autoclose <a target="_self" class="jsdoclink scrollToMethod" data-target="setAutoClose" href="api/sap.ui.core.Popup#methods/setAutoClose">#setAutoClose</a> enabled allows the focus to be moved into the extra content without closing itself.</p><p>A popup with modal <a target="_self" class="jsdoclink scrollToMethod" data-target="setModal" href="api/sap.ui.core.Popup#methods/setModal">#setModal</a> enabled allows the focus to be shifted into the extra content without taking it back to the previous focused element in the popup.</p>
          * @param {HTMLElement[] | sap.ui.core.Element[] | string[]} aContent <p>An array containing DOM elements, sap.ui.core.Element or an ID which are considered to be part of the Popup; a value of null removes all previous content</p>
@@ -6816,7 +7036,7 @@ declare namespace sap {
       
         };
       
-      </pre></p><p>By default, when the control is invalidated (e.g. a property is changed, an aggregation is removed, or an association is added), it will be registered for re-rendering. During the (re)rendering, the <code>render</code> method of the control renderer is executed via a specified <code>RenderManager</code> interface and the control instance. Traditional string-based rendering creates a new HTML structure of the control in every rendering cycle and removes the existing control DOM structure from the DOM tree. The set of new semantic <code>RenderManager</code> APIs lets us understand the structure of the DOM, walk along the live DOM tree, and figure out changes as new APIs are called. If there is a change, then <code>RenderManager</code> patches only the required parts of the live DOM tree. This allows control developers to remove their DOM-related custom setters.</p><p><b>Note:</b> To enable the new in-place rendering technology, the <code>apiVersion</code> property of the control renderer must be set to <code>2</code>.</p><p><pre>
+      </pre></p><p>By default, when the control is invalidated (e.g. a property is changed, an aggregation is removed, or an association is added), it will be registered for re-rendering. During the (re)rendering, the <code>render</code> method of the control renderer is executed via a specified <code>RenderManager</code> interface and the control instance.</p><p>Traditional string-based rendering creates a new HTML structure of the control in every rendering cycle and removes the existing control DOM structure from the DOM tree.</p><p>The set of new semantic <code>RenderManager</code> APIs lets us understand the structure of the DOM, walk along the live DOM tree, and figure out changes as new APIs are called. If there is a change, then <code>RenderManager</code> patches only the required parts of the live DOM tree. This allows control developers to remove their DOM-related custom setters.</p><p><b>Note:</b> To enable the new in-place rendering technology, the <code>apiVersion</code> property of the control renderer must be set to <code>2</code>. This property is not inherited by subclass renderers. It has to be set anew by each subclass to assure that the extended contract between framework and renderer is fulfilled (see next paragraph).</p><p><pre>
       
         var myButtonRenderer = {
             apiVersion: 2    // enable in-place DOM patching
@@ -6831,7 +7051,7 @@ declare namespace sap {
       
         };
       
-      </pre></p><h3>Renderer.apiVersion contract</h3><p> To allow a more efficient in-place DOM patching and to ensure the compatibility of the control, the following prerequisites must be fulfilled for the controls using the new rendering technology:</p><p><ul> <li>Legacy control renderers must be migrated to the new semantic renderer API: <a target="_self" class="jsdoclink" href="api/sap.ui.core.RenderManager#methods/openStart">openStart</a>, <a target="_self" class="jsdoclink" href="api/sap.ui.core.RenderManager#methods/voidStart">voidStart</a>, <a target="_self" class="jsdoclink" href="api/sap.ui.core.RenderManager#methods/style">style</a>, <a target="_self" class="jsdoclink" href="api/sap.ui.core.RenderManager#methods/class">class</a>, <a target="_self" class="jsdoclink" href="api/sap.ui.core.RenderManager#methods/attr">attr</a>, <a target="_self" class="jsdoclink" href="api/sap.ui.core.RenderManager#methods/openEnd">openEnd</a>, <a target="_self" class="jsdoclink" href="api/sap.ui.core.RenderManager#methods/voidEnd">voidEnd</a>, <a target="_self" class="jsdoclink" href="api/sap.ui.core.RenderManager#methods/text">text</a>, <a target="_self" class="jsdoclink" href="api/sap.ui.core.RenderManager#methods/unsafeHtml">unsafeHtml</a>, <a target="_self" class="jsdoclink" href="api/sap.ui.core.RenderManager#methods/icon">icon</a>, <a target="_self" class="jsdoclink" href="api/sap.ui.core.RenderManager#methods/accessibilityState">accessibilityState</a>, <a target="_self" class="jsdoclink" href="api/sap.ui.core.RenderManager#methods/renderControl">renderControl</a>, <a target="_self" class="jsdoclink" href="api/sap.ui.core.RenderManager#methods/cleanupControlWithoutRendering">cleanupControlWithoutRendering</a> </li> <li>During the migration, restrictions that are defined in the API documentation must be taken into account, e.g. tag and attribute names must be set in their canonical form.</li> <li>Fault tolerance of HTML5 markups is not applicable for the new semantic rendering API, e.g. except void tags, all tags must be closed; duplicate attributes within one HTML element must not exist.</li> <li>Existing control DOM structure will not be removed from the DOM tree; therefore all custom events, including the ones that are registered with jQuery, must be deregistered correctly at the <code>onBeforeRendering</code> and <code>exit</code> hooks.</li> <li>Classes and attribute names must not be escaped. Styles should be validated via types but this might not be sufficient in all cases, e.g. validated URL values can contain harmful content; in this case <a target="_self" class="jsdoclink" href="api/module:sap/base/security/encodeCSS">encodeCSS</a> can be used.</li> <li>To allow a more efficient DOM update, second parameter of the <a target="_self" class="jsdoclink" href="api/sap.ui.core.RenderManager#methods/openStart">openStart</a> or <a target="_self" class="jsdoclink" href="api/sap.ui.core.RenderManager#methods/voidStart">voidStart</a> methods must be used to identify elements, e.g. use <code>rm.openStart("div", oControl.getId() + "-suffix");</code> instead of <code>rm.openStart("div").attr("id", oControl.getId() + "-suffix");</code></li> <li>Controls that listen to the <code>focusin</code> event must double check their focus handling. Since DOM nodes are not removed and only reused, the <code>focusin</code> event might not be fired because of re-rendering.</li> </ul><br><br><span>Documentation links:</span><ul><li><a target="_self" class="jsdoclink" href="api/sap.ui.core.Core">sap.ui.core.Core</a></li><li><a target="_self" class="jsdoclink" href="api/sap.ui#methods/sap.ui.getCore">sap.ui.getCore</a></li></ul></p>
+      </pre></p><h3>Contract for Renderer.apiVersion 2</h3><p> To allow a more efficient in-place DOM patching and to ensure the compatibility of the control, the following prerequisites must be fulfilled for the controls using the new rendering technology:</p><p><ul> <li>Legacy control renderers must be migrated to the new semantic renderer API: <a target="_self" class="jsdoclink" href="api/sap.ui.core.RenderManager#methods/openStart">openStart</a>, <a target="_self" class="jsdoclink" href="api/sap.ui.core.RenderManager#methods/voidStart">voidStart</a>, <a target="_self" class="jsdoclink" href="api/sap.ui.core.RenderManager#methods/style">style</a>, <a target="_self" class="jsdoclink" href="api/sap.ui.core.RenderManager#methods/class">class</a>, <a target="_self" class="jsdoclink" href="api/sap.ui.core.RenderManager#methods/attr">attr</a>, <a target="_self" class="jsdoclink" href="api/sap.ui.core.RenderManager#methods/openEnd">openEnd</a>, <a target="_self" class="jsdoclink" href="api/sap.ui.core.RenderManager#methods/voidEnd">voidEnd</a>, <a target="_self" class="jsdoclink" href="api/sap.ui.core.RenderManager#methods/text">text</a>, <a target="_self" class="jsdoclink" href="api/sap.ui.core.RenderManager#methods/unsafeHtml">unsafeHtml</a>, <a target="_self" class="jsdoclink" href="api/sap.ui.core.RenderManager#methods/icon">icon</a>, <a target="_self" class="jsdoclink" href="api/sap.ui.core.RenderManager#methods/accessibilityState">accessibilityState</a>, <a target="_self" class="jsdoclink" href="api/sap.ui.core.RenderManager#methods/renderControl">renderControl</a>, <a target="_self" class="jsdoclink" href="api/sap.ui.core.RenderManager#methods/cleanupControlWithoutRendering">cleanupControlWithoutRendering</a> </li> <li>During the migration, restrictions that are defined in the API documentation of those methods must be taken into account, e.g. tag and attribute names must be set in their canonical form.</li> <li>Fault tolerance of HTML5 markup is not applicable for the new semantic rendering API, e.g. except void tags, all tags must be closed; duplicate attributes within one HTML element must not exist.</li> <li>Existing control DOM structure will not be removed from the DOM tree; therefore all custom events, including the ones that are registered with jQuery, must be de-registered correctly at the <code>onBeforeRendering</code> and <code>exit</code> hooks.</li> <li>Classes and attribute names must not be escaped.</li> <li>Styles should be validated via types (e.g. <code>sap.ui.core.CSSSize</code>). But this might not be sufficient in all cases, e.g. validated URL values can contain harmful content; in this case <a target="_self" class="jsdoclink" href="api/module:sap/base/security/encodeCSS">encodeCSS</a> can be used.</li> <li>To allow a more efficient DOM update, second parameter of the <a target="_self" class="jsdoclink" href="api/sap.ui.core.RenderManager#methods/openStart">openStart</a> or <a target="_self" class="jsdoclink" href="api/sap.ui.core.RenderManager#methods/voidStart">voidStart</a> methods must be used to identify elements, e.g. use <code>rm.openStart("div", oControl.getId() + "-suffix");</code> instead of <code>rm.openStart("div").attr("id", oControl.getId() + "-suffix");</code></li> <li>Controls that listen to the <code>focusin</code> event must double check their focus handling. Since DOM nodes are not removed and only reused, the <code>focusin</code> event might not be fired during re-rendering.</li> </ul><br><br><span>Documentation links:</span><ul><li><a target="_self" class="jsdoclink" href="api/sap.ui.core.Core">sap.ui.core.Core</a></li><li><a target="_self" class="jsdoclink" href="api/sap.ui#methods/sap.ui.getCore">sap.ui.getCore</a></li></ul></p>
        */
       export class RenderManager extends Object {
         /**
@@ -6863,9 +7083,11 @@ declare namespace sap {
          */
         constructor();
         /**
-         * <p>Writes the accessibility state (see WAI-ARIA specification) of the provided element into the HTML based on the element's properties and associations.</p><p>The ARIA properties are only written when the accessibility feature is activated in the UI5 configuration.</p><p>The following properties/values to ARIA attribute mappings are done (if the element does have such properties): <ul> <li><code>editable===false</code> => <code>aria-readonly="true"</code></li> <li><code>enabled===false</code> => <code>aria-disabled="true"</code></li> <li><code>visible===false</code> => <code>aria-hidden="true"</code></li> <li><code>required===true</code> => <code>aria-required="true"</code></li> <li><code>selected===true</code> => <code>aria-selected="true"</code></li> <li><code>checked===true</code> => <code>aria-checked="true"</code></li> </ul></p><p>In case of the required attribute also the Label controls which referencing the given element in their 'for' relation are taken into account to compute the <code>aria-required</code> attribute.</p><p>Additionally, the association <code>ariaDescribedBy</code> and <code>ariaLabelledBy</code> are used to write the ID lists of the ARIA attributes <code>aria-describedby</code> and <code>aria-labelledby</code>.</p><p>Label controls that reference the given element in their 'for' relation are automatically added to the <code>aria-labelledby</code> attributes.</p><p>Note: This function is only a heuristic of a control property to ARIA attribute mapping. Control developers have to check whether it fulfills their requirements. In case of problems (for example the RadioButton has a <code>selected</code> property but must provide an <code>aria-checked</code> attribute) the auto-generated result of this function can be influenced via the parameter <code>mProps</code> as described below.</p><p>The parameter <code>mProps</code> can be used to either provide additional attributes which should be added and/or to avoid the automatic generation of single ARIA attributes. The 'aria-' prefix will be prepended automatically to the keys (Exception: Attribute 'role' does not get the prefix 'aria-').</p><p>Examples: <code>{hidden : true}</code> results in <code>aria-hidden="true"</code> independent of the presence or absence of the visibility property. <code>{hidden : null}</code> ensures that no <code>aria-hidden</code> attribute is written independent of the presence or absence of the visibility property. The function behaves in the same way for the associations <code>ariaDescribedBy</code> and <code>ariaLabelledBy</code>. To append additional values to the auto-generated <code>aria-describedby</code> and <code>aria-labelledby</code> attributes the following format can be used: <code>{describedby : {value: "id1 id2", append: true}}</code> => <code>aria-describedby="ida idb id1 id2"</code> (assuming that "ida idb" is the auto-generated part based on the association <code>ariaDescribedBy</code>).</p>
-         * @param {sap.ui.core.Element} oElement <p>the element whose accessibility state should be rendered</p>
-         * @param {any} mProps <p>a map of properties that should be added additionally or changed.</p>
+         * <p>Collects accessibility related attributes for an <code>Element</code> and renders them as part of the currently rendered DOM element.</p><p>See the WAI-ARIA specification for a general description of the accessibility related attributes. Attributes are only rendered when the accessibility feature is activated in the UI5 runtime configuration.</p><p>The values for the attributes are collected from the following sources (last one wins): <ol> <li>from the properties and associations of the given <code>oElement</code>, using a heuristic mapping (described below)</li> <li>from the <code>mProps</code> parameter, as provided by the caller</li> <li>from the parent of the given <code>oElement</code>, if it has a parent and if the parent implements the method <a target="_self" class="jsdoclink" href="api/sap.ui.core.Element#methods/enhanceAccessibilityState">enhanceAccessibilityState</a></li> </ol> If no <code>oElement</code> is given, only <code>mProps</code> will be taken into account.</p><h3>Heuristic Mapping</h3><p> The following mapping from properties/values to ARIA attributes is used (if the element does have such properties): <ul> <li><code>editable===false</code> => <code>aria-readonly="true"</code></li> <li><code>enabled===false</code> => <code>aria-disabled="true"</code></li> <li><code>visible===false</code> => <code>aria-hidden="true"</code></li> <li><code>required===true</code> => <code>aria-required="true"</code></li> <li><code>selected===true</code> => <code>aria-selected="true"</code></li> <li><code>checked===true</code> => <code>aria-checked="true"</code></li> </ul></p><p>In case of the <code>required</code> property, all label controls which reference the given element in their <code>labelFor</code> relation are additionally taken into account when determining the value for the <code>aria-required</code> attribute.</p><p>Additionally, the associations <code>ariaDescribedBy</code> and <code>ariaLabelledBy</code> are used to determine the lists of IDS for the ARIA attributes <code>aria-describedby</code> and <code>aria-labelledby</code>.</p><p>Label controls that reference the given element in their <code>labelFor</code> relation are automatically added to the <code>aria-labelledby</code> attributes.</p><p>Note: This function is only a heuristic of a control property to ARIA attribute mapping. Control developers have to check whether it fulfills their requirements. In case of problems (for example the RadioButton has a <code>selected</code> property but must provide an <code>aria-checked</code> attribute) the auto-generated result of this function can be influenced via the parameter <code>mProps</code> as described below.</p><p>The parameter <code>mProps</code> can be used to either provide additional attributes which should be rendered and/or to avoid the automatic generation of single ARIA attributes. The 'aria-' prefix will be prepended automatically to the keys (Exception: Attribute <code>role</code> does not get the prefix 'aria-').</p><p>Examples:<br> <code>{hidden : true}</code> results in <code>aria-hidden="true"</code> independent of the presence or absence of the visibility property.<br> <code>{hidden : null}</code> ensures that no <code>aria-hidden</code> attribute is written independent of the presence or absence of the visibility property.<br></p><p>The function behaves in the same way for the associations <code>ariaDescribedBy</code> and <code>ariaLabelledBy</code>. To append additional values to the auto-generated <code>aria-describedby</code> and <code>aria-labelledby</code> attributes, the following format can be used: <pre>
+          {describedby : {value: "id1 id2", append: true}} =>  aria-describedby = "ida idb id1 id2"
+        </pre> (assuming that "ida idb" is the auto-generated part based on the association <code>ariaDescribedBy</code>).</p>
+         * @param {sap.ui.core.Element} oElement <p>The <code>Element</code> whose accessibility state should be rendered</p>
+         * @param {any} mProps <p>A map of additional properties that should be added or changed.</p>
          * @returns sap.ui.core.RenderManager <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
         accessibilityState(oElement?: sap.ui.core.Element, mProps?: any): sap.ui.core.RenderManager;
@@ -7041,9 +7263,11 @@ declare namespace sap {
          */
         write(sText: string | number): sap.ui.core.RenderManager;
         /**
-         * <p>Writes the accessibility state (see WAI-ARIA specification) of the provided element into the HTML based on the element's properties and associations.</p><p>The ARIA properties are only written when the accessibility feature is activated in the UI5 configuration.</p><p>The following properties/values to ARIA attribute mappings are done (if the element does have such properties): <ul> <li><code>editable===false</code> => <code>aria-readonly="true"</code></li> <li><code>enabled===false</code> => <code>aria-disabled="true"</code></li> <li><code>visible===false</code> => <code>aria-hidden="true"</code></li> <li><code>required===true</code> => <code>aria-required="true"</code></li> <li><code>selected===true</code> => <code>aria-selected="true"</code></li> <li><code>checked===true</code> => <code>aria-checked="true"</code></li> </ul></p><p>In case of the required attribute also the Label controls which referencing the given element in their 'for' relation are taken into account to compute the <code>aria-required</code> attribute.</p><p>Additionally, the association <code>ariaDescribedBy</code> and <code>ariaLabelledBy</code> are used to write the ID lists of the ARIA attributes <code>aria-describedby</code> and <code>aria-labelledby</code>.</p><p>Label controls that reference the given element in their 'for' relation are automatically added to the <code>aria-labelledby</code> attributes.</p><p>Note: This function is only a heuristic of a control property to ARIA attribute mapping. Control developers have to check whether it fulfills their requirements. In case of problems (for example the RadioButton has a <code>selected</code> property but must provide an <code>aria-checked</code> attribute) the auto-generated result of this function can be influenced via the parameter <code>mProps</code> as described below.</p><p>The parameter <code>mProps</code> can be used to either provide additional attributes which should be added and/or to avoid the automatic generation of single ARIA attributes. The 'aria-' prefix will be prepended automatically to the keys (Exception: Attribute 'role' does not get the prefix 'aria-').</p><p>Examples: <code>{hidden : true}</code> results in <code>aria-hidden="true"</code> independent of the presence or absence of the visibility property. <code>{hidden : null}</code> ensures that no <code>aria-hidden</code> attribute is written independent of the presence or absence of the visibility property. The function behaves in the same way for the associations <code>ariaDescribedBy</code> and <code>ariaLabelledBy</code>. To append additional values to the auto-generated <code>aria-describedby</code> and <code>aria-labelledby</code> attributes the following format can be used: <code>{describedby : {value: "id1 id2", append: true}}</code> => <code>aria-describedby="ida idb id1 id2"</code> (assuming that "ida idb" is the auto-generated part based on the association <code>ariaDescribedBy</code>).</p>
-         * @param {sap.ui.core.Element} oElement <p>the element whose accessibility state should be rendered</p>
-         * @param {any} mProps <p>a map of properties that should be added additionally or changed.</p>
+         * <p>Collects accessibility related attributes for an <code>Element</code> and renders them as part of the currently rendered DOM element.</p><p>See the WAI-ARIA specification for a general description of the accessibility related attributes. Attributes are only rendered when the accessibility feature is activated in the UI5 runtime configuration.</p><p>The values for the attributes are collected from the following sources (last one wins): <ol> <li>from the properties and associations of the given <code>oElement</code>, using a heuristic mapping (described below)</li> <li>from the <code>mProps</code> parameter, as provided by the caller</li> <li>from the parent of the given <code>oElement</code>, if it has a parent and if the parent implements the method <a target="_self" class="jsdoclink" href="api/sap.ui.core.Element#methods/enhanceAccessibilityState">enhanceAccessibilityState</a></li> </ol> If no <code>oElement</code> is given, only <code>mProps</code> will be taken into account.</p><h3>Heuristic Mapping</h3><p> The following mapping from properties/values to ARIA attributes is used (if the element does have such properties): <ul> <li><code>editable===false</code> => <code>aria-readonly="true"</code></li> <li><code>enabled===false</code> => <code>aria-disabled="true"</code></li> <li><code>visible===false</code> => <code>aria-hidden="true"</code></li> <li><code>required===true</code> => <code>aria-required="true"</code></li> <li><code>selected===true</code> => <code>aria-selected="true"</code></li> <li><code>checked===true</code> => <code>aria-checked="true"</code></li> </ul></p><p>In case of the <code>required</code> property, all label controls which reference the given element in their <code>labelFor</code> relation are additionally taken into account when determining the value for the <code>aria-required</code> attribute.</p><p>Additionally, the associations <code>ariaDescribedBy</code> and <code>ariaLabelledBy</code> are used to determine the lists of IDS for the ARIA attributes <code>aria-describedby</code> and <code>aria-labelledby</code>.</p><p>Label controls that reference the given element in their <code>labelFor</code> relation are automatically added to the <code>aria-labelledby</code> attributes.</p><p>Note: This function is only a heuristic of a control property to ARIA attribute mapping. Control developers have to check whether it fulfills their requirements. In case of problems (for example the RadioButton has a <code>selected</code> property but must provide an <code>aria-checked</code> attribute) the auto-generated result of this function can be influenced via the parameter <code>mProps</code> as described below.</p><p>The parameter <code>mProps</code> can be used to either provide additional attributes which should be rendered and/or to avoid the automatic generation of single ARIA attributes. The 'aria-' prefix will be prepended automatically to the keys (Exception: Attribute <code>role</code> does not get the prefix 'aria-').</p><p>Examples:<br> <code>{hidden : true}</code> results in <code>aria-hidden="true"</code> independent of the presence or absence of the visibility property.<br> <code>{hidden : null}</code> ensures that no <code>aria-hidden</code> attribute is written independent of the presence or absence of the visibility property.<br></p><p>The function behaves in the same way for the associations <code>ariaDescribedBy</code> and <code>ariaLabelledBy</code>. To append additional values to the auto-generated <code>aria-describedby</code> and <code>aria-labelledby</code> attributes, the following format can be used: <pre>
+          {describedby : {value: "id1 id2", append: true}} =>  aria-describedby = "ida idb id1 id2"
+        </pre> (assuming that "ida idb" is the auto-generated part based on the association <code>ariaDescribedBy</code>).</p>
+         * @param {sap.ui.core.Element} oElement <p>The <code>Element</code> whose accessibility state should be rendered</p>
+         * @param {any} mProps <p>A map of additional properties that should be added or changed.</p>
          * @returns sap.ui.core.RenderManager <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
         writeAccessibilityState(oElement?: sap.ui.core.Element, mProps?: any): sap.ui.core.RenderManager;
@@ -7174,31 +7398,31 @@ declare namespace sap {
          * @param {sap.ui.core.CSSSize} sContentSize <p>New value for property <code>contentSize</code></p>
          * @returns sap.ui.core.ScrollBar <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setContentSize(sContentSize: sap.ui.core.CSSSize): sap.ui.core.ScrollBar;
+        setContentSize(sContentSize?: sap.ui.core.CSSSize): sap.ui.core.ScrollBar;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getScrollPosition" href="api/sap.ui.core.ScrollBar#methods/getScrollPosition">scrollPosition</a>.</p><p>Scroll position in steps or pixels.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
          * @param {number} iScrollPosition <p>New value for property <code>scrollPosition</code></p>
          * @returns sap.ui.core.ScrollBar <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setScrollPosition(iScrollPosition: number): sap.ui.core.ScrollBar;
+        setScrollPosition(iScrollPosition?: number): sap.ui.core.ScrollBar;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSize" href="api/sap.ui.core.ScrollBar#methods/getSize">size</a>.</p><p>Size of the Scrollbar (in pixels).</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
          * @param {sap.ui.core.CSSSize} sSize <p>New value for property <code>size</code></p>
          * @returns sap.ui.core.ScrollBar <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setSize(sSize: sap.ui.core.CSSSize): sap.ui.core.ScrollBar;
+        setSize(sSize?: sap.ui.core.CSSSize): sap.ui.core.ScrollBar;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSteps" href="api/sap.ui.core.ScrollBar#methods/getSteps">steps</a>.</p><p>Number of steps to scroll. Used if the size of the content is not known as the data is loaded dynamically.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
          * @param {number} iSteps <p>New value for property <code>steps</code></p>
          * @returns sap.ui.core.ScrollBar <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setSteps(iSteps: number): sap.ui.core.ScrollBar;
+        setSteps(iSteps?: number): sap.ui.core.ScrollBar;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getVertical" href="api/sap.ui.core.ScrollBar#methods/getVertical">vertical</a>.</p><p>Orientation. Defines if the Scrollbar is vertical or horizontal.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
          * @param {boolean} bVertical <p>New value for property <code>vertical</code></p>
          * @returns sap.ui.core.ScrollBar <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setVertical(bVertical: boolean): sap.ui.core.ScrollBar;
+        setVertical(bVertical?: boolean): sap.ui.core.ScrollBar;
         /**
          * <p>Unbinds the mouse wheel scroll event of the control that has the scrollbar</p>
          * @param {string} oOwnerDomRef <p>Dom ref of the Control that uses the scrollbar</p>
@@ -7356,25 +7580,25 @@ declare namespace sap {
          * @param {boolean} bEmphasized <p>New value for property <code>emphasized</code></p>
          * @returns sap.ui.core.Title <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setEmphasized(bEmphasized: boolean): sap.ui.core.Title;
+        setEmphasized(bEmphasized?: boolean): sap.ui.core.Title;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getIcon" href="api/sap.ui.core.Title#methods/getIcon">icon</a>.</p><p>Defines the URL for icon display</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
          * @param {sap.ui.core.URI} sIcon <p>New value for property <code>icon</code></p>
          * @returns sap.ui.core.Title <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setIcon(sIcon: sap.ui.core.URI): sap.ui.core.Title;
+        setIcon(sIcon?: sap.ui.core.URI): sap.ui.core.Title;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getLevel" href="api/sap.ui.core.Title#methods/getLevel">level</a>.</p><p>Defines the level of the title. If set to auto the level of the title is chosen by the control rendering the title.</p><p>Currently not all controls using the Title.control supporting this property.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Auto</code>.</p>
          * @param {sap.ui.core.TitleLevel} sLevel <p>New value for property <code>level</code></p>
          * @returns sap.ui.core.Title <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setLevel(sLevel: sap.ui.core.TitleLevel): sap.ui.core.Title;
+        setLevel(sLevel?: sap.ui.core.TitleLevel): sap.ui.core.Title;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getText" href="api/sap.ui.core.Title#methods/getText">text</a>.</p><p>Defines the title text</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
          * @param {string} sText <p>New value for property <code>text</code></p>
          * @returns sap.ui.core.Title <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setText(sText: string): sap.ui.core.Title;
+        setText(sText?: string): sap.ui.core.Title;
       }
       /**
        * <p><p>Level of a title.</p></p>
@@ -7446,7 +7670,7 @@ declare namespace sap {
          */
         protected fireClosed(mParameters?: any): sap.ui.core.TooltipBase;
         /**
-         * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getAtPosition" href="api/sap.ui.core.TooltipBase#methods/getAtPosition">atPosition</a>.</p><p>Optional. At position defines which position on the target control to align the positioned tooltip.</p><p>Default value is <code>begin bottom</code>.</p>
+         * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getAtPosition" href="api/sap.ui.core.TooltipBase#methods/getAtPosition">atPosition</a>.</p><p>Optional. At position defines which position on the target control to align the positioned tooltip.</p><p>Default value is <code>'begin bottom'</code>.</p>
          * @returns sap.ui.core.Dock <p>Value of property <code>atPosition</code></p>
          */
         getAtPosition(): sap.ui.core.Dock;
@@ -7461,17 +7685,17 @@ declare namespace sap {
          */
         getCloseDuration(): number;
         /**
-         * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getCollision" href="api/sap.ui.core.TooltipBase#methods/getCollision">collision</a>.</p><p>Optional. Collision - when the positioned element overflows the window in some direction, move it to an alternative position.</p><p>Default value is <code>flip</code>.</p>
+         * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getCollision" href="api/sap.ui.core.TooltipBase#methods/getCollision">collision</a>.</p><p>Optional. Collision - when the positioned element overflows the window in some direction, move it to an alternative position.</p><p>Default value is <code>'flip'</code>.</p>
          * @returns sap.ui.core.Collision <p>Value of property <code>collision</code></p>
          */
         getCollision(): sap.ui.core.Collision;
         /**
-         * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getMyPosition" href="api/sap.ui.core.TooltipBase#methods/getMyPosition">myPosition</a>.</p><p>Optional. My position defines which position on the extended tooltip being positioned to align with the target control.</p><p>Default value is <code>begin top</code>.</p>
+         * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getMyPosition" href="api/sap.ui.core.TooltipBase#methods/getMyPosition">myPosition</a>.</p><p>Optional. My position defines which position on the extended tooltip being positioned to align with the target control.</p><p>Default value is <code>'begin top'</code>.</p>
          * @returns sap.ui.core.Dock <p>Value of property <code>myPosition</code></p>
          */
         getMyPosition(): sap.ui.core.Dock;
         /**
-         * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getOffset" href="api/sap.ui.core.TooltipBase#methods/getOffset">offset</a>.</p><p>Optional. Offset adds these left-top values to the calculated position. Example: "10 3".</p><p>Default value is <code>10 3</code>.</p>
+         * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getOffset" href="api/sap.ui.core.TooltipBase#methods/getOffset">offset</a>.</p><p>Optional. Offset adds these left-top values to the calculated position. Example: "10 3".</p><p>Default value is <code>'10 3'</code>.</p>
          * @returns string <p>Value of property <code>offset</code></p>
          */
         getOffset(): string;
@@ -7491,59 +7715,59 @@ declare namespace sap {
          */
         getText(): string;
         /**
-         * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getAtPosition" href="api/sap.ui.core.TooltipBase#methods/getAtPosition">atPosition</a>.</p><p>Optional. At position defines which position on the target control to align the positioned tooltip.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>begin bottom</code>.</p>
+         * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getAtPosition" href="api/sap.ui.core.TooltipBase#methods/getAtPosition">atPosition</a>.</p><p>Optional. At position defines which position on the target control to align the positioned tooltip.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>'begin bottom'</code>.</p>
          * @param {sap.ui.core.Dock} sAtPosition <p>New value for property <code>atPosition</code></p>
          * @returns sap.ui.core.TooltipBase <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setAtPosition(sAtPosition: sap.ui.core.Dock): sap.ui.core.TooltipBase;
+        setAtPosition(sAtPosition?: sap.ui.core.Dock): sap.ui.core.TooltipBase;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getCloseDelay" href="api/sap.ui.core.TooltipBase#methods/getCloseDelay">closeDelay</a>.</p><p>Closing delay of the tooltip in milliseconds</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>100</code>.</p>
          * @param {number} iCloseDelay <p>New value for property <code>closeDelay</code></p>
          * @returns sap.ui.core.TooltipBase <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setCloseDelay(iCloseDelay: number): sap.ui.core.TooltipBase;
+        setCloseDelay(iCloseDelay?: number): sap.ui.core.TooltipBase;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getCloseDuration" href="api/sap.ui.core.TooltipBase#methods/getCloseDuration">closeDuration</a>.</p><p>Optional. Close Duration in milliseconds.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>200</code>.</p>
          * @param {number} iCloseDuration <p>New value for property <code>closeDuration</code></p>
          * @returns sap.ui.core.TooltipBase <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setCloseDuration(iCloseDuration: number): sap.ui.core.TooltipBase;
+        setCloseDuration(iCloseDuration?: number): sap.ui.core.TooltipBase;
         /**
-         * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getCollision" href="api/sap.ui.core.TooltipBase#methods/getCollision">collision</a>.</p><p>Optional. Collision - when the positioned element overflows the window in some direction, move it to an alternative position.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>flip</code>.</p>
+         * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getCollision" href="api/sap.ui.core.TooltipBase#methods/getCollision">collision</a>.</p><p>Optional. Collision - when the positioned element overflows the window in some direction, move it to an alternative position.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>'flip'</code>.</p>
          * @param {sap.ui.core.Collision} sCollision <p>New value for property <code>collision</code></p>
          * @returns sap.ui.core.TooltipBase <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setCollision(sCollision: sap.ui.core.Collision): sap.ui.core.TooltipBase;
+        setCollision(sCollision?: sap.ui.core.Collision): sap.ui.core.TooltipBase;
         /**
-         * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getMyPosition" href="api/sap.ui.core.TooltipBase#methods/getMyPosition">myPosition</a>.</p><p>Optional. My position defines which position on the extended tooltip being positioned to align with the target control.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>begin top</code>.</p>
+         * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getMyPosition" href="api/sap.ui.core.TooltipBase#methods/getMyPosition">myPosition</a>.</p><p>Optional. My position defines which position on the extended tooltip being positioned to align with the target control.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>'begin top'</code>.</p>
          * @param {sap.ui.core.Dock} sMyPosition <p>New value for property <code>myPosition</code></p>
          * @returns sap.ui.core.TooltipBase <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setMyPosition(sMyPosition: sap.ui.core.Dock): sap.ui.core.TooltipBase;
+        setMyPosition(sMyPosition?: sap.ui.core.Dock): sap.ui.core.TooltipBase;
         /**
-         * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getOffset" href="api/sap.ui.core.TooltipBase#methods/getOffset">offset</a>.</p><p>Optional. Offset adds these left-top values to the calculated position. Example: "10 3".</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>10 3</code>.</p>
+         * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getOffset" href="api/sap.ui.core.TooltipBase#methods/getOffset">offset</a>.</p><p>Optional. Offset adds these left-top values to the calculated position. Example: "10 3".</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>'10 3'</code>.</p>
          * @param {string} sOffset <p>New value for property <code>offset</code></p>
          * @returns sap.ui.core.TooltipBase <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setOffset(sOffset: string): sap.ui.core.TooltipBase;
+        setOffset(sOffset?: string): sap.ui.core.TooltipBase;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getOpenDelay" href="api/sap.ui.core.TooltipBase#methods/getOpenDelay">openDelay</a>.</p><p>Opening delay of the tooltip in milliseconds</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>500</code>.</p>
          * @param {number} iOpenDelay <p>New value for property <code>openDelay</code></p>
          * @returns sap.ui.core.TooltipBase <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setOpenDelay(iOpenDelay: number): sap.ui.core.TooltipBase;
+        setOpenDelay(iOpenDelay?: number): sap.ui.core.TooltipBase;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getOpenDuration" href="api/sap.ui.core.TooltipBase#methods/getOpenDuration">openDuration</a>.</p><p>Optional. Open Duration in milliseconds.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>200</code>.</p>
          * @param {number} iOpenDuration <p>New value for property <code>openDuration</code></p>
          * @returns sap.ui.core.TooltipBase <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setOpenDuration(iOpenDuration: number): sap.ui.core.TooltipBase;
+        setOpenDuration(iOpenDuration?: number): sap.ui.core.TooltipBase;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getText" href="api/sap.ui.core.TooltipBase#methods/getText">text</a>.</p><p>The text that is shown in the tooltip that extends the TooltipBase class, for example in RichTooltip.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
          * @param {string} sText <p>New value for property <code>text</code></p>
          * @returns sap.ui.core.TooltipBase <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setText(sText: string): sap.ui.core.TooltipBase;
+        setText(sText?: string): sap.ui.core.TooltipBase;
       }
       /**
        * <p>An area in a page that hosts a tree of UI elements.</p><p><code>UIArea</code>s are fully managed by the UI5 <a target="_self" class="jsdoclink" href="api/sap.ui.core.Core">Core</a>. They cannot be created by the application but are implicitly created by the Core when controls are placed via <a target="_self" class="jsdoclink" href="api/sap.ui.core.Control#methods/placeAt">Control#placeAt</a> at a new DOM element for which no <code>UIArea</code> exists yet.</p><p><code>UIArea</code>s are essential for the rendering of controls. Controls get rendered only when they are directly or indirectly contained in the <code>content</code> aggregation of a <code>UIArea</code>. <code>Control#placeAt</code> ensures that there is a <code>UIArea</code> with the given ID and adds the control to the <code>content</code> aggregation of this <code>UIArea</code>. Whenever controls become invalidated, the corresponding <code>UIArea</code> remembers this and takes care of the re-rendering of the control.</p><p>Additionally, <code>UIArea</code>s play an important role in the event handling of controls. They register for a standard set of browser events. For each incoming event, they identify the control to which the target of the event belongs to and dispatch the event to that control. This dispatching reduces the number of event handlers in a page.</p><p><code>UIArea</code>s also act as a data binding root for their contained controls. Whenever a model is attached to or detached from the Core, this change is propagated to all <code>UIAreas</code> which in turn propagate it further down to their aggregated children, etc.</p><p>The special aggregation named <code>dependents</code> also participates in the databinding, but its content is not rendered by the <code>UIArea</code>. It can be used for popups or similar controls that are not contained in the normal control tree, but nevertheless should receive model or binding context updates.</p>
@@ -7743,9 +7967,9 @@ declare namespace sap {
         byId(sId: string): sap.ui.core.Element;
         /**
          * <p>Hook method to create the content (UI Control Tree) of this component.</p><p>The default implementation in this class reads the name (and optionally type) of a root view from the descriptor for this component (path <code>/sap.ui5/rootView</code>) or, for backward compatibility, just the name from static component metadata (property <code>rootView</code>). When no type is specified, it defaults to XML. The method then calls the <a target="_self" class="jsdoclink" href="api/sap.ui#methods/sap.ui.view">view factory</a> to instantiate the root view and returns the result.</p><p>When there is no root view configuration, <code>null</code> will be returned.</p><p>This method can be overwritten by subclasses if the default implementation doesn't fit their needs. Subclasses are not limited to views as return type but may return any control, but only a single control (can be the root of a larger control tree, however).</p>
-         * @returns sap.ui.core.mvc.View|sap.ui.core.Control <p>Root control of the UI tree or <code>null</code> if none is configured</p>
+         * @returns sap.ui.core.Control|null <p>Root control of the UI tree or <code>null</code> if none is configured</p>
          */
-        createContent(): sap.ui.core.mvc.View | sap.ui.core.Control;
+        createContent(): sap.ui.core.Control | null;
         /**
          * <p>Convert the given component local element ID to a globally unique ID by prefixing it with the component ID.</p>
          * @param {string} sId <p>Component local ID of the element</p>
@@ -7902,7 +8126,9 @@ declare namespace sap {
         }
       }
       /**
-       * <p><p>Marker for the correctness of the current value.</p></p>
+       * <p><p>Marker for the correctness of the current value.</p><br><br>References: <ul><li><a target="_blank" rel="noopener" href="https://experience.sap.com/fiori-design-web/how-to-use-semantic-colors">Semantic Colors</a>
+      <img src="./resources/sap/ui/documentation/sdk/images/link-sap.png"
+      title="Information published on SAP site" class="sapUISDKExternalLink"/></li></ul></p>
        */
       export enum ValueState {
         /**
@@ -8097,7 +8323,7 @@ declare namespace sap {
          */
         protected byId(sId: string): sap.ui.core.Element;
         /**
-         * <p>Allows the parent of a control to enhance the aria information during rendering.</p><p>This function is called by the RenderManager's writeAccessibilityState method for the parent of the currently rendered control - if the parent implements it.</p>
+         * <p>Allows the parent of a control to enhance the aria information during rendering.</p><p>This function is called by the RenderManager's <a target="_self" class="jsdoclink" href="api/sap.ui.core.RenderManager#methods/accessibilityState">accessibilityState</a> and <a target="_self" class="jsdoclink" href="api/sap.ui.core.RenderManager#methods/writeAccessibilityState">writeAccessibilityState</a> methods for the parent of the currently rendered control - if the parent implements it.</p>
          * @param {sap.ui.core.Element} oElement <p>the Control/Element for which aria properties are rendered</p>
          * @param {any} mAriaProps <p>map of aria properties keyed by there name (without prefix "aria-")</p>
          * @returns any <p>map of enhanced aria properties</p>
@@ -8125,7 +8351,7 @@ declare namespace sap {
          */
         getResourceBundle(): any | Promise<any>;
         /**
-         * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.core.XMLComposite#methods/getWidth">width</a>.</p><p>The width</p><p>Default value is <code>100%</code>.</p>
+         * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.core.XMLComposite#methods/getWidth">width</a>.</p><p>The width</p><p>Default value is <code>'100%'</code>.</p>
          * @returns sap.ui.core.CSSSize <p>Value of property <code>width</code></p>
          */
         getWidth(): sap.ui.core.CSSSize;
@@ -8134,19 +8360,19 @@ declare namespace sap {
          * @param {boolean} bDisplayBlock <p>New value for property <code>displayBlock</code></p>
          * @returns sap.ui.core.XMLComposite <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setDisplayBlock(bDisplayBlock: boolean): sap.ui.core.XMLComposite;
+        setDisplayBlock(bDisplayBlock?: boolean): sap.ui.core.XMLComposite;
         /**
          * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHeight" href="api/sap.ui.core.XMLComposite#methods/getHeight">height</a>.</p><p>The height</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
          * @param {sap.ui.core.CSSSize} sHeight <p>New value for property <code>height</code></p>
          * @returns sap.ui.core.XMLComposite <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setHeight(sHeight: sap.ui.core.CSSSize): sap.ui.core.XMLComposite;
+        setHeight(sHeight?: sap.ui.core.CSSSize): sap.ui.core.XMLComposite;
         /**
-         * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.core.XMLComposite#methods/getWidth">width</a>.</p><p>The width</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>100%</code>.</p>
+         * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.core.XMLComposite#methods/getWidth">width</a>.</p><p>The width</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>'100%'</code>.</p>
          * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
          * @returns sap.ui.core.XMLComposite <p>Reference to <code>this</code> in order to allow method chaining</p>
          */
-        setWidth(sWidth: sap.ui.core.CSSSize): sap.ui.core.XMLComposite;
+        setWidth(sWidth?: sap.ui.core.CSSSize): sap.ui.core.XMLComposite;
       }
     }
   }
@@ -8302,9 +8528,9 @@ declare namespace sap {
           /**
            * <p>Retrieves a Component by its ID.</p><p>When the ID is <code>null</code> or <code>undefined</code> or when there's no Component with the given ID, then <code>undefined</code> is returned.</p>
            * @param {sap.ui.core.ID} id <p>ID of the Component to retrieve</p>
-           * @returns sap.ui.core.Component <p>Component with the given ID or <code>undefined</code></p>
+           * @returns sap.ui.core.Component|undefined <p>Component with the given ID or <code>undefined</code></p>
            */
-          function get(id: sap.ui.core.ID): sap.ui.core.Component;
+          function get(id: sap.ui.core.ID): sap.ui.core.Component | undefined;
         }
       }
     }
@@ -8553,13 +8779,13 @@ declare namespace sap {
            * @param {boolean} bEnabled <p>New value for property <code>enabled</code></p>
            * @returns sap.ui.core.dnd.DragDropBase <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          setEnabled(bEnabled: boolean): sap.ui.core.dnd.DragDropBase;
+          setEnabled(bEnabled?: boolean): sap.ui.core.dnd.DragDropBase;
           /**
            * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getGroupName" href="api/sap.ui.core.dnd.DragDropBase#methods/getGroupName">groupName</a>.</p><p>Defines the name of the group to which this object belongs. If <code>groupName</code> is specified, then this object will only interacts with other drag-and-drop objects within the same group.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
            * @param {string} sGroupName <p>New value for property <code>groupName</code></p>
            * @returns sap.ui.core.dnd.DragDropBase <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          setGroupName(sGroupName: string): sap.ui.core.dnd.DragDropBase;
+          setGroupName(sGroupName?: string): sap.ui.core.dnd.DragDropBase;
         }
         /**
          * <p>Provides the configuration for drag-and-drop operations.</p><p><b>Note:</b> This configuration might be ignored due to control <a target="_self" class="jsdoclink" href="api/sap.ui.core.Element#methods/sap.ui.core.Element.extend">metadata</a> restrictions.</p>
@@ -8608,7 +8834,7 @@ declare namespace sap {
            */
           protected fireDragEnd(mParameters?: any): sap.ui.core.dnd.DragDropInfo;
           /**
-           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="dragStart" href="api/sap.ui.core.dnd.DragDropInfo#events/dragStart">dragStart</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by using the <code>preventDefault</code>-method on the event object.</p>
+           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="dragStart" href="api/sap.ui.core.dnd.DragDropInfo#events/dragStart">dragStart</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by calling the <code>preventDefault</code> method on the event object. The return value of this method indicates whether the default action should be executed.</p>
            * @param {any} mParameters <p>Parameters to pass along with the event</p>
            * @returns boolean <p>Whether or not to prevent the default action</p>
            */
@@ -8628,7 +8854,7 @@ declare namespace sap {
            * @param {string} sSourceAggregation <p>New value for property <code>sourceAggregation</code></p>
            * @returns sap.ui.core.dnd.DragDropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          setSourceAggregation(sSourceAggregation: string): sap.ui.core.dnd.DragDropInfo;
+          setSourceAggregation(sSourceAggregation?: string): sap.ui.core.dnd.DragDropInfo;
           /**
            * <p>Sets the associated <a target="_self" class="jsdoclink scrollToMethod" data-target="getTargetElement" href="api/sap.ui.core.dnd.DragDropInfo#methods/getTargetElement">targetElement</a>.</p>
            * @param {sap.ui.core.ID | sap.ui.core.Element} oTargetElement <p>ID of an element which becomes the new target of this targetElement association; alternatively, an element instance may be given</p>
@@ -8683,7 +8909,7 @@ declare namespace sap {
            */
           protected fireDragEnd(mParameters?: any): sap.ui.core.dnd.DragInfo;
           /**
-           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="dragStart" href="api/sap.ui.core.dnd.DragInfo#events/dragStart">dragStart</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by using the <code>preventDefault</code>-method on the event object.</p>
+           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="dragStart" href="api/sap.ui.core.dnd.DragInfo#events/dragStart">dragStart</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by calling the <code>preventDefault</code> method on the event object. The return value of this method indicates whether the default action should be executed.</p>
            * @param {any} mParameters <p>Parameters to pass along with the event</p>
            * @returns boolean <p>Whether or not to prevent the default action</p>
            */
@@ -8698,7 +8924,7 @@ declare namespace sap {
            * @param {string} sSourceAggregation <p>New value for property <code>sourceAggregation</code></p>
            * @returns sap.ui.core.dnd.DragInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          setSourceAggregation(sSourceAggregation: string): sap.ui.core.dnd.DragInfo;
+          setSourceAggregation(sSourceAggregation?: string): sap.ui.core.dnd.DragInfo;
         }
         /**
          * <p><p>When a user requests to drag some controls that can be dragged, a drag session is started. The drag session can be used to transfer data between applications or between dragged and dropped controls. Please see provided APIs for more details.</p><p><b>Note:</b> An implementation of this interface is provided by the framework during drag-and-drop operations and is exposed as <code>dragSession</code> parameter of the different drag and drop events.</p><p><b>Note:</b> This interface is not intended to be implemented by controls, applications or test code. Extending it with additional methods in future versions will be regarded as a compatible change.</p></p>
@@ -8782,7 +9008,7 @@ declare namespace sap {
            */
           detachDrop(fnFunction: Function, oListener?: any): sap.ui.core.dnd.DropInfo;
           /**
-           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="dragEnter" href="api/sap.ui.core.dnd.DropInfo#events/dragEnter">dragEnter</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by using the <code>preventDefault</code>-method on the event object.</p>
+           * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="dragEnter" href="api/sap.ui.core.dnd.DropInfo#events/dragEnter">dragEnter</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by calling the <code>preventDefault</code> method on the event object. The return value of this method indicates whether the default action should be executed.</p>
            * @param {any} mParameters <p>Parameters to pass along with the event</p>
            * @returns boolean <p>Whether or not to prevent the default action</p>
            */
@@ -8800,17 +9026,17 @@ declare namespace sap {
            */
           protected fireDrop(mParameters?: any): sap.ui.core.dnd.DropInfo;
           /**
-           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getDropEffect" href="api/sap.ui.core.dnd.DropInfo#methods/getDropEffect">dropEffect</a>.</p><p>Defines the visual drop effect.</p><p>In Internet Explorer, default visual drop effect is <code>Copy</code> and this property has no effect.</p><p>Default value is <code>Move</code>.</p>
+           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getDropEffect" href="api/sap.ui.core.dnd.DropInfo#methods/getDropEffect">dropEffect</a>.</p><p>Defines the visual drop effect.</p><p>In Internet Explorer, default visual drop effect is <code>Copy</code> and this property has no effect.</p><p>Default value is <code>"Move"</code>.</p>
            * @returns sap.ui.core.dnd.DropEffect <p>Value of property <code>dropEffect</code></p>
            */
           getDropEffect(): sap.ui.core.dnd.DropEffect;
           /**
-           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getDropLayout" href="api/sap.ui.core.dnd.DropInfo#methods/getDropLayout">dropLayout</a>.</p><p>Defines the layout of the droppable controls if <code>dropPosition</code> is set to <code>Between</code> or <code>OnOrBetween</code>.</p><p>Default value is <code>Default</code>.</p>
+           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getDropLayout" href="api/sap.ui.core.dnd.DropInfo#methods/getDropLayout">dropLayout</a>.</p><p>Defines the layout of the droppable controls if <code>dropPosition</code> is set to <code>Between</code> or <code>OnOrBetween</code>.</p><p>Default value is <code>"Default"</code>.</p>
            * @returns sap.ui.core.dnd.DropLayout <p>Value of property <code>dropLayout</code></p>
            */
           getDropLayout(): sap.ui.core.dnd.DropLayout;
           /**
-           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getDropPosition" href="api/sap.ui.core.dnd.DropInfo#methods/getDropPosition">dropPosition</a>.</p><p>Defines the position for the drop action, visualized by a rectangle.</p><p>Default value is <code>On</code>.</p>
+           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getDropPosition" href="api/sap.ui.core.dnd.DropInfo#methods/getDropPosition">dropPosition</a>.</p><p>Defines the position for the drop action, visualized by a rectangle.</p><p>Default value is <code>"On"</code>.</p>
            * @returns sap.ui.core.dnd.DropPosition <p>Value of property <code>dropPosition</code></p>
            */
           getDropPosition(): sap.ui.core.dnd.DropPosition;
@@ -8820,29 +9046,29 @@ declare namespace sap {
            */
           getTargetAggregation(): string;
           /**
-           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getDropEffect" href="api/sap.ui.core.dnd.DropInfo#methods/getDropEffect">dropEffect</a>.</p><p>Defines the visual drop effect.</p><p>In Internet Explorer, default visual drop effect is <code>Copy</code> and this property has no effect.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Move</code>.</p>
+           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getDropEffect" href="api/sap.ui.core.dnd.DropInfo#methods/getDropEffect">dropEffect</a>.</p><p>Defines the visual drop effect.</p><p>In Internet Explorer, default visual drop effect is <code>Copy</code> and this property has no effect.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"Move"</code>.</p>
            * @param {sap.ui.core.dnd.DropEffect} sDropEffect <p>New value for property <code>dropEffect</code></p>
            * @returns sap.ui.core.dnd.DropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          setDropEffect(sDropEffect: sap.ui.core.dnd.DropEffect): sap.ui.core.dnd.DropInfo;
+          setDropEffect(sDropEffect?: sap.ui.core.dnd.DropEffect): sap.ui.core.dnd.DropInfo;
           /**
-           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getDropLayout" href="api/sap.ui.core.dnd.DropInfo#methods/getDropLayout">dropLayout</a>.</p><p>Defines the layout of the droppable controls if <code>dropPosition</code> is set to <code>Between</code> or <code>OnOrBetween</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Default</code>.</p>
+           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getDropLayout" href="api/sap.ui.core.dnd.DropInfo#methods/getDropLayout">dropLayout</a>.</p><p>Defines the layout of the droppable controls if <code>dropPosition</code> is set to <code>Between</code> or <code>OnOrBetween</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"Default"</code>.</p>
            * @param {sap.ui.core.dnd.DropLayout} sDropLayout <p>New value for property <code>dropLayout</code></p>
            * @returns sap.ui.core.dnd.DropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          setDropLayout(sDropLayout: sap.ui.core.dnd.DropLayout): sap.ui.core.dnd.DropInfo;
+          setDropLayout(sDropLayout?: sap.ui.core.dnd.DropLayout): sap.ui.core.dnd.DropInfo;
           /**
-           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getDropPosition" href="api/sap.ui.core.dnd.DropInfo#methods/getDropPosition">dropPosition</a>.</p><p>Defines the position for the drop action, visualized by a rectangle.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>On</code>.</p>
+           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getDropPosition" href="api/sap.ui.core.dnd.DropInfo#methods/getDropPosition">dropPosition</a>.</p><p>Defines the position for the drop action, visualized by a rectangle.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"On"</code>.</p>
            * @param {sap.ui.core.dnd.DropPosition} sDropPosition <p>New value for property <code>dropPosition</code></p>
            * @returns sap.ui.core.dnd.DropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          setDropPosition(sDropPosition: sap.ui.core.dnd.DropPosition): sap.ui.core.dnd.DropInfo;
+          setDropPosition(sDropPosition?: sap.ui.core.dnd.DropPosition): sap.ui.core.dnd.DropInfo;
           /**
            * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getTargetAggregation" href="api/sap.ui.core.dnd.DropInfo#methods/getTargetAggregation">targetAggregation</a>.</p><p>The aggregation name in the drop target control which is the target of this drag-and-drop action. If undefined, the entire control is the target. This can be handy if the target control does not have any aggregations or if the drop position within the target does not matter.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
            * @param {string} sTargetAggregation <p>New value for property <code>targetAggregation</code></p>
            * @returns sap.ui.core.dnd.DropInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          setTargetAggregation(sTargetAggregation: string): sap.ui.core.dnd.DropInfo;
+          setTargetAggregation(sTargetAggregation?: string): sap.ui.core.dnd.DropInfo;
         }
         /**
          * <p><p>Configuration options for the layout of the droppable controls.</p></p>
@@ -8939,9 +9165,9 @@ declare namespace sap {
           /**
            * <p>Retrieves an Element by its ID.</p><p>When the ID is <code>null</code> or <code>undefined</code> or when there's no element with the given ID, then <code>undefined</code> is returned.</p>
            * @param {sap.ui.core.ID} id <p>ID of the element to retrieve</p>
-           * @returns sap.ui.core.Element <p>Element with the given ID or <code>undefined</code></p>
+           * @returns sap.ui.core.Element|undefined <p>Element with the given ID or <code>undefined</code></p>
            */
-          function get(id: sap.ui.core.ID): sap.ui.core.Element;
+          function get(id: sap.ui.core.ID): sap.ui.core.Element | undefined;
         }
       }
     }
@@ -9069,7 +9295,7 @@ declare namespace sap {
               "currencyCode": false,
               "customCurrencies": {
                   "BTC": {
-                      "symbol": "Ƀ",
+                      "symbol": "\u0243",
                       "decimals": 3
                   }
               }
@@ -9139,9 +9365,9 @@ declare namespace sap {
           /**
            * <p>Parse a string which is formatted according to the given format options.</p>
            * @param {string} sValue <p>the string containing a formatted numeric value</p>
-           * @returns number|array <p>the parsed value or an array which contains the parsed value and the currency code (symbol) when the NumberFormat is a currency instance</p>
+           * @returns number|array|string <p>the parsed value as: <ul> <li>number</li> <li>array which contains the parsed value and the currency code (symbol) or unit for currency and unit instances</li> <li>string when option "parseAsString" is <code>true</code></li> <li><code>NaN</code> if value cannot be parsed</li> <li><code>null</code> if value is invalid</li> </ul></p>
            */
-          parse(sValue: string): number | any[];
+          parse(sValue: string): number | any[] | string;
         }
         namespace NumberFormat {
           /**
@@ -9203,9 +9429,9 @@ declare namespace sap {
         function addIcon(iconName: string, collectionName: string, iconInfo: any): any;
         /**
          * <p>Creates an instance of <a target="_self" class="jsdoclink" href="api/sap.ui.core.Icon">sap.ui.core.Icon</a> if the given URI is an icon URI, otherwise the given constructor is called. The given URI is set to the src property of the control.</p>
-         * @param {string | any} setting <p>contains the properties which will be used to instantiate the returned control. It should contain at least a property named src. If it's given with a string type, it will be taken as the value of src property.</p>
-         * @param {Function} constructor <p>the constructor function which is called when the given URI isn't an icon URI</p>
-         * @returns sap.ui.core.Control <p>either an instance of sap.ui.core.Icon or instance created by calling the given constructor</p>
+         * @param {string | any} setting <p>Contains the properties which will be used to instantiate the returned control. All properties of the associated constructor can be used. Unknown properties are ignored. It should contain at least a property named src. If it's given with a string type, it will be taken as the value of src property.</p>
+         * @param {Function} constructor <p>The constructor function which is called when the given URI isn't an icon URI</p>
+         * @returns sap.ui.core.Control <p>Either an instance of sap.ui.core.Icon or instance created by calling the given constructor</p>
          */
         function createControlByURI(setting: string | any, constructor: Function): sap.ui.core.Control;
         /**
@@ -9229,7 +9455,7 @@ declare namespace sap {
          * <p>Returns an info object for the icon with the given <code>iconName</code> and <code>collectionName</code>.</p><p>Instead of giving name and collection, a complete icon-URI can be provided as <code>iconName</code>. The method will determine name and collection from the URI, see <a target="_self" class="jsdoclink scrollToMethod" data-target="sap.ui.core.IconPool.isIconURI" href="api/sap.ui.core.IconPool#methods/sap.ui.core.IconPool.isIconURI">IconPool.isIconURI</a> for details.</p><p>The returned info object has the following properties: <ul> <li><code>string: name</code> Name of the icon</li> <li><code>string: collection</code> Name of the collection that contains the icon or <code>undefined</code> in case of the default collection</li> <li><code>string: uri</code> Icon URI that identifies the icon</li> <li><code>string: fontFamily</code> CSS font family to use for this icon</li> <li><code>string: content</code> Character sequence that represents the icon in the icon font</li> <li><code>string: text</code> Alternative text describing the icon (optional, might be empty)</li> <li><code>boolean: suppressMirroring</code> Whether the icon needs no mirroring in right-to-left mode</li> </ul></p>
          * @param {string} iconName <p>Name of the icon, or a complete icon-URI with icon collection and icon name; must not be empty</p>
          * @param {string} collectionName <p>Name of the icon collection; to access built-in icons, omit the collection name</p>
-         * @param {string} loadingMode <p>The approach for loading the icon info, if it is not already available: sync (default) - font metadata is loaded synchronously and the icon info is returned immediately async - a promise is returned that returns the icon info when the font metadata is loaded mixed - until the font metadata is loaded a promise is returned, afterwards the icon info</p>
+         * @param {string} loadingMode <p>The approach for loading the icon info, if it is not already available: sync - font metadata is loaded synchronously and the icon info is returned immediately async - a promise is returned that returns the icon info when the font metadata is loaded mixed - until the font metadata is loaded a promise is returned, afterwards the icon info</p>
          * @returns object|Promise|undefined <p>Info object or Promise for the icon depending on the loadingMode or <code>undefined</code> when the icon can't be found or no icon name was given.</p>
          */
         function getIconInfo(iconName: string, collectionName?: string, loadingMode?: string): any | Promise<any> | undefined;
@@ -9390,10 +9616,10 @@ declare namespace sap {
            */
           getPersistent(): boolean;
           /**
-           * <p>Returns the message target</p>
-           * @returns string <p>target</p>
+           * <p>Returns the targets of this message.</p>
+           * @returns string[] <p>The message targets; empty array if the message has no targets</p>
            */
-          getTarget(): string;
+          getTargets(): string[];
           /**
            * <p>Returns the if Message set as technical message</p>
            * @returns boolean <p>true if message is technical or false if not</p>
@@ -9450,10 +9676,10 @@ declare namespace sap {
            */
           setPersistent(bPersistent: boolean): void;
           /**
-           * <p>Set message target: The syntax is MessageProcessor dependent. See the documentation of the respective MessageProcessor.</p>
-           * @param {string} sTarget <p>The Message target</p>
+           * <p>Sets the targets of this message.</p>
+           * @param {string[]} aNewTargets <p>The new targets of this message; use an empty array if the message shall have no targets</p>
            */
-          setTarget(sTarget: string): void;
+          setTargets(aNewTargets: string[]): void;
           /**
            * <p>Set message as technical message</p>
            * @param {boolean} bTechnical <p>Set Message as technical message lifecycle controlled by Application</p>
@@ -10057,7 +10283,7 @@ declare namespace sap {
            */
           getViewName(): string;
           /**
-           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.core.mvc.View#methods/getWidth">width</a>.</p><p>The width</p><p>Default value is <code>100%</code>.</p>
+           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.core.mvc.View#methods/getWidth">width</a>.</p><p>The width</p><p>Default value is <code>'100%'</code>.</p>
            * @returns sap.ui.core.CSSSize <p>Value of property <code>width</code></p>
            */
           getWidth(): sap.ui.core.CSSSize;
@@ -10104,25 +10330,25 @@ declare namespace sap {
            * @param {boolean} bDisplayBlock <p>New value for property <code>displayBlock</code></p>
            * @returns sap.ui.core.mvc.View <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          setDisplayBlock(bDisplayBlock: boolean): sap.ui.core.mvc.View;
+          setDisplayBlock(bDisplayBlock?: boolean): sap.ui.core.mvc.View;
           /**
            * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHeight" href="api/sap.ui.core.mvc.View#methods/getHeight">height</a>.</p><p>The height</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
            * @param {sap.ui.core.CSSSize} sHeight <p>New value for property <code>height</code></p>
            * @returns sap.ui.core.mvc.View <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          setHeight(sHeight: sap.ui.core.CSSSize): sap.ui.core.mvc.View;
+          setHeight(sHeight?: sap.ui.core.CSSSize): sap.ui.core.mvc.View;
           /**
            * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getViewName" href="api/sap.ui.core.mvc.View#methods/getViewName">viewName</a>.</p><p>Name of the View</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
            * @param {string} sViewName <p>New value for property <code>viewName</code></p>
            * @returns sap.ui.core.mvc.View <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          setViewName(sViewName: string): sap.ui.core.mvc.View;
+          setViewName(sViewName?: string): sap.ui.core.mvc.View;
           /**
-           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.core.mvc.View#methods/getWidth">width</a>.</p><p>The width</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>100%</code>.</p>
+           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.core.mvc.View#methods/getWidth">width</a>.</p><p>The width</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>'100%'</code>.</p>
            * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
            * @returns sap.ui.core.mvc.View <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          setWidth(sWidth: sap.ui.core.CSSSize): sap.ui.core.mvc.View;
+          setWidth(sWidth?: sap.ui.core.CSSSize): sap.ui.core.mvc.View;
         }
         namespace View {
           /**
@@ -10419,11 +10645,11 @@ declare namespace sap {
              */
             static enable(): void;
             /**
-             * <p>Returns the currently set Blacklist configuration. Returned object is copied from the original one. In case you modify it, you have to set it by using the <code>setEventBlacklist</code> setter in order for it to take effect.</p>
+             * <p>Returns the currently set ExcludeList configuration. Returned object is copied from the original one. In case you modify it, you have to set it by using the <code>setEventExcludeList</code> setter in order for it to take effect.</p>
              */
-            static getEventsBlacklist(): void;
+            static getEventsExcludeList(): void;
             /**
-             * <p>Sets a new Blacklist configuration.</p><p>BlackList configuration should have the following structure as in the example shown below.</p><p>In <code>global</code> object, we set all events that we don't want to track. In <code>controls</code> object, we can list different controls and include or exclude events for them.</p><p>For example, in this configuration the <code>load</code> event is exposed for the <code>sap.m.Image</code> control regardless of it being excluded globally for all other controls.</p><p>For <code>sap.m.Button</code> control, we don't want to track the <code>tap</code> event but we need to track the <code>afterRendering</code> event.</p><p>In the case where we write in the <code>controls</code> object a control without any excluded or included events, this control is NOT tracked at all.</p><p>In the example configuration events coming from control <code>sap.m.AccButton</code> are not be exposed.</p><p><pre>
+             * <p>Sets a new ExcludeList configuration.</p><p>ExcludeList configuration should have the following structure as in the example shown below.</p><p>In <code>global</code> object, we set all events that we don't want to track. In <code>controls</code> object, we can list different controls and include or exclude events for them.</p><p>For example, in this configuration the <code>load</code> event is exposed for the <code>sap.m.Image</code> control regardless of it being excluded globally for all other controls.</p><p>For <code>sap.m.Button</code> control, we don't want to track the <code>tap</code> event but we need to track the <code>afterRendering</code> event.</p><p>In the case where we write in the <code>controls</code> object a control without any excluded or included events, this control is NOT tracked at all.</p><p>In the example configuration events coming from control <code>sap.m.AccButton</code> are not be exposed.</p><p><pre>
             {
                 global: ["modelContextChange", "beforeRendering", "afterRendering",
                     "propertyChanged", "beforeGeometryChanged", "geometryChanged",
@@ -10432,18 +10658,18 @@ declare namespace sap {
                     ],
                 controls: {
                   "sap.m.Image": {
-                    exclude: ["load"]
+                    include: ["load"]
                   },
                   "sap.m.Button": {
-                    include: ["tap"],
-                    exclude: ["afterRendering"]
+                    exclude: ["tap"],
+                    include: ["afterRendering"]
                   },
                   "sap.m.AccButton": {}
                 }
               }
             </pre> The set configuration object is copied from the given one.</p>
              */
-            static setEventsBlacklist(): void;
+            static setEventsExcludeList(): void;
             /**
              * <p>Event broadcaster. This class is meant for private usages. Apps are not supposed to used it. It is created for an experimental purpose.</p>
              */
@@ -10513,7 +10739,7 @@ declare namespace sap {
            * @param {string} sFileExtension <p>file extension</p>
            * @param {string} sMimeType <p>file mime-type</p>
            * @param {string} sCharset <p>file charset</p>
-           * @param {boolean} bByteOrderMark <p>Whether to prepend a unicode byte order mark (only applies for utf-8 charset). Default is <code>false</code> except when <code>sFileExtension</code> = <code>csv</code> it is <code>true</code> (compatibility reasons).</p>
+           * @param {boolean} bByteOrderMark <p>Whether to prepend a unicode byte order mark (only applies for utf-8 charset). Default is <code>false</code> except when <code>sFileExtension</code> === 'csv' and <code>sCharset</code> === 'utf-8' it is <code>true</code> (compatibility reasons).</p>
            */
           function save(sData: string, sFileName: string, sFileExtension: string, sMimeType: string, sCharset: string, bByteOrderMark?: boolean): void;
         }
@@ -10560,7 +10786,7 @@ declare namespace sap {
              */
             function bindProperty(vControl: sap.ui.base.ManagedObject | HTMLElement, sPropertyName: string, vBindingInfos: any): void;
             /**
-             * <p>Function determining the control targeted by the change. The function distinguishes between local IDs generated starting with 1.40 and the global IDs generated in previous versions.</p>
+             * <p>Function determining the control targeted by the change.</p>
              * @param {any} oSelector <p>Target of a flexibility change</p>
              * @param {sap.ui.core.UIComponent} oAppComponent <p>Application component</p>
              * @param {HTMLElement} oView <p>For XML processing only: XML node of the view</p>
@@ -10636,6 +10862,12 @@ declare namespace sap {
              */
             function getControlType(vControl: sap.ui.base.ManagedObject | HTMLElement): string;
             /**
+             * <p>Gets the flexibility delegate information placed at a control.</p>
+             * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>Control representation</p>
+             * @returns sap.ui.core.util.reflection.FlexDelegateInfo <p>Delegate information</p>
+             */
+            function getFlexDelegate(vControl: sap.ui.base.ManagedObject | HTMLElement): sap.ui.core.util.reflection.FlexDelegateInfo;
+            /**
              * <p>See <a target="_self" class="jsdoclink" href="api/sap.ui.base.ManagedObject#methods/getId">sap.ui.base.ManagedObject#getId</a> method.</p>
              * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>Control representation</p>
              * @returns string <p>ID</p>
@@ -10676,7 +10908,7 @@ declare namespace sap {
              */
             function getPropertyBindingOrProperty(vControl: sap.ui.base.ManagedObject | HTMLElement, sPropertyName: string): any;
             /**
-             * <p>Function for determining the selector that is used later to apply a change for a given control. The function distinguishes between local IDs generated starting with 1.40 and the global IDs generated in previous versions.</p>
+             * <p>Function for determining the selector that is used later to apply a change for a given control.</p>
              * @param {sap.ui.base.ManagedObject | HTMLElement | string} vControl <p>Control or ID string for which the selector should be determined</p>
              * @param {sap.ui.core.Component} oAppComponent <p>Application component, needed only if <code>vControl</code> is a string or XML node</p>
              * @param {any} mAdditionalSelectorInformation <p>Additional mapped data which is added to the selector</p>
@@ -10684,7 +10916,7 @@ declare namespace sap {
              */
             function getSelector(vControl: sap.ui.base.ManagedObject | HTMLElement | string, oAppComponent: sap.ui.core.Component, mAdditionalSelectorInformation?: any): any;
             /**
-             * <p>See <a target="_self" class="jsdoclink" href="api/sap.ui.core.StashedControlSupport#methods/getVisible">sap.ui.core.StashedControlSupport#getVisible</a> method.</p>
+             * <p>Retrieves the current value of the stashed property.</p>
              * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>Control representation</p>
              * @returns boolean <p><code>true</code> if the control is stashed</p>
              */
@@ -10761,17 +10993,25 @@ declare namespace sap {
              */
             function setPropertyBindingOrProperty(vControl: sap.ui.base.ManagedObject | HTMLElement, sPropertyName: string, vBindingOrValue: any): void;
             /**
-             * <p>See <a target="_self" class="jsdoclink" href="api/sap.ui.core.StashedControlSupport#methods/setVisible">sap.ui.core.StashedControlSupport#setVisible</a> method.</p>
+             * <p>Sets the new value for stashed and visible.</p>
              * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>Control representation</p>
-             * @param {boolean} bVisible <p>New value for <code>stashed</code> property</p>
+             * @param {boolean} bStashed <p>New value for <code>stashed</code> property</p>
              */
-            function setStashed(vControl: sap.ui.base.ManagedObject | HTMLElement, bVisible: boolean): void;
+            function setStashed(vControl: sap.ui.base.ManagedObject | HTMLElement, bStashed: boolean): void;
             /**
              * <p>See <a target="_self" class="jsdoclink" href="api/sap.ui.core.Control#methods/setVisible">sap.ui.core.Control#setVisible</a> method.</p>
              * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>Control representation</p>
              * @param {boolean} bVisible <p>New value for <code>visible</code> property</p>
              */
             function setVisible(vControl: sap.ui.base.ManagedObject | HTMLElement, bVisible: boolean): void;
+            /**
+             * <p>Loads a fragment, processes the XML templating and turns the result into an array of nodes or controls. See <a target="_self" class="jsdoclink" href="api/sap.ui.core.util.XMLPreprocessor#methods/process">sap.ui.core.util.XMLPreprocessor#process</a></p>
+             * @param {string} sFragmentName <p>XML fragment name (e.g. some.path.fragmentName)</p>
+             * @param {any} mPreprocessorSettings <p>Map/JSON object with initial property values, etc.</p>
+             * @param {sap.ui.core.mvc.View} oView <p>View for the fragment, only needed on JS side</p>
+             * @returns any <p>Array with the nodes/instances of the controls of the fragment</p>
+             */
+            function templateControlFragment(sFragmentName: string, mPreprocessorSettings: any, oView: sap.ui.core.mvc.View): any | any;
             /**
              * <p>See <a target="_self" class="jsdoclink" href="api/sap.ui.base.ManagedObject#methods/unbindAggregation">sap.ui.base.ManagedObject#unbindAggregation</a> method.</p>
              * @param {sap.ui.base.ManagedObject | HTMLElement} vControl <p>Control representation</p>
@@ -10910,11 +11150,11 @@ declare namespace sap {
          */
         var blink: boolean;
         /**
-         * <p>If this flag is set to <code>true</code>, the Google Chrome browser is used.</p>
+         * <p>If this flag is set to <code>true</code>, a browser that is based on the Chromium browser project is used, such as the Google Chrome browser or the Microsoft Edge (Chromium) browser.</p>
          */
         var chrome: boolean;
         /**
-         * <p>If this flag is set to <code>true</code>, the Microsoft Edge browser is used.</p>
+         * <p>If this flag is set to <code>true</code>, the Microsoft Edge (EdgeHTML) browser is used. The Microsoft Edge (Chromium) browser is reported via the <a target="_self" class="jsdoclink scrollToMethod" data-target="chrome" href="api/sap.ui.Device.browser#methods/chrome">#chrome</a> flag instead, because it also uses Chromium as its browser engine.</p>
          */
         var edge: boolean;
         /**
@@ -10982,11 +11222,11 @@ declare namespace sap {
            */
           ANDROID = "ANDROID",
           /**
-           * <p>Chrome browser name.</p>
+           * <p>Chrome browser name, used for Google Chrome browser and Microsoft Edge (Chromium) browser.</p>
            */
           CHROME = "CHROME",
           /**
-           * <p>Edge browser name.</p>
+           * <p>Edge browser name, used for Microsoft Edge (EdgeHTML) browser.</p>
            */
           EDGE = "EDGE",
           /**
@@ -11096,7 +11336,7 @@ declare namespace sap {
            */
           SAP_6STEPS = "SAP_6STEPS",
           /**
-           * <p>A 3-step range set (Phone, Tablet, Desktop).</p><p>The ranges of this set are: <ul> <li><code>"Phone"</code>: For screens smaller than 600 pixels.</li> <li><code>"Tablet"</code>: For screens greater than or equal to 600 pixels and smaller than 1024 pixels.</li> <li><code>"Desktop"</code>: For screens greater than or equal to 1024 pixels.</li> </ul></p><p>This range set is initialized by default. An initialization via <a target="_self" class="jsdoclink" href="api/sap.ui.Device.media#methods/sap.ui.Device.media.initRangeSet">sap.ui.Device.media.initRangeSet</a> is not needed.</p><p>A CSS class is added to the page root (<code>html</code> tag) which indicates the current screen width range: <code>sapUiMedia-Std-<i>NAME_OF_THE_INTERVAL</i></code>. Furthermore there are 5 additional CSS classes to hide elements based on the width of the screen: <ul> <li><code>sapUiHideOnPhone</code>: Will be hidden if the screen has 600px or more</li> <li><code>sapUiHideOnTablet</code>: Will be hidden if the screen has less than 600px or more than 1023px</li> <li><code>sapUiHideOnDesktop</code>: Will be hidden if the screen is smaller than 1024px</li> <li><code>sapUiVisibleOnlyOnPhone</code>: Will be visible if the screen has less than 600px</li> <li><code>sapUiVisibleOnlyOnTablet</code>: Will be visible if the screen has 600px or more but less than 1024px</li> <li><code>sapUiVisibleOnlyOnDesktop</code>: Will be visible if the screen has 1024px or more</li> </ul></p>
+           * <p>A 3-step range set (Phone, Tablet, Desktop).</p><p>The ranges of this set are: <ul> <li><code>"Phone"</code>: For screens smaller than 600 pixels.</li> <li><code>"Tablet"</code>: For screens greater than or equal to 600 pixels and smaller than 1024 pixels.</li> <li><code>"Desktop"</code>: For screens greater than or equal to 1024 pixels.</li> </ul></p><p>This range set is initialized by default. An initialization via <a target="_self" class="jsdoclink" href="api/sap.ui.Device.media#methods/sap.ui.Device.media.initRangeSet">sap.ui.Device.media.initRangeSet</a> is not needed.</p><p>A CSS class is added to the page root (<code>html</code> tag) which indicates the current screen width range: <code>sapUiMedia-Std-<i>NAME_OF_THE_INTERVAL</i></code>. Furthermore there are 5 additional CSS classes to hide elements based on the width of the screen: <ul> <li><code>sapUiHideOnPhone</code>: Will be hidden if the screen has 600px or less</li> <li><code>sapUiHideOnTablet</code>: Will be hidden if the screen has more than 600px and less than 1023px</li> <li><code>sapUiHideOnDesktop</code>: Will be hidden if the screen is larger than 1024px</li> <li><code>sapUiVisibleOnlyOnPhone</code>: Will be visible only if the screen has less than 600px</li> <li><code>sapUiVisibleOnlyOnTablet</code>: Will be visible only if the screen has 600px or more but less than 1024px</li> <li><code>sapUiVisibleOnlyOnDesktop</code>: Will be visible only if the screen has 1024px or more</li> </ul></p>
            */
           SAP_STANDARD = "SAP_STANDARD",
           /**
@@ -11524,12 +11764,17 @@ declare namespace sap {
          */
         getContext(): sap.ui.model.Context;
         /**
+         * <p>Whether this binding does not propagate model messages to the control. By default, all bindings propagate messages. If a binding wants to support this feature, it has to override <a target="_self" class="jsdoclink scrollToMethod" data-target="supportsIgnoreMessages" href="api/sap.ui.model.Binding#methods/supportsIgnoreMessages">#supportsIgnoreMessages</a>, which returns <code>true</code>.</p><p>For example, a binding for a currency code is used in a composite binding for rendering the proper number of decimals, but the currency code is not displayed in the attached control. In that case, messages for the currency code shall not be displayed at that control, only messages for the amount.</p>
+         * @returns boolean|undefined <p>Whether this binding does not propagate model messages to the control; returns <code>undefined</code> if the corresponding binding parameter is not set, which means that model messages are propagated to the control</p>
+         */
+        getIgnoreMessages(): boolean | undefined;
+        /**
          * <p>Returns the model to which this binding belongs.</p>
          * @returns sap.ui.model.Model <p>Model to which this binding belongs</p>
          */
         getModel(): sap.ui.model.Model;
         /**
-         * <p>Returns the model path to which this binding binds.</p><p>Might be a relative or absolute path. If it is relative, it will be resolved relative to the context as returned by <a target="_self" class="jsdoclink" href="api/getContext()">getContext()</a>.</p>
+         * <p>Returns the model path to which this binding binds.</p><p>Might be a relative or absolute path. If it is relative, it will be resolved relative to the context as returned by <a target="_self" class="jsdoclink scrollToMethod" data-target="getContext" href="api/sap.ui.model.Binding#methods/getContext">#getContext</a>.</p>
          * @returns string <p>Binding path</p>
          */
         getPath(): string;
@@ -11539,17 +11784,22 @@ declare namespace sap {
         protected initialize(): void;
         /**
          * <p>Returns whether the binding is initial, which means it did not get an initial value yet</p>
-         * @returns boolean <p>Whether binding is initial</p>
+         * @returns boolean <p>Whether the binding is initial</p>
          */
         isInitial(): boolean;
         /**
          * <p>Returns whether the binding is relative, which means its path does not start with a slash ('/')</p>
-         * @returns boolean <p>Whether binding is relative</p>
+         * @returns boolean <p>Whether the binding is relative</p>
          */
         isRelative(): boolean;
         /**
+         * <p>Returns whether the binding is resolved, which means the binding's path is absolute or the binding has a model context.<br><br>References: <ul><li>#getContext</li><li>#getPath</li><li>#isRelative</li></ul></p>
+         * @returns boolean <p>Whether the binding is resolved</p>
+         */
+        isResolved(): boolean;
+        /**
          * <p>Returns true if the binding is suspended or false if not.</p>
-         * @returns boolean <p>Whether binding is suspended</p>
+         * @returns boolean <p>Whether the binding is suspended</p>
          */
         isSuspended(): boolean;
         /**
@@ -11561,6 +11811,16 @@ declare namespace sap {
          * <p>Resumes the binding update. Change events will be fired again.</p><p>When the binding is resumed, a change event will be fired immediately, if the data has changed while the binding was suspended. For server-side models, a request to the server will be triggered, if a refresh was requested while the binding was suspended.</p>
          */
         resume(): void;
+        /**
+         * <p>Sets the indicator whether this binding does not propagate model messages to the control.<br><br>References: <ul><li>#getIgnoreMessages</li><li>#supportsIgnoreMessages</li></ul></p>
+         * @param {boolean} bIgnoreMessages <p>Whether this binding does not propagate model messages to the control</p>
+         */
+        setIgnoreMessages(bIgnoreMessages: boolean): void;
+        /**
+         * <p>Whether this binding supports the feature of not propagating model messages to the control. The default implementation returns <code>false</code>.<br><br>References: <ul><li>#getIgnoreMessages</li><li>#setIgnoreMessages</li></ul></p>
+         * @returns boolean <p><code>false</code>; subclasses that support this feature need to override this function and need to return <code>true</code></p>
+         */
+        supportsIgnoreMessages(): boolean;
         /**
          * <p>Suspends the binding update. No change events will be fired.</p><p>A refresh call with bForceUpdate set to true will also update the binding and fire a change in suspended mode. Special operations on bindings, which require updates to work properly (as paging or filtering in list bindings) will also update and cause a change event although the binding is suspended.</p>
          */
@@ -11714,10 +11974,10 @@ declare namespace sap {
          */
         forceNoCache(bForceNoCache?: boolean): void;
         /**
-         * <p>Returns the current data of the model. Be aware that the returned object is a reference to the model data so all changes to that data will also change the model data.</p>
-         * @returns undefined <p>the data object</p>
+         * <p>Returns the current data of the model.</p><p>Be aware that the returned object is a reference to the model data so all changes to that data will also change the model data.</p>
+         * @returns any <p>the data object</p>
          */
-        getData(): undefined;
+        getData(): any;
         /**
          * <p>update all bindings</p>
          * @param {boolean} bForceUpdate <p>true/false: Default = false. If set to false an update will only be done when the value of a binding changed.</p>
@@ -12075,8 +12335,8 @@ declare namespace sap {
          */
         getInvalidValue(): any;
         /**
-         * <p>Returns the array of all state messages combining the model and control messages.</p>
-         * @returns sap.ui.core.Message[] <p>The array of all messages</p>
+         * <p>Returns the array of this data state's messages combining the model and control messages. The array is sorted descendingly by message severity.</p>
+         * @returns sap.ui.core.Message[] <p>The sorted array of all messages</p>
          */
         getMessages(): sap.ui.core.Message[];
         /**
@@ -12155,6 +12415,11 @@ declare namespace sap {
          */
         getParseWithValues(): boolean;
         /**
+         * <p>Gets an array of indices that determine which parts of this type shall not propagate their model messages to the attached control. Prerequisite is that the corresponding binding supports this feature, see <a target="_self" class="jsdoclink" href="api/sap.ui.model.Binding#methods/supportsIgnoreMessages">sap.ui.model.Binding#supportsIgnoreMessages</a>.<br><br>References: <ul><li>sap.ui.model.Binding#supportsIgnoreMessages</li></ul></p>
+         * @returns number[] <p>An array of indices that determine which parts of this type shall not propagate their model messages to the attached control</p>
+         */
+        getPartsIgnoringMessages(): number[];
+        /**
          * <p>Returns whether the <a target="_self" class="jsdoclink scrollToMethod" data-target="formatValue" href="api/sap.ui.model.CompositeType#methods/formatValue">#formatValue</a> and <a target="_self" class="jsdoclink scrollToMethod" data-target="parseValue" href="api/sap.ui.model.CompositeType#methods/parseValue">#parseValue</a> methods operate on the internal, related native JavaScript values.</p>
          * @returns boolean <p>Whether the <a target="_self" class="jsdoclink scrollToMethod" data-target="formatValue" href="api/sap.ui.model.CompositeType#methods/formatValue">#formatValue</a> and <a target="_self" class="jsdoclink scrollToMethod" data-target="parseValue" href="api/sap.ui.model.CompositeType#methods/parseValue">#parseValue</a> methods operate on the internal, related native JavaScript values</p>
          */
@@ -12201,6 +12466,11 @@ declare namespace sap {
          * @param {string} sPath <p>the binding path</p>
          */
         constructor(oModel: sap.ui.model.Model, sPath: string);
+        /**
+         * <p>Returns messages associated with this context, that is messages belonging to the object referred to by this context or a child object of that object. The messages are sorted by their <a target="_self" class="jsdoclink" href="api/sap.ui.core.message.Message#methods/getType">type</a> according to the type's severity in a way that messages with highest severity come first.<br><br>References: <ul><li>sap.ui.model.Model#getMessages</li></ul></p>
+         * @returns sap.ui.core.message.Message[] <p>The messages associated with this context sorted by severity; empty array in case no messages exist</p>
+         */
+        getMessages(): sap.ui.core.message.Message[];
         /**
          * <p>Getter for model</p>
          * @returns sap.ui.model.Model <p>the model</p>
@@ -12295,8 +12565,8 @@ declare namespace sap {
          */
         getInvalidValue(): any;
         /**
-         * <p>Returns the array of all state messages combining the model and control messages.</p>
-         * @returns sap.ui.core.Message[] <p>The array of all messages</p>
+         * <p>Returns the array of this data state's messages combining the model and control messages. The array is sorted descendingly by message severity.</p>
+         * @returns sap.ui.core.Message[] <p>The sorted array of all messages</p>
          */
         getMessages(): sap.ui.core.Message[];
         /**
@@ -12552,6 +12822,12 @@ declare namespace sap {
          */
         isLengthFinal(): boolean;
         /**
+         * <p>Requests a <a target="_self" class="jsdoclink" href="api/sap.ui.model.Filter">sap.ui.model.Filter</a> object which can be used to filter the list binding by entries with model messages. With the filter callback, you can define if a message is considered when creating the filter for entries with messages.</p><p>The resulting filter does not consider application or control filters specified for this list binding in its constructor or in its <a target="_self" class="jsdoclink scrollToMethod" data-target="filter" href="api/sap.ui.model.ListBinding#methods/filter">#filter</a> method; add filters which you want to keep with the "and" conjunction to the resulting filter before calling <a target="_self" class="jsdoclink scrollToMethod" data-target="filter" href="api/sap.ui.model.ListBinding#methods/filter">#filter</a>.</p><p>The implementation of this method is optional for model specific implementations of <code>sap.ui.model.ListBinding</code>. Check for existence of this function before calling it.</p>
+         * @param {Function} fnFilter <p>A callback function to filter only relevant messages. The callback returns whether the given <a target="_self" class="jsdoclink" href="api/sap.ui.core.message.Message">sap.ui.core.message.Message</a> is considered. If no callback function is given, all messages are considered.</p>
+         * @returns any <p>A Promise that resolves with a <a target="_self" class="jsdoclink" href="api/sap.ui.model.Filter">sap.ui.model.Filter</a> representing the entries with messages; it resolves with <code>null</code> if the binding is not resolved or if the binding knows that there is no message for any entry</p>
+         */
+        protected requestFilterForMessages(fnFilter?: Function): any;
+        /**
          * <p>Sorts the list according to the sorter object.</p><p>Instead of a single sorter also an array of sorters can be passed to the sort method. In this case they are processed in the sequence in which they are contained in the array.</p><h4>Grouping</h4><p> Sorting and grouping are closely related, in case a list should be grouped, it must be sorted by the property to group with. Grouping is enabled by setting the <code>group</code> property on the sorter object. If it is enabled, you can get the current group of an item using <a target="_self" class="jsdoclink" href="api/sap.ui.model.ListBinding#methods/getGroup">sap.ui.model.ListBinding.prototype.getGroup</a>. In case multiple sorters are provided, grouping can only be done on the first sorter, nested grouping is not supported.</p>
          * @param {sap.ui.model.Sorter | any[]} aSorters <p>the Sorter object or an array of sorters which defines the sort order</p>
          * @returns sap.ui.model.ListBinding <p>returns <code>this</code> to facilitate method chaining</p>
@@ -12754,6 +13030,19 @@ declare namespace sap {
          */
         getDefaultBindingMode(): sap.ui.model.BindingMode;
         /**
+         * <p>Returns messages of this model associated with the given context, that is messages belonging to the object referred to by this context or a child object of that object. The messages are sorted by their <a target="_self" class="jsdoclink" href="api/sap.ui.core.message.Message#methods/getType">type</a> according to the type's severity in a way that messages with highest severity come first.</p>
+         * @param {sap.ui.model.Context} oContext <p>The context to retrieve messages for</p>
+         * @returns sap.ui.core.message.Message[] <p>The messages associated with this context sorted by severity; empty array in case no messages exist</p>
+         */
+        getMessages(oContext: sap.ui.model.Context): sap.ui.core.message.Message[];
+        /**
+         * <p>Returns model messages for which the target matches the given resolved binding path.</p>
+         * @param {string} sPath <p>The resolved binding path</p>
+         * @param {boolean} bPrefixMatch <p>Whether also messages with a target starting with the given path are returned, not just the messages with a target identical to the given path</p>
+         * @returns sap.ui.core.message.Message[] <p>An array of messages matching the given path; may be empty but not <code>null</code> or <code>undefined</code></p>
+         */
+        protected getMessagesByPath(sPath: string, bPrefixMatch?: boolean): sap.ui.core.message.Message[];
+        /**
          * <p>Returns the meta model associated with this model if it is available for the concrete model type.</p>
          * @returns sap.ui.model.MetaModel <p>The meta model or <code>undefined</code> if no meta model exists.</p>
          */
@@ -12773,6 +13062,13 @@ declare namespace sap {
          * @returns any <p>vValue The value of the property</p>
          */
         getOriginalProperty(sPath: string, oContext?: any): any;
+        /**
+         * <p>Implement in inheriting classes.</p>
+         * @param {string} sPath <p>the path to where to read the attribute value</p>
+         * @param {any} oContext <p>the context with which the path should be resolved</p>
+         * @returns any <p>Value of the addressed property</p>
+         */
+        getProperty(sPath: string, oContext?: any): any;
         /**
          * <p>Check if the specified binding mode is supported by the model.</p>
          * @param {sap.ui.model.BindingMode} sMode <p>The binding mode to check</p>
@@ -12805,10 +13101,10 @@ declare namespace sap {
          */
         setMessages(vMessages: any): void;
         /**
-         * <p>Sets messages.</p>
-         * @param {any} mMessages <p>Messages for this model</p>
+         * <p>Sets the messages for this model and notifies the bindings if the new messages differ from the current model messages.</p>
+         * @param {any} mMessages <p>The new messages for the model, mapping a binding path to an array of <a target="_self" class="jsdoclink" href="api/sap.ui.core.message.Message">sap.ui.core.message.Message</a> objects</p>
          */
-        setMessages(mMessages: any): void;
+        setMessages(mMessages?: any): void;
         /**
          * <p>Set the maximum number of entries which are used for list bindings.</p><p>The default size limit for models is 100.</p>
          * @param {number} iSizeLimit <p>Collection size limit</p>
@@ -12919,6 +13215,7 @@ declare namespace sap {
         setValue(vValue: any): void;
       }
       /**
+       * <p>This artefact is used by the table controls for handling selections. It is not associated with the model layer of UI5.</p>
        */
       export class SelectionModel extends sap.ui.base.EventProvider {
         /**
@@ -13096,13 +13393,14 @@ declare namespace sap {
         getGroupFunction(): Function;
       }
       /**
-       * <p>The StaticBinding allows to define static values within a CompositeBinding. It behaves like a property binding but always returns the value, which is stored in the binding itself.</p>
+       * <p>The <code>StaticBinding</code> allows to define static values within a <a target="_self" class="jsdoclink" href="api/sap.ui.model.CompositeBinding">sap.ui.model.CompositeBinding</a>. It behaves like a property binding but always returns the value that is stored in the binding itself. The binding does not have a <a target="_self" class="jsdoclink" href="api/sap.ui.model.Context">sap.ui.model.Context</a>, a <a target="_self" class="jsdoclink" href="api/sap.ui.model.Model">sap.ui.model.Model</a> or a path.</p>
        */
       export class StaticBinding extends sap.ui.model.PropertyBinding {
         /**
          * <p>Constructor for StaticBinding</p>
+         * @param {any} vValue <p>The static value of this binding</p>
          */
-        constructor();
+        constructor(vValue: any);
       }
       /**
        * <p><p>Different modes for setting the auto expand mode on tree or analytical bindings.</p></p>
@@ -13225,8 +13523,9 @@ declare namespace sap {
         constructor();
         /**
          * <p>Returns the public facade of this object.</p><p>By default, the public facade is implemented as an instance of <a target="_self" class="jsdoclink" href="api/sap.ui.base.Interface">sap.ui.base.Interface</a>, exposing the <code>publicMethods</code> as defined in the metadata of the class of this object.</p><p>See the documentation of the <a target="_self" class="jsdoclink scrollToMethod" data-target="sap.ui.base.Object.extend" href="api/sap.ui.base.Object#methods/sap.ui.base.Object.extend">extend</a> method for an explanation of <code>publicMethods</code>.</p><p>The facade is created on the first call of <code>getInterface</code> and reused for all later calls.</p>
+         * @returns sap.ui.base.Object <p>A facade for this object, with at least the public methods of the class of this.</p>
          */
-        getInterface(): any;
+        getInterface(): sap.ui.base.Object;
         /**
          * <p>Overrides the <a target="_self" class="jsdoclink" href="api/sap.ui.base.Object#methods/getInterface">sap.ui.base.Object#getInterface</a> to avoid creating an <code>Interface</code> object for types.</p>
          * @returns any <p>this</p>
@@ -13265,16 +13564,16 @@ declare namespace sap {
        */
       namespace analytics {
         /**
-         * <p>Tree binding implementation for OData entity sets with aggregate semantics.</p><p>Note on the handling of different count modes: The AnalyticalBinding always uses the OData $inlinecount system query option to determine the total count of matching entities. It ignores the default count mode set in the ODataModel instance and the count mode specified in the binding parameters. If the default count mode is None, a warning is added to the log to remind the application that OData requests generated by the AnalyticalBinding will include a $inlinecount. If a count mode has been specified in the binding parameters, an error message will be logged if it is None, because the binding will still add the $inlinecount to OData requests. If a binding count mode is set to Request or Both, a warning will be logged to remind the application that the OData requests generated by the AnalyticalBinding will include a $inlinecount.</p>
+         * <p>Tree binding implementation for OData entity sets with aggregate semantics.</p><p>Note on the handling of different count modes: The AnalyticalBinding always uses the OData $inlinecount system query option to determine the total count of matching entities. It ignores the default count mode set in the ODataModel instance and the count mode specified in the binding parameters. If the default count mode is <code>None</code>, a warning is added to the log to remind the application that OData requests generated by the AnalyticalBinding will include a $inlinecount. If a count mode has been specified in the binding parameters, an error message is logged if it is <code>None</code>, because the binding still adds the $inlinecount to OData requests. If a binding count mode is set to <code>Request</code> or <code>Both</code>, a warning is logged to remind the application that the OData requests generated by the AnalyticalBinding include a $inlinecount.</p>
          */
         export class AnalyticalBinding extends sap.ui.model.TreeBinding {
           /**
-           * @param {sap.ui.model.Model} oModel undefined
-           * @param {string} sPath <p>the path pointing to the tree / array that should be bound</p>
-           * @param {any} oContext <p>the context object for this data binding</p>
-           * @param {any[]} aSorter <p>predefined sorter/s contained in an array</p>
-           * @param {any[]} aFilters <p>predefined filter/s contained in an array</p>
-           * @param {any} mParameters <p>a map which contains additional control parameters.</p>
+           * @param {sap.ui.model.Model} oModel <p>The OData model</p>
+           * @param {string} sPath <p>The path pointing to the tree / array that should be bound</p>
+           * @param {any} oContext <p>The context object for this data binding</p>
+           * @param {any[]} aSorter <p>An array of predefined sorters</p>
+           * @param {any[]} aFilters <p>An array of predefined filters</p>
+           * @param {any} mParameters <p>A map containing additional binding parameters</p>
            */
           constructor(oModel: sap.ui.model.Model, sPath: string, oContext?: any, aSorter?: any[], aFilters?: any[], mParameters?: any);
           /**
@@ -13394,7 +13693,7 @@ declare namespace sap {
           getSortablePropertyNames(): any[];
           /**
            * <p>Gets the total number of entities in the bound OData entity set.</p><p>Counting takes place at the lowest aggregation level defined by the possible value combinations for the complete set of dimension properties included in the bound entity set. This means that intermediate aggregate entities with sub-totals at higher aggregation levels are not counted.</p>
-           * @returns number <p>the total number of addressed entities in the OData entity set</p>
+           * @returns number <p>The total number of addressed entities in the OData entity set, or -1 if the number is not yet known or if the binding parameter <code>provideTotalResultSize</code> is set to <code>false</code></p>
            */
           getTotalSize(): number;
           /**
@@ -14625,6 +14924,7 @@ declare namespace sap {
            * <p>Implement in inheriting classes.</p>
            * @param {string} sPath <p>the path to where to read the attribute value</p>
            * @param {any} oContext <p>the context with which the path should be resolved</p>
+           * @returns any <p>Value of the addressed property</p>
            */
           getProperty(sPath: string, oContext?: any): any;
           /**
@@ -14638,7 +14938,7 @@ declare namespace sap {
            * <p>Load JSON-encoded data from the server using a GET HTTP request and store the resulting JSON data in the model. Note: Due to browser security restrictions, most "Ajax" requests are subject to the same origin policy, the request can not successfully retrieve data from a different domain, subdomain, or protocol.</p>
            * @param {string} sURL <p>A string containing the URL to which the request is sent.</p>
            * @param {any | string} oParameters <p>A map or string that is sent to the server with the request. Data that is sent to the server is appended to the URL as a query string. If the value of the data parameter is an object (map), it is converted to a string and url-encoded before it is appended to the URL.</p>
-           * @param {boolean} bAsync <p>By default, all requests are sent asynchronous (i.e. this is set to true by default). If you need synchronous requests, set this option to false. Cross-domain requests do not support synchronous operation. Note that synchronous requests may temporarily lock the browser, disabling any actions while the request is active.</p>
+           * @param {boolean} bAsync <p>By default, all requests are sent asynchronous. <b>Do not use <code>bAsync=false</code></b> because synchronous requests may temporarily lock the browser, disabling any actions while the request is active. Cross-domain requests do not support synchronous operation.</p>
            * @param {string} sType <p>The type of request to make ("POST" or "GET"), default is "GET". Note: Other HTTP request methods, such as PUT and DELETE, can also be used here, but they are not supported by all browsers.</p>
            * @param {boolean} bMerge <p>Whether the data should be merged instead of replaced</p>
            * @param {boolean} bCache <p>Disables caching if set to false. Default is true.</p>
@@ -14719,6 +15019,7 @@ declare namespace sap {
            * <p>Implement in inheriting classes.</p>
            * @param {string} sPath <p>the path to where to read the attribute value</p>
            * @param {any} oContext <p>the context with which the path should be resolved</p>
+           * @returns any <p>Value of the addressed property</p>
            */
           getProperty(sPath: string, oContext?: any): any;
           /**
@@ -14897,15 +15198,15 @@ declare namespace sap {
           convert(): sap.ui.model.Filter;
         }
         /**
-         * <p><p>Different scopes for retrieving messages from a service.</p><br><br>References: <ul><li>sap.ui.model.ODataModel#constructor</li></ul></p>
+         * <p><p>Different scopes for retrieving messages from a service consumed via a <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v2.ODataModel">sap.ui.model.odata.v2.ODataModel</a>.</p><br><br>References: <ul><li>sap.ui.model.ODataModel#constructor</li></ul></p>
          */
         export enum MessageScope {
           /**
-           * <p>Retrieve messages for the whole business object. If the service does not support this option it fallbacks to requested.</p>
+           * <p>Retrieve messages for the requested or changed entities and for all their child entities that belong to the same business object. The service needs to set the OData V2 annotation "message-scope-supported" at the <code>EntityContainer</code> to <code>true</code>. If the service does set this OData V2 annotation, the OData model falls back to <code>sap.ui.model.odata.MessageScope.RequestedObjects</code>.</p>
            */
           BusinessObject = "BusinessObject",
           /**
-           * <p>Retrieve messages only for the requested/changed entities.</p>
+           * <p>Retrieve messages only for the requested or changed entities.</p>
            */
           RequestedObjects = "RequestedObjects",
         }
@@ -15081,13 +15382,16 @@ declare namespace sap {
           sort(aSorters: sap.ui.model.Sorter | any[]): sap.ui.model.ListBinding;
         }
         /**
-         * <p>OData implementation of the sap.ui.core.message.MessageParser class. Parses message responses from the back-end.</p>
+         * <p>OData implementation of the sap.ui.core.message.MessageParser class. Parses message responses from the back end.</p>
          */
-        export abstract class ODataMessageParser extends sap.ui.core.message.MessageParser {
+        export class ODataMessageParser extends sap.ui.core.message.MessageParser {
           /**
-           * <p>OData implementation of the sap.ui.core.message.MessageParser class. Parses message responses from the back-end.</p>
+           * <p>OData implementation of the sap.ui.core.message.MessageParser class. Parses message responses from the back end.</p>
+           * @param {string} sServiceUrl <p>Base URI of the service used for the calculation of message targets</p>
+           * @param {sap.ui.model.odata.ODataMetadata} oMetadata <p>The ODataMetadata object</p>
+           * @param {boolean} bPersistTechnicalMessages <p>Whether technical messages should always be treated as persistent, since 1.83.0</p>
            */
-          constructor();
+          constructor(sServiceUrl: string, oMetadata: sap.ui.model.odata.ODataMetadata, bPersistTechnicalMessages: boolean);
           /**
            * <p>Returns the name of the header field that is used to parse the server messages</p>
            * @returns string <p>The name of the header field</p>
@@ -15100,11 +15404,12 @@ declare namespace sap {
           /**
            * <p>Parses the given response for messages, calculates the delta and fires the messageChange-event on the MessageProcessor if messages are found.</p>
            * @param {any} oResponse <p>The response from the server containing body and headers</p>
-           * @param {any} oRequest <p>The original request that lead to this response</p>
-           * @param {any} mGetEntities <p>A map containing the entities requested from the back-end as keys</p>
-           * @param {any} mChangeEntities <p>A map containing the entities changed on the back-end as keys</p>
+           * @param {any} oRequest <p>The original request that leads to this response</p>
+           * @param {any} mGetEntities <p>A map with the keys of the entities requested from the back-end mapped to true</p>
+           * @param {any} mChangeEntities <p>A map with the keys of the entities changed in the back-end mapped to true</p>
+           * @param {boolean} bMessageScopeSupported <p>Whether the used OData service supports the message scope <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.MessageScope">sap.ui.model.odata.MessageScope.BusinessObject</a></p>
            */
-          parse(oResponse: any, oRequest: any, mGetEntities: any, mChangeEntities: any): void;
+          parse(oResponse: any, oRequest: any, mGetEntities: any, mChangeEntities: any, bMessageScopeSupported: boolean): void;
           /**
            * <p>Sets the header field name that should be used for parsing the JSON messages</p>
            * @param {string} sFieldName <p>The name of the header field that should be used as source of the message object</p>
@@ -15186,9 +15491,10 @@ declare namespace sap {
           isLoaded(): boolean;
           /**
            * <p>Returns a promise for the loaded state of the metadata.</p>
+           * @param {boolean} bRejectOnFailure <p>With <code>bRejectOnFailure=false</code> the returned promise is not rejected. In case of failure this promise stays pending. Since 1.79 with <code>bRejectOnFailure=true</code> the returned promise is rejected when the initial loading of the metadata fails.</p>
            * @returns Promise<any> <p>A promise on metadata loaded state</p>
            */
-          loaded(): Promise<any>;
+          loaded(bRejectOnFailure?: boolean): Promise<any>;
           /**
            * <p>Refreshes the metadata creating a new request to the server.</p><p>Returns a new promise which can be resolved or rejected depending on the metadata loading state.</p>
            * @returns Promise<any> <p>A promise on metadata loaded state</p>
@@ -15570,6 +15876,7 @@ declare namespace sap {
            * <p>Implement in inheriting classes.</p>
            * @param {string} sPath <p>the path to where to read the attribute value</p>
            * @param {any} oContext <p>the context with which the path should be resolved</p>
+           * @returns any <p>Value of the addressed property</p>
            */
           getProperty(sPath: string, oContext?: any): any;
           /**
@@ -15713,6 +16020,7 @@ declare namespace sap {
          */
         export class ODataPropertyBinding extends sap.ui.model.PropertyBinding {
           /**
+           * <p>Do <strong>NOT</strong> call this private constructor, but rather use <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v2.ODataModel#methods/bindProperty">sap.ui.model.odata.v2.ODataModel#bindProperty</a> instead!</p>
            * @param {sap.ui.model.Model} oModel undefined
            * @param {string} sPath undefined
            * @param {sap.ui.model.Context} oContext undefined
@@ -15727,6 +16035,16 @@ declare namespace sap {
            * <p>Initialize the binding. The message should be called when creating a binding. If metadata is not yet available, do nothing, method will be called again when metadata is loaded.</p>
            */
           protected initialize(): void;
+          /**
+           * <p>Whether this binding supports the feature of not propagating model messages to the control. The default implementation returns <code>false</code>.<br><br>References: <ul><li>#getIgnoreMessages</li><li>#setIgnoreMessages</li></ul></p>
+           * @returns boolean <p><code>false</code>; subclasses that support this feature need to override this function and need to return <code>true</code></p>
+           */
+          supportsIgnoreMessages(): boolean;
+          /**
+           * <p>Returns <code>true</code>, as this binding supports the feature of not propagating model messages to the control.<br><br>References: <ul><li>sap.ui.model.Binding#getIgnoreMessages</li><li>sap.ui.model.Binding#setIgnoreMessages</li></ul></p>
+           * @returns boolean <p><code>true</code></p>
+           */
+          supportsIgnoreMessages(): boolean;
         }
         /**
          */
@@ -15889,7 +16207,7 @@ declare namespace sap {
           export class Currency extends sap.ui.model.type.Currency {
             /**
              * <p>Constructor for a <code>Currency</code> composite type.</p>
-             * @param {any} oFormatOptions <p>See parameter <code>oFormatOptions</code> of <a target="_self" class="jsdoclink" href="api/sap.ui.model.type.Currency#constructor">sap.ui.model.type.Currency#constructor</a>. Format options are immutable, that is, they can only be set once on construction. Format options that are not supported or have a different default are listed below.</p>
+             * @param {any} oFormatOptions <p>See parameter <code>oFormatOptions</code> of <a target="_self" class="jsdoclink" href="api/sap.ui.model.type.Currency#constructor">sap.ui.model.type.Currency#constructor</a>. Format options are immutable, that is, they can only be set once on construction. Format options that are not supported or have a different default are listed below. If the format option <code>showMeasure</code> is set to <code>false</code>, model messages for the currency code are not propagated to the control if the corresponding binding supports the feature of ignoring messages, see <a target="_self" class="jsdoclink" href="api/sap.ui.model.Binding#methods/supportsIgnoreMessages">sap.ui.model.Binding#supportsIgnoreMessages</a>, and the corresponding binding parameter is not set manually.</p>
              * @param {any} oConstraints <p>Not supported</p>
              */
             constructor(oFormatOptions?: any, oConstraints?: any);
@@ -15923,8 +16241,9 @@ declare namespace sap {
             formatValue(aValues: any[], sTargetType: string): string;
             /**
              * <p>Returns the public facade of this object.</p><p>By default, the public facade is implemented as an instance of <a target="_self" class="jsdoclink" href="api/sap.ui.base.Interface">sap.ui.base.Interface</a>, exposing the <code>publicMethods</code> as defined in the metadata of the class of this object.</p><p>See the documentation of the <a target="_self" class="jsdoclink scrollToMethod" data-target="sap.ui.base.Object.extend" href="api/sap.ui.base.Object#methods/sap.ui.base.Object.extend">extend</a> method for an explanation of <code>publicMethods</code>.</p><p>The facade is created on the first call of <code>getInterface</code> and reused for all later calls.</p>
+             * @returns sap.ui.base.Object <p>A facade for this object, with at least the public methods of the class of this.</p>
              */
-            getInterface(): any;
+            getInterface(): sap.ui.base.Object;
             /**
              * <p>Overrides the <a target="_self" class="jsdoclink" href="api/sap.ui.base.Object#methods/getInterface">sap.ui.base.Object#getInterface</a> to avoid creating an <code>Interface</code> object for types.</p>
              * @returns any <p>this</p>
@@ -16563,8 +16882,9 @@ declare namespace sap {
             constructor(oFormatOptions?: any, oConstraints?: any);
             /**
              * <p>Returns the public facade of this object.</p><p>By default, the public facade is implemented as an instance of <a target="_self" class="jsdoclink" href="api/sap.ui.base.Interface">sap.ui.base.Interface</a>, exposing the <code>publicMethods</code> as defined in the metadata of the class of this object.</p><p>See the documentation of the <a target="_self" class="jsdoclink scrollToMethod" data-target="sap.ui.base.Object.extend" href="api/sap.ui.base.Object#methods/sap.ui.base.Object.extend">extend</a> method for an explanation of <code>publicMethods</code>.</p><p>The facade is created on the first call of <code>getInterface</code> and reused for all later calls.</p>
+             * @returns sap.ui.base.Object <p>A facade for this object, with at least the public methods of the class of this.</p>
              */
-            getInterface(): any;
+            getInterface(): sap.ui.base.Object;
             /**
              * <p>Overrides the <a target="_self" class="jsdoclink" href="api/sap.ui.base.Object#methods/getInterface">sap.ui.base.Object#getInterface</a> to avoid creating an <code>Interface</code> object for types.</p>
              * @returns any <p>this</p>
@@ -16794,7 +17114,7 @@ declare namespace sap {
              */
             formatValue(vValue: any, sTargetType: string): any | Promise<any>;
             /**
-             * <p>Formats the given value to the given target type. If <code>isDigitSequence</code> constraint of this type is set to <code>true</code> and the target type is any or string and the given value contains only digits, the leading zeros are truncated.</p>
+             * <p>Formats the given value to the given target type. If the <code>isDigitSequence</code> constraint of this type is set to <code>true</code>, the target type is 'any' or 'string', and the given value contains only digits, the leading zeros are truncated. If the <code>isDigitSequence</code> constraint of this type is set to <code>true</code> and the <code>maxLength</code> constraint is set, this type behaves as an ABAP type NUMC; in this case, the value '0' is formatted to '', provided the target type is 'string'.</p>
              * @param {string} sValue <p>the value to be formatted</p>
              * @param {string} sTargetType <p>the target type; may be "any", "boolean", "float", "int" or "string". See <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.type">sap.ui.model.odata.type</a> for more information.</p>
              * @returns string|number|boolean <p>the formatted output value in the target type; <code>undefined</code> is always formatted to <code>null</code>; <code>null</code> is formatted to "" if the target type is "string".</p>
@@ -16964,7 +17284,7 @@ declare namespace sap {
           export class Unit extends sap.ui.model.type.Unit {
             /**
              * <p>Constructor for a <code>Unit</code> composite type.</p>
-             * @param {any} oFormatOptions <p>See parameter <code>oFormatOptions</code> of <a target="_self" class="jsdoclink" href="api/sap.ui.model.type.Unit#constructor">sap.ui.model.type.Unit#constructor</a>. Format options are immutable, that is, they can only be set once on construction. Format options that are not supported or have a different default are listed below.</p>
+             * @param {any} oFormatOptions <p>See parameter <code>oFormatOptions</code> of <a target="_self" class="jsdoclink" href="api/sap.ui.model.type.Unit#constructor">sap.ui.model.type.Unit#constructor</a>. Format options are immutable, that is, they can only be set once on construction. Format options that are not supported or have a different default are listed below. If the format option <code>showMeasure</code> is set to <code>false</code>, model messages for the unit of measure are not propagated to the control if the corresponding binding supports the feature of ignoring messages, see <a target="_self" class="jsdoclink" href="api/sap.ui.model.Binding#methods/supportsIgnoreMessages">sap.ui.model.Binding#supportsIgnoreMessages</a>, and the corresponding binding parameter is not set manually.</p>
              * @param {any} oConstraints <p>Not supported</p>
              * @param {string[]} aDynamicFormatOptionNames <p>Not supported</p>
              */
@@ -16999,8 +17319,9 @@ declare namespace sap {
             formatValue(aValues: any[], sTargetType: string): string;
             /**
              * <p>Returns the public facade of this object.</p><p>By default, the public facade is implemented as an instance of <a target="_self" class="jsdoclink" href="api/sap.ui.base.Interface">sap.ui.base.Interface</a>, exposing the <code>publicMethods</code> as defined in the metadata of the class of this object.</p><p>See the documentation of the <a target="_self" class="jsdoclink scrollToMethod" data-target="sap.ui.base.Object.extend" href="api/sap.ui.base.Object#methods/sap.ui.base.Object.extend">extend</a> method for an explanation of <code>publicMethods</code>.</p><p>The facade is created on the first call of <code>getInterface</code> and reused for all later calls.</p>
+             * @returns sap.ui.base.Object <p>A facade for this object, with at least the public methods of the class of this.</p>
              */
-            getInterface(): any;
+            getInterface(): sap.ui.base.Object;
             /**
              * <p>Overrides the <a target="_self" class="jsdoclink" href="api/sap.ui.base.Object#methods/getInterface">sap.ui.base.Object#getInterface</a> to avoid creating an <code>Interface</code> object for types.</p>
              * @returns any <p>this</p>
@@ -17385,6 +17706,18 @@ declare namespace sap {
              */
             refresh(bForceUpdate?: boolean, sGroupId?: string): void;
             /**
+             * <p>Requests a <a target="_self" class="jsdoclink" href="api/sap.ui.model.Filter">sap.ui.model.Filter</a> object which can be used to filter the list binding by entries with model messages. With the filter callback, you can define if a message is considered when creating the filter for entries with messages.</p><p>The resulting filter does not consider application or control filters specified for this list binding in its constructor or in its <a target="_self" class="jsdoclink scrollToMethod" data-target="filter" href="api/sap.ui.model.ListBinding#methods/filter">#filter</a> method; add filters which you want to keep with the "and" conjunction to the resulting filter before calling <a target="_self" class="jsdoclink scrollToMethod" data-target="filter" href="api/sap.ui.model.ListBinding#methods/filter">#filter</a>.</p><p>The implementation of this method is optional for model specific implementations of <code>sap.ui.model.ListBinding</code>. Check for existence of this function before calling it.</p>
+             * @param {Function} fnFilter <p>A callback function to filter only relevant messages. The callback returns whether the given <a target="_self" class="jsdoclink" href="api/sap.ui.core.message.Message">sap.ui.core.message.Message</a> is considered. If no callback function is given, all messages are considered.</p>
+             * @returns any <p>A Promise that resolves with a <a target="_self" class="jsdoclink" href="api/sap.ui.model.Filter">sap.ui.model.Filter</a> representing the entries with messages; it resolves with <code>null</code> if the binding is not resolved or if the binding knows that there is no message for any entry</p>
+             */
+            protected requestFilterForMessages(fnFilter?: Function): any;
+            /**
+             * <p>Requests a <a target="_self" class="jsdoclink" href="api/sap.ui.model.Filter">sap.ui.model.Filter</a> object which can be used to filter the list binding by entries with model messages. With the filter callback, you can define if a message is considered when creating the filter for entries with messages.</p><p>The resulting filter does not consider application or control filters specified for this list binding in its constructor or in its <a target="_self" class="jsdoclink scrollToMethod" data-target="filter" href="api/sap.ui.model.odata.v2.ODataListBinding#methods/filter">#filter</a> method; add filters which you want to keep with the "and" conjunction to the resulting filter before calling <a target="_self" class="jsdoclink scrollToMethod" data-target="filter" href="api/sap.ui.model.odata.v2.ODataListBinding#methods/filter">#filter</a>.</p>
+             * @param {Function} fnFilter <p>A callback function to filter only relevant messages. The callback returns whether the given <a target="_self" class="jsdoclink" href="api/sap.ui.core.message.Message">sap.ui.core.message.Message</a> is considered. If no callback function is given, all messages are considered.</p>
+             * @returns any <p>A Promise that resolves with a <a target="_self" class="jsdoclink" href="api/sap.ui.model.Filter">sap.ui.model.Filter</a> representing the entries with messages; it resolves with <code>null</code> if the binding is not resolved or if there is no message for any entry</p>
+             */
+            protected requestFilterForMessages(fnFilter?: Function): any;
+            /**
              * <p>Sorts the list according to the sorter object.</p><p>Instead of a single sorter also an array of sorters can be passed to the sort method. In this case they are processed in the sequence in which they are contained in the array.</p><h4>Grouping</h4><p> Sorting and grouping are closely related, in case a list should be grouped, it must be sorted by the property to group with. Grouping is enabled by setting the <code>group</code> property on the sorter object. If it is enabled, you can get the current group of an item using <a target="_self" class="jsdoclink" href="api/sap.ui.model.ListBinding#methods/getGroup">sap.ui.model.ListBinding.prototype.getGroup</a>. In case multiple sorters are provided, grouping can only be done on the first sorter, nested grouping is not supported.</p>
              * @param {sap.ui.model.Sorter | any[]} aSorters <p>the Sorter object or an array of sorters which defines the sort order</p>
              * @returns sap.ui.model.ListBinding <p>returns <code>this</code> to facilitate method chaining</p>
@@ -17404,7 +17737,7 @@ declare namespace sap {
           export class ODataModel extends sap.ui.model.Model {
             /**
              * <p>Constructor for a new ODataModel.</p>
-             * @param {string | any} serviceUrl <p>Base URI of the service to request data from; additional URL parameters appended here will be appended to every request. If you pass an object it will be interpreted as the parameter object (second parameter). Then <code>mParameters.serviceUrl</code> becomes a mandatory parameter.</p>
+             * @param {string | any} serviceUrl <p>Base URI of the service to request data from; additional URL parameters appended here will be appended to every request. If you pass an object, it will be interpreted as the parameter object (second parameter). Then <code>mParameters.serviceUrl</code> becomes a mandatory parameter.</p>
              * @param {any} mParameters <p>Map which contains the following parameter properties:</p>
              */
             constructor(serviceUrl: string | any, mParameters?: any);
@@ -17531,7 +17864,7 @@ declare namespace sap {
              * <p>Creates a new property binding for this model.<br><br>References: <ul><li>sap.ui.model.Model.prototype.bindProperty</li></ul></p>
              * @param {string} sPath <p>Path pointing to the property that should be bound; either an absolute path or a path relative to a given <code>oContext</code></p>
              * @param {any} oContext <p>A context object for the new binding</p>
-             * @param {any} mParameters <p>Map of optional parameters for the binding; the ODataModel (v2) currently supports no additional parameters</p>
+             * @param {any} mParameters <p>Map of optional parameters for the binding</p>
              * @returns sap.ui.model.PropertyBinding <p>The new property binding</p>
              */
             bindProperty(sPath: string, oContext?: any, mParameters?: any): sap.ui.model.PropertyBinding;
@@ -17556,10 +17889,10 @@ declare namespace sap {
              */
             bindTree(sPath: string, oContext?: sap.ui.model.Context, aFilters?: sap.ui.model.Filter | sap.ui.model.Filter[], mParameters?: any, aSorters?: sap.ui.model.Sorter[]): sap.ui.model.TreeBinding;
             /**
-             * <p>Trigger a request to the function import OData service that was specified in the model constructor.</p><p>If the return type of the function import is either an entity type or a collection of an entity type, then the changes are reflected in the model. Otherwise they are ignored, and the <code>response</code> can be processed in the <code>success</code> callback.</p>
-             * @param {string} sFunctionName <p>A string containing the name of the function to call. The name is concatenated to the service URL which was specified in the model constructor.</p>
-             * @param {any} mParameters <p>Optional parameter map containing any of the following properties:</p>
-             * @returns any <p>An object which has a <code>contextCreated</code> function that returns a <code>Promise</code>. This resolves with the created <a target="_self" class="jsdoclink" href="api/sap.ui.model.Context">sap.ui.model.Context</a>. In addition it has an <code>abort</code> function to abort the current request.</p>
+             * <p>Triggers a request for the given function import.</p><p>If the return type of the function import is either an entity type or a collection of an entity type, then this OData model's cache is updated with the values of the returned entities. Otherwise they are ignored, and the <code>response</code> can be processed in the <code>success</code> callback.</p>
+             * @param {string} sFunctionName <p>The name of the function import starting with a slash, for example <code>/Activate</code>.</p>
+             * @param {any} mParameters <p>The parameter map containing any of the following properties:</p>
+             * @returns any <p>An object which has a <code>contextCreated</code> function that returns a <code>Promise</code>. This resolves with the created <a target="_self" class="jsdoclink" href="api/sap.ui.model.Context">sap.ui.model.Context</a>. In addition it has an <code>abort</code> function to abort the current request. The Promise returned by <code>contextCreated</code> is rejected if the function name cannot be found in the metadata or if the parameter <code>expand</code> is used and the function does not return a single entity.</p>
              */
             callFunction(sFunctionName: string, mParameters?: any): any;
             /**
@@ -17596,10 +17929,10 @@ declare namespace sap {
              */
             createBindingContext(sPath: string, oContext?: any, mParameters?: any, fnCallBack?: Function, bReload?: boolean): sap.ui.model.Context;
             /**
-             * <p>Creates a new entry object which is described by the metadata of the entity type of the specified <code>sPath</code> Name. A context object is returned which can be used to bind against the newly created object.</p><p>For each created entry a request is created and stored in a request queue. The request queue can be submitted by calling <a target="_self" class="jsdoclink scrollToMethod" data-target="submitChanges" href="api/sap.ui.model.odata.v2.ODataModel#methods/submitChanges">#submitChanges</a>. To delete a created entry from the request queue call <a target="_self" class="jsdoclink scrollToMethod" data-target="deleteCreatedEntry" href="api/sap.ui.model.odata.v2.ODataModel#methods/deleteCreatedEntry">#deleteCreatedEntry</a>.</p><p>The optional parameter <code>mParameters.properties</code> can be used as follows: <ul> <li><code>properties</code> could be an array containing the property names which should be included in the new entry. Other properties defined in the entity type won't be included. </li> <li><code>properties</code> could be an object which includes the desired properties and the corresponding values which should be used for the created entry. </li> </ul> If <code>properties</code> is not specified, all properties in the entity type will be included in the created entry.</p><p>If there are no values specified, the properties will have <code>undefined</code> values.</p><p>Please note that deep creates (including data defined by navigation properties) are not supported.</p>
-             * @param {string} sPath <p>Name of the path to the EntitySet</p>
+             * <p>Creates a new entry object which is described by the metadata of the entity type of the specified <code>sPath</code> Name. A context object is returned which can be used to bind against the newly created object.</p><p>For each created entry a request is created and stored in a request queue. The request queue can be submitted by calling <a target="_self" class="jsdoclink scrollToMethod" data-target="submitChanges" href="api/sap.ui.model.odata.v2.ODataModel#methods/submitChanges">#submitChanges</a>. To delete a created entry from the request queue call <a target="_self" class="jsdoclink scrollToMethod" data-target="deleteCreatedEntry" href="api/sap.ui.model.odata.v2.ODataModel#methods/deleteCreatedEntry">#deleteCreatedEntry</a>.</p><p>The optional parameter <code>mParameters.properties</code> can be used as follows: <ul> <li><code>properties</code> could be an array containing the property names which should be included in the new entry. Other properties defined in the entity type won't be included. </li> <li><code>properties</code> could be an object which includes the desired properties and the corresponding values which should be used for the created entry. </li> </ul> If <code>properties</code> is not specified, all properties in the entity type will be included in the created entry.</p><p>If there are no values specified, the properties will have <code>undefined</code> values.</p><p>Please note that deep creates (including data defined by navigation properties) are not supported.</p><p>The parameter <code>expand</code> is supported since 1.78.0. If this parameter is set, the given navigation properties are expanded automatically with the same $batch request in which the POST request for the creation is contained. Ensure that the batch mode is used and the back-end service supports GET requests relative to a content ID outside the changeset. The success and error callback functions are called only once, even if there are two requests in the <code>$batch</code> related to a single call of <a target="_self" class="jsdoclink scrollToMethod" data-target="createEntry" href="api/sap.ui.model.odata.v2.ODataModel#methods/createEntry">#createEntry</a>: <ul> <li>a POST request for creating an entity,</li> <li>a GET request for requesting the navigation properties for the just created entity. </li> </ul> The following outcomes are possible: <ul> <li>If both requests succeed, the success handler is called with the merged data of the POST and the GET request and with the response of the POST request.</li> <li>If the POST request fails, the GET request also fails. In that case the error callback handler is called with the error response of the POST request.</li> <li>If the POST request succeeds but the GET request for the navigation properties fails, the success handler is called with the data and the response of the POST request. The response object of the success handler call and the response parameter of the corresponding <code>requestFailed</code> and <code>requestCompleted</code> events have an additional property <code>expandAfterCreateFailed</code> set to <code>true</code>. </li> </ul></p>
+             * @param {string} sPath <p>The path to the EntitySet</p>
              * @param {any} mParameters <p>A map of the following parameters:</p>
-             * @returns sap.ui.model.Context <p>A Context object that points to the new created entry.</p>
+             * @returns sap.ui.model.Context <p>A Context object that points to the newly created entry.</p>
              */
             createEntry(sPath: string, mParameters: any): sap.ui.model.Context;
             /**
@@ -17765,6 +18098,11 @@ declare namespace sap {
              */
             getKey(vValue: string | any | sap.ui.model.Context): string;
             /**
+             * <p>Returns this model's message scope.<br><br>References: <ul><li>sap.ui.model.odata.MessageScope</li></ul></p>
+             * @returns sap.ui.model.odata.MessageScope <p>The message scope</p>
+             */
+            getMessageScope(): sap.ui.model.odata.MessageScope;
+            /**
              * <p>Returns the meta model associated with this model if it is available for the concrete model type.</p>
              * @returns sap.ui.model.MetaModel <p>The meta model or <code>undefined</code> if no meta model exists.</p>
              */
@@ -17813,6 +18151,7 @@ declare namespace sap {
              * <p>Implement in inheriting classes.</p>
              * @param {string} sPath <p>the path to where to read the attribute value</p>
              * @param {any} oContext <p>the context with which the path should be resolved</p>
+             * @returns any <p>Value of the addressed property</p>
              */
             getProperty(sPath: string, oContext?: any): any;
             /**
@@ -17829,7 +18168,7 @@ declare namespace sap {
             getRefreshAfterChange(): boolean;
             /**
              * <p>Returns the current security token.</p><p>If the token has not been requested from the server it will be requested first (synchronously).</p>
-             * @returns string <p>The CSRF security token</p>
+             * @returns string <p>The security token</p>
              */
             getSecurityToken(): string;
             /**
@@ -17874,10 +18213,16 @@ declare namespace sap {
              */
             isMetadataLoadingFailed(): boolean;
             /**
-             * <p>Returns a promise for the loaded state of the metadata.</p><p>The promise won't get rejected in case the metadata loading failed but is only resolved if the metadata is loaded successfully. If <code>refreshMetadata</code> function is called after this promise is already resolved you should rely on the promise returned by <code>refreshMetadata</code> to get information about the refreshed metadata loaded state.</p><p>The Metadata needs to be loaded prior to performing OData calls. Chaining to the returned promise ensures that all required parameters have been loaded, e.g. authentication token.</p>
+             * <p>Checks whether the service has set the OData V2 annotation "message-scope-supported" on the <code>EntityContainer</code> with the value <code>true</code>. This is a a precondition for the setting of <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.MessageScope">sap.ui.model.odata.MessageScope.BusinessObject</a> via <a target="_self" class="jsdoclink scrollToMethod" data-target="setMessageScope" href="api/sap.ui.model.odata.v2.ODataModel#methods/setMessageScope">#setMessageScope</a>.<br><br>References: <ul><li>sap.ui.model.odata.MessageScope</li></ul></p>
+             * @returns Promise<any> <p>A promise resolving with <code>true</code> if the OData V2 annotation "message-scope-supported" on the <code>EntityContainer</code> is set to <code>true</code></p>
+             */
+            messageScopeSupported(): Promise<any>;
+            /**
+             * <p>Returns a promise for the loaded state of the metadata.</p><p>The metadata needs to be loaded prior to performing OData calls. Chaining to the returned promise ensures that all required parameters have been loaded, e.g. the security token, see <a target="_self" class="jsdoclink scrollToMethod" data-target="getSecurityToken" href="api/sap.ui.model.odata.v2.ODataModel#methods/getSecurityToken">#getSecurityToken</a>.</p><p>The returned promise depends on the optional parameter <code>bRejectOnFailure</code>.</p><p><code>bRejectOnFailure=false</code>: The promise won't get rejected in case the metadata or annotation loading failed but is only resolved if <ol> <li>the metadata are loaded successfully,</li> <li>the annotations are processed, provided the model parameter <code>loadAnnotationsJoined</code> has been set.</li> </ol> Use this promise for delaying OData calls until all required information is available, i.e. this promise is resolved.</p><p><code>bRejectOnFailure=true</code>: Since 1.79, the parameter <code>bRejectOnFailure</code> allows to request a promise that is rejected when one of the following fails: <ul> <li>the loading of the metadata,</li> <li>the loading of the annotations, provided the model parameter <code>loadAnnotationsJoined</code> has been set.</li> </ul> The promise is fulfilled upon successful loading of both. This promise can be used to start processing OData calls when it is fulfilled and to display an error message when it is rejected. See also the example below.</p><p>If the method <code>refreshMetadata</code> is called after the returned promise is already resolved or rejected, you should use the promise returned by <code>refreshMetadata</code> to get information about the refreshed state.</p>
+             * @param {boolean} bRejectOnFailure <p>Determines since 1.79 whether the returned promise is rejected when the initial loading of the metadata fails. In case the model parameter <code>loadAnnotationsJoined</code> is set, the returned promise fails also if loading the annotations fails.</p>
              * @returns Promise<any> <p>A promise on metadata loaded state</p>
              */
-            metadataLoaded(): Promise<any>;
+            metadataLoaded(bRejectOnFailure?: boolean): Promise<any>;
             /**
              * <p>Trigger a <code>GET</code> request to the OData service that was specified in the model constructor.</p><p>The data will be stored in the model. The requested data is returned with the response.</p>
              * @param {string} sPath <p>A string containing the path to the data which should be retrieved. The path is concatenated to the service URL which was specified in the model constructor.</p>
@@ -17921,7 +18266,7 @@ declare namespace sap {
             resetChanges(aPath?: any[], bAll?: boolean): Promise<any>;
             /**
              * <p>Returns a promise, which will resolve with the security token as soon as it is available.</p>
-             * @returns Promise<any> <p>A promise on the CSRF security token</p>
+             * @returns Promise<any> <p>A promise on the security token</p>
              */
             securityTokenAvailable(): Promise<any>;
             /**
@@ -17953,6 +18298,11 @@ declare namespace sap {
              */
             setHeaders(mHeaders: any): void;
             /**
+             * <p>Sets this model's message scope.<br><br>References: <ul><li>sap.ui.model.odata.MessageScope</li></ul></p>
+             * @param {sap.ui.model.odata.MessageScope} sMessageScope <p>The message scope</p>
+             */
+            setMessageScope(sMessageScope: sap.ui.model.odata.MessageScope): void;
+            /**
              * <p>Sets a new value for the given property <code>sPath</code> in the model.</p><p>If the <code>changeBatchGroup</code> for the changed entity type is set to <a target="_self" class="jsdoclink scrollToMethod" data-target="setDeferredGroups" href="api/sap.ui.model.odata.v2.ODataModel#methods/setDeferredGroups">deferred</a>, changes could be submitted with <a target="_self" class="jsdoclink scrollToMethod" data-target="submitChanges" href="api/sap.ui.model.odata.v2.ODataModel#methods/submitChanges">#submitChanges</a>. Otherwise the change will be submitted directly.</p>
              * @param {string} sPath <p>Path of the property to set</p>
              * @param {any} oValue <p>Value to set the property to</p>
@@ -17967,7 +18317,7 @@ declare namespace sap {
              */
             setRefreshAfterChange(bRefreshAfterChange: boolean): void;
             /**
-             * <p>Enable/Disable XCSRF-Token handling.</p>
+             * <p>Enable/Disable security token handling.</p>
              * @param {boolean} bTokenHandling <p>Whether to use token handling or not</p>
              */
             setTokenHandlingEnabled(bTokenHandling?: boolean): void;
@@ -18160,7 +18510,7 @@ declare namespace sap {
           }
         }
         /**
-         * <p><p>Model and related classes like bindings for OData V4.</p></p>
+         * <p><p>Model and related classes like bindings for OData V4.</p><p><b>Note:</b> Smart controls (<code>sap.ui.comp</code> library) do not support the SAPUI5 OData V4 model. Also controls such as <a target="_self" class="jsdoclink" href="api/sap.ui.table.TreeTable">sap.ui.table.TreeTable</a> and <a target="_self" class="jsdoclink" href="api/sap.ui.table.AnalyticalTable">sap.ui.table.AnalyticalTable</a> are not supported together with the SAPUI5 OData V4 model. The interface for applications has been changed for easier and more efficient use of the model. For a summary of these changes, see <a target="_self" href="topic/abd4d7c7548d4c29ab8364d3904a6d74">Changes Compared to OData V2 Model</a>.</p></p>
          */
         namespace v4 {
           /**
@@ -18168,24 +18518,9 @@ declare namespace sap {
            */
           namespace AnnotationHelper {
             /**
-             * <p>A function that helps to interpret OData V4 annotations. It knows about the following expressions: <ul> <li>"14.4 Constant Expressions" for "edm:Bool", "edm:Date", "edm:DateTimeOffset", "edm:Decimal", "edm:Float", "edm:Guid", "edm:Int", "edm:TimeOfDay". <li>constant "14.4.11 Expression edm:String": This is turned into a fixed text (e.g. <code>"Width"</code>). String constants that contain a simple binding <code>"{@i18n>...}"</code> to the hard-coded model name "@i18n" with arbitrary path are not turned into a fixed text, but kept as a data binding expression; this allows local annotation files to refer to a resource bundle for internationalization. <li>dynamic "14.5.1 Comparison and Logical Operators": These are turned into expression bindings to perform the operations at runtime. <li>dynamic "14.5.3 Expression edm:Apply": <ul> <li>"14.5.3.1.1 Function odata.concat": This is turned into a data binding expression relative to an entity. <li>"14.5.3.1.2 Function odata.fillUriTemplate": This is turned into an expression binding to fill the template at runtime. <li>"14.5.3.1.3 Function odata.uriEncode": This is turned into an expression binding to encode the parameter at runtime. <li>Apply functions may be nested arbitrarily. </ul> <li>dynamic "14.5.6 Expression edm:If": This is turned into an expression binding to be evaluated at runtime. The expression is a conditional expression like <code>"{=condition ? expression1 : expression2}"</code>. <li>dynamic "14.5.10 Expression edm:Null": This is turned into a <code>null</code> value. It is ignored in <code>odata.concat</code>. <li>dynamic "14.5.12 Expression edm:Path" and "14.5.13 Expression edm:PropertyPath": This is turned into a data binding relative to an entity, including type information and constraints as available from metadata, e.g. <code>"{path : 'Name', type : 'sap.ui.model.odata.type.String', constraints : {'maxLength':'255'}}"</code>. Depending on the used type, some additional constraints of this type are set: <ul> <li>Edm.DateTime: The "displayFormat" constraint is set to the value of the "sap:display-format" annotation of the referenced property. <li>Edm.Decimal: The "precision" and "scale" constraints are set to the values of the corresponding attributes of the referenced property. The "minimum", "maximum", "minimumExclusive" and "maximumExlusive" constraints are set to the values of the corresponding "Org.OData.Validation.V1" annotation of the referenced property; note that in this case only constant expressions are supported to determine the annotation value. <li>Edm.String: The "maxLength" constraint is set to the value of the corresponding attribute of the referenced property, and the "isDigitSequence" constraint is set to the value of the "com.sap.vocabularies.Common.v1.IsDigitSequence" annotation of the referenced property; note that in this case only constant expressions are supported to determine the annotation value. </ul> </ul></p><p>If <code>oDetails.context.getPath()</code> contains a single "$AnnotationPath" or "$Path" segment, the value corresponding to that segment is considered as a data binding path prefix whenever a dynamic "14.5.12 Expression edm:Path" or "14.5.13 Expression edm:PropertyPath" is turned into a data binding. Use <a target="_self" class="jsdoclink scrollToMethod" data-target="sap.ui.model.odata.v4.AnnotationHelper.resolve$Path" href="api/sap.ui.model.odata.v4.AnnotationHelper#methods/sap.ui.model.odata.v4.AnnotationHelper.resolve$Path">sap.ui.model.odata.v4.AnnotationHelper.resolve$Path</a> to avoid these prefixes in cases where they are not applicable.</p><p>Unsupported or incorrect values are turned into a string nevertheless, but indicated as such. Proper escaping is used to make sure that data binding syntax is not corrupted. In such a case, an error describing the problem is logged to the console.</p><p>Example: <pre>
+             * <p>A function that helps to interpret OData V4 annotations.</p><p>Unsupported or incorrect values are turned into a string nevertheless, but are indicated as such. In such a case, an error describing the problem is logged to the console. Proper escaping is used to make sure that data binding syntax is not corrupted.</p><p>Example: <pre>
             &lt;Text text="{meta>Value/@@sap.ui.model.odata.v4.AnnotationHelper.format}" />
-            </pre></p><p>Example for "$Path" in the context's path: <pre>
-            &lt;Annotations Target="com.sap.gateway.default.iwbep.tea_busi.v0001.EQUIPMENT">
-              &lt;Annotation Term="com.sap.vocabularies.UI.v1.LineItem">
-                &lt;Collection>
-                  &lt;Record Type="com.sap.vocabularies.UI.v1.DataField">
-                    &lt;PropertyValue Property="Value" Path="EQUIPMENT_2_PRODUCT/Name" />
-                  &lt;/Record>
-                &lt;/Collection>
-              &lt;/Annotation>
-            &lt;/Annotations>
-            &lt;Annotations Target="com.sap.gateway.default.iwbep.tea_busi_product.v0001.Product/Name">
-              &lt;Annotation Term="com.sap.vocabularies.Common.v1.QuickInfo" Path="PRODUCT_2_SUPPLIER/Supplier_Name" />
-            &lt;/Annotations>
-            </pre> <pre>
-            &lt;Text text="{meta>/Equipments/@com.sap.vocabularies.UI.v1.LineItem/0/Value/$Path@com.sap.vocabularies.Common.v1.QuickInfo@@sap.ui.model.odata.v4.AnnotationHelper.format}" />
-            </pre> <code>format</code> returns a binding with path "EQUIPMENT_2_PRODUCT/PRODUCT_2_SUPPLIER/Supplier_Name".</p><p>Example for "$AnnotationPath" in the context's path: <pre>
+            </pre></p><h3>Supported Expressions</h3><p> <ul> <li> "14.4 Constant Expressions" for "edm:Bool", "edm:Date", "edm:DateTimeOffset", "edm:Decimal", "edm:Float", "edm:Guid", "edm:Int", "edm:TimeOfDay". <li> constant "14.4.11 Expression edm:String": This is turned into a fixed text (for example <code>"Width"</code>). String constants that contain a simple binding <code>"{@i18n>...}"</code> to the hard-coded model name "@i18n" with arbitrary path are not turned into a fixed text, but kept as a data binding expression; this allows local annotation files to refer to a resource bundle for internationalization. <li> dynamic "14.5.1 Comparison and Logical Operators": These are turned into expression bindings to perform the operations at runtime. <li> dynamic "14.5.3 Expression edm:Apply": <ul> <li> "14.5.3.1.1 Function odata.concat": This is turned into a data binding expression relative to an entity. <li> "14.5.3.1.2 Function odata.fillUriTemplate": This is turned into an expression binding to fill the template at runtime. <li> "14.5.3.1.3 Function odata.uriEncode": This is turned into an expression binding to encode the parameter at runtime. <li> Apply functions may be nested arbitrarily. </ul> <li> dynamic "14.5.5 Expression edm:Collection": This is turned into an expression binding to be evaluated at runtime. Elements can be conditionally added to the collection when using dynamic "14.5.6 Expression edm:If" as a direct child. <li> dynamic "14.5.6 Expression edm:If": This is turned into an expression binding to be evaluated at runtime. The expression is a conditional expression like <code>"{=condition ? expression1 : expression2}"</code>. <li> dynamic "14.5.10 Expression edm:Null": This is turned into a <code>null</code> value. It is ignored in <code>odata.concat</code>. <li> dynamic "14.5.12 Expression edm:Path" and "14.5.13 Expression edm:PropertyPath": These are turned into data bindings relative to an entity, including type information and constraints as available from metadata, for example <code>"{path : 'Name', type : 'sap.ui.model.odata.type.String', constraints : {'maxLength' : 255}, formatOptions : {'parseKeepsEmptyString' : true}}"</code>. Depending on the used type, some additional constraints and format options of this type are set: <ul> <li> Edm.DateTime: The "displayFormat" constraint is set to the value of the "sap:display-format" annotation of the referenced property. <li> Edm.Decimal: The "precision" and "scale" constraints are set to the values of the corresponding attributes of the referenced property. The "minimum", "maximum", "minimumExclusive", and "maximumExclusive" constraints are set to the values of the corresponding "Org.OData.Validation.V1" annotation of the referenced property; note that in this case only constant expressions are supported to determine the annotation value. <li> Edm.String: The "maxLength" constraint is set to the value of the corresponding attribute of the referenced property, and the "isDigitSequence" constraint is set to the value of the "com.sap.vocabularies.Common.v1.IsDigitSequence" annotation of the referenced property; note that in this case only constant expressions are supported to determine the annotation value. The "parseKeepsEmptyString" format option is set. </ul> Since 1.78.0, both "edm:Path" and "edm:PropertyPath" are also supported if <code>vRawValue</code> is the path itself, and not the object wrapping it. </ul></p><h3>$AnnotationPath and $Path</h3><p> If <code>oDetails.context.getPath()</code> contains a single "$AnnotationPath" or "$Path" segment, the value corresponding to that segment is considered as a data binding path prefix whenever a dynamic "14.5.12 Expression edm:Path" or "14.5.13 Expression edm:PropertyPath" is turned into a data binding. Use <a target="_self" class="jsdoclink scrollToMethod" data-target="sap.ui.model.odata.v4.AnnotationHelper.resolve$Path" href="api/sap.ui.model.odata.v4.AnnotationHelper#methods/sap.ui.model.odata.v4.AnnotationHelper.resolve$Path">sap.ui.model.odata.v4.AnnotationHelper.resolve$Path</a> to avoid these prefixes in cases where they are not applicable.</p><h4>$AnnotationPath</h4><p> Example for "$AnnotationPath" in the context's path: <pre>
             &lt;Annotations Target="com.sap.gateway.default.iwbep.tea_busi.v0001.EQUIPMENT">
               &lt;Annotation Term="com.sap.vocabularies.UI.v1.Facets">
                 &lt;Collection>
@@ -18200,16 +18535,50 @@ declare namespace sap {
             &lt;/Annotations>
             </pre> <pre>
             &lt;Text text="{meta>/Equipments/@com.sap.vocabularies.UI.v1.Facets/0/Target/$AnnotationPath/@@sap.ui.model.odata.v4.AnnotationHelper.format}" />
-            </pre> <code>format</code> returns a binding with path "EQUIPMENT_2_PRODUCT/Name".</p><p>Since 1.73 in addition to supporting annotations, this function also can be used to interpret action or function parameters as a binding string.</p><p>See an example of the metadata for an unbound action "AcChangeTeamBudgetByID": <pre>
+            </pre> <code>format</code> returns a binding with path "EQUIPMENT_2_PRODUCT/Name".</p><h4>$Path</h4><p> Example for "$Path" in the context's path: <pre>
+            &lt;Annotations Target="com.sap.gateway.default.iwbep.tea_busi.v0001.EQUIPMENT">
+              &lt;Annotation Term="com.sap.vocabularies.UI.v1.LineItem">
+                &lt;Collection>
+                  &lt;Record Type="com.sap.vocabularies.UI.v1.DataField">
+                    &lt;PropertyValue Property="Value" Path="EQUIPMENT_2_PRODUCT/Name" />
+                  &lt;/Record>
+                &lt;/Collection>
+              &lt;/Annotation>
+            &lt;/Annotations>
+            &lt;Annotations Target="com.sap.gateway.default.iwbep.tea_busi_product.v0001.Product/Name">
+              &lt;Annotation Term="com.sap.vocabularies.Common.v1.QuickInfo" Path="PRODUCT_2_SUPPLIER/Supplier_Name" />
+            &lt;/Annotations>
+            </pre> <pre>
+            &lt;Text text="{meta>/Equipments/@com.sap.vocabularies.UI.v1.LineItem/0/Value/$Path@com.sap.vocabularies.Common.v1.QuickInfo@@sap.ui.model.odata.v4.AnnotationHelper.format}" />
+            </pre> <code>format</code> returns a binding with path "EQUIPMENT_2_PRODUCT/PRODUCT_2_SUPPLIER/Supplier_Name".</p><h3>Annotations on an Operation or a Parameter</h3><p> Since 1.71.0, for annotations on an operation or a parameter, the binding parameter's name is stripped off any dynamic "14.5.12 Expression edm:Path" and "14.5.13 Expression edm:PropertyPath" where it might be used as a first segment. Since 1.76.0 this does not apply to annotations on a parameter. In the former case, we assume that the resulting data binding is relative to the parent context of the operation binding, that is, to the context representing the binding parameter itself. In the latter case, we assume that the resulting data binding is relative to the parameter context of the operation binding (see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataContextBinding#methods/getParameterContext">sap.ui.model.odata.v4.ODataContextBinding#getParameterContext</a>).</p><p>Example: <pre>
+               &lt;Action Name="ShipProduct" EntitySetPath="_it" IsBound="true" >
+                   &lt;Parameter Name="_it" Type="name.space.Product" Nullable="false"/>
+                   &lt;Parameter Name="City" Type="Edm.String"/>
+               &lt;/Action>
+            </pre> For the operation <code>ShipProduct</code> mentioned above, the following annotation targets an operation parameter and refers back to the binding parameter. <pre>
+                &lt;Annotations Target="name.space.ShipProduct(name.space.Product)/City">
+                   &lt;Annotation Term="com.sap.vocabularies.Common.v1.Text" Path="_it/SupplierIdentifier"/>
+                &lt;/Annotations>
+            </pre></p><p>Using <code>AnnotationHelper.format</code> like <pre>
+            &lt;Text text="{meta>/Products/name.space.ShipProduct/$Parameter/City@com.sap.vocabularies.Common.v1.Text@@sap.ui.model.odata.v4.AnnotationHelper.format}" />
+            </pre> results in <pre>
+            &lt;Text text="{path:'_it/SupplierIdentifier',type:'sap.ui.model.odata.type.Int32'}" />
+            </pre> and the data binding evaluates to the <code>SupplierIdentifier</code> property of the entity the operation is called on.</p><h3>Operation Parameters</h3><p> Since 1.73.0, this function can be used on action or function parameters and results in a relative data binding, just like a "14.5.12 Expression edm:Path".</p><p>Assume we have the following metadata for an unbound action "AcChangeTeamBudgetByID": <pre>
                &lt;Action Name="AcChangeTeamBudgetByID">
                    &lt;Parameter Name="TeamID" Type="Edm.String" Nullable="false" MaxLength="10"/>
                    &lt;Parameter Name="Budget" Type="Edm.Decimal" Nullable="false" Precision="16" Scale="variable"/>
                &lt;/Action>
             </pre></p><p>Let <code>ChangeTeamBudgetByID</code> be the action import of this action. Using <code>AnnotationHelper.format</code> for the <code>TeamID</code> like <pre>
             &lt;Text text="{meta>/ChangeTeamBudgetByID/TeamID@@sap.ui.model.odata.v4.AnnotationHelper.format}" />
-            </pre> returns the following binding string which contains information about path, type and constraints: <pre>
-            &lt;Text text="{path:'TeamID',type:'sap.ui.model.odata.type.String',constraints:{'maxLength':10,'nullable':false}" />
-            </pre><br><br>References: <ul><li>sap.ui.model.odata.v4.AnnotationHelper.resolve$Path</li></ul></p>
+            </pre> results in <pre>
+            &lt;Text text="{path:'TeamID',type:'sap.ui.model.odata.type.String',constraints:{'maxLength':10,'nullable':false},formatOptions:{'parseKeepsEmptyString':true}}" />
+            </pre></p><h3>Binding Parameters and Format Options</h3><p> Since 1.77.0, binding parameters and format options can be given. The usage <pre>
+            &lt;Input value="{meta>/ChangeTeamBudgetByID/Budget@@sap.ui.model.odata.v4.AnnotationHelper.format($($$noPatch : true$), $(groupingEnabled : false$))}" />
+            </pre> results in a data binding with the given binding parameters and format options. Note how, for an object notation, curly brackets must be replaced by <code>$(</code> and <code>$)</code> respectively. Use <code>null</code>, not <code>undefined</code>, in case no binding parameters are needed.</p><h3>Structural Properties</h3><p> Since 1.78.0, this function can be used on a structural property and results in a relative data binding, just like a "14.5.12 Expression edm:Path". The usage <pre>
+            &lt;Input value="{meta>/Department/Name@@sap.ui.model.odata.v4.AnnotationHelper.format}"/>
+            </pre> results in <pre>
+            &lt; Input value="{path:'Name',type:'sap.ui.model.odata.type.String',constraints:{'maxLength':40,'nullable':false},formatOptions:{'parseKeepsEmptyString':true}}"/>
+            </pre><br><br>References: <ul><li>sap.ui.model.odata.v4.AnnotationHelper.resolve$Path</li><li>sap.ui.model.odata.v4.AnnotationHelper.value</li></ul></p>
              * @param {any} vRawValue <p>The raw value from the meta model</p>
              * @param {any} oDetails <p>The details object</p>
              * @returns string | Promise<any> <p>A data binding, or a fixed text, or a sequence thereof, or a <code>Promise</code> resolving with that string, for example if not all type information is already available</p>
@@ -18222,7 +18591,7 @@ declare namespace sap {
              */
             function getNavigationBinding(sPath: string): string;
             /**
-             * <p>A function that helps to interpret OData V4 annotations. It knows about the syntax of the path value used by the following dynamic expressions: <ul> <li>"14.5.2 Expression edm:AnnotationPath"</li> <li>"14.5.11 Expression edm:NavigationPropertyPath"</li> <li>"14.5.12 Expression edm:Path"</li> <li>"14.5.13 Expression edm:PropertyPath"</li> </ul> It returns the path of structural and navigation properties from the given path value, but removes "$count", types casts, term casts, and annotations of navigation properties.</p>
+             * <p>A function that helps to interpret OData V4 annotations. It knows about the syntax of the path value used by the following dynamic expressions: <ul> <li> "14.5.2 Expression edm:AnnotationPath" <li> "14.5.11 Expression edm:NavigationPropertyPath" <li> "14.5.12 Expression edm:Path" <li> "14.5.13 Expression edm:PropertyPath" </ul> It returns the path of structural and navigation properties from the given path value, but removes "$count", types casts, term casts, and annotations on navigation properties.</p>
              * @param {string} sPath <p>The path value from the meta model, for example "ToSupplier/@com.sap.vocabularies.Communication.v1.Address" or "@com.sap.vocabularies.UI.v1.FieldGroup#Dimensions"</p>
              * @returns string <p>The path of structural and navigation properties, for example "ToSupplier" or ""</p>
              */
@@ -18235,7 +18604,7 @@ declare namespace sap {
              */
             function getValueListType(vRawValue: any, oDetails: any): sap.ui.model.odata.v4.ValueListType | Promise<any>;
             /**
-             * <p>A function that helps to interpret OData V4 annotations. It knows about the syntax of the path value used by the following dynamic expressions: <ul> <li>"14.5.2 Expression edm:AnnotationPath"</li> <li>"14.5.11 Expression edm:NavigationPropertyPath"</li> <li>"14.5.12 Expression edm:Path"</li> <li>"14.5.13 Expression edm:PropertyPath"</li> </ul> It returns the information whether the given path ends with "$count" or with a multi-valued structural or navigation property. Term casts and annotations of navigation properties are ignored.</p><p>Example: <pre>
+             * <p>A function that helps to interpret OData V4 annotations. It knows about the syntax of the path value used by the following dynamic expressions: <ul> <li> "14.5.2 Expression edm:AnnotationPath" <li> "14.5.11 Expression edm:NavigationPropertyPath" <li> "14.5.12 Expression edm:Path" <li> "14.5.13 Expression edm:PropertyPath" </ul> It returns the information whether the given path ends with "$count" or with a multi-valued structural or navigation property. Term casts and annotations on navigation properties are ignored.</p><p>Example: <pre>
             &lt;template:if test="{facet>Target/$AnnotationPath@@sap.ui.model.odata.v4.AnnotationHelper.isMultiple}">
             </pre></p>
              * @param {string} sPath <p>The path value from the meta model, for example "ToSupplier/@com.sap.vocabularies.Communication.v1.Address" or "@com.sap.vocabularies.UI.v1.FieldGroup#Dimensions"</p>
@@ -18259,9 +18628,37 @@ declare namespace sap {
              */
             function resolve$Path(oContext: sap.ui.model.Context): string;
             /**
-             * <p>A function that helps to interpret OData V4 annotations. It knows about the following expressions: <ul> <li>"14.4 Constant Expressions" for "edm:Bool", "edm:Date", "edm:DateTimeOffset", "edm:Decimal", "edm:Float", "edm:Guid", "edm:Int", "edm:TimeOfDay". <li>constant "14.4.11 Expression edm:String": This is turned into a fixed text (e.g. <code>"Width"</code>). String constants that contain a simple binding <code>"{@i18n>...}"</code> to the hard-coded model name "@i18n" with arbitrary path are not turned into a fixed text, but kept as a data binding expression; this allows local annotation files to refer to a resource bundle for internationalization. <li>dynamic "14.5.1 Comparison and Logical Operators": These are turned into expression bindings to perform the operations at runtime. <li>dynamic "14.5.3 Expression edm:Apply": <ul> <li>"14.5.3.1.1 Function odata.concat": This is turned into a data binding expression. <li>"14.5.3.1.2 Function odata.fillUriTemplate": This is turned into an expression binding to fill the template at runtime. <li>"14.5.3.1.3 Function odata.uriEncode": This is turned into an expression binding to encode the parameter at runtime. <li>Apply functions may be nested arbitrarily. </ul> <li>dynamic "14.5.6 Expression edm:If": This is turned into an expression binding to be evaluated at runtime. The expression is a conditional expression like <code>"{=condition ? expression1 : expression2}"</code>. <li>dynamic "14.5.10 Expression edm:Null": This is turned into a <code>null</code> value. It is ignored in <code>odata.concat</code>. <li>dynamic "14.5.12 Expression edm:Path" and "14.5.13 Expression edm:PropertyPath": This is turned into a simple data binding, e.g. <code>"{Name}"</code>. </ul> Unsupported or incorrect values are turned into a string nevertheless, but indicated as such. In such a case, an error describing the problem is logged to the console.</p><p>Example: <pre>
+             * <p>A function that helps to interpret OData V4 annotations.</p><p>Unsupported or incorrect values are turned into a string nevertheless, but are indicated as such. In such a case, an error describing the problem is logged to the console.</p><p>Example: <pre>
             &lt;Text text="{meta>Value/@@sap.ui.model.odata.v4.AnnotationHelper.value}" />
-            </pre></p>
+            </pre></p><h3>Supported Expressions</h3><p> <ul> <li> "14.4 Constant Expressions" for "edm:Bool", "edm:Date", "edm:DateTimeOffset", "edm:Decimal", "edm:Float", "edm:Guid", "edm:Int", "edm:TimeOfDay". <li> constant "14.4.11 Expression edm:String": This is turned into a fixed text (for example <code>"Width"</code>). String constants that contain a simple binding <code>"{@i18n>...}"</code> to the hard-coded model name "@i18n" with arbitrary path are not turned into a fixed text, but kept as a data binding expression; this allows local annotation files to refer to a resource bundle for internationalization. <li> dynamic "14.5.1 Comparison and Logical Operators": These are turned into expression bindings to perform the operations at runtime. <li> dynamic "14.5.3 Expression edm:Apply": <ul> <li> "14.5.3.1.1 Function odata.concat": This is turned into a data binding expression. <li> "14.5.3.1.2 Function odata.fillUriTemplate": This is turned into an expression binding to fill the template at runtime. <li> "14.5.3.1.3 Function odata.uriEncode": This is turned into an expression binding to encode the parameter at runtime. <li> Apply functions may be nested arbitrarily. </ul> <li> dynamic "14.5.5 Expression edm:Collection": This is turned into an expression binding to be evaluated at runtime. Elements can be conditionally added to the collection when using dynamic "14.5.6 Expression edm:If" as a direct child. <li> dynamic "14.5.6 Expression edm:If": This is turned into an expression binding to be evaluated at runtime. The expression is a conditional expression like <code>"{=condition ? expression1 : expression2}"</code>. <li> dynamic "14.5.10 Expression edm:Null": This is turned into a <code>null</code> value. It is ignored in <code>odata.concat</code>. <li> dynamic "14.5.12 Expression edm:Path" and "14.5.13 Expression edm:PropertyPath": These are turned into simple data bindings, for example <code>"{Name}"</code>. Since 1.78.0, both are also supported if <code>vRawValue</code> is the path itself, and not the object wrapping it. </ul></p><h3>Annotations on an Operation or a Parameter</h3><p> Since 1.71.0, for annotations on an operation or a parameter, the binding parameter's name is stripped off any dynamic "14.5.12 Expression edm:Path" and "14.5.13 Expression edm:PropertyPath" where it might be used as a first segment. Since 1.76.0 this does not apply to annotations on a parameter. In the former case, we assume that the resulting data binding is relative to the parent context of the operation binding, that is, to the context representing the binding parameter itself. In the latter case, we assume that the resulting data binding is relative to the parameter context of the operation binding (see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataContextBinding#methods/getParameterContext">sap.ui.model.odata.v4.ODataContextBinding#getParameterContext</a>).</p><p>Example: <pre>
+               &lt;Action Name="ShipProduct" EntitySetPath="_it" IsBound="true" >
+                   &lt;Parameter Name="_it" Type="name.space.Product" Nullable="false"/>
+                   &lt;Parameter Name="City" Type="Edm.String"/>
+               &lt;/Action>
+            </pre> For the operation <code>ShipProduct</code> mentioned above, the following annotation targets an operation parameter and refers back to the binding parameter. <pre>
+                &lt;Annotations Target="name.space.ShipProduct(name.space.Product)/City">
+                   &lt;Annotation Term="com.sap.vocabularies.Common.v1.Text" Path="_it/SupplierIdentifier"/>
+                &lt;/Annotations>
+            </pre></p><p>Using <code>AnnotationHelper.value</code> like <pre>
+            &lt;Text text="{meta>/Products/name.space.ShipProduct/$Parameter/City@com.sap.vocabularies.Common.v1.Text@@sap.ui.model.odata.v4.AnnotationHelper.value}" />
+            </pre> results in <pre>
+            &lt;Text text="{_it/SupplierIdentifier}" />
+            </pre> and the data binding evaluates to the <code>SupplierIdentifier</code> property of the entity the operation is called on.</p><h3>Operation Parameters</h3><p> Since 1.73.0, this function can be used on action or function parameters and results in a relative data binding, just like a "14.5.12 Expression edm:Path".</p><p>Assume we have the following metadata for an unbound action "AcChangeTeamBudgetByID": <pre>
+               &lt;Action Name="AcChangeTeamBudgetByID">
+                   &lt;Parameter Name="TeamID" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                   &lt;Parameter Name="Budget" Type="Edm.Decimal" Nullable="false" Precision="16" Scale="variable"/>
+               &lt;/Action>
+            </pre></p><p>Let <code>ChangeTeamBudgetByID</code> be the action import of this action. Using <code>AnnotationHelper.value</code> for the <code>TeamID</code> like <pre>
+            &lt;Text text="{meta>/ChangeTeamBudgetByID/TeamID@@sap.ui.model.odata.v4.AnnotationHelper.value}" />
+            </pre> results in <pre>
+            &lt;Text text="{TeamID}" />
+            </pre></p><h3>Binding Parameters</h3><p> Since 1.77.0, binding parameters can be given. The usage <pre>
+            &lt;Input value="{meta>/ChangeTeamBudgetByID/Budget@@sap.ui.model.odata.v4.AnnotationHelper.value($($$noPatch : true$))}" />
+            </pre> results in a data binding with the given binding parameters. Note how, for an object notation, curly brackets must be replaced by <code>$(</code> and <code>$)</code> respectively.</p><h3>Structural Properties</h3><p> Since 1.78.0, this function can be used on a structural property and results in a relative data binding, just like a "14.5.12 Expression edm:Path". The usage <pre>
+            &lt;Input value="{meta>/Department/Name@@sap.ui.model.odata.v4.AnnotationHelper.value}"/>
+            </pre> results in <pre>
+            &lt; Input value="{Name}"/>
+            </pre><br><br>References: <ul><li>sap.ui.model.odata.v4.AnnotationHelper.format</li></ul></p>
              * @param {any} vRawValue <p>The raw value from the meta model</p>
              * @param {any} oDetails <p>The details object</p>
              * @returns string <p>A data binding or a fixed text or a sequence thereof</p>
@@ -18273,13 +18670,17 @@ declare namespace sap {
            */
           export class Context extends sap.ui.model.Context {
             /**
+             * <p>Collapses the group node that this context points to.<br><br>References: <ul><li>#expand</li><li>#isExpanded</li></ul></p>
+             */
+            collapse(): void;
+            /**
              * <p>Returns a promise that is resolved without data when the entity represented by this context has been created in the backend and all selected properties of this entity are available. Expanded navigation properties are only available if the context's binding is refreshable. <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataBinding#methods/refresh">sap.ui.model.odata.v4.ODataBinding#refresh</a> describes which bindings are refreshable.</p><p>As long as the promise is not yet resolved or rejected, the entity represented by this context is transient.</p><p>Once the promise is resolved, <a target="_self" class="jsdoclink scrollToMethod" data-target="getPath" href="api/sap.ui.model.odata.v4.Context#methods/getPath">#getPath</a> returns a path including the key predicate of the new entity. This requires that all key properties are available.</p>
-             * @returns Promise<any> <p>A promise that is resolved without data when the entity represented by this context has been created in the backend. It is rejected with an <code>Error</code> instance where <code>oError.canceled === true</code> if the transient entity is deleted before it is created in the backend, for example via <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.Context#methods/delete">sap.ui.model.odata.v4.Context#delete</a>, <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataListBinding#methods/resetChanges">sap.ui.model.odata.v4.ODataListBinding#resetChanges</a> or <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/resetChanges">sap.ui.model.odata.v4.ODataModel#resetChanges</a>. Returns <code>undefined</code> if the context has not been created using <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataListBinding#methods/create">sap.ui.model.odata.v4.ODataListBinding#create</a>.</p>
+             * @returns Promise<any> <p>A promise that is resolved without data when the entity represented by this context has been created in the backend. It is rejected with an <code>Error</code> instance where <code>oError.canceled === true</code> if the transient entity is deleted before it is created in the backend, for example via <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.Context#methods/delete">sap.ui.model.odata.v4.Context#delete</a>, <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataListBinding#methods/resetChanges">sap.ui.model.odata.v4.ODataListBinding#resetChanges</a> or <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/resetChanges">sap.ui.model.odata.v4.ODataModel#resetChanges</a>. It is rejected with an <code>Error</code> instance without <code>oError.canceled</code> if loading of $metadata fails. Returns <code>undefined</code> if the context has not been created using <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataListBinding#methods/create">sap.ui.model.odata.v4.ODataListBinding#create</a>.</p>
              */
             created(): Promise<any>;
             /**
              * <p>Deletes the OData entity this context points to.</p><p>The context must not be used anymore after successful deletion.</p>
-             * @param {string} sGroupId <p>The group ID to be used for the DELETE request; if not specified, the update group ID for the context's binding is used, see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/bindContext">sap.ui.model.odata.v4.ODataModel#bindContext</a> and <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/bindList">sap.ui.model.odata.v4.ODataModel#bindList</a>; the resulting group ID must not have <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.SubmitMode">sap.ui.model.odata.v4.SubmitMode.API</a>.</p>
+             * @param {string} sGroupId <p>The group ID to be used for the DELETE request; if not specified, the update group ID for the context's binding is used, see <a target="_self" class="jsdoclink scrollToMethod" data-target="getUpdateGroupId" href="api/sap.ui.model.odata.v4.Context#methods/getUpdateGroupId">#getUpdateGroupId</a>; the resulting group ID must not have <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.SubmitMode">sap.ui.model.odata.v4.SubmitMode.API</a>. Since 1.81, if this context is transient (see <a target="_self" class="jsdoclink scrollToMethod" data-target="isTransient" href="api/sap.ui.model.odata.v4.Context#methods/isTransient">#isTransient</a>), no group ID needs to be specified.</p>
              * @returns Promise<any> <p>A promise which is resolved without a result in case of success, or rejected with an instance of <code>Error</code> in case of failure, e.g. if the given context does not point to an entity, if it is not part of a list binding, if there are pending changes for the context's binding, if the resulting group ID has SubmitMode.API, or if the deletion on the server fails. <p> The error instance is flagged with <code>isConcurrentModification</code> in case a concurrent modification (e.g. by another user) of the entity between loading and deletion has been detected; this should be shown to the user who needs to decide whether to try deletion again. If the entity does not exist, we assume it has already been deleted by someone else and report success.</p>
              */
             delete(sGroupId?: string): Promise<any>;
@@ -18288,9 +18689,13 @@ declare namespace sap {
              */
             destroy(): void;
             /**
-             * <p>Destroys this context, that is, it removes this context from all dependent bindings and drops references to binding and model, so that the context cannot be used anymore; it keeps path and index for debugging purposes.<br><br>References: <ul><li>sap.ui.model.Context#destroy</li></ul></p>
+             * <p>Destroys this context, that is, it removes this context from all dependent bindings and drops references to binding and model, so that the context cannot be used anymore; it keeps path and index for debugging purposes.<br><br>References: <ul><li>sap.ui.base.Object#destroy</li></ul></p>
              */
             destroy(): void;
+            /**
+             * <p>Expands the group node that this context points to.<br><br>References: <ul><li>#collapse</li><li>#isExpanded</li></ul></p>
+             */
+            expand(): void;
             /**
              * <p>Returns the binding this context belongs to.</p>
              * @returns sap.ui.model.odata.v4.ODataContextBinding|sap.ui.model.odata.v4.ODataListBinding <p>The context's binding</p>
@@ -18302,8 +18707,13 @@ declare namespace sap {
              */
             getCanonicalPath(): string;
             /**
+             * <p>Returns the group ID of the context's binding that is used for read requests. See <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataListBinding#methods/getGroupId">sap.ui.model.odata.v4.ODataListBinding#getGroupId</a> and <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataContextBinding#methods/getGroupId">sap.ui.model.odata.v4.ODataContextBinding#getGroupId</a>.</p>
+             * @returns string <p>The group ID</p>
+             */
+            getGroupId(): string;
+            /**
              * <p>Returns the context's index within the binding's collection. The return value changes when a new entity is added via <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataListBinding#methods/create">sap.ui.model.odata.v4.ODataListBinding#create</a> without <code>bAtEnd</code>, and when a context representing a created entity is deleted again.</p>
-             * @returns number <p>The context's index within the binding's collection or <code>undefined</code> if the context does not belong to a list binding.</p>
+             * @returns number <p>The context's index within the binding's collection. It is <code>undefined</code> if <ul> <li> it does not belong to a list binding, <li> it is kept alive (see <a target="_self" class="jsdoclink scrollToMethod" data-target="isKeepAlive" href="api/sap.ui.model.odata.v4.Context#methods/isKeepAlive">#isKeepAlive</a>), but not in the collection currently. </ul></p>
              */
             getIndex(): number;
             /**
@@ -18315,7 +18725,7 @@ declare namespace sap {
             getObject(sPath?: string, mParameters?: any): any;
             /**
              * <p>Returns the value for the given path relative to this context. The function allows access to the complete data the context points to (if <code>sPath</code> is "") or any part thereof. The data is a JSON structure as described in <a href="http://docs.oasis-open.org/odata/odata-json-format/v4.0/odata-json-format-v4.0.html"> "OData JSON Format Version 4.0"</a>. Note that the function clones the result. Modify values via <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataPropertyBinding#methods/setValue">sap.ui.model.odata.v4.ODataPropertyBinding#setValue</a>.</p><p>Returns <code>undefined</code> if the data is not (yet) available; no request is triggered. Use <a target="_self" class="jsdoclink scrollToMethod" data-target="requestObject" href="api/sap.ui.model.odata.v4.Context#methods/requestObject">#requestObject</a> for asynchronous access.<br><br>References: <ul><li>sap.ui.model.Context#getObject</li></ul></p>
-             * @param {string} sPath <p>A relative path within the JSON structure</p>
+             * @param {string} sPath <p>A path relative to this context</p>
              * @returns any <p>The requested value</p>
              */
             getObject(sPath?: string): any;
@@ -18327,16 +18737,31 @@ declare namespace sap {
             getProperty(sPath: string): any;
             /**
              * <p>Returns the property value for the given path relative to this context. The path is expected to point to a structural property with primitive type. Returns <code>undefined</code> if the data is not (yet) available; no request is triggered. Use <a target="_self" class="jsdoclink scrollToMethod" data-target="requestProperty" href="api/sap.ui.model.odata.v4.Context#methods/requestProperty">#requestProperty</a> for asynchronous access.<br><br>References: <ul><li>sap.ui.model.Context#getProperty</li><li>sap.ui.model.odata.v4.ODataMetaModel#requestUI5Type</li></ul></p>
-             * @param {string} sPath <p>A relative path within the JSON structure</p>
+             * @param {string} sPath <p>A path relative to this context</p>
              * @param {boolean} bExternalFormat <p>If <code>true</code>, the value is returned in external format using a UI5 type for the given property path that formats corresponding to the property's EDM type and constraints. If the type is not yet available, <code>undefined</code> is returned.</p>
              * @returns any <p>The requested property value</p>
              */
             getProperty(sPath: string, bExternalFormat?: boolean): any;
             /**
-             * <p>Returns whether there are pending changes for bindings dependent on this context, or for unresolved bindings which were dependent on this context at the time the pending change was created. This includes the context itself being transient (see <a target="_self" class="jsdoclink scrollToMethod" data-target="isTransient" href="api/sap.ui.model.odata.v4.Context#methods/isTransient">#isTransient</a>).</p>
+             * <p>Returns the group ID of the context's binding that is used for update requests. See <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataListBinding#methods/getUpdateGroupId">sap.ui.model.odata.v4.ODataListBinding#getUpdateGroupId</a> and <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataContextBinding#methods/getUpdateGroupId">sap.ui.model.odata.v4.ODataContextBinding#getUpdateGroupId</a>.</p>
+             * @returns string <p>The update group ID</p>
+             */
+            getUpdateGroupId(): string;
+            /**
+             * <p>Returns whether there are pending changes for bindings dependent on this context, or for unresolved bindings (see <a target="_self" class="jsdoclink" href="api/sap.ui.model.Binding#methods/isResolved">sap.ui.model.Binding#isResolved</a>) which were dependent on this context at the time the pending change was created. This includes the context itself being transient (see <a target="_self" class="jsdoclink scrollToMethod" data-target="isTransient" href="api/sap.ui.model.odata.v4.Context#methods/isTransient">#isTransient</a>).</p>
              * @returns boolean <p>Whether there are pending changes</p>
              */
             hasPendingChanges(): boolean;
+            /**
+             * <p>Tells whether the group node that this context points to is expanded.<br><br>References: <ul><li>#collapse</li><li>#expand</li></ul></p>
+             * @returns boolean|undefined <p>Whether the group node that this context points to is expanded, or <code>undefined</code> if the node is not expandable</p>
+             */
+            isExpanded(): boolean | undefined;
+            /**
+             * <p>Returns whether this context is kept alive.<br><br>References: <ul><li>#setKeepAlive</li></ul></p>
+             * @returns boolean <p><code>true</code> if this context is kept alive</p>
+             */
+            isKeepAlive(): boolean;
             /**
              * <p>For a context created using <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataListBinding#methods/create">sap.ui.model.odata.v4.ODataListBinding#create</a>, the method returns <code>true</code> if the context is transient, meaning that the promise returned by <a target="_self" class="jsdoclink scrollToMethod" data-target="created" href="api/sap.ui.model.odata.v4.Context#methods/created">#created</a> is not yet resolved or rejected, and returns <code>false</code> if the context is not transient. The result of this function can also be accessed via instance annotation "@$ui5.context.isTransient" at the entity.</p>
              * @returns boolean <p>Whether this context is transient if it is created using <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataListBinding#methods/create">sap.ui.model.odata.v4.ODataListBinding#create</a>; <code>undefined</code> if it is not created using <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataListBinding#methods/create">sap.ui.model.odata.v4.ODataListBinding#create</a></p>
@@ -18344,8 +18769,8 @@ declare namespace sap {
             isTransient(): boolean;
             /**
              * <p>Refreshes the single entity represented by this context.</p>
-             * @param {string} sGroupId <p>The group ID to be used for the refresh; if not specified, the group ID for the context's binding is used, see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/bindList">sap.ui.model.odata.v4.ODataModel#bindList</a> and <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/bindContext">sap.ui.model.odata.v4.ODataModel#bindContext</a>.</p>
-             * @param {boolean} bAllowRemoval <p>If the context belongs to a list binding, the parameter allows the list binding to remove the context from the list binding's collection because the entity does not match the binding's filter anymore, see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataListBinding#methods/filter">sap.ui.model.odata.v4.ODataListBinding#filter</a>; a removed context is destroyed, see <a target="_self" class="jsdoclink scrollToMethod" data-target="destroy" href="api/sap.ui.model.odata.v4.Context#methods/destroy">#destroy</a>. If the context belongs to a context binding, the parameter must not be used. Supported since 1.55.0</p>
+             * @param {string} sGroupId <p>The group ID to be used for the refresh; if not specified, the group ID for the context's binding is used, see <a target="_self" class="jsdoclink scrollToMethod" data-target="getGroupId" href="api/sap.ui.model.odata.v4.Context#methods/getGroupId">#getGroupId</a>.</p>
+             * @param {boolean} bAllowRemoval <p>If the context belongs to a list binding, the parameter allows the list binding to remove the context from the list binding's collection because the entity does not match the binding's filter anymore, see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataListBinding#methods/filter">sap.ui.model.odata.v4.ODataListBinding#filter</a>; a removed context is destroyed, see <a target="_self" class="jsdoclink scrollToMethod" data-target="destroy" href="api/sap.ui.model.odata.v4.Context#methods/destroy">#destroy</a>. If the context belongs to a context binding, the parameter must not be used. Supported since 1.55.0</p><p>Since 1.84.0, if this context is kept alive (see <a target="_self" class="jsdoclink scrollToMethod" data-target="isKeepAlive" href="api/sap.ui.model.odata.v4.Context#methods/isKeepAlive">#isKeepAlive</a>), it is only destroyed if the corresponding entity does no longer exist in the back end. In this case, the <code>fnOnBeforeDestroy</code> callback passed with <a target="_self" class="jsdoclink scrollToMethod" data-target="setKeepAlive" href="api/sap.ui.model.odata.v4.Context#methods/setKeepAlive">#setKeepAlive</a>) is called.</p>
              */
             refresh(sGroupId?: string, bAllowRemoval?: boolean): void;
             /**
@@ -18355,32 +18780,39 @@ declare namespace sap {
             requestCanonicalPath(): Promise<any>;
             /**
              * <p>Returns a promise on the value for the given path relative to this context. The function allows access to the complete data the context points to (if <code>sPath</code> is "") or any part thereof. The data is a JSON structure as described in <a href="http://docs.oasis-open.org/odata/odata-json-format/v4.0/odata-json-format-v4.0.html"> "OData JSON Format Version 4.0"</a>. Note that the function clones the result. Modify values via <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.Context#methods/setProperty">sap.ui.model.odata.v4.Context#setProperty</a>.</p><p>If you want <a target="_self" class="jsdoclink scrollToMethod" data-target="requestObject" href="api/sap.ui.model.odata.v4.Context#methods/requestObject">#requestObject</a> to read fresh data, call <a target="_self" class="jsdoclink scrollToMethod" data-target="refresh" href="api/sap.ui.model.odata.v4.Context#methods/refresh">#refresh</a> first.<br><br>References: <ul><li>#getBinding</li><li>sap.ui.model.odata.v4.ODataContextBinding#refresh</li><li>sap.ui.model.odata.v4.ODataListBinding#refresh</li></ul></p>
-             * @param {string} sPath <p>A relative path within the JSON structure</p>
+             * @param {string} sPath <p>A path relative to this context</p>
              * @returns Promise<any> <p>A promise on the requested value</p>
              */
             requestObject(sPath?: string): Promise<any>;
             /**
-             * <p>Returns a promise on the property value for the given path relative to this context. The path is expected to point to a structural property with primitive type.<br><br>References: <ul><li>sap.ui.model.odata.v4.ODataMetaModel#requestUI5Type</li></ul></p>
-             * @param {string} sPath <p>A relative path within the JSON structure</p>
-             * @param {boolean} bExternalFormat <p>If <code>true</code>, the value is returned in external format using a UI5 type for the given property path that formats corresponding to the property's EDM type and constraints.</p>
-             * @returns Promise<any> <p>A promise on the requested value; it is rejected if the value is not primitive</p>
+             * <p>Returns a promise on the property value for the given path relative to this context. The path is expected to point to a structural property with primitive type. Since 1.81.1 it is possible to request more than one property. Property values that are not cached yet are requested from the back end.<br><br>References: <ul><li>sap.ui.model.odata.v4.ODataMetaModel#requestUI5Type</li></ul></p>
+             * @param {string | string[]} vPath <p>One or multiple paths relative to this context</p>
+             * @param {boolean} bExternalFormat <p>If <code>true</code>, the values are returned in external format using UI5 types for the given property paths that format corresponding to the properties' EDM types and constraints</p>
+             * @returns Promise<any> <p>A promise on the requested value or values; it is rejected if a value is not primitive</p>
              */
-            requestProperty(sPath?: string, bExternalFormat?: boolean): Promise<any>;
+            requestProperty(vPath?: string | string[], bExternalFormat?: boolean): Promise<any>;
             /**
-             * <p>Loads side effects for this context using the given "14.5.11 Expression edm:NavigationPropertyPath" or "14.5.13 Expression edm:PropertyPath" objects. Use this method to explicitly load side effects in case implicit loading is switched off via the binding-specific parameter <code>$$patchWithoutSideEffects</code>. The method can be called on <ul> <li> the bound context of a context binding, <li> the return value context of an operation binding, <li> a context of a list binding representing a single entity, <li> the header context of a list binding; side effects are loaded for the whole binding in this case. </ul> Key predicates must be available in this context's path. Avoid navigation properties as part of a binding's $select system query option as they may trigger pointless requests. There must be only context bindings between this context and its first ancestor binding which uses own data service requests.</p><p>If the first ancestor binding has an empty path, it is a context binding. In this case, we look for the farthest ancestor binding with the following characteristics: It uses own data service requests, it can be reached via a sequence of only empty paths, and it is actually being used. This way, side effects are loaded also for siblings of that first ancestor binding which show the same data, but useless requests are avoided.</p><p>By default, the request uses the update group ID for this context's binding; this way, it can easily be part of the same batch request as the corresponding update. <b>Caution:</b> If a dependent binding uses a different update group ID, it may lose its pending changes. The same will happen if a different group ID is provided, and the side effects affect properties for which there are pending changes.</p><p>All failed updates or creates for the group ID are repeated within the same batch request. If the group ID has submit mode <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.SubmitMode">sap.ui.model.odata.v4.SubmitMode.Auto</a> and there are currently running updates or creates this method first waits for them to be processed.</p><p>The events 'dataRequested' and 'dataReceived' are not fired. Whatever should happen in the event handler attached to... <ul> <li>'dataRequested', can instead be done before calling <a target="_self" class="jsdoclink scrollToMethod" data-target="requestSideEffects" href="api/sap.ui.model.odata.v4.Context#methods/requestSideEffects">#requestSideEffects</a>.</li> <li>'dataReceived', can instead be done once the <code>oPromise</code> returned by <a target="_self" class="jsdoclink scrollToMethod" data-target="requestSideEffects" href="api/sap.ui.model.odata.v4.Context#methods/requestSideEffects">#requestSideEffects</a> fulfills or rejects (using <code>oPromise.then(function () {...}, function () {...})</code>).</li> </ul><br><br>References: <ul><li>sap.ui.model.odata.v4.ODataContextBinding#execute</li><li>sap.ui.model.odata.v4.ODataContextBinding#getBoundContext</li><li>sap.ui.model.odata.v4.ODataListBinding#getHeaderContext</li><li>sap.ui.model.odata.v4.ODataModel#bindContext</li></ul></p>
-             * @param {object[]} aPathExpressions <p>The "14.5.11 Expression edm:NavigationPropertyPath" or "14.5.13 Expression edm:PropertyPath" objects describing which properties need to be loaded because they may have changed due to side effects of a previous update, for example <code>[{$PropertyPath : "TEAM_ID"}, {$NavigationPropertyPath : "EMPLOYEE_2_MANAGER"}, {$PropertyPath : "EMPLOYEE_2_TEAM/Team_Id"}]</code></p>
-             * @param {string} sGroupId <p>The group ID to be used (since 1.69.0); if not specified, the update group ID for the context's binding is used, see "$$updateGroupId" at <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/bindList">sap.ui.model.odata.v4.ODataModel#bindList</a> and <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/bindContext">sap.ui.model.odata.v4.ODataModel#bindContext</a>. If a different group ID is specified, make sure that <a target="_self" class="jsdoclink scrollToMethod" data-target="requestSideEffects" href="api/sap.ui.model.odata.v4.Context#methods/requestSideEffects">#requestSideEffects</a> is called after the corresponding updates have been successfully processed by the server and that there are no pending changes for the affected properties.</p>
+             * <p>Loads side effects for this context using the given "14.5.11 Expression edm:NavigationPropertyPath" or "14.5.13 Expression edm:PropertyPath" objects. Use this method to explicitly load side effects in case implicit loading is switched off via the binding-specific parameter <code>$$patchWithoutSideEffects</code>. The method can be called on <ul> <li> the bound context of a context binding, <li> the return value context of an operation binding, <li> a context of a list binding representing a single entity, <li> the header context of a list binding; side effects are loaded for the whole binding in this case. </ul> Key predicates must be available in this context's path. Avoid navigation properties as part of a binding's $select system query option as they may trigger pointless requests. There must be only context bindings between this context and its first ancestor binding which uses own data service requests.</p><p>If the first ancestor binding has an empty path, it is a context binding. In this case, we look for the farthest ancestor binding with the following characteristics: It uses own data service requests, it can be reached via a sequence of only empty paths, and it is actually being used. This way, side effects are loaded also for siblings of that first ancestor binding which show the same data, but useless requests are avoided.</p><p>By default, the request uses the update group ID for this context's binding; this way, it can easily be part of the same batch request as the corresponding update. <b>Caution:</b> If a dependent binding uses a different update group ID, it may lose its pending changes. The same will happen if a different group ID is provided, and the side effects affect properties for which there are pending changes.</p><p>All failed updates or creates for the group ID are repeated within the same batch request. If the group ID has submit mode <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.SubmitMode">sap.ui.model.odata.v4.SubmitMode.Auto</a> and there are currently running updates or creates this method first waits for them to be processed.</p><p>The events 'dataRequested' and 'dataReceived' are not fired. Whatever should happen in the event handler attached to... <ul> <li> 'dataRequested', can instead be done before calling <a target="_self" class="jsdoclink scrollToMethod" data-target="requestSideEffects" href="api/sap.ui.model.odata.v4.Context#methods/requestSideEffects">#requestSideEffects</a>. <li> 'dataReceived', can instead be done once the <code>oPromise</code> returned by <a target="_self" class="jsdoclink scrollToMethod" data-target="requestSideEffects" href="api/sap.ui.model.odata.v4.Context#methods/requestSideEffects">#requestSideEffects</a> fulfills or rejects (using <code>oPromise.then(function () {...}, function () {...})</code>). </ul><br><br>References: <ul><li>sap.ui.model.odata.v4.ODataContextBinding#execute</li><li>sap.ui.model.odata.v4.ODataContextBinding#getBoundContext</li><li>sap.ui.model.odata.v4.ODataListBinding#getHeaderContext</li><li>sap.ui.model.odata.v4.ODataModel#bindContext</li></ul></p>
+             * @param {object[]} aPathExpressions <p>The "14.5.11 Expression edm:NavigationPropertyPath" or "14.5.13 Expression edm:PropertyPath" objects describing which properties need to be loaded because they may have changed due to side effects of a previous update, for example <code>[{$PropertyPath : "TEAM_ID"}, {$NavigationPropertyPath : "EMPLOYEE_2_MANAGER"}, {$PropertyPath : "EMPLOYEE_2_TEAM/Team_Id"}]</code>. An empty navigation property path means that the whole entity may have changed, including its navigation properties. Since 1.75, a property path may end with a "*" segment to indicate that all structural properties may have changed, but no navigation properties (unless listed explicitly), for example <code>[{$PropertyPath : "*"}, {$NavigationPropertyPath : "EMPLOYEE_2_MANAGER"}]</code> or <code>[{$PropertyPath : "EMPLOYEE_2_MANAGER/*"}]</code>.</p><p>Since 1.82.0 absolute paths are supported. Absolute paths must start with the entity container (example "/com.sap.gateway.default.iwbep.tea_busi.v0001.Container/TEAMS") of the service. All (navigation) properties in the complete model matching such an absolute path are updated.</p>
+             * @param {string} sGroupId <p>The group ID to be used (since 1.69.0); if not specified, the update group ID for the context's binding is used, see <a target="_self" class="jsdoclink scrollToMethod" data-target="getUpdateGroupId" href="api/sap.ui.model.odata.v4.Context#methods/getUpdateGroupId">#getUpdateGroupId</a>. If a different group ID is specified, make sure that <a target="_self" class="jsdoclink scrollToMethod" data-target="requestSideEffects" href="api/sap.ui.model.odata.v4.Context#methods/requestSideEffects">#requestSideEffects</a> is called after the corresponding updates have been successfully processed by the server and that there are no pending changes for the affected properties.</p>
              * @returns Promise<any> <p>Promise resolved with <code>undefined</code>, or rejected with an error if loading of side effects fails. Use it to set fields affected by side effects to read-only before <a target="_self" class="jsdoclink scrollToMethod" data-target="requestSideEffects" href="api/sap.ui.model.odata.v4.Context#methods/requestSideEffects">#requestSideEffects</a> and make them editable again when the promise resolves; in the error handler, you can repeat the loading of side effects.</p>
              */
             requestSideEffects(aPathExpressions: object[], sGroupId?: string): Promise<any>;
             /**
-             * <p>Sets a new value for the property identified by the given path. The path is relative to this context and is expected to point to a structural property with primitive type.<br><br>References: <ul><li>#getProperty</li></ul></p>
-             * @param {string} sPath <p>A relative path within the JSON structure</p>
-             * @param {any} vValue <p>The new value which must be primitive</p>
-             * @param {string} sGroupId <p>The group ID to be used for the PATCH request; if not specified, the update group ID for the context's binding is used, see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/bindList">sap.ui.model.odata.v4.ODataModel#bindList</a> and <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/bindContext">sap.ui.model.odata.v4.ODataModel#bindContext</a>. Since 1.74, you can use <code>null</code> to prevent the PATCH request.</p>
-             * @returns Promise<any> <p>A promise which is resolved without a result in case of success, or rejected with an instance of <code>Error</code> in case of failure</p>
+             * <p>Sets this context's <code>keepAlive</code> attribute. If <code>true</code> the context is kept alive even when it is removed from its binding's collection, for example if a filter is applied and the entity represented by this context does not match the filter criteria.</p><p>Note that <a target="_self" class="jsdoclink scrollToMethod" data-target="refresh" href="api/sap.ui.model.odata.v4.Context#methods/refresh">#refresh</a>, <a target="_self" class="jsdoclink scrollToMethod" data-target="requestSideEffects" href="api/sap.ui.model.odata.v4.Context#methods/requestSideEffects">#requestSideEffects</a> and <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataListBinding#methods/refresh">sap.ui.model.odata.v4.ODataListBinding#refresh</a> are currently not supported for kept-alive contexts.<br><br>References: <ul><li>#isKeepAlive</li></ul></p>
+             * @param {boolean} bKeepAlive <p>Whether to keep the context alive</p>
+             * @param {Function} fnOnBeforeDestroy <p>Callback function that is executed once for a kept-alive context just before it is destroyed, see <a target="_self" class="jsdoclink scrollToMethod" data-target="destroy" href="api/sap.ui.model.odata.v4.Context#methods/destroy">#destroy</a>. Supported since 1.84.0</p>
              */
-            setProperty(sPath: string, vValue: any, sGroupId?: string): Promise<any>;
+            setKeepAlive(bKeepAlive: boolean, fnOnBeforeDestroy?: Function): void;
+            /**
+             * <p>Sets a new value for the property identified by the given path. The path is relative to this context and is expected to point to a structural property with primitive type.<br><br>References: <ul><li>#getProperty</li><li>sap.ui.model.odata.v4.ODataContextBinding#event:patchSent</li><li>sap.ui.model.odata.v4.ODataContextBinding#event:patchCompleted</li><li>sap.ui.model.odata.v4.ODataListBinding#event:patchSent</li><li>sap.ui.model.odata.v4.ODataListBinding#event:patchCompleted</li></ul></p>
+             * @param {string} sPath <p>A path relative to this context</p>
+             * @param {any} vValue <p>The new value which must be primitive</p>
+             * @param {string} sGroupId <p>The group ID to be used for the PATCH request; if not specified, the update group ID for the context's binding is used, see <a target="_self" class="jsdoclink scrollToMethod" data-target="getUpdateGroupId" href="api/sap.ui.model.odata.v4.Context#methods/getUpdateGroupId">#getUpdateGroupId</a>. Since 1.74.0, you can use <code>null</code> to prevent the PATCH request.</p>
+             * @param {boolean} bRetry <p>Since 1.85.0, if <code>true</code> the property is not reset if the PATCH request failed. It contributes to the pending changes instead (see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/hasPendingChanges">sap.ui.model.odata.v4.ODataModel#hasPendingChanges</a>, <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataContextBinding#methods/hasPendingChanges">sap.ui.model.odata.v4.ODataContextBinding#hasPendingChanges</a> and <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataListBinding#methods/hasPendingChanges">sap.ui.model.odata.v4.ODataListBinding#hasPendingChanges</a>) and can be reset via the corresponding <code>resetChanges</code> methods.</p><p>The PATCH is automatically repeated with the next call of <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/submitBatch">sap.ui.model.odata.v4.ODataModel#submitBatch</a> if the group ID has <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.SubmitMode">sap.ui.model.odata.v4.SubmitMode.API</a>. Otherwise it is repeated when the property is modified again.</p><p>Each time the PATCH request is sent to the server, a 'patchSent' event is fired on the binding sending the request. When the response for this request is received, a 'patchCompleted' with a boolean parameter 'success' is fired.</p>
+             * @returns Promise<any> <p>A promise which is resolved without a result in case of success, or rejected with an instance of <code>Error</code> in case of failure. With <code>bRetry</code> it is only rejected with an <code>Error</code> instance where <code>oError.canceled === true</code> when the property has been reset via the methods <ul> <li> <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/resetChanges">sap.ui.model.odata.v4.ODataModel#resetChanges</a> <li> <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataContextBinding#methods/resetChanges">sap.ui.model.odata.v4.ODataContextBinding#resetChanges</a> or <li> <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataListBinding#methods/resetChanges">sap.ui.model.odata.v4.ODataListBinding#resetChanges</a>. </ul></p>
+             */
+            setProperty(sPath: string, vValue: any, sGroupId?: string, bRetry?: boolean): Promise<any>;
             /**
              * <p>Returns a string representation of this object including the binding path.</p>
              * @returns string <p>A string description of this binding</p>
@@ -18391,6 +18823,19 @@ declare namespace sap {
            * <p>Context binding for an OData V4 model. An event handler can only be attached to this binding for the following events: 'AggregatedDataStateChange', 'change', 'dataReceived', 'dataRequested', and 'DataStateChange'. For other events, an error is thrown.</p><p>A context binding can also be used as an <i>operation binding</i> to support bound actions, action imports, bound functions and function imports. If you want to control the execution time of an operation, for example a function import named "GetNumberOfAvailableItems", create a context binding for the path "/GetNumberOfAvailableItems(...)" (as specified here, including the three dots). Such an operation binding is <i>deferred</i>, meaning that it does not request automatically, but only when you call <a target="_self" class="jsdoclink scrollToMethod" data-target="execute" href="api/sap.ui.model.odata.v4.ODataContextBinding#methods/execute">#execute</a>. <a target="_self" class="jsdoclink scrollToMethod" data-target="refresh" href="api/sap.ui.model.odata.v4.ODataContextBinding#methods/refresh">#refresh</a> is always ignored for actions and action imports. For bound functions and function imports, it is ignored if <a target="_self" class="jsdoclink scrollToMethod" data-target="execute" href="api/sap.ui.model.odata.v4.ODataContextBinding#methods/execute">#execute</a> has not yet been called. Afterwards it results in another call of the function with the parameter values of the last execute.</p><p>The binding parameter for bound actions or bound functions may be given in the binding path, for example "/SalesOrderList('42')/name.space.SalesOrder_Confirm". This can be used if the exact entity for the binding parameter is known in advance. If you use a relative binding instead, the operation path is a concatenation of the parent context's canonical path and the deferred binding's path.</p><p><b>Example</b>: You have a table with a list binding to "/SalesOrderList". In each row you have a button to confirm the sales order, with the relative binding "name.space.SalesOrder_Confirm(...)". Then the parent context for such a button refers to an entity in "SalesOrderList", so its canonical path is "/SalesOrderList('<i>SalesOrderID</i>')" and the resulting path for the action is "/SalesOrderList('<i>SalesOrderID</i>')/name.space.SalesOrder_Confirm".</p><p>This also works if the relative path of the deferred operation binding starts with a navigation property. Then this navigation property will be part of the operation's resource path, which is still valid.</p><p>A deferred operation binding is not allowed to have another deferred operation binding as parent.</p>
            */
           export class ODataContextBinding extends sap.ui.model.ContextBinding {
+            /**
+             * <p>Attaches an event handler to the event with the given identifier.</p>
+             * @param {string} sEventId <p>The identifier of the event to listen for</p>
+             * @param {any} oData <p>An object that will be passed to the handler along with the event object when the event is fired</p>
+             * @param {Function} fnFunction <p>The handler function to call when the event occurs. This function will be called in the context of the <code>oListener</code> instance (if present) or on the event provider instance. The event object (<a target="_self" class="jsdoclink" href="api/sap.ui.base.Event">sap.ui.base.Event</a>) is provided as first argument of the handler. Handlers must not change the content of the event. The second argument is the specified <code>oData</code> instance (if present).</p>
+             * @param {any} oListener <p>The object that wants to be notified when the event occurs (<code>this</code> context within the handler function). If it is not specified, the handler function is called in the context of the event provider.</p>
+             * @returns sap.ui.base.EventProvider <p>Returns <code>this</code> to allow method chaining</p>
+             */
+            attachEvent(sEventId: string, oData: any, fnFunction: Function, oListener?: any): sap.ui.base.EventProvider;
+            /**
+             * <p>See <a target="_self" class="jsdoclink" href="api/sap.ui.base.EventProvider#methods/attachEvent">sap.ui.base.EventProvider#attachEvent</a><br><br>References: <ul><li>sap.ui.base.EventProvider#attachEvent</li></ul></p>
+             */
+            attachEvent(): void;
             /**
              * <p>Attach event handler <code>fnFunction</code> to the 'patchCompleted' event of this binding.</p>
              * @param {Function} fnFunction <p>The function to call when the event occurs</p>
@@ -18421,7 +18866,7 @@ declare namespace sap {
              */
             destroy(): void;
             /**
-             * <p>Destroys the object. The object must not be used anymore after this function was called.</p>
+             * <p>Destroys the object. The object must not be used anymore after this function was called.<br><br>References: <ul><li>sap.ui.model.Binding#destroy</li></ul></p>
              */
             destroy(): void;
             /**
@@ -18438,7 +18883,7 @@ declare namespace sap {
             detachPatchSent(fnFunction: Function, oListener?: any): void;
             /**
              * <p>Calls the OData operation that corresponds to this operation binding.</p><p>Parameters for the operation must be set via <a target="_self" class="jsdoclink scrollToMethod" data-target="setParameter" href="api/sap.ui.model.odata.v4.ODataContextBinding#methods/setParameter">#setParameter</a> beforehand.</p><p>The value of this binding is the result of the operation. To access a result of primitive type, bind a control to the path "value", for example <code>&lt;Text text="{value}"/></code>. If the result has a complex or entity type, you can bind properties as usual, for example <code>&lt;Text text="{street}"/></code>.</p>
-             * @param {string} sGroupId <p>The group ID to be used for the request; if not specified, the group ID for this binding is used, see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataContextBinding#constructor">sap.ui.model.odata.v4.ODataContextBinding#constructor</a>. Valid values are <code>undefined</code>, '$auto', '$auto.*', '$direct' or application group IDs as specified in <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel">sap.ui.model.odata.v4.ODataModel</a>.</p>
+             * @param {string} sGroupId <p>The group ID to be used for the request; if not specified, the group ID for this binding is used, see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataContextBinding#constructor">sap.ui.model.odata.v4.ODataContextBinding#constructor</a> and <a target="_self" class="jsdoclink scrollToMethod" data-target="getGroupId" href="api/sap.ui.model.odata.v4.ODataContextBinding#methods/getGroupId">#getGroupId</a>. To use the update group ID, see <a target="_self" class="jsdoclink scrollToMethod" data-target="getUpdateGroupId" href="api/sap.ui.model.odata.v4.ODataContextBinding#methods/getUpdateGroupId">#getUpdateGroupId</a>, it needs to be specified explicitly. Valid values are <code>undefined</code>, '$auto', '$auto.*', '$direct' or application group IDs as specified in <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel">sap.ui.model.odata.v4.ODataModel</a>.</p>
              * @returns Promise<any> <p>A promise that is resolved without data or with a return value context when the operation call succeeded, or rejected with an instance of <code>Error</code> in case of failure, for instance if the operation metadata is not found, if overloading is not supported, or if a collection-valued function parameter is encountered.</p><p>A return value context is a <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.Context">sap.ui.model.odata.v4.Context</a> which represents a bound operation response. It is created only if the operation is bound and has a single entity return value from the same entity set as the operation's binding parameter and has a parent context which is a <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.Context">sap.ui.model.odata.v4.Context</a> and points to an entity from an entity set.</p><p>If a return value context is created, it must be used instead of <code>this.getBoundContext()</code>. All bound messages will be related to the return value context only. Such a message can only be connected to a corresponding control if the control's property bindings use the return value context as binding context.</p>
              */
             execute(sGroupId?: string): Promise<any>;
@@ -18453,18 +18898,28 @@ declare namespace sap {
              */
             getBoundContext(): sap.ui.model.odata.v4.Context;
             /**
+             * <p>Returns the group ID of the binding that is used for read requests. The group ID of the binding is alternatively defined by <ul> <li> the <code>groupId</code> parameter of the OData model; see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#constructor">sap.ui.model.odata.v4.ODataModel#constructor</a>, <li> the <code>$$groupId</code> binding parameter; see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/bindList">sap.ui.model.odata.v4.ODataModel#bindList</a> and <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/bindContext">sap.ui.model.odata.v4.ODataModel#bindContext</a>. </ul></p>
+             * @returns string <p>The group ID</p>
+             */
+            getGroupId(): string;
+            /**
              * <p>Returns the context pointing to the parameters of a deferred operation binding.</p>
              * @returns sap.ui.model.odata.v4.Context <p>The parameter context</p>
              */
             getParameterContext(): sap.ui.model.odata.v4.Context;
             /**
              * <p>Returns the root binding of this binding's hierarchy, see binding <a target="_self" href="topic/54e0ddf695af4a6c978472cecb01c64d">Initialization and Read Requests</a>.</p>
-             * @returns sap.ui.model.odata.v4.ODataContextBinding|sap.ui.model.odata.v4.ODataListBinding|sap.ui.model.odata.v4.ODataPropertyBinding <p>The root binding or <code>undefined</code> if this binding is not yet resolved.</p>
+             * @returns sap.ui.model.odata.v4.ODataContextBinding|sap.ui.model.odata.v4.ODataListBinding|sap.ui.model.odata.v4.ODataPropertyBinding <p>The root binding or <code>undefined</code> if this binding is unresolved (see <a target="_self" class="jsdoclink" href="api/sap.ui.model.Binding#methods/isResolved">sap.ui.model.Binding#isResolved</a>).</p>
              */
             getRootBinding(): sap.ui.model.odata.v4.ODataContextBinding | sap.ui.model.odata.v4.ODataListBinding | sap.ui.model.odata.v4.ODataPropertyBinding;
             /**
-             * <p>Returns <code>true</code> if this binding or its dependent bindings have pending changes, meaning updates that have not yet been successfully sent to the server.</p>
-             * @returns boolean <p><code>true</code> if the binding has pending changes</p>
+             * <p>Returns the group ID of the binding that is used for update requests. The update group ID of the binding is alternatively defined by <ul> <li> the <code>updateGroupId</code> parameter of the OData model; see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#constructor">sap.ui.model.odata.v4.ODataModel#constructor</a>, <li> the <code>$$updateGroupId</code> binding parameter; see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/bindList">sap.ui.model.odata.v4.ODataModel#bindList</a> and <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/bindContext">sap.ui.model.odata.v4.ODataModel#bindContext</a>. </ul></p>
+             * @returns string <p>The update group ID</p>
+             */
+            getUpdateGroupId(): string;
+            /**
+             * <p>Returns <code>true</code> if this binding or its dependent bindings have pending property changes or created entities which have not been sent successfully to the server. This function does not take into account the deletion of entities (see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.Context#methods/delete">sap.ui.model.odata.v4.Context#delete</a>) and the execution of OData operations (see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataContextBinding#methods/execute">sap.ui.model.odata.v4.ODataContextBinding#execute</a>).</p><p>Note: If this binding is relative, its data is cached separately for each parent context path. This method returns <code>true</code> if there are pending changes for the current parent context path of this binding. If this binding is unresolved (see <a target="_self" class="jsdoclink" href="api/sap.ui.model.Binding#methods/isResolved">sap.ui.model.Binding#isResolved</a>), it returns <code>false</code>.</p>
+             * @returns boolean <p><code>true</code> if the binding is resolved and has pending changes</p>
              */
             hasPendingChanges(): boolean;
             /**
@@ -18472,16 +18927,16 @@ declare namespace sap {
              */
             protected initialize(): void;
             /**
-             * <p>Initializes the OData context binding: Fires a 'change' event in case the binding has a resolved path and its root binding is not suspended.<br><br>References: <ul><li>sap.ui.model.Binding#initialize</li><li>#getRootBinding</li></ul></p>
+             * <p>Initializes the OData context binding: Fires a 'change' event in case the binding has a resolved path and its root binding is not suspended.<br><br>References: <ul><li>#getRootBinding</li></ul></p>
              */
             protected initialize(): void;
             /**
              * <p>Returns whether the binding is initial, which means it did not get an initial value yet</p>
-             * @returns boolean <p>Whether binding is initial</p>
+             * @returns boolean <p>Whether the binding is initial</p>
              */
             isInitial(): boolean;
             /**
-             * <p>Method not supported<br><br>References: <ul><li>sap.ui.model.Binding#isInitial</li></ul></p>
+             * <p>Method not supported</p>
              */
             isInitial(): void;
             /**
@@ -18491,12 +18946,12 @@ declare namespace sap {
             refresh(bForceUpdate: boolean): void;
             /**
              * <p>Refreshes the binding. Prompts the model to retrieve data from the server using the given group ID and notifies the control that new data is available.</p><p>Refresh is supported for bindings which are not relative to a <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.Context">sap.ui.model.odata.v4.Context</a>.</p><p>Note: When calling <a target="_self" class="jsdoclink scrollToMethod" data-target="refresh" href="api/sap.ui.model.odata.v4.ODataContextBinding#methods/refresh">#refresh</a> multiple times, the result of the request triggered by the last call determines the binding's data; it is <b>independent</b> of the order of calls to <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/submitBatch">sap.ui.model.odata.v4.ODataModel#submitBatch</a> with the given group ID.</p><p>If there are pending changes, an error is thrown. Use <a target="_self" class="jsdoclink scrollToMethod" data-target="hasPendingChanges" href="api/sap.ui.model.odata.v4.ODataContextBinding#methods/hasPendingChanges">#hasPendingChanges</a> to check if there are pending changes. If there are changes, call <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/submitBatch">sap.ui.model.odata.v4.ODataModel#submitBatch</a> to submit the changes or <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/resetChanges">sap.ui.model.odata.v4.ODataModel#resetChanges</a> to reset the changes before calling <a target="_self" class="jsdoclink scrollToMethod" data-target="refresh" href="api/sap.ui.model.odata.v4.ODataContextBinding#methods/refresh">#refresh</a>.<br><br>References: <ul><li>sap.ui.model.Binding#refresh</li><li>#getRootBinding</li><li>#hasPendingChanges</li><li>#resetChanges</li><li>#suspend</li></ul></p>
-             * @param {string} sGroupId <p>The group ID to be used for refresh; if not specified, the binding's group ID is used. For suspended bindings, only the binding's group ID is supported because <a target="_self" class="jsdoclink scrollToMethod" data-target="resume" href="api/sap.ui.model.odata.v4.ODataContextBinding#methods/resume">#resume</a> uses the binding's group ID.</p><p>Valid values are <code>undefined</code>, '$auto', '$auto.*', '$direct' or application group IDs as specified in <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel">sap.ui.model.odata.v4.ODataModel</a>.</p>
+             * @param {string} sGroupId <p>The group ID to be used for refresh; if not specified, the binding's group ID is used, see <a target="_self" class="jsdoclink scrollToMethod" data-target="getGroupId" href="api/sap.ui.model.odata.v4.ODataContextBinding#methods/getGroupId">#getGroupId</a>. For suspended bindings, only the binding's group ID is supported because <a target="_self" class="jsdoclink scrollToMethod" data-target="resume" href="api/sap.ui.model.odata.v4.ODataContextBinding#methods/resume">#resume</a> uses the binding's group ID.</p><p>Valid values are <code>undefined</code>, '$auto', '$auto.*', '$direct' or application group IDs as specified in <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel">sap.ui.model.odata.v4.ODataModel</a>.</p>
              */
             refresh(sGroupId?: string): void;
             /**
-             * <p>Returns a promise on the value for the given path relative to this binding. The function allows access to the complete data the binding points to (if <code>sPath</code> is "") or any part thereof. The data is a JSON structure as described in <a href="http://docs.oasis-open.org/odata/odata-json-format/v4.0/odata-json-format-v4.0.html"> "OData JSON Format Version 4.0"</a>. Note that the function clones the result. Modify values via <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.Context#methods/setProperty">sap.ui.model.odata.v4.Context#setProperty</a>.</p><p>If you want <a target="_self" class="jsdoclink scrollToMethod" data-target="requestObject" href="api/sap.ui.model.odata.v4.ODataContextBinding#methods/requestObject">#requestObject</a> to read fresh data, call <code>oBinding.refresh()</code> first.<br><br>References: <ul><li>sap.ui.model.odata.v4.ODataContext#requestObject</li></ul></p>
-             * @param {string} sPath <p>A relative path within the JSON structure</p>
+             * <p>Returns a promise on the value for the given path relative to this binding. The function allows access to the complete data the binding points to (if <code>sPath</code> is "") or any part thereof. The data is a JSON structure as described in <a href="http://docs.oasis-open.org/odata/odata-json-format/v4.0/odata-json-format-v4.0.html"> "OData JSON Format Version 4.0"</a>. Note that the function clones the result. Modify values via <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.Context#methods/setProperty">sap.ui.model.odata.v4.Context#setProperty</a>.</p><p>If you want <a target="_self" class="jsdoclink scrollToMethod" data-target="requestObject" href="api/sap.ui.model.odata.v4.ODataContextBinding#methods/requestObject">#requestObject</a> to read fresh data, call <code>oBinding.refresh()</code> first.<br><br>References: <ul><li>sap.ui.model.odata.v4.Context#requestObject</li></ul></p>
+             * @param {string} sPath <p>A path relative to this context binding</p>
              * @returns Promise<any> <p>A promise on the requested value; in case there is no bound context this promise resolves with <code>undefined</code></p>
              */
             requestObject(sPath?: string): Promise<any>;
@@ -18546,6 +19001,19 @@ declare namespace sap {
              */
             attachCreateSent(fnFunction: Function, oListener?: any): void;
             /**
+             * <p>Attaches an event handler to the event with the given identifier.</p>
+             * @param {string} sEventId <p>The identifier of the event to listen for</p>
+             * @param {any} oData <p>An object that will be passed to the handler along with the event object when the event is fired</p>
+             * @param {Function} fnFunction <p>The handler function to call when the event occurs. This function will be called in the context of the <code>oListener</code> instance (if present) or on the event provider instance. The event object (<a target="_self" class="jsdoclink" href="api/sap.ui.base.Event">sap.ui.base.Event</a>) is provided as first argument of the handler. Handlers must not change the content of the event. The second argument is the specified <code>oData</code> instance (if present).</p>
+             * @param {any} oListener <p>The object that wants to be notified when the event occurs (<code>this</code> context within the handler function). If it is not specified, the handler function is called in the context of the event provider.</p>
+             * @returns sap.ui.base.EventProvider <p>Returns <code>this</code> to allow method chaining</p>
+             */
+            attachEvent(sEventId: string, oData: any, fnFunction: Function, oListener?: any): sap.ui.base.EventProvider;
+            /**
+             * <p>See <a target="_self" class="jsdoclink" href="api/sap.ui.base.EventProvider#methods/attachEvent">sap.ui.base.EventProvider#attachEvent</a><br><br>References: <ul><li>sap.ui.base.EventProvider#attachEvent</li></ul></p>
+             */
+            attachEvent(): void;
+            /**
              * <p>Attach event handler <code>fnFunction</code> to the 'patchCompleted' event of this binding.</p>
              * @param {Function} fnFunction <p>The function to call when the event occurs</p>
              * @param {any} oListener <p>Object on which to call the given function</p>
@@ -18563,7 +19031,7 @@ declare namespace sap {
              */
             changeParameters(mParameters: any): void;
             /**
-             * <p>Creates a new entity and inserts it at the start or the end of the list.</p><p>For creating the new entity, the binding's update group ID is used, see binding parameter $$updateGroupId of <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/bindList">sap.ui.model.odata.v4.ODataModel#bindList</a>.</p><p>You can call <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.Context#methods/delete">sap.ui.model.odata.v4.Context#delete</a> to delete the created context again. As long as the context is transient (see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.Context#methods/isTransient">sap.ui.model.odata.v4.Context#isTransient</a>), <a target="_self" class="jsdoclink scrollToMethod" data-target="resetChanges" href="api/sap.ui.model.odata.v4.ODataListBinding#methods/resetChanges">#resetChanges</a> and a call to <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/resetChanges">sap.ui.model.odata.v4.ODataModel#resetChanges</a> with the update group ID as parameter also delete the created context together with other changes.</p><p>If the creation of the entity on the server failed, the creation is repeated automatically. If the binding's update group ID has <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.SubmitMode">sap.ui.model.odata.v4.SubmitMode.API</a>, it is repeated with the next call of <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/submitBatch">sap.ui.model.odata.v4.ODataModel#submitBatch</a>. Otherwise it is repeated with the next update for the entity. Since 1.67.0, <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/submitBatch">sap.ui.model.odata.v4.ODataModel#submitBatch</a> can also be used for group IDs with <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.SubmitMode">sap.ui.model.odata.v4.SubmitMode.Auto</a> in order to repeat the creation even if there is no update for the entity.</p><p>Each time the data for the created entity is sent to the server, a <a target="_self" class="jsdoclink scrollToEvent" data-target="createSent" href="api/sap.ui.model.odata.v4.ODataListBinding#events/createSent">#event:createSent</a> event is fired and each time the client receives a response for the creation, a <a target="_self" class="jsdoclink scrollToEvent" data-target="createCompleted" href="api/sap.ui.model.odata.v4.ODataListBinding#events/createCompleted">#event:createCompleted</a> event is fired, independent of whether the creation was successful or not.</p><p>The initial data for the created entity can be supplied via the parameter <code>oInitialData</code> and modified via property bindings. Properties that are not part of the initial data show the default value from the service metadata on the UI, but they are not sent to the server. If there is no default value, <code>null</code> is used instead, even if the property is not <code>Nullable</code>.</p><p>Note: If a server requires a property in the request, you must supply this property in the initial data, for example if the server requires a unit for an amount. This also applies if this property has a default value.</p><p>Note: After creation, the created entity is refreshed to ensure that the data specified in this list binding's $expand is available; to skip this refresh, set <code>bSkipRefresh</code> to <code>true</code>.</p><p>Note: The binding must have the parameter <code>$count : true</code> when creating an entity at the end. Otherwise the collection length may be unknown and there is no clear position to place this entity at.</p>
+             * <p>Creates a new entity and inserts it at the start or the end of the list.</p><p>For creating the new entity, the binding's update group ID is used, see <a target="_self" class="jsdoclink scrollToMethod" data-target="getUpdateGroupId" href="api/sap.ui.model.odata.v4.ODataListBinding#methods/getUpdateGroupId">#getUpdateGroupId</a>.</p><p>You can call <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.Context#methods/delete">sap.ui.model.odata.v4.Context#delete</a> to delete the created context again. As long as the context is transient (see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.Context#methods/isTransient">sap.ui.model.odata.v4.Context#isTransient</a>), <a target="_self" class="jsdoclink scrollToMethod" data-target="resetChanges" href="api/sap.ui.model.odata.v4.ODataListBinding#methods/resetChanges">#resetChanges</a> and a call to <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/resetChanges">sap.ui.model.odata.v4.ODataModel#resetChanges</a> with the update group ID as parameter also delete the created context together with other changes.</p><p>If the creation of the entity on the server failed, the creation is repeated automatically. If the binding's update group ID has <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.SubmitMode">sap.ui.model.odata.v4.SubmitMode.API</a>, it is repeated with the next call of <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/submitBatch">sap.ui.model.odata.v4.ODataModel#submitBatch</a>. Otherwise it is repeated with the next update for the entity. Since 1.67.0, <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/submitBatch">sap.ui.model.odata.v4.ODataModel#submitBatch</a> can also be used for group IDs with <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.SubmitMode">sap.ui.model.odata.v4.SubmitMode.Auto</a> in order to repeat the creation even if there is no update for the entity.</p><p>Each time the data for the created entity is sent to the server, a <a target="_self" class="jsdoclink scrollToEvent" data-target="createSent" href="api/sap.ui.model.odata.v4.ODataListBinding#events/createSent">#event:createSent</a> event is fired and each time the client receives a response for the creation, a <a target="_self" class="jsdoclink scrollToEvent" data-target="createCompleted" href="api/sap.ui.model.odata.v4.ODataListBinding#events/createCompleted">#event:createCompleted</a> event is fired, independent of whether the creation was successful or not.</p><p>The initial data for the created entity can be supplied via the parameter <code>oInitialData</code> and modified via property bindings. Properties that are not part of the initial data show the default value from the service metadata on the UI, but they are not sent to the server. If there is no default value, <code>null</code> is used instead, even if the property is not <code>Nullable</code>.</p><p>Note: If a server requires a property in the request, you must supply this property in the initial data, for example if the server requires a unit for an amount. This also applies if this property has a default value.</p><p>Note: After creation, the created entity is refreshed to ensure that the data specified in this list binding's $expand is available; to skip this refresh, set <code>bSkipRefresh</code> to <code>true</code>. To avoid errors you must skip this refresh when using <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.Context#methods/requestSideEffects">sap.ui.model.odata.v4.Context#requestSideEffects</a> in the same $batch to refresh the complete collection containing the newly created entity.</p><p>Note: A deep create is not supported. The dependent entity has to be created using a second list binding. Note that it is not supported to bind relative to a transient context.</p><p>Note: Creating at the end is only allowed if the final length of the binding is known (see <a target="_self" class="jsdoclink scrollToMethod" data-target="isLengthFinal" href="api/sap.ui.model.odata.v4.ODataListBinding#methods/isLengthFinal">#isLengthFinal</a>), so that there is a clear position to place this entity at. This is the case if the complete collection has been read or if the system parameter <code>$count</code> is <code>true</code> and the binding has processed at least one request.</p>
              * @param {any} oInitialData <p>The initial data for the created entity</p>
              * @param {boolean} bSkipRefresh <p>Whether an automatic refresh of the created entity will be skipped</p>
              * @param {boolean} bAtEnd <p>Whether the entity is inserted at the end of the list. When creating multiple entities, this parameter must have the same value for each entity. Supported since 1.66.0</p>
@@ -18583,7 +19051,7 @@ declare namespace sap {
              */
             destroy(): void;
             /**
-             * <p>Destroys the object. The object must not be used anymore after this function was called.</p>
+             * <p>Destroys the object. The object must not be used anymore after this function was called.<br><br>References: <ul><li>sap.ui.model.Binding#destroy</li></ul></p>
              */
             destroy(): void;
             /**
@@ -18632,7 +19100,7 @@ declare namespace sap {
              */
             protected getContexts(iStartIndex?: number, iLength?: number): sap.ui.model.Context[];
             /**
-             * <p>Returns already created binding contexts for all entities in this list binding for the range determined by the given start index <code>iStart</code> and <code>iLength</code>. If at least one of the entities in the given range has not yet been loaded, fires a <a target="_self" class="jsdoclink scrollToEvent" data-target="change" href="api/sap.ui.model.odata.v4.ODataListBinding#events/change">#event:change</a> event on this list binding once these entities have been loaded <b>asynchronously</b>. A further call to this method in the 'change' event handler with the same index range then yields the updated array of contexts.<br><br>References: <ul><li>sap.ui.model.ListBinding#getContexts</li></ul></p>
+             * <p>Returns already created binding contexts for all entities in this list binding for the range determined by the given start index <code>iStart</code> and <code>iLength</code>. If at least one of the entities in the given range has not yet been loaded, fires a <a target="_self" class="jsdoclink scrollToEvent" data-target="change" href="api/sap.ui.model.odata.v4.ODataListBinding#events/change">#event:change</a> event on this list binding once these entities have been loaded <b>asynchronously</b>. A further call to this method in the 'change' event handler with the same index range then yields the updated array of contexts.</p>
              * @param {number} iStart <p>The index where to start the retrieval of contexts</p>
              * @param {number} iLength <p>The number of contexts to retrieve beginning from the start index; defaults to the model's size limit, see <a target="_self" class="jsdoclink" href="api/sap.ui.model.Model#methods/setSizeLimit">sap.ui.model.Model#setSizeLimit</a>; <code>Infinity</code> may be used since 1.53.0 to retrieve all data</p>
              * @param {number} iMaximumPrefetchSize <p>The maximum number of contexts to read before and after the given range; with this, controls can prefetch data that is likely to be needed soon, e.g. when scrolling down in a table. Negative values will be treated as 0. Supported since 1.39.0; <code>Infinity</code> may be used since 1.53.0 to prefetch all data and thus disable paging.</p>
@@ -18655,7 +19123,12 @@ declare namespace sap {
              */
             getDownloadUrl(): string;
             /**
-             * <p>Returns the header context which allows binding to <code>$count</code>. If known, the value of such a binding is the sum of the element count of the collection on the server and the number of transient entities created on the client. Otherwise it is <code>undefined</code>. The value is a number and its type is <code>Edm.Int64</code>.</p><p>The count is known to the binding in the following situations: <ul> <li>The server-side count has been requested via the system query option <code>$count</code>. <li>A "short read" in a paged collection (the server delivered less elements than requested) indicated that the server has no more unread elements. <li>It has been read completely in one request, for example an embedded collection via <code>$expand</code>. </ul></p><p>The <code>$count</code> is unknown, if the binding is relative, but has no context.</p>
+             * <p>Returns the group ID of the binding that is used for read requests. The group ID of the binding is alternatively defined by <ul> <li> the <code>groupId</code> parameter of the OData model; see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#constructor">sap.ui.model.odata.v4.ODataModel#constructor</a>, <li> the <code>$$groupId</code> binding parameter; see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/bindList">sap.ui.model.odata.v4.ODataModel#bindList</a> and <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/bindContext">sap.ui.model.odata.v4.ODataModel#bindContext</a>. </ul></p>
+             * @returns string <p>The group ID</p>
+             */
+            getGroupId(): string;
+            /**
+             * <p>Returns the header context which allows binding to <code>$count</code>. If known, the value of such a binding is the sum of the element count of the collection on the server and the number of transient entities created on the client. Otherwise it is <code>undefined</code>. The value is a number and its type is <code>Edm.Int64</code>.</p><p>The count is known to the binding in the following situations: <ul> <li> The server-side count has been requested via the system query option <code>$count</code>. <li> A "short read" in a paged collection (the server delivered less elements than requested) indicated that the server has no more unread elements. <li> It has been read completely in one request, for example an embedded collection via <code>$expand</code>. </ul></p><p>The <code>$count</code> is unknown, if the binding is relative, but has no context.</p>
              * @returns sap.ui.model.odata.v4.Context <p>The header context or <code>null</code> if the binding is relative and has no context</p>
              */
             getHeaderContext(): sap.ui.model.odata.v4.Context;
@@ -18677,12 +19150,17 @@ declare namespace sap {
             getQueryOptions(bWithSystemQueryOptions?: boolean): any;
             /**
              * <p>Returns the root binding of this binding's hierarchy, see binding <a target="_self" href="topic/54e0ddf695af4a6c978472cecb01c64d">Initialization and Read Requests</a>.</p>
-             * @returns sap.ui.model.odata.v4.ODataContextBinding|sap.ui.model.odata.v4.ODataListBinding|sap.ui.model.odata.v4.ODataPropertyBinding <p>The root binding or <code>undefined</code> if this binding is not yet resolved.</p>
+             * @returns sap.ui.model.odata.v4.ODataContextBinding|sap.ui.model.odata.v4.ODataListBinding|sap.ui.model.odata.v4.ODataPropertyBinding <p>The root binding or <code>undefined</code> if this binding is unresolved (see <a target="_self" class="jsdoclink" href="api/sap.ui.model.Binding#methods/isResolved">sap.ui.model.Binding#isResolved</a>).</p>
              */
             getRootBinding(): sap.ui.model.odata.v4.ODataContextBinding | sap.ui.model.odata.v4.ODataListBinding | sap.ui.model.odata.v4.ODataPropertyBinding;
             /**
-             * <p>Returns <code>true</code> if this binding or its dependent bindings have pending changes, meaning updates that have not yet been successfully sent to the server.</p>
-             * @returns boolean <p><code>true</code> if the binding has pending changes</p>
+             * <p>Returns the group ID of the binding that is used for update requests. The update group ID of the binding is alternatively defined by <ul> <li> the <code>updateGroupId</code> parameter of the OData model; see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#constructor">sap.ui.model.odata.v4.ODataModel#constructor</a>, <li> the <code>$$updateGroupId</code> binding parameter; see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/bindList">sap.ui.model.odata.v4.ODataModel#bindList</a> and <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/bindContext">sap.ui.model.odata.v4.ODataModel#bindContext</a>. </ul></p>
+             * @returns string <p>The update group ID</p>
+             */
+            getUpdateGroupId(): string;
+            /**
+             * <p>Returns <code>true</code> if this binding or its dependent bindings have pending property changes or created entities which have not been sent successfully to the server. This function does not take into account the deletion of entities (see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.Context#methods/delete">sap.ui.model.odata.v4.Context#delete</a>) and the execution of OData operations (see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataContextBinding#methods/execute">sap.ui.model.odata.v4.ODataContextBinding#execute</a>).</p><p>Note: If this binding is relative, its data is cached separately for each parent context path. This method returns <code>true</code> if there are pending changes for the current parent context path of this binding. If this binding is unresolved (see <a target="_self" class="jsdoclink" href="api/sap.ui.model.Binding#methods/isResolved">sap.ui.model.Binding#isResolved</a>), it returns <code>false</code>.</p>
+             * @returns boolean <p><code>true</code> if the binding is resolved and has pending changes</p>
              */
             hasPendingChanges(): boolean;
             /**
@@ -18690,16 +19168,16 @@ declare namespace sap {
              */
             protected initialize(): void;
             /**
-             * <p>Initializes the OData list binding: Fires an event in case the binding has a resolved path and its root binding is not suspended. If the model's parameter <code>autoExpandSelect</code> is used (see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#constructor">sap.ui.model.odata.v4.ODataModel#constructor</a>), it fires a 'change' event, else it fires a 'refresh' event (since 1.67.0).<br><br>References: <ul><li>sap.ui.model.Binding#initialize</li><li>#getRootBinding</li></ul></p>
+             * <p>Initializes the OData list binding: Fires an event in case the binding has a resolved path and its root binding is not suspended. If the model's parameter <code>autoExpandSelect</code> is used (see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#constructor">sap.ui.model.odata.v4.ODataModel#constructor</a>), it fires a 'change' event, else it fires a 'refresh' event (since 1.67.0).<br><br>References: <ul><li>#getRootBinding</li></ul></p>
              */
             protected initialize(): void;
             /**
              * <p>Returns whether the binding is initial, which means it did not get an initial value yet</p>
-             * @returns boolean <p>Whether binding is initial</p>
+             * @returns boolean <p>Whether the binding is initial</p>
              */
             isInitial(): boolean;
             /**
-             * <p>Method not supported<br><br>References: <ul><li>sap.ui.model.Binding#isInitial</li></ul></p>
+             * <p>Method not supported</p>
              */
             isInitial(): void;
             /**
@@ -18719,14 +19197,14 @@ declare namespace sap {
             refresh(bForceUpdate: boolean): void;
             /**
              * <p>Refreshes the binding. Prompts the model to retrieve data from the server using the given group ID and notifies the control that new data is available.</p><p>Refresh is supported for bindings which are not relative to a <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.Context">sap.ui.model.odata.v4.Context</a>.</p><p>Note: When calling <a target="_self" class="jsdoclink scrollToMethod" data-target="refresh" href="api/sap.ui.model.odata.v4.ODataListBinding#methods/refresh">#refresh</a> multiple times, the result of the request triggered by the last call determines the binding's data; it is <b>independent</b> of the order of calls to <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/submitBatch">sap.ui.model.odata.v4.ODataModel#submitBatch</a> with the given group ID.</p><p>If there are pending changes, an error is thrown. Use <a target="_self" class="jsdoclink scrollToMethod" data-target="hasPendingChanges" href="api/sap.ui.model.odata.v4.ODataListBinding#methods/hasPendingChanges">#hasPendingChanges</a> to check if there are pending changes. If there are changes, call <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/submitBatch">sap.ui.model.odata.v4.ODataModel#submitBatch</a> to submit the changes or <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/resetChanges">sap.ui.model.odata.v4.ODataModel#resetChanges</a> to reset the changes before calling <a target="_self" class="jsdoclink scrollToMethod" data-target="refresh" href="api/sap.ui.model.odata.v4.ODataListBinding#methods/refresh">#refresh</a>.<br><br>References: <ul><li>sap.ui.model.Binding#refresh</li><li>#getRootBinding</li><li>#hasPendingChanges</li><li>#resetChanges</li><li>#suspend</li></ul></p>
-             * @param {string} sGroupId <p>The group ID to be used for refresh; if not specified, the binding's group ID is used. For suspended bindings, only the binding's group ID is supported because <a target="_self" class="jsdoclink scrollToMethod" data-target="resume" href="api/sap.ui.model.odata.v4.ODataListBinding#methods/resume">#resume</a> uses the binding's group ID.</p><p>Valid values are <code>undefined</code>, '$auto', '$auto.*', '$direct' or application group IDs as specified in <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel">sap.ui.model.odata.v4.ODataModel</a>.</p>
+             * @param {string} sGroupId <p>The group ID to be used for refresh; if not specified, the binding's group ID is used, see <a target="_self" class="jsdoclink scrollToMethod" data-target="getGroupId" href="api/sap.ui.model.odata.v4.ODataListBinding#methods/getGroupId">#getGroupId</a>. For suspended bindings, only the binding's group ID is supported because <a target="_self" class="jsdoclink scrollToMethod" data-target="resume" href="api/sap.ui.model.odata.v4.ODataListBinding#methods/resume">#resume</a> uses the binding's group ID.</p><p>Valid values are <code>undefined</code>, '$auto', '$auto.*', '$direct' or application group IDs as specified in <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel">sap.ui.model.odata.v4.ODataModel</a>.</p>
              */
             refresh(sGroupId?: string): void;
             /**
              * <p>Requests the entities for the given index range of the binding's collection and resolves with the corresponding contexts.</p>
              * @param {number} iStart <p>The index where to start the retrieval of contexts; must be greater than or equal to 0</p>
              * @param {number} iLength <p>The number of contexts to retrieve beginning from the start index; defaults to the model's size limit, see <a target="_self" class="jsdoclink" href="api/sap.ui.model.Model#methods/setSizeLimit">sap.ui.model.Model#setSizeLimit</a>; must be greater than 0, <code>Infinity</code> may be used to retrieve all data</p>
-             * @param {string} sGroupId <p>The group ID to be used for the request; if not specified, the group ID for this binding is used, see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataListBinding#constructor">sap.ui.model.odata.v4.ODataListBinding#constructor</a>. Valid values are <code>undefined</code>, '$auto', '$auto.*', '$direct' or application group IDs as specified in <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel">sap.ui.model.odata.v4.ODataModel</a>.</p>
+             * @param {string} sGroupId <p>The group ID to be used for the request; if not specified, the group ID for this binding is used, see <a target="_self" class="jsdoclink scrollToMethod" data-target="getGroupId" href="api/sap.ui.model.odata.v4.ODataListBinding#methods/getGroupId">#getGroupId</a>. Valid values are <code>undefined</code>, '$auto', '$auto.*', '$direct' or application group IDs as specified in <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel">sap.ui.model.odata.v4.ODataModel</a>.</p>
              * @returns any <p>A promise which is resolved with the array of the contexts, the first entry containing the context for <code>iStart</code>; it is rejected if <code>iStart</code> or <code>iLength</code> are less than 0 or when requesting the data fails</p>
              */
             requestContexts(iStart?: number, iLength?: number, sGroupId?: string): any;
@@ -18750,9 +19228,9 @@ declare namespace sap {
             resume(): void;
             /**
              * <p>Sets a new data aggregation object and derives the system query option <code>$apply</code> implicitly from it.</p>
-             * @param {any} oAggregation <p>An object holding the information needed for data aggregation; see also <a href="http://docs.oasis-open.org/odata/odata-data-aggregation-ext/v4.0/">OData Extension for Data Aggregation Version 4.0</a>.</p>
+             * @param {any} oAggregation <p>An object holding the information needed for data aggregation; see also <a href="http://docs.oasis-open.org/odata/odata-data-aggregation-ext/v4.0/">OData Extension for Data Aggregation Version 4.0</a>. Since 1.76.0, <code>undefined</code> can be used to remove the data aggregation object, which allows to set <code>$apply</code> explicitly afterwards. <code>null</code> is not supported.</p>
              */
-            setAggregation(oAggregation: any): void;
+            setAggregation(oAggregation?: any): void;
             /**
              * <p>Sorts the list according to the sorter object.</p><p>Instead of a single sorter also an array of sorters can be passed to the sort method. In this case they are processed in the sequence in which they are contained in the array.</p><h4>Grouping</h4><p> Sorting and grouping are closely related, in case a list should be grouped, it must be sorted by the property to group with. Grouping is enabled by setting the <code>group</code> property on the sorter object. If it is enabled, you can get the current group of an item using <a target="_self" class="jsdoclink" href="api/sap.ui.model.ListBinding#methods/getGroup">sap.ui.model.ListBinding.prototype.getGroup</a>. In case multiple sorters are provided, grouping can only be done on the first sorter, nested grouping is not supported.</p>
              * @param {sap.ui.model.Sorter | any[]} aSorters <p>the Sorter object or an array of sorters which defines the sort order</p>
@@ -18785,6 +19263,32 @@ declare namespace sap {
            */
           export class ODataMetaModel extends sap.ui.model.MetaModel {
             /**
+             * <p>Attaches an event handler to the event with the given identifier.</p>
+             * @param {string} sEventId <p>The identifier of the event to listen for</p>
+             * @param {any} oData <p>An object that will be passed to the handler along with the event object when the event is fired</p>
+             * @param {Function} fnFunction <p>The handler function to call when the event occurs. This function will be called in the context of the <code>oListener</code> instance (if present) or on the event provider instance. The event object (<a target="_self" class="jsdoclink" href="api/sap.ui.base.Event">sap.ui.base.Event</a>) is provided as first argument of the handler. Handlers must not change the content of the event. The second argument is the specified <code>oData</code> instance (if present).</p>
+             * @param {any} oListener <p>The object that wants to be notified when the event occurs (<code>this</code> context within the handler function). If it is not specified, the handler function is called in the context of the event provider.</p>
+             * @returns sap.ui.base.EventProvider <p>Returns <code>this</code> to allow method chaining</p>
+             */
+            attachEvent(sEventId: string, oData: any, fnFunction: Function, oListener?: any): sap.ui.base.EventProvider;
+            /**
+             * <p>See <a target="_self" class="jsdoclink" href="api/sap.ui.base.EventProvider#methods/attachEvent">sap.ui.base.EventProvider#attachEvent</a><br><br>References: <ul><li>sap.ui.base.EventProvider#attachEvent</li></ul></p>
+             */
+            attachEvent(): void;
+            /**
+             * <p>Create ContextBinding.</p>
+             * @param {string | any} sPath <p>the path pointing to the property that should be bound or an object which contains the following parameter properties: path, context, parameters</p>
+             * @param {any} oContext <p>the context object for this databinding (optional)</p>
+             * @param {any} mParameters <p>additional model specific parameters (optional)</p>
+             * @param {any} oEvents <p>event handlers can be passed to the binding ({change:myHandler})</p>
+             * @returns sap.ui.model.ContextBinding 
+             */
+            bindContext(sPath: string | any, oContext?: any, mParameters?: any, oEvents?: any): sap.ui.model.ContextBinding;
+            /**
+             * <p>See <code>sap.ui.model.Model#bindContext</code><br><br>References: <ul><li>sap.ui.model.Model#bindContext</li></ul></p>
+             */
+            bindContext(): void;
+            /**
              * <p>Implement in inheriting classes.</p>
              * @param {string} sPath <p>the path pointing to the list / array that should be bound</p>
              * @param {any} oContext <p>the context object for this databinding (optional)</p>
@@ -18795,7 +19299,7 @@ declare namespace sap {
              */
             bindList(sPath: string, oContext?: any, aSorters?: sap.ui.model.Sorter, aFilters?: any[], mParameters?: any): sap.ui.model.ListBinding;
             /**
-             * <p>Creates a list binding for this metadata model which iterates content from the given path (relative to the given context), sorted and filtered as indicated.</p><p>By default, OData names are iterated and a trailing slash is implicitly added to the path (see <a target="_self" class="jsdoclink scrollToMethod" data-target="requestObject" href="api/sap.ui.model.odata.v4.ODataMetaModel#methods/requestObject">#requestObject</a> for the effects this has); technical properties and inline annotations are filtered out.</p><p>A path which ends with an "@" segment can be used to iterate all inline or external targeting annotations; no trailing slash is added implicitly; technical properties and OData names are filtered out.<br><br>References: <ul><li>#requestObject</li><li>sap.ui.model.FilterOperator</li><li>sap.ui.model.Model#bindList</li></ul></p>
+             * <p>Creates a list binding for this metadata model which iterates content from the given path (relative to the given context), sorted and filtered as indicated.</p><p>By default, OData names are iterated and a trailing slash is implicitly added to the path (see <a target="_self" class="jsdoclink scrollToMethod" data-target="requestObject" href="api/sap.ui.model.odata.v4.ODataMetaModel#methods/requestObject">#requestObject</a> for the effects this has); technical properties and inline annotations are filtered out.</p><p>A path which ends with an "@" segment can be used to iterate all inline or external targeting annotations; no trailing slash is added implicitly; technical properties and OData names are filtered out.<br><br>References: <ul><li>sap.ui.model.Model#bindList</li><li>#requestObject</li><li>sap.ui.model.FilterOperator</li></ul></p>
              * @param {string} sPath <p>A relative or absolute path within the metadata model, for example "/EMPLOYEES"</p>
              * @param {sap.ui.model.Context} oContext <p>The context to be used as a starting point in case of a relative path</p>
              * @param {sap.ui.model.Sorter | sap.ui.model.Sorter[]} aSorters <p>Initial sort order, see <a target="_self" class="jsdoclink" href="api/sap.ui.model.ListBinding#methods/sort">sap.ui.model.ListBinding#sort</a></p>
@@ -18812,11 +19316,11 @@ declare namespace sap {
              */
             bindProperty(sPath: string, oContext?: any, mParameters?: any): sap.ui.model.PropertyBinding;
             /**
-             * <p>Creates a property binding for this meta data model which refers to the content from the given path (relative to the given context).<br><br>References: <ul><li>sap.ui.model.Model#bindProperty</li></ul></p>
-             * @param {string} sPath <p>A relative or absolute path within the meta data model, for example "/EMPLOYEES/ENTRYDATE"</p>
+             * <p>Creates a property binding for this metadata model which refers to the content from the given path (relative to the given context).<br><br>References: <ul><li>sap.ui.model.Model#bindProperty</li></ul></p>
+             * @param {string} sPath <p>A relative or absolute path within the metadata model, for example "/EMPLOYEES/ENTRYDATE"</p>
              * @param {sap.ui.model.Context} oContext <p>The context to be used as a starting point in case of a relative path</p>
              * @param {any} mParameters <p>Optional binding parameters that are passed to <a target="_self" class="jsdoclink scrollToMethod" data-target="getObject" href="api/sap.ui.model.odata.v4.ODataMetaModel#methods/getObject">#getObject</a> to compute the binding's value; if they are given, <code>oContext</code> cannot be omitted</p>
-             * @returns sap.ui.model.PropertyBinding <p>A property binding for this meta data model</p>
+             * @returns sap.ui.model.PropertyBinding <p>A property binding for this metadata model</p>
              */
             bindProperty(sPath: string, oContext?: sap.ui.model.Context, mParameters?: any): sap.ui.model.PropertyBinding;
             /**
@@ -18850,6 +19354,12 @@ declare namespace sap {
              */
             getMetaContext(sPath: string): sap.ui.model.Context;
             /**
+             * <p>Returns the OData metadata model path corresponding to the given OData data model path.</p>
+             * @param {string} sPath <p>An absolute data path within the OData data model, for example "/EMPLOYEES/0/ENTRYDATE" or "/EMPLOYEES('42')/ENTRYDATE</p>
+             * @returns string <p>The corresponding metadata path within the OData metadata model, for example "/EMPLOYEES/ENTRYDATE"</p>
+             */
+            getMetaPath(sPath: string): string;
+            /**
              * <p>Implement in inheriting classes.</p>
              * @param {string} sPath <p>Path to where to read the object</p>
              * @param {any} oContext <p>Context with which the path should be resolved</p>
@@ -18858,7 +19368,7 @@ declare namespace sap {
              */
             getObject(sPath: string, oContext?: any, mParameters?: any): any;
             /**
-             * <p>Returns the metadata object for the given path relative to the given context. Returns <code>undefined</code> in case the metadata is not (yet) available. Use <a target="_self" class="jsdoclink scrollToMethod" data-target="requestObject" href="api/sap.ui.model.odata.v4.ODataMetaModel#methods/requestObject">#requestObject</a> for asynchronous access.<br><br>References: <ul><li>#requestObject</li><li>sap.ui.model.Model#getObject</li></ul></p>
+             * <p>Returns the metadata object for the given path relative to the given context. Returns <code>undefined</code> in case the metadata is not (yet) available. Use <a target="_self" class="jsdoclink scrollToMethod" data-target="requestObject" href="api/sap.ui.model.odata.v4.ODataMetaModel#methods/requestObject">#requestObject</a> for asynchronous access.<br><br>References: <ul><li>sap.ui.model.Model#getObject</li><li>#requestObject</li></ul></p>
              * @param {string} sPath <p>A relative or absolute path within the metadata model</p>
              * @param {sap.ui.model.Context} oContext <p>The context to be used as a starting point in case of a relative path</p>
              * @param {any} mParameters <p>Optional (binding) parameters; if they are given, <code>oContext</code> cannot be omitted</p>
@@ -18868,9 +19378,10 @@ declare namespace sap {
             /**
              * <p>Returns the UI5 type for the given property path that formats and parses corresponding to the property's EDM type and constraints. The property's type must be a primitive type. Use <a target="_self" class="jsdoclink scrollToMethod" data-target="requestUI5Type" href="api/sap.ui.model.odata.v4.ODataMetaModel#methods/requestUI5Type">#requestUI5Type</a> for asynchronous access.<br><br>References: <ul><li>#requestUI5Type</li></ul></p>
              * @param {string} sPath <p>An absolute path to an OData property within the OData data model</p>
+             * @param {any} mFormatOptions <p>Type-specific format options, since 1.81.0. The boolean format option "parseKeepsEmptyString" applies to <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.type.String">sap.ui.model.odata.type.String</a> only and is ignored for all other types. All other format options are passed "as is".</p>
              * @returns sap.ui.model.odata.type.ODataType <p>The corresponding UI5 type from <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.type">sap.ui.model.odata.type</a>, if all required metadata to calculate this type is already available; if no specific type can be determined, a warning is logged and <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.type.Raw">sap.ui.model.odata.type.Raw</a> is used</p>
              */
-            getUI5Type(sPath: string): sap.ui.model.odata.type.ODataType;
+            getUI5Type(sPath: string, mFormatOptions?: any): sap.ui.model.odata.type.ODataType;
             /**
              * <p>Determines which type of value list exists for the given property.<br><br>References: <ul><li>#requestValueListType</li></ul></p>
              * @param {string} sPropertyPath <p>An absolute path to an OData property within the OData data model</p>
@@ -18890,7 +19401,7 @@ declare namespace sap {
              * <p>Request currency customizing based on the code list reference given in the entity container's <code>com.sap.vocabularies.CodeList.v1.CurrencyCodes</code> annotation. The corresponding HTTP request uses the HTTP headers obtained via <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/getHttpHeaders">sap.ui.model.odata.v4.ODataModel#getHttpHeaders</a> from this meta model's data model.<br><br>References: <ul><li>#requestUnitsOfMeasure</li></ul></p>
              * @param {any} vRawValue <p>If present, it must be this meta model's root entity container</p>
              * @param {any} oDetails <p>The details object</p>
-             * @returns Promise<any> <p>A promise resolving with the currency customizing which is a map from currency key to an object with the following properties: <ul> <li>StandardCode: The language-independent standard code (e.g. ISO) for the currency as referred to via the <code>com.sap.vocabularies.CodeList.v1.StandardCode</code> annotation on the currency's key, if present <li>Text: The language-dependent text for the currency as referred to via the <code>com.sap.vocabularies.Common.v1.Text</code> annotation on the currency's key <li>UnitSpecificScale: The decimals for the currency as referred to via the <code>com.sap.vocabularies.Common.v1.UnitSpecificScale</code> annotation on the currency's key; entries where this would be <code>null</code> are ignored, and an error is logged </ul> It resolves with <code>null</code>, if no <code>com.sap.vocabularies.CodeList.v1.CurrencyCodes</code> annotation is found. It is rejected, if there is not exactly one currency key, or if the currency customizing cannot be loaded.</p>
+             * @returns Promise<any> <p>A promise resolving with the currency customizing which is a map from currency key to an object with the following properties: <ul> <li> StandardCode: The language-independent standard code (e.g. ISO) for the currency as referred to via the <code>com.sap.vocabularies.CodeList.v1.StandardCode</code> annotation on the currency's key, if present <li> Text: The language-dependent text for the currency as referred to via the <code>com.sap.vocabularies.Common.v1.Text</code> annotation on the currency's key <li> UnitSpecificScale: The decimals for the currency as referred to via the <code>com.sap.vocabularies.Common.v1.UnitSpecificScale</code> annotation on the currency's key; entries where this would be <code>null</code> are ignored, and an error is logged </ul> It resolves with <code>null</code>, if no <code>com.sap.vocabularies.CodeList.v1.CurrencyCodes</code> annotation is found. It is rejected, if there is not exactly one currency key, or if the currency customizing cannot be loaded.</p>
              */
             requestCurrencyCodes(vRawValue?: any, oDetails?: any): Promise<any>;
             /**
@@ -18910,7 +19421,7 @@ declare namespace sap {
               &lt;!-- /EMPLOYEES/ENTRYDATE/@com.sap.vocabularies.Common.v1.Text -->
               "{property>./@com.sap.vocabularies.Common.v1.Text}"
             &lt;/template:with>
-            </pre></p><p>The basic idea is that every path described in "14.2.1 Attribute Target" in specification "OData Version 4.0 Part 3: Common Schema Definition Language" is a valid absolute path within the metadata model if a leading slash is added; for example "/" + "MySchema.MyEntityContainer/MyEntitySet/MyComplexProperty/MyNavigationProperty". Also, every path described in "14.5.2 Expression edm:AnnotationPath", "14.5.11 Expression edm:NavigationPropertyPath", "14.5.12 Expression edm:Path", and "14.5.13 Expression edm:PropertyPath" is a valid relative path within the metadata model if a suitable prefix is added which addresses an entity container, entity set, singleton, complex type, entity type, or property; for example "/MySchema.MyEntityType/MyProperty" + "@vCard.Address#work/FullName".</p><p>The absolute path is split into segments and followed step-by-step, starting at the global scope of all known qualified OData names. There are two technical properties there: "$Version" (typically "4.0") and "$EntityContainer" with the name of the single entity container for this metadata model's service.</p><p>An empty segment in between is invalid, except to force return type lookup for operation overloads (see below). An empty segment at the end caused by a trailing slash differentiates between a name and the object it refers to. This way, "/$EntityContainer" refers to the name of the single entity container and "/$EntityContainer/" refers to the single entity container as an object.</p><p>The segment "@sapui.name" refers back to the last OData name (simple identifier or qualified name) or annotation name encountered during path traversal immediately before "@sapui.name": <ul> <li> "/EMPLOYEES@sapui.name" results in "EMPLOYEES" and "/EMPLOYEES/@sapui.name" results in the same as "/EMPLOYEES/$Type", that is, the qualified name of the entity set's type (see below how "$Type" is inserted implicitly). Note how the separating slash again makes a difference here. <li> "/EMPLOYEES/@com.sap.vocabularies.Common.v1.Label@sapui.name" results in "@com.sap.vocabularies.Common.v1.Label" and a slash does not make any difference as long as the annotation does not have a "$Type" property. <li> A technical property (that is, a numerical segment or one starting with a "$") immediately before "@sapui.name" is invalid, for example "/$EntityContainer@sapui.name". </ul> The path must not continue after "@sapui.name".</p><p>If the current object is a string value, that string value is treated as a relative path and followed step-by-step before the next segment is processed. Except for this, a path must not continue if it comes across a non-object value. Such a string value can be a qualified name (example path "/$EntityContainer/..."), a simple identifier (example path "/TEAMS/$NavigationPropertyBinding/TEAM_2_EMPLOYEES/...") including the special name "$ReturnType" (since 1.71.0), or even a path according to "14.5.12 Expression edm:Path" etc. (example path "/TEAMS/@com.sap.vocabularies.UI.v1.LineItem/0/Value/$Path/...".</p><p>Segments starting with an "@" character, for example "@com.sap.vocabularies.Common.v1.Label", address annotations at the current object. As the first segment, they refer to the single entity container. For objects which can only be annotated inline (see "14.3 Element edm:Annotation" minus "14.2.1 Attribute Target"), the object already contains the annotations as a property. For objects which can (only or also) be annotated via external targeting, the object does not contain any annotation as a property. Such annotations MUST be accessed via a path. Such objects include operations (that is, actions and functions) and their parameters, which can be annotated for a single overload or for all overloads at the same time.</p><p>Segments starting with an OData name followed by an "@" character, for example "/TEAMS@Org.OData.Capabilities.V1.TopSupported", address annotations at an entity set, singleton, or property, not at the corresponding type. In contrast, "/TEAMS/@com.sap.vocabularies.Common.v1.Deletable" (note the separating slash) addresses an annotation at the entity set's type. This is in line with the special rule of "14.5.12 Expression edm:Path" regarding annotations at a navigation property itself.</p><p>"@" can be used as a segment to address a map of all annotations of the current object. This is useful for iteration, for example via <code>&lt;template:repeat list="{entityType>@}" ...></code>.</p><p>Annotations of an annotation are addressed not by two separate segments, but by a single segment like "@com.sap.vocabularies.Common.v1.Text@com.sap.vocabularies.Common.v1.TextArrangement". Each annotation can have a qualifier, for example "@first#foo@second#bar". Note: If the first annotation's value is a record, a separate segment addresses an annotation of that record, not an annotation of the first annotation itself. In a similar way, annotations of "7.2 Element edm:ReferentialConstraint", "7.3 Element edm:OnDelete", "10.2 Element edm:Member" and "14.5.14.2 Element edm:PropertyValue" are addressed by segments like "&lt;7.2.1 Attribute Property>@...", "$OnDelete@...", "&lt;10.2.1 Attribute Name>@..." and "&lt;14.5.14.2.1 Attribute Property>@..." (where angle brackets denote a variable part and sections refer to specification "OData Version 4.0 Part 3: Common Schema Definition Language").</p><p>Annotations starting with "@@", for example "@@sap.ui.model.odata.v4.AnnotationHelper.isMultiple" or "@@.AH.isMultiple" or "@@.isMultiple", represent computed annotations. Their name without the "@@" prefix must refer to a function in <code>mParameters.scope</code> in case of a relative name starting with a dot, which is stripped before lookup; see the <code>&lt;template:alias></code> instruction for XML Templating. In case of an absolute name, it is searched in <code>mParameters.scope</code> first and then in the global namespace. The names "requestCurrencyCodes" and "requestUnitsOfMeasure" default to <a target="_self" class="jsdoclink scrollToMethod" data-target="requestCurrencyCodes" href="api/sap.ui.model.odata.v4.ODataMetaModel#methods/requestCurrencyCodes">#requestCurrencyCodes</a> and <a target="_self" class="jsdoclink scrollToMethod" data-target="requestUnitsOfMeasure" href="api/sap.ui.model.odata.v4.ODataMetaModel#methods/requestUnitsOfMeasure">#requestUnitsOfMeasure</a> resp. if not present in <code>mParameters.scope</code>. This function is called with the current object (or primitive value) and additional details and returns the result of this <a target="_self" class="jsdoclink scrollToMethod" data-target="requestObject" href="api/sap.ui.model.odata.v4.ODataMetaModel#methods/requestObject">#requestObject</a> call. The additional details are given as an object with the following properties: <ul> <li><code>{boolean} $$valueAsPromise</code> Whether the computed annotation may return a <code>Promise</code> resolving with its value (since 1.57.0) <li><code><a target="_self" class="jsdoclink" href="api/sap.ui.model.Context">sap.ui.model.Context</a> context</code> Points to the current object <li><code>{object} overload</code> In case of annotations of an operation or a parameter, if filtering by binding parameter determines a single operation overload, that overload is passed (since 1.71.0), else <code>undefined</code> <li><code>{string} schemaChildName</code> The qualified name of the schema child where the computed annotation has been found </ul> Computed annotations cannot be iterated by "@". The path must not continue after a computed annotation.</p><p>A segment which represents an OData qualified name is looked up in the global scope ("scope lookup") and thus determines a schema child which is used later on. Unknown qualified names are invalid. This way, "/acme.DefaultContainer/EMPLOYEES" addresses the "EMPLOYEES" child of the schema child named "acme.DefaultContainer". This also works indirectly ("/$EntityContainer/EMPLOYEES") and implicitly ("/EMPLOYEES", see below).</p><p>A segment which represents an OData simple identifier (or the special names "$ReturnType", since 1.71.0, or "$Parameter", since 1.73.0) needs special preparations. The same applies to the empty segment after a trailing slash. <ol> <li> If the current object has a "$Action", "$Function" or "$Type" property, it is used for scope lookup first. This way, "/EMPLOYEES/ENTRYDATE" addresses the same object as "/EMPLOYEES/$Type/ENTRYDATE", namely the "ENTRYDATE" child of the entity type corresponding to the "EMPLOYEES" child of the entity container. The other cases jump from an operation import to the corresponding operation overloads. <li> Else if the segment is the first one within its path, the last schema child addressed via scope lookup is used instead of the current object. This can only happen indirectly as in "/TEAMS/$NavigationPropertyBinding/TEAM_2_EMPLOYEES/..." where the schema child is the entity container and the navigation property binding can contain the simple identifier of another entity set within the same container.</p><p>If the segment is the first one overall, "$EntityContainer" is inserted into the path implicitly. In other words, the entity container is used as the initial schema child. This way, "/EMPLOYEES" addresses the same object as "/$EntityContainer/EMPLOYEES", namely the "EMPLOYEES" child of the entity container. <li> Afterwards, if the current object is an array, it represents overloads for an operation. Annotations of an operation (since 1.71.0) or a parameter (since 1.66.0) can be immediately addressed, no matter if they apply for a single overload or for all overloads at the same time, for example "/TEAMS/acme.NewAction@" or "/TEAMS/acme.NewAction/Team_ID@". Annotations of an unbound operation overload can be addressed like "/OperationImport/@$ui5.overload@", while "/OperationImport/@" addresses annotations of the operation import itself. The special name "$ReturnType" can be used (since 1.71.0) like a parameter to address annotations of the return type instead, for example "/TEAMS/acme.NewAction/$ReturnType@".</p><p>Operation overloads are then filtered by binding parameter; multiple overloads after filtering are invalid except if addressing all overloads via the segment "@$ui5.overload", for example "/acme.NewAction/@$ui5.overload".</p><p>Once a single overload has been determined, its parameters can be immediately addressed, for example "/TEAMS/acme.NewAction/Team_ID", or the special name "$Parameter" can be used (since 1.73.0), for example "/TEAMS/acme.NewAction/$Parameter/Team_ID". The special name "$ReturnType" can be used (since 1.71.0) like a parameter to address the return type instead, for example "/TEAMS/acme.NewAction/$ReturnType". For all other names, the overload's "$ReturnType/$Type" is used for scope lookup. This way, "/GetOldestWorker/AGE" addresses the same object as "/GetOldestWorker/$ReturnType/AGE" or "/GetOldestWorker/$Function/0/$ReturnType/$Type/AGE", and "/TEAMS/acme.NewAction/MemberCount" (assuming "MemberCount" is not a parameter in this example) addresses the same object as "/TEAMS/acme.NewAction/$ReturnType/MemberCount" or "/TEAMS/acme.NewAction/@$ui5.overload/0/$ReturnType/$Type/MemberCount". In case a name can refer both to a parameter and to a property of the return type, an empty segment can be used instead of "@$ui5.overload/0/$ReturnType/$Type" or "$ReturnType" to force return type lookup, for example "/TEAMS/acme.NewAction//Team_ID".</p><p>For primitive return types, the special segment "value" can be used to refer to the return type itself (see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataContextBinding#methods/execute">sap.ui.model.odata.v4.ODataContextBinding#execute</a>). This way, "/GetOldestAge/value" addresses the same object as "/GetOldestAge/$ReturnType" or "/GetOldestAge/$Function/0/$ReturnType" or "/GetOldestAge/@$ui5.overload/0/$ReturnType" (which is needed for automatic type determination, see <a target="_self" class="jsdoclink scrollToMethod" data-target="requestUI5Type" href="api/sap.ui.model.odata.v4.ODataMetaModel#methods/requestUI5Type">#requestUI5Type</a>). </ol></p><p>A trailing slash can be used to continue a path and thus force scope lookup or OData simple identifier preparations, but then stay at the current object. This way, "/EMPLOYEES/$Type/" addresses the entity type itself corresponding to the "EMPLOYEES" child of the entity container. Although the empty segment is not an OData simple identifier, it can be used as a placeholder for one. In this way, "/EMPLOYEES/" addresses the same entity type as "/EMPLOYEES/$Type/". That entity type in turn is a map of all its OData children (that is, structural and navigation properties) and determines the set of possible child names that might be used after the trailing slash.</p><p>"$" can be used as the last segment to continue a path and thus force scope lookup, but no OData simple identifier preparations. In this way, it serves as a placeholder for a technical property. The path must not continue after "$", except for a computed annotation. Example: "/TEAMS/@com.sap.vocabularies.UI.v1.LineItem/0/Value/$Path/$" addresses the referenced property itself, not the corresponding type like "/TEAMS/@com.sap.vocabularies.UI.v1.LineItem/0/Value/$Path/" does. "/TEAMS/@com.sap.vocabularies.UI.v1.LineItem/0/Target/$NavigationPropertyPath/$@@.isMultiple" calls a computed annotation on the navigation property itself, not on the corresponding type.</p><p>Any other segment, including an OData simple identifier, is looked up as a property of the current object.<br><br>References: <ul><li>#getObject</li></ul></p>
+            </pre></p><p>The basic idea is that every path described in "14.2.1 Attribute Target" in specification "OData Version 4.0 Part 3: Common Schema Definition Language" is a valid absolute path within the metadata model if a leading slash is added; for example "/" + "MySchema.MyEntityContainer/MyEntitySet/MyComplexProperty/MyNavigationProperty". Also, every path described in "14.5.2 Expression edm:AnnotationPath", "14.5.11 Expression edm:NavigationPropertyPath", "14.5.12 Expression edm:Path", and "14.5.13 Expression edm:PropertyPath" is a valid relative path within the metadata model if a suitable prefix is added which addresses an entity container, entity set, singleton, complex type, entity type, or property; for example "/MySchema.MyEntityType/MyProperty" + "@vCard.Address#work/FullName".</p><p>The absolute path is split into segments and followed step-by-step, starting at the global scope of all known qualified OData names. There are two technical properties there: "$Version" (typically "4.0") and "$EntityContainer" with the name of the single entity container for this metadata model's service.</p><p>An empty segment in between is invalid, except to force return type lookup for operation overloads (see below). An empty segment at the end caused by a trailing slash differentiates between a name and the object it refers to. This way, "/$EntityContainer" refers to the name of the single entity container and "/$EntityContainer/" refers to the single entity container as an object.</p><p>The segment "@sapui.name" refers back to the last OData name (simple identifier or qualified name) or annotation name encountered during path traversal immediately before "@sapui.name": <ul> <li> "/EMPLOYEES@sapui.name" results in "EMPLOYEES" and "/EMPLOYEES/@sapui.name" results in the same as "/EMPLOYEES/$Type", that is, the qualified name of the entity set's type (see below how "$Type" is inserted implicitly). Note how the separating slash again makes a difference here. <li> "/EMPLOYEES/@com.sap.vocabularies.Common.v1.Label@sapui.name" results in "@com.sap.vocabularies.Common.v1.Label" and a slash does not make any difference as long as the annotation does not have a "$Type" property. <li> A technical property (that is, a numerical segment or one starting with a "$") immediately before "@sapui.name" is invalid, for example "/$EntityContainer@sapui.name". </ul> The path must not continue after "@sapui.name".</p><p>If the current object is a string value, that string value is treated as a relative path and followed step-by-step before the next segment is processed. Except for this, a path must not continue if it comes across a non-object value. Such a string value can be a qualified name (example path "/$EntityContainer/..."), a simple identifier (example path "/TEAMS/$NavigationPropertyBinding/TEAM_2_EMPLOYEES/...") including the special name "$ReturnType" (since 1.71.0), or even a path according to "14.5.12 Expression edm:Path" etc. (example path "/TEAMS/@com.sap.vocabularies.UI.v1.LineItem/0/Value/$Path/...".</p><p>Segments starting with an "@" character, for example "@com.sap.vocabularies.Common.v1.Label", address annotations at the current object. As the first segment, they refer to the single entity container. For objects which can only be annotated inline (see "14.3 Element edm:Annotation" minus "14.2.1 Attribute Target"), the object already contains the annotations as a property. For objects which can (only or also) be annotated via external targeting, the object does not contain any annotation as a property. Such annotations MUST be accessed via a path. Such objects include operations (that is, actions and functions) and their parameters, which can be annotated for a single overload or for all overloads at the same time.</p><p>Segments starting with an OData name followed by an "@" character, for example "/TEAMS@Org.OData.Capabilities.V1.TopSupported", address annotations at an entity set, singleton, or property, not at the corresponding type. In contrast, "/TEAMS/@com.sap.vocabularies.Common.v1.Deletable" (note the separating slash) addresses an annotation at the entity set's type. This is in line with the special rule of "14.5.12 Expression edm:Path" regarding annotations at a navigation property itself.</p><p>"@" can be used as a segment to address a map of all annotations of the current object. This is useful for iteration, for example via <code>&lt;template:repeat list="{entityType>@}" ...></code>.</p><p>Annotations of an annotation are addressed not by two separate segments, but by a single segment like "@com.sap.vocabularies.Common.v1.Text@com.sap.vocabularies.Common.v1.TextArrangement". Each annotation can have a qualifier, for example "@first#foo@second#bar". Note: If the first annotation's value is a record, a separate segment addresses an annotation of that record, not an annotation of the first annotation itself. In a similar way, annotations of "7.2 Element edm:ReferentialConstraint", "7.3 Element edm:OnDelete", "10.2 Element edm:Member" and "14.5.14.2 Element edm:PropertyValue" are addressed by segments like "&lt;7.2.1 Attribute Property>@...", "$OnDelete@...", "&lt;10.2.1 Attribute Name>@..." and "&lt;14.5.14.2.1 Attribute Property>@..." (where angle brackets denote a variable part and sections refer to specification "OData Version 4.0 Part 3: Common Schema Definition Language").</p><p>Annotations starting with "@@", for example "@@sap.ui.model.odata.v4.AnnotationHelper.isMultiple" or "@@.AH.isMultiple" or "@@.isMultiple", represent computed annotations. Their name without the "@@" prefix must refer to a function in <code>mParameters.scope</code> in case of a relative name starting with a dot, which is stripped before lookup; see the <code>&lt;template:alias></code> instruction for XML Templating. In case of an absolute name, it is searched in <code>mParameters.scope</code> first and then in the global namespace. The names "requestCurrencyCodes" and "requestUnitsOfMeasure" default to <a target="_self" class="jsdoclink scrollToMethod" data-target="requestCurrencyCodes" href="api/sap.ui.model.odata.v4.ODataMetaModel#methods/requestCurrencyCodes">#requestCurrencyCodes</a> and <a target="_self" class="jsdoclink scrollToMethod" data-target="requestUnitsOfMeasure" href="api/sap.ui.model.odata.v4.ODataMetaModel#methods/requestUnitsOfMeasure">#requestUnitsOfMeasure</a> resp. if not present in <code>mParameters.scope</code>. This function is called with the current object (or primitive value) and additional details and returns the result of this <a target="_self" class="jsdoclink scrollToMethod" data-target="requestObject" href="api/sap.ui.model.odata.v4.ODataMetaModel#methods/requestObject">#requestObject</a> call. The additional details are given as an object with the following properties: <ul> <li> <code>{boolean} $$valueAsPromise</code> Whether the computed annotation may return a <code>Promise</code> resolving with its value (since 1.57.0) <li> <code><a target="_self" class="jsdoclink" href="api/sap.ui.model.Context">sap.ui.model.Context</a> context</code> Points to the current object <li> <code>{object} overload</code> In case of annotations of an operation or a parameter, if filtering by binding parameter determines a single operation overload, that overload is passed (since 1.71.0), else <code>undefined</code> <li> <code>{string} schemaChildName</code> The qualified name of the schema child where the computed annotation has been found </ul> Computed annotations cannot be iterated by "@". The path must not continue after a computed annotation. Since 1.77.0, arguments can be given to a computed annotation much like a JavaScript function call. The left parenthesis must immediately follow the name and no whitespace must follow the right parenthesis. In between, a comma separated list of JSON values may be given (see <code>JSON.parse</code>); string literals may be enclosed in single or double quotes; property names in object literals need not be quoted; curly brackets must be replaced by <code>$(</code> and <code>$)</code> respectively, no matter where they appear, and there is no escaping for <code>$(</code> and <code>$)</code> to prevent replacement back to curly brackets before parsing; as usual, <code>null</code> is supported while <code>undefined</code> is not. Example: "@@AH.format($(style : 'short'$)))" or "@@AH.format(null, $($$noPatch : true$)))".</p><p>A segment which represents an OData qualified name is looked up in the global scope ("scope lookup") and thus determines a schema child which is used later on. Unknown qualified names are invalid. This way, "/acme.DefaultContainer/EMPLOYEES" addresses the "EMPLOYEES" child of the schema child named "acme.DefaultContainer". This also works indirectly ("/$EntityContainer/EMPLOYEES") and implicitly ("/EMPLOYEES", see below).</p><p>A segment which represents an OData simple identifier (or the special names "$ReturnType", since 1.71.0, or "$Parameter", since 1.73.0) needs special preparations. The same applies to the empty segment after a trailing slash. <ol> <li> If the current object has a "$Action", "$Function" or "$Type" property, it is used for scope lookup first. This way, "/EMPLOYEES/ENTRYDATE" addresses the same object as "/EMPLOYEES/$Type/ENTRYDATE", namely the "ENTRYDATE" child of the entity type corresponding to the "EMPLOYEES" child of the entity container. The other cases jump from an operation import to the corresponding operation overloads. <li> Else if the segment is the first one within its path, the last schema child addressed via scope lookup is used instead of the current object. This can only happen indirectly as in "/TEAMS/$NavigationPropertyBinding/TEAM_2_EMPLOYEES/..." where the schema child is the entity container and the navigation property binding can contain the simple identifier of another entity set within the same container.</p><p>If the segment is the first one overall, "$EntityContainer" is inserted into the path implicitly. In other words, the entity container is used as the initial schema child. This way, "/EMPLOYEES" addresses the same object as "/$EntityContainer/EMPLOYEES", namely the "EMPLOYEES" child of the entity container. <li> Afterwards, if the current object is an array, it represents overloads for an operation. Annotations of an operation (since 1.71.0) or a parameter (since 1.66.0) can be immediately addressed, no matter if they apply for a single overload or for all overloads at the same time, for example "/TEAMS/acme.NewAction@" or "/TEAMS/acme.NewAction/Team_ID@". Annotations of an unbound operation overload can be addressed like "/OperationImport/@$ui5.overload@", while "/OperationImport/@" addresses annotations of the operation import itself. The special name "$ReturnType" can be used (since 1.71.0) like a parameter to address annotations of the return type instead, for example "/TEAMS/acme.NewAction/$ReturnType@".</p><p>Operation overloads are then filtered by binding parameter; multiple overloads after filtering are invalid except if addressing all overloads via the segment "@$ui5.overload", for example "/acme.NewAction/@$ui5.overload".</p><p>Once a single overload has been determined, its parameters can be immediately addressed, for example "/TEAMS/acme.NewAction/Team_ID", or the special name "$Parameter" can be used (since 1.73.0), for example "/TEAMS/acme.NewAction/$Parameter/Team_ID". The special name "$ReturnType" can be used (since 1.71.0) like a parameter to address the return type instead, for example "/TEAMS/acme.NewAction/$ReturnType". For all other names, the overload's "$ReturnType/$Type" is used for scope lookup. This way, "/GetOldestWorker/AGE" addresses the same object as "/GetOldestWorker/$ReturnType/AGE" or "/GetOldestWorker/$Function/0/$ReturnType/$Type/AGE", and "/TEAMS/acme.NewAction/MemberCount" (assuming "MemberCount" is not a parameter in this example) addresses the same object as "/TEAMS/acme.NewAction/$ReturnType/MemberCount" or "/TEAMS/acme.NewAction/@$ui5.overload/0/$ReturnType/$Type/MemberCount". In case a name can refer both to a parameter and to a property of the return type, an empty segment can be used instead of "@$ui5.overload/0/$ReturnType/$Type" or "$ReturnType" to force return type lookup, for example "/TEAMS/acme.NewAction//Team_ID".</p><p>For primitive return types, the special segment "value" can be used to refer to the return type itself (see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataContextBinding#methods/execute">sap.ui.model.odata.v4.ODataContextBinding#execute</a>). This way, "/GetOldestAge/value" addresses the same object as "/GetOldestAge/$ReturnType" or "/GetOldestAge/$Function/0/$ReturnType" or "/GetOldestAge/@$ui5.overload/0/$ReturnType" (which is needed for automatic type determination, see <a target="_self" class="jsdoclink scrollToMethod" data-target="requestUI5Type" href="api/sap.ui.model.odata.v4.ODataMetaModel#methods/requestUI5Type">#requestUI5Type</a>). </ol></p><p>A trailing slash can be used to continue a path and thus force scope lookup or OData simple identifier preparations, but then stay at the current object. This way, "/EMPLOYEES/$Type/" addresses the entity type itself corresponding to the "EMPLOYEES" child of the entity container. Although the empty segment is not an OData simple identifier, it can be used as a placeholder for one. In this way, "/EMPLOYEES/" addresses the same entity type as "/EMPLOYEES/$Type/". That entity type in turn is a map of all its OData children (that is, structural and navigation properties) and determines the set of possible child names that might be used after the trailing slash.</p><p>"$" can be used as the last segment to continue a path and thus force scope lookup, but no OData simple identifier preparations. In this way, it serves as a placeholder for a technical property. The path must not continue after "$", except for a computed annotation. Example: "/TEAMS/@com.sap.vocabularies.UI.v1.LineItem/0/Value/$Path/$" addresses the referenced property itself, not the corresponding type like "/TEAMS/@com.sap.vocabularies.UI.v1.LineItem/0/Value/$Path/" does. "/TEAMS/@com.sap.vocabularies.UI.v1.LineItem/0/Target/$NavigationPropertyPath/$@@.isMultiple" calls a computed annotation on the navigation property itself, not on the corresponding type.</p><p>Any other segment, including an OData simple identifier, is looked up as a property of the current object.<br><br>References: <ul><li>#getObject</li></ul></p>
              * @param {string} sPath <p>A relative or absolute path within the metadata model</p>
              * @param {sap.ui.model.Context} oContext <p>The context to be used as a starting point in case of a relative path</p>
              * @param {any} mParameters <p>Optional (binding) parameters; if they are given, <code>oContext</code> cannot be omitted</p>
@@ -18920,23 +19431,25 @@ declare namespace sap {
             /**
              * <p>Requests the UI5 type for the given property path that formats and parses corresponding to the property's EDM type and constraints. The property's type must be a primitive type. Use <a target="_self" class="jsdoclink scrollToMethod" data-target="getUI5Type" href="api/sap.ui.model.odata.v4.ODataMetaModel#methods/getUI5Type">#getUI5Type</a> for synchronous access.<br><br>References: <ul><li>#getUI5Type</li></ul></p>
              * @param {string} sPath <p>An absolute path to an OData property within the OData data model</p>
+             * @param {any} mFormatOptions <p>Type-specific format options, since 1.81.0. The boolean format option "parseKeepsEmptyString" applies to <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.type.String">sap.ui.model.odata.type.String</a> only and is ignored for all other types. All other format options are passed "as is".</p>
              * @returns Promise<any> <p>A promise that gets resolved with the corresponding UI5 type from <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.type">sap.ui.model.odata.type</a>; if no specific type can be determined, a warning is logged and <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.type.Raw">sap.ui.model.odata.type.Raw</a> is used</p>
              */
-            requestUI5Type(sPath: string): Promise<any>;
+            requestUI5Type(sPath: string, mFormatOptions?: any): Promise<any>;
             /**
              * <p>Request unit customizing based on the code list reference given in the entity container's <code>com.sap.vocabularies.CodeList.v1.UnitOfMeasure</code> annotation. The corresponding HTTP request uses the HTTP headers obtained via <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/getHttpHeaders">sap.ui.model.odata.v4.ODataModel#getHttpHeaders</a> from this meta model's data model.<br><br>References: <ul><li>#requestCurrencyCodes</li></ul></p>
              * @param {any} vRawValue <p>If present, it must be this meta model's root entity container</p>
              * @param {any} oDetails <p>The details object</p>
-             * @returns Promise<any> <p>A promise resolving with the unit customizing which is a map from unit key to an object with the following properties: <ul> <li>StandardCode: The language-independent standard code (e.g. ISO) for the unit as referred to via the <code>com.sap.vocabularies.CodeList.v1.StandardCode</code> annotation on the unit's key, if present <li>Text: The language-dependent text for the unit as referred to via the <code>com.sap.vocabularies.Common.v1.Text</code> annotation on the unit's key <li>UnitSpecificScale: The decimals for the unit as referred to via the <code>com.sap.vocabularies.Common.v1.UnitSpecificScale</code> annotation on the unit's key; entries where this would be <code>null</code> are ignored, and an error is logged </ul> It resolves with <code>null</code>, if no <code>com.sap.vocabularies.CodeList.v1.UnitOfMeasure</code> annotation is found. It is rejected, if there is not exactly one unit key, or if the unit customizing cannot be loaded.</p>
+             * @returns Promise<any> <p>A promise resolving with the unit customizing which is a map from unit key to an object with the following properties: <ul> <li> StandardCode: The language-independent standard code (e.g. ISO) for the unit as referred to via the <code>com.sap.vocabularies.CodeList.v1.StandardCode</code> annotation on the unit's key, if present <li> Text: The language-dependent text for the unit as referred to via the <code>com.sap.vocabularies.Common.v1.Text</code> annotation on the unit's key <li> UnitSpecificScale: The decimals for the unit as referred to via the <code>com.sap.vocabularies.Common.v1.UnitSpecificScale</code> annotation on the unit's key; entries where this would be <code>null</code> are ignored, and an error is logged </ul> It resolves with <code>null</code>, if no <code>com.sap.vocabularies.CodeList.v1.UnitOfMeasure</code> annotation is found. It is rejected, if there is not exactly one unit key, or if the unit customizing cannot be loaded.</p>
              */
             requestUnitsOfMeasure(vRawValue?: any, oDetails?: any): Promise<any>;
             /**
              * <p>Requests information to retrieve a value list for the property given by <code>sPropertyPath</code>.</p>
              * @param {string} sPropertyPath <p>An absolute path to an OData property within the OData data model or a (meta) path to an operation parameter, for example "/TEAMS(1)/acme.NewAction/Team_ID"</p>
              * @param {boolean} bAutoExpandSelect <p>The value of the parameter <code>autoExpandSelect</code> for value list models created by this method. If the value list model is the data model associated with this meta model, this flag has no effect. Supported since 1.68.0</p>
-             * @returns Promise<any> <p>A promise which is resolved with a map of qualifier to value list mapping objects structured as defined by <code>com.sap.vocabularies.Common.v1.ValueListType</code>; the map entry with key "" represents the mapping without qualifier. Each entry has an additional property "$model" which is the <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel">sap.ui.model.odata.v4.ODataModel</a> instance to read value list data via this mapping; this model is constructed with the HTTP headers obtained via <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/getHttpHeaders">sap.ui.model.odata.v4.ODataModel#getHttpHeaders</a> from this meta model's data model.</p><p>For fixed values, only one mapping is expected and the qualifier is ignored. The mapping is available with key "".</p><p>The promise is rejected with an error if there is no value list information available for the given property path. Use <a target="_self" class="jsdoclink scrollToMethod" data-target="getValueListType" href="api/sap.ui.model.odata.v4.ODataMetaModel#methods/getValueListType">#getValueListType</a> to determine if value list information exists. It is also rejected with an error if the value list metadata is inconsistent.</p><p>An inconsistency can result from one of the following reasons: <ul> <li> There is a reference, but the referenced service does not contain mappings for the property. <li> The referenced service contains annotation targets in the namespace of the data service that are not mappings for the property. <li> Two different referenced services contain a mapping using the same qualifier. <li> A service is referenced twice. <li> There are multiple mappings for a fixed value list. <li> A <code>com.sap.vocabularies.Common.v1.ValueList</code> annotation in a referenced service has the property <code>CollectionRoot</code> or <code>SearchSupported</code>. <li> A <code>com.sap.vocabularies.Common.v1.ValueList</code> annotation in the service itself has the property <code>SearchSupported</code> and additionally the annotation <code>com.sap.vocabularies.Common.v1.ValueListWithFixedValues</code> is defined. </ul></p>
+             * @param {sap.ui.model.odata.v4.Context} oContext <p>Context to resolve "14.5.12 Expression edm:Path" references contained in a "com.sap.vocabularies.Common.v1.ValueListRelevantQualifiers" annotation. Supported since 1.84.0</p>
+             * @returns Promise<any> <p>A promise which is resolved with a map of qualifier to value list mapping objects structured as defined by <code>com.sap.vocabularies.Common.v1.ValueListType</code>; the map entry with key "" represents the mapping without qualifier. Each entry has an additional property "$model" which is the <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel">sap.ui.model.odata.v4.ODataModel</a> instance to read value list data via this mapping; that model is constructed with the HTTP headers obtained via <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/getHttpHeaders">sap.ui.model.odata.v4.ODataModel#getHttpHeaders</a> from this meta model's data model. Since 1.80.0, that model's parameter "sharedRequests" is set automatically (see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#constructor">sap.ui.model.odata.v4.ODataModel#constructor</a>). If the value list model is the data model associated with this meta model, use the binding-specific parameter "$$sharedRequest" instead, see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/bindList">sap.ui.model.odata.v4.ODataModel#bindList</a>.</p><p>For fixed values, only one mapping is expected and the qualifier is ignored. The mapping is available with key "".</p><p>The promise is rejected with an error if there is no value list information available for the given property path. Use <a target="_self" class="jsdoclink scrollToMethod" data-target="getValueListType" href="api/sap.ui.model.odata.v4.ODataMetaModel#methods/getValueListType">#getValueListType</a> to determine if value list information exists. It is also rejected with an error if the value list metadata is inconsistent.</p><p>An inconsistency can result from one of the following reasons: <ul> <li> There is a reference, but the referenced service does not contain mappings for the property. <li> The referenced service contains annotation targets in the namespace of the data service that are not mappings for the property. <li> Two different referenced services contain a mapping using the same qualifier. <li> A service is referenced twice. <li> There are multiple mappings for a fixed value list. <li> A <code>com.sap.vocabularies.Common.v1.ValueList</code> annotation in a referenced service has the property <code>CollectionRoot</code> or <code>SearchSupported</code>. <li> A <code>com.sap.vocabularies.Common.v1.ValueList</code> annotation in the service itself has the property <code>SearchSupported</code> and additionally the annotation <code>com.sap.vocabularies.Common.v1.ValueListWithFixedValues</code> is defined. </ul></p>
              */
-            requestValueListInfo(sPropertyPath: string, bAutoExpandSelect?: boolean): Promise<any>;
+            requestValueListInfo(sPropertyPath: string, bAutoExpandSelect?: boolean, oContext?: sap.ui.model.odata.v4.Context): Promise<any>;
             /**
              * <p>Determines which type of value list exists for the given property.<br><br>References: <ul><li>#getValueListType</li></ul></p>
              * @param {string} sPropertyPath <p>An absolute path to an OData property within the OData data model</p>
@@ -18955,7 +19468,7 @@ declare namespace sap {
             toString(): string;
           }
           /**
-           * <p>Model implementation for OData V4.</p><p>Every resource path (relative to the service root URL, no query options) according to "4 Resource Path" in specification "OData Version 4.0 Part 2: URL Conventions" is a valid data binding path within this model if a leading slash is added; for example "/" + "SalesOrderList('A%2FB%26C')" to access an entity instance with key "A/B&C". Note that appropriate URI encoding is necessary, see the example of <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataUtils#methods/sap.ui.model.odata.v4.ODataUtils.formatLiteral">sap.ui.model.odata.v4.ODataUtils.formatLiteral</a>. "4.5.1 Addressing Actions" needs an operation binding, see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataContextBinding">sap.ui.model.odata.v4.ODataContextBinding</a>.</p><p>Note that the OData V4 model has its own <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.Context">sap.ui.model.odata.v4.Context</a> class. Bindings which are relative to such a V4 context depend on their corresponding parent binding and do not access data with their own service requests unless parameters are provided.</p><p><b>Group IDs</b> control the model's use of batch requests. Valid group IDs are: <ul> <li><b>$auto</b> and <b>$auto.*</b>: Bundles requests from the model in a batch request which is sent automatically before rendering. You can use different '$auto.*' group IDs to use different batch requests. The suffix may be any non-empty string consisting of alphanumeric characters from the basic Latin alphabet, including the underscore. The submit mode for these group IDs is always <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.SubmitMode#methods/Auto">sap.ui.model.odata.v4.SubmitMode#Auto</a>. </li> <li><b>$direct</b>: Sends requests directly without batch. The submit mode for this group ID is always <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.SubmitMode#methods/Direct">sap.ui.model.odata.v4.SubmitMode#Direct</a>. </li> <li>An application group ID, which is a non-empty string consisting of alphanumeric characters from the basic Latin alphabet, including the underscore. By default, an application group has the submit mode <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.SubmitMode#methods/API">sap.ui.model.odata.v4.SubmitMode#API</a>. It is possible to use a different submit mode; for details see <code>mParameters.groupProperties</code>. </li> </ul></p>
+           * <p>Model implementation for OData V4.</p><p>Every resource path (relative to the service root URL, no query options) according to "4 Resource Path" in specification "OData Version 4.0 Part 2: URL Conventions" is a valid data binding path within this model if a leading slash is added; for example "/" + "SalesOrderList('A%2FB%26C')" to access an entity instance with key "A/B&C". Note that appropriate URI encoding is necessary, see the example of <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataUtils#methods/sap.ui.model.odata.v4.ODataUtils.formatLiteral">sap.ui.model.odata.v4.ODataUtils.formatLiteral</a>. "4.5.1 Addressing Actions" needs an operation binding, see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataContextBinding">sap.ui.model.odata.v4.ODataContextBinding</a>.</p><p>Note that the OData V4 model has its own <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.Context">sap.ui.model.odata.v4.Context</a> class. Bindings which are relative to such a V4 context depend on their corresponding parent binding and do not access data with their own service requests unless parameters are provided.</p><p><b>Group IDs</b> control the model's use of batch requests. Valid group IDs are: <ul> <li> <b>$auto</b> and <b>$auto.*</b>: Bundles requests from the model in a batch request which is sent automatically before rendering. You can use different '$auto.*' group IDs to use different batch requests. The suffix may be any non-empty string consisting of alphanumeric characters from the basic Latin alphabet, including the underscore. The submit mode for these group IDs is always <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.SubmitMode#methods/Auto">sap.ui.model.odata.v4.SubmitMode#Auto</a>. <li> <b>$direct</b>: Sends requests directly without batch. The submit mode for this group ID is always <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.SubmitMode#methods/Direct">sap.ui.model.odata.v4.SubmitMode#Direct</a>. <li> An application group ID, which is a non-empty string consisting of alphanumeric characters from the basic Latin alphabet, including the underscore. By default, an application group has the submit mode <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.SubmitMode#methods/API">sap.ui.model.odata.v4.SubmitMode#API</a>. It is possible to use a different submit mode; for details see <code>mParameters.groupProperties</code>. </ul></p>
            */
           export class ODataModel extends sap.ui.model.Model {
             /**
@@ -18963,6 +19476,19 @@ declare namespace sap {
              * @param {any} mParameters <p>The parameters</p>
              */
             constructor(mParameters: any);
+            /**
+             * <p>Attaches an event handler to the event with the given identifier.</p>
+             * @param {string} sEventId <p>The identifier of the event to listen for</p>
+             * @param {any} oData <p>An object that will be passed to the handler along with the event object when the event is fired</p>
+             * @param {Function} fnFunction <p>The handler function to call when the event occurs. This function will be called in the context of the <code>oListener</code> instance (if present) or on the event provider instance. The event object (<a target="_self" class="jsdoclink" href="api/sap.ui.base.Event">sap.ui.base.Event</a>) is provided as first argument of the handler. Handlers must not change the content of the event. The second argument is the specified <code>oData</code> instance (if present).</p>
+             * @param {any} oListener <p>The object that wants to be notified when the event occurs (<code>this</code> context within the handler function). If it is not specified, the handler function is called in the context of the event provider.</p>
+             * @returns sap.ui.base.EventProvider <p>Returns <code>this</code> to allow method chaining</p>
+             */
+            attachEvent(sEventId: string, oData: any, fnFunction: Function, oListener?: any): sap.ui.base.EventProvider;
+            /**
+             * <p>See <a target="_self" class="jsdoclink" href="api/sap.ui.base.EventProvider#methods/attachEvent">sap.ui.base.EventProvider#attachEvent</a><br><br>References: <ul><li>sap.ui.base.EventProvider#attachEvent</li></ul></p>
+             */
+            attachEvent(): void;
             /**
              * <p>Attach event handler <code>fnFunction</code> to the 'sessionTimeout' event of this model.</p>
              * @param {Function} fnFunction <p>The function to call when the event occurs</p>
@@ -18983,7 +19509,7 @@ declare namespace sap {
              * <p>Creates a new context binding for the given path, context and parameters.</p><p>This binding is inactive and will not know the bound context initially. You have to call <a target="_self" class="jsdoclink" href="api/sap.ui.model.Binding#methods/initialize">sap.ui.model.Binding#initialize</a> to get it updated asynchronously and register a change listener at the binding to be informed when the bound context is available.<br><br>References: <ul><li>sap.ui.model.Model#bindContext</li></ul></p>
              * @param {string} sPath <p>The binding path in the model; must not end with a slash</p>
              * @param {sap.ui.model.odata.v4.Context} oContext <p>The context which is required as base for a relative path</p>
-             * @param {any} mParameters <p>Map of binding parameters which can be OData query options as specified in "OData Version 4.0 Part 2: URL Conventions" or the binding-specific parameters as specified below. Note: The binding creates its own data service request if it is absolute or if it has any parameters or if it is relative and has a context created via <a target="_self" class="jsdoclink scrollToMethod" data-target="createBindingContext" href="api/sap.ui.model.odata.v4.ODataModel#methods/createBindingContext">#createBindingContext</a>. The following OData query options are allowed: <ul> <li> All "5.2 Custom Query Options" except for those with a name starting with "sap-" <li> The $count, $expand, $filter, $levels, $orderby, $search and $select "5.1 System Query Options"; OData V4 only allows $count, $filter, $levels, $orderby and $search inside resource paths that identify a collection. In our case here, this means you can only use them inside $expand. </ul> All other query options lead to an error. Query options specified for the binding overwrite model query options.</p>
+             * @param {any} mParameters <p>Map of binding parameters which can be OData query options as specified in "OData Version 4.0 Part 2: URL Conventions" or the binding-specific parameters as specified below. Note: The binding creates its own data service request if it is absolute or if it has any parameters or if it is relative and has a context created via <a target="_self" class="jsdoclink scrollToMethod" data-target="createBindingContext" href="api/sap.ui.model.odata.v4.ODataModel#methods/createBindingContext">#createBindingContext</a>. The following OData query options are allowed: <ul> <li> All "5.2 Custom Query Options" except for those with a name starting with "sap-" (unless starting with "sap-valid-") <li> The $count, $expand, $filter, $levels, $orderby, $search and $select "5.1 System Query Options"; OData V4 only allows $count, $filter, $levels, $orderby and $search inside resource paths that identify a collection. In our case here, this means you can only use them inside $expand. </ul> All other query options lead to an error. Query options specified for the binding overwrite model query options.</p>
              * @returns sap.ui.model.odata.v4.ODataContextBinding <p>The context binding</p>
              */
             bindContext(sPath: string, oContext?: sap.ui.model.odata.v4.Context, mParameters?: any): sap.ui.model.odata.v4.ODataContextBinding;
@@ -19003,7 +19529,7 @@ declare namespace sap {
              * @param {sap.ui.model.Context} oContext <p>The context which is required as base for a relative path</p>
              * @param {sap.ui.model.Sorter | sap.ui.model.Sorter[]} vSorters <p>The dynamic sorters to be used initially. Call <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataListBinding#methods/sort">sap.ui.model.odata.v4.ODataListBinding#sort</a> to replace them. Static sorters, as defined in the '$orderby' binding parameter, are always executed after the dynamic sorters. Supported since 1.39.0.</p>
              * @param {sap.ui.model.Filter | sap.ui.model.Filter[]} vFilters <p>The dynamic application filters to be used initially. Call <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataListBinding#methods/filter">sap.ui.model.odata.v4.ODataListBinding#filter</a> to replace them. Static filters, as defined in the '$filter' binding parameter, are always combined with the dynamic filters using a logical <code>AND</code>. Supported since 1.39.0.</p>
-             * @param {any} mParameters <p>Map of binding parameters which can be OData query options as specified in "OData Version 4.0 Part 2: URL Conventions" or binding-specific parameters as specified below. Note: The binding creates its own data service request if it is absolute or if it has any parameters or if it is relative and has a context created via <a target="_self" class="jsdoclink scrollToMethod" data-target="createBindingContext" href="api/sap.ui.model.odata.v4.ODataModel#methods/createBindingContext">#createBindingContext</a> or if it has sorters or filters. The following OData query options are allowed: <ul> <li> All "5.2 Custom Query Options" except for those with a name starting with "sap-" <li> The $apply, $count, $expand, $filter, $levels, $orderby, $search, and $select "5.1 System Query Options" </ul> All other query options lead to an error. Query options specified for the binding overwrite model query options.</p>
+             * @param {any} mParameters <p>Map of binding parameters which can be OData query options as specified in "OData Version 4.0 Part 2: URL Conventions" or binding-specific parameters as specified below. Note: The binding creates its own data service request if it is absolute or if it has any parameters or if it is relative and has a context created via <a target="_self" class="jsdoclink scrollToMethod" data-target="createBindingContext" href="api/sap.ui.model.odata.v4.ODataModel#methods/createBindingContext">#createBindingContext</a> or if it has sorters or filters. The following OData query options are allowed: <ul> <li> All "5.2 Custom Query Options" except for those with a name starting with "sap-" (unless starting with "sap-valid-") <li> The $apply, $count, $expand, $filter, $levels, $orderby, $search, and $select "5.1 System Query Options" </ul> All other query options lead to an error. Query options specified for the binding overwrite model query options.</p>
              * @returns sap.ui.model.odata.v4.ODataListBinding <p>The list binding</p>
              */
             bindList(sPath: string, oContext?: sap.ui.model.Context, vSorters?: sap.ui.model.Sorter | sap.ui.model.Sorter[], vFilters?: sap.ui.model.Filter | sap.ui.model.Filter[], mParameters?: any): sap.ui.model.odata.v4.ODataListBinding;
@@ -19019,7 +19545,7 @@ declare namespace sap {
              * <p>Creates a new property binding for the given path. This binding is inactive and will not know the property value initially. You have to call <a target="_self" class="jsdoclink" href="api/sap.ui.model.Binding#methods/initialize">sap.ui.model.Binding#initialize</a> to get it updated asynchronously and register a change listener at the binding to be informed when the value is available.</p><p>It is possible to create a property binding pointing to metadata. A '##' in the binding's path is recognized as a separator and splits it into two parts. The part before the separator is resolved with the binding's context and the result is transformed into a metadata context (see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataMetaModel#methods/getMetaContext">sap.ui.model.odata.v4.ODataMetaModel#getMetaContext</a>). The part following the separator is then interpreted relative to this metadata context, even if it starts with a '/'; a trailing '/' is allowed here, see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataMetaModel#methods/requestObject">sap.ui.model.odata.v4.ODataMetaModel#requestObject</a> for the effect it has.</p><p>If the target type specified in the corresponding control property's binding info is "any" and the binding is relative or points to metadata, the binding may have an object value; in this case and unless the binding refers to an action advertisement the binding's mode must be <a target="_self" class="jsdoclink" href="api/sap.ui.model.BindingMode">sap.ui.model.BindingMode.OneTime</a>.<br><br>References: <ul><li>sap.ui.base.ManagedObject#bindProperty</li><li>sap.ui.model.Model#bindProperty</li><li>sap.ui.model.PropertyBinding#setType</li></ul></p>
              * @param {string} sPath <p>The binding path in the model; must not be empty. Must not end with a '/' unless the binding points to metadata.</p>
              * @param {sap.ui.model.Context} oContext <p>The context which is required as base for a relative path</p>
-             * @param {any} mParameters <p>Map of binding parameters which can be OData query options as specified in "OData Version 4.0 Part 2: URL Conventions" or the binding-specific parameter "$$groupId". All "5.2 Custom Query Options" are allowed except for those with a name starting with "sap-". All other query options lead to an error. Query options specified for the binding overwrite model query options. Note: The binding only creates its own data service request if it is absolute or if it is relative to a context created via <a target="_self" class="jsdoclink scrollToMethod" data-target="createBindingContext" href="api/sap.ui.model.odata.v4.ODataModel#methods/createBindingContext">#createBindingContext</a>. The binding parameters are ignored in case the binding creates no own data service request or in case the binding points to metadata.</p>
+             * @param {any} mParameters <p>Map of binding parameters which can be OData query options as specified in "OData Version 4.0 Part 2: URL Conventions" or the binding-specific parameter "$$groupId". All "5.2 Custom Query Options" are allowed except for those with a name starting with "sap-" (unless starting with "sap-valid-"). All other query options lead to an error. Query options specified for the binding overwrite model query options. Note: The binding only creates its own data service request if it is absolute or if it is relative to a context created via <a target="_self" class="jsdoclink scrollToMethod" data-target="createBindingContext" href="api/sap.ui.model.odata.v4.ODataModel#methods/createBindingContext">#createBindingContext</a>. The binding parameters are ignored in case the binding creates no own data service request or in case the binding points to metadata.</p>
              * @returns sap.ui.model.odata.v4.ODataPropertyBinding <p>The property binding</p>
              */
             bindProperty(sPath: string, oContext?: sap.ui.model.Context, mParameters?: any): sap.ui.model.odata.v4.ODataPropertyBinding;
@@ -19053,7 +19579,7 @@ declare namespace sap {
              */
             createBindingContext(sPath: string, oContext?: any, mParameters?: any, fnCallBack?: Function, bReload?: boolean): sap.ui.model.Context;
             /**
-             * <p>Creates a binding context for the given path. A relative path can only be resolved if a context is provided. Note: The parameters <code>mParameters</code>, <code>fnCallBack</code>, and <code>bReload</code> from <a target="_self" class="jsdoclink" href="api/sap.ui.model.Model#methods/createBindingContext">sap.ui.model.Model#createBindingContext</a> are not supported.</p><p>It is possible to create binding contexts pointing to metadata. A '##' is recognized as separator in the resolved path and splits it into two parts; note that '#' may also be used as separator but is deprecated since 1.51. The part before the separator is transformed into a metadata context (see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataMetaModel#methods/getMetaContext">sap.ui.model.odata.v4.ODataMetaModel#getMetaContext</a>). The part following the separator is then interpreted relative to this metadata context, even if it starts with a '/'; a trailing '/' is allowed here, see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataMetaModel#methods/requestObject">sap.ui.model.odata.v4.ODataMetaModel#requestObject</a> for the effect it has.</p><p>A binding path may also point to an operation advertisement which is addressed with '#<namespace>.<operation>' and is part of the data payload, not the metadata. The metadata of an operation can be addressed via '##' as described above.</p><p>Examples: <ul> <li><code>/Products('42')/Name##@com.sap.vocabularies.Common.v1.Label</code> points to the "Label" annotation of the "Name" property of the entity set "Products". <li><code>/##Products/Name@com.sap.vocabularies.Common.v1.Label</code> has no data path part and thus starts at the metadata root. It also points to the "Label" annotation of the "Name" property of the entity set "Products". <li><code>/Products##/</code> points to the entity type (note the trailing '/') of the entity set "Products". <li><code>/EMPLOYEES('1')/##com.sap.Action</code> points to the metadata of an action bound to the entity set "EMPLOYEES". <li><code>/EMPLOYEES('1')/#com.sap.Action</code> does not point to metadata, but to the action advertisement. </ul><br><br>References: <ul><li>sap.ui.model.Model#createBindingContext</li></ul></p>
+             * <p>Creates a binding context for the given path. A relative path can only be resolved if a context is provided. Note: The parameters <code>mParameters</code>, <code>fnCallBack</code>, and <code>bReload</code> from <a target="_self" class="jsdoclink" href="api/sap.ui.model.Model#methods/createBindingContext">sap.ui.model.Model#createBindingContext</a> are not supported.</p><p>It is possible to create binding contexts pointing to metadata. A '##' is recognized as separator in the resolved path and splits it into two parts; note that '#' may also be used as separator but is deprecated since 1.51. The part before the separator is transformed into a metadata context (see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataMetaModel#methods/getMetaContext">sap.ui.model.odata.v4.ODataMetaModel#getMetaContext</a>). The part following the separator is then interpreted relative to this metadata context, even if it starts with a '/'; a trailing '/' is allowed here, see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataMetaModel#methods/requestObject">sap.ui.model.odata.v4.ODataMetaModel#requestObject</a> for the effect it has.</p><p>A binding path may also point to an operation advertisement which is addressed with '#<namespace>.<operation>' and is part of the data payload, not the metadata. The metadata of an operation can be addressed via '##' as described above.</p><p>Examples: <ul> <li> <code>/Products('42')/Name##@com.sap.vocabularies.Common.v1.Label</code> points to the "Label" annotation of the "Name" property of the entity set "Products". <li> <code>/##Products/Name@com.sap.vocabularies.Common.v1.Label</code> has no data path part and thus starts at the metadata root. It also points to the "Label" annotation of the "Name" property of the entity set "Products". <li> <code>/Products##/</code> points to the entity type (note the trailing '/') of the entity set "Products". <li> <code>/EMPLOYEES('1')/##com.sap.Action</code> points to the metadata of an action bound to the entity set "EMPLOYEES". <li> <code>/EMPLOYEES('1')/#com.sap.Action</code> does not point to metadata, but to the action advertisement. </ul><br><br>References: <ul><li>sap.ui.model.Model#createBindingContext</li></ul></p>
              * @param {string} sPath <p>The binding path, may be relative to the provided context</p>
              * @param {sap.ui.model.Context} oContext <p>The context which is required as base for a relative path</p>
              * @returns sap.ui.model.Context <p>The binding context with the resolved path and the model instance</p>
@@ -19085,7 +19611,7 @@ declare namespace sap {
              */
             destroyBindingContext(oContext: any): void;
             /**
-             * <p>Method not supported<br><br>References: <ul><li>sap.ui.model.Model#destroyBindingContext</li></ul></p>
+             * <p>Method not supported</p>
              */
             destroyBindingContext(): void;
             /**
@@ -19116,7 +19642,7 @@ declare namespace sap {
              */
             getMetaModel(): sap.ui.model.MetaModel;
             /**
-             * <p>Returns the meta model for this ODataModel.<br><br>References: <ul><li>sap.ui.model.Model#getMetaModel</li></ul></p>
+             * <p>Returns the meta model for this ODataModel.</p>
              * @returns sap.ui.model.odata.v4.ODataMetaModel <p>The meta model for this ODataModel</p>
              */
             getMetaModel(): sap.ui.model.odata.v4.ODataMetaModel;
@@ -19143,7 +19669,7 @@ declare namespace sap {
             refresh(bForceUpdate: boolean): void;
             /**
              * <p>Refreshes the model by calling refresh on all bindings which have a change event handler attached.</p><p>Note: When calling <a target="_self" class="jsdoclink scrollToMethod" data-target="refresh" href="api/sap.ui.model.odata.v4.ODataModel#methods/refresh">#refresh</a> multiple times, the result of the request triggered by the last call determines the model's data; it is <b>independent</b> of the order of calls to <a target="_self" class="jsdoclink scrollToMethod" data-target="submitBatch" href="api/sap.ui.model.odata.v4.ODataModel#methods/submitBatch">#submitBatch</a> with the given group ID.</p><p>If there are pending changes, an error is thrown. Use <a target="_self" class="jsdoclink scrollToMethod" data-target="hasPendingChanges" href="api/sap.ui.model.odata.v4.ODataModel#methods/hasPendingChanges">#hasPendingChanges</a> to check if there are pending changes. If there are changes, call <a target="_self" class="jsdoclink scrollToMethod" data-target="submitBatch" href="api/sap.ui.model.odata.v4.ODataModel#methods/submitBatch">#submitBatch</a> to submit the changes or <a target="_self" class="jsdoclink scrollToMethod" data-target="resetChanges" href="api/sap.ui.model.odata.v4.ODataModel#methods/resetChanges">#resetChanges</a> to reset the changes before calling <a target="_self" class="jsdoclink scrollToMethod" data-target="refresh" href="api/sap.ui.model.odata.v4.ODataModel#methods/refresh">#refresh</a>.<br><br>References: <ul><li>sap.ui.model.Model#refresh</li><li>sap.ui.model.odata.v4.ODataContextBinding#refresh</li><li>sap.ui.model.odata.v4.ODataListBinding#refresh</li><li>sap.ui.model.odata.v4.ODataPropertyBinding#refresh</li></ul></p>
-             * @param {string} sGroupId <p>The group ID to be used for refresh; valid values are <code>undefined</code>, '$auto', '$auto.*', '$direct' or application group IDs as specified in <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel">sap.ui.model.odata.v4.ODataModel</a>. It is ignored for suspended bindings, because resume uses the binding's group ID</p>
+             * @param {string} sGroupId <p>The group ID to be used for refresh; valid values are <code>undefined</code>, '$auto', '$auto.*', '$direct' or application group IDs as specified in <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel">sap.ui.model.odata.v4.ODataModel</a>. It is ignored for suspended bindings, because resume uses the binding's group ID.</p>
              */
             refresh(sGroupId?: string): void;
             /**
@@ -19173,6 +19699,19 @@ declare namespace sap {
            */
           export class ODataPropertyBinding extends sap.ui.model.PropertyBinding {
             /**
+             * <p>Attaches an event handler to the event with the given identifier.</p>
+             * @param {string} sEventId <p>The identifier of the event to listen for</p>
+             * @param {any} oData <p>An object that will be passed to the handler along with the event object when the event is fired</p>
+             * @param {Function} fnFunction <p>The handler function to call when the event occurs. This function will be called in the context of the <code>oListener</code> instance (if present) or on the event provider instance. The event object (<a target="_self" class="jsdoclink" href="api/sap.ui.base.Event">sap.ui.base.Event</a>) is provided as first argument of the handler. Handlers must not change the content of the event. The second argument is the specified <code>oData</code> instance (if present).</p>
+             * @param {any} oListener <p>The object that wants to be notified when the event occurs (<code>this</code> context within the handler function). If it is not specified, the handler function is called in the context of the event provider.</p>
+             * @returns sap.ui.base.EventProvider <p>Returns <code>this</code> to allow method chaining</p>
+             */
+            attachEvent(sEventId: string, oData: any, fnFunction: Function, oListener?: any): sap.ui.base.EventProvider;
+            /**
+             * <p>See <a target="_self" class="jsdoclink" href="api/sap.ui.base.EventProvider#methods/attachEvent">sap.ui.base.EventProvider#attachEvent</a><br><br>References: <ul><li>sap.ui.base.EventProvider#attachEvent</li></ul></p>
+             */
+            attachEvent(): void;
+            /**
              * <p>Destructor method for objects.</p>
              */
             destroy(): void;
@@ -19185,14 +19724,24 @@ declare namespace sap {
              */
             destroy(): void;
             /**
-             * <p>Destroys the object. The object must not be used anymore after this function was called.</p>
+             * <p>Destroys the object. The object must not be used anymore after this function was called.<br><br>References: <ul><li>sap.ui.model.Binding#destroy</li></ul></p>
              */
             destroy(): void;
             /**
+             * <p>Returns the group ID of the binding that is used for read requests. The group ID of the binding is alternatively defined by <ul> <li> the <code>groupId</code> parameter of the OData model; see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#constructor">sap.ui.model.odata.v4.ODataModel#constructor</a>, <li> the <code>$$groupId</code> binding parameter; see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/bindList">sap.ui.model.odata.v4.ODataModel#bindList</a> and <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/bindContext">sap.ui.model.odata.v4.ODataModel#bindContext</a>. </ul></p>
+             * @returns string <p>The group ID</p>
+             */
+            getGroupId(): string;
+            /**
              * <p>Returns the root binding of this binding's hierarchy, see binding <a target="_self" href="topic/54e0ddf695af4a6c978472cecb01c64d">Initialization and Read Requests</a>.</p>
-             * @returns sap.ui.model.odata.v4.ODataContextBinding|sap.ui.model.odata.v4.ODataListBinding|sap.ui.model.odata.v4.ODataPropertyBinding <p>The root binding or <code>undefined</code> if this binding is not yet resolved.</p>
+             * @returns sap.ui.model.odata.v4.ODataContextBinding|sap.ui.model.odata.v4.ODataListBinding|sap.ui.model.odata.v4.ODataPropertyBinding <p>The root binding or <code>undefined</code> if this binding is unresolved (see <a target="_self" class="jsdoclink" href="api/sap.ui.model.Binding#methods/isResolved">sap.ui.model.Binding#isResolved</a>).</p>
              */
             getRootBinding(): sap.ui.model.odata.v4.ODataContextBinding | sap.ui.model.odata.v4.ODataListBinding | sap.ui.model.odata.v4.ODataPropertyBinding;
+            /**
+             * <p>Returns the group ID of the binding that is used for update requests. The update group ID of the binding is alternatively defined by <ul> <li> the <code>updateGroupId</code> parameter of the OData model; see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#constructor">sap.ui.model.odata.v4.ODataModel#constructor</a>, <li> the <code>$$updateGroupId</code> binding parameter; see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/bindList">sap.ui.model.odata.v4.ODataModel#bindList</a> and <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/bindContext">sap.ui.model.odata.v4.ODataModel#bindContext</a>. </ul></p>
+             * @returns string <p>The update group ID</p>
+             */
+            getUpdateGroupId(): string;
             /**
              * <p>Returns the current value of the bound target</p>
              * @returns any <p>the current value of the bound target</p>
@@ -19209,17 +19758,17 @@ declare namespace sap {
              */
             getValueListType(): sap.ui.model.odata.v4.ValueListType;
             /**
-             * <p>Returns <code>true</code> if this binding or its dependent bindings have pending changes, meaning updates that have not yet been successfully sent to the server.</p>
-             * @returns boolean <p><code>true</code> if the binding has pending changes</p>
+             * <p>Returns <code>true</code> if this binding or its dependent bindings have pending property changes or created entities which have not been sent successfully to the server. This function does not take into account the deletion of entities (see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.Context#methods/delete">sap.ui.model.odata.v4.Context#delete</a>) and the execution of OData operations (see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataContextBinding#methods/execute">sap.ui.model.odata.v4.ODataContextBinding#execute</a>).</p><p>Note: If this binding is relative, its data is cached separately for each parent context path. This method returns <code>true</code> if there are pending changes for the current parent context path of this binding. If this binding is unresolved (see <a target="_self" class="jsdoclink" href="api/sap.ui.model.Binding#methods/isResolved">sap.ui.model.Binding#isResolved</a>), it returns <code>false</code>.</p>
+             * @returns boolean <p><code>true</code> if the binding is resolved and has pending changes</p>
              */
             hasPendingChanges(): boolean;
             /**
              * <p>Returns whether the binding is initial, which means it did not get an initial value yet</p>
-             * @returns boolean <p>Whether binding is initial</p>
+             * @returns boolean <p>Whether the binding is initial</p>
              */
             isInitial(): boolean;
             /**
-             * <p>Method not supported<br><br>References: <ul><li>sap.ui.model.Binding#isInitial</li></ul></p>
+             * <p>Method not supported</p>
              */
             isInitial(): void;
             /**
@@ -19229,7 +19778,7 @@ declare namespace sap {
             refresh(bForceUpdate: boolean): void;
             /**
              * <p>Refreshes the binding. Prompts the model to retrieve data from the server using the given group ID and notifies the control that new data is available.</p><p>Refresh is supported for bindings which are not relative to a <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.Context">sap.ui.model.odata.v4.Context</a>.</p><p>Note: When calling <a target="_self" class="jsdoclink scrollToMethod" data-target="refresh" href="api/sap.ui.model.odata.v4.ODataPropertyBinding#methods/refresh">#refresh</a> multiple times, the result of the request triggered by the last call determines the binding's data; it is <b>independent</b> of the order of calls to <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/submitBatch">sap.ui.model.odata.v4.ODataModel#submitBatch</a> with the given group ID.</p><p>If there are pending changes, an error is thrown. Use <a target="_self" class="jsdoclink scrollToMethod" data-target="hasPendingChanges" href="api/sap.ui.model.odata.v4.ODataPropertyBinding#methods/hasPendingChanges">#hasPendingChanges</a> to check if there are pending changes. If there are changes, call <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/submitBatch">sap.ui.model.odata.v4.ODataModel#submitBatch</a> to submit the changes or <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel#methods/resetChanges">sap.ui.model.odata.v4.ODataModel#resetChanges</a> to reset the changes before calling <a target="_self" class="jsdoclink scrollToMethod" data-target="refresh" href="api/sap.ui.model.odata.v4.ODataPropertyBinding#methods/refresh">#refresh</a>.<br><br>References: <ul><li>sap.ui.model.Binding#refresh</li><li>#getRootBinding</li><li>#hasPendingChanges</li><li>#resetChanges</li><li>#suspend</li></ul></p>
-             * @param {string} sGroupId <p>The group ID to be used for refresh; if not specified, the binding's group ID is used. For suspended bindings, only the binding's group ID is supported because <a target="_self" class="jsdoclink scrollToMethod" data-target="resume" href="api/sap.ui.model.odata.v4.ODataPropertyBinding#methods/resume">#resume</a> uses the binding's group ID.</p><p>Valid values are <code>undefined</code>, '$auto', '$auto.*', '$direct' or application group IDs as specified in <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel">sap.ui.model.odata.v4.ODataModel</a>.</p>
+             * @param {string} sGroupId <p>The group ID to be used for refresh; if not specified, the binding's group ID is used, see <a target="_self" class="jsdoclink scrollToMethod" data-target="getGroupId" href="api/sap.ui.model.odata.v4.ODataPropertyBinding#methods/getGroupId">#getGroupId</a>. For suspended bindings, only the binding's group ID is supported because <a target="_self" class="jsdoclink scrollToMethod" data-target="resume" href="api/sap.ui.model.odata.v4.ODataPropertyBinding#methods/resume">#resume</a> uses the binding's group ID.</p><p>Valid values are <code>undefined</code>, '$auto', '$auto.*', '$direct' or application group IDs as specified in <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel">sap.ui.model.odata.v4.ODataModel</a>.</p>
              */
             refresh(sGroupId?: string): void;
             /**
@@ -19240,7 +19789,7 @@ declare namespace sap {
             /**
              * <p>Requests information to retrieve a value list for this property.</p>
              * @param {boolean} bAutoExpandSelect <p>The value of the parameter <code>autoExpandSelect</code> for value list models created by this method. If the value list model is this binding's model, this flag has no effect. Supported since 1.68.0</p>
-             * @returns Promise<any> <p>A promise which is resolved with a map of qualifier to value list mapping objects structured as defined by <code>com.sap.vocabularies.Common.v1.ValueListMappingType</code>; the map entry with key "" represents the mapping without qualifier. Each entry has an additional property "$model" which is the <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel">sap.ui.model.odata.v4.ODataModel</a> instance to read value list data via this mapping.</p><p>For fixed values, only one mapping is expected and the qualifier is ignored. The mapping is available with key "".</p><p>The promise is rejected with an error if there is no value list information available for this property. Use <a target="_self" class="jsdoclink scrollToMethod" data-target="getValueListType" href="api/sap.ui.model.odata.v4.ODataPropertyBinding#methods/getValueListType">#getValueListType</a> to determine if value list information exists. It is also rejected with an error if the value list metadata is inconsistent.</p><p>An inconsistency can result from one of the following reasons: <ul> <li> There is a reference, but the referenced service does not contain mappings for the property. <li> The referenced service contains annotation targets in the namespace of the data service that are not mappings for the property. <li> Two different referenced services contain a mapping using the same qualifier. <li> A service is referenced twice. <li> No mappings have been found. </ul></p>
+             * @returns Promise<any> <p>See <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataMetaModel#methods/requestValueListInfo">sap.ui.model.odata.v4.ODataMetaModel#requestValueListInfo</a></p>
              */
             requestValueListInfo(bAutoExpandSelect?: boolean): Promise<any>;
             /**
@@ -19285,9 +19834,19 @@ declare namespace sap {
             /**
              * <p>Sets the new current value and updates the cache. If the value cannot be accepted or cannot be updated on the server, an error is logged to the console and added to the message manager as a technical message.<br><br>References: <ul><li>sap.ui.model.PropertyBinding#setValue</li></ul></p>
              * @param {any} vValue <p>The new value which must be primitive</p>
-             * @param {string} sGroupId <p>The group ID to be used for this update call; if not specified, the update group ID for this binding (or its relevant parent binding) is used, see <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataPropertyBinding#constructor">sap.ui.model.odata.v4.ODataPropertyBinding#constructor</a>. Valid values are <code>undefined</code>, '$auto', '$auto.*', '$direct' or application group IDs as specified in <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel">sap.ui.model.odata.v4.ODataModel</a>.</p>
+             * @param {string} sGroupId <p>The group ID to be used for this update call; if not specified, the update group ID for this binding (or its relevant parent binding) is used, see <a target="_self" class="jsdoclink scrollToMethod" data-target="getUpdateGroupId" href="api/sap.ui.model.odata.v4.ODataPropertyBinding#methods/getUpdateGroupId">#getUpdateGroupId</a>. Valid values are <code>undefined</code>, '$auto', '$auto.*', '$direct' or application group IDs as specified in <a target="_self" class="jsdoclink" href="api/sap.ui.model.odata.v4.ODataModel">sap.ui.model.odata.v4.ODataModel</a>.</p>
              */
             setValue(vValue: any, sGroupId?: string): void;
+            /**
+             * <p>Whether this binding supports the feature of not propagating model messages to the control. The default implementation returns <code>false</code>.<br><br>References: <ul><li>#getIgnoreMessages</li><li>#setIgnoreMessages</li></ul></p>
+             * @returns boolean <p><code>false</code>; subclasses that support this feature need to override this function and need to return <code>true</code></p>
+             */
+            supportsIgnoreMessages(): boolean;
+            /**
+             * <p>Returns <code>true</code>, as this binding supports the feature of not propagating model messages to the control.<br><br>References: <ul><li>sap.ui.model.Binding#getIgnoreMessages</li><li>sap.ui.model.Binding#setIgnoreMessages</li></ul></p>
+             * @returns boolean <p><code>true</code></p>
+             */
+            supportsIgnoreMessages(): boolean;
             /**
              * <p>Suspends the binding update. No change events will be fired.</p><p>A refresh call with bForceUpdate set to true will also update the binding and fire a change in suspended mode. Special operations on bindings, which require updates to work properly (as paging or filtering in list bindings) will also update and cause a change event although the binding is suspended.</p>
              */
@@ -19386,7 +19945,7 @@ declare namespace sap {
          */
         export class ResourceModel extends sap.ui.model.Model {
           /**
-           * <p>Constructor for a new ResourceModel.</p>
+           * <p>Constructor for a new ResourceModel.</p><h3>Declarative Usage</h3><p> The ResourceModel can be created using configuration objects instead of <code>ResourceBundle</code> instances. This is the recommended way and enables: <ul> <li>use of terminologies in the bundle and in the enhancements</li> <li>a guaranteed order of resolution</li> </ul></p><h3>Programmatic Usage</h3><p> The ResourceModel can be created in a programmatic manner which means that <code>ResourceBundle</code> instances are used instead of configurations. Existing ResourceBundles can either be used in the <code>bundle</code> parameter or in the <code>enhanceWith</code> array. Runtime errors are thrown when <code>ResourceBundle</code> instances are used with <code>terminologies</code>. Also when using <code>ResourceModel#enhance</code> with <code>terminologies</code>.</p>
            * @param {any} oData <p>Parameters used to initialize the <code>ResourceModel</code>; at least one of <code>bundle</code>, <code>bundleName</code> or <code>bundleUrl</code> must be set; if more than one property is set, they are evaluated in the mentioned order</p>
            */
           constructor(oData: any);
@@ -19407,13 +19966,14 @@ declare namespace sap {
           /**
            * <p>Enhances the resource model with a custom resource bundle.</p><p>The custom bundle can define new texts for keys existing in the main bundle, texts for new keys, or both. A resource model can be enhanced with multiple resource bundles by calling this method multiple times. Each call appends to the list of enhancements, but no bundle can be removed from the list.</p><p>When looking up a text for a key, the enhancements are processed in reverse order. Texts from the last added resource bundle are preferred over texts from previously added bundles or texts from the main bundle.</p>
            * @param {any | any} oData <p>Either an already loaded bundle instance, or a configuration object with parameters to load a new resource bundle. When a configuration object is given, at least one of <code>bundleUrl</code> or <code>bundleName</code> must be set; if both are set, <code>bundleName</code> wins</p>
-           * @returns Promise<any> <p>A Promise resolving when the enhancement is finished or <code>null</code> if the <code>ResourceModel</code> is configured to act synchronously</p>
+           * @returns Promise|null <p>A Promise resolving when the enhancement is finished or <code>null</code> if the <code>ResourceModel</code> is configured to act synchronously</p>
            */
-          enhance(oData: any | any): Promise<any>;
+          enhance(oData: any | any): Promise<any> | null;
           /**
            * <p>Implement in inheriting classes.</p>
            * @param {string} sPath <p>the path to where to read the attribute value</p>
            * @param {any} oContext <p>the context with which the path should be resolved</p>
+           * @returns any <p>Value of the addressed property</p>
            */
           getProperty(sPath: string, oContext?: any): any;
           /**
@@ -19484,6 +20044,7 @@ declare namespace sap {
            * <p>Implement in inheriting classes.</p>
            * @param {string} sPath <p>the path to where to read the attribute value</p>
            * @param {any} oContext <p>the context with which the path should be resolved</p>
+           * @returns any <p>Value of the addressed property</p>
            */
           getProperty(sPath: string, oContext?: any): any;
           /**
@@ -19502,7 +20063,7 @@ declare namespace sap {
            * <p>Load XML-encoded data from the server using a GET HTTP request and store the resulting XML data in the model. Note: Due to browser security restrictions, most "Ajax" requests are subject to the same origin policy, the request can not successfully retrieve data from a different domain, subdomain, or protocol.</p>
            * @param {string} sURL <p>A string containing the URL to which the request is sent</p>
            * @param {any | string} oParameters <p>A map of parameters or a single parameter string that is sent to the server with the request</p>
-           * @param {boolean} bAsync <p>Whether the request should be asynchronous or not</p>
+           * @param {boolean} bAsync <p>By default, all requests are sent asynchronous. <b>Do not use <code>bAsync=false</code></b> because synchronous requests may temporarily lock the browser, disabling any actions while the request is active. Cross-domain requests do not support synchronous operation.</p>
            * @param {string} sType <p>HTTP method of request</p>
            * @param {string} bCache <p>Force no caching if false</p>
            * @param {any} mHeaders <p>An object of additional header key/value pairs to send along with the request</p>
@@ -19548,20 +20109,6 @@ declare namespace sap {
           constructor(oModel: sap.ui.model.xml.XMLModel, Path: string, oContext?: any, aFilters?: any[], mParameters?: any);
         }
       }
-    }
-  }
-}
-declare namespace sap {
-  namespace ui {
-    /**
-     */
-    namespace VersionInfo {
-      /**
-       * <p>Loads the version info file (resources/sap-ui-version.json) asynchronously and returns a Promise. The returned Promise resolves with the version info files content.</p><p>If a library name is specified then the version info of the individual library will be retrieved.</p><p>In case of the version info file is not available an error will occur when calling this function.</p>
-       * @param {any} mOptions <p>an object map (see below)</p>
-       * @returns Promise<any> <p>a Promise which resolves with one of these values: the full version info, the library specific one, undefined if library is not listed or there was an error during loading.</p>
-       */
-      function load(mOptions: any): Promise<any>;
     }
   }
 }
@@ -19620,7 +20167,7 @@ declare namespace sap {
        */
       namespace date {
         /**
-         * <p>The UniversalDate is the base class of calendar date instances. It contains the static methods to create calendar specific instances.</p><p>The member variable <code>this.oData</code> contains the JS Date object, which is the source value of the date information. The prototype is containing getters and setters of the JS Date and is delegating them to the internal date object. Implementations for specific calendars may override methods needed for their specific calendar (e.g. getYear and getEra for Japanese emperor calendar);</p>
+         * <p>The UniversalDate is the base class of calendar date instances. It contains the static methods to create calendar specific instances.</p><p>The member variable <code>this.oDate</code> contains the JS Date object, which is the source value of the date information. The prototype is containing getters and setters of the JS Date and is delegating them to the internal date object. Implementations for specific calendars may override methods needed for their specific calendar (e.g. getYear and getEra for Japanese emperor calendar);</p>
          */
         export class UniversalDate extends sap.ui.base.Object {
           /**
@@ -19629,12 +20176,12 @@ declare namespace sap {
            */
           static getClass(sCalendarType: sap.ui.core.CalendarType): void;
           /**
-           * <p>Returns an instance of Date, based on the calendar type from the configuration, or as explicitly defined by parameter. The object provides all methods also known on the JavaScript Date object.</p>
-           * @param {Date} oDate <p>A JavaScript date object</p>
-           * @param {sap.ui.core.CalendarType} sCalendarType <p>A calendar type</p>
-           * @returns sap.ui.core.date.UniversalDate <p>A date instance</p>
+           * <p>Returns an instance of Date, based on the calendar type from the configuration, or as explicitly defined by parameter. The object provides all methods also known on the JavaScript Date object.</p><p>Note: Prefer this method over calling <code>new UniversalDate</code> with an instance of <code>Date</code></p>
+           * @param {Date | UniversalDate} oDate <p>JavaScript date object, defaults to <code>new Date()</code></p>
+           * @param {sap.ui.core.CalendarType} sCalendarType <p>The calendar type, defaults to <code>sap.ui.getCore().getConfiguration().getCalendarType()</code></p>
+           * @returns sap.ui.core.date.UniversalDate <p>The date instance</p>
            */
-          static getInstance(oDate: Date, sCalendarType: sap.ui.core.CalendarType): sap.ui.core.date.UniversalDate;
+          static getInstance(oDate?: Date | UniversalDate, sCalendarType?: sap.ui.core.CalendarType): sap.ui.core.date.UniversalDate;
           /**
            * <p>Constructor for UniversalDate.</p>
            */
@@ -19765,6 +20312,45 @@ declare namespace sap {
     namespace core {
       /**
        */
+      namespace aria {
+        /**
+         * <p><p>Types of popups to set as aria-haspopup attribute. Most of the values (except "None") of the enumeration are taken from the ARIA specification: https://www.w3.org/TR/wai-aria/#aria-haspopup</p></p>
+         */
+        export enum HasPopup {
+          /**
+           * <p>Dialog popup type.</p>
+           */
+          Dialog = "Dialog",
+          /**
+           * <p>Grid popup type.</p>
+           */
+          Grid = "Grid",
+          /**
+           * <p>ListBox popup type.</p>
+           */
+          ListBox = "ListBox",
+          /**
+           * <p>Menu popup type.</p>
+           */
+          Menu = "Menu",
+          /**
+           * <p>None - the aria-haspopup attribute will not be rendered.</p>
+           */
+          None = "None",
+          /**
+           * <p>Tree popup type.</p>
+           */
+          Tree = "Tree",
+        }
+      }
+    }
+  }
+}
+declare namespace sap {
+  namespace ui {
+    namespace core {
+      /**
+       */
       namespace hyphenation {
         /**
          * <p>This class provides methods for evaluating the possibility of using browser-native hyphenation or initializing and using a third-party hyphenation module.</p><h3>Overview</h3><p> By using this API, a developer can check if browser-native hyphenation is supported for a particular language.</p><p>When browser-native hyphenation is not supported or if otherwise required, the API can be used to hyphenate texts. A third-party library "Hyphenopoly" is used in that case.</p><p>It is used internally by controls that support the <code>wrappingType:<a target="_self" class="jsdoclink" href="api/sap.m.WrappingType">WrappingType.Hyphenated</a></code> property.</p><p>As the class is singleton, an instance should be acquired from <a target="_self" class="jsdoclink scrollToMethod" data-target="sap.ui.core.hyphenation.Hyphenation.getInstance" href="api/sap.ui.core.hyphenation.Hyphenation#methods/sap.ui.core.hyphenation.Hyphenation.getInstance">Hyphenation.getInstance</a>.</p><h3>Usage</h3><h4>When to use:</h4><p> <ul> <li>To check if browser-native hyphenation is available for particular language.</li> <li>To hyphenate texts if browser-native hyphenation is not available.</li> </ul> </p><h4>When not to use:</h4><p> <ul> <li> If the use case is covered by controls that support the property <code>wrappingType:<a target="_self" class="jsdoclink" href="api/sap.m.WrappingType">WrappingType.Hyphenated</a></code>. This functionality is supported by <a target="_self" class="jsdoclink" href="api/sap.m.Title">sap.m.Title</a>, <a target="_self" class="jsdoclink" href="api/sap.m.Label">sap.m.Label</a> and <a target="_self" class="jsdoclink" href="api/sap.m.Text">sap.m.Text</a>. </li> <li>If browser-native hyphenation is available</li> </ul></p><h3>Example</h3><p> <pre>
@@ -19790,7 +20376,7 @@ declare namespace sap {
            */
           attachError(oData: any, fnFunction: Function, oListener?: any): sap.ui.core.hyphenation.Hyphenation;
           /**
-           * <p>Checks if native hyphenation works in the current browser for the given language.</p>
+           * <p>Checks if native hyphenation works in the current browser for the given language. This check is performed against the value of the "lang" HTML attribute of the page.</p>
            * @param {string} sLang <p>For what language to check. The global application language is the default one</p>
            * @returns boolean|null <p>True if native hyphenation works for the given language. False if native hyphenation will not work. Null if the language is not known to the Hyphenation API</p>
            */
@@ -19837,7 +20423,7 @@ declare namespace sap {
            * @param {string} sLang <p>The language to check for</p>
            * @returns boolean <p>True if the language was initialized</p>
            */
-          isLanguageInitialized(sLang: string): boolean;
+          isLanguageInitialized(sLang?: string): boolean;
           /**
            * <p>Checks if <code>Hyphenation</code> API knows about the given language.</p><p>If it is a known language, the API can be used to check browser-native and third-party support.</p>
            * @param {string} sLang <p>For what language to check. The global application language is the default one.</p>
@@ -19921,9 +20507,9 @@ declare namespace sap {
        */
       namespace routing {
         /**
-         * <p>Class for manipulating and receiving changes of the browserhash with the hasher framework.</p><p>Fires a <code>hashChanged</code> event if the browser hash changes.</p>
+         * <p>Class for manipulating and receiving changes of the browser hash with the hasher framework.</p><p>Fires a <code>hashChanged</code> event if the browser hash changes.</p>
          */
-        export class HashChanger extends sap.ui.base.EventProvider {
+        export class HashChanger extends sap.ui.core.routing.HashChangerBase {
           /**
            * <p>Gets a global singleton of the HashChanger. The singleton will get created when this function is invoked for the first time.</p>
            * @returns sap.ui.core.routing.HashChanger <p>The global HashChanger</p>
@@ -19945,24 +20531,14 @@ declare namespace sap {
           getHash(): string;
           /**
            * <p>Defines the events and its parameters which should be used for tracking the hash changes</p>
-           * @returns Object[] <p>the events info. Each event info object in the array should contain a name property which describes the event name, and an optional paramMapping object where the parameter names in the event are defined for the 'newHash', 'oldHash' and 'fullHash'. If any of them isn't defined in the mapping, the same name is used to get the property value from the event object. Every object can also define a "updateHashOnly" option with boolean value to indicate whether the event is only relevant for the RouterHashChanger instances which are going to be created and the event shouldn't be forwarded to the existing RouterHashChanger instances. If this option is set to true, the new hash is saved RouterHashChanger instances but no "hashChanged" event is fired on any existing RouterHashChanger instance.</p>
+           * @returns sap.ui.core.routing.HashChangerEventInfo[] <p>The array containing the events info</p>
            */
-          protected getRelevantEventsInfo(): Object[];
+          protected getRelevantEventsInfo(): sap.ui.core.routing.HashChangerEventInfo[];
           /**
            * <p>Will start listening to hashChanges with the parseHash function. This will also fire a hashchanged event with the initial hash.</p>
            * @returns boolean <p>false if it was initialized before, true if it was initialized the first time</p>
            */
           init(): boolean;
-          /**
-           * <p>Replaces the hash with a certain value. When using the replace function, no browser history entry is written. If you want to have an entry in the browser history, please use the <a target="_self" class="jsdoclink scrollToMethod" data-target="setHash" href="api/sap.ui.core.routing.HashChanger#methods/setHash">#setHash</a> function.</p>
-           * @param {string} sHash <p>New hash</p>
-           */
-          replaceHash(sHash: string): void;
-          /**
-           * <p>Sets the hash to a certain value. When using this function, a browser history entry is written. If you do not want to have an entry in the browser history, please use the <a target="_self" class="jsdoclink scrollToMethod" data-target="replaceHash" href="api/sap.ui.core.routing.HashChanger#methods/replaceHash">#replaceHash</a> function.</p>
-           * @param {string} sHash <p>New hash</p>
-           */
-          setHash(sHash: string): void;
         }
         /**
          * <p>Base Class for manipulating and receiving changes of hash segment.</p><p>Fires a <code>hashChanged</code> event if the relevant hash changes.</p>
@@ -19981,6 +20557,40 @@ declare namespace sap {
            * @param {string} sHash <p>New hash</p>
            */
           protected setHash(sHash: string): void;
+        }
+        /**
+         * <p><p>The object containing the event info for the events that are forwarded to <a target="_self" class="jsdoclink" href="api/sap.ui.core.routing.RouterHashChanger">sap.ui.core.routing.RouterHashChanger</a>.</p></p>
+         */
+        export interface HashChangerEventInfo {
+          /**
+           * <p>The name of the event that is fired by the HashChanger and should be forwarded to the RouterHashChanger</p>
+           */
+          name: string;
+          /**
+           * <p>The optional defined parameter name mapping that is used for forwarding the event to the <a target="_self" class="jsdoclink" href="api/sap.ui.core.routing.RouterHashChanger">sap.ui.core.routing.RouterHashChanger</a>.</p>
+           */
+          paramMapping: sap.ui.core.routing.HashChangerEventParameterMapping;
+          /**
+           * <p>Indicates whether the event is ignored by every RouterHashChanger instance and is only relevant for the other routing classes, for example <a target="_self" class="jsdoclink" href="api/sap.ui.core.routing.History">sap.ui.core.routing.History</a>.</p>
+           */
+          updateHashOnly: boolean;
+        }
+        /**
+         * <p><p>The object containing the parameter mapping for forwarding the event to the <a target="_self" class="jsdoclink" href="api/sap.ui.core.routing.RouterHashChanger">sap.ui.core.routing.RouterHashChanger</a>.</p></p>
+         */
+        export interface HashChangerEventParameterMapping {
+          /**
+           * <p>The name of the parameter whose value is used as the <code>newHash</code> parameter in the event that is forwarded to the <a target="_self" class="jsdoclink" href="api/sap.ui.core.routing.RouterHashChanger">sap.ui.core.routing.RouterHashChanger</a>. If this isn't set, the value is taken from the property <code>newHash</code>.</p>
+           */
+          newHash: string;
+          /**
+           * <p>The name of the parameter whose value is used as the <code>oldHash</code> parameter in the event that is forwarded to the <a target="_self" class="jsdoclink" href="api/sap.ui.core.routing.RouterHashChanger">sap.ui.core.routing.RouterHashChanger</a>. If this isn't set, the value is taken from the property <code>oldHash</code>.</p>
+           */
+          oldHash: string;
+          /**
+           * <p>The name of the parameter whose value is used as the <code>fullHash</code> parameter in the event that is forwarded to the <a target="_self" class="jsdoclink" href="api/sap.ui.core.routing.RouterHashChanger">sap.ui.core.routing.RouterHashChanger</a>. If this isn't set, the value is taken from the property <code>fullHash</code>.</p>
+           */
+          fullHash: string;
         }
         /**
          */
@@ -20012,23 +20622,23 @@ declare namespace sap {
           getPreviousHash(): string;
         }
         /**
-         * <p><p>Enumaration for different HistoryDirections.</p></p>
+         * <p><p>Enumeration for different HistoryDirections.</p></p>
          */
         export enum HistoryDirection {
           /**
-           * <p>The page has already been navigated to and it was the precessor of the previous page</p>
+           * <p>The page has already been navigated to and it was the predecessor of the previous page.</p>
            */
           Backwards = "Backwards",
           /**
-           * <p>The page has already been navigated to and it was the successor of the previous page</p>
+           * <p>The page has already been navigated to and it was the successor of the previous page.</p>
            */
           Forwards = "Forwards",
           /**
-           * <p>A new Entry is added to the history</p>
+           * <p>A new entry is added to the history.</p>
            */
           NewEntry = "NewEntry",
           /**
-           * <p>A Navigation took place, but it could be any of the other three states</p>
+           * <p>A navigation took place, but it could be any of the other three states.</p>
            */
           Unknown = "Unknown",
         }
@@ -20228,7 +20838,7 @@ declare namespace sap {
                   path: "my.application.namespace",
                   viewType: "XML"
               },
-              // You should only use this constructor when you are not using a router with a component.
+              // You should only use this constructor when you are using a router without a component.
               // Please use the metadata of a component to define your routes and targets.
               // The documentation can be found here: {@link sap.ui.core.UIComponent.extend}.
               null,
@@ -20438,7 +21048,7 @@ declare namespace sap {
            */
           match(sHash: string): boolean;
           /**
-           * <p>Navigates to a specific route defining a set of parameters.</p><p>The parameters will be URI encoded - the characters ; , / ? : @ & = + $ are reserved and will not be encoded. If you want to use special characters in your <code>oParameters</code>, you have to encode them (encodeURIComponent).</p><p>If the given route name can't be found, an error message is logged to the console and the hash will be changed to the empty string.</p>
+           * <p>Navigates to a specific route defining a set of parameters.</p><p>The parameters will be URI encoded - the characters ; , / ? : @ & = + $ are reserved and will not be encoded. If you want to use special characters in your <code>oParameters</code>, you have to encode them (encodeURIComponent).</p><p>If the given route name can't be found, an error message is logged to the console and the hash will be changed to the empty string.</p><p>This method excecutes following steps: 1. Interpolates the pattern with the given parameters 2. Sets the interpolated pattern to the browser's hash 3. Reacts to the browser's <code>hashchange</code> event to find out the route which matches the hash</p><p>If there are multiple routes that have the same pattern, the call of navTo with a specific route won't necessarily trigger the matching process of this route. In the end, the first route in the router configuration list that matches the browser hash will be chosen.</p><p>If the browser hash is already set with the interpolated pattern from the navTo call, nothing will happen because the browser won't fire <code>hashchange</code> event in this case.</p>
            * @param {string} sName <p>The name of the route</p>
            * @param {any} oParameters <p>The parameters for the route. As of Version 1.75 the recommendation is naming the query parameter with a leading "?" character, which is identical to the definition in the route's pattern. The old syntax without a leading "?" character is deprecated. e.g. <b>Route:</b> <code>{parameterName1}/:parameterName2:/{?queryParameterName}</code> <b>Parameter:</b> <pre>
                   {
@@ -20466,7 +21076,7 @@ declare namespace sap {
            */
           register(sName: string): sap.ui.core.routing.Router;
           /**
-           * <p>Stops to listen to the <code>hashChange</code> of the browser.</p><p>If you want the router to start again, call <a target="_self" class="jsdoclink scrollToMethod" data-target="initialize" href="api/sap.ui.core.routing.Router#methods/initialize">#initialize</a> again.</p>
+           * <p>Stops to listen to the <code>hashchange</code> of the browser.</p><p>If you want the router to start again, call <a target="_self" class="jsdoclink scrollToMethod" data-target="initialize" href="api/sap.ui.core.routing.Router#methods/initialize">#initialize</a> again.</p>
            * @returns sap.ui.core.routing.Router <p>this for chaining.</p>
            */
           stop(): sap.ui.core.routing.Router;
@@ -20567,6 +21177,27 @@ declare namespace sap {
           protected fireDisplay(oParameters?: any): sap.ui.core.routing.Target;
         }
         /**
+         * <p><p>Object containing the target info for displaying targets</p></p>
+         */
+        export interface TargetInfo {
+          /**
+           * <p>Defines the name of the target that is going to be displayed</p>
+           */
+          name: string;
+          /**
+           * <p>A prefix that is used for reserving a dedicated section in the browser hash for the router of this target. This needs to be set only for target that has type "Component"</p>
+           */
+          prefix: string;
+          /**
+           * <p>Whether the titleChanged event from this target should be propagated to the parent or not</p>
+           */
+          propagateTitle: boolean;
+          /**
+           * <p>Whether the target is relevant to the current matched route or not. If 'true', then the dynamic target is linked to the route's life cycle. When switching to a different route, then the dynamic target will be suspended.</p>
+           */
+          routeRelevant: boolean;
+        }
+        /**
          * <p>Provides a convenient way for placing views into the correct containers of your application.</p><p>The main benefit of <code>Targets</code> is lazy loading: you do not have to create the views until you really need them. If you are using the mobile library, please use <a target="_self" class="jsdoclink" href="api/sap.m.routing.Targets">sap.m.routing.Targets</a> instead of this class.</p>
          */
         export class Targets extends sap.ui.base.EventProvider {
@@ -20627,12 +21258,12 @@ declare namespace sap {
           detachTitleChanged(fnFunction: Function, oListener?: any): sap.ui.core.routing.Targets;
           /**
            * <p>Creates a view and puts it in an aggregation of the specified control.</p>
-           * @param {string | string[]} vTargets <p>Key of the target as specified in the <a target="_self" class="jsdoclink" href="api/sap.ui.core.routing.Targets#constructor">#constructor</a>. To display multiple targets you may also pass an array of keys.</p>
+           * @param {string | string[] | sap.ui.core.routing.TargetInfo | sap.ui.core.routing.TargetInfo[]} vTargets <p>Either the target name or a target info object. To display multiple targets you may also pass an array of target names or target info objects.</p>
            * @param {any} oData <p>an object that will be passed to the display event in the data property. If the target has parents, the data will also be passed to them.</p>
            * @param {string} sTitleTarget <p>the name of the target from which the title option is taken for firing the <a target="_self" class="jsdoclink" href="api/sap.ui.core.routing.Targets#events/titleChanged">titleChanged</a> event</p>
            * @returns sap.ui.core.routing.Targets|Promise <p>this pointer for chaining or a Promise</p>
            */
-          display(vTargets: string | string[], oData?: any, sTitleTarget?: string): sap.ui.core.routing.Targets | Promise<any>;
+          display(vTargets: string | string[] | sap.ui.core.routing.TargetInfo | sap.ui.core.routing.TargetInfo[], oData?: any, sTitleTarget?: string): sap.ui.core.routing.Targets | Promise<any>;
           /**
            * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="created" href="api/sap.ui.core.routing.Targets#events/created">created</a> to attached listeners.</p>
            * @param {any} oParameters <p>Parameters to pass along with the event</p>
@@ -20642,9 +21273,10 @@ declare namespace sap {
           /**
            * <p>Returns a target by its name (if you pass myTarget: { view: "myView" }) in the config myTarget is the name.</p>
            * @param {string | string[]} vName <p>the name of a single target or the name of multiple targets</p>
-           * @returns sap.ui.core.routing.Target|undefined|sap.ui.core.routing.Target[] <p>The target with the coresponding name or undefined. If an array way passed as name this will return an array with all found targets. Non existing targets will not be returned but will log an error.</p>
+           * @param {boolean} bSuppressNotFoundError <p>In case no target is found for the given name, the not found error is supressed when this is set with true</p>
+           * @returns sap.ui.core.routing.Target|undefined|sap.ui.core.routing.Target[] <p>The target with the coresponding name or undefined. If an array way passed as name this will return an array with all found targets. Non existing targets will not be returned and an error is logged when <code>bSuppressNotFoundError</code> param isn't set to <code>true</code>.</p>
            */
-          getTarget(vName: string | string[]): sap.ui.core.routing.Target | undefined | sap.ui.core.routing.Target[];
+          getTarget(vName: string | string[], bSuppressNotFoundError?: boolean): sap.ui.core.routing.Target | undefined | sap.ui.core.routing.Target[];
           /**
            * <p>Returns the views instance passed to the constructor</p>
            * @returns sap.ui.core.routing.Views <p>the views instance</p>
@@ -20700,7 +21332,7 @@ declare namespace sap {
            */
           constructor(sId?: string, mSettings?: any);
           /**
-           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSuggestType" href="api/sap.ui.core.search.OpenSearchProvider#methods/getSuggestType">suggestType</a>.</p><p>The type of data which is provided by the given suggestUrl: either 'json' or 'xml'.</p><p>Default value is <code>json</code>.</p>
+           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSuggestType" href="api/sap.ui.core.search.OpenSearchProvider#methods/getSuggestType">suggestType</a>.</p><p>The type of data which is provided by the given suggestUrl: either 'json' or 'xml'.</p><p>Default value is <code>'json'</code>.</p>
            * @returns string <p>Value of property <code>suggestType</code></p>
            */
           getSuggestType(): string;
@@ -20710,17 +21342,17 @@ declare namespace sap {
            */
           getSuggestUrl(): sap.ui.core.URI;
           /**
-           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSuggestType" href="api/sap.ui.core.search.OpenSearchProvider#methods/getSuggestType">suggestType</a>.</p><p>The type of data which is provided by the given suggestUrl: either 'json' or 'xml'.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>json</code>.</p>
+           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSuggestType" href="api/sap.ui.core.search.OpenSearchProvider#methods/getSuggestType">suggestType</a>.</p><p>The type of data which is provided by the given suggestUrl: either 'json' or 'xml'.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>'json'</code>.</p>
            * @param {string} sSuggestType <p>New value for property <code>suggestType</code></p>
            * @returns sap.ui.core.search.OpenSearchProvider <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          setSuggestType(sSuggestType: string): sap.ui.core.search.OpenSearchProvider;
+          setSuggestType(sSuggestType?: string): sap.ui.core.search.OpenSearchProvider;
           /**
            * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSuggestUrl" href="api/sap.ui.core.search.OpenSearchProvider#methods/getSuggestUrl">suggestUrl</a>.</p><p>The URL for suggestions of the search provider. As placeholder for the concrete search queries '{searchTerms}' must be used. For cross domain requests maybe a proxy must be used.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
            * @param {sap.ui.core.URI} sSuggestUrl <p>New value for property <code>suggestUrl</code></p>
            * @returns sap.ui.core.search.OpenSearchProvider <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          setSuggestUrl(sSuggestUrl: sap.ui.core.URI): sap.ui.core.search.OpenSearchProvider;
+          setSuggestUrl(sSuggestUrl?: sap.ui.core.URI): sap.ui.core.search.OpenSearchProvider;
           /**
            * <p>Call this function to get suggest values from the search provider. The given callback function is called with the suggest value (type 'string', 1st parameter) and an array of the suggestions (type '[string]', 2nd parameter).</p>
            * @param {string} sValue <p>The value for which suggestions are requested.</p>
@@ -20754,7 +21386,7 @@ declare namespace sap {
            * @param {string} sIcon <p>New value for property <code>icon</code></p>
            * @returns sap.ui.core.search.SearchProvider <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          setIcon(sIcon: string): sap.ui.core.search.SearchProvider;
+          setIcon(sIcon?: string): sap.ui.core.search.SearchProvider;
           /**
            * <p>Call this function to get suggest values from the search provider. The given callback function is called with the suggest value (type 'string', 1st parameter) and an array of the suggestions (type '[string]', 2nd parameter).</p>
            * @param {string} sValue <p>The value for which suggestions are requested.</p>
@@ -20920,13 +21552,13 @@ declare namespace sap {
            * @param {string} sName <p>New value for property <code>name</code></p>
            * @returns sap.ui.core.tmpl.DOMAttribute <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          setName(sName: string): sap.ui.core.tmpl.DOMAttribute;
+          setName(sName?: string): sap.ui.core.tmpl.DOMAttribute;
           /**
            * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getValue" href="api/sap.ui.core.tmpl.DOMAttribute#methods/getValue">value</a>.</p><p>Value of the DOM attribute</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
            * @param {string} sValue <p>New value for property <code>value</code></p>
            * @returns sap.ui.core.tmpl.DOMAttribute <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          setValue(sValue: string): sap.ui.core.tmpl.DOMAttribute;
+          setValue(sValue?: string): sap.ui.core.tmpl.DOMAttribute;
         }
         /**
          * <p>Represents a DOM element. It allows to use databinding for the properties and nested DOM attributes.</p>
@@ -20978,7 +21610,7 @@ declare namespace sap {
            */
           getElements(): sap.ui.core.tmpl.DOMElement[];
           /**
-           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getTag" href="api/sap.ui.core.tmpl.DOMElement#methods/getTag">tag</a>.</p><p>The HTML-tag of the DOM element which contains the text</p><p>Default value is <code>span</code>.</p>
+           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getTag" href="api/sap.ui.core.tmpl.DOMElement#methods/getTag">tag</a>.</p><p>The HTML-tag of the DOM element which contains the text</p><p>Default value is <code>'span'</code>.</p>
            * @returns string <p>Value of property <code>tag</code></p>
            */
           getTag(): string;
@@ -21042,17 +21674,17 @@ declare namespace sap {
            */
           removeElement(vElement: number | string | sap.ui.core.tmpl.DOMElement): sap.ui.core.tmpl.DOMElement;
           /**
-           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getTag" href="api/sap.ui.core.tmpl.DOMElement#methods/getTag">tag</a>.</p><p>The HTML-tag of the DOM element which contains the text</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>span</code>.</p>
+           * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getTag" href="api/sap.ui.core.tmpl.DOMElement#methods/getTag">tag</a>.</p><p>The HTML-tag of the DOM element which contains the text</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>'span'</code>.</p>
            * @param {string} sTag <p>New value for property <code>tag</code></p>
            * @returns sap.ui.core.tmpl.DOMElement <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          setTag(sTag: string): sap.ui.core.tmpl.DOMElement;
+          setTag(sTag?: string): sap.ui.core.tmpl.DOMElement;
           /**
            * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getText" href="api/sap.ui.core.tmpl.DOMElement#methods/getText">text</a>.</p><p>The text content of the DOM element</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
            * @param {string} sText <p>New value for property <code>text</code></p>
            * @returns sap.ui.core.tmpl.DOMElement <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          setText(sText: string): sap.ui.core.tmpl.DOMElement;
+          setText(sText?: string): sap.ui.core.tmpl.DOMElement;
         }
         /**
          * <p>The class for Handlebars Templates.</p>
@@ -21114,7 +21746,7 @@ declare namespace sap {
            * @param {string} sContent <p>New value for property <code>content</code></p>
            * @returns sap.ui.core.tmpl.Template <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          setContent(sContent: string): sap.ui.core.tmpl.Template;
+          setContent(sContent?: string): sap.ui.core.tmpl.Template;
         }
         /**
          * <p>This is the base class for all template controls. Template controls are declared based on templates.</p>
@@ -21222,7 +21854,7 @@ declare namespace sap {
            * @param {any} oContext <p>New value for property <code>context</code></p>
            * @returns sap.ui.core.tmpl.TemplateControl <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          setContext(oContext: any): sap.ui.core.tmpl.TemplateControl;
+          setContext(oContext?: any): sap.ui.core.tmpl.TemplateControl;
           /**
            * <p>Sets the associated <a target="_self" class="jsdoclink scrollToMethod" data-target="getTemplate" href="api/sap.ui.core.tmpl.TemplateControl#methods/getTemplate">template</a>.</p>
            * @param {sap.ui.core.ID | sap.ui.core.tmpl.Template} oTemplate <p>ID of an element which becomes the new target of this template association; alternatively, an element instance may be given</p>
@@ -21365,7 +21997,7 @@ declare namespace sap {
           removeRow(vRow: number | string | sap.ui.core.util.ExportRow): sap.ui.core.util.ExportRow;
           /**
            * <p>Generates the file content, triggers a download / save action and returns a Promise with the instance as context (this).<br> The promise will be resolved with the generated content as a string. <p><b>For information about browser support, see <code>sap.ui.core.util.File.save</code></b></p></p><p><p><b>Please note: The return value was changed from jQuery Promises to standard ES6 Promises. jQuery specific Promise methods ('done', 'fail', 'always', 'pipe' and 'state') are still available but should not be used. Please use only the standard methods 'then' and 'catch'!</b></p></p>
-           * @param {string} sFileName <p>file name, defaults to 'data'</p>
+           * @param {string} sFileName <p>The file name</p>
            * @returns Promise<any> <p>Promise object</p>
            */
           saveFile(sFileName?: string): Promise<any>;
@@ -21568,7 +22200,7 @@ declare namespace sap {
            * @param {boolean} bByteOrderMark <p>New value for property <code>byteOrderMark</code></p>
            * @returns sap.ui.core.util.ExportType <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
-          setByteOrderMark(bByteOrderMark: boolean): sap.ui.core.util.ExportType;
+          setByteOrderMark(bByteOrderMark?: boolean): sap.ui.core.util.ExportType;
           /**
            * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getCharset" href="api/sap.ui.core.util.ExportType#methods/getCharset">charset</a>.</p><p>Charset.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
            * @param {string} sCharset <p>New value for property <code>charset</code></p>
@@ -21589,7 +22221,7 @@ declare namespace sap {
           setMimeType(sMimeType: string): sap.ui.core.util.ExportType;
         }
         /**
-         * <p>CSV export type. Can be used for <a target="_self" class="jsdoclink" href="api/sap.ui.core.util.Export">Export</a>.</p><p>Please note that there could be an issue with the separator char depending on the user's system language in some programs such as Microsoft Excel. To prevent those issues use the data-import functionality which enables the possibility to explicitly set the separator char that should be used. This way the content will be displayed correctly.</p><p>Potential formulas (cell data starts with one of = + - @) will be escaped by prepending a single quote. As the export functionality is intended to be used with actual (user) data there is no reason to allow formulas.</p>
+         * <p>CSV export type. Can be used for <a target="_self" class="jsdoclink" href="api/sap.ui.core.util.Export">Export</a>.</p><p>Please note that there could be an issue with the separator char depending on the user's system language in some programs such as Microsoft Excel. To prevent those issues use the data-import functionality which enables the possibility to explicitly set the separator char that should be used. This way the content will be displayed correctly.</p><p>Potential formulas (cell data starts with one of = + - @) will be escaped by prepending a single quote. As the export functionality is intended to be used with actual (user) data there is no reason to allow formulas.</p><p>The maximum cell length is limited to 32,760 characters. In case any string exceeds this limit, it will be cut off.</p>
          */
         export class ExportTypeCSV extends sap.ui.core.util.ExportType {
           /**
@@ -21609,7 +22241,7 @@ declare namespace sap {
            */
           protected generate(): string;
           /**
-           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSeparatorChar" href="api/sap.ui.core.util.ExportTypeCSV#methods/getSeparatorChar">separatorChar</a>.</p><p>Separator char.</p><p>Value needs to be exactly one character or empty for default.</p><p>Default value is <code>,</code>.</p>
+           * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSeparatorChar" href="api/sap.ui.core.util.ExportTypeCSV#methods/getSeparatorChar">separatorChar</a>.</p><p>Separator char.</p><p>Value needs to be exactly one character or empty for default.</p><p>Default value is <code>','</code>.</p>
            * @returns string <p>Value of property <code>separatorChar</code></p>
            */
           getSeparatorChar(): string;
@@ -21784,6 +22416,11 @@ declare namespace sap {
         /**
          */
         namespace reflection {
+          /**
+           * <p><p>Object containing delegate information.</p></p>
+           */
+          export interface FlexDelegateInfo {
+          }
         }
       }
     }
@@ -22018,7 +22655,7 @@ declare namespace sap {
           attachOpen(oData: any, fnFunction: Function, oListener?: any): sap.ui.core.ws.WebSocket;
           /**
            * <p>Closes the connection.</p>
-           * @param {number} iCode <p>Status code that explains why the connection is closed. Must either be 1000, or between 3000 and 4999 (default 1000)</p>
+           * @param {number} iCode <p>Status code that explains why the connection is closed. Must either be 1000, or between 3000 and 4999</p>
            * @param {string} sReason <p>Closing reason as a string</p>
            * @returns sap.ui.core.ws.WebSocket <p>Reference to <code>this</code> in order to allow method chaining</p>
            */
@@ -22159,7 +22796,7 @@ declare namespace sap {
         export class Currency extends sap.ui.model.CompositeType {
           /**
            * <p>Constructor for a <code>Currency</code> type.</p>
-           * @param {any} oFormatOptions <p>Format options; for a list of all available options, see <a target="_self" class="jsdoclink" href="api/sap.ui.core.format.NumberFormat#methods/sap.ui.core.format.NumberFormat.getCurrencyInstance">sap.ui.core.format.NumberFormat.getCurrencyInstance</a>.</p>
+           * @param {any} oFormatOptions <p>Format options; for a list of all available options, see <a target="_self" class="jsdoclink" href="api/sap.ui.core.format.NumberFormat#methods/sap.ui.core.format.NumberFormat.getCurrencyInstance">sap.ui.core.format.NumberFormat.getCurrencyInstance</a>. If the format option <code>showMeasure</code> is set to <code>false</code>, model messages for the currency code are not propagated to the control if the corresponding binding supports the feature of ignoring model messages, see <a target="_self" class="jsdoclink" href="api/sap.ui.model.Binding#methods/supportsIgnoreMessages">sap.ui.model.Binding#supportsIgnoreMessages</a>, and the corresponding binding parameter is not set manually.</p>
            * @param {any} oConstraints <p>Constraints for the value part</p>
            */
           constructor(oFormatOptions?: any, oConstraints?: any);
@@ -22184,6 +22821,16 @@ declare namespace sap {
            * @returns string <p>The formatted output value; the values <code>undefined</code> or <code>null</code> or an amount <code>undefined</code> or <code>null</code> are formatted to <code>null</code></p>
            */
           formatValue(vValue: any[] | string, sTargetType: string): string;
+          /**
+           * <p>Gets an array of indices that determine which parts of this type shall not propagate their model messages to the attached control. Prerequisite is that the corresponding binding supports this feature, see <a target="_self" class="jsdoclink" href="api/sap.ui.model.Binding#methods/supportsIgnoreMessages">sap.ui.model.Binding#supportsIgnoreMessages</a>.<br><br>References: <ul><li>sap.ui.model.Binding#supportsIgnoreMessages</li></ul></p>
+           * @returns number[] <p>An array of indices that determine which parts of this type shall not propagate their model messages to the attached control</p>
+           */
+          getPartsIgnoringMessages(): number[];
+          /**
+           * <p>Gets an array of indices that determine which parts of this type shall not propagate their model messages to the attached control. Prerequisite is that the corresponding binding supports this feature, see <a target="_self" class="jsdoclink" href="api/sap.ui.model.Binding#methods/supportsIgnoreMessages">sap.ui.model.Binding#supportsIgnoreMessages</a>. If the format option <code>showMeasure</code> is set to <code>false</code> and the currency value is not shown in the control, the part for the currency code shall not propagate model messages to the control.<br><br>References: <ul><li>sap.ui.model.Binding#supportsIgnoreMessages</li></ul></p>
+           * @returns number[] <p>An array of indices that determine which parts of this type shall not propagate their model messages to the attached control</p>
+           */
+          getPartsIgnoringMessages(): number[];
           /**
            * <p>Parses an external value of the given source type to the corresponding value in model representation.</p>
            * @param {any} vValue <p>The value to be parsed</p>

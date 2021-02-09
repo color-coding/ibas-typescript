@@ -5,3 +5,114 @@
  * Use of this source code is governed by an Apache License, Version 2.0
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
+namespace trainingtesting {
+    export namespace ui {
+        export namespace m {
+            /** 查看视图-客户主数据 */
+            export class CustomerViewView extends ibas.BOViewView implements app.ICustomerViewView {
+                /** 绘制视图 */
+                draw(): any {
+                    let that: this = this;
+                    return this.page = new sap.extension.uxap.DataObjectPageLayout("", {
+                        dataInfo: {
+                            code: bo.Customer.BUSINESS_OBJECT_CODE,
+                        },
+                        showFooter: false,
+                        headerTitle: new sap.uxap.ObjectPageHeader("", {
+                            actions: [
+                                new sap.uxap.ObjectPageHeaderActionButton("", {
+                                    hideText: true,
+                                    importance: sap.uxap.Importance.High,
+                                    text: ibas.i18n.prop("shell_data_edit"),
+                                    type: sap.m.ButtonType.Transparent,
+                                    icon: "sap-icon://edit",
+                                    visible: this.mode === ibas.emViewMode.VIEW ? false : true,
+                                    press(): void {
+                                        that.fireViewEvents(that.editDataEvent);
+                                    }
+                                }),
+                                new sap.uxap.ObjectPageHeaderActionButton("", {
+                                    hideText: true,
+                                    importance: sap.uxap.Importance.Medium,
+                                    text: ibas.i18n.prop("shell_data_services"),
+                                    type: sap.m.ButtonType.Transparent,
+                                    icon: "sap-icon://action",
+                                    press(event: sap.ui.base.Event): void {
+                                        ibas.servicesManager.showServices({
+                                            proxy: new ibas.BOServiceProxy({
+                                                data: that.page.getModel().getData(),
+                                                converter: new bo.DataConverter(),
+                                            }),
+                                            displayServices(services: ibas.IServiceAgent[]): void {
+                                                if (ibas.objects.isNull(services) || services.length === 0) {
+                                                    return;
+                                                }
+                                                let popover: sap.m.Popover = new sap.m.Popover("", {
+                                                    showHeader: false,
+                                                    placement: sap.m.PlacementType.Bottom,
+                                                });
+                                                for (let service of services) {
+                                                    popover.addContent(new sap.m.Button("", {
+                                                        text: ibas.i18n.prop(service.name),
+                                                        type: sap.m.ButtonType.Transparent,
+                                                        icon: service.icon,
+                                                        press(): void {
+                                                            service.run();
+                                                            popover.close();
+                                                        }
+                                                    }));
+                                                }
+                                                popover.addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
+                                                popover.openBy(event.getSource(), true);
+                                            }
+                                        });
+                                    }
+                                }),
+                            ],
+                        }),
+                        headerContent: [
+                        ],
+                        sections: [
+                            new sap.uxap.ObjectPageSection("", {
+                                title: ibas.i18n.prop("trainingtesting_title_general"),
+                                subSections: [
+                                    new sap.uxap.ObjectPageSubSection("", {
+                                        blocks: [
+                                            new sap.ui.layout.form.SimpleForm("", {
+                                                editable: false,
+                                                width: "auto",
+                                                content: [
+                                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_customer_code") }),
+                                                    new sap.extension.m.Text("", {
+                                                    }).bindProperty("bindingValue", {
+                                                        path: "code",
+                                                        type: new sap.extension.data.Alphanumeric(),
+                                                    }),
+                                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_customer_name") }),
+                                                    new sap.extension.m.Text("", {
+                                                    }).bindProperty("bindingValue", {
+                                                        path: "name",
+                                                        type: new sap.extension.data.Alphanumeric(),
+                                                    }),
+                                                ]
+                                            }).addStyleClass("sapUxAPObjectPageSubSectionAlignContent"),
+                                        ]
+                                    }),
+                                ]
+                            }),
+                        ]
+                    });
+                }
+
+                private page: sap.extension.uxap.ObjectPageLayout;
+
+                /** 显示数据 */
+                showCustomer(data: bo.Customer): void {
+                    this.page.setModel(new sap.extension.model.JSONModel(data));
+                    // 改变页面状态
+                    sap.extension.pages.changeStatus(this.page);
+                }
+            }
+        }
+    }
+}

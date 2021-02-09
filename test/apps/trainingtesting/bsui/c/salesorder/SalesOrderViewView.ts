@@ -10,6 +10,7 @@ namespace trainingtesting {
         export namespace c {
             /** 查看视图-销售订单 */
             export class SalesOrderViewView extends ibas.BOViewView implements app.ISalesOrderViewView {
+
                 /** 绘制视图 */
                 draw(): any {
                     let that: this = this;
@@ -20,80 +21,102 @@ namespace trainingtesting {
                         },
                         columns: [
                             new sap.extension.m.Column("", {
-                                header: ibas.i18n.prop("bo_salesorderitem_itemdescription")
+                                header: ibas.i18n.prop("bo_salesorderitem_itemcode"),
                             }),
                             new sap.extension.m.Column("", {
-                                header: ibas.i18n.prop("bo_salesorderitem_quantity")
+                                header: ibas.i18n.prop("bo_salesorderitem_itemdescription"),
                             }),
                             new sap.extension.m.Column("", {
-                                header: ibas.i18n.prop("bo_salesorderitem_warehouse")
+                                header: ibas.i18n.prop("bo_salesorderitem_quantity"),
                             }),
                             new sap.extension.m.Column("", {
-                                header: ibas.i18n.prop("bo_salesorderitem_price")
+                                header: ibas.i18n.prop("bo_salesorderitem_deliverydate"),
                             }),
                             new sap.extension.m.Column("", {
-                                header: ibas.i18n.prop("bo_salesorderitem_linetotal")
-                            })
+                                header: ibas.i18n.prop("bo_salesorderitem_price"),
+                            }),
+                            new sap.extension.m.Column("", {
+                                header: ibas.i18n.prop("bo_salesorderitem_pricecurrency"),
+                            }),
+                            new sap.extension.m.Column("", {
+                                header: ibas.i18n.prop("bo_salesorderitem_linetotal"),
+                            }),
+                            new sap.extension.m.Column("", {
+                                header: ibas.i18n.prop("bo_salesorderitem_warehouse"),
+                            }),
+                            new sap.extension.m.Column("", {
+                                header: ibas.i18n.prop("bo_salesorderitem_reference1"),
+                            }),
+                            new sap.extension.m.Column("", {
+                                header: ibas.i18n.prop("bo_salesorderitem_reference2"),
+                            }),
                         ],
                         items: {
                             path: "/rows",
                             template: new sap.m.ColumnListItem("", {
                                 cells: [
-                                    new sap.extension.m.ObjectIdentifier("", {
-                                        title: {
+                                    new sap.extension.m.ObjectAttribute("", {
+                                        bindingValue: {
                                             path: "itemCode",
                                             type: new sap.extension.data.Alphanumeric(),
-                                            formatter(this: sap.m.ObjectIdentifier, data: any): any {
-                                                let boRepository: bo.BORepositoryTrainingTesting = new bo.BORepositoryTrainingTesting();
-                                                boRepository.fetchMaterial({
-                                                    criteria: [
-                                                        new ibas.Condition(bo.Material.PROPERTY_CODE_NAME, ibas.emConditionOperation.EQUAL, data)
-                                                    ],
-                                                    onCompleted: (opRslt) => {
-                                                        let data: any = opRslt.resultObjects.firstOrDefault();
-                                                        if (data instanceof bo.Material) {
-                                                            this.setText(data.name);
-                                                        }
-                                                    }
-                                                });
-                                                return data;
-                                            }
-                                        },
+                                        }
                                     }),
-                                    new sap.extension.m.ObjectNumber("", {
-                                        number: {
+                                    new sap.extension.m.ObjectAttribute("", {
+                                        bindingValue: {
+                                            path: "itemDescription",
+                                            type: new sap.extension.data.Alphanumeric(),
+                                        }
+                                    }),
+                                    new sap.extension.m.ObjectAttribute("", {
+                                        bindingValue: {
                                             path: "quantity",
-                                            type: new sap.extension.data.Quantity()
-                                        },
+                                            type: new sap.extension.data.Quantity(),
+                                        }
                                     }),
-                                    new sap.extension.m.ObjectIdentifier("", {
-                                        title: {
-                                            path: "warehouse",
-                                            type: new sap.extension.data.Alphanumeric()
-                                        },
+                                    new sap.extension.m.ObjectAttribute("", {
+                                        bindingValue: {
+                                            path: "deliveryDate",
+                                            type: new sap.extension.data.Date(),
+                                        }
                                     }),
-                                    new sap.extension.m.ObjectNumber("", {
-                                        number: {
+                                    new sap.extension.m.ObjectAttribute("", {
+                                        bindingValue: {
                                             path: "price",
-                                            type: new sap.extension.data.Price()
-                                        },
-                                        unit: {
-                                            path: "priceCurrency",
-                                            type: new sap.extension.data.Alphanumeric()
-                                        },
+                                            type: new sap.extension.data.Price(),
+                                        }
                                     }),
-                                    new sap.extension.m.ObjectNumber("", {
-                                        number: {
-                                            path: "lineTotal",
-                                            type: new sap.extension.data.Price()
-                                        },
-                                        unit: {
+                                    new sap.extension.m.ObjectAttribute("", {
+                                        bindingValue: {
                                             path: "priceCurrency",
-                                            type: new sap.extension.data.Alphanumeric()
-                                        },
+                                            type: new sap.extension.data.Alphanumeric(),
+                                        }
+                                    }),
+                                    new sap.extension.m.ObjectAttribute("", {
+                                        bindingValue: {
+                                            path: "lineTotal",
+                                            type: new sap.extension.data.Sum(),
+                                        }
+                                    }),
+                                    new sap.extension.m.ObjectAttribute("", {
+                                        bindingValue: {
+                                            path: "warehouse",
+                                            type: new sap.extension.data.Alphanumeric(),
+                                        }
+                                    }),
+                                    new sap.extension.m.ObjectAttribute("", {
+                                        bindingValue: {
+                                            path: "reference1",
+                                            type: new sap.extension.data.Alphanumeric(),
+                                        }
+                                    }),
+                                    new sap.extension.m.ObjectAttribute("", {
+                                        bindingValue: {
+                                            path: "reference2",
+                                            type: new sap.extension.data.Alphanumeric(),
+                                        }
                                     }),
                                 ]
-                            })
+                            }),
                         }
                     });
                     return this.page = new sap.extension.uxap.DataObjectPageLayout("", {
@@ -201,40 +224,87 @@ namespace trainingtesting {
                             ]
                         }),
                         headerContent: [
-                            new sap.ui.layout.VerticalLayout("", {
-                                content: [
-                                    new sap.extension.m.ObjectAttribute("", {
-                                        title: ibas.i18n.prop("bo_salesorder_documentdate"),
-                                        text: {
-                                            path: "documentDate",
-                                            type: new sap.extension.data.Date()
-                                        }
-                                    }),
-                                    new sap.extension.m.ObjectAttribute("", {
-                                        title: ibas.i18n.prop("bo_salesorder_deliverydate"),
-                                        text: {
-                                            path: "deliveryDate",
-                                            type: new sap.extension.data.Date()
-                                        }
-                                    }),
-                                    new sap.extension.m.ObjectAttribute("", {
-                                        title: ibas.i18n.prop("bo_salesorder_reference1"),
-                                        text: {
-                                            path: "reference1",
-                                            type: new sap.extension.data.Alphanumeric()
-                                        }
-                                    }),
-                                    new sap.extension.m.ObjectAttribute("", {
-                                        title: ibas.i18n.prop("bo_salesorder_reference2"),
-                                        text: {
-                                            path: "reference2",
-                                            type: new sap.extension.data.Alphanumeric()
-                                        }
-                                    })
-                                ]
-                            })
                         ],
                         sections: [
+                            new sap.uxap.ObjectPageSection("", {
+                                title: ibas.i18n.prop("bo_salesorder"),
+                                subSections: [
+                                    new sap.uxap.ObjectPageSubSection("", {
+                                        blocks: [
+                                            new sap.extension.m.ObjectAttribute("", {
+                                                title: ibas.i18n.prop("bo_salesorder_postingdate"),
+                                                bindingValue: {
+                                                    path: "postingDate",
+                                                    type: new sap.extension.data.Date(),
+                                                }
+                                            }),
+                                            new sap.extension.m.ObjectAttribute("", {
+                                                title: ibas.i18n.prop("bo_salesorder_deliverydate"),
+                                                bindingValue: {
+                                                    path: "deliveryDate",
+                                                    type: new sap.extension.data.Date(),
+                                                }
+                                            }),
+                                            new sap.extension.m.ObjectAttribute("", {
+                                                title: ibas.i18n.prop("bo_salesorder_documentdate"),
+                                                bindingValue: {
+                                                    path: "documentDate",
+                                                    type: new sap.extension.data.Date(),
+                                                }
+                                            }),
+                                            new sap.extension.m.ObjectAttribute("", {
+                                                title: ibas.i18n.prop("bo_salesorder_customercode"),
+                                                bindingValue: {
+                                                    path: "customerCode",
+                                                    type: new sap.extension.data.Alphanumeric(),
+                                                }
+                                            }),
+                                            new sap.extension.m.ObjectAttribute("", {
+                                                title: ibas.i18n.prop("bo_salesorder_customername"),
+                                                bindingValue: {
+                                                    path: "customerName",
+                                                    type: new sap.extension.data.Alphanumeric(),
+                                                }
+                                            }),
+                                            new sap.extension.m.ObjectAttribute("", {
+                                                title: ibas.i18n.prop("bo_salesorder_documentcurrency"),
+                                                bindingValue: {
+                                                    path: "documentCurrency",
+                                                    type: new sap.extension.data.Alphanumeric(),
+                                                }
+                                            }),
+                                            new sap.extension.m.ObjectAttribute("", {
+                                                title: ibas.i18n.prop("bo_salesorder_documentrate"),
+                                                bindingValue: {
+                                                    path: "documentRate",
+                                                    type: new sap.extension.data.Rate(),
+                                                }
+                                            }),
+                                            new sap.extension.m.ObjectAttribute("", {
+                                                title: ibas.i18n.prop("bo_salesorder_documenttotal"),
+                                                bindingValue: {
+                                                    path: "documentTotal",
+                                                    type: new sap.extension.data.Sum(),
+                                                }
+                                            }),
+                                            new sap.extension.m.ObjectAttribute("", {
+                                                title: ibas.i18n.prop("bo_salesorder_reference1"),
+                                                bindingValue: {
+                                                    path: "reference1",
+                                                    type: new sap.extension.data.Alphanumeric(),
+                                                }
+                                            }),
+                                            new sap.extension.m.ObjectAttribute("", {
+                                                title: ibas.i18n.prop("bo_salesorder_reference2"),
+                                                bindingValue: {
+                                                    path: "reference2",
+                                                    type: new sap.extension.data.Alphanumeric(),
+                                                }
+                                            }),
+                                        ],
+                                    })
+                                ]
+                            }),
                             new sap.uxap.ObjectPageSection("", {
                                 title: ibas.i18n.prop("bo_salesorder_salesorderitems"),
                                 subSections: [
@@ -245,22 +315,6 @@ namespace trainingtesting {
                                     })
                                 ]
                             }),
-                            new sap.uxap.ObjectPageSection("", {
-                                title: ibas.i18n.prop("bo_salesorder_remarks"),
-                                subSections: [
-                                    new sap.uxap.ObjectPageSubSection("", {
-                                        blocks: [
-                                            new sap.extension.m.ObjectStatus("", {
-                                                title: ibas.i18n.prop("bo_salesorder_remarks"),
-                                                text: {
-                                                    path: "remarks",
-                                                    type: new sap.extension.data.Alphanumeric()
-                                                }
-                                            }),
-                                        ],
-                                    })
-                                ]
-                            })
                         ]
                     });
                 }

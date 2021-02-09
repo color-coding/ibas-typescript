@@ -14,7 +14,7 @@ namespace shell {
             export class WelcomeView extends ibas.DialogView implements app.IWelcomeView {
                 /** 绘制视图 */
                 draw(): any {
-                    let form: sap.m.Dialog = new sap.extension.m.Dialog("", {
+                    let form: sap.m.Dialog = new sap.m.Dialog("", {
                         title: this.title,
                         type: sap.m.DialogType.Standard,
                         state: sap.ui.core.ValueState.None,
@@ -41,7 +41,7 @@ namespace shell {
                                 this.fireViewEvents(this.closeEvent);
                             }
                         })
-                    });
+                    }).addStyleClass("sapUiNoContentPadding");
                     setTimeout(() => {
                         if (form instanceof sap.m.Dialog && form.isOpen()) {
                             form.getEndButton().setEnabled(true);

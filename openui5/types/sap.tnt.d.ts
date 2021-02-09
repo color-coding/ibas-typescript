@@ -66,43 +66,43 @@ declare namespace sap {
              * @param {number} iColorScheme <p>New value for property <code>colorScheme</code></p>
              * @returns sap.tnt.InfoLabel <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setColorScheme(iColorScheme: number): sap.tnt.InfoLabel;
+            setColorScheme(iColorScheme?: number): sap.tnt.InfoLabel;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getDisplayOnly" href="api/sap.tnt.InfoLabel#methods/getDisplayOnly">displayOnly</a>.</p><p>Determines if the <code>InfoLabel</code> is in <code>displayOnly</code> mode. When set to <code>true</code> the control size adjusts to fit other controls, for example non-editable <code>Forms</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
              * @param {boolean} bDisplayOnly <p>New value for property <code>displayOnly</code></p>
              * @returns sap.tnt.InfoLabel <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setDisplayOnly(bDisplayOnly: boolean): sap.tnt.InfoLabel;
+            setDisplayOnly(bDisplayOnly?: boolean): sap.tnt.InfoLabel;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getIcon" href="api/sap.tnt.InfoLabel#methods/getIcon">icon</a>.</p><p>Defines the icon to be displayed as graphical element within the <code>InfoLabel</code>. It can be an icon from the icon font.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
              * @param {sap.ui.core.URI} sIcon <p>New value for property <code>icon</code></p>
              * @returns sap.tnt.InfoLabel <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setIcon(sIcon: sap.ui.core.URI): sap.tnt.InfoLabel;
+            setIcon(sIcon?: sap.ui.core.URI): sap.tnt.InfoLabel;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getRenderMode" href="api/sap.tnt.InfoLabel#methods/getRenderMode">renderMode</a>.</p><p>Specifies the type of the <code>InfoLabel</code> paddings - loose or narrow. <b>Note:</b> By default the padding is loose. It is recommended to use narrow (smaller) paddings for numeric texts.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Loose</code>.</p>
              * @param {sap.tnt.RenderMode} sRenderMode <p>New value for property <code>renderMode</code></p>
              * @returns sap.tnt.InfoLabel <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setRenderMode(sRenderMode: sap.tnt.RenderMode): sap.tnt.InfoLabel;
+            setRenderMode(sRenderMode?: sap.tnt.RenderMode): sap.tnt.InfoLabel;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getText" href="api/sap.tnt.InfoLabel#methods/getText">text</a>.</p><p>Specifies the text inside the <code>InfoLabel</code> control.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
              * @param {string} sText <p>New value for property <code>text</code></p>
              * @returns sap.tnt.InfoLabel <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setText(sText: string): sap.tnt.InfoLabel;
+            setText(sText?: string): sap.tnt.InfoLabel;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getTextDirection" href="api/sap.tnt.InfoLabel#methods/getTextDirection">textDirection</a>.</p><p>Available options for the text direction are LTR and RTL. By default the control inherits the text direction from its parent control.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Inherit</code>.</p>
              * @param {sap.ui.core.TextDirection} sTextDirection <p>New value for property <code>textDirection</code></p>
              * @returns sap.tnt.InfoLabel <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setTextDirection(sTextDirection: sap.ui.core.TextDirection): sap.tnt.InfoLabel;
+            setTextDirection(sTextDirection?: sap.ui.core.TextDirection): sap.tnt.InfoLabel;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.tnt.InfoLabel#methods/getWidth">width</a>.</p><p>Specifies the width of the <code>InfoLabel</code> control. By default, the <code>InfoLabel</code> control has the width of the content. Set this property to restrict the width to a custom value.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
              * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
              * @returns sap.tnt.InfoLabel <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setWidth(sWidth: sap.ui.core.CSSSize): sap.tnt.InfoLabel;
+            setWidth(sWidth?: sap.ui.core.CSSSize): sap.tnt.InfoLabel;
             /**
              * <p>Unbinds property <a target="_self" class="jsdoclink scrollToMethod" data-target="getText" href="api/sap.tnt.InfoLabel#methods/getText">text</a> from model data.</p>
              * @returns sap.tnt.InfoLabel <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -254,7 +254,7 @@ declare namespace sap {
              * @param {boolean} bExpanded <p>New value for property <code>expanded</code></p>
              * @returns sap.tnt.NavigationList <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setExpanded(bExpanded: boolean): sap.tnt.NavigationList;
+            setExpanded(bExpanded?: boolean): sap.tnt.NavigationList;
             /**
              * <p>Sets the association for selectedItem. Set <code>null</code> to deselect.</p>
              * @param {string | sap.tnt.NavigationListItem} selectedItem <p>The control to be set as selected</p>
@@ -327,6 +327,11 @@ declare namespace sap {
              */
             getHasExpander(): boolean;
             /**
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHref" href="api/sap.tnt.NavigationListItem#methods/getHref">href</a>.</p><p>Defines the link target URI. Supports standard hyperlink behavior. If a JavaScript action should be triggered, this should not be set, but instead an event handler for the <code>select</code> event should be registered.</p>
+             * @returns sap.ui.core.URI <p>Value of property <code>href</code></p>
+             */
+            getHref(): sap.ui.core.URI;
+            /**
              * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getIcon" href="api/sap.tnt.NavigationListItem#methods/getIcon">icon</a>.</p><p>Specifies the icon for the item.</p><p>Default value is <code>empty string</code>.</p>
              * @returns sap.ui.core.URI <p>Value of property <code>icon</code></p>
              */
@@ -336,6 +341,11 @@ declare namespace sap {
              * @returns sap.tnt.NavigationListItem[] 
              */
             getItems(): sap.tnt.NavigationListItem[];
+            /**
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getTarget" href="api/sap.tnt.NavigationListItem#methods/getTarget">target</a>.</p><p>Specifies the browsing context where the linked content will open.</p><p>Options are the standard values for window.open() supported by browsers: <code>_self</code>, <code>_top</code>, <code>_blank</code>, <code>_parent</code>, <code>_search</code>. Alternatively, a frame name can be entered. This property is only used when the <code>href</code> property is set.</p>
+             * @returns string <p>Value of property <code>target</code></p>
+             */
+            getTarget(): string;
             /**
              * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getVisible" href="api/sap.tnt.NavigationListItem#methods/getVisible">visible</a>.</p><p>Specifies if the item should be shown.</p><p>Default value is <code>true</code>.</p>
              * @returns boolean <p>Value of property <code>visible</code></p>
@@ -370,25 +380,37 @@ declare namespace sap {
              * @param {boolean} bExpanded <p>New value for property <code>expanded</code></p>
              * @returns sap.tnt.NavigationListItem <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setExpanded(bExpanded: boolean): sap.tnt.NavigationListItem;
+            setExpanded(bExpanded?: boolean): sap.tnt.NavigationListItem;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHasExpander" href="api/sap.tnt.NavigationListItem#methods/getHasExpander">hasExpander</a>.</p><p>Specifies if the item has an expander.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
              * @param {boolean} bHasExpander <p>New value for property <code>hasExpander</code></p>
              * @returns sap.tnt.NavigationListItem <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setHasExpander(bHasExpander: boolean): sap.tnt.NavigationListItem;
+            setHasExpander(bHasExpander?: boolean): sap.tnt.NavigationListItem;
+            /**
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHref" href="api/sap.tnt.NavigationListItem#methods/getHref">href</a>.</p><p>Defines the link target URI. Supports standard hyperlink behavior. If a JavaScript action should be triggered, this should not be set, but instead an event handler for the <code>select</code> event should be registered.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+             * @param {sap.ui.core.URI} sHref <p>New value for property <code>href</code></p>
+             * @returns sap.tnt.NavigationListItem <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            setHref(sHref?: sap.ui.core.URI): sap.tnt.NavigationListItem;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getIcon" href="api/sap.tnt.NavigationListItem#methods/getIcon">icon</a>.</p><p>Specifies the icon for the item.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
              * @param {sap.ui.core.URI} sIcon <p>New value for property <code>icon</code></p>
              * @returns sap.tnt.NavigationListItem <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setIcon(sIcon: sap.ui.core.URI): sap.tnt.NavigationListItem;
+            setIcon(sIcon?: sap.ui.core.URI): sap.tnt.NavigationListItem;
+            /**
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getTarget" href="api/sap.tnt.NavigationListItem#methods/getTarget">target</a>.</p><p>Specifies the browsing context where the linked content will open.</p><p>Options are the standard values for window.open() supported by browsers: <code>_self</code>, <code>_top</code>, <code>_blank</code>, <code>_parent</code>, <code>_search</code>. Alternatively, a frame name can be entered. This property is only used when the <code>href</code> property is set.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+             * @param {string} sTarget <p>New value for property <code>target</code></p>
+             * @returns sap.tnt.NavigationListItem <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            setTarget(sTarget?: string): sap.tnt.NavigationListItem;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getVisible" href="api/sap.tnt.NavigationListItem#methods/getVisible">visible</a>.</p><p>Specifies if the item should be shown.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
              * @param {boolean} bVisible <p>New value for property <code>visible</code></p>
              * @returns sap.tnt.NavigationListItem <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setVisible(bVisible: boolean): sap.tnt.NavigationListItem;
+            setVisible(bVisible?: boolean): sap.tnt.NavigationListItem;
         }
         /**
          * <p><p>Predefined types of <code>InfoLabel</code></p></p>
@@ -596,7 +618,7 @@ declare namespace sap {
              */
             getSideContent(): sap.tnt.SideNavigation;
             /**
-             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSideExpanded" href="api/sap.tnt.ToolPage#methods/getSideExpanded">sideExpanded</a>.</p><p>Indicates if the side area is expanded. Overrides the expanded property of the sideContent aggregation.</p><p>Default value is <code>true</code>.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSideExpanded" href="api/sap.tnt.ToolPage#methods/getSideExpanded">sideExpanded</a>.</p><p>Indicates if the side menu is expanded. Overrides the <code>expanded</code> property of the <code>sideContent</code> aggregation.</p><p>Default value is <code>true</code>.</p>
              * @returns boolean <p>Value of property <code>sideExpanded</code></p>
              */
             getSideExpanded(): boolean;
@@ -638,10 +660,10 @@ declare namespace sap {
             setSideContent(oSideContent: sap.tnt.SideNavigation): sap.tnt.ToolPage;
             /**
              * <p>Sets the expand/collapse state of the SideContent.</p>
-             * @param {boolean} isSideExpanded <p>defines whether the SideNavigation is expanded.</p>
+             * @param {boolean} bSideExpanded <p>defines whether the SideNavigation is expanded.</p>
              * @returns sap.tnt.ToolPage <p>Pointer to the control instance for chaining</p>
              */
-            setSideExpanded(isSideExpanded: boolean): sap.tnt.ToolPage;
+            setSideExpanded(bSideExpanded: boolean): sap.tnt.ToolPage;
             /**
              * <p>Toggles the expand/collapse state of the SideContent.</p>
              * @returns sap.tnt.ToolPage <p>Pointer to the control instance for chaining.</p>

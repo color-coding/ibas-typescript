@@ -8,17 +8,11 @@
 namespace trainingtesting {
     export namespace ui {
         export namespace c {
-            /**
-             * 列表视图-客户主数据
-             */
+            /** 列表视图-客户主数据 */
             export class CustomerListView extends ibas.BOListView implements app.ICustomerListView {
                 /** 返回查询的对象 */
                 get queryTarget(): any {
                     return bo.Customer;
-                }
-                /** 自动查询 */
-                get autoQuery(): boolean {
-                    return true;
                 }
                 /** 编辑数据，参数：目标数据 */
                 editDataEvent: Function;
@@ -36,21 +30,19 @@ namespace trainingtesting {
                         columns: [
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_customer_code"),
-                                template: new sap.extension.m.DataLink("", {
-                                    objectCode: bo.Customer.BUSINESS_OBJECT_CODE,
+                                template: new sap.extension.m.Text("", {
                                 }).bindProperty("bindingValue", {
                                     path: "code",
-                                    type: new sap.extension.data.Alphanumeric()
-                                })
+                                    type: new sap.extension.data.Alphanumeric(),
+                                }),
                             }),
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_customer_name"),
                                 template: new sap.extension.m.Text("", {
-                                    wrapping: false
                                 }).bindProperty("bindingValue", {
                                     path: "name",
-                                    type: new sap.extension.data.Alphanumeric()
-                                })
+                                    type: new sap.extension.data.Alphanumeric(),
+                                }),
                             }),
                         ],
                         nextDataSet(event: sap.ui.base.Event): void {
@@ -70,7 +62,7 @@ namespace trainingtesting {
                             that.fireViewEvents(that.fetchDataEvent, criteria);
                         }
                     });
-                    return new sap.m.Page("", {
+                    return new sap.extension.m.Page("", {
                         showHeader: false,
                         subHeader: new sap.m.Toolbar("", {
                             content: [
@@ -78,7 +70,7 @@ namespace trainingtesting {
                                     text: ibas.i18n.prop("shell_data_new"),
                                     type: sap.m.ButtonType.Transparent,
                                     icon: "sap-icon://create",
-                                    press: function (): void {
+                                    press(): void {
                                         that.fireViewEvents(that.newDataEvent);
                                     }
                                 }),
@@ -86,7 +78,7 @@ namespace trainingtesting {
                                     text: ibas.i18n.prop("shell_data_view"),
                                     type: sap.m.ButtonType.Transparent,
                                     icon: "sap-icon://display",
-                                    press: function (): void {
+                                    press(): void {
                                         that.fireViewEvents(that.viewDataEvent, that.table.getSelecteds().firstOrDefault());
                                     }
                                 }),
@@ -94,7 +86,7 @@ namespace trainingtesting {
                                     text: ibas.i18n.prop("shell_data_edit"),
                                     type: sap.m.ButtonType.Transparent,
                                     icon: "sap-icon://edit",
-                                    press: function (): void {
+                                    press(): void {
                                         that.fireViewEvents(that.editDataEvent, that.table.getSelecteds().firstOrDefault());
                                     }
                                 }),
@@ -103,7 +95,7 @@ namespace trainingtesting {
                                     text: ibas.i18n.prop("shell_data_delete"),
                                     type: sap.m.ButtonType.Transparent,
                                     icon: "sap-icon://delete",
-                                    press: function (): void {
+                                    press(): void {
                                         that.fireViewEvents(that.deleteDataEvent, that.table.getSelecteds());
                                     }
                                 }),
@@ -111,7 +103,7 @@ namespace trainingtesting {
                                 new sap.m.Button("", {
                                     type: sap.m.ButtonType.Transparent,
                                     icon: "sap-icon://action",
-                                    press: function (event: any): void {
+                                    press(event: sap.ui.base.Event): void {
                                         ibas.servicesManager.showServices({
                                             proxy: new ibas.BOServiceProxy({
                                                 data: that.table.getSelecteds(),
@@ -130,7 +122,7 @@ namespace trainingtesting {
                                                         text: ibas.i18n.prop(service.name),
                                                         type: sap.m.ButtonType.Transparent,
                                                         icon: service.icon,
-                                                        press: function (): void {
+                                                        press(): void {
                                                             service.run();
                                                             popover.close();
                                                         }
@@ -149,10 +141,10 @@ namespace trainingtesting {
                         ]
                     });
                 }
-                private table: sap.extension.table.DataTable;
+                private table: sap.extension.table.Table;
                 /** 显示数据 */
                 showData(datas: bo.Customer[]): void {
-                    let model: sap.ui.model.Model = this.table.getModel(undefined);
+                    let model: sap.ui.model.Model = this.table.getModel();
                     if (model instanceof sap.extension.model.JSONModel) {
                         // 已绑定过数据
                         model.addData(datas);

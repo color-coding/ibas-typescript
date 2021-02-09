@@ -6,7 +6,6 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 /// <reference path="./types/index.d.ts" />
-/// <reference path="./datatypes.ts" />
 /// <reference path="./utils.ts" />
 /// <reference path="./extensions/BORepository.ts" />
 /// <reference path="./extensions/Common.ts" />
@@ -62,12 +61,8 @@
 /// <reference path="./extensions/components/Wizard.ts" />
 /// <reference path="./extensions/components/Card.d.ts" />
 /// <reference path="./extensions/components/Card.ts" />
-/// <reference path="./extensions/components/Dialog.d.ts" />
-/// <reference path="./extensions/components/Dialog.ts" />
 /// <reference path="./extensions/components/MessageStrip.d.ts" />
 /// <reference path="./extensions/components/MessageStrip.ts" />
-/// <reference path="./extensions/components/Form.d.ts" />
-/// <reference path="./extensions/components/Form.ts" />
 /// <reference path="./extensions/components/Factory.ts" />
 
 namespace openui5 {

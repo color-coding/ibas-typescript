@@ -281,7 +281,7 @@ namespace shell {
                 /** 绘制视图 */
                 draw(): any {
                     let that: this = this;
-                    this.form = new sap.extension.m.Dialog("", {
+                    this.form = new sap.m.Dialog("", {
                         title: this.title,
                         type: sap.m.DialogType.Standard,
                         state: sap.ui.core.ValueState.None,
@@ -337,7 +337,7 @@ namespace shell {
                                 }
                             }),
                         ]
-                    });
+                    }).addStyleClass("sapUiNoContentPadding");
                     return this.form;
                 }
             }

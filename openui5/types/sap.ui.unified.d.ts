@@ -145,7 +145,7 @@ declare namespace sap {
                  */
                 protected fireStartDateChange(mParameters?: any): sap.ui.unified.Calendar;
                 /**
-                 * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="weekNumberSelect" href="api/sap.ui.unified.Calendar#events/weekNumberSelect">weekNumberSelect</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by using the <code>preventDefault</code>-method on the event object.</p>
+                 * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="weekNumberSelect" href="api/sap.ui.unified.Calendar#events/weekNumberSelect">weekNumberSelect</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by calling the <code>preventDefault</code> method on the event object. The return value of this method indicates whether the default action should be executed.</p>
                  * @param {any} mParameters <p>Parameters to pass along with the event</p>
                  * @returns boolean <p>Whether or not to prevent the default action</p>
                  */
@@ -329,13 +329,13 @@ declare namespace sap {
                  * @param {number} iFirstDayOfWeek <p>New value for property <code>firstDayOfWeek</code></p>
                  * @returns sap.ui.unified.Calendar <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setFirstDayOfWeek(iFirstDayOfWeek: number): sap.ui.unified.Calendar;
+                setFirstDayOfWeek(iFirstDayOfWeek?: number): sap.ui.unified.Calendar;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getIntervalSelection" href="api/sap.ui.unified.Calendar#methods/getIntervalSelection">intervalSelection</a>.</p><p>If set, interval selection is allowed</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bIntervalSelection <p>New value for property <code>intervalSelection</code></p>
                  * @returns sap.ui.unified.Calendar <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setIntervalSelection(bIntervalSelection: boolean): sap.ui.unified.Calendar;
+                setIntervalSelection(bIntervalSelection?: boolean): sap.ui.unified.Calendar;
                 /**
                  * <p>Sets the associated <a target="_self" class="jsdoclink scrollToMethod" data-target="getLegend" href="api/sap.ui.unified.Calendar#methods/getLegend">legend</a>.</p>
                  * @param {sap.ui.core.ID | sap.ui.unified.CalendarLegend} oLegend <p>ID of an element which becomes the new target of this legend association; alternatively, an element instance may be given</p>
@@ -359,43 +359,43 @@ declare namespace sap {
                  * @param {number} iMonths <p>New value for property <code>months</code></p>
                  * @returns sap.ui.unified.Calendar <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setMonths(iMonths: number): sap.ui.unified.Calendar;
+                setMonths(iMonths?: number): sap.ui.unified.Calendar;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getNonWorkingDays" href="api/sap.ui.unified.Calendar#methods/getNonWorkingDays">nonWorkingDays</a>.</p><p>If set, the provided weekdays are displayed as non-working days. Valid values inside the array are 0 to 6. If not set, the weekend defined in the locale settings is displayed as non-working days.</p><p><b>Note:</b> Keep in mind that this property sets only weekly-recurring days as non-working. If you need specific dates or dates ranges, such as national holidays, use the <code>specialDates</code> aggregation to set them. Both the non-working days (from property) and dates (from aggregation) are visualized the same.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {number[]} sNonWorkingDays <p>New value for property <code>nonWorkingDays</code></p>
                  * @returns sap.ui.unified.Calendar <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setNonWorkingDays(sNonWorkingDays: number[]): sap.ui.unified.Calendar;
+                setNonWorkingDays(sNonWorkingDays?: number[]): sap.ui.unified.Calendar;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getPrimaryCalendarType" href="api/sap.ui.unified.Calendar#methods/getPrimaryCalendarType">primaryCalendarType</a>.</p><p>If set, the calendar type is used for display. If not set, the calendar type of the global configuration is used.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {sap.ui.core.CalendarType} sPrimaryCalendarType <p>New value for property <code>primaryCalendarType</code></p>
                  * @returns sap.ui.unified.Calendar <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setPrimaryCalendarType(sPrimaryCalendarType: sap.ui.core.CalendarType): sap.ui.unified.Calendar;
+                setPrimaryCalendarType(sPrimaryCalendarType?: sap.ui.core.CalendarType): sap.ui.unified.Calendar;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSecondaryCalendarType" href="api/sap.ui.unified.Calendar#methods/getSecondaryCalendarType">secondaryCalendarType</a>.</p><p>If set, the days are also displayed in this calendar type If not set, the dates are only displayed in the primary calendar type</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {sap.ui.core.CalendarType} sSecondaryCalendarType <p>New value for property <code>secondaryCalendarType</code></p>
                  * @returns sap.ui.unified.Calendar <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setSecondaryCalendarType(sSecondaryCalendarType: sap.ui.core.CalendarType): sap.ui.unified.Calendar;
+                setSecondaryCalendarType(sSecondaryCalendarType?: sap.ui.core.CalendarType): sap.ui.unified.Calendar;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getShowWeekNumbers" href="api/sap.ui.unified.Calendar#methods/getShowWeekNumbers">showWeekNumbers</a>.</p><p>Determines whether the week numbers in the months are displayed.</p><p><b>Note:</b> For Islamic calendars, the week numbers are not displayed regardless of what is set to this property.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                  * @param {boolean} bShowWeekNumbers <p>New value for property <code>showWeekNumbers</code></p>
                  * @returns sap.ui.unified.Calendar <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setShowWeekNumbers(bShowWeekNumbers: boolean): sap.ui.unified.Calendar;
+                setShowWeekNumbers(bShowWeekNumbers?: boolean): sap.ui.unified.Calendar;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSingleSelection" href="api/sap.ui.unified.Calendar#methods/getSingleSelection">singleSelection</a>.</p><p>If set, only a single date or interval, if intervalSelection is enabled, can be selected</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                  * @param {boolean} bSingleSelection <p>New value for property <code>singleSelection</code></p>
                  * @returns sap.ui.unified.Calendar <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setSingleSelection(bSingleSelection: boolean): sap.ui.unified.Calendar;
+                setSingleSelection(bSingleSelection?: boolean): sap.ui.unified.Calendar;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.unified.Calendar#methods/getWidth">width</a>.</p><p>Width of Calendar</p><p><b>Note:</b> There is a theme depending minimum width, so the calendar can not be set smaller.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
                  * @returns sap.ui.unified.Calendar <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setWidth(sWidth: sap.ui.core.CSSSize): sap.ui.unified.Calendar;
+                setWidth(sWidth?: sap.ui.core.CSSSize): sap.ui.unified.Calendar;
             }
             /**
              * <p>An appointment for use in a <code>PlanningCalendar</code> or similar. The rendering must be done in the Row collecting the appointments. (Because there are different visualizations possible.)</p><p>Applications could inherit from this element to add own fields.</p>
@@ -408,10 +408,20 @@ declare namespace sap {
                  */
                 constructor(sId?: string, mSettings?: any);
                 /**
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getColor" href="api/sap.ui.unified.DateTypeRange#methods/getColor">color</a>.</p><p>Background color of the <code>Calendar</code> <code>specialDates</code> aggregation. If set, this color will override the default background color defined in <code>Calendar</code> <code>specialDates</code> aggregation</p>
+                 * @returns sap.ui.core.CSSColor <p>Value of property <code>color</code></p>
+                 */
+                getColor(): sap.ui.core.CSSColor;
+                /**
                  * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getColor" href="api/sap.ui.unified.CalendarAppointment#methods/getColor">color</a>.</p><p>Overrides the color derived from the <code>type</code> property. This property will work only with full hex color with pound symbol, e.g.: #FF0000.</p>
                  * @returns sap.ui.core.CSSColor <p>Value of property <code>color</code></p>
                  */
                 getColor(): sap.ui.core.CSSColor;
+                /**
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getDescription" href="api/sap.ui.unified.CalendarAppointment#methods/getDescription">description</a>.</p><p>Description of the appointment.</p>
+                 * @returns string <p>Value of property <code>description</code></p>
+                 */
+                getDescription(): string;
                 /**
                  * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getIcon" href="api/sap.ui.unified.CalendarAppointment#methods/getIcon">icon</a>.</p><p>Icon of the Appointment. (e.g. picture of the person)</p><p>URI of an image or an icon registered in sap.ui.core.IconPool.</p>
                  * @returns sap.ui.core.URI <p>Value of property <code>icon</code></p>
@@ -443,35 +453,47 @@ declare namespace sap {
                  */
                 getTitle(): string;
                 /**
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getColor" href="api/sap.ui.unified.DateTypeRange#methods/getColor">color</a>.</p><p>Background color of the <code>Calendar</code> <code>specialDates</code> aggregation. If set, this color will override the default background color defined in <code>Calendar</code> <code>specialDates</code> aggregation</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+                 * @param {sap.ui.core.CSSColor} sColor <p>New value for property <code>color</code></p>
+                 * @returns sap.ui.unified.DateTypeRange <p>Reference to <code>this</code> in order to allow method chaining</p>
+                 */
+                setColor(sColor?: sap.ui.core.CSSColor): sap.ui.unified.DateTypeRange;
+                /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getColor" href="api/sap.ui.unified.CalendarAppointment#methods/getColor">color</a>.</p><p>Overrides the color derived from the <code>type</code> property. This property will work only with full hex color with pound symbol, e.g.: #FF0000.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {sap.ui.core.CSSColor} sColor <p>New value for property <code>color</code></p>
                  * @returns sap.ui.unified.CalendarAppointment <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setColor(sColor: sap.ui.core.CSSColor): sap.ui.unified.CalendarAppointment;
+                setColor(sColor?: sap.ui.core.CSSColor): sap.ui.unified.CalendarAppointment;
+                /**
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getDescription" href="api/sap.ui.unified.CalendarAppointment#methods/getDescription">description</a>.</p><p>Description of the appointment.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+                 * @param {string} sDescription <p>New value for property <code>description</code></p>
+                 * @returns sap.ui.unified.CalendarAppointment <p>Reference to <code>this</code> in order to allow method chaining</p>
+                 */
+                setDescription(sDescription: string): sap.ui.unified.CalendarAppointment;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getIcon" href="api/sap.ui.unified.CalendarAppointment#methods/getIcon">icon</a>.</p><p>Icon of the Appointment. (e.g. picture of the person)</p><p>URI of an image or an icon registered in sap.ui.core.IconPool.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {sap.ui.core.URI} sIcon <p>New value for property <code>icon</code></p>
                  * @returns sap.ui.unified.CalendarAppointment <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setIcon(sIcon: sap.ui.core.URI): sap.ui.unified.CalendarAppointment;
+                setIcon(sIcon?: sap.ui.core.URI): sap.ui.unified.CalendarAppointment;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getKey" href="api/sap.ui.unified.CalendarAppointment#methods/getKey">key</a>.</p><p>Can be used as identifier of the appointment</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {string} sKey <p>New value for property <code>key</code></p>
                  * @returns sap.ui.unified.CalendarAppointment <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setKey(sKey: string): sap.ui.unified.CalendarAppointment;
+                setKey(sKey?: string): sap.ui.unified.CalendarAppointment;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSelected" href="api/sap.ui.unified.CalendarAppointment#methods/getSelected">selected</a>.</p><p>Indicates if the icon is selected.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bSelected <p>New value for property <code>selected</code></p>
                  * @returns sap.ui.unified.CalendarAppointment <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setSelected(bSelected: boolean): sap.ui.unified.CalendarAppointment;
+                setSelected(bSelected?: boolean): sap.ui.unified.CalendarAppointment;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getTentative" href="api/sap.ui.unified.CalendarAppointment#methods/getTentative">tentative</a>.</p><p>Indicates if the icon is tentative.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bTentative <p>New value for property <code>tentative</code></p>
                  * @returns sap.ui.unified.CalendarAppointment <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setTentative(bTentative: boolean): sap.ui.unified.CalendarAppointment;
+                setTentative(bTentative?: boolean): sap.ui.unified.CalendarAppointment;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getText" href="api/sap.ui.unified.CalendarAppointment#methods/getText">text</a>.</p><p>Text of the appointment.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {string} sText <p>New value for property <code>text</code></p>
@@ -484,6 +506,40 @@ declare namespace sap {
                  * @returns sap.ui.unified.CalendarAppointment <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
                 setTitle(sTitle: string): sap.ui.unified.CalendarAppointment;
+            }
+            /**
+             * <p><p>Types of a calendar appointment display mode</p></p>
+             */
+            export enum CalendarAppointmentHeight {
+                /**
+                 * <p>Automatic display mode.</p>
+                 */
+                Automatic = "Automatic",
+                /**
+                 * <p>HalfSize display mode.</p>
+                 */
+                HalfSize = "HalfSize",
+                /**
+                 * <p>Large display mode.</p>
+                 */
+                Large = "Large",
+                /**
+                 * <p>Regular display mode.</p>
+                 */
+                Regular = "Regular",
+            }
+            /**
+             * <p><p>Types of a calendar appointment display mode</p></p>
+             */
+            export enum CalendarAppointmentRoundWidth {
+                /**
+                 * <p>Visually rounds the appointment to half a column.</p>
+                 */
+                HalfColumn = "HalfColumn",
+                /**
+                 * <p>No rounding is used.</p>
+                 */
+                None = "None",
             }
             /**
              * <p><p>Visualization types for <a target="_self" class="jsdoclink" href="api/sap.ui.unified.CalendarAppointment">sap.ui.unified.CalendarAppointment</a>.</p></p>
@@ -543,19 +599,19 @@ declare namespace sap {
                  * @param {number} iDays <p>New value for property <code>days</code></p>
                  * @returns sap.ui.unified.CalendarDateInterval <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setDays(iDays: number): sap.ui.unified.CalendarDateInterval;
+                setDays(iDays?: number): sap.ui.unified.CalendarDateInterval;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getPickerPopup" href="api/sap.ui.unified.CalendarDateInterval#methods/getPickerPopup">pickerPopup</a>.</p><p>If set, the month- and yearPicker opens on a popup</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bPickerPopup <p>New value for property <code>pickerPopup</code></p>
                  * @returns sap.ui.unified.CalendarDateInterval <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setPickerPopup(bPickerPopup: boolean): sap.ui.unified.CalendarDateInterval;
+                setPickerPopup(bPickerPopup?: boolean): sap.ui.unified.CalendarDateInterval;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getShowDayNamesLine" href="api/sap.ui.unified.CalendarDateInterval#methods/getShowDayNamesLine">showDayNamesLine</a>.</p><p>If set the day names are shown in a separate line. If not set the day names are shown inside the single days.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                  * @param {boolean} bShowDayNamesLine <p>New value for property <code>showDayNamesLine</code></p>
                  * @returns sap.ui.unified.CalendarDateInterval <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setShowDayNamesLine(bShowDayNamesLine: boolean): sap.ui.unified.CalendarDateInterval;
+                setShowDayNamesLine(bShowDayNamesLine?: boolean): sap.ui.unified.CalendarDateInterval;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getStartDate" href="api/sap.ui.unified.CalendarDateInterval#methods/getStartDate">startDate</a>.</p><p>Start date of the Interval</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {any} oStartDate <p>New value for property <code>startDate</code></p>
@@ -695,7 +751,7 @@ declare namespace sap {
                  */
                 destroyItems(): sap.ui.unified.CalendarLegend;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getColumnWidth" href="api/sap.ui.unified.CalendarLegend#methods/getColumnWidth">columnWidth</a>.</p><p>Defines the width of the created columns in which the items are arranged.</p><p>Default value is <code>120px</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getColumnWidth" href="api/sap.ui.unified.CalendarLegend#methods/getColumnWidth">columnWidth</a>.</p><p>Defines the width of the created columns in which the items are arranged.</p><p>Default value is <code>'120px'</code>.</p>
                  * @returns sap.ui.core.CSSSize <p>Value of property <code>columnWidth</code></p>
                  */
                 getColumnWidth(): sap.ui.core.CSSSize;
@@ -705,7 +761,7 @@ declare namespace sap {
                  */
                 getItems(): sap.ui.unified.CalendarLegendItem[];
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getStandardItems" href="api/sap.ui.unified.CalendarLegend#methods/getStandardItems">standardItems</a>.</p><p>Determines the standard items related to the calendar days, such as, today, selected, working and non-working. Values must be one of <code>sap.ui.unified.StandardCalendarLegendItem</code>. Note: for versions 1.50 and 1.52, this property was defined in the subclass <code>sap.m.PlanningCalendarLegend</code></p><p>Default value is <code>Today,Selected,WorkingDay,NonWorkingDay</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getStandardItems" href="api/sap.ui.unified.CalendarLegend#methods/getStandardItems">standardItems</a>.</p><p>Determines the standard items related to the calendar days, such as, today, selected, working and non-working. Values must be one of <code>sap.ui.unified.StandardCalendarLegendItem</code>. Note: for versions 1.50 and 1.52, this property was defined in the subclass <code>sap.m.PlanningCalendarLegend</code></p><p>Default value is <code>['Today', 'Selected', 'WorkingDay', 'NonWorkingDay']</code>.</p>
                  * @returns string[] <p>Value of property <code>standardItems</code></p>
                  */
                 getStandardItems(): string[];
@@ -734,17 +790,17 @@ declare namespace sap {
                  */
                 removeItem(vItem: number | string | sap.ui.unified.CalendarLegendItem): sap.ui.unified.CalendarLegendItem;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getColumnWidth" href="api/sap.ui.unified.CalendarLegend#methods/getColumnWidth">columnWidth</a>.</p><p>Defines the width of the created columns in which the items are arranged.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>120px</code>.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getColumnWidth" href="api/sap.ui.unified.CalendarLegend#methods/getColumnWidth">columnWidth</a>.</p><p>Defines the width of the created columns in which the items are arranged.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>'120px'</code>.</p>
                  * @param {sap.ui.core.CSSSize} sColumnWidth <p>New value for property <code>columnWidth</code></p>
                  * @returns sap.ui.unified.CalendarLegend <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setColumnWidth(sColumnWidth: sap.ui.core.CSSSize): sap.ui.unified.CalendarLegend;
+                setColumnWidth(sColumnWidth?: sap.ui.core.CSSSize): sap.ui.unified.CalendarLegend;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getStandardItems" href="api/sap.ui.unified.CalendarLegend#methods/getStandardItems">standardItems</a>.</p><p>Determines the standard items related to the calendar days, such as, today, selected, working and non-working. Values must be one of <code>sap.ui.unified.StandardCalendarLegendItem</code>. Note: for versions 1.50 and 1.52, this property was defined in the subclass <code>sap.m.PlanningCalendarLegend</code></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Today,Selected,WorkingDay,NonWorkingDay</code>.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getStandardItems" href="api/sap.ui.unified.CalendarLegend#methods/getStandardItems">standardItems</a>.</p><p>Determines the standard items related to the calendar days, such as, today, selected, working and non-working. Values must be one of <code>sap.ui.unified.StandardCalendarLegendItem</code>. Note: for versions 1.50 and 1.52, this property was defined in the subclass <code>sap.m.PlanningCalendarLegend</code></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>['Today', 'Selected', 'WorkingDay', 'NonWorkingDay']</code>.</p>
                  * @param {string[]} sStandardItems <p>New value for property <code>standardItems</code></p>
                  * @returns sap.ui.unified.CalendarLegend <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setStandardItems(sStandardItems: string[]): sap.ui.unified.CalendarLegend;
+                setStandardItems(sStandardItems?: string[]): sap.ui.unified.CalendarLegend;
             }
             /**
              * <p>Item to be displayed in a CalendarLegend.</p>
@@ -776,19 +832,19 @@ declare namespace sap {
                  * @param {sap.ui.core.CSSColor} sColor <p>New value for property <code>color</code></p>
                  * @returns sap.ui.unified.CalendarLegendItem <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setColor(sColor: sap.ui.core.CSSColor): sap.ui.unified.CalendarLegendItem;
+                setColor(sColor?: sap.ui.core.CSSColor): sap.ui.unified.CalendarLegendItem;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getText" href="api/sap.ui.unified.CalendarLegendItem#methods/getText">text</a>.</p><p>Text to be displayed for the item.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {string} sText <p>New value for property <code>text</code></p>
                  * @returns sap.ui.unified.CalendarLegendItem <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setText(sText: string): sap.ui.unified.CalendarLegendItem;
+                setText(sText?: string): sap.ui.unified.CalendarLegendItem;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getType" href="api/sap.ui.unified.CalendarLegendItem#methods/getType">type</a>.</p><p>Type of the item. If not set the type is automatically determined from the order of the items in the CalendarLegend.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>None</code>.</p>
                  * @param {sap.ui.unified.CalendarDayType} sType <p>New value for property <code>type</code></p>
                  * @returns sap.ui.unified.CalendarLegendItem <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setType(sType: sap.ui.unified.CalendarDayType): sap.ui.unified.CalendarLegendItem;
+                setType(sType?: sap.ui.unified.CalendarDayType): sap.ui.unified.CalendarLegendItem;
             }
             /**
              * <p>Calendar with granularity of months displayed in one line.</p><p><b>Note:</b> JavaScript Date objects are used to set and return the months, mark them as selected or as a special type. But the date part of the Date object is not used. If a Date object is returned the date will be set to the 1st of the corresponding month.</p>
@@ -1027,7 +1083,7 @@ declare namespace sap {
                  * @param {boolean} bIntervalSelection <p>New value for property <code>intervalSelection</code></p>
                  * @returns sap.ui.unified.CalendarMonthInterval <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setIntervalSelection(bIntervalSelection: boolean): sap.ui.unified.CalendarMonthInterval;
+                setIntervalSelection(bIntervalSelection?: boolean): sap.ui.unified.CalendarMonthInterval;
                 /**
                  * <p>Sets the associated <a target="_self" class="jsdoclink scrollToMethod" data-target="getLegend" href="api/sap.ui.unified.CalendarMonthInterval#methods/getLegend">legend</a>.</p>
                  * @param {sap.ui.core.ID | sap.ui.unified.CalendarLegend} oLegend <p>ID of an element which becomes the new target of this legend association; alternatively, an element instance may be given</p>
@@ -1039,31 +1095,31 @@ declare namespace sap {
                  * @param {any} oMaxDate <p>New value for property <code>maxDate</code></p>
                  * @returns sap.ui.unified.CalendarMonthInterval <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setMaxDate(oMaxDate: any): sap.ui.unified.CalendarMonthInterval;
+                setMaxDate(oMaxDate?: any): sap.ui.unified.CalendarMonthInterval;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getMinDate" href="api/sap.ui.unified.CalendarMonthInterval#methods/getMinDate">minDate</a>.</p><p>Minimum date that can be shown and selected in the Calendar. This must be a JavaScript date object.</p><p><b>Note:</b> If the <code>minDate</code> is set to be after the <code>maxDate</code>, the <code>maxDate</code> is set to the end of the month of the <code>minDate</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {any} oMinDate <p>New value for property <code>minDate</code></p>
                  * @returns sap.ui.unified.CalendarMonthInterval <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setMinDate(oMinDate: any): sap.ui.unified.CalendarMonthInterval;
+                setMinDate(oMinDate?: any): sap.ui.unified.CalendarMonthInterval;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getMonths" href="api/sap.ui.unified.CalendarMonthInterval#methods/getMonths">months</a>.</p><p>Number of months displayed</p><p><b>Note:</b> On phones, the maximum number of months displayed in the row is always 6.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>12</code>.</p>
                  * @param {number} iMonths <p>New value for property <code>months</code></p>
                  * @returns sap.ui.unified.CalendarMonthInterval <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setMonths(iMonths: number): sap.ui.unified.CalendarMonthInterval;
+                setMonths(iMonths?: number): sap.ui.unified.CalendarMonthInterval;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getPickerPopup" href="api/sap.ui.unified.CalendarMonthInterval#methods/getPickerPopup">pickerPopup</a>.</p><p>If set, the yearPicker opens on a popup</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bPickerPopup <p>New value for property <code>pickerPopup</code></p>
                  * @returns sap.ui.unified.CalendarMonthInterval <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setPickerPopup(bPickerPopup: boolean): sap.ui.unified.CalendarMonthInterval;
+                setPickerPopup(bPickerPopup?: boolean): sap.ui.unified.CalendarMonthInterval;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSingleSelection" href="api/sap.ui.unified.CalendarMonthInterval#methods/getSingleSelection">singleSelection</a>.</p><p>If set, only a single date or interval, if <code>intervalSelection</code> is enabled, can be selected</p><p><b>Note:</b> Selection of multiple intervals is not supported in the current version.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                  * @param {boolean} bSingleSelection <p>New value for property <code>singleSelection</code></p>
                  * @returns sap.ui.unified.CalendarMonthInterval <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setSingleSelection(bSingleSelection: boolean): sap.ui.unified.CalendarMonthInterval;
+                setSingleSelection(bSingleSelection?: boolean): sap.ui.unified.CalendarMonthInterval;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getStartDate" href="api/sap.ui.unified.CalendarMonthInterval#methods/getStartDate">startDate</a>.</p><p>Start date of the Interval as JavaScript Date object. The month of this Date will be the first month in the displayed row.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {any} oStartDate <p>New value for property <code>startDate</code></p>
@@ -1075,7 +1131,7 @@ declare namespace sap {
                  * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
                  * @returns sap.ui.unified.CalendarMonthInterval <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setWidth(sWidth: sap.ui.core.CSSSize): sap.ui.unified.CalendarMonthInterval;
+                setWidth(sWidth?: sap.ui.core.CSSSize): sap.ui.unified.CalendarMonthInterval;
             }
             /**
              * <p>A calendar row with a header and appointments. The Appointments will be placed in the defined interval.</p>
@@ -1212,15 +1268,20 @@ declare namespace sap {
                  */
                 focusNearestAppointment(oDate: any): sap.ui.unified.CalendarRow;
                 /**
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getAppointmentHeight" href="api/sap.ui.unified.CalendarRow#methods/getAppointmentHeight">appointmentHeight</a>.</p><p>Defines the height of the <code>CalendarAppoinment<code></p><p>Default value is <code>Regular</code>.</p>
+                 * @returns sap.ui.unified.CalendarAppointmentHeight <p>Value of property <code>appointmentHeight</code></p>
+                 */
+                getAppointmentHeight(): sap.ui.unified.CalendarAppointmentHeight;
+                /**
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getAppointmentRoundWidth" href="api/sap.ui.unified.CalendarRow#methods/getAppointmentRoundWidth">appointmentRoundWidth</a>.</p><p>Defines rounding of the width of <code>CalendarAppoinment<code> <b>Note:</b> This property is applied, when the calendar interval type is day and the view shows more than 20 days</p><p>Default value is <code>None</code>.</p>
+                 * @returns sap.ui.unified.CalendarAppointmentRoundWidth <p>Value of property <code>appointmentRoundWidth</code></p>
+                 */
+                getAppointmentRoundWidth(): sap.ui.unified.CalendarAppointmentRoundWidth;
+                /**
                  * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-target="getAppointments" href="api/sap.ui.unified.CalendarRow#methods/getAppointments">appointments</a>.</p><p>Appointments to be displayed in the row. Appointments outside the visible time frame are not rendered.</p><p><b>Note:</b> For performance reasons, only appointments in the visible time range or nearby should be assigned.</p>
                  * @returns sap.ui.unified.CalendarAppointment[] 
                  */
                 getAppointments(): sap.ui.unified.CalendarAppointment[];
-                /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getAppointmentsReducedHeight" href="api/sap.ui.unified.CalendarRow#methods/getAppointmentsReducedHeight">appointmentsReducedHeight</a>.</p><p>If set the appointments without text (only title) are rendered with a smaller height.</p><p><b>Note:</b> On phone devices this property is ignored, appointments are always rendered in full height to allow touching.</p><p>Default value is <code>false</code>.</p>
-                 * @returns boolean <p>Value of property <code>appointmentsReducedHeight</code></p>
-                 */
-                getAppointmentsReducedHeight(): boolean;
                 /**
                  * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getAppointmentsVisualization" href="api/sap.ui.unified.CalendarRow#methods/getAppointmentsVisualization">appointmentsVisualization</a>.</p><p>Defines the visualization of the <code>CalendarAppoinment</code></p><p><b>Note:</b> The real visualization depends on the used theme.</p><p>Default value is <code>Standard</code>.</p>
                  * @returns sap.ui.unified.CalendarAppointmentVisualization <p>Value of property <code>appointmentsVisualization</code></p>
@@ -1377,47 +1438,53 @@ declare namespace sap {
                  */
                 removeIntervalHeader(vIntervalHeader: number | string | sap.ui.unified.CalendarAppointment): sap.ui.unified.CalendarAppointment;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getAppointmentsReducedHeight" href="api/sap.ui.unified.CalendarRow#methods/getAppointmentsReducedHeight">appointmentsReducedHeight</a>.</p><p>If set the appointments without text (only title) are rendered with a smaller height.</p><p><b>Note:</b> On phone devices this property is ignored, appointments are always rendered in full height to allow touching.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
-                 * @param {boolean} bAppointmentsReducedHeight <p>New value for property <code>appointmentsReducedHeight</code></p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getAppointmentHeight" href="api/sap.ui.unified.CalendarRow#methods/getAppointmentHeight">appointmentHeight</a>.</p><p>Defines the height of the <code>CalendarAppoinment<code></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Regular</code>.</p>
+                 * @param {sap.ui.unified.CalendarAppointmentHeight} sAppointmentHeight <p>New value for property <code>appointmentHeight</code></p>
                  * @returns sap.ui.unified.CalendarRow <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setAppointmentsReducedHeight(bAppointmentsReducedHeight: boolean): sap.ui.unified.CalendarRow;
+                setAppointmentHeight(sAppointmentHeight?: sap.ui.unified.CalendarAppointmentHeight): sap.ui.unified.CalendarRow;
+                /**
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getAppointmentRoundWidth" href="api/sap.ui.unified.CalendarRow#methods/getAppointmentRoundWidth">appointmentRoundWidth</a>.</p><p>Defines rounding of the width of <code>CalendarAppoinment<code> <b>Note:</b> This property is applied, when the calendar interval type is day and the view shows more than 20 days</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>None</code>.</p>
+                 * @param {sap.ui.unified.CalendarAppointmentRoundWidth} sAppointmentRoundWidth <p>New value for property <code>appointmentRoundWidth</code></p>
+                 * @returns sap.ui.unified.CalendarRow <p>Reference to <code>this</code> in order to allow method chaining</p>
+                 */
+                setAppointmentRoundWidth(sAppointmentRoundWidth?: sap.ui.unified.CalendarAppointmentRoundWidth): sap.ui.unified.CalendarRow;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getAppointmentsVisualization" href="api/sap.ui.unified.CalendarRow#methods/getAppointmentsVisualization">appointmentsVisualization</a>.</p><p>Defines the visualization of the <code>CalendarAppoinment</code></p><p><b>Note:</b> The real visualization depends on the used theme.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Standard</code>.</p>
                  * @param {sap.ui.unified.CalendarAppointmentVisualization} sAppointmentsVisualization <p>New value for property <code>appointmentsVisualization</code></p>
                  * @returns sap.ui.unified.CalendarRow <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setAppointmentsVisualization(sAppointmentsVisualization: sap.ui.unified.CalendarAppointmentVisualization): sap.ui.unified.CalendarRow;
+                setAppointmentsVisualization(sAppointmentsVisualization?: sap.ui.unified.CalendarAppointmentVisualization): sap.ui.unified.CalendarRow;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getCheckResize" href="api/sap.ui.unified.CalendarRow#methods/getCheckResize">checkResize</a>.</p><p>If set, the <code>CalendarRow</code> checks for resize by itself.</p><p>If a lot of <code>CalendarRow</code> controls are used in one container control (like <code>PlanningCalendar</code>). the resize checks should be done only by this container control. Then the container control should call <code>handleResize</code> of the <code>CalendarRow</code> if a resize happens.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                  * @param {boolean} bCheckResize <p>New value for property <code>checkResize</code></p>
                  * @returns sap.ui.unified.CalendarRow <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setCheckResize(bCheckResize: boolean): sap.ui.unified.CalendarRow;
+                setCheckResize(bCheckResize?: boolean): sap.ui.unified.CalendarRow;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getGroupAppointmentsMode" href="api/sap.ui.unified.CalendarRow#methods/getGroupAppointmentsMode">groupAppointmentsMode</a>.</p><p>Defines the mode in which the overlapping appointments are displayed.</p><p><b>Note:</b> This property takes effect, only if the <code>intervalType</code> of the current calendar view is set to <code>sap.ui.unified.CalendarIntervalType.Month</code>. On phone devices this property is ignored, and the default value is applied.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Collapsed</code>.</p>
                  * @param {sap.ui.unified.GroupAppointmentsMode} sGroupAppointmentsMode <p>New value for property <code>groupAppointmentsMode</code></p>
                  * @returns sap.ui.unified.CalendarRow <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setGroupAppointmentsMode(sGroupAppointmentsMode: sap.ui.unified.GroupAppointmentsMode): sap.ui.unified.CalendarRow;
+                setGroupAppointmentsMode(sGroupAppointmentsMode?: sap.ui.unified.GroupAppointmentsMode): sap.ui.unified.CalendarRow;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHeight" href="api/sap.ui.unified.CalendarRow#methods/getHeight">height</a>.</p><p>Height of the row</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {sap.ui.core.CSSSize} sHeight <p>New value for property <code>height</code></p>
                  * @returns sap.ui.unified.CalendarRow <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setHeight(sHeight: sap.ui.core.CSSSize): sap.ui.unified.CalendarRow;
+                setHeight(sHeight?: sap.ui.core.CSSSize): sap.ui.unified.CalendarRow;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getIntervals" href="api/sap.ui.unified.CalendarRow#methods/getIntervals">intervals</a>.</p><p>Number of displayed intervals. The size of the intervals is defined with <code>intervalType</code></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>12</code>.</p>
                  * @param {number} iIntervals <p>New value for property <code>intervals</code></p>
                  * @returns sap.ui.unified.CalendarRow <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setIntervals(iIntervals: number): sap.ui.unified.CalendarRow;
+                setIntervals(iIntervals?: number): sap.ui.unified.CalendarRow;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getIntervalType" href="api/sap.ui.unified.CalendarRow#methods/getIntervalType">intervalType</a>.</p><p>Type of the intervals of the row. The default is one hour.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Hour</code>.</p>
                  * @param {sap.ui.unified.CalendarIntervalType} sIntervalType <p>New value for property <code>intervalType</code></p>
                  * @returns sap.ui.unified.CalendarRow <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setIntervalType(sIntervalType: sap.ui.unified.CalendarIntervalType): sap.ui.unified.CalendarRow;
+                setIntervalType(sIntervalType?: sap.ui.unified.CalendarIntervalType): sap.ui.unified.CalendarRow;
                 /**
                  * <p>Sets the associated <a target="_self" class="jsdoclink scrollToMethod" data-target="getLegend" href="api/sap.ui.unified.CalendarRow#methods/getLegend">legend</a>.</p>
                  * @param {sap.ui.core.ID | sap.ui.unified.CalendarLegend} oLegend <p>ID of an element which becomes the new target of this legend association; alternatively, an element instance may be given</p>
@@ -1429,31 +1496,31 @@ declare namespace sap {
                  * @param {number[]} sNonWorkingDays <p>New value for property <code>nonWorkingDays</code></p>
                  * @returns sap.ui.unified.CalendarRow <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setNonWorkingDays(sNonWorkingDays: number[]): sap.ui.unified.CalendarRow;
+                setNonWorkingDays(sNonWorkingDays?: number[]): sap.ui.unified.CalendarRow;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getNonWorkingHours" href="api/sap.ui.unified.CalendarRow#methods/getNonWorkingHours">nonWorkingHours</a>.</p><p>If set, the provided hours are displayed as non-working hours. Valid values inside the array are 0 to 23. (Other values will just be ignored.)</p><p><b>Note:</b> The non working hours are only visualized if <code>intervalType</code> is set to hour.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {number[]} sNonWorkingHours <p>New value for property <code>nonWorkingHours</code></p>
                  * @returns sap.ui.unified.CalendarRow <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setNonWorkingHours(sNonWorkingHours: number[]): sap.ui.unified.CalendarRow;
+                setNonWorkingHours(sNonWorkingHours?: number[]): sap.ui.unified.CalendarRow;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getShowEmptyIntervalHeaders" href="api/sap.ui.unified.CalendarRow#methods/getShowEmptyIntervalHeaders">showEmptyIntervalHeaders</a>.</p><p>If set, interval headers are shown even if no <code>intervalHeaders</code> are assigned to the visible time frame.</p><p>If not set, no interval headers are shown if no <code>intervalHeaders</code> are assigned.</p><p><b>Note:</b> This property is only used if <code>showIntervalHeaders</code> is set to true.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                  * @param {boolean} bShowEmptyIntervalHeaders <p>New value for property <code>showEmptyIntervalHeaders</code></p>
                  * @returns sap.ui.unified.CalendarRow <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setShowEmptyIntervalHeaders(bShowEmptyIntervalHeaders: boolean): sap.ui.unified.CalendarRow;
+                setShowEmptyIntervalHeaders(bShowEmptyIntervalHeaders?: boolean): sap.ui.unified.CalendarRow;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getShowIntervalHeaders" href="api/sap.ui.unified.CalendarRow#methods/getShowIntervalHeaders">showIntervalHeaders</a>.</p><p>If set, interval headers are shown like specified in <code>showEmptyIntervalHeaders</code>.</p><p>If not set, no interval headers are shown even if <code>intervalHeaders</code> are assigned.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                  * @param {boolean} bShowIntervalHeaders <p>New value for property <code>showIntervalHeaders</code></p>
                  * @returns sap.ui.unified.CalendarRow <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setShowIntervalHeaders(bShowIntervalHeaders: boolean): sap.ui.unified.CalendarRow;
+                setShowIntervalHeaders(bShowIntervalHeaders?: boolean): sap.ui.unified.CalendarRow;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getShowSubIntervals" href="api/sap.ui.unified.CalendarRow#methods/getShowSubIntervals">showSubIntervals</a>.</p><p>If set, subintervals are shown.</p><p>If the interval type is <code>Hour</code>, quarter hours are shown.</p><p>If the interval type is <code>Day</code>, hours are shown.</p><p>If the interval type is <code>Month</code>, days are shown.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bShowSubIntervals <p>New value for property <code>showSubIntervals</code></p>
                  * @returns sap.ui.unified.CalendarRow <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setShowSubIntervals(bShowSubIntervals: boolean): sap.ui.unified.CalendarRow;
+                setShowSubIntervals(bShowSubIntervals?: boolean): sap.ui.unified.CalendarRow;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getStartDate" href="api/sap.ui.unified.CalendarRow#methods/getStartDate">startDate</a>.</p><p>Start date, as JavaScript Date object, of the row. As default, the current date is used.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {any} oStartDate <p>New value for property <code>startDate</code></p>
@@ -1465,13 +1532,13 @@ declare namespace sap {
                  * @param {boolean} bUpdateCurrentTime <p>New value for property <code>updateCurrentTime</code></p>
                  * @returns sap.ui.unified.CalendarRow <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setUpdateCurrentTime(bUpdateCurrentTime: boolean): sap.ui.unified.CalendarRow;
+                setUpdateCurrentTime(bUpdateCurrentTime?: boolean): sap.ui.unified.CalendarRow;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.unified.CalendarRow#methods/getWidth">width</a>.</p><p>Width of the row</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
                  * @returns sap.ui.unified.CalendarRow <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setWidth(sWidth: sap.ui.core.CSSSize): sap.ui.unified.CalendarRow;
+                setWidth(sWidth?: sap.ui.core.CSSSize): sap.ui.unified.CalendarRow;
                 /**
                  * <p>If the current time is in the visible output of the <code>CalendarRow</code>, the indicator for the current time must be positioned.</p><p>For this, each <code>CalendarRow</code> can trigger a timer. But if multiple <code>CalendarRow</code>s are used in one container (e.G. <code>PlanningCalendar</code>), it is better if the container triggers the interval once and then calls this function of each <code>CalendarRow</code>.</p>
                  * @returns sap.ui.unified.CalendarRow <p><code>this</code> to allow method chaining</p>
@@ -1720,19 +1787,19 @@ declare namespace sap {
                  * @param {number} iIntervalMinutes <p>New value for property <code>intervalMinutes</code></p>
                  * @returns sap.ui.unified.CalendarTimeInterval <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setIntervalMinutes(iIntervalMinutes: number): sap.ui.unified.CalendarTimeInterval;
+                setIntervalMinutes(iIntervalMinutes?: number): sap.ui.unified.CalendarTimeInterval;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getIntervalSelection" href="api/sap.ui.unified.CalendarTimeInterval#methods/getIntervalSelection">intervalSelection</a>.</p><p>If set, interval selection is allowed</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bIntervalSelection <p>New value for property <code>intervalSelection</code></p>
                  * @returns sap.ui.unified.CalendarTimeInterval <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setIntervalSelection(bIntervalSelection: boolean): sap.ui.unified.CalendarTimeInterval;
+                setIntervalSelection(bIntervalSelection?: boolean): sap.ui.unified.CalendarTimeInterval;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getItems" href="api/sap.ui.unified.CalendarTimeInterval#methods/getItems">items</a>.</p><p>Number of time items displayed. Default is 12.</p><p><b>Note:</b> On phones, the maximum number of items displayed in the row is always 6.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>12</code>.</p>
                  * @param {number} iItems <p>New value for property <code>items</code></p>
                  * @returns sap.ui.unified.CalendarTimeInterval <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setItems(iItems: number): sap.ui.unified.CalendarTimeInterval;
+                setItems(iItems?: number): sap.ui.unified.CalendarTimeInterval;
                 /**
                  * <p>Sets the associated <a target="_self" class="jsdoclink scrollToMethod" data-target="getLegend" href="api/sap.ui.unified.CalendarTimeInterval#methods/getLegend">legend</a>.</p>
                  * @param {sap.ui.core.ID | sap.ui.unified.CalendarLegend} oLegend <p>ID of an element which becomes the new target of this legend association; alternatively, an element instance may be given</p>
@@ -1744,25 +1811,25 @@ declare namespace sap {
                  * @param {any} oMaxDate <p>New value for property <code>maxDate</code></p>
                  * @returns sap.ui.unified.CalendarTimeInterval <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setMaxDate(oMaxDate: any): sap.ui.unified.CalendarTimeInterval;
+                setMaxDate(oMaxDate?: any): sap.ui.unified.CalendarTimeInterval;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getMinDate" href="api/sap.ui.unified.CalendarTimeInterval#methods/getMinDate">minDate</a>.</p><p>Minimum date that can be shown and selected in the Calendar. This must be a JavaScript date object.</p><p><b>Note:</b> If the <code>minDate</code> is set to be after the <code>maxDate</code>, the <code>maxDate</code> is set to the end of the month of the <code>minDate</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {any} oMinDate <p>New value for property <code>minDate</code></p>
                  * @returns sap.ui.unified.CalendarTimeInterval <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setMinDate(oMinDate: any): sap.ui.unified.CalendarTimeInterval;
+                setMinDate(oMinDate?: any): sap.ui.unified.CalendarTimeInterval;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getPickerPopup" href="api/sap.ui.unified.CalendarTimeInterval#methods/getPickerPopup">pickerPopup</a>.</p><p>If set, the day-, month- and yearPicker opens on a popup</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bPickerPopup <p>New value for property <code>pickerPopup</code></p>
                  * @returns sap.ui.unified.CalendarTimeInterval <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setPickerPopup(bPickerPopup: boolean): sap.ui.unified.CalendarTimeInterval;
+                setPickerPopup(bPickerPopup?: boolean): sap.ui.unified.CalendarTimeInterval;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSingleSelection" href="api/sap.ui.unified.CalendarTimeInterval#methods/getSingleSelection">singleSelection</a>.</p><p>If set, only a single date or interval, if <code>intervalSelection</code> is enabled, can be selected</p><p><b>Note:</b> Selection of multiple intervals is not supported in the current version.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                  * @param {boolean} bSingleSelection <p>New value for property <code>singleSelection</code></p>
                  * @returns sap.ui.unified.CalendarTimeInterval <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setSingleSelection(bSingleSelection: boolean): sap.ui.unified.CalendarTimeInterval;
+                setSingleSelection(bSingleSelection?: boolean): sap.ui.unified.CalendarTimeInterval;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getStartDate" href="api/sap.ui.unified.CalendarTimeInterval#methods/getStartDate">startDate</a>.</p><p>Start date of the Interval as JavaScript Date object. The time interval corresponding to this Date and <code>items</code> and <code>intervalMinutes</code> will be the first time in the displayed row.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {any} oStartDate <p>New value for property <code>startDate</code></p>
@@ -1774,7 +1841,7 @@ declare namespace sap {
                  * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
                  * @returns sap.ui.unified.CalendarTimeInterval <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setWidth(sWidth: sap.ui.core.CSSSize): sap.ui.unified.CalendarTimeInterval;
+                setWidth(sWidth?: sap.ui.core.CSSSize): sap.ui.unified.CalendarTimeInterval;
             }
             /**
              * <p>Enables the user to select a color. The color can be defined using HEX, RGB, or HSV values or a CSS color name.</p><p><b>Note:</b> Keep in mind that this control needs either <code>sap.m</code> or <code>sap.ui.commons</code> library to be loaded in order to work as it depends on controls available in one or the other library.</p>
@@ -1859,7 +1926,7 @@ declare namespace sap {
                  * @param {string} sColorString <p>New value for property <code>colorString</code></p>
                  * @returns sap.ui.unified.ColorPicker <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setColorString(sColorString: string): sap.ui.unified.ColorPicker;
+                setColorString(sColorString?: string): sap.ui.unified.ColorPicker;
                 /**
                  * <p>Setter for <code>displayMode</code> property.</p>
                  * @param {sap.ui.unified.ColorPickerDisplayMode} sDisplayMode <p>control displayMode enum</p>
@@ -1964,19 +2031,19 @@ declare namespace sap {
                  * @param {string} sColorString <p>New value for property <code>colorString</code></p>
                  * @returns sap.ui.unified.ColorPickerPopover <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setColorString(sColorString: string): sap.ui.unified.ColorPickerPopover;
+                setColorString(sColorString?: string): sap.ui.unified.ColorPickerPopover;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getDisplayMode" href="api/sap.ui.unified.ColorPickerPopover#methods/getDisplayMode">displayMode</a>.</p><p>Determines the display mode of the <code>ColorPicker</code> among three types - Default, Large and Simplified</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Default</code>.</p>
                  * @param {sap.ui.unified.ColorPickerDisplayMode} sDisplayMode <p>New value for property <code>displayMode</code></p>
                  * @returns sap.ui.unified.ColorPickerPopover <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setDisplayMode(sDisplayMode: sap.ui.unified.ColorPickerDisplayMode): sap.ui.unified.ColorPickerPopover;
+                setDisplayMode(sDisplayMode?: sap.ui.unified.ColorPickerDisplayMode): sap.ui.unified.ColorPickerPopover;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getMode" href="api/sap.ui.unified.ColorPickerPopover#methods/getMode">mode</a>.</p><p>Determines the color mode of the <code>ColorPicker</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>HSV</code>.</p>
                  * @param {sap.ui.unified.ColorPickerMode} sMode <p>New value for property <code>mode</code></p>
                  * @returns sap.ui.unified.ColorPickerPopover <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setMode(sMode: sap.ui.unified.ColorPickerMode): sap.ui.unified.ColorPickerPopover;
+                setMode(sMode?: sap.ui.unified.ColorPickerMode): sap.ui.unified.ColorPickerPopover;
             }
             /**
              * <p>Switches between two control areas and animates it via CSS transitions</p>
@@ -2016,7 +2083,7 @@ declare namespace sap {
                  */
                 getActiveContent(): number;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getAnimation" href="api/sap.ui.unified.ContentSwitcher#methods/getAnimation">animation</a>.</p><p>Set the used animation when changing content. This just sets a CSS-class named "sapUiUnifiedACSwitcherAnimation" + this value on the root element of the control. The animation has to be implemented in CSS. This also enables applications to implement their own animations via CSS by reacting to the parent class. See the types sap.ui.unified.ContentSwitcherAnimation for default implementations.</p><p>Default value is <code>None</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getAnimation" href="api/sap.ui.unified.ContentSwitcher#methods/getAnimation">animation</a>.</p><p>Set the used animation when changing content. This just sets a CSS-class named "sapUiUnifiedACSwitcherAnimation" + this value on the root element of the control. The animation has to be implemented in CSS. This also enables applications to implement their own animations via CSS by reacting to the parent class. See the types sap.ui.unified.ContentSwitcherAnimation for default implementations.</p><p>Default value is <code>'None'</code>.</p>
                  * @returns string <p>Value of property <code>animation</code></p>
                  */
                 getAnimation(): string;
@@ -2083,13 +2150,13 @@ declare namespace sap {
                  * @param {number} iActiveContent <p>New value for property <code>activeContent</code></p>
                  * @returns sap.ui.unified.ContentSwitcher <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setActiveContent(iActiveContent: number): sap.ui.unified.ContentSwitcher;
+                setActiveContent(iActiveContent?: number): sap.ui.unified.ContentSwitcher;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getAnimation" href="api/sap.ui.unified.ContentSwitcher#methods/getAnimation">animation</a>.</p><p>Set the used animation when changing content. This just sets a CSS-class named "sapUiUnifiedACSwitcherAnimation" + this value on the root element of the control. The animation has to be implemented in CSS. This also enables applications to implement their own animations via CSS by reacting to the parent class. See the types sap.ui.unified.ContentSwitcherAnimation for default implementations.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>None</code>.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getAnimation" href="api/sap.ui.unified.ContentSwitcher#methods/getAnimation">animation</a>.</p><p>Set the used animation when changing content. This just sets a CSS-class named "sapUiUnifiedACSwitcherAnimation" + this value on the root element of the control. The animation has to be implemented in CSS. This also enables applications to implement their own animations via CSS by reacting to the parent class. See the types sap.ui.unified.ContentSwitcherAnimation for default implementations.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>'None'</code>.</p>
                  * @param {string} sAnimation <p>New value for property <code>animation</code></p>
                  * @returns sap.ui.unified.ContentSwitcher <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setAnimation(sAnimation: string): sap.ui.unified.ContentSwitcher;
+                setAnimation(sAnimation?: string): sap.ui.unified.ContentSwitcher;
                 /**
                  * <p>Changes the currently active content to the other one. If content 1 is active, content 2 will be activated and the other way around.</p>
                  */
@@ -2183,35 +2250,11 @@ declare namespace sap {
                  */
                 init(): void;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getCurrency" href="api/sap.ui.unified.Currency#methods/getCurrency">currency</a>.</p><p>Determines the displayed currency code (ISO 4217).</p><p><b>Note:</b> If a * character is set instead of currency code, only the character itself will be rendered, ignoring the <code>value</code> property.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
-                 * @param {string} sCurrency <p>New value for property <code>currency</code></p>
-                 * @returns sap.ui.unified.Currency <p>Reference to <code>this</code> in order to allow method chaining</p>
-                 */
-                setCurrency(sCurrency: string): sap.ui.unified.Currency;
-                /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getMaxPrecision" href="api/sap.ui.unified.Currency#methods/getMaxPrecision">maxPrecision</a>.</p><p>Defines the space that is available for the precision of the various currencies.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>3</code>.</p>
-                 * @param {number} iMaxPrecision <p>New value for property <code>maxPrecision</code></p>
-                 * @returns sap.ui.unified.Currency <p>Reference to <code>this</code> in order to allow method chaining</p>
-                 */
-                setMaxPrecision(iMaxPrecision: number): sap.ui.unified.Currency;
-                /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getStringValue" href="api/sap.ui.unified.Currency#methods/getStringValue">stringValue</a>.</p><p>Determines the currency value as a string.</p><p>String value is useful if you want to store really big values. If there are more than 21 digits before the decimal point or if the number starts with “0.” followed by more than five zeros, it is represented in exponential form. In these cases use the <code>stringValue</code> property to keep the number in decimal format.</p><p><b>Note:</b> If set, it will take precedence over the <code>value</code> property.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {string} sStringValue <p>New value for property <code>stringValue</code></p>
                  * @returns sap.ui.unified.Currency <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setStringValue(sStringValue: string): sap.ui.unified.Currency;
-                /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getUseSymbol" href="api/sap.ui.unified.Currency#methods/getUseSymbol">useSymbol</a>.</p><p>Displays the currency symbol instead of the ISO currency code.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
-                 * @param {boolean} bUseSymbol <p>New value for property <code>useSymbol</code></p>
-                 * @returns sap.ui.unified.Currency <p>Reference to <code>this</code> in order to allow method chaining</p>
-                 */
-                setUseSymbol(bUseSymbol: boolean): sap.ui.unified.Currency;
-                /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getValue" href="api/sap.ui.unified.Currency#methods/getValue">value</a>.</p><p>Determines the currency value.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
-                 * @param {number} fValue <p>New value for property <code>value</code></p>
-                 * @returns sap.ui.unified.Currency <p>Reference to <code>this</code> in order to allow method chaining</p>
-                 */
-                setValue(fValue: number): sap.ui.unified.Currency;
+                setStringValue(sStringValue?: string): sap.ui.unified.Currency;
             }
             /**
              * <p>Date range for use in DatePicker</p>
@@ -2238,13 +2281,13 @@ declare namespace sap {
                  * @param {any} oEndDate <p>New value for property <code>endDate</code></p>
                  * @returns sap.ui.unified.DateRange <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setEndDate(oEndDate: any): sap.ui.unified.DateRange;
+                setEndDate(oEndDate?: any): sap.ui.unified.DateRange;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getStartDate" href="api/sap.ui.unified.DateRange#methods/getStartDate">startDate</a>.</p><p>Start date for a date range. This must be a JavaScript date object.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {any} oStartDate <p>New value for property <code>startDate</code></p>
                  * @returns sap.ui.unified.DateRange <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setStartDate(oStartDate: any): sap.ui.unified.DateRange;
+                setStartDate(oStartDate?: any): sap.ui.unified.DateRange;
             }
             /**
              * <p>Date range with calendar day type information. Used to visualize special days in the Calendar.</p>
@@ -2257,16 +2300,38 @@ declare namespace sap {
                  */
                 constructor(sId?: string, mSettings?: any);
                 /**
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getColor" href="api/sap.ui.unified.DateTypeRange#methods/getColor">color</a>.</p><p>Background color of the <code>Calendar</code> <code>specialDates</code> aggregation. If set, this color will override the default background color defined in <code>Calendar</code> <code>specialDates</code> aggregation</p>
+                 * @returns sap.ui.core.CSSColor <p>Value of property <code>color</code></p>
+                 */
+                getColor(): sap.ui.core.CSSColor;
+                /**
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSecondaryType" href="api/sap.ui.unified.DateTypeRange#methods/getSecondaryType">secondaryType</a>.</p><p>Applies secondary <code>CalendarDayType</code> combined with the <code>CalendarDayType</code> type chosen. Allows <code>specialDates</code> to be also a <code>NonWorkingDay</code>. The secondary day type can only be used for <code>NonWorkingDay</code> or <code>None</code> calendar day types. In other cases it will not be visible.</p><p>Default value is <code>None</code>.</p>
+                 * @returns sap.ui.unified.CalendarDayType <p>Value of property <code>secondaryType</code></p>
+                 */
+                getSecondaryType(): sap.ui.unified.CalendarDayType;
+                /**
                  * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getType" href="api/sap.ui.unified.DateTypeRange#methods/getType">type</a>.</p><p>Type of the date range.</p><p>Default value is <code>Type01</code>.</p>
                  * @returns sap.ui.unified.CalendarDayType <p>Value of property <code>type</code></p>
                  */
                 getType(): sap.ui.unified.CalendarDayType;
                 /**
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getColor" href="api/sap.ui.unified.DateTypeRange#methods/getColor">color</a>.</p><p>Background color of the <code>Calendar</code> <code>specialDates</code> aggregation. If set, this color will override the default background color defined in <code>Calendar</code> <code>specialDates</code> aggregation</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+                 * @param {sap.ui.core.CSSColor} sColor <p>New value for property <code>color</code></p>
+                 * @returns sap.ui.unified.DateTypeRange <p>Reference to <code>this</code> in order to allow method chaining</p>
+                 */
+                setColor(sColor?: sap.ui.core.CSSColor): sap.ui.unified.DateTypeRange;
+                /**
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSecondaryType" href="api/sap.ui.unified.DateTypeRange#methods/getSecondaryType">secondaryType</a>.</p><p>Applies secondary <code>CalendarDayType</code> combined with the <code>CalendarDayType</code> type chosen. Allows <code>specialDates</code> to be also a <code>NonWorkingDay</code>. The secondary day type can only be used for <code>NonWorkingDay</code> or <code>None</code> calendar day types. In other cases it will not be visible.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>None</code>.</p>
+                 * @param {sap.ui.unified.CalendarDayType} sSecondaryType <p>New value for property <code>secondaryType</code></p>
+                 * @returns sap.ui.unified.DateTypeRange <p>Reference to <code>this</code> in order to allow method chaining</p>
+                 */
+                setSecondaryType(sSecondaryType?: sap.ui.unified.CalendarDayType): sap.ui.unified.DateTypeRange;
+                /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getType" href="api/sap.ui.unified.DateTypeRange#methods/getType">type</a>.</p><p>Type of the date range.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Type01</code>.</p>
                  * @param {sap.ui.unified.CalendarDayType} sType <p>New value for property <code>type</code></p>
                  * @returns sap.ui.unified.DateTypeRange <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setType(sType: sap.ui.unified.CalendarDayType): sap.ui.unified.DateTypeRange;
+                setType(sType?: sap.ui.unified.CalendarDayType): sap.ui.unified.DateTypeRange;
             }
             /**
              * <p>The framework generates an input field and a button with text "Browse ...". The API supports features such as on change uploads (the upload starts immediately after a file has been selected), file uploads with explicit calls, adjustable control sizes, text display after uploads, or tooltips containing complete file paths.</p>
@@ -2388,6 +2453,11 @@ declare namespace sap {
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
                 attachUploadStart(oData: any, fnFunction: Function, oListener?: any): sap.ui.unified.FileUploader;
+                /**
+                 * <p>Checks if the chosen file is readable.</p>
+                 * @returns Promise<any> <p>A promise that resolves successfully if the chosen file can be read and fails with an error message if it cannot</p>
+                 */
+                checkFileReadable(): Promise<any>;
                 /**
                  * <p>Clears the content of the <code>FileUploader</code>.</p><p><b>Note:</b> The attached additional data however is retained.</p>
                  * @returns sap.ui.unified.FileUploader <p>The <code>sap.ui.unified.FileUploader</code> instance</p>
@@ -2569,7 +2639,7 @@ declare namespace sap {
                  */
                 getEnabled(): boolean;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getFileType" href="api/sap.ui.unified.FileUploader#methods/getFileType">fileType</a>.</p><p>The chosen files will be checked against an array of file types.</p><p>If at least one file does not fit the file type restriction, the upload is prevented.</p><p>Example: <code>["jpg", "png", "bmp"]</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getFileType" href="api/sap.ui.unified.FileUploader#methods/getFileType">fileType</a>.</p><p>The chosen files will be checked against an array of file types.</p><p>If at least one file does not fit the file type restriction, the upload is prevented. <b>Note:</b> This property is not supported by Microsoft Edge.</p><p>Example: <code>["jpg", "png", "bmp"]</code>.</p>
                  * @returns string[] <p>Value of property <code>fileType</code></p>
                  */
                 getFileType(): string[];
@@ -2578,6 +2648,11 @@ declare namespace sap {
                  * @returns sap.ui.unified.FileUploaderParameter[] 
                  */
                 getHeaderParameters(): sap.ui.unified.FileUploaderParameter[];
+                /**
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHttpRequestMethod" href="api/sap.ui.unified.FileUploader#methods/getHttpRequestMethod">httpRequestMethod</a>.</p><p>Chosen HTTP request method for file upload.</p><p>Default value is <code>Post</code>.</p>
+                 * @returns sap.ui.unified.FileUploaderHttpRequestMethod <p>Value of property <code>httpRequestMethod</code></p>
+                 */
+                getHttpRequestMethod(): sap.ui.unified.FileUploaderHttpRequestMethod;
                 /**
                  * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getIcon" href="api/sap.ui.unified.FileUploader#methods/getIcon">icon</a>.</p><p>Icon to be displayed as graphical element within the button.</p><p>This can be a URI to an image or an icon font URI.</p><p>Default value is <code>empty string</code>.</p>
                  * @returns sap.ui.core.URI <p>Value of property <code>icon</code></p>
@@ -2614,7 +2689,7 @@ declare namespace sap {
                  */
                 getMaximumFileSize(): number;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getMimeType" href="api/sap.ui.unified.FileUploader#methods/getMimeType">mimeType</a>.</p><p>The chosen files will be checked against an array of mime types.</p><p>If at least one file does not fit the mime type restriction, the upload is prevented. <b>Note:</b> This property is not supported by Internet Explorer & Edge.</p><p>Example: <code>["image/png", "image/jpeg"]</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getMimeType" href="api/sap.ui.unified.FileUploader#methods/getMimeType">mimeType</a>.</p><p>The chosen files will be checked against an array of mime types.</p><p>If at least one file does not fit the mime type restriction, the upload is prevented. <b>Note:</b> This property is not supported by Internet Explorer & Microsoft Edge.</p><p>Example: <code>["image/png", "image/jpeg"]</code>.</p>
                  * @returns string[] <p>Value of property <code>mimeType</code></p>
                  */
                 getMimeType(): string[];
@@ -2774,157 +2849,163 @@ declare namespace sap {
                  * @param {string} sAdditionalData <p>New value for property <code>additionalData</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setAdditionalData(sAdditionalData: string): sap.ui.unified.FileUploader;
+                setAdditionalData(sAdditionalData?: string): sap.ui.unified.FileUploader;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getButtonOnly" href="api/sap.ui.unified.FileUploader#methods/getButtonOnly">buttonOnly</a>.</p><p>If set to "true", the <code>FileUploader</code> will be rendered as Button only, without showing the input field.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bButtonOnly <p>New value for property <code>buttonOnly</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setButtonOnly(bButtonOnly: boolean): sap.ui.unified.FileUploader;
+                setButtonOnly(bButtonOnly?: boolean): sap.ui.unified.FileUploader;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getButtonText" href="api/sap.ui.unified.FileUploader#methods/getButtonText">buttonText</a>.</p><p>The button's text can be overwritten using this property.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {string} sButtonText <p>New value for property <code>buttonText</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setButtonText(sButtonText: string): sap.ui.unified.FileUploader;
+                setButtonText(sButtonText?: string): sap.ui.unified.FileUploader;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getEnabled" href="api/sap.ui.unified.FileUploader#methods/getEnabled">enabled</a>.</p><p>Disabled controls have different colors, depending on customer settings.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                  * @param {boolean} bEnabled <p>New value for property <code>enabled</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setEnabled(bEnabled: boolean): sap.ui.unified.FileUploader;
+                setEnabled(bEnabled?: boolean): sap.ui.unified.FileUploader;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getFileType" href="api/sap.ui.unified.FileUploader#methods/getFileType">fileType</a>.</p><p>The chosen files will be checked against an array of file types.</p><p>If at least one file does not fit the file type restriction, the upload is prevented.</p><p>Example: <code>["jpg", "png", "bmp"]</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getFileType" href="api/sap.ui.unified.FileUploader#methods/getFileType">fileType</a>.</p><p>The chosen files will be checked against an array of file types.</p><p>If at least one file does not fit the file type restriction, the upload is prevented. <b>Note:</b> This property is not supported by Microsoft Edge.</p><p>Example: <code>["jpg", "png", "bmp"]</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {string[]} sFileType <p>New value for property <code>fileType</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setFileType(sFileType: string[]): sap.ui.unified.FileUploader;
+                setFileType(sFileType?: string[]): sap.ui.unified.FileUploader;
+                /**
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHttpRequestMethod" href="api/sap.ui.unified.FileUploader#methods/getHttpRequestMethod">httpRequestMethod</a>.</p><p>Chosen HTTP request method for file upload.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Post</code>.</p>
+                 * @param {sap.ui.unified.FileUploaderHttpRequestMethod} sHttpRequestMethod <p>New value for property <code>httpRequestMethod</code></p>
+                 * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
+                 */
+                setHttpRequestMethod(sHttpRequestMethod?: sap.ui.unified.FileUploaderHttpRequestMethod): sap.ui.unified.FileUploader;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getIcon" href="api/sap.ui.unified.FileUploader#methods/getIcon">icon</a>.</p><p>Icon to be displayed as graphical element within the button.</p><p>This can be a URI to an image or an icon font URI.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
                  * @param {sap.ui.core.URI} sIcon <p>New value for property <code>icon</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setIcon(sIcon: sap.ui.core.URI): sap.ui.unified.FileUploader;
+                setIcon(sIcon?: sap.ui.core.URI): sap.ui.unified.FileUploader;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getIconFirst" href="api/sap.ui.unified.FileUploader#methods/getIconFirst">iconFirst</a>.</p><p>If set to true (default), the display sequence is 1. icon 2. control text.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                  * @param {boolean} bIconFirst <p>New value for property <code>iconFirst</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setIconFirst(bIconFirst: boolean): sap.ui.unified.FileUploader;
+                setIconFirst(bIconFirst?: boolean): sap.ui.unified.FileUploader;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getIconHovered" href="api/sap.ui.unified.FileUploader#methods/getIconHovered">iconHovered</a>.</p><p>Icon to be displayed as graphical element within the button when it is hovered (only if also a base icon was specified).</p><p>If not specified, the base icon is used. If an icon font icon is used, this property is ignored.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
                  * @param {sap.ui.core.URI} sIconHovered <p>New value for property <code>iconHovered</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setIconHovered(sIconHovered: sap.ui.core.URI): sap.ui.unified.FileUploader;
+                setIconHovered(sIconHovered?: sap.ui.core.URI): sap.ui.unified.FileUploader;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getIconOnly" href="api/sap.ui.unified.FileUploader#methods/getIconOnly">iconOnly</a>.</p><p>If set to true, the button is displayed without any text.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bIconOnly <p>New value for property <code>iconOnly</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setIconOnly(bIconOnly: boolean): sap.ui.unified.FileUploader;
+                setIconOnly(bIconOnly?: boolean): sap.ui.unified.FileUploader;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getIconSelected" href="api/sap.ui.unified.FileUploader#methods/getIconSelected">iconSelected</a>.</p><p>Icon to be displayed as graphical element within the button when it is selected (only if also a base icon was specified).</p><p>If not specified, the base or hovered icon is used. If an icon font icon is used, this property is ignored.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
                  * @param {sap.ui.core.URI} sIconSelected <p>New value for property <code>iconSelected</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setIconSelected(sIconSelected: sap.ui.core.URI): sap.ui.unified.FileUploader;
+                setIconSelected(sIconSelected?: sap.ui.core.URI): sap.ui.unified.FileUploader;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getMaximumFilenameLength" href="api/sap.ui.unified.FileUploader#methods/getMaximumFilenameLength">maximumFilenameLength</a>.</p><p>The maximum length of a filename which the <code>FileUploader</code> will accept.</p><p>If the maximum filename length is exceeded, the corresponding event <code>filenameLengthExceed</code> is fired.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {number} iMaximumFilenameLength <p>New value for property <code>maximumFilenameLength</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setMaximumFilenameLength(iMaximumFilenameLength: number): sap.ui.unified.FileUploader;
+                setMaximumFilenameLength(iMaximumFilenameLength?: number): sap.ui.unified.FileUploader;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getMaximumFileSize" href="api/sap.ui.unified.FileUploader#methods/getMaximumFileSize">maximumFileSize</a>.</p><p>A file size limit in megabytes which prevents the upload if at least one file exceeds it.</p><p>This property is not supported by Internet Explorer 9.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {number} fMaximumFileSize <p>New value for property <code>maximumFileSize</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setMaximumFileSize(fMaximumFileSize: number): sap.ui.unified.FileUploader;
+                setMaximumFileSize(fMaximumFileSize?: number): sap.ui.unified.FileUploader;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getMimeType" href="api/sap.ui.unified.FileUploader#methods/getMimeType">mimeType</a>.</p><p>The chosen files will be checked against an array of mime types.</p><p>If at least one file does not fit the mime type restriction, the upload is prevented. <b>Note:</b> This property is not supported by Internet Explorer & Edge.</p><p>Example: <code>["image/png", "image/jpeg"]</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getMimeType" href="api/sap.ui.unified.FileUploader#methods/getMimeType">mimeType</a>.</p><p>The chosen files will be checked against an array of mime types.</p><p>If at least one file does not fit the mime type restriction, the upload is prevented. <b>Note:</b> This property is not supported by Internet Explorer & Microsoft Edge.</p><p>Example: <code>["image/png", "image/jpeg"]</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {string[]} sMimeType <p>New value for property <code>mimeType</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setMimeType(sMimeType: string[]): sap.ui.unified.FileUploader;
+                setMimeType(sMimeType?: string[]): sap.ui.unified.FileUploader;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getMultiple" href="api/sap.ui.unified.FileUploader#methods/getMultiple">multiple</a>.</p><p>Allows multiple files to be chosen and uploaded from the same folder.</p><p>This property is not supported by Internet Explorer 9.</p><p><b>Note:</b> Keep in mind that the various operating systems for mobile devices can react differently to the property so that fewer upload functions may be available in some cases.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bMultiple <p>New value for property <code>multiple</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setMultiple(bMultiple: boolean): sap.ui.unified.FileUploader;
+                setMultiple(bMultiple?: boolean): sap.ui.unified.FileUploader;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getName" href="api/sap.ui.unified.FileUploader#methods/getName">name</a>.</p><p>Unique control name for identification on the server side after sending data to the server.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {string} sName <p>New value for property <code>name</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setName(sName: string): sap.ui.unified.FileUploader;
+                setName(sName?: string): sap.ui.unified.FileUploader;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getPlaceholder" href="api/sap.ui.unified.FileUploader#methods/getPlaceholder">placeholder</a>.</p><p>Placeholder for the text field.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {string} sPlaceholder <p>New value for property <code>placeholder</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setPlaceholder(sPlaceholder: string): sap.ui.unified.FileUploader;
+                setPlaceholder(sPlaceholder?: string): sap.ui.unified.FileUploader;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSameFilenameAllowed" href="api/sap.ui.unified.FileUploader#methods/getSameFilenameAllowed">sameFilenameAllowed</a>.</p><p>If the FileUploader is configured to upload the file directly after the file is selected, it is not allowed to upload a file with the same name again. If a user should be allowed to upload a file with the same name again this parameter has to be "true".</p><p>A typical use case would be if the files have different paths.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bSameFilenameAllowed <p>New value for property <code>sameFilenameAllowed</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setSameFilenameAllowed(bSameFilenameAllowed: boolean): sap.ui.unified.FileUploader;
+                setSameFilenameAllowed(bSameFilenameAllowed?: boolean): sap.ui.unified.FileUploader;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSendXHR" href="api/sap.ui.unified.FileUploader#methods/getSendXHR">sendXHR</a>.</p><p>If set to "true", the request will be sent as XHR request instead of a form submit.</p><p>This property is not supported by Internet Explorer 9.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bSendXHR <p>New value for property <code>sendXHR</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setSendXHR(bSendXHR: boolean): sap.ui.unified.FileUploader;
+                setSendXHR(bSendXHR?: boolean): sap.ui.unified.FileUploader;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getStyle" href="api/sap.ui.unified.FileUploader#methods/getStyle">style</a>.</p><p>Style of the button.</p><p>Values "Transparent, "Accept", "Reject", or "Emphasized" are allowed.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {string} sStyle <p>New value for property <code>style</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setStyle(sStyle: string): sap.ui.unified.FileUploader;
+                setStyle(sStyle?: string): sap.ui.unified.FileUploader;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getUploadOnChange" href="api/sap.ui.unified.FileUploader#methods/getUploadOnChange">uploadOnChange</a>.</p><p>If set to "true", the upload immediately starts after file selection. With the default setting, the upload needs to be explicitly triggered.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bUploadOnChange <p>New value for property <code>uploadOnChange</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setUploadOnChange(bUploadOnChange: boolean): sap.ui.unified.FileUploader;
+                setUploadOnChange(bUploadOnChange?: boolean): sap.ui.unified.FileUploader;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getUploadUrl" href="api/sap.ui.unified.FileUploader#methods/getUploadUrl">uploadUrl</a>.</p><p>Used when URL address is on a remote server.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
                  * @param {sap.ui.core.URI} sUploadUrl <p>New value for property <code>uploadUrl</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setUploadUrl(sUploadUrl: sap.ui.core.URI): sap.ui.unified.FileUploader;
+                setUploadUrl(sUploadUrl?: sap.ui.core.URI): sap.ui.unified.FileUploader;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getUseMultipart" href="api/sap.ui.unified.FileUploader#methods/getUseMultipart">useMultipart</a>.</p><p>If set to "false", the request will be sent as file only request instead of a multipart/form-data request.</p><p>Only one file could be uploaded using this type of request. Required for sending such a request is to set the property <code>sendXHR</code> to "true". This property is not supported by Internet Explorer 9.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                  * @param {boolean} bUseMultipart <p>New value for property <code>useMultipart</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setUseMultipart(bUseMultipart: boolean): sap.ui.unified.FileUploader;
+                setUseMultipart(bUseMultipart?: boolean): sap.ui.unified.FileUploader;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getValue" href="api/sap.ui.unified.FileUploader#methods/getValue">value</a>.</p><p>Value of the path for file upload.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
                  * @param {string} sValue <p>New value for property <code>value</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setValue(sValue: string): sap.ui.unified.FileUploader;
+                setValue(sValue?: string): sap.ui.unified.FileUploader;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getValueState" href="api/sap.ui.unified.FileUploader#methods/getValueState">valueState</a>.</p><p>Visualizes warnings or errors related to the text field.</p><p>Possible values: Warning, Error, Success, None.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>None</code>.</p>
                  * @param {sap.ui.core.ValueState} sValueState <p>New value for property <code>valueState</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setValueState(sValueState: sap.ui.core.ValueState): sap.ui.unified.FileUploader;
+                setValueState(sValueState?: sap.ui.core.ValueState): sap.ui.unified.FileUploader;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getValueStateText" href="api/sap.ui.unified.FileUploader#methods/getValueStateText">valueStateText</a>.</p><p>Custom text for the value state message pop-up.</p><p><b>Note:</b> If not specified, a default text, based on the value state type, will be used instead.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {string} sValueStateText <p>New value for property <code>valueStateText</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setValueStateText(sValueStateText: string): sap.ui.unified.FileUploader;
+                setValueStateText(sValueStateText?: string): sap.ui.unified.FileUploader;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.unified.FileUploader#methods/getWidth">width</a>.</p><p>Specifies the displayed control width.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
                  * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
                  * @returns sap.ui.unified.FileUploader <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setWidth(sWidth: sap.ui.core.CSSSize): sap.ui.unified.FileUploader;
+                setWidth(sWidth?: sap.ui.core.CSSSize): sap.ui.unified.FileUploader;
                 /**
                  * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-target="getXhrSettings" href="api/sap.ui.unified.FileUploader#methods/getXhrSettings">xhrSettings</a>.</p>
                  * @param {sap.ui.unified.FileUploaderXHRSettings} oXhrSettings <p>The xhrSettings to set</p>
@@ -2936,6 +3017,19 @@ declare namespace sap {
                  * @param {boolean} bPreProcessFiles <p>Set to <code>true</code> to allow pre-processing of the files before sending the request. As a result, the <code>upload</code> method becomes asynchronous. See <a target="_self" class="jsdoclink" href="api/sap.ui.unified.IProcessableBlobs">sap.ui.unified.IProcessableBlobs</a> for more information. <b>Note:</b> This parameter is only taken into account when <code>sendXHR</code> is set to <code>true</code>.</p>
                  */
                 upload(bPreProcessFiles?: boolean): void;
+            }
+            /**
+             * <p><p>Types of HTTP request methods.</p></p>
+             */
+            export enum FileUploaderHttpRequestMethod {
+                /**
+                 * <p>HTTP request POST method.</p>
+                 */
+                Post = "Post",
+                /**
+                 * <p>HTTP request PUT method.</p>
+                 */
+                Put = "Put",
             }
             /**
              * <p>Represents a parameter for the FileUploader which is rendered as a hidden inputfield.</p>
@@ -2962,13 +3056,13 @@ declare namespace sap {
                  * @param {string} sName <p>New value for property <code>name</code></p>
                  * @returns sap.ui.unified.FileUploaderParameter <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setName(sName: string): sap.ui.unified.FileUploaderParameter;
+                setName(sName?: string): sap.ui.unified.FileUploaderParameter;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getValue" href="api/sap.ui.unified.FileUploaderParameter#methods/getValue">value</a>.</p><p>The value of the hidden inputfield.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {string} sValue <p>New value for property <code>value</code></p>
                  * @returns sap.ui.unified.FileUploaderParameter <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setValue(sValue: string): sap.ui.unified.FileUploaderParameter;
+                setValue(sValue?: string): sap.ui.unified.FileUploaderParameter;
             }
             /**
              * <p>Properties for the <code>XMLHttpRequest</code> object used for file uploads.</p>
@@ -2990,7 +3084,7 @@ declare namespace sap {
                  * @param {boolean} bWithCredentials <p>New value for property <code>withCredentials</code></p>
                  * @returns sap.ui.unified.FileUploaderXHRSettings <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setWithCredentials(bWithCredentials: boolean): sap.ui.unified.FileUploaderXHRSettings;
+                setWithCredentials(bWithCredentials?: boolean): sap.ui.unified.FileUploaderXHRSettings;
             }
             /**
              * <p><p>Types of display mode for overlapping appointments.</p></p>
@@ -3144,19 +3238,19 @@ declare namespace sap {
                  * @param {boolean} bEnabled <p>New value for property <code>enabled</code></p>
                  * @returns sap.ui.unified.Menu <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setEnabled(bEnabled: boolean): sap.ui.unified.Menu;
+                setEnabled(bEnabled?: boolean): sap.ui.unified.Menu;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getMaxVisibleItems" href="api/sap.ui.unified.Menu#methods/getMaxVisibleItems">maxVisibleItems</a>.</p><p>The maximum number of items which are displayed before an overflow mechanism takes effect. A value smaller than 1 means an infinite number of visible items. The overall height of the menu is limited by the height of the screen. If the maximum possible height is reached, an overflow takes effect, even if the maximum number of visible items is not yet reached.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
                  * @param {number} iMaxVisibleItems <p>New value for property <code>maxVisibleItems</code></p>
                  * @returns sap.ui.unified.Menu <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setMaxVisibleItems(iMaxVisibleItems: number): sap.ui.unified.Menu;
+                setMaxVisibleItems(iMaxVisibleItems?: number): sap.ui.unified.Menu;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getPageSize" href="api/sap.ui.unified.Menu#methods/getPageSize">pageSize</a>.</p><p>The keyboard can be used to navigate through the items of a menu. Beside the arrow keys for single steps and the <i>Home</i> / <i>End</i> keys for jumping to the first / last item, the <i>Page Up</i> / <i>Page Down</i> keys can be used to jump an arbitrary number of items up or down. This number can be defined via the <code>pageSize</code> property. For values smaller than 1, paging behaves in a similar way to when using the <i>Home</i> / <i>End</i> keys. If the value equals 1, the paging behavior is similar to that of the arrow keys.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>5</code>.</p>
                  * @param {number} iPageSize <p>New value for property <code>pageSize</code></p>
                  * @returns sap.ui.unified.Menu <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setPageSize(iPageSize: number): sap.ui.unified.Menu;
+                setPageSize(iPageSize?: number): sap.ui.unified.Menu;
             }
             /**
              * <p>Standard item to be used inside a menu. A menu item represents an action which can be selected by the user in the menu or it can provide a submenu to organize the actions hierarchically.</p>
@@ -3205,13 +3299,13 @@ declare namespace sap {
                  * @param {sap.ui.core.URI} sIcon <p>New value for property <code>icon</code></p>
                  * @returns sap.ui.unified.MenuItem <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setIcon(sIcon: sap.ui.core.URI): sap.ui.unified.MenuItem;
+                setIcon(sIcon?: sap.ui.core.URI): sap.ui.unified.MenuItem;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getText" href="api/sap.ui.unified.MenuItem#methods/getText">text</a>.</p><p>Defines the text which should be displayed on the item.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
                  * @param {string} sText <p>New value for property <code>text</code></p>
                  * @returns sap.ui.unified.MenuItem <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setText(sText: string): sap.ui.unified.MenuItem;
+                setText(sText?: string): sap.ui.unified.MenuItem;
             }
             /**
              * <p>Abstract base class for menu item which provides common properties and events for all concrete item implementations.</p>
@@ -3296,13 +3390,13 @@ declare namespace sap {
                  * @param {boolean} bEnabled <p>New value for property <code>enabled</code></p>
                  * @returns sap.ui.unified.MenuItemBase <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setEnabled(bEnabled: boolean): sap.ui.unified.MenuItemBase;
+                setEnabled(bEnabled?: boolean): sap.ui.unified.MenuItemBase;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getStartsSection" href="api/sap.ui.unified.MenuItemBase#methods/getStartsSection">startsSection</a>.</p><p>Defines whether a visual separator should be rendered before the item. <b>Note:</b> If an item is invisible also the separator of this item is not shown.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bStartsSection <p>New value for property <code>startsSection</code></p>
                  * @returns sap.ui.unified.MenuItemBase <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setStartsSection(bStartsSection: boolean): sap.ui.unified.MenuItemBase;
+                setStartsSection(bStartsSection?: boolean): sap.ui.unified.MenuItemBase;
                 /**
                  * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-target="getSubmenu" href="api/sap.ui.unified.MenuItemBase#methods/getSubmenu">submenu</a>.</p>
                  * @param {sap.ui.unified.Menu} oSubmenu <p>The submenu to set</p>
@@ -3314,7 +3408,7 @@ declare namespace sap {
                  * @param {boolean} bVisible <p>New value for property <code>visible</code></p>
                  * @returns sap.ui.unified.MenuItemBase <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setVisible(bVisible: boolean): sap.ui.unified.MenuItemBase;
+                setVisible(bVisible?: boolean): sap.ui.unified.MenuItemBase;
             }
             /**
              * <p>Special menu item which contains a label and a text field. This menu item is e.g. helpful for filter implementations. The aggregation <code>submenu</code> (inherited from parent class) is not supported for this type of menu item.</p>
@@ -3361,13 +3455,13 @@ declare namespace sap {
                  * @param {sap.ui.core.URI} sIcon <p>New value for property <code>icon</code></p>
                  * @returns sap.ui.unified.MenuTextFieldItem <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setIcon(sIcon: sap.ui.core.URI): sap.ui.unified.MenuTextFieldItem;
+                setIcon(sIcon?: sap.ui.core.URI): sap.ui.unified.MenuTextFieldItem;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getLabel" href="api/sap.ui.unified.MenuTextFieldItem#methods/getLabel">label</a>.</p><p>Defines the label of the text field of the item.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {string} sLabel <p>New value for property <code>label</code></p>
                  * @returns sap.ui.unified.MenuTextFieldItem <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setLabel(sLabel: string): sap.ui.unified.MenuTextFieldItem;
+                setLabel(sLabel?: string): sap.ui.unified.MenuTextFieldItem;
                 /**
                  * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-target="getSubmenu" href="api/sap.ui.unified.MenuItemBase#methods/getSubmenu">submenu</a>.</p>
                  * @param {sap.ui.unified.Menu} oSubmenu <p>The submenu to set</p>
@@ -3379,13 +3473,13 @@ declare namespace sap {
                  * @param {string} sValue <p>New value for property <code>value</code></p>
                  * @returns sap.ui.unified.MenuTextFieldItem <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setValue(sValue: string): sap.ui.unified.MenuTextFieldItem;
+                setValue(sValue?: string): sap.ui.unified.MenuTextFieldItem;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getValueState" href="api/sap.ui.unified.MenuTextFieldItem#methods/getValueState">valueState</a>.</p><p>Defines the value state of the text field of the item. This allows you to visualize e.g. warnings or errors.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>None</code>.</p>
                  * @param {sap.ui.core.ValueState} sValueState <p>New value for property <code>valueState</code></p>
                  * @returns sap.ui.unified.MenuTextFieldItem <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setValueState(sValueState: sap.ui.core.ValueState): sap.ui.unified.MenuTextFieldItem;
+                setValueState(sValueState?: sap.ui.core.ValueState): sap.ui.unified.MenuTextFieldItem;
             }
             /**
              * <p>The shell control is meant as root control (full-screen) of an application. It was build as root control of the Fiori Launchpad application and provides the basic capabilities for this purpose. Do not use this control within applications which run inside the Fiori Lauchpad and do not use it for other scenarios than the root control usecase.</p>
@@ -3614,7 +3708,7 @@ declare namespace sap {
                  * @param {sap.ui.core.URI} sIcon <p>New value for property <code>icon</code></p>
                  * @returns sap.ui.unified.Shell <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setIcon(sIcon: sap.ui.core.URI): sap.ui.unified.Shell;
+                setIcon(sIcon?: sap.ui.core.URI): sap.ui.unified.Shell;
                 /**
                  * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-target="getSearch" href="api/sap.ui.unified.Shell#methods/getSearch">search</a>.</p>
                  * @param {sap.ui.core.Control} oSearch <p>The search to set</p>
@@ -3626,7 +3720,7 @@ declare namespace sap {
                  * @param {boolean} bSearchVisible <p>New value for property <code>searchVisible</code></p>
                  * @returns sap.ui.unified.Shell <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setSearchVisible(bSearchVisible: boolean): sap.ui.unified.Shell;
+                setSearchVisible(bSearchVisible?: boolean): sap.ui.unified.Shell;
                 /**
                  * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-target="getUser" href="api/sap.ui.unified.Shell#methods/getUser">user</a>.</p>
                  * @param {sap.ui.unified.ShellHeadUserItem} oUser <p>The user to set</p>
@@ -3717,31 +3811,31 @@ declare namespace sap {
                  * @param {sap.ui.core.URI} sIcon <p>New value for property <code>icon</code></p>
                  * @returns sap.ui.unified.ShellHeadItem <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setIcon(sIcon: sap.ui.core.URI): sap.ui.unified.ShellHeadItem;
+                setIcon(sIcon?: sap.ui.core.URI): sap.ui.unified.ShellHeadItem;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSelected" href="api/sap.ui.unified.ShellHeadItem#methods/getSelected">selected</a>.</p><p>Defines the toggle state in case the item represents a toggle button (see also property <code>toggleEnabled</code>).</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bSelected <p>New value for property <code>selected</code></p>
                  * @returns sap.ui.unified.ShellHeadItem <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setSelected(bSelected: boolean): sap.ui.unified.ShellHeadItem;
+                setSelected(bSelected?: boolean): sap.ui.unified.ShellHeadItem;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getShowSeparator" href="api/sap.ui.unified.ShellHeadItem#methods/getShowSeparator">showSeparator</a>.</p><p>If set to true, a separator is displayed after the item.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                  * @param {boolean} bShowSeparator <p>New value for property <code>showSeparator</code></p>
                  * @returns sap.ui.unified.ShellHeadItem <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setShowSeparator(bShowSeparator: boolean): sap.ui.unified.ShellHeadItem;
+                setShowSeparator(bShowSeparator?: boolean): sap.ui.unified.ShellHeadItem;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getToggleEnabled" href="api/sap.ui.unified.ShellHeadItem#methods/getToggleEnabled">toggleEnabled</a>.</p><p>If set to true, the item represents a toggle button. The <code>selected</code> property can the be used to define the toggle state. Otherwise the item is displayed as action button. In this case the <code>selected</code> property is ignored.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                  * @param {boolean} bToggleEnabled <p>New value for property <code>toggleEnabled</code></p>
                  * @returns sap.ui.unified.ShellHeadItem <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setToggleEnabled(bToggleEnabled: boolean): sap.ui.unified.ShellHeadItem;
+                setToggleEnabled(bToggleEnabled?: boolean): sap.ui.unified.ShellHeadItem;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getVisible" href="api/sap.ui.unified.ShellHeadItem#methods/getVisible">visible</a>.</p><p>Invisible items are not shown on the UI.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                  * @param {boolean} bVisible <p>New value for property <code>visible</code></p>
                  * @returns sap.ui.unified.ShellHeadItem <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setVisible(bVisible: boolean): sap.ui.unified.ShellHeadItem;
+                setVisible(bVisible?: boolean): sap.ui.unified.ShellHeadItem;
             }
             /**
              * <p>User Header Action Item of the Shell.</p>
@@ -3816,19 +3910,19 @@ declare namespace sap {
                  * @param {sap.ui.core.URI} sImage <p>New value for property <code>image</code></p>
                  * @returns sap.ui.unified.ShellHeadUserItem <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setImage(sImage: sap.ui.core.URI): sap.ui.unified.ShellHeadUserItem;
+                setImage(sImage?: sap.ui.core.URI): sap.ui.unified.ShellHeadUserItem;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getShowPopupIndicator" href="api/sap.ui.unified.ShellHeadUserItem#methods/getShowPopupIndicator">showPopupIndicator</a>.</p><p>The user item is intended to be used for user settings. Normally these settings are done via a Menu or Dialog. If this property is set to true an indicator for such a popup mechanismn is shown in the item.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                  * @param {boolean} bShowPopupIndicator <p>New value for property <code>showPopupIndicator</code></p>
                  * @returns sap.ui.unified.ShellHeadUserItem <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setShowPopupIndicator(bShowPopupIndicator: boolean): sap.ui.unified.ShellHeadUserItem;
+                setShowPopupIndicator(bShowPopupIndicator?: boolean): sap.ui.unified.ShellHeadUserItem;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getUsername" href="api/sap.ui.unified.ShellHeadUserItem#methods/getUsername">username</a>.</p><p>The name of the user.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
                  * @param {string} sUsername <p>New value for property <code>username</code></p>
                  * @returns sap.ui.unified.ShellHeadUserItem <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setUsername(sUsername: string): sap.ui.unified.ShellHeadUserItem;
+                setUsername(sUsername?: string): sap.ui.unified.ShellHeadUserItem;
             }
             /**
              * <p>The shell layout is the base for the shell control which is meant as root control (full-screen) of an application. It was build as root control of the Fiori Launchpad application and provides the basic capabilities for this purpose. Do not use this control within applications which run inside the Fiori Lauchpad and do not use it for other scenarios than the root control usecase.</p>
@@ -3956,19 +4050,19 @@ declare namespace sap {
                  * @param {boolean} bHeaderHiding <p>New value for property <code>headerHiding</code></p>
                  * @returns sap.ui.unified.ShellLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setHeaderHiding(bHeaderHiding: boolean): sap.ui.unified.ShellLayout;
+                setHeaderHiding(bHeaderHiding?: boolean): sap.ui.unified.ShellLayout;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHeaderVisible" href="api/sap.ui.unified.ShellLayout#methods/getHeaderVisible">headerVisible</a>.</p><p>If set to false, no header (and no items, search, ...) is shown.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                  * @param {boolean} bHeaderVisible <p>New value for property <code>headerVisible</code></p>
                  * @returns sap.ui.unified.ShellLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setHeaderVisible(bHeaderVisible: boolean): sap.ui.unified.ShellLayout;
+                setHeaderVisible(bHeaderVisible?: boolean): sap.ui.unified.ShellLayout;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getShowPane" href="api/sap.ui.unified.ShellLayout#methods/getShowPane">showPane</a>.</p><p>Shows / Hides the side pane.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bShowPane <p>New value for property <code>showPane</code></p>
                  * @returns sap.ui.unified.ShellLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setShowPane(bShowPane: boolean): sap.ui.unified.ShellLayout;
+                setShowPane(bShowPane?: boolean): sap.ui.unified.ShellLayout;
             }
             /**
              * <p>ShellOverlay to be opened in front of an sap.ui.unified.Shell</p>
@@ -4147,7 +4241,7 @@ declare namespace sap {
                  */
                 getSecondaryContent(): sap.ui.core.Control[];
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSecondaryContentSize" href="api/sap.ui.unified.SplitContainer#methods/getSecondaryContentSize">secondaryContentSize</a>.</p><p>The width if the secondary content. The height is always 100%.</p><p>Default value is <code>250px</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSecondaryContentSize" href="api/sap.ui.unified.SplitContainer#methods/getSecondaryContentSize">secondaryContentSize</a>.</p><p>The width if the secondary content. The height is always 100%.</p><p>Default value is <code>'250px'</code>.</p>
                  * @returns sap.ui.core.CSSSize <p>Value of property <code>secondaryContentSize</code></p>
                  */
                 getSecondaryContentSize(): sap.ui.core.CSSSize;
@@ -4209,19 +4303,19 @@ declare namespace sap {
                  * @param {sap.ui.core.Orientation} sOrientation <p>New value for property <code>orientation</code></p>
                  * @returns sap.ui.unified.SplitContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setOrientation(sOrientation: sap.ui.core.Orientation): sap.ui.unified.SplitContainer;
+                setOrientation(sOrientation?: sap.ui.core.Orientation): sap.ui.unified.SplitContainer;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSecondaryContentSize" href="api/sap.ui.unified.SplitContainer#methods/getSecondaryContentSize">secondaryContentSize</a>.</p><p>The width if the secondary content. The height is always 100%.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>250px</code>.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSecondaryContentSize" href="api/sap.ui.unified.SplitContainer#methods/getSecondaryContentSize">secondaryContentSize</a>.</p><p>The width if the secondary content. The height is always 100%.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>'250px'</code>.</p>
                  * @param {sap.ui.core.CSSSize} sSecondaryContentSize <p>New value for property <code>secondaryContentSize</code></p>
                  * @returns sap.ui.unified.SplitContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setSecondaryContentSize(sSecondaryContentSize: sap.ui.core.CSSSize): sap.ui.unified.SplitContainer;
+                setSecondaryContentSize(sSecondaryContentSize?: sap.ui.core.CSSSize): sap.ui.unified.SplitContainer;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getShowSecondaryContent" href="api/sap.ui.unified.SplitContainer#methods/getShowSecondaryContent">showSecondaryContent</a>.</p><p>Shows / Hides the secondary area.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {boolean} bShowSecondaryContent <p>New value for property <code>showSecondaryContent</code></p>
                  * @returns sap.ui.unified.SplitContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setShowSecondaryContent(bShowSecondaryContent: boolean): sap.ui.unified.SplitContainer;
+                setShowSecondaryContent(bShowSecondaryContent?: boolean): sap.ui.unified.SplitContainer;
             }
             /**
              * <p><p>Standard day types visualized in a <a target="_self" class="jsdoclink" href="api/sap.m.PlanningCalendarLegend">sap.m.PlanningCalendarLegend</a>, which correspond to days in a <a target="_self" class="jsdoclink" href="api/sap.ui.unified.Calendar">sap.ui.unified.Calendar</a>.</p></p>
@@ -4308,13 +4402,13 @@ declare namespace sap {
                      * @param {number} iDays <p>New value for property <code>days</code></p>
                      * @returns sap.ui.unified.calendar.DatesRow <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setDays(iDays: number): sap.ui.unified.calendar.DatesRow;
+                    setDays(iDays?: number): sap.ui.unified.calendar.DatesRow;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getShowDayNamesLine" href="api/sap.ui.unified.calendar.DatesRow#methods/getShowDayNamesLine">showDayNamesLine</a>.</p><p>If set the day names are shown in a separate line. If not set the day names are shown inside the single days.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                      * @param {boolean} bShowDayNamesLine <p>New value for property <code>showDayNamesLine</code></p>
                      * @returns sap.ui.unified.calendar.DatesRow <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setShowDayNamesLine(bShowDayNamesLine: boolean): sap.ui.unified.calendar.DatesRow;
+                    setShowDayNamesLine(bShowDayNamesLine?: boolean): sap.ui.unified.calendar.DatesRow;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getStartDate" href="api/sap.ui.unified.calendar.DatesRow#methods/getStartDate">startDate</a>.</p><p>Start date of the row If in rendering phase the date property is not in the range startDate + days, it is set to the start date So after setting the start date the date should be set to be in the range of the start date</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                      * @param {any} oStartDate <p>New value for property <code>startDate</code></p>
@@ -4548,13 +4642,13 @@ declare namespace sap {
                      * @param {boolean} bEnabledNext <p>New value for property <code>enabledNext</code></p>
                      * @returns sap.ui.unified.calendar.Header <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setEnabledNext(bEnabledNext: boolean): sap.ui.unified.calendar.Header;
+                    setEnabledNext(bEnabledNext?: boolean): sap.ui.unified.calendar.Header;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getEnabledPrevious" href="api/sap.ui.unified.calendar.Header#methods/getEnabledPrevious">enabledPrevious</a>.</p><p>Enables the previous button</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                      * @param {boolean} bEnabledPrevious <p>New value for property <code>enabledPrevious</code></p>
                      * @returns sap.ui.unified.calendar.Header <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setEnabledPrevious(bEnabledPrevious: boolean): sap.ui.unified.calendar.Header;
+                    setEnabledPrevious(bEnabledPrevious?: boolean): sap.ui.unified.calendar.Header;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getTextButton0" href="api/sap.ui.unified.calendar.Header#methods/getTextButton0">textButton0</a>.</p><p>Text of the first button (normally day)</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                      * @param {string} sTextButton0 <p>New value for property <code>textButton0</code></p>
@@ -4578,19 +4672,19 @@ declare namespace sap {
                      * @param {boolean} bVisibleButton0 <p>New value for property <code>visibleButton0</code></p>
                      * @returns sap.ui.unified.calendar.Header <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setVisibleButton0(bVisibleButton0: boolean): sap.ui.unified.calendar.Header;
+                    setVisibleButton0(bVisibleButton0?: boolean): sap.ui.unified.calendar.Header;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getVisibleButton1" href="api/sap.ui.unified.calendar.Header#methods/getVisibleButton1">visibleButton1</a>.</p><p>If set, the second button will be displayed</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                      * @param {boolean} bVisibleButton1 <p>New value for property <code>visibleButton1</code></p>
                      * @returns sap.ui.unified.calendar.Header <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setVisibleButton1(bVisibleButton1: boolean): sap.ui.unified.calendar.Header;
+                    setVisibleButton1(bVisibleButton1?: boolean): sap.ui.unified.calendar.Header;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getVisibleButton2" href="api/sap.ui.unified.calendar.Header#methods/getVisibleButton2">visibleButton2</a>.</p><p>If set, the third button will be displayed</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                      * @param {boolean} bVisibleButton2 <p>New value for property <code>visibleButton2</code></p>
                      * @returns sap.ui.unified.calendar.Header <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setVisibleButton2(bVisibleButton2: boolean): sap.ui.unified.calendar.Header;
+                    setVisibleButton2(bVisibleButton2?: boolean): sap.ui.unified.calendar.Header;
                 }
                 /**
                  * <p>renders a month with ItemNavigation This is used inside the calendar. Not for stand alone usage If used inside the calendar the properties and aggregation are directly taken from the parent (To not duplicate and sync DateRanges and so on...)</p>
@@ -4711,7 +4805,7 @@ declare namespace sap {
                      */
                     protected fireSelect(mParameters?: any): sap.ui.unified.calendar.Month;
                     /**
-                     * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="weekNumberSelect" href="api/sap.ui.unified.calendar.Month#events/weekNumberSelect">weekNumberSelect</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by using the <code>preventDefault</code>-method on the event object.</p>
+                     * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="weekNumberSelect" href="api/sap.ui.unified.calendar.Month#events/weekNumberSelect">weekNumberSelect</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by calling the <code>preventDefault</code> method on the event object. The return value of this method indicates whether the default action should be executed.</p>
                      * @param {any} mParameters <p>Parameters to pass along with the event</p>
                      * @returns boolean <p>Whether or not to prevent the default action</p>
                      */
@@ -4885,13 +4979,13 @@ declare namespace sap {
                      * @param {number} iFirstDayOfWeek <p>New value for property <code>firstDayOfWeek</code></p>
                      * @returns sap.ui.unified.calendar.Month <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setFirstDayOfWeek(iFirstDayOfWeek: number): sap.ui.unified.calendar.Month;
+                    setFirstDayOfWeek(iFirstDayOfWeek?: number): sap.ui.unified.calendar.Month;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getIntervalSelection" href="api/sap.ui.unified.calendar.Month#methods/getIntervalSelection">intervalSelection</a>.</p><p>If set, interval selection is allowed</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                      * @param {boolean} bIntervalSelection <p>New value for property <code>intervalSelection</code></p>
                      * @returns sap.ui.unified.calendar.Month <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setIntervalSelection(bIntervalSelection: boolean): sap.ui.unified.calendar.Month;
+                    setIntervalSelection(bIntervalSelection?: boolean): sap.ui.unified.calendar.Month;
                     /**
                      * <p>Sets the associated <a target="_self" class="jsdoclink scrollToMethod" data-target="getLegend" href="api/sap.ui.unified.calendar.Month#methods/getLegend">legend</a>.</p>
                      * @param {sap.ui.core.ID | sap.ui.unified.CalendarLegend} oLegend <p>ID of an element which becomes the new target of this legend association; alternatively, an element instance may be given</p>
@@ -4903,7 +4997,7 @@ declare namespace sap {
                      * @param {number[]} sNonWorkingDays <p>New value for property <code>nonWorkingDays</code></p>
                      * @returns sap.ui.unified.calendar.Month <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setNonWorkingDays(sNonWorkingDays: number[]): sap.ui.unified.calendar.Month;
+                    setNonWorkingDays(sNonWorkingDays?: number[]): sap.ui.unified.calendar.Month;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getPrimaryCalendarType" href="api/sap.ui.unified.calendar.Month#methods/getPrimaryCalendarType">primaryCalendarType</a>.</p><p>If set, the calendar type is used for display. If not set, the calendar type of the global configuration is used.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                      * @param {sap.ui.core.CalendarType} sPrimaryCalendarType <p>New value for property <code>primaryCalendarType</code></p>
@@ -4921,25 +5015,25 @@ declare namespace sap {
                      * @param {boolean} bShowHeader <p>New value for property <code>showHeader</code></p>
                      * @returns sap.ui.unified.calendar.Month <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setShowHeader(bShowHeader: boolean): sap.ui.unified.calendar.Month;
+                    setShowHeader(bShowHeader?: boolean): sap.ui.unified.calendar.Month;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getShowWeekNumbers" href="api/sap.ui.unified.calendar.Month#methods/getShowWeekNumbers">showWeekNumbers</a>.</p><p>Determines whether the week numbers in the months are displayed.</p><p><b>Note:</b> For Islamic calendars, the week numbers are not displayed regardless of what is set to this property.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                      * @param {boolean} bShowWeekNumbers <p>New value for property <code>showWeekNumbers</code></p>
                      * @returns sap.ui.unified.calendar.Month <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setShowWeekNumbers(bShowWeekNumbers: boolean): sap.ui.unified.calendar.Month;
+                    setShowWeekNumbers(bShowWeekNumbers?: boolean): sap.ui.unified.calendar.Month;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSingleSelection" href="api/sap.ui.unified.calendar.Month#methods/getSingleSelection">singleSelection</a>.</p><p>If set, only a single date or interval, if intervalSelection is enabled, can be selected</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                      * @param {boolean} bSingleSelection <p>New value for property <code>singleSelection</code></p>
                      * @returns sap.ui.unified.calendar.Month <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setSingleSelection(bSingleSelection: boolean): sap.ui.unified.calendar.Month;
+                    setSingleSelection(bSingleSelection?: boolean): sap.ui.unified.calendar.Month;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.unified.calendar.Month#methods/getWidth">width</a>.</p><p>Width of Month</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                      * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
                      * @returns sap.ui.unified.calendar.Month <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setWidth(sWidth: sap.ui.core.CSSSize): sap.ui.unified.calendar.Month;
+                    setWidth(sWidth?: sap.ui.core.CSSSize): sap.ui.unified.calendar.Month;
                 }
                 /**
                  * <p>renders a MonthPicker with ItemNavigation This is used inside the calendar. Not for stand alone usage</p>
@@ -5073,13 +5167,13 @@ declare namespace sap {
                      * @param {number} iColumns <p>New value for property <code>columns</code></p>
                      * @returns sap.ui.unified.calendar.MonthPicker <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setColumns(iColumns: number): sap.ui.unified.calendar.MonthPicker;
+                    setColumns(iColumns?: number): sap.ui.unified.calendar.MonthPicker;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getIntervalSelection" href="api/sap.ui.unified.calendar.MonthPicker#methods/getIntervalSelection">intervalSelection</a>.</p><p>If set, interval selection is allowed</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                      * @param {boolean} bIntervalSelection <p>New value for property <code>intervalSelection</code></p>
                      * @returns sap.ui.unified.calendar.MonthPicker <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setIntervalSelection(bIntervalSelection: boolean): sap.ui.unified.calendar.MonthPicker;
+                    setIntervalSelection(bIntervalSelection?: boolean): sap.ui.unified.calendar.MonthPicker;
                     /**
                      * <p>sets a minimum and maximum month</p>
                      * @param {number} iMin <p>minimum month as integer (starting with 0)</p>
@@ -5092,13 +5186,13 @@ declare namespace sap {
                      * @param {number} iMonth <p>New value for property <code>month</code></p>
                      * @returns sap.ui.unified.calendar.MonthPicker <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setMonth(iMonth: number): sap.ui.unified.calendar.MonthPicker;
+                    setMonth(iMonth?: number): sap.ui.unified.calendar.MonthPicker;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getMonths" href="api/sap.ui.unified.calendar.MonthPicker#methods/getMonths">months</a>.</p><p>number of displayed months The value must be between 1 and 12</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>12</code>.</p>
                      * @param {number} iMonths <p>New value for property <code>months</code></p>
                      * @returns sap.ui.unified.calendar.MonthPicker <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setMonths(iMonths: number): sap.ui.unified.calendar.MonthPicker;
+                    setMonths(iMonths?: number): sap.ui.unified.calendar.MonthPicker;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getPrimaryCalendarType" href="api/sap.ui.unified.calendar.MonthPicker#methods/getPrimaryCalendarType">primaryCalendarType</a>.</p><p>If set, the calendar type is used for display. If not set, the calendar type of the global configuration is used.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                      * @param {sap.ui.core.CalendarType} sPrimaryCalendarType <p>New value for property <code>primaryCalendarType</code></p>
@@ -5318,7 +5412,7 @@ declare namespace sap {
                      * @param {boolean} bIntervalSelection <p>New value for property <code>intervalSelection</code></p>
                      * @returns sap.ui.unified.calendar.MonthsRow <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setIntervalSelection(bIntervalSelection: boolean): sap.ui.unified.calendar.MonthsRow;
+                    setIntervalSelection(bIntervalSelection?: boolean): sap.ui.unified.calendar.MonthsRow;
                     /**
                      * <p>Sets the associated <a target="_self" class="jsdoclink scrollToMethod" data-target="getLegend" href="api/sap.ui.unified.calendar.MonthsRow#methods/getLegend">legend</a>.</p>
                      * @param {sap.ui.core.ID | sap.ui.unified.CalendarLegend} oLegend <p>ID of an element which becomes the new target of this legend association; alternatively, an element instance may be given</p>
@@ -5330,19 +5424,19 @@ declare namespace sap {
                      * @param {number} iMonths <p>New value for property <code>months</code></p>
                      * @returns sap.ui.unified.calendar.MonthsRow <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setMonths(iMonths: number): sap.ui.unified.calendar.MonthsRow;
+                    setMonths(iMonths?: number): sap.ui.unified.calendar.MonthsRow;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getShowHeader" href="api/sap.ui.unified.calendar.MonthsRow#methods/getShowHeader">showHeader</a>.</p><p>If set, a header with the years is shown to visualize what month belongs to what year.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                      * @param {boolean} bShowHeader <p>New value for property <code>showHeader</code></p>
                      * @returns sap.ui.unified.calendar.MonthsRow <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setShowHeader(bShowHeader: boolean): sap.ui.unified.calendar.MonthsRow;
+                    setShowHeader(bShowHeader?: boolean): sap.ui.unified.calendar.MonthsRow;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSingleSelection" href="api/sap.ui.unified.calendar.MonthsRow#methods/getSingleSelection">singleSelection</a>.</p><p>If set, only a single month or interval, if intervalSelection is enabled, can be selected</p><p><b>Note:</b> Selection of multiple intervals is not supported in the current version.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                      * @param {boolean} bSingleSelection <p>New value for property <code>singleSelection</code></p>
                      * @returns sap.ui.unified.calendar.MonthsRow <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setSingleSelection(bSingleSelection: boolean): sap.ui.unified.calendar.MonthsRow;
+                    setSingleSelection(bSingleSelection?: boolean): sap.ui.unified.calendar.MonthsRow;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getStartDate" href="api/sap.ui.unified.calendar.MonthsRow#methods/getStartDate">startDate</a>.</p><p>Start date, as JavaScript Date object, of the row. The month of this date is the first month of the displayed row.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                      * @param {any} oStartDate <p>New value for property <code>startDate</code></p>
@@ -5567,19 +5661,19 @@ declare namespace sap {
                      * @param {number} iIntervalMinutes <p>New value for property <code>intervalMinutes</code></p>
                      * @returns sap.ui.unified.calendar.TimesRow <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setIntervalMinutes(iIntervalMinutes: number): sap.ui.unified.calendar.TimesRow;
+                    setIntervalMinutes(iIntervalMinutes?: number): sap.ui.unified.calendar.TimesRow;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getIntervalSelection" href="api/sap.ui.unified.calendar.TimesRow#methods/getIntervalSelection">intervalSelection</a>.</p><p>If set, interval selection is allowed</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                      * @param {boolean} bIntervalSelection <p>New value for property <code>intervalSelection</code></p>
                      * @returns sap.ui.unified.calendar.TimesRow <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setIntervalSelection(bIntervalSelection: boolean): sap.ui.unified.calendar.TimesRow;
+                    setIntervalSelection(bIntervalSelection?: boolean): sap.ui.unified.calendar.TimesRow;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getItems" href="api/sap.ui.unified.calendar.TimesRow#methods/getItems">items</a>.</p><p>Number of time items displayed</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>12</code>.</p>
                      * @param {number} iItems <p>New value for property <code>items</code></p>
                      * @returns sap.ui.unified.calendar.TimesRow <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setItems(iItems: number): sap.ui.unified.calendar.TimesRow;
+                    setItems(iItems?: number): sap.ui.unified.calendar.TimesRow;
                     /**
                      * <p>Sets the associated <a target="_self" class="jsdoclink scrollToMethod" data-target="getLegend" href="api/sap.ui.unified.calendar.TimesRow#methods/getLegend">legend</a>.</p>
                      * @param {sap.ui.core.ID | sap.ui.unified.CalendarLegend} oLegend <p>ID of an element which becomes the new target of this legend association; alternatively, an element instance may be given</p>
@@ -5591,13 +5685,13 @@ declare namespace sap {
                      * @param {boolean} bShowHeader <p>New value for property <code>showHeader</code></p>
                      * @returns sap.ui.unified.calendar.TimesRow <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setShowHeader(bShowHeader: boolean): sap.ui.unified.calendar.TimesRow;
+                    setShowHeader(bShowHeader?: boolean): sap.ui.unified.calendar.TimesRow;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSingleSelection" href="api/sap.ui.unified.calendar.TimesRow#methods/getSingleSelection">singleSelection</a>.</p><p>If set, only a single month or interval, if intervalSelection is enabled, can be selected</p><p><b>Note:</b> Selection of multiple intervals is not supported in the current version.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                      * @param {boolean} bSingleSelection <p>New value for property <code>singleSelection</code></p>
                      * @returns sap.ui.unified.calendar.TimesRow <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setSingleSelection(bSingleSelection: boolean): sap.ui.unified.calendar.TimesRow;
+                    setSingleSelection(bSingleSelection?: boolean): sap.ui.unified.calendar.TimesRow;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getStartDate" href="api/sap.ui.unified.calendar.TimesRow#methods/getStartDate">startDate</a>.</p><p>Start date, as JavaScript Date object, of the row.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                      * @param {any} oStartDate <p>New value for property <code>startDate</code></p>
@@ -5742,7 +5836,7 @@ declare namespace sap {
                      * @param {number} iColumns <p>New value for property <code>columns</code></p>
                      * @returns sap.ui.unified.calendar.YearPicker <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setColumns(iColumns: number): sap.ui.unified.calendar.YearPicker;
+                    setColumns(iColumns?: number): sap.ui.unified.calendar.YearPicker;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getDate" href="api/sap.ui.unified.calendar.YearPicker#methods/getDate">date</a>.</p><p>Date as JavaScript Date object. For this date a <code>YearPicker</code> is rendered. If a Year is selected the date is updated with the start date of the selected year (depending on the calendar type).</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                      * @param {any} oDate <p>New value for property <code>date</code></p>
@@ -5754,7 +5848,7 @@ declare namespace sap {
                      * @param {boolean} bIntervalSelection <p>New value for property <code>intervalSelection</code></p>
                      * @returns sap.ui.unified.calendar.YearPicker <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setIntervalSelection(bIntervalSelection: boolean): sap.ui.unified.calendar.YearPicker;
+                    setIntervalSelection(bIntervalSelection?: boolean): sap.ui.unified.calendar.YearPicker;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getPrimaryCalendarType" href="api/sap.ui.unified.calendar.YearPicker#methods/getPrimaryCalendarType">primaryCalendarType</a>.</p><p>If set, the calendar type is used for display. If not set, the calendar type of the global configuration is used.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                      * @param {sap.ui.core.CalendarType} sPrimaryCalendarType <p>New value for property <code>primaryCalendarType</code></p>
@@ -5766,7 +5860,7 @@ declare namespace sap {
                      * @param {number} iYears <p>New value for property <code>years</code></p>
                      * @returns sap.ui.unified.calendar.YearPicker <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setYears(iYears: number): sap.ui.unified.calendar.YearPicker;
+                    setYears(iYears?: number): sap.ui.unified.calendar.YearPicker;
                 }
             }
         }

@@ -54,9 +54,9 @@ declare namespace sap {
             /**
              * <p>Scroll to a specific Section.</p>
              * @param {string} sId <p>The Section ID to scroll to</p>
-             * @param {number} iDuration <p>Scroll duration (in ms). Default value is 0.</p>
+             * @param {number} iDuration <p>Scroll duration (in ms)</p>
              */
-            scrollToSection(sId: string, iDuration: number): void;
+            scrollToSection(sId: string, iDuration?: number): void;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getBackgroundDesign" href="api/sap.uxap.AnchorBar#methods/getBackgroundDesign">backgroundDesign</a>.</p><p>Determines the background color of the <code>AnchorBar</code>.</p><p><b>Note:</b> The default value of <code>backgroundDesign</code> property is null. If the property is not set, the color of the background is <code>@sapUiObjectHeaderBackground</code>, which depends on the specific theme.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
              * @param {sap.m.BackgroundDesign} sBackgroundDesign <p>New value for property <code>backgroundDesign</code></p>
@@ -74,13 +74,13 @@ declare namespace sap {
              * @param {boolean} bShowPopover <p>New value for property <code>showPopover</code></p>
              * @returns sap.uxap.AnchorBar <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setShowPopover(bShowPopover: boolean): sap.uxap.AnchorBar;
+            setShowPopover(bShowPopover?: boolean): sap.uxap.AnchorBar;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getUpperCase" href="api/sap.uxap.AnchorBar#methods/getUpperCase">upperCase</a>.</p><p>Determines whether the Anchor bar items are displayed in upper case.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
              * @param {boolean} bUpperCase <p>New value for property <code>upperCase</code></p>
              * @returns sap.uxap.AnchorBar <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setUpperCase(bUpperCase: boolean): sap.uxap.AnchorBar;
+            setUpperCase(bUpperCase?: boolean): sap.uxap.AnchorBar;
         }
         /**
          * <p>The main element that holds the content that is displayed in an <a target="_self" class="jsdoclink" href="api/sap.uxap.ObjectPageLayout">ObjectPageLayout</a>, but not necessarily only there.</p><h3>Overview</h3><p>The blocks give the flexibility to combine different content types.</p><p>A block is a control that: <ul> <li>Has modes and a view associated to each mode. At rendering time, the view associated to the mode is rendered.</li> <li>Can use all view types for storing its internal control tree (XML, JS, JSON, HTML)</li> </ul></p><p>As any UI5 view, the XML view can have a controller which automatically comes with a <code>this.oParentBlock</code> attribute (so that the controller can interact with the block). The <code>oParentBlock</code> is firstly available in <code>onParentBlockModeChange</code> method. If the controller implements the <code>onParentBlockModeChange</code> method, this method will be called with the <code>sMode</code> parameter when the view is used or reused by the block.<br><br><span>Documentation links:</span><ul><li><a target="_self" href="topic/2978f6064742456ebed31c5ccf4d051d">Creating Blocks</a></li></ul></p>
@@ -107,10 +107,10 @@ declare namespace sap {
              */
             attachViewInit(oData: any, fnFunction: Function, oListener?: any): sap.uxap.BlockBase;
             /**
-             * <p>Create view</p>
-             * @param {any} mParameter <p>the view metadata</p>
-             * @param {string} sMode <p>the mode associated with the view</p>
-             * @returns any <p>Promise</p>
+             * <p>Creates a view.</p>
+             * @param {any} mParameter <p>View metadata</p>
+             * @param {string} sMode <p>Mode associated with the view</p>
+             * @returns any <p>A promise on the created view.</p>
              */
             protected createView(mParameter: any, sMode: string): any;
             /**
@@ -132,7 +132,7 @@ declare namespace sap {
              */
             protected fireViewInit(mParameters?: any): sap.uxap.BlockBase;
             /**
-             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getColumnLayout" href="api/sap.uxap.BlockBase#methods/getColumnLayout">columnLayout</a>.</p><p>Determines on how many columns the layout will be rendered. Allowed values are integers from 1 to 4 and "auto".</p><p>Default value is <code>auto</code>.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getColumnLayout" href="api/sap.uxap.BlockBase#methods/getColumnLayout">columnLayout</a>.</p><p>Determines on how many columns the layout will be rendered. Allowed values are integers from 1 to 4 and "auto".</p><p>Default value is <code>"auto"</code>.</p>
              * @returns sap.uxap.BlockBaseColumnLayout <p>Value of property <code>columnLayout</code></p>
              */
             getColumnLayout(): sap.uxap.BlockBaseColumnLayout;
@@ -200,7 +200,7 @@ declare namespace sap {
              * @param {sap.uxap.BlockBaseFormAdjustment} sFormAdjustment <p>New value for property <code>formAdjustment</code></p>
              * @returns sap.uxap.BlockBase <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setFormAdjustment(sFormAdjustment: sap.uxap.BlockBaseFormAdjustment): sap.uxap.BlockBase;
+            setFormAdjustment(sFormAdjustment?: sap.uxap.BlockBaseFormAdjustment): sap.uxap.BlockBase;
             /**
              * <p>Set the view mode for this particular block.</p>
              * @param {string} sMode <p>the mode to apply to the control (that should be synchronized with view declared)</p>
@@ -218,7 +218,13 @@ declare namespace sap {
              * @param {boolean} bShowSubSectionMore <p>New value for property <code>showSubSectionMore</code></p>
              * @returns sap.uxap.BlockBase <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setShowSubSectionMore(bShowSubSectionMore: boolean): sap.uxap.BlockBase;
+            setShowSubSectionMore(bShowSubSectionMore?: boolean): sap.uxap.BlockBase;
+            /**
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getVisible" href="api/sap.uxap.BlockBase#methods/getVisible">visible</a>.</p><p>Determines the visibility of the block.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+             * @param {boolean} bVisible <p>New value for property <code>visible</code></p>
+             * @returns sap.uxap.BlockBase <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            setVisible(bVisible?: boolean): sap.uxap.BlockBase;
         }
         /**
          * <p><p>Used by the <code>BlockBase</code> control to define if it should do automatic adjustment of its nested forms.</p></p>
@@ -313,7 +319,7 @@ declare namespace sap {
              * @param {boolean} bShowCurrentLocation <p>New value for property <code>showCurrentLocation</code></p>
              * @returns sap.uxap.BreadCrumbs <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setShowCurrentLocation(bShowCurrentLocation: boolean): sap.uxap.BreadCrumbs;
+            setShowCurrentLocation(bShowCurrentLocation?: boolean): sap.uxap.BreadCrumbs;
         }
         /**
          * <p>A select that displays items on a hierarchy of 2 levels.</p><p>If a provided item has a custom data named <code>secondLevel</code>, then it will be displayed as a second level, otherwise it would be displayed as a first level.</p>
@@ -335,7 +341,7 @@ declare namespace sap {
              * @param {boolean} bUpperCase <p>New value for property <code>upperCase</code></p>
              * @returns sap.uxap.HierarchicalSelect <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setUpperCase(bUpperCase: boolean): sap.uxap.HierarchicalSelect;
+            setUpperCase(bUpperCase?: boolean): sap.uxap.HierarchicalSelect;
         }
         /**
          * <p><p>Interface for controls that are eligible for the <code>headerContent</code> aggregation of the <code><a target="_self" class="jsdoclink" href="api/sap.uxap.ObjectPageLayout">sap.uxap.ObjectPageLayout</a></code>.</p><p>Controls that implement this interface: <ul> <li><code><a target="_self" class="jsdoclink" href="api/sap.uxap.ObjectPageHeaderContent">sap.uxap.ObjectPageHeaderContent</a></code> - <code>ObjectPageLayout</code>'s classic header content</code></li> <li><code><a target="_self" class="jsdoclink" href="api/sap.uxap.ObjectPageDynamicHeaderContent">sap.uxap.ObjectPageDynamicHeaderContent</a></code> - <code>ObjectPageLayout</code>'s dynamic header content</code></li> </ul></p><p>For more information on the types of header available for the <code><a target="_self" class="jsdoclink" href="api/sap.uxap.ObjectPageLayout">ObjectPageLayout</a></code>, see <a target="_self" href="topic/d2ef0099542d44dc868719d908e576d0">Object Page Headers</a>.</p><p>For details regarding the differences and similarities between the available headers, see <a target="_self" href="topic/9c9d94fd28284539a9a5a57e9caf82a8">Object Page Headers Comparison</a>.</p><br><br>References: <ul></ul></p>
@@ -385,7 +391,7 @@ declare namespace sap {
              */
             getExternalPath(): string;
             /**
-             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getInternalModelName" href="api/sap.uxap.ModelMapping#methods/getInternalModelName">internalModelName</a>.</p><p>Determines the internal model name.</p><p>Default value is <code>Model</code>.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getInternalModelName" href="api/sap.uxap.ModelMapping#methods/getInternalModelName">internalModelName</a>.</p><p>Determines the internal model name.</p><p>Default value is <code>"Model"</code>.</p>
              * @returns string <p>Value of property <code>internalModelName</code></p>
              */
             getInternalModelName(): string;
@@ -394,19 +400,19 @@ declare namespace sap {
              * @param {string} sExternalModelName <p>New value for property <code>externalModelName</code></p>
              * @returns sap.uxap.ModelMapping <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setExternalModelName(sExternalModelName: string): sap.uxap.ModelMapping;
+            setExternalModelName(sExternalModelName?: string): sap.uxap.ModelMapping;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getExternalPath" href="api/sap.uxap.ModelMapping#methods/getExternalPath">externalPath</a>.</p><p>Determines the external path.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
              * @param {string} sExternalPath <p>New value for property <code>externalPath</code></p>
              * @returns sap.uxap.ModelMapping <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setExternalPath(sExternalPath: string): sap.uxap.ModelMapping;
+            setExternalPath(sExternalPath?: string): sap.uxap.ModelMapping;
             /**
-             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getInternalModelName" href="api/sap.uxap.ModelMapping#methods/getInternalModelName">internalModelName</a>.</p><p>Determines the internal model name.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Model</code>.</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getInternalModelName" href="api/sap.uxap.ModelMapping#methods/getInternalModelName">internalModelName</a>.</p><p>Determines the internal model name.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"Model"</code>.</p>
              * @param {string} sInternalModelName <p>New value for property <code>internalModelName</code></p>
              * @returns sap.uxap.ModelMapping <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setInternalModelName(sInternalModelName: string): sap.uxap.ModelMapping;
+            setInternalModelName(sInternalModelName?: string): sap.uxap.ModelMapping;
         }
         /**
          * <p>Settings for accessible landmarks which can be applied to the container elements of a <code>sap.uxap.ObjectPageLayout</code> control. These landmarks are used by assistive technologies (such as screenreaders) to provide a meaningful page overview.</p>
@@ -424,7 +430,7 @@ declare namespace sap {
              */
             getContentLabel(): string;
             /**
-             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getContentRole" href="api/sap.uxap.ObjectPageAccessibleLandmarkInfo#methods/getContentRole">contentRole</a>.</p><p>Landmark role of the content container of the corresponding <code>sap.uxap.ObjectPageLayout</code> control.</p><p>If set to <code>sap.ui.core.AccessibleLandmarkRole.None</code>, no landmark will be added to the container.</p><p>Default value is <code>None</code>.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getContentRole" href="api/sap.uxap.ObjectPageAccessibleLandmarkInfo#methods/getContentRole">contentRole</a>.</p><p>Landmark role of the content container of the corresponding <code>sap.uxap.ObjectPageLayout</code> control.</p><p>If set to <code>sap.ui.core.AccessibleLandmarkRole.None</code>, no landmark will be added to the container.</p><p>Default value is <code>"None"</code>.</p>
              * @returns sap.ui.core.AccessibleLandmarkRole <p>Value of property <code>contentRole</code></p>
              */
             getContentRole(): sap.ui.core.AccessibleLandmarkRole;
@@ -434,7 +440,7 @@ declare namespace sap {
              */
             getFooterLabel(): string;
             /**
-             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getFooterRole" href="api/sap.uxap.ObjectPageAccessibleLandmarkInfo#methods/getFooterRole">footerRole</a>.</p><p>Landmark role of the footer container of the corresponding <code>sap.uxap.ObjectPageLayout</code> control.</p><p>If set to <code>sap.ui.core.AccessibleLandmarkRole.None</code>, no landmark will be added to the container.</p><p>Default value is <code>Region</code>.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getFooterRole" href="api/sap.uxap.ObjectPageAccessibleLandmarkInfo#methods/getFooterRole">footerRole</a>.</p><p>Landmark role of the footer container of the corresponding <code>sap.uxap.ObjectPageLayout</code> control.</p><p>If set to <code>sap.ui.core.AccessibleLandmarkRole.None</code>, no landmark will be added to the container.</p><p>Default value is <code>"Region"</code>.</p>
              * @returns sap.ui.core.AccessibleLandmarkRole <p>Value of property <code>footerRole</code></p>
              */
             getFooterRole(): sap.ui.core.AccessibleLandmarkRole;
@@ -444,7 +450,7 @@ declare namespace sap {
              */
             getHeaderLabel(): string;
             /**
-             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHeaderRole" href="api/sap.uxap.ObjectPageAccessibleLandmarkInfo#methods/getHeaderRole">headerRole</a>.</p><p>Landmark role of the header container of the corresponding <code>sap.uxap.ObjectPageLayout</code> control.</p><p>If set to <code>sap.ui.core.AccessibleLandmarkRole.None</code>, no landmark will be added to the container.</p><p>Default value is <code>Banner</code>.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHeaderRole" href="api/sap.uxap.ObjectPageAccessibleLandmarkInfo#methods/getHeaderRole">headerRole</a>.</p><p>Landmark role of the header container of the corresponding <code>sap.uxap.ObjectPageLayout</code> control.</p><p>If set to <code>sap.ui.core.AccessibleLandmarkRole.None</code>, no landmark will be added to the container.</p><p>Default value is <code>"Banner"</code>.</p>
              * @returns sap.ui.core.AccessibleLandmarkRole <p>Value of property <code>headerRole</code></p>
              */
             getHeaderRole(): sap.ui.core.AccessibleLandmarkRole;
@@ -454,7 +460,7 @@ declare namespace sap {
              */
             getNavigationLabel(): string;
             /**
-             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getNavigationRole" href="api/sap.uxap.ObjectPageAccessibleLandmarkInfo#methods/getNavigationRole">navigationRole</a>.</p><p>Landmark role of the navigation container of the corresponding <code>sap.uxap.ObjectPageLayout</code> control.</p><p>If set to <code>sap.ui.core.AccessibleLandmarkRole.None</code>, no landmark will be added to the container.</p><p>Default value is <code>Navigation</code>.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getNavigationRole" href="api/sap.uxap.ObjectPageAccessibleLandmarkInfo#methods/getNavigationRole">navigationRole</a>.</p><p>Landmark role of the navigation container of the corresponding <code>sap.uxap.ObjectPageLayout</code> control.</p><p>If set to <code>sap.ui.core.AccessibleLandmarkRole.None</code>, no landmark will be added to the container.</p><p>Default value is <code>"Navigation"</code>.</p>
              * @returns sap.ui.core.AccessibleLandmarkRole <p>Value of property <code>navigationRole</code></p>
              */
             getNavigationRole(): sap.ui.core.AccessibleLandmarkRole;
@@ -464,7 +470,7 @@ declare namespace sap {
              */
             getRootLabel(): string;
             /**
-             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getRootRole" href="api/sap.uxap.ObjectPageAccessibleLandmarkInfo#methods/getRootRole">rootRole</a>.</p><p>Landmark role of the root container of the corresponding <code>sap.uxap.ObjectPageLayout</code> control.</p><p>If set to <code>sap.ui.core.AccessibleLandmarkRole.None</code>, no landmark will be added to the container.</p><p>Default value is <code>Main</code>.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getRootRole" href="api/sap.uxap.ObjectPageAccessibleLandmarkInfo#methods/getRootRole">rootRole</a>.</p><p>Landmark role of the root container of the corresponding <code>sap.uxap.ObjectPageLayout</code> control.</p><p>If set to <code>sap.ui.core.AccessibleLandmarkRole.None</code>, no landmark will be added to the container.</p><p>Default value is <code>"Main"</code>.</p>
              * @returns sap.ui.core.AccessibleLandmarkRole <p>Value of property <code>rootRole</code></p>
              */
             getRootRole(): sap.ui.core.AccessibleLandmarkRole;
@@ -473,61 +479,61 @@ declare namespace sap {
              * @param {string} sContentLabel <p>New value for property <code>contentLabel</code></p>
              * @returns sap.uxap.ObjectPageAccessibleLandmarkInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setContentLabel(sContentLabel: string): sap.uxap.ObjectPageAccessibleLandmarkInfo;
+            setContentLabel(sContentLabel?: string): sap.uxap.ObjectPageAccessibleLandmarkInfo;
             /**
-             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getContentRole" href="api/sap.uxap.ObjectPageAccessibleLandmarkInfo#methods/getContentRole">contentRole</a>.</p><p>Landmark role of the content container of the corresponding <code>sap.uxap.ObjectPageLayout</code> control.</p><p>If set to <code>sap.ui.core.AccessibleLandmarkRole.None</code>, no landmark will be added to the container.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>None</code>.</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getContentRole" href="api/sap.uxap.ObjectPageAccessibleLandmarkInfo#methods/getContentRole">contentRole</a>.</p><p>Landmark role of the content container of the corresponding <code>sap.uxap.ObjectPageLayout</code> control.</p><p>If set to <code>sap.ui.core.AccessibleLandmarkRole.None</code>, no landmark will be added to the container.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"None"</code>.</p>
              * @param {sap.ui.core.AccessibleLandmarkRole} sContentRole <p>New value for property <code>contentRole</code></p>
              * @returns sap.uxap.ObjectPageAccessibleLandmarkInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setContentRole(sContentRole: sap.ui.core.AccessibleLandmarkRole): sap.uxap.ObjectPageAccessibleLandmarkInfo;
+            setContentRole(sContentRole?: sap.ui.core.AccessibleLandmarkRole): sap.uxap.ObjectPageAccessibleLandmarkInfo;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getFooterLabel" href="api/sap.uxap.ObjectPageAccessibleLandmarkInfo#methods/getFooterLabel">footerLabel</a>.</p><p>Texts which describe the landmark of the header container of the corresponding <code>sap.uxap.ObjectPageLayout</code> control.</p><p>If not set (and a landmark different than <code>sap.ui.core.AccessibleLandmarkRole.None</code> is defined), no label is set.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
              * @param {string} sFooterLabel <p>New value for property <code>footerLabel</code></p>
              * @returns sap.uxap.ObjectPageAccessibleLandmarkInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setFooterLabel(sFooterLabel: string): sap.uxap.ObjectPageAccessibleLandmarkInfo;
+            setFooterLabel(sFooterLabel?: string): sap.uxap.ObjectPageAccessibleLandmarkInfo;
             /**
-             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getFooterRole" href="api/sap.uxap.ObjectPageAccessibleLandmarkInfo#methods/getFooterRole">footerRole</a>.</p><p>Landmark role of the footer container of the corresponding <code>sap.uxap.ObjectPageLayout</code> control.</p><p>If set to <code>sap.ui.core.AccessibleLandmarkRole.None</code>, no landmark will be added to the container.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Region</code>.</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getFooterRole" href="api/sap.uxap.ObjectPageAccessibleLandmarkInfo#methods/getFooterRole">footerRole</a>.</p><p>Landmark role of the footer container of the corresponding <code>sap.uxap.ObjectPageLayout</code> control.</p><p>If set to <code>sap.ui.core.AccessibleLandmarkRole.None</code>, no landmark will be added to the container.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"Region"</code>.</p>
              * @param {sap.ui.core.AccessibleLandmarkRole} sFooterRole <p>New value for property <code>footerRole</code></p>
              * @returns sap.uxap.ObjectPageAccessibleLandmarkInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setFooterRole(sFooterRole: sap.ui.core.AccessibleLandmarkRole): sap.uxap.ObjectPageAccessibleLandmarkInfo;
+            setFooterRole(sFooterRole?: sap.ui.core.AccessibleLandmarkRole): sap.uxap.ObjectPageAccessibleLandmarkInfo;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHeaderLabel" href="api/sap.uxap.ObjectPageAccessibleLandmarkInfo#methods/getHeaderLabel">headerLabel</a>.</p><p>Texts which describe the landmark of the header container of the corresponding <code>sap.uxap.ObjectPageLayout</code> control.</p><p>If not set (and a landmark different than <code>sap.ui.core.AccessibleLandmarkRole.None</code> is defined), no label is set.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
              * @param {string} sHeaderLabel <p>New value for property <code>headerLabel</code></p>
              * @returns sap.uxap.ObjectPageAccessibleLandmarkInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setHeaderLabel(sHeaderLabel: string): sap.uxap.ObjectPageAccessibleLandmarkInfo;
+            setHeaderLabel(sHeaderLabel?: string): sap.uxap.ObjectPageAccessibleLandmarkInfo;
             /**
-             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHeaderRole" href="api/sap.uxap.ObjectPageAccessibleLandmarkInfo#methods/getHeaderRole">headerRole</a>.</p><p>Landmark role of the header container of the corresponding <code>sap.uxap.ObjectPageLayout</code> control.</p><p>If set to <code>sap.ui.core.AccessibleLandmarkRole.None</code>, no landmark will be added to the container.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Banner</code>.</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHeaderRole" href="api/sap.uxap.ObjectPageAccessibleLandmarkInfo#methods/getHeaderRole">headerRole</a>.</p><p>Landmark role of the header container of the corresponding <code>sap.uxap.ObjectPageLayout</code> control.</p><p>If set to <code>sap.ui.core.AccessibleLandmarkRole.None</code>, no landmark will be added to the container.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"Banner"</code>.</p>
              * @param {sap.ui.core.AccessibleLandmarkRole} sHeaderRole <p>New value for property <code>headerRole</code></p>
              * @returns sap.uxap.ObjectPageAccessibleLandmarkInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setHeaderRole(sHeaderRole: sap.ui.core.AccessibleLandmarkRole): sap.uxap.ObjectPageAccessibleLandmarkInfo;
+            setHeaderRole(sHeaderRole?: sap.ui.core.AccessibleLandmarkRole): sap.uxap.ObjectPageAccessibleLandmarkInfo;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getNavigationLabel" href="api/sap.uxap.ObjectPageAccessibleLandmarkInfo#methods/getNavigationLabel">navigationLabel</a>.</p><p>Texts which describe the landmark of the navigation container of the corresponding <code>sap.uxap.ObjectPageLayout</code> control.</p><p>If not set (and a landmark different than <code>sap.ui.core.AccessibleLandmarkRole.None</code> is defined), no label is set.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
              * @param {string} sNavigationLabel <p>New value for property <code>navigationLabel</code></p>
              * @returns sap.uxap.ObjectPageAccessibleLandmarkInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setNavigationLabel(sNavigationLabel: string): sap.uxap.ObjectPageAccessibleLandmarkInfo;
+            setNavigationLabel(sNavigationLabel?: string): sap.uxap.ObjectPageAccessibleLandmarkInfo;
             /**
-             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getNavigationRole" href="api/sap.uxap.ObjectPageAccessibleLandmarkInfo#methods/getNavigationRole">navigationRole</a>.</p><p>Landmark role of the navigation container of the corresponding <code>sap.uxap.ObjectPageLayout</code> control.</p><p>If set to <code>sap.ui.core.AccessibleLandmarkRole.None</code>, no landmark will be added to the container.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Navigation</code>.</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getNavigationRole" href="api/sap.uxap.ObjectPageAccessibleLandmarkInfo#methods/getNavigationRole">navigationRole</a>.</p><p>Landmark role of the navigation container of the corresponding <code>sap.uxap.ObjectPageLayout</code> control.</p><p>If set to <code>sap.ui.core.AccessibleLandmarkRole.None</code>, no landmark will be added to the container.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"Navigation"</code>.</p>
              * @param {sap.ui.core.AccessibleLandmarkRole} sNavigationRole <p>New value for property <code>navigationRole</code></p>
              * @returns sap.uxap.ObjectPageAccessibleLandmarkInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setNavigationRole(sNavigationRole: sap.ui.core.AccessibleLandmarkRole): sap.uxap.ObjectPageAccessibleLandmarkInfo;
+            setNavigationRole(sNavigationRole?: sap.ui.core.AccessibleLandmarkRole): sap.uxap.ObjectPageAccessibleLandmarkInfo;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getRootLabel" href="api/sap.uxap.ObjectPageAccessibleLandmarkInfo#methods/getRootLabel">rootLabel</a>.</p><p>Texts which describe the landmark of the root container of the corresponding <code>sap.uxap.ObjectPageLayout</code> control.</p><p>If not set (and a landmark different than <code>sap.ui.core.AccessibleLandmarkRole.None</code> is defined), no label is set.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
              * @param {string} sRootLabel <p>New value for property <code>rootLabel</code></p>
              * @returns sap.uxap.ObjectPageAccessibleLandmarkInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setRootLabel(sRootLabel: string): sap.uxap.ObjectPageAccessibleLandmarkInfo;
+            setRootLabel(sRootLabel?: string): sap.uxap.ObjectPageAccessibleLandmarkInfo;
             /**
-             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getRootRole" href="api/sap.uxap.ObjectPageAccessibleLandmarkInfo#methods/getRootRole">rootRole</a>.</p><p>Landmark role of the root container of the corresponding <code>sap.uxap.ObjectPageLayout</code> control.</p><p>If set to <code>sap.ui.core.AccessibleLandmarkRole.None</code>, no landmark will be added to the container.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Main</code>.</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getRootRole" href="api/sap.uxap.ObjectPageAccessibleLandmarkInfo#methods/getRootRole">rootRole</a>.</p><p>Landmark role of the root container of the corresponding <code>sap.uxap.ObjectPageLayout</code> control.</p><p>If set to <code>sap.ui.core.AccessibleLandmarkRole.None</code>, no landmark will be added to the container.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"Main"</code>.</p>
              * @param {sap.ui.core.AccessibleLandmarkRole} sRootRole <p>New value for property <code>rootRole</code></p>
              * @returns sap.uxap.ObjectPageAccessibleLandmarkInfo <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setRootRole(sRootRole: sap.ui.core.AccessibleLandmarkRole): sap.uxap.ObjectPageAccessibleLandmarkInfo;
+            setRootRole(sRootRole?: sap.ui.core.AccessibleLandmarkRole): sap.uxap.ObjectPageAccessibleLandmarkInfo;
         }
         /**
          * <p><p>Used by the <code>sap.uxap.component.Component</code> how to initialize the <code>ObjectPageLayout</code> sections and subsections.</p></p>
@@ -820,49 +826,49 @@ declare namespace sap {
              * @param {boolean} bIsActionAreaAlwaysVisible <p>New value for property <code>isActionAreaAlwaysVisible</code></p>
              * @returns sap.uxap.ObjectPageHeader <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setIsActionAreaAlwaysVisible(bIsActionAreaAlwaysVisible: boolean): sap.uxap.ObjectPageHeader;
+            setIsActionAreaAlwaysVisible(bIsActionAreaAlwaysVisible?: boolean): sap.uxap.ObjectPageHeader;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getIsObjectIconAlwaysVisible" href="api/sap.uxap.ObjectPageHeader#methods/getIsObjectIconAlwaysVisible">isObjectIconAlwaysVisible</a>.</p><p>Determines whether the icon should always be visible or visible only when the header is snapped.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
              * @param {boolean} bIsObjectIconAlwaysVisible <p>New value for property <code>isObjectIconAlwaysVisible</code></p>
              * @returns sap.uxap.ObjectPageHeader <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setIsObjectIconAlwaysVisible(bIsObjectIconAlwaysVisible: boolean): sap.uxap.ObjectPageHeader;
+            setIsObjectIconAlwaysVisible(bIsObjectIconAlwaysVisible?: boolean): sap.uxap.ObjectPageHeader;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getIsObjectSubtitleAlwaysVisible" href="api/sap.uxap.ObjectPageHeader#methods/getIsObjectSubtitleAlwaysVisible">isObjectSubtitleAlwaysVisible</a>.</p><p>Determines whether the subtitle should always be visible or visible only when the header is snapped.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
              * @param {boolean} bIsObjectSubtitleAlwaysVisible <p>New value for property <code>isObjectSubtitleAlwaysVisible</code></p>
              * @returns sap.uxap.ObjectPageHeader <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setIsObjectSubtitleAlwaysVisible(bIsObjectSubtitleAlwaysVisible: boolean): sap.uxap.ObjectPageHeader;
+            setIsObjectSubtitleAlwaysVisible(bIsObjectSubtitleAlwaysVisible?: boolean): sap.uxap.ObjectPageHeader;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getIsObjectTitleAlwaysVisible" href="api/sap.uxap.ObjectPageHeader#methods/getIsObjectTitleAlwaysVisible">isObjectTitleAlwaysVisible</a>.</p><p>Determines whether the title should always be visible or visible only when the header is snapped.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
              * @param {boolean} bIsObjectTitleAlwaysVisible <p>New value for property <code>isObjectTitleAlwaysVisible</code></p>
              * @returns sap.uxap.ObjectPageHeader <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setIsObjectTitleAlwaysVisible(bIsObjectTitleAlwaysVisible: boolean): sap.uxap.ObjectPageHeader;
+            setIsObjectTitleAlwaysVisible(bIsObjectTitleAlwaysVisible?: boolean): sap.uxap.ObjectPageHeader;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getMarkChanges" href="api/sap.uxap.ObjectPageHeader#methods/getMarkChanges">markChanges</a>.</p><p>Marks that there are unsaved changes in the objectPageHeader. The markChanges state cannot be used together with the markLocked state. If both are set to true, only the locked state will be displayed.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
              * @param {boolean} bMarkChanges <p>New value for property <code>markChanges</code></p>
              * @returns sap.uxap.ObjectPageHeader <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setMarkChanges(bMarkChanges: boolean): sap.uxap.ObjectPageHeader;
+            setMarkChanges(bMarkChanges?: boolean): sap.uxap.ObjectPageHeader;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getMarkFavorite" href="api/sap.uxap.ObjectPageHeader#methods/getMarkFavorite">markFavorite</a>.</p><p>Set the favorite state to true or false. The showMarkers property must be true for this property to take effect.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
              * @param {boolean} bMarkFavorite <p>New value for property <code>markFavorite</code></p>
              * @returns sap.uxap.ObjectPageHeader <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setMarkFavorite(bMarkFavorite: boolean): sap.uxap.ObjectPageHeader;
+            setMarkFavorite(bMarkFavorite?: boolean): sap.uxap.ObjectPageHeader;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getMarkFlagged" href="api/sap.uxap.ObjectPageHeader#methods/getMarkFlagged">markFlagged</a>.</p><p>Set the flagged state to true or false. The showMarkers property must be true for this property to take effect.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
              * @param {boolean} bMarkFlagged <p>New value for property <code>markFlagged</code></p>
              * @returns sap.uxap.ObjectPageHeader <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setMarkFlagged(bMarkFlagged: boolean): sap.uxap.ObjectPageHeader;
+            setMarkFlagged(bMarkFlagged?: boolean): sap.uxap.ObjectPageHeader;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getMarkLocked" href="api/sap.uxap.ObjectPageHeader#methods/getMarkLocked">markLocked</a>.</p><p>Set the locked state of the objectPageHeader.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
              * @param {boolean} bMarkLocked <p>New value for property <code>markLocked</code></p>
              * @returns sap.uxap.ObjectPageHeader <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setMarkLocked(bMarkLocked: boolean): sap.uxap.ObjectPageHeader;
+            setMarkLocked(bMarkLocked?: boolean): sap.uxap.ObjectPageHeader;
             /**
              * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-target="getNavigationBar" href="api/sap.uxap.ObjectPageHeader#methods/getNavigationBar">navigationBar</a>.</p>
              * @param {sap.m.Bar} oNavigationBar <p>The navigationBar to set</p>
@@ -874,61 +880,61 @@ declare namespace sap {
              * @param {string} sObjectImageAlt <p>New value for property <code>objectImageAlt</code></p>
              * @returns sap.uxap.ObjectPageHeader <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setObjectImageAlt(sObjectImageAlt: string): sap.uxap.ObjectPageHeader;
+            setObjectImageAlt(sObjectImageAlt?: string): sap.uxap.ObjectPageHeader;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getObjectImageBackgroundColor" href="api/sap.uxap.ObjectPageHeader#methods/getObjectImageBackgroundColor">objectImageBackgroundColor</a>.</p><p>Determines the background color of the image placeholder or icon if valid icon URI is provided.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Accent6</code>.</p>
              * @param {sap.m.AvatarColor} sObjectImageBackgroundColor <p>New value for property <code>objectImageBackgroundColor</code></p>
              * @returns sap.uxap.ObjectPageHeader <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setObjectImageBackgroundColor(sObjectImageBackgroundColor: sap.m.AvatarColor): sap.uxap.ObjectPageHeader;
+            setObjectImageBackgroundColor(sObjectImageBackgroundColor?: sap.m.AvatarColor): sap.uxap.ObjectPageHeader;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getObjectImageDensityAware" href="api/sap.uxap.ObjectPageHeader#methods/getObjectImageDensityAware">objectImageDensityAware</a>.</p><p>The value of densityAware for the image, supplied via the objectImageURI property. See sap.m.Image for more details on densityAware.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
              * @param {boolean} bObjectImageDensityAware <p>New value for property <code>objectImageDensityAware</code></p>
              * @returns sap.uxap.ObjectPageHeader <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setObjectImageDensityAware(bObjectImageDensityAware: boolean): sap.uxap.ObjectPageHeader;
+            setObjectImageDensityAware(bObjectImageDensityAware?: boolean): sap.uxap.ObjectPageHeader;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getObjectImageShape" href="api/sap.uxap.ObjectPageHeader#methods/getObjectImageShape">objectImageShape</a>.</p><p>Determines whether the picture should be displayed in a square or with a circle-shaped mask.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Square</code>.</p>
              * @param {sap.m.AvatarShape} sObjectImageShape <p>New value for property <code>objectImageShape</code></p>
              * @returns sap.uxap.ObjectPageHeader <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setObjectImageShape(sObjectImageShape: sap.m.AvatarShape): sap.uxap.ObjectPageHeader;
+            setObjectImageShape(sObjectImageShape?: sap.m.AvatarShape): sap.uxap.ObjectPageHeader;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getObjectImageURI" href="api/sap.uxap.ObjectPageHeader#methods/getObjectImageURI">objectImageURI</a>.</p><p>The URL of the image, representing the business object</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
              * @param {string} sObjectImageURI <p>New value for property <code>objectImageURI</code></p>
              * @returns sap.uxap.ObjectPageHeader <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setObjectImageURI(sObjectImageURI: string): sap.uxap.ObjectPageHeader;
+            setObjectImageURI(sObjectImageURI?: string): sap.uxap.ObjectPageHeader;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getObjectSubtitle" href="api/sap.uxap.ObjectPageHeader#methods/getObjectSubtitle">objectSubtitle</a>.</p><p>The description of the object</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
              * @param {string} sObjectSubtitle <p>New value for property <code>objectSubtitle</code></p>
              * @returns sap.uxap.ObjectPageHeader <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setObjectSubtitle(sObjectSubtitle: string): sap.uxap.ObjectPageHeader;
+            setObjectSubtitle(sObjectSubtitle?: string): sap.uxap.ObjectPageHeader;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getObjectTitle" href="api/sap.uxap.ObjectPageHeader#methods/getObjectTitle">objectTitle</a>.</p><p>The title of the object</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
              * @param {string} sObjectTitle <p>New value for property <code>objectTitle</code></p>
              * @returns sap.uxap.ObjectPageHeader <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setObjectTitle(sObjectTitle: string): sap.uxap.ObjectPageHeader;
+            setObjectTitle(sObjectTitle?: string): sap.uxap.ObjectPageHeader;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getShowMarkers" href="api/sap.uxap.ObjectPageHeader#methods/getShowMarkers">showMarkers</a>.</p><p>Indicates if object page header title supports showing markers such as flagged and favorite.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
              * @param {boolean} bShowMarkers <p>New value for property <code>showMarkers</code></p>
              * @returns sap.uxap.ObjectPageHeader <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setShowMarkers(bShowMarkers: boolean): sap.uxap.ObjectPageHeader;
+            setShowMarkers(bShowMarkers?: boolean): sap.uxap.ObjectPageHeader;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getShowPlaceholder" href="api/sap.uxap.ObjectPageHeader#methods/getShowPlaceholder">showPlaceholder</a>.</p><p>Enables support of a placeholder image in case no image is specified or the URL of the provided image is invalid.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
              * @param {boolean} bShowPlaceholder <p>New value for property <code>showPlaceholder</code></p>
              * @returns sap.uxap.ObjectPageHeader <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setShowPlaceholder(bShowPlaceholder: boolean): sap.uxap.ObjectPageHeader;
+            setShowPlaceholder(bShowPlaceholder?: boolean): sap.uxap.ObjectPageHeader;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getShowTitleSelector" href="api/sap.uxap.ObjectPageHeader#methods/getShowTitleSelector">showTitleSelector</a>.</p><p>When set to true, the selector arrow icon/image is shown and can be pressed.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
              * @param {boolean} bShowTitleSelector <p>New value for property <code>showTitleSelector</code></p>
              * @returns sap.uxap.ObjectPageHeader <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setShowTitleSelector(bShowTitleSelector: boolean): sap.uxap.ObjectPageHeader;
+            setShowTitleSelector(bShowTitleSelector?: boolean): sap.uxap.ObjectPageHeader;
             /**
              * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-target="getSideContentButton" href="api/sap.uxap.ObjectPageHeader#methods/getSideContentButton">sideContentButton</a>.</p>
              * @param {sap.m.Button} oSideContentButton <p>The sideContentButton to set</p>
@@ -972,19 +978,19 @@ declare namespace sap {
              * @param {boolean} bHideIcon <p>New value for property <code>hideIcon</code></p>
              * @returns sap.uxap.ObjectPageHeaderActionButton <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setHideIcon(bHideIcon: boolean): sap.uxap.ObjectPageHeaderActionButton;
+            setHideIcon(bHideIcon?: boolean): sap.uxap.ObjectPageHeaderActionButton;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHideText" href="api/sap.uxap.ObjectPageHeaderActionButton#methods/getHideText">hideText</a>.</p><p>Hide the button text when rendered into the headerTitle part of the ObjectPageLayout. This is useful if you want to display icons only in the headerTitle part but still want to display text + icon in the actionSheet that appears when not enough space is available on the screen for displaying all actions.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
              * @param {boolean} bHideText <p>New value for property <code>hideText</code></p>
              * @returns sap.uxap.ObjectPageHeaderActionButton <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setHideText(bHideText: boolean): sap.uxap.ObjectPageHeaderActionButton;
+            setHideText(bHideText?: boolean): sap.uxap.ObjectPageHeaderActionButton;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getImportance" href="api/sap.uxap.ObjectPageHeaderActionButton#methods/getImportance">importance</a>.</p><p>Determines the order in which the button overflows.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>High</code>.</p>
              * @param {sap.uxap.Importance} sImportance <p>New value for property <code>importance</code></p>
              * @returns sap.uxap.ObjectPageHeaderActionButton <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setImportance(sImportance: sap.uxap.Importance): sap.uxap.ObjectPageHeaderActionButton;
+            setImportance(sImportance?: sap.uxap.Importance): sap.uxap.ObjectPageHeaderActionButton;
         }
         /**
          * <p>Header content for the classic header of the <a target="_self" class="jsdoclink" href="api/sap.uxap.ObjectPageLayout">sap.uxap.ObjectPageLayout</a>.</p><h3>Overview</h3><p>The <code>ObjectPageHeaderContent</code> represents the movable part of the <code>ObjectPageLayout</code>'s classic header. It can contain any control and scrolls along with the content of the page until it disappears (collapsed header). When scrolled back to the top it becomes visible again (expanded header). It contains all the additional information of the object.</p><p>Documentation links: <ul> <li><a target="_self" href="topic/d2ef0099542d44dc868719d908e576d0">Object Page Headers</a></li> <li><a target="_self" href="topic/0fecbce45e39406aa939bd25e89823f4">Object Page Classic Header</a></li> <li><a target="_blank" rel="noopener" href="https://experience.sap.com/fiori-design-web/object-page/">UX Guidelines: Object Page</a>
@@ -1088,7 +1094,7 @@ declare namespace sap {
              */
             getVisibleS(): boolean;
             /**
-             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.uxap.ObjectPageHeaderLayoutData#methods/getWidth">width</a>.</p><p>If this property is set the control will take the provided size.</p><p>Default value is <code>auto</code>.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.uxap.ObjectPageHeaderLayoutData#methods/getWidth">width</a>.</p><p>If this property is set the control will take the provided size.</p><p>Default value is <code>'auto'</code>.</p>
              * @returns sap.ui.core.CSSSize <p>Value of property <code>width</code></p>
              */
             getWidth(): sap.ui.core.CSSSize;
@@ -1097,37 +1103,37 @@ declare namespace sap {
              * @param {boolean} bShowSeparatorAfter <p>New value for property <code>showSeparatorAfter</code></p>
              * @returns sap.uxap.ObjectPageHeaderLayoutData <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setShowSeparatorAfter(bShowSeparatorAfter: boolean): sap.uxap.ObjectPageHeaderLayoutData;
+            setShowSeparatorAfter(bShowSeparatorAfter?: boolean): sap.uxap.ObjectPageHeaderLayoutData;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getShowSeparatorBefore" href="api/sap.uxap.ObjectPageHeaderLayoutData#methods/getShowSeparatorBefore">showSeparatorBefore</a>.</p><p>If this property is set the control will display a separator before it.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
              * @param {boolean} bShowSeparatorBefore <p>New value for property <code>showSeparatorBefore</code></p>
              * @returns sap.uxap.ObjectPageHeaderLayoutData <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setShowSeparatorBefore(bShowSeparatorBefore: boolean): sap.uxap.ObjectPageHeaderLayoutData;
+            setShowSeparatorBefore(bShowSeparatorBefore?: boolean): sap.uxap.ObjectPageHeaderLayoutData;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getVisibleL" href="api/sap.uxap.ObjectPageHeaderLayoutData#methods/getVisibleL">visibleL</a>.</p><p>If this property is set the control will be visible (or not) in a large sized layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
              * @param {boolean} bVisibleL <p>New value for property <code>visibleL</code></p>
              * @returns sap.uxap.ObjectPageHeaderLayoutData <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setVisibleL(bVisibleL: boolean): sap.uxap.ObjectPageHeaderLayoutData;
+            setVisibleL(bVisibleL?: boolean): sap.uxap.ObjectPageHeaderLayoutData;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getVisibleM" href="api/sap.uxap.ObjectPageHeaderLayoutData#methods/getVisibleM">visibleM</a>.</p><p>If this property is set the control will be visible (or not) in a medium sized layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
              * @param {boolean} bVisibleM <p>New value for property <code>visibleM</code></p>
              * @returns sap.uxap.ObjectPageHeaderLayoutData <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setVisibleM(bVisibleM: boolean): sap.uxap.ObjectPageHeaderLayoutData;
+            setVisibleM(bVisibleM?: boolean): sap.uxap.ObjectPageHeaderLayoutData;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getVisibleS" href="api/sap.uxap.ObjectPageHeaderLayoutData#methods/getVisibleS">visibleS</a>.</p><p>If this property is set the control will be visible (or not) in a small sized layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
              * @param {boolean} bVisibleS <p>New value for property <code>visibleS</code></p>
              * @returns sap.uxap.ObjectPageHeaderLayoutData <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setVisibleS(bVisibleS: boolean): sap.uxap.ObjectPageHeaderLayoutData;
+            setVisibleS(bVisibleS?: boolean): sap.uxap.ObjectPageHeaderLayoutData;
             /**
-             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.uxap.ObjectPageHeaderLayoutData#methods/getWidth">width</a>.</p><p>If this property is set the control will take the provided size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>auto</code>.</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.uxap.ObjectPageHeaderLayoutData#methods/getWidth">width</a>.</p><p>If this property is set the control will take the provided size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>'auto'</code>.</p>
              * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
              * @returns sap.uxap.ObjectPageHeaderLayoutData <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setWidth(sWidth: sap.ui.core.CSSSize): sap.uxap.ObjectPageHeaderLayoutData;
+            setWidth(sWidth?: sap.ui.core.CSSSize): sap.uxap.ObjectPageHeaderLayoutData;
         }
         /**
          * <p><p>Used by the <code>ObjectPageHeader</code> control to define which shape to use for the image.</p></p>
@@ -1191,6 +1197,14 @@ declare namespace sap {
              */
             attachSectionChange(oData: any, fnFunction: Function, oListener?: any): sap.uxap.ObjectPageLayout;
             /**
+             * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-target="subSectionVisibilityChange" href="api/sap.uxap.ObjectPageLayout#events/subSectionVisibilityChange">subSectionVisibilityChange</a> event of this <code>sap.uxap.ObjectPageLayout</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.uxap.ObjectPageLayout</code> itself.</p><p>Fired when the visibility of subsections is changed.</p>
+             * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+             * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+             * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.uxap.ObjectPageLayout</code> itself</p>
+             * @returns sap.uxap.ObjectPageLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            attachSubSectionVisibilityChange(oData: any, fnFunction: Function, oListener?: any): sap.uxap.ObjectPageLayout;
+            /**
              * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-target="toggleAnchorBar" href="api/sap.uxap.ObjectPageLayout#events/toggleAnchorBar">toggleAnchorBar</a> event of this <code>sap.uxap.ObjectPageLayout</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.uxap.ObjectPageLayout</code> itself.</p><p>The event is fired when the Anchor bar is switched from moving to fixed or the other way round.</p>
              * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
              * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
@@ -1245,6 +1259,13 @@ declare namespace sap {
              */
             detachSectionChange(fnFunction: Function, oListener?: any): sap.uxap.ObjectPageLayout;
             /**
+             * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-target="subSectionVisibilityChange" href="api/sap.uxap.ObjectPageLayout#events/subSectionVisibilityChange">subSectionVisibilityChange</a> event of this <code>sap.uxap.ObjectPageLayout</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+             * @param {any} oListener <p>Context object on which the given function had to be called</p>
+             * @returns sap.uxap.ObjectPageLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            detachSubSectionVisibilityChange(fnFunction: Function, oListener?: any): sap.uxap.ObjectPageLayout;
+            /**
              * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-target="toggleAnchorBar" href="api/sap.uxap.ObjectPageLayout#events/toggleAnchorBar">toggleAnchorBar</a> event of this <code>sap.uxap.ObjectPageLayout</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
              * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
              * @param {any} oListener <p>Context object on which the given function had to be called</p>
@@ -1269,6 +1290,12 @@ declare namespace sap {
              * @returns sap.uxap.ObjectPageLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             protected fireSectionChange(mParameters?: any): sap.uxap.ObjectPageLayout;
+            /**
+             * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="subSectionVisibilityChange" href="api/sap.uxap.ObjectPageLayout#events/subSectionVisibilityChange">subSectionVisibilityChange</a> to attached listeners.</p>
+             * @param {any} mParameters <p>Parameters to pass along with the event</p>
+             * @returns sap.uxap.ObjectPageLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            protected fireSubSectionVisibilityChange(mParameters?: any): sap.uxap.ObjectPageLayout;
             /**
              * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="toggleAnchorBar" href="api/sap.uxap.ObjectPageLayout#events/toggleAnchorBar">toggleAnchorBar</a> to attached listeners.</p>
              * @param {any} mParameters <p>Parameters to pass along with the event</p>
@@ -1316,7 +1343,7 @@ declare namespace sap {
              */
             getHeaderTitle(): sap.uxap.IHeaderTitle;
             /**
-             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHeight" href="api/sap.uxap.ObjectPageLayout#methods/getHeight">height</a>.</p><p>Determines the height of the ObjectPage.</p><p>Default value is <code>100%</code>.</p>
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHeight" href="api/sap.uxap.ObjectPageLayout#methods/getHeight">height</a>.</p><p>Determines the height of the ObjectPage.</p><p>Default value is <code>"100%"</code>.</p>
              * @returns sap.ui.core.CSSSize <p>Value of property <code>height</code></p>
              */
             getHeight(): sap.ui.core.CSSSize;
@@ -1476,16 +1503,16 @@ declare namespace sap {
             /**
              * <p>Scrolls the Object page to the given Section.</p>
              * @param {string} sId <p>The Section ID to scroll to</p>
-             * @param {number} iDuration <p>Scroll duration (in ms). Default value is 0</p>
+             * @param {number} iDuration <p>Scroll duration (in ms)</p>
              * @param {number} iOffset <p>Additional pixels to scroll</p>
              */
-            scrollToSection(sId: string, iDuration: number, iOffset: number): void;
+            scrollToSection(sId: string, iDuration?: number, iOffset?: number): void;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getAlwaysShowContentHeader" href="api/sap.uxap.ObjectPageLayout#methods/getAlwaysShowContentHeader">alwaysShowContentHeader</a>.</p><p>Determines whether Header Content will always be expanded on desktop.</p><p><b>Note</b>: This property is only taken into account if an instance of <code>sap.uxap.ObjectPageHeader</code> is used for the <code>headerTitle</code> aggregation.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
              * @param {boolean} bAlwaysShowContentHeader <p>New value for property <code>alwaysShowContentHeader</code></p>
              * @returns sap.uxap.ObjectPageLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setAlwaysShowContentHeader(bAlwaysShowContentHeader: boolean): sap.uxap.ObjectPageLayout;
+            setAlwaysShowContentHeader(bAlwaysShowContentHeader?: boolean): sap.uxap.ObjectPageLayout;
             /**
              * <p>Sets the value of the <code>backgroundDesignAnchorBar</code> property.</p>
              * @param {sap.m.BackgroundDesign} sBackgroundDesignAnchorBar <p>new value of the <code>backgroundDesignAnchorBar</code></p>
@@ -1497,13 +1524,13 @@ declare namespace sap {
              * @param {boolean} bEnableLazyLoading <p>New value for property <code>enableLazyLoading</code></p>
              * @returns sap.uxap.ObjectPageLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setEnableLazyLoading(bEnableLazyLoading: boolean): sap.uxap.ObjectPageLayout;
+            setEnableLazyLoading(bEnableLazyLoading?: boolean): sap.uxap.ObjectPageLayout;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getFlexEnabled" href="api/sap.uxap.ObjectPageLayout#methods/getFlexEnabled">flexEnabled</a>.</p><p>Specifies whether the object page enables flexibility features, such as hiding and adding sections.<br> For more information about SAPUI5 flexibility, refer to the Developer Guide.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
              * @param {boolean} bFlexEnabled <p>New value for property <code>flexEnabled</code></p>
              * @returns sap.uxap.ObjectPageLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setFlexEnabled(bFlexEnabled: boolean): sap.uxap.ObjectPageLayout;
+            setFlexEnabled(bFlexEnabled?: boolean): sap.uxap.ObjectPageLayout;
             /**
              * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-target="getFooter" href="api/sap.uxap.ObjectPageLayout#methods/getFooter">footer</a>.</p>
              * @param {sap.m.IBar} oFooter <p>The footer to set</p>
@@ -1515,7 +1542,7 @@ declare namespace sap {
              * @param {boolean} bHeaderContentPinnable <p>New value for property <code>headerContentPinnable</code></p>
              * @returns sap.uxap.ObjectPageLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setHeaderContentPinnable(bHeaderContentPinnable: boolean): sap.uxap.ObjectPageLayout;
+            setHeaderContentPinnable(bHeaderContentPinnable?: boolean): sap.uxap.ObjectPageLayout;
             /**
              * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-target="getHeaderTitle" href="api/sap.uxap.ObjectPageLayout#methods/getHeaderTitle">headerTitle</a>.</p>
              * @param {sap.uxap.IHeaderTitle} oHeaderTitle <p>The headerTitle to set</p>
@@ -1523,17 +1550,17 @@ declare namespace sap {
              */
             setHeaderTitle(oHeaderTitle: sap.uxap.IHeaderTitle): sap.uxap.ObjectPageLayout;
             /**
-             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHeight" href="api/sap.uxap.ObjectPageLayout#methods/getHeight">height</a>.</p><p>Determines the height of the ObjectPage.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>100%</code>.</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHeight" href="api/sap.uxap.ObjectPageLayout#methods/getHeight">height</a>.</p><p>Determines the height of the ObjectPage.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"100%"</code>.</p>
              * @param {sap.ui.core.CSSSize} sHeight <p>New value for property <code>height</code></p>
              * @returns sap.uxap.ObjectPageLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setHeight(sHeight: sap.ui.core.CSSSize): sap.uxap.ObjectPageLayout;
+            setHeight(sHeight?: sap.ui.core.CSSSize): sap.uxap.ObjectPageLayout;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getIsChildPage" href="api/sap.uxap.ObjectPageLayout#methods/getIsChildPage">isChildPage</a>.</p><p>Determines whether the page is a child page and renders it with a different design. Child pages have an additional (darker/lighter) stripe on the left side of their header content area.</p><p><b>Note</b>: This property is only taken into account if an instance of <code>sap.uxap.ObjectPageHeader</code> is used for the <code>headerTitle</code> aggregation.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
              * @param {boolean} bIsChildPage <p>New value for property <code>isChildPage</code></p>
              * @returns sap.uxap.ObjectPageLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setIsChildPage(bIsChildPage: boolean): sap.uxap.ObjectPageLayout;
+            setIsChildPage(bIsChildPage?: boolean): sap.uxap.ObjectPageLayout;
             /**
              * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-target="getLandmarkInfo" href="api/sap.uxap.ObjectPageLayout#methods/getLandmarkInfo">landmarkInfo</a>.</p>
              * @param {sap.uxap.ObjectPageAccessibleLandmarkInfo} oLandmarkInfo <p>The landmarkInfo to set</p>
@@ -1545,13 +1572,13 @@ declare namespace sap {
              * @param {boolean} bPreserveHeaderStateOnScroll <p>New value for property <code>preserveHeaderStateOnScroll</code></p>
              * @returns sap.uxap.ObjectPageLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setPreserveHeaderStateOnScroll(bPreserveHeaderStateOnScroll: boolean): sap.uxap.ObjectPageLayout;
+            setPreserveHeaderStateOnScroll(bPreserveHeaderStateOnScroll?: boolean): sap.uxap.ObjectPageLayout;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSectionTitleLevel" href="api/sap.uxap.ObjectPageLayout#methods/getSectionTitleLevel">sectionTitleLevel</a>.</p><p>Determines the ARIA level of the <code>ObjectPageSection</code> and <code>ObjectPageSubSection</code> titles. The ARIA level is used by assisting technologies, such as screen readers, to create a hierarchical site map for faster navigation.</p><p><br><b>Note:</b> <ul> <li>Defining a <code>sectionTitleLevel</code> will add <code>aria-level</code> attribute from 1 to 6 instead of changing the titles` HTML tag from H1 to H6. <br>For example: if <code>sectionTitleLevel</code> is <code>TitleLevel.H1</code>, it will result as aria-level of 1 added to the <code>ObjectPageSection</code> title. </li></p><p><li> The <code>ObjectPageSubSection</code> title would have <code>aria-level</code> one level lower than the defined. For example: if <code>sectionTitleLevel</code> is <code>TitleLevel.H1</code>, it will result as aria-level of 2 added to the <code>ObjectPageSubSection</code> title.</li></p><p><li> It is possible to define a <code>titleLevel</code> on <code>ObjectPageSection</code> or <code>ObjectPageSubSection</code> level. In this case the value of this property will be ignored. </li> </ul></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Auto</code>.</p>
              * @param {sap.ui.core.TitleLevel} sSectionTitleLevel <p>New value for property <code>sectionTitleLevel</code></p>
              * @returns sap.uxap.ObjectPageLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setSectionTitleLevel(sSectionTitleLevel: sap.ui.core.TitleLevel): sap.uxap.ObjectPageLayout;
+            setSectionTitleLevel(sSectionTitleLevel?: sap.ui.core.TitleLevel): sap.uxap.ObjectPageLayout;
             /**
              * <p>Sets the section that should be selected.</p><p>The section can either be given by itself or by its id.</p><p>Note that an argument of <code>null</code> will cause the first visible section be set as <code>selectedSection</code>. This is because the <code>sap.uxap.ObjectPageLayout</code> should always have one of its sections selected (unless it has 0 visible sections).</p>
              * @param {string | sap.uxap.ObjectPageSection} sId <p>The ID or the section instance that should be selected Note that <code>null</code> or <code>undefined</code> are not valid arguments</p>
@@ -1563,73 +1590,73 @@ declare namespace sap {
              * @param {boolean} bShowAnchorBar <p>New value for property <code>showAnchorBar</code></p>
              * @returns sap.uxap.ObjectPageLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setShowAnchorBar(bShowAnchorBar: boolean): sap.uxap.ObjectPageLayout;
+            setShowAnchorBar(bShowAnchorBar?: boolean): sap.uxap.ObjectPageLayout;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getShowAnchorBarPopover" href="api/sap.uxap.ObjectPageLayout#methods/getShowAnchorBarPopover">showAnchorBarPopover</a>.</p><p>Determines whether to show a Popover with Subsection links when clicking on Section links in the Anchor bar.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
              * @param {boolean} bShowAnchorBarPopover <p>New value for property <code>showAnchorBarPopover</code></p>
              * @returns sap.uxap.ObjectPageLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setShowAnchorBarPopover(bShowAnchorBarPopover: boolean): sap.uxap.ObjectPageLayout;
+            setShowAnchorBarPopover(bShowAnchorBarPopover?: boolean): sap.uxap.ObjectPageLayout;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getShowEditHeaderButton" href="api/sap.uxap.ObjectPageLayout#methods/getShowEditHeaderButton">showEditHeaderButton</a>.</p><p>Determines whether an Edit button will be displayed in Header Content.</p><p><b>Note</b>: This property is only taken into account if an instance of <code>sap.uxap.ObjectPageHeader</code> is used for the <code>headerTitle</code> aggregation.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
              * @param {boolean} bShowEditHeaderButton <p>New value for property <code>showEditHeaderButton</code></p>
              * @returns sap.uxap.ObjectPageLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setShowEditHeaderButton(bShowEditHeaderButton: boolean): sap.uxap.ObjectPageLayout;
+            setShowEditHeaderButton(bShowEditHeaderButton?: boolean): sap.uxap.ObjectPageLayout;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getShowFooter" href="api/sap.uxap.ObjectPageLayout#methods/getShowFooter">showFooter</a>.</p><p>Determines whether the footer is visible.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
              * @param {boolean} bShowFooter <p>New value for property <code>showFooter</code></p>
              * @returns sap.uxap.ObjectPageLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setShowFooter(bShowFooter: boolean): sap.uxap.ObjectPageLayout;
+            setShowFooter(bShowFooter?: boolean): sap.uxap.ObjectPageLayout;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getShowHeaderContent" href="api/sap.uxap.ObjectPageLayout#methods/getShowHeaderContent">showHeaderContent</a>.</p><p>Determines the visibility of the Header content (headerContent aggregation).</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
              * @param {boolean} bShowHeaderContent <p>New value for property <code>showHeaderContent</code></p>
              * @returns sap.uxap.ObjectPageLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setShowHeaderContent(bShowHeaderContent: boolean): sap.uxap.ObjectPageLayout;
+            setShowHeaderContent(bShowHeaderContent?: boolean): sap.uxap.ObjectPageLayout;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getShowOnlyHighImportance" href="api/sap.uxap.ObjectPageLayout#methods/getShowOnlyHighImportance">showOnlyHighImportance</a>.</p><p>Determines whether sections and subsections with importance Low and Medium are hidden even on large screens.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
              * @param {boolean} bShowOnlyHighImportance <p>New value for property <code>showOnlyHighImportance</code></p>
              * @returns sap.uxap.ObjectPageLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setShowOnlyHighImportance(bShowOnlyHighImportance: boolean): sap.uxap.ObjectPageLayout;
+            setShowOnlyHighImportance(bShowOnlyHighImportance?: boolean): sap.uxap.ObjectPageLayout;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getShowTitleInHeaderContent" href="api/sap.uxap.ObjectPageLayout#methods/getShowTitleInHeaderContent">showTitleInHeaderContent</a>.</p><p>Determines whether the title, image, markers and selectTitleArrow are shown in the Header content area.</p><p><b>Note</b>: This property is only taken into account if an instance of <code>sap.uxap.ObjectPageHeader</code> is used for the <code>headerTitle</code> aggregation.</li></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
              * @param {boolean} bShowTitleInHeaderContent <p>New value for property <code>showTitleInHeaderContent</code></p>
              * @returns sap.uxap.ObjectPageLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setShowTitleInHeaderContent(bShowTitleInHeaderContent: boolean): sap.uxap.ObjectPageLayout;
+            setShowTitleInHeaderContent(bShowTitleInHeaderContent?: boolean): sap.uxap.ObjectPageLayout;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSubSectionLayout" href="api/sap.uxap.ObjectPageLayout#methods/getSubSectionLayout">subSectionLayout</a>.</p><p>Determines whether Subsection titles are displayed on top or to the left of the Subsection content.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>TitleOnTop</code>.</p>
              * @param {sap.uxap.ObjectPageSubSectionLayout} sSubSectionLayout <p>New value for property <code>subSectionLayout</code></p>
              * @returns sap.uxap.ObjectPageLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setSubSectionLayout(sSubSectionLayout: sap.uxap.ObjectPageSubSectionLayout): sap.uxap.ObjectPageLayout;
+            setSubSectionLayout(sSubSectionLayout?: sap.uxap.ObjectPageSubSectionLayout): sap.uxap.ObjectPageLayout;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getToggleHeaderOnTitleClick" href="api/sap.uxap.ObjectPageLayout#methods/getToggleHeaderOnTitleClick">toggleHeaderOnTitleClick</a>.</p><p>Determines whether the user can switch between the expanded/collapsed states of the <code>sap.uxap.ObjectPageDynamicHeaderContent</code> by clicking on the <code>sap.uxap.ObjectPageDynamicHeaderTitle</code>. If set to <code>false</code>, the <code>sap.uxap.ObjectPageDynamicHeaderTitle</code> is not clickable and the application must provide other means for expanding/collapsing the <code>sap.uxap.ObjectPageDynamicHeaderContent</code>, if necessary.</p><p><b>Note:</b> This property is only taken into account if an instance of <code>sap.uxap.ObjectPageDynamicHeaderTitle</code> is used for the <code>headerTitle</code> aggregation.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
              * @param {boolean} bToggleHeaderOnTitleClick <p>New value for property <code>toggleHeaderOnTitleClick</code></p>
              * @returns sap.uxap.ObjectPageLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setToggleHeaderOnTitleClick(bToggleHeaderOnTitleClick: boolean): sap.uxap.ObjectPageLayout;
+            setToggleHeaderOnTitleClick(bToggleHeaderOnTitleClick?: boolean): sap.uxap.ObjectPageLayout;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getUpperCaseAnchorBar" href="api/sap.uxap.ObjectPageLayout#methods/getUpperCaseAnchorBar">upperCaseAnchorBar</a>.</p><p>Determines whether the Anchor bar items are displayed in upper case.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
              * @param {boolean} bUpperCaseAnchorBar <p>New value for property <code>upperCaseAnchorBar</code></p>
              * @returns sap.uxap.ObjectPageLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setUpperCaseAnchorBar(bUpperCaseAnchorBar: boolean): sap.uxap.ObjectPageLayout;
+            setUpperCaseAnchorBar(bUpperCaseAnchorBar?: boolean): sap.uxap.ObjectPageLayout;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getUseIconTabBar" href="api/sap.uxap.ObjectPageLayout#methods/getUseIconTabBar">useIconTabBar</a>.</p><p>Determines whether the navigation mode is tab-based instead of the default anchor bar. If enabled, the sections are displayed separately on each tab rather than having all of them visible at the same time.</p><p><b>Note:</b> Keep in mind that the <code>sap.m.IconTabBar</code> control is no longer used for the tab navigation mode.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
              * @param {boolean} bUseIconTabBar <p>New value for property <code>useIconTabBar</code></p>
              * @returns sap.uxap.ObjectPageLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setUseIconTabBar(bUseIconTabBar: boolean): sap.uxap.ObjectPageLayout;
+            setUseIconTabBar(bUseIconTabBar?: boolean): sap.uxap.ObjectPageLayout;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getUseTwoColumnsForLargeScreen" href="api/sap.uxap.ObjectPageLayout#methods/getUseTwoColumnsForLargeScreen">useTwoColumnsForLargeScreen</a>.</p><p>Determines whether the to use two column layout for the L screen size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
              * @param {boolean} bUseTwoColumnsForLargeScreen <p>New value for property <code>useTwoColumnsForLargeScreen</code></p>
              * @returns sap.uxap.ObjectPageLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setUseTwoColumnsForLargeScreen(bUseTwoColumnsForLargeScreen: boolean): sap.uxap.ObjectPageLayout;
+            setUseTwoColumnsForLargeScreen(bUseTwoColumnsForLargeScreen?: boolean): sap.uxap.ObjectPageLayout;
         }
         /**
          * <p>A helper element that enables a "stashed-based" lazy loading approach for the content of the <a target="_self" class="jsdoclink" href="api/sap.uxap.ObjectPageSubSection">sap.uxap.ObjectPageSubSection</a> control.</p><p><code>ObjectPageLazyLoader</code> is intended to be used in a declarative way only (for example, in a view) with the <code>stashed</code> property set to <code>true</code>, and is recommended to be used only once per subsection as its sole content.</p><p><code>ObjectPageLazyLoader</code> utilizes UI5's stashing mechanism and is a lightweight alternative to the native block-based Lazy Loading of the <code>ObjectPageLayout</code>. Wrapping the content of a subsection in an <code>ObjectPageLazyLoader</code> with <code>stashed=true</code> will make the content unstash automatically as the user scrolls.</p><p><b>Note:</b> Subsections are required to have an ID when used with <code>ObjectPageLazyLoader</code>.</p>
@@ -1758,13 +1785,13 @@ declare namespace sap {
              * @param {boolean} bShowTitle <p>New value for property <code>showTitle</code></p>
              * @returns sap.uxap.ObjectPageSection <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setShowTitle(bShowTitle: boolean): sap.uxap.ObjectPageSection;
+            setShowTitle(bShowTitle?: boolean): sap.uxap.ObjectPageSection;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getTitleUppercase" href="api/sap.uxap.ObjectPageSection#methods/getTitleUppercase">titleUppercase</a>.</p><p>Determines whether the Section title is displayed in upper case.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
              * @param {boolean} bTitleUppercase <p>New value for property <code>titleUppercase</code></p>
              * @returns sap.uxap.ObjectPageSection <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setTitleUppercase(bTitleUppercase: boolean): sap.uxap.ObjectPageSection;
+            setTitleUppercase(bTitleUppercase?: boolean): sap.uxap.ObjectPageSection;
         }
         /**
          * <p>An abstract container for sections and subsections in the <a target="_self" class="jsdoclink" href="api/sap.uxap.ObjectPageLayout">sap.uxap.ObjectPageLayout</a>.</p>
@@ -1796,7 +1823,12 @@ declare namespace sap {
              */
             getImportance(): sap.uxap.Importance;
             /**
-             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getTitle" href="api/sap.uxap.ObjectPageSectionBase#methods/getTitle">title</a>.</p><p>Section Title</p>
+             * <p>Returns the control name text.</p><p>To be overwritten by the specific control method.</p>
+             * @returns string <p>control name text</p>
+             */
+            protected getSectionText(): string;
+            /**
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getTitle" href="api/sap.uxap.ObjectPageSectionBase#methods/getTitle">title</a>.</p><p>Defines the title of the respective section/subsection.</p><p><b>Note:</b> If a subsection is the only one (or the only one visible) within a section, its title is displayed instead of the section title. This behavior is true even if the <code>showTitle</code> propeprty of <a target="_self" class="jsdoclink" href="api/sap.uxap.ObjectPageSubSection">sap.uxap.ObjectPageSubSection</a> is set to <code>false</code>.</p>
              * @returns string <p>Value of property <code>title</code></p>
              */
             getTitle(): string;
@@ -1821,25 +1853,25 @@ declare namespace sap {
              * @param {sap.uxap.Importance} sImportance <p>New value for property <code>importance</code></p>
              * @returns sap.uxap.ObjectPageSectionBase <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setImportance(sImportance: sap.uxap.Importance): sap.uxap.ObjectPageSectionBase;
+            setImportance(sImportance?: sap.uxap.Importance): sap.uxap.ObjectPageSectionBase;
             /**
-             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getTitle" href="api/sap.uxap.ObjectPageSectionBase#methods/getTitle">title</a>.</p><p>Section Title</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getTitle" href="api/sap.uxap.ObjectPageSectionBase#methods/getTitle">title</a>.</p><p>Defines the title of the respective section/subsection.</p><p><b>Note:</b> If a subsection is the only one (or the only one visible) within a section, its title is displayed instead of the section title. This behavior is true even if the <code>showTitle</code> propeprty of <a target="_self" class="jsdoclink" href="api/sap.uxap.ObjectPageSubSection">sap.uxap.ObjectPageSubSection</a> is set to <code>false</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
              * @param {string} sTitle <p>New value for property <code>title</code></p>
              * @returns sap.uxap.ObjectPageSectionBase <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setTitle(sTitle: string): sap.uxap.ObjectPageSectionBase;
+            setTitle(sTitle?: string): sap.uxap.ObjectPageSectionBase;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getTitleLevel" href="api/sap.uxap.ObjectPageSectionBase#methods/getTitleLevel">titleLevel</a>.</p><p>Determines the ARIA level of the <code>ObjectPageSectionBase</code> title. The ARIA level is used by assisting technologies, such as screen readers, to create a hierarchical site map for faster navigation.</p><p><b>Note:</b> Defining a <code>titleLevel</code> will add <code>aria-level</code> attribute from 1 to 6, instead of changing the <code>ObjectPageSectionBase</code> title HTML tag from H1 to H6. <br>For example: if <code>titleLevel</code> is <code>TitleLevel.H1</code>, it will result as aria-level of 1 added to the <code>ObjectPageSectionBase</code> title.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Auto</code>.</p>
              * @param {sap.ui.core.TitleLevel} sTitleLevel <p>New value for property <code>titleLevel</code></p>
              * @returns sap.uxap.ObjectPageSectionBase <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setTitleLevel(sTitleLevel: sap.ui.core.TitleLevel): sap.uxap.ObjectPageSectionBase;
+            setTitleLevel(sTitleLevel?: sap.ui.core.TitleLevel): sap.uxap.ObjectPageSectionBase;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getVisible" href="api/sap.uxap.ObjectPageSectionBase#methods/getVisible">visible</a>.</p><p>Invisible ObjectPageSectionBase are not rendered</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
              * @param {boolean} bVisible <p>New value for property <code>visible</code></p>
              * @returns sap.uxap.ObjectPageSectionBase <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setVisible(bVisible: boolean): sap.uxap.ObjectPageSectionBase;
+            setVisible(bVisible?: boolean): sap.uxap.ObjectPageSectionBase;
         }
         /**
          * <p>Second-level information container of an <a target="_self" class="jsdoclink" href="api/sap.uxap.ObjectPageLayout">sap.uxap.ObjectPageLayout</a>.</p><p>An <code>ObjectPageSubSection</code> may only be used within sections in the <code>ObjectPageLayout</code>. Subsections are used to display primary information in the <code>blocks</code> aggregation (always visible) and not-so-important information in the <code>moreBlocks</code> aggregation. The content in the <code>moreBlocks</code> aggregation is initially hidden, but may be accessed with a "See more" (...) button.</p><p>As of version 1.61, applications can enable auto-expand of the subsections to fit the sections container by adding the <code>sapUxAPObjectPageSubSectionFitContainer</code> class to the subsection. This is useful in situations where the sub-section contains a control that has “100%” height, for example, <code>sap.ui.table.Table</code> with <code>visibleRowCountMode</code> set to <code>Auto</code>.</p><p><b>Note:</b> This control is intended to be used only as part of the <code>ObjectPageLayout</code>.</p>
@@ -1906,6 +1938,11 @@ declare namespace sap {
              * @returns sap.ui.core.Control[] 
              */
             getMoreBlocks(): sap.ui.core.Control[];
+            /**
+             * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getShowTitle" href="api/sap.uxap.ObjectPageSubSection#methods/getShowTitle">showTitle</a>.</p><p>Determines whether to display the <code>SubSection</code> title or not.</p><p><b>Note:</b> If a subsection is the only one (or the only one visible) within a section, its title is displayed instead of the section title even if this property is set to <code>false</code>. To hide the title of a subsection which is the only one (or the only one visible), you need to set the <code>showTitle</code> properties to <code>false</code> for both the section and its subsection.</p><p>Default value is <code>true</code>.</p>
+             * @returns boolean <p>Value of property <code>showTitle</code></p>
+             */
+            getShowTitle(): boolean;
             /**
              * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getTitleUppercase" href="api/sap.uxap.ObjectPageSubSection#methods/getTitleUppercase">titleUppercase</a>.</p><p>Determines whether the Subsection title is displayed in upper case.</p><p>Default value is <code>false</code>.</p>
              * @returns boolean <p>Value of property <code>titleUppercase</code></p>
@@ -1988,13 +2025,19 @@ declare namespace sap {
              * @param {sap.uxap.ObjectPageSubSectionMode} sMode <p>New value for property <code>mode</code></p>
              * @returns sap.uxap.ObjectPageSubSection <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setMode(sMode: sap.uxap.ObjectPageSubSectionMode): sap.uxap.ObjectPageSubSection;
+            setMode(sMode?: sap.uxap.ObjectPageSubSectionMode): sap.uxap.ObjectPageSubSection;
+            /**
+             * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getShowTitle" href="api/sap.uxap.ObjectPageSubSection#methods/getShowTitle">showTitle</a>.</p><p>Determines whether to display the <code>SubSection</code> title or not.</p><p><b>Note:</b> If a subsection is the only one (or the only one visible) within a section, its title is displayed instead of the section title even if this property is set to <code>false</code>. To hide the title of a subsection which is the only one (or the only one visible), you need to set the <code>showTitle</code> properties to <code>false</code> for both the section and its subsection.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+             * @param {boolean} bShowTitle <p>New value for property <code>showTitle</code></p>
+             * @returns sap.uxap.ObjectPageSubSection <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            setShowTitle(bShowTitle?: boolean): sap.uxap.ObjectPageSubSection;
             /**
              * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getTitleUppercase" href="api/sap.uxap.ObjectPageSubSection#methods/getTitleUppercase">titleUppercase</a>.</p><p>Determines whether the Subsection title is displayed in upper case.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
              * @param {boolean} bTitleUppercase <p>New value for property <code>titleUppercase</code></p>
              * @returns sap.uxap.ObjectPageSubSection <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setTitleUppercase(bTitleUppercase: boolean): sap.uxap.ObjectPageSubSection;
+            setTitleUppercase(bTitleUppercase?: boolean): sap.uxap.ObjectPageSubSection;
         }
         /**
          * <p><p>Used by the <code>ObjectPagSubSection</code> control to define which layout to apply.</p></p>

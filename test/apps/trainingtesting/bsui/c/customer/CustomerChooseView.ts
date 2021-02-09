@@ -8,9 +8,7 @@
 namespace trainingtesting {
     export namespace ui {
         export namespace c {
-            /**
-             * 选择视图-客户主数据
-             */
+            /** 选择视图-客户主数据 */
             export class CustomerChooseView extends ibas.BOChooseView implements app.ICustomerChooseView {
                 /** 返回查询的对象 */
                 get queryTarget(): any {
@@ -27,21 +25,19 @@ namespace trainingtesting {
                         columns: [
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_customer_code"),
-                                template: new sap.extension.m.DataLink("", {
-                                    objectCode: bo.Customer.BUSINESS_OBJECT_CODE,
+                                template: new sap.extension.m.Text("", {
                                 }).bindProperty("bindingValue", {
                                     path: "code",
-                                    type: new sap.extension.data.Alphanumeric()
+                                    type: new sap.extension.data.Alphanumeric(),
                                 }),
                             }),
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_customer_name"),
                                 template: new sap.extension.m.Text("", {
-                                    wrapping: false
                                 }).bindProperty("bindingValue", {
                                     path: "name",
-                                    type: new sap.extension.data.Alphanumeric()
-                                })
+                                    type: new sap.extension.data.Alphanumeric(),
+                                }),
                             }),
                         ],
                         nextDataSet(event: sap.ui.base.Event): void {
@@ -61,10 +57,11 @@ namespace trainingtesting {
                             that.fireViewEvents(that.fetchDataEvent, criteria);
                         }
                     });
-                    return new sap.extension.m.Dialog("", {
+                    return new sap.m.Dialog("", {
                         title: this.title,
                         type: sap.m.DialogType.Standard,
                         state: sap.ui.core.ValueState.None,
+                        stretch: ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM) === ibas.emPlantform.PHONE ? true : false,
                         horizontalScrolling: true,
                         verticalScrolling: true,
                         content: [
@@ -73,33 +70,33 @@ namespace trainingtesting {
                         buttons: [
                             new sap.m.Button("", {
                                 text: ibas.i18n.prop("shell_data_new"),
-                                visible: this.mode === ibas.emViewMode.VIEW ? false : true,
                                 type: sap.m.ButtonType.Transparent,
-                                press: function (): void {
+                                visible: this.mode === ibas.emViewMode.VIEW ? false : true,
+                                press(): void {
                                     that.fireViewEvents(that.newDataEvent);
                                 }
                             }),
                             new sap.m.Button("", {
                                 text: ibas.i18n.prop("shell_data_choose"),
                                 type: sap.m.ButtonType.Transparent,
-                                press: function (): void {
+                                press(): void {
                                     that.fireViewEvents(that.chooseDataEvent, that.table.getSelecteds());
                                 }
                             }),
                             new sap.m.Button("", {
                                 text: ibas.i18n.prop("shell_exit"),
                                 type: sap.m.ButtonType.Transparent,
-                                press: function (): void {
+                                press(): void {
                                     that.fireViewEvents(that.closeEvent);
                                 }
                             }),
                         ],
-                    });
+                    }).addStyleClass("sapUiNoContentPadding");
                 }
-                private table: sap.extension.table.DataTable;
+                private table: sap.extension.table.Table;
                 /** 显示数据 */
                 showData(datas: bo.Customer[]): void {
-                    let model: sap.ui.model.Model = this.table.getModel(undefined);
+                    let model: sap.ui.model.Model = this.table.getModel();
                     if (model instanceof sap.extension.model.JSONModel) {
                         // 已绑定过数据
                         model.addData(datas);

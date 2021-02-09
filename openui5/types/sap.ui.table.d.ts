@@ -56,31 +56,31 @@ declare namespace sap {
                  * @param {any} oGroupHeaderFormatter <p>New value for property <code>groupHeaderFormatter</code></p>
                  * @returns sap.ui.table.AnalyticalColumn <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setGroupHeaderFormatter(oGroupHeaderFormatter: any): sap.ui.table.AnalyticalColumn;
+                setGroupHeaderFormatter(oGroupHeaderFormatter?: any): sap.ui.table.AnalyticalColumn;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getInResult" href="api/sap.ui.table.AnalyticalColumn#methods/getInResult">inResult</a>.</p><p>Specifies that the dimension referred to by the column shall be included in the granularity of the data result. It allows a finer distinction between a visible/grouped/(included)inResult column.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bInResult <p>New value for property <code>inResult</code></p>
                  * @returns sap.ui.table.AnalyticalColumn <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setInResult(bInResult: boolean): sap.ui.table.AnalyticalColumn;
+                setInResult(bInResult?: boolean): sap.ui.table.AnalyticalColumn;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getLeadingProperty" href="api/sap.ui.table.AnalyticalColumn#methods/getLeadingProperty">leadingProperty</a>.</p><p>Defines the primary model property which is used inside the Column. In case of the analytical extension this means the property which is grouped by for dimensions or the property which is summed for measures.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {string} sLeadingProperty <p>New value for property <code>leadingProperty</code></p>
                  * @returns sap.ui.table.AnalyticalColumn <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setLeadingProperty(sLeadingProperty: string): sap.ui.table.AnalyticalColumn;
+                setLeadingProperty(sLeadingProperty?: string): sap.ui.table.AnalyticalColumn;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getShowIfGrouped" href="api/sap.ui.table.AnalyticalColumn#methods/getShowIfGrouped">showIfGrouped</a>.</p><p>Specifies whether the column is displayed within the table even if it is grouped or not. A grouped column has the same value for every rows within the group.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bShowIfGrouped <p>New value for property <code>showIfGrouped</code></p>
                  * @returns sap.ui.table.AnalyticalColumn <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setShowIfGrouped(bShowIfGrouped: boolean): sap.ui.table.AnalyticalColumn;
+                setShowIfGrouped(bShowIfGrouped?: boolean): sap.ui.table.AnalyticalColumn;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSummed" href="api/sap.ui.table.AnalyticalColumn#methods/getSummed">summed</a>.</p><p>If defined a sum for this column is calculated</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bSummed <p>New value for property <code>summed</code></p>
                  * @returns sap.ui.table.AnalyticalColumn <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setSummed(bSummed: boolean): sap.ui.table.AnalyticalColumn;
+                setSummed(bSummed?: boolean): sap.ui.table.AnalyticalColumn;
             }
             /**
              * <p>A column menu which is used by the analytical column</p>
@@ -142,11 +142,6 @@ declare namespace sap {
                  */
                 expandAll(): sap.ui.table.AnalyticalTable;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getCollapseRecursive" href="api/sap.ui.table.AnalyticalTable#methods/getCollapseRecursive">collapseRecursive</a>.</p><p>Setting collapseRecursive to true means, that when collapsing a node all subsequent child nodes will also be collapsed.</p><p>Calling the setter of this property only has an effect when the tables <code>rows</code> aggregation is already bound and the binding supports this feature.</p><p>Default value is <code>true</code>.</p>
-                 * @returns boolean <p>Value of property <code>collapseRecursive</code></p>
-                 */
-                getCollapseRecursive(): boolean;
-                /**
                  * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getColumnVisibilityMenuSorter" href="api/sap.ui.table.AnalyticalTable#methods/getColumnVisibilityMenuSorter">columnVisibilityMenuSorter</a>.</p><p>Functions which is used to sort the column visibility menu entries e.g.: function(ColumnA, ColumnB) { return 0 = equals, <0 lower, >0 greater }; Other values than functions will be ignored.</p>
                  * @returns any <p>Value of property <code>columnVisibilityMenuSorter</code></p>
                  */
@@ -164,10 +159,10 @@ declare namespace sap {
                  */
                 getContextByIndex(iIndex: number): any;
                 /**
-                 * <p>Retrieves the lead selection index. The lead selection index is, among other things, used to determine the start/end of a selection range, when using Shift-Click to select multiple entries at once.</p>
-                 * @returns number[] <p>an array containing all selected indices (ascending ordered integers)</p>
+                 * <p>Retrieves the lead selection index.</p><p>The lead selection index is, among other things, used to determine the start/end of a selection range, when using Shift-Click to select multiple entries at once.</p>
+                 * @returns number <p>Current lead selection index.</p>
                  */
-                getSelectedIndex(): number[];
+                getSelectedIndex(): number;
                 /**
                  * <p>Zero-based indices of selected items, wrapped in an array. An empty array means "no selection".</p>
                  * @returns number[] <p>Selected indices</p>
@@ -232,17 +227,11 @@ declare namespace sap {
                  */
                 selectAll(): sap.ui.table.AnalyticalTable;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getCollapseRecursive" href="api/sap.ui.table.AnalyticalTable#methods/getCollapseRecursive">collapseRecursive</a>.</p><p>Setting collapseRecursive to true means, that when collapsing a node all subsequent child nodes will also be collapsed.</p><p>Calling the setter of this property only has an effect when the tables <code>rows</code> aggregation is already bound and the binding supports this feature.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
-                 * @param {boolean} bCollapseRecursive <p>New value for property <code>collapseRecursive</code></p>
-                 * @returns sap.ui.table.AnalyticalTable <p>Reference to <code>this</code> in order to allow method chaining</p>
-                 */
-                setCollapseRecursive(bCollapseRecursive: boolean): sap.ui.table.AnalyticalTable;
-                /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getColumnVisibilityMenuSorter" href="api/sap.ui.table.AnalyticalTable#methods/getColumnVisibilityMenuSorter">columnVisibilityMenuSorter</a>.</p><p>Functions which is used to sort the column visibility menu entries e.g.: function(ColumnA, ColumnB) { return 0 = equals, <0 lower, >0 greater }; Other values than functions will be ignored.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {any} oColumnVisibilityMenuSorter <p>New value for property <code>columnVisibilityMenuSorter</code></p>
                  * @returns sap.ui.table.AnalyticalTable <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setColumnVisibilityMenuSorter(oColumnVisibilityMenuSorter: any): sap.ui.table.AnalyticalTable;
+                setColumnVisibilityMenuSorter(oColumnVisibilityMenuSorter?: any): sap.ui.table.AnalyticalTable;
                 /**
                  * <p>Sets the selected index. The previous selection is removed.</p>
                  * @param {number} iIndex <p>The index to select</p>
@@ -326,7 +315,7 @@ declare namespace sap {
                  */
                 detachColumnMenuOpen(fnFunction: Function, oListener?: any): sap.ui.table.Column;
                 /**
-                 * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="columnMenuOpen" href="api/sap.ui.table.Column#events/columnMenuOpen">columnMenuOpen</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by using the <code>preventDefault</code>-method on the event object.</p>
+                 * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="columnMenuOpen" href="api/sap.ui.table.Column#events/columnMenuOpen">columnMenuOpen</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by calling the <code>preventDefault</code> method on the event object. The return value of this method indicates whether the default action should be executed.</p>
                  * @param {any} mParameters <p>Parameters to pass along with the event</p>
                  * @returns boolean <p>Whether or not to prevent the default action</p>
                  */
@@ -498,31 +487,31 @@ declare namespace sap {
                  * @param {boolean} bAutoResizable <p>New value for property <code>autoResizable</code></p>
                  * @returns sap.ui.table.Column <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setAutoResizable(bAutoResizable: boolean): sap.ui.table.Column;
+                setAutoResizable(bAutoResizable?: boolean): sap.ui.table.Column;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getDefaultFilterOperator" href="api/sap.ui.table.Column#methods/getDefaultFilterOperator">defaultFilterOperator</a>.</p><p>If this property is set, the default filter operator of the column is overridden. By default <code>Contains</code> is used for string and <code>EQ</code> for other types. A valid <code>sap.ui.model.FilterOperator</code> needs to be passed.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {string} sDefaultFilterOperator <p>New value for property <code>defaultFilterOperator</code></p>
                  * @returns sap.ui.table.Column <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setDefaultFilterOperator(sDefaultFilterOperator: string): sap.ui.table.Column;
+                setDefaultFilterOperator(sDefaultFilterOperator?: string): sap.ui.table.Column;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getFiltered" href="api/sap.ui.table.Column#methods/getFiltered">filtered</a>.</p><p>Indicates if the column is filtered. This property only controls if a filter indicator is displayed in the column header - it does not trigger the filter function. The column can be filtered using <a target="_self" class="jsdoclink" href="api/sap.ui.table.Table#methods/filter">sap.ui.table.Table#filter</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bFiltered <p>New value for property <code>filtered</code></p>
                  * @returns sap.ui.table.Column <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setFiltered(bFiltered: boolean): sap.ui.table.Column;
+                setFiltered(bFiltered?: boolean): sap.ui.table.Column;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getFilterOperator" href="api/sap.ui.table.Column#methods/getFilterOperator">filterOperator</a>.</p><p>Filter operator to use when filtering this column.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {string} sFilterOperator <p>New value for property <code>filterOperator</code></p>
                  * @returns sap.ui.table.Column <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setFilterOperator(sFilterOperator: string): sap.ui.table.Column;
+                setFilterOperator(sFilterOperator?: string): sap.ui.table.Column;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getFilterProperty" href="api/sap.ui.table.Column#methods/getFilterProperty">filterProperty</a>.</p><p>Specifies the binding property on which the column shall be filtered. Since the column template may have composite bindings, it's not possible to figure out on which binding property the filter shall be applied. Therefore the binding property for filtering must be specified. For example, if the first name and last name are displayed in the same column, only one of the two can be defined as <code>filterProperty</code>.</p><p>A column menu entry for filtering can only be generated if the <code>filterProperty</code> is set. The default menu entry is a text input field.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {string} sFilterProperty <p>New value for property <code>filterProperty</code></p>
                  * @returns sap.ui.table.Column <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setFilterProperty(sFilterProperty: string): sap.ui.table.Column;
+                setFilterProperty(sFilterProperty?: string): sap.ui.table.Column;
                 /**
                  * <p>The filter type can be the class name of a type, an expression similar to the binding syntax, or a function. A function receives the entered filter value as a parameter and should return the appropriate value for the filter expression.</p>
                  * @param {any} vType <p>The filter type</p>
@@ -546,25 +535,25 @@ declare namespace sap {
                  * @param {string} sFilterValue <p>New value for property <code>filterValue</code></p>
                  * @returns sap.ui.table.Column <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setFilterValue(sFilterValue: string): sap.ui.table.Column;
+                setFilterValue(sFilterValue?: string): sap.ui.table.Column;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getGrouped" href="api/sap.ui.table.Column#methods/getGrouped">grouped</a>.</p><p>Indicates if the column is grouped.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bGrouped <p>New value for property <code>grouped</code></p>
                  * @returns sap.ui.table.Column <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setGrouped(bGrouped: boolean): sap.ui.table.Column;
+                setGrouped(bGrouped?: boolean): sap.ui.table.Column;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHAlign" href="api/sap.ui.table.Column#methods/getHAlign">hAlign</a>.</p><p>Horizontal alignment of the column content. Controls with a text align do not inherit the horizontal alignment. You have to set the text align directly on the template.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Begin</code>.</p>
                  * @param {sap.ui.core.HorizontalAlign} sHAlign <p>New value for property <code>hAlign</code></p>
                  * @returns sap.ui.table.Column <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setHAlign(sHAlign: sap.ui.core.HorizontalAlign): sap.ui.table.Column;
+                setHAlign(sHAlign?: sap.ui.core.HorizontalAlign): sap.ui.table.Column;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHeaderSpan" href="api/sap.ui.table.Column#methods/getHeaderSpan">headerSpan</a>.</p><p>If this property is set, a span is applied for the header. When moving columns, all columns which are part of the header will be moved. The <code>headerSpan</code> can be either an integer or an array of integers (if you use the multi header feature of the table). If you only specify an integer, this span is applied for all header rows, with multiple integers you can specify a separate span for each header row. <b>Note:</b> Only columns with a span equal to 1 can have a column menu. When setting a column to fixed, all columns which are part of the header with the greatest span will be set to fixed.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1</code>.</p>
                  * @param {any} oHeaderSpan <p>New value for property <code>headerSpan</code></p>
                  * @returns sap.ui.table.Column <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setHeaderSpan(oHeaderSpan: any): sap.ui.table.Column;
+                setHeaderSpan(oHeaderSpan?: any): sap.ui.table.Column;
                 /**
                  * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-target="getLabel" href="api/sap.ui.table.Column#methods/getLabel">label</a>.</p>
                  * @param {sap.ui.core.Control | string} vLabel <p>The label to set</p>
@@ -582,49 +571,49 @@ declare namespace sap {
                  * @param {number} iMinWidth <p>New value for property <code>minWidth</code></p>
                  * @returns sap.ui.table.Column <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setMinWidth(iMinWidth: number): sap.ui.table.Column;
+                setMinWidth(iMinWidth?: number): sap.ui.table.Column;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getName" href="api/sap.ui.table.Column#methods/getName">name</a>.</p><p>The name of the column which is used for the text representation of this column, for example, in menus. If not set, the text from the multiLabels aggregation or the label aggregation (in that order) is used as a fallback option.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {string} sName <p>New value for property <code>name</code></p>
                  * @returns sap.ui.table.Column <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setName(sName: string): sap.ui.table.Column;
+                setName(sName?: string): sap.ui.table.Column;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getResizable" href="api/sap.ui.table.Column#methods/getResizable">resizable</a>.</p><p>If set to true, the column can be resized either using the resize bar (by mouse) or using the keyboard (SHIFT + Left/Right Arrow keys)</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                  * @param {boolean} bResizable <p>New value for property <code>resizable</code></p>
                  * @returns sap.ui.table.Column <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setResizable(bResizable: boolean): sap.ui.table.Column;
+                setResizable(bResizable?: boolean): sap.ui.table.Column;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getShowFilterMenuEntry" href="api/sap.ui.table.Column#methods/getShowFilterMenuEntry">showFilterMenuEntry</a>.</p><p>Defines if the filter menu entry is displayed</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                  * @param {boolean} bShowFilterMenuEntry <p>New value for property <code>showFilterMenuEntry</code></p>
                  * @returns sap.ui.table.Column <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setShowFilterMenuEntry(bShowFilterMenuEntry: boolean): sap.ui.table.Column;
+                setShowFilterMenuEntry(bShowFilterMenuEntry?: boolean): sap.ui.table.Column;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getShowSortMenuEntry" href="api/sap.ui.table.Column#methods/getShowSortMenuEntry">showSortMenuEntry</a>.</p><p>Defines if the sort menu entries are displayed</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                  * @param {boolean} bShowSortMenuEntry <p>New value for property <code>showSortMenuEntry</code></p>
                  * @returns sap.ui.table.Column <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setShowSortMenuEntry(bShowSortMenuEntry: boolean): sap.ui.table.Column;
+                setShowSortMenuEntry(bShowSortMenuEntry?: boolean): sap.ui.table.Column;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSorted" href="api/sap.ui.table.Column#methods/getSorted">sorted</a>.</p><p>Indicates if the column is sorted. This property only controls if a sort indicator is displayed in the column header - it does not trigger the sort function. The column can be sorted using <a target="_self" class="jsdoclink" href="api/sap.ui.table.Table#methods/sort">sap.ui.table.Table#sort</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bSorted <p>New value for property <code>sorted</code></p>
                  * @returns sap.ui.table.Column <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setSorted(bSorted: boolean): sap.ui.table.Column;
+                setSorted(bSorted?: boolean): sap.ui.table.Column;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSortOrder" href="api/sap.ui.table.Column#methods/getSortOrder">sortOrder</a>.</p><p>This property indicates the sort direction (Ascending or Descending). The corresponding icon will be rendered if the property <code>sorted</code> is <code>true</code></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Ascending</code>.</p>
                  * @param {sap.ui.table.SortOrder} sSortOrder <p>New value for property <code>sortOrder</code></p>
                  * @returns sap.ui.table.Column <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setSortOrder(sSortOrder: sap.ui.table.SortOrder): sap.ui.table.Column;
+                setSortOrder(sSortOrder?: sap.ui.table.SortOrder): sap.ui.table.Column;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSortProperty" href="api/sap.ui.table.Column#methods/getSortProperty">sortProperty</a>.</p><p>Specifies the binding property on which the column will sort. Since the column template may have composite bindings, it's not possible to figure out on which binding property the sort shall be applied. Therefore the binding property for sorting must be specified. For example, if the first name and last name are displayed in the same column, only one of the two can be defined as <code>sortProperty</code>.</p><p>A column menu entry for sorting can only be generated if the <code>sortProperty</code> is set.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {string} sSortProperty <p>New value for property <code>sortProperty</code></p>
                  * @returns sap.ui.table.Column <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setSortProperty(sSortProperty: string): sap.ui.table.Column;
+                setSortProperty(sSortProperty?: string): sap.ui.table.Column;
                 /**
                  * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-target="getTemplate" href="api/sap.ui.table.Column#methods/getTemplate">template</a>.</p>
                  * @param {sap.ui.core.Control | string} vTemplate <p>The template to set</p>
@@ -636,13 +625,13 @@ declare namespace sap {
                  * @param {boolean} bVisible <p>New value for property <code>visible</code></p>
                  * @returns sap.ui.table.Column <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setVisible(bVisible: boolean): sap.ui.table.Column;
+                setVisible(bVisible?: boolean): sap.ui.table.Column;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.table.Column#methods/getWidth">width</a>.</p><p>Width of the column in CSS units. Default value is <code>auto</code>, see <a href="https://www.w3.org/TR/CSS2/tables.html#width-layout"></a> <p>Minimal column width is device-dependent, for example on desktop devices the column will not be smaller than 48px. <p>This property can be changed by the user or by the application configuration/personalization. <p>If a user adjusts the column width manually, the resulting value is always set in pixels. In addition, other columns with width <code>auto</code> get a fixed minimum width and do not shrink after the resizing.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
                  * @returns sap.ui.table.Column <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setWidth(sWidth: sap.ui.core.CSSSize): sap.ui.table.Column;
+                setWidth(sWidth?: sap.ui.core.CSSSize): sap.ui.table.Column;
                 /**
                  * <p>Returns whether the column should be rendered.</p>
                  * @returns boolean <p>Returns <code>true</code>, if the column should be rendered</p>
@@ -702,7 +691,7 @@ declare namespace sap {
                  */
                 detachApply(fnFunction: Function, oListener?: any): sap.ui.table.CreationRow;
                 /**
-                 * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="apply" href="api/sap.ui.table.CreationRow#events/apply">apply</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by using the <code>preventDefault</code>-method on the event object.</p>
+                 * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="apply" href="api/sap.ui.table.CreationRow#events/apply">apply</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by calling the <code>preventDefault</code> method on the event object. The return value of this method indicates whether the default action should be executed.</p>
                  * @param {any} mParameters <p>Parameters to pass along with the event</p>
                  * @returns boolean <p>Whether or not to prevent the default action</p>
                  */
@@ -756,7 +745,7 @@ declare namespace sap {
                  * @param {boolean} bApplyEnabled <p>New value for property <code>applyEnabled</code></p>
                  * @returns sap.ui.table.CreationRow <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setApplyEnabled(bApplyEnabled: boolean): sap.ui.table.CreationRow;
+                setApplyEnabled(bApplyEnabled?: boolean): sap.ui.table.CreationRow;
                 /**
                  * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-target="getToolbar" href="api/sap.ui.table.CreationRow#methods/getToolbar">toolbar</a>.</p>
                  * @param {sap.ui.core.Toolbar} oToolbar <p>The toolbar to set</p>
@@ -931,7 +920,7 @@ declare namespace sap {
                  * @param {boolean} bVisible <p>New value for property <code>visible</code></p>
                  * @returns sap.ui.table.RowAction <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setVisible(bVisible: boolean): sap.ui.table.RowAction;
+                setVisible(bVisible?: boolean): sap.ui.table.RowAction;
             }
             /**
              * <p>An action items to be displayed in a <code>RowAction</code> control. This element must only be used in the context of the <code>sap.ui.table.Table</code> control to define row actions.</p>
@@ -989,25 +978,25 @@ declare namespace sap {
                  * @param {sap.ui.core.URI} sIcon <p>New value for property <code>icon</code></p>
                  * @returns sap.ui.table.RowActionItem <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setIcon(sIcon: sap.ui.core.URI): sap.ui.table.RowActionItem;
+                setIcon(sIcon?: sap.ui.core.URI): sap.ui.table.RowActionItem;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getText" href="api/sap.ui.table.RowActionItem#methods/getText">text</a>.</p><p>The text of the item. It is used as tooltip and for accessibility purposes.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
                  * @param {string} sText <p>New value for property <code>text</code></p>
                  * @returns sap.ui.table.RowActionItem <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setText(sText: string): sap.ui.table.RowActionItem;
+                setText(sText?: string): sap.ui.table.RowActionItem;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getType" href="api/sap.ui.table.RowActionItem#methods/getType">type</a>.</p><p>The type of the item. Setting the type ensures default values for the properties <code>icon</code> and <code>text</code>. If an icon or text is set explicitly this setting is used.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Custom</code>.</p>
                  * @param {sap.ui.table.RowActionType} sType <p>New value for property <code>type</code></p>
                  * @returns sap.ui.table.RowActionItem <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setType(sType: sap.ui.table.RowActionType): sap.ui.table.RowActionItem;
+                setType(sType?: sap.ui.table.RowActionType): sap.ui.table.RowActionItem;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getVisible" href="api/sap.ui.table.RowActionItem#methods/getVisible">visible</a>.</p><p>Whether the item should be visible on the screen.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                  * @param {boolean} bVisible <p>New value for property <code>visible</code></p>
                  * @returns sap.ui.table.RowActionItem <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setVisible(bVisible: boolean): sap.ui.table.RowActionItem;
+                setVisible(bVisible?: boolean): sap.ui.table.RowActionItem;
             }
             /**
              * <p><p>Row Action types.</p></p>
@@ -1037,7 +1026,7 @@ declare namespace sap {
                  */
                 constructor(sId?: string, mSettings?: any);
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHighlight" href="api/sap.ui.table.RowSettings#methods/getHighlight">highlight</a>.</p><p>The highlight state of the rows.</p><p>If the highlight is set to <a target="_self" class="jsdoclink" href="api/sap.ui.core.MessageType">sap.ui.core.MessageType.None</a> (default), no highlights are visible. Valid values for the <code>highlight</code> property are values of the enumerations <a target="_self" class="jsdoclink" href="api/sap.ui.core.MessageType">sap.ui.core.MessageType</a> or <a target="_self" class="jsdoclink" href="api/sap.ui.core.IndicationColor">sap.ui.core.IndicationColor</a>.</p><p>Accessibility support is provided through the associated <a target="_self" class="jsdoclink" href="api/sap.ui.table.RowSettings#methods/setHighlightText">highlightText</a> property. If the <code>highlight</code> property is set to a value of <a target="_self" class="jsdoclink" href="api/sap.ui.core.MessageType">sap.ui.core.MessageType</a>, the <code>highlightText</code> property does not need to be set because a default text is used. However, the default text can be overridden by setting the <code>highlightText</code> property. In all other cases the <code>highlightText</code> property must be set.</p><p>Default value is <code>None</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHighlight" href="api/sap.ui.table.RowSettings#methods/getHighlight">highlight</a>.</p><p>The highlight state of the rows.</p><p>If the highlight is set to <a target="_self" class="jsdoclink" href="api/sap.ui.core.MessageType">sap.ui.core.MessageType.None</a> (default), no highlights are visible. Valid values for the <code>highlight</code> property are values of the enumerations <a target="_self" class="jsdoclink" href="api/sap.ui.core.MessageType">sap.ui.core.MessageType</a> or <a target="_self" class="jsdoclink" href="api/sap.ui.core.IndicationColor">sap.ui.core.IndicationColor</a>.</p><p>Accessibility support is provided through the associated <a target="_self" class="jsdoclink" href="api/sap.ui.table.RowSettings#methods/setHighlightText">highlightText</a> property. If the <code>highlight</code> property is set to a value of <a target="_self" class="jsdoclink" href="api/sap.ui.core.MessageType">sap.ui.core.MessageType</a>, the <code>highlightText</code> property does not need to be set because a default text is used. However, the default text can be overridden by setting the <code>highlightText</code> property. In all other cases the <code>highlightText</code> property must be set.</p><p>Default value is <code>"None"</code>.</p>
                  * @returns string <p>Value of property <code>highlight</code></p>
                  */
                 getHighlight(): string;
@@ -1052,23 +1041,23 @@ declare namespace sap {
                  */
                 getNavigated(): boolean;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHighlight" href="api/sap.ui.table.RowSettings#methods/getHighlight">highlight</a>.</p><p>The highlight state of the rows.</p><p>If the highlight is set to <a target="_self" class="jsdoclink" href="api/sap.ui.core.MessageType">sap.ui.core.MessageType.None</a> (default), no highlights are visible. Valid values for the <code>highlight</code> property are values of the enumerations <a target="_self" class="jsdoclink" href="api/sap.ui.core.MessageType">sap.ui.core.MessageType</a> or <a target="_self" class="jsdoclink" href="api/sap.ui.core.IndicationColor">sap.ui.core.IndicationColor</a>.</p><p>Accessibility support is provided through the associated <a target="_self" class="jsdoclink" href="api/sap.ui.table.RowSettings#methods/setHighlightText">highlightText</a> property. If the <code>highlight</code> property is set to a value of <a target="_self" class="jsdoclink" href="api/sap.ui.core.MessageType">sap.ui.core.MessageType</a>, the <code>highlightText</code> property does not need to be set because a default text is used. However, the default text can be overridden by setting the <code>highlightText</code> property. In all other cases the <code>highlightText</code> property must be set.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>None</code>.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHighlight" href="api/sap.ui.table.RowSettings#methods/getHighlight">highlight</a>.</p><p>The highlight state of the rows.</p><p>If the highlight is set to <a target="_self" class="jsdoclink" href="api/sap.ui.core.MessageType">sap.ui.core.MessageType.None</a> (default), no highlights are visible. Valid values for the <code>highlight</code> property are values of the enumerations <a target="_self" class="jsdoclink" href="api/sap.ui.core.MessageType">sap.ui.core.MessageType</a> or <a target="_self" class="jsdoclink" href="api/sap.ui.core.IndicationColor">sap.ui.core.IndicationColor</a>.</p><p>Accessibility support is provided through the associated <a target="_self" class="jsdoclink" href="api/sap.ui.table.RowSettings#methods/setHighlightText">highlightText</a> property. If the <code>highlight</code> property is set to a value of <a target="_self" class="jsdoclink" href="api/sap.ui.core.MessageType">sap.ui.core.MessageType</a>, the <code>highlightText</code> property does not need to be set because a default text is used. However, the default text can be overridden by setting the <code>highlightText</code> property. In all other cases the <code>highlightText</code> property must be set.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"None"</code>.</p>
                  * @param {string} sHighlight <p>New value for property <code>highlight</code></p>
                  * @returns sap.ui.table.RowSettings <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setHighlight(sHighlight: string): sap.ui.table.RowSettings;
+                setHighlight(sHighlight?: string): sap.ui.table.RowSettings;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHighlightText" href="api/sap.ui.table.RowSettings#methods/getHighlightText">highlightText</a>.</p><p>Defines the semantics of the <a target="_self" class="jsdoclink" href="api/sap.ui.table.RowSettings#methods/setHighlight">highlight</a> property for accessibility purposes.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
                  * @param {string} sHighlightText <p>New value for property <code>highlightText</code></p>
                  * @returns sap.ui.table.RowSettings <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setHighlightText(sHighlightText: string): sap.ui.table.RowSettings;
+                setHighlightText(sHighlightText?: string): sap.ui.table.RowSettings;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getNavigated" href="api/sap.ui.table.RowSettings#methods/getNavigated">navigated</a>.</p><p>The navigated state of a row.</p><p>If set to <code>true</code>, a navigation indicator is displayed at the end of the row. <b>Note:</b> The navigation indicator is only visible if row actions are available.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bNavigated <p>New value for property <code>navigated</code></p>
                  * @returns sap.ui.table.RowSettings <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setNavigated(bNavigated: boolean): sap.ui.table.RowSettings;
+                setNavigated(bNavigated?: boolean): sap.ui.table.RowSettings;
             }
             /**
              * <p><p>Selection behavior of the table</p></p>
@@ -1480,7 +1469,7 @@ declare namespace sap {
                  */
                 filter(oColumn: sap.ui.table.Column, sValue?: string): void;
                 /**
-                 * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="beforeOpenContextMenu" href="api/sap.ui.table.Table#events/beforeOpenContextMenu">beforeOpenContextMenu</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by using the <code>preventDefault</code>-method on the event object.</p>
+                 * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="beforeOpenContextMenu" href="api/sap.ui.table.Table#events/beforeOpenContextMenu">beforeOpenContextMenu</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by calling the <code>preventDefault</code> method on the event object. The return value of this method indicates whether the default action should be executed.</p>
                  * @param {any} mParameters <p>Parameters to pass along with the event</p>
                  * @returns boolean <p>Whether or not to prevent the default action</p>
                  */
@@ -1492,37 +1481,37 @@ declare namespace sap {
                  */
                 protected fireBusyStateChanged(mParameters?: any): sap.ui.table.Table;
                 /**
-                 * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="cellClick" href="api/sap.ui.table.Table#events/cellClick">cellClick</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by using the <code>preventDefault</code>-method on the event object.</p>
+                 * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="cellClick" href="api/sap.ui.table.Table#events/cellClick">cellClick</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by calling the <code>preventDefault</code> method on the event object. The return value of this method indicates whether the default action should be executed.</p>
                  * @param {any} mParameters <p>Parameters to pass along with the event</p>
                  * @returns boolean <p>Whether or not to prevent the default action</p>
                  */
                 protected fireCellClick(mParameters?: any): boolean;
                 /**
-                 * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="columnFreeze" href="api/sap.ui.table.Table#events/columnFreeze">columnFreeze</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by using the <code>preventDefault</code>-method on the event object.</p>
+                 * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="columnFreeze" href="api/sap.ui.table.Table#events/columnFreeze">columnFreeze</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by calling the <code>preventDefault</code> method on the event object. The return value of this method indicates whether the default action should be executed.</p>
                  * @param {any} mParameters <p>Parameters to pass along with the event</p>
                  * @returns boolean <p>Whether or not to prevent the default action</p>
                  */
                 protected fireColumnFreeze(mParameters?: any): boolean;
                 /**
-                 * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="columnMove" href="api/sap.ui.table.Table#events/columnMove">columnMove</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by using the <code>preventDefault</code>-method on the event object.</p>
+                 * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="columnMove" href="api/sap.ui.table.Table#events/columnMove">columnMove</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by calling the <code>preventDefault</code> method on the event object. The return value of this method indicates whether the default action should be executed.</p>
                  * @param {any} mParameters <p>Parameters to pass along with the event</p>
                  * @returns boolean <p>Whether or not to prevent the default action</p>
                  */
                 protected fireColumnMove(mParameters?: any): boolean;
                 /**
-                 * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="columnResize" href="api/sap.ui.table.Table#events/columnResize">columnResize</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by using the <code>preventDefault</code>-method on the event object.</p>
+                 * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="columnResize" href="api/sap.ui.table.Table#events/columnResize">columnResize</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by calling the <code>preventDefault</code> method on the event object. The return value of this method indicates whether the default action should be executed.</p>
                  * @param {any} mParameters <p>Parameters to pass along with the event</p>
                  * @returns boolean <p>Whether or not to prevent the default action</p>
                  */
                 protected fireColumnResize(mParameters?: any): boolean;
                 /**
-                 * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="columnSelect" href="api/sap.ui.table.Table#events/columnSelect">columnSelect</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by using the <code>preventDefault</code>-method on the event object.</p>
+                 * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="columnSelect" href="api/sap.ui.table.Table#events/columnSelect">columnSelect</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by calling the <code>preventDefault</code> method on the event object. The return value of this method indicates whether the default action should be executed.</p>
                  * @param {any} mParameters <p>Parameters to pass along with the event</p>
                  * @returns boolean <p>Whether or not to prevent the default action</p>
                  */
                 protected fireColumnSelect(mParameters?: any): boolean;
                 /**
-                 * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="columnVisibility" href="api/sap.ui.table.Table#events/columnVisibility">columnVisibility</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by using the <code>preventDefault</code>-method on the event object.</p>
+                 * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="columnVisibility" href="api/sap.ui.table.Table#events/columnVisibility">columnVisibility</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by calling the <code>preventDefault</code> method on the event object. The return value of this method indicates whether the default action should be executed.</p>
                  * @param {any} mParameters <p>Parameters to pass along with the event</p>
                  * @returns boolean <p>Whether or not to prevent the default action</p>
                  */
@@ -1534,7 +1523,7 @@ declare namespace sap {
                  */
                 protected fireCustomFilter(mParameters?: any): sap.ui.table.Table;
                 /**
-                 * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="filter" href="api/sap.ui.table.Table#events/filter">filter</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by using the <code>preventDefault</code>-method on the event object.</p>
+                 * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="filter" href="api/sap.ui.table.Table#events/filter">filter</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by calling the <code>preventDefault</code> method on the event object. The return value of this method indicates whether the default action should be executed.</p>
                  * @param {any} mParameters <p>Parameters to pass along with the event</p>
                  * @returns boolean <p>Whether or not to prevent the default action</p>
                  */
@@ -1546,13 +1535,13 @@ declare namespace sap {
                  */
                 protected fireFirstVisibleRowChanged(mParameters?: any): sap.ui.table.Table;
                 /**
-                 * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="group" href="api/sap.ui.table.Table#events/group">group</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by using the <code>preventDefault</code>-method on the event object.</p>
+                 * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="group" href="api/sap.ui.table.Table#events/group">group</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by calling the <code>preventDefault</code> method on the event object. The return value of this method indicates whether the default action should be executed.</p>
                  * @param {any} mParameters <p>Parameters to pass along with the event</p>
                  * @returns boolean <p>Whether or not to prevent the default action</p>
                  */
                 protected fireGroup(mParameters?: any): boolean;
                 /**
-                 * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="paste" href="api/sap.ui.table.Table#events/paste">paste</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by using the <code>preventDefault</code>-method on the event object.</p>
+                 * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="paste" href="api/sap.ui.table.Table#events/paste">paste</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by calling the <code>preventDefault</code> method on the event object. The return value of this method indicates whether the default action should be executed.</p>
                  * @param {any} mParameters <p>Parameters to pass along with the event</p>
                  * @returns boolean <p>Whether or not to prevent the default action</p>
                  */
@@ -1564,7 +1553,7 @@ declare namespace sap {
                  */
                 protected fireRowSelectionChange(mParameters?: any): sap.ui.table.Table;
                 /**
-                 * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="sort" href="api/sap.ui.table.Table#events/sort">sort</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by using the <code>preventDefault</code>-method on the event object.</p>
+                 * <p>Fires event <a target="_self" class="jsdoclink scrollToEvent" data-target="sort" href="api/sap.ui.table.Table#events/sort">sort</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by calling the <code>preventDefault</code> method on the event object. The return value of this method indicates whether the default action should be executed.</p>
                  * @param {any} mParameters <p>Parameters to pass along with the event</p>
                  * @returns boolean <p>Whether or not to prevent the default action</p>
                  */
@@ -1595,8 +1584,8 @@ declare namespace sap {
                  */
                 getColumns(): sap.ui.table.Column[];
                 /**
-                 * <p>In contrast to the function <code>getFixedColumnCount</code> which returns the value of the property <code>fixedColumnCount</code>, this function returns the actual fixed column count computed based on the table width.</p><p><b>Note:</b> The computed column count is only available after the table is fully rendered.</p>
-                 * @returns number <p>The actual fixed column count computed based on the table width.</p>
+                 * <p>In contrast to the function <code>getFixedColumnCount</code> which returns the value of the property <code>fixedColumnCount</code>, this function returns the actual fixed column count computed based on the column spans of the header, the width of the table and the width of the columns.</p>
+                 * @returns number <p>The actual fixed column count computed based on the column spans of the header, the width of the table and the width of the columns.</p>
                  */
                 protected getComputedFixedColumnCount(): number;
                 /**
@@ -1666,7 +1655,7 @@ declare namespace sap {
                  */
                 getFirstVisibleRow(): number;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getFixedBottomRowCount" href="api/sap.ui.table.Table#methods/getFixedBottomRowCount">fixedBottomRowCount</a>.</p><p>Number of rows that are fix on the bottom. When you use a vertical scrollbar, only the rows which are not fixed, will scroll.</p><p>Default value is <code>0</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getFixedBottomRowCount" href="api/sap.ui.table.Table#methods/getFixedBottomRowCount">fixedBottomRowCount</a>.</p><p>Number of rows that are fix on the bottom. When you use a vertical scrollbar, only the rows which are not fixed, will scroll.</p><p>This property is only supported if the <code>rows</code> aggregation is bound to a <a target="_self" class="jsdoclink" href="api/sap.ui.model.ClientModel">client model</a>.</p><p>Default value is <code>0</code>.</p>
                  * @returns number <p>Value of property <code>fixedBottomRowCount</code></p>
                  */
                 getFixedBottomRowCount(): number;
@@ -1676,7 +1665,7 @@ declare namespace sap {
                  */
                 getFixedColumnCount(): number;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getFixedRowCount" href="api/sap.ui.table.Table#methods/getFixedRowCount">fixedRowCount</a>.</p><p>Number of rows that are fix on the top. When you use a vertical scrollbar, only the rows which are not fixed, will scroll.</p><p>Default value is <code>0</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getFixedRowCount" href="api/sap.ui.table.Table#methods/getFixedRowCount">fixedRowCount</a>.</p><p>Number of rows that are fix on the top. When you use a vertical scrollbar, only the rows which are not fixed, will scroll.</p><p>This property is only supported if the <code>rows</code> aggregation is bound to a <a target="_self" class="jsdoclink" href="api/sap.ui.model.ClientModel">client model</a>.</p><p>Default value is <code>0</code>.</p>
                  * @returns number <p>Value of property <code>fixedRowCount</code></p>
                  */
                 getFixedRowCount(): number;
@@ -1781,7 +1770,7 @@ declare namespace sap {
                  */
                 getVisibleRowCountMode(): sap.ui.table.VisibleRowCountMode;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.table.Table#methods/getWidth">width</a>.</p><p>Width of the Table.</p><p>Default value is <code>auto</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.table.Table#methods/getWidth">width</a>.</p><p>Width of the Table.</p><p>Default value is <code>'auto'</code>.</p>
                  * @returns sap.ui.core.CSSSize <p>Value of property <code>width</code></p>
                  */
                 getWidth(): sap.ui.core.CSSSize;
@@ -1915,19 +1904,19 @@ declare namespace sap {
                  * @param {boolean} bAlternateRowColors <p>New value for property <code>alternateRowColors</code></p>
                  * @returns sap.ui.table.Table <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setAlternateRowColors(bAlternateRowColors: boolean): sap.ui.table.Table;
+                setAlternateRowColors(bAlternateRowColors?: boolean): sap.ui.table.Table;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getColumnHeaderHeight" href="api/sap.ui.table.Table#methods/getColumnHeaderHeight">columnHeaderHeight</a>.</p><p>Header row height in pixel. If a value greater than 0 is set, it overrides the height defined in the <code>rowHeight</code> property for the rows in the table's header. The value defines the minimum height, but it cannot be less than the default height based on the content density configuration. The actual height can increase based on the content.</p><p><b>Note</b>: In a <a target="_self" class="jsdoclink" href="api/sap.ui.table.Column#methods/getMultiLabels">MultiLabel</a> scenario, the height is applied to each individual row of the table's header.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {number} iColumnHeaderHeight <p>New value for property <code>columnHeaderHeight</code></p>
                  * @returns sap.ui.table.Table <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setColumnHeaderHeight(iColumnHeaderHeight: number): sap.ui.table.Table;
+                setColumnHeaderHeight(iColumnHeaderHeight?: number): sap.ui.table.Table;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getColumnHeaderVisible" href="api/sap.ui.table.Table#methods/getColumnHeaderVisible">columnHeaderVisible</a>.</p><p>Flag whether the column header is visible or not.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                  * @param {boolean} bColumnHeaderVisible <p>New value for property <code>columnHeaderVisible</code></p>
                  * @returns sap.ui.table.Table <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setColumnHeaderVisible(bColumnHeaderVisible: boolean): sap.ui.table.Table;
+                setColumnHeaderVisible(bColumnHeaderVisible?: boolean): sap.ui.table.Table;
                 /**
                  * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-target="getContextMenu" href="api/sap.ui.table.Table#methods/getContextMenu">contextMenu</a>.</p>
                  * @param {sap.ui.core.IContextMenu} oContextMenu <p>The contextMenu to set</p>
@@ -1939,73 +1928,73 @@ declare namespace sap {
                  * @param {boolean} bEditable <p>New value for property <code>editable</code></p>
                  * @returns sap.ui.table.Table <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setEditable(bEditable: boolean): sap.ui.table.Table;
+                setEditable(bEditable?: boolean): sap.ui.table.Table;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getEnableBusyIndicator" href="api/sap.ui.table.Table#methods/getEnableBusyIndicator">enableBusyIndicator</a>.</p><p>If set to <code>true</code>, the table changes its busy state, resulting in showing or hiding the busy indicator. The table will switch to busy as soon as data is retrieved to be displayed in the currently visible rows. This happens, for example, during scrolling, filtering, or sorting. As soon as the data has been retrieved, the table switches back to not busy. The busy state of the table can still be set manually by calling <a target="_self" class="jsdoclink" href="api/sap.ui.core.Control#methods/setBusy">sap.ui.core.Control#setBusy</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bEnableBusyIndicator <p>New value for property <code>enableBusyIndicator</code></p>
                  * @returns sap.ui.table.Table <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setEnableBusyIndicator(bEnableBusyIndicator: boolean): sap.ui.table.Table;
+                setEnableBusyIndicator(bEnableBusyIndicator?: boolean): sap.ui.table.Table;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getEnableCellFilter" href="api/sap.ui.table.Table#methods/getEnableCellFilter">enableCellFilter</a>.</p><p>Flag whether to enable or disable the context menu on cells to trigger a filtering with the cell value.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bEnableCellFilter <p>New value for property <code>enableCellFilter</code></p>
                  * @returns sap.ui.table.Table <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setEnableCellFilter(bEnableCellFilter: boolean): sap.ui.table.Table;
+                setEnableCellFilter(bEnableCellFilter?: boolean): sap.ui.table.Table;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getEnableColumnFreeze" href="api/sap.ui.table.Table#methods/getEnableColumnFreeze">enableColumnFreeze</a>.</p><p>Flag whether to show or hide the column menu item to freeze or unfreeze a column.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bEnableColumnFreeze <p>New value for property <code>enableColumnFreeze</code></p>
                  * @returns sap.ui.table.Table <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setEnableColumnFreeze(bEnableColumnFreeze: boolean): sap.ui.table.Table;
+                setEnableColumnFreeze(bEnableColumnFreeze?: boolean): sap.ui.table.Table;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getEnableColumnReordering" href="api/sap.ui.table.Table#methods/getEnableColumnReordering">enableColumnReordering</a>.</p><p>Flag to enable or disable column reordering</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                  * @param {boolean} bEnableColumnReordering <p>New value for property <code>enableColumnReordering</code></p>
                  * @returns sap.ui.table.Table <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setEnableColumnReordering(bEnableColumnReordering: boolean): sap.ui.table.Table;
+                setEnableColumnReordering(bEnableColumnReordering?: boolean): sap.ui.table.Table;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getEnableCustomFilter" href="api/sap.ui.table.Table#methods/getEnableCustomFilter">enableCustomFilter</a>.</p><p>Set this parameter to true to implement your own filter behaviour. Instead of the filter input box a button will be rendered for which' press event (customFilter) you can register an event handler.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bEnableCustomFilter <p>New value for property <code>enableCustomFilter</code></p>
                  * @returns sap.ui.table.Table <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setEnableCustomFilter(bEnableCustomFilter: boolean): sap.ui.table.Table;
+                setEnableCustomFilter(bEnableCustomFilter?: boolean): sap.ui.table.Table;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getEnableGrouping" href="api/sap.ui.table.Table#methods/getEnableGrouping">enableGrouping</a>.</p><p>Enables or disables grouping. If grouping is enabled, the table is grouped by the column which is defined in the <code>groupBy</code> association.</p><p>The following restrictions apply: <ul> <li>Only client models are supported (e.g. <a target="_self" class="jsdoclink" href="api/sap.ui.model.json.JSONModel">sap.ui.model.json.JSONModel</a>). Grouping does not work with OData models.</li> <li>The table can only be grouped by <b>one</b> column at a time. Grouping by another column will remove the current grouping.</li> <li>For the grouping to work correctly, <a target="_self" class="jsdoclink" href="api/sap.ui.table.Column#methods/getSortProperty">sortProperty</a> must be set for the grouped column.</li> <li>If grouping has been done, sorting and filtering is not possible. Any existing sorting and filtering rules do no longer apply. The UI is not updated accordingly (e.g. menu items, sort and filter icons).</li> <li>The column, by which the table is grouped, is not visible. It will become visible again only if the table is grouped by another column or grouping is disabled.</li> </ul></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bEnableGrouping <p>New value for property <code>enableGrouping</code></p>
                  * @returns sap.ui.table.Table <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setEnableGrouping(bEnableGrouping: boolean): sap.ui.table.Table;
+                setEnableGrouping(bEnableGrouping?: boolean): sap.ui.table.Table;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getEnableSelectAll" href="api/sap.ui.table.Table#methods/getEnableSelectAll">enableSelectAll</a>.</p><p>Specifies if a select all button should be displayed in the top left corner. This button is only displayed if the row selector is visible and the selection mode is set to any kind of multi selection.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                  * @param {boolean} bEnableSelectAll <p>New value for property <code>enableSelectAll</code></p>
                  * @returns sap.ui.table.Table <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setEnableSelectAll(bEnableSelectAll: boolean): sap.ui.table.Table;
+                setEnableSelectAll(bEnableSelectAll?: boolean): sap.ui.table.Table;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getFirstVisibleRow" href="api/sap.ui.table.Table#methods/getFirstVisibleRow">firstVisibleRow</a>.</p><p>First visible row.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
                  * @param {number} iFirstVisibleRow <p>New value for property <code>firstVisibleRow</code></p>
                  * @returns sap.ui.table.Table <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setFirstVisibleRow(iFirstVisibleRow: number): sap.ui.table.Table;
+                setFirstVisibleRow(iFirstVisibleRow?: number): sap.ui.table.Table;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getFixedBottomRowCount" href="api/sap.ui.table.Table#methods/getFixedBottomRowCount">fixedBottomRowCount</a>.</p><p>Number of rows that are fix on the bottom. When you use a vertical scrollbar, only the rows which are not fixed, will scroll.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getFixedBottomRowCount" href="api/sap.ui.table.Table#methods/getFixedBottomRowCount">fixedBottomRowCount</a>.</p><p>Number of rows that are fix on the bottom. When you use a vertical scrollbar, only the rows which are not fixed, will scroll.</p><p>This property is only supported if the <code>rows</code> aggregation is bound to a <a target="_self" class="jsdoclink" href="api/sap.ui.model.ClientModel">client model</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
                  * @param {number} iFixedBottomRowCount <p>New value for property <code>fixedBottomRowCount</code></p>
                  * @returns sap.ui.table.Table <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setFixedBottomRowCount(iFixedBottomRowCount: number): sap.ui.table.Table;
+                setFixedBottomRowCount(iFixedBottomRowCount?: number): sap.ui.table.Table;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getFixedColumnCount" href="api/sap.ui.table.Table#methods/getFixedColumnCount">fixedColumnCount</a>.</p><p>Number of columns that are fixed on the left. Only columns which are not fixed can be scrolled horizontally.</p><p><b>Note</b> <ul> <li>Fixed columns need a defined width for the feature to work.</li> <li>The aggregated width of all fixed columns must not exceed the table width. Otherwise the table ignores the value of the property and adapts the behavior in an appropriate way to ensure that the user is still able to scroll horizontally.</li> </ul></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
                  * @param {number} iFixedColumnCount <p>New value for property <code>fixedColumnCount</code></p>
                  * @returns sap.ui.table.Table <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setFixedColumnCount(iFixedColumnCount: number): sap.ui.table.Table;
+                setFixedColumnCount(iFixedColumnCount?: number): sap.ui.table.Table;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getFixedRowCount" href="api/sap.ui.table.Table#methods/getFixedRowCount">fixedRowCount</a>.</p><p>Number of rows that are fix on the top. When you use a vertical scrollbar, only the rows which are not fixed, will scroll.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getFixedRowCount" href="api/sap.ui.table.Table#methods/getFixedRowCount">fixedRowCount</a>.</p><p>Number of rows that are fix on the top. When you use a vertical scrollbar, only the rows which are not fixed, will scroll.</p><p>This property is only supported if the <code>rows</code> aggregation is bound to a <a target="_self" class="jsdoclink" href="api/sap.ui.model.ClientModel">client model</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
                  * @param {number} iFixedRowCount <p>New value for property <code>fixedRowCount</code></p>
                  * @returns sap.ui.table.Table <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setFixedRowCount(iFixedRowCount: number): sap.ui.table.Table;
+                setFixedRowCount(iFixedRowCount?: number): sap.ui.table.Table;
                 /**
                  * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-target="getFooter" href="api/sap.ui.table.Table#methods/getFooter">footer</a>.</p>
                  * @param {sap.ui.core.Control | string} vFooter <p>The footer to set</p>
@@ -2023,7 +2012,7 @@ declare namespace sap {
                  * @param {number} iMinAutoRowCount <p>New value for property <code>minAutoRowCount</code></p>
                  * @returns sap.ui.table.Table <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setMinAutoRowCount(iMinAutoRowCount: number): sap.ui.table.Table;
+                setMinAutoRowCount(iMinAutoRowCount?: number): sap.ui.table.Table;
                 /**
                  * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-target="getNoData" href="api/sap.ui.table.Table#methods/getNoData">noData</a>.</p>
                  * @param {sap.ui.core.Control | string} vNoData <p>The noData to set</p>
@@ -2035,7 +2024,7 @@ declare namespace sap {
                  * @param {number} iRowActionCount <p>New value for property <code>rowActionCount</code></p>
                  * @returns sap.ui.table.Table <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setRowActionCount(iRowActionCount: number): sap.ui.table.Table;
+                setRowActionCount(iRowActionCount?: number): sap.ui.table.Table;
                 /**
                  * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-target="getRowActionTemplate" href="api/sap.ui.table.Table#methods/getRowActionTemplate">rowActionTemplate</a>.</p>
                  * @param {sap.ui.table.RowAction} oRowActionTemplate <p>The rowActionTemplate to set</p>
@@ -2047,7 +2036,7 @@ declare namespace sap {
                  * @param {number} iRowHeight <p>New value for property <code>rowHeight</code></p>
                  * @returns sap.ui.table.Table <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setRowHeight(iRowHeight: number): sap.ui.table.Table;
+                setRowHeight(iRowHeight?: number): sap.ui.table.Table;
                 /**
                  * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-target="getRowSettingsTemplate" href="api/sap.ui.table.Table#methods/getRowSettingsTemplate">rowSettingsTemplate</a>.</p>
                  * @param {sap.ui.table.RowSettings} oRowSettingsTemplate <p>The rowSettingsTemplate to set</p>
@@ -2065,7 +2054,7 @@ declare namespace sap {
                  * @param {sap.ui.table.SelectionBehavior} sSelectionBehavior <p>New value for property <code>selectionBehavior</code></p>
                  * @returns sap.ui.table.Table <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setSelectionBehavior(sSelectionBehavior: sap.ui.table.SelectionBehavior): sap.ui.table.Table;
+                setSelectionBehavior(sSelectionBehavior?: sap.ui.table.SelectionBehavior): sap.ui.table.Table;
                 /**
                  * <p>Sets the given selection interval as selection. In case of a single selection, only <code>iIndexTo</code> is selected.</p>
                  * @param {number} iIndexFrom <p>Index from which the selection starts</p>
@@ -2084,19 +2073,19 @@ declare namespace sap {
                  * @param {boolean} bShowColumnVisibilityMenu <p>New value for property <code>showColumnVisibilityMenu</code></p>
                  * @returns sap.ui.table.Table <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setShowColumnVisibilityMenu(bShowColumnVisibilityMenu: boolean): sap.ui.table.Table;
+                setShowColumnVisibilityMenu(bShowColumnVisibilityMenu?: boolean): sap.ui.table.Table;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getShowNoData" href="api/sap.ui.table.Table#methods/getShowNoData">showNoData</a>.</p><p>Flag whether to show the no data overlay or not once the table is empty. If set to false the table will just show a grid of empty cells</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                  * @param {boolean} bShowNoData <p>New value for property <code>showNoData</code></p>
                  * @returns sap.ui.table.Table <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setShowNoData(bShowNoData: boolean): sap.ui.table.Table;
+                setShowNoData(bShowNoData?: boolean): sap.ui.table.Table;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getShowOverlay" href="api/sap.ui.table.Table#methods/getShowOverlay">showOverlay</a>.</p><p>Setting this property to true will show an overlay on top of the Table content and users cannot click anymore on the Table content.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bShowOverlay <p>New value for property <code>showOverlay</code></p>
                  * @returns sap.ui.table.Table <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setShowOverlay(bShowOverlay: boolean): sap.ui.table.Table;
+                setShowOverlay(bShowOverlay?: boolean): sap.ui.table.Table;
                 /**
                  * <p>Sets the threshold value, which will be added to all data requests in case the Table is bound against an OData service.</p>
                  * @param {number} iThreshold <p>The threshold</p>
@@ -2114,19 +2103,19 @@ declare namespace sap {
                  * @param {number} iVisibleRowCount <p>New value for property <code>visibleRowCount</code></p>
                  * @returns sap.ui.table.Table <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setVisibleRowCount(iVisibleRowCount: number): sap.ui.table.Table;
+                setVisibleRowCount(iVisibleRowCount?: number): sap.ui.table.Table;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getVisibleRowCountMode" href="api/sap.ui.table.Table#methods/getVisibleRowCountMode">visibleRowCountMode</a>.</p><p>Defines how the table handles the visible rows in the table.</p><p>In the <code>"Fixed"</code> mode, the table always has as many rows as defined in the <code>visibleRowCount</code> property.</p><p>In the <code>"Auto"</code> mode, the <code>visibleRowCount</code> property is changed by the table automatically. It will then adjust its row count to the space it is allowed to cover (limited by the surrounding container), but it cannot have less than defined in the <code>minAutoRowCount</code> property. The <code>visibleRowCount</code> property cannot be set manually. </p><h3>Limitations</h3><p> <ul> <li>All rows need to have the same height.</li> <li>The table must be rendered without siblings in its parent DOM element. The only exception is if the parent element is a CSS flex container, and the table is a CSS flex item allowed to grow and shrink.</li> </ul></p><p>In the <code>"Interactive"</code> mode, the table has as many rows as defined in the <code>visibleRowCount</code> property after rendering. The user can change the <code>visibleRowCount</code> by dragging a resizer.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Fixed</code>.</p>
                  * @param {sap.ui.table.VisibleRowCountMode} sVisibleRowCountMode <p>New value for property <code>visibleRowCountMode</code></p>
                  * @returns sap.ui.table.Table <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setVisibleRowCountMode(sVisibleRowCountMode: sap.ui.table.VisibleRowCountMode): sap.ui.table.Table;
+                setVisibleRowCountMode(sVisibleRowCountMode?: sap.ui.table.VisibleRowCountMode): sap.ui.table.Table;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.table.Table#methods/getWidth">width</a>.</p><p>Width of the Table.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>auto</code>.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.table.Table#methods/getWidth">width</a>.</p><p>Width of the Table.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>'auto'</code>.</p>
                  * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
                  * @returns sap.ui.table.Table <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setWidth(sWidth: sap.ui.core.CSSSize): sap.ui.table.Table;
+                setWidth(sWidth?: sap.ui.core.CSSSize): sap.ui.table.Table;
                 /**
                  * <p>Sorts the given column ascending or descending.</p>
                  * @param {sap.ui.table.Column | undefined} oColumn <p>Column to be sorted or undefined to clear sorting</p>
@@ -2161,7 +2150,7 @@ declare namespace sap {
                  */
                 getAutoSave(): boolean;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getCustomDataKey" href="api/sap.ui.table.TablePersoController#methods/getCustomDataKey">customDataKey</a>.</p><p>By defining a custom data key the <code>TablePersoController</code> will try to get the key for saving the perso data from the custom data of the Table and Column instead of creating it by concatenating the ID of the Table and the Column. Basically this will be more stable than using the auto IDs.</p><p>Default value is <code>persoKey</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getCustomDataKey" href="api/sap.ui.table.TablePersoController#methods/getCustomDataKey">customDataKey</a>.</p><p>By defining a custom data key the <code>TablePersoController</code> will try to get the key for saving the perso data from the custom data of the Table and Column instead of creating it by concatenating the ID of the Table and the Column. Basically this will be more stable than using the auto IDs.</p><p>Default value is <code>"persoKey"</code>.</p>
                  * @returns string <p>Value of property <code>customDataKey</code></p>
                  */
                 getCustomDataKey(): string;
@@ -2195,13 +2184,13 @@ declare namespace sap {
                  * @param {boolean} bAutoSave <p>New value for property <code>autoSave</code></p>
                  * @returns sap.ui.table.TablePersoController <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setAutoSave(bAutoSave: boolean): sap.ui.table.TablePersoController;
+                setAutoSave(bAutoSave?: boolean): sap.ui.table.TablePersoController;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getCustomDataKey" href="api/sap.ui.table.TablePersoController#methods/getCustomDataKey">customDataKey</a>.</p><p>By defining a custom data key the <code>TablePersoController</code> will try to get the key for saving the perso data from the custom data of the Table and Column instead of creating it by concatenating the ID of the Table and the Column. Basically this will be more stable than using the auto IDs.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>persoKey</code>.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getCustomDataKey" href="api/sap.ui.table.TablePersoController#methods/getCustomDataKey">customDataKey</a>.</p><p>By defining a custom data key the <code>TablePersoController</code> will try to get the key for saving the perso data from the custom data of the Table and Column instead of creating it by concatenating the ID of the Table and the Column. Basically this will be more stable than using the auto IDs.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"persoKey"</code>.</p>
                  * @param {string} sCustomDataKey <p>New value for property <code>customDataKey</code></p>
                  * @returns sap.ui.table.TablePersoController <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setCustomDataKey(sCustomDataKey: string): sap.ui.table.TablePersoController;
+                setCustomDataKey(sCustomDataKey?: string): sap.ui.table.TablePersoController;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getPersoService" href="api/sap.ui.table.TablePersoController#methods/getPersoService">persoService</a>.</p><p>Personalization Service object. Needs to have the following methods: <ul> <li>getPersData() : <code>jQuery Promise</code> (http://api.jquery.com/promise/)</li> <li>setPersData(oBundle) : <code>jQuery Promise</code> (http://api.jquery.com/promise/)</li> <li>delPersData() : <code>jQuery Promise</code> (http://api.jquery.com/promise/)</li> </ul></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {any} oPersoService <p>New value for property <code>persoService</code></p>
@@ -2289,20 +2278,10 @@ declare namespace sap {
                  */
                 protected fireToggleOpenState(mParameters?: any): sap.ui.table.TreeTable;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getCollapseRecursive" href="api/sap.ui.table.TreeTable#methods/getCollapseRecursive">collapseRecursive</a>.</p><p>Setting collapseRecursive to true means, that when collapsing a node all subsequent child nodes will also be collapsed. This property is only supported with sap.ui.model.odata.v2.ODataModel. <b>Note:</b> collapseRecursive is currently <b>not</b> supported if your OData service exposes the hierarchy annotation <code>hierarchy-descendant-count-for</code>. In this case the value of the collapseRecursive property is ignored. For more information about the OData hierarchy annotations, please see the <b>SAP Annotations for OData Version 2.0</b> specification.</p><p>Default value is <code>true</code>.</p>
-                 * @returns boolean <p>Value of property <code>collapseRecursive</code></p>
-                 */
-                getCollapseRecursive(): boolean;
-                /**
                  * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getGroupHeaderProperty" href="api/sap.ui.table.TreeTable#methods/getGroupHeaderProperty">groupHeaderProperty</a>.</p><p>The property name of the rows data which will be displayed as a group header if the group mode is enabled</p>
                  * @returns string <p>Value of property <code>groupHeaderProperty</code></p>
                  */
                 getGroupHeaderProperty(): string;
-                /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getRootLevel" href="api/sap.ui.table.TreeTable#methods/getRootLevel">rootLevel</a>.</p><p>The root level is the level of the topmost tree nodes, which will be used as an entry point for OData services. This property is only supported when the TreeTable uses an underlying odata services with hierarchy annotations. This property is only supported with sap.ui.model.odata.v2.ODataModel The hierarchy annotations may also be provided locally as a parameter for the ODataTreeBinding.</p><p>Default value is <code>0</code>.</p>
-                 * @returns number <p>Value of property <code>rootLevel</code></p>
-                 */
-                getRootLevel(): number;
                 /**
                  * <p>Zero-based indices of selected items, wrapped in an array. An empty array means "no selection".</p>
                  * @returns number[] <p>Selected indices</p>
@@ -2349,17 +2328,11 @@ declare namespace sap {
                  */
                 selectAll(): sap.ui.table.TreeTable;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getCollapseRecursive" href="api/sap.ui.table.TreeTable#methods/getCollapseRecursive">collapseRecursive</a>.</p><p>Setting collapseRecursive to true means, that when collapsing a node all subsequent child nodes will also be collapsed. This property is only supported with sap.ui.model.odata.v2.ODataModel. <b>Note:</b> collapseRecursive is currently <b>not</b> supported if your OData service exposes the hierarchy annotation <code>hierarchy-descendant-count-for</code>. In this case the value of the collapseRecursive property is ignored. For more information about the OData hierarchy annotations, please see the <b>SAP Annotations for OData Version 2.0</b> specification.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
-                 * @param {boolean} bCollapseRecursive <p>New value for property <code>collapseRecursive</code></p>
-                 * @returns sap.ui.table.TreeTable <p>Reference to <code>this</code> in order to allow method chaining</p>
-                 */
-                setCollapseRecursive(bCollapseRecursive: boolean): sap.ui.table.TreeTable;
-                /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getFixedRowCount" href="api/sap.ui.table.Table#methods/getFixedRowCount">fixedRowCount</a>.</p><p>Number of rows that are fix on the top. When you use a vertical scrollbar, only the rows which are not fixed, will scroll.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getFixedRowCount" href="api/sap.ui.table.Table#methods/getFixedRowCount">fixedRowCount</a>.</p><p>Number of rows that are fix on the top. When you use a vertical scrollbar, only the rows which are not fixed, will scroll.</p><p>This property is only supported if the <code>rows</code> aggregation is bound to a <a target="_self" class="jsdoclink" href="api/sap.ui.model.ClientModel">client model</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
                  * @param {number} iFixedRowCount <p>New value for property <code>fixedRowCount</code></p>
                  * @returns sap.ui.table.Table <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setFixedRowCount(iFixedRowCount: number): sap.ui.table.Table;
+                setFixedRowCount(iFixedRowCount?: number): sap.ui.table.Table;
                 /**
                  * <p>Setter for property <code>fixedRowCount</code>.</p><p><b>This property is not supportd for the TreeTable and will be ignored!</b></p><p>Default value is <code>0</code></p>
                  * @param {number} iRowCount <p>New value for property <code>fixedRowCount</code></p>
@@ -2371,13 +2344,7 @@ declare namespace sap {
                  * @param {string} sGroupHeaderProperty <p>New value for property <code>groupHeaderProperty</code></p>
                  * @returns sap.ui.table.TreeTable <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setGroupHeaderProperty(sGroupHeaderProperty: string): sap.ui.table.TreeTable;
-                /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getRootLevel" href="api/sap.ui.table.TreeTable#methods/getRootLevel">rootLevel</a>.</p><p>The root level is the level of the topmost tree nodes, which will be used as an entry point for OData services. This property is only supported when the TreeTable uses an underlying odata services with hierarchy annotations. This property is only supported with sap.ui.model.odata.v2.ODataModel The hierarchy annotations may also be provided locally as a parameter for the ODataTreeBinding.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
-                 * @param {number} iRootLevel <p>New value for property <code>rootLevel</code></p>
-                 * @returns sap.ui.table.TreeTable <p>Reference to <code>this</code> in order to allow method chaining</p>
-                 */
-                setRootLevel(iRootLevel: number): sap.ui.table.TreeTable;
+                setGroupHeaderProperty(sGroupHeaderProperty?: string): sap.ui.table.TreeTable;
                 /**
                  * <p>Sets the selected index. The previous selection is removed.</p>
                  * @param {number} iIndex <p>The index to select</p>
@@ -2415,7 +2382,7 @@ declare namespace sap {
                  * @param {boolean} bUseGroupMode <p>New value for property <code>useGroupMode</code></p>
                  * @returns sap.ui.table.TreeTable <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setUseGroupMode(bUseGroupMode: boolean): sap.ui.table.TreeTable;
+                setUseGroupMode(bUseGroupMode?: boolean): sap.ui.table.TreeTable;
             }
             /**
              * <p><p>VisibleRowCountMode of the table</p></p>
@@ -2458,11 +2425,13 @@ declare namespace sap {
                  */
                 export class MultiSelectionPlugin extends sap.ui.table.plugins.SelectionPlugin {
                     /**
-                    * <p>Adds the given selection interval to the selection and requests the corresponding binding contexts. In single-selection mode it requests the context and sets the selected index to <code>iIndexTo</code>.</p><p>If the number of indices in the range is greater than the value of the <code>limit</code> property, only n=limit indices, starting from <code>iIndexFrom</code>, are selected. The table is scrolled to display the index last selected.</p>
-                    * @param {number} iIndexFrom <p>Index from which the selection starts</p>
-                    * @param {number} iIndexTo <p>Index up to which to select</p>
-                    */
-                    addSelectionInterval(iIndexFrom: number, iIndexTo: number): void;
+                     * <p>Adds the given selection interval to the selection and requests the corresponding binding contexts. In single-selection mode it requests the context and sets the selected index to <code>iIndexTo</code>.</p><p>If the number of indices in the range is greater than the value of the <code>limit</code> property, only n=limit indices, starting from <code>iIndexFrom</code>, are selected. The table is scrolled to display the index last selected.</p>
+                     * @param {number} iIndexFrom <p>Index from which the selection starts</p>
+                     * @param {number} iIndexTo <p>Index up to which to select</p>
+                     * @param {any} oEventPayload <p>If the function call triggers a <a target="_self" class="jsdoclink scrollToEvent" data-target="selectionChange" href="api/sap.ui.table.plugins.MultiSelectionPlugin#events/selectionChange">selectionChange</a> event, this object is transferred to the event in the <code>customPayload</code> parameter</p>
+                     * @returns Promise<any> <p>A Promise that resolves after the selection has been completed or is rejected with an error</p>
+                     */
+                    addSelectionInterval(iIndexFrom: number, iIndexTo: number, oEventPayload?: any): Promise<any>;
                     /**
                      * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" class="jsdoclink scrollToEvent" data-target="selectionChange" href="api/sap.ui.table.plugins.SelectionPlugin#events/selectionChange">selectionChange</a> event of this <code>sap.ui.table.plugins.SelectionPlugin</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.table.plugins.SelectionPlugin</code> itself.</p><p>This event is fired when the selection is changed.</p>
                      * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
@@ -2481,8 +2450,9 @@ declare namespace sap {
                     attachSelectionChange(oData: any, fnFunction: Function, oListener?: any): sap.ui.table.plugins.MultiSelectionPlugin;
                     /**
                      * <p>Removes the complete selection.</p>
+                     * @param {any} oEventPayload <p>If the function call triggers a <a target="_self" class="jsdoclink scrollToEvent" data-target="selectionChange" href="api/sap.ui.table.plugins.MultiSelectionPlugin#events/selectionChange">selectionChange</a> event, this object is transferred to the event in the <code>customPayload</code> parameter</p>
                      */
-                    clearSelection(): void;
+                    clearSelection(oEventPayload?: any): void;
                     /**
                      * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" class="jsdoclink scrollToEvent" data-target="selectionChange" href="api/sap.ui.table.plugins.SelectionPlugin#events/selectionChange">selectionChange</a> event of this <code>sap.ui.table.plugins.SelectionPlugin</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
                      * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
@@ -2544,47 +2514,54 @@ declare namespace sap {
                      * <p>Removes the given selection interval from the selection. In case of single selection, only <code>iIndexTo</code> is removed from the selection.</p>
                      * @param {number} iIndexFrom <p>Index from which the deselection starts</p>
                      * @param {number} iIndexTo <p>Index up to which to deselect</p>
+                     * @param {any} oEventPayload <p>If the function call triggers a <a target="_self" class="jsdoclink scrollToEvent" data-target="selectionChange" href="api/sap.ui.table.plugins.MultiSelectionPlugin#events/selectionChange">selectionChange</a> event, this object is transferred to the event in the <code>customPayload</code> parameter</p>
                      */
-                    removeSelectionInterval(iIndexFrom: number, iIndexTo: number): void;
+                    removeSelectionInterval(iIndexFrom: number, iIndexTo: number, oEventPayload?: any): void;
                     /**
-                     * <p>Requests the binding contexts and adds all indices to the selection if the limit is disabled.</p>
+                     * <p>Requests the binding contexts and adds all indices to the selection if the limit is disabled or the binding length is smaller then the limit.</p>
+                     * @param {any} oEventPayload <p>If the function call triggers a <a target="_self" class="jsdoclink scrollToEvent" data-target="selectionChange" href="api/sap.ui.table.plugins.MultiSelectionPlugin#events/selectionChange">selectionChange</a> event, this object is transferred to the event in the <code>customPayload</code> parameter</p>
+                     * @returns Promise<any> <p>A Promise that resolves after the selection has been completed or is rejected with an error</p>
                      */
-                    selectAll(): void;
+                    selectAll(oEventPayload?: any): Promise<any>;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getEnableNotification" href="api/sap.ui.table.plugins.MultiSelectionPlugin#methods/getEnableNotification">enableNotification</a>.</p><p>Enables notifications that are displayed once a selection has been limited.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                      * @param {boolean} bEnableNotification <p>New value for property <code>enableNotification</code></p>
                      * @returns sap.ui.table.plugins.MultiSelectionPlugin <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setEnableNotification(bEnableNotification: boolean): sap.ui.table.plugins.MultiSelectionPlugin;
+                    setEnableNotification(bEnableNotification?: boolean): sap.ui.table.plugins.MultiSelectionPlugin;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getLimit" href="api/sap.ui.table.plugins.MultiSelectionPlugin#methods/getLimit">limit</a>.</p><p>Number of indices which can be selected in a range. Accepts positive integer values. If set to 0, the limit is disabled, and the Select All checkbox appears instead of the Deselect All button. <b>Note:</b> To avoid severe performance problems, the limit should only be set to 0 in the following cases: <ul> <li>With client-side models</li> <li>With server-side models if they are used in client mode</li> <li>If the entity set is small</li> </ul> In other cases, we recommend to set the limit to at least double the value of the <a target="_self" class="jsdoclink" href="api/sap.ui.table.Table#methods/getThreshold">threshold</a> property of the related <code>sap.ui.table.Table</code> control.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>200</code>.</p>
                      * @param {number} iLimit <p>New value for property <code>limit</code></p>
                      * @returns sap.ui.table.plugins.MultiSelectionPlugin <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setLimit(iLimit: number): sap.ui.table.plugins.MultiSelectionPlugin;
+                    setLimit(iLimit?: number): sap.ui.table.plugins.MultiSelectionPlugin;
                     /**
                      * <p>Requests the context and sets the selected index to <code>iIndex</code>.</p>
                      * @param {number} iIndex <p>The index to select</p>
+                     * @param {any} oEventPayload <p>If the function call triggers a <a target="_self" class="jsdoclink scrollToEvent" data-target="selectionChange" href="api/sap.ui.table.plugins.MultiSelectionPlugin#events/selectionChange">selectionChange</a> event, this object is transferred to the event in the <code>customPayload</code> parameter</p>
+                     * @returns Promise<any> <p>A Promise that resolves after the selection has been completed or is rejected with an error</p>
                      */
-                    setSelectedIndex(iIndex: number): void;
+                    setSelectedIndex(iIndex: number, oEventPayload?: any): Promise<any>;
                     /**
                      * <p>Sets the given selection interval as the selection and requests the corresponding binding contexts. In single-selection mode it requests the context and sets the selected index to <code>iIndexTo</code>.</p><p>If the number of indices in the range is greater than the value of the <code>limit</code> property, only n=limit indices, starting from <code>iIndexFrom</code>, are selected. The table is scrolled to display the index last selected.</p>
                      * @param {number} iIndexFrom <p>Index from which the selection starts</p>
                      * @param {number} iIndexTo <p>Index up to which to select</p>
+                     * @param {any} oEventPayload <p>If the function call triggers a <a target="_self" class="jsdoclink scrollToEvent" data-target="selectionChange" href="api/sap.ui.table.plugins.MultiSelectionPlugin#events/selectionChange">selectionChange</a> event, this object is transferred to the event in the <code>customPayload</code> parameter</p>
+                     * @returns Promise<any> <p>A Promise that resolves after the selection has been completed or is rejected with an error</p>
                      */
-                    setSelectionInterval(iIndexFrom: number, iIndexTo: number): void;
+                    setSelectionInterval(iIndexFrom: number, iIndexTo: number, oEventPayload?: any): Promise<any>;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSelectionMode" href="api/sap.ui.table.plugins.MultiSelectionPlugin#methods/getSelectionMode">selectionMode</a>.</p><p>Selection mode of the plugin. This property controls whether single or multiple rows can be selected. It also influences the visual appearance. When the selection mode is changed, the current selection is removed.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>MultiToggle</code>.</p>
                      * @param {sap.ui.table.SelectionMode} sSelectionMode <p>New value for property <code>selectionMode</code></p>
                      * @returns sap.ui.table.plugins.MultiSelectionPlugin <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setSelectionMode(sSelectionMode: sap.ui.table.SelectionMode): sap.ui.table.plugins.MultiSelectionPlugin;
+                    setSelectionMode(sSelectionMode?: sap.ui.table.SelectionMode): sap.ui.table.plugins.MultiSelectionPlugin;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getShowHeaderSelector" href="api/sap.ui.table.plugins.MultiSelectionPlugin#methods/getShowHeaderSelector">showHeaderSelector</a>.</p><p>Show header selector</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                      * @param {boolean} bShowHeaderSelector <p>New value for property <code>showHeaderSelector</code></p>
                      * @returns sap.ui.table.plugins.MultiSelectionPlugin <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setShowHeaderSelector(bShowHeaderSelector: boolean): sap.ui.table.plugins.MultiSelectionPlugin;
+                    setShowHeaderSelector(bShowHeaderSelector?: boolean): sap.ui.table.plugins.MultiSelectionPlugin;
                 }
                 /**
                  * <p>Implements the selection methods for a table.</p>
@@ -2657,25 +2634,25 @@ declare namespace sap {
                      * @param {boolean} bHideEmptyRows <p>New value for property <code>hideEmptyRows</code></p>
                      * @returns sap.ui.table.rowmodes.AutoRowMode <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setHideEmptyRows(bHideEmptyRows: boolean): sap.ui.table.rowmodes.AutoRowMode;
+                    setHideEmptyRows(bHideEmptyRows?: boolean): sap.ui.table.rowmodes.AutoRowMode;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getMaxRowCount" href="api/sap.ui.table.rowmodes.AutoRowMode#methods/getMaxRowCount">maxRowCount</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>-1</code>.</p>
                      * @param {number} iMaxRowCount <p>New value for property <code>maxRowCount</code></p>
                      * @returns sap.ui.table.rowmodes.AutoRowMode <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setMaxRowCount(iMaxRowCount: number): sap.ui.table.rowmodes.AutoRowMode;
+                    setMaxRowCount(iMaxRowCount?: number): sap.ui.table.rowmodes.AutoRowMode;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getMinRowCount" href="api/sap.ui.table.rowmodes.AutoRowMode#methods/getMinRowCount">minRowCount</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>5</code>.</p>
                      * @param {number} iMinRowCount <p>New value for property <code>minRowCount</code></p>
                      * @returns sap.ui.table.rowmodes.AutoRowMode <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setMinRowCount(iMinRowCount: number): sap.ui.table.rowmodes.AutoRowMode;
+                    setMinRowCount(iMinRowCount?: number): sap.ui.table.rowmodes.AutoRowMode;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getRowContentHeight" href="api/sap.ui.table.rowmodes.AutoRowMode#methods/getRowContentHeight">rowContentHeight</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
                      * @param {number} iRowContentHeight <p>New value for property <code>rowContentHeight</code></p>
                      * @returns sap.ui.table.rowmodes.AutoRowMode <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setRowContentHeight(iRowContentHeight: number): sap.ui.table.rowmodes.AutoRowMode;
+                    setRowContentHeight(iRowContentHeight?: number): sap.ui.table.rowmodes.AutoRowMode;
                 }
                 /**
                  * <p>TODO: Class description</p>
@@ -2702,13 +2679,13 @@ declare namespace sap {
                      * @param {boolean} bHideEmptyRows <p>New value for property <code>hideEmptyRows</code></p>
                      * @returns sap.ui.table.rowmodes.FixedRowMode <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setHideEmptyRows(bHideEmptyRows: boolean): sap.ui.table.rowmodes.FixedRowMode;
+                    setHideEmptyRows(bHideEmptyRows?: boolean): sap.ui.table.rowmodes.FixedRowMode;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getRowContentHeight" href="api/sap.ui.table.rowmodes.FixedRowMode#methods/getRowContentHeight">rowContentHeight</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
                      * @param {number} iRowContentHeight <p>New value for property <code>rowContentHeight</code></p>
                      * @returns sap.ui.table.rowmodes.FixedRowMode <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setRowContentHeight(iRowContentHeight: number): sap.ui.table.rowmodes.FixedRowMode;
+                    setRowContentHeight(iRowContentHeight?: number): sap.ui.table.rowmodes.FixedRowMode;
                 }
                 /**
                  * <p>TODO: Class description</p>
@@ -2735,13 +2712,13 @@ declare namespace sap {
                      * @param {number} iMinRowCount <p>New value for property <code>minRowCount</code></p>
                      * @returns sap.ui.table.rowmodes.InteractiveRowMode <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setMinRowCount(iMinRowCount: number): sap.ui.table.rowmodes.InteractiveRowMode;
+                    setMinRowCount(iMinRowCount?: number): sap.ui.table.rowmodes.InteractiveRowMode;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getRowContentHeight" href="api/sap.ui.table.rowmodes.InteractiveRowMode#methods/getRowContentHeight">rowContentHeight</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
                      * @param {number} iRowContentHeight <p>New value for property <code>rowContentHeight</code></p>
                      * @returns sap.ui.table.rowmodes.InteractiveRowMode <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setRowContentHeight(iRowContentHeight: number): sap.ui.table.rowmodes.InteractiveRowMode;
+                    setRowContentHeight(iRowContentHeight?: number): sap.ui.table.rowmodes.InteractiveRowMode;
                 }
                 /**
                  * <p>TODO: Class description</p>
@@ -2753,6 +2730,14 @@ declare namespace sap {
                      * @param {any} mSettings <p>initial settings for the new control</p>
                      */
                     constructor(sId?: string, mSettings?: any);
+                    /**
+                     * <p>Disables the "NoData" text of the table. The table will no longer show this text, even if its property <a target="_self" class="jsdoclink" href="api/sap.ui.table.Table#methods/getShowNoData">showNoData</a> is set to <code>true</code>. The text is hidden if it is currently shown. Has no effect for the text that is shown when the table has no visible columns.</p>
+                     */
+                    protected disableNoData(): void;
+                    /**
+                     * <p>Enables the "NoData" text of the table. Whether the text is shown depends on the state of the table and its <a target="_self" class="jsdoclink" href="api/sap.ui.table.Table#methods/getShowNoData">showNoData</a> property.</p>
+                     */
+                    protected enableNoData(): void;
                     /**
                      * <p>Gets the base row content height of this mode. This number is a pixel value and affects the base row height of the table. Returns 0 if this mode does not support setting the row content height.<br><br>References: <ul><li><a target="_self" class="jsdoclink" href="api/sap.ui.table.rowmodes.RowMode#methods/getBaseRowHeightOfTable">sap.ui.table.rowmodes.RowMode#getBaseRowHeightOfTable</a></li></ul></p>
                      * @returns number <p>The base row content height in pixels.</p>
@@ -2818,19 +2803,19 @@ declare namespace sap {
                      * @param {number} iFixedBottomRowCount <p>New value for property <code>fixedBottomRowCount</code></p>
                      * @returns sap.ui.table.rowmodes.RowMode <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setFixedBottomRowCount(iFixedBottomRowCount: number): sap.ui.table.rowmodes.RowMode;
+                    setFixedBottomRowCount(iFixedBottomRowCount?: number): sap.ui.table.rowmodes.RowMode;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getFixedTopRowCount" href="api/sap.ui.table.rowmodes.RowMode#methods/getFixedTopRowCount">fixedTopRowCount</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
                      * @param {number} iFixedTopRowCount <p>New value for property <code>fixedTopRowCount</code></p>
                      * @returns sap.ui.table.rowmodes.RowMode <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setFixedTopRowCount(iFixedTopRowCount: number): sap.ui.table.rowmodes.RowMode;
+                    setFixedTopRowCount(iFixedTopRowCount?: number): sap.ui.table.rowmodes.RowMode;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getRowCount" href="api/sap.ui.table.rowmodes.RowMode#methods/getRowCount">rowCount</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>10</code>.</p>
                      * @param {number} iRowCount <p>New value for property <code>rowCount</code></p>
                      * @returns sap.ui.table.rowmodes.RowMode <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setRowCount(iRowCount: number): sap.ui.table.rowmodes.RowMode;
+                    setRowCount(iRowCount?: number): sap.ui.table.rowmodes.RowMode;
                     /**
                      * <p>Updates the table's rows aggregation according to the current computed row count, and updates the rows binding contexts.</p>
                      */

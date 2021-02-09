@@ -116,6 +116,12 @@ namespace sap {
                                         ibas.logger.log(new Error(opRslt.message));
                                     } else {
                                         propertyControls.call(this, opRslt.resultObjects.firstOrDefault());
+                                        // 已加载数据，则重置
+                                        let model: any = this.getModel();
+                                        if (model !== undefined) {
+                                            this.setModel(undefined);
+                                            this.setModel(model);
+                                        }
                                     }
                                 }
                             });

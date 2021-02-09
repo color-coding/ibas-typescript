@@ -54,7 +54,7 @@ declare namespace sap {
                 Mixed = "Mixed",
             }
             /**
-             * <p>The BlockLayout is used to display several objects in a section-based manner. </p><h3>Overview</h3><p> The BlockLayout uses horizontal and vertical subdivisions, and full-width banners to display a set of elements. By placing pictorial and textual elements side-by-side in different blocks, you can establish a visual connection between blocks and between similar elements. </p><h3>Structure</h3><p> The BlockLayout contains BlockLayout cells. Every cell consists of a title and content. The title can be text or a link.</p><p>Special full-width sections of the BlockLayout allow horizontal scrolling through a set of blocks.</p><p>The BlockLayout comes in five predefined types for background colors: <ul> <li>Layout only (default) - a layout scheme and no background colors</li> <li>Light - a layout scheme with light colors</li> <li>Accent - a layout scheme with 11 pre-defined color sets</li> <li>Dashboard - a layout scheme with additional borders and no background colors</li> </ul> Background colors are attached directly to the blocks of the layout.</p><p><b>Note:</b> With version 1.48 colors can be set for each individual <a target="_self" class="jsdoclink" href="api/sap.ui.layout.BlockLayoutCell">cell</a>. There are 11 pre-defined color sets, each with 4 different shades for the Belize theme and 6 different shades for the Fiori 3 theme. The main colors of the sets can be changed in Theme Designer. To change the background of a particular cell, set <code>backgroundColorSet</code> (main color) and <code>backgroundColorShade</code> (shade).</p><p><b>Note:</b> Usage of disabled, emphasized or subtle links as titles is not recommended. Dark background designs, for example Accent, are not fully supported with regards to Аccessibility when used with links as titles.</p><h3>Usage</h3><h4>When to use</h4><p> <ul> <li>You want to create a catalogue-like page with sections of blocks.</li> <li>The BlockLayout is intended for developing administrative tools and applications.</li> </ul> </p><h4>When not to use</h4><p> <ul> <li>You want to display properties or features of one content item. Use a <a target="_self" class="jsdoclink" href="api/sap.uxap.ObjectPageLayout">object page</a> or <a target="_self" class="jsdoclink" href="api/sap.f.DynamicPage">dynamic page</a> instead.</li> </ul> </p><h3>Responsive Behavior</h3><p> <ul> <li>The breakpoints of the block layout react to the width of the control itself and not to the actual screen size.</li> <li> On small screens all blocks will wrap to a single scrollable column</li> </ul></p>
+             * <p>The BlockLayout is used to display several objects in a section-based manner. </p><h3>Overview</h3><p> The BlockLayout uses horizontal and vertical subdivisions, and full-width banners to display a set of elements. By placing pictorial and textual elements side-by-side in different blocks, you can establish a visual connection between blocks and between similar elements. </p><h3>Structure</h3><p> The BlockLayout contains BlockLayout cells. Every cell consists of a title and content. The title can be text or a link.</p><p>Special full-width sections of the BlockLayout allow horizontal scrolling through a set of blocks.</p><p>The BlockLayout comes in five predefined types for background colors: <ul> <li>Layout only (default) - a layout scheme and no background colors</li> <li>Light - a layout scheme with light colors</li> <li>Accent - a layout scheme with 11 pre-defined color sets</li> <li>Dashboard - a layout scheme with additional borders and no background colors</li> </ul> Background colors are attached directly to the blocks of the layout.</p><p><b>Note:</b> With version 1.48 colors can be set for each individual <a target="_self" class="jsdoclink" href="api/sap.ui.layout.BlockLayoutCell">cell</a>. There are 11 pre-defined color sets, each with 4 different shades for the Belize theme and 6 different shades for the Fiori 3 theme. The main colors of the sets can be changed in Theme Designer. To change the background of a particular cell, set <code>backgroundColorSet</code> (main color) and <code>backgroundColorShade</code> (shade).</p><p><b>Note:</b> Usage of disabled, emphasized or subtle links as titles is not recommended. Dark background designs, for example Accent, are not fully supported with regards to Accessibility when used with links as titles.</p><h3>Usage</h3><h4>When to use</h4><p> <ul> <li>You want to create a catalogue-like page with sections of blocks.</li> <li>The BlockLayout is intended for developing administrative tools and applications.</li> </ul> </p><h4>When not to use</h4><p> <ul> <li>You want to display properties or features of one content item. Use a <a target="_self" class="jsdoclink" href="api/sap.uxap.ObjectPageLayout">object page</a> or <a target="_self" class="jsdoclink" href="api/sap.f.DynamicPage">dynamic page</a> instead.</li> </ul> </p><h3>Responsive Behavior</h3><p> <ul> <li>The breakpoints of the block layout react to the width of the control itself and not to the actual screen size.</li> <li> On small screens all blocks will wrap to a single scrollable column</li> </ul></p>
              */
             export class BlockLayout extends sap.ui.core.Control {
                 /**
@@ -75,7 +75,7 @@ declare namespace sap {
                  */
                 destroyContent(): sap.ui.layout.BlockLayout;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getBackground" href="api/sap.ui.layout.BlockLayout#methods/getBackground">background</a>.</p><p>Determines the background used for the Layout</p><p>Default value is <code>Default</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getBackground" href="api/sap.ui.layout.BlockLayout#methods/getBackground">background</a>.</p><p>Determines the background used for the Layout</p><p>Default value is <code>"Default"</code>.</p>
                  * @returns sap.ui.layout.BlockBackgroundType <p>Value of property <code>background</code></p>
                  */
                 getBackground(): sap.ui.layout.BlockBackgroundType;
@@ -114,17 +114,17 @@ declare namespace sap {
                  */
                 removeContent(vContent: number | string | sap.ui.layout.BlockLayoutRow): sap.ui.layout.BlockLayoutRow;
                 /**
-                 * <p>Changes background type</p>
-                 * @param {string} sNewBackground <p>Background's style of type sap.ui.layout.BlockBackgroundType</p>
-                 * @returns sap.ui.layout.BlockLayout <p>BlockLayout instance. Allows method chaining</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getBackground" href="api/sap.ui.layout.BlockLayout#methods/getBackground">background</a>.</p><p>Determines the background used for the Layout</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"Default"</code>.</p>
+                 * @param {sap.ui.layout.BlockBackgroundType} sBackground <p>New value for property <code>background</code></p>
+                 * @returns sap.ui.layout.BlockLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setBackground(sNewBackground: string): sap.ui.layout.BlockLayout;
+                setBackground(sBackground?: sap.ui.layout.BlockBackgroundType): sap.ui.layout.BlockLayout;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getKeepFontSize" href="api/sap.ui.layout.BlockLayout#methods/getKeepFontSize">keepFontSize</a>.</p><p>Keeps the font-size of the contents as is, independent from the screen size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bKeepFontSize <p>New value for property <code>keepFontSize</code></p>
                  * @returns sap.ui.layout.BlockLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setKeepFontSize(bKeepFontSize: boolean): sap.ui.layout.BlockLayout;
+                setKeepFontSize(bKeepFontSize?: boolean): sap.ui.layout.BlockLayout;
             }
             /**
              * <p>The BlockLayoutCell is used as an aggregation of the BlockLayoutRow. It contains Controls. The BlockLayoutCell should be used only as aggregation of the BlockLayoutRow.</p>
@@ -173,12 +173,12 @@ declare namespace sap {
                  */
                 getTitle(): string;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getTitleAlignment" href="api/sap.ui.layout.BlockLayoutCell#methods/getTitleAlignment">titleAlignment</a>.</p><p>Defines the alignment of the cell title</p><p>Default value is <code>Begin</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getTitleAlignment" href="api/sap.ui.layout.BlockLayoutCell#methods/getTitleAlignment">titleAlignment</a>.</p><p>Defines the alignment of the cell title</p><p>Default value is <code>"Begin"</code>.</p>
                  * @returns sap.ui.core.HorizontalAlign <p>Value of property <code>titleAlignment</code></p>
                  */
                 getTitleAlignment(): sap.ui.core.HorizontalAlign;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getTitleLevel" href="api/sap.ui.layout.BlockLayoutCell#methods/getTitleLevel">titleLevel</a>.</p><p>Defines the aria level of the title This information is e.g. used by assistive technologies like screenreaders to create a hierarchical site map for faster navigation.</p><p>Default value is <code>Auto</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getTitleLevel" href="api/sap.ui.layout.BlockLayoutCell#methods/getTitleLevel">titleLevel</a>.</p><p>Defines the aria level of the title This information is e.g. used by assistive technologies like screenreaders to create a hierarchical site map for faster navigation.</p><p>Default value is <code>"Auto"</code>.</p>
                  * @returns sap.ui.core.TitleLevel <p>Value of property <code>titleLevel</code></p>
                  */
                 getTitleLevel(): sap.ui.core.TitleLevel;
@@ -233,19 +233,19 @@ declare namespace sap {
                  * @param {string} sTitle <p>New value for property <code>title</code></p>
                  * @returns sap.ui.layout.BlockLayoutCell <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setTitle(sTitle: string): sap.ui.layout.BlockLayoutCell;
+                setTitle(sTitle?: string): sap.ui.layout.BlockLayoutCell;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getTitleAlignment" href="api/sap.ui.layout.BlockLayoutCell#methods/getTitleAlignment">titleAlignment</a>.</p><p>Defines the alignment of the cell title</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Begin</code>.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getTitleAlignment" href="api/sap.ui.layout.BlockLayoutCell#methods/getTitleAlignment">titleAlignment</a>.</p><p>Defines the alignment of the cell title</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"Begin"</code>.</p>
                  * @param {sap.ui.core.HorizontalAlign} sTitleAlignment <p>New value for property <code>titleAlignment</code></p>
                  * @returns sap.ui.layout.BlockLayoutCell <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setTitleAlignment(sTitleAlignment: sap.ui.core.HorizontalAlign): sap.ui.layout.BlockLayoutCell;
+                setTitleAlignment(sTitleAlignment?: sap.ui.core.HorizontalAlign): sap.ui.layout.BlockLayoutCell;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getTitleLevel" href="api/sap.ui.layout.BlockLayoutCell#methods/getTitleLevel">titleLevel</a>.</p><p>Defines the aria level of the title This information is e.g. used by assistive technologies like screenreaders to create a hierarchical site map for faster navigation.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Auto</code>.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getTitleLevel" href="api/sap.ui.layout.BlockLayoutCell#methods/getTitleLevel">titleLevel</a>.</p><p>Defines the aria level of the title This information is e.g. used by assistive technologies like screenreaders to create a hierarchical site map for faster navigation.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"Auto"</code>.</p>
                  * @param {sap.ui.core.TitleLevel} sTitleLevel <p>New value for property <code>titleLevel</code></p>
                  * @returns sap.ui.layout.BlockLayoutCell <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setTitleLevel(sTitleLevel: sap.ui.core.TitleLevel): sap.ui.layout.BlockLayoutCell;
+                setTitleLevel(sTitleLevel?: sap.ui.core.TitleLevel): sap.ui.layout.BlockLayoutCell;
                 /**
                  * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-target="getTitleLink" href="api/sap.ui.layout.BlockLayoutCell#methods/getTitleLink">titleLink</a>.</p>
                  * @param {sap.ui.core.Control} oTitleLink <p>The titleLink to set</p>
@@ -372,13 +372,13 @@ declare namespace sap {
                  * @param {number} iLSize <p>New value for property <code>lSize</code></p>
                  * @returns sap.ui.layout.BlockLayoutCellData <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setLSize(iLSize: number): sap.ui.layout.BlockLayoutCellData;
+                setLSize(iLSize?: number): sap.ui.layout.BlockLayoutCellData;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getMSize" href="api/sap.ui.layout.BlockLayoutCellData#methods/getMSize">mSize</a>.</p><p>Sets the width of the cell for M size of the BlockLayout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1</code>.</p>
                  * @param {number} iMSize <p>New value for property <code>mSize</code></p>
                  * @returns sap.ui.layout.BlockLayoutCellData <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setMSize(iMSize: number): sap.ui.layout.BlockLayoutCellData;
+                setMSize(iMSize?: number): sap.ui.layout.BlockLayoutCellData;
                 /**
                  * <p>Sets width of the cell to all sizes if the width is specified.</p>
                  * @param {undefined} iValue 
@@ -390,13 +390,13 @@ declare namespace sap {
                  * @param {number} iSSize <p>New value for property <code>sSize</code></p>
                  * @returns sap.ui.layout.BlockLayoutCellData <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setSSize(iSSize: number): sap.ui.layout.BlockLayoutCellData;
+                setSSize(iSSize?: number): sap.ui.layout.BlockLayoutCellData;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getXlSize" href="api/sap.ui.layout.BlockLayoutCellData#methods/getXlSize">xlSize</a>.</p><p>Sets the width of the cell for XL size of the BlockLayout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1</code>.</p>
                  * @param {number} iXlSize <p>New value for property <code>xlSize</code></p>
                  * @returns sap.ui.layout.BlockLayoutCellData <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setXlSize(iXlSize: number): sap.ui.layout.BlockLayoutCellData;
+                setXlSize(iXlSize?: number): sap.ui.layout.BlockLayoutCellData;
             }
             /**
              * <p>The BlockLayoutRow is used as an aggregation to the BlockLayout. It aggregates Block Layout cells. The BlockLayoutRow has 2 rendering modes - scrollable and non scrollable.</p>
@@ -491,7 +491,7 @@ declare namespace sap {
                  * @param {boolean} bScrollable <p>New value for property <code>scrollable</code></p>
                  * @returns sap.ui.layout.BlockLayoutRow <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setScrollable(bScrollable: boolean): sap.ui.layout.BlockLayoutRow;
+                setScrollable(bScrollable?: boolean): sap.ui.layout.BlockLayoutRow;
             }
             /**
              * <p><p>A string type that is used inside the BlockLayoutRow to set predefined set of colors the cells inside the control. Color sets depend on sap.ui.layout.BlockBackgroundType</p></p>
@@ -573,7 +573,7 @@ declare namespace sap {
                  */
                 getContainerQuery(): boolean;
                 /**
-                 * <p>Returns the breakpoint for the current state of the control.</p>
+                 * <p>Returns the breakpoint for the current state of the control. If the control is not rendered yet this method will return <code>undefined</code>, as current break point calculation is based on the parent container width.</p>
                  * @returns String <p>currentBreakpoint</p>
                  */
                 getCurrentBreakpoint(): String;
@@ -587,6 +587,12 @@ declare namespace sap {
                  * @returns sap.ui.core.Control[] 
                  */
                 getMainContent(): sap.ui.core.Control[];
+                /**
+                 * <p>Returns a scroll helper object used to handle scrolling.</p>
+                 * @param {any} oControl <p>The control instance that requested the scroll helper</p>
+                 * @returns sap.ui.core.delegate.ScrollEnablement <p>The scroll helper instance</p>
+                 */
+                getScrollDelegate(oControl: any): sap.ui.core.delegate.ScrollEnablement;
                 /**
                  * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getShowMainContent" href="api/sap.ui.layout.DynamicSideContent#methods/getShowMainContent">showMainContent</a>.</p><p>Determines whether the main content is visible or hidden.</p><p>Default value is <code>true</code>.</p>
                  * @returns boolean <p>Value of property <code>showMainContent</code></p>
@@ -680,7 +686,7 @@ declare namespace sap {
                  * @param {boolean} bContainerQuery <p>New value for property <code>containerQuery</code></p>
                  * @returns sap.ui.layout.DynamicSideContent <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setContainerQuery(bContainerQuery: boolean): sap.ui.layout.DynamicSideContent;
+                setContainerQuery(bContainerQuery?: boolean): sap.ui.layout.DynamicSideContent;
                 /**
                  * <p>Sets or unsets the page in equalSplit mode.</p>
                  * @param {boolean} bState <p>Determines if the page is set to equalSplit mode</p>
@@ -706,13 +712,13 @@ declare namespace sap {
                  * @param {sap.ui.layout.SideContentFallDown} sSideContentFallDown <p>New value for property <code>sideContentFallDown</code></p>
                  * @returns sap.ui.layout.DynamicSideContent <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setSideContentFallDown(sSideContentFallDown: sap.ui.layout.SideContentFallDown): sap.ui.layout.DynamicSideContent;
+                setSideContentFallDown(sSideContentFallDown?: sap.ui.layout.SideContentFallDown): sap.ui.layout.DynamicSideContent;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSideContentPosition" href="api/sap.ui.layout.DynamicSideContent#methods/getSideContentPosition">sideContentPosition</a>.</p><p>Determines whether the side content is on the left or on the right side of the main content.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>End</code>.</p>
                  * @param {sap.ui.layout.SideContentPosition} sSideContentPosition <p>New value for property <code>sideContentPosition</code></p>
                  * @returns sap.ui.layout.DynamicSideContent <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setSideContentPosition(sSideContentPosition: sap.ui.layout.SideContentPosition): sap.ui.layout.DynamicSideContent;
+                setSideContentPosition(sSideContentPosition?: sap.ui.layout.SideContentPosition): sap.ui.layout.DynamicSideContent;
                 /**
                  * <p>Sets the sideContentVisibility property.</p>
                  * @param {sap.ui.layout.SideContentVisibility} sVisibility <p>Determines on which breakpoints the side content is visible.</p>
@@ -758,7 +764,7 @@ declare namespace sap {
                  */
                 getFixContent(): sap.ui.core.Control[];
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getFixContentSize" href="api/sap.ui.layout.FixFlex#methods/getFixContentSize">fixContentSize</a>.</p><p>Determines the height (if the vertical property is "true") or the width (if the vertical property is "false") of the fixed area. If left at the default value "auto", the fixed-size area will be as large as its content. In this case the content cannot use percentage sizes.</p><p>Default value is <code>auto</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getFixContentSize" href="api/sap.ui.layout.FixFlex#methods/getFixContentSize">fixContentSize</a>.</p><p>Determines the height (if the vertical property is "true") or the width (if the vertical property is "false") of the fixed area. If left at the default value "auto", the fixed-size area will be as large as its content. In this case the content cannot use percentage sizes.</p><p>Default value is <code>"auto"</code>.</p>
                  * @returns sap.ui.core.CSSSize <p>Value of property <code>fixContentSize</code></p>
                  */
                 getFixContentSize(): sap.ui.core.CSSSize;
@@ -807,17 +813,17 @@ declare namespace sap {
                  */
                 removeFixContent(vFixContent: number | string | sap.ui.core.Control): sap.ui.core.Control;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getFixContentSize" href="api/sap.ui.layout.FixFlex#methods/getFixContentSize">fixContentSize</a>.</p><p>Determines the height (if the vertical property is "true") or the width (if the vertical property is "false") of the fixed area. If left at the default value "auto", the fixed-size area will be as large as its content. In this case the content cannot use percentage sizes.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>auto</code>.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getFixContentSize" href="api/sap.ui.layout.FixFlex#methods/getFixContentSize">fixContentSize</a>.</p><p>Determines the height (if the vertical property is "true") or the width (if the vertical property is "false") of the fixed area. If left at the default value "auto", the fixed-size area will be as large as its content. In this case the content cannot use percentage sizes.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"auto"</code>.</p>
                  * @param {sap.ui.core.CSSSize} sFixContentSize <p>New value for property <code>fixContentSize</code></p>
                  * @returns sap.ui.layout.FixFlex <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setFixContentSize(sFixContentSize: sap.ui.core.CSSSize): sap.ui.layout.FixFlex;
+                setFixContentSize(sFixContentSize?: sap.ui.core.CSSSize): sap.ui.layout.FixFlex;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getFixFirst" href="api/sap.ui.layout.FixFlex#methods/getFixFirst">fixFirst</a>.</p><p>Determines whether the fixed-size area should be on the beginning/top ( if the value is "true") or end/bottom ( if the value is "false").</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                  * @param {boolean} bFixFirst <p>New value for property <code>fixFirst</code></p>
                  * @returns sap.ui.layout.FixFlex <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setFixFirst(bFixFirst: boolean): sap.ui.layout.FixFlex;
+                setFixFirst(bFixFirst?: boolean): sap.ui.layout.FixFlex;
                 /**
                  * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-target="getFlexContent" href="api/sap.ui.layout.FixFlex#methods/getFlexContent">flexContent</a>.</p>
                  * @param {sap.ui.core.Control} oFlexContent <p>The flexContent to set</p>
@@ -829,13 +835,13 @@ declare namespace sap {
                  * @param {number} iMinFlexSize <p>New value for property <code>minFlexSize</code></p>
                  * @returns sap.ui.layout.FixFlex <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setMinFlexSize(iMinFlexSize: number): sap.ui.layout.FixFlex;
+                setMinFlexSize(iMinFlexSize?: number): sap.ui.layout.FixFlex;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getVertical" href="api/sap.ui.layout.FixFlex#methods/getVertical">vertical</a>.</p><p>Determines the direction of the layout of child elements. True for vertical and false for horizontal layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                  * @param {boolean} bVertical <p>New value for property <code>vertical</code></p>
                  * @returns sap.ui.layout.FixFlex <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setVertical(bVertical: boolean): sap.ui.layout.FixFlex;
+                setVertical(bVertical?: boolean): sap.ui.layout.FixFlex;
             }
             /**
              * <p>A layout control which positions its child controls in a 12 column flow layout.</p><p>The <code>Grid</code> control's children can be specified to take on a variable amount of columns depending on available screen size. With this control it is possible to achieve flexible layouts and line-breaks for extra large-, large-, medium- and small-sized screens, such as large desktop, desktop, tablet, and mobile.</p><p>The <code>Grid</code> control's width can be percentage- or pixel-based and the spacing between its columns can be set to various predefined values.</p><p><b>Notes:</b> <ul> <li>The visibility of the child control does not affect the horizontal space it occupies, meaning that even if the control is not visible, its horizontal space still exists, even if it is empty.</li> <li> If it gets wider, the content of the columns is designed to overflow outside of its dimensions. An additional <code>sapUiRespGridOverflowHidden</code> CSS class should be added to the control in order to hide the overflowing part of it.</li> </ul><br><br><span>Documentation links:</span><ul><li><a target="_self" href="topic/32d4b9c2b981425dbc374d3e9d5d0c2e">Grid Controls</a></li></ul></p>
@@ -885,12 +891,12 @@ declare namespace sap {
                  */
                 getContent(): sap.ui.core.Control[];
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getDefaultIndent" href="api/sap.ui.layout.Grid#methods/getDefaultIndent">defaultIndent</a>.</p><p>Optional. Defines default for the whole Grid numbers of empty columns before the current span begins. It can be defined for large, medium and small screens. Allowed values are separated by space Letters L, M or S followed by number of columns from 0 to 11 that the container has to take, for example, <code>L2 M4 S6</code>, <code>M11</code>, <code>s10</code> or <code>l4 m4</code>.</p><p><b>Note:</b> The parameters must be provided in the order <large medium small>.</p><p>Default value is <code>XL0 L0 M0 S0</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getDefaultIndent" href="api/sap.ui.layout.Grid#methods/getDefaultIndent">defaultIndent</a>.</p><p>Optional. Defines default for the whole Grid numbers of empty columns before the current span begins. It can be defined for large, medium and small screens. Allowed values are separated by space Letters L, M or S followed by number of columns from 0 to 11 that the container has to take, for example, <code>L2 M4 S6</code>, <code>M11</code>, <code>s10</code> or <code>l4 m4</code>.</p><p><b>Note:</b> The parameters must be provided in the order <large medium small>.</p><p>Default value is <code>"XL0 L0 M0 S0"</code>.</p>
                  * @returns sap.ui.layout.GridIndent <p>Value of property <code>defaultIndent</code></p>
                  */
                 getDefaultIndent(): sap.ui.layout.GridIndent;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getDefaultSpan" href="api/sap.ui.layout.Grid#methods/getDefaultSpan">defaultSpan</a>.</p><p>Optional. A string type that represents the span values of the <code>Grid</code> for large, medium and small screens. Allowed values are separated by space Letters L, M or S followed by number of columns from 1 to 12 that the container has to take, for example, <code>L2 M4 S6</code>, <code>M12</code>, <code>s10</code> or <code>l4 m4</code>.</p><p><b>Note:</b> The parameters must be provided in the order <large medium small>.</p><p>Default value is <code>XL3 L3 M6 S12</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getDefaultSpan" href="api/sap.ui.layout.Grid#methods/getDefaultSpan">defaultSpan</a>.</p><p>Optional. A string type that represents the span values of the <code>Grid</code> for large, medium and small screens. Allowed values are separated by space Letters L, M or S followed by number of columns from 1 to 12 that the container has to take, for example, <code>L2 M4 S6</code>, <code>M12</code>, <code>s10</code> or <code>l4 m4</code>.</p><p><b>Note:</b> The parameters must be provided in the order <large medium small>.</p><p>Default value is <code>"XL3 L3 M6 S12"</code>.</p>
                  * @returns sap.ui.layout.GridSpan <p>Value of property <code>defaultSpan</code></p>
                  */
                 getDefaultSpan(): sap.ui.layout.GridSpan;
@@ -900,7 +906,7 @@ declare namespace sap {
                  */
                 getHSpacing(): number;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getPosition" href="api/sap.ui.layout.Grid#methods/getPosition">position</a>.</p><p>Optional. Defines the position of the <code>Grid</code> in the window or surrounding container.</p><p>Default value is <code>Left</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getPosition" href="api/sap.ui.layout.Grid#methods/getPosition">position</a>.</p><p>Optional. Defines the position of the <code>Grid</code> in the window or surrounding container.</p><p>Default value is <code>"Left"</code>.</p>
                  * @returns sap.ui.layout.GridPosition <p>Value of property <code>position</code></p>
                  */
                 getPosition(): sap.ui.layout.GridPosition;
@@ -910,7 +916,7 @@ declare namespace sap {
                  */
                 getVSpacing(): number;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.layout.Grid#methods/getWidth">width</a>.</p><p>Optional. Defines the width of the <code>Grid</code>. If not specified, then 100%.</p><p>Default value is <code>100%</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.layout.Grid#methods/getWidth">width</a>.</p><p>Optional. Defines the width of the <code>Grid</code>. If not specified, then 100%.</p><p>Default value is <code>'100%'</code>.</p>
                  * @returns sap.ui.core.CSSSize <p>Value of property <code>width</code></p>
                  */
                 getWidth(): sap.ui.core.CSSSize;
@@ -954,43 +960,43 @@ declare namespace sap {
                  * @param {boolean} bContainerQuery <p>New value for property <code>containerQuery</code></p>
                  * @returns sap.ui.layout.Grid <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setContainerQuery(bContainerQuery: boolean): sap.ui.layout.Grid;
+                setContainerQuery(bContainerQuery?: boolean): sap.ui.layout.Grid;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getDefaultIndent" href="api/sap.ui.layout.Grid#methods/getDefaultIndent">defaultIndent</a>.</p><p>Optional. Defines default for the whole Grid numbers of empty columns before the current span begins. It can be defined for large, medium and small screens. Allowed values are separated by space Letters L, M or S followed by number of columns from 0 to 11 that the container has to take, for example, <code>L2 M4 S6</code>, <code>M11</code>, <code>s10</code> or <code>l4 m4</code>.</p><p><b>Note:</b> The parameters must be provided in the order <large medium small>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>XL0 L0 M0 S0</code>.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getDefaultIndent" href="api/sap.ui.layout.Grid#methods/getDefaultIndent">defaultIndent</a>.</p><p>Optional. Defines default for the whole Grid numbers of empty columns before the current span begins. It can be defined for large, medium and small screens. Allowed values are separated by space Letters L, M or S followed by number of columns from 0 to 11 that the container has to take, for example, <code>L2 M4 S6</code>, <code>M11</code>, <code>s10</code> or <code>l4 m4</code>.</p><p><b>Note:</b> The parameters must be provided in the order <large medium small>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"XL0 L0 M0 S0"</code>.</p>
                  * @param {sap.ui.layout.GridIndent} sDefaultIndent <p>New value for property <code>defaultIndent</code></p>
                  * @returns sap.ui.layout.Grid <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setDefaultIndent(sDefaultIndent: sap.ui.layout.GridIndent): sap.ui.layout.Grid;
+                setDefaultIndent(sDefaultIndent?: sap.ui.layout.GridIndent): sap.ui.layout.Grid;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getDefaultSpan" href="api/sap.ui.layout.Grid#methods/getDefaultSpan">defaultSpan</a>.</p><p>Optional. A string type that represents the span values of the <code>Grid</code> for large, medium and small screens. Allowed values are separated by space Letters L, M or S followed by number of columns from 1 to 12 that the container has to take, for example, <code>L2 M4 S6</code>, <code>M12</code>, <code>s10</code> or <code>l4 m4</code>.</p><p><b>Note:</b> The parameters must be provided in the order <large medium small>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>XL3 L3 M6 S12</code>.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getDefaultSpan" href="api/sap.ui.layout.Grid#methods/getDefaultSpan">defaultSpan</a>.</p><p>Optional. A string type that represents the span values of the <code>Grid</code> for large, medium and small screens. Allowed values are separated by space Letters L, M or S followed by number of columns from 1 to 12 that the container has to take, for example, <code>L2 M4 S6</code>, <code>M12</code>, <code>s10</code> or <code>l4 m4</code>.</p><p><b>Note:</b> The parameters must be provided in the order <large medium small>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"XL3 L3 M6 S12"</code>.</p>
                  * @param {sap.ui.layout.GridSpan} sDefaultSpan <p>New value for property <code>defaultSpan</code></p>
                  * @returns sap.ui.layout.Grid <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setDefaultSpan(sDefaultSpan: sap.ui.layout.GridSpan): sap.ui.layout.Grid;
+                setDefaultSpan(sDefaultSpan?: sap.ui.layout.GridSpan): sap.ui.layout.Grid;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHSpacing" href="api/sap.ui.layout.Grid#methods/getHSpacing">hSpacing</a>.</p><p>Optional. Defines the horizontal spacing between the content in the <code>Grid</code>. In rem, allowed values are 0, 0.5 , 1 or 2.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1</code>.</p>
                  * @param {number} fHSpacing <p>New value for property <code>hSpacing</code></p>
                  * @returns sap.ui.layout.Grid <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setHSpacing(fHSpacing: number): sap.ui.layout.Grid;
+                setHSpacing(fHSpacing?: number): sap.ui.layout.Grid;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getPosition" href="api/sap.ui.layout.Grid#methods/getPosition">position</a>.</p><p>Optional. Defines the position of the <code>Grid</code> in the window or surrounding container.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Left</code>.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getPosition" href="api/sap.ui.layout.Grid#methods/getPosition">position</a>.</p><p>Optional. Defines the position of the <code>Grid</code> in the window or surrounding container.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"Left"</code>.</p>
                  * @param {sap.ui.layout.GridPosition} sPosition <p>New value for property <code>position</code></p>
                  * @returns sap.ui.layout.Grid <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setPosition(sPosition: sap.ui.layout.GridPosition): sap.ui.layout.Grid;
+                setPosition(sPosition?: sap.ui.layout.GridPosition): sap.ui.layout.Grid;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getVSpacing" href="api/sap.ui.layout.Grid#methods/getVSpacing">vSpacing</a>.</p><p>Optional. Defines the vertical spacing between the rows in the <code>Grid</code>. In rem, allowed values are 0, 0.5, 1 and 2.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1</code>.</p>
                  * @param {number} fVSpacing <p>New value for property <code>vSpacing</code></p>
                  * @returns sap.ui.layout.Grid <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setVSpacing(fVSpacing: number): sap.ui.layout.Grid;
+                setVSpacing(fVSpacing?: number): sap.ui.layout.Grid;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.layout.Grid#methods/getWidth">width</a>.</p><p>Optional. Defines the width of the <code>Grid</code>. If not specified, then 100%.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>100%</code>.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.layout.Grid#methods/getWidth">width</a>.</p><p>Optional. Defines the width of the <code>Grid</code>. If not specified, then 100%.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>'100%'</code>.</p>
                  * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
                  * @returns sap.ui.layout.Grid <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setWidth(sWidth: sap.ui.core.CSSSize): sap.ui.layout.Grid;
+                setWidth(sWidth?: sap.ui.core.CSSSize): sap.ui.layout.Grid;
             }
             /**
              * <p>Defines layout data for the <a target="_self" class="jsdoclink" href="api/sap.ui.layout.Grid">sap.ui.layout.Grid</a>.</p><p><b>Note:</b> When <code>GridData</code> is used for controls inside a form, the <code>linebreak</code> property has to be set to <code>true</code> if the next form element has to be displayed on a new line. Otherwise the <code>GridData</code> overrides the layout provided by the <code>Form</code>.<br><br><span>Documentation links:</span><ul><li><a target="_self" href="topic/32d4b9c2b981425dbc374d3e9d5d0c2e">Grid Controls</a></li></ul></p>
@@ -1112,127 +1118,127 @@ declare namespace sap {
                  * @param {sap.ui.layout.GridIndent} sIndent <p>New value for property <code>indent</code></p>
                  * @returns sap.ui.layout.GridData <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setIndent(sIndent: sap.ui.layout.GridIndent): sap.ui.layout.GridData;
+                setIndent(sIndent?: sap.ui.layout.GridIndent): sap.ui.layout.GridData;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getIndentL" href="api/sap.ui.layout.GridData#methods/getIndentL">indentL</a>.</p><p>Optional. Defines an indent value for large screens. This value overwrites the value for large screens defined in the <code>indent</code> property.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {number} iIndentL <p>New value for property <code>indentL</code></p>
                  * @returns sap.ui.layout.GridData <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setIndentL(iIndentL: number): sap.ui.layout.GridData;
+                setIndentL(iIndentL?: number): sap.ui.layout.GridData;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getIndentM" href="api/sap.ui.layout.GridData#methods/getIndentM">indentM</a>.</p><p>Optional. Defines an indent value for medium size screens. This value overwrites the value for medium screens defined in the <code>indent</code> property.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {number} iIndentM <p>New value for property <code>indentM</code></p>
                  * @returns sap.ui.layout.GridData <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setIndentM(iIndentM: number): sap.ui.layout.GridData;
+                setIndentM(iIndentM?: number): sap.ui.layout.GridData;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getIndentS" href="api/sap.ui.layout.GridData#methods/getIndentS">indentS</a>.</p><p>Optional. Defines an indent value for small screens. This value overwrites the value for small screens defined in the <code>indent</code> property.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {number} iIndentS <p>New value for property <code>indentS</code></p>
                  * @returns sap.ui.layout.GridData <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setIndentS(iIndentS: number): sap.ui.layout.GridData;
+                setIndentS(iIndentS?: number): sap.ui.layout.GridData;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getIndentXL" href="api/sap.ui.layout.GridData#methods/getIndentXL">indentXL</a>.</p><p>Optional. Defines an indent value for extra large screens. This value overwrites the value for extra large screens defined in the <code>indent</code> property.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {number} iIndentXL <p>New value for property <code>indentXL</code></p>
                  * @returns sap.ui.layout.GridData <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setIndentXL(iIndentXL: number): sap.ui.layout.GridData;
+                setIndentXL(iIndentXL?: number): sap.ui.layout.GridData;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getLinebreak" href="api/sap.ui.layout.GridData#methods/getLinebreak">linebreak</a>.</p><p>Optional. If set to <code>true</code>, the control causes a line break on all-size screens within the <code>Grid</code> and becomes the first within the next line.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bLinebreak <p>New value for property <code>linebreak</code></p>
                  * @returns sap.ui.layout.GridData <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setLinebreak(bLinebreak: boolean): sap.ui.layout.GridData;
+                setLinebreak(bLinebreak?: boolean): sap.ui.layout.GridData;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getLinebreakL" href="api/sap.ui.layout.GridData#methods/getLinebreakL">linebreakL</a>.</p><p>Optional. If set to <code>true</code>, the control causes a line break on large screens within the <code>Grid</code> and becomes the first within the next line.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bLinebreakL <p>New value for property <code>linebreakL</code></p>
                  * @returns sap.ui.layout.GridData <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setLinebreakL(bLinebreakL: boolean): sap.ui.layout.GridData;
+                setLinebreakL(bLinebreakL?: boolean): sap.ui.layout.GridData;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getLinebreakM" href="api/sap.ui.layout.GridData#methods/getLinebreakM">linebreakM</a>.</p><p>Optional. If set to <code>true</code>, the control causes a line break on medium screens within the <code>Grid</code> and becomes the first within the next line.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bLinebreakM <p>New value for property <code>linebreakM</code></p>
                  * @returns sap.ui.layout.GridData <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setLinebreakM(bLinebreakM: boolean): sap.ui.layout.GridData;
+                setLinebreakM(bLinebreakM?: boolean): sap.ui.layout.GridData;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getLinebreakS" href="api/sap.ui.layout.GridData#methods/getLinebreakS">linebreakS</a>.</p><p>Optional. If set to <code>true</code>, the control causes a line break on small screens within the <code>Grid</code> and becomes the first within the next line.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bLinebreakS <p>New value for property <code>linebreakS</code></p>
                  * @returns sap.ui.layout.GridData <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setLinebreakS(bLinebreakS: boolean): sap.ui.layout.GridData;
+                setLinebreakS(bLinebreakS?: boolean): sap.ui.layout.GridData;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getLinebreakXL" href="api/sap.ui.layout.GridData#methods/getLinebreakXL">linebreakXL</a>.</p><p>Optional. If set to <code>true</code>, the control causes a line break on extra large screens within the <code>Grid</code> and becomes the first within the next line.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bLinebreakXL <p>New value for property <code>linebreakXL</code></p>
                  * @returns sap.ui.layout.GridData <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setLinebreakXL(bLinebreakXL: boolean): sap.ui.layout.GridData;
+                setLinebreakXL(bLinebreakXL?: boolean): sap.ui.layout.GridData;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getMoveBackwards" href="api/sap.ui.layout.GridData#methods/getMoveBackwards">moveBackwards</a>.</p><p>Optional. Moves a cell backwards with as many columns as specified.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {sap.ui.layout.GridIndent} sMoveBackwards <p>New value for property <code>moveBackwards</code></p>
                  * @returns sap.ui.layout.GridData <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setMoveBackwards(sMoveBackwards: sap.ui.layout.GridIndent): sap.ui.layout.GridData;
+                setMoveBackwards(sMoveBackwards?: sap.ui.layout.GridIndent): sap.ui.layout.GridData;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getMoveForward" href="api/sap.ui.layout.GridData#methods/getMoveForward">moveForward</a>.</p><p>Optional. Moves a cell forwards with as many columns as specified.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {sap.ui.layout.GridIndent} sMoveForward <p>New value for property <code>moveForward</code></p>
                  * @returns sap.ui.layout.GridData <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setMoveForward(sMoveForward: sap.ui.layout.GridIndent): sap.ui.layout.GridData;
+                setMoveForward(sMoveForward?: sap.ui.layout.GridIndent): sap.ui.layout.GridData;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSpan" href="api/sap.ui.layout.GridData#methods/getSpan">span</a>.</p><p>A string type that represents the span values of the <code>Grid</code> for large, medium and small screens.</p><p>Allowed values are separated by space Letters L, M or S followed by number of columns from 1 to 12 that the container has to take, for example: <code>L2 M4 S6</code>, <code>M12</code>, <code>s10</code> or <code>l4 m4</code>.</p><p><b>Note:</b> The parameters must be provided in the order <large medium small>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {sap.ui.layout.GridSpan} sSpan <p>New value for property <code>span</code></p>
                  * @returns sap.ui.layout.GridData <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setSpan(sSpan: sap.ui.layout.GridSpan): sap.ui.layout.GridData;
+                setSpan(sSpan?: sap.ui.layout.GridSpan): sap.ui.layout.GridData;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSpanL" href="api/sap.ui.layout.GridData#methods/getSpanL">spanL</a>.</p><p>Optional. Defines a span value for large screens. This value overwrites the value for large screens defined in the <code>span</code> property.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {number} iSpanL <p>New value for property <code>spanL</code></p>
                  * @returns sap.ui.layout.GridData <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setSpanL(iSpanL: number): sap.ui.layout.GridData;
+                setSpanL(iSpanL?: number): sap.ui.layout.GridData;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSpanM" href="api/sap.ui.layout.GridData#methods/getSpanM">spanM</a>.</p><p>Optional. Defines a span value for medium size screens. This value overwrites the value for medium screens defined in the <code>span</code> property.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {number} iSpanM <p>New value for property <code>spanM</code></p>
                  * @returns sap.ui.layout.GridData <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setSpanM(iSpanM: number): sap.ui.layout.GridData;
+                setSpanM(iSpanM?: number): sap.ui.layout.GridData;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSpanS" href="api/sap.ui.layout.GridData#methods/getSpanS">spanS</a>.</p><p>Optional. Defines a span value for small screens. This value overwrites the value for small screens defined in the <code>span</code> property.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {number} iSpanS <p>New value for property <code>spanS</code></p>
                  * @returns sap.ui.layout.GridData <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setSpanS(iSpanS: number): sap.ui.layout.GridData;
+                setSpanS(iSpanS?: number): sap.ui.layout.GridData;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSpanXL" href="api/sap.ui.layout.GridData#methods/getSpanXL">spanXL</a>.</p><p>Optional. Defines a span value for extra large screens. This value overwrites the value for extra large screens defined in the <code>span</code> property.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {number} iSpanXL <p>New value for property <code>spanXL</code></p>
                  * @returns sap.ui.layout.GridData <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setSpanXL(iSpanXL: number): sap.ui.layout.GridData;
+                setSpanXL(iSpanXL?: number): sap.ui.layout.GridData;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getVisibleL" href="api/sap.ui.layout.GridData#methods/getVisibleL">visibleL</a>.</p><p>Defines if this control is visible on large screens.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                  * @param {boolean} bVisibleL <p>New value for property <code>visibleL</code></p>
                  * @returns sap.ui.layout.GridData <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setVisibleL(bVisibleL: boolean): sap.ui.layout.GridData;
+                setVisibleL(bVisibleL?: boolean): sap.ui.layout.GridData;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getVisibleM" href="api/sap.ui.layout.GridData#methods/getVisibleM">visibleM</a>.</p><p>Defines if this control is visible on medium screens.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                  * @param {boolean} bVisibleM <p>New value for property <code>visibleM</code></p>
                  * @returns sap.ui.layout.GridData <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setVisibleM(bVisibleM: boolean): sap.ui.layout.GridData;
+                setVisibleM(bVisibleM?: boolean): sap.ui.layout.GridData;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getVisibleS" href="api/sap.ui.layout.GridData#methods/getVisibleS">visibleS</a>.</p><p>Defines if this control is visible on small screens.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                  * @param {boolean} bVisibleS <p>New value for property <code>visibleS</code></p>
                  * @returns sap.ui.layout.GridData <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setVisibleS(bVisibleS: boolean): sap.ui.layout.GridData;
+                setVisibleS(bVisibleS?: boolean): sap.ui.layout.GridData;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getVisibleXL" href="api/sap.ui.layout.GridData#methods/getVisibleXL">visibleXL</a>.</p><p>Defines if this control is visible on extra Large screens.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                  * @param {boolean} bVisibleXL <p>New value for property <code>visibleXL</code></p>
                  * @returns sap.ui.layout.GridData <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setVisibleXL(bVisibleXL: boolean): sap.ui.layout.GridData;
+                setVisibleXL(bVisibleXL?: boolean): sap.ui.layout.GridData;
             }
             /**
              * <p><p>The position of the <a target="_self" class="jsdoclink" href="api/sap.ui.layout.Grid">sap.ui.layout.Grid</a>. Can be <code>Left</code> (default), <code>Center</code> or <code>Right</code>.</p></p>
@@ -1316,10 +1322,10 @@ declare namespace sap {
                  * @param {boolean} bAllowWrapping <p>New value for property <code>allowWrapping</code></p>
                  * @returns sap.ui.layout.HorizontalLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setAllowWrapping(bAllowWrapping: boolean): sap.ui.layout.HorizontalLayout;
+                setAllowWrapping(bAllowWrapping?: boolean): sap.ui.layout.HorizontalLayout;
             }
             /**
-             * <p>PaneContainer is an abstraction of Splitter.</p><p>Could be used as an aggregation of ResponsiveSplitter or other PaneContainers.</p>
+             * <p>PaneContainer is an abstraction of Splitter.</p><p>Could be used as an aggregation of ResponsiveSplitter or nested in other PaneContainers.</p>
              */
             export class PaneContainer extends sap.ui.core.Element {
                 /**
@@ -1345,7 +1351,7 @@ declare namespace sap {
                  */
                 getOrientation(): sap.ui.core.Orientation;
                 /**
-                 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-target="getPanes" href="api/sap.ui.layout.PaneContainer#methods/getPanes">panes</a>.</p><p>The Pane that will be shown when there is no suitable pane for ResponsiveSplitter's current width.</p>
+                 * <p>Gets content of aggregation <a target="_self" class="jsdoclink scrollToMethod" data-target="getPanes" href="api/sap.ui.layout.PaneContainer#methods/getPanes">panes</a>.</p><p>The panes to be split. The control will show n-1 splitter bars between n controls in this aggregation.</p>
                  * @returns sap.ui.core.Element[] 
                  */
                 getPanes(): sap.ui.core.Element[];
@@ -1465,7 +1471,7 @@ declare namespace sap {
                  * @param {boolean} bResponsive <p>New value for property <code>responsive</code></p>
                  * @returns sap.ui.layout.ResponsiveFlowLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setResponsive(bResponsive: boolean): sap.ui.layout.ResponsiveFlowLayout;
+                setResponsive(bResponsive?: boolean): sap.ui.layout.ResponsiveFlowLayout;
             }
             /**
              * <p>This is a LayoutData element that can be added to a control if this control is used within a ResponsiveFlowLayout.</p>
@@ -1507,34 +1513,34 @@ declare namespace sap {
                  * @param {boolean} bLinebreak <p>New value for property <code>linebreak</code></p>
                  * @returns sap.ui.layout.ResponsiveFlowLayoutData <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setLinebreak(bLinebreak: boolean): sap.ui.layout.ResponsiveFlowLayoutData;
+                setLinebreak(bLinebreak?: boolean): sap.ui.layout.ResponsiveFlowLayoutData;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getLinebreakable" href="api/sap.ui.layout.ResponsiveFlowLayoutData#methods/getLinebreakable">linebreakable</a>.</p><p>Shows if an element can be wrapped into a new row. If this value is set to false, the min-width will be set to 0 and the wrapping is up to the previous element.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                  * @param {boolean} bLinebreakable <p>New value for property <code>linebreakable</code></p>
                  * @returns sap.ui.layout.ResponsiveFlowLayoutData <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setLinebreakable(bLinebreakable: boolean): sap.ui.layout.ResponsiveFlowLayoutData;
+                setLinebreakable(bLinebreakable?: boolean): sap.ui.layout.ResponsiveFlowLayoutData;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getMargin" href="api/sap.ui.layout.ResponsiveFlowLayoutData#methods/getMargin">margin</a>.</p><p>Prevents any margin of the element if set to false.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                  * @param {boolean} bMargin <p>New value for property <code>margin</code></p>
                  * @returns sap.ui.layout.ResponsiveFlowLayoutData <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setMargin(bMargin: boolean): sap.ui.layout.ResponsiveFlowLayoutData;
+                setMargin(bMargin?: boolean): sap.ui.layout.ResponsiveFlowLayoutData;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getMinWidth" href="api/sap.ui.layout.ResponsiveFlowLayoutData#methods/getMinWidth">minWidth</a>.</p><p>Defines the minimal size in px of a ResponsiveFlowLayout element. The element will be shrunk down to this value.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>100</code>.</p>
                  * @param {number} iMinWidth <p>New value for property <code>minWidth</code></p>
                  * @returns sap.ui.layout.ResponsiveFlowLayoutData <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setMinWidth(iMinWidth: number): sap.ui.layout.ResponsiveFlowLayoutData;
+                setMinWidth(iMinWidth?: number): sap.ui.layout.ResponsiveFlowLayoutData;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWeight" href="api/sap.ui.layout.ResponsiveFlowLayoutData#methods/getWeight">weight</a>.</p><p>Defines the weight of the element, that influences the resulting width. If there are several elements within a row of the ResponsiveFlowLayout, each element could have another weight. The bigger the weight of a single element, the wider it will be stretched, i.e. a bigger weight results in a larger width.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1</code>.</p>
                  * @param {number} iWeight <p>New value for property <code>weight</code></p>
                  * @returns sap.ui.layout.ResponsiveFlowLayoutData <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setWeight(iWeight: number): sap.ui.layout.ResponsiveFlowLayoutData;
+                setWeight(iWeight?: number): sap.ui.layout.ResponsiveFlowLayoutData;
             }
             /**
-             * <p>A responsive splitter which divides the application into several areas. </p><h3>Overview</h3><p> The responsive splitter layout structures complex applications into defined areas. These areas may be resizable and are either distributed across one or multiple screen areas, some of which may also be off-canvas.</p><p>The control is intended for developing administrative tools and applications. </p><h3>Structure</h3><p> The responsive splitter holds the following hierarchy of containers and controls: <ul> <li><a target="_self" class="jsdoclink" href="api/sap.ui.layout.PaneContainer">Pane Container</a> - holds one or more Split Panes and determines the pane orientation. The pane which is stored in <code>rootPaneContainer</code> holds all other pane containers and split panes.</li> <li><a target="_self" class="jsdoclink" href="api/sap.ui.layout.SplitPane">Split Pane</a> - independent containers that may interact with one another. Each pane can hold only one control.</li> </ul> </p><h3>Usage</h3><h4>When to use</h4><p> <ul> <li>The application has to display several areas side by side that must be resizable.</li> <li>The application must work on a range of different devices in a responsive manner.</li> </ul> </p><h3>Responsive Behavior</h3><p> <ul> <li>As soon as views are in the off-canvas mode, the pagination bar at the bottom of the application allows the user to switch between them.</li> <li>On touch-enabled devices, the splitters show explicit handles with larger touch areas.</li> <li>Double-clicking on a splitter will collapse or expand it back to its original position.</li> </ul></p><p><b>Note:</b> We don't recommend dynamically inserting/removing panes into/from the PaneContainer since this might lead to inconsistent layout. If it is necessary, you need to ensure the sum of all sizes of the SplitPanes doesn't exceed the width of the PaneContainer.</p>
+             * <p>A responsive splitter which divides the application into several areas. </p><h3>Overview</h3><p> The responsive splitter layout structures complex applications into defined areas. These areas may be resizable and are either distributed across one or multiple screen areas, some of which may also be off-canvas.</p><p>The control is intended for developing administrative tools and applications. </p><h3>Structure</h3><p> The responsive splitter holds the following hierarchy of containers and controls: <ul> <li><a target="_self" class="jsdoclink" href="api/sap.ui.layout.PaneContainer">Pane Container</a> - holds one or more Split Panes and determines the pane orientation. The pane which is stored in <code>rootPaneContainer</code> holds all other pane containers and split panes.</li> <li><a target="_self" class="jsdoclink" href="api/sap.ui.layout.SplitPane">Split Pane</a> - independent containers that may interact with one another. Each pane can hold only one control.</li> </ul> </p><h3>Usage</h3><h4>When to use</h4><p> <ul> <li>The application has to display several areas side by side that must be resizable.</li> <li>The application must work on a range of different devices in a responsive manner.</li> </ul> </p><h3>Responsive Behavior</h3><p> <ul> <li>As soon as views are in the off-canvas mode, the pagination bar at the bottom of the application allows the user to switch between them.</li> <li>On touch-enabled devices the bars of the splitter can be moved by touching the grip.</li> <li>Double-clicking on a splitter will collapse or expand it back to its original position.</li> </ul></p><p><b>Note:</b> We don't recommend dynamically inserting/removing panes into/from the PaneContainer since this might lead to inconsistent layout. If it is necessary, you need to ensure the sum of all sizes of the SplitPanes doesn't exceed the width of the PaneContainer.</p>
              */
             export class ResponsiveSplitter extends sap.ui.core.Control {
                 /**
@@ -1554,7 +1560,7 @@ declare namespace sap {
                  */
                 getDefaultPane(): sap.ui.core.ID;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHeight" href="api/sap.ui.layout.ResponsiveSplitter#methods/getHeight">height</a>.</p><p>The height of the control</p><p>Default value is <code>100%</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHeight" href="api/sap.ui.layout.ResponsiveSplitter#methods/getHeight">height</a>.</p><p>The height of the control</p><p>Default value is <code>'100%'</code>.</p>
                  * @returns sap.ui.core.CSSSize <p>Value of property <code>height</code></p>
                  */
                 getHeight(): sap.ui.core.CSSSize;
@@ -1564,7 +1570,7 @@ declare namespace sap {
                  */
                 getRootPaneContainer(): sap.ui.layout.PaneContainer;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.layout.ResponsiveSplitter#methods/getWidth">width</a>.</p><p>The width of the control</p><p>Default value is <code>100%</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.layout.ResponsiveSplitter#methods/getWidth">width</a>.</p><p>The width of the control</p><p>Default value is <code>'100%'</code>.</p>
                  * @returns sap.ui.core.CSSSize <p>Value of property <code>width</code></p>
                  */
                 getWidth(): sap.ui.core.CSSSize;
@@ -1575,11 +1581,11 @@ declare namespace sap {
                  */
                 setDefaultPane(oDefaultPane: sap.ui.core.ID | sap.ui.layout.SplitPane): sap.ui.layout.ResponsiveSplitter;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHeight" href="api/sap.ui.layout.ResponsiveSplitter#methods/getHeight">height</a>.</p><p>The height of the control</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>100%</code>.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHeight" href="api/sap.ui.layout.ResponsiveSplitter#methods/getHeight">height</a>.</p><p>The height of the control</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>'100%'</code>.</p>
                  * @param {sap.ui.core.CSSSize} sHeight <p>New value for property <code>height</code></p>
                  * @returns sap.ui.layout.ResponsiveSplitter <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setHeight(sHeight: sap.ui.core.CSSSize): sap.ui.layout.ResponsiveSplitter;
+                setHeight(sHeight?: sap.ui.core.CSSSize): sap.ui.layout.ResponsiveSplitter;
                 /**
                  * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-target="getRootPaneContainer" href="api/sap.ui.layout.ResponsiveSplitter#methods/getRootPaneContainer">rootPaneContainer</a>.</p>
                  * @param {sap.ui.layout.PaneContainer} oRootPaneContainer <p>The rootPaneContainer to set</p>
@@ -1587,11 +1593,11 @@ declare namespace sap {
                  */
                 setRootPaneContainer(oRootPaneContainer: sap.ui.layout.PaneContainer): sap.ui.layout.ResponsiveSplitter;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.layout.ResponsiveSplitter#methods/getWidth">width</a>.</p><p>The width of the control</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>100%</code>.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.layout.ResponsiveSplitter#methods/getWidth">width</a>.</p><p>The width of the control</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>'100%'</code>.</p>
                  * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
                  * @returns sap.ui.layout.ResponsiveSplitter <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setWidth(sWidth: sap.ui.core.CSSSize): sap.ui.layout.ResponsiveSplitter;
+                setWidth(sWidth?: sap.ui.core.CSSSize): sap.ui.layout.ResponsiveSplitter;
             }
             /**
              * <p><p>Types of the DynamicSideContent FallDown options</p></p>
@@ -1693,16 +1699,16 @@ declare namespace sap {
                  * @param {boolean} bDemandPane <p>New value for property <code>demandPane</code></p>
                  * @returns sap.ui.layout.SplitPane <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setDemandPane(bDemandPane: boolean): sap.ui.layout.SplitPane;
+                setDemandPane(bDemandPane?: boolean): sap.ui.layout.SplitPane;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getRequiredParentWidth" href="api/sap.ui.layout.SplitPane#methods/getRequiredParentWidth">requiredParentWidth</a>.</p><p>Determines the minimum width of the ResponsiveSplitter(in pixels). When it is reached the pane will be hidden from the screen.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>800</code>.</p>
                  * @param {number} iRequiredParentWidth <p>New value for property <code>requiredParentWidth</code></p>
                  * @returns sap.ui.layout.SplitPane <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setRequiredParentWidth(iRequiredParentWidth: number): sap.ui.layout.SplitPane;
+                setRequiredParentWidth(iRequiredParentWidth?: number): sap.ui.layout.SplitPane;
             }
             /**
-             * <p>A layout that contains several content areas. The content that is added to the splitter should contain LayoutData of the type SplitterLayoutData that defines its size and size contraints.</p><p>By adding or changing SplitterLayoutData to the controls that make up the content areas, the size can be changed programatically. Additionally the contents can be made non-resizable individually and a minimal size (in px) can be set.</p><p>The orientation of the splitter can be set to horizontal (default) or vertical. All content areas of the splitter will be arranged in that way. In order to split vertically and horizontally at the same time, Splitters need to be nested.</p><p>The splitter bars can be focused to enable resizing of the content areas via keyboard. The contents size can be manipulated when the splitter bar is focused and Shift-Left/Down/Right/Up are pressed. When Shift-Home/End are pressed, the contents are set their minimum or maximum size (keep in mind though, that resizing an auto-size content-area next to another auto-size one might lead to the effect that the former does not take its maximum size but only the maximum size before recalculating auto sizes).</p><p>The splitter bars used for resizing the contents by the user can be set to different widths (or heights in vertical mode) and the splitter will automatically resize the other contents accordingly. In case the splitter bar is resized after the splitter has rendered, a manual resize has to be triggered by invoking triggerResize() on the Splitter.</p>
+             * <h3>Overview</h3><p> A layout that contains several content areas. The content that is added to the splitter should contain <code>layoutData</code> of type <a target="_self" class="jsdoclink" href="api/sap.ui.layout.SplitterLayoutData">SplitterLayoutData</a> which defines its size and size constraints. If such <code>layoutData</code> is not defined, it will be generated automatically.</p><p>By adding or changing the <code>layoutData</code> to the controls that make up the content areas, the size can be changed programmatically. Additionally the content areas can be made non-resizable individually and a minimal size (in px) can be set.</p><p>The orientation of the splitter can be set to horizontal (default) or vertical. All content areas of the splitter will be arranged in that way. In order to split vertically and horizontally at the same time, splitters need to be nested.</p><p>The splitter bars are focusable to enable resizing of the content areas via keyboard. The size of the content areas can be manipulated when the splitter bar is focused and Shift-Left/Down/Right/Up are pressed. When Shift-Home/End are pressed, the content areas are resized to their minimum or maximum size (Note, that resizing one auto-size content area next to another auto-size content area, might lead to the effect that the former does not take its maximum size but only the maximum size before recalculating the auto-sizes).</p><p>The splitter bars used for resizing the content areas by the user can be set to different widths (or heights in vertical mode) and the splitter will automatically resize the other content areas accordingly. In case the splitter bar is resized after the splitter has been rendered, a manual resize has to be triggered by invoking triggerResize() on the splitter.</p><h3>Responsive Behavior</h3><p> On touch-enabled devices the bars of the splitter can be moved by touching the grip.</p>
              */
             export class Splitter extends sap.ui.core.Control {
                 /**
@@ -1738,11 +1744,11 @@ declare namespace sap {
                  */
                 detachResize(fnFunction: Function, oListener?: any): sap.ui.layout.Splitter;
                 /**
-                 * <p>Disables the resizing of the Splitter contents via keyboard. This changes the Splitter bars to non-focussable elements.</p>
+                 * <p>Disables the resizing of the Splitter contents via keyboard. This changes the Splitter bars to non-focusable elements.</p>
                  */
                 protected disableKeyboardSupport(): void;
                 /**
-                 * <p>Enables the resizing of the Splitter contents via keyboard. This makes the Splitter bars focussable elements.</p>
+                 * <p>Enables the resizing of the Splitter contents via keyboard. This makes the Splitter bars focusable elements.</p>
                  */
                 protected enableKeyboardSupport(): void;
                 /**
@@ -1757,7 +1763,7 @@ declare namespace sap {
                  */
                 getContentAreas(): sap.ui.core.Control[];
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHeight" href="api/sap.ui.layout.Splitter#methods/getHeight">height</a>.</p><p>The height of the control</p><p>Default value is <code>100%</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHeight" href="api/sap.ui.layout.Splitter#methods/getHeight">height</a>.</p><p>The height of the control</p><p>Default value is <code>'100%'</code>.</p>
                  * @returns sap.ui.core.CSSSize <p>Value of property <code>height</code></p>
                  */
                 getHeight(): sap.ui.core.CSSSize;
@@ -1767,7 +1773,7 @@ declare namespace sap {
                  */
                 getOrientation(): sap.ui.core.Orientation;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.layout.Splitter#methods/getWidth">width</a>.</p><p>The width of the control</p><p>Default value is <code>100%</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.layout.Splitter#methods/getWidth">width</a>.</p><p>The width of the control</p><p>Default value is <code>'100%'</code>.</p>
                  * @returns sap.ui.core.CSSSize <p>Value of property <code>width</code></p>
                  */
                 getWidth(): sap.ui.core.CSSSize;
@@ -1796,23 +1802,27 @@ declare namespace sap {
                  */
                 removeContentArea(vContentArea: number | string | sap.ui.core.Control): sap.ui.core.Control;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHeight" href="api/sap.ui.layout.Splitter#methods/getHeight">height</a>.</p><p>The height of the control</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>100%</code>.</p>
+                 * <p>Resets the size (width or height) of each of the content areas.</p>
+                 */
+                resetContentAreasSizes(): void;
+                /**
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHeight" href="api/sap.ui.layout.Splitter#methods/getHeight">height</a>.</p><p>The height of the control</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>'100%'</code>.</p>
                  * @param {sap.ui.core.CSSSize} sHeight <p>New value for property <code>height</code></p>
                  * @returns sap.ui.layout.Splitter <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setHeight(sHeight: sap.ui.core.CSSSize): sap.ui.layout.Splitter;
+                setHeight(sHeight?: sap.ui.core.CSSSize): sap.ui.layout.Splitter;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getOrientation" href="api/sap.ui.layout.Splitter#methods/getOrientation">orientation</a>.</p><p>Whether to split the contents horizontally (default) or vertically.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Horizontal</code>.</p>
                  * @param {sap.ui.core.Orientation} sOrientation <p>New value for property <code>orientation</code></p>
                  * @returns sap.ui.layout.Splitter <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setOrientation(sOrientation: sap.ui.core.Orientation): sap.ui.layout.Splitter;
+                setOrientation(sOrientation?: sap.ui.core.Orientation): sap.ui.layout.Splitter;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.layout.Splitter#methods/getWidth">width</a>.</p><p>The width of the control</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>100%</code>.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.layout.Splitter#methods/getWidth">width</a>.</p><p>The width of the control</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>'100%'</code>.</p>
                  * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
                  * @returns sap.ui.layout.Splitter <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setWidth(sWidth: sap.ui.core.CSSSize): sap.ui.layout.Splitter;
+                setWidth(sWidth?: sap.ui.core.CSSSize): sap.ui.layout.Splitter;
                 /**
                  * <p>This method triggers a resize on the Splitter - meaning it forces the Splitter to recalculate all sizes. This method should only be used in rare cases, for example when the CSS that defines the sizes of the splitter bars changes without triggering a rerendering of the splitter.</p>
                  * @param {boolean} forceDirectly <p>Do not delay the resize, trigger it right now.</p>
@@ -1840,7 +1850,7 @@ declare namespace sap {
                  */
                 getResizable(): boolean;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSize" href="api/sap.ui.layout.SplitterLayoutData#methods/getSize">size</a>.</p><p>Sets the size of the splitter content.</p><p>Default value is <code>auto</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSize" href="api/sap.ui.layout.SplitterLayoutData#methods/getSize">size</a>.</p><p>Sets the size of the splitter content.</p><p>Default value is <code>'auto'</code>.</p>
                  * @returns sap.ui.core.CSSSize <p>Value of property <code>size</code></p>
                  */
                 getSize(): sap.ui.core.CSSSize;
@@ -1849,19 +1859,19 @@ declare namespace sap {
                  * @param {number} iMinSize <p>New value for property <code>minSize</code></p>
                  * @returns sap.ui.layout.SplitterLayoutData <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setMinSize(iMinSize: number): sap.ui.layout.SplitterLayoutData;
+                setMinSize(iMinSize?: number): sap.ui.layout.SplitterLayoutData;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getResizable" href="api/sap.ui.layout.SplitterLayoutData#methods/getResizable">resizable</a>.</p><p>Determines whether the control in the splitter can be resized or not.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                  * @param {boolean} bResizable <p>New value for property <code>resizable</code></p>
                  * @returns sap.ui.layout.SplitterLayoutData <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setResizable(bResizable: boolean): sap.ui.layout.SplitterLayoutData;
+                setResizable(bResizable?: boolean): sap.ui.layout.SplitterLayoutData;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSize" href="api/sap.ui.layout.SplitterLayoutData#methods/getSize">size</a>.</p><p>Sets the size of the splitter content.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>auto</code>.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSize" href="api/sap.ui.layout.SplitterLayoutData#methods/getSize">size</a>.</p><p>Sets the size of the splitter content.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>'auto'</code>.</p>
                  * @param {sap.ui.core.CSSSize} sSize <p>New value for property <code>size</code></p>
                  * @returns sap.ui.layout.SplitterLayoutData <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setSize(sSize: sap.ui.core.CSSSize): sap.ui.layout.SplitterLayoutData;
+                setSize(sSize?: sap.ui.core.CSSSize): sap.ui.layout.SplitterLayoutData;
             }
             /**
              * <p>In this layout the content controls are rendered one below the other.</p>
@@ -1933,13 +1943,13 @@ declare namespace sap {
                  * @param {boolean} bEnabled <p>New value for property <code>enabled</code></p>
                  * @returns sap.ui.layout.VerticalLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setEnabled(bEnabled: boolean): sap.ui.layout.VerticalLayout;
+                setEnabled(bEnabled?: boolean): sap.ui.layout.VerticalLayout;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.layout.VerticalLayout#methods/getWidth">width</a>.</p><p>Width of the <code>VerticalLayout</code>. If no width is set, the width of the content is used. If the content of the layout has a larger width than the layout, it is cut off. There is no scrolling inside the layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
                  * @returns sap.ui.layout.VerticalLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setWidth(sWidth: sap.ui.core.CSSSize): sap.ui.layout.VerticalLayout;
+                setWidth(sWidth?: sap.ui.core.CSSSize): sap.ui.layout.VerticalLayout;
             }
         }
     }
@@ -2147,7 +2157,7 @@ declare namespace sap {
                     /**
                      * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getGridAutoFlow" href="api/sap.ui.layout.cssgrid.CSSGrid#methods/getGridAutoFlow">gridAutoFlow</a>.</p><p>Sets the value for the CSS display:grid property <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-auto-flow">MDN web docs: grid-auto-flow</a>
                     <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
-                    title="Information published on non SAP site" class="sapUISDKExternalLink"/></p><p><b>Note:</b> Not supported in IE11, Edge 15.</p><p>Default value is <code>Row</code>.</p>
+                    title="Information published on non SAP site" class="sapUISDKExternalLink"/></p><p><b>Note:</b> Not supported in IE11, Edge 15.</p><p>Default value is <code>"Row"</code>.</p>
                      * @returns sap.ui.layout.cssgrid.CSSGridAutoFlow <p>Value of property <code>gridAutoFlow</code></p>
                      */
                     getGridAutoFlow(): sap.ui.layout.cssgrid.CSSGridAutoFlow;
@@ -2199,7 +2209,7 @@ declare namespace sap {
                      */
                     getItems(): sap.ui.core.Control[];
                     /**
-                     * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.layout.cssgrid.CSSGrid#methods/getWidth">width</a>.</p><p>The width of the control</p><p>Default value is <code>100%</code>.</p>
+                     * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.layout.cssgrid.CSSGrid#methods/getWidth">width</a>.</p><p>The width of the control</p><p>Default value is <code>"100%"</code>.</p>
                      * @returns sap.ui.core.CSSSize <p>Value of property <code>width</code></p>
                      */
                     getWidth(): sap.ui.core.CSSSize;
@@ -2240,15 +2250,15 @@ declare namespace sap {
                      * @param {sap.ui.layout.cssgrid.CSSGridTrack} sGridAutoColumns <p>New value for property <code>gridAutoColumns</code></p>
                      * @returns sap.ui.layout.cssgrid.CSSGrid <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setGridAutoColumns(sGridAutoColumns: sap.ui.layout.cssgrid.CSSGridTrack): sap.ui.layout.cssgrid.CSSGrid;
+                    setGridAutoColumns(sGridAutoColumns?: sap.ui.layout.cssgrid.CSSGridTrack): sap.ui.layout.cssgrid.CSSGrid;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getGridAutoFlow" href="api/sap.ui.layout.cssgrid.CSSGrid#methods/getGridAutoFlow">gridAutoFlow</a>.</p><p>Sets the value for the CSS display:grid property <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-auto-flow">MDN web docs: grid-auto-flow</a>
                     <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
-                    title="Information published on non SAP site" class="sapUISDKExternalLink"/></p><p><b>Note:</b> Not supported in IE11, Edge 15.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Row</code>.</p>
+                    title="Information published on non SAP site" class="sapUISDKExternalLink"/></p><p><b>Note:</b> Not supported in IE11, Edge 15.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"Row"</code>.</p>
                      * @param {sap.ui.layout.cssgrid.CSSGridAutoFlow} sGridAutoFlow <p>New value for property <code>gridAutoFlow</code></p>
                      * @returns sap.ui.layout.cssgrid.CSSGrid <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setGridAutoFlow(sGridAutoFlow: sap.ui.layout.cssgrid.CSSGridAutoFlow): sap.ui.layout.cssgrid.CSSGrid;
+                    setGridAutoFlow(sGridAutoFlow?: sap.ui.layout.cssgrid.CSSGridAutoFlow): sap.ui.layout.cssgrid.CSSGrid;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getGridAutoRows" href="api/sap.ui.layout.cssgrid.CSSGrid#methods/getGridAutoRows">gridAutoRows</a>.</p><p>Sets the value for the CSS display:grid property <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-auto-rows">MDN web docs: grid-auto-rows</a>
                     <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
@@ -2256,7 +2266,7 @@ declare namespace sap {
                      * @param {sap.ui.layout.cssgrid.CSSGridTrack} sGridAutoRows <p>New value for property <code>gridAutoRows</code></p>
                      * @returns sap.ui.layout.cssgrid.CSSGrid <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setGridAutoRows(sGridAutoRows: sap.ui.layout.cssgrid.CSSGridTrack): sap.ui.layout.cssgrid.CSSGrid;
+                    setGridAutoRows(sGridAutoRows?: sap.ui.layout.cssgrid.CSSGridTrack): sap.ui.layout.cssgrid.CSSGrid;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getGridColumnGap" href="api/sap.ui.layout.cssgrid.CSSGrid#methods/getGridColumnGap">gridColumnGap</a>.</p><p>Sets the value for the CSS display:grid property <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-column-gap">MDN web docs: grid-column-gap</a>
                     <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
@@ -2264,7 +2274,7 @@ declare namespace sap {
                      * @param {sap.ui.core.CSSSize} sGridColumnGap <p>New value for property <code>gridColumnGap</code></p>
                      * @returns sap.ui.layout.cssgrid.CSSGrid <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setGridColumnGap(sGridColumnGap: sap.ui.core.CSSSize): sap.ui.layout.cssgrid.CSSGrid;
+                    setGridColumnGap(sGridColumnGap?: sap.ui.core.CSSSize): sap.ui.layout.cssgrid.CSSGrid;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getGridGap" href="api/sap.ui.layout.cssgrid.CSSGrid#methods/getGridGap">gridGap</a>.</p><p>Sets the value for the CSS display:grid property <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-gap">MDN web docs: grid-gap</a>
                     <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
@@ -2272,7 +2282,7 @@ declare namespace sap {
                      * @param {sap.ui.layout.cssgrid.CSSGridGapShortHand} sGridGap <p>New value for property <code>gridGap</code></p>
                      * @returns sap.ui.layout.cssgrid.CSSGrid <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setGridGap(sGridGap: sap.ui.layout.cssgrid.CSSGridGapShortHand): sap.ui.layout.cssgrid.CSSGrid;
+                    setGridGap(sGridGap?: sap.ui.layout.cssgrid.CSSGridGapShortHand): sap.ui.layout.cssgrid.CSSGrid;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getGridRowGap" href="api/sap.ui.layout.cssgrid.CSSGrid#methods/getGridRowGap">gridRowGap</a>.</p><p>Sets the value for the CSS display:grid property <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-row-gap">MDN web docs: grid-row-gap</a>
                     <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
@@ -2280,7 +2290,7 @@ declare namespace sap {
                      * @param {sap.ui.core.CSSSize} sGridRowGap <p>New value for property <code>gridRowGap</code></p>
                      * @returns sap.ui.layout.cssgrid.CSSGrid <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setGridRowGap(sGridRowGap: sap.ui.core.CSSSize): sap.ui.layout.cssgrid.CSSGrid;
+                    setGridRowGap(sGridRowGap?: sap.ui.core.CSSSize): sap.ui.layout.cssgrid.CSSGrid;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getGridTemplateColumns" href="api/sap.ui.layout.cssgrid.CSSGrid#methods/getGridTemplateColumns">gridTemplateColumns</a>.</p><p>Sets the value for the CSS display:grid property <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-columns">MDN web docs: grid-template-columns</a>
                     <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
@@ -2288,7 +2298,7 @@ declare namespace sap {
                      * @param {sap.ui.layout.cssgrid.CSSGridTrack} sGridTemplateColumns <p>New value for property <code>gridTemplateColumns</code></p>
                      * @returns sap.ui.layout.cssgrid.CSSGrid <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setGridTemplateColumns(sGridTemplateColumns: sap.ui.layout.cssgrid.CSSGridTrack): sap.ui.layout.cssgrid.CSSGrid;
+                    setGridTemplateColumns(sGridTemplateColumns?: sap.ui.layout.cssgrid.CSSGridTrack): sap.ui.layout.cssgrid.CSSGrid;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getGridTemplateRows" href="api/sap.ui.layout.cssgrid.CSSGrid#methods/getGridTemplateRows">gridTemplateRows</a>.</p><p>Sets the value for the CSS display:grid property <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-rows">MDN web docs: grid-template-rows</a>
                     <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
@@ -2296,13 +2306,13 @@ declare namespace sap {
                      * @param {sap.ui.layout.cssgrid.CSSGridTrack} sGridTemplateRows <p>New value for property <code>gridTemplateRows</code></p>
                      * @returns sap.ui.layout.cssgrid.CSSGrid <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setGridTemplateRows(sGridTemplateRows: sap.ui.layout.cssgrid.CSSGridTrack): sap.ui.layout.cssgrid.CSSGrid;
+                    setGridTemplateRows(sGridTemplateRows?: sap.ui.layout.cssgrid.CSSGridTrack): sap.ui.layout.cssgrid.CSSGrid;
                     /**
-                     * <p>Sets the width of the grid.</p>
-                     * @param {sap.ui.core.CSSSize} sWidth <p>The width of the Grid as CSS size.</p>
-                     * @returns sap.ui.layout.cssgrid.CSSGrid <p>Pointer to the control instance to allow method chaining.</p>
+                     * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.layout.cssgrid.CSSGrid#methods/getWidth">width</a>.</p><p>The width of the control</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"100%"</code>.</p>
+                     * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
+                     * @returns sap.ui.layout.cssgrid.CSSGrid <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setWidth(sWidth: sap.ui.core.CSSSize): sap.ui.layout.cssgrid.CSSGrid;
+                    setWidth(sWidth?: sap.ui.core.CSSSize): sap.ui.layout.cssgrid.CSSGrid;
                 }
                 /**
                  * <p><p>A string type that is used for CSS grid to control how the auto-placement algorithm works, specifying exactly how auto-placed items get flowed into the grid.</p><br><br>References: <ul><li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-auto-flow">https://developer.mozilla.org/en-US/docs/Web/CSS/grid-auto-flow</a>
@@ -2347,7 +2357,7 @@ declare namespace sap {
                     /**
                      * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getGridAutoFlow" href="api/sap.ui.layout.cssgrid.GridBasicLayout#methods/getGridAutoFlow">gridAutoFlow</a>.</p><p>Sets the value for the CSS display:grid property <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-auto-flow">MDN web docs: grid-auto-flow</a>
                     <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
-                    title="Information published on non SAP site" class="sapUISDKExternalLink"/></p><p><b>Note:</b> Not supported in IE11, Edge 15.</p><p>Default value is <code>Row</code>.</p>
+                    title="Information published on non SAP site" class="sapUISDKExternalLink"/></p><p><b>Note:</b> Not supported in IE11, Edge 15.</p><p>Default value is <code>"Row"</code>.</p>
                      * @returns sap.ui.layout.cssgrid.CSSGridAutoFlow <p>Value of property <code>gridAutoFlow</code></p>
                      */
                     getGridAutoFlow(): sap.ui.layout.cssgrid.CSSGridAutoFlow;
@@ -2400,15 +2410,15 @@ declare namespace sap {
                      * @param {sap.ui.layout.cssgrid.CSSGridTrack} sGridAutoColumns <p>New value for property <code>gridAutoColumns</code></p>
                      * @returns sap.ui.layout.cssgrid.GridBasicLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setGridAutoColumns(sGridAutoColumns: sap.ui.layout.cssgrid.CSSGridTrack): sap.ui.layout.cssgrid.GridBasicLayout;
+                    setGridAutoColumns(sGridAutoColumns?: sap.ui.layout.cssgrid.CSSGridTrack): sap.ui.layout.cssgrid.GridBasicLayout;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getGridAutoFlow" href="api/sap.ui.layout.cssgrid.GridBasicLayout#methods/getGridAutoFlow">gridAutoFlow</a>.</p><p>Sets the value for the CSS display:grid property <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-auto-flow">MDN web docs: grid-auto-flow</a>
                     <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
-                    title="Information published on non SAP site" class="sapUISDKExternalLink"/></p><p><b>Note:</b> Not supported in IE11, Edge 15.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Row</code>.</p>
+                    title="Information published on non SAP site" class="sapUISDKExternalLink"/></p><p><b>Note:</b> Not supported in IE11, Edge 15.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"Row"</code>.</p>
                      * @param {sap.ui.layout.cssgrid.CSSGridAutoFlow} sGridAutoFlow <p>New value for property <code>gridAutoFlow</code></p>
                      * @returns sap.ui.layout.cssgrid.GridBasicLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setGridAutoFlow(sGridAutoFlow: sap.ui.layout.cssgrid.CSSGridAutoFlow): sap.ui.layout.cssgrid.GridBasicLayout;
+                    setGridAutoFlow(sGridAutoFlow?: sap.ui.layout.cssgrid.CSSGridAutoFlow): sap.ui.layout.cssgrid.GridBasicLayout;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getGridAutoRows" href="api/sap.ui.layout.cssgrid.GridBasicLayout#methods/getGridAutoRows">gridAutoRows</a>.</p><p>Sets the value for the CSS display:grid property <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-auto-rows">MDN web docs: grid-auto-rows</a>
                     <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
@@ -2416,7 +2426,7 @@ declare namespace sap {
                      * @param {sap.ui.layout.cssgrid.CSSGridTrack} sGridAutoRows <p>New value for property <code>gridAutoRows</code></p>
                      * @returns sap.ui.layout.cssgrid.GridBasicLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setGridAutoRows(sGridAutoRows: sap.ui.layout.cssgrid.CSSGridTrack): sap.ui.layout.cssgrid.GridBasicLayout;
+                    setGridAutoRows(sGridAutoRows?: sap.ui.layout.cssgrid.CSSGridTrack): sap.ui.layout.cssgrid.GridBasicLayout;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getGridColumnGap" href="api/sap.ui.layout.cssgrid.GridBasicLayout#methods/getGridColumnGap">gridColumnGap</a>.</p><p>Sets the value for the CSS display:grid property <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-column-gap">MDN web docs: grid-column-gap</a>
                     <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
@@ -2424,7 +2434,7 @@ declare namespace sap {
                      * @param {sap.ui.core.CSSSize} sGridColumnGap <p>New value for property <code>gridColumnGap</code></p>
                      * @returns sap.ui.layout.cssgrid.GridBasicLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setGridColumnGap(sGridColumnGap: sap.ui.core.CSSSize): sap.ui.layout.cssgrid.GridBasicLayout;
+                    setGridColumnGap(sGridColumnGap?: sap.ui.core.CSSSize): sap.ui.layout.cssgrid.GridBasicLayout;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getGridGap" href="api/sap.ui.layout.cssgrid.GridBasicLayout#methods/getGridGap">gridGap</a>.</p><p>Sets the value for the CSS display:grid property <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-gap">MDN web docs: grid-gap</a>
                     <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
@@ -2432,7 +2442,7 @@ declare namespace sap {
                      * @param {sap.ui.layout.cssgrid.CSSGridGapShortHand} sGridGap <p>New value for property <code>gridGap</code></p>
                      * @returns sap.ui.layout.cssgrid.GridBasicLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setGridGap(sGridGap: sap.ui.layout.cssgrid.CSSGridGapShortHand): sap.ui.layout.cssgrid.GridBasicLayout;
+                    setGridGap(sGridGap?: sap.ui.layout.cssgrid.CSSGridGapShortHand): sap.ui.layout.cssgrid.GridBasicLayout;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getGridRowGap" href="api/sap.ui.layout.cssgrid.GridBasicLayout#methods/getGridRowGap">gridRowGap</a>.</p><p>Sets the value for the CSS display:grid property <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-row-gap">MDN web docs: grid-row-gap</a>
                     <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
@@ -2440,7 +2450,7 @@ declare namespace sap {
                      * @param {sap.ui.core.CSSSize} sGridRowGap <p>New value for property <code>gridRowGap</code></p>
                      * @returns sap.ui.layout.cssgrid.GridBasicLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setGridRowGap(sGridRowGap: sap.ui.core.CSSSize): sap.ui.layout.cssgrid.GridBasicLayout;
+                    setGridRowGap(sGridRowGap?: sap.ui.core.CSSSize): sap.ui.layout.cssgrid.GridBasicLayout;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getGridTemplateColumns" href="api/sap.ui.layout.cssgrid.GridBasicLayout#methods/getGridTemplateColumns">gridTemplateColumns</a>.</p><p>Sets the value for the CSS display:grid property <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-columns">MDN web docs: grid-template-columns</a>
                     <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
@@ -2448,7 +2458,7 @@ declare namespace sap {
                      * @param {sap.ui.layout.cssgrid.CSSGridTrack} sGridTemplateColumns <p>New value for property <code>gridTemplateColumns</code></p>
                      * @returns sap.ui.layout.cssgrid.GridBasicLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setGridTemplateColumns(sGridTemplateColumns: sap.ui.layout.cssgrid.CSSGridTrack): sap.ui.layout.cssgrid.GridBasicLayout;
+                    setGridTemplateColumns(sGridTemplateColumns?: sap.ui.layout.cssgrid.CSSGridTrack): sap.ui.layout.cssgrid.GridBasicLayout;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getGridTemplateRows" href="api/sap.ui.layout.cssgrid.GridBasicLayout#methods/getGridTemplateRows">gridTemplateRows</a>.</p><p>Sets the value for the CSS display:grid property <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-rows">MDN web docs: grid-template-rows</a>
                     <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
@@ -2456,7 +2466,7 @@ declare namespace sap {
                      * @param {sap.ui.layout.cssgrid.CSSGridTrack} sGridTemplateRows <p>New value for property <code>gridTemplateRows</code></p>
                      * @returns sap.ui.layout.cssgrid.GridBasicLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setGridTemplateRows(sGridTemplateRows: sap.ui.layout.cssgrid.CSSGridTrack): sap.ui.layout.cssgrid.GridBasicLayout;
+                    setGridTemplateRows(sGridTemplateRows?: sap.ui.layout.cssgrid.CSSGridTrack): sap.ui.layout.cssgrid.GridBasicLayout;
                 }
                 /**
                  * <p>Applies a sap.ui.layout.cssgrid.GridSettings to a provided DOM element or Control.</p>
@@ -2506,7 +2516,7 @@ declare namespace sap {
                      */
                     protected _setGridLayout(oElement: HTMLElement, oGridSettings: sap.ui.layout.cssgrid.GridSettings): void;
                     /**
-                     * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getBoxesPerRowConfig" href="api/sap.ui.layout.cssgrid.GridBoxLayout#methods/getBoxesPerRowConfig">boxesPerRowConfig</a>.</p><p>A string type that defines number of Boxes per row for extra large, large, medium and small screens</p><p>Default value is <code>XL7 L6 M4 S2</code>.</p>
+                     * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getBoxesPerRowConfig" href="api/sap.ui.layout.cssgrid.GridBoxLayout#methods/getBoxesPerRowConfig">boxesPerRowConfig</a>.</p><p>A string type that defines number of Boxes per row for extra large, large, medium and small screens</p><p>Default value is <code>"XL7 L6 M4 S2"</code>.</p>
                      * @returns sap.ui.layout.BoxesPerRowConfig <p>Value of property <code>boxesPerRowConfig</code></p>
                      */
                     getBoxesPerRowConfig(): sap.ui.layout.BoxesPerRowConfig;
@@ -2529,23 +2539,23 @@ declare namespace sap {
                      */
                     isResponsive(): boolean;
                     /**
-                     * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getBoxesPerRowConfig" href="api/sap.ui.layout.cssgrid.GridBoxLayout#methods/getBoxesPerRowConfig">boxesPerRowConfig</a>.</p><p>A string type that defines number of Boxes per row for extra large, large, medium and small screens</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>XL7 L6 M4 S2</code>.</p>
+                     * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getBoxesPerRowConfig" href="api/sap.ui.layout.cssgrid.GridBoxLayout#methods/getBoxesPerRowConfig">boxesPerRowConfig</a>.</p><p>A string type that defines number of Boxes per row for extra large, large, medium and small screens</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"XL7 L6 M4 S2"</code>.</p>
                      * @param {sap.ui.layout.BoxesPerRowConfig} sBoxesPerRowConfig <p>New value for property <code>boxesPerRowConfig</code></p>
                      * @returns sap.ui.layout.cssgrid.GridBoxLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setBoxesPerRowConfig(sBoxesPerRowConfig: sap.ui.layout.BoxesPerRowConfig): sap.ui.layout.cssgrid.GridBoxLayout;
+                    setBoxesPerRowConfig(sBoxesPerRowConfig?: sap.ui.layout.BoxesPerRowConfig): sap.ui.layout.cssgrid.GridBoxLayout;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getBoxMinWidth" href="api/sap.ui.layout.cssgrid.GridBoxLayout#methods/getBoxMinWidth">boxMinWidth</a>.</p><p>Defines the minimum width of the Boxes</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
                      * @param {sap.ui.core.CSSSize} sBoxMinWidth <p>New value for property <code>boxMinWidth</code></p>
                      * @returns sap.ui.layout.cssgrid.GridBoxLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setBoxMinWidth(sBoxMinWidth: sap.ui.core.CSSSize): sap.ui.layout.cssgrid.GridBoxLayout;
+                    setBoxMinWidth(sBoxMinWidth?: sap.ui.core.CSSSize): sap.ui.layout.cssgrid.GridBoxLayout;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getBoxWidth" href="api/sap.ui.layout.cssgrid.GridBoxLayout#methods/getBoxWidth">boxWidth</a>.</p><p>Defines the width of the Boxes</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
                      * @param {sap.ui.core.CSSSize} sBoxWidth <p>New value for property <code>boxWidth</code></p>
                      * @returns sap.ui.layout.cssgrid.GridBoxLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setBoxWidth(sBoxWidth: sap.ui.core.CSSSize): sap.ui.layout.cssgrid.GridBoxLayout;
+                    setBoxWidth(sBoxWidth?: sap.ui.core.CSSSize): sap.ui.layout.cssgrid.GridBoxLayout;
                 }
                 /**
                  * <p>Holds layout data for a grid item.</p>
@@ -2606,7 +2616,7 @@ declare namespace sap {
                      * @param {sap.ui.layout.cssgrid.CSSGridLine} sGridColumn <p>New value for property <code>gridColumn</code></p>
                      * @returns sap.ui.layout.cssgrid.GridItemLayoutData <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setGridColumn(sGridColumn: sap.ui.layout.cssgrid.CSSGridLine): sap.ui.layout.cssgrid.GridItemLayoutData;
+                    setGridColumn(sGridColumn?: sap.ui.layout.cssgrid.CSSGridLine): sap.ui.layout.cssgrid.GridItemLayoutData;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getGridColumnEnd" href="api/sap.ui.layout.cssgrid.GridItemLayoutData#methods/getGridColumnEnd">gridColumnEnd</a>.</p><p>Sets the value for the CSS display:grid item property grid-column-end <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-column-end">MDN web docs: grid-column-end</a>
                     <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
@@ -2614,7 +2624,7 @@ declare namespace sap {
                      * @param {sap.ui.layout.cssgrid.CSSGridLine} sGridColumnEnd <p>New value for property <code>gridColumnEnd</code></p>
                      * @returns sap.ui.layout.cssgrid.GridItemLayoutData <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setGridColumnEnd(sGridColumnEnd: sap.ui.layout.cssgrid.CSSGridLine): sap.ui.layout.cssgrid.GridItemLayoutData;
+                    setGridColumnEnd(sGridColumnEnd?: sap.ui.layout.cssgrid.CSSGridLine): sap.ui.layout.cssgrid.GridItemLayoutData;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getGridColumnStart" href="api/sap.ui.layout.cssgrid.GridItemLayoutData#methods/getGridColumnStart">gridColumnStart</a>.</p><p>Sets the value for the CSS display:grid item property grid-column-start <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-column-start">MDN web docs: grid-column-start</a>
                     <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
@@ -2622,7 +2632,7 @@ declare namespace sap {
                      * @param {sap.ui.layout.cssgrid.CSSGridLine} sGridColumnStart <p>New value for property <code>gridColumnStart</code></p>
                      * @returns sap.ui.layout.cssgrid.GridItemLayoutData <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setGridColumnStart(sGridColumnStart: sap.ui.layout.cssgrid.CSSGridLine): sap.ui.layout.cssgrid.GridItemLayoutData;
+                    setGridColumnStart(sGridColumnStart?: sap.ui.layout.cssgrid.CSSGridLine): sap.ui.layout.cssgrid.GridItemLayoutData;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getGridRow" href="api/sap.ui.layout.cssgrid.GridItemLayoutData#methods/getGridRow">gridRow</a>.</p><p>Sets the value for the CSS display:grid item property grid-row <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-row">MDN web docs: grid-row</a>
                     <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
@@ -2630,7 +2640,7 @@ declare namespace sap {
                      * @param {sap.ui.layout.cssgrid.CSSGridLine} sGridRow <p>New value for property <code>gridRow</code></p>
                      * @returns sap.ui.layout.cssgrid.GridItemLayoutData <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setGridRow(sGridRow: sap.ui.layout.cssgrid.CSSGridLine): sap.ui.layout.cssgrid.GridItemLayoutData;
+                    setGridRow(sGridRow?: sap.ui.layout.cssgrid.CSSGridLine): sap.ui.layout.cssgrid.GridItemLayoutData;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getGridRowEnd" href="api/sap.ui.layout.cssgrid.GridItemLayoutData#methods/getGridRowEnd">gridRowEnd</a>.</p><p>Sets the value for the CSS display:grid item property grid-row-end <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-row-end">MDN web docs: grid-row-end</a>
                     <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
@@ -2638,7 +2648,7 @@ declare namespace sap {
                      * @param {sap.ui.layout.cssgrid.CSSGridLine} sGridRowEnd <p>New value for property <code>gridRowEnd</code></p>
                      * @returns sap.ui.layout.cssgrid.GridItemLayoutData <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setGridRowEnd(sGridRowEnd: sap.ui.layout.cssgrid.CSSGridLine): sap.ui.layout.cssgrid.GridItemLayoutData;
+                    setGridRowEnd(sGridRowEnd?: sap.ui.layout.cssgrid.CSSGridLine): sap.ui.layout.cssgrid.GridItemLayoutData;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getGridRowStart" href="api/sap.ui.layout.cssgrid.GridItemLayoutData#methods/getGridRowStart">gridRowStart</a>.</p><p>Sets the value for the CSS display:grid item property grid-row-start <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-row-start">MDN web docs: grid-row-start</a>
                     <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
@@ -2646,7 +2656,7 @@ declare namespace sap {
                      * @param {sap.ui.layout.cssgrid.CSSGridLine} sGridRowStart <p>New value for property <code>gridRowStart</code></p>
                      * @returns sap.ui.layout.cssgrid.GridItemLayoutData <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setGridRowStart(sGridRowStart: sap.ui.layout.cssgrid.CSSGridLine): sap.ui.layout.cssgrid.GridItemLayoutData;
+                    setGridRowStart(sGridRowStart?: sap.ui.layout.cssgrid.CSSGridLine): sap.ui.layout.cssgrid.GridItemLayoutData;
                 }
                 /**
                  * <p>Applies a sap.ui.layout.cssgrid.GridSettings to a provided DOM element or Control.</p>
@@ -2787,7 +2797,7 @@ declare namespace sap {
                      * @param {boolean} bContainerQuery <p>New value for property <code>containerQuery</code></p>
                      * @returns sap.ui.layout.cssgrid.GridResponsiveLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setContainerQuery(bContainerQuery: boolean): sap.ui.layout.cssgrid.GridResponsiveLayout;
+                    setContainerQuery(bContainerQuery?: boolean): sap.ui.layout.cssgrid.GridResponsiveLayout;
                     /**
                      * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-target="getLayout" href="api/sap.ui.layout.cssgrid.GridResponsiveLayout#methods/getLayout">layout</a>.</p>
                      * @param {sap.ui.layout.cssgrid.GridSettings} oLayout <p>The layout to set</p>
@@ -2839,7 +2849,7 @@ declare namespace sap {
                     /**
                      * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getGridAutoFlow" href="api/sap.ui.layout.cssgrid.GridSettings#methods/getGridAutoFlow">gridAutoFlow</a>.</p><p>Sets the value for the CSS display:grid property <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-auto-flow">MDN web docs: grid-auto-flow</a>
                     <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
-                    title="Information published on non SAP site" class="sapUISDKExternalLink"/></p><p><b>Note:</b> Not supported in IE11, Edge 15.</p><p>Default value is <code>Row</code>.</p>
+                    title="Information published on non SAP site" class="sapUISDKExternalLink"/></p><p><b>Note:</b> Not supported in IE11, Edge 15.</p><p>Default value is <code>"Row"</code>.</p>
                      * @returns sap.ui.layout.cssgrid.CSSGridAutoFlow <p>Value of property <code>gridAutoFlow</code></p>
                      */
                     getGridAutoFlow(): sap.ui.layout.cssgrid.CSSGridAutoFlow;
@@ -2892,15 +2902,15 @@ declare namespace sap {
                      * @param {sap.ui.layout.cssgrid.CSSGridTrack} sGridAutoColumns <p>New value for property <code>gridAutoColumns</code></p>
                      * @returns sap.ui.layout.cssgrid.GridSettings <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setGridAutoColumns(sGridAutoColumns: sap.ui.layout.cssgrid.CSSGridTrack): sap.ui.layout.cssgrid.GridSettings;
+                    setGridAutoColumns(sGridAutoColumns?: sap.ui.layout.cssgrid.CSSGridTrack): sap.ui.layout.cssgrid.GridSettings;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getGridAutoFlow" href="api/sap.ui.layout.cssgrid.GridSettings#methods/getGridAutoFlow">gridAutoFlow</a>.</p><p>Sets the value for the CSS display:grid property <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-auto-flow">MDN web docs: grid-auto-flow</a>
                     <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
-                    title="Information published on non SAP site" class="sapUISDKExternalLink"/></p><p><b>Note:</b> Not supported in IE11, Edge 15.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Row</code>.</p>
+                    title="Information published on non SAP site" class="sapUISDKExternalLink"/></p><p><b>Note:</b> Not supported in IE11, Edge 15.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"Row"</code>.</p>
                      * @param {sap.ui.layout.cssgrid.CSSGridAutoFlow} sGridAutoFlow <p>New value for property <code>gridAutoFlow</code></p>
                      * @returns sap.ui.layout.cssgrid.GridSettings <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setGridAutoFlow(sGridAutoFlow: sap.ui.layout.cssgrid.CSSGridAutoFlow): sap.ui.layout.cssgrid.GridSettings;
+                    setGridAutoFlow(sGridAutoFlow?: sap.ui.layout.cssgrid.CSSGridAutoFlow): sap.ui.layout.cssgrid.GridSettings;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getGridAutoRows" href="api/sap.ui.layout.cssgrid.GridSettings#methods/getGridAutoRows">gridAutoRows</a>.</p><p>Sets the value for the CSS display:grid property <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-auto-rows">MDN web docs: grid-auto-rows</a>
                     <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
@@ -2908,7 +2918,7 @@ declare namespace sap {
                      * @param {sap.ui.layout.cssgrid.CSSGridTrack} sGridAutoRows <p>New value for property <code>gridAutoRows</code></p>
                      * @returns sap.ui.layout.cssgrid.GridSettings <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setGridAutoRows(sGridAutoRows: sap.ui.layout.cssgrid.CSSGridTrack): sap.ui.layout.cssgrid.GridSettings;
+                    setGridAutoRows(sGridAutoRows?: sap.ui.layout.cssgrid.CSSGridTrack): sap.ui.layout.cssgrid.GridSettings;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getGridColumnGap" href="api/sap.ui.layout.cssgrid.GridSettings#methods/getGridColumnGap">gridColumnGap</a>.</p><p>Sets the value for the CSS display:grid property <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-column-gap">MDN web docs: grid-column-gap</a>
                     <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
@@ -2916,7 +2926,7 @@ declare namespace sap {
                      * @param {sap.ui.core.CSSSize} sGridColumnGap <p>New value for property <code>gridColumnGap</code></p>
                      * @returns sap.ui.layout.cssgrid.GridSettings <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setGridColumnGap(sGridColumnGap: sap.ui.core.CSSSize): sap.ui.layout.cssgrid.GridSettings;
+                    setGridColumnGap(sGridColumnGap?: sap.ui.core.CSSSize): sap.ui.layout.cssgrid.GridSettings;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getGridGap" href="api/sap.ui.layout.cssgrid.GridSettings#methods/getGridGap">gridGap</a>.</p><p>Sets the value for the CSS display:grid property <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-gap">MDN web docs: grid-gap</a>
                     <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
@@ -2924,7 +2934,7 @@ declare namespace sap {
                      * @param {sap.ui.layout.cssgrid.CSSGridGapShortHand} sGridGap <p>New value for property <code>gridGap</code></p>
                      * @returns sap.ui.layout.cssgrid.GridSettings <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setGridGap(sGridGap: sap.ui.layout.cssgrid.CSSGridGapShortHand): sap.ui.layout.cssgrid.GridSettings;
+                    setGridGap(sGridGap?: sap.ui.layout.cssgrid.CSSGridGapShortHand): sap.ui.layout.cssgrid.GridSettings;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getGridRowGap" href="api/sap.ui.layout.cssgrid.GridSettings#methods/getGridRowGap">gridRowGap</a>.</p><p>Sets the value for the CSS display:grid property <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-row-gap">MDN web docs: grid-row-gap</a>
                     <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
@@ -2932,7 +2942,7 @@ declare namespace sap {
                      * @param {sap.ui.core.CSSSize} sGridRowGap <p>New value for property <code>gridRowGap</code></p>
                      * @returns sap.ui.layout.cssgrid.GridSettings <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setGridRowGap(sGridRowGap: sap.ui.core.CSSSize): sap.ui.layout.cssgrid.GridSettings;
+                    setGridRowGap(sGridRowGap?: sap.ui.core.CSSSize): sap.ui.layout.cssgrid.GridSettings;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getGridTemplateColumns" href="api/sap.ui.layout.cssgrid.GridSettings#methods/getGridTemplateColumns">gridTemplateColumns</a>.</p><p>Sets the value for the CSS display:grid property <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-columns">MDN web docs: grid-template-columns</a>
                     <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
@@ -2940,7 +2950,7 @@ declare namespace sap {
                      * @param {sap.ui.layout.cssgrid.CSSGridTrack} sGridTemplateColumns <p>New value for property <code>gridTemplateColumns</code></p>
                      * @returns sap.ui.layout.cssgrid.GridSettings <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setGridTemplateColumns(sGridTemplateColumns: sap.ui.layout.cssgrid.CSSGridTrack): sap.ui.layout.cssgrid.GridSettings;
+                    setGridTemplateColumns(sGridTemplateColumns?: sap.ui.layout.cssgrid.CSSGridTrack): sap.ui.layout.cssgrid.GridSettings;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getGridTemplateRows" href="api/sap.ui.layout.cssgrid.GridSettings#methods/getGridTemplateRows">gridTemplateRows</a>.</p><p>Sets the value for the CSS display:grid property <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-rows">MDN web docs: grid-template-rows</a>
                     <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
@@ -2948,7 +2958,7 @@ declare namespace sap {
                      * @param {sap.ui.layout.cssgrid.CSSGridTrack} sGridTemplateRows <p>New value for property <code>gridTemplateRows</code></p>
                      * @returns sap.ui.layout.cssgrid.GridSettings <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setGridTemplateRows(sGridTemplateRows: sap.ui.layout.cssgrid.CSSGridTrack): sap.ui.layout.cssgrid.GridSettings;
+                    setGridTemplateRows(sGridTemplateRows?: sap.ui.layout.cssgrid.CSSGridTrack): sap.ui.layout.cssgrid.GridSettings;
                 }
                 /**
                  * <p><p>Defines the functions that need to be implemented by a Control which wants to have display:grid behavior via sap.ui.layout.cssgrid.GridLayoutDelegate</p></p>
@@ -2980,13 +2990,13 @@ declare namespace sap {
                      * @param {number} iColumns <p>New value for property <code>columns</code></p>
                      * @returns sap.ui.layout.cssgrid.ResponsiveColumnItemLayoutData <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setColumns(iColumns: number): sap.ui.layout.cssgrid.ResponsiveColumnItemLayoutData;
+                    setColumns(iColumns?: number): sap.ui.layout.cssgrid.ResponsiveColumnItemLayoutData;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getRows" href="api/sap.ui.layout.cssgrid.ResponsiveColumnItemLayoutData#methods/getRows">rows</a>.</p><p>Specifies the number of rows, which the item should take.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1</code>.</p>
                      * @param {number} iRows <p>New value for property <code>rows</code></p>
                      * @returns sap.ui.layout.cssgrid.ResponsiveColumnItemLayoutData <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setRows(iRows: number): sap.ui.layout.cssgrid.ResponsiveColumnItemLayoutData;
+                    setRows(iRows?: number): sap.ui.layout.cssgrid.ResponsiveColumnItemLayoutData;
                 }
                 /**
                  * <p>Represents a layout which displays variable number of columns, depending on available screen size. With that it achieves flexible layouts and line breaks for large, medium, and small-sized screens, such as desktop, tablet, and mobile.</p><p>Grid row's height is dynamically determined by the height of the highest grid element on this row.</p>
@@ -3069,19 +3079,19 @@ declare namespace sap {
                      * @param {sap.ui.layout.form.ColumnsL} sColumnsL <p>New value for property <code>columnsL</code></p>
                      * @returns sap.ui.layout.form.ColumnContainerData <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setColumnsL(sColumnsL: sap.ui.layout.form.ColumnsL): sap.ui.layout.form.ColumnContainerData;
+                    setColumnsL(sColumnsL?: sap.ui.layout.form.ColumnsL): sap.ui.layout.form.ColumnContainerData;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getColumnsM" href="api/sap.ui.layout.form.ColumnContainerData#methods/getColumnsM">columnsM</a>.</p><p>Number of columns the <code>FormContainer</code> element uses if the <code>Form</code> control has medium size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1</code>.</p>
                      * @param {sap.ui.layout.form.ColumnsM} sColumnsM <p>New value for property <code>columnsM</code></p>
                      * @returns sap.ui.layout.form.ColumnContainerData <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setColumnsM(sColumnsM: sap.ui.layout.form.ColumnsM): sap.ui.layout.form.ColumnContainerData;
+                    setColumnsM(sColumnsM?: sap.ui.layout.form.ColumnsM): sap.ui.layout.form.ColumnContainerData;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getColumnsXL" href="api/sap.ui.layout.form.ColumnContainerData#methods/getColumnsXL">columnsXL</a>.</p><p>Number of columns the <code>FormContainer</code> element uses if the <code>Form</code> control has extra-large size.</p><p>The number of columns for extra-large size must not be smaller than the number of columns for large size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>2</code>.</p>
                      * @param {sap.ui.layout.form.ColumnsXL} sColumnsXL <p>New value for property <code>columnsXL</code></p>
                      * @returns sap.ui.layout.form.ColumnContainerData <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setColumnsXL(sColumnsXL: sap.ui.layout.form.ColumnsXL): sap.ui.layout.form.ColumnContainerData;
+                    setColumnsXL(sColumnsXL?: sap.ui.layout.form.ColumnsXL): sap.ui.layout.form.ColumnContainerData;
                 }
                 /**
                  * <p>The <code>ColumnLayout</code>-specific layout data for the <code>FormElement</code> content fields.</p><p>One <code>FormElement</code> element contains 12 cells and has two sizes, small and large. Using <code>ColumnElementData</code>, the default calculation of the cells used for a field or label can be overwritten.</p>
@@ -3108,13 +3118,13 @@ declare namespace sap {
                      * @param {sap.ui.layout.form.ColumnCells} sCellsLarge <p>New value for property <code>cellsLarge</code></p>
                      * @returns sap.ui.layout.form.ColumnElementData <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setCellsLarge(sCellsLarge: sap.ui.layout.form.ColumnCells): sap.ui.layout.form.ColumnElementData;
+                    setCellsLarge(sCellsLarge?: sap.ui.layout.form.ColumnCells): sap.ui.layout.form.ColumnElementData;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getCellsSmall" href="api/sap.ui.layout.form.ColumnElementData#methods/getCellsSmall">cellsSmall</a>.</p><p>Number of cells used by a field if the <code>FormElement</code> element is small. The label is then above the fields per default.</p><p>If set to <code>12</code>, the full size of the <code>FormElement</code> is used.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>12</code>.</p>
                      * @param {sap.ui.layout.form.ColumnCells} sCellsSmall <p>New value for property <code>cellsSmall</code></p>
                      * @returns sap.ui.layout.form.ColumnElementData <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setCellsSmall(sCellsSmall: sap.ui.layout.form.ColumnCells): sap.ui.layout.form.ColumnElementData;
+                    setCellsSmall(sCellsSmall?: sap.ui.layout.form.ColumnCells): sap.ui.layout.form.ColumnElementData;
                 }
                 /**
                  * <p>The <code>ColumnLayout</code> control renders a <code>Form</code> control in a column-based responsive way. Depending on its size, the <code>Form</code> control is divided into one or more columns. (XL - max. 4 columns, L - max. 3 columns, M - max. 2 columns and S - 1 column.)</p><p>The <code>FormContainer</code> elements are spread out to the columns depending on the number of <code>FormContainer</code> elements and their size. For example, if there are 4 columns and 2 <code>FormContainer</code> elements, each <code>FormContainer</code> element will use 2 columns. If there are 3 columns and 2 <code>FormContainer</code> elements, the larger one will use 2 columns, the smaller one 1 column. The size of a <code>FormContainer</code> element will be determined based on the number of visible <code>FormElement</code> elements assigned to it. If there are more <code>FormContainer</code> elements than columns, every <code>FormContainer</code> element uses only one column. So the last row of the <code>Form</code> control will not be fully used.</p><p>The default size of the <code>FormContainer</code> element can be overwritten by using <code>ColumnContainerData</code> as <code>LayoutData</code>. If one <code>FormContainer</code> element has <code>ColumnContainerData</code> set, the size calculation of the other <code>FormContainer</code> elements might not lead to the expected result. In this case, use <code>ColumnContainerData</code> also for the other <code>FormContainer</code> elements.</p><p>The <code>FormElement</code> elements are spread out to the columns of a <code>FormContainer</code> element arranged in a newspaper-like order. The position of the labels and fields depends on the size of the used column. If there is enough space, the labels are beside the fields, otherwise above the fields.</p><p>The default size of a content control of a <code>FormElement</code> element can be overwritten using <code>ColumnElementData</code> as <code>LayoutData</code>. If one control assigned to a <code>FormElement</code> element has <code>ColumnElementData</code> set, the size calculation of the other controls assigned to the <code>FormElement</code> element might not lead to the expected result. In this case, use <code>ColumnElementData</code> for the other controls, assigned to the <code>FormElement</code> element, too.</p><p>The placement of the <code>FormElement</code> elements is made by the browser <code>column-count</code> logic. So this can be different in different browsers and lead in some cases to other results than might be expected.</p><p><b>Note:</b> This control cannot be used stand-alone, it just renders a <code>Form</code> control, so it must be assigned to a <code>Form</code> control using the <code>layout</code> aggregation.</p>
@@ -3156,31 +3166,31 @@ declare namespace sap {
                      * @param {sap.ui.layout.form.ColumnsL} sColumnsL <p>New value for property <code>columnsL</code></p>
                      * @returns sap.ui.layout.form.ColumnLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setColumnsL(sColumnsL: sap.ui.layout.form.ColumnsL): sap.ui.layout.form.ColumnLayout;
+                    setColumnsL(sColumnsL?: sap.ui.layout.form.ColumnsL): sap.ui.layout.form.ColumnLayout;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getColumnsM" href="api/sap.ui.layout.form.ColumnLayout#methods/getColumnsM">columnsM</a>.</p><p>Number of columns for medium size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1</code>.</p>
                      * @param {sap.ui.layout.form.ColumnsM} sColumnsM <p>New value for property <code>columnsM</code></p>
                      * @returns sap.ui.layout.form.ColumnLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setColumnsM(sColumnsM: sap.ui.layout.form.ColumnsM): sap.ui.layout.form.ColumnLayout;
+                    setColumnsM(sColumnsM?: sap.ui.layout.form.ColumnsM): sap.ui.layout.form.ColumnLayout;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getColumnsXL" href="api/sap.ui.layout.form.ColumnLayout#methods/getColumnsXL">columnsXL</a>.</p><p>Number of columns for extra-large size.</p><p>The number of columns for extra-large size must not be smaller than the number of columns for large size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>2</code>.</p>
                      * @param {sap.ui.layout.form.ColumnsXL} sColumnsXL <p>New value for property <code>columnsXL</code></p>
                      * @returns sap.ui.layout.form.ColumnLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setColumnsXL(sColumnsXL: sap.ui.layout.form.ColumnsXL): sap.ui.layout.form.ColumnLayout;
+                    setColumnsXL(sColumnsXL?: sap.ui.layout.form.ColumnsXL): sap.ui.layout.form.ColumnLayout;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getEmptyCellsLarge" href="api/sap.ui.layout.form.ColumnLayout#methods/getEmptyCellsLarge">emptyCellsLarge</a>.</p><p>Defines how many cells are empty at the end of a row. This could be used to keep the fields small on large screens.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
                      * @param {sap.ui.layout.form.EmptyCells} sEmptyCellsLarge <p>New value for property <code>emptyCellsLarge</code></p>
                      * @returns sap.ui.layout.form.ColumnLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setEmptyCellsLarge(sEmptyCellsLarge: sap.ui.layout.form.EmptyCells): sap.ui.layout.form.ColumnLayout;
+                    setEmptyCellsLarge(sEmptyCellsLarge?: sap.ui.layout.form.EmptyCells): sap.ui.layout.form.ColumnLayout;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getLabelCellsLarge" href="api/sap.ui.layout.form.ColumnLayout#methods/getLabelCellsLarge">labelCellsLarge</a>.</p><p>Defines how many cells a label uses if the column is large.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>4</code>.</p>
                      * @param {sap.ui.layout.form.ColumnCells} sLabelCellsLarge <p>New value for property <code>labelCellsLarge</code></p>
                      * @returns sap.ui.layout.form.ColumnLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setLabelCellsLarge(sLabelCellsLarge: sap.ui.layout.form.ColumnCells): sap.ui.layout.form.ColumnLayout;
+                    setLabelCellsLarge(sLabelCellsLarge?: sap.ui.layout.form.ColumnCells): sap.ui.layout.form.ColumnLayout;
                 }
                 /**
                  * <p>A <code>Form</code> control arranges labels and fields (like input fields) into groups and rows. There are different ways to visualize forms for different screen sizes.</p><p>A <code>Form</code> is structured into <code>FormContainers</code>. Each <code>FormContainer</code> consists of <code>FormElements</code>. The <code>FormElements</code> consists of a label and the form fields. A <code>Form</code> doesn't render its content by itself. The rendering is done by the assigned <code>FormLayout</code>. This is so that the rendering can be adopted to new UI requirements without changing the <code>Form</code> itself.</p><p>For the content of a <code>Form</code>, <code>VariantLayoutData</code> are supported to allow simple switching of the <code>FormLayout</code>. <code>LayoutData</code> on the content can be used to overwrite the default layout of the <code>Form</code>.</p><p>The <code>Form</code> (and its sub-controls) automatically add label and field assignment to enable screen reader support. It also adds keyboard support to navigate between the fields and groups inside the form.</p><p><b>Warning:</b> Do not put any layout or other container controls into the <code>FormElement</code>. Views are also not supported. This could damage the visual layout, keyboard support and screen-reader support.</p><p>If editable controls are used as content, the <code>editable</code> property must be set to <code>true</code>, otherwise to <code>false</code>. If the <code>editable</code> property is set incorrectly, there will be visual issues like wrong label alignment or wrong spacing between the controls.</p>
@@ -3299,7 +3309,7 @@ declare namespace sap {
                      * @param {boolean} bEditable <p>New value for property <code>editable</code></p>
                      * @returns sap.ui.layout.form.Form <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setEditable(bEditable: boolean): sap.ui.layout.form.Form;
+                    setEditable(bEditable?: boolean): sap.ui.layout.form.Form;
                     /**
                      * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-target="getLayout" href="api/sap.ui.layout.form.Form#methods/getLayout">layout</a>.</p>
                      * @param {sap.ui.layout.form.FormLayout} oLayout <p>The layout to set</p>
@@ -3323,7 +3333,7 @@ declare namespace sap {
                      * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
                      * @returns sap.ui.layout.form.Form <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setWidth(sWidth: sap.ui.core.CSSSize): sap.ui.layout.form.Form;
+                    setWidth(sWidth?: sap.ui.core.CSSSize): sap.ui.layout.form.Form;
                 }
                 /**
                  * <p>A <code>FormContainer</code> represents a group inside a <code>Form</code>. It consists of <code>FormElements</code>. The rendering of the <code>FormContainer</code> is done by the <code>FormLayout</code> assigned to the <code>Form</code>.</p>
@@ -3447,13 +3457,13 @@ declare namespace sap {
                      * @param {boolean} bExpandable <p>New value for property <code>expandable</code></p>
                      * @returns sap.ui.layout.form.FormContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setExpandable(bExpandable: boolean): sap.ui.layout.form.FormContainer;
+                    setExpandable(bExpandable?: boolean): sap.ui.layout.form.FormContainer;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getExpanded" href="api/sap.ui.layout.form.FormContainer#methods/getExpanded">expanded</a>.</p><p>Container is expanded.</p><p><b>Note:</b> This property only works if <code>expandable</code> is set to <code>true</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                      * @param {boolean} bExpanded <p>New value for property <code>expanded</code></p>
                      * @returns sap.ui.layout.form.FormContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setExpanded(bExpanded: boolean): sap.ui.layout.form.FormContainer;
+                    setExpanded(bExpanded?: boolean): sap.ui.layout.form.FormContainer;
                     /**
                      * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-target="getTitle" href="api/sap.ui.layout.form.FormContainer#methods/getTitle">title</a>.</p>
                      * @param {sap.ui.core.Title | string} vTitle <p>The title to set</p>
@@ -3471,7 +3481,7 @@ declare namespace sap {
                      * @param {boolean} bVisible <p>New value for property <code>visible</code></p>
                      * @returns sap.ui.layout.form.FormContainer <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setVisible(bVisible: boolean): sap.ui.layout.form.FormContainer;
+                    setVisible(bVisible?: boolean): sap.ui.layout.form.FormContainer;
                 }
                 /**
                  * <p>A <code>FormElement</code> represents a row in a <code>FormContainer</code>. A <code>FormElement</code> is a combination of one label and different controls associated to this label.</p>
@@ -3573,7 +3583,7 @@ declare namespace sap {
                      * @param {boolean} bVisible <p>New value for property <code>visible</code></p>
                      * @returns sap.ui.layout.form.FormElement <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setVisible(bVisible: boolean): sap.ui.layout.form.FormElement;
+                    setVisible(bVisible?: boolean): sap.ui.layout.form.FormElement;
                 }
                 /**
                  * <p>Base layout to render a <code>Form</code>. Other layouts to render a <code>Form</code> must inherit from this one.</p><p><b>Note:</b> This control must not be used to render a <code>Form</code> in productive applications as it does not fulfill any design guidelines and usability standards.</p>
@@ -3595,7 +3605,7 @@ declare namespace sap {
                      * @param {sap.ui.layout.BackgroundDesign} sBackgroundDesign <p>New value for property <code>backgroundDesign</code></p>
                      * @returns sap.ui.layout.form.FormLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setBackgroundDesign(sBackgroundDesign: sap.ui.layout.BackgroundDesign): sap.ui.layout.form.FormLayout;
+                    setBackgroundDesign(sBackgroundDesign?: sap.ui.layout.BackgroundDesign): sap.ui.layout.form.FormLayout;
                 }
                 /**
                  * <p>The <code>GridLayout</code>-specific layout data for <code>FormContainers</code>.</p>
@@ -3617,7 +3627,7 @@ declare namespace sap {
                      * @param {boolean} bHalfGrid <p>New value for property <code>halfGrid</code></p>
                      * @returns sap.ui.layout.form.GridContainerData <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setHalfGrid(bHalfGrid: boolean): sap.ui.layout.form.GridContainerData;
+                    setHalfGrid(bHalfGrid?: boolean): sap.ui.layout.form.GridContainerData;
                 }
                 /**
                  * <p>The <code>GridLayout</code>-specific layout data for <code>FormElement</code> fields.</p>
@@ -3630,7 +3640,7 @@ declare namespace sap {
                      */
                     constructor(sId?: string, mSettings?: any);
                     /**
-                     * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHCells" href="api/sap.ui.layout.form.GridElementData#methods/getHCells">hCells</a>.</p><p>Number of cells in horizontal direction.</p><p>If set to <code>auto</code>, the size is determined by the number of fields and the available cells. For labels the auto size is 3 cells.</p><p>If set to <code>full</code>, only one field is allowed within the <code>FormElement</code>. It gets the full width of the row and the label is displayed above.</p><p><b>Note:</b> For labels, the full size setting has no effect.</p><p>Default value is <code>auto</code>.</p>
+                     * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHCells" href="api/sap.ui.layout.form.GridElementData#methods/getHCells">hCells</a>.</p><p>Number of cells in horizontal direction.</p><p>If set to <code>auto</code>, the size is determined by the number of fields and the available cells. For labels the auto size is 3 cells.</p><p>If set to <code>full</code>, only one field is allowed within the <code>FormElement</code>. It gets the full width of the row and the label is displayed above.</p><p><b>Note:</b> For labels, the full size setting has no effect.</p><p>Default value is <code>'auto'</code>.</p>
                      * @returns sap.ui.layout.form.GridElementCells <p>Value of property <code>hCells</code></p>
                      */
                     getHCells(): sap.ui.layout.form.GridElementCells;
@@ -3640,17 +3650,17 @@ declare namespace sap {
                      */
                     getVCells(): number;
                     /**
-                     * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHCells" href="api/sap.ui.layout.form.GridElementData#methods/getHCells">hCells</a>.</p><p>Number of cells in horizontal direction.</p><p>If set to <code>auto</code>, the size is determined by the number of fields and the available cells. For labels the auto size is 3 cells.</p><p>If set to <code>full</code>, only one field is allowed within the <code>FormElement</code>. It gets the full width of the row and the label is displayed above.</p><p><b>Note:</b> For labels, the full size setting has no effect.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>auto</code>.</p>
+                     * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHCells" href="api/sap.ui.layout.form.GridElementData#methods/getHCells">hCells</a>.</p><p>Number of cells in horizontal direction.</p><p>If set to <code>auto</code>, the size is determined by the number of fields and the available cells. For labels the auto size is 3 cells.</p><p>If set to <code>full</code>, only one field is allowed within the <code>FormElement</code>. It gets the full width of the row and the label is displayed above.</p><p><b>Note:</b> For labels, the full size setting has no effect.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>'auto'</code>.</p>
                      * @param {sap.ui.layout.form.GridElementCells} sHCells <p>New value for property <code>hCells</code></p>
                      * @returns sap.ui.layout.form.GridElementData <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setHCells(sHCells: sap.ui.layout.form.GridElementCells): sap.ui.layout.form.GridElementData;
+                    setHCells(sHCells?: sap.ui.layout.form.GridElementCells): sap.ui.layout.form.GridElementData;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getVCells" href="api/sap.ui.layout.form.GridElementData#methods/getVCells">vCells</a>.</p><p>Number of cells in vertical direction.</p><p><b>Note:</b> This property has no effect on labels.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1</code>.</p>
                      * @param {number} iVCells <p>New value for property <code>vCells</code></p>
                      * @returns sap.ui.layout.form.GridElementData <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setVCells(iVCells: number): sap.ui.layout.form.GridElementData;
+                    setVCells(iVCells?: number): sap.ui.layout.form.GridElementData;
                 }
                 /**
                  * <p>This <code>FormLayout</code> renders a <code>Form</code> using an HTML-table based grid. This can be a 16 column grid or an 8 column grid. The grid is stable, so the alignment of the fields is the same for all screen sizes or widths of the <code>Form</code>. Only the width of the single grid columns depends on the available width.</p><p>To adjust the appearance inside the <code>GridLayout</code>, you can use <code>GridContainerData</code> for <code>FormContainers</code> and <code>GridElementData</code> for content fields.</p><p><b>Note:</b> If content fields have a <code>width</code> property this will be ignored, as the width of the controls is set by the grid cells.</p><p>This control cannot be used stand-alone, it just renders a <code>Form</code>, so it must be assigned to a <code>Form</code> using the <code>layout</code> aggregation.</p>
@@ -3672,7 +3682,7 @@ declare namespace sap {
                      * @param {boolean} bSingleColumn <p>New value for property <code>singleColumn</code></p>
                      * @returns sap.ui.layout.form.GridLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setSingleColumn(bSingleColumn: boolean): sap.ui.layout.form.GridLayout;
+                    setSingleColumn(bSingleColumn?: boolean): sap.ui.layout.form.GridLayout;
                 }
                 /**
                  * <p>The <code>ResponsiveGridLayout</code> control renders a <code>Form</code> using a responsive grid. Internally the <code>Grid</code> control is used for rendering. Using this layout, the <code>Form</code> is rendered in a responsive way. Depending on the available space, the <code>FormContainers</code> are rendered in one or different columns and the labels are rendered in the same row as the fields or above the fields. This behavior can be influenced by the properties of this layout control.</p><p>On the <code>FormContainers</code>, labels and content fields, <code>GridData</code> can be used to change the default rendering. <code>GridData</code> is not supported for <code>FormElements</code>.</p><p><b>Note:</b> If <code>GridData</code> is used, this may result in a much more complex layout than the default one. This means that in some cases, the calculation for the other content may not bring the expected result. In such cases, <code>GridData</code> should be used for all content controls to disable the default behavior.</p><p>This control cannot be used stand-alone, it just renders a <code>Form</code>, so it must be assigned to a <code>Form</code> using the <code>layout</code> aggregation.</p>
@@ -3769,97 +3779,97 @@ declare namespace sap {
                      * @param {boolean} bAdjustLabelSpan <p>New value for property <code>adjustLabelSpan</code></p>
                      * @returns sap.ui.layout.form.ResponsiveGridLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setAdjustLabelSpan(bAdjustLabelSpan: boolean): sap.ui.layout.form.ResponsiveGridLayout;
+                    setAdjustLabelSpan(bAdjustLabelSpan?: boolean): sap.ui.layout.form.ResponsiveGridLayout;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getBreakpointL" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getBreakpointL">breakpointL</a>.</p><p>Breakpoint (in pixel) between Medium size and Large size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1024</code>.</p>
                      * @param {number} iBreakpointL <p>New value for property <code>breakpointL</code></p>
                      * @returns sap.ui.layout.form.ResponsiveGridLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setBreakpointL(iBreakpointL: number): sap.ui.layout.form.ResponsiveGridLayout;
+                    setBreakpointL(iBreakpointL?: number): sap.ui.layout.form.ResponsiveGridLayout;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getBreakpointM" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getBreakpointM">breakpointM</a>.</p><p>Breakpoint (in pixel) between Small size and Medium size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>600</code>.</p>
                      * @param {number} iBreakpointM <p>New value for property <code>breakpointM</code></p>
                      * @returns sap.ui.layout.form.ResponsiveGridLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setBreakpointM(iBreakpointM: number): sap.ui.layout.form.ResponsiveGridLayout;
+                    setBreakpointM(iBreakpointM?: number): sap.ui.layout.form.ResponsiveGridLayout;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getBreakpointXL" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getBreakpointXL">breakpointXL</a>.</p><p>Breakpoint (in pixel) between large size and extra large (XL) size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1440</code>.</p>
                      * @param {number} iBreakpointXL <p>New value for property <code>breakpointXL</code></p>
                      * @returns sap.ui.layout.form.ResponsiveGridLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setBreakpointXL(iBreakpointXL: number): sap.ui.layout.form.ResponsiveGridLayout;
+                    setBreakpointXL(iBreakpointXL?: number): sap.ui.layout.form.ResponsiveGridLayout;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getColumnsL" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getColumnsL">columnsL</a>.</p><p>Number of columns for large size.</p><p>The number of columns for large size must not be smaller than the number of columns for medium size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>2</code>.</p>
                      * @param {number} iColumnsL <p>New value for property <code>columnsL</code></p>
                      * @returns sap.ui.layout.form.ResponsiveGridLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setColumnsL(iColumnsL: number): sap.ui.layout.form.ResponsiveGridLayout;
+                    setColumnsL(iColumnsL?: number): sap.ui.layout.form.ResponsiveGridLayout;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getColumnsM" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getColumnsM">columnsM</a>.</p><p>Number of columns for medium size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1</code>.</p>
                      * @param {number} iColumnsM <p>New value for property <code>columnsM</code></p>
                      * @returns sap.ui.layout.form.ResponsiveGridLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setColumnsM(iColumnsM: number): sap.ui.layout.form.ResponsiveGridLayout;
+                    setColumnsM(iColumnsM?: number): sap.ui.layout.form.ResponsiveGridLayout;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getColumnsXL" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getColumnsXL">columnsXL</a>.</p><p>Number of columns for extra large size.</p><p>The number of columns for extra large size must not be smaller than the number of columns for large size. <b>Note:</b> If the default value -1 is not overwritten with the meaningful one then the <code>columnsL</code> value is used (from the backward compatibility reasons).</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>-1</code>.</p>
                      * @param {number} iColumnsXL <p>New value for property <code>columnsXL</code></p>
                      * @returns sap.ui.layout.form.ResponsiveGridLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setColumnsXL(iColumnsXL: number): sap.ui.layout.form.ResponsiveGridLayout;
+                    setColumnsXL(iColumnsXL?: number): sap.ui.layout.form.ResponsiveGridLayout;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getEmptySpanL" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getEmptySpanL">emptySpanL</a>.</p><p>Number of grid cells that are empty at the end of each line on large size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
                      * @param {number} iEmptySpanL <p>New value for property <code>emptySpanL</code></p>
                      * @returns sap.ui.layout.form.ResponsiveGridLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setEmptySpanL(iEmptySpanL: number): sap.ui.layout.form.ResponsiveGridLayout;
+                    setEmptySpanL(iEmptySpanL?: number): sap.ui.layout.form.ResponsiveGridLayout;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getEmptySpanM" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getEmptySpanM">emptySpanM</a>.</p><p>Number of grid cells that are empty at the end of each line on medium size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
                      * @param {number} iEmptySpanM <p>New value for property <code>emptySpanM</code></p>
                      * @returns sap.ui.layout.form.ResponsiveGridLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setEmptySpanM(iEmptySpanM: number): sap.ui.layout.form.ResponsiveGridLayout;
+                    setEmptySpanM(iEmptySpanM?: number): sap.ui.layout.form.ResponsiveGridLayout;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getEmptySpanS" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getEmptySpanS">emptySpanS</a>.</p><p>Number of grid cells that are empty at the end of each line on small size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
                      * @param {number} iEmptySpanS <p>New value for property <code>emptySpanS</code></p>
                      * @returns sap.ui.layout.form.ResponsiveGridLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setEmptySpanS(iEmptySpanS: number): sap.ui.layout.form.ResponsiveGridLayout;
+                    setEmptySpanS(iEmptySpanS?: number): sap.ui.layout.form.ResponsiveGridLayout;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getEmptySpanXL" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getEmptySpanXL">emptySpanXL</a>.</p><p>Number of grid cells that are empty at the end of each line on extra large size.</p><p><b>Note:</b> If the default value -1 is not overwritten with the meaningful one then the <code>emptySpanL</code> value is used.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>-1</code>.</p>
                      * @param {number} iEmptySpanXL <p>New value for property <code>emptySpanXL</code></p>
                      * @returns sap.ui.layout.form.ResponsiveGridLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setEmptySpanXL(iEmptySpanXL: number): sap.ui.layout.form.ResponsiveGridLayout;
+                    setEmptySpanXL(iEmptySpanXL?: number): sap.ui.layout.form.ResponsiveGridLayout;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getLabelSpanL" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getLabelSpanL">labelSpanL</a>.</p><p>Default span for labels in large size.</p><p><b>Note:</b> If <code>adjustLabelSpan</code> is set, this property is only used if more than 1 <code>FormContainer</code> is in one line. If only 1 <code>FormContainer</code> is in the line, then the <code>labelSpanM</code> value is used.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>4</code>.</p>
                      * @param {number} iLabelSpanL <p>New value for property <code>labelSpanL</code></p>
                      * @returns sap.ui.layout.form.ResponsiveGridLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setLabelSpanL(iLabelSpanL: number): sap.ui.layout.form.ResponsiveGridLayout;
+                    setLabelSpanL(iLabelSpanL?: number): sap.ui.layout.form.ResponsiveGridLayout;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getLabelSpanM" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getLabelSpanM">labelSpanM</a>.</p><p>Default span for labels in medium size.</p><p><b>Note:</b> If <code>adjustLabelSpan</code> is set this property is used for full-size <code>FormContainers</code>. If more than one <code>FormContainer</code> is in one line, <code>labelSpanL</code> is used.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>2</code>.</p>
                      * @param {number} iLabelSpanM <p>New value for property <code>labelSpanM</code></p>
                      * @returns sap.ui.layout.form.ResponsiveGridLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setLabelSpanM(iLabelSpanM: number): sap.ui.layout.form.ResponsiveGridLayout;
+                    setLabelSpanM(iLabelSpanM?: number): sap.ui.layout.form.ResponsiveGridLayout;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getLabelSpanS" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getLabelSpanS">labelSpanS</a>.</p><p>Default span for labels in small size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>12</code>.</p>
                      * @param {number} iLabelSpanS <p>New value for property <code>labelSpanS</code></p>
                      * @returns sap.ui.layout.form.ResponsiveGridLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setLabelSpanS(iLabelSpanS: number): sap.ui.layout.form.ResponsiveGridLayout;
+                    setLabelSpanS(iLabelSpanS?: number): sap.ui.layout.form.ResponsiveGridLayout;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getLabelSpanXL" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getLabelSpanXL">labelSpanXL</a>.</p><p>Default span for labels in extra large size.</p><p><b>Note:</b> If the default value -1 is not overwritten with the meaningful one then the <code>labelSpanL</code> value is used.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>-1</code>.</p>
                      * @param {number} iLabelSpanXL <p>New value for property <code>labelSpanXL</code></p>
                      * @returns sap.ui.layout.form.ResponsiveGridLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setLabelSpanXL(iLabelSpanXL: number): sap.ui.layout.form.ResponsiveGridLayout;
+                    setLabelSpanXL(iLabelSpanXL?: number): sap.ui.layout.form.ResponsiveGridLayout;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSingleContainerFullSize" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getSingleContainerFullSize">singleContainerFullSize</a>.</p><p>If the <code>Form</code> contains only one single <code>FormContainer</code> and this property is set, the <code>FormContainer</code> is displayed using the full size of the <code>Form</code>. In this case the properties <code>columnsXL</code>, <code>columnsL</code> and <code>columnsM</code> are ignored.</p><p>In all other cases the <code>FormContainer</code> is displayed in the size of one column.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                      * @param {boolean} bSingleContainerFullSize <p>New value for property <code>singleContainerFullSize</code></p>
                      * @returns sap.ui.layout.form.ResponsiveGridLayout <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setSingleContainerFullSize(bSingleContainerFullSize: boolean): sap.ui.layout.form.ResponsiveGridLayout;
+                    setSingleContainerFullSize(bSingleContainerFullSize?: boolean): sap.ui.layout.form.ResponsiveGridLayout;
                 }
                 /**
                  * <p>The <code>ResponsiveLayout</code> renders a <code>Form</code> with a responsive layout. Internally the <code>ResponsiveFlowLayout</code> is used. The responsiveness of this layout tries to best use the available space. This means that the order of the <code>FormContainers</code>, labels and fields depends on the available space.</p><p>On the <code>FormContainers</code>, <code>FormElements</code>, labels and content fields, <code>ResponsiveFlowLayoutData</code> can be used to change the default rendering.</p><p>We suggest using the <code>ResponsiveGridLayout</code> instead of this layout because this is easier to consume and brings more stable responsive output.</p><p><b>Note:</b> If <code>ResponsiveFlowLayoutData</code> are used this may result in a much more complex layout than the default one. This means that in some cases, the calculation for the other content may not bring the expected result. In such cases, <code>ResponsiveFlowLayoutData</code> should be used for all content controls to disable the default behavior.</p><p>This control cannot be used stand-alone, it just renders a <code>Form</code>, so it must be assigned to a <code>Form</code> using the <code>layout</code> aggregation.</p>
@@ -4092,133 +4102,133 @@ declare namespace sap {
                      * @param {boolean} bAdjustLabelSpan <p>New value for property <code>adjustLabelSpan</code></p>
                      * @returns sap.ui.layout.form.SimpleForm <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setAdjustLabelSpan(bAdjustLabelSpan: boolean): sap.ui.layout.form.SimpleForm;
+                    setAdjustLabelSpan(bAdjustLabelSpan?: boolean): sap.ui.layout.form.SimpleForm;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getBackgroundDesign" href="api/sap.ui.layout.form.SimpleForm#methods/getBackgroundDesign">backgroundDesign</a>.</p><p>Specifies the background color of the <code>SimpleForm</code> content.</p><p>The visualization of the different options depends on the used theme.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Translucent</code>.</p>
                      * @param {sap.ui.layout.BackgroundDesign} sBackgroundDesign <p>New value for property <code>backgroundDesign</code></p>
                      * @returns sap.ui.layout.form.SimpleForm <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setBackgroundDesign(sBackgroundDesign: sap.ui.layout.BackgroundDesign): sap.ui.layout.form.SimpleForm;
+                    setBackgroundDesign(sBackgroundDesign?: sap.ui.layout.BackgroundDesign): sap.ui.layout.form.SimpleForm;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getBreakpointL" href="api/sap.ui.layout.form.SimpleForm#methods/getBreakpointL">breakpointL</a>.</p><p>Breakpoint between Medium size and Large size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1024</code>.</p>
                      * @param {number} iBreakpointL <p>New value for property <code>breakpointL</code></p>
                      * @returns sap.ui.layout.form.SimpleForm <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setBreakpointL(iBreakpointL: number): sap.ui.layout.form.SimpleForm;
+                    setBreakpointL(iBreakpointL?: number): sap.ui.layout.form.SimpleForm;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getBreakpointM" href="api/sap.ui.layout.form.SimpleForm#methods/getBreakpointM">breakpointM</a>.</p><p>Breakpoint between Small size and Medium size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>600</code>.</p>
                      * @param {number} iBreakpointM <p>New value for property <code>breakpointM</code></p>
                      * @returns sap.ui.layout.form.SimpleForm <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setBreakpointM(iBreakpointM: number): sap.ui.layout.form.SimpleForm;
+                    setBreakpointM(iBreakpointM?: number): sap.ui.layout.form.SimpleForm;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getBreakpointXL" href="api/sap.ui.layout.form.SimpleForm#methods/getBreakpointXL">breakpointXL</a>.</p><p>Breakpoint between Medium size and Large size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1440</code>.</p>
                      * @param {number} iBreakpointXL <p>New value for property <code>breakpointXL</code></p>
                      * @returns sap.ui.layout.form.SimpleForm <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setBreakpointXL(iBreakpointXL: number): sap.ui.layout.form.SimpleForm;
+                    setBreakpointXL(iBreakpointXL?: number): sap.ui.layout.form.SimpleForm;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getColumnsL" href="api/sap.ui.layout.form.SimpleForm#methods/getColumnsL">columnsL</a>.</p><p>Form columns for large size. The number of columns for large size must not be smaller than the number of columns for medium size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> or a <code>ColumnLayout</code> is used as a layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>2</code>.</p>
                      * @param {number} iColumnsL <p>New value for property <code>columnsL</code></p>
                      * @returns sap.ui.layout.form.SimpleForm <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setColumnsL(iColumnsL: number): sap.ui.layout.form.SimpleForm;
+                    setColumnsL(iColumnsL?: number): sap.ui.layout.form.SimpleForm;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getColumnsM" href="api/sap.ui.layout.form.SimpleForm#methods/getColumnsM">columnsM</a>.</p><p>Form columns for medium size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> or a <code>ColumnLayout</code> is used as a layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1</code>.</p>
                      * @param {number} iColumnsM <p>New value for property <code>columnsM</code></p>
                      * @returns sap.ui.layout.form.SimpleForm <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setColumnsM(iColumnsM: number): sap.ui.layout.form.SimpleForm;
+                    setColumnsM(iColumnsM?: number): sap.ui.layout.form.SimpleForm;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getColumnsXL" href="api/sap.ui.layout.form.SimpleForm#methods/getColumnsXL">columnsXL</a>.</p><p>Form columns for extra large size. The number of columns for extra large size must not be smaller than the number of columns for large size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> or a <code>ColumnLayout</code> is used as a layout. If the default value -1 is not overwritten with the meaningful one then the <code>columnsL</code> value is used (from the backward compatibility reasons).</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>-1</code>.</p>
                      * @param {number} iColumnsXL <p>New value for property <code>columnsXL</code></p>
                      * @returns sap.ui.layout.form.SimpleForm <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setColumnsXL(iColumnsXL: number): sap.ui.layout.form.SimpleForm;
+                    setColumnsXL(iColumnsXL?: number): sap.ui.layout.form.SimpleForm;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getEditable" href="api/sap.ui.layout.form.SimpleForm#methods/getEditable">editable</a>.</p><p>Applies a device-specific and theme-specific line height and label alignment to the form rows if the form has editable content. If set, all (not only the editable) rows of the form will get the line height of editable fields.</p><p>The labels inside the form will be rendered by default in the according mode.</p><p><b>Note:</b> The setting of this property does not change the content of the form. For example, <code>Input</code> controls in a form with <code>editable</code> set to false are still editable.</p><p><b>Warning:</b> If this property is wrongly set, this might lead to visual issues. The labels and fields might be misaligned, the labels might be rendered in the wrong mode, and the spacing between the single controls might be wrong. Also, controls that do not fit the mode might be rendered incorrectly.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                      * @param {boolean} bEditable <p>New value for property <code>editable</code></p>
                      * @returns sap.ui.layout.form.SimpleForm <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setEditable(bEditable: boolean): sap.ui.layout.form.SimpleForm;
+                    setEditable(bEditable?: boolean): sap.ui.layout.form.SimpleForm;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getEmptySpanL" href="api/sap.ui.layout.form.SimpleForm#methods/getEmptySpanL">emptySpanL</a>.</p><p>Number of grid cells that are empty at the end of each line on large size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> or a <code>ColumnLayout</code> is used as a layout. If a <code>ColumnLayout</code> is used, this property defines the empty cells for large columns.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
                      * @param {number} iEmptySpanL <p>New value for property <code>emptySpanL</code></p>
                      * @returns sap.ui.layout.form.SimpleForm <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setEmptySpanL(iEmptySpanL: number): sap.ui.layout.form.SimpleForm;
+                    setEmptySpanL(iEmptySpanL?: number): sap.ui.layout.form.SimpleForm;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getEmptySpanM" href="api/sap.ui.layout.form.SimpleForm#methods/getEmptySpanM">emptySpanM</a>.</p><p>Number of grid cells that are empty at the end of each line on medium size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
                      * @param {number} iEmptySpanM <p>New value for property <code>emptySpanM</code></p>
                      * @returns sap.ui.layout.form.SimpleForm <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setEmptySpanM(iEmptySpanM: number): sap.ui.layout.form.SimpleForm;
+                    setEmptySpanM(iEmptySpanM?: number): sap.ui.layout.form.SimpleForm;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getEmptySpanS" href="api/sap.ui.layout.form.SimpleForm#methods/getEmptySpanS">emptySpanS</a>.</p><p>Number of grid cells that are empty at the end of each line on small size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
                      * @param {number} iEmptySpanS <p>New value for property <code>emptySpanS</code></p>
                      * @returns sap.ui.layout.form.SimpleForm <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setEmptySpanS(iEmptySpanS: number): sap.ui.layout.form.SimpleForm;
+                    setEmptySpanS(iEmptySpanS?: number): sap.ui.layout.form.SimpleForm;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getEmptySpanXL" href="api/sap.ui.layout.form.SimpleForm#methods/getEmptySpanXL">emptySpanXL</a>.</p><p>Number of grid cells that are empty at the end of each line on extra large size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout. If the default value -1 is not overwritten with the meaningful one then the <code>emptySpanL</code> value is used (from the backward compatibility reasons).</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>-1</code>.</p>
                      * @param {number} iEmptySpanXL <p>New value for property <code>emptySpanXL</code></p>
                      * @returns sap.ui.layout.form.SimpleForm <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setEmptySpanXL(iEmptySpanXL: number): sap.ui.layout.form.SimpleForm;
+                    setEmptySpanXL(iEmptySpanXL?: number): sap.ui.layout.form.SimpleForm;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getLabelMinWidth" href="api/sap.ui.layout.form.SimpleForm#methods/getLabelMinWidth">labelMinWidth</a>.</p><p>Specifies the min-width in pixels of the label in all form rows.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveLayout</code> is used as a layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>192</code>.</p>
                      * @param {number} iLabelMinWidth <p>New value for property <code>labelMinWidth</code></p>
                      * @returns sap.ui.layout.form.SimpleForm <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setLabelMinWidth(iLabelMinWidth: number): sap.ui.layout.form.SimpleForm;
+                    setLabelMinWidth(iLabelMinWidth?: number): sap.ui.layout.form.SimpleForm;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getLabelSpanL" href="api/sap.ui.layout.form.SimpleForm#methods/getLabelSpanL">labelSpanL</a>.</p><p>Default span for labels in large size.</p><p><b>Note:</b> If <code>adjustLabelSpan</code> is set, this property is only used if more than 1 <code>FormContainer</code> is in one line. If only 1 <code>FormContainer</code> is in the line, then the <code>labelSpanM</code> value is used.</p><p><b>Note:</b> This property is only used if <code>ResponsiveGridLayout</code> or <code>ColumnLayout</code> is used as a layout. If a <code>ColumnLayout</code> is used, this property defines the label size for large columns.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>4</code>.</p>
                      * @param {number} iLabelSpanL <p>New value for property <code>labelSpanL</code></p>
                      * @returns sap.ui.layout.form.SimpleForm <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setLabelSpanL(iLabelSpanL: number): sap.ui.layout.form.SimpleForm;
+                    setLabelSpanL(iLabelSpanL?: number): sap.ui.layout.form.SimpleForm;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getLabelSpanM" href="api/sap.ui.layout.form.SimpleForm#methods/getLabelSpanM">labelSpanM</a>.</p><p>Default span for labels in medium size.</p><p><b>Note:</b> If <code>adjustLabelSpan</code> is set, this property is used for full-size <code>FormContainers</code>. If more than one <code>FormContainer</code> is in one line, <code>labelSpanL</code> is used.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>2</code>.</p>
                      * @param {number} iLabelSpanM <p>New value for property <code>labelSpanM</code></p>
                      * @returns sap.ui.layout.form.SimpleForm <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setLabelSpanM(iLabelSpanM: number): sap.ui.layout.form.SimpleForm;
+                    setLabelSpanM(iLabelSpanM?: number): sap.ui.layout.form.SimpleForm;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getLabelSpanS" href="api/sap.ui.layout.form.SimpleForm#methods/getLabelSpanS">labelSpanS</a>.</p><p>Default span for labels in small size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>12</code>.</p>
                      * @param {number} iLabelSpanS <p>New value for property <code>labelSpanS</code></p>
                      * @returns sap.ui.layout.form.SimpleForm <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setLabelSpanS(iLabelSpanS: number): sap.ui.layout.form.SimpleForm;
+                    setLabelSpanS(iLabelSpanS?: number): sap.ui.layout.form.SimpleForm;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getLabelSpanXL" href="api/sap.ui.layout.form.SimpleForm#methods/getLabelSpanXL">labelSpanXL</a>.</p><p>Default span for labels in extra large size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout. If the default value -1 is not overwritten with the meaningful one then the <code>labelSpanL</code> value is used (from the backward compatibility reasons).</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>-1</code>.</p>
                      * @param {number} iLabelSpanXL <p>New value for property <code>labelSpanXL</code></p>
                      * @returns sap.ui.layout.form.SimpleForm <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setLabelSpanXL(iLabelSpanXL: number): sap.ui.layout.form.SimpleForm;
+                    setLabelSpanXL(iLabelSpanXL?: number): sap.ui.layout.form.SimpleForm;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getLayout" href="api/sap.ui.layout.form.SimpleForm#methods/getLayout">layout</a>.</p><p>The <code>FormLayout</code> that is used to render the <code>SimpleForm</code>.</p><p>We recommend using the <code>ResponsiveGridLayout</code> for rendering a <code>SimpleForm</code>, as its responsiveness uses the space available in the best way possible.</p><p><b>Note</b> If possible, set the <code>layout</code> before adding content to prevent calculations for the default layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>ResponsiveLayout</code>.</p>
                      * @param {sap.ui.layout.form.SimpleFormLayout} sLayout <p>New value for property <code>layout</code></p>
                      * @returns sap.ui.layout.form.SimpleForm <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setLayout(sLayout: sap.ui.layout.form.SimpleFormLayout): sap.ui.layout.form.SimpleForm;
+                    setLayout(sLayout?: sap.ui.layout.form.SimpleFormLayout): sap.ui.layout.form.SimpleForm;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getMaxContainerCols" href="api/sap.ui.layout.form.SimpleForm#methods/getMaxContainerCols">maxContainerCols</a>.</p><p>The maximum amount of groups (<code><a target="_self" class="jsdoclink" href="api/sap.ui.layout.form.FormContainer">FormContainers</a></code>) per row that is used before a new row is started.</p><p><b>Note:</b> If <code><a target="_self" class="jsdoclink" href="api/sap.ui.layout.form.SimpleFormLayout">sap.ui.layout.form.SimpleFormLayout.ResponsiveGridLayout</a></code> is used as <code>layout</code>, this property is not used. Please use the properties <code>ColumnsL</code> and <code>ColumnsM</code> in this case.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>2</code>.</p>
                      * @param {number} iMaxContainerCols <p>New value for property <code>maxContainerCols</code></p>
                      * @returns sap.ui.layout.form.SimpleForm <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setMaxContainerCols(iMaxContainerCols: number): sap.ui.layout.form.SimpleForm;
+                    setMaxContainerCols(iMaxContainerCols?: number): sap.ui.layout.form.SimpleForm;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getMinWidth" href="api/sap.ui.layout.form.SimpleForm#methods/getMinWidth">minWidth</a>.</p><p>The overall minimum width in pixels that is used for the <code>SimpleForm</code>.</p><p>If the available width is below the given <code>minWidth</code> the <code>SimpleForm</code> will create a new row for the next group (<code><a target="_self" class="jsdoclink" href="api/sap.ui.layout.form.FormContainer">FormContainer</a></code>). The default value is -1, meaning that inner groups (<code><a target="_self" class="jsdoclink" href="api/sap.ui.layout.form.FormContainer">FormContainers</a></code>) will be stacked until <code>maxContainerCols</code> is reached, irrespective of whether a <code>width</code> is reached or the available parents width is reached.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveLayout</code> is used as a layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>-1</code>.</p>
                      * @param {number} iMinWidth <p>New value for property <code>minWidth</code></p>
                      * @returns sap.ui.layout.form.SimpleForm <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setMinWidth(iMinWidth: number): sap.ui.layout.form.SimpleForm;
+                    setMinWidth(iMinWidth?: number): sap.ui.layout.form.SimpleForm;
                     /**
                      * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSingleContainerFullSize" href="api/sap.ui.layout.form.SimpleForm#methods/getSingleContainerFullSize">singleContainerFullSize</a>.</p><p>If the <code>Form</code> contains only one single <code>FormContainer</code> and this property is set, the <code>FormContainer</code> is displayed using the full size of the <code>Form</code>. In this case the properties <code>columnsL</code> and <code>columnsM</code> are ignored.</p><p>In all other cases the <code>FormContainer</code> is displayed in the size of one column.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                      * @param {boolean} bSingleContainerFullSize <p>New value for property <code>singleContainerFullSize</code></p>
                      * @returns sap.ui.layout.form.SimpleForm <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setSingleContainerFullSize(bSingleContainerFullSize: boolean): sap.ui.layout.form.SimpleForm;
+                    setSingleContainerFullSize(bSingleContainerFullSize?: boolean): sap.ui.layout.form.SimpleForm;
                     /**
                      * <p>Sets the aggregated <a target="_self" class="jsdoclink scrollToMethod" data-target="getTitle" href="api/sap.ui.layout.form.SimpleForm#methods/getTitle">title</a>.</p>
                      * @param {sap.ui.core.Title | string} vTitle <p>The title to set</p>
@@ -4236,7 +4246,7 @@ declare namespace sap {
                      * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
                      * @returns sap.ui.layout.form.SimpleForm <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setWidth(sWidth: sap.ui.core.CSSSize): sap.ui.layout.form.SimpleForm;
+                    setWidth(sWidth?: sap.ui.core.CSSSize): sap.ui.layout.form.SimpleForm;
                 }
                 /**
                  * <p><p>Available <code>FormLayouts</code> used to render a <code>SimpleForm</code>.</p></p>

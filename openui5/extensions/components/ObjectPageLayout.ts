@@ -74,6 +74,8 @@ namespace sap {
             ObjectPageLayout.extend("sap.extension.uxap.DataObjectPageLayout", {
                 metadata: {
                     properties: {
+                        /** 用户字段模式 */
+                        userFieldsMode: { type: "string" },
                         /** 数据信息 */
                         dataInfo: { type: "any" },
                         /** 属性过滤器 */
@@ -97,7 +99,10 @@ namespace sap {
                     return this.setProperty("dataInfo", value);
                 },
                 /** 重构设置 */
-                applySettings(this: DataObjectPageLayout): DataObjectPageLayout {
+                applySettings(this: DataObjectPageLayout, mSettings: any, oScope?: any): DataObjectPageLayout {
+                    if (ibas.objects.isNull(mSettings.userFieldsMode)) {
+                        mSettings.userFieldsMode = "attribute";
+                    }
                     ObjectPageLayout.prototype.applySettings.apply(this, arguments);
                     // 设置其他属性
                     let dataInfo: any = this.getDataInfo();
@@ -111,7 +116,8 @@ namespace sap {
                             name: ibas.objects.nameOf(dataInfo),
                         };
                     }
-                    if (typeof dataInfo === "object") {
+                    if (typeof dataInfo === "object"
+                        && (!ibas.strings.isEmpty(this.getUserFieldsMode()) && !ibas.strings.equalsIgnoreCase(this.getUserFieldsMode(), "none"))) {
                         if (dataInfo.properties instanceof Array) {
                             propertyControls.call(this, dataInfo);
                         } else {
@@ -126,6 +132,12 @@ namespace sap {
                                         ibas.logger.log(new Error(opRslt.message));
                                     } else {
                                         propertyControls.call(this, opRslt.resultObjects.firstOrDefault());
+                                        // 已加载数据，则重置
+                                        let model: any = this.getModel();
+                                        if (model !== undefined) {
+                                            this.setModel(undefined);
+                                            this.setModel(model);
+                                        }
                                     }
                                 }
                             });
@@ -154,10 +166,23 @@ namespace sap {
                             if (!ibas.objects.isNull(userFields)) {
                                 let section: any = sap.ui.getCore().byId(this.getId() + "_extendSection");
                                 if (section instanceof sap.uxap.ObjectPageSubSection) {
-                                    for (let item of section.getBlocks()) {
-                                        let bindingInfo: any = managedobjects.bindingInfo(item, "text");
-                                        if (!ibas.objects.isNull(bindingInfo)) {
-                                            userfields.check(userFields, bindingInfo);
+                                    if (this.getUserFieldsMode() === "input" || this.getUserFieldsMode() === "text") {
+                                        for (let item of section.getBlocks()) {
+                                            if (item instanceof sap.ui.layout.form.SimpleForm) {
+                                                for (let sItem of item.getContent()) {
+                                                    let bindingInfo: any = managedobjects.bindingInfo(sItem, "bindingValue");
+                                                    if (!ibas.objects.isNull(bindingInfo)) {
+                                                        userfields.check(userFields, bindingInfo);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        for (let item of section.getBlocks()) {
+                                            let bindingInfo: any = managedobjects.bindingInfo(item, "text");
+                                            if (!ibas.objects.isNull(bindingInfo)) {
+                                                userfields.check(userFields, bindingInfo);
+                                            }
                                         }
                                     }
                                 }
@@ -227,28 +252,82 @@ namespace sap {
                     authorising(item);
                 }
                 let section: sap.uxap.ObjectPageSubSection;
-                for (let property of properties) {
-                    if (ibas.objects.isNull(property)) {
-                        continue;
+                if (this.getUserFieldsMode() === "input") {
+                    let form: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
+                        editable: true,
+                        width: "auto",
+                    }).addStyleClass("sapUxAPObjectPageSubSectionAlignContent");
+                    section = new sap.uxap.ObjectPageSubSection(this.getId() + "_extendSection", {
+                        blocks: [
+                            form
+                        ],
+                    });
+                    for (let property of properties) {
+                        if (ibas.objects.isNull(property)) {
+                            continue;
+                        }
+                        if (ibas.objects.isNull(property.authorised)) {
+                            continue;
+                        }
+                        if (property.authorised === ibas.emAuthoriseType.NONE) {
+                            continue;
+                        }
+                        property = factories.newProperty(property, boInfo);
+                        form.addContent(new sap.m.Label("", {
+                            text: property.systemed === true ? ibas.i18n.prop(ibas.strings.format("bo_{0}_{1}", boInfo.name, property.name).toLowerCase()) : property.description
+                        }));
+                        form.addContent(factories.newComponent(property, "Input"));
                     }
-                    if (ibas.objects.isNull(property.authorised)) {
-                        continue;
+                } else if (this.getUserFieldsMode() === "text") {
+                    let form: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
+                        editable: false,
+                        width: "auto",
+                    }).addStyleClass("sapUxAPObjectPageSubSectionAlignContent");
+                    section = new sap.uxap.ObjectPageSubSection(this.getId() + "_extendSection", {
+                        blocks: [
+                            form
+                        ],
+                    });
+                    for (let property of properties) {
+                        if (ibas.objects.isNull(property)) {
+                            continue;
+                        }
+                        if (ibas.objects.isNull(property.authorised)) {
+                            continue;
+                        }
+                        if (property.authorised === ibas.emAuthoriseType.NONE) {
+                            continue;
+                        }
+                        property = factories.newProperty(property, boInfo);
+                        form.addContent(new sap.m.Label("", {
+                            text: property.systemed === true ? ibas.i18n.prop(ibas.strings.format("bo_{0}_{1}", boInfo.name, property.name).toLowerCase()) : property.description
+                        }));
+                        form.addContent(factories.newComponent(property, "Text"));
                     }
-                    if (property.authorised === ibas.emAuthoriseType.NONE) {
-                        continue;
+                } else {
+                    for (let property of properties) {
+                        if (ibas.objects.isNull(property)) {
+                            continue;
+                        }
+                        if (ibas.objects.isNull(property.authorised)) {
+                            continue;
+                        }
+                        if (property.authorised === ibas.emAuthoriseType.NONE) {
+                            continue;
+                        }
+                        if (ibas.objects.isNull(section)) {
+                            section = new sap.uxap.ObjectPageSubSection(this.getId() + "_extendSection", {
+                                blocks: [
+                                ],
+                            });
+                        }
+                        property = factories.newProperty(property, boInfo);
+                        let element: any = factories.newComponent(property, "Object");
+                        if (property.systemed === true && element instanceof sap.m.ObjectAttribute) {
+                            element.setTitle(ibas.i18n.prop(ibas.strings.format("bo_{0}_{1}", boInfo.name, property.name).toLowerCase()));
+                        }
+                        section.addBlock(element);
                     }
-                    if (ibas.objects.isNull(section)) {
-                        section = new sap.uxap.ObjectPageSubSection(this.getId() + "_extendSection", {
-                            blocks: [
-                            ],
-                        });
-                    }
-                    property = factories.newProperty(property, boInfo);
-                    let element: any = factories.newComponent(property, "Object");
-                    if (property.systemed === true && element instanceof sap.m.ObjectAttribute) {
-                        element.setTitle(ibas.i18n.prop(ibas.strings.format("bo_{0}_{1}", boInfo.name, property.name).toLowerCase()));
-                    }
-                    section.addBlock(element);
                 }
                 if (!ibas.objects.isNull(section)) {
                     this.addSection(new sap.uxap.ObjectPageSection("", {

@@ -6,6 +6,7 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 /// <reference path="../../index.d.ts" />
+/// <reference path="../c/material/MaterialBrowseView.ts" />
 /// <reference path="./material/index.ts" />
 /// <reference path="./customer/index.ts" />
 /// <reference path="./salesorder/index.ts" />
@@ -33,6 +34,9 @@ namespace trainingtesting {
                     case app.MaterialEditApp.APPLICATION_ID:
                         view = new m.MaterialEditView();
                         break;
+                    case app.MaterialViewApp.APPLICATION_ID:
+                        view = new m.MaterialViewView();
+                        break;
                     case app.CustomerListApp.APPLICATION_ID:
                         view = new m.CustomerListView();
                         break;
@@ -42,6 +46,9 @@ namespace trainingtesting {
                     case app.CustomerEditApp.APPLICATION_ID:
                         view = new m.CustomerEditView();
                         break;
+                    case app.CustomerViewApp.APPLICATION_ID:
+                        view = new m.CustomerViewView();
+                        break;
                     case app.SalesOrderListApp.APPLICATION_ID:
                         view = new m.SalesOrderListView();
                         break;
@@ -50,6 +57,9 @@ namespace trainingtesting {
                         break;
                     case app.SalesOrderEditApp.APPLICATION_ID:
                         view = new m.SalesOrderEditView();
+                        break;
+                    case app.SalesOrderViewApp.APPLICATION_ID:
+                        view = new m.SalesOrderViewView();
                         break;
                     case app.DemoResidentApp.APPLICATION_ID:
                         view = new m.DemoResidentView();

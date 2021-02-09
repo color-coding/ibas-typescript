@@ -106,6 +106,8 @@ namespace sap {
                         return sap.ui.core.ValueState.Success;
                     } else if (data === ibas.emDocumentStatus.CLOSED) {
                         return sap.ui.core.ValueState.Success;
+                    } else if (data === ibas.emDocumentStatus.PLANNED) {
+                        return sap.ui.core.ValueState.Warning;
                     } else {
                         return sap.ui.core.ValueState.None;
                     }
@@ -120,7 +122,7 @@ namespace sap {
                     } else if (data === ibas.emDocumentStatus.FINISHED) {
                         return "sap-icon://status-completed";
                     } else if (data === ibas.emDocumentStatus.CLOSED) {
-                        return "sap-icon://status-critical";
+                        return "sap-icon://complete";
                     } else {
                         return "sap-icon://status-inactive";
                     }
@@ -197,7 +199,7 @@ namespace sap {
                     } else if (data === ibas.emApprovalStatus.CANCELLED) {
                         return sap.ui.core.ValueState.Error;
                     } else if (data === ibas.emApprovalStatus.PROCESSING) {
-                        return sap.ui.core.ValueState.Information;
+                        return sap.ui.core.ValueState.Warning;
                     } else if (data === ibas.emApprovalStatus.REJECTED) {
                         return sap.ui.core.ValueState.Error;
                     } else {
@@ -210,15 +212,15 @@ namespace sap {
                  */
                 toIcon(data: any): string {
                     if (data === ibas.emApprovalStatus.APPROVED) {
-                        return "sap-icon://accept";
+                        return "sap-icon://sys-enter";
                     } else if (data === ibas.emApprovalStatus.CANCELLED) {
                         return "sap-icon://cancel";
                     } else if (data === ibas.emApprovalStatus.PROCESSING) {
-                        return "sap-icon://status-in-process";
+                        return "sap-icon://initiative";
                     } else if (data === ibas.emApprovalStatus.REJECTED) {
-                        return "sap-icon://decline";
+                        return "sap-icon://sys-cancel";
                     } else {
-                        return "sap-icon://status-positive";
+                        return "sap-icon://sys-minus";
                     }
                 }
             });

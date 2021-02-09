@@ -20,11 +20,11 @@ namespace trainingtesting {
                         },
                         headerTitle: new sap.uxap.ObjectPageHeader("", {
                             objectTitle: {
-                                path: "code",
+                                path: "name",
                                 type: new sap.extension.data.Alphanumeric(),
                             },
                             objectSubtitle: {
-                                path: "name",
+                                path: "code",
                                 type: new sap.extension.data.Alphanumeric(),
                             },
                             navigationBar: new sap.m.Bar("", {
@@ -34,7 +34,7 @@ namespace trainingtesting {
                                         type: sap.m.ButtonType.Transparent,
                                         icon: "sap-icon://edit",
                                         visible: this.mode === ibas.emViewMode.VIEW ? false : true,
-                                        press: function (): void {
+                                        press(): void {
                                             that.fireViewEvents(that.editDataEvent);
                                         }
                                     })
@@ -43,7 +43,7 @@ namespace trainingtesting {
                                     new sap.m.Button("", {
                                         type: sap.m.ButtonType.Transparent,
                                         icon: "sap-icon://action",
-                                        press: function (event: any): void {
+                                        press(event: sap.ui.base.Event): void {
                                             ibas.servicesManager.showServices({
                                                 proxy: new ibas.BOServiceProxy({
                                                     data: that.page.getModel().getData(),
@@ -62,7 +62,7 @@ namespace trainingtesting {
                                                             text: ibas.i18n.prop(service.name),
                                                             type: sap.m.ButtonType.Transparent,
                                                             icon: service.icon,
-                                                            press: function (): void {
+                                                            press(): void {
                                                                 service.run();
                                                                 popover.close();
                                                             }
@@ -77,70 +77,57 @@ namespace trainingtesting {
                                 ]
                             }),
                             actions: [
-                                new sap.extension.m.ObjectYesNoStatus("", {
-                                    title: ibas.i18n.prop("bo_customer_activated"),
-                                    text: {
-                                        path: "activated",
-                                        type: new sap.extension.data.YesNo(true),
-                                    }
-                                }),
                             ]
                         }),
                         headerContent: [
                         ],
                         sections: [
                             new sap.uxap.ObjectPageSection("", {
-                                title: ibas.i18n.prop("bo_customer"),
+                                title: ibas.i18n.prop("trainingtesting_title_others"),
                                 subSections: [
                                     new sap.uxap.ObjectPageSubSection("", {
-                                        blocks: [
-                                            new sap.ui.layout.VerticalLayout("", {
-                                                content: [
-                                                    new sap.extension.m.ObjectAttribute("", {
-                                                        title: ibas.i18n.prop("bo_customer_country"),
-                                                        text: {
-                                                            path: "country",
-                                                            type: new sap.extension.data.Alphanumeric()
-                                                        }
-                                                    }),
-                                                    new sap.extension.m.ObjectAttribute("", {
-                                                        title: ibas.i18n.prop("bo_customer_province"),
-                                                        text: {
-                                                            path: "province",
-                                                            type: new sap.extension.data.Alphanumeric()
-                                                        }
-                                                    }),
-                                                    new sap.extension.m.ObjectAttribute("", {
-                                                        title: ibas.i18n.prop("bo_customer_city"),
-                                                        text: {
-                                                            path: "city",
-                                                            type: new sap.extension.data.Alphanumeric()
-                                                        }
-                                                    }),
-                                                    new sap.extension.m.ObjectAttribute("", {
-                                                        title: ibas.i18n.prop("bo_customer_district"),
-                                                        text: {
-                                                            path: "district",
-                                                            type: new sap.extension.data.Alphanumeric()
-                                                        }
-                                                    }),
-                                                    new sap.extension.m.ObjectAttribute("", {
-                                                        title: ibas.i18n.prop("bo_customer_street"),
-                                                        text: {
-                                                            path: "street",
-                                                            type: new sap.extension.data.Alphanumeric()
-                                                        }
-                                                    }),
-                                                    new sap.extension.m.ObjectAttribute("", {
-                                                        title: ibas.i18n.prop("bo_customer_zipcode"),
-                                                        text: {
-                                                            path: "zipCode",
-                                                            type: new sap.extension.data.Alphanumeric()
-                                                        }
-                                                    }),
-
-                                                ]
-                                            }),
+                                        blocks: [new sap.extension.m.ObjectAttribute("", {
+                                            title: ibas.i18n.prop("bo_customer_country"),
+                                            text: {
+                                                path: "country",
+                                                type: new sap.extension.data.Alphanumeric()
+                                            }
+                                        }),
+                                        new sap.extension.m.ObjectAttribute("", {
+                                            title: ibas.i18n.prop("bo_customer_province"),
+                                            text: {
+                                                path: "province",
+                                                type: new sap.extension.data.Alphanumeric()
+                                            }
+                                        }),
+                                        new sap.extension.m.ObjectAttribute("", {
+                                            title: ibas.i18n.prop("bo_customer_city"),
+                                            text: {
+                                                path: "city",
+                                                type: new sap.extension.data.Alphanumeric()
+                                            }
+                                        }),
+                                        new sap.extension.m.ObjectAttribute("", {
+                                            title: ibas.i18n.prop("bo_customer_district"),
+                                            text: {
+                                                path: "district",
+                                                type: new sap.extension.data.Alphanumeric()
+                                            }
+                                        }),
+                                        new sap.extension.m.ObjectAttribute("", {
+                                            title: ibas.i18n.prop("bo_customer_street"),
+                                            text: {
+                                                path: "street",
+                                                type: new sap.extension.data.Alphanumeric()
+                                            }
+                                        }),
+                                        new sap.extension.m.ObjectAttribute("", {
+                                            title: ibas.i18n.prop("bo_customer_zipcode"),
+                                            text: {
+                                                path: "zipCode",
+                                                type: new sap.extension.data.Alphanumeric()
+                                            }
+                                        }),
                                         ],
                                     })
                                 ]

@@ -711,6 +711,40 @@ namespace sap {
                     });
                 }
             });
+            /**
+             * 数据所属组织-输入框
+             */
+            OrganizationInput.extend("sap.extension.m.DataOrganizationInput", {
+                metadata: {
+                    properties: {
+                    },
+                    events: {}
+                },
+                renderer: {},
+                init(this: DataOrganizationInput): void {
+                    (<any>OrganizationInput.prototype).init.apply(this, arguments);
+                    this.attachModelContextChange(undefined, function (event: sap.ui.base.Event): void {
+                        let source: any = event.getSource();
+                        if (source instanceof OrganizationInput) {
+                            let content: any = source.getBindingContext();
+                            if (content instanceof sap.ui.model.Context) {
+                                let data: any = content.getObject();
+                                if (data instanceof ibas.BusinessObject) {
+                                    if (data.isNew === true) {
+                                        let binding: any = source.getBinding("bindingValue");
+                                        if (binding instanceof sap.ui.model.PropertyBinding) {
+                                            if (!(binding.getRawValue() > 0)) {
+                                                binding.setValue(ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_BELONG));
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+
         }
     }
 }

@@ -16,7 +16,6 @@
 /// <reference path ="./sap.ui.layout.d.ts" />
 /// <reference path ="./sap.ui.rta.d.ts" />
 /// <reference path ="./sap.ui.suite.d.ts" />
-/// <reference path ="./sap.ui.support.d.ts" />
 /// <reference path ="./sap.ui.table.d.ts" />
 /// <reference path ="./sap.ui.unified.d.ts" />
 /// <reference path ="./sap.uxap.d.ts" />

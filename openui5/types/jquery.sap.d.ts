@@ -2,8 +2,8 @@
  * Provides base functionality of the SAP jQuery plugin as extension of the jQuery framework.<br/> See also <a href="http://api.jquery.com/jQuery/">jQuery</a> for details.<br/> Although these functions appear as static ones, they are meant to be used on jQuery instances.<br/> If not stated differently, the functions follow the fluent interface paradigm and return the jQuery instance for chaining of statements.
  * 
  * Example for usage of an instance method: <pre>
- *   var oRect = jQuery("#myDiv").rect();
- *   alert("Top Position: " + oRect.top);
+ *     var oRect = jQuery("#myDiv").rect();
+ *     alert("Top Position: " + oRect.top);
  * </pre>
  */
 declare interface JQueryStatic {
@@ -314,7 +314,7 @@ declare interface JQuerySap {
    * This function implements the algorithm described in "A Technique for Isolating Differences Between Files" (Commun. ACM, April 1978, Volume 21, Number 4, Pages 264-268).
    * 
    * Items in the arrays are not compared directly. Instead, a substitute symbol is determined for each item by applying the provided function <code>fnSymbol</code> to it. Items with strictly equal symbols are assumed to represent the same logical item: <pre>
-   *   fnSymbol(a) === fnSymbol(b)   <=>   a 'is logically the same as' b
+   *     fnSymbol(a) === fnSymbol(b)     <=>     a 'is logically the same as' b
    * </pre> As an additional constraint, casting the symbols to string should not modify the comparison result. If this second constraint is not met, this method might report more diffs than necessary.
    * 
    * If no symbol function is provided, a default implementation is used which applies <code>JSON.stringify</code> to non-string items and reduces the strings to a hash code. It is not guaranteed that this default implementation fulfills the above constraint in all cases, but it is a compromise between implementation effort, generality and performance. If items are known to be non-stringifiable (e.g. because they may contain cyclic references) or when hash collisions are likely, an own <code>fnSymbol</code> function must be provided.
@@ -323,31 +323,31 @@ declare interface JQuerySap {
    * 
    * Sample implementation of the update <pre>
    * 
-   *  function update(aOldArray, aNewArray) {
+   *    function update(aOldArray, aNewArray) {
    * 
-   *    // calculate the diff
-   *    var aDiff = jQuery.sap.arraySymbolDiff(aOldArray, aNewArray, __provide_your_symbol_function_here__);
+   *        // calculate the diff
+   *        var aDiff = jQuery.sap.arraySymbolDiff(aOldArray, aNewArray, __provide_your_symbol_function_here__);
    * 
-   *    // apply update operations
-   *    aDiff.forEach( function(op) {
+   *        // apply update operations
+   *        aDiff.forEach( function(op) {
    * 
-   *      // invariant: aOldArray and aNewArray now are equal up to (excluding) op.index
+   *            // invariant: aOldArray and aNewArray now are equal up to (excluding) op.index
    * 
-   *      switch ( op.type ) {
-   *      case 'insert':
-   *        // new array contains a new (or otherwise unmapped) item, add it here
-   *        aOldArray.splice(op.index, 0, aNewArray[op.index]);
-   *        break;
-   *      case 'delete':
-   *        // an item is no longer part of the array (or has been moved to another position), remove it
-   *        aOldArray.splice(op.index, 1);
-   *        break;
-   *      default:
-   *        throw new Error('unexpected diff operation type');
-   *      }
+   *            switch ( op.type ) {
+   *            case 'insert':
+   *                // new array contains a new (or otherwise unmapped) item, add it here
+   *                aOldArray.splice(op.index, 0, aNewArray[op.index]);
+   *                break;
+   *            case 'delete':
+   *                // an item is no longer part of the array (or has been moved to another position), remove it
+   *                aOldArray.splice(op.index, 1);
+   *                break;
+   *            default:
+   *                throw new Error('unexpected diff operation type');
+   *            }
    * 
-   *    });
-   *  }
+   *        });
+   *    }
    * 
    * </pre>
    * @param {any[]} aOld - Old Array
@@ -590,11 +590,11 @@ declare interface JQuerySap {
    * This method can be used when a string with arbitrary content has to be integrated into a regular expression and when the whole string should match literally.
    * 
    * Example: <pre>
-   *   var text = "E=m*c^2"; // text to search
-   *   var search = "m*c";   // text to search for
+   *     var text = "E=m*c^2"; // text to search
+   *     var search = "m*c";     // text to search for
    * 
-   *   text.match( new RegExp(                         search  ) ); // [ "c" ]
-   *   text.match( new RegExp( jQuery.sap.escapeRegExp(search) ) ); // [ "m*c" ]
+   *     text.match( new RegExp(                                                 search    ) ); // [ "c" ]
+   *     text.match( new RegExp( jQuery.sap.escapeRegExp(search) ) ); // [ "m*c" ]
    * </pre>
    * @param {string} sString - String to escape
    * @returns {string} The escaped string
@@ -605,9 +605,9 @@ declare interface JQuerySap {
    * Returns a new constructor function that creates objects with the given prototype.
    * 
    * As of 1.45.0, this method has been deprecated. Use the following code pattern instead: <pre>
-   *   function MyFunction() {
-   *   };
-   *   MyFunction.prototype = oPrototype;
+   *     function MyFunction() {
+   *     };
+   *     MyFunction.prototype = oPrototype;
    * </pre>
    * @param {any} oPrototype - Prototype to use for the new objects
    * @returns {Function} the newly created constructor function
@@ -632,10 +632,10 @@ declare interface JQuerySap {
    * To avoid interpretation of curly braces as placeholders, any non-placeholder fragment of the pattern can be enclosed in single quotes. The surrounding single quotes will be omitted from the result. Single quotes that are not meant to escape a fragment and that should appear in the result, need to be doubled. In the result, only a single single quote will occur.
    * 
    * Example Pattern Strings: <pre>
-   *   jQuery.sap.formatMessage("Say {0}",     ["Hello"]) -> "Say Hello"    // normal use case
-   *   jQuery.sap.formatMessage("Say '{0}'",   ["Hello"]) -> "Say {0}"      // escaped placeholder
-   *   jQuery.sap.formatMessage("Say ''{0}''", ["Hello"]) -> "Say 'Hello'"  // doubled single quote
-   *   jQuery.sap.formatMessage("Say '{0}'''", ["Hello"]) -> "Say {0}'"     // doubled single quote in quoted fragment
+   *     jQuery.sap.formatMessage("Say {0}",         ["Hello"]) -> "Say Hello"        // normal use case
+   *     jQuery.sap.formatMessage("Say '{0}'",     ["Hello"]) -> "Say {0}"            // escaped placeholder
+   *     jQuery.sap.formatMessage("Say ''{0}''", ["Hello"]) -> "Say 'Hello'"    // doubled single quote
+   *     jQuery.sap.formatMessage("Say '{0}'''", ["Hello"]) -> "Say {0}'"         // doubled single quote in quoted fragment
    * </pre>
    * 
    * In contrast to java.util.MessageFormat, format types or format styles are not supported. Everything after the argument index and up to the first closing curly brace is ignored. Nested placeholders (as supported by java.lang.MessageFormat for the format type choice) are not ignored but reported as a parse error.
@@ -679,10 +679,10 @@ declare interface JQuerySap {
    * When the addressed object exists, it is simply returned. If it doesn't exists, the behavior depends on the value of the second, optional parameter <code>iNoCreates</code> (assuming 'n' to be the number of names in the name sequence): <ul> <li>NaN: if iNoCreates is not a number and the addressed object doesn't exist, then <code>getObject()</code> returns <code>undefined</code>. <li>0 &lt; iNoCreates &lt; n: any non-existing intermediate object is created, except the <i>last</i> <code>iNoCreates</code> ones. </ul>
    * 
    * Example: <pre>
-   *   getObject()            -- returns the context object (either param or window)
-   *   getObject("a.b.C")     -- will only try to get a.b.C and return undefined if not found.
-   *   getObject("a.b.C", 0)  -- will create a, b, and C in that order if they don't exists
-   *   getObject("a.b.c", 1)  -- will create a and b, but not C.
+   *     getObject()                        -- returns the context object (either param or window)
+   *     getObject("a.b.C")         -- will only try to get a.b.C and return undefined if not found.
+   *     getObject("a.b.C", 0)    -- will create a, b, and C in that order if they don't exists
+   *     getObject("a.b.c", 1)    -- will create a and b, but not C.
    * </pre>
    * 
    * When a <code>oContext</code> is given, the search starts in that object. Otherwise it starts in the <code>window</code> object that this plugin has been created in.
@@ -907,11 +907,11 @@ declare interface JQuerySap {
    * If option 'url' is passed, immediately a load request for the given target is triggered. A property file that is loaded can contain comments with a leading ! or #. The loaded property list does not contain any comments.
    * 
    * <b>Example for loading a property file:</b> <pre>
-   *  jQuery.sap.properties({url : "../myProperty.properties"});
+   *    jQuery.sap.properties({url : "../myProperty.properties"});
    * </pre>
    * 
    * <b>Example for creating an empty properties instance:</b> <pre>
-   *  jQuery.sap.properties();
+   *    jQuery.sap.properties();
    * </pre>
    * 
    * <b>Examples for getting and setting properties:</b> <pre>
@@ -1037,12 +1037,12 @@ declare interface JQuerySap {
    * 
    * One example is: <pre>
    * {
-   *    'phone':'phone-icon_60x60.png',
-   *    'phone@2':'phone-retina_120x120.png',
-   *    'tablet':'tablet-icon_76x76.png',
-   *    'tablet@2':'tablet-retina_152x152.png',
-   *    'precomposed':true,
-   *    'favicon':'desktop.ico'
+   *        'phone':'phone-icon_60x60.png',
+   *        'phone@2':'phone-retina_120x120.png',
+   *        'tablet':'tablet-icon_76x76.png',
+   *        'tablet@2':'tablet-retina_152x152.png',
+   *        'precomposed':true,
+   *        'favicon':'desktop.ico'
    * }
    * </pre> If one of the sizes is not given, the largest available alternative image will be used instead for this size. On Android these icons may or may not be used by the device. Apparently chances can be improved by using icons with glare effect, so the "precomposed" property can be set to "true". Some Android devices may also use the favicon for bookmarks instead of the home icons.</li>
    * @param {any} oIcons
@@ -1182,98 +1182,98 @@ declare interface JQuerySap {
    * Split URL into components and check for allowed characters according to RFC 3986:
    * 
    * <pre>
-   * authority     = [ userinfo "@" ] host [ ":" port ]
-   * userinfo      = *( unreserved / pct-encoded / sub-delims / ":" )
-   * host          = IP-literal / IPv4address / reg-name
+   * authority         = [ userinfo "@" ] host [ ":" port ]
+   * userinfo            = *( unreserved / pct-encoded / sub-delims / ":" )
+   * host                    = IP-literal / IPv4address / reg-name
    * 
-   * IP-literal    = "[" ( IPv6address / IPvFuture  ) "]"
-   * IPvFuture     = "v" 1*HEXDIG "." 1*( unreserved / sub-delims / ":" )
-   * IPv6address   =                            6( h16 ":" ) ls32
-   *               /                       "::" 5( h16 ":" ) ls32
-   *               / [               h16 ] "::" 4( h16 ":" ) ls32
-   *               / [ *1( h16 ":" ) h16 ] "::" 3( h16 ":" ) ls32
-   *               / [ *2( h16 ":" ) h16 ] "::" 2( h16 ":" ) ls32
-   *               / [ *3( h16 ":" ) h16 ] "::"    h16 ":"   ls32
-   *               / [ *4( h16 ":" ) h16 ] "::"              ls32
-   *               / [ *5( h16 ":" ) h16 ] "::"              h16
-   *               / [ *6( h16 ":" ) h16 ] "::"
-   * ls32          = ( h16 ":" h16 ) / IPv4address
-   *               ; least-significant 32 bits of address
-   * h16           = 1*4HEXDIG
-   *               ; 16 bits of address represented in hexadecimal
+   * IP-literal        = "[" ( IPv6address / IPvFuture    ) "]"
+   * IPvFuture         = "v" 1*HEXDIG "." 1*( unreserved / sub-delims / ":" )
+   * IPv6address     =                                                        6( h16 ":" ) ls32
+   *                             /                                             "::" 5( h16 ":" ) ls32
+   *                             / [                             h16 ] "::" 4( h16 ":" ) ls32
+   *                             / [ *1( h16 ":" ) h16 ] "::" 3( h16 ":" ) ls32
+   *                             / [ *2( h16 ":" ) h16 ] "::" 2( h16 ":" ) ls32
+   *                             / [ *3( h16 ":" ) h16 ] "::"        h16 ":"     ls32
+   *                             / [ *4( h16 ":" ) h16 ] "::"                            ls32
+   *                             / [ *5( h16 ":" ) h16 ] "::"                            h16
+   *                             / [ *6( h16 ":" ) h16 ] "::"
+   * ls32                    = ( h16 ":" h16 ) / IPv4address
+   *                             ; least-significant 32 bits of address
+   * h16                     = 1*4HEXDIG
+   *                             ; 16 bits of address represented in hexadecimal
    * 
-   * IPv4address   = dec-octet "." dec-octet "." dec-octet "." dec-octet
-   * dec-octet     = DIGIT                 ; 0-9
-   *               / %x31-39 DIGIT         ; 10-99
-   *               / "1" 2DIGIT            ; 100-199
-   *               / "2" %x30-34 DIGIT     ; 200-249
-   *               / "25" %x30-35          ; 250-255
+   * IPv4address     = dec-octet "." dec-octet "." dec-octet "." dec-octet
+   * dec-octet         = DIGIT                                 ; 0-9
+   *                             / %x31-39 DIGIT                 ; 10-99
+   *                             / "1" 2DIGIT                        ; 100-199
+   *                             / "2" %x30-34 DIGIT         ; 200-249
+   *                             / "25" %x30-35                    ; 250-255
    * 
-   * reg-name      = *( unreserved / pct-encoded / sub-delims )
+   * reg-name            = *( unreserved / pct-encoded / sub-delims )
    * 
-   * pct-encoded   = "%" HEXDIG HEXDIG
-   * reserved      = gen-delims / sub-delims
-   * gen-delims    = ":" / "/" / "?" / "#" / "[" / "]" / "@"
-   * sub-delims    = "!" / "$" / "&" / "'" / "(" / ")"
-   *               / "*" / "+" / "," / ";" / "="
-   * unreserved    = ALPHA / DIGIT / "-" / "." / "_" / "~"
-   * pchar         = unreserved / pct-encoded / sub-delims / ":" / "@"
+   * pct-encoded     = "%" HEXDIG HEXDIG
+   * reserved            = gen-delims / sub-delims
+   * gen-delims        = ":" / "/" / "?" / "#" / "[" / "]" / "@"
+   * sub-delims        = "!" / "$" / "&" / "'" / "(" / ")"
+   *                             / "*" / "+" / "," / ";" / "="
+   * unreserved        = ALPHA / DIGIT / "-" / "." / "_" / "~"
+   * pchar                 = unreserved / pct-encoded / sub-delims / ":" / "@"
    * 
-   * path          = path-abempty    ; begins with "/" or is empty
-   *               / path-absolute   ; begins with "/" but not "//"
-   *               / path-noscheme   ; begins with a non-colon segment
-   *               / path-rootless   ; begins with a segment
-   *               / path-empty      ; zero characters
+   * path                    = path-abempty        ; begins with "/" or is empty
+   *                             / path-absolute     ; begins with "/" but not "//"
+   *                             / path-noscheme     ; begins with a non-colon segment
+   *                             / path-rootless     ; begins with a segment
+   *                             / path-empty            ; zero characters
    * 
-   * path-abempty  = *( "/" segment )
+   * path-abempty    = *( "/" segment )
    * path-absolute = "/" [ segment-nz *( "/" segment ) ]
    * path-noscheme = segment-nz-nc *( "/" segment )
    * path-rootless = segment-nz *( "/" segment )
-   * path-empty    = 0<pchar>
-   * segment       = *pchar
-   * segment-nz    = 1*pchar
+   * path-empty        = 0<pchar>
+   * segment             = *pchar
+   * segment-nz        = 1*pchar
    * segment-nz-nc = 1*( unreserved / pct-encoded / sub-delims / "@" )
-   *               ; non-zero-length segment without any colon ":"
+   *                             ; non-zero-length segment without any colon ":"
    * 
-   * query         = *( pchar / "/" / "?" )
+   * query                 = *( pchar / "/" / "?" )
    * 
-   * fragment      = *( pchar / "/" / "?" )
+   * fragment            = *( pchar / "/" / "?" )
    * </pre>
    * 
    * For the hostname component, we are checking for valid DNS hostnames according to RFC 952 / RFC 1123:
    * 
    * <pre>
-   * hname         = name *("." name)
-   * name          = let-or-digit ( *( let-or-digit-or-hyphen ) let-or-digit )
+   * hname                 = name *("." name)
+   * name                    = let-or-digit ( *( let-or-digit-or-hyphen ) let-or-digit )
    * </pre>
    * 
    * When the URI uses the protocol 'mailto:', the address part is additionally checked against the most commonly used parts of RFC 6068:
    * 
    * <pre>
-   * mailtoURI     = "mailto:" [ to ] [ hfields ]
-   * to            = addr-spec *("," addr-spec )
-   * hfields       = "?" hfield *( "&" hfield )
-   * hfield        = hfname "=" hfvalue
-   * hfname        = *qchar
-   * hfvalue       = *qchar
-   * addr-spec     = local-part "@" domain
-   * local-part    = dot-atom-text              // not accepted: quoted-string
-   * domain        = dot-atom-text              // not accepted: "[" *dtext-no-obs "]"
-   * dtext-no-obs  = %d33-90 / ; Printable US-ASCII
-   *                 %d94-126  ; characters not including
-   *                           ; "[", "]", or "\"
-   * qchar         = unreserved / pct-encoded / some-delims
-   * some-delims   = "!" / "$" / "'" / "(" / ")" / "*"
-   *               / "+" / "," / ";" / ":" / "@"
+   * mailtoURI         = "mailto:" [ to ] [ hfields ]
+   * to                        = addr-spec *("," addr-spec )
+   * hfields             = "?" hfield *( "&" hfield )
+   * hfield                = hfname "=" hfvalue
+   * hfname                = *qchar
+   * hfvalue             = *qchar
+   * addr-spec         = local-part "@" domain
+   * local-part        = dot-atom-text                            // not accepted: quoted-string
+   * domain                = dot-atom-text                            // not accepted: "[" *dtext-no-obs "]"
+   * dtext-no-obs    = %d33-90 / ; Printable US-ASCII
+   *                                 %d94-126    ; characters not including
+   *                                                     ; "[", "]", or "\"
+   * qchar                 = unreserved / pct-encoded / some-delims
+   * some-delims     = "!" / "$" / "'" / "(" / ")" / "*"
+   *                             / "+" / "," / ";" / ":" / "@"
    * 
    * Note:
    * A number of characters that can appear in &lt;addr-spec> MUST be
-   * percent-encoded.  These are the characters that cannot appear in
+   * percent-encoded.    These are the characters that cannot appear in
    * a URI according to [STD66] as well as "%" (because it is used for
    * percent-encoding) and all the characters in gen-delims except "@"
-   * and ":" (i.e., "/", "?", "#", "[", and "]").  Of the characters
+   * and ":" (i.e., "/", "?", "#", "[", and "]").    Of the characters
    * in sub-delims, at least the following also have to be percent-
-   * encoded: "&", ";", and "=".  Care has to be taken both when
+   * encoded: "&", ";", and "=".    Care has to be taken both when
    * encoding as well as when decoding to make sure these operations
    * are applied only once.
    * 

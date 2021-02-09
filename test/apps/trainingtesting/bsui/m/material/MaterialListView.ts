@@ -8,9 +8,7 @@
 namespace trainingtesting {
     export namespace ui {
         export namespace m {
-            /**
-             * 列表视图-物料主数据
-             */
+            /** 列表视图-物料主数据 */
             export class MaterialListView extends ibas.BOListView implements app.IMaterialListView {
                 /** 返回查询的对象 */
                 get queryTarget(): any {
@@ -23,7 +21,7 @@ namespace trainingtesting {
                 /** 绘制视图 */
                 draw(): any {
                     let that: this = this;
-                    this.list = new sap.m.List("", {
+                    this.list = new sap.extension.m.List("", {
                         inset: false,
                         growing: false,
                         mode: sap.m.ListMode.None,
@@ -34,16 +32,14 @@ namespace trainingtesting {
                             justifyContent: sap.m.FlexJustifyContent.End,
                             items: [
                                 new sap.m.SegmentedButton("", {
-                                    width: "9rem",
                                     items: [
                                         new sap.m.SegmentedButtonItem("", {
                                             width: "3rem",
                                             icon: "sap-icon://action",
-                                            press: function (event: any): void {
-                                                that.page.setShowFooter(true);
+                                            press(event: sap.ui.base.Event): void {
                                                 ibas.servicesManager.showServices({
                                                     proxy: new ibas.BOServiceProxy({
-                                                        data: openui5.utils.getSelecteds(that.list),
+                                                        data: that.list.getSelecteds(),
                                                         converter: new bo.DataConverter(),
                                                     }),
                                                     displayServices(services: ibas.IServiceAgent[]): void {
@@ -59,7 +55,7 @@ namespace trainingtesting {
                                                                 text: ibas.i18n.prop(service.name),
                                                                 type: sap.m.ButtonType.Transparent,
                                                                 icon: service.icon,
-                                                                press: function (): void {
+                                                                press(): void {
                                                                     service.run();
                                                                     popover.close();
                                                                     that.list.swipeOut(null);
@@ -76,82 +72,62 @@ namespace trainingtesting {
                                             width: "3rem",
                                             icon: "sap-icon://delete",
                                             press(oEvent: any): void {
-                                                that.page.setShowFooter(true);
-                                                that.fireViewEvents(that.deleteDataEvent,
-                                                    openui5.utils.getSelecteds<bo.Material>(that.list)
-                                                );
+                                                that.fireViewEvents(that.deleteDataEvent, that.list.getSelecteds());
                                             }
                                         }),
                                         new sap.m.SegmentedButtonItem("", {
                                             width: "3rem",
                                             icon: "sap-icon://edit",
                                             press(oEvent: any): void {
-                                                that.page.setShowFooter(true);
-                                                that.fireViewEvents(that.editDataEvent,
-                                                    openui5.utils.getSelecteds<bo.Material>(that.list).firstOrDefault()
-                                                );
+                                                that.fireViewEvents(that.editDataEvent, that.list.getSelecteds().firstOrDefault());
                                             }
                                         })
                                     ]
                                 }),
                             ]
                         }).addStyleClass("sapUiSmallMarginTop"),
-                        swipe: function (event: sap.ui.base.Event): void {
-                            that.page.setShowFooter(true);
-                        },
                         items: {
                             path: "/rows",
                             template: new sap.m.ObjectListItem("", {
                                 title: {
-                                    path: "code"
+                                    path: "name",
+                                    type: new sap.extension.data.Alphanumeric(),
                                 },
-                                number: {
-                                    path: "onOrder"
-                                },
-                                numberUnit: {
-                                    path: "uom"
-                                },
-                                secondStatus: new sap.m.ObjectStatus("", {
-                                    text: {
-                                        path: "approvalStatus",
-                                        formatter(data: any): any {
-                                            return ibas.enums.describe(ibas.emApprovalStatus, data);
-                                        }
-                                    }
-                                }),
                                 attributes: [
-                                    new sap.m.ObjectAttribute("", {
-                                        text: {
-                                            path: "name"
+                                    new sap.extension.m.ObjectAttribute("", {
+                                        title: ibas.i18n.prop("bo_material_code"),
+                                        bindingValue: {
+                                            path: "code",
+                                            type: new sap.extension.data.Alphanumeric(),
                                         }
                                     }),
-                                ]
+                                    new sap.extension.m.ObjectAttribute("", {
+                                        title: ibas.i18n.prop("bo_material_onorder"),
+                                        bindingValue: {
+                                            path: "onOrder",
+                                            type: new sap.extension.data.Quantity(),
+                                        }
+                                    }),
+                                    new sap.extension.m.ObjectAttribute("", {
+                                        title: ibas.i18n.prop("bo_material_uom"),
+                                        bindingValue: {
+                                            path: "uom",
+                                            type: new sap.extension.data.Alphanumeric(),
+                                        }
+                                    }),
+                                ],
+                                type: sap.m.ListType.Active,
+                                press: function (oEvent: sap.ui.base.Event): void {
+                                    that.fireViewEvents(that.editDataEvent, this.getBindingContext().getObject());
+                                },
                             })
-                        }
-                    });
-                    this.page = new sap.m.Page("", {
-                        showHeader: false,
-                        showSubHeader: false,
-                        floatingFooter: true,
-                        content: [
-                            this.list
-                        ],
-                        footer: new sap.m.Toolbar("", {
-                            content: [
-                                new sap.m.Button("", {
-                                    width: "100%",
-                                    text: ibas.i18n.prop("shell_data_new"),
-                                    press: function (): void {
-                                        that.fireViewEvents(that.newDataEvent);
-                                    }
-                                })
-                            ]
-                        })
-                    });
-                    // 添加列表自动查询事件
-                    openui5.utils.triggerNextResults({
-                        listener: this.list,
-                        next(data: any): void {
+                        },
+                        nextDataSet(event: sap.ui.base.Event): void {
+                            // 查询下一个数据集
+                            let data: any = event.getParameter("data");
+                            if (ibas.objects.isNull(data)) {
+                                return;
+                            }
                             if (ibas.objects.isNull(that.lastCriteria)) {
                                 return;
                             }
@@ -163,10 +139,28 @@ namespace trainingtesting {
                             that.fireViewEvents(that.fetchDataEvent, criteria);
                         }
                     });
-                    return this.page;
+                    return this.page = new sap.m.Page("", {
+                        showHeader: false,
+                        showSubHeader: false,
+                        floatingFooter: true,
+                        content: [
+                            this.list
+                        ],
+                        footer: new sap.m.Toolbar("", {
+                            content: [
+                                new sap.m.Button("", {
+                                    width: "100%",
+                                    text: ibas.i18n.prop("shell_data_new"),
+                                    press(): void {
+                                        that.fireViewEvents(that.newDataEvent);
+                                    }
+                                })
+                            ]
+                        })
+                    });
                 }
                 private page: sap.m.Page;
-                private list: sap.m.List;
+                private list: sap.extension.m.List;
                 private pullToRefresh: sap.m.PullToRefresh;
                 /** 嵌入下拉条 */
                 embeddedPuller(view: any): void {
@@ -179,26 +173,16 @@ namespace trainingtesting {
                 }
                 /** 显示数据 */
                 showData(datas: bo.Material[]): void {
-                    if (!ibas.objects.isNull(this.pullToRefresh) && datas.length > 0) {
-                        this.pullToRefresh.destroy(true);
-                        this.pullToRefresh = undefined;
+                    if (!ibas.objects.isNull(this.pullToRefresh)) {
+                        this.pullToRefresh.hide();
                     }
-                    let done: boolean = false;
-                    let model: sap.ui.model.Model = this.list.getModel(undefined);
-                    if (!ibas.objects.isNull(model)) {
-                        // 已存在绑定数据，添加新的
-                        let hDatas: any = (<any>model).getData();
-                        if (!ibas.objects.isNull(hDatas) && hDatas.rows instanceof Array) {
-                            for (let item of datas) {
-                                hDatas.rows.push(item);
-                            }
-                            model.refresh(false);
-                            done = true;
-                        }
-                    }
-                    if (!done) {
-                        // 没有显示数据
-                        this.list.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
+                    let model: sap.ui.model.Model = this.list.getModel();
+                    if (model instanceof sap.extension.model.JSONModel) {
+                        // 已绑定过数据
+                        model.addData(datas);
+                    } else {
+                        // 未绑定过数据
+                        this.list.setModel(new sap.extension.model.JSONModel({ rows: datas }));
                     }
                     this.list.setBusy(false);
                 }

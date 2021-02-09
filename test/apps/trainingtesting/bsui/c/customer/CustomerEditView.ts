@@ -8,9 +8,7 @@
 namespace trainingtesting {
     export namespace ui {
         export namespace c {
-            /**
-             * 编辑视图-客户主数据
-             */
+            /** 编辑视图-客户主数据 */
             export class CustomerEditView extends ibas.BOEditView implements app.ICustomerEditView {
                 /** 删除数据事件 */
                 deleteDataEvent: Function;
@@ -26,24 +24,19 @@ namespace trainingtesting {
                             new sap.ui.core.Title("", { text: ibas.i18n.prop("trainingtesting_title_general") }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_customer_code") }),
                             new sap.extension.m.Input("", {
-                                type: sap.m.InputType.Text
                             }).bindProperty("bindingValue", {
                                 path: "code",
-                                type: new sap.extension.data.Alphanumeric()
+                                type: new sap.extension.data.Alphanumeric({
+                                    maxLength: 20
+                                }),
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_customer_name") }),
                             new sap.extension.m.Input("", {
-                                type: sap.m.InputType.Text
                             }).bindProperty("bindingValue", {
                                 path: "name",
-                                type: new sap.extension.data.Alphanumeric()
-                            }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_customer_activated") }),
-                            new sap.extension.m.EnumSelect("", {
-                                enumType: ibas.emYesNo
-                            }).bindProperty("bindingValue", {
-                                path: "activated",
-                                type: new sap.extension.data.YesNo(),
+                                type: new sap.extension.data.Alphanumeric({
+                                    maxLength: 100
+                                }),
                             }),
                             new sap.ui.core.Title("", { text: ibas.i18n.prop("trainingtesting_title_others") }),
                             new sap.m.Label("", { text: ibas.i18n.prop("openui5_address") }),
@@ -69,15 +62,23 @@ namespace trainingtesting {
                             }),
                         ]
                     });
-                    return this.page = new sap.extension.m.Page("", {
+                    let formBottom: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
+                        editable: true,
+                        content: [
+                        ]
+                    });
+                    return this.page = new sap.extension.m.DataPage("", {
                         showHeader: false,
+                        dataInfo: {
+                            code: bo.Customer.BUSINESS_OBJECT_CODE,
+                        },
                         subHeader: new sap.m.Toolbar("", {
                             content: [
                                 new sap.m.Button("", {
                                     text: ibas.i18n.prop("shell_data_save"),
                                     type: sap.m.ButtonType.Transparent,
                                     icon: "sap-icon://save",
-                                    press: function (): void {
+                                    press(): void {
                                         that.fireViewEvents(that.saveDataEvent);
                                     }
                                 }),
@@ -85,7 +86,7 @@ namespace trainingtesting {
                                     text: ibas.i18n.prop("shell_data_delete"),
                                     type: sap.m.ButtonType.Transparent,
                                     icon: "sap-icon://delete",
-                                    press: function (): void {
+                                    press(): void {
                                         that.fireViewEvents(that.deleteDataEvent);
                                     }
                                 }),
@@ -100,7 +101,7 @@ namespace trainingtesting {
                                             new sap.m.MenuItem("", {
                                                 text: ibas.i18n.prop("shell_data_new"),
                                                 icon: "sap-icon://create",
-                                                press: function (): void {
+                                                press(): void {
                                                     // 创建新的对象
                                                     that.fireViewEvents(that.createDataEvent, false);
                                                 }
@@ -108,7 +109,7 @@ namespace trainingtesting {
                                             new sap.m.MenuItem("", {
                                                 text: ibas.i18n.prop("shell_data_clone"),
                                                 icon: "sap-icon://copy",
-                                                press: function (): void {
+                                                press(): void {
                                                     // 复制当前对象
                                                     that.fireViewEvents(that.createDataEvent, true);
                                                 }
@@ -119,10 +120,12 @@ namespace trainingtesting {
                             ]
                         }),
                         content: [
-                            formTop
+                            formTop,
+                            formBottom,
                         ]
                     });
                 }
+
                 private page: sap.extension.m.Page;
 
                 /** 显示数据 */

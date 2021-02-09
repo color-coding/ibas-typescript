@@ -8,9 +8,7 @@
 namespace trainingtesting {
     export namespace ui {
         export namespace c {
-            /**
-             * 列表视图-销售订单
-             */
+            /** 列表视图-销售订单 */
             export class SalesOrderListView extends ibas.BOListView implements app.ISalesOrderListView {
                 /** 返回查询的对象 */
                 get queryTarget(): any {
@@ -35,50 +33,76 @@ namespace trainingtesting {
                                 template: new sap.extension.m.Text("", {
                                 }).bindProperty("bindingValue", {
                                     path: "docEntry",
-                                    type: new sap.extension.data.Numeric()
-                                })
-                            }),
-                            new sap.extension.table.DataColumn("", {
-                                label: ibas.i18n.prop("bo_salesorder_customercode"),
-                                template: new sap.extension.m.DataLink("", {
-                                    objectCode: bo.Customer.BUSINESS_OBJECT_CODE,
-                                }).bindProperty("bindingValue", {
-                                    path: "customerCode",
-                                    type: new sap.extension.data.Alphanumeric()
-                                })
-                            }),
-                            new sap.extension.table.DataColumn("", {
-                                label: ibas.i18n.prop("bo_salesorder_customername"),
-                                template: new sap.extension.m.RepositoryText("", {
-                                    repository: bo.BORepositoryTrainingTesting,
-                                    dataInfo: {
-                                        type: bo.Customer,
-                                        key: bo.Customer.PROPERTY_CODE_NAME,
-                                        text: bo.Customer.PROPERTY_NAME_NAME
-                                    },
-                                }).bindProperty("bindingValue", {
-                                    path: "customerCode",
-                                    type: new sap.extension.data.Alphanumeric()
-                                })
+                                    type: new sap.extension.data.Numeric(),
+                                }),
                             }),
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_salesorder_documentstatus"),
                                 template: new sap.extension.m.Text("", {
                                 }).bindProperty("bindingValue", {
                                     path: "documentStatus",
-                                    type: new sap.extension.data.DocumentStatus(true)
-                                })
+                                    type: new sap.extension.data.DocumentStatus(true),
+                                }),
                             }),
                             new sap.extension.table.DataColumn("", {
-                                label: ibas.i18n.prop("bo_salesorder_canceled"),
+                                label: ibas.i18n.prop("bo_salesorder_documentdate"),
                                 template: new sap.extension.m.Text("", {
                                 }).bindProperty("bindingValue", {
-                                    path: "canceled",
-                                    type: new sap.extension.data.YesNo(true)
-                                })
-                            })
+                                    path: "documentDate",
+                                    type: new sap.extension.data.Date(),
+                                }),
+                            }),
+                            new sap.extension.table.DataColumn("", {
+                                label: ibas.i18n.prop("bo_salesorder_customercode"),
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "customerCode",
+                                    type: new sap.extension.data.Alphanumeric(),
+                                }),
+                            }),
+                            new sap.extension.table.DataColumn("", {
+                                label: ibas.i18n.prop("bo_salesorder_customername"),
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "customerName",
+                                    type: new sap.extension.data.Alphanumeric(),
+                                }),
+                            }),
+                            new sap.extension.table.DataColumn("", {
+                                label: ibas.i18n.prop("bo_salesorder_documenttotal"),
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
+                                    parts: [
+                                        {
+                                            path: "documentTotal",
+                                            type: new sap.extension.data.Sum(),
+                                        },
+                                        {
+                                            path: "documentCurrency",
+                                            type: new sap.extension.data.Alphanumeric(),
+                                        },
+                                    ]
+                                }),
+                            }),
+                            new sap.extension.table.DataColumn("", {
+                                label: ibas.i18n.prop("bo_salesorder_reference1"),
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "reference1",
+                                    type: new sap.extension.data.Alphanumeric(),
+                                }),
+                            }),
+                            new sap.extension.table.DataColumn("", {
+                                label: ibas.i18n.prop("bo_salesorder_reference2"),
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "reference2",
+                                    type: new sap.extension.data.Alphanumeric(),
+                                }),
+                            }),
                         ],
                         nextDataSet(event: sap.ui.base.Event): void {
+                            // 查询下一个数据集
                             let data: any = event.getParameter("data");
                             if (ibas.objects.isNull(data)) {
                                 return;
@@ -102,7 +126,7 @@ namespace trainingtesting {
                                     text: ibas.i18n.prop("shell_data_new"),
                                     type: sap.m.ButtonType.Transparent,
                                     icon: "sap-icon://create",
-                                    press: function (): void {
+                                    press(): void {
                                         that.fireViewEvents(that.newDataEvent);
                                     }
                                 }),
@@ -110,7 +134,7 @@ namespace trainingtesting {
                                     text: ibas.i18n.prop("shell_data_view"),
                                     type: sap.m.ButtonType.Transparent,
                                     icon: "sap-icon://display",
-                                    press: function (): void {
+                                    press(): void {
                                         that.fireViewEvents(that.viewDataEvent, that.table.getSelecteds().firstOrDefault());
                                     }
                                 }),
@@ -118,7 +142,7 @@ namespace trainingtesting {
                                     text: ibas.i18n.prop("shell_data_edit"),
                                     type: sap.m.ButtonType.Transparent,
                                     icon: "sap-icon://edit",
-                                    press: function (): void {
+                                    press(): void {
                                         that.fireViewEvents(that.editDataEvent, that.table.getSelecteds().firstOrDefault());
                                     }
                                 }),
@@ -127,7 +151,7 @@ namespace trainingtesting {
                                     text: ibas.i18n.prop("shell_data_delete"),
                                     type: sap.m.ButtonType.Transparent,
                                     icon: "sap-icon://delete",
-                                    press: function (): void {
+                                    press(): void {
                                         that.fireViewEvents(that.deleteDataEvent, that.table.getSelecteds());
                                     }
                                 }),
@@ -135,7 +159,7 @@ namespace trainingtesting {
                                 new sap.m.Button("", {
                                     type: sap.m.ButtonType.Transparent,
                                     icon: "sap-icon://action",
-                                    press: function (event: any): void {
+                                    press(event: sap.ui.base.Event): void {
                                         ibas.servicesManager.showServices({
                                             proxy: new ibas.BOServiceProxy({
                                                 data: that.table.getSelecteds(),
@@ -154,7 +178,7 @@ namespace trainingtesting {
                                                         text: ibas.i18n.prop(service.name),
                                                         type: sap.m.ButtonType.Transparent,
                                                         icon: service.icon,
-                                                        press: function (): void {
+                                                        press(): void {
                                                             service.run();
                                                             popover.close();
                                                         }
@@ -173,10 +197,10 @@ namespace trainingtesting {
                         ]
                     });
                 }
-                private table: sap.extension.table.DataTable;
+                private table: sap.extension.table.Table;
                 /** 显示数据 */
                 showData(datas: bo.SalesOrder[]): void {
-                    let model: sap.ui.model.Model = this.table.getModel(undefined);
+                    let model: sap.ui.model.Model = this.table.getModel();
                     if (model instanceof sap.extension.model.JSONModel) {
                         // 已绑定过数据
                         model.addData(datas);

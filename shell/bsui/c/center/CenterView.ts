@@ -251,6 +251,12 @@ namespace shell {
                                             window.history.replaceState(null, null, hash);
                                         }
                                     }
+                                    // 手机平台时，自动收缩功能菜单
+                                    if (ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM) === ibas.emPlantform.PHONE) {
+                                        if (mainPage.getSideExpanded()) {
+                                            mainPage.setSideExpanded(!mainPage.getSideExpanded());
+                                        }
+                                    }
                                 } else if (page instanceof sap.m.MessagePage) {
                                     let button: any = sap.ui.getCore().byId(UI_MAIN_MENU);
                                     if (button instanceof sap.m.Button) {
@@ -268,7 +274,6 @@ namespace shell {
                                     // 切换hash值
                                     window.history.replaceState(null, null, "#");
                                 }
-
                             }
                         },
                     });
@@ -682,7 +687,7 @@ namespace shell {
                     }
                     let viewContent: sap.m.Dialog = view.draw();
                     if (!(viewContent instanceof sap.m.Dialog)) {
-                        viewContent = new sap.extension.m.Dialog("", {
+                        viewContent = new sap.m.Dialog("", {
                             title: title,
                             type: sap.m.DialogType.Standard,
                             state: sap.ui.core.ValueState.None,
@@ -710,7 +715,7 @@ namespace shell {
                                     }
                                 })
                             ]
-                        });
+                        }).addStyleClass("sapUiNoContentPadding");
                     }
                     // 修改id号
                     view.id = viewContent.getId();

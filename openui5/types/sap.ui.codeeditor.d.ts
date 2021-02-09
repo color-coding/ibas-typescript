@@ -12,7 +12,7 @@ declare namespace sap {
          */
         namespace codeeditor {
             /**
-             * <p>Allows to visualize source code of various types with syntax highlighting, line numbers in editable and read only mode. Use this controls in scenarios where the user should be able to inspect and edit source code. NOTE: There is a known limitation where CodeEditor won't work within IconTabBar on Internet Explorer. There is a way to achieve the same functionality - an example of IconTabHeader and a CodeEditor can be found in the CodeEditor's samples.</p>
+             * <p>Allows to visualize source code of various types with syntax highlighting, line numbers in editable and read only mode. Use this controls in scenarios where the user should be able to inspect and edit source code. The control currently uses the third-party code editor Ace. NOTE: There is a known limitation where CodeEditor won't work within IconTabBar on Internet Explorer. There is a way to achieve the same functionality - an example of IconTabHeader and a CodeEditor can be found in the CodeEditor's samples.</p>
              */
             export class CodeEditor extends sap.ui.core.Control {
                 /**
@@ -22,7 +22,7 @@ declare namespace sap {
                  */
                 constructor(sId?: string, mSettings?: any);
                 /**
-                 * <p>Defines custom completer - object implementing a getCompletions method. The method has two parameters - fnCallback method and context object. Context object provides details about oPos and sPrefix as provided by ACE.</p>
+                 * <p>Defines custom completer - object implementing a getCompletions method. The method has two parameters - fnCallback method and context object. Context object provides details about oPos and sPrefix as provided by the third-party code editor.</p>
                  * @param {any} oCustomCompleter <p>Object with getCompletions method</p>
                  */
                 addCustomCompleter(oCustomCompleter: any): void;
@@ -74,7 +74,7 @@ declare namespace sap {
                  */
                 focus(): sap.ui.codeeditor.CodeEditor;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getColorTheme" href="api/sap.ui.codeeditor.CodeEditor#methods/getColorTheme">colorTheme</a>.</p><p>Sets the editors color theme Possible values are: default, hcb, hcb_bright, hcb_blue, theme-ambiance, chaos, chrome, clouds, clouds_midnight, cobalt, crimson_editor, dawn, dreamweaver, eclipse, github, gob, gruvbox, idle_fingers, iplastic, katzenmilch, kr_theme, kuroir, merbivore, merbivore_soft, mono_industrial, monokai, pastel_on_dark, solarized_dark, solarized_light, sqlserver, terminal, textmate, tomorrow, tomorrow_night, tomorrow_night_blue, tomorrow_night_bright, tomorrow_night_eighties, twilight, dracula vibrant_ink, xcode</p><p>Default value is <code>default</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getColorTheme" href="api/sap.ui.codeeditor.CodeEditor#methods/getColorTheme">colorTheme</a>.</p><p>Sets the editors color theme Possible values are: default, hcb, hcb_bright, hcb_blue, theme-ambiance, chaos, chrome, clouds, clouds_midnight, cobalt, crimson_editor, dawn, dreamweaver, eclipse, github, gob, gruvbox, idle_fingers, iplastic, katzenmilch, kr_theme, kuroir, merbivore, merbivore_soft, mono_industrial, monokai, pastel_on_dark, solarized_dark, solarized_light, sqlserver, terminal, textmate, tomorrow, tomorrow_night, tomorrow_night_blue, tomorrow_night_bright, tomorrow_night_eighties, twilight, dracula vibrant_ink, xcode</p><p>Default value is <code>"default"</code>.</p>
                  * @returns string <p>Value of property <code>colorTheme</code></p>
                  */
                 getColorTheme(): string;
@@ -89,7 +89,7 @@ declare namespace sap {
                  */
                 getEditable(): boolean;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHeight" href="api/sap.ui.codeeditor.CodeEditor#methods/getHeight">height</a>.</p><p>The height of the code editor. A minimal height of 3rem will be applied in case the height is less than 20px.</p><p>Default value is <code>100%</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHeight" href="api/sap.ui.codeeditor.CodeEditor#methods/getHeight">height</a>.</p><p>The height of the code editor. A minimal height of 3rem will be applied in case the height is less than 20px.</p><p>Default value is <code>"100%"</code>.</p>
                  * @returns sap.ui.core.CSSSize <p>Value of property <code>height</code></p>
                  */
                 getHeight(): sap.ui.core.CSSSize;
@@ -109,7 +109,7 @@ declare namespace sap {
                  */
                 getSyntaxHints(): boolean;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getType" href="api/sap.ui.codeeditor.CodeEditor#methods/getType">type</a>.</p><p>The type of the code in the editor used for syntax highlighting Possible types are: abap, abc, actionscript, ada, apache_conf, applescript, asciidoc, assembly_x86, autohotkey, batchfile, bro, c9search, c_cpp, cirru, clojure, cobol, coffee, coldfusion, csharp, css, curly, d, dart, diff, django, dockerfile, dot, drools, eiffel, ejs, elixir, elm, erlang, forth, fortran, ftl, gcode, gherkin, gitignore, glsl, gobstones, golang, groovy, haml, handlebars, haskell, haskell_cabal, haxe, hjson, html, html_elixir, html_ruby, ini, io, jack, jade, java, javascript, json, jsoniq, jsp, jsx, julia, kotlin, latex, lean, less, liquid, lisp, live_script, livescript, logiql, lsl, lua, luapage, lucene, makefile, markdown, mask, matlab, mavens_mate_log, maze, mel, mips_assembler, mipsassembler, mushcode, mysql, nix, nsis, objectivec, ocaml, pascal, perl, pgsql, php, plain_text, powershell, praat, prolog, properties, protobuf, python, r, razor, rdoc, rhtml, rst, ruby, rust, sass, scad, scala, scheme, scss, sh, sjs, smarty, snippets, soy_template, space, sql, sqlserver, stylus, svg, swift, swig, tcl, tex, text, textile, toml, tsx, twig, typescript, vala, vbscript, velocity, verilog, vhdl, wollok, xml, xquery, yaml, terraform, slim, redshift, red, puppet, php_laravel_blade, mixal, jssm, fsharp, edifact, csp, cssound_score, cssound_orchestra, cssound_document,</p><p>Default value is <code>javascript</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getType" href="api/sap.ui.codeeditor.CodeEditor#methods/getType">type</a>.</p><p>The type of the code in the editor used for syntax highlighting Possible types are: abap, abc, actionscript, ada, apache_conf, applescript, asciidoc, assembly_x86, autohotkey, batchfile, bro, c9search, c_cpp, cirru, clojure, cobol, coffee, coldfusion, csharp, css, curly, d, dart, diff, django, dockerfile, dot, drools, eiffel, ejs, elixir, elm, erlang, forth, fortran, ftl, gcode, gherkin, gitignore, glsl, gobstones, golang, groovy, haml, handlebars, haskell, haskell_cabal, haxe, hjson, html, html_elixir, html_ruby, ini, io, jack, jade, java, javascript, json, jsoniq, jsp, jsx, julia, kotlin, latex, lean, less, liquid, lisp, live_script, livescript, logiql, lsl, lua, luapage, lucene, makefile, markdown, mask, matlab, mavens_mate_log, maze, mel, mips_assembler, mipsassembler, mushcode, mysql, nix, nsis, objectivec, ocaml, pascal, perl, pgsql, php, plain_text, powershell, praat, prolog, properties, protobuf, python, r, razor, rdoc, rhtml, rst, ruby, rust, sass, scad, scala, scheme, scss, sh, sjs, smarty, snippets, soy_template, space, sql, sqlserver, stylus, svg, swift, swig, tcl, tex, text, textile, toml, tsx, twig, typescript, vala, vbscript, velocity, verilog, vhdl, wollok, xml, xquery, yaml, terraform, slim, redshift, red, puppet, php_laravel_blade, mixal, jssm, fsharp, edifact, csp, cssound_score, cssound_orchestra, cssound_document,</p><p>Default value is <code>"javascript"</code>.</p>
                  * @returns string <p>Value of property <code>type</code></p>
                  */
                 getType(): string;
@@ -124,7 +124,7 @@ declare namespace sap {
                  */
                 getValueSelection(): boolean;
                 /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.codeeditor.CodeEditor#methods/getWidth">width</a>.</p><p>The width of the code editor</p><p>Default value is <code>100%</code>.</p>
+                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.codeeditor.CodeEditor#methods/getWidth">width</a>.</p><p>The width of the code editor</p><p>Default value is <code>"100%"</code>.</p>
                  * @returns sap.ui.core.CSSSize <p>Value of property <code>width</code></p>
                  */
                 getWidth(): sap.ui.core.CSSSize;
@@ -139,63 +139,59 @@ declare namespace sap {
                  */
                 setColorTheme(sTheme: string): sap.ui.codeeditor.CodeEditor;
                 /**
-                 * <p>Sets whether the code editor is editable or not</p>
-                 * @param {boolean} bValue <p>true to allow editing, otherwise false</p>
-                 * @returns sap.ui.codeeditor.CodeEditor <p>Returns <code>this</code> to allow method chaining</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getEditable" href="api/sap.ui.codeeditor.CodeEditor#methods/getEditable">editable</a>.</p><p>Sets whether the code in the editor can be changed by the user</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+                 * @param {boolean} bEditable <p>New value for property <code>editable</code></p>
+                 * @returns sap.ui.codeeditor.CodeEditor <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setEditable(bValue: boolean): sap.ui.codeeditor.CodeEditor;
+                setEditable(bEditable?: boolean): sap.ui.codeeditor.CodeEditor;
                 /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHeight" href="api/sap.ui.codeeditor.CodeEditor#methods/getHeight">height</a>.</p><p>The height of the code editor. A minimal height of 3rem will be applied in case the height is less than 20px.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>100%</code>.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getHeight" href="api/sap.ui.codeeditor.CodeEditor#methods/getHeight">height</a>.</p><p>The height of the code editor. A minimal height of 3rem will be applied in case the height is less than 20px.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"100%"</code>.</p>
                  * @param {sap.ui.core.CSSSize} sHeight <p>New value for property <code>height</code></p>
                  * @returns sap.ui.codeeditor.CodeEditor <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setHeight(sHeight: sap.ui.core.CSSSize): sap.ui.codeeditor.CodeEditor;
+                setHeight(sHeight?: sap.ui.core.CSSSize): sap.ui.codeeditor.CodeEditor;
                 /**
-                 * <p>Sets whether line numbers should be shown or not</p>
-                 * @param {boolean} bValue <p>true to show line numbers</p>
-                 * @returns sap.ui.codeeditor.CodeEditor <p>Returns <code>this</code> to allow method chaining</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getLineNumbers" href="api/sap.ui.codeeditor.CodeEditor#methods/getLineNumbers">lineNumbers</a>.</p><p>Sets whether line numbers should be shown</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+                 * @param {boolean} bLineNumbers <p>New value for property <code>lineNumbers</code></p>
+                 * @returns sap.ui.codeeditor.CodeEditor <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setLineNumbers(bValue: boolean): sap.ui.codeeditor.CodeEditor;
+                setLineNumbers(bLineNumbers?: boolean): sap.ui.codeeditor.CodeEditor;
                 /**
-                 * <p>Sets <code>maxLines</code> property.</p>
-                 * @param {number} iMaxLines <p>Maximum number of lines the editor should display</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getMaxLines" href="api/sap.ui.codeeditor.CodeEditor#methods/getMaxLines">maxLines</a>.</p><p>Sets whether the editor height should auto expand to a maximum number of lines. After reaching the maximum number of lines specified, the content of the <code>CodeEditor</code> will become scrollable.</p><p><b>Note:</b> Keep in mind that the auto expand <code>CodeEditor</code> behavior requires the <code>height</code> property to be set to <code>auto</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
+                 * @param {number} iMaxLines <p>New value for property <code>maxLines</code></p>
+                 * @returns sap.ui.codeeditor.CodeEditor <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setMaxLines(iMaxLines: number): void;
+                setMaxLines(iMaxLines?: number): sap.ui.codeeditor.CodeEditor;
                 /**
-                 * <p>Sets whether syntax hints should be shown or not Hints are only visible if <code>lineNumbers</code> is set to true.</p>
-                 * @param {boolean} bShow <p>true(default) to show the syntax hints</p>
-                 * @returns sap.ui.codeeditor.CodeEditor <p>Returns <code>this</code> to allow method chaining</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getSyntaxHints" href="api/sap.ui.codeeditor.CodeEditor#methods/getSyntaxHints">syntaxHints</a>.</p><p>Sets whether to show syntax hints the editor. This flag is only available if line numbers are shown.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+                 * @param {boolean} bSyntaxHints <p>New value for property <code>syntaxHints</code></p>
+                 * @returns sap.ui.codeeditor.CodeEditor <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setSyntaxHints(bShow: boolean): sap.ui.codeeditor.CodeEditor;
+                setSyntaxHints(bSyntaxHints?: boolean): sap.ui.codeeditor.CodeEditor;
                 /**
-                 * <p>Sets the type of the code editors value used for syntax highlighting</p>
-                 * @param {string} sType <p>javascript (default), html, xml, css</p>
-                 * @returns sap.ui.codeeditor.CodeEditor <p>Returns <code>this</code> to allow method chaining</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getType" href="api/sap.ui.codeeditor.CodeEditor#methods/getType">type</a>.</p><p>The type of the code in the editor used for syntax highlighting Possible types are: abap, abc, actionscript, ada, apache_conf, applescript, asciidoc, assembly_x86, autohotkey, batchfile, bro, c9search, c_cpp, cirru, clojure, cobol, coffee, coldfusion, csharp, css, curly, d, dart, diff, django, dockerfile, dot, drools, eiffel, ejs, elixir, elm, erlang, forth, fortran, ftl, gcode, gherkin, gitignore, glsl, gobstones, golang, groovy, haml, handlebars, haskell, haskell_cabal, haxe, hjson, html, html_elixir, html_ruby, ini, io, jack, jade, java, javascript, json, jsoniq, jsp, jsx, julia, kotlin, latex, lean, less, liquid, lisp, live_script, livescript, logiql, lsl, lua, luapage, lucene, makefile, markdown, mask, matlab, mavens_mate_log, maze, mel, mips_assembler, mipsassembler, mushcode, mysql, nix, nsis, objectivec, ocaml, pascal, perl, pgsql, php, plain_text, powershell, praat, prolog, properties, protobuf, python, r, razor, rdoc, rhtml, rst, ruby, rust, sass, scad, scala, scheme, scss, sh, sjs, smarty, snippets, soy_template, space, sql, sqlserver, stylus, svg, swift, swig, tcl, tex, text, textile, toml, tsx, twig, typescript, vala, vbscript, velocity, verilog, vhdl, wollok, xml, xquery, yaml, terraform, slim, redshift, red, puppet, php_laravel_blade, mixal, jssm, fsharp, edifact, csp, cssound_score, cssound_orchestra, cssound_document,</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"javascript"</code>.</p>
+                 * @param {string} sType <p>New value for property <code>type</code></p>
+                 * @returns sap.ui.codeeditor.CodeEditor <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setType(sType: string): sap.ui.codeeditor.CodeEditor;
+                setType(sType?: string): sap.ui.codeeditor.CodeEditor;
                 /**
-                 * <p>Sets the value of the code editor</p>
-                 * @param {string} sValue <p>the value of the code editor</p>
-                 * @returns sap.ui.codeeditor.CodeEditor <p>Returns <code>this</code> to allow method chaining</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getValue" href="api/sap.ui.codeeditor.CodeEditor#methods/getValue">value</a>.</p><p>The value displayed in the code editor</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
+                 * @param {string} sValue <p>New value for property <code>value</code></p>
+                 * @returns sap.ui.codeeditor.CodeEditor <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setValue(sValue: string): sap.ui.codeeditor.CodeEditor;
+                setValue(sValue?: string): sap.ui.codeeditor.CodeEditor;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getValueSelection" href="api/sap.ui.codeeditor.CodeEditor#methods/getValueSelection">valueSelection</a>.</p><p>Sets whether the code is automatically selected if a value is set</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                  * @param {boolean} bValueSelection <p>New value for property <code>valueSelection</code></p>
                  * @returns sap.ui.codeeditor.CodeEditor <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setValueSelection(bValueSelection: boolean): sap.ui.codeeditor.CodeEditor;
+                setValueSelection(bValueSelection?: boolean): sap.ui.codeeditor.CodeEditor;
                 /**
-                 * <p>Sets <code>visible</code> property.</p>
-                 * @param {boolean} bVisible <p>Whether the code editor is visible.</p>
-                 */
-                setVisible(bVisible: boolean): sap.ui.codeeditor.CodeEditor;
-                /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.codeeditor.CodeEditor#methods/getWidth">width</a>.</p><p>The width of the code editor</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>100%</code>.</p>
+                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWidth" href="api/sap.ui.codeeditor.CodeEditor#methods/getWidth">width</a>.</p><p>The width of the code editor</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"100%"</code>.</p>
                  * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
                  * @returns sap.ui.codeeditor.CodeEditor <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setWidth(sWidth: sap.ui.core.CSSSize): sap.ui.codeeditor.CodeEditor;
+                setWidth(sWidth?: sap.ui.core.CSSSize): sap.ui.codeeditor.CodeEditor;
             }
         }
     }

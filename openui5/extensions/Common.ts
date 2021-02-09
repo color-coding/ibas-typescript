@@ -250,6 +250,7 @@ namespace sap {
                     mObject = this;
                     property = arguments[0];
                 }
+
                 if (ibas.objects.isNull(property)) {
                     let metadata: any = (<any>mObject).getMetadata();
                     if (metadata instanceof sap.ui.base.ManagedObjectMetadata) {
@@ -346,7 +347,7 @@ namespace sap {
                             return true;
                         }
                     }
-                } else {
+                } else if (!ibas.objects.isNull(control)) {
                     let sPath: string = managedobjects.bindingPath(control);
                     for (let item of properties) {
                         if (ibas.strings.equalsIgnoreCase(item, sPath)) {

@@ -477,7 +477,7 @@ namespace openui5 {
                 return null;
             }
             /** 检查控件验证类型 */
-            function checkControlBindingInfoType(managedObject: sap.ui.base.ManagedObject): datatype.DataType {
+            function checkControlBindingInfoType(managedObject: sap.ui.base.ManagedObject): sap.extension.data.Type {
                 let bindingInfo: any = null;
                 if (!!managedObject && typeof managedObject.getBindingContext === "function") {
                     /** 控件当前有绑定内容才判断绑定类型 */
@@ -517,15 +517,15 @@ namespace openui5 {
                         validateResult.status = stepResult.status;
                     }
                 } else {
-                    let bindingInfoType: datatype.DataType = checkControlBindingInfoType(content);
+                    let bindingInfoType: sap.extension.data.Type = checkControlBindingInfoType(content);
                     if (!!bindingInfoType) {
                         let validationValue: any = getValidationValue(content);  // 界面值
-                        validationValue = bindingInfoType.parseValue(validationValue); // 转为BO中属性值
-                        let vResult: datatype.ValidateResult = bindingInfoType.validate(validationValue, managedObject);
+                        validationValue = bindingInfoType.parseValue(validationValue, undefined); // 转为BO中属性值
+                        let vResult: datatype.ValidateResult = bindingInfoType.validateValue(validationValue);
                         if (!vResult.status) {
                             validateResult.message = vResult.message;
                             validateResult.status = vResult.status;
-                            bindingInfoType.fireValidationError(managedObject, validateResult.message);
+                            datatype.fireValidationError(managedObject, validateResult.message);
                         } else {
                             if (managedObject instanceof sap.ui.core.Element) {
                                 (<any>sap.ui.getCore()).fireValidationSuccess({
@@ -822,6 +822,27 @@ namespace openui5 {
                 }
             }
             return control;
+        }
+    }
+
+    export namespace datatype {
+        /**
+         * 验证结果
+         */
+        export class ValidateResult {
+            status: boolean;
+            message: string;
+        }
+
+        export function fireValidationError(managedObject: sap.ui.base.ManagedObject, message?: string): sap.ui.core.Core {
+            if (managedObject !== null && managedObject !== undefined
+                && managedObject instanceof sap.ui.core.Element) {
+                let arg: any = {
+                    element: managedObject,
+                    message: message,
+                };
+                return (<any>sap.ui.getCore()).fireValidationError(arg);
+            }
         }
     }
 }

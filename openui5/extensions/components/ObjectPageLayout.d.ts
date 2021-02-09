@@ -42,6 +42,15 @@ declare namespace sap {
              */
             class DataObjectPageLayout extends ObjectPageLayout {
                 /**
+                 * 获取用户字段模式
+                 */
+                getUserFieldsMode(): string;
+                /**
+                 * 设置用户字段模式
+                 * @param value 值
+                 */
+                setUserFieldsMode(value: "attribute" | "input" | "none"): this;
+                /**
                  * 获取数据信息
                  */
                 getDataInfo(): { code: string, name?: string } | string | shell.bo.IBizObjectInfo;

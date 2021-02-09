@@ -115,25 +115,25 @@ declare namespace sap {
                  * @param {sap.ui.suite.TaskCircleColor} sColor <p>New value for property <code>color</code></p>
                  * @returns sap.ui.suite.TaskCircle <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setColor(sColor: sap.ui.suite.TaskCircleColor): sap.ui.suite.TaskCircle;
+                setColor(sColor?: sap.ui.suite.TaskCircleColor): sap.ui.suite.TaskCircle;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getMaxValue" href="api/sap.ui.suite.TaskCircle#methods/getMaxValue">maxValue</a>.</p><p>Upper limit of the displayed values. Default is 100.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>100</code>.</p>
                  * @param {number} iMaxValue <p>New value for property <code>maxValue</code></p>
                  * @returns sap.ui.suite.TaskCircle <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setMaxValue(iMaxValue: number): sap.ui.suite.TaskCircle;
+                setMaxValue(iMaxValue?: number): sap.ui.suite.TaskCircle;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getMinValue" href="api/sap.ui.suite.TaskCircle#methods/getMinValue">minValue</a>.</p><p>Lower limit of the displayed values. Default is 0.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
                  * @param {number} iMinValue <p>New value for property <code>minValue</code></p>
                  * @returns sap.ui.suite.TaskCircle <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setMinValue(iMinValue: number): sap.ui.suite.TaskCircle;
+                setMinValue(iMinValue?: number): sap.ui.suite.TaskCircle;
                 /**
                  * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getValue" href="api/sap.ui.suite.TaskCircle#methods/getValue">value</a>.</p><p>Current value of the task circle to be displayed. In dependency of the parameters maxValue and minValue it controls the size of the circle.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
                  * @param {number} iValue <p>New value for property <code>value</code></p>
                  * @returns sap.ui.suite.TaskCircle <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setValue(iValue: number): sap.ui.suite.TaskCircle;
+                setValue(iValue?: number): sap.ui.suite.TaskCircle;
             }
             /**
              * <p><p>Defined color values for the Task Circle Control</p></p>

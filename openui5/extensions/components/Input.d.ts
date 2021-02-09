@@ -145,6 +145,11 @@ declare namespace sap {
              */
             class DataOwnerInput extends UserInput {
             }
+            /**
+             * 数据所属组织-输入框
+             */
+            class DataOrganizationInput extends OrganizationInput {
+            }
         }
     }
 }
