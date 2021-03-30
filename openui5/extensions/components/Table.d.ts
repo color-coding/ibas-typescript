@@ -175,6 +175,24 @@ declare namespace sap {
                  * @returns number
                  */
                 getSelectedIndex(): number;
+                /**
+                 * 监听下一个数据集事件
+                 * @param oData 数据
+                 * @param fnFunction 方法
+                 * @param oListener 监听者
+                 */
+                attachNextDataSet(oData: any, fnFunction: Function, oListener?: any): this;
+                /**
+                 * 移出下一个数据集事件
+                 * @param fnFunction 方法
+                 * @param oListener 监听者
+                 */
+                detachNextDataSet(fnFunction: Function, oListener?: any): this;
+                /**
+                 * 触发下一个数据集事件
+                 * @param param 参数
+                 */
+                protected fireNextDataSet(param: { data: any, }): void;
             }
         }
     }
