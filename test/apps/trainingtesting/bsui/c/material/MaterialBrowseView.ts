@@ -36,7 +36,7 @@ namespace trainingtesting {
                         }),
                         items: {
                             path: "/rows",
-                            template: new sap.extension.f.GridListItem("", {
+                            template: new sap.f.GridListItem("", {
                                 content: [
                                     new sap.extension.f.Card("", {
                                         width: "100%",

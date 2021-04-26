@@ -426,7 +426,7 @@ namespace sap {
                     if (model instanceof sap.extension.model.JSONModel) {
                         model.destroy();
                     }
-                    (<any>sap.m.List.prototype).exit.apply(this, arguments);
+                    (<any>sap.f.GridList.prototype).exit.apply(this, arguments);
                 }
             });
         }

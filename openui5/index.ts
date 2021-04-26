@@ -63,6 +63,8 @@
 /// <reference path="./extensions/components/Card.ts" />
 /// <reference path="./extensions/components/MessageStrip.d.ts" />
 /// <reference path="./extensions/components/MessageStrip.ts" />
+/// <reference path="./extensions/components/GenericTag.d.ts" />
+/// <reference path="./extensions/components/GenericTag.ts" />
 /// <reference path="./extensions/components/Factory.ts" />
 
 namespace openui5 {

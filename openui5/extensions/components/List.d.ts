@@ -199,9 +199,6 @@ declare namespace sap {
                  */
                 protected fireNextDataSet(param: { data: any, }): void;
             }
-            class GridListItem extends sap.f.GridListItem {
-
-            }
         }
     }
 }

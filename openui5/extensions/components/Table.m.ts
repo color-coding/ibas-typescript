@@ -87,6 +87,15 @@ namespace sap {
                                 sap.m.Sticky.ColumnHeaders
                             ];
                         }
+                        if (ibas.objects.isNull(mSettings.includeItemInSelection)) {
+                            mSettings.includeItemInSelection = true;
+                        }
+                        if (ibas.objects.isNull(mSettings.growing)) {
+                            mSettings.growing = true;
+                        }
+                        if (ibas.objects.isNull(mSettings.growingScrollToLoad)) {
+                            mSettings.growingScrollToLoad = true;
+                        }
                     }
                     return sap.m.Table.prototype.applySettings.apply(this, arguments);
                 },
