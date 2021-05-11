@@ -10,7 +10,7 @@
     "compactScreen": false,
     "disablePlatformView": false,
     "fullScreen|PHONE": true,
-    "queryPanelConfigurable|PHONE": false,
+    "queryPanelConfigurable|PHONE": true,
     "queryPanelSelectable|PHONE": false,
     "defaultUser": "admin",
     "defaultPassword": "1q2w3e",

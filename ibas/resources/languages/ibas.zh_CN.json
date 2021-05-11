@@ -53,5 +53,6 @@
   "sys_action_starting": "开始执行，时间[{0}]",
   "sys_action_occurred_error": "发生错误，[{0}]",
   "sys_action_not_running": "没有运行",
-  "sys_action_completed": "执行结束，时间[{0}]，耗时[{1}]秒"
+  "sys_action_completed": "执行结束，时间[{0}]，耗时[{1}]秒",
+  "sys_data_modified_continue_close_view": "数据还未保存，是否继续关闭？"
 }

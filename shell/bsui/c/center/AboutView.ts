@@ -14,12 +14,11 @@ namespace shell {
             export class AboutView extends ibas.View implements app.IAboutView {
                 /** 绘制视图 */
                 draw(): any {
-                    this.form = new sap.m.Page("", {
+                    return this.form = new sap.m.Page("", {
                         showHeader: false,
                         enableScrolling: true,
                         content: [this.form]
                     });
-                    return this.form;
                 }
                 private form: sap.m.Page;
 

@@ -137,19 +137,19 @@ namespace shell {
                                         that.table = that.createTable(boInfo.properties);
                                         that.form.addContent(that.table);
                                     }
-                                    that.table.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
+                                    that.table.setModel(new sap.extension.model.JSONModel({ rows: datas }));
                                 }
                             });
                         } else {
                             this.table = this.createTable([]);
                             this.form.addContent(this.table);
-                            this.table.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
+                            this.table.setModel(new sap.extension.model.JSONModel({ rows: datas }));
                         }
                     } else {
-                        this.table.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
+                        this.table.setModel(new sap.extension.model.JSONModel({ rows: datas }));
                     }
                 }
-                private table: sap.ui.table.Table;
+                private table: sap.extension.table.Table;
                 protected getPropertyListItem(properies: bo.IBizPropertyInfo[]): sap.ui.core.ListItem[] {
                     let items: Array<sap.ui.core.ListItem> = [];
                     items.push(new sap.ui.core.ListItem("", {
@@ -169,9 +169,9 @@ namespace shell {
                     }
                     return items;
                 }
-                private createTable(properies: bo.IBizPropertyInfo[]): sap.ui.table.Table {
+                private createTable(properies: bo.IBizPropertyInfo[]): sap.extension.table.Table {
                     let that: this = this;
-                    let table: sap.ui.table.Table = new sap.ui.table.Table("", {
+                    let table: sap.extension.table.Table = new sap.extension.table.Table("", {
                         toolbar: new sap.m.Toolbar("", {
                             content: [
                                 new sap.m.Button("", {
@@ -187,75 +187,70 @@ namespace shell {
                                     type: sap.m.ButtonType.Transparent,
                                     icon: "sap-icon://less",
                                     press: function (): void {
-                                        let selected: any = openui5.utils.getSelecteds(that.table).firstOrDefault();
-                                        that.fireViewEvents(that.removeQueryConditionEvent, selected);
+                                        that.fireViewEvents(that.removeQueryConditionEvent, that.table.getSelecteds());
                                     }
                                 })
                             ]
                         }),
                         visibleRowCount: 5,
                         enableSelectAll: false,
-                        selectionBehavior: sap.ui.table.SelectionBehavior.Row,
                         rows: "{/rows}",
                         columns: [
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("shell_query_condition_relationship"),
-                                width: "100px",
-                                template: new sap.m.Select("", {
-                                    width: "100%",
-                                    items: openui5.utils.createComboBoxItems(ibas.emConditionRelationship)
-                                }).bindProperty("selectedKey", {
+                                width: "8rem",
+                                template: new sap.extension.m.EnumSelect("", {
+                                    enumType: ibas.emConditionRelationship,
+                                }).bindProperty("bindingValue", {
                                     path: "relationship",
-                                    type: "sap.ui.model.type.Integer"
+                                    type: new sap.extension.data.ConditionRelationship()
                                 })
                             }),
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("shell_query_condition_bracketopen"),
-                                width: "100px",
+                                width: "8rem",
                                 template: new sap.extension.m.RepeatCharSelect("", {
                                     repeatText: "(",
                                     maxCount: 5,
-                                }).bindProperty("selectedKey", {
+                                }).bindProperty("bindingValue", {
                                     path: "bracketOpen",
                                     type: "sap.ui.model.type.Integer"
                                 })
                             }),
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("shell_query_condition_alias"),
-                                width: "200px",
-                                template: new sap.m.Select("", {
-                                    width: "100%",
+                                width: "16rem",
+                                template: new sap.extension.m.Select("", {
                                     items: this.getPropertyListItem(properies)
-                                }).bindProperty("selectedKey", {
+                                }).bindProperty("bindingValue", {
                                     path: "alias",
                                 })
                             }),
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("shell_query_condition_operation"),
-                                width: "140px",
-                                template: new sap.m.Select("", {
-                                    width: "100%",
-                                    items: openui5.utils.createComboBoxItems(ibas.emConditionOperation)
-                                }).bindProperty("selectedKey", {
+                                width: "10rem",
+                                template: new sap.extension.m.EnumSelect("", {
+                                    enumType: ibas.emConditionOperation,
+                                }).bindProperty("bindingValue", {
                                     path: "operation",
-                                    type: "sap.ui.model.type.Integer"
+                                    type: new sap.extension.data.ConditionOperation()
                                 })
                             }),
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("shell_query_condition_value"),
-                                width: "120px",
-                                template: new sap.m.Input("", {
-                                }).bindProperty("value", {
+                                width: "10rem",
+                                template: new sap.extension.m.Input("", {
+                                }).bindProperty("bindingValue", {
                                     path: "value"
                                 }),
                             }),
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("shell_query_condition_bracketclose"),
-                                width: "100px",
+                                width: "8rem",
                                 template: new sap.extension.m.RepeatCharSelect("", {
                                     repeatText: ")",
                                     maxCount: 5,
-                                }).bindProperty("selectedKey", {
+                                }).bindProperty("bindingValue", {
                                     path: "bracketClose",
                                     type: "sap.ui.model.type.Integer"
                                 })
@@ -281,31 +276,26 @@ namespace shell {
                 /** 绘制视图 */
                 draw(): any {
                     let that: this = this;
-                    this.form = new sap.m.Dialog("", {
+                    return this.form = new sap.m.Dialog("", {
                         title: this.title,
                         type: sap.m.DialogType.Standard,
                         state: sap.ui.core.ValueState.None,
-                        stretchOnPhone: true,
-                        horizontalScrolling: true,
-                        verticalScrolling: true,
+                        stretch: ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM) === ibas.emPlantform.PHONE ? true : false,
                         subHeader: new sap.m.Toolbar("", {
                             content: [
-                                new sap.m.ToolbarSpacer("", { width: "5px" }),
-                                new sap.m.Label("", {
+                                new sap.m.Title("", {
                                     text: ibas.i18n.prop("shell_query_name"),
                                 }),
                                 new sap.m.Input("", {
                                 }).bindProperty("value", {
                                     path: "/name"
                                 }),
-                                new sap.m.ToolbarSpacer("", { width: "15px" }),
                                 new sap.m.RatingIndicator("", {
                                     maxValue: 5,
                                     tooltip: ibas.i18n.prop("shell_query_order"),
                                 }).bindProperty("value", {
                                     path: "/order"
                                 }),
-                                new sap.m.ToolbarSpacer("", { width: "5px" })
                             ]
                         }),
                         content: [
@@ -338,7 +328,6 @@ namespace shell {
                             }),
                         ]
                     }).addStyleClass("sapUiNoContentPadding");
-                    return this.form;
                 }
             }
         }

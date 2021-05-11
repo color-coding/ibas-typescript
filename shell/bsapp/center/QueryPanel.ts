@@ -145,8 +145,10 @@ namespace shell {
                 this.editQuery.criteria.conditions.create();
                 this.view.showQueryConditions(this.editQuery.criteria.conditions);
             }
-            private removeQueryCondition(condition: ibas.ICondition): void {
-                this.editQuery.criteria.conditions.remove(condition);
+            private removeQueryCondition(condition: ibas.ICondition | ibas.ICondition[]): void {
+                for (let item of ibas.arrays.create(condition)) {
+                    this.editQuery.criteria.conditions.remove(item);
+                }
                 this.view.showQueryConditions(this.editQuery.criteria.conditions);
             }
             /** 运行 */

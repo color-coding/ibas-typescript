@@ -13,211 +13,30 @@ namespace shell {
              * 视图-查询面板
              */
             export class QueryPanelView extends c.QueryPanelView implements app.IQueryPanelView {
-                private list: sap.m.List;
-                private list_template: sap.m.CustomListItem;
-                /** 显示查询条件 */
-                showQueryConditions(datas: ibas.ICondition[]): void {
-                    let that: this = this;
-                    if (ibas.objects.isNull(this.list_template)) {
-                        // 尚未初始化表格
-                        // 获取列描述
-                        let boRepository: bo.IBORepositoryShell = bo.repository.create();
-                        boRepository.fetchBizObjectInfo({
-                            user: ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE),
-                            boCode: this.boName,
-                            onCompleted(opRslt: ibas.IOperationResult<bo.IBizObjectInfo>): void {
-                                let properies: bo.IBizPropertyInfo[] = [];
-                                if (opRslt.resultObjects.length > 0) {
-                                    properies = opRslt.resultObjects.firstOrDefault().properties;
-                                }
-                                that.list_template = new sap.m.CustomListItem("", {
-                                    content: [
-                                        new sap.m.VBox("", {
-                                            fitContainer: true,
-                                            items: [
-                                                new sap.m.HBox("", {
-                                                    fitContainer: true,
-                                                    alignContent: sap.m.FlexAlignContent.Center,
-                                                    items: [
-                                                        new sap.m.VBox("", {
-                                                            justifyContent: sap.m.FlexJustifyContent.Center,
-                                                            fitContainer: true,
-                                                            width: "14%",
-                                                            items: [
-                                                                new sap.m.Label("", {
-                                                                    width: "100%",
-                                                                    text: ibas.i18n.prop("shell_query_condition")
-                                                                }),
-                                                            ]
-                                                        }),
-                                                        new sap.m.VBox("", {
-                                                            fitContainer: true,
-                                                            width: "1%",
-                                                        }),
-                                                        new sap.m.VBox("", {
-                                                            justifyContent: sap.m.FlexJustifyContent.Center,
-                                                            fitContainer: true,
-                                                            width: "70%",
-                                                            items: [
-                                                                new sap.m.Select("", {
-                                                                    width: "100%",
-                                                                    items: openui5.utils.createComboBoxItems(ibas.emConditionRelationship),
-                                                                }).bindProperty("selectedKey", {
-                                                                    path: "relationship",
-                                                                    type: "sap.ui.model.type.Integer"
-                                                                }),
-                                                            ]
-                                                        }),
-                                                        new sap.m.VBox("", {
-                                                            fitContainer: true,
-                                                            width: "1%",
-                                                        }),
-                                                        new sap.m.VBox("", {
-                                                            fitContainer: true,
-                                                            width: "14%",
-                                                            items: [
-                                                                new sap.m.Button("", {
-                                                                    type: sap.m.ButtonType.Transparent,
-                                                                    width: "100%",
-                                                                    icon: "sap-icon://sys-cancel",
-                                                                    press: function (): void {
-                                                                        let selected: any = this.getBindingContext().getObject();
-                                                                        that.fireViewEvents(that.removeQueryConditionEvent, selected);
-                                                                    }
-                                                                })
-                                                            ]
-                                                        }),
-                                                    ]
-                                                }),
-                                                new sap.m.HBox("", {
-                                                    fitContainer: true,
-                                                    items: [
-                                                        new sap.m.VBox("", {
-                                                            justifyContent: sap.m.FlexJustifyContent.Center,
-                                                            fitContainer: true,
-                                                            width: "14%",
-                                                            items: [
-                                                                new sap.extension.m.RepeatCharSelect("", {
-                                                                    repeatText: "(",
-                                                                    maxCount: 5,
-                                                                }).bindProperty("selectedKey", {
-                                                                    path: "bracketOpen",
-                                                                    type: "sap.ui.model.type.Integer"
-                                                                }),
-                                                            ]
-                                                        }),
-                                                        new sap.m.VBox("", {
-                                                            fitContainer: true,
-                                                            width: "1%",
-                                                        }),
-                                                        new sap.m.VBox("", {
-                                                            fitContainer: true,
-                                                            width: "70%",
-                                                            items: [
-                                                                new sap.m.Select("", {
-                                                                    width: "100%",
-                                                                    items: that.getPropertyListItem(properies)
-                                                                }).bindProperty("selectedKey", {
-                                                                    path: "alias",
-                                                                }),
-                                                                new sap.m.Select("", {
-                                                                    width: "100%",
-                                                                    items: openui5.utils.createComboBoxItems(ibas.emConditionOperation)
-                                                                }).bindProperty("selectedKey", {
-                                                                    path: "operation",
-                                                                    type: "sap.ui.model.type.Integer"
-                                                                }),
-                                                                new sap.m.Input("", {
-                                                                    width: "100%",
-                                                                    placeholder: ibas.i18n.prop("shell_query_condition_value"),
-                                                                }).bindProperty("value", {
-                                                                    path: "value"
-                                                                }),
-                                                            ]
-                                                        }),
-                                                        new sap.m.VBox("", {
-                                                            fitContainer: true,
-                                                            width: "1%",
-                                                        }),
-                                                        new sap.m.VBox("", {
-                                                            fitContainer: true,
-                                                            justifyContent: sap.m.FlexJustifyContent.Center,
-                                                            width: "14%",
-                                                            items: [
-                                                                new sap.extension.m.RepeatCharSelect("", {
-                                                                    repeatText: ")",
-                                                                    maxCount: 5,
-                                                                }).bindProperty("selectedKey", {
-                                                                    path: "bracketClose",
-                                                                    type: "sap.ui.model.type.Integer"
-                                                                }),
-                                                            ]
-                                                        }),
-                                                    ]
-                                                }),
-                                            ]
-                                        }),
-                                    ]
-                                });
-                                that.list.bindItems({
-                                    path: "/rows",
-                                    template: that.list_template,
-                                });
-                                that.list.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
-                            }
-                        });
-                        return;
-                    }
-                    this.list.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
-                }
-                /** 关闭之后 */
-                protected onClosed(): void {
-                    super.onClosed();
-                    if (this.list != null) {
-                        this.list.destroy(true);
-                        this.list = null;
-                    }
-                    if (this.list_template != null) {
-                        this.list_template.destroy(true);
-                        this.list_template = null;
-                    }
-                }
                 /** 绘制视图 */
                 draw(): any {
                     let that: this = this;
-                    this.list = new sap.m.List("", {
-                        inset: false,
-                        growing: true,
-                        mode: sap.m.ListMode.None,
-                        swipeDirection: sap.m.SwipeDirection.RightToLeft,
-                        delete: function (event: any): void {
-                            that.fireViewEvents(that.removeQueryConditionEvent, event.getParameters().listItem.getModel().getData());
-                        },
-                    });
-                    this.form = new sap.m.Dialog("", {
+                    return this.form = new sap.m.Dialog("", {
                         title: this.title,
                         type: sap.m.DialogType.Standard,
                         state: sap.ui.core.ValueState.None,
-                        stretchOnPhone: true,
-                        horizontalScrolling: true,
-                        verticalScrolling: true,
+                        stretch: ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM) === ibas.emPlantform.PHONE ? true : false,
                         subHeader: new sap.m.Toolbar("", {
                             content: [
-                                new sap.m.Label("", {
+                                new sap.m.Title("", {
                                     text: ibas.i18n.prop("shell_query_name"),
                                 }),
                                 new sap.m.Input("", {
                                 }).bindProperty("value", {
                                     path: "/name"
                                 }),
-                                new sap.m.ToolbarSpacer("", { width: "15px" }),
+                                new sap.m.ToolbarSpacer(""),
                                 new sap.m.RatingIndicator("", {
                                     maxValue: 5,
                                     tooltip: ibas.i18n.prop("shell_query_order"),
                                 }).bindProperty("value", {
                                     path: "/order"
                                 }),
-                                new sap.m.ToolbarSpacer("", { width: "5px" })
                             ]
                         }),
                         content: [
@@ -250,7 +69,151 @@ namespace shell {
                             }),
                         ]
                     }).addStyleClass("sapUiNoContentPadding");
-                    return this.form;
+                }
+                private list: sap.m.List;
+                /** 显示查询条件 */
+                showQueryConditions(datas: ibas.ICondition[]): void {
+                    let that: this = this;
+                    if (ibas.objects.isNull(this.list)) {
+                        // 尚未初始化表格
+                        // 获取列描述
+                        let boRepository: bo.IBORepositoryShell = bo.repository.create();
+                        boRepository.fetchBizObjectInfo({
+                            user: ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE),
+                            boCode: this.boName,
+                            onCompleted(opRslt: ibas.IOperationResult<bo.IBizObjectInfo>): void {
+                                let properies: bo.IBizPropertyInfo[] = [];
+                                if (opRslt.resultObjects.length > 0) {
+                                    properies = opRslt.resultObjects.firstOrDefault().properties;
+                                }
+                                that.form.addContent(that.list = new sap.m.List("", {
+                                    inset: false,
+                                    growing: true,
+                                    mode: sap.m.ListMode.None,
+                                    swipeDirection: sap.m.SwipeDirection.RightToLeft,
+                                    delete: function (event: any): void {
+                                        that.fireViewEvents(that.removeQueryConditionEvent, event.getParameters().listItem.getModel().getData());
+                                    },
+                                    items: {
+                                        path: "/rows",
+                                        template: new sap.m.CustomListItem("", {
+                                            content: [
+                                                new sap.m.Panel("", {
+                                                    expandable: true,
+                                                    expanded: true,
+                                                    headerToolbar:
+                                                        new sap.m.Toolbar("", {
+                                                            content: [
+                                                                new sap.m.Title("", {
+                                                                    text: ibas.i18n.prop("shell_query_condition")
+                                                                }),
+                                                                new sap.extension.m.EnumSelect("", {
+                                                                    width: "100%",
+                                                                    enumType: ibas.emConditionRelationship,
+                                                                }).bindProperty("bindingValue", {
+                                                                    path: "relationship",
+                                                                    type: new sap.extension.data.ConditionRelationship(),
+                                                                }),
+                                                                new sap.m.ToolbarSpacer(),
+                                                                new sap.m.Button("", {
+                                                                    type: sap.m.ButtonType.Transparent,
+                                                                    icon: "sap-icon://sys-cancel",
+                                                                    press: function (this: sap.m.Button): void {
+                                                                        let selected: any = this.getBindingContext().getObject();
+                                                                        that.fireViewEvents(that.removeQueryConditionEvent, selected);
+                                                                    }
+                                                                })
+                                                            ]
+                                                        }),
+                                                    content: [
+                                                        new sap.m.VBox("", {
+                                                            alignItems: sap.m.FlexAlignItems.Stretch,
+                                                            alignContent: sap.m.FlexAlignContent.Stretch,
+                                                            justifyContent: sap.m.FlexJustifyContent.Inherit,
+                                                            items: [
+                                                                new sap.m.HBox("", {
+                                                                    items: [
+                                                                        new sap.extension.m.RepeatCharSelect("", {
+                                                                            width: "100%",
+                                                                            repeatText: "(",
+                                                                            maxCount: 5,
+                                                                            layoutData: new sap.m.FlexItemData("", {
+                                                                                growFactor: 1,
+                                                                            })
+                                                                        }).bindProperty("selectedKey", {
+                                                                            path: "bracketOpen",
+                                                                            type: "sap.ui.model.type.Integer"
+                                                                        }),
+                                                                        new sap.extension.m.Select("", {
+                                                                            width: "100%",
+                                                                            items: that.getPropertyListItem(properies),
+                                                                            layoutData: new sap.m.FlexItemData("", {
+                                                                                growFactor: 2,
+                                                                            })
+                                                                        }).bindProperty("bindingValue", {
+                                                                            path: "alias",
+                                                                        }),
+                                                                    ]
+                                                                }),
+                                                                new sap.m.HBox("", {
+                                                                    items: [
+                                                                        new sap.extension.m.EnumSelect("", {
+                                                                            width: "100%",
+                                                                            textAlign: sap.ui.core.TextAlign.Center,
+                                                                            enumType: ibas.emConditionOperation,
+                                                                            layoutData: new sap.m.FlexItemData("", {
+                                                                                growFactor: 3,
+                                                                            })
+                                                                        }).bindProperty("bindingValue", {
+                                                                            path: "operation",
+                                                                            type: new sap.extension.data.ConditionOperation(),
+                                                                        }),
+                                                                    ]
+                                                                }),
+                                                                new sap.m.HBox("", {
+                                                                    items: [
+                                                                        new sap.extension.m.Input("", {
+                                                                            width: "100%",
+                                                                            placeholder: ibas.i18n.prop("shell_query_condition_value"),
+                                                                            layoutData: new sap.m.FlexItemData("", {
+                                                                                growFactor: 2,
+                                                                            })
+                                                                        }).bindProperty("bindingValue", {
+                                                                            path: "value",
+                                                                            type: new sap.extension.data.Alphanumeric(),
+                                                                        }),
+                                                                        new sap.extension.m.RepeatCharSelect("", {
+                                                                            width: "100%",
+                                                                            repeatText: ")",
+                                                                            maxCount: 5,
+                                                                            layoutData: new sap.m.FlexItemData("", {
+                                                                                growFactor: 1,
+                                                                            })
+                                                                        }).bindProperty("selectedKey", {
+                                                                            path: "bracketClose",
+                                                                            type: "sap.ui.model.type.Integer"
+                                                                        }),
+                                                                    ]
+                                                                }),
+                                                            ]
+                                                        }),
+                                                    ],
+                                                }),
+                                            ]
+                                        }),
+                                    }
+                                }));
+                                that.showQueryConditions(datas);
+                            }
+                        });
+                    } else {
+                        this.list.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
+                    }
+                }
+                onClosed(): void {
+                    this.list.destroy();
+                    this.list = null;
+                    super.onClosed();
                 }
             }
         }

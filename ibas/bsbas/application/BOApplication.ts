@@ -294,6 +294,10 @@ namespace ibas {
      * 业务对象编辑应用
      */
     export abstract class BOEditApplication<T extends IBOEditView, D> extends BOApplication<T> {
+        constructor() {
+            super();
+            this.warningClose = config.get(CONFIG_ITEM_DEBUG_MODE) === true ? false : true;
+        }
         /** 注册视图，重载需要回掉此方法 */
         protected registerView(): void {
             super.registerView();
@@ -321,6 +325,29 @@ namespace ibas {
                 }
             }
         }
+
+        /** 关闭视图 */
+        close(): void {
+            if (this.warningClose === true
+                && this.editData instanceof BusinessObject && this.editData.isDirty === true) {
+                this.messages({
+                    type: emMessageType.QUESTION,
+                    message: i18n.prop("sys_data_modified_continue_close_view"),
+                    actions: [
+                        emMessageAction.YES,
+                        emMessageAction.NO
+                    ],
+                    onCompleted: (action) => {
+                        if (action === emMessageAction.YES) {
+                            super.close();
+                        }
+                    }
+                });
+            } else {
+                super.close();
+            }
+        }
+        protected warningClose: boolean;
     }
 
     const PROPERTY_ON_COMPLETED_SAVED: symbol = Symbol("onCompletedClose");
@@ -336,8 +363,7 @@ namespace ibas {
          * 运行
          * @param caller 服务调用者
          */
-        run(caller: IBOEditServiceCaller<D>): void;
-        /** 运行 */
+        run(caller: IBOEditServiceCaller<D>): void;        /** 运行 */
         run(): void {
             if (arguments.length === 1) {
                 // 判断是否为选择契约
@@ -379,16 +405,36 @@ namespace ibas {
         }
         /** 关闭视图 */
         close(): void {
-            if (!objects.isNull(this.view)) {
-                if (!objects.isNull(this.viewShower)) {
-                    this.viewShower.destroy(this.view);
-                }
-            }
-            if (!objects.isNull(this.editData) && this[PROPERTY_ON_COMPLETED_CLOSED] instanceof Function) {
-                if (this.editData instanceof BusinessObject && this.editData.isDirty === false) {
-                    this[PROPERTY_ON_COMPLETED_CLOSED](this.editData);
-                } else {
-                    this[PROPERTY_ON_COMPLETED_CLOSED](this.editData);
+            if (this.warningClose === true
+                && this.editData instanceof BusinessObject && this.editData.isDirty === true) {
+                this.messages({
+                    type: emMessageType.QUESTION,
+                    message: i18n.prop("sys_data_modified_continue_close_view"),
+                    actions: [
+                        emMessageAction.YES,
+                        emMessageAction.NO
+                    ],
+                    onCompleted: (action) => {
+                        if (action === emMessageAction.YES) {
+                            BOApplication.prototype.close.apply(this, arguments);
+                            if (!objects.isNull(this.editData) && this[PROPERTY_ON_COMPLETED_CLOSED] instanceof Function) {
+                                if (this.editData instanceof BusinessObject && this.editData.isDirty === false) {
+                                    this[PROPERTY_ON_COMPLETED_CLOSED](this.editData);
+                                } else {
+                                    this[PROPERTY_ON_COMPLETED_CLOSED](this.editData);
+                                }
+                            }
+                        }
+                    }
+                });
+            } else {
+                BOApplication.prototype.close.apply(this, arguments);
+                if (!objects.isNull(this.editData) && this[PROPERTY_ON_COMPLETED_CLOSED] instanceof Function) {
+                    if (this.editData instanceof BusinessObject && this.editData.isDirty === false) {
+                        this[PROPERTY_ON_COMPLETED_CLOSED](this.editData);
+                    } else {
+                        this[PROPERTY_ON_COMPLETED_CLOSED](this.editData);
+                    }
                 }
             }
         }

@@ -66,7 +66,7 @@ namespace sap {
                                             let binding: any = source.getBinding("bindingValue");
                                             if (binding instanceof sap.ui.model.PropertyBinding) {
                                                 if (source.isEmptyValue(binding.getRawValue())) {
-                                                    binding.setValue(defaultItem.getKey());
+                                                    source.setBindingValue(defaultItem.getKey());
                                                 }
                                             }
                                         }

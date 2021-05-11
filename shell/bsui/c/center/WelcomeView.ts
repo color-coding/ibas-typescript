@@ -53,7 +53,23 @@ namespace shell {
                 private page: sap.m.Page;
                 /** 显示内容 */
                 showContent(content: string): void {
-                    if (ibas.strings.isWith(content, "http", undefined)) {
+                    if (ibas.strings.isWith(content, undefined, ".jpg")
+                        || ibas.strings.isWith(content, undefined, ".png")
+                        || ibas.strings.isWith(content, undefined, ".bmp")) {
+                        this.page.addContent(new sap.m.FlexBox("", {
+                            alignItems: sap.m.FlexAlignItems.Center,
+                            justifyContent: sap.m.FlexJustifyContent.Center,
+                            height: "100%",
+                            width: "100%",
+                            items: [
+                                new sap.m.Image("", {
+                                    height: "100%",
+                                    width: "100%",
+                                    src: content,
+                                })
+                            ]
+                        }));
+                    } else if (ibas.strings.isWith(content, "http", undefined)) {
                         let html: sap.ui.core.HTML = new sap.ui.core.HTML("", {
                             content: ibas.strings.format(
                                 `<iframe src="{0}" width="100%" height="100%" frameborder="no" style="border:0px;" scrolling="no"></iframe>`, content),
@@ -62,15 +78,6 @@ namespace shell {
                             visible: true,
                         });
                         this.page.addContent(html);
-                    } else if (ibas.strings.isWith(content, undefined, ".jpg")
-                        || ibas.strings.isWith(content, undefined, ".png")
-                        || ibas.strings.isWith(content, undefined, ".bmp")) {
-                        let image: sap.m.Image = new sap.m.Image("", {
-                            height: "100%",
-                            width: "100%",
-                            src: content,
-                        });
-                        this.page.addContent(image);
                     } else if (!ibas.strings.isEmpty(content)) {
                         this.page.addContent(new sap.m.Text("", {
                             height: "100%",

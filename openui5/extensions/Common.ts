@@ -286,21 +286,26 @@ namespace sap {
              */
             export function nonEditable(control: sap.ui.core.Control): void {
                 if (control instanceof sap.m.InputBase) {
+                    control.unbindProperty("editable", false);
                     control.setEditable(false);
                     if (control instanceof sap.m.Input) {
                         control.setShowValueHelp(false);
                     }
                 } else if (control instanceof sap.m.Select) {
                     try {
+                        control.unbindProperty("editable", false);
                         control.setEditable(false);
                     } catch (error) {
                         control.setEnabled(false);
                     }
                 } else if (control instanceof sap.m.CheckBox) {
+                    control.unbindProperty("editable", false);
                     control.setEditable(false);
                 } else if (control instanceof sap.extension.core.EditableControl) {
+                    control.unbindProperty("editable", false);
                     control.setEditable(false);
                 } else if (control instanceof sap.m.Button || control instanceof sap.m.MenuButton) {
+                    control.unbindProperty("enabled", false);
                     control.setEnabled(false);
                 } else if (control instanceof sap.ui.table.Table) {
                     control.setEditable(false);
