@@ -292,12 +292,8 @@ namespace sap {
                         control.setShowValueHelp(false);
                     }
                 } else if (control instanceof sap.m.Select) {
-                    try {
-                        control.unbindProperty("editable", false);
-                        control.setEditable(false);
-                    } catch (error) {
-                        control.setEnabled(false);
-                    }
+                    control.unbindProperty("editable", false);
+                    control.setEditable(false);
                 } else if (control instanceof sap.m.CheckBox) {
                     control.unbindProperty("editable", false);
                     control.setEditable(false);

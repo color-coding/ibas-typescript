@@ -76,10 +76,10 @@ namespace sap {
             function clearSelection(this: Input, event: KeyboardEvent): void {
                 if (event.keyCode === 8 || event.keyCode === 46) {
                     // backspace key
-                    if (this instanceof Input) {
+                    if (this instanceof Input && this.getEditable() === true) {
                         if (this.getShowValueHelp() && this.getValueHelpOnly()) {
                             this.setBindingValue(null);
-                            this.fireChange();
+                            this.fireChange({});
                         }
                     }
                 }

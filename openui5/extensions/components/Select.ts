@@ -51,32 +51,57 @@ namespace sap {
                 isEmptyValue(value: any): boolean {
                     return ibas.strings.isEmpty(value);
                 },
-                init(this: Select): void {
-                    (<any>sap.m.Select.prototype).init.apply(this, arguments);
-                    this.attachModelContextChange(undefined, function (event: sap.ui.base.Event): void {
-                        let source: any = event.getSource();
-                        if (source instanceof Select && source.getItems().length > 1) {
-                            let defaultItem: SelectItem = defaultSelectItem(source);
-                            if (defaultItem instanceof SelectItem) {
-                                let content: any = source.getBindingContext();
-                                if (content instanceof sap.ui.model.Context) {
-                                    let data: any = content.getObject();
-                                    if (data instanceof ibas.BusinessObject) {
-                                        if (data.isNew === true) {
-                                            let binding: any = source.getBinding("bindingValue");
-                                            if (binding instanceof sap.ui.model.PropertyBinding) {
-                                                if (source.isEmptyValue(binding.getRawValue())) {
-                                                    source.setBindingValue(defaultItem.getKey());
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
+                _isKeyAvailable(this: Select, sKey: string): boolean {
+                    let available: boolean = (<any>sap.m.Select.prototype)._isKeyAvailable.apply(this, arguments);
+                    if (available === false && this.getForceSelection() === false) {
+                        this.addItem(new SelectItem("", {
+                            key: sKey,
+                            text: sKey,
+                            additionalText: sKey,
+                        }));
+                        return true;
+                    }
+                    return available;
+                },
+                getDefaultSelectedItem(): sap.ui.core.Item {
+                    for (let item of this.getItems()) {
+                        if (item instanceof SelectItem) {
+                            if (item.getDefault() === true) {
+                                return item;
                             }
                         }
-                    });
+                    }
+                    return (<any>sap.m.Select.prototype).getDefaultSelectedItem.apply(this, arguments);
+                },
+                init(this: Select): void {
+                    this.attachBrowserEvent("keydown", clearSelection);
+                    (<any>sap.m.Select.prototype).init.apply(this, arguments);
+                },
+                exit(this: Select): void {
+                    this.detachBrowserEvent("keydown", clearSelection);
+                    (<any>sap.m.Select.prototype).exit.apply(this, arguments);
                 }
             });
+            // 但仅选择数据时，清除已选择值
+            function clearSelection(this: Select, event: KeyboardEvent): void {
+                if (event.keyCode === 8 || event.keyCode === 46) {
+                    // backspace key
+                    if (this instanceof Select && this.getEditable() === true) {
+                        if (this.getForceSelection() === false) {
+                            this.close();
+                            this.setBindingValue(null);
+                            this.fireChange({});
+                        } else {
+                            let item: any = this.getDefaultSelectedItem();
+                            if (item instanceof SelectItem) {
+                                this.close();
+                                this.setBindingValue(item.getKey());
+                                this.fireChange({});
+                            }
+                        }
+                    }
+                }
+            }
             sap.ui.core.ListItem.extend("sap.extension.m.SelectItem", {
                 metadata: {
                     properties: {
@@ -85,7 +110,7 @@ namespace sap {
                     events: {}
                 },
                 /** 是否为默认值 */
-                isDefault(): boolean {
+                getDefault(): boolean {
                     return this.getProperty("default");
                 },
                 /** 设置为默认值 */
@@ -93,16 +118,6 @@ namespace sap {
                     return this.setProperty("default", value);
                 },
             });
-            function defaultSelectItem(select: Select): SelectItem {
-                for (let item of select.getItems()) {
-                    if (item instanceof SelectItem) {
-                        if (item.isDefault() === true) {
-                            return item;
-                        }
-                    }
-                }
-                return undefined;
-            }
             /**
              * 枚举数据-选择框
              */
@@ -171,7 +186,10 @@ namespace sap {
                         }));
                     }
                     return this;
-                }
+                },
+                _isKeyAvailable(this: Select, sKey: string): boolean {
+                    return (<any>sap.m.Select.prototype)._isKeyAvailable.apply(this, arguments);
+                },
             });
             /**
              * 业务仓库数据-选择框
@@ -185,8 +203,12 @@ namespace sap {
                         dataInfo: { type: "any" },
                         /** 查询条件 */
                         criteria: { type: "any" },
-                        /** 空白数据 */
-                        blankData: { type: "any", defaultValue: {} },
+                        /** 强制选择 */
+                        forceSelection: {
+                            type: "boolean",
+                            group: "Behavior",
+                            defaultValue: false
+                        },
                     },
                     events: {}
                 },
@@ -231,19 +253,6 @@ namespace sap {
                     return this.setProperty("criteria", utils.criteria(value));
                 },
                 /**
-                 * 获取空白数据
-                 */
-                getBlankData(this: RepositorySelect): { key: string, text: string } {
-                    return this.getProperty("blankData");
-                },
-                /**
-                 * 设置空白数据（未设置使用默认，无效值则为不使用）
-                 * @param value 空白数据；undefined表示不使用
-                 */
-                setBlankData(this: RepositorySelect, value: { key: string, text: string }): RepositorySelect {
-                    return this.setProperty("blankData", value);
-                },
-                /**
                  * 设置绑定值
                  * @param value 值
                  */
@@ -268,30 +277,11 @@ namespace sap {
                             if (values instanceof Error) {
                                 ibas.logger.log(values);
                             } else {
-                                let blankData: any = this.getBlankData();
-                                if (blankData !== false && !ibas.objects.isNull(blankData)) {
-                                    if (!blankData.key) {
-                                        blankData.key = "";
-                                    }
-                                    if (!blankData.text) {
-                                        blankData.text = ibas.i18n.prop("openui5_please_select_data");
-                                    }
-                                    this.addItem(new SelectItem("", {
-                                        key: blankData.key,
-                                        text: blankData.text
-                                    }));
-                                }
                                 for (let item of values) {
                                     this.addItem(new SelectItem("", {
                                         key: item.key,
                                         text: item.text
                                     }));
-                                }
-                                if (this.getItems().length > 0) {
-                                    if (!ibas.strings.isEmpty(this.getSelectedKey())) {
-                                    } else {
-                                        this.setSelectedItem(this.getFirstItem());
-                                    }
                                 }
                             }
                         }
@@ -309,8 +299,12 @@ namespace sap {
                         dataInfo: { type: "any" },
                         /** 属性名称 */
                         propertyName: { type: "string" },
-                        /** 空白数据 */
-                        blankData: { type: "any", defaultValue: { key: "", text: ibas.i18n.prop("openui5_please_select_data") } },
+                        /** 强制选择 */
+                        forceSelection: {
+                            type: "boolean",
+                            group: "Behavior",
+                            defaultValue: false
+                        },
                     },
                     events: {}
                 },
@@ -383,6 +377,7 @@ namespace sap {
                     if (ibas.strings.isEmpty(propertyName)) {
                         return this;
                     }
+                    this.destroyItems();
                     let boRepository: shell.bo.IBORepositoryShell = ibas.boFactory.create(shell.bo.BO_REPOSITORY_SHELL);
                     boRepository.fetchBizObjectInfo({
                         user: ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE),
@@ -402,10 +397,6 @@ namespace sap {
                                     if (boName && !ibas.strings.equalsIgnoreCase(data.name, boName)) {
                                         continue;
                                     }
-                                    this.addItem(new SelectItem("", {
-                                        key: "",
-                                        text: ibas.i18n.prop("openui5_please_select_data")
-                                    }));
                                     for (let property of data.properties) {
                                         if (ibas.strings.equalsIgnoreCase(propertyName, property.name)) {
                                             if (property.values instanceof Array) {
@@ -415,14 +406,15 @@ namespace sap {
                                                         text: item.description,
                                                         default: item.default,
                                                     }));
+                                                    if (item.default === true) {
+                                                        // 有默认值设置，则强制选择
+                                                        if (this.getForceSelection() === false) {
+                                                            this.setForceSelection(true);
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }
-                                    }
-                                    if (this.getItems().length > 0) {
-                                        setTimeout(() => {
-                                            this.fireModelContextChange(undefined);
-                                        }, 50);
                                     }
                                     return;
                                 }
@@ -522,11 +514,6 @@ namespace sap {
                                         default: values.lastOrDefault() === item ? true : undefined,
                                     }));
                                 }
-                                if (this.getItems().length > 0) {
-                                    setTimeout(() => {
-                                        this.fireModelContextChange(undefined);
-                                    }, 50);
-                                }
                             }
                         }
                     );
@@ -562,11 +549,11 @@ namespace sap {
                  * 加载可选值
                  */
                 loadItems(this: RepeatCharSelect): RepeatCharSelect {
-                    this.destroyItems();
                     let vChar: string = this.getRepeatText();
                     if (ibas.strings.isEmpty(vChar)) {
                         return;
                     }
+                    this.destroyItems();
                     let count: number = this.getMaxCount();
                     this.addItem(new SelectItem("", {
                         key: 0,
