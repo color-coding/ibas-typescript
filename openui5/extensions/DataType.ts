@@ -1115,6 +1115,38 @@ namespace sap {
                     return true;
                 }
             }
+
+            /**
+             * 数据状态
+             */
+            export function status(documentStatus: ibas.emDocumentStatus, approvalStatus?: ibas.emApprovalStatus, canceled?: ibas.emYesNo): sap.ui.core.ValueState {
+                // tslint:disable-next-line: triple-equals
+                if (canceled == ibas.emYesNo.YES) {
+                    return sap.ui.core.ValueState.Error;
+                }
+                // tslint:disable-next-line: triple-equals
+                if (approvalStatus == ibas.emApprovalStatus.CANCELLED
+                    // tslint:disable-next-line: triple-equals
+                    || approvalStatus == ibas.emApprovalStatus.REJECTED) {
+                    return sap.ui.core.ValueState.Error;
+                    // tslint:disable-next-line: triple-equals
+                } else if (approvalStatus == ibas.emApprovalStatus.PROCESSING) {
+                    return sap.ui.core.ValueState.Warning;
+                }
+                // tslint:disable-next-line: triple-equals
+                if (documentStatus == ibas.emDocumentStatus.PLANNED) {
+                    return sap.ui.core.ValueState.Warning;
+                    // tslint:disable-next-line: triple-equals
+                } else if (documentStatus == ibas.emDocumentStatus.RELEASED) {
+                    return sap.ui.core.ValueState.Information;
+                    // tslint:disable-next-line: triple-equals
+                } else if (documentStatus == ibas.emDocumentStatus.FINISHED
+                    // tslint:disable-next-line: triple-equals
+                    || documentStatus == ibas.emDocumentStatus.CLOSED) {
+                    return sap.ui.core.ValueState.Success;
+                }
+                return sap.ui.core.ValueState.None;
+            }
         }
     }
 }

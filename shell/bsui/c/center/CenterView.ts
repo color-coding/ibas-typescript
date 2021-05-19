@@ -691,9 +691,7 @@ namespace shell {
                             title: title,
                             type: sap.m.DialogType.Standard,
                             state: sap.ui.core.ValueState.None,
-                            // resizable: true,
-                            // draggable: true,
-                            stretchOnPhone: true,
+                            stretch: ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM) === ibas.emPlantform.PHONE ? true : false,
                             horizontalScrolling: true,
                             verticalScrolling: true,
                             content: [

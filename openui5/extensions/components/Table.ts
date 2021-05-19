@@ -376,7 +376,52 @@ namespace sap {
                     return this.setProperty("propertyFilter", value);
                 },
                 /** 重构设置 */
-                applySettings(this: DataTable): DataTable {
+                applySettings(this: DataTable, mSettings: any): DataTable {
+                    if (typeof mSettings?.dataInfo === "function") {
+                        if (mSettings.rowSettingsTemplate === undefined) {
+                            if (mSettings.dataInfo.prototype instanceof ibas.BODocument) {
+                                mSettings.rowSettingsTemplate = new sap.ui.table.RowSettings("", {
+                                    highlight: {
+                                        parts: [
+                                            {
+                                                path: "approvalStatus",
+                                                type: new data.ApprovalStatus(),
+                                            },
+                                            {
+                                                path: "canceled",
+                                                type: new data.YesNo(),
+                                            },
+                                            {
+                                                path: "documentStatus",
+                                                type: new data.DocumentStatus()
+                                            }
+                                        ],
+                                        formatter(approvalStatus: ibas.emApprovalStatus, canceled: ibas.emYesNo, documentStatus: ibas.emDocumentStatus): sap.ui.core.ValueState {
+                                            return data.status(documentStatus, approvalStatus, canceled);
+                                        }
+                                    }
+                                });
+                            } else if (mSettings.dataInfo.prototype instanceof ibas.BODocumentLine) {
+                                mSettings.rowSettingsTemplate = new sap.ui.table.RowSettings("", {
+                                    highlight: {
+                                        parts: [
+                                            {
+                                                path: "canceled",
+                                                type: new data.YesNo(),
+                                            },
+                                            {
+                                                path: "lineStatus",
+                                                type: new data.DocumentStatus()
+                                            }
+                                        ],
+                                        formatter(approvalStatus: ibas.emApprovalStatus, canceled: ibas.emYesNo, documentStatus: ibas.emDocumentStatus): sap.ui.core.ValueState {
+                                            return data.status(documentStatus, approvalStatus, canceled);
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    }
                     Table.prototype.applySettings.apply(this, arguments);
                     let dataInfo: any = this.getDataInfo();
                     if (typeof dataInfo === "string") {

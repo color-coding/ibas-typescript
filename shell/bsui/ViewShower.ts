@@ -70,16 +70,23 @@ namespace shell {
                         // 隐藏app
                         let app: sap.ui.core.Element = sap.ui.getCore().byId(UI_APP);
                         if (app instanceof sap.m.App) {
-                            app.setVisible(false);
-                            pView = sap.extension.customdatas.getView(app.getCurrentPage());
-                            if (pView instanceof ibas.View) {
-                                pView.isDisplayed = false;
+
+                            let page: any = app.getCurrentPage();
+                            if (page instanceof sap.ui.core.Control) {
+                                page.setVisible(false);
+                                pView = sap.extension.customdatas.getView(page);
+                                if (pView instanceof ibas.View) {
+                                    pView.isDisplayed = false;
+                                }
                             }
                         }
                         viewContent.attachAfterClose(null, () => {
                             // 重新显示app
                             if (app instanceof sap.m.App) {
-                                app.setVisible(true);
+                                let page: any = app.getCurrentPage();
+                                if (page instanceof sap.ui.core.Control) {
+                                    page.setVisible(true);
+                                }
                                 if (pView instanceof ibas.View) {
                                     pView.isDisplayed = true;
                                 }
