@@ -101,10 +101,6 @@ namespace ibas {
          * @param item 项目
          */
         remove(item: T): void {
-            // 无效值不做处理
-            if (item === null || item === undefined) {
-                return;
-            }
             let keeps: Array<T> = new Array();// 临时数组
             for (let tmp of this) {
                 if (item === tmp) {
@@ -129,7 +125,10 @@ namespace ibas {
          */
         removeAt(index: number): void {
             if (index >= 0 && index < this.length) {
-                this.remove(this[index]);
+                let keeps: Array<T> = this.splice(index, this.length - index);
+                for (let i: number = 1; i < keeps.length; i++) {
+                    this.push(keeps[i]);
+                }
             }
         }
         /**

@@ -257,11 +257,6 @@ namespace sap {
                         editable: true,
                         width: "auto",
                     }).addStyleClass("sapUxAPObjectPageSubSectionAlignContent");
-                    section = new sap.uxap.ObjectPageSubSection(this.getId() + "_extendSection", {
-                        blocks: [
-                            form
-                        ],
-                    });
                     for (let property of properties) {
                         if (ibas.objects.isNull(property)) {
                             continue;
@@ -271,6 +266,13 @@ namespace sap {
                         }
                         if (property.authorised === ibas.emAuthoriseType.NONE) {
                             continue;
+                        }
+                        if (ibas.objects.isNull(section)) {
+                            section = new sap.uxap.ObjectPageSubSection(this.getId() + "_extendSection", {
+                                blocks: [
+                                    form
+                                ],
+                            });
                         }
                         property = factories.newProperty(property, boInfo);
                         form.addContent(new sap.m.Label("", {
@@ -283,11 +285,6 @@ namespace sap {
                         editable: false,
                         width: "auto",
                     }).addStyleClass("sapUxAPObjectPageSubSectionAlignContent");
-                    section = new sap.uxap.ObjectPageSubSection(this.getId() + "_extendSection", {
-                        blocks: [
-                            form
-                        ],
-                    });
                     for (let property of properties) {
                         if (ibas.objects.isNull(property)) {
                             continue;
@@ -297,6 +294,13 @@ namespace sap {
                         }
                         if (property.authorised === ibas.emAuthoriseType.NONE) {
                             continue;
+                        }
+                        if (ibas.objects.isNull(section)) {
+                            section = new sap.uxap.ObjectPageSubSection(this.getId() + "_extendSection", {
+                                blocks: [
+                                    form
+                                ],
+                            });
                         }
                         property = factories.newProperty(property, boInfo);
                         form.addContent(new sap.m.Label("", {

@@ -25,16 +25,15 @@ namespace shell {
                             content: [
                                 new sap.m.Title("", {
                                     text: ibas.i18n.prop("shell_query_name"),
-                                }),
+                                }).addStyleClass("sapUiSmallMarginBegin"),
                                 new sap.m.Input("", {
-                                }).bindProperty("value", {
+                                }).addStyleClass("sapUiSmallMarginBegin").bindProperty("value", {
                                     path: "/name"
                                 }),
-                                new sap.m.ToolbarSpacer(""),
                                 new sap.m.RatingIndicator("", {
                                     maxValue: 5,
                                     tooltip: ibas.i18n.prop("shell_query_order"),
-                                }).bindProperty("value", {
+                                }).addStyleClass("sapUiSmallMarginBegin sapUiSmallMarginEnd").bindProperty("value", {
                                     path: "/order"
                                 }),
                             ]

@@ -156,11 +156,14 @@ namespace ibas {
         create(): T;
         /**
          * 移出项目
-         * @param item 被移出项目
-         * @returns true,被移出;false,被delete;null,无效数据
+         * @param item 项目
+         * @param force 强制真实移除：true，忽略状态移除；false，仅isNew移除
+         * @returns true，被移出；false，被delete；undefined，无效数据
          */
-        remove(item: T): boolean;
-        /** 过滤删除的项目 */
+        remove(item: T, force?: boolean): boolean;
+        /**
+         * 过滤删除的项目
+         */
         filterDeleted(): T[];
     }
 
@@ -609,26 +612,25 @@ namespace ibas {
             this.firePropertyChanged("length");
         }
         /**
-         * 移出项目（新数据，则移出集合；否则，标记删除）
+         * 移出项目
          * @param item 项目
+         * @param force 强制真实移除：true，忽略状态移除；false，仅isNew移除
+         * @returns true，被移出；false，被delete；undefined，无效数据
          */
-        remove(item: T): boolean {
+        remove(item: T, force?: boolean): boolean {
             // 无效值不做处理
-            if (item === null || item === undefined) {
-                return null;
+            if (this.contain(item)) {
+                if (force === true || item.isNew === true) {
+                    super.remove(item);
+                    this.afterRemove(item);
+                    return true;
+                } else {
+                    item.delete();
+                    this.afterRemove(item);
+                    return false;
+                }
             }
-            // 不是集合值
-            if (!this.contain(item)) {
-                return null;
-            }
-            if (!item.isNew) {
-                item.delete();
-                return false;
-            } else {
-                super.remove(item);
-                this.afterRemove(item);
-                return true;
-            }
+            return undefined;
         }
         /**
          * 移出项目后
