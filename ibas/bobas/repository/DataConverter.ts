@@ -30,7 +30,9 @@ namespace ibas {
          * @returns 目标类型
          */
         convert(data: any, sign: string): any {
-            if (objects.instanceOf(data, OperationResult)) {
+            if (objects.isNull(data)) {
+                return data;
+            } else if (objects.instanceOf(data, OperationResult)) {
                 let newData: OperationResult<any> = data;
                 let resultObjects: any[] = [];
                 for (let item of newData.resultObjects) {

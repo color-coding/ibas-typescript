@@ -855,6 +855,132 @@ namespace sap {
                     return sap.ui.table.TreeTable.prototype.isIndexSelected.apply(this, arguments);
                 },
             });
+
+            /**
+             * 数据树表格
+             */
+            TreeTable.extend("sap.extension.table.DataTreeTable", {
+                metadata: {
+                    properties: {
+                        /** 数据信息 */
+                        dataInfo: { type: "any" },
+                        /** 属性过滤器 */
+                        propertyFilter: { type: "function" },
+                    },
+                    events: {}
+                },
+                renderer: {},
+                /**
+                 * 获取数据信息
+                 */
+                getDataInfo(this: DataTreeTable): { code: string, name?: string } | string | Function | shell.bo.IBizObjectInfo {
+                    return this.getProperty("dataInfo");
+                },
+                /**
+                 * 设置数据信息
+                 * @param value 数据信息
+                 */
+                setDataInfo(this: DataTreeTable, value: { code: string, name?: string } | string | Function | shell.bo.IBizObjectInfo): DataTreeTable {
+                    return this.setProperty("dataInfo", value);
+                },
+                /**
+                 * 获取属性过滤器
+                 */
+                getPropertyFilter(): Function {
+                    return this.getProperty("propertyFilter");
+                },
+                /**
+                 * 设置属性过滤器
+                 * @param value 过滤器
+                 */
+                setPropertyFilter(value: (property: shell.bo.IBizPropertyInfo) => boolean): DataTreeTable {
+                    return this.setProperty("propertyFilter", value);
+                },
+                /** 重构设置 */
+                applySettings(this: DataTreeTable, mSettings: any): DataTreeTable {
+                    TreeTable.prototype.applySettings.apply(this, arguments);
+                    let dataInfo: any = this.getDataInfo();
+                    if (typeof dataInfo === "string") {
+                        dataInfo = {
+                            code: dataInfo,
+                        };
+                    } else if (typeof dataInfo === "function") {
+                        dataInfo = {
+                            code: dataInfo.BUSINESS_OBJECT_CODE,
+                            name: ibas.objects.nameOf(dataInfo),
+                        };
+                    }
+                    if (typeof dataInfo === "object") {
+                        if (dataInfo.properties instanceof Array) {
+                            propertyColumns.call(this, dataInfo);
+                        } else {
+                            let info: { code: string, name?: string } = dataInfo;
+                            let boRepository: shell.bo.IBORepositoryShell = ibas.boFactory.create(shell.bo.BO_REPOSITORY_SHELL);
+                            boRepository.fetchBizObjectInfo({
+                                user: ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE),
+                                boCode: ibas.config.applyVariables(info.code),
+                                boName: info.name,
+                                onCompleted: (opRslt) => {
+                                    if (opRslt.resultCode !== 0) {
+                                        ibas.logger.log(new Error(opRslt.message));
+                                    } else {
+                                        propertyColumns.call(this, opRslt.resultObjects.firstOrDefault());
+                                        // 已加载数据，则重置
+                                        let model: any = this.getModel();
+                                        if (model !== undefined) {
+                                            this.setModel(undefined);
+                                            this.setModel(model);
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    }
+                    return this;
+                },
+                /**
+                 * 设置模型
+                 * @param oModel 数据模型
+                 * @param sName 名称
+                 */
+                setModel(this: DataTreeTable, oModel: model.JSONModel, sName?: string): DataTreeTable {
+                    let model: model.JSONModel = this.getModel();
+                    // 判断是否有有效模型
+                    if (model && model.getData()) {
+                        let data: any = model.getData();
+                        if (!(data.rows instanceof Array && data.rows.length > 0)) {
+                            model = undefined;
+                        }
+                    }
+                    // 没有设置过模型，则更新控件绑定信息
+                    if (ibas.objects.isNull(model) && !ibas.objects.isNull(oModel)) {
+                        // 获取对象信息
+                        let data: any = oModel.getData();
+                        if (data instanceof Array) {
+                            data = data[0];
+                        } else if (data.rows instanceof Array) {
+                            data = data.rows[0];
+                        }
+                        if (!ibas.objects.isNull(data)) {
+                            let userFields: ibas.IUserFields = data.userFields;
+                            if (!ibas.objects.isNull(userFields)) {
+                                for (let column of this.getColumns()) {
+                                    if (column instanceof DataColumn) {
+                                        let template: sap.ui.core.Control | string = column.getTemplate();
+                                        if (template instanceof sap.ui.core.Control) {
+                                            let bindingInfo: any = managedobjects.bindingInfo(template, "bindingValue");
+                                            if (!ibas.objects.isNull(bindingInfo)) {
+                                                userfields.check(userFields, bindingInfo);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    return TreeTable.prototype.setModel.apply(this, arguments);
+                },
+            });
         }
     }
 }

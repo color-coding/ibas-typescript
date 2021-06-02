@@ -194,6 +194,20 @@ declare namespace sap {
                  */
                 protected fireNextDataSet(param: { data: any, }): void;
             }
+            /**
+             * 数据表格
+             */
+            class DataTreeTable extends TreeTable {
+                /**
+                 * 获取数据信息
+                 */
+                getDataInfo(): { code: string, name?: string } | string | shell.bo.IBizObjectInfo;
+                /**
+                 * 设置数据信息
+                 * @param value 值
+                 */
+                setDataInfo(value: { code: string, name?: string } | string | shell.bo.IBizObjectInfo): this;
+            }
         }
     }
 }

@@ -55,7 +55,7 @@ namespace sap {
                         throw new Error(ibas.i18n.prop("sys_invalid_parameter", methodName));
                     }
                     method.call(boRepository, {
-                        criteria: criteria,
+                        criteria: ibas.objects.isNull(criteria) ? new ibas.Criteria() : criteria,
                         onCompleted(opRslt: ibas.IOperationResult<any>): void {
                             try {
                                 if (opRslt.resultCode !== 0) {

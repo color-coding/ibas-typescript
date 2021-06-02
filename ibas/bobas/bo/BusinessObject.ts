@@ -472,6 +472,10 @@ namespace ibas {
                         if (name === "isDeleted") {
                             this.firePropertyChanged("length");
                         } else if (name === "length") {
+                            // 集合变化，则父项修改
+                            if (this.parent?.isLoading !== true && this.parent?.isDirty === false) {
+                                this.parent.markDirty();
+                            }
                             runRules.call(this, null);
                         } else {
                             runRules.call(this, name);
