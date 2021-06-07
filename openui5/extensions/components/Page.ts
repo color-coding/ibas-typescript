@@ -241,7 +241,16 @@ namespace sap {
                                 }));
                             }
                             if (bar instanceof sap.m.Toolbar) {
-                                bar.addContent(new sap.m.ToolbarSpacer(""));
+                                let done: boolean = false;
+                                for (let item of bar.getContent()) {
+                                    if (item instanceof sap.m.ToolbarSpacer) {
+                                        done = true;
+                                        break;
+                                    }
+                                }
+                                if (done === false) {
+                                    bar.addContent(new sap.m.ToolbarSpacer(""));
+                                }
                                 bar.addContent(shower);
                             } else if (bar instanceof sap.m.Bar) {
                                 bar.insertContentRight(shower, bar.getContentRight().length - 1);
