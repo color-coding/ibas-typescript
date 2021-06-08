@@ -47,6 +47,7 @@
 /// <reference path="./bsbas/application/View.ts" />
 /// <reference path="./bsbas/application/Services.ts" />
 /// <reference path="./bsbas/application/Variables.ts" />
+/// <reference path="./bsbas/application/Component.ts" />
 
 namespace ibas {
     /** 关于 */

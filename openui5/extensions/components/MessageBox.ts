@@ -74,6 +74,11 @@ namespace sap {
                     show(vMessage, mOptions);
                 }
                 export function show(vMessage: string, mOptions?: IMessageBoxOptions): void {
+                    if (ibas.objects.isNull(mOptions)) {
+                        mOptions = {
+                            type: undefined,
+                        };
+                    }
                     jQuery.sap.require("sap.m.MessageBox");
                     if (!ibas.strings.isEmpty(vMessage)) {
                         let boCode: string;

@@ -224,7 +224,7 @@ namespace sap {
                  * @param value 业务仓库实例；业务仓库名称
                  */
                 setRepository(this: RepositorySelect, value: ibas.BORepositoryApplication | string): RepositorySelect {
-                    return this.setProperty("repository", utils.repository(value));
+                    return this.setProperty("repository", repositories.repository(value));
                 },
                 /**
                  * 获取数据信息
@@ -237,7 +237,7 @@ namespace sap {
                  * @param value 数据信息
                  */
                 setDataInfo(this: RepositorySelect, value: repository.IDataInfo | any): RepositorySelect {
-                    return this.setProperty("dataInfo", utils.dataInfo(value));
+                    return this.setProperty("dataInfo", repositories.dataInfo(value));
                 },
                 /**
                  * 获取查询
@@ -250,7 +250,7 @@ namespace sap {
                  * @param value 查询
                  */
                 setCriteria(this: RepositorySelect, value: ibas.ICriteria | ibas.ICondition[]): RepositorySelect {
-                    return this.setProperty("criteria", utils.criteria(value));
+                    return this.setProperty("criteria", repositories.criteria(value));
                 },
                 /**
                  * 设置绑定值

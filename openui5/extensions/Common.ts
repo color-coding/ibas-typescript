@@ -8,9 +8,9 @@
 namespace sap {
     export namespace extension {
         /**
-         * 工具集
+         * 仓库集
          */
-        export namespace utils {
+        export namespace repositories {
             /**
              * 解析业务仓库
              * @param value 值

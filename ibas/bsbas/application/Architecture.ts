@@ -400,6 +400,9 @@ namespace ibas {
             } else if (item instanceof ServiceMapping) {
                 // 注册服务
                 item.navigation = this.navigation();
+            } else if (item instanceof ComponentMapping) {
+                // 注册组件
+                item.navigation = this.navigation();
             }
             super.register(item);
         }

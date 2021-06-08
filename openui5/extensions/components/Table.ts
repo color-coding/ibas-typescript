@@ -571,8 +571,6 @@ namespace sap {
                         label: property.systemed !== true ? property.description :
                             ibas.i18n.prop(ibas.strings.format("bo_{0}_{1}", boInfo.name, property.name).toLowerCase()),
                         template: factories.newComponent(property, readonly ? "Text" : "Input"),
-                        sortProperty: property.searched === true ? property.name : undefined,
-                        filterProperty: property.searched === true ? property.name : undefined,
                     });
                     if (property.position > 0) {
                         this.insertColumn(column, property.position);

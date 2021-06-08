@@ -76,7 +76,7 @@ namespace sap {
                  * @param value 业务仓库实例；业务仓库名称
                  */
                 setRepository(this: RepositoryObjectAttribute, value: ibas.BORepositoryApplication | string): RepositoryObjectAttribute {
-                    return this.setProperty("repository", utils.repository(value));
+                    return this.setProperty("repository", repositories.repository(value));
                 },
                 /**
                  * 获取数据信息
@@ -89,7 +89,7 @@ namespace sap {
                  * @param value 数据信息
                  */
                 setDataInfo(this: RepositoryObjectAttribute, value: repository.IDataInfo | any): RepositoryObjectAttribute {
-                    return this.setProperty("dataInfo", utils.dataInfo(value));
+                    return this.setProperty("dataInfo", repositories.dataInfo(value));
                 },
                 /**
                  * 设置选中值

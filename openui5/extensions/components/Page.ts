@@ -163,6 +163,63 @@ namespace sap {
                     return Page.prototype.setModel.apply(this, arguments);
                 },
             });
+            function checkFormContent(control: sap.ui.core.Control, properties: shell.bo.IBizPropertyInfo[]): void {
+                if (control instanceof sap.ui.layout.VerticalLayout) {
+                    for (let item of control.getContent()) {
+                        checkFormContent(item, properties);
+                    }
+                } else if (control instanceof sap.m.FlexBox) {
+                    for (let item of control.getItems()) {
+                        checkFormContent(item, properties);
+                    }
+                } else if (control instanceof sap.ui.layout.Splitter) {
+                    for (let item of control.getContentAreas()) {
+                        checkFormContent(item, properties);
+                    }
+                } else if (control instanceof sap.m.ScrollContainer) {
+                    for (let item of control.getContent()) {
+                        checkFormContent(item, properties);
+                    }
+                } else if (control instanceof sap.ui.layout.form.SimpleForm) {
+                    for (let fmItem of control.getContent()) {
+                        if (fmItem instanceof sap.m.Label) {
+                            continue;
+                        }
+                        if (fmItem instanceof sap.m.Title) {
+                            continue;
+                        }
+                        if (fmItem instanceof sap.m.Button) {
+                            continue;
+                        }
+                        if (fmItem instanceof sap.m.ListBase) {
+                            continue;
+                        }
+                        if (fmItem instanceof sap.ui.table.Table) {
+                            continue;
+                        }
+                        if (fmItem instanceof sap.ui.core.Control) {
+                            let bindingPath: string = managedobjects.bindingPath(fmItem);
+                            let index: number = properties.findIndex(c => c && ibas.strings.equalsIgnoreCase(c.name, bindingPath));
+                            if (index < 0) {
+                                continue;
+                            }
+                            let propertyInfo: shell.bo.IBizPropertyInfo = properties[index];
+                            if (!ibas.objects.isNull(propertyInfo)) {
+                                if (propertyInfo.authorised === ibas.emAuthoriseType.NONE) {
+                                    fmItem.setVisible(false);
+                                    let label: any = sap.ui.getCore().byId(fmItem.getIdForLabel());
+                                    if (label instanceof sap.ui.core.Control) {
+                                        label.setVisible(false);
+                                    }
+                                } else if (propertyInfo.authorised === ibas.emAuthoriseType.READ) {
+                                    controls.nonEditable(fmItem);
+                                }
+                                properties[index] = null;
+                            }
+                        }
+                    }
+                }
+            }
             function propertyControls(this: DataPage, boInfo: shell.bo.IBizObjectInfo): void {
                 if (!boInfo || !(boInfo.properties instanceof Array)) {
                     return;
@@ -171,44 +228,7 @@ namespace sap {
                 let properties: shell.bo.IBizPropertyInfo[] = Object.assign([], boInfo.properties);
                 let layout: any = sap.ui.getCore().byId(this.getId() + "_commonSplit");
                 if (layout instanceof sap.ui.layout.VerticalLayout) {
-                    for (let lyItem of layout.getContent()) {
-                        if (lyItem instanceof sap.ui.layout.form.SimpleForm) {
-                            for (let fmItem of lyItem.getContent()) {
-                                if (fmItem instanceof sap.m.Label) {
-                                    continue;
-                                }
-                                if (fmItem instanceof sap.m.Title) {
-                                    continue;
-                                }
-                                if (fmItem instanceof sap.m.Button) {
-                                    continue;
-                                }
-                                if (fmItem instanceof sap.ui.table.Table) {
-                                    continue;
-                                }
-                                if (fmItem instanceof sap.ui.core.Control) {
-                                    let bindingPath: string = managedobjects.bindingPath(fmItem);
-                                    let index: number = properties.findIndex(c => c && ibas.strings.equalsIgnoreCase(c.name, bindingPath));
-                                    if (index < 0) {
-                                        continue;
-                                    }
-                                    let propertyInfo: shell.bo.IBizPropertyInfo = properties[index];
-                                    if (!ibas.objects.isNull(propertyInfo)) {
-                                        if (propertyInfo.authorised === ibas.emAuthoriseType.NONE) {
-                                            fmItem.setVisible(false);
-                                            let label: any = sap.ui.getCore().byId(fmItem.getIdForLabel());
-                                            if (label instanceof sap.ui.core.Control) {
-                                                label.setVisible(false);
-                                            }
-                                        } else if (propertyInfo.authorised === ibas.emAuthoriseType.READ) {
-                                            controls.nonEditable(fmItem);
-                                        }
-                                        properties[index] = null;
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    checkFormContent(layout, properties);
                 }
                 let splitter: any;
                 for (let property of properties) {

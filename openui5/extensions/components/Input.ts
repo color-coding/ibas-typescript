@@ -110,7 +110,7 @@ namespace sap {
                  * @param value 业务仓库实例；业务仓库名称
                  */
                 setRepository(this: RepositoryInput, value: ibas.BORepositoryApplication | string): RepositoryInput {
-                    return this.setProperty("repository", utils.repository(value));
+                    return this.setProperty("repository", repositories.repository(value));
                 },
                 /**
                  * 获取数据信息
@@ -123,7 +123,7 @@ namespace sap {
                  * @param value 数据信息
                  */
                 setDataInfo(this: RepositoryInput, value: repository.IDataInfo | any): RepositoryInput {
-                    return this.setProperty("dataInfo", utils.dataInfo(value));
+                    return this.setProperty("dataInfo", repositories.dataInfo(value));
                 },
                 /**
                  * 设置值
@@ -289,7 +289,7 @@ namespace sap {
                  * @param value 查询
                  */
                 setCriteria(this: SelectionInput, value: ibas.ICriteria | ibas.ICondition[]): SelectionInput {
-                    return this.setProperty("criteria", utils.criteria(value));
+                    return this.setProperty("criteria", repositories.criteria(value));
                 },
                 /** 初始化 */
                 init(this: SelectionInput): void {
