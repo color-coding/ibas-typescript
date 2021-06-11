@@ -394,6 +394,8 @@ namespace ibas {
                 return String(value);
             } else if (value instanceof Array) {
                 let stringBuilder: StringBuilder = new StringBuilder();
+                stringBuilder.map(undefined, "");
+                stringBuilder.map(null, "");
                 for (let item of value) {
                     if (stringBuilder.length > 0) {
                         stringBuilder.append(DATA_SEPARATOR);
@@ -1082,6 +1084,8 @@ namespace ibas {
                 return sValue;
             }
             let builder: StringBuilder = new StringBuilder();
+            builder.map(undefined, "");
+            builder.map(null, "");
             if (!strings.isEmpty(decValue)) {
                 for (let index: number = decValue.length - 1; index >= 0; index--) {
                     builder.append(decValue[index]);

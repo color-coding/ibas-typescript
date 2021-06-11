@@ -120,6 +120,8 @@ namespace ibas {
         /** 输出字符串 */
         toString(): string {
             let stringBuilder: StringBuilder = new StringBuilder();
+            stringBuilder.map(null, "");
+            stringBuilder.map(undefined, "");
             stringBuilder.append(enums.toString(emJudmentOperation, this.relationship));
             stringBuilder.append(" ");
             for (let index: number = 0; index < this.openBracket; index++) {
@@ -127,7 +129,7 @@ namespace ibas {
             }
             stringBuilder.append(this.leftOperter.getValue());
             stringBuilder.append(" ");
-            stringBuilder.append(enums.toString(emJudmentOperation, this.operation.toString()));
+            stringBuilder.append(enums.toString(emJudmentOperation, this.operation));
             stringBuilder.append(" ");
             stringBuilder.append(this.rightOperter.getValue());
             for (let index: number = 0; index < this.closeBracket; index++) {
@@ -307,6 +309,8 @@ namespace ibas {
                 jItems.add(item);
             }
             let stringBuilder: StringBuilder = new StringBuilder();
+            stringBuilder.map(null, "");
+            stringBuilder.map(undefined, "");
             stringBuilder.append("judgment:");
             stringBuilder.append(" ");
             stringBuilder.append(value.toString());

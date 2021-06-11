@@ -545,20 +545,22 @@ namespace ibas {
             if (this.viewData instanceof BusinessObject) {
                 let criteria: ICriteria = this.viewData.criteria();
                 if (!objects.isNull(criteria) && criteria.conditions.length > 0) {
-                    let bulider: StringBuilder = new StringBuilder();
-                    bulider.append(URL_HASH_SIGN_SERVICES);
-                    bulider.append(this.id);
-                    bulider.append("/");
+                    let builder: StringBuilder = new StringBuilder();
+                    builder.map(undefined, "");
+                    builder.map(null, "");
+                    builder.append(URL_HASH_SIGN_SERVICES);
+                    builder.append(this.id);
+                    builder.append("/");
                     for (let item of criteria.conditions) {
-                        if (bulider.length > 3) {
-                            bulider.append("&");
+                        if (builder.length > 3) {
+                            builder.append("&");
                         }
-                        bulider.append(item.alias);
-                        bulider.append("=");
-                        bulider.append(item.value);
+                        builder.append(item.alias);
+                        builder.append("=");
+                        builder.append(item.value);
                     }
                     // 发送登录连接请求后,清除地址栏中的查询参数信息,并且不保留浏览器历史记录
-                    window.history.replaceState(null, null, encodeURI(bulider.toString()));
+                    window.history.replaceState(null, null, encodeURI(builder.toString()));
                 }
             }
 

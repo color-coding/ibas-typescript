@@ -369,6 +369,8 @@ namespace ibas {
          */
         toString(): string {
             let builder: StringBuilder = new StringBuilder();
+            builder.map(undefined, "");
+            builder.map(null, "");
             if (this.tag !== undefined) {
                 builder.append(this.tag);
                 builder.append(": ");
@@ -383,6 +385,8 @@ namespace ibas {
          */
         outString(): string {
             let builder: StringBuilder = new StringBuilder();
+            builder.map(undefined, "");
+            builder.map(null, "");
             if (this.level !== undefined) {
                 builder.append("[");
                 builder.append(emMessageLevel[this.level]);

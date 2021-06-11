@@ -206,6 +206,14 @@ namespace ibas {
          */
         NOT_CONTAIN,
         /**
+         * 空值
+         */
+        IS_NULL,
+        /**
+         * 不是空值
+         */
+        NOT_NULL,
+        /**
          * 与（仅布尔比较有效）
          */
         AND,

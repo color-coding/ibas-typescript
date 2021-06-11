@@ -37,6 +37,10 @@ namespace ibas {
                     return emJudmentOperation.BEGIN_WITH;
                 } else if (value === emConditionOperation.END) {
                     return emJudmentOperation.END_WITH;
+                } else if (value === emConditionOperation.IS_NULL) {
+                    return emJudmentOperation.IS_NULL;
+                } else if (value === emConditionOperation.NOT_NULL) {
+                    return emJudmentOperation.NOT_NULL;
                 }
                 throw new Error(i18n.prop("sys_unrecognized_data"));
             }
@@ -99,6 +103,8 @@ namespace ibas {
          */
         toString(): string {
             let builder: StringBuilder = new StringBuilder();
+            builder.map(null, "");
+            builder.map(undefined, "");
             builder.append("{");
             builder.append("expression:");
             builder.append(" ");
@@ -140,6 +146,18 @@ namespace ibas {
                     return true;
                 }
                 return false;
+            } else if (this.operation === emJudmentOperation.IS_NULL) {
+                // 空值
+                if (objects.isNull(this.leftValue)) {
+                    return true;
+                }
+                return false;
+            } else if (this.operation === emJudmentOperation.NOT_NULL) {
+                // 非空值
+                if (objects.isNull(this.leftValue)) {
+                    return false;
+                }
+                return true;
             }
             // 不支持的
             return super.result();
@@ -222,6 +240,18 @@ namespace ibas {
                     return true;
                 }
                 return false;
+            } else if (this.operation === emJudmentOperation.IS_NULL) {
+                // 空值
+                if (objects.isNull(this.leftValue)) {
+                    return true;
+                }
+                return false;
+            } else if (this.operation === emJudmentOperation.NOT_NULL) {
+                // 非空值
+                if (objects.isNull(this.leftValue)) {
+                    return false;
+                }
+                return true;
             }
             return super.result();
         }
@@ -303,6 +333,18 @@ namespace ibas {
                     return true;
                 }
                 return false;
+            } else if (this.operation === emJudmentOperation.IS_NULL) {
+                // 空值
+                if (objects.isNull(this.leftValue)) {
+                    return true;
+                }
+                return false;
+            } else if (this.operation === emJudmentOperation.NOT_NULL) {
+                // 非空值
+                if (objects.isNull(this.leftValue)) {
+                    return false;
+                }
+                return true;
             }
             return super.result();
         }
@@ -326,6 +368,18 @@ namespace ibas {
                     return true;
                 }
                 return false;
+            } else if (this.operation === emJudmentOperation.IS_NULL) {
+                // 空值
+                if (objects.isNull(this.leftValue)) {
+                    return true;
+                }
+                return false;
+            } else if (this.operation === emJudmentOperation.NOT_NULL) {
+                // 非空值
+                if (objects.isNull(this.leftValue)) {
+                    return false;
+                }
+                return true;
             }
         }
     }
@@ -402,6 +456,18 @@ namespace ibas {
                     return true;
                 }
                 return false;
+            } else if (this.operation === emJudmentOperation.IS_NULL) {
+                // 空值
+                if (objects.isNull(this.leftValue)) {
+                    return true;
+                }
+                return false;
+            } else if (this.operation === emJudmentOperation.NOT_NULL) {
+                // 非空值
+                if (objects.isNull(this.leftValue)) {
+                    return false;
+                }
+                return true;
             }
             // 其他
             return super.result();

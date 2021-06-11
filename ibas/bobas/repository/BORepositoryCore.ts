@@ -193,6 +193,8 @@ namespace ibas {
                 throw new Error(i18n.prop("sys_invalid_parameter", "address"));
             }
             let methodUrl: StringBuilder = new StringBuilder();
+            methodUrl.map(undefined, "");
+            methodUrl.map(null, "");
             if (!strings.isEmpty(this.address)) {
                 methodUrl.append(this.address);
             }

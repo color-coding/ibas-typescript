@@ -320,6 +320,8 @@ namespace ibas {
                 return rChars;
             };
             let builder: StringBuilder = new StringBuilder();
+            builder.map(undefined, "");
+            builder.map(null, "");
             builder.append("{");
             for (let item of this.conditions) {
                 if (builder.length > 1) {
@@ -678,6 +680,7 @@ namespace ibas {
         toString(): string {
             let builder: StringBuilder = new StringBuilder();
             builder.map(undefined, "");
+            builder.map(null, "");
             builder.append("{");
             builder.append(this.alias);
             builder.append(" ");
@@ -778,6 +781,8 @@ namespace ibas {
          */
         toString(): string {
             let builder: StringBuilder = new StringBuilder();
+            builder.map(undefined, "");
+            builder.map(null, "");
             builder.append("{");
             builder.append(this.alias);
             builder.append(" ");
