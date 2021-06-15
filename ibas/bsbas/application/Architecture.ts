@@ -162,8 +162,8 @@ namespace ibas {
         functions(): IModuleFunction[];
         /** 默认功能 */
         default(): IModuleFunction;
-        /** 已实例应用集合 */
-        applications(): IApplication<IView>[];
+        /** 应用映射集合 */
+        applications(): IResidentApplicationMapping[];
         /** 添加初始化完成监听 */
         addListener(listener: Function): void;
     }
@@ -361,14 +361,14 @@ namespace ibas {
             }
             return list;
         }
-        /** 应用集合 */
-        applications(): IApplication<IView>[] {
-            let list: Array<IApplication<IView>> = new Array<IApplication<IView>>();
+        /** 应用映射集合 */
+        applications(): IResidentApplicationMapping[] {
+            let list: Array<IResidentApplicationMapping> = new Array<IResidentApplicationMapping>();
             for (let item of super.elements()) {
-                if (!objects.instanceOf(item, Application)) {
+                if (!objects.instanceOf(item, ResidentApplicationMapping)) {
                     continue;
                 }
-                list.push(<IApplication<IView>>item);
+                list.push(<IResidentApplicationMapping>item);
             }
             return list;
         }
@@ -391,11 +391,8 @@ namespace ibas {
                     item.id = uuids.random();
                 }
                 item.navigation = this.navigation();
-            } else if (item instanceof Application) {
+            } else if (item instanceof ResidentApplicationMapping) {
                 // 注册应用
-                if (strings.isEmpty(item.id)) {
-                    item.id = uuids.random();
-                }
                 item.navigation = this.navigation();
             } else if (item instanceof ServiceMapping) {
                 // 注册服务

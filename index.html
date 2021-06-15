@@ -24,11 +24,6 @@
                 window.location.href = "ibas/diagnosis/index.html";
                 console.error(error.toString());
                 console.warn("Please check if the browser supports es6.");
-            } finally {
-                var target = document.getElementById('spinner');
-                if (target) {
-                    target.remove();
-                }
             }
         }, function () {
             // 加载失败

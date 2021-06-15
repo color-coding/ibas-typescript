@@ -38,5 +38,17 @@ namespace trainingtesting {
         /** 视图-演示 */
         export interface IDemoResidentView extends ibas.IResidentView {
         }
+        export class DemoResidentApplicationMapping extends ibas.ResidentApplicationMapping {
+            /** 构造函数 */
+            constructor() {
+                super();
+                this.id = DemoResidentApp.APPLICATION_ID;
+                this.name = DemoResidentApp.APPLICATION_NAME;
+                this.description = ibas.i18n.prop(this.name);
+            }
+            create(): ibas.ResidentApplication<ibas.IResidentView> {
+                return new DemoResidentApp();
+            }
+        }
     }
 }

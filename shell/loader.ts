@@ -247,6 +247,11 @@ namespace loader {
             }, () => {
                 this.diagnose();
             });
+            // 去掉等待标
+            let target: HTMLElement = document.getElementById("spinner");
+            if (target) {
+                target.remove();
+            }
         }
         /** 诊断错误 */
         private diagnose(): void {

@@ -374,7 +374,9 @@ namespace sap {
                                 if (source instanceof sap.m.InputBase) {
                                     source.setValue(builder.toString());
                                     if (onChanged instanceof Function) {
-                                        onChanged(new sap.ui.base.Event("changed", source, undefined));
+                                        onChanged(new sap.ui.base.Event("changed", source, {
+                                            selecteds: selecteds
+                                        }));
                                     }
                                 }
                             }

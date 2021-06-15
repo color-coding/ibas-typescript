@@ -166,13 +166,15 @@ namespace shell {
                                     }
                                 }
                                 // 处理应用
-                                for (let app of console.applications()) {
+                                for (let item of console.applications()) {
                                     // 显示常驻应用
-                                    if (ibas.objects.instanceOf(app, ibas.ResidentApplication)) {
+                                    if (ibas.objects.instanceOf(item, ibas.ResidentApplicationMapping)) {
+                                        let app: ibas.IApplication<ibas.IBarView> = item.create();
+                                        app.navigation = item.navigation;
                                         if (ibas.objects.isNull(app.viewShower)) {
                                             app.viewShower = this;
                                         }
-                                        this.view.showResidentView(<ibas.IBarView>app.view);
+                                        this.view.showResidentView(app.view);
                                     }
                                 }
                             }

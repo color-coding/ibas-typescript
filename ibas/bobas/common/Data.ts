@@ -101,22 +101,7 @@ namespace ibas {
          * @param item 项目
          */
         remove(item: T): void {
-            let keeps: Array<T> = new Array();// 临时数组
-            for (let tmp of this) {
-                if (item === tmp) {
-                    // 被移出的数组，不保留
-                    continue;
-                }
-                keeps.push(tmp);
-            }
-            // 清除数组
-            while (this.length > 0) {
-                this.pop();
-            }
-            // 重新插入被保存的
-            for (let tmp of keeps) {
-                this.push(tmp);
-            }
+            this.removeAt(this.indexOf(item));
         }
 
         /**
@@ -125,10 +110,7 @@ namespace ibas {
          */
         removeAt(index: number): void {
             if (index >= 0 && index < this.length) {
-                let keeps: Array<T> = this.splice(index, this.length - index);
-                for (let i: number = 1; i < keeps.length; i++) {
-                    this.push(keeps[i]);
-                }
+                this.splice(index, 1);
             }
         }
         /**

@@ -335,6 +335,23 @@ namespace ibas {
             }
         }
     }
+    /** 常驻应用映射 */
+    export interface IResidentApplicationMapping extends IElement {
+        /** 视图导航 */
+        navigation: IViewNavigation;
+        /** 创建服务实例 */
+        create(): ResidentApplication<IResidentView>;
+    }
+    /** 常驻应用映射 */
+    export abstract class ResidentApplicationMapping extends Element implements IResidentApplicationMapping {
+        constructor() {
+            super();
+        }
+        /** 视图导航 */
+        navigation: IViewNavigation;
+        /** 创建服务实例 */
+        abstract create(): ResidentApplication<IResidentView>;
+    }
     /**
      * 常驻应用
      */

@@ -39,7 +39,18 @@ namespace ibas {
     /**
      * 应用服务映射
      */
-    export abstract class ComponentMapping<T extends IComponentSetting> extends Element {
+    export interface IComponentMapping<T extends IComponentSetting> extends IElement {
+        /** 视图导航 */
+        navigation: IViewNavigation;
+        /** 设置 */
+        setting: T;
+        /** 创建服务实例 */
+        create(): ComponentApplication<IComponentView, T>;
+    }
+    /**
+     * 应用服务映射
+     */
+    export abstract class ComponentMapping<T extends IComponentSetting> extends Element implements IComponentMapping<T> {
         constructor() {
             super();
         }

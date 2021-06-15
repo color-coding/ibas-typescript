@@ -110,7 +110,7 @@ namespace trainingtesting {
                 // 注册服务应用
                 this.register(new DemoServiceMapping());
                 // 注册常驻应用
-                this.register(new DemoResidentApp());
+                this.register(new DemoResidentApplicationMapping());
 
             }
             /** 运行 */
