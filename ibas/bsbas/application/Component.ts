@@ -45,15 +45,9 @@ namespace ibas {
         }
         /** 视图导航 */
         navigation: IViewNavigation;
-        /** 创建服务实例 */
-        create(): ComponentApplication<IComponentView, T> {
-            let app: ComponentApplication<IComponentView, T> = this.newInstance();
-            app.navigation = this.navigation;
-            return app;
-        }
         /** 设置 */
         abstract setting: T;
         /** 创建服务实例 */
-        protected abstract newInstance(): ComponentApplication<IComponentView, T>;
+        abstract create(): ComponentApplication<IComponentView, T>;
     }
 }

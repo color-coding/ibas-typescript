@@ -293,13 +293,13 @@ namespace shell {
                                         condition.relationship = ibas.emConditionRelationship.OR;
                                         if (firstCondition === null) {
                                             firstCondition = condition;
+                                            firstCondition.relationship = ibas.emConditionRelationship.AND;
                                         }
                                         lastCondition = condition;
                                     }
                                 }
                                 if (firstCondition !== lastCondition) {
                                     firstCondition.bracketOpen = 1;
-                                    firstCondition.relationship = ibas.emConditionRelationship.AND;
                                     lastCondition.bracketClose = 1;
                                 }
                                 // 没有查询字段，则查询主键
