@@ -42,6 +42,7 @@
     "shell_data_cancel": "取消",
     "shell_data_choose": "选择",
     "shell_data_remove": "移除",
+    "shell_data_remove_line": "移除行",
     "shell_data_add": "添加",
     "shell_data_add_line": "添加行",
     "shell_data_save": "保存",

@@ -74,6 +74,7 @@ namespace sap {
                     criteria = value;
                 } else if (value instanceof Array) {
                     criteria = new ibas.Criteria();
+                    criteria.noChilds = true;
                     for (let item of value) {
                         if (item instanceof ibas.Condition) {
                             criteria.conditions.add(item);

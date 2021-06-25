@@ -195,7 +195,7 @@ namespace sap {
                 // 1.70以上兼容问题
                 setSelectionMode(this: Table): Table {
                     // tslint:disable-next-line: no-string-literal
-                    if (this["_hasSelectionPlugin"] && this.getChooseType() === ibas.emChooseType.MULTIPLE) {
+                    if (this["_hasSelectionPlugin"] && this["_hasSelectionPlugin"]() === true) {
                         let plugin: any = this.getPlugins()[0];
                         if (plugin instanceof sap.ui.table.plugins.MultiSelectionPlugin) {
                             return plugin.setSelectionMode.apply(plugin, arguments);
@@ -205,7 +205,7 @@ namespace sap {
                 },
                 setSelectedIndex(this: Table): Table {
                     // tslint:disable-next-line: no-string-literal
-                    if (this["_hasSelectionPlugin"] && this.getChooseType() === ibas.emChooseType.MULTIPLE) {
+                    if (this["_hasSelectionPlugin"] && this["_hasSelectionPlugin"]() === true) {
                         let plugin: any = this.getPlugins()[0];
                         if (plugin instanceof sap.ui.table.plugins.MultiSelectionPlugin) {
                             return plugin.setSelectedIndex.apply(plugin, arguments);
@@ -215,7 +215,7 @@ namespace sap {
                 },
                 clearSelection(this: Table): Table {
                     // tslint:disable-next-line: no-string-literal
-                    if (this["_hasSelectionPlugin"] && this.getChooseType() === ibas.emChooseType.MULTIPLE) {
+                    if (this["_hasSelectionPlugin"] && this["_hasSelectionPlugin"]() === true) {
                         let plugin: any = this.getPlugins()[0];
                         if (plugin instanceof sap.ui.table.plugins.MultiSelectionPlugin) {
                             return plugin.clearSelection.apply(plugin, arguments);
@@ -225,7 +225,7 @@ namespace sap {
                 },
                 selectAll(this: Table): Table {
                     // tslint:disable-next-line: no-string-literal
-                    if (this["_hasSelectionPlugin"] && this.getChooseType() === ibas.emChooseType.MULTIPLE) {
+                    if (this["_hasSelectionPlugin"] && this["_hasSelectionPlugin"]() === true) {
                         let plugin: any = this.getPlugins()[0];
                         if (plugin instanceof sap.ui.table.plugins.MultiSelectionPlugin) {
                             return plugin.selectAll.apply(plugin, arguments);
@@ -235,7 +235,7 @@ namespace sap {
                 },
                 getSelectedIndices(this: Table): Table {
                     // tslint:disable-next-line: no-string-literal
-                    if (this["_hasSelectionPlugin"] && this.getChooseType() === ibas.emChooseType.MULTIPLE) {
+                    if (this["_hasSelectionPlugin"] && this["_hasSelectionPlugin"]() === true) {
                         let plugin: any = this.getPlugins()[0];
                         if (plugin instanceof sap.ui.table.plugins.MultiSelectionPlugin) {
                             return plugin.getSelectedIndices.apply(plugin, arguments);
@@ -245,7 +245,7 @@ namespace sap {
                 },
                 addSelectionInterval(this: Table): Table {
                     // tslint:disable-next-line: no-string-literal
-                    if (this["_hasSelectionPlugin"] && this.getChooseType() === ibas.emChooseType.MULTIPLE) {
+                    if (this["_hasSelectionPlugin"] && this["_hasSelectionPlugin"]() === true) {
                         let plugin: any = this.getPlugins()[0];
                         if (plugin instanceof sap.ui.table.plugins.MultiSelectionPlugin) {
                             return plugin.addSelectionInterval.apply(plugin, arguments);
@@ -255,7 +255,7 @@ namespace sap {
                 },
                 setSelectionInterval(this: Table): Table {
                     // tslint:disable-next-line: no-string-literal
-                    if (this["_hasSelectionPlugin"] && this.getChooseType() === ibas.emChooseType.MULTIPLE) {
+                    if (this["_hasSelectionPlugin"] && this["_hasSelectionPlugin"]() === true) {
                         let plugin: any = this.getPlugins()[0];
                         if (plugin instanceof sap.ui.table.plugins.MultiSelectionPlugin) {
                             return plugin.setSelectionInterval.apply(plugin, arguments);
@@ -265,7 +265,7 @@ namespace sap {
                 },
                 removeSelectionInterval(this: Table): Table {
                     // tslint:disable-next-line: no-string-literal
-                    if (this["_hasSelectionPlugin"] && this.getChooseType() === ibas.emChooseType.MULTIPLE) {
+                    if (this["_hasSelectionPlugin"] && this["_hasSelectionPlugin"]() === true) {
                         let plugin: any = this.getPlugins()[0];
                         if (plugin instanceof sap.ui.table.plugins.MultiSelectionPlugin) {
                             return plugin.removeSelectionInterval.apply(plugin, arguments);
@@ -275,7 +275,7 @@ namespace sap {
                 },
                 isIndexSelected(this: Table): Table {
                     // tslint:disable-next-line: no-string-literal
-                    if (this["_hasSelectionPlugin"] && this.getChooseType() === ibas.emChooseType.MULTIPLE) {
+                    if (this["_hasSelectionPlugin"] && this["_hasSelectionPlugin"]() === true) {
                         let plugin: any = this.getPlugins()[0];
                         if (plugin instanceof sap.ui.table.plugins.MultiSelectionPlugin) {
                             return plugin.isIndexSelected.apply(plugin, arguments);
@@ -571,6 +571,8 @@ namespace sap {
                         label: property.systemed !== true ? property.description :
                             ibas.i18n.prop(ibas.strings.format("bo_{0}_{1}", boInfo.name, property.name).toLowerCase()),
                         template: factories.newComponent(property, readonly ? "Text" : "Input"),
+                        sortProperty: property.systemed === true ? property.searched === true ? property.name : undefined : undefined,
+                        filterProperty: property.systemed === true ? property.searched === true ? property.name : undefined : undefined,
                     });
                     if (property.position > 0) {
                         this.insertColumn(column, property.position);
