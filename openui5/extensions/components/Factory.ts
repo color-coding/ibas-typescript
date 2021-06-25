@@ -144,11 +144,29 @@ namespace sap {
                                 force = true;
                             }
                         }
-                        return new sap.extension.m.Select("", {
-                            forceSelection: force,
-                            editable: property.authorised === ibas.emAuthoriseType.ALL ? true : false,
-                            items: items
-                        }).bindProperty("bindingValue", bindInfo);
+
+                        return force === true
+                            ? new sap.extension.m.Select("", {
+                                forceSelection: true,
+                                editable: property.authorised === ibas.emAuthoriseType.ALL ? true : false,
+                                items: items,
+                                modelContextChange(this: sap.m.Select, event: sap.ui.base.Event): void {
+                                    let data: any = this.getBindingContext()?.getObject();
+                                    if (!ibas.objects.isNull(data)) {
+                                        let binding: any = this.getBinding("bindingValue");
+                                        if (binding instanceof sap.ui.model.PropertyBinding) {
+                                            if (binding.getValue() === undefined) {
+                                                binding.setValue(this.getSelectedKey());
+                                            }
+                                        }
+                                    }
+                                }
+                            }).bindProperty("bindingValue", bindInfo)
+                            : new sap.extension.m.Select("", {
+                                forceSelection: false,
+                                editable: property.authorised === ibas.emAuthoriseType.ALL ? true : false,
+                                items: items,
+                            }).bindProperty("bindingValue", bindInfo);
                     } else {
                         return new sap.extension.m.Input("", {
                             editable: property.authorised === ibas.emAuthoriseType.ALL ? true : false,

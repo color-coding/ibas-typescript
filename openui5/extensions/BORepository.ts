@@ -155,6 +155,7 @@ namespace sap {
                         // 合并查询条件
                         let tasks: ibas.ArrayList<Task> = new ibas.ArrayList<Task>();
                         let criteria: ibas.ICriteria = new ibas.Criteria();
+                        criteria.noChilds = true;
                         for (let task of this.tasks) {
                             if (ibas.objects.isNull(task)) {
                                 continue;

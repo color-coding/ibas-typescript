@@ -67,28 +67,31 @@ namespace sap {
                     return this.setProperty("dataInfo", value);
                 },
                 /** 重构设置 */
-                applySettings(this: DataPage): DataPage {
+                applySettings(this: DataPage, mSettings: any, oScope?: any): DataPage {
+                    if (mSettings.content) {
+                        // 给区域套一层，以处理自定义字段
+                        let content: any = mSettings.content;
+                        mSettings.content = [
+                            new sap.ui.layout.DynamicSideContent(this.getId() + "_contentSplit", {
+                                showMainContent: true,
+                                showSideContent: false,
+                                mainContent: [
+                                    new Page(this.getId() + "_commonSplit", {
+                                        showHeader: false,
+                                        content: content
+                                    })
+                                ],
+                                sideContent: [
+                                    new sap.ui.layout.form.SimpleForm(this.getId() + "_extendSplit", {
+                                        width: "100%",
+                                        editable: true,
+                                    }),
+                                ]
+                            })
+
+                        ];
+                    }
                     Page.prototype.applySettings.apply(this, arguments);
-                    // 重新构建区域
-                    let content: any[] = this.removeAllContent();
-                    this.addContent(
-                        new sap.ui.layout.DynamicSideContent(this.getId() + "_contentSplit", {
-                            showMainContent: true,
-                            showSideContent: false,
-                            mainContent: [
-                                new sap.ui.layout.VerticalLayout(this.getId() + "_commonSplit", {
-                                    width: "100%",
-                                    content: content
-                                })
-                            ],
-                            sideContent: [
-                                new sap.ui.layout.form.SimpleForm(this.getId() + "_extendSplit", {
-                                    width: "100%",
-                                    editable: true,
-                                }),
-                            ]
-                        })
-                    );
                     // 设置其他属性
                     let dataInfo: any = this.getDataInfo();
                     if (typeof dataInfo === "string") {
@@ -227,7 +230,7 @@ namespace sap {
                 // 查询未存在的属性
                 let properties: shell.bo.IBizPropertyInfo[] = Object.assign([], boInfo.properties);
                 let layout: any = sap.ui.getCore().byId(this.getId() + "_commonSplit");
-                if (layout instanceof sap.ui.layout.VerticalLayout) {
+                if (layout instanceof sap.m.Page) {
                     checkFormContent(layout, properties);
                 }
                 let splitter: any;

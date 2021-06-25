@@ -437,6 +437,9 @@ namespace sap {
                  */
                 formatValue(oValue: any, sInternalType: string): any {
                     if (sInternalType === "string") {
+                        if (ibas.objects.isNull(oValue)) {
+                            return oValue;
+                        }
                         oValue = ibas.numbers.round(oValue * 100, this.decimalPlaces - 2);
                         return oValue + "%";
                     }
