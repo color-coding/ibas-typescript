@@ -566,4 +566,41 @@ namespace ibas {
             }
         }
     }
+    /** 业务规则-日期计算间隔 */
+    export class BusinessRuleDateCalculationInterval extends BusinessRuleCommon {
+        /**
+         * 构造
+         * @param start 属性-开始日期
+         * @param end 属性-结束日期
+         * @param result 属性-结果
+         * @param unit 计算单位
+         */
+        constructor(start: string, end: string, result: string, unit?: ibas.dates.emDifferenceType) {
+            super();
+            this.start = start;
+            this.end = end;
+            this.result = result;
+            this.unit = unit;
+            if (strings.isEmpty(this.unit)) {
+                this.unit = ibas.dates.emDifferenceType.DAY;
+            }
+            this.inputProperties.add(this.start);
+            this.inputProperties.add(this.end);
+            this.affectedProperties.add(this.result);
+        }
+        start: string;
+        end: string;
+        result: string;
+        unit: ibas.dates.emDifferenceType;
+        /** 计算规则 */
+        protected compute(context: BusinessRuleContextCommon): void {
+            let sDate: Date = context.inputValues.get(this.start);
+            let eDate: Date = context.inputValues.get(this.end);
+            let value: number = ibas.dates.difference(this.unit, eDate, sDate);
+            if (typeof value !== "number") {
+                value = undefined;
+            }
+            context.outputValues.set(this.result, value);
+        }
+    }
 }

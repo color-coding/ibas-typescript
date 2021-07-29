@@ -171,12 +171,20 @@ namespace sap {
                     for (let item of control.getContent()) {
                         checkFormContent(item, properties);
                     }
-                } else if (control instanceof sap.m.FlexBox) {
-                    for (let item of control.getItems()) {
-                        checkFormContent(item, properties);
-                    }
                 } else if (control instanceof sap.ui.layout.Splitter) {
                     for (let item of control.getContentAreas()) {
+                        checkFormContent(item, properties);
+                    }
+                } else if (control instanceof sap.ui.layout.DynamicSideContent) {
+                    for (let item of control.getMainContent()) {
+                        checkFormContent(item, properties);
+                    }
+                } else if (control instanceof sap.m.Page) {
+                    for (let item of control.getContent()) {
+                        checkFormContent(item, properties);
+                    }
+                } else if (control instanceof sap.m.FlexBox) {
+                    for (let item of control.getItems()) {
                         checkFormContent(item, properties);
                     }
                 } else if (control instanceof sap.m.ScrollContainer) {
@@ -210,9 +218,20 @@ namespace sap {
                             if (!ibas.objects.isNull(propertyInfo)) {
                                 if (propertyInfo.authorised === ibas.emAuthoriseType.NONE) {
                                     fmItem.setVisible(false);
-                                    let label: any = sap.ui.getCore().byId(fmItem.getIdForLabel());
-                                    if (label instanceof sap.ui.core.Control) {
-                                        label.setVisible(false);
+                                    // 设置此行其他控件不可见，如：label
+                                    let fmParent: any = fmItem.getParent();
+                                    if (fmParent instanceof sap.ui.layout.form.FormElement) {
+                                        let label: any = fmParent.getLabel();
+                                        if (label instanceof sap.ui.core.Control) {
+                                            label.setVisible(false);
+                                        }
+                                        if (fmParent.getFields() instanceof Array) {
+                                            for (let pItem of fmParent.getFields()) {
+                                                if (pItem instanceof sap.ui.core.Control) {
+                                                    pItem.setVisible(false);
+                                                }
+                                            }
+                                        }
                                     }
                                 } else if (propertyInfo.authorised === ibas.emAuthoriseType.READ) {
                                     controls.nonEditable(fmItem);

@@ -32,7 +32,7 @@ namespace sap {
                  * @param value 值
                  */
                 setBindingValue(this: ComboBox, value: string): ComboBox {
-                    sap.m.Select.prototype.setSelectedKey.apply(this, arguments);
+                    sap.m.ComboBox.prototype.setSelectedKey.apply(this, arguments);
                     this.setProperty("bindingValue", value);
                     return this;
                 },

@@ -8,6 +8,8 @@
 namespace shell {
     export namespace ui {
         export namespace c {
+            /** 配置项目-欢迎页手工关闭 */
+            export const CONFIG_ITEM_WELCOME_VIEW_MANUAL_CLOSE: string = "welcomeViewManualClose";
             /**
              * 视图-欢迎
              */
@@ -36,6 +38,7 @@ namespace shell {
                         endButton: new sap.m.Button("", {
                             text: ibas.i18n.prop("shell_close"),
                             type: sap.m.ButtonType.Transparent,
+                            visible: ibas.config.get(CONFIG_ITEM_WELCOME_VIEW_MANUAL_CLOSE, true),
                             enabled: false,
                             press: () => {
                                 this.fireViewEvents(this.closeEvent);

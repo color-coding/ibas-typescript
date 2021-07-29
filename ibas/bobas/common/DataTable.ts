@@ -26,7 +26,12 @@ namespace ibas {
         /** 行 */
         rows: ArrayList<DataTableRow> = new ArrayList<DataTableRow>();
         /** 转为对象 */
-        convert(param: IConvertParam = undefined): any[] {
+        convert(param?: IConvertParam): any[];
+        /** 转为对象 */
+        convert<T>(param?: IConvertParam): T[];
+        /** 转为对象 */
+        convert(): any[] {
+            let param: IConvertParam = arguments[0];
             if (objects.isNull(param)) {
                 param = {
                     format: true,
