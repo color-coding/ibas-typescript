@@ -35,17 +35,15 @@ namespace trainingtesting {
                                     maxLength: 20
                                 }),
                             },
+                            sideContentButton: new sap.m.Button("", {
+                                text: ibas.i18n.prop("shell_data_save"),
+                                type: sap.m.ButtonType.Transparent,
+                                icon: "sap-icon://save",
+                                press(): void {
+                                    that.fireViewEvents(that.saveDataEvent);
+                                }
+                            }),
                             actions: [
-                                new sap.uxap.ObjectPageHeaderActionButton("", {
-                                    text: ibas.i18n.prop("shell_data_save"),
-                                    type: sap.m.ButtonType.Transparent,
-                                    icon: "sap-icon://save",
-                                    hideText: true,
-                                    importance: sap.uxap.Importance.High,
-                                    press(): void {
-                                        that.fireViewEvents(that.saveDataEvent);
-                                    }
-                                }),
                                 new sap.uxap.ObjectPageHeaderActionButton("", {
                                     text: ibas.i18n.prop("shell_data_clone"),
                                     type: sap.m.ButtonType.Transparent,

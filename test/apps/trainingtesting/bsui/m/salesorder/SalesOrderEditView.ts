@@ -84,17 +84,15 @@ namespace trainingtesting {
                                     }
                                 ],
                             },
+                            sideContentButton: new sap.m.Button("", {
+                                text: ibas.i18n.prop("shell_data_save"),
+                                type: sap.m.ButtonType.Transparent,
+                                icon: "sap-icon://save",
+                                press(): void {
+                                    that.fireViewEvents(that.saveDataEvent);
+                                }
+                            }),
                             actions: [
-                                new sap.uxap.ObjectPageHeaderActionButton("", {
-                                    text: ibas.i18n.prop("shell_data_save"),
-                                    type: sap.m.ButtonType.Transparent,
-                                    icon: "sap-icon://save",
-                                    hideText: true,
-                                    importance: sap.uxap.Importance.High,
-                                    press(): void {
-                                        that.fireViewEvents(that.saveDataEvent);
-                                    }
-                                }),
                                 new sap.uxap.ObjectPageHeaderActionButton("", {
                                     text: ibas.i18n.prop("shell_data_clone"),
                                     type: sap.m.ButtonType.Transparent,
@@ -246,7 +244,11 @@ namespace trainingtesting {
                                                 }).addStyleClass("sapUiSmallMarginTop"),
                                                 items: {
                                                     path: "/rows",
-                                                    template: new sap.m.ObjectListItem("", {
+                                                    template: new sap.extension.m.DataObjectListItem("", {
+                                                        dataInfo: {
+                                                            code: bo.SalesOrder.BUSINESS_OBJECT_CODE,
+                                                            name: bo.SalesOrderItem.name
+                                                        },
                                                         title: "# {lineId}",
                                                         attributes: [
                                                             new sap.extension.m.ObjectAttribute("", {
@@ -401,6 +403,7 @@ namespace trainingtesting {
                         ],
                         buttons: [
                             new sap.m.Button("", {
+                                width: "20%",
                                 icon: "sap-icon://arrow-left",
                                 type: sap.m.ButtonType.Transparent,
                                 press: function (): void {
@@ -423,6 +426,7 @@ namespace trainingtesting {
                                 }
                             }),
                             new sap.m.Button("", {
+                                width: "20%",
                                 icon: "sap-icon://arrow-right",
                                 type: sap.m.ButtonType.Transparent,
                                 press: function (): void {
@@ -440,6 +444,27 @@ namespace trainingtesting {
                                                 type: ibas.emMessageType.WARNING,
                                                 message: ibas.i18n.prop(["shell_please", "shell_data_add_line"]),
                                             });
+                                        }
+                                    }
+                                }
+                            }),
+                            new sap.m.Button("", {
+                                width: "20%",
+                                text: ibas.i18n.prop("shell_data_remove"),
+                                type: sap.m.ButtonType.Transparent,
+                                press: function (): void {
+                                    let form: any = editForm.getContent()[0];
+                                    if (form instanceof sap.extension.layout.SimpleForm) {
+                                        let datas: any = that.listSalesOrderItem.getModel().getData("rows");
+                                        if (datas instanceof Array && datas.length > 0) {
+                                            that.fireViewEvents(that.removeSalesOrderItemEvent, form.getModel().getData());
+                                            if (datas.length === 1) {
+                                                // 无数据，退出
+                                                (<any>editForm.getButtons()[3]).firePress({});
+                                            } else {
+                                                // 下一个
+                                                (<any>editForm.getButtons()[1]).firePress({});
+                                            }
                                         }
                                     }
                                 }

@@ -19,18 +19,15 @@ namespace trainingtesting {
                         },
                         showFooter: false,
                         headerTitle: new sap.uxap.ObjectPageHeader("", {
+                            sideContentButton: new sap.m.Button("", {
+                                text: ibas.i18n.prop("shell_data_edit"),
+                                type: sap.m.ButtonType.Transparent,
+                                icon: "sap-icon://edit",
+                                press(): void {
+                                    that.fireViewEvents(that.editDataEvent);
+                                }
+                            }),
                             actions: [
-                                new sap.uxap.ObjectPageHeaderActionButton("", {
-                                    hideText: true,
-                                    importance: sap.uxap.Importance.High,
-                                    text: ibas.i18n.prop("shell_data_edit"),
-                                    type: sap.m.ButtonType.Transparent,
-                                    icon: "sap-icon://edit",
-                                    visible: this.mode === ibas.emViewMode.VIEW ? false : true,
-                                    press(): void {
-                                        that.fireViewEvents(that.editDataEvent);
-                                    }
-                                }),
                                 new sap.uxap.ObjectPageHeaderActionButton("", {
                                     hideText: true,
                                     importance: sap.uxap.Importance.Medium,
