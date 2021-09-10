@@ -745,6 +745,190 @@ namespace sap {
                 }
             });
 
+            /**
+             * 对象属性可选值-输入框
+             */
+            Input.extend("sap.extension.m.PropertyInput", {
+                metadata: {
+                    properties: {
+                        /** 对象数据信息 */
+                        dataInfo: { type: "any" },
+                        /** 属性名称 */
+                        propertyName: { type: "string" },
+                    },
+                    events: {}
+                },
+                renderer: {},
+                /**
+                 * 获取数据信息
+                 */
+                getDataInfo(this: PropertyInput): { code: string, name?: string } | string {
+                    return this.getProperty("dataInfo");
+                },
+                /**
+                 * 设置数据信息
+                 * @param value 数据信息
+                 */
+                setDataInfo(this: PropertyInput, value: { code: string, name?: string } | string): PropertyInput {
+                    return this.setProperty("dataInfo", value);
+                },
+                /**
+                 * 获取属性名称
+                 */
+                getPropertyName(this: PropertyInput): string {
+                    return this.getProperty("propertyName");
+                },
+                /**
+                 * 设置属性名称
+                 * @param value 属性名称
+                 */
+                setPropertyName(this: PropertyInput, value: string): PropertyInput {
+                    return this.setProperty("propertyName", value);
+                },
+                /**
+                 * 设置绑定值
+                 * @param value 值
+                 */
+                setBindingValue(this: Input, value: string): Input {
+                    if (this.getSuggestionItems().length > 0) {
+                        sap.m.Input.prototype.setSelectedKey.apply(this, arguments);
+                    } else {
+                        sap.m.Input.prototype.setValue.apply(this, arguments);
+                    }
+                    this.setProperty("bindingValue", value);
+                    return this;
+                },
+                /** 重写此方法，设置选中值 */
+                setSelectionItem(this: Input, value: sap.ui.core.Item): Input {
+                    (<any>sap.m.Input.prototype).setSelectionItem.apply(this, arguments);
+                    this.setProperty("bindingValue", this.getSelectedKey());
+                    return this;
+                },
+                /**
+                 * 设置值
+                 * @param value 值
+                 */
+                setValue(this: Input, value: string): Input {
+                    if (this.getSuggestionItems().length > 0) {
+                        sap.m.Input.prototype.setValue.apply(this, arguments);
+                    } else {
+                        return this.setBindingValue(value);
+                    }
+                    return this;
+                },
+                /** 重构设置 */
+                applySettings(this: PropertyInput, mSettings: any, oScope?: any): PropertyInput {
+                    if (mSettings) {
+                        if (!mSettings.valueHelpIconSrc) {
+                            mSettings.valueHelpIconSrc = "sap-icon://slim-arrow-down";
+                        }
+                        if (!mSettings.valueHelpRequest) {
+                            mSettings.valueHelpRequest = (event: sap.ui.base.Event) => {
+                                let source: any = event.getSource();
+                                if (source instanceof Input) {
+                                    source.showItems(null);
+                                }
+                            };
+                        }
+                    }
+                    Input.prototype.applySettings.apply(this, arguments);
+                    if (this.getSuggestionItems().length === 0) {
+                        this.loadItems();
+                    }
+                    return this;
+                },
+                /**
+                 * 加载可选值
+                 */
+                loadItems(this: PropertyInput): PropertyInput {
+                    let boInfo: { code: string, name?: string } | string | Function = this.getDataInfo();
+                    if (typeof boInfo === "string") {
+                        boInfo = {
+                            code: boInfo,
+                            name: undefined,
+                        };
+                    } else if (typeof boInfo === "function") {
+                        boInfo = {
+                            code: ibas.objects.typeOf(boInfo).BUSINESS_OBJECT_CODE,
+                            name: undefined,
+                        };
+                    }
+                    if (!boInfo || !boInfo.code) {
+                        return this;
+                    }
+                    let propertyName: string = this.getPropertyName();
+                    if (ibas.strings.isEmpty(propertyName)) {
+                        // 未设置属性则使用绑定的
+                        propertyName = this.getBindingPath("bindingValue");
+                    }
+                    if (ibas.strings.isEmpty(propertyName)) {
+                        return this;
+                    }
+                    this.destroySuggestionItems();
+                    let boRepository: shell.bo.IBORepositoryShell = ibas.boFactory.create(shell.bo.BO_REPOSITORY_SHELL);
+                    boRepository.fetchBizObjectInfo({
+                        user: ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE),
+                        boCode: ibas.config.applyVariables(boInfo.code),
+                        boName: boInfo.name,
+                        onCompleted: (opRslt) => {
+                            try {
+                                if (opRslt.resultCode !== 0) {
+                                    throw new Error(opRslt.message);
+                                }
+                                let boName: string;
+                                if (propertyName.indexOf(".") > 0) {
+                                    // 属性带路径，则取名称
+                                    boName = propertyName.split(".")[0];
+                                }
+                                for (let data of opRslt.resultObjects) {
+                                    if (boName && !ibas.strings.equalsIgnoreCase(data.name, boName)) {
+                                        continue;
+                                    }
+                                    for (let property of data.properties) {
+                                        if (ibas.strings.equalsIgnoreCase(propertyName, property.name)) {
+                                            if (property.values instanceof Array) {
+                                                for (let item of property.values) {
+                                                    this.addSuggestionItem(new SelectItem("", {
+                                                        key: item.value,
+                                                        text: item.description,
+                                                        default: item.default,
+                                                    }));
+                                                }
+                                            }
+                                        }
+                                    }
+                                    if (this.getSuggestionItems().length > 0) {
+                                        this.setShowValueHelp(true);
+                                    } else {
+                                        this.setShowValueHelp(false);
+                                    }
+                                    return;
+                                }
+                            } catch (error) {
+                                ibas.logger.log(error);
+                            }
+                        }
+                    });
+                    return this;
+                },
+                init(this: Input): void {
+                    (<any>Input.prototype).init.apply(this, arguments);
+                    this.attachModelContextChange(undefined, (event: sap.ui.base.Event) => {
+                        let source: any = event.getSource();
+                        if (source instanceof Input) {
+                            if (ibas.objects.isNull(source.getBindingValue())) {
+                                for (let item of source.getSuggestionItems()) {
+                                    if (item instanceof SelectItem) {
+                                        if (item.getDefault() === true) {
+                                            source.setSelectedItem(item); return;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                },
+            });
         }
     }
 }

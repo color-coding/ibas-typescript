@@ -101,7 +101,10 @@ namespace trainingtesting {
                         }).addStyleClass("sapUiSmallMarginTop"),
                         items: {
                             path: "/rows",
-                            template: new sap.m.ObjectListItem("", {
+                            template: new sap.extension.m.DataObjectListItem("", {
+                                dataInfo: {
+                                    code: bo.Material.BUSINESS_OBJECT_CODE,
+                                },
                                 title: {
                                     path: "name",
                                     type: new sap.extension.data.Alphanumeric(),

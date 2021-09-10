@@ -115,6 +115,8 @@ namespace ibas {
         APPROVED,
         /** 已拒绝 */
         REJECTED,
+        /** 已退回 */
+        RETURNED,
         /** 已跳过 */
         SKIPPED
     }
@@ -131,7 +133,9 @@ namespace ibas {
         /** 已拒绝 */
         REJECTED,
         /** 已取消 */
-        CANCELLED
+        CANCELLED,
+        /** 已退回 */
+        RETURNED
     }
     /**
      * 审批结果
@@ -142,7 +146,9 @@ namespace ibas {
         /** 拒绝的 */
         REJECTED,
         /** 重置为进行中 */
-        PROCESSING
+        PROCESSING,
+        /** 已退回 */
+        RETURNED
     }
     /**
      * 方向

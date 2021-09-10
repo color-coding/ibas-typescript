@@ -622,6 +622,13 @@ namespace openui5 {
                         }
                         properties.add(item);
                     }
+                    properties = properties.sort((n1, n2) => {
+                        if (n1.name > n2.name) {
+                            return 1;
+                        } else {
+                            return -1;
+                        }
+                    });
                     let bo: ibas.BusinessObject<any>;
                     if (container instanceof sap.m.Page) {
                         container.attachModelContextChange(null, function (oEvent: any): void {

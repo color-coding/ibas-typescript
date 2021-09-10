@@ -1130,7 +1130,9 @@ namespace sap {
                 // tslint:disable-next-line: triple-equals
                 if (approvalStatus == ibas.emApprovalStatus.CANCELLED
                     // tslint:disable-next-line: triple-equals
-                    || approvalStatus == ibas.emApprovalStatus.REJECTED) {
+                    || approvalStatus == ibas.emApprovalStatus.REJECTED
+                    // tslint:disable-next-line: triple-equals
+                    || approvalStatus == ibas.emApprovalStatus.RETURNED) {
                     return sap.ui.core.ValueState.Error;
                     // tslint:disable-next-line: triple-equals
                 } else if (approvalStatus == ibas.emApprovalStatus.PROCESSING) {

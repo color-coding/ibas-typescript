@@ -189,6 +189,24 @@ declare namespace sap {
                  */
                 loadItems(): this;
             }
+            /**
+             * 业务对象属性-选择框
+             */
+            class BusinessObjectPropertiesSelect extends Select {
+                /**
+                 * 获取数据信息
+                 */
+                getDataInfo(): { code: string, name?: string } | string | Function;
+                /**
+                 * 设置数据信息
+                 * @param value 值
+                 */
+                setDataInfo(value: { code: string, name?: string } | string | Function): this;
+                /**
+                 * 加载可选值
+                 */
+                loadItems(): this;
+            }
         }
     }
 }

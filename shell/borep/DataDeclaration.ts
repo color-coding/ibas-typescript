@@ -119,6 +119,8 @@ namespace shell {
             Systemed: boolean;
             /** 授权的 */
             Authorised: string;
+            /** 链接的对象 */
+            LinkedObject: string;
             /** 值集合 */
             Values: IBizPropertyValue[];
         }

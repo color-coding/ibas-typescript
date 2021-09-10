@@ -150,6 +150,33 @@ declare namespace sap {
              */
             class DataOrganizationInput extends OrganizationInput {
             }
+            /**
+             * 对象属性可选值-输入框
+             */
+            class PropertyInput extends Input {
+                /**
+                 * 获取数据信息
+                 */
+                getDataInfo(): { code: string, name?: string } | string | Function;
+                /**
+                 * 设置数据信息
+                 * @param value 值
+                 */
+                setDataInfo(value: { code: string, name?: string } | string | Function): this;
+                /**
+                 * 获取属性名称
+                 */
+                getPropertyName(): string;
+                /**
+                 * 设置属性名称
+                 * @param value 属性名称
+                 */
+                setPropertyName(value: string): this;
+                /**
+                 * 加载可选值
+                 */
+                loadItems(): this;
+            }
         }
     }
 }

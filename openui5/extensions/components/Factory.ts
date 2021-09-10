@@ -30,7 +30,8 @@ namespace sap {
                     searched: property.searched,
                     systemed: property.systemed,
                     authorised: property.authorised,
-                    values: property.values
+                    values: property.values,
+                    linkedObject: property.linkedObject
                 };
             }
             /**
@@ -167,6 +168,8 @@ namespace sap {
                                 editable: property.authorised === ibas.emAuthoriseType.ALL ? true : false,
                                 items: items,
                             }).bindProperty("bindingValue", bindInfo);
+                    } else if (!ibas.strings.isEmpty(property.linkedObject)) {
+                        return <sap.ui.core.Control>newInput(property.linkedObject).bindProperty("bindingValue", bindInfo);
                     } else {
                         return new sap.extension.m.Input("", {
                             editable: property.authorised === ibas.emAuthoriseType.ALL ? true : false,
@@ -376,6 +379,10 @@ namespace sap {
                             criteria: criteria,
                             chooseType: ibas.emChooseType.MULTIPLE,
                             onCompleted: (selecteds) => {
+                                if (selecteds instanceof ibas.DataTable) {
+                                    selecteds = <any>selecteds.convert({ format: false, nameAs: "index" });
+                                    property = "0";
+                                }
                                 let builder: ibas.StringBuilder = new ibas.StringBuilder();
                                 for (let item of selecteds) {
                                     if (builder.length > 0) {

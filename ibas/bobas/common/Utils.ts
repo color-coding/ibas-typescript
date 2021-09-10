@@ -864,9 +864,9 @@ namespace ibas {
             if (type === emDifferenceType.DAY) {
                 add = value * 24 * 60 * 60 * 1000;
             } else if (type === emDifferenceType.HOUR) {
-                add = value * 60 * 1000;
-            } else if (type === emDifferenceType.MINUTE) {
                 add = value * 60 * 60 * 1000;
+            } else if (type === emDifferenceType.MINUTE) {
+                add = value * 60 * 1000;
             } else if (type === emDifferenceType.SECOND) {
                 add = value * 1000;
             }

@@ -101,7 +101,10 @@ namespace trainingtesting {
                         }).addStyleClass("sapUiSmallMarginTop"),
                         items: {
                             path: "/rows",
-                            template: new sap.m.ObjectListItem("", {
+                            template: new sap.extension.m.DataObjectListItem("", {
+                                dataInfo: {
+                                    code: bo.SalesOrder.BUSINESS_OBJECT_CODE,
+                                },
                                 title: "# {docEntry}",
                                 number: {
                                     path: "documentTotal",

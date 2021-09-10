@@ -49,19 +49,22 @@
     "em_approvalstepstatus_processing": "审批中",
     "em_approvalstepstatus_approved": "已批准",
     "em_approvalstepstatus_rejected": "已拒绝",
-    "em_approvalstepstatus_skipped": "已跳过"
+    "em_approvalstepstatus_skipped": "已跳过",
+    "em_approvalstepstatus_returned": "已退回"
   },
   {
     "em_approvalstatus_unaffected": "不影响",
     "em_approvalstatus_cancelled": "已取消",
     "em_approvalstatus_processing": "审批中",
     "em_approvalstatus_approved": "已批准",
-    "em_approvalstatus_rejected": "已拒绝"
+    "em_approvalstatus_rejected": "已拒绝",
+    "em_approvalstatus_returned": "已退回"
   },
   {
     "em_approvalresult_processing": "审批中",
     "em_approvalresult_approved": "已批准",
-    "em_approvalresult_rejected": "已拒绝"
+    "em_approvalresult_rejected": "已拒绝",
+    "em_approvalresult_returned": "已退回"
   },
   {
     "em_direction_in": "入",

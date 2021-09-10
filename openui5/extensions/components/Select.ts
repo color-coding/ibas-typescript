@@ -76,6 +76,22 @@ namespace sap {
                 init(this: Select): void {
                     this.attachBrowserEvent("keydown", clearSelection);
                     (<any>sap.m.Select.prototype).init.apply(this, arguments);
+                    this.attachModelContextChange(undefined, (event: sap.ui.base.Event) => {
+                        let source: any = event.getSource();
+                        if (source instanceof Select) {
+                            if (ibas.objects.isNull(source.getBindingValue())) {
+                                if (source.getForceSelection() === true) {
+                                    for (let item of source.getItems()) {
+                                        if (item instanceof SelectItem) {
+                                            if (item.getDefault() === true) {
+                                                source.setSelectedItem(item); return;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
                 },
                 exit(this: Select): void {
                     this.detachBrowserEvent("keydown", clearSelection);
@@ -260,7 +276,7 @@ namespace sap {
                     return Select.prototype.setBindingValue.apply(this, arguments);
                 },
                 /** 重构设置 */
-                applySettings(this: EnumSelect): EnumSelect {
+                applySettings(this: RepositorySelect): RepositorySelect {
                     Select.prototype.applySettings.apply(this, arguments);
                     if (this.getItems().length === 0) {
                         this.loadItems();
@@ -343,7 +359,7 @@ namespace sap {
                     return Select.prototype.setBindingValue.apply(this, arguments);
                 },
                 /** 重构设置 */
-                applySettings(this: EnumSelect, mSettings: any, oScope?: any): EnumSelect {
+                applySettings(this: PropertySelect, mSettings: any, oScope?: any): PropertySelect {
                     Select.prototype.applySettings.apply(this, arguments);
                     if (this.getItems().length === 0) {
                         this.loadItems();
@@ -567,6 +583,98 @@ namespace sap {
                             text: builder.toString(),
                         }));
                     }
+                    return this;
+                }
+            });
+            /**
+             * 业务对象属性-选择框
+             */
+            Select.extend("sap.extension.m.BusinessObjectPropertiesSelect", {
+                metadata: {
+                    properties: {
+                        /** 对象数据信息 */
+                        dataInfo: { type: "any" },
+                        /** 强制选择 */
+                        forceSelection: {
+                            type: "boolean",
+                            group: "Behavior",
+                            defaultValue: false
+                        },
+                    },
+                    events: {}
+                },
+                renderer: {},
+                /**
+                 * 获取数据信息
+                 */
+                getDataInfo(this: PropertySelect): { code: string, name?: string } | string {
+                    return this.getProperty("dataInfo");
+                },
+                /**
+                 * 设置数据信息
+                 * @param value 数据信息
+                 */
+                setDataInfo(this: PropertySelect, value: { code: string, name?: string } | string): PropertySelect {
+                    return this.setProperty("dataInfo", value);
+                },
+                /**
+                 * 设置绑定值
+                 * @param value 值
+                 */
+                setBindingValue(this: PropertySelect, value: string): PropertySelect {
+                    return Select.prototype.setBindingValue.apply(this, arguments);
+                },
+                /** 重构设置 */
+                applySettings(this: PropertySelect, mSettings: any, oScope?: any): PropertySelect {
+                    Select.prototype.applySettings.apply(this, arguments);
+                    if (this.getItems().length === 0) {
+                        this.loadItems();
+                    }
+                    return this;
+                },
+                /**
+                 * 加载可选值
+                 */
+                loadItems(this: PropertySelect): PropertySelect {
+                    let boInfo: { code: string, name?: string } | string | Function = this.getDataInfo();
+                    if (typeof boInfo === "string") {
+                        boInfo = {
+                            code: boInfo,
+                            name: undefined,
+                        };
+                    } else if (typeof boInfo === "function") {
+                        boInfo = {
+                            code: ibas.objects.typeOf(boInfo).BUSINESS_OBJECT_CODE,
+                            name: undefined,
+                        };
+                    }
+                    if (!boInfo || !boInfo.code) {
+                        return this;
+                    }
+                    this.destroyItems();
+                    let boRepository: shell.bo.IBORepositoryShell = ibas.boFactory.create(shell.bo.BO_REPOSITORY_SHELL);
+                    boRepository.fetchBizObjectInfo({
+                        user: ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE),
+                        boCode: ibas.config.applyVariables(boInfo.code),
+                        boName: boInfo.name,
+                        onCompleted: (opRslt) => {
+                            try {
+                                if (opRslt.resultCode !== 0) {
+                                    throw new Error(opRslt.message);
+                                }
+                                for (let data of opRslt.resultObjects) {
+                                    for (let property of data.properties) {
+                                        this.addItem(new SelectItem("", {
+                                            key: property.name,
+                                            text: property.description,
+                                        }));
+                                    }
+                                }
+                            } catch (error) {
+                                ibas.logger.log(error);
+                            }
+                        }
+                    });
                     return this;
                 }
             });
