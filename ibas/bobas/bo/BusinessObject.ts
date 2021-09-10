@@ -382,6 +382,7 @@ namespace ibas {
         reset(): void {
             // 设置为新对象
             this.markNew(true);
+            let myRules: IBusinessRules = businessRulesManager.getRules(objects.typeOf(this));
             for (let property in this) {
                 if (strings.isEmpty(property)) {
                     continue;
@@ -396,6 +397,10 @@ namespace ibas {
                 } else if (value instanceof BusinessObjects) {
                     for (let item of value) {
                         item.reset();
+                    }
+                } else {
+                    if (!objects.isNull(myRules)) {
+                        myRules.execute(this, property);
                     }
                 }
             }
