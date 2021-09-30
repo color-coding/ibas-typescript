@@ -533,6 +533,17 @@ namespace sap {
                                 if (propertyInfo.searched === true) {
                                     column.setSortProperty(propertyInfo.name);
                                     column.setFilterProperty(propertyInfo.name);
+                                    if (ibas.strings.equalsIgnoreCase(propertyInfo.dataType, "NUMERIC")) {
+                                        column.setFilterType(new sap.ui.model.type.Integer());
+                                    } else if (ibas.strings.equalsIgnoreCase(propertyInfo.dataType, "DECIMAL")) {
+                                        column.setFilterType(new sap.ui.model.type.Float());
+                                    } else if (ibas.strings.equalsIgnoreCase(propertyInfo.dataType, "DATE")) {
+                                        if (ibas.strings.equalsIgnoreCase(propertyInfo.editType, "TIME")) {
+                                            column.setFilterType(new sap.ui.model.type.Integer());
+                                        } else {
+                                            column.setFilterType(new sap.ui.model.type.Date());
+                                        }
+                                    }
                                 }
                                 // 修正位置
                                 if (propertyInfo.position > 0) {
@@ -573,6 +584,11 @@ namespace sap {
                         template: factories.newComponent(property, readonly ? "Text" : "Input"),
                         sortProperty: property.systemed === true ? property.searched === true ? property.name : undefined : undefined,
                         filterProperty: property.systemed === true ? property.searched === true ? property.name : undefined : undefined,
+                        filterType: ibas.strings.equalsIgnoreCase(property.dataType, "NUMERIC") ? new sap.ui.model.type.Integer() :
+                            ibas.strings.equalsIgnoreCase(property.dataType, "DECIMAL") ? new sap.ui.model.type.Float() :
+                                ibas.strings.equalsIgnoreCase(property.dataType, "DATE") ?
+                                    ibas.strings.equalsIgnoreCase(property.editType, "TIME") ? new sap.ui.model.type.Integer() : new sap.ui.model.type.Date()
+                                    : undefined
                     });
                     if (property.position > 0) {
                         this.insertColumn(column, property.position);

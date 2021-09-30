@@ -31,6 +31,18 @@ namespace ibas {
          */
         removeAt(index: number): void;
         /**
+         * 插入项目
+         * @param index 插入位置
+         * @param item 项目
+         */
+        insert(index: number, item: T): void;
+        /**
+         * 插入项目
+         * @param index 插入位置
+         * @param items 项目数组
+         */
+        insert(index: number, items: T[]): void;
+        /**
          * 第一个或默认
          */
         where(lambda: (value: T) => boolean): T[];
@@ -95,7 +107,34 @@ namespace ibas {
                 }
             }
         }
+        /**
+         * 插入项目
+         * @param index 插入位置
+         * @param item 项目
+         */
+        insert(index: number, item: T): void;
+        /**
+         * 插入项目
+         * @param index 插入位置
+         * @param items 项目数组
+         */
+        insert(index: number, items: T[]): void;
 
+        insert(): void {
+            // 无效值不做处理
+            if (arguments === null || arguments === undefined || arguments.length !== 2) {
+                return;
+            }
+            let index: number = arguments[0];
+            let value: T | T[] = arguments[1];
+            if (value instanceof Array) {
+                for (let item of value) {
+                    this.splice(index + 1, 0, item);
+                }
+            } else {
+                this.splice(index, 0, value);
+            }
+        }
         /**
          * 移出项目
          * @param item 项目
