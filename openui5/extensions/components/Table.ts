@@ -566,7 +566,7 @@ namespace sap {
                     }
                 }
                 // 自定义字段排序集合
-                let boUserFields: any = boInfo.properties.filter(c => c.systemed === false).sort((a, b) => a.name.charCodeAt(2) - b.name.charCodeAt(2));
+                let boUserFields: any = boInfo.properties.filter(c => c.systemed === false).sort((a, b) => a.name.localeCompare(b.name));
                 // 创建未存在的列
                 for (let property of properties) {
                     if (ibas.objects.isNull(property)) {
