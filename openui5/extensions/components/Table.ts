@@ -533,6 +533,17 @@ namespace sap {
                                 if (propertyInfo.searched === true) {
                                     column.setSortProperty(propertyInfo.name);
                                     column.setFilterProperty(propertyInfo.name);
+                                    if (ibas.strings.equalsIgnoreCase(propertyInfo.dataType, "NUMERIC")) {
+                                        column.setFilterType(new sap.ui.model.type.Integer());
+                                    } else if (ibas.strings.equalsIgnoreCase(propertyInfo.dataType, "DECIMAL")) {
+                                        column.setFilterType(new sap.ui.model.type.Float());
+                                    } else if (ibas.strings.equalsIgnoreCase(propertyInfo.dataType, "DATE")) {
+                                        if (ibas.strings.equalsIgnoreCase(propertyInfo.editType, "TIME")) {
+                                            column.setFilterType(new sap.ui.model.type.Integer());
+                                        } else {
+                                            column.setFilterType(new sap.ui.model.type.Date());
+                                        }
+                                    }
                                 }
                                 // 修正位置
                                 if (propertyInfo.position > 0) {
@@ -554,6 +565,8 @@ namespace sap {
                         }
                     }
                 }
+                // 自定义字段排序集合
+                let boUserFields: any = boInfo.properties.filter(c => c.systemed === false).sort((a, b) => a.name.localeCompare(b.name));
                 // 创建未存在的列
                 for (let property of properties) {
                     if (ibas.objects.isNull(property)) {
@@ -566,13 +579,25 @@ namespace sap {
                         continue;
                     }
                     property = factories.newProperty(property, boInfo);
+                    let fieldPosition: number = 0;
+                    // 获取字段位置
+                    if (property.systemed === false) {
+                        fieldPosition = boUserFields.indexOf(boUserFields.filter(c => c.name === property.name)[0]);
+                    }
                     let column: DataColumn = new DataColumn("", {
                         propertyInfo: property,
                         label: property.systemed !== true ? property.description :
                             ibas.i18n.prop(ibas.strings.format("bo_{0}_{1}", boInfo.name, property.name).toLowerCase()),
                         template: factories.newComponent(property, readonly ? "Text" : "Input"),
-                        sortProperty: property.systemed === true ? property.searched === true ? property.name : undefined : undefined,
-                        filterProperty: property.systemed === true ? property.searched === true ? property.name : undefined : undefined,
+                        sortProperty: property.systemed === true ? property.searched === true ? property.name : undefined :
+                            property.searched === true ? "userFields/" + fieldPosition + "/value" : undefined,
+                        filterProperty: property.systemed === true ? property.searched === true ? property.name : undefined :
+                            property.searched === true ? "userFields/" + fieldPosition + "/value" : undefined,
+                        filterType: ibas.strings.equalsIgnoreCase(property.dataType, "NUMERIC") ? new sap.ui.model.type.Integer() :
+                            ibas.strings.equalsIgnoreCase(property.dataType, "DECIMAL") ? new sap.ui.model.type.Float() :
+                                ibas.strings.equalsIgnoreCase(property.dataType, "DATE") ?
+                                    ibas.strings.equalsIgnoreCase(property.editType, "TIME") ? new sap.ui.model.type.Integer() : new sap.ui.model.type.Date()
+                                    : new sap.ui.model.type.String()
                     });
                     if (property.position > 0) {
                         this.insertColumn(column, property.position);

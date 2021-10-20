@@ -179,7 +179,7 @@ namespace sap {
                                         }
                                     } else {
                                         for (let item of section.getBlocks()) {
-                                            let bindingInfo: any = managedobjects.bindingInfo(item, "text");
+                                            let bindingInfo: any = managedobjects.bindingInfo(item, "bindingValue");
                                             if (!ibas.objects.isNull(bindingInfo)) {
                                                 userfields.check(userFields, bindingInfo);
                                             }

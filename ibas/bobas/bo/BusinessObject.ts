@@ -332,18 +332,20 @@ namespace ibas {
     }
     /** 用户字段集合 */
     export interface IUserFields {
+        /** Iterator */
+        [Symbol.iterator](): IterableIterator<IUserField>;
         /** 获取用户字段 */
         get(index: number): IUserField;
         /** 获取用户字段 */
         get(name: string): IUserField;
-        /** 变量集合 */
-        forEach(): IUserField[];
         /** 大小 */
         size(): number;
         /** 返回索引 */
         indexOf(item: IUserField): number;
         /** 注册 */
         register(name: string, valueType: emDbFieldType): IUserField;
+        /** 变量集合 */
+        forEach(): IUserField[];
     }
 
     /**
@@ -911,7 +913,7 @@ namespace ibas {
         }
     }
     /** 用户字段 */
-    export class UserField<T> implements IUserField {
+    export class UserField<T> extends Bindable implements IUserField {
         /** 名称 */
         Name: string;
         get name(): string {
@@ -919,6 +921,7 @@ namespace ibas {
         }
         set name(value: string) {
             this.Name = value;
+            this.firePropertyChanged("name");
         }
         /** 类型 */
         ValueType: emDbFieldType;
@@ -927,6 +930,7 @@ namespace ibas {
         }
         set valueType(value: emDbFieldType) {
             this.ValueType = value;
+            this.firePropertyChanged("valueType");
         }
         /** 值 */
         Value: T;
@@ -935,6 +939,7 @@ namespace ibas {
         }
         set value(value: T) {
             this.Value = value;
+            this.firePropertyChanged("value");
         }
     }
     class UserFieldInfo {
@@ -1003,16 +1008,23 @@ namespace ibas {
             let userField: IUserField = userFieldManager.create(info);
             userField.name = name;
             userField.valueType = valueType;
-            this.push(userField);
+            let index: number = this.push(userField);
+            if (userField instanceof UserField) {
+                userField.registerListener({
+                    propertyChanged: (name) => {
+                        if (strings.equalsIgnoreCase(name, "Value")) {
+                            if (this[PROPERTY_PARENT] instanceof BusinessObject && this[PROPERTY_PARENT].isLoading === false) {
+                                this[PROPERTY_PARENT].firePropertyChanged(strings.format("UserFields/{0}", index));
+                            }
+                        }
+                    }
+                });
+            }
             return userField;
         }
         /** 大小 */
         size(): number {
             return this.length;
-        }
-        /** 变量集合 */
-        forEach(): IUserField[] {
-            return this;
         }
         /** 获取用户字段 */
         get(index: number): IUserField;
@@ -1032,6 +1044,13 @@ namespace ibas {
                 }
             }
             return userField;
+        }
+        /** 变量集合 */
+        forEach(): IUserField[] {
+            if (arguments.length > 0) {
+                return super.forEach.apply(this, arguments);
+            }
+            return this;
         }
     }
     /** 业务对象工具 */
@@ -1215,7 +1234,7 @@ namespace ibas {
                 }
                 let skips: IList<string> = arrays.create(skip);
                 // 复制自定义字段
-                for (let item of source.userFields.forEach()) {
+                for (let item of source.userFields) {
                     if (skips.contain(item.name)) {
                         continue;
                     }

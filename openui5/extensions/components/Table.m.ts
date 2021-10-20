@@ -241,7 +241,7 @@ namespace sap {
                                 if (bindingInfo && bindingInfo.template instanceof sap.m.ColumnListItem) {
                                     let template: sap.m.ColumnListItem = bindingInfo.template;
                                     for (let item of template.getCells()) {
-                                        let bindingInfo: any = managedobjects.bindingInfo(item, "text");
+                                        let bindingInfo: any = managedobjects.bindingInfo(item, "bindingValue");
                                         if (!ibas.objects.isNull(bindingInfo)) {
                                             userfields.check(userFields, bindingInfo);
                                         }

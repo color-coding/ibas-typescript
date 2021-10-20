@@ -203,7 +203,8 @@ namespace sap {
                     }
                     return new sap.extension.m.ObjectAttribute("", {
                         title: property.description,
-                    }).bindProperty("bindingValue", bindInfo);
+                        bindingValue: bindInfo,
+                    });
                 } else if (mode === "Object.2") {
                     if (property.values instanceof Array && property.values.length > 0) {
                         // 可选值
@@ -231,7 +232,8 @@ namespace sap {
                         });
                     }
                     return new sap.extension.m.ObjectAttribute("", {
-                    }).bindProperty("bindingValue", bindInfo);
+                        bindingValue: bindInfo,
+                    });
                 } else {
                     return null;
                 }
