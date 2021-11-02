@@ -640,6 +640,16 @@ namespace ibas {
             // 可重载
             this.firePropertyChanged("length");
         }
+        /**
+         * 清除所有
+         */
+        clear(): void {
+            let count: number = this.length;
+            super.clear.apply(this, arguments);
+            if (count !== this.length) {
+                this.firePropertyChanged("length");
+            }
+        }
         /** 过滤删除的项目 */
         filterDeleted(): T[] {
             return super.where((item: T) => {
