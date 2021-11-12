@@ -106,9 +106,11 @@ namespace ibas {
         protected abstract viewShowed(): void;
         /** 关闭视图 */
         close(): void {
-            if (!objects.isNull(this.view)) {
-                if (!objects.isNull(this.viewShower)) {
-                    this.viewShower.destroy(this.view);
+            if (this.isViewShowed()) {
+                if (!objects.isNull(this.view)) {
+                    if (!objects.isNull(this.viewShower)) {
+                        this.viewShower.destroy(this.view);
+                    }
                 }
             }
         }

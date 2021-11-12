@@ -14,6 +14,7 @@
   "sys_not_parsed_data": "没有解析的数据[{0}]",
   "sys_not_converted_data": "没有转换的数据[{0}]",
   "sys_network_error": "服务器资源不可用，请稍后重试",
+  "sys_send_error": "发送错误",
   "sys_server_internal_error": "服务器内部错误，请检查调用参数",
   "sys_unsupported_operation": "不支持的操作",
   "sys_operation_not_allowed_on_offline": "处于离线状态，不允许执行此操作",

@@ -89,7 +89,17 @@ namespace ibas {
                     that = null;
                 }
             };
-            xhr.send(data);
+            try {
+                xhr.send(data);
+            } catch (error) {
+                // 出错了
+                let opRslt: OperationResult<any> = new OperationResult<any>();
+                opRslt.resultCode = -1;
+                opRslt.message = strings.format("{0} - {1}", opRslt.resultCode, i18n.prop("sys_send_error"));
+                if (onCompleted instanceof Function) {
+                    onCompleted(opRslt);
+                }
+            }
         }
         /**
          * 返回方法地址

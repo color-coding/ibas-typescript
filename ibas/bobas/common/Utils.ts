@@ -412,18 +412,28 @@ namespace ibas {
          * @param value 内容
          * @param starts 开始字符
          * @param ends 结束字符
+         * @param ignoreCase 忽略大小写（默认不忽略）
          */
-        export function isWith(value: any, starts: string, ends: string): boolean {
+        export function isWith(value: any, starts: string, ends: string, ignoreCase: boolean = false): boolean {
             let sValue: string = valueOf(value);
             if (isEmpty(sValue)) {
                 return false;
             }
+            if (ignoreCase === true) {
+                sValue = sValue.toLowerCase();
+            }
             if (!isEmpty(starts)) {
+                if (ignoreCase === true) {
+                    starts = starts.toLowerCase();
+                }
                 if (!sValue.startsWith(starts)) {
                     return false;
                 }
             }
             if (!isEmpty(ends)) {
+                if (ignoreCase === true) {
+                    ends = ends.toLowerCase();
+                }
                 if (!sValue.endsWith(ends)) {
                     return false;
                 }

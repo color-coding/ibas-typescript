@@ -40,12 +40,19 @@ declare namespace sap {
                  * @param value 值
                  */
                 setBindingValue(value: string): this;
-                /** 是否没有值 */
+                /** 
+                 * 是否没有值
+                 * @param value 值
+                 */
                 isEmptyValue(value: any): boolean;
                 /**
                  * 获取默认项目
                  */
                 protected getDefaultSelectedItem(): sap.ui.core.Item;
+                /**
+                 * 加载可选值
+                 */
+                loadItems(): this;
             }
             /** 选择框项目 */
             class SelectItem extends sap.ui.core.ListItem {
@@ -67,10 +74,6 @@ declare namespace sap {
                  * @param value 枚举类型
                  */
                 setEnumType(value: any): this;
-                /**
-                 * 加载可选值
-                 */
-                loadItems(): this;
             }
             /**
              * 业务仓库数据-选择框
@@ -112,10 +115,6 @@ declare namespace sap {
                  * @param value 空白数据；undefined表示不使用
                  */
                 setBlankData(value: { key: string, text: string }): this;
-                /**
-                 * 加载可选值
-                 */
-                loadItems(): this;
             }
             /**
              * 对象属性可选值-选择框
@@ -139,10 +138,6 @@ declare namespace sap {
                  * @param value 属性名称
                  */
                 setPropertyName(value: string): this;
-                /**
-                 * 加载可选值
-                 */
-                loadItems(): this;
             }
             /**
              * 对象服务系列-选择框
@@ -157,10 +152,6 @@ declare namespace sap {
                  * @param value 对象编码
                  */
                 setObjectCode(value: string): this;
-                /**
-                 * 加载可选值
-                 */
-                loadItems(): this;
             }
             /**
              * 重复字符计数-选择框
@@ -184,10 +175,6 @@ declare namespace sap {
                  * @param value 重复内容
                  */
                 setRepeatText(value: string): this;
-                /**
-                 * 加载可选值
-                 */
-                loadItems(): this;
             }
             /**
              * 业务对象属性-选择框
@@ -202,10 +189,6 @@ declare namespace sap {
                  * @param value 值
                  */
                 setDataInfo(value: { code: string, name?: string } | string | Function): this;
-                /**
-                 * 加载可选值
-                 */
-                loadItems(): this;
             }
         }
     }

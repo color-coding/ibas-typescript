@@ -73,6 +73,14 @@ namespace sap {
                     }
                     return (<any>sap.m.Select.prototype).getDefaultSelectedItem.apply(this, arguments);
                 },
+                /** 重构设置 */
+                applySettings(this: Select): Select {
+                    sap.m.Select.prototype.applySettings.apply(this, arguments);
+                    if (typeof this.loadItems === "function" && this.getItems().length === 0) {
+                        this.loadItems();
+                    }
+                    return this;
+                },
                 init(this: Select): void {
                     this.attachBrowserEvent("keydown", clearSelection);
                     (<any>sap.m.Select.prototype).init.apply(this, arguments);
@@ -165,14 +173,6 @@ namespace sap {
                  */
                 setBindingValue(this: EnumSelect, value: string): EnumSelect {
                     return Select.prototype.setBindingValue.apply(this, arguments);
-                },
-                /** 重构设置 */
-                applySettings(this: EnumSelect): EnumSelect {
-                    Select.prototype.applySettings.apply(this, arguments);
-                    if (this.getItems().length === 0) {
-                        this.loadItems();
-                    }
-                    return this;
                 },
                 /**
                  * 加载可选值
@@ -275,14 +275,6 @@ namespace sap {
                 setBindingValue(this: RepositorySelect, value: string): RepositorySelect {
                     return Select.prototype.setBindingValue.apply(this, arguments);
                 },
-                /** 重构设置 */
-                applySettings(this: RepositorySelect): RepositorySelect {
-                    Select.prototype.applySettings.apply(this, arguments);
-                    if (this.getItems().length === 0) {
-                        this.loadItems();
-                    }
-                    return this;
-                },
                 /**
                  * 加载可选值
                  */
@@ -357,14 +349,6 @@ namespace sap {
                  */
                 setBindingValue(this: PropertySelect, value: string): PropertySelect {
                     return Select.prototype.setBindingValue.apply(this, arguments);
-                },
-                /** 重构设置 */
-                applySettings(this: PropertySelect, mSettings: any, oScope?: any): PropertySelect {
-                    Select.prototype.applySettings.apply(this, arguments);
-                    if (this.getItems().length === 0) {
-                        this.loadItems();
-                    }
-                    return this;
                 },
                 /**
                  * 加载可选值
@@ -484,9 +468,6 @@ namespace sap {
                         mSettings.objectCode = ibas.config.applyVariables(mSettings.objectCode);
                     }
                     Select.prototype.applySettings.apply(this, arguments);
-                    if (this.getItems().length === 0) {
-                        this.loadItems();
-                    }
                     return this;
                 },
                 /**
@@ -553,14 +534,6 @@ namespace sap {
                     events: {}
                 },
                 renderer: {},
-                /** 重构设置 */
-                applySettings(this: RepeatCharSelect): RepeatCharSelect {
-                    Select.prototype.applySettings.apply(this, arguments);
-                    if (this.getItems().length === 0) {
-                        this.loadItems();
-                    }
-                    return this;
-                },
                 /**
                  * 加载可选值
                  */
@@ -623,14 +596,6 @@ namespace sap {
                  */
                 setBindingValue(this: PropertySelect, value: string): PropertySelect {
                     return Select.prototype.setBindingValue.apply(this, arguments);
-                },
-                /** 重构设置 */
-                applySettings(this: PropertySelect, mSettings: any, oScope?: any): PropertySelect {
-                    Select.prototype.applySettings.apply(this, arguments);
-                    if (this.getItems().length === 0) {
-                        this.loadItems();
-                    }
-                    return this;
                 },
                 /**
                  * 加载可选值
