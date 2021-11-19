@@ -25,6 +25,10 @@ namespace ibas {
     export const CONFIG_ITEM_USER_TOKEN: string = "userToken";
     /** 配置项目-仓库用户口令 */
     export const CONFIG_ITEM_TEMPLATE_USER_TOKEN: string = "userToken|{0}";
+    /** 配置项目-仓库超时时间 */
+    export const CONFIG_ITEM_REPOSITORY_TIMEOUT: string = "repositoryTimeout";
+    /** 配置项目-仓库超时时间 */
+    export const CONFIG_ITEM_REPOSITORY_TEMPLATE_TIMEOUT: string = "repositoryTimeout|{0}";
     /**
      * 业务仓库应用
      */
@@ -41,6 +45,10 @@ namespace ibas {
          * 是否离线
          */
         offline: boolean;
+        /**
+         * 超时时间
+         */
+        timeout: number;
     }
     /**
      * 业务仓库应用
@@ -81,6 +89,15 @@ namespace ibas {
             if (strings.isEmpty(boRepository.token)) {
                 boRepository.token = config.get(CONFIG_ITEM_USER_TOKEN);
             }
+            // 超时时间
+            boRepository.timeout = config.get(strings.format(CONFIG_ITEM_REPOSITORY_TEMPLATE_TIMEOUT, name));
+            // 没有超时时间，则使用全局超时时间
+            if (!(boRepository.timeout >= 0)) {
+                boRepository.timeout = config.get(CONFIG_ITEM_REPOSITORY_TIMEOUT);
+            }
+            if (!(boRepository.timeout >= 0)) {
+                boRepository.timeout = 0;
+            }
         }
         /** 构造 */
         constructor() {
@@ -93,6 +110,8 @@ namespace ibas {
         token: string;
         /** 是否离线 */
         offline: boolean;
+        /** 超时时间 */
+        timeout: number;
         /** 创建读写业务仓库 */
         protected createRepository(): IBORepository {
             if (this.offline) {
@@ -101,6 +120,7 @@ namespace ibas {
                 boRepository.address = this.address;
                 boRepository.token = this.token;
                 boRepository.converter = this.createConverter();
+                boRepository.timeout = this.timeout;
                 return boRepository;
             } else {
                 // 在线状态，使用服务仓库
@@ -108,6 +128,7 @@ namespace ibas {
                 boRepository.address = this.address;
                 boRepository.token = this.token;
                 boRepository.converter = this.createConverter();
+                boRepository.timeout = this.timeout;
                 return boRepository;
             }
         }

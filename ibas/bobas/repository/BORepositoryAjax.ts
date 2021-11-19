@@ -24,6 +24,10 @@ namespace ibas {
          */
         autoParsing: boolean;
         /**
+         * 超时时间
+         */
+        timeout: number;
+        /**
          * 远程方法调用
          * 特殊调用参数可重载createAjaxSettings方法
          * @param method 方法名称
@@ -89,6 +93,9 @@ namespace ibas {
                     that = null;
                 }
             };
+            if (this.timeout >= 0) {
+                xhr.timeout = this.timeout;
+            }
             try {
                 xhr.send(data);
             } catch (error) {
