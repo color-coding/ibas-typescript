@@ -69,6 +69,8 @@
 /// <reference path="./extensions/components/Form.ts" />
 /// <reference path="./extensions/components/ObjectListItem.d.ts" />
 /// <reference path="./extensions/components/ObjectListItem.ts" />
+/// <reference path="./extensions/components/Toolbar.d.ts" />
+/// <reference path="./extensions/components/Toolbar.ts" />
 /// <reference path="./extensions/components/Factory.ts" />
 
 namespace openui5 {
