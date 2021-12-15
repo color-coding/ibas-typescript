@@ -269,6 +269,16 @@ namespace sap {
                             property = "selectedKey";
                         } else if (metadata.hasProperty("selected")) {
                             property = "selected";
+                        } else if (metadata.hasProperty("country")) {
+                            property = "country";
+                        } else if (metadata.hasProperty("city")) {
+                            property = "city";
+                        } else if (metadata.hasProperty("province")) {
+                            property = "province";
+                        } else if (metadata.hasProperty("district")) {
+                            property = "district";
+                        } else if (metadata.hasProperty("street")) {
+                            property = "street";
                         }
                     }
                 }

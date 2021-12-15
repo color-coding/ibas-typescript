@@ -24,13 +24,13 @@ namespace trainingtesting {
                         showFooter: false,
                         headerTitle: new sap.uxap.ObjectPageHeader("", {
                             objectTitle: {
-                                path: "name",
+                                path: "code",
                                 type: new sap.extension.data.Alphanumeric({
                                     maxLength: 100
                                 }),
                             },
                             objectSubtitle: {
-                                path: "code",
+                                path: "name",
                                 type: new sap.extension.data.Alphanumeric({
                                     maxLength: 20
                                 }),

@@ -152,6 +152,9 @@ namespace sap {
                  */
                 setValue(this: RepositoryInput, value: string): RepositoryInput {
                     sap.m.Input.prototype.setValue.apply(this, arguments);
+                    if (this.getValueHelpOnly() === false && this.getSelectedItem() === null) {
+                        this.setProperty("bindingValue", value);
+                    }
                     return this;
                 },
                 /**

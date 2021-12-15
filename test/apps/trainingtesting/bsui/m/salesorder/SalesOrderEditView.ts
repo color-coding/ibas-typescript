@@ -472,8 +472,12 @@ namespace trainingtesting {
                             new sap.m.Button("", {
                                 text: ibas.i18n.prop("shell_exit"),
                                 type: sap.m.ButtonType.Transparent,
-                                press(): void {
-                                    editForm.close();
+                                press(this: sap.m.Button): void {
+                                    if (this.getParent() instanceof sap.m.Dialog) {
+                                        (<sap.m.Dialog>this.getParent()).close();
+                                    } else {
+                                        editForm.close();
+                                    }
                                 }
                             }),
                         ]

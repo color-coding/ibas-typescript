@@ -28,43 +28,30 @@ namespace sap {
                     properties: {
                         /** 枚举类型 */
                         enumType: { type: "any" },
+                        /** 枚举值 */
+                        enumValue: { type: "any" },
                     },
                     events: {}
                 },
                 renderer: {
                 },
                 /**
-                 * 获取枚举类型
-                 */
-                getEnumType(this: ObjectEnumStatus): any {
-                    return this.getProperty("enumType");
-                },
-                /**
-                 * 设置枚举类型
+                 * 设置枚举值
                  * @param value 枚举类型
                  */
-                setEnumType(this: ObjectEnumStatus, value: any): ObjectEnumStatus {
-                    return this.setProperty("enumType", value);
+                setEnumValue(this: ObjectEnumStatus, value: any): ObjectEnumStatus {
+                    this.setProperty("enumValue", value);
+                    this.setState(this.toState(this.getEnumValue()));
+                    this.setIcon(this.toIcon(this.getEnumValue()));
+                    this.setText(this.toText(this.getEnumValue()));
+                    return this;
                 },
                 /**
-                 * 设置文本，并修改状态及图标值
-                 * @param value 值
+                 * 转为描述值
+                 * @param data 枚举值
                  */
-                setText(this: ObjectEnumStatus, value: string): ObjectEnumStatus {
-                    ObjectStatus.prototype.setText.apply(this, arguments);
-                    let context: any = this.getBindingContext();
-                    if (context instanceof sap.ui.model.Context) {
-                        let value: any = ibas.objects.propertyValue(context.getObject(), this.getBindingPath("text"));
-                        if (!ibas.objects.isNull(value)) {
-                            if (this.toState instanceof Function) {
-                                this.setState(this.toState(value));
-                            }
-                            if (this.toIcon instanceof Function) {
-                                this.setIcon(this.toIcon(value));
-                            }
-                        }
-                    }
-                    return this;
+                toText(this: ObjectEnumStatus, enumValue: any): string {
+                    return ibas.enums.describe(this.getEnumType(), enumValue);
                 },
                 /** 重构设置 */
                 applySettings(this: ObjectEnumStatus, mSetting: any): ObjectEnumStatus {
@@ -77,6 +64,10 @@ namespace sap {
                             this.toIcon = mSetting.toIcon;
                             delete (mSetting.toIcon);
                         }
+                        if (mSetting.toText instanceof Function) {
+                            this.toText = mSetting.toText;
+                            delete (mSetting.toText);
+                        }
                     }
                     ObjectStatus.prototype.applySettings.apply(this, arguments);
                     return this;
@@ -88,8 +79,6 @@ namespace sap {
             ObjectEnumStatus.extend("sap.extension.m.ObjectDocumentStatus", {
                 metadata: {
                     properties: {
-                        /** 枚举类型 */
-                        enumType: { type: "any", defalut: ibas.emDocumentStatus },
                     },
                     events: {}
                 },
@@ -126,7 +115,17 @@ namespace sap {
                     } else {
                         return "sap-icon://status-inactive";
                     }
-                }
+                },
+                /** 重构设置 */
+                applySettings(this: ObjectEnumStatus, mSetting: any): ObjectEnumStatus {
+                    if (!mSetting) {
+                        mSetting = {};
+                    }
+                    if (!mSetting.enumType) {
+                        mSetting.enumType = ibas.emDocumentStatus;
+                    }
+                    return ObjectEnumStatus.prototype.applySettings.apply(this, arguments);
+                },
             });
             function negative(this: ObjectYesNoStatus, value: ibas.emYesNo): ibas.emYesNo {
                 if (this.getNegative() === true) {
@@ -144,8 +143,6 @@ namespace sap {
             ObjectEnumStatus.extend("sap.extension.m.ObjectYesNoStatus", {
                 metadata: {
                     properties: {
-                        /** 枚举类型 */
-                        enumType: { type: "any", defalut: ibas.emYesNo },
                         /** 相反的 */
                         negative: { type: "boolean", defalut: false },
                     },
@@ -174,7 +171,17 @@ namespace sap {
                     } else {
                         return "sap-icon://sys-enter";
                     }
-                }
+                },
+                /** 重构设置 */
+                applySettings(this: ObjectEnumStatus, mSetting: any): ObjectEnumStatus {
+                    if (!mSetting) {
+                        mSetting = {};
+                    }
+                    if (!mSetting.enumType) {
+                        mSetting.enumType = ibas.emYesNo;
+                    }
+                    return ObjectEnumStatus.prototype.applySettings.apply(this, arguments);
+                },
             });
             /**
              * 对象审批状态
@@ -182,8 +189,6 @@ namespace sap {
             ObjectEnumStatus.extend("sap.extension.m.ObjectApprovalStatus", {
                 metadata: {
                     properties: {
-                        /** 枚举类型 */
-                        enumType: { type: "any", defalut: ibas.emApprovalStatus },
                     },
                     events: {}
                 },
@@ -222,7 +227,17 @@ namespace sap {
                     } else {
                         return "sap-icon://sys-minus";
                     }
-                }
+                },
+                /** 重构设置 */
+                applySettings(this: ObjectEnumStatus, mSetting: any): ObjectEnumStatus {
+                    if (!mSetting) {
+                        mSetting = {};
+                    }
+                    if (!mSetting.enumType) {
+                        mSetting.enumType = ibas.emApprovalStatus;
+                    }
+                    return ObjectEnumStatus.prototype.applySettings.apply(this, arguments);
+                },
             });
             /**
              * 对象状态
@@ -230,8 +245,6 @@ namespace sap {
             ObjectEnumStatus.extend("sap.extension.m.ObjectBOStatus", {
                 metadata: {
                     properties: {
-                        /** 枚举类型 */
-                        enumType: { type: "any", defalut: ibas.emBOStatus },
                     },
                     events: {}
                 },
@@ -258,7 +271,17 @@ namespace sap {
                     } else {
                         return "sap-icon://status-critical";
                     }
-                }
+                },
+                /** 重构设置 */
+                applySettings(this: ObjectEnumStatus, mSetting: any): ObjectEnumStatus {
+                    if (!mSetting) {
+                        mSetting = {};
+                    }
+                    if (!mSetting.enumType) {
+                        mSetting.enumType = ibas.emBOStatus;
+                    }
+                    return ObjectEnumStatus.prototype.applySettings.apply(this, arguments);
+                },
             });
             /**
              * 业务仓库数据-对象状态
@@ -486,6 +509,93 @@ namespace sap {
                             }
                         });
                     }
+                },
+            });
+            /**
+             * 对象状态-单据状态和取消状态
+             */
+            ObjectStatus.extend("sap.extension.m.ObjectDocumentCanceledStatus", {
+                metadata: {
+                    properties: {
+                        /** 取消状态 */
+                        canceledStatus: { type: "int", defalut: ibas.emYesNo.NO },
+                        /** 单据状态 */
+                        documentStatus: { type: "int", defalut: ibas.emDocumentStatus.PLANNED },
+                    },
+                    events: {}
+                },
+                renderer: {
+                },
+                /**
+                 * 设置属性值-取消状态
+                 * @param value 值
+                 */
+                setCanceledStatus(this: ObjectDocumentCanceledStatus, value: ibas.emYesNo): ObjectDocumentCanceledStatus {
+                    this.setProperty("canceledStatus", value, true);
+                    this.setState(this.toState(this.getCanceledStatus(), this.getDocumentStatus()));
+                    this.setIcon(this.toIcon(this.getCanceledStatus(), this.getDocumentStatus()));
+                    this.setText(this.toText(this.getCanceledStatus(), this.getDocumentStatus()));
+                    return this;
+                },
+                /**
+                 * 设置属性值-取消状态
+                 * @param value 值
+                 */
+                setDocumentStatus(this: ObjectDocumentCanceledStatus, value: ibas.emDocumentStatus): ObjectDocumentCanceledStatus {
+                    this.setProperty("documentStatus", value, true);
+                    this.setState(this.toState(this.getCanceledStatus(), this.getDocumentStatus()));
+                    this.setIcon(this.toIcon(this.getCanceledStatus(), this.getDocumentStatus()));
+                    this.setText(this.toText(this.getCanceledStatus(), this.getDocumentStatus()));
+                    return this;
+                },
+                /**
+                 * 转为状态值
+                 * @param data 枚举值
+                 */
+                toState(this: ObjectDocumentCanceledStatus, canceledStatus: ibas.emYesNo, documentStatus: ibas.emDocumentStatus): sap.ui.core.ValueState {
+                    if (canceledStatus === ibas.emYesNo.YES) {
+                        return sap.ui.core.ValueState.Error;
+                    }
+                    return ObjectDocumentStatus.prototype.toState(documentStatus);
+                },
+                /**
+                 * 转为图标值
+                 * @param data 枚举值
+                 */
+                toIcon(this: ObjectDocumentCanceledStatus, canceledStatus: ibas.emYesNo, documentStatus: ibas.emDocumentStatus): string {
+                    if (canceledStatus === ibas.emYesNo.YES) {
+                        return "sap-icon://sys-cancel";
+                    }
+                    return ObjectDocumentStatus.prototype.toIcon(documentStatus);
+                },
+                /**
+                 * 转为图标值
+                 * @param data 枚举值
+                 */
+                toText(this: ObjectDocumentCanceledStatus, canceledStatus: ibas.emYesNo, documentStatus: ibas.emDocumentStatus): string {
+                    if (canceledStatus === ibas.emYesNo.YES) {
+                        return ibas.i18n.prop("em_documentstatus_canceled");
+                    }
+                    return ibas.enums.describe(ibas.emDocumentStatus, documentStatus);
+                },
+                /** 重构设置 */
+                applySettings(this: ObjectDocumentCanceledStatus, mSetting: any): ObjectDocumentCanceledStatus {
+                    if (mSetting) {
+                        if (mSetting.toState instanceof Function) {
+                            this.toState = mSetting.toState;
+                            delete (mSetting.toState);
+                        }
+                        if (mSetting.toIcon instanceof Function) {
+                            this.toIcon = mSetting.toIcon;
+                            delete (mSetting.toIcon);
+                        }
+                        if (mSetting.toText instanceof Function) {
+                            this.toText = mSetting.toText;
+                            delete (mSetting.toText);
+                        }
+                    }
+                    ObjectStatus.prototype.applySettings.apply(this, arguments);
+                    return this;
                 },
             });
         }

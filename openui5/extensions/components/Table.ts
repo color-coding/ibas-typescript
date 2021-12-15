@@ -543,6 +543,22 @@ namespace sap {
                                         } else {
                                             column.setFilterType(new sap.ui.model.type.Date());
                                         }
+                                    } else if (ibas.strings.equalsIgnoreCase(propertyInfo.dataType, "ALPHANUMERIC")) {
+                                        if (column.getTemplate() instanceof sap.ui.core.Control) {
+                                            let bind: any = (<any>column.getTemplate()).getBindingInfo("bindingValue");
+                                            if (!ibas.objects.isNull(bind) && bind.parts instanceof Array && bind.parts.length === 1) {
+                                                let type: any = bind.parts[0].type;
+                                                if (type instanceof sap.extension.data.Enum && !ibas.objects.isNull(type.enumType)) {
+                                                    column.setFilterType(function (value: any): any {
+                                                        for (let key in type.enumType) {
+                                                            if (ibas.enums.describe(type.enumType, type.enumType[key]).indexOf(value) !== -1) {
+                                                                return key.toString();
+                                                            }
+                                                        }
+                                                    });
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                                 // 修正位置

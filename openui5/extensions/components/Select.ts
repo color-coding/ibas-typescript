@@ -286,10 +286,15 @@ namespace sap {
                                 ibas.logger.log(values);
                             } else {
                                 for (let item of values) {
-                                    this.addItem(new SelectItem("", {
-                                        key: item.key,
-                                        text: item.text
-                                    }));
+                                    let sItem: any = this.getItemByKey(item.key);
+                                    if (sItem instanceof ui.core.Item) {
+                                        sItem.setText(item.text);
+                                    } else {
+                                        this.addItem(new SelectItem("", {
+                                            key: item.key,
+                                            text: item.text
+                                        }));
+                                    }
                                 }
                             }
                         }
@@ -401,11 +406,19 @@ namespace sap {
                                         if (ibas.strings.equalsIgnoreCase(propertyName, property.name)) {
                                             if (property.values instanceof Array) {
                                                 for (let item of property.values) {
-                                                    this.addItem(new SelectItem("", {
-                                                        key: item.value,
-                                                        text: item.description,
-                                                        default: item.default,
-                                                    }));
+                                                    let sItem: any = this.getItemByKey(item.value);
+                                                    if (sItem instanceof ui.core.Item) {
+                                                        sItem.setText(item.description);
+                                                        if (sItem instanceof SelectItem) {
+                                                            sItem.setDefault(item.default);
+                                                        }
+                                                    } else {
+                                                        this.addItem(new SelectItem("", {
+                                                            key: item.value,
+                                                            text: item.description,
+                                                            default: item.default,
+                                                        }));
+                                                    }
                                                     if (item.default === true) {
                                                         // 有默认值设置，则强制选择
                                                         if (this.getForceSelection() === false) {
@@ -505,11 +518,16 @@ namespace sap {
                                 ibas.logger.log(values);
                             } else {
                                 for (let item of values) {
-                                    this.addItem(new SelectItem("", {
-                                        key: item.key,
-                                        text: item.text,
-                                        default: values.lastOrDefault() === item ? true : undefined,
-                                    }));
+                                    let sItem: any = this.getItemByKey(item.key);
+                                    if (sItem instanceof ui.core.Item) {
+                                        sItem.setText(item.text);
+                                    } else {
+                                        this.addItem(new SelectItem("", {
+                                            key: item.key,
+                                            text: item.text,
+                                            default: values.lastOrDefault() === item ? true : undefined,
+                                        }));
+                                    }
                                 }
                             }
                         }
@@ -629,10 +647,15 @@ namespace sap {
                                 }
                                 for (let data of opRslt.resultObjects) {
                                     for (let property of data.properties) {
-                                        this.addItem(new SelectItem("", {
-                                            key: property.name,
-                                            text: property.description,
-                                        }));
+                                        let sItem: any = this.getItemByKey(property.name);
+                                        if (sItem instanceof ui.core.Item) {
+                                            sItem.setText(property.description);
+                                        } else {
+                                            this.addItem(new SelectItem("", {
+                                                key: property.name,
+                                                text: property.description,
+                                            }));
+                                        }
                                     }
                                 }
                             } catch (error) {

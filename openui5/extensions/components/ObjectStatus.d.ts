@@ -34,6 +34,7 @@ declare namespace sap {
             }
             /**
              * 对象枚举状态
+             * 绑定属性：enumValue
              */
             class ObjectEnumStatus extends ObjectStatus {
                 /**
@@ -46,6 +47,15 @@ declare namespace sap {
                  */
                 setEnumType(value: any): this;
                 /**
+                 * 获取枚举值
+                 */
+                getEnumValue(): any;
+                /**
+                 * 设置枚举值
+                 * @param value 枚举类型
+                 */
+                setEnumValue(value: any): this;
+                /**
                  * 转为状态值
                  * @param data 枚举值
                  */
@@ -55,12 +65,16 @@ declare namespace sap {
                  * @param data 枚举值
                  */
                 toIcon(data: any): string;
+                /**
+                 * 转为描述值
+                 * @param data 枚举值
+                 */
+                toText(data: any): string;
             }
             /**
              * 对象单据状态
              */
             class ObjectDocumentStatus extends ObjectEnumStatus {
-
             }
             /**
              * 对象是否状态
@@ -80,13 +94,52 @@ declare namespace sap {
              * 对象审批状态
              */
             class ObjectApprovalStatus extends ObjectEnumStatus {
-
             }
             /**
              * 对象状态
              */
             class ObjectBOStatus extends ObjectEnumStatus {
-
+            }
+            /**
+             * 对象状态-单据状态和取消状态
+             */
+            class ObjectDocumentCanceledStatus extends ObjectStatus {
+                /**
+                 * 获取取消状态
+                 */
+                getCanceledStatus(): ibas.emYesNo;
+                /**
+                 * 设置取消状态
+                 * @param value 值
+                 */
+                setCanceledStatus(value: ibas.emYesNo): this;
+                /**
+                 * 获取单据状态
+                 */
+                getDocumentStatus(): ibas.emDocumentStatus;
+                /**
+                 * 设置单据状态
+                 * @param value 值
+                 */
+                setDocumentStatus(value: ibas.emDocumentStatus): this;
+                /**
+                 * 转为状态值
+                 * @param canceledStatus 取消状态值
+                 * @param documentStatus 单据状态值
+                 */
+                toState(canceledStatus: ibas.emYesNo, documentStatus: ibas.emDocumentStatus): sap.ui.core.ValueState;
+                /**
+                 * 转为图标值
+                 * @param canceledStatus 取消状态值
+                 * @param documentStatus 单据状态值
+                 */
+                toIcon(canceledStatus: ibas.emYesNo, documentStatus: ibas.emDocumentStatus): string;
+                /**
+                 * 转为描述
+                 * @param canceledStatus 取消状态值
+                 * @param documentStatus 单据状态值
+                 */
+                toText(canceledStatus: ibas.emYesNo, documentStatus: ibas.emDocumentStatus): string;
             }
             /**
              * 业务仓库数据-对象状态

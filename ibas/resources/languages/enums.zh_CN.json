@@ -38,7 +38,8 @@
     "em_documentstatus_planned": "计划",
     "em_documentstatus_released": "下达",
     "em_documentstatus_finished": "完成",
-    "em_documentstatus_closed": "结算"
+    "em_documentstatus_closed": "结算",
+    "em_documentstatus_canceled": "取消"
   },
   {
     "em_bostatus_open": "未清",
