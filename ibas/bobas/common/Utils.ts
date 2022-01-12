@@ -985,7 +985,22 @@ namespace ibas {
             }
             return result;
         }
-
+        /**
+         * 计算时间跨度，（XX小时XX分XX秒）
+         * @param beginTime 开始时间
+         * @param finishTime 结束时间
+         */
+        export function span(beginTime: Date, finishTime: Date): string {
+            if (!(beginTime instanceof Date) || !(finishTime instanceof Date)) {
+                return undefined;
+            }
+            let second: number = Math.round((finishTime.getTime() - beginTime.getTime()) / 1000);
+            let hour: number = parseInt(String(second / 60 / 60), 10);
+            second = second - (hour * 60 * 60);
+            let minute: number = parseInt(String(second / 60), 10);
+            second = second - (minute * 60);
+            return i18n.prop("sys_date_time_span", hour, minute, second);
+        }
     }
     /**
      * 数字
@@ -1145,7 +1160,7 @@ namespace ibas {
             if (value.startsWith(ROOT_URL_SIGN)) {
                 // 优先使用配置
                 let element: any = document.querySelector(HTML_META_ROOT_URL);
-                if (element instanceof HTMLElement) {
+                if (element instanceof window.HTMLElement) {
                     url = element.getAttribute("content");
                 }
                 if (objects.isNull(url)) {
@@ -1194,7 +1209,7 @@ namespace ibas {
                 // 优先使用配置
                 let url: string;
                 let element: any = document.querySelector(HTML_META_ROOT_URL);
-                if (element instanceof HTMLElement) {
+                if (element instanceof window.HTMLElement) {
                     url = element.getAttribute("content");
                 }
                 if (objects.isNull(url)) {

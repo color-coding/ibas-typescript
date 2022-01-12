@@ -363,7 +363,8 @@ namespace ibas {
          * 运行
          * @param caller 服务调用者
          */
-        run(caller: IBOEditServiceCaller<D>): void;        /** 运行 */
+        run(caller: IBOEditServiceCaller<D>): void;
+        /** 运行 */
         run(): void {
             if (arguments.length === 1) {
                 // 判断是否为选择契约

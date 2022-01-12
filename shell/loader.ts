@@ -7,6 +7,21 @@
  */
 /// <reference path ="../ibas/index.d.ts" />
 /// <reference path ="../openui5/types/index.d.ts" />
+// 兼容性处理，globalThis
+declare var __magic__: any;
+(function (): void {
+    if (typeof globalThis === "object") {
+        return;
+    }
+    Object.defineProperty(Object.prototype, "__magic__", {
+        get: function (): any {
+            return this;
+        },
+        configurable: true
+    });
+    __magic__.globalThis = __magic__;
+    delete (<any>Object.prototype).__magic__;
+}());
 namespace loader {
     // 解决方法缺失
     if (typeof String.prototype.startsWith === undefined) {

@@ -485,6 +485,10 @@ namespace ibas {
                             }
                             runRules.call(this, null);
                         } else {
+                            // 集合变化，则父项修改
+                            if (this.parent?.isLoading !== true && this.parent?.isDirty === false) {
+                                this.parent.markDirty();
+                            }
                             runRules.call(this, name);
                         }
                         this.onItemPropertyChanged(bo, name);

@@ -191,6 +191,16 @@ namespace ibas {
                 that = null;
             });
         }
+        /** 返回当前键值 */
+        all(): KeyText[] {
+            let values: IList<KeyText> = new ArrayList<KeyText>();
+            for (let resources of this.resources.values()) {
+                for (let key of resources.keys()) {
+                    values.add(new KeyText(key, resources.get(key)));
+                }
+            }
+            return values;
+        }
     }
     /** 语言变化监听者 */
     export interface ILanguageChangedListener {

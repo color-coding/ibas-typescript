@@ -16,6 +16,10 @@ namespace ibas {
      * 动作
      */
     export abstract class Action {
+        constructor() {
+            this.id = uuids.random();
+            this.name = objects.nameOf(objects.typeOf(this));
+        }
         /** 标识 */
         id: string;
         /** 名称 */
@@ -38,7 +42,7 @@ namespace ibas {
                 this[PROPERTY_CONFIG] = new Configuration();
             }
             this[PROPERTY_CONFIG].set(key, value);
-            this.log(emMessageLevel.INFO, ibas.i18n.prop("sys_action_new_config_item", key, value));
+            this.log(emMessageLevel.DEBUG, ibas.i18n.prop("sys_action_new_config_item", key, value));
         }
         /**
          * 获取配置
@@ -126,7 +130,7 @@ namespace ibas {
         /** 进行 */
         do(): void {
             if (this.isRunning()) {
-                throw new Error(i18n.prop("sys_action_not_running"));
+                throw new Error(i18n.prop("sys_action_is_running"));
             }
             let done: boolean = false;
             this[PROPERTY_STARTTIME] = new Date();
@@ -135,7 +139,11 @@ namespace ibas {
             try {
                 done = this.run();
             } catch (error) {
-                this.log(emMessageLevel.ERROR, i18n.prop("sys_action_occurred_error", error));
+                if (config.get(CONFIG_ITEM_DEBUG_MODE, false) === false) {
+                    this.log(emMessageLevel.ERROR, i18n.prop("sys_action_occurred_error", error));
+                } else {
+                    this.log(emMessageLevel.ERROR, i18n.prop("sys_action_occurred_error", error.stack));
+                }
             }
             if (done) {
                 // 任务完成
