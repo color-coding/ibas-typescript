@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "removeComments": false,
+    "target": "es6",
+    "preserveConstEnums": true,
+    "outFile": "../worker.js",
+    "declaration": false,
+    "sourceMap": true
+  },
+  "include": [
+    "../index.d.ts"
+  ],
+  "files": [
+    "./Worker.ts"
+  ]
+}

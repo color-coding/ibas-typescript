@@ -108,7 +108,7 @@ namespace ibas {
             } else if (arguments[0] instanceof Error) {
                 message = new Message();
                 message.level = emMessageLevel.ERROR;
-                message.content = arguments[0].message;
+                message.content = arguments[0].stack;
                 useCount++;
             } else if (typeof (arguments[0]) === "number") {
                 message = new Message();

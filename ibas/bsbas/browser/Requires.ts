@@ -27,7 +27,7 @@ namespace ibas {
          * @param config 配置
          */
         export function create(requireConfig: IRequireConfig): Require {
-            if ((<any>window).require === undefined || (<any>window).require === null) {
+            if ((<any>globalThis).require === undefined || (<any>globalThis).require === null) {
                 throw new Error("not found requirejs.");
             }
             // 运行时版本
@@ -40,7 +40,7 @@ namespace ibas {
                     return (url.indexOf("?") === -1 ? "?" : "&") + "_=" + rtVersion;
                 };
             }
-            return (<any>window).require.config(requireConfig);
+            return (<any>globalThis).require.config(requireConfig);
         }
 
         /**

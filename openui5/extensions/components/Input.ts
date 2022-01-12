@@ -736,7 +736,7 @@ namespace sap {
                                     if (data.isNew === true) {
                                         let binding: any = source.getBinding("bindingValue");
                                         if (binding instanceof sap.ui.model.PropertyBinding) {
-                                            if (!(binding.getRawValue() > 0)) {
+                                            if (ibas.strings.isEmpty(binding.getRawValue())) {
                                                 binding.setValue(ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_BELONG));
                                             }
                                         }
