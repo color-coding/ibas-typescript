@@ -72,10 +72,10 @@ namespace ibas {
             if (script.indexOf("/spin.js") > 0 || script.indexOf("/spin.min.js") > 0) {
                 return true;
             }
-            if (script.indexOf(".ui.") > 0) {
+            if (script.indexOf("/bsui/") > 0) {
                 return true;
             }
-            if (script.indexOf("/bsui/") > 0) {
+            if (script.indexOf(".ui.") > 0) {
                 return true;
             }
             return false;

@@ -604,10 +604,9 @@ namespace ibas {
                 }
             }
             // 存在行编号，为其自动编号
-            if (objects.instanceOf(item, BODocumentLine)
-                || objects.instanceOf(item, BOMasterDataLine)
-                || objects.instanceOf(item, BOSimpleLine)) {
-                if (numbers.toInt(item.getProperty(BO_PROPERTY_NAME_LINEID)) <= 0) {
+            if (item.isNew === true) {
+                if (objects.instanceOf(item, BODocumentLine) || objects.instanceOf(item, BOMasterDataLine)
+                    || objects.instanceOf(item, BOSimpleLine)) {
                     let max: number = 0;
                     for (let tmp of this) {
                         if (tmp === item) {
@@ -627,9 +626,19 @@ namespace ibas {
             // 处理单据状态
             if (objects.instanceOf(item, BODocumentLine)) {
                 if (objects.instanceOf(this.parent, BODocument)) {
-                    item.setProperty(BO_PROPERTY_NAME_LINESTATUS, this.parent.getProperty(BO_PROPERTY_NAME_DOCUMENTSTATUS));
+                    // 根据父项设置行状态，完成/结算为下达
+                    let status: emDocumentStatus = this.parent.getProperty(BO_PROPERTY_NAME_DOCUMENTSTATUS);
+                    if (status === emDocumentStatus.FINISHED || status === emDocumentStatus.RELEASED) {
+                        status = emDocumentStatus.RELEASED;
+                    }
+                    item.setProperty(BO_PROPERTY_NAME_LINESTATUS, status);
                 } else if (objects.instanceOf(this.parent, BODocumentLine)) {
-                    item.setProperty(BO_PROPERTY_NAME_LINESTATUS, this.parent.getProperty(BO_PROPERTY_NAME_LINESTATUS));
+                    // 根据父项设置行状态，完成/结算为下达
+                    let status: emDocumentStatus = this.parent.getProperty(BO_PROPERTY_NAME_LINESTATUS);
+                    if (status === emDocumentStatus.FINISHED || status === emDocumentStatus.RELEASED) {
+                        status = emDocumentStatus.RELEASED;
+                    }
+                    item.setProperty(BO_PROPERTY_NAME_LINESTATUS, status);
                 }
             }
             if (objects.instanceOf(item, Bindable)) {
