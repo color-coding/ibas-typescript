@@ -54,6 +54,7 @@ namespace shell {
                                 text: ibas.i18n.prop("shell_data_save"),
                                 type: sap.m.ButtonType.Transparent,
                                 // icon: "sap-icon://accept",
+                                visible: this.configurable,
                                 press: function (): void {
                                     that.fireViewEvents(that.saveQueryEvent);
                                 }

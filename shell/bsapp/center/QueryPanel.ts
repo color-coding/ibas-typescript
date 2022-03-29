@@ -73,11 +73,15 @@ namespace shell {
                     ibas.strings.format(CONFIG_ITEM_QUERY_PANEL_SELECTABLE_ON_PLANTFORM,
                         ibas.enums.toString(ibas.emPlantform, ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM)))
                     , selectable);
-                let configurable: boolean = ibas.config.get(CONFIG_ITEM_QUERY_PANEL_CONFIGURABLE, true);
-                this.view.configurable = ibas.config.get(
-                    ibas.strings.format(CONFIG_ITEM_QUERY_PANEL_CONFIGURABLE_ON_PLANTFORM,
-                        ibas.enums.toString(ibas.emPlantform, ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM)))
-                    , configurable);
+                if (this.listener instanceof ibas.BOChooseView) {
+                    this.view.configurable = false;
+                } else {
+                    let configurable: boolean = ibas.config.get(CONFIG_ITEM_QUERY_PANEL_CONFIGURABLE, true);
+                    this.view.configurable = ibas.config.get(
+                        ibas.strings.format(CONFIG_ITEM_QUERY_PANEL_CONFIGURABLE_ON_PLANTFORM,
+                            ibas.enums.toString(ibas.emPlantform, ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM)))
+                        , configurable);
+                }
                 this.listener.queryPanel = () => {
                     return this.view;
                 };
@@ -176,36 +180,35 @@ namespace shell {
                     };
                 }
                 this.listener = caller.view;
-                if (!ibas.objects.isNull(this.listener) && !ibas.objects.isNull(this.listener.usingCriteria)) {
-                    this.queries = new ibas.ArrayList<bo.IUserQuery>();
-                    this.queries.add({
-                        id: this.listener.queryId,
-                        name: ibas.i18n.prop("shell_query_exclusive"),
-                        criteria: this.listener.usingCriteria,
-                        order: 0,
-                    });
-                    this.init(caller.onInitialized);
-                } else {
-                    let boRepository: bo.IBORepositoryShell = bo.repository.create();
-                    boRepository.fetchUserQueries({
-                        user: ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE),
-                        queryId: this.listener.queryId,
-                        onCompleted: (opRslt) => {
-                            try {
-                                if (opRslt.resultCode !== 0) {
-                                    throw new Error(opRslt.message);
-                                }
-                                this.queries = new ibas.ArrayList<bo.IUserQuery>();
-                                for (let item of opRslt.resultObjects) {
-                                    this.queries.add(item);
-                                }
-                                this.init(caller.onInitialized);
-                            } catch (error) {
-                                this.messages(error);
-                            }
+                let boRepository: bo.IBORepositoryShell = bo.repository.create();
+                boRepository.fetchUserQueries({
+                    user: ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE),
+                    queryId: this.listener.queryId,
+                    onCompleted: (opRslt) => {
+                        if (opRslt.resultCode !== 0) {
+                            this.proceeding(ibas.emMessageType.WARNING, opRslt.message);
                         }
-                    });
-                }
+                        this.queries = new ibas.ArrayList<bo.IUserQuery>();
+                        if (!ibas.objects.isNull(this.listener.usingCriteria)) {
+                            this.queries.add({
+                                id: this.listener.queryId,
+                                name: ibas.i18n.prop("shell_query_exclusive"),
+                                criteria: this.listener.usingCriteria,
+                                order: 0,
+                            });
+                        }
+                        for (let item of opRslt.resultObjects) {
+                            if (ibas.objects.isNull(item.criteria)) {
+                                continue;
+                            }
+                            if (!ibas.objects.isNull(this.listener.usingCriteria)) {
+                                item.criteria = this.listener.usingCriteria.copyFrom(item.criteria);
+                            }
+                            this.queries.add(item);
+                        }
+                        this.init(caller.onInitialized);
+                    }
+                });
             }
             private listener: ibas.IUseQueryPanel;
             private targetName(): string {
