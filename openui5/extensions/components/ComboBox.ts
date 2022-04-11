@@ -128,11 +128,137 @@ namespace sap {
                         }
                     });
                 },
-                applySettings(this: MultiComboBox, mSettings: any, oScope?: any): sap.m.MultiComboBox {
+                applySettings(this: MultiComboBox, mSettings: any, oScope?: any): MultiComboBox {
                     sap.m.MultiComboBox.prototype.applySettings.apply(this, arguments);
                     if (this.getItems().length === 0) {
                         this.fireLoadItems({});
                     }
+                    return this;
+                },
+            });
+            /**
+             * 对象属性可选值-多择框
+             */
+            MultiComboBox.extend("sap.extension.m.PropertyMultiComboBox", {
+                metadata: {
+                    properties: {
+                        /** 对象数据信息 */
+                        dataInfo: { type: "any" },
+                        /** 属性名称 */
+                        propertyName: { type: "string" },
+                    },
+                    events: {}
+                },
+                renderer: {
+                },
+                /**
+                 * 获取数据信息
+                 */
+                getDataInfo(this: PropertyMultiComboBox): { code: string, name?: string } | string {
+                    return this.getProperty("dataInfo");
+                },
+                /**
+                 * 设置数据信息
+                 * @param value 数据信息
+                 */
+                setDataInfo(this: PropertyMultiComboBox, value: { code: string, name?: string } | string): PropertyMultiComboBox {
+                    return this.setProperty("dataInfo", value);
+                },
+                /**
+                 * 获取属性名称
+                 */
+                getPropertyName(this: PropertyMultiComboBox): string {
+                    return this.getProperty("propertyName");
+                },
+                /**
+                 * 设置属性名称
+                 * @param value 属性名称
+                 */
+                setPropertyName(this: PropertyMultiComboBox, value: string): PropertyMultiComboBox {
+                    return this.setProperty("propertyName", value);
+                },
+                /**
+                 * 加载可选值
+                 */
+                loadItems(this: PropertyMultiComboBox): PropertyMultiComboBox {
+                    let boInfo: { code: string, name?: string } | string | Function = this.getDataInfo();
+                    if (typeof boInfo === "string") {
+                        boInfo = {
+                            code: boInfo,
+                            name: undefined,
+                        };
+                    } else if (typeof boInfo === "function") {
+                        boInfo = {
+                            code: ibas.objects.typeOf(boInfo).BUSINESS_OBJECT_CODE,
+                            name: undefined,
+                        };
+                    }
+                    if (!boInfo || !boInfo.code) {
+                        return this;
+                    }
+                    let propertyName: string = this.getPropertyName();
+                    if (ibas.strings.isEmpty(propertyName)) {
+                        // 未设置属性则使用绑定的
+                        propertyName = this.getBindingPath("bindingValue");
+                    }
+                    if (ibas.strings.isEmpty(propertyName)) {
+                        return this;
+                    }
+                    // this.destroyItems(); // 删除后记忆就不对了
+                    let boRepository: shell.bo.IBORepositoryShell = ibas.boFactory.create(shell.bo.BO_REPOSITORY_SHELL);
+                    boRepository.fetchBizObjectInfo({
+                        user: ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE),
+                        boCode: ibas.config.applyVariables(boInfo.code),
+                        boName: boInfo.name,
+                        onCompleted: (opRslt) => {
+                            try {
+                                if (opRslt.resultCode !== 0) {
+                                    throw new Error(opRslt.message);
+                                }
+                                let boName: string;
+                                if (propertyName.indexOf(".") > 0) {
+                                    // 属性带路径，则取名称
+                                    boName = propertyName.split(".")[0];
+                                }
+                                for (let data of opRslt.resultObjects) {
+                                    if (boName && !ibas.strings.equalsIgnoreCase(data.name, boName)) {
+                                        continue;
+                                    }
+                                    for (let property of data.properties) {
+                                        if (ibas.strings.equalsIgnoreCase(propertyName, property.name)) {
+                                            if (property.values instanceof Array) {
+                                                for (let item of property.values) {
+                                                    let sItem: any = this.getItemByKey(item.value);
+                                                    if (sItem instanceof ui.core.Item) {
+                                                        sItem.setText(item.description);
+                                                        if (sItem instanceof SelectItem) {
+                                                            sItem.setDefault(item.default);
+                                                        }
+                                                    } else {
+                                                        this.addItem(new SelectItem("", {
+                                                            key: item.value,
+                                                            text: item.description,
+                                                            default: item.default,
+                                                        }));
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    return;
+                                }
+                            } catch (error) {
+                                ibas.logger.log(error);
+                            }
+                        }
+                    });
+                    return this;
+                },
+                applySettings(this: PropertyMultiComboBox, mSettings: any, oScope?: any): PropertyMultiComboBox {
+                    if (typeof mSettings.loadItems !== "function") {
+                        mSettings.loadItems = this.loadItems;
+                    }
+                    MultiComboBox.prototype.applySettings.apply(this, arguments);
                     return this;
                 },
             });

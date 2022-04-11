@@ -325,6 +325,33 @@ namespace sap {
                             template.addCell(component);
                         }
                     }
+                    properties = Object.assign([], boInfo.properties);
+                    let sortedInfos: shell.bo.IBizPropertyInfo[] = properties.filter(c => !ibas.objects.isNull(c))
+                        .filter(c => !ibas.objects.isNull(c.position)).sort((a: any, b: any) => {
+                            return a.position - b.position;
+                        });
+
+                    for (let info of sortedInfos) {
+                        for (let item of template.getCells()) {
+                            let bindingPath: string = managedobjects.bindingPath(item);
+                            if (ibas.strings.equalsIgnoreCase(info.name, bindingPath)) {
+                                let column: sap.m.Column = null;
+                                let index: number = template.indexOfCell(item);
+                                if (index > 0 && index < this.getColumns().length) {
+                                    column = this.getColumns()[index];
+                                }
+                                // 修正位置
+                                if (info.position > 0) {
+                                    let position: number = info.position;
+                                    this.removeColumn(column);
+                                    this.insertColumn(column, position - 1);
+                                    template.removeCell(item);
+                                    template.insertCell(item, position - 1);
+                                }
+                                break;
+                            }
+                        }
+                    }
                 }
             }
         }

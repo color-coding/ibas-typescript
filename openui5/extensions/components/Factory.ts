@@ -37,7 +37,7 @@ namespace sap {
             /**
              * 创建属性组件
              * @param property 属性信息
-             * @param textView 文本视图
+             * @param mode 视图类型
              */
             export function newComponent(property: shell.bo.IBizPropertyInfo, mode: "Text" | "Input" | "Object" | "Object.2"): sap.ui.core.Control {
                 // 创建绑定信息
@@ -163,10 +163,21 @@ namespace sap {
                                     }
                                 }
                             }).bindProperty("bindingValue", bindInfo)
-                            : new sap.extension.m.Select("", {
-                                forceSelection: false,
+                            : new sap.extension.m.ComboBox("", {
                                 editable: property.authorised === ibas.emAuthoriseType.ALL ? true : false,
                                 items: items,
+                                change(this: sap.m.ComboBox, event: sap.ui.base.Event): void {
+                                    let source: any = event.getSource();
+                                    if (source instanceof sap.m.ComboBox) {
+                                        let key: any = source.getSelectedKey();
+                                        let value: any = source.getValue();
+                                        if (!key && value) {
+                                            source.setValueState(sap.ui.core.ValueState.Error);
+                                        } else {
+                                            source.setValueState(sap.ui.core.ValueState.None);
+                                        }
+                                    }
+                                },
                             }).bindProperty("bindingValue", bindInfo);
                     } else if (!ibas.strings.isEmpty(property.linkedObject)) {
                         return <sap.ui.core.Control>newInput(property.linkedObject).bindProperty("bindingValue", bindInfo);

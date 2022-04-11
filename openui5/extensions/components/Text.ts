@@ -141,6 +141,7 @@ namespace sap {
                                             textBudilder.append(item.text);
                                         }
                                         this.setText(textBudilder.toString());
+                                        this.setTooltip(ibas.strings.format("{0} - {1}", keyBudilder.toString(), textBudilder.toString()));
                                     }
                                 }
                             );
@@ -245,12 +246,34 @@ namespace sap {
                                         for (let property of data.properties) {
                                             if (ibas.strings.equalsIgnoreCase(propertyName, property.name)) {
                                                 if (property.values instanceof Array) {
+                                                    let keyBudilder: ibas.StringBuilder = new ibas.StringBuilder();
+                                                    keyBudilder.map(null, "");
+                                                    keyBudilder.map(undefined, "");
+                                                    let textBudilder: ibas.StringBuilder = new ibas.StringBuilder();
+                                                    textBudilder.map(null, "");
+                                                    textBudilder.map(undefined, "");
                                                     for (let item of property.values) {
                                                         if (ibas.strings.equals(item.value, value)) {
-                                                            this.setText(item.description);
-                                                            return;
+                                                            keyBudilder.append(item.value);
+                                                            textBudilder.append(item.description);
+                                                            break;
+                                                        } else if (value.startsWith(item.value + ",")
+                                                            || value.indexOf("," + item.value + ",") > 0
+                                                            || value.endsWith("," + item.value)) {
+                                                            if (keyBudilder.length > 0) {
+                                                                keyBudilder.append(ibas.DATA_SEPARATOR);
+                                                            }
+                                                            if (textBudilder.length > 0) {
+                                                                textBudilder.append(ibas.DATA_SEPARATOR);
+                                                                textBudilder.append(" ");
+                                                            }
+                                                            keyBudilder.append(item.value);
+                                                            textBudilder.append(item.description);
+                                                            continue;
                                                         }
                                                     }
+                                                    this.setText(textBudilder.toString());
+                                                    this.setTooltip(ibas.strings.format("{0} - {1}", keyBudilder.toString(), textBudilder.toString()));
                                                 }
                                             }
                                         }

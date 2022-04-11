@@ -1152,6 +1152,27 @@ namespace sap {
                 }
                 return sap.ui.core.ValueState.None;
             }
+
+            const instanceMaps: Map<any, Type> = new Map<any, Type>();
+            /**
+             * 格式化值
+             * @param type 目标类型
+             * @param value 值
+             * @param internalType 内部类型
+             */
+            export function formatValue(type: any, value: any, internalType: string): any {
+                if (!ibas.objects.isAssignableFrom(type, Type)) {
+                    return value;
+                }
+                let instance: Type = instanceMaps.get(type);
+                if (ibas.objects.isNull(instance)) {
+                    instance = new type;
+                    if (instance instanceof Type) {
+                        instanceMaps.set(type, instance);
+                    }
+                }
+                return instance.formatValue(value, internalType);
+            }
         }
     }
 }

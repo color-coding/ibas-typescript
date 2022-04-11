@@ -36,4 +36,6 @@ namespace ibas {
     export const CONFIG_ITEM_DECIMAL_PLACES_SUM: string = "decimalPlaces|Sum";
     /** 配置项目-小数位-单位数量 */
     export const CONFIG_ITEM_DECIMAL_PLACES_MEASUREMENT: string = "decimalPlaces|Measurement";
+    /** 配置项目-小数位-百分比 */
+    export const CONFIG_ITEM_DECIMAL_PLACES_PERCENTAGE: string = "decimalPlaces|Percentage";
 }

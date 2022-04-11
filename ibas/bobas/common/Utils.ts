@@ -627,15 +627,15 @@ namespace ibas {
                         if (!(value instanceof Object)) {
                             continue;
                         }
-                        if (value === window.document || value === window.indexedDB || value === window.caches
-                            || value === window.applicationCache || value === window.localStorage
-                            || value === window.navigator || value === window.location || value === window.console
-                            || value === window.crypto || value === window.frames || value === window.frameElement
-                            || value === window.history || value === window.clientInformation || value === window.styleMedia
+                        if (value === globalThis.document || value === globalThis.indexedDB || value === globalThis.caches
+                            || value === globalThis.applicationCache || value === globalThis.localStorage
+                            || value === globalThis.navigator || value === globalThis.location || value === globalThis.console
+                            || value === globalThis.crypto || value === globalThis.frames || value === globalThis.frameElement
+                            || value === globalThis.history || value === globalThis.clientInformation || value === globalThis.styleMedia
                         ) {
                             continue;
                         }
-                        if (value === data || (level > 0 && value === window)) {
+                        if (value === data || (level > 0 && value === globalThis)) {
                             continue;
                         }
                         if (value === type) {
@@ -1027,11 +1027,20 @@ namespace ibas {
             if (typeof data === "string") {
                 data = strings.remove(data, ",");
             }
-            let value: number = parseFloat(data);
-            if (isNaN(value)) {
-                return 0.0;
+            if (strings.isWith(data, undefined, "%")) {
+                let value: number = parseFloat(data);
+                if (isNaN(value)) {
+                    return 0.0;
+                } else {
+                    return value / 100;
+                }
             } else {
-                return value;
+                let value: number = parseFloat(data);
+                if (isNaN(value)) {
+                    return 0.0;
+                } else {
+                    return value;
+                }
             }
         }
         /**
@@ -1124,6 +1133,36 @@ namespace ibas {
                 }
             }
             return builder.toString(true);
+        }
+
+        /**
+         * 判断数值是否近似（忽略微小差异）
+         * @param value1 值1
+         * @param value2 值2
+         * @param digits 小数位
+         * @param degree 精确度（默认10小数位次方）
+         */
+        export function isApproximated(value1: number, value2: number, digits: number = 6, degree: number = undefined): boolean {
+            if (isNaN(value1)) {
+                return false;
+            }
+            if (isNaN(value2)) {
+                return false;
+            }
+            if (value1 === value2) {
+                return true;
+            }
+            if (digits > 0) {
+                degree = isNaN(degree) ? Math.pow(10, digits > 1 ? digits - 1 : digits) * 0.6 : degree;
+                let nValue1: number = value1 * Math.pow(10, digits);
+                let nValue2: number = value2 * Math.pow(10, digits);
+                if (Math.abs(nValue1 - nValue2) < degree) {
+                    return true;
+                }
+                return false;
+            } else {
+                return value1 === value2;
+            }
         }
     }
 

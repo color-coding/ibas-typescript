@@ -40,6 +40,15 @@ declare namespace sap {
                  * @param value 值
                  */
                 setBindingValue(value: string): this;
+                /**
+                 * 获取是否换行
+                 */
+                getWrapping(): boolean;
+                /**
+                 * 设置是否换行
+                 * @param value 值
+                 */
+                setWrapping(value: boolean): this;
             }
             /**
              * 业务仓库数据-对象属性
