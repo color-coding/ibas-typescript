@@ -561,18 +561,6 @@ namespace sap {
                                         }
                                     }
                                 }
-                                // 修正位置
-                                if (propertyInfo.position > 0) {
-                                    let index: number = this.indexOfColumn(column);
-                                    let position: number = propertyInfo.position - 1;
-                                    if (position < index) {
-                                        this.removeColumn(column);
-                                        this.insertColumn(column, position);
-                                    } else if (position > index) {
-                                        this.removeColumn(column);
-                                        this.insertColumn(column, position - 1);
-                                    }
-                                }
                                 if (template instanceof sap.m.InputBase) {
                                     readonly = false;
                                 }
@@ -615,11 +603,31 @@ namespace sap {
                                     ibas.strings.equalsIgnoreCase(property.editType, "TIME") ? new sap.ui.model.type.Integer() : new sap.ui.model.type.Date()
                                     : new sap.ui.model.type.String()
                     });
-                    if (property.position > 0) {
-                        this.insertColumn(column, property.position);
-                    } else {
-                        this.addColumn(column);
+                    this.addColumn(column);
+                }
+                // 位置修正
+                let showedColumns: ibas.ArrayList<sap.extension.table.DataColumn> = new ibas.ArrayList<sap.extension.table.DataColumn>();
+                for (let column of this.getColumns()) {
+                    if (!(column instanceof sap.extension.table.DataColumn)) {
+                        continue;
                     }
+                    let info: shell.bo.BizPropertyInfo = (<any>column)?.getPropertyInfo();
+                    if (!ibas.objects.isNull(info)) {
+                        // 有位置信息的列重新移除并重新排序，没有的按原有位置显示
+                        if (!ibas.objects.isNull(info.position)) {
+                            showedColumns.add(column);
+                            this.removeColumn(column);
+                        }
+                    }
+                }
+                // 列按位置信息排序
+                let sortedColumns: ibas.ArrayList<sap.extension.table.DataColumn> = showedColumns.sort((a: sap.extension.table.DataColumn, b: sap.extension.table.DataColumn) => {
+                    let aInfo: shell.bo.IBizPropertyInfo = a.getPropertyInfo();
+                    let bInfo: shell.bo.IBizPropertyInfo = b.getPropertyInfo();
+                    return aInfo.position - bInfo.position;
+                });
+                for (let column of sortedColumns) {
+                    this.insertColumn(column, column.getPropertyInfo().position);
                 }
             }
             /**

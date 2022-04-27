@@ -284,21 +284,6 @@ namespace sap {
                                     column.setVisible(false);
                                 }
                             }
-                            // 修正位置
-                            if (propertyInfo.position > 0) {
-                                let position: number = propertyInfo.position - 1;
-                                if (position < index) {
-                                    this.removeColumn(column);
-                                    this.insertColumn(column, position);
-                                    template.removeCell(item);
-                                    template.insertCell(item, position);
-                                } else if (position > index) {
-                                    this.removeColumn(column);
-                                    this.insertColumn(column, position - 1);
-                                    template.removeCell(item);
-                                    template.insertCell(item, position - 1);
-                                }
-                            }
                         }
                     }
                     for (let property of properties) {
@@ -317,13 +302,29 @@ namespace sap {
                                 ibas.i18n.prop(ibas.strings.format("bo_{0}_{1}", boInfo.name, property.name).toLowerCase())
                         });
                         let component: any = factories.newComponent(property, "Object.2");
-                        if (property.position > 0) {
-                            this.insertColumn(column, property.position);
-                            template.insertCell(component, property.position);
-                        } else {
-                            this.addColumn(column);
-                            template.addCell(component);
+                        this.addColumn(column);
+                        template.addCell(component);
+                    }
+                    // 位置修正
+                    let showedColumns: ibas.ArrayList<any> = new ibas.ArrayList<any>();
+                    for (let column of this.getColumns()) {
+                        let info: shell.bo.BizPropertyInfo = (<any>column).getPropertyInfo();
+                        if (!ibas.objects.isNull(info)) {
+                            // 有位置信息的列重新移除并重新排序，没有的按原有位置显示
+                            if (!ibas.objects.isNull(info.position)) {
+                                showedColumns.add(column);
+                                this.removeColumn(column);
+                            }
                         }
+                    }
+                    // 列按位置信息排序
+                    let sortedColumns: ibas.ArrayList<any> = showedColumns.sort((a: any, b: any) => {
+                        let aInfo: shell.bo.IBizPropertyInfo = a.getPropertyInfo();
+                        let bInfo: shell.bo.IBizPropertyInfo = b.getPropertyInfo();
+                        return aInfo.position - bInfo.position;
+                    });
+                    for (let column of sortedColumns) {
+                        this.insertColumn(column, column.getPropertyInfo().position);
                     }
                 }
             }
