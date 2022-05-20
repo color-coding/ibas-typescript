@@ -18022,5 +18022,2771 @@
         "name": "铁门关市",
         "cityCode": "6590",
         "provinceCode": "65"
+    },
+	{
+        "code": "100",
+        "name": "中正区",
+        "cityCode": "7101",
+        "provinceCode": "71"
+    },
+    {
+        "code": "103",
+        "name": "大同区",
+        "cityCode": "7101",
+        "provinceCode": "71"
+    },
+    {
+        "code": "104",
+        "name": "中山区",
+        "cityCode": "7101",
+        "provinceCode": "71"
+    },
+    {
+        "code": "105",
+        "name": "松山区",
+        "cityCode": "7101",
+        "provinceCode": "71"
+    },
+    {
+        "code": "106",
+        "name": "大安区",
+        "cityCode": "7101",
+        "provinceCode": "71"
+    },
+    {
+        "code": "108",
+        "name": "万华区",
+        "cityCode": "7101",
+        "provinceCode": "71"
+    },
+    {
+        "code": "110",
+        "name": "信义区",
+        "cityCode": "7101",
+        "provinceCode": "71"
+    },
+    {
+        "code": "111",
+        "name": "士林区",
+        "cityCode": "7101",
+        "provinceCode": "71"
+    },
+    {
+        "code": "112",
+        "name": "北投区",
+        "cityCode": "7101",
+        "provinceCode": "71"
+    },
+    {
+        "code": "114",
+        "name": "内湖区",
+        "cityCode": "7101",
+        "provinceCode": "71"
+    },
+    {
+        "code": "115",
+        "name": "南港区",
+        "cityCode": "7101",
+        "provinceCode": "71"
+    },
+    {
+        "code": "116",
+        "name": "文山区",
+        "cityCode": "7101",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710113",
+        "name": "其它区",
+        "cityCode": "7101",
+        "provinceCode": "71"
+    },
+    {
+        "code": "800",
+        "name": "新兴区",
+        "cityCode": "7102",
+        "provinceCode": "71"
+    },
+    {
+        "code": "801",
+        "name": "前金区",
+        "cityCode": "7102",
+        "provinceCode": "71"
+    },
+    {
+        "code": "802",
+        "name": "芩雅区",
+        "cityCode": "7102",
+        "provinceCode": "71"
+    },
+    {
+        "code": "803",
+        "name": "盐埕区",
+        "cityCode": "7102",
+        "provinceCode": "71"
+    },
+    {
+        "code": "804",
+        "name": "鼓山区",
+        "cityCode": "7102",
+        "provinceCode": "71"
+    },
+    {
+        "code": "805",
+        "name": "旗津区",
+        "cityCode": "7102",
+        "provinceCode": "71"
+    },
+    {
+        "code": "806",
+        "name": "前镇区",
+        "cityCode": "7102",
+        "provinceCode": "71"
+    },
+    {
+        "code": "807",
+        "name": "三民区",
+        "cityCode": "7102",
+        "provinceCode": "71"
+    },
+    {
+        "code": "813",
+        "name": "左营区",
+        "cityCode": "7102",
+        "provinceCode": "71"
+    },
+    {
+        "code": "811",
+        "name": "楠梓区",
+        "cityCode": "7102",
+        "provinceCode": "71"
+    },
+    {
+        "code": "812",
+        "name": "小港区",
+        "cityCode": "7102",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710212",
+        "name": "其它区",
+        "cityCode": "7102",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710241",
+        "name": "苓雅区",
+        "cityCode": "7102",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710242",
+        "name": "仁武区",
+        "cityCode": "7102",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710243",
+        "name": "大社区",
+        "cityCode": "7102",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710244",
+        "name": "冈山区",
+        "cityCode": "7102",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710245",
+        "name": "路竹区",
+        "cityCode": "7102",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710246",
+        "name": "阿莲区",
+        "cityCode": "7102",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710247",
+        "name": "田寮区",
+        "cityCode": "7102",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710248",
+        "name": "燕巢区",
+        "cityCode": "7102",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710249",
+        "name": "桥头区",
+        "cityCode": "7102",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710250",
+        "name": "梓官区",
+        "cityCode": "7102",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710251",
+        "name": "弥陀区",
+        "cityCode": "7102",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710252",
+        "name": "永安区",
+        "cityCode": "7102",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710253",
+        "name": "湖内区",
+        "cityCode": "7102",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710254",
+        "name": "凤山区",
+        "cityCode": "7102",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710255",
+        "name": "大寮区",
+        "cityCode": "7102",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710256",
+        "name": "林园区",
+        "cityCode": "7102",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710257",
+        "name": "鸟松区",
+        "cityCode": "7102",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710258",
+        "name": "大树区",
+        "cityCode": "7102",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710259",
+        "name": "旗山区",
+        "cityCode": "7102",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710260",
+        "name": "美浓区",
+        "cityCode": "7102",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710261",
+        "name": "六龟区",
+        "cityCode": "7102",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710262",
+        "name": "内门区",
+        "cityCode": "7102",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710263",
+        "name": "杉林区",
+        "cityCode": "7102",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710264",
+        "name": "甲仙区",
+        "cityCode": "7102",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710265",
+        "name": "桃源区",
+        "cityCode": "7102",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710266",
+        "name": "那玛夏区",
+        "cityCode": "7102",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710267",
+        "name": "茂林区",
+        "cityCode": "7102",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710268",
+        "name": "茄萣区",
+        "cityCode": "7102",
+        "provinceCode": "71"
+    },
+    {
+        "code": "703",
+        "name": "中西区",
+        "cityCode": "7103",
+        "provinceCode": "71"
+    },
+    {
+        "code": "701",
+        "name": "东区",
+        "cityCode": "7103",
+        "provinceCode": "71"
+    },
+    {
+        "code": "702",
+        "name": "南区",
+        "cityCode": "7103",
+        "provinceCode": "71"
+    },
+    {
+        "code": "704",
+        "name": "北区",
+        "cityCode": "7103",
+        "provinceCode": "71"
+    },
+    {
+        "code": "708",
+        "name": "安平区",
+        "cityCode": "7103",
+        "provinceCode": "71"
+    },
+    {
+        "code": "709",
+        "name": "安南区",
+        "cityCode": "7103",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710307",
+        "name": "其它区",
+        "cityCode": "7103",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710339",
+        "name": "永康区",
+        "cityCode": "7103",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710340",
+        "name": "归仁区",
+        "cityCode": "7103",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710341",
+        "name": "新化区",
+        "cityCode": "7103",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710342",
+        "name": "左镇区",
+        "cityCode": "7103",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710343",
+        "name": "玉井区",
+        "cityCode": "7103",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710344",
+        "name": "楠西区",
+        "cityCode": "7103",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710345",
+        "name": "南化区",
+        "cityCode": "7103",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710346",
+        "name": "仁德区",
+        "cityCode": "7103",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710347",
+        "name": "关庙区",
+        "cityCode": "7103",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710348",
+        "name": "龙崎区",
+        "cityCode": "7103",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710349",
+        "name": "官田区",
+        "cityCode": "7103",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710350",
+        "name": "麻豆区",
+        "cityCode": "7103",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710351",
+        "name": "佳里区",
+        "cityCode": "7103",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710352",
+        "name": "西港区",
+        "cityCode": "7103",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710353",
+        "name": "七股区",
+        "cityCode": "7103",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710354",
+        "name": "将军区",
+        "cityCode": "7103",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710355",
+        "name": "学甲区",
+        "cityCode": "7103",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710356",
+        "name": "北门区",
+        "cityCode": "7103",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710357",
+        "name": "新营区",
+        "cityCode": "7103",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710358",
+        "name": "后壁区",
+        "cityCode": "7103",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710359",
+        "name": "白河区",
+        "cityCode": "7103",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710360",
+        "name": "东山区",
+        "cityCode": "7103",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710361",
+        "name": "六甲区",
+        "cityCode": "7103",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710362",
+        "name": "下营区",
+        "cityCode": "7103",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710363",
+        "name": "柳营区",
+        "cityCode": "7103",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710364",
+        "name": "盐水区",
+        "cityCode": "7103",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710365",
+        "name": "善化区",
+        "cityCode": "7103",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710366",
+        "name": "大内区",
+        "cityCode": "7103",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710367",
+        "name": "山上区",
+        "cityCode": "7103",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710368",
+        "name": "新市区",
+        "cityCode": "7103",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710369",
+        "name": "安定区",
+        "cityCode": "7103",
+        "provinceCode": "71"
+    },
+    {
+        "code": "400",
+        "name": "中区",
+        "cityCode": "7104",
+        "provinceCode": "71"
+    },
+    {
+        "code": "401",
+        "name": "东区",
+        "cityCode": "7104",
+        "provinceCode": "71"
+    },
+    {
+        "code": "402",
+        "name": "南区",
+        "cityCode": "7104",
+        "provinceCode": "71"
+    },
+    {
+        "code": "403",
+        "name": "西区",
+        "cityCode": "7104",
+        "provinceCode": "71"
+    },
+    {
+        "code": "404",
+        "name": "北区",
+        "cityCode": "7104",
+        "provinceCode": "71"
+    },
+    {
+        "code": "406",
+        "name": "北屯区",
+        "cityCode": "7104",
+        "provinceCode": "71"
+    },
+    {
+        "code": "407",
+        "name": "西屯区",
+        "cityCode": "7104",
+        "provinceCode": "71"
+    },
+    {
+        "code": "408",
+        "name": "南屯区",
+        "cityCode": "7104",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710409",
+        "name": "其它区",
+        "cityCode": "7104",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710431",
+        "name": "太平区",
+        "cityCode": "7104",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710432",
+        "name": "大里区",
+        "cityCode": "7104",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710433",
+        "name": "雾峰区",
+        "cityCode": "7104",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710434",
+        "name": "乌日区",
+        "cityCode": "7104",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710435",
+        "name": "丰原区",
+        "cityCode": "7104",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710436",
+        "name": "后里区",
+        "cityCode": "7104",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710437",
+        "name": "石冈区",
+        "cityCode": "7104",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710438",
+        "name": "东势区",
+        "cityCode": "7104",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710439",
+        "name": "和平区",
+        "cityCode": "7104",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710440",
+        "name": "新社区",
+        "cityCode": "7104",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710441",
+        "name": "潭子区",
+        "cityCode": "7104",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710442",
+        "name": "大雅区",
+        "cityCode": "7104",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710443",
+        "name": "神冈区",
+        "cityCode": "7104",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710444",
+        "name": "大肚区",
+        "cityCode": "7104",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710445",
+        "name": "沙鹿区",
+        "cityCode": "7104",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710446",
+        "name": "龙井区",
+        "cityCode": "7104",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710447",
+        "name": "梧栖区",
+        "cityCode": "7104",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710448",
+        "name": "清水区",
+        "cityCode": "7104",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710449",
+        "name": "大甲区",
+        "cityCode": "7104",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710450",
+        "name": "外埔区",
+        "cityCode": "7104",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710451",
+        "name": "大安区",
+        "cityCode": "7104",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710507",
+        "name": "金沙镇",
+        "cityCode": "7105",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710508",
+        "name": "金湖镇",
+        "cityCode": "7105",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710509",
+        "name": "金宁乡",
+        "cityCode": "7105",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710510",
+        "name": "金城镇",
+        "cityCode": "7105",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710511",
+        "name": "烈屿乡",
+        "cityCode": "7105",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710512",
+        "name": "乌坵乡",
+        "cityCode": "7105",
+        "provinceCode": "71"
+    },
+    {
+        "code": "其他区",
+        "name": "其他区",
+        "cityCode": "7105",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710614",
+        "name": "南投市",
+        "cityCode": "7106",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710615",
+        "name": "中寮乡",
+        "cityCode": "7106",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710616",
+        "name": "草屯镇",
+        "cityCode": "7106",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710617",
+        "name": "国姓乡",
+        "cityCode": "7106",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710618",
+        "name": "埔里镇",
+        "cityCode": "7106",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710619",
+        "name": "仁爱乡",
+        "cityCode": "7106",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710620",
+        "name": "名间乡",
+        "cityCode": "7106",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710621",
+        "name": "集集镇",
+        "cityCode": "7106",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710622",
+        "name": "水里乡",
+        "cityCode": "7106",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710623",
+        "name": "鱼池乡",
+        "cityCode": "7106",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710624",
+        "name": "信义乡",
+        "cityCode": "7106",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710625",
+        "name": "竹山镇",
+        "cityCode": "7106",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710626",
+        "name": "鹿谷乡",
+        "cityCode": "7106",
+        "provinceCode": "71"
+    },
+    {
+        "code": "其他区",
+        "name": "其他区",
+        "cityCode": "7106",
+        "provinceCode": "71"
+    },
+    {
+        "code": "200",
+        "name": "仁爱区",
+        "cityCode": "7107",
+        "provinceCode": "71"
+    },
+    {
+        "code": "201",
+        "name": "信义区",
+        "cityCode": "7107",
+        "provinceCode": "71"
+    },
+    {
+        "code": "202",
+        "name": "中正区",
+        "cityCode": "7107",
+        "provinceCode": "71"
+    },
+    {
+        "code": "203",
+        "name": "中山区",
+        "cityCode": "7107",
+        "provinceCode": "71"
+    },
+    {
+        "code": "204",
+        "name": "安乐区",
+        "cityCode": "7107",
+        "provinceCode": "71"
+    },
+    {
+        "code": "205",
+        "name": "暖暖区",
+        "cityCode": "7107",
+        "provinceCode": "71"
+    },
+    {
+        "code": "206",
+        "name": "七堵区",
+        "cityCode": "7107",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710708",
+        "name": "其它区",
+        "cityCode": "7107",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710801",
+        "name": "东区",
+        "cityCode": "7108",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710802",
+        "name": "北区",
+        "cityCode": "7108",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710803",
+        "name": "香山区",
+        "cityCode": "7108",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710804",
+        "name": "其它区",
+        "cityCode": "7108",
+        "provinceCode": "71"
+    },
+    {
+        "code": "橫山乡",
+        "name": "橫山乡",
+        "cityCode": "7108",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710901",
+        "name": "东区",
+        "cityCode": "7109",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710902",
+        "name": "西区",
+        "cityCode": "7109",
+        "provinceCode": "71"
+    },
+    {
+        "code": "710903",
+        "name": "其它区",
+        "cityCode": "7109",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711130",
+        "name": "万里区",
+        "cityCode": "7111",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711131",
+        "name": "金山区",
+        "cityCode": "7111",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711132",
+        "name": "板桥区",
+        "cityCode": "7111",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711133",
+        "name": "汐止区",
+        "cityCode": "7111",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711134",
+        "name": "深坑区",
+        "cityCode": "7111",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711135",
+        "name": "石碇区",
+        "cityCode": "7111",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711136",
+        "name": "瑞芳区",
+        "cityCode": "7111",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711137",
+        "name": "平溪区",
+        "cityCode": "7111",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711138",
+        "name": "双溪区",
+        "cityCode": "7111",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711139",
+        "name": "贡寮区",
+        "cityCode": "7111",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711140",
+        "name": "新店区",
+        "cityCode": "7111",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711141",
+        "name": "坪林区",
+        "cityCode": "7111",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711142",
+        "name": "乌来区",
+        "cityCode": "7111",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711143",
+        "name": "永和区",
+        "cityCode": "7111",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711144",
+        "name": "中和区",
+        "cityCode": "7111",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711145",
+        "name": "土城区",
+        "cityCode": "7111",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711146",
+        "name": "三峡区",
+        "cityCode": "7111",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711147",
+        "name": "树林区",
+        "cityCode": "7111",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711148",
+        "name": "莺歌区",
+        "cityCode": "7111",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711149",
+        "name": "三重区",
+        "cityCode": "7111",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711150",
+        "name": "新庄区",
+        "cityCode": "7111",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711151",
+        "name": "泰山区",
+        "cityCode": "7111",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711152",
+        "name": "林口区",
+        "cityCode": "7111",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711153",
+        "name": "芦洲区",
+        "cityCode": "7111",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711154",
+        "name": "五股区",
+        "cityCode": "7111",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711155",
+        "name": "八里区",
+        "cityCode": "7111",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711156",
+        "name": "淡水区",
+        "cityCode": "7111",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711157",
+        "name": "三芝区",
+        "cityCode": "7111",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711158",
+        "name": "石门区",
+        "cityCode": "7111",
+        "provinceCode": "71"
+    },
+    {
+        "code": "其他区",
+        "name": "其他区",
+        "cityCode": "7111",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711214",
+        "name": "宜兰市",
+        "cityCode": "7112",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711215",
+        "name": "头城镇",
+        "cityCode": "7112",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711216",
+        "name": "礁溪乡",
+        "cityCode": "7112",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711217",
+        "name": "壮围乡",
+        "cityCode": "7112",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711218",
+        "name": "员山乡",
+        "cityCode": "7112",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711219",
+        "name": "罗东镇",
+        "cityCode": "7112",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711220",
+        "name": "三星乡",
+        "cityCode": "7112",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711221",
+        "name": "大同乡",
+        "cityCode": "7112",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711222",
+        "name": "五结乡",
+        "cityCode": "7112",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711223",
+        "name": "冬山乡",
+        "cityCode": "7112",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711224",
+        "name": "苏澳镇",
+        "cityCode": "7112",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711225",
+        "name": "南澳乡",
+        "cityCode": "7112",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711226",
+        "name": "钓鱼台",
+        "cityCode": "7112",
+        "provinceCode": "71"
+    },
+    {
+        "code": "其他区",
+        "name": "其他区",
+        "cityCode": "7112",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711314",
+        "name": "竹北市",
+        "cityCode": "7113",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711315",
+        "name": "湖口乡",
+        "cityCode": "7113",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711316",
+        "name": "新丰乡",
+        "cityCode": "7113",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711317",
+        "name": "新埔镇",
+        "cityCode": "7113",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711318",
+        "name": "关西镇",
+        "cityCode": "7113",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711319",
+        "name": "芎林乡",
+        "cityCode": "7113",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711320",
+        "name": "宝山乡",
+        "cityCode": "7113",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711321",
+        "name": "竹东镇",
+        "cityCode": "7113",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711322",
+        "name": "五峰乡",
+        "cityCode": "7113",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711323",
+        "name": "横山乡",
+        "cityCode": "7113",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711324",
+        "name": "尖石乡",
+        "cityCode": "7113",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711325",
+        "name": "北埔乡",
+        "cityCode": "7113",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711326",
+        "name": "峨眉乡",
+        "cityCode": "7113",
+        "provinceCode": "71"
+    },
+    {
+        "code": "其他区",
+        "name": "其他区",
+        "cityCode": "7113",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711414",
+        "name": "中坜区",
+        "cityCode": "7114",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711415",
+        "name": "平镇区",
+        "cityCode": "7114",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711416",
+        "name": "龙潭区",
+        "cityCode": "7114",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711417",
+        "name": "杨梅区",
+        "cityCode": "7114",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711418",
+        "name": "新屋区",
+        "cityCode": "7114",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711419",
+        "name": "观音区",
+        "cityCode": "7114",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711420",
+        "name": "桃园区",
+        "cityCode": "7114",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711421",
+        "name": "龟山区",
+        "cityCode": "7114",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711422",
+        "name": "八德区",
+        "cityCode": "7114",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711423",
+        "name": "大溪区",
+        "cityCode": "7114",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711424",
+        "name": "复兴区",
+        "cityCode": "7114",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711425",
+        "name": "大园区",
+        "cityCode": "7114",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711426",
+        "name": "芦竹区",
+        "cityCode": "7114",
+        "provinceCode": "71"
+    },
+    {
+        "code": "其他区",
+        "name": "其他区",
+        "cityCode": "7114",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711519",
+        "name": "竹南镇",
+        "cityCode": "7115",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711520",
+        "name": "头份市",
+        "cityCode": "7115",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711521",
+        "name": "三湾乡",
+        "cityCode": "7115",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711522",
+        "name": "南庄乡",
+        "cityCode": "7115",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711523",
+        "name": "狮潭乡",
+        "cityCode": "7115",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711524",
+        "name": "后龙镇",
+        "cityCode": "7115",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711525",
+        "name": "通霄镇",
+        "cityCode": "7115",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711526",
+        "name": "苑里镇",
+        "cityCode": "7115",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711527",
+        "name": "苗栗市",
+        "cityCode": "7115",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711528",
+        "name": "造桥乡",
+        "cityCode": "7115",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711529",
+        "name": "头屋乡",
+        "cityCode": "7115",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711530",
+        "name": "公馆乡",
+        "cityCode": "7115",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711531",
+        "name": "大湖乡",
+        "cityCode": "7115",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711532",
+        "name": "泰安乡",
+        "cityCode": "7115",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711533",
+        "name": "铜锣乡",
+        "cityCode": "7115",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711534",
+        "name": "三义乡",
+        "cityCode": "7115",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711535",
+        "name": "西湖乡",
+        "cityCode": "7115",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711536",
+        "name": "卓兰镇",
+        "cityCode": "7115",
+        "provinceCode": "71"
+    },
+    {
+        "code": "其他区",
+        "name": "其他区",
+        "cityCode": "7115",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711727",
+        "name": "彰化市",
+        "cityCode": "7117",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711728",
+        "name": "芬园乡",
+        "cityCode": "7117",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711729",
+        "name": "花坛乡",
+        "cityCode": "7117",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711730",
+        "name": "秀水乡",
+        "cityCode": "7117",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711731",
+        "name": "鹿港镇",
+        "cityCode": "7117",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711732",
+        "name": "福兴乡",
+        "cityCode": "7117",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711733",
+        "name": "线西乡",
+        "cityCode": "7117",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711734",
+        "name": "和美镇",
+        "cityCode": "7117",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711735",
+        "name": "伸港乡",
+        "cityCode": "7117",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711736",
+        "name": "员林市",
+        "cityCode": "7117",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711737",
+        "name": "社头乡",
+        "cityCode": "7117",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711738",
+        "name": "永靖乡",
+        "cityCode": "7117",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711739",
+        "name": "埔心乡",
+        "cityCode": "7117",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711740",
+        "name": "溪湖镇",
+        "cityCode": "7117",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711741",
+        "name": "大村乡",
+        "cityCode": "7117",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711742",
+        "name": "埔盐乡",
+        "cityCode": "7117",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711743",
+        "name": "田中镇",
+        "cityCode": "7117",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711744",
+        "name": "北斗镇",
+        "cityCode": "7117",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711745",
+        "name": "田尾乡",
+        "cityCode": "7117",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711746",
+        "name": "埤头乡",
+        "cityCode": "7117",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711747",
+        "name": "溪州乡",
+        "cityCode": "7117",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711748",
+        "name": "竹塘乡",
+        "cityCode": "7117",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711749",
+        "name": "二林镇",
+        "cityCode": "7117",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711750",
+        "name": "大城乡",
+        "cityCode": "7117",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711751",
+        "name": "芳苑乡",
+        "cityCode": "7117",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711752",
+        "name": "二水乡",
+        "cityCode": "7117",
+        "provinceCode": "71"
+    },
+    {
+        "code": "其他区",
+        "name": "其他区",
+        "cityCode": "7117",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711919",
+        "name": "番路乡",
+        "cityCode": "7119",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711920",
+        "name": "梅山乡",
+        "cityCode": "7119",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711921",
+        "name": "竹崎乡",
+        "cityCode": "7119",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711922",
+        "name": "阿里山乡",
+        "cityCode": "7119",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711923",
+        "name": "中埔乡",
+        "cityCode": "7119",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711924",
+        "name": "大埔乡",
+        "cityCode": "7119",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711925",
+        "name": "水上乡",
+        "cityCode": "7119",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711926",
+        "name": "鹿草乡",
+        "cityCode": "7119",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711927",
+        "name": "太保市",
+        "cityCode": "7119",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711928",
+        "name": "朴子市",
+        "cityCode": "7119",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711929",
+        "name": "东石乡",
+        "cityCode": "7119",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711930",
+        "name": "六脚乡",
+        "cityCode": "7119",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711931",
+        "name": "新港乡",
+        "cityCode": "7119",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711932",
+        "name": "民雄乡",
+        "cityCode": "7119",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711933",
+        "name": "大林镇",
+        "cityCode": "7119",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711934",
+        "name": "溪口乡",
+        "cityCode": "7119",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711935",
+        "name": "义竹乡",
+        "cityCode": "7119",
+        "provinceCode": "71"
+    },
+    {
+        "code": "711936",
+        "name": "布袋镇",
+        "cityCode": "7119",
+        "provinceCode": "71"
+    },
+    {
+        "code": "其他区",
+        "name": "其他区",
+        "cityCode": "7119",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712121",
+        "name": "斗南镇",
+        "cityCode": "7121",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712122",
+        "name": "大埤乡",
+        "cityCode": "7121",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712123",
+        "name": "虎尾镇",
+        "cityCode": "7121",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712124",
+        "name": "土库镇",
+        "cityCode": "7121",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712125",
+        "name": "褒忠乡",
+        "cityCode": "7121",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712126",
+        "name": "东势乡",
+        "cityCode": "7121",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712127",
+        "name": "台西乡",
+        "cityCode": "7121",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712128",
+        "name": "仑背乡",
+        "cityCode": "7121",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712129",
+        "name": "麦寮乡",
+        "cityCode": "7121",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712130",
+        "name": "斗六市",
+        "cityCode": "7121",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712131",
+        "name": "林内乡",
+        "cityCode": "7121",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712132",
+        "name": "古坑乡",
+        "cityCode": "7121",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712133",
+        "name": "莿桐乡",
+        "cityCode": "7121",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712134",
+        "name": "西螺镇",
+        "cityCode": "7121",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712135",
+        "name": "二仑乡",
+        "cityCode": "7121",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712136",
+        "name": "北港镇",
+        "cityCode": "7121",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712137",
+        "name": "水林乡",
+        "cityCode": "7121",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712138",
+        "name": "口湖乡",
+        "cityCode": "7121",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712139",
+        "name": "四湖乡",
+        "cityCode": "7121",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712140",
+        "name": "元长乡",
+        "cityCode": "7121",
+        "provinceCode": "71"
+    },
+    {
+        "code": "其他区",
+        "name": "其他区",
+        "cityCode": "7121",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712434",
+        "name": "屏东市",
+        "cityCode": "7124",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712435",
+        "name": "三地门乡",
+        "cityCode": "7124",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712436",
+        "name": "雾台乡",
+        "cityCode": "7124",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712437",
+        "name": "玛家乡",
+        "cityCode": "7124",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712438",
+        "name": "九如乡",
+        "cityCode": "7124",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712439",
+        "name": "里港乡",
+        "cityCode": "7124",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712440",
+        "name": "高树乡",
+        "cityCode": "7124",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712441",
+        "name": "盐埔乡",
+        "cityCode": "7124",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712442",
+        "name": "长治乡",
+        "cityCode": "7124",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712443",
+        "name": "麟洛乡",
+        "cityCode": "7124",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712444",
+        "name": "竹田乡",
+        "cityCode": "7124",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712445",
+        "name": "内埔乡",
+        "cityCode": "7124",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712446",
+        "name": "万丹乡",
+        "cityCode": "7124",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712447",
+        "name": "潮州镇",
+        "cityCode": "7124",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712448",
+        "name": "泰武乡",
+        "cityCode": "7124",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712449",
+        "name": "来义乡",
+        "cityCode": "7124",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712450",
+        "name": "万峦乡",
+        "cityCode": "7124",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712451",
+        "name": "崁顶乡",
+        "cityCode": "7124",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712452",
+        "name": "新埤乡",
+        "cityCode": "7124",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712453",
+        "name": "南州乡",
+        "cityCode": "7124",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712454",
+        "name": "林边乡",
+        "cityCode": "7124",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712455",
+        "name": "东港镇",
+        "cityCode": "7124",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712456",
+        "name": "琉球乡",
+        "cityCode": "7124",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712457",
+        "name": "佳冬乡",
+        "cityCode": "7124",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712458",
+        "name": "新园乡",
+        "cityCode": "7124",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712459",
+        "name": "枋寮乡",
+        "cityCode": "7124",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712460",
+        "name": "枋山乡",
+        "cityCode": "7124",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712461",
+        "name": "春日乡",
+        "cityCode": "7124",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712462",
+        "name": "狮子乡",
+        "cityCode": "7124",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712463",
+        "name": "车城乡",
+        "cityCode": "7124",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712464",
+        "name": "牡丹乡",
+        "cityCode": "7124",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712465",
+        "name": "恒春镇",
+        "cityCode": "7124",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712466",
+        "name": "满州乡",
+        "cityCode": "7124",
+        "provinceCode": "71"
+    },
+    {
+        "code": "其他区",
+        "name": "其他区",
+        "cityCode": "7124",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712517",
+        "name": "台东市",
+        "cityCode": "7125",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712518",
+        "name": "绿岛乡",
+        "cityCode": "7125",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712519",
+        "name": "兰屿乡",
+        "cityCode": "7125",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712520",
+        "name": "延平乡",
+        "cityCode": "7125",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712521",
+        "name": "卑南乡",
+        "cityCode": "7125",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712522",
+        "name": "鹿野乡",
+        "cityCode": "7125",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712523",
+        "name": "关山镇",
+        "cityCode": "7125",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712524",
+        "name": "海端乡",
+        "cityCode": "7125",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712525",
+        "name": "池上乡",
+        "cityCode": "7125",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712526",
+        "name": "东河乡",
+        "cityCode": "7125",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712527",
+        "name": "成功镇",
+        "cityCode": "7125",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712528",
+        "name": "长滨乡",
+        "cityCode": "7125",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712529",
+        "name": "金峰乡",
+        "cityCode": "7125",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712530",
+        "name": "大武乡",
+        "cityCode": "7125",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712531",
+        "name": "达仁乡",
+        "cityCode": "7125",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712532",
+        "name": "太麻里乡",
+        "cityCode": "7125",
+        "provinceCode": "71"
+    },
+    {
+        "code": "其他区",
+        "name": "其他区",
+        "cityCode": "7125",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712615",
+        "name": "花莲市",
+        "cityCode": "7126",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712616",
+        "name": "新城乡",
+        "cityCode": "7126",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712617",
+        "name": "太鲁阁",
+        "cityCode": "7126",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712618",
+        "name": "秀林乡",
+        "cityCode": "7126",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712619",
+        "name": "吉安乡",
+        "cityCode": "7126",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712620",
+        "name": "寿丰乡",
+        "cityCode": "7126",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712621",
+        "name": "凤林镇",
+        "cityCode": "7126",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712622",
+        "name": "光复乡",
+        "cityCode": "7126",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712623",
+        "name": "丰滨乡",
+        "cityCode": "7126",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712624",
+        "name": "瑞穗乡",
+        "cityCode": "7126",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712625",
+        "name": "万荣乡",
+        "cityCode": "7126",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712626",
+        "name": "玉里镇",
+        "cityCode": "7126",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712627",
+        "name": "卓溪乡",
+        "cityCode": "7126",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712628",
+        "name": "富里乡",
+        "cityCode": "7126",
+        "provinceCode": "71"
+    },
+    {
+        "code": "其他区",
+        "name": "其他区",
+        "cityCode": "7126",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712707",
+        "name": "马公市",
+        "cityCode": "7127",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712708",
+        "name": "西屿乡",
+        "cityCode": "7127",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712709",
+        "name": "望安乡",
+        "cityCode": "7127",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712710",
+        "name": "七美乡",
+        "cityCode": "7127",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712711",
+        "name": "白沙乡",
+        "cityCode": "7127",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712712",
+        "name": "湖西乡",
+        "cityCode": "7127",
+        "provinceCode": "71"
+    },
+    {
+        "code": "其他区",
+        "name": "其他区",
+        "cityCode": "7127",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712805",
+        "name": "南竿乡",
+        "cityCode": "7128",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712806",
+        "name": "北竿乡",
+        "cityCode": "7128",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712807",
+        "name": "莒光乡",
+        "cityCode": "7128",
+        "provinceCode": "71"
+    },
+    {
+        "code": "712808",
+        "name": "东引乡",
+        "cityCode": "7128",
+        "provinceCode": "71"
+    },
+    {
+        "code": "其他区",
+        "name": "其他区",
+        "cityCode": "7128",
+        "provinceCode": "71"
+    },
+    {
+        "code": "810101",
+        "name": "中西区",
+        "cityCode": "8100",
+        "provinceCode": "81"
+    },
+    {
+        "code": "810102",
+        "name": "湾仔",
+        "cityCode": "8100",
+        "provinceCode": "81"
+    },
+    {
+        "code": "810103",
+        "name": "东区",
+        "cityCode": "8100",
+        "provinceCode": "81"
+    },
+    {
+        "code": "810104",
+        "name": "南区",
+        "cityCode": "8100",
+        "provinceCode": "81"
+    },
+    {
+        "code": "湾仔区",
+        "name": "湾仔区",
+        "cityCode": "8100",
+        "provinceCode": "81"
+    },
+    {
+        "code": "其他区",
+        "name": "其他区",
+        "cityCode": "8100",
+        "provinceCode": "81"
+    },
+    {
+        "code": "810201",
+        "name": "九龙城区",
+        "cityCode": "8102",
+        "provinceCode": "81"
+    },
+    {
+        "code": "810202",
+        "name": "油尖旺区",
+        "cityCode": "8102",
+        "provinceCode": "81"
+    },
+    {
+        "code": "810203",
+        "name": "深水埗区",
+        "cityCode": "8102",
+        "provinceCode": "81"
+    },
+    {
+        "code": "810204",
+        "name": "黄大仙区",
+        "cityCode": "8102",
+        "provinceCode": "81"
+    },
+    {
+        "code": "810205",
+        "name": "观塘区",
+        "cityCode": "8102",
+        "provinceCode": "81"
+    },
+    {
+        "code": "其他区",
+        "name": "其他区",
+        "cityCode": "8102",
+        "provinceCode": "81"
+    },
+    {
+        "code": "810301",
+        "name": "北区",
+        "cityCode": "8103",
+        "provinceCode": "81"
+    },
+    {
+        "code": "810302",
+        "name": "大埔区",
+        "cityCode": "8103",
+        "provinceCode": "81"
+    },
+    {
+        "code": "810303",
+        "name": "沙田区",
+        "cityCode": "8103",
+        "provinceCode": "81"
+    },
+    {
+        "code": "810304",
+        "name": "西贡区",
+        "cityCode": "8103",
+        "provinceCode": "81"
+    },
+    {
+        "code": "810305",
+        "name": "元朗区",
+        "cityCode": "8103",
+        "provinceCode": "81"
+    },
+    {
+        "code": "810306",
+        "name": "屯门区",
+        "cityCode": "8103",
+        "provinceCode": "81"
+    },
+    {
+        "code": "810307",
+        "name": "荃湾区",
+        "cityCode": "8103",
+        "provinceCode": "81"
+    },
+    {
+        "code": "810308",
+        "name": "葵青区",
+        "cityCode": "8103",
+        "provinceCode": "81"
+    },
+    {
+        "code": "810309",
+        "name": "离岛区",
+        "cityCode": "8103",
+        "provinceCode": "81"
+    },
+    {
+        "code": "其他区",
+        "name": "其他区",
+        "cityCode": "8103",
+        "provinceCode": "81"
+    },
+    {
+        "code": "810110",
+        "name": "离岛区",
+        "cityCode": "8100",
+        "provinceCode": "81"
+    },
+    {
+        "code": "810115",
+        "name": "屯门区",
+        "cityCode": "8100",
+        "provinceCode": "81"
+    },
+    {
+        "code": "810106",
+        "name": "深水埗区",
+        "cityCode": "8100",
+        "provinceCode": "81"
+    },
+    {
+        "code": "810114",
+        "name": "沙田区",
+        "cityCode": "8100",
+        "provinceCode": "81"
+    },
+    {
+        "code": "810103",
+        "name": "九龙城区",
+        "cityCode": "8100",
+        "provinceCode": "81"
+    },
+    {
+        "code": "810117",
+        "name": "荃湾区",
+        "cityCode": "8100",
+        "provinceCode": "81"
+    },
+    {
+        "code": "810111",
+        "name": "葵青区",
+        "cityCode": "8100",
+        "provinceCode": "81"
+    },
+    {
+        "code": "810116",
+        "name": "大埔区",
+        "cityCode": "8100",
+        "provinceCode": "81"
+    },
+    {
+        "code": "810105",
+        "name": "南区",
+        "cityCode": "8100",
+        "provinceCode": "81"
+    },
+    {
+        "code": "810108",
+        "name": "黄大仙区",
+        "cityCode": "8100",
+        "provinceCode": "81"
+    },
+    {
+        "code": "810104",
+        "name": "观塘区",
+        "cityCode": "8100",
+        "provinceCode": "81"
+    },
+    {
+        "code": "810112",
+        "name": "北区",
+        "cityCode": "8100",
+        "provinceCode": "81"
+    },
+    {
+        "code": "810101",
+        "name": "中西区",
+        "cityCode": "8100",
+        "provinceCode": "81"
+    },
+    {
+        "code": "810107",
+        "name": "湾仔区",
+        "cityCode": "8100",
+        "provinceCode": "81"
+    },
+    {
+        "code": "810109",
+        "name": "油尖旺区",
+        "cityCode": "8100",
+        "provinceCode": "81"
+    },
+    {
+        "code": "810102",
+        "name": "东区",
+        "cityCode": "8100",
+        "provinceCode": "81"
+    },
+    {
+        "code": "810113",
+        "name": "西贡区",
+        "cityCode": "8100",
+        "provinceCode": "81"
+    },
+    {
+        "code": "810118",
+        "name": "元朗区",
+        "cityCode": "8100",
+        "provinceCode": "81"
+    },
+    {
+        "code": "820001",
+        "name": "花地玛堂区",
+        "cityCode": "8201",
+        "provinceCode": "82"
+    },
+    {
+        "code": "820002",
+        "name": "花王堂区",
+        "cityCode": "8201",
+        "provinceCode": "82"
+    },
+    {
+        "code": "820003",
+        "name": "望德堂区",
+        "cityCode": "8201",
+        "provinceCode": "82"
+    },
+    {
+        "code": "820004",
+        "name": "大堂区",
+        "cityCode": "8201",
+        "provinceCode": "82"
+    },
+    {
+        "code": "820005",
+        "name": "风顺堂区",
+        "cityCode": "8201",
+        "provinceCode": "82"
+    },
+    {
+        "code": "大堂区",
+        "name": "大堂区",
+        "cityCode": "8201",
+        "provinceCode": "82"
+    },
+    {
+        "code": "花地玛堂区",
+        "name": "花地玛堂区",
+        "cityCode": "8201",
+        "provinceCode": "82"
+    },
+    {
+        "code": "圣安多尼堂区",
+        "name": "圣安多尼堂区",
+        "cityCode": "8201",
+        "provinceCode": "82"
+    },
+    {
+        "code": "望德堂区",
+        "name": "望德堂区",
+        "cityCode": "8201",
+        "provinceCode": "82"
+    },
+    {
+        "code": "风顺堂区",
+        "name": "风顺堂区",
+        "cityCode": "8201",
+        "provinceCode": "82"
+    },
+    {
+        "code": "其他区",
+        "name": "其他区",
+        "cityCode": "8201",
+        "provinceCode": "82"
+    },
+    {
+        "code": "820006",
+        "name": "嘉模堂区",
+        "cityCode": "8202",
+        "provinceCode": "82"
+    },
+    {
+        "code": "820007",
+        "name": "路氹填海区",
+        "cityCode": "8202",
+        "provinceCode": "82"
+    },
+    {
+        "code": "820008",
+        "name": "圣方济各堂区",
+        "cityCode": "8202",
+        "provinceCode": "82"
+    },
+    {
+        "code": "路氹城",
+        "name": "路氹城",
+        "cityCode": "8202",
+        "provinceCode": "82"
+    },
+    {
+        "code": "其他区",
+        "name": "其他区",
+        "cityCode": "8202",
+        "provinceCode": "82"
+    },
+    {
+        "code": "嘉模堂区",
+        "name": "嘉模堂区",
+        "cityCode": "氹仔岛",
+        "provinceCode": "82"
+    },
+    {
+        "code": "圣方济各堂区",
+        "name": "圣方济各堂区",
+        "cityCode": "路环岛",
+        "provinceCode": "82"
+    },
+    {
+        "code": "820002",
+        "name": "望德堂区",
+        "cityCode": "8200",
+        "provinceCode": "82"
+    },
+    {
+        "code": "820004",
+        "name": "圣方济各堂区",
+        "cityCode": "8200",
+        "provinceCode": "82"
+    },
+    {
+        "code": "820006",
+        "name": "大堂区",
+        "cityCode": "8200",
+        "provinceCode": "82"
+    },
+    {
+        "code": "820003",
+        "name": "风顺堂区",
+        "cityCode": "8200",
+        "provinceCode": "82"
+    },
+    {
+        "code": "820001",
+        "name": "花王堂区",
+        "cityCode": "8200",
+        "provinceCode": "82"
+    },
+    {
+        "code": "820008",
+        "name": "花地玛堂区",
+        "cityCode": "8200",
+        "provinceCode": "82"
+    },
+    {
+        "code": "820005",
+        "name": "嘉模堂区",
+        "cityCode": "8200",
+        "provinceCode": "82"
+    },
+    {
+        "code": "820007",
+        "name": "路氹填海区",
+        "cityCode": "8200",
+        "provinceCode": "82"
+    },
+    {
+        "code": "820010",
+        "name": "澳门特别行政区直辖",
+        "cityCode": "8200",
+        "provinceCode": "82"
     }
 ]

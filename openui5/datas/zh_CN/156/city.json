@@ -1713,5 +1713,160 @@
         "code": "6590",
         "name": "自治区直辖县级行政区划",
         "provinceCode": "65"
+    },
+	{
+        "code": "7101",
+        "name": "台北市",
+        "provinceCode": "71"
+    },
+    {
+        "code": "7102",
+        "name": "高雄市",
+        "provinceCode": "71"
+    },
+    {
+        "code": "7103",
+        "name": "台南市",
+        "provinceCode": "71"
+    },
+    {
+        "code": "7104",
+        "name": "台中市",
+        "provinceCode": "71"
+    },
+    {
+        "code": "7105",
+        "name": "金门县",
+        "provinceCode": "71"
+    },
+    {
+        "code": "7106",
+        "name": "南投县",
+        "provinceCode": "71"
+    },
+    {
+        "code": "7107",
+        "name": "基隆市",
+        "provinceCode": "71"
+    },
+    {
+        "code": "7108",
+        "name": "新竹市",
+        "provinceCode": "71"
+    },
+    {
+        "code": "7109",
+        "name": "嘉义市",
+        "provinceCode": "71"
+    },
+    {
+        "code": "7111",
+        "name": "新北市",
+        "provinceCode": "71"
+    },
+    {
+        "code": "7112",
+        "name": "宜兰县",
+        "provinceCode": "71"
+    },
+    {
+        "code": "7113",
+        "name": "新竹县",
+        "provinceCode": "71"
+    },
+    {
+        "code": "7114",
+        "name": "桃园市",
+        "provinceCode": "71"
+    },
+    {
+        "code": "7115",
+        "name": "苗栗县",
+        "provinceCode": "71"
+    },
+    {
+        "code": "7117",
+        "name": "彰化县",
+        "provinceCode": "71"
+    },
+    {
+        "code": "7119",
+        "name": "嘉义县",
+        "provinceCode": "71"
+    },
+    {
+        "code": "7121",
+        "name": "云林县",
+        "provinceCode": "71"
+    },
+    {
+        "code": "7124",
+        "name": "屏东县",
+        "provinceCode": "71"
+    },
+    {
+        "code": "7125",
+        "name": "台东县",
+        "provinceCode": "71"
+    },
+    {
+        "code": "7126",
+        "name": "花莲县",
+        "provinceCode": "71"
+    },
+    {
+        "code": "7127",
+        "name": "澎湖县",
+        "provinceCode": "71"
+    },
+    {
+        "code": "7128",
+        "name": "连江县",
+        "provinceCode": "71"
+    },
+    {
+        "code": "8100",
+        "name": "香港岛",
+        "provinceCode": "81"
+    },
+    {
+        "code": "8102",
+        "name": "九龙",
+        "provinceCode": "81"
+    },
+    {
+        "code": "8103",
+        "name": "新界",
+        "provinceCode": "81"
+    },
+    {
+        "code": "8100",
+        "name": "香港",
+        "provinceCode": "81"
+    },
+    {
+        "code": "8201",
+        "name": "澳门半岛",
+        "provinceCode": "82"
+    },
+    {
+        "code": "8202",
+        "name": "离岛",
+        "provinceCode": "82"
+    },
+    {
+        "code": "氹仔岛",
+        "name": "氹仔岛",
+        "provinceCode": "82"
+    },
+    {
+        "code": "路环岛",
+        "name": "路环岛",
+        "provinceCode": "82"
+    },
+    {
+        "code": "8200",
+        "name": "澳门",
+        "provinceCode": "82"
     }
 ]
