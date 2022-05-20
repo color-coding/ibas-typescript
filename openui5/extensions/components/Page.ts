@@ -236,6 +236,11 @@ namespace sap {
                                 } else if (propertyInfo.authorised === ibas.emAuthoriseType.READ) {
                                     controls.nonEditable(fmItem);
                                 }
+                                if (propertyInfo.required === true) {
+                                    if (fmItem instanceof sap.m.InputBase) {
+                                        fmItem.setRequired(true);
+                                    }
+                                }
                                 properties[index] = null;
                             }
                         }

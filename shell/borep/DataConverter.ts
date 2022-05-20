@@ -117,6 +117,7 @@ namespace shell {
                         Searched: newData.searched,
                         Systemed: newData.systemed,
                         Description: newData.description,
+                        Required: newData.required,
                         Authorised: newData.authorised ? ibas.enums.toString(ibas.emAuthoriseType, newData.authorised) : undefined,
                         LinkedObject: newData.linkedObject,
                         Values: values
@@ -229,6 +230,7 @@ namespace shell {
                     newData.editSize = remote.EditSize;
                     newData.searched = remote.Searched;
                     newData.systemed = remote.Systemed;
+                    newData.required = remote.Required;
                     newData.authorised = ibas.strings.isEmpty(remote.Authorised) ? undefined : ibas.enums.valueOf(ibas.emAuthoriseType, remote.Authorised);
                     newData.linkedObject = remote.LinkedObject;
                     newData.values = new Array<BizPropertyValue>();

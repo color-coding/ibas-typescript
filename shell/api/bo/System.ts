@@ -107,6 +107,8 @@ namespace shell {
             searched: boolean;
             /** 系统的 */
             systemed: boolean;
+            /** 必填的 */
+            required: boolean;
             /** 链接的对象 */
             linkedObject?: string;
             /** 授权的 */

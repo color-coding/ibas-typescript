@@ -119,6 +119,8 @@ namespace shell {
             Systemed: boolean;
             /** 授权的 */
             Authorised: string;
+            /** 必填的 */
+            Required: boolean;
             /** 链接的对象 */
             LinkedObject: string;
             /** 值集合 */

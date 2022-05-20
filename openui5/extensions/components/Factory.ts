@@ -31,6 +31,7 @@ namespace sap {
                     systemed: property.systemed,
                     authorised: property.authorised,
                     values: property.values,
+                    required: property.required,
                     linkedObject: property.linkedObject
                 };
             }
@@ -116,20 +117,24 @@ namespace sap {
                     if (bindInfo.type instanceof sap.extension.data.Date) {
                         return new sap.extension.m.DatePicker("", {
                             editable: property.authorised === ibas.emAuthoriseType.ALL ? true : false,
+                            required: property.required,
                         }).bindProperty("bindingValue", bindInfo);
                     } else if (bindInfo.type instanceof sap.extension.data.Time) {
                         return new sap.extension.m.TimePicker("", {
                             editable: property.authorised === ibas.emAuthoriseType.ALL ? true : false,
+                            required: property.required,
                         }).bindProperty("bindingValue", bindInfo);
                     } else if (bindInfo.type instanceof sap.extension.data.Decimal && !(bindInfo.type instanceof sap.extension.data.Percentage)) {
                         return new sap.extension.m.Input("", {
                             type: sap.m.InputType.Number,
                             editable: property.authorised === ibas.emAuthoriseType.ALL ? true : false,
+                            required: property.required,
                         }).bindProperty("bindingValue", bindInfo);
                     } else if (bindInfo.type instanceof sap.extension.data.Numeric) {
                         return new sap.extension.m.Input("", {
                             type: sap.m.InputType.Number,
                             editable: property.authorised === ibas.emAuthoriseType.ALL ? true : false,
+                            required: property.required,
                         }).bindProperty("bindingValue", bindInfo);
                     } else if (property.values instanceof Array && property.values.length > 0) {
                         let force: boolean = false;
@@ -149,6 +154,7 @@ namespace sap {
                         return force === true
                             ? new sap.extension.m.Select("", {
                                 forceSelection: true,
+                                required: property.required,
                                 editable: property.authorised === ibas.emAuthoriseType.ALL ? true : false,
                                 items: items,
                                 modelContextChange(this: sap.m.Select, event: sap.ui.base.Event): void {
@@ -164,6 +170,7 @@ namespace sap {
                                 }
                             }).bindProperty("bindingValue", bindInfo)
                             : new sap.extension.m.ComboBox("", {
+                                required: property.required,
                                 editable: property.authorised === ibas.emAuthoriseType.ALL ? true : false,
                                 items: items,
                                 change(this: sap.m.ComboBox, event: sap.ui.base.Event): void {
@@ -180,10 +187,13 @@ namespace sap {
                                 },
                             }).bindProperty("bindingValue", bindInfo);
                     } else if (!ibas.strings.isEmpty(property.linkedObject)) {
-                        return <sap.ui.core.Control>newInput(property.linkedObject).bindProperty("bindingValue", bindInfo);
+                        let input: sap.m.InputBase = <sap.m.InputBase>newInput(property.linkedObject).bindProperty("bindingValue", bindInfo);
+                        input.setRequired(property.required);
+                        return input;
                     } else {
                         return new sap.extension.m.Input("", {
                             editable: property.authorised === ibas.emAuthoriseType.ALL ? true : false,
+                            required: property.required,
                         }).bindProperty("bindingValue", bindInfo);
                     }
                 } else if (mode === "Object") {
