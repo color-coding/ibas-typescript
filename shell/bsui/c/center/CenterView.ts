@@ -900,6 +900,17 @@ namespace shell {
                     if (ibas.objects.isNull(view)) {
                         // 未指定，则关闭当前页面
                         view = this.currentPageView();
+                        // 尝试调用当前页面的关闭事件
+                        if (view instanceof ibas.View && view.closeEvent instanceof Function) {
+                            view.closeEvent.apply(view.application);
+                            let hash: string = sap.extension.customdatas.getHash(sap.ui.getCore().byId(view.id));
+                            if (typeof hash === "string") {
+                                if (!(ibas.strings.equals(hash, window.location.hash))) {
+                                    window.history.replaceState(null, null, hash);
+                                }
+                            }
+                            return;
+                        }
                     }
                     if (ibas.objects.isNull(view)) {
                         return;
