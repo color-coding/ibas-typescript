@@ -563,6 +563,12 @@ namespace sap {
                                 }
                                 if (template instanceof sap.m.InputBase) {
                                     readonly = false;
+                                    if (propertyInfo.required === true) {
+                                        let label: any = column.getLabel();
+                                        if (label instanceof sap.m.Label) {
+                                            label.setRequired(true);
+                                        }
+                                    }
                                 }
                                 properties[index] = null;
                             }
@@ -590,8 +596,11 @@ namespace sap {
                     }
                     let column: DataColumn = new DataColumn("", {
                         propertyInfo: property,
-                        label: property.systemed !== true ? property.description :
-                            ibas.i18n.prop(ibas.strings.format("bo_{0}_{1}", boInfo.name, property.name).toLowerCase()),
+                        label: new sap.m.Label("", {
+                            text: property.systemed !== true ? property.description :
+                                ibas.i18n.prop(ibas.strings.format("bo_{0}_{1}", boInfo.name, property.name).toLowerCase()),
+                            required: readonly ? false : property.required,
+                        }),
                         template: factories.newComponent(property, readonly ? "Text" : "Input"),
                         sortProperty: property.systemed === true ? property.searched === true ? property.name : undefined :
                             property.searched === true ? "userFields/" + fieldPosition + "/value" : undefined,
@@ -606,8 +615,11 @@ namespace sap {
                     this.addColumn(column);
                 }
                 // 位置修正
-                let showedColumns: ibas.ArrayList<any> = new ibas.ArrayList<any>();
+                let showedColumns: ibas.ArrayList<sap.extension.table.DataColumn> = new ibas.ArrayList<sap.extension.table.DataColumn>();
                 for (let column of this.getColumns()) {
+                    if (!(column instanceof sap.extension.table.DataColumn)) {
+                        continue;
+                    }
                     let info: shell.bo.BizPropertyInfo = (<any>column)?.getPropertyInfo();
                     if (!ibas.objects.isNull(info)) {
                         // 有位置信息的列重新移除并重新排序，没有的按原有位置显示
@@ -618,7 +630,7 @@ namespace sap {
                     }
                 }
                 // 列按位置信息排序
-                let sortedColumns: ibas.ArrayList<any> = showedColumns.sort((a: any, b: any) => {
+                let sortedColumns: ibas.ArrayList<sap.extension.table.DataColumn> = showedColumns.sort((a: sap.extension.table.DataColumn, b: sap.extension.table.DataColumn) => {
                     let aInfo: shell.bo.IBizPropertyInfo = a.getPropertyInfo();
                     let bInfo: shell.bo.IBizPropertyInfo = b.getPropertyInfo();
                     return aInfo.position - bInfo.position;

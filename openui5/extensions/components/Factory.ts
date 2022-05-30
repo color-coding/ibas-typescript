@@ -58,26 +58,26 @@ namespace sap {
                     || property.name === "Locked" || property.name === "Transfered"
                     || property.name === "Activated" || property.name === "Deleted") {
                     bindInfo.type = new sap.extension.data.YesNo(mode === "Text" ? true : false);
-                } else if (property.dataType === "Numeric") {
+                } else if (ibas.strings.equalsIgnoreCase(property.dataType, "Numeric")) {
                     bindInfo.type = new sap.extension.data.Numeric();
-                } else if (property.dataType === "Date") {
-                    if (property.editType === "Time") {
+                } else if (ibas.strings.equalsIgnoreCase(property.dataType, "Date")) {
+                    if (ibas.strings.equalsIgnoreCase(property.editType, "Time")) {
                         bindInfo.type = new sap.extension.data.Time();
                     } else {
                         bindInfo.type = new sap.extension.data.Date();
                     }
-                } else if (property.dataType === "Decimal") {
-                    if (property.editType === "Rate") {
+                } else if (ibas.strings.equalsIgnoreCase(property.dataType, "Decimal")) {
+                    if (ibas.strings.equalsIgnoreCase(property.editType, "Rate")) {
                         bindInfo.type = new sap.extension.data.Rate();
-                    } else if (property.editType === "Sum") {
+                    } else if (ibas.strings.equalsIgnoreCase(property.editType, "Sum")) {
                         bindInfo.type = new sap.extension.data.Sum();
-                    } else if (property.editType === "Price") {
+                    } else if (ibas.strings.equalsIgnoreCase(property.editType, "Price")) {
                         bindInfo.type = new sap.extension.data.Price();
-                    } else if (property.editType === "Quantity") {
+                    } else if (ibas.strings.equalsIgnoreCase(property.editType, "Quantity")) {
                         bindInfo.type = new sap.extension.data.Quantity();
-                    } else if (property.editType === "Percentage") {
+                    } else if (ibas.strings.equalsIgnoreCase(property.editType, "Percentage")) {
                         bindInfo.type = new sap.extension.data.Percentage();
-                    } else if (property.editType === "Measurement") {
+                    } else if (ibas.strings.equalsIgnoreCase(property.editType, "Measurement")) {
                         bindInfo.type = new sap.extension.data.Measurement();
                     } else {
                         bindInfo.type = new sap.extension.data.Decimal();

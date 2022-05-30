@@ -211,6 +211,20 @@ namespace sap {
                             authorising(item);
                         } return;
                     }
+                    if (control instanceof sap.m.FlexBox) {
+                        for (let item of control.getItems()) {
+                            authorising(item);
+                            if (item instanceof sap.m.InputBase && item.getRequired()) {
+                                let iparent: any = item.getParent().getParent();
+                                if (iparent instanceof sap.ui.layout.form.FormElement) {
+                                    let label: any = iparent.getLabel();
+                                    if (label instanceof sap.m.Label) {
+                                        label.setRequired(true);
+                                    }
+                                }
+                            }
+                        } return;
+                    }
                     if (control instanceof sap.uxap.ObjectPageSection) {
                         for (let item of control.getSubSections()) {
                             for (let sItem of item.getBlocks()) {

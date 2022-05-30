@@ -345,14 +345,14 @@ namespace sap {
                         }
                     } else if (model instanceof ibas.BODocument) {
                         if (model.getProperty("DocumentStatus") === ibas.emDocumentStatus.CLOSED) {
-                            nonEditable(page.getSubHeader(), ["sap-icon://save", "sap-icon://delete", "sap-icon://create"]);
+                            nonEditable(page.getSubHeader(), ["sap-icon://save", "sap-icon://delete", "sap-icon://create", "sap-icon://duplicate"]);
                             for (let item of page.getContent()) {
                                 nonEditable(item, []);
                             }
                         }
                     } else if (model instanceof ibas.BODocumentLine) {
                         if (model.getProperty("LineStatus") === ibas.emDocumentStatus.CLOSED) {
-                            nonEditable(page.getSubHeader(), ["sap-icon://save", "sap-icon://delete", "sap-icon://create"]);
+                            nonEditable(page.getSubHeader(), ["sap-icon://save", "sap-icon://delete", "sap-icon://create", "sap-icon://duplicate"]);
                             for (let item of page.getContent()) {
                                 nonEditable(item, []);
                             }

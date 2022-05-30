@@ -246,7 +246,11 @@ namespace loader {
                         ibas.strings.format("{0}/languages/openui5.json", ibas.urls.rootUrl("/openui5/index")),
                     ], () => {
                         // 设置语言
-                        ibas.i18n.language = sap.ui.getCore().getConfiguration().getLanguageTag();
+                        let language: string = sap.ui.getCore().getConfiguration().getLanguageTag();
+                        if (ibas.strings.isWith(language, "en-", undefined) === true) {
+                            language = "en-US";
+                        }
+                        ibas.i18n.language = language;
                         // 重新加载语言
                         ibas.i18n.reload(() => {
                             try {

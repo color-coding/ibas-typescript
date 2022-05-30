@@ -579,6 +579,8 @@ namespace sap {
                             } else {
                                 return null;
                             }
+                        } else if (oValue instanceof globalThis.Date) {
+                            return ibas.dates.toString(oValue, this.format);
                         }
                     } else if (sInternalType === "Date" && !ibas.objects.isNull(oValue)) {
                         let value: number = 0;
