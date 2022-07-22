@@ -606,12 +606,18 @@ namespace sap {
                     this.addColumn(column);
                 }
                 // 位置修正
+<<<<<<< HEAD
                 let showedColumns: ibas.ArrayList<sap.extension.table.DataColumn> = new ibas.ArrayList<sap.extension.table.DataColumn>();
                 for (let column of this.getColumns()) {
                     if (!(column instanceof sap.extension.table.DataColumn)) {
                         continue;
                     }
                     let info: shell.bo.BizPropertyInfo = (<any>column)?.getPropertyInfo();
+=======
+                let showedColumns: ibas.ArrayList<any> = new ibas.ArrayList<any>();
+                for (let column of this.getColumns()) {
+                    let info: shell.bo.BizPropertyInfo = (<any>column).getPropertyInfo();
+>>>>>>> 6f4da51fe2a195704cb1819ac38b44bdb2653bd2
                     if (!ibas.objects.isNull(info)) {
                         // 有位置信息的列重新移除并重新排序，没有的按原有位置显示
                         if (!ibas.objects.isNull(info.position)) {
@@ -621,7 +627,11 @@ namespace sap {
                     }
                 }
                 // 列按位置信息排序
+<<<<<<< HEAD
                 let sortedColumns: ibas.ArrayList<sap.extension.table.DataColumn> = showedColumns.sort((a: sap.extension.table.DataColumn, b: sap.extension.table.DataColumn) => {
+=======
+                let sortedColumns: ibas.ArrayList<any> = showedColumns.sort((a: any, b: any) => {
+>>>>>>> 6f4da51fe2a195704cb1819ac38b44bdb2653bd2
                     let aInfo: shell.bo.IBizPropertyInfo = a.getPropertyInfo();
                     let bInfo: shell.bo.IBizPropertyInfo = b.getPropertyInfo();
                     return aInfo.position - bInfo.position;
