@@ -23,6 +23,23 @@ namespace shell {
         export const CONNECTION_WAY_USER_PASSWORD: string = "USER_PASSWORD";
         /** 连接方式-用户口令 */
         export const CONNECTION_WAY_USER_TOKEN: string = "USER_TOKEN";
+
+        class ConnectRemoteRepositoryAjax extends ibas.RemoteRepositoryAjax {
+            protected createHttpRequest(method: string): XMLHttpRequest {
+                let methodUrl: string = this.methodUrl(method);
+                let xhr: XMLHttpRequest = new XMLHttpRequest();
+                xhr.open("POST", methodUrl, true);
+                xhr.responseType = "json";
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
+                // token为头认证形式
+                if (ibas.strings.isWith(this.token, ibas.HTTP_HEADER_TOKEN_AUTHORIZATION, undefined)) {
+                    // xhr.withCredentials = true;
+                    xhr.setRequestHeader("Authorization", this.token.substring(ibas.HTTP_HEADER_TOKEN_AUTHORIZATION.length));
+                }
+                return xhr;
+            }
+
+        }
         /**
          * 业务仓库-壳-远程
          */
@@ -48,32 +65,25 @@ namespace shell {
              * @param caller 用户密码登录调用者
              */
             userConnect(caller: IUserConnectCaller): void {
-                let remoteRepository: ibas.IRemoteRepository = this.createRemoteRepository();
-                if (ibas.objects.isNull(remoteRepository)) {
-                    throw new Error(ibas.i18n.prop("sys_invalid_parameter", "remoteRepository"));
-                }
-                // 使用此模块库加载器
-                let require: Require = ibas.requires.create({
-                    context: ibas.requires.naming(shell.CONSOLE_NAME),
+                let builder: ibas.StringBuilder = new ibas.StringBuilder();
+                builder.map(undefined, "");
+                builder.map(null, "");
+                builder.append("user");
+                builder.append("=");
+                builder.append(caller.user);
+                builder.append("&");
+                builder.append("password");
+                builder.append("=");
+                builder.append(btoa(caller.password));
+                let remoteRepository: ibas.IRemoteRepository = new ConnectRemoteRepositoryAjax();
+                remoteRepository.address = this.address;
+                remoteRepository.converter = this.createConverter();
+                remoteRepository.callRemoteMethod("userConnect", builder.toString(), (opRslt) => {
+                    if (opRslt.resultCode === 0) {
+                        ibas.config.set(CONFIG_ITEM_CONNECTION_WAY, CONNECTION_WAY_USER_PASSWORD);
+                    }
+                    caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
                 });
-                let minLibrary: boolean = ibas.config.get(ibas.CONFIG_ITEM_USE_MINIMUM_LIBRARY, false);
-                require(["../ibas/3rdparty/crypto-js" + (minLibrary ? ibas.SIGN_MIN_LIBRARY : "")],
-                    function (cryptoJS: CryptoJS.Hashes): void {
-                        let method: string =
-                            ibas.strings.format("userConnect?user={0}&password={1}", caller.user, cryptoJS.MD5(caller.password));
-                        remoteRepository.callRemoteMethod(method, undefined, (opRslt) => {
-                            if (opRslt.resultCode === 0) {
-                                ibas.config.set(CONFIG_ITEM_CONNECTION_WAY, CONNECTION_WAY_USER_PASSWORD);
-                            }
-                            caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
-                        });
-                    }, function (error: RequireError): void {
-                        // 加载js库失败
-                        let opRslt: ibas.IOperationResult<any> = new ibas.OperationResult();
-                        opRslt.resultCode = -901;
-                        opRslt.message = error.message;
-                        caller.onCompleted(opRslt);
-                    });
             }
             /**
              * 用户口令登录
