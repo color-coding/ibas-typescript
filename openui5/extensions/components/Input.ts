@@ -265,7 +265,15 @@ namespace sap {
                         /** 查询条件 */
                         criteria: { type: "any" },
                     },
-                    events: {}
+                    events: {
+                        "afterSelection": {
+                            parameters: {
+                                selecteds: {
+                                    type: "array",
+                                },
+                            }
+                        },
+                    },
                 },
                 renderer: {},
                 /**
@@ -344,7 +352,7 @@ namespace sap {
                                     that.addSuggestionItem(item);
                                     that.setSelectedItem(item);
                                     that.updateDomValue(item.getText());
-                                    that = null;
+                                    that.fireAfterSelection({ selecteds: selecteds, });
                                 }
                             });
                         }
@@ -687,6 +695,8 @@ namespace sap {
             UserInput.extend("sap.extension.m.DataOwnerInput", {
                 metadata: {
                     properties: {
+                        /** 用户组织 */
+                        organization: { type: "string" },
                     },
                     events: {}
                 },
@@ -708,6 +718,17 @@ namespace sap {
                                             }
                                         }
                                     }
+                                }
+                            }
+                        }
+                    });
+                    this.attachAfterSelection(undefined, function (event: sap.ui.base.Event): void {
+                        let source: any = event.getSource();
+                        if (source instanceof DataOwnerInput) {
+                            let selecteds: any = event.getParameter("selecteds");
+                            if (selecteds instanceof Array) {
+                                for (let selected of selecteds) {
+                                    source.setOrganization(ibas.objects.propertyValue(selected, "Organization"));
                                 }
                             }
                         }

@@ -86,6 +86,24 @@ declare namespace sap {
                  * @param value 数据信息
                  */
                 setCriteria(value: ibas.ICriteria | ibas.ICondition[]): this;
+                /**
+                 * 监听选择完成事件
+                 * @param oData 
+                 * @param fnFunction 
+                 * @param oListener 
+                 */
+                attachAfterSelection(oData: any, fnFunction: Function, oListener?: any): this;
+                /**
+                 * 取消监听选择完成事件
+                 * @param fnFunction 
+                 * @param oListener 
+                 */
+                detachAfterSelection(fnFunction: Function, oListener?: any): this;
+                /**
+                 * 触发选择完成事件
+                 * @param param 
+                 */
+                protected fireAfterSelection(param: { selecteds: any[], }): this;
             }
             /**
              * 超级文本框
@@ -144,6 +162,15 @@ declare namespace sap {
              * 数据所有者-输入框
              */
             class DataOwnerInput extends UserInput {
+                /**
+                 * 获取组织
+                 */
+                getOrganization(): string;
+                /**
+                 * 设置组织
+                 * @param value 值
+                 */
+                setOrganization(value: string): this;
             }
             /**
              * 数据所属组织-输入框

@@ -292,6 +292,64 @@ namespace sap {
                     (<any>sap.m.Tree.prototype).exit.apply(this, arguments);
                 }
             });
+            /**
+             * 自定义列表项目
+             */
+            sap.m.CustomListItem.extend("sap.extension.m.CustomListItem", {
+                metadata: {
+                    properties: {
+                        detailIcon: { type: "string" },
+                        detailTooltip: { type: "string" },
+                    },
+                    events: {
+                    },
+                },
+                renderer: {
+                },
+                onAfterRendering(this: CustomListItem): void {
+                    (<any>sap.m.CustomListItem.prototype).onAfterRendering.apply(this, arguments);
+                    let typeCtrl: any = (<any>this).getTypeControl();
+                    if (typeCtrl instanceof sap.m.Button) {
+                        let value: string = this.getDetailIcon();
+                        if (!ibas.strings.isEmpty(value)) {
+                            typeCtrl.setIcon(value);
+                        }
+                        value = this.getDetailTooltip();
+                        if (!ibas.strings.isEmpty(value)) {
+                            typeCtrl.setTooltip(value);
+                        }
+                    }
+                }
+            });
+            /**
+             * 列表项目
+             */
+            sap.m.ColumnListItem.extend("sap.extension.m.ColumnListItem", {
+                metadata: {
+                    properties: {
+                        detailIcon: { type: "string" },
+                        detailTooltip: { type: "string" },
+                    },
+                    events: {
+                    },
+                },
+                renderer: {
+                },
+                onAfterRendering(this: ColumnListItem): void {
+                    (<any>sap.m.ColumnListItem.prototype).onAfterRendering.apply(this, arguments);
+                    let typeCtrl: any = (<any>this).getTypeControl();
+                    if (typeCtrl instanceof sap.m.Button) {
+                        let value: string = this.getDetailIcon();
+                        if (!ibas.strings.isEmpty(value)) {
+                            typeCtrl.setIcon(value);
+                        }
+                        value = this.getDetailTooltip();
+                        if (!ibas.strings.isEmpty(value)) {
+                            typeCtrl.setTooltip(value);
+                        }
+                    }
+                }
+            });
         }
         export namespace f {
             /**

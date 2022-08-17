@@ -136,6 +136,48 @@ declare namespace sap {
                  */
                 protected fireNextDataSet(param: { data: any, }): void;
             }
+            /**
+             * 自定义列表项目
+             */
+            class CustomListItem extends sap.m.CustomListItem {
+                /**
+                 * 获取详情图标
+                 */
+                getDetailIcon(): string;
+                /**
+                 * 设置详情图标
+                 */
+                setDetailIcon(value: string): this;
+                /**
+                 * 获取详情提示
+                 */
+                getDetailTooltip(): string;
+                /**
+                 * 设置详情提示
+                 */
+                setDetailTooltip(value: string): this;
+            }
+            /**
+             * 列表项目
+             */
+            class ColumnListItem extends sap.m.ColumnListItem {
+                /**
+                 * 获取详情图标
+                 */
+                getDetailIcon(): string;
+                /**
+                 * 设置详情图标
+                 */
+                setDetailIcon(value: string): this;
+                /**
+                 * 获取详情提示
+                 */
+                getDetailTooltip(): string;
+                /**
+                 * 设置详情提示
+                 */
+                setDetailTooltip(value: string): this;
+            }
         }
         namespace f {
             class GridList extends sap.f.GridList {

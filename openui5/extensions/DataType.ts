@@ -501,6 +501,9 @@ namespace sap {
                         if (ibas.objects.isNull(oValue)) {
                             return undefined;
                         }
+                        if (!(oValue instanceof globalThis.Date)) {
+                            oValue = ibas.dates.valueOf(oValue);
+                        }
                         if (this.format) {
                             return ibas.dates.toString(oValue, this.format);
                         } else {
