@@ -17,9 +17,9 @@ namespace sap {
                         /** 绑定值 */
                         bindingValue: { type: "Date" },
                         /** 值模板 */
-                        valueFormat: { type: "string", group: "Data", defaultValue: data.Date.DEFAULT_FORMAT },
+                        valueFormat: { type: "string", group: "Data", defaultValue: data.DEFAULT_FORMAT_DATE },
                         /** 显示模板 */
-                        displayFormat: { type: "string", group: "Appearance", defaultValue: data.Date.DEFAULT_FORMAT },
+                        displayFormat: { type: "string", group: "Appearance", defaultValue: data.DEFAULT_FORMAT_DATE },
                     },
                     events: {}
                 },
@@ -36,7 +36,11 @@ namespace sap {
                  * @param value 值
                  */
                 setBindingValue(this: DatePicker, value: any): DatePicker {
-                    sap.m.DatePicker.prototype.setDateValue.apply(this, arguments);
+                    if (value instanceof Date) {
+                        sap.m.DatePicker.prototype.setDateValue.apply(this, arguments);
+                    } else {
+                        sap.m.DatePicker.prototype.setValue.apply(this, arguments);
+                    }
                     this.setProperty("bindingValue", value);
                     return this;
                 },
@@ -78,9 +82,9 @@ namespace sap {
                         /** 绑定值 */
                         bindingValue: { type: "Date" },
                         /** 值模板 */
-                        valueFormat: { type: "string", group: "Data", defaultValue: data.Time.DEFAULT_FORMAT },
+                        valueFormat: { type: "string", group: "Data", defaultValue: data.DEFAULT_FORMAT_TIME },
                         /** 显示模板 */
-                        displayFormat: { type: "string", group: "Appearance", defaultValue: data.Time.DEFAULT_FORMAT },
+                        displayFormat: { type: "string", group: "Appearance", defaultValue: data.DEFAULT_FORMAT_TIME },
                     },
                     events: {}
                 },
@@ -97,7 +101,11 @@ namespace sap {
                  * @param value 值
                  */
                 setBindingValue(this: TimePicker, value: any): TimePicker {
-                    sap.m.TimePicker.prototype.setDateValue.apply(this, arguments);
+                    if (value instanceof Date) {
+                        sap.m.TimePicker.prototype.setDateValue.apply(this, arguments);
+                    } else {
+                        sap.m.TimePicker.prototype.setValue.apply(this, arguments);
+                    }
                     this.setProperty("bindingValue", value);
                     return this;
                 },
@@ -123,23 +131,24 @@ namespace sap {
                         }
                     });
                 },
-                /** 重构设置 */
-                applySettings(this: TimePicker, mSettings: any): TimePicker {
-                    if (!mSettings.valueFormat) {
-                        mSettings.valueFormat = data.Time.DEFAULT_FORMAT;
-                    }
-                    if (!mSettings.displayFormat) {
-                        mSettings.displayFormat = data.Time.DEFAULT_FORMAT;
-                    }
-                    sap.m.TimePicker.prototype.applySettings.apply(this, arguments);
-                    return this;
-                },
                 /** 重写绑定 */
                 bindProperty(this: TimePicker, sName: string, oBindingInfo: any): TimePicker {
                     managedobjects.checkBinding.apply(this, arguments);
                     sap.m.TimePicker.prototype.bindProperty.apply(this, arguments);
                     return this;
-                }
+                },
+                /** 重构设置 */
+                applySettings(this: TimePicker, mSettings: any): TimePicker {
+                    if (!mSettings) { mSettings = {}; }
+                    if (!mSettings.valueFormat) {
+                        mSettings.valueFormat = data.DEFAULT_FORMAT_TIME;
+                    }
+                    if (!mSettings.displayFormat) {
+                        mSettings.displayFormat = data.DEFAULT_FORMAT_TIME;
+                    }
+                    sap.m.TimePicker.prototype.applySettings.apply(this, arguments);
+                    return this;
+                },
             });
         }
     }

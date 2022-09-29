@@ -358,7 +358,7 @@ namespace trainingtesting {
                                         }),
                                         new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorderitem_quantity") }),
                                         new sap.extension.m.Input("", {
-                                            type: sap.m.InputType.Number
+
                                         }).bindProperty("bindingValue", {
                                             path: "quantity",
                                             type: new sap.extension.data.Quantity(),
@@ -379,7 +379,7 @@ namespace trainingtesting {
                                         }),
                                         new sap.m.Label("", { text: ibas.i18n.prop("bo_salesorderitem_linetotal") }),
                                         new sap.extension.m.Input("", {
-                                            type: sap.m.InputType.Number
+
                                         }).bindProperty("bindingValue", {
                                             path: "lineTotal",
                                             type: new sap.extension.data.Sum(),

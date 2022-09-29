@@ -407,138 +407,6 @@ namespace openui5 {
             }
         }
         /**
-         * 验证控件绑定属性是否合法
-         * @param managedObjects
-         */
-        export function validateControlBoundProperty(managedObjects: sap.ui.base.ManagedObject[]): datatype.ValidateResult;
-        /**
-         * 验证控件绑定属性是否合法
-         * @param managedObject
-         */
-        export function validateControlBoundProperty(managedObject: sap.ui.base.ManagedObject): datatype.ValidateResult;
-        /**
-         * 验证控件绑定属性是否合法
-         */
-        export function validateControlBoundProperty(): datatype.ValidateResult {
-            function traverseContents(managedObject: sap.ui.base.ManagedObject): sap.ui.base.ManagedObject[];
-            function traverseContents(managedObject: sap.ui.base.ManagedObject): sap.ui.base.ManagedObject;
-            /** 遍历展开控件内容 */
-            function traverseContents(): any {
-                let managedObject: any = arguments[0];
-                let managedObjects: sap.ui.base.ManagedObject[] = [];
-                if (ibas.objects.isNull(managedObject)) {
-                    return null;
-                }
-                if (managedObject instanceof sap.m.Panel) {
-                    managedObjects.push(managedObject.getHeaderToolbar());
-                }
-                if (managedObject.getContent instanceof Function) {
-                    for (let content of managedObject.getContent().reverse()) {
-                        managedObjects.push(content);
-                    }
-                } else if (managedObject instanceof sap.ui.table.Table) {
-                    for (let row of managedObject.getRows().reverse()) {
-                        for (let cell of row.getCells()) {
-                            managedObjects.push(cell);
-                        }
-                    }
-                } else if (managedObject instanceof sap.m.Wizard) {
-                    for (let step of managedObject.getSteps().reverse()) {
-                        managedObjects.push(step);
-                    }
-                } else if (managedObject instanceof sap.m.ListBase) {
-                    for (let listItem of managedObject.getItems().reverse()) {
-                        managedObjects.push(listItem);
-                    }
-                } else if (managedObject instanceof sap.m.ColumnListItem) {
-                    for (let cell of managedObject.getCells().reverse()) {
-                        managedObjects.push(cell);
-                    }
-                } else if (managedObject instanceof sap.m.FlexBox) {
-                    for (let item of managedObject.getItems().reverse()) {
-                        managedObjects.push(item);
-                    }
-                } else {
-                    return managedObject;
-                }
-                return managedObjects;
-            }
-            /** 获取控件验证值 */
-            function getValidationValue(managedObject: sap.ui.base.ManagedObject): any {
-                if (managedObject instanceof sap.m.InputBase || managedObject instanceof sap.m.DatePicker) {
-                    return managedObject.getValue();
-                }
-                if (managedObject instanceof sap.m.Select) {
-                    return managedObject.getSelectedKey();
-                }
-                if (managedObject instanceof sap.m.DateRangeSelection || managedObject instanceof sap.m.TimePicker) {
-                    return managedObject.getDateValue();
-                }
-                return null;
-            }
-            /** 检查控件验证类型 */
-            function checkControlBindingInfoType(managedObject: sap.ui.base.ManagedObject): sap.extension.data.Type {
-                let bindingInfo: any = null;
-                if (!!managedObject && typeof managedObject.getBindingContext === "function") {
-                    /** 控件当前有绑定内容才判断绑定类型 */
-                    if (!!managedObject.getBindingContext()) {
-                        /** 获取值类型,根据不同控件的绑定值添加 */
-                        let bindingTypes: Array<string> = ["value", "dateValue", "secondDateValue", "selectedKey"];
-                        for (let type of bindingTypes) {
-                            let info: any = (<any>managedObject).getBindingInfo(type);
-                            if (!!info && !!info.type && info.type.validate instanceof Function) {
-                                bindingInfo = info;
-                                break;
-                            }
-                        }
-                    }
-                }
-                return !!bindingInfo ? bindingInfo.type : null;
-            }
-            let validateResult: datatype.ValidateResult = new datatype.ValidateResult();
-            validateResult.status = true;
-            let argument: any = arguments[0];
-            let managedObjects: sap.ui.base.ManagedObject[] = [];
-            if (ibas.objects.isNull(argument)) {
-                return validateResult;
-            }
-            if (argument instanceof Array) {
-                managedObjects = argument;
-            } else {
-                managedObjects = [argument];
-            }
-            for (let managedObject of managedObjects) {
-                let content: any = traverseContents(managedObject);
-                if (ibas.objects.isNull(content)) {
-                } else if (content instanceof Array) {
-                    let stepResult: datatype.ValidateResult = validateControlBoundProperty(content);
-                    if (!stepResult.status) {
-                        validateResult.message = stepResult.message;
-                        validateResult.status = stepResult.status;
-                    }
-                } else {
-                    let bindingInfoType: sap.extension.data.Type = checkControlBindingInfoType(content);
-                    if (!!bindingInfoType) {
-                        let validationValue: any = getValidationValue(content);  // 界面值
-                        validationValue = bindingInfoType.parseValue(validationValue, undefined); // 转为BO中属性值
-                        let vResult: datatype.ValidateResult = bindingInfoType.validateValue(validationValue);
-                        if (!vResult.status) {
-                            validateResult.message = vResult.message;
-                            validateResult.status = vResult.status;
-                            datatype.fireValidationError(managedObject, validateResult.message);
-                        } else {
-                            if (managedObject instanceof sap.ui.core.Element) {
-                                (<any>sap.ui.getCore()).fireValidationSuccess({
-                                    element: managedObject
-                                });
-                            }
-                        }
-                    }
-                }
-            }
-            return validateResult;
-        }
-        /**
          * 初始化自定义字段UI
          * @param page 页面page
          * @param mainLayout 页面主布局
@@ -818,7 +686,7 @@ namespace openui5 {
                     let bindingInfo: {
                         parts: {
                             path: string,
-                            type: sap.extension.data.Type,
+                            type: sap.ui.model.SimpleType,
                         }[]
                     } = (<any>control).getBindingInfo("bindingValue");
                     if (bindingInfo && bindingInfo.parts instanceof Array) {

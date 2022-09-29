@@ -2964,6 +2964,14 @@ declare namespace sap {
          */
         static isA(oObject: any, vTypeName: string | string[]): boolean;
         /**
+          * <p>Creates a new subclass of class sap.ui.base.EventProvider with name <code>sClassName</code> and enriches it with the information contained in <code>oClassInfo</code>.</p><p><code>oClassInfo</code> might contain the same kind of information as described in <a target="_self" class="jsdoclink" href="api/sap.ui.base.Object#methods/sap.ui.base.Object.extend">sap.ui.base.Object.extend</a>.</p>
+          * @param {string} sClassName <p>Name of the class being created</p>
+          * @param {any} oClassInfo <p>Object literal with information about the class</p>
+          * @param {Function} FNMetaImpl <p>Constructor function for the metadata object; if not given, it defaults to the metadata implementation used by this class</p>
+          * @returns Function <p>Created class / constructor function</p>
+          */
+        static extend(sClassName: string, oClassInfo?: any, FNMetaImpl?: Function): Function;
+        /**
          * <p>Constructor for an <code>sap.ui.base.Object</code>.</p><p>Subclasses of this class should always call the constructor of their base class.</p>
          */
         constructor();

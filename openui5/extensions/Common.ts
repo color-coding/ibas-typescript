@@ -148,7 +148,7 @@ namespace sap {
         }
         /** 用户字段相关 */
         export namespace userfields {
-            function toDbFieldType(type: sap.extension.data.Type): ibas.emDbFieldType {
+            function toDbFieldType(type: sap.ui.model.SimpleType): ibas.emDbFieldType {
                 if (type instanceof sap.extension.data.Numeric) {
                     return ibas.emDbFieldType.NUMERIC;
                 } else if (type instanceof sap.extension.data.Decimal) {
@@ -173,7 +173,7 @@ namespace sap {
                     if (ibas.strings.isWith(item.path, "u_", undefined)) {
                         let name: string = item.path;
                         name = name[0].toUpperCase() + name.substring(1);
-                        let userField: ibas.IUserField = userFields.register(name, toDbFieldType(item.type instanceof sap.extension.data.Type ? item.type : undefined));
+                        let userField: ibas.IUserField = userFields.register(name, toDbFieldType(item.type instanceof sap.ui.model.SimpleType ? item.type : undefined));
                         if (!ibas.objects.isNull(userField)) {
                             let index: number = userFields.indexOf(userField);
                             item.path = ibas.strings.format("userFields/{0}/value", index);
@@ -491,7 +491,7 @@ namespace sap {
                                     let value: any = data[j];
                                     let property: managedobjects.IBindingInfo = properties[j];
                                     if (!ibas.strings.isEmpty(property)) {
-                                        if (property.type instanceof sap.extension.data.Type) {
+                                        if (property.type instanceof sap.ui.model.SimpleType) {
                                             json[property.path] = property.type.parseValue(value, typeof value);
                                         } else {
                                             json[property.path] = value;

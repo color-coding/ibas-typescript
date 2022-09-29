@@ -44,7 +44,7 @@ namespace sap {
                 // 创建绑定信息
                 let bindInfo: {
                     path: string,
-                    type?: sap.extension.data.Type
+                    type?: sap.ui.model.SimpleType
                 } = {
                     path: property.name[0].toLowerCase() + property.name.substring(1)
                 };
@@ -126,13 +126,11 @@ namespace sap {
                         }).bindProperty("bindingValue", bindInfo);
                     } else if (bindInfo.type instanceof sap.extension.data.Decimal && !(bindInfo.type instanceof sap.extension.data.Percentage)) {
                         return new sap.extension.m.Input("", {
-                            type: sap.m.InputType.Number,
                             editable: property.authorised === ibas.emAuthoriseType.ALL ? true : false,
                             required: property.required,
                         }).bindProperty("bindingValue", bindInfo);
                     } else if (bindInfo.type instanceof sap.extension.data.Numeric) {
                         return new sap.extension.m.Input("", {
-                            type: sap.m.InputType.Number,
                             editable: property.authorised === ibas.emAuthoriseType.ALL ? true : false,
                             required: property.required,
                         }).bindProperty("bindingValue", bindInfo);

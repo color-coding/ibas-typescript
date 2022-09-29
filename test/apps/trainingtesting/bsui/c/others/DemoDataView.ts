@@ -17,6 +17,7 @@ namespace trainingtesting {
                 /** 绘制视图 */
                 draw(): any {
                     let that: this = this;
+                    jQuery.sap.require("sap.ui.codeeditor.CodeEditor");
                     let formTop: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
                         editable: true,
                         content: [
@@ -30,8 +31,9 @@ namespace trainingtesting {
                                     notEmpty: true,
                                     maxLength: 20,
                                     minLength: 3,
+                                    // 手机号码
                                     regExp: /^((\(\d{2,3}\))|(\d{3}\-))?((13\d{9})|(14\d{9})|(15\d{9})|(16\d{9})|(17\d{9})|(18\d{9}))$/,
-                                    onValidated: (error) => {
+                                    validateValue: (error) => {
                                         if (error instanceof Error) {
                                             error.message = "Alphanumeric " + error.message;
                                         }
@@ -40,17 +42,17 @@ namespace trainingtesting {
                             }),
                             new sap.m.Label("", { text: "Numeric" }),
                             new sap.m.Input("", {
-                                type: sap.m.InputType.Number
+
                             }).bindProperty("value", {
                                 path: "/numeric",
                                 type: new sap.extension.data.Numeric({
-                                    maxValue: 999,
+                                    maxValue: 9999,
                                     minValue: 0
                                 }),
                             }),
                             new sap.m.Label("", { text: "Decimal" + " ." + ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES) }),
                             new sap.m.Input("", {
-                                type: sap.m.InputType.Number
+
                             }).bindProperty("value", {
                                 path: "/decimal",
                                 type: new sap.extension.data.Decimal(),
@@ -59,7 +61,7 @@ namespace trainingtesting {
                             }),
                             new sap.m.Label("", { text: "Price" + " ." + ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES_PRICE) }),
                             new sap.m.Input("", {
-                                type: sap.m.InputType.Number
+
                             }).bindProperty("value", {
                                 path: "/price",
                                 type: new sap.extension.data.Price(),
@@ -68,7 +70,7 @@ namespace trainingtesting {
                             }),
                             new sap.m.Label("", { text: "Quantity" + " ." + ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES_QUANTITY) }),
                             new sap.m.Input("", {
-                                type: sap.m.InputType.Number
+
                             }).bindProperty("value", {
                                 path: "/quantity",
                                 type: new sap.extension.data.Quantity(),
@@ -77,7 +79,7 @@ namespace trainingtesting {
                             }),
                             new sap.m.Label("", { text: "Rate" + " ." + ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES_RATE) }),
                             new sap.m.Input("", {
-                                type: sap.m.InputType.Number
+
                             }).bindProperty("value", {
                                 path: "/rate",
                                 type: new sap.extension.data.Rate(),
@@ -86,7 +88,7 @@ namespace trainingtesting {
                             }),
                             new sap.m.Label("", { text: "Sum" + " ." + ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES_SUM) }),
                             new sap.m.Input("", {
-                                type: sap.m.InputType.Number
+
                             }).bindProperty("value", {
                                 path: "/sum",
                                 type: new sap.extension.data.Sum(),
@@ -95,7 +97,7 @@ namespace trainingtesting {
                             }),
                             new sap.m.Label("", { text: "Measurement" + " ." + ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES_MEASUREMENT) }),
                             new sap.m.Input("", {
-                                type: sap.m.InputType.Number
+
                             }).bindProperty("value", {
                                 path: "/measurement",
                                 type: new sap.extension.data.Measurement(),
@@ -124,7 +126,6 @@ namespace trainingtesting {
                             }),
                             new sap.m.Label("", { text: "Time" }),
                             new sap.m.TimePicker("", {
-                                valueFormat: sap.extension.data.Time.DEFAULT_FORMAT,
                             }).bindProperty("value", {
                                 path: "/time",
                                 type: new sap.extension.data.Time(),
@@ -186,10 +187,13 @@ namespace trainingtesting {
                                 }),
                             }),
                             new sap.ui.core.Title("", {}),
-                            new sap.m.Label("", { text: "Stringify" }),
-                            this.textArea = new sap.m.TextArea("", {
-                                rows: 20,
-                            }),
+                            this.textArea = new sap.ui.codeeditor.CodeEditor("", {
+                                lineNumbers: false,
+                                height: "20rem",
+                                width: "100%",
+                                type: "json",
+                                colorTheme: "eclipse",
+                            })
                         ]
                     });
                     return this.page = new sap.m.Page("", {
@@ -228,7 +232,7 @@ namespace trainingtesting {
                     });
                 }
                 private page: sap.m.Page;
-                private textArea: sap.m.TextArea;
+                private textArea: sap.ui.codeeditor.CodeEditor;
                 showData(data: app.DemoData): void {
                     this.page.setModel(new sap.ui.model.json.JSONModel(data));
                 }

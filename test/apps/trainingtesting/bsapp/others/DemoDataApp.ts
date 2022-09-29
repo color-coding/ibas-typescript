@@ -32,20 +32,20 @@ namespace trainingtesting {
                 this.myData.time = ibas.dates.time();
                 this.myData.canceled = ibas.emYesNo.YES;
                 this.myData.documentStatus = ibas.emDocumentStatus.RELEASED;
-                this.myData.numeric = ibas.numbers.toInt(Math.random() * 1000);
-                this.myData.decimal = Math.random() * 100;
-                this.myData.quantity = Math.random() * 100;
-                this.myData.price = Math.random() * 100;
-                this.myData.measurement = Math.random() * 100;
-                this.myData.sum = Math.random() * 100;
-                this.myData.rate = Math.random() * 100;
-                this.myData.percentage = Math.random() * 100;
+                this.myData.numeric = ibas.numbers.toInt(Math.random() * 10000);
+                this.myData.decimal = Math.random() * 10000;
+                this.myData.quantity = Math.random() * 10000;
+                this.myData.price = Math.random() * 10000;
+                this.myData.measurement = Math.random() * 10000;
+                this.myData.sum = Math.random() * 10000;
+                this.myData.rate = Math.random() * 10000;
+                this.myData.percentage = Math.random() * 10;
                 this.view.showData(this.myData);
             }
             private myData: DemoData;
             private stringData(): void {
                 let converter: bo.DataConverter = new bo.DataConverter();
-                let data: string = JSON.stringify(converter.convert(this.myData, undefined));
+                let data: string = JSON.stringify(converter.convert(this.myData, undefined), null, 4);
                 this.view.showDataString(data);
             }
         }

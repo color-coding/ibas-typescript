@@ -165,7 +165,7 @@ namespace trainingtesting {
                                     new sap.extension.table.DataColumn("", {
                                         label: ibas.i18n.prop("bo_salesorderitem_quantity"),
                                         template: new sap.extension.m.Input("", {
-                                            type: sap.m.InputType.Number
+
                                         }).bindProperty("bindingValue", {
                                             path: "quantity",
                                             type: new sap.extension.data.Quantity(),
@@ -182,7 +182,7 @@ namespace trainingtesting {
                                     new sap.extension.table.DataColumn("", {
                                         label: ibas.i18n.prop("bo_salesorderitem_price"),
                                         template: new sap.extension.m.Input("", {
-                                            type: sap.m.InputType.Number
+
                                         }).bindProperty("bindingValue", {
                                             path: "price",
                                             type: new sap.extension.data.Price(),
@@ -201,7 +201,7 @@ namespace trainingtesting {
                                     new sap.extension.table.DataColumn("", {
                                         label: ibas.i18n.prop("bo_salesorderitem_linetotal"),
                                         template: new sap.extension.m.Input("", {
-                                            type: sap.m.InputType.Number
+
                                         }).bindProperty("bindingValue", {
                                             path: "lineTotal",
                                             type: new sap.extension.data.Sum(),

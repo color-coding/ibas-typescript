@@ -40,7 +40,7 @@ namespace trainingtesting {
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_material_onorder") }),
                             new sap.extension.m.Input("", {
-                                type: sap.m.InputType.Number
+
                             }).bindProperty("bindingValue", {
                                 path: "onOrder",
                                 type: new sap.extension.data.Quantity(),

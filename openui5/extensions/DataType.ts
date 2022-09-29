@@ -5,6 +5,268 @@
  * Use of this source code is governed by an Apache License, Version 2.0
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
+declare namespace sap {
+    namespace extension {
+        namespace data {
+            /**
+             * 未知类型
+             */
+            class Unknown extends sap.ui.model.SimpleType {
+                constructor(setting?: IUnknownSetting);
+            }
+            /**
+             * 字母数字类型
+             */
+            class Alphanumeric extends sap.ui.model.type.String {
+                /**
+                 * 字母数字类型
+                 * @param setting 设置
+                 */
+                constructor(setting?: IAlphanumericSetting);
+            }
+            /**
+             * 数字类型
+             */
+            class Numeric extends sap.ui.model.type.Integer {
+                /**
+                 * 数字类型
+                 * @param setting 设置
+                 */
+                constructor(setting?: INumericSetting);
+            }
+            /**
+             * 小数类型
+             */
+            class Decimal extends sap.ui.model.type.Float {
+                /**
+                 * 小数类型
+                 * @param setting 设置
+                 */
+                constructor(setting?: IDecimalSetting);
+            }
+            /**
+             * 价格类型
+             */
+            class Price extends Decimal {
+                /**
+                 * 价格类型
+                 * @param setting 设置
+                 */
+                constructor(setting?: IDecimalSetting);
+            }
+            /**
+             * 数量类型
+             */
+            class Quantity extends Decimal {
+                /**
+                 * 数量类型
+                 * @param setting 设置
+                 */
+                constructor(setting?: IDecimalSetting);
+            }
+            /**
+             * 率类型
+             */
+            class Rate extends Decimal {
+                /**
+                 * 率类型
+                 * @param setting 设置
+                 */
+                constructor(setting?: IDecimalSetting);
+            }
+            /**
+             * 总计类型
+             */
+            class Sum extends Decimal {
+                /**
+                 * 总计类型
+                 * @param setting 设置
+                 */
+                constructor(setting?: IDecimalSetting);
+            }
+            /**
+             * 单位数量类型
+             */
+            class Measurement extends Decimal {
+                /**
+                 * 单位数量类型
+                 * @param setting 设置
+                 */
+                constructor(setting?: IDecimalSetting);
+            }
+            /**
+             * 百分数类型
+             */
+            class Percentage extends Decimal {
+                /**
+                 * 单位数量类型
+                 * @param setting 设置
+                 */
+                constructor(setting?: IDecimalSetting);
+            }
+            /**
+             * 日期类型
+             */
+            class Date extends sap.ui.model.type.Date {
+                /**
+                 * 日期类型
+                 * @param setting 设置
+                 */
+                constructor(setting?: IDateTimeSetting);
+            }
+            /**
+             * 时间类型
+             */
+            class Time extends sap.ui.model.type.Time {
+                /**
+                 * 时间类型
+                 * @param setting 设置
+                 */
+                constructor(setting?: IDateTimeSetting);
+                /** 格式化方式 */
+                format: string;
+            }
+            /**
+             * 日期时间类型
+             */
+            class DateTime extends sap.ui.model.type.DateTime {
+                /**
+                 * 日期时间类型
+                 * @param setting 设置
+                 */
+                constructor(setting?: IDateTimeSetting);
+            }
+            /**
+             * 枚举类型
+             */
+            class Enum extends sap.ui.model.SimpleType {
+                /**
+                 * 枚举类型
+                 * @param setting 设置
+                 */
+                constructor(setting: IEnumSetting);
+                /**
+                 * 枚举类型
+                 */
+                enumType: any;
+                /**
+                 * 枚举值描述（使用后不能解析值）
+                 */
+                describe: boolean;
+            }
+            /**
+             * 是否类型
+             */
+            class YesNo extends Enum {
+                /**
+                 * 构造
+                 * @param describe 使用描述，当true时，显示语言描述，但不能使用双向绑定
+                 */
+                constructor(describe?: boolean);
+            }
+            /**
+             * 单据状态类型
+             */
+            class DocumentStatus extends Enum {
+                /**
+                 * 构造
+                 * @param describe 使用描述，当true时，显示语言描述，但不能使用双向绑定
+                 */
+                constructor(describe?: boolean);
+            }
+            /**
+             * 对象状态类型
+             */
+            class BOStatus extends Enum {
+                /**
+                 * 构造
+                 * @param describe 使用描述，当true时，显示语言描述，但不能使用双向绑定
+                 */
+                constructor(describe?: boolean);
+            }
+            /**
+             * 审批状态类型
+             */
+            class ApprovalStatus extends Enum {
+                /**
+                 * 构造
+                 * @param describe 使用描述，当true时，显示语言描述，但不能使用双向绑定
+                 */
+                constructor(describe?: boolean);
+            }
+            /**
+             * 审批结果类型
+             */
+            class ApprovalResult extends Enum {
+                /**
+                 * 构造
+                 * @param describe 使用描述，当true时，显示语言描述，但不能使用双向绑定
+                 */
+                constructor(describe?: boolean);
+            }
+            /**
+             * 审批步骤状态类型
+             */
+            class ApprovalStepStatus extends Enum {
+                /**
+                 * 构造
+                 * @param describe 使用描述，当true时，显示语言描述，但不能使用双向绑定
+                 */
+                constructor(describe?: boolean);
+            }
+            /**
+             * 权限类型类型
+             */
+            class AuthoriseType extends Enum {
+                /**
+                 * 构造
+                 * @param describe 使用描述，当true时，显示语言描述，但不能使用双向绑定
+                 */
+                constructor(describe?: boolean);
+            }
+            /**
+             * 条件操作类型
+             */
+            class ConditionOperation extends Enum {
+                /**
+                 * 构造
+                 * @param describe 使用描述，当true时，显示语言描述，但不能使用双向绑定
+                 */
+                constructor(describe?: boolean);
+            }
+            /**
+             * 条件关系类型
+             */
+            class ConditionRelationship extends Enum {
+                /**
+                 * 构造
+                 * @param describe 使用描述，当true时，显示语言描述，但不能使用双向绑定
+                 */
+                constructor(describe?: boolean);
+            }
+            /**
+             * 排序方式类型
+             */
+            class SortType extends Enum {
+                /**
+                 * 构造
+                 * @param describe 使用描述，当true时，显示语言描述，但不能使用双向绑定
+                 */
+                constructor(describe?: boolean);
+            }
+            /**
+             * 方向类型
+             */
+            class Direction extends Enum {
+                /**
+                 * 构造
+                 * @param describe 使用描述，当true时，显示语言描述，但不能使用双向绑定
+                 */
+                constructor(describe?: boolean);
+            }
+        }
+    }
+}
 namespace sap {
     export namespace extension {
         export namespace data {
@@ -12,56 +274,11 @@ namespace sap {
              * 数据类型设置
              */
             export interface ITypeSetting {
-                /* 验证之后 */
-                onValidated?(error: Error): sap.ui.model.ValidateException | void;
-            }
-            /**
-             * 数据类型基类
-             */
-            export abstract class Type extends sap.ui.model.SimpleType {
-                constructor(setting?: ITypeSetting) {
-                    super();
-                    if (!ibas.objects.isNull(setting)) {
-                        this.onValidated = setting.onValidated;
-                    }
-                }
-                /**
-                 * 格式化值到视图
-                 * @param oValue 值
-                 * @param sInternalType 视图类型
-                 */
-                formatValue(oValue: any, sInternalType: string): any {
-                    return oValue;
-                }
-                /**
-                 * 格式化值到模型
-                 * @param oValue 值
-                 * @param sInternalType 视图类型
-                 */
-                parseValue(oValue: any, sInternalType: string): any {
-                    return oValue;
-                }
                 /**
                  * 验证值
                  * @param oValue 值
                  */
-                validateValue(oValue: any): any {
-                    try {
-                        this.validate(oValue);
-                    } catch (error) {
-                        if (this.onValidated instanceof Function) {
-                            let result: sap.ui.model.ValidateException | void = this.onValidated(error);
-                            if (!(result instanceof sap.ui.model.ValidateException)) {
-                                result = new sap.ui.model.ValidateException(error.message);
-                            }
-                            throw result;
-                        } else {
-                            throw new sap.ui.model.ValidateException(error.message);
-                        }
-                    }
-                }
-                private onValidated: (error: Error) => sap.ui.model.ValidateException | void;
-                protected abstract validate(oValue: any): void;
+                validateValue?(oValue: any): any;
             }
             /**
              * 未知类型设置
@@ -79,31 +296,44 @@ namespace sap {
                  * @param sInternalType 视图类型
                  */
                 parseValue(oValue: any, sInternalType: string): any;
+            }
+            sap.ui.model.SimpleType.extend("sap.extension.data.Unknown", {
+                constructor: function (this: sap.ui.model.SimpleType, setting?: IUnknownSetting): void {
+                    sap.ui.model.SimpleType.call(this, arguments);
+                    if (typeof setting.formatValue === "function") {
+                        this.formatValue = setting.formatValue;
+                    }
+                    if (typeof setting.parseValue === "function") {
+                        this.parseValue = setting.parseValue;
+                    }
+                    if (typeof setting.validateValue === "function") {
+                        this.validateValue = setting.validateValue;
+                    }
+                },
+                /**
+                 * 格式化值到视图
+                 * @param oValue 值
+                 * @param sInternalType 视图类型
+                 */
+                formatValue(oValue: any, sInternalType: string): any {
+
+                },
+                /**
+                 * 格式化值到模型
+                 * @param oValue 值
+                 * @param sInternalType 视图类型
+                 */
+                parseValue(oValue: any, sInternalType: string): any {
+
+                },
                 /**
                  * 验证值
                  * @param oValue 值
                  */
-                validate?(oValue: any): void;
-            }
-            /**
-             * 未知类型
-             */
-            export class Unknown extends Type {
-                constructor(setting: IUnknownSetting) {
-                    super(setting);
-                    if (!ibas.objects.isNull(setting)) {
-                        this.formatValue = setting.formatValue;
-                        this.parseValue = setting.parseValue;
-                        this._validate = setting.validate;
-                    }
+                validateValue(oValue: any): any {
+
                 }
-                private _validate: (oValue: any) => void;
-                protected validate(oValue: any): void {
-                    if (this._validate instanceof Function) {
-                        this._validate(oValue);
-                    }
-                }
-            }
+            });
             /**
              * 字母数字设置
              */
@@ -117,84 +347,18 @@ namespace sap {
                 /** 正则表达式 */
                 regExp?: RegExp;
             }
-            /**
-             * 字母数字类型
-             */
-            export class Alphanumeric extends Type {
-                /**
-                 * 字母数字类型
-                 * @param setting 设置
-                 */
-                constructor(setting?: IAlphanumericSetting) {
-                    super(setting);
-                    if (!ibas.objects.isNull(setting)) {
-                        this.notEmpty = setting.notEmpty;
-                        this.maxLength = setting.maxLength;
-                        this.minLength = setting.minLength;
-                        this.regExp = setting.regExp;
-                    }
+            sap.ui.model.type.String.extend("sap.extension.data.Alphanumeric", {
+                constructor: function (setting?: IAlphanumericSetting): void {
+                    sap.ui.model.type.String.call(this, undefined, setting ?
+                        {
+                            minLength: setting.minLength,
+                            maxLength: setting.maxLength,
+                            nullable: setting.notEmpty === false,
+                            search: setting.regExp,
+                        } : undefined
+                    );
                 }
-                /** 允许空 */
-                notEmpty: boolean;
-                /** 最小长度 */
-                minLength: number;
-                /** 最大长度 */
-                maxLength: number;
-                /** 正则表达式 */
-                regExp?: RegExp;
-                /**
-                 * 格式化值到视图
-                 * @param oValue 值
-                 * @param sInternalType 视图类型
-                 */
-                formatValue(oValue: any, sInternalType: string): any {
-                    if (sInternalType === "string") {
-                        // 需要字符串类型
-                        if (ibas.objects.isNull(oValue)) {
-                            return undefined;
-                        }
-                        return ibas.strings.valueOf(oValue);
-                    }
-                    return oValue;
-                }
-                /**
-                 * 格式化值到模型
-                 * @param oValue 值
-                 * @param sInternalType 视图类型
-                 */
-                parseValue(oValue: any, sInternalType: string): any {
-                    if (ibas.objects.isNull(oValue)) {
-                        return undefined;
-                    }
-                    return ibas.strings.valueOf(oValue);
-                }
-                /** 验证数据 */
-                protected validate(oValue: any): void {
-                    if (this.notEmpty === true) {
-                        if (ibas.strings.isEmpty(oValue)) {
-                            throw new RangeError(ibas.i18n.prop("openui5_data_value_is_empty"));
-                        }
-                    }
-                    if (ibas.objects.isNull(oValue)) {
-                        return;
-                    }
-                    if (typeof oValue === "string") {
-                        if (this.maxLength && oValue.length > this.maxLength) {
-                            throw new RangeError(ibas.i18n.prop("openui5_data_value_length_more_than", this.maxLength));
-                        }
-                        if (this.minLength && oValue.length < this.minLength) {
-                            throw new RangeError(ibas.i18n.prop("openui5_data_value_length_less_than", this.minLength));
-                        }
-                        if (this.regExp) {
-                            if (oValue.match(this.regExp) === null) {
-                                throw new RangeError(ibas.i18n.prop("openui5_data_value_not_match", this.regExp.source));
-                            }
-                        }
-                    } else {
-                        throw new TypeError(ibas.i18n.prop("openui5_data_value_type_error", ibas.objects.nameOf(this)));
-                    }
-                }
-            }
+            });
             /**
              * 数字类型设置
              */
@@ -204,73 +368,17 @@ namespace sap {
                 /** 最大值 */
                 maxValue?: number;
             }
-            /**
-             * 数字类型
-             */
-            export class Numeric extends Type {
-                /**
-                 * 数字类型
-                 * @param setting 设置
-                 */
-                constructor(setting?: INumericSetting) {
-                    super(setting);
-                    if (!ibas.objects.isNull(setting)) {
-                        this.minValue = setting.minValue;
-                        this.maxValue = setting.maxValue;
-                    }
+            sap.ui.model.type.Integer.extend("sap.extension.data.Numeric", {
+                constructor: function (this: Numeric, setting?: INumericSetting): void {
+                    sap.ui.model.type.Integer.call(this, undefined, setting ?
+                        {
+                            minimum: setting.minValue,
+                            maximum: setting.maxValue,
+                        } : undefined
+                    );
+                    (<any>this).sName = ibas.objects.nameOf(this);
                 }
-                /** 最小值 */
-                minValue: number;
-                /** 最大值 */
-                maxValue: number;
-                /**
-                 * 格式化值到视图
-                 * @param oValue 值
-                 * @param sInternalType 视图类型
-                 */
-                formatValue(oValue: any, sInternalType: string): any {
-                    if (sInternalType === "string") {
-                        // 需要字符串类型
-                        if (ibas.objects.isNull(oValue)) {
-                            return undefined;
-                        }
-                        return ibas.numbers.toString(oValue, 0);
-                    }
-                    return oValue;
-                }
-                /**
-                 * 格式化值到模型
-                 * @param oValue 值
-                 * @param sInternalType 视图类型
-                 */
-                parseValue(oValue: any, sInternalType: string): any {
-                    if (typeof oValue === "number") {
-                        return Math.floor(oValue);
-                    } else if (typeof oValue === "string") {
-                        if (ibas.strings.isEmpty(oValue)) {
-                            return undefined;
-                        }
-                        return ibas.numbers.toInt(oValue);
-                    }
-                    return 0;
-                }
-                /** 验证数据 */
-                protected validate(oValue: any): void {
-                    if (ibas.objects.isNull(oValue)) {
-                        return;
-                    }
-                    if (typeof oValue === "number" && !isNaN(oValue)) {
-                        if (typeof this.minValue === "number" && oValue < this.minValue) {
-                            throw new RangeError(ibas.i18n.prop("openui5_data_value_less_than", this.minValue));
-                        }
-                        if (typeof this.maxValue === "number" && oValue > this.maxValue) {
-                            throw new RangeError(ibas.i18n.prop("openui5_data_value_more_than", this.maxValue));
-                        }
-                    } else {
-                        throw new TypeError(ibas.i18n.prop("openui5_data_value_type_error", ibas.objects.nameOf(this)));
-                    }
-                }
-            }
+            });
             /**
              * 小数类型设置
              */
@@ -282,185 +390,109 @@ namespace sap {
                 /** 小数位 */
                 decimalPlaces?: number;
             }
-            /**
-             * 小数类型
-             */
-            export class Decimal extends Type {
-                /**
-                 * 小数类型
-                 * @param setting 设置
-                 */
-                constructor(setting?: IDecimalSetting) {
-                    super(setting);
-                    if (!ibas.objects.isNull(setting)) {
-                        this.minValue = setting.minValue;
-                        this.maxValue = setting.maxValue;
-                        this.decimalPlaces = setting.decimalPlaces;
-                    }
-                    if (ibas.objects.isNull(this.decimalPlaces)) {
-                        this.decimalPlaces = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES, 6);
-                        this.decimalPlaces = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES + "|" + ibas.objects.nameOf(this), this.decimalPlaces);
-                    }
+            const DECIMAL_PLACES: number = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES, 6);
+            const DECIMAL_PLACES_PRICE: number = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES_PRICE, DECIMAL_PLACES);
+            const DECIMAL_PLACES_PERCENTAGE: number = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES_PERCENTAGE, DECIMAL_PLACES);
+            const DECIMAL_PLACES_MEASUREMENT: number = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES_MEASUREMENT, DECIMAL_PLACES);
+            const DECIMAL_PLACES_QUANTITY: number = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES_QUANTITY, DECIMAL_PLACES);
+            const DECIMAL_PLACES_RATE: number = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES_RATE, DECIMAL_PLACES);
+            const DECIMAL_PLACES_SUM: number = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES_SUM, DECIMAL_PLACES);
+
+            sap.ui.model.type.Float.extend("sap.extension.data.Decimal", {
+                constructor: function (setting?: IDecimalSetting): void {
+                    sap.ui.model.type.Float.call(this, {
+                        decimals: setting?.decimalPlaces > 0 ? setting?.decimalPlaces : DECIMAL_PLACES
+                    }, setting ?
+                        {
+                            minimum: setting.minValue,
+                            maximum: setting.maxValue,
+                        } : undefined
+                    );
                 }
-                /** 最小值 */
-                minValue: number;
-                /** 最大值 */
-                maxValue: number;
-                /** 小数位 */
-                decimalPlaces: number;
-                /**
-                 * 格式化值到视图
-                 * @param oValue 值
-                 * @param sInternalType 视图类型
-                 */
-                formatValue(oValue: any, sInternalType: string): any {
-                    if (sInternalType === "string") {
-                        // 需要字符串类型
-                        if (ibas.objects.isNull(oValue)) {
-                            return undefined;
+            });
+            Decimal.extend("sap.extension.data.Price", {
+                constructor: function (setting?: IDecimalSetting): void {
+                    if (!(setting?.decimalPlaces > 0)) {
+                        if (!setting) {
+                            setting = {};
                         }
-                        return ibas.numbers.toString(oValue, this.decimalPlaces);
+                        setting.decimalPlaces = DECIMAL_PLACES_PRICE;
                     }
-                    return oValue;
+                    Decimal.call(this, setting);
                 }
-                /**
-                 * 格式化值到模型
-                 * @param oValue 值
-                 * @param sInternalType 视图类型
-                 */
-                parseValue(oValue: any, sInternalType: string): any {
-                    if (typeof oValue === "number") {
-                        return ibas.numbers.round(oValue, this.decimalPlaces);
-                    } else if (typeof oValue === "string") {
-                        if (ibas.strings.isEmpty(oValue)) {
-                            return undefined;
+            });
+            Decimal.extend("sap.extension.data.Quantity", {
+                constructor: function (setting?: IDecimalSetting): void {
+                    if (!(setting?.decimalPlaces > 0)) {
+                        if (!setting) {
+                            setting = {};
                         }
-                        return ibas.numbers.round(ibas.numbers.valueOf(oValue), this.decimalPlaces);
+                        setting.decimalPlaces = DECIMAL_PLACES_QUANTITY;
                     }
-                    return 0.0;
+                    Decimal.call(this, setting);
                 }
-                /** 验证数据 */
-                protected validate(oValue: any): void {
-                    if (ibas.objects.isNull(oValue)) {
-                        return;
-                    }
-                    if (typeof oValue === "number" && !isNaN(oValue)) {
-                        if (typeof this.minValue === "number" && oValue < this.minValue) {
-                            throw new RangeError(ibas.i18n.prop("openui5_data_value_less_than", this.minValue));
+            });
+            Decimal.extend("sap.extension.data.Rate", {
+                constructor: function (setting?: IDecimalSetting): void {
+                    if (!(setting?.decimalPlaces > 0)) {
+                        if (!setting) {
+                            setting = {};
                         }
-                        if (typeof this.maxValue === "number" && oValue > this.maxValue) {
-                            throw new RangeError(ibas.i18n.prop("openui5_data_value_more_than", this.maxValue));
+                        setting.decimalPlaces = DECIMAL_PLACES_RATE;
+                    }
+                    Decimal.call(this, setting);
+                }
+            });
+            Decimal.extend("sap.extension.data.Sum", {
+                constructor: function (setting?: IDecimalSetting): void {
+                    if (!(setting?.decimalPlaces > 0)) {
+                        if (!setting) {
+                            setting = {};
                         }
-                    } else {
-                        throw new TypeError(ibas.i18n.prop("openui5_data_value_type_error", ibas.objects.nameOf(this)));
+                        setting.decimalPlaces = DECIMAL_PLACES_SUM;
                     }
+                    Decimal.call(this, setting);
                 }
-            }
-            /**
-             * 价格类型
-             */
-            export class Price extends Decimal {
-                /**
-                 * 价格类型
-                 * @param setting 设置
-                 */
-                constructor(setting?: IDecimalSetting) {
-                    super(setting);
-                }
-            }
-            /**
-             * 数量类型
-             */
-            export class Quantity extends Decimal {
-                /**
-                 * 数量类型
-                 * @param setting 设置
-                 */
-                constructor(setting?: IDecimalSetting) {
-                    super(setting);
-                }
-            }
-            /**
-             * 率类型
-             */
-            export class Rate extends Decimal {
-                /**
-                 * 率类型
-                 * @param setting 设置
-                 */
-                constructor(setting?: IDecimalSetting) {
-                    super(setting);
-                }
-            }
-            /**
-             * 总计类型
-             */
-            export class Sum extends Decimal {
-                /**
-                 * 总计类型
-                 * @param setting 设置
-                 */
-                constructor(setting?: IDecimalSetting) {
-                    super(setting);
-                }
-            }
-            /**
-             * 单位数量类型
-             */
-            export class Measurement extends Decimal {
-                /**
-                 * 单位数量类型
-                 * @param setting 设置
-                 */
-                constructor(setting?: IDecimalSetting) {
-                    super(setting);
-                }
-            }
-            /**
-             * 百分比类型
-             */
-            export class Percentage extends Decimal {
-                /**
-                 * 百分比类型
-                 * @param setting 设置
-                 */
-                constructor(setting?: IDecimalSetting) {
-                    super(setting);
-                    if (ibas.objects.isNull(this.decimalPlaces)) {
-                        this.decimalPlaces = 2;
-                    }
-                }
-                /**
-                 * 格式化值到视图
-                 * @param oValue 值
-                 * @param sInternalType 视图类型
-                 */
-                formatValue(oValue: any, sInternalType: string): any {
-                    if (sInternalType === "string") {
-                        if (ibas.objects.isNull(oValue)) {
-                            return oValue;
+            });
+            Decimal.extend("sap.extension.data.Measurement", {
+                constructor: function (setting?: IDecimalSetting): void {
+                    if (!(setting?.decimalPlaces > 0)) {
+                        if (!setting) {
+                            setting = {};
                         }
-                        oValue = ibas.numbers.round(oValue * 100, this.decimalPlaces - 2);
-                        return oValue + "%";
+                        setting.decimalPlaces = DECIMAL_PLACES_MEASUREMENT;
                     }
-                    return oValue;
+                    Decimal.call(this, setting);
                 }
-                /**
-                 * 格式化值到模型
-                 * @param oValue 值
-                 * @param sInternalType 视图类型
-                 */
-                parseValue(oValue: any, sInternalType: string): any {
-                    if (typeof oValue === "string") {
-                        if (ibas.strings.isWith(oValue, undefined, "%")) {
-                            oValue = oValue.substring(0, oValue.length - 1);
+            });
+            Decimal.extend("sap.extension.data.Percentage", {
+                constructor: function (setting?: IDecimalSetting): void {
+                    if (!(setting?.decimalPlaces > 0)) {
+                        if (!setting) {
+                            setting = {};
                         }
-                        oValue = parseFloat(oValue) / 100;
-                        return super.parseValue(oValue, sInternalType);
+                        setting.decimalPlaces = DECIMAL_PLACES_PERCENTAGE - 2;
+                        if (setting.decimalPlaces < 2) {
+                            setting.decimalPlaces = 2;
+                        }
                     }
-                    return super.parseValue.apply(this, arguments);
+                    Decimal.call(this, setting);
+                },
+                _createFormats(): void {
+                    let oSourceOptions: any = this.oFormatOptions.source;
+                    this.oOutputFormat = sap.ui.core.format.NumberFormat.getPercentInstance(this.oFormatOptions);
+                    if (oSourceOptions) {
+                        if ((<any>sap).base.util.isEmptyObject(oSourceOptions)) {
+                            oSourceOptions = {
+                                groupingEnabled: false,
+                                groupingSeparator: ",",
+                                decimalSeparator: "."
+                            };
+                        }
+                        this.oInputFormat = sap.ui.core.format.NumberFormat.getPercentInstance(oSourceOptions);
+                    }
                 }
-            }
+            });
             /**
              * 日期时间类型设置
              */
@@ -468,105 +500,22 @@ namespace sap {
                 /** 格式 */
                 format?: string;
             }
-            /**
-             * 日期时间类型
-             */
-            export class Date extends Type {
-                /**
-                 * 默认格式：yyyy-MM-dd
-                 */
-                static DEFAULT_FORMAT = ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE, "yyyy-MM-dd");
-                /**
-                 * 日期时间类型
-                 * @param setting 设置
-                 */
-                constructor(setting?: IDateTimeSetting) {
-                    super(setting);
-                    if (!ibas.objects.isNull(setting)) {
-                        this.format = setting.format;
+            export const DEFAULT_FORMAT_DATE: string = ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE, "yyyy-MM-dd");
+            sap.ui.model.type.Date.extend("sap.extension.data.Date", {
+                constructor: function (setting?: IDateTimeSetting): void {
+                    sap.ui.model.type.Date.apply(this, arguments);
+                },
+            });
+            export const DEFAULT_FORMAT_TIME: string = ibas.config.get(ibas.CONFIG_ITEM_FORMAT_TIME, "HH:mm");
+            sap.ui.model.SimpleType.extend("sap.extension.data.Time", {
+                constructor: function (this: Time, setting?: IDateTimeSetting): void {
+                    sap.ui.model.SimpleType.apply(this, arguments);
+                    this.format = setting?.format;
+                    if (!this.format) {
+                        this.format = DEFAULT_FORMAT_TIME;
                     }
-                    if (ibas.strings.isEmpty(this.format)) {
-                        this.format = Date.DEFAULT_FORMAT;
-                    }
-                }
-                /** 格式 */
-                format: string;
-                /**
-                 * 格式化值到视图
-                 * @param oValue 值
-                 * @param sInternalType 视图类型
-                 */
-                formatValue(oValue: any, sInternalType: string): any {
-                    if (sInternalType === "string") {
-                        if (ibas.objects.isNull(oValue)) {
-                            return undefined;
-                        }
-                        if (!(oValue instanceof globalThis.Date)) {
-                            oValue = ibas.dates.valueOf(oValue);
-                        }
-                        if (this.format) {
-                            return ibas.dates.toString(oValue, this.format);
-                        } else {
-                            return ibas.dates.toString(oValue);
-                        }
-                    } else if (sInternalType === "number") {
-                        return ibas.dates.valueOf(oValue).getTime();
-                    } else if (sInternalType === "Date") {
-                        if (typeof oValue === "string" || typeof oValue === "number") {
-                            return ibas.dates.valueOf(oValue);
-                        }
-                    }
-                    return oValue;
-                }
-                /**
-                 * 格式化值到模型
-                 * @param oValue 值
-                 * @param sInternalType 视图类型
-                 */
-                parseValue(oValue: any, sInternalType: string): any {
-                    if (ibas.dates.isDate(oValue)) {
-                        return oValue;
-                    } else if (typeof oValue === "string" || typeof oValue === "number") {
-                        if (ibas.strings.isEmpty(oValue)) {
-                            return undefined;
-                        }
-                        return ibas.dates.valueOf(oValue);
-                    }
-                    return undefined;
-                }
-                /** 验证数据 */
-                protected validate(oValue: any): void {
-                    if (ibas.objects.isNull(oValue)) {
-                        return;
-                    }
-                    if (!ibas.dates.isDate(oValue)) {
-                        throw new TypeError(ibas.i18n.prop("openui5_data_value_type_error", ibas.objects.nameOf(this)));
-                    }
-                }
-            }
-            /**
-             * 时间类型
-             */
-            export class Time extends Type {
-                /**
-                 * 默认格式：HH:mm
-                 */
-                static DEFAULT_FORMAT = ibas.config.get(ibas.CONFIG_ITEM_FORMAT_TIME, "HH:mm");
-                /**
-                 * 时间类型
-                 * @param setting 设置
-                 */
-                constructor(setting?: IDateTimeSetting) {
-                    super(setting);
-                    if (!ibas.objects.isNull(setting)) {
-                        this.format = setting.format;
-                    }
-                    if (ibas.strings.isEmpty(this.format)) {
-                        this.format = Time.DEFAULT_FORMAT;
-                    }
-                }
-                /** 格式 */
-                format: string;
+
+                },
                 /**
                  * 格式化值到视图
                  * @param oValue 值
@@ -602,7 +551,7 @@ namespace sap {
                         }
                     }
                     return oValue;
-                }
+                },
                 /**
                  * 格式化值到模型
                  * @param oValue 值
@@ -635,9 +584,8 @@ namespace sap {
                         return parseInt(ibas.dates.toString(oValue, "HHmm"), 0);
                     }
                     return undefined;
-                }
-                /** 验证数据 */
-                protected validate(oValue: any): void {
+                },
+                validateValue(oValue: any): any {
                     if (ibas.objects.isNull(oValue)) {
                         return;
                     }
@@ -649,112 +597,35 @@ namespace sap {
                         throw new TypeError(ibas.i18n.prop("openui5_data_value_type_error", ibas.objects.nameOf(this)));
                     }
                 }
-            }
+            });
+            export const DEFAULT_FORMAT_DATETIME: string = DEFAULT_FORMAT_DATE + " " + DEFAULT_FORMAT_TIME;
             /**
              * 日期时间类型
              */
-            export class DateTime extends Type {
-                /**
-                 * 默认格式：yyyy-MM-dd HH:ss
-                 */
-                static DEFAULT_FORMAT = Date.DEFAULT_FORMAT + " " + Time.DEFAULT_FORMAT;
-                /**
-                 * 日期时间类型
-                 * @param setting 设置
-                 */
-                constructor(setting?: IDateTimeSetting) {
-                    super(setting);
-                    if (!ibas.objects.isNull(setting)) {
-                        this.format = setting.format;
-                    }
-                    if (ibas.strings.isEmpty(this.format)) {
-                        this.format = Date.DEFAULT_FORMAT;
-                    }
-                }
-                /** 格式 */
-                format: string;
-                /**
-                 * 格式化值到视图
-                 * @param oValue 值
-                 * @param sInternalType 视图类型
-                 */
-                formatValue(oValue: any, sInternalType: string): any {
-                    if (sInternalType === "string") {
-                        if (ibas.objects.isNull(oValue)) {
-                            return undefined;
-                        }
-                        if (this.format) {
-                            return ibas.dates.toString(oValue, this.format);
-                        } else {
-                            return ibas.dates.toString(oValue);
-                        }
-                    } else if (sInternalType === "number") {
-                        return ibas.dates.valueOf(oValue).getTime();
-                    } else if (sInternalType === "Date") {
-                        if (typeof oValue === "string" || typeof oValue === "number") {
-                            return ibas.dates.valueOf(oValue);
-                        }
-                    }
-                    return oValue;
-                }
-                /**
-                 * 格式化值到模型
-                 * @param oValue 值
-                 * @param sInternalType 视图类型
-                 */
-                parseValue(oValue: any, sInternalType: string): any {
-                    if (ibas.dates.isDate(oValue)) {
-                        return oValue;
-                    } else if (typeof oValue === "string" || typeof oValue === "number") {
-                        if (ibas.strings.isEmpty(oValue)) {
-                            return undefined;
-                        }
-                        return ibas.dates.valueOf(oValue);
-                    }
-                    return undefined;
-                }
-                /** 验证数据 */
-                protected validate(oValue: any): void {
-                    if (ibas.objects.isNull(oValue)) {
-                        return;
-                    }
-                    if (!ibas.dates.isDate(oValue)) {
-                        throw new TypeError(ibas.i18n.prop("openui5_data_value_type_error", ibas.objects.nameOf(this)));
-                    }
-                }
-            }
+            sap.ui.model.type.DateTime.extend("sap.extension.data.DateTime", {
+                constructor: function (setting?: IDateTimeSetting): void {
+                    sap.ui.model.type.Date.apply(this, arguments);
+                },
+            });
             /**
              * 枚举类型设置
              */
             export interface IEnumSetting extends ITypeSetting {
-                /** 枚举类型 */
+                /**
+                 * 枚举类型
+                 */
                 enumType: any;
                 /**
                  * 枚举值描述（使用后不能解析值）
                  */
                 describe?: boolean;
             }
-            /**
-             * 枚举类型
-             */
-            export class Enum extends Type {
-                /**
-                 * 枚举类型
-                 * @param setting 设置
-                 */
-                constructor(setting: IEnumSetting) {
-                    super(setting);
-                    if (!ibas.objects.isNull(setting)) {
-                        this.enumType = setting.enumType;
-                        this.describe = setting.describe;
-                    }
-                }
-                /** 枚举类型 */
-                enumType: any;
-                /**
-                 * 枚举值描述（使用后不能解析值）
-                 */
-                describe: boolean;
+            sap.ui.model.SimpleType.extend("sap.extension.data.Enum", {
+                constructor: function (this: Enum, setting?: IEnumSetting): void {
+                    sap.ui.model.SimpleType.apply(this);
+                    this.describe = setting.describe;
+                    this.enumType = setting.enumType;
+                },
                 /**
                  * 格式化值到视图
                  * @param oValue 值
@@ -768,28 +639,38 @@ namespace sap {
                         return ibas.strings.valueOf(oValue);
                     }
                     return oValue;
-                }
+                },
                 /**
                  * 格式化值到模型
                  * @param oValue 值
                  * @param sInternalType 视图类型
                  */
-                parseValue(oValue: any, sInternalType: string): any {
-                    if (this.describe === true) {
-                        throw new Error("Method not implemented.");
-                    }
-                    if (typeof oValue === "string") {
-                        if (ibas.strings.isEmpty(oValue)) {
-                            return undefined;
-                        }
-                        return ibas.enums.valueOf(this.enumType, oValue);
-                    } else if (typeof oValue === "number") {
+                parseValue(this: Enum, oValue: any, sInternalType: string): any {
+                    if (typeof oValue === "number") {
                         return oValue;
                     }
+                    let vValue: any = this.enumType[oValue];
+                    if (this.enumType[vValue] === undefined && vValue !== undefined) {
+                        return oValue;
+                    }
+                    vValue = ibas.enums.valueOf(this.enumType, oValue);
+                    if (!ibas.objects.isNull(vValue)) {
+                        return vValue;
+                    }
+                    if (this.describe) {
+                        for (let item in this.enumType) {
+                            if (ibas.numbers.isNumber(item)) {
+                                vValue = ibas.enums.describe(this.enumType, item);
+                                if (ibas.strings.equals(vValue, oValue)) {
+                                    return parseInt(item, 10);
+                                }
+                            }
+                        }
+                    }
                     return undefined;
-                }
+                },
                 /** 验证数据 */
-                protected validate(oValue: any): void {
+                validateValue(oValue: any): Promise<any> {
                     if (ibas.objects.isNull(oValue)) {
                         return;
                     }
@@ -802,23 +683,26 @@ namespace sap {
                             return;
                         }
                     }
+                    if (this.describe) {
+                        for (let item in this.enumType) {
+                            if (ibas.numbers.isNumber(item)) {
+                                let vValue: any = ibas.enums.describe(this.enumType, item);
+                                if (ibas.strings.equals(vValue, oValue)) {
+                                    return;
+                                }
+                            }
+                        }
+                    }
                     throw new TypeError(ibas.i18n.prop("openui5_data_value_type_error", ibas.objects.nameOf(this)));
                 }
-            }
-            /**
-             * 是否类型
-             */
-            export class YesNo extends Enum {
-                /**
-                 * 构造
-                 * @param describe 使用描述，当true时，显示语言描述，但不能使用双向绑定
-                 */
-                constructor(describe?: boolean) {
-                    super({
-                        enumType: ibas.emYesNo,
+            });
+            Enum.extend("sap.extension.data.YesNo", {
+                constructor: function (this: Enum, describe?: boolean): void {
+                    Enum.call(this, {
                         describe: describe,
+                        enumType: ibas.emYesNo,
                     });
-                }
+                },
                 /**
                  * 格式化值到视图
                  * @param oValue 值
@@ -828,9 +712,9 @@ namespace sap {
                     if (sInternalType === "boolean") {
                         return oValue === ibas.emYesNo.YES ? true : false;
                     } else {
-                        return super.formatValue(oValue, sInternalType);
+                        return Enum.prototype.formatValue.apply(this, arguments);
                     }
-                }
+                },
                 /**
                  * 格式化值到模型
                  * @param oValue 值
@@ -840,160 +724,90 @@ namespace sap {
                     if (typeof oValue === "boolean") {
                         return oValue === true ? ibas.emYesNo.YES : ibas.emYesNo.NO;
                     } else {
-                        return super.parseValue(oValue, sInternalType);
+                        return Enum.prototype.parseValue.apply(this, arguments);
                     }
                 }
-            }
-            /**
-             * 单据状态类型
-             */
-            export class DocumentStatus extends Enum {
-                /**
-                 * 构造
-                 * @param describe 使用描述，当true时，显示语言描述，但不能使用双向绑定
-                 */
-                constructor(describe?: boolean) {
-                    super({
+            });
+            Enum.extend("sap.extension.data.DocumentStatus", {
+                constructor: function (this: Enum, describe?: boolean): void {
+                    Enum.call(this, {
+                        describe: describe,
                         enumType: ibas.emDocumentStatus,
-                        describe: describe,
                     });
-                }
-            }
-            /**
-             * 对象状态类型
-             */
-            export class BOStatus extends Enum {
-                /**
-                 * 构造
-                 * @param describe 使用描述，当true时，显示语言描述，但不能使用双向绑定
-                 */
-                constructor(describe?: boolean) {
-                    super({
+                },
+            });
+            Enum.extend("sap.extension.data.BOStatus", {
+                constructor: function (this: Enum, describe?: boolean): void {
+                    Enum.call(this, {
+                        describe: describe,
                         enumType: ibas.emBOStatus,
-                        describe: describe,
                     });
-                }
-            }
-            /**
-             * 审批状态类型
-             */
-            export class ApprovalStatus extends Enum {
-                /**
-                 * 构造
-                 * @param describe 使用描述，当true时，显示语言描述，但不能使用双向绑定
-                 */
-                constructor(describe?: boolean) {
-                    super({
+                },
+            });
+            Enum.extend("sap.extension.data.ApprovalStatus", {
+                constructor: function (this: Enum, describe?: boolean): void {
+                    Enum.call(this, {
+                        describe: describe,
                         enumType: ibas.emApprovalStatus,
-                        describe: describe,
                     });
-                }
-            }
-            /**
-             * 审批结果类型
-             */
-            export class ApprovalResult extends Enum {
-                /**
-                 * 构造
-                 * @param describe 使用描述，当true时，显示语言描述，但不能使用双向绑定
-                 */
-                constructor(describe?: boolean) {
-                    super({
+                },
+            });
+            Enum.extend("sap.extension.data.ApprovalResult", {
+                constructor: function (this: Enum, describe?: boolean): void {
+                    Enum.call(this, {
+                        describe: describe,
                         enumType: ibas.emApprovalResult,
-                        describe: describe,
                     });
-                }
-            }
-            /**
-             * 审批步骤状态类型
-             */
-            export class ApprovalStepStatus extends Enum {
-                /**
-                 * 构造
-                 * @param describe 使用描述，当true时，显示语言描述，但不能使用双向绑定
-                 */
-                constructor(describe?: boolean) {
-                    super({
+                },
+            });
+            Enum.extend("sap.extension.data.ApprovalStepStatus", {
+                constructor: function (this: Enum, describe?: boolean): void {
+                    Enum.call(this, {
+                        describe: describe,
                         enumType: ibas.emApprovalStepStatus,
-                        describe: describe,
                     });
-                }
-            }
-            /**
-             * 权限类型类型
-             */
-            export class AuthoriseType extends Enum {
-                /**
-                 * 构造
-                 * @param describe 使用描述，当true时，显示语言描述，但不能使用双向绑定
-                 */
-                constructor(describe?: boolean) {
-                    super({
+                },
+            });
+            Enum.extend("sap.extension.data.AuthoriseType", {
+                constructor: function (this: Enum, describe?: boolean): void {
+                    Enum.call(this, {
+                        describe: describe,
                         enumType: ibas.emAuthoriseType,
-                        describe: describe,
                     });
-                }
-            }
-            /**
-             * 条件操作类型
-             */
-            export class ConditionOperation extends Enum {
-                /**
-                 * 构造
-                 * @param describe 使用描述，当true时，显示语言描述，但不能使用双向绑定
-                 */
-                constructor(describe?: boolean) {
-                    super({
+                },
+            });
+            Enum.extend("sap.extension.data.ConditionOperation", {
+                constructor: function (this: Enum, describe?: boolean): void {
+                    Enum.call(this, {
+                        describe: describe,
                         enumType: ibas.emConditionOperation,
-                        describe: describe,
                     });
-                }
-            }
-            /**
-             * 条件关系类型
-             */
-            export class ConditionRelationship extends Enum {
-                /**
-                 * 构造
-                 * @param describe 使用描述，当true时，显示语言描述，但不能使用双向绑定
-                 */
-                constructor(describe?: boolean) {
-                    super({
+                },
+            });
+            Enum.extend("sap.extension.data.ConditionRelationship", {
+                constructor: function (this: Enum, describe?: boolean): void {
+                    Enum.call(this, {
+                        describe: describe,
                         enumType: ibas.emConditionRelationship,
-                        describe: describe,
                     });
-                }
-            }
-            /**
-             * 排序方式类型
-             */
-            export class SortType extends Enum {
-                /**
-                 * 构造
-                 * @param describe 使用描述，当true时，显示语言描述，但不能使用双向绑定
-                 */
-                constructor(describe?: boolean) {
-                    super({
+                },
+            });
+            Enum.extend("sap.extension.data.SortType", {
+                constructor: function (this: Enum, describe?: boolean): void {
+                    Enum.call(this, {
+                        describe: describe,
                         enumType: ibas.emSortType,
-                        describe: describe,
                     });
-                }
-            }
-            /**
-             * 方向类型
-             */
-            export class Direction extends Enum {
-                /**
-                 * 构造
-                 * @param describe 使用描述，当true时，显示语言描述，但不能使用双向绑定
-                 */
-                constructor(describe?: boolean) {
-                    super({
+                },
+            });
+            Enum.extend("sap.extension.data.Direction", {
+                constructor: function (this: Enum, describe?: boolean): void {
+                    Enum.call(this, {
+                        describe: describe,
                         enumType: ibas.emDirection,
-                        describe: describe,
                     });
-                }
-            }
+                },
+            });
             class ValidatorItem {
                 constructor(element: sap.ui.core.Element, property: string) {
                     this.element = element;
@@ -1016,7 +830,7 @@ namespace sap {
                 let bindingInfo: {
                     parts: {
                         path: string,
-                        type: sap.extension.data.Type,
+                        type: sap.ui.model.SimpleType,
                     }[]
                 } = this.getBindingInfo(property);
                 if (bindingInfo && bindingInfo.parts instanceof Array) {
@@ -1026,7 +840,7 @@ namespace sap {
                         if (typeof type === "function") {
                             type = new type;
                         }
-                        if (type instanceof Type) {
+                        if (type instanceof sap.ui.model.SimpleType) {
                             try {
                                 type.validateValue(type.parseValue(pValue, typeof pValue));
                             } catch (error) {
@@ -1158,7 +972,7 @@ namespace sap {
                 return sap.ui.core.ValueState.None;
             }
 
-            const instanceMaps: Map<any, Type> = new Map<any, Type>();
+            const instanceMaps: Map<any, sap.ui.model.SimpleType> = new Map<any, sap.ui.model.SimpleType>();
             /**
              * 格式化值
              * @param type 目标类型
@@ -1166,13 +980,13 @@ namespace sap {
              * @param internalType 内部类型
              */
             export function formatValue(type: any, value: any, internalType: string): any {
-                if (!ibas.objects.isAssignableFrom(type, Type)) {
+                if (!ibas.objects.isAssignableFrom(type, sap.ui.model.SimpleType)) {
                     return value;
                 }
-                let instance: Type = instanceMaps.get(type);
+                let instance: sap.ui.model.SimpleType = instanceMaps.get(type);
                 if (ibas.objects.isNull(instance)) {
                     instance = new type;
-                    if (instance instanceof Type) {
+                    if (instance instanceof sap.ui.model.SimpleType) {
                         instanceMaps.set(type, instance);
                     }
                 }
