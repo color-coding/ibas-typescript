@@ -1106,6 +1106,23 @@ namespace ibas {
             }
         }
         /**
+         * 业务对象编码
+         * @param boClass 对象类型
+         */
+        export function code(boClass: Function): string {
+            let code: string = undefined;
+            if (boClass instanceof Function) {
+                code = (<any>boClass).BUSINESS_OBJECT_CODE;
+                if (ibas.objects.isNull(code)) {
+                    let tmp: any = boClass();
+                    if (typeof tmp === "object") {
+                        code = objects.propertyValue(tmp, BO_PROPERTY_NAME_OBJECTCODE);
+                    }
+                }
+            }
+            return code;
+        }
+        /**
          * 描述业务对象
          * 如：{[CC_MM_ITEM].[Code = A00001]&[DocEntry = 3]}
          * @param boKeys 对象标记

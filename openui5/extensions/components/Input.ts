@@ -18,10 +18,47 @@ namespace sap {
                         bindingValue: { type: "string" },
                         /** 仅值选择，不可输入 */
                         valueHelpOnly: { type: "boolean", defaultValue: true },
+                        /** 显示值链接钮 */
+                        showValueLink: { type: "boolean", defaultValue: false },
                     },
-                    events: {}
+                    events: {
+                        "valueLinkRequest": {
+                            parameters: {
+                                value: {
+                                    type: "string",
+                                },
+                            }
+                        },
+                    }
                 },
                 renderer: {
+                },
+                /**
+                 * 设置显示值链接钮
+                 * @param value 数据信息
+                 */
+                setShowValueLink(this: Input, value: boolean): Input {
+                    this.setProperty("showValueLink", value);
+                    if (value === true) {
+                        this.addBeginIcon({
+                            src: "sap-icon://shortcut",
+                            press(event: sap.ui.base.Event): void {
+                                let source: any = event.getSource();
+                                if (source instanceof sap.ui.core.Icon) {
+                                    let parent: any = source.getParent();
+                                    if (parent instanceof Input) {
+                                        let value: any = parent.getBindingValue();
+                                        if (!ibas.objects.isNull(value)) {
+                                            (<any>parent).fireValueLinkRequest({ value: value });
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    } else {
+                        this.removeAggregation("_beginIcon", undefined, false);
+                    }
+                    return this;
                 },
                 /**
                  * 获取绑定值
@@ -36,6 +73,24 @@ namespace sap {
                 setBindingValue(this: Input, value: string): Input {
                     sap.m.Input.prototype.setValue.apply(this, arguments);
                     this.setProperty("bindingValue", value);
+                    if (this.getShowValueLink() === true) {
+                        let icons: any = this.getAggregation("_beginIcon", null);
+                        if (!ibas.objects.isNull(icons)) {
+                            if (ibas.objects.isNull(value)) {
+                                for (let item of ibas.arrays.create(icons)) {
+                                    if (item instanceof sap.ui.core.Icon) {
+                                        item.setVisible(false);
+                                    }
+                                }
+                            } else {
+                                for (let item of ibas.arrays.create(icons)) {
+                                    if (item instanceof sap.ui.core.Icon) {
+                                        item.setVisible(true);
+                                    }
+                                }
+                            }
+                        }
+                    }
                     return this;
                 },
                 /**
@@ -43,7 +98,8 @@ namespace sap {
                  * @param value 值
                  */
                 setValue(this: Input, value: string): Input {
-                    return this.setBindingValue(value);
+                    this.setBindingValue(value);
+                    return this;
                 },
                 /** 重写绑定 */
                 bindProperty(this: Input, sName: string, oBindingInfo: any): Input {
@@ -251,9 +307,74 @@ namespace sap {
                             );
                         }
                     }
+                    if (this.getShowValueLink() === true) {
+                        let icons: any = this.getAggregation("_beginIcon", null);
+                        if (!ibas.objects.isNull(icons)) {
+                            if (ibas.objects.isNull(value)) {
+                                for (let item of ibas.arrays.create(icons)) {
+                                    if (item instanceof sap.ui.core.Icon) {
+                                        item.setVisible(false);
+                                    }
+                                }
+                            } else {
+                                for (let item of ibas.arrays.create(icons)) {
+                                    if (item instanceof sap.ui.core.Icon) {
+                                        item.setVisible(true);
+                                    }
+                                }
+                            }
+                        }
+                    }
                     return this;
+                },
+                applySettings(this: RepositoryInput, mSettings: any, oScope?: any): RepositoryInput {
+                    if (mSettings?.dataInfo?.type) {
+                        if (ibas.objects.isNull(mSettings?.showValueLink)) {
+                            if (!mSettings) {
+                                mSettings = {};
+                            }
+                            mSettings.showValueLink = hasViewService(mSettings.dataInfo.type);
+                        }
+                    }
+                    (<any>Input.prototype).applySettings.apply(this, arguments);
+                    return this;
+                },
+                /** 初始化 */
+                init(this: RepositoryInput): void {
+                    (<any>Input.prototype).init.apply(this, arguments);
+                    this.attachValueLinkRequest(undefined, (event: sap.ui.base.Event) => {
+                        let source: any = event.getSource();
+                        if (source instanceof RepositoryInput) {
+                            let boCode: string = ibas.businessobjects.code(<any>source.getDataInfo()?.type);
+                            if (!ibas.strings.isEmpty(boCode)) {
+                                ibas.servicesManager.runLinkService({
+                                    boCode: boCode,
+                                    linkValue: event.getParameter("value")
+                                });
+                            }
+                        }
+                    });
                 }
             });
+            const hasViewServiceMap: Map<any, boolean> = new Map<any, boolean>();
+            // 是否存在查看服务
+            function hasViewService(boType: Function): boolean {
+                if (!hasViewServiceMap.has(boType)) {
+                    if (ibas.servicesManager.getServices({
+                        proxy: new ibas.BOLinkServiceProxy({
+                            boCode: ibas.businessobjects.code(boType),
+                            linkValue: undefined
+
+                        }),
+                        category: ibas.businessobjects.code(boType),
+                    }).length > 0) {
+                        hasViewServiceMap.set(boType, true);
+                    } else {
+                        hasViewServiceMap.set(boType, false);
+                    }
+                }
+                return hasViewServiceMap.get(boType);
+            }
             /**
              * 业务仓库数据-选择输入框
              */
@@ -301,6 +422,15 @@ namespace sap {
                  */
                 setCriteria(this: SelectionInput, value: ibas.ICriteria | ibas.ICondition[]): SelectionInput {
                     return this.setProperty("criteria", repositories.criteria(value));
+                },
+                applySettings(this: SelectionInput, mSettings: any, oScope?: any): SelectionInput {
+                    if (mSettings?.chooseType === ibas.emChooseType.MULTIPLE) {
+                        if (!mSettings) {
+                            mSettings = {};
+                        }
+                        mSettings.showValueLink = false;
+                    }
+                    return (<any>RepositoryInput.prototype).applySettings.apply(this, arguments);
                 },
                 /** 初始化 */
                 init(this: SelectionInput): void {
@@ -412,7 +542,7 @@ namespace sap {
                 },
                 renderer: {},
                 /** 重构设置 */
-                applySettings(this: UserInput): UserInput {
+                applySettings(this: UserInput, mSettings: any, oScope?: any): UserInput {
                     SelectionInput.prototype.applySettings.apply(this, arguments);
                     let boRepository: ibas.BORepositoryApplication = this.getRepository();
                     if (ibas.objects.isNull(boRepository)) {
@@ -433,6 +563,9 @@ namespace sap {
                             variables.set(criteria, UserInput, "criteria");
                         }
                         this.setCriteria(criteria);
+                    }
+                    if (ibas.objects.isNull(mSettings?.showValueLink)) {
+                        this.setShowValueLink(true);
                     }
                     return this;
                 },
@@ -484,7 +617,7 @@ namespace sap {
                 },
                 renderer: {},
                 /** 重构设置 */
-                applySettings(this: OrganizationInput): OrganizationInput {
+                applySettings(this: OrganizationInput, mSettings: any, oScope?: any): OrganizationInput {
                     SelectionInput.prototype.applySettings.apply(this, arguments);
                     let boRepository: ibas.BORepositoryApplication = this.getRepository();
                     if (ibas.objects.isNull(boRepository)) {
@@ -526,6 +659,9 @@ namespace sap {
                             variables.set(criteria, OrganizationInput, "criteria");
                         }
                         this.setCriteria(criteria);
+                    }
+                    if (ibas.objects.isNull(mSettings?.showValueLink)) {
+                        this.setShowValueLink(true);
                     }
                     return this;
                 }

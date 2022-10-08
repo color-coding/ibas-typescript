@@ -40,6 +40,34 @@ declare namespace sap {
                  * @param value 值
                  */
                 setBindingValue(value: string): this;
+
+                /**
+                * 获取显示值链接钮
+                */
+                getShowValueLink(): boolean;
+                /**
+                 * 设置显示值链接钮
+                 * @param value 数据信息
+                 */
+                setShowValueLink(value: boolean): this;
+                /**
+                 * 监听值链接事件
+                 * @param oData 
+                 * @param fnFunction 
+                 * @param oListener 
+                 */
+                attachValueLinkRequest(oData: any, fnFunction: Function, oListener?: any): this;
+                /**
+                 * 取消监听值链接事件
+                 * @param fnFunction 
+                 * @param oListener 
+                 */
+                detachValueLinkRequest(fnFunction: Function, oListener?: any): this;
+                /** 
+                 * 触发地址改变事件
+                 * @param param 
+                 */
+                protected fireValueLinkRequest(param: { value: string }): this;
             }
             /**
              * 业务仓库数据-输入框
