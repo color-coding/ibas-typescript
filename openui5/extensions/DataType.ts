@@ -500,10 +500,22 @@ namespace sap {
                 /** 格式 */
                 format?: string;
             }
-            export const DEFAULT_FORMAT_DATE: string = ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE, "yyyy-MM-dd");
+            export const DEFAULT_FORMAT_DATE: string = ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE);
             sap.ui.model.type.Date.extend("sap.extension.data.Date", {
                 constructor: function (setting?: IDateTimeSetting): void {
-                    sap.ui.model.type.Date.apply(this, arguments);
+                    if (DEFAULT_FORMAT_DATE && !setting?.format) {
+                        if (!setting) {
+                            setting = {};
+                        }
+                        setting.format = DEFAULT_FORMAT_DATE;
+                    }
+                    sap.ui.model.type.Date.call(this, { pattern: setting?.format });
+                },
+                parseValue(oValue: any, sInternalType: string): any {
+                    if (sInternalType === "Date") {
+                        return oValue;
+                    }
+                    return sap.ui.model.type.Date.prototype.parseValue.apply(this, arguments);
                 },
             });
             export const DEFAULT_FORMAT_TIME: string = ibas.config.get(ibas.CONFIG_ITEM_FORMAT_TIME, "HH:mm");
@@ -514,7 +526,6 @@ namespace sap {
                     if (!this.format) {
                         this.format = DEFAULT_FORMAT_TIME;
                     }
-
                 },
                 /**
                  * 格式化值到视图
@@ -598,13 +609,25 @@ namespace sap {
                     }
                 }
             });
-            export const DEFAULT_FORMAT_DATETIME: string = DEFAULT_FORMAT_DATE + " " + DEFAULT_FORMAT_TIME;
+            export const DEFAULT_FORMAT_DATETIME: string = ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATETIME);
             /**
              * 日期时间类型
              */
             sap.ui.model.type.DateTime.extend("sap.extension.data.DateTime", {
                 constructor: function (setting?: IDateTimeSetting): void {
-                    sap.ui.model.type.Date.apply(this, arguments);
+                    if (DEFAULT_FORMAT_DATETIME && !setting?.format) {
+                        if (!setting) {
+                            setting = {};
+                        }
+                        setting.format = DEFAULT_FORMAT_DATETIME;
+                    }
+                    sap.ui.model.type.DateTime.call(this, { pattern: setting?.format });
+                },
+                parseValue(oValue: any, sInternalType: string): any {
+                    if (sInternalType === "Date") {
+                        return oValue;
+                    }
+                    return sap.ui.model.type.Date.prototype.parseValue.apply(this, arguments);
                 },
             });
             /**

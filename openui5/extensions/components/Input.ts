@@ -33,6 +33,23 @@ namespace sap {
                 },
                 renderer: {
                 },
+                onAfterRendering(this: Input): void {
+                    (<any>sap.m.Input.prototype).onAfterRendering.apply(this, arguments);
+                    if (this.getShowValueLink()) {
+                        let icons: any = this.getAggregation("_beginIcon", null);
+                        if (!ibas.objects.isNull(icons)) {
+                            for (let item of ibas.arrays.create(icons)) {
+                                let element: any = document.getElementById(item.getId());
+                                if (!ibas.objects.isNull(element)) {
+                                    element = element.parentElement;
+                                    if (!ibas.objects.isNull(element)) {
+                                        element.style.cssText = "height: auto;";
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
                 /**
                  * 设置显示值链接钮
                  * @param value 数据信息

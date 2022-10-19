@@ -8,6 +8,8 @@
 namespace sap {
     export namespace extension {
         export namespace m {
+            const DEFAULT_FORMAT_DATE: string = "yyyy-MM-dd";
+            const DEFAULT_FORMAT_TIME: string = "HH:mm";
             /**
              * 日期选择框
              */
@@ -17,7 +19,7 @@ namespace sap {
                         /** 绑定值 */
                         bindingValue: { type: "Date" },
                         /** 值模板 */
-                        valueFormat: { type: "string", group: "Data", defaultValue: data.DEFAULT_FORMAT_DATE },
+                        valueFormat: { type: "string", group: "Data", defaultValue: DEFAULT_FORMAT_DATE },
                         /** 显示模板 */
                         displayFormat: { type: "string", group: "Appearance", defaultValue: data.DEFAULT_FORMAT_DATE },
                     },
@@ -82,7 +84,7 @@ namespace sap {
                         /** 绑定值 */
                         bindingValue: { type: "Date" },
                         /** 值模板 */
-                        valueFormat: { type: "string", group: "Data", defaultValue: data.DEFAULT_FORMAT_TIME },
+                        valueFormat: { type: "string", group: "Data", defaultValue: DEFAULT_FORMAT_TIME },
                         /** 显示模板 */
                         displayFormat: { type: "string", group: "Appearance", defaultValue: data.DEFAULT_FORMAT_TIME },
                     },
