@@ -49,20 +49,31 @@ namespace shell {
                         content: [
                             new sap.m.VBox("", {
                                 items: [
-                                    new sap.m.Title("", {
-                                        text: ibas.config.get(app.CONFIG_ITEM_APPLICATION_NAME, ibas.i18n.prop("shell_name")),
-                                        level: sap.ui.core.TitleLevel.H1,
-                                        titleStyle: sap.ui.core.TitleLevel.H1,
-                                        textAlign: sap.ui.core.TextAlign.Center,
-                                        width: "100%",
-                                    }),
-                                    new sap.m.Title("", {
-                                        text: subheading,
-                                        level: sap.ui.core.TitleLevel.H4,
-                                        titleStyle: sap.ui.core.TitleLevel.H4,
-                                        textAlign: sap.ui.core.TextAlign.Right,
+                                    new sap.m.Toolbar("", {
+                                        content: [
+                                            new sap.m.ToolbarSpacer(),
+                                            new sap.m.Title("", {
+                                                text: ibas.config.get(app.CONFIG_ITEM_APPLICATION_NAME, ibas.i18n.prop("shell_name")),
+                                                level: sap.ui.core.TitleLevel.H1,
+                                                titleStyle: sap.ui.core.TitleLevel.H1,
+                                                textAlign: sap.ui.core.TextAlign.Center,
+                                            }),
+                                            new sap.m.ToolbarSpacer(),
+                                        ],
+                                        style: sap.m.ToolbarStyle.Clear,
+                                    }).addStyleClass("sapUiTinyMarginBottom"),
+                                    new sap.m.Toolbar("", {
+                                        content: [
+                                            new sap.m.ToolbarSpacer(),
+                                            new sap.m.Title("", {
+                                                text: subheading,
+                                                level: sap.ui.core.TitleLevel.H4,
+                                                titleStyle: sap.ui.core.TitleLevel.H4,
+                                                textAlign: sap.ui.core.TextAlign.Right
+                                            }).addStyleClass("sapUiLargeMarginEnd"),
+                                        ],
                                         visible: ibas.strings.isEmpty(subheading) ? false : true,
-                                        width: "100%",
+                                        style: sap.m.ToolbarStyle.Clear,
                                     }),
                                 ]
                             }),

@@ -190,6 +190,10 @@ declare namespace sap {
                  */
                 setDataInfo(value: { code: string, name?: string } | string | Function): this;
             }
+            /**
+             * 货币-选择框
+             */
+            class CurrencySelect extends Select { }
         }
     }
 }

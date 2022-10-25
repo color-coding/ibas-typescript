@@ -16,6 +16,19 @@ namespace sap {
                 key: string;
                 /** 属性-描述 */
                 text: string;
+                /** 属性-注释 */
+                note?: string;
+            }
+            /** 值-描述-注释 */
+            export class KeyText extends ibas.KeyText {
+                constructor(key?: string, text?: string, note?: string) {
+                    super();
+                    this.key = key;
+                    this.text = text;
+                    this.note = note;
+                }
+                /** 注释 */
+                note: string;
             }
             /**
              * 查询数据
@@ -25,7 +38,7 @@ namespace sap {
              * @param onCompleted 完成事件
              */
             export function fetch(boRepository: ibas.BORepositoryApplication,
-                dataInfo: IDataInfo, criteria: ibas.ICriteria, onCompleted: (values: ibas.IList<ibas.KeyText> | Error) => void): void {
+                dataInfo: IDataInfo, criteria: ibas.ICriteria, onCompleted: (values: ibas.IList<KeyText> | Error) => void): void {
                 try {
                     if (!(boRepository instanceof ibas.BORepositoryApplication)) {
                         throw new Error(ibas.i18n.prop("sys_invalid_parameter", "boRepository"));
@@ -49,6 +62,7 @@ namespace sap {
                     if (ibas.strings.isEmpty(propertyText)) {
                         propertyText = propertyKey;
                     }
+                    let propertyNote: string = dataInfo.note;
                     let methodName: string = ibas.strings.format("fetch{0}", boName);
                     let method: Function = boRepository[methodName];
                     if (!(method instanceof Function)) {
@@ -61,13 +75,19 @@ namespace sap {
                                 if (opRslt.resultCode !== 0) {
                                     throw new Error(opRslt.message);
                                 }
-                                let values: ibas.IList<ibas.KeyText> = new ibas.ArrayList<ibas.KeyText>();
+                                let values: ibas.IList<KeyText> = new ibas.ArrayList<KeyText>();
                                 for (let item of opRslt.resultObjects) {
+                                    let value: KeyText;
                                     let keys: ibas.IList<any> = propertyValues(item, propertyKey);
                                     let texts: ibas.IList<any> = propertyValues(item, propertyText);
+                                    let notes: ibas.IList<any> = !ibas.strings.isEmpty(propertyNote) ? propertyValues(item, propertyNote) : undefined;
                                     for (let index: number = 0; index < keys.length; index++) {
                                         // 值全部转为字符类型
-                                        values.add(new ibas.KeyText(String(keys[index]), index < texts.length ? String(texts[index]) : ""));
+                                        value = new KeyText();
+                                        value.key = String(keys[index]);
+                                        value.text = index < texts.length ? String(texts[index]) : "";
+                                        value.note = (notes && index < notes.length) ? String(notes[index]) : undefined;
+                                        values.add(value);
                                     }
                                 }
                                 if (onCompleted instanceof Function) {

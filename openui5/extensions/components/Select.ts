@@ -40,6 +40,10 @@ namespace sap {
                 setSelection(this: Select, value: sap.ui.core.Item): Select {
                     (<any>sap.m.Select.prototype).setSelection.apply(this, arguments);
                     this.setProperty("bindingValue", this.getSelectedKey());
+                    let tooltip: any = value?.getTooltip();
+                    if (tooltip) {
+                        this.setTooltip(tooltip);
+                    }
                     return this;
                 },
                 /** 重写绑定 */
@@ -198,7 +202,7 @@ namespace sap {
                         this.addItem(new SelectItem("", {
                             key: key,
                             text: ibas.enums.describe(enumType, key),
-                            additionalText: text
+                            tooltip: ibas.strings.format("{0} - {1}", key, ibas.enums.describe(enumType, key))
                         }));
                     }
                     return this;
@@ -289,10 +293,12 @@ namespace sap {
                                     let sItem: any = this.getItemByKey(item.key);
                                     if (sItem instanceof ui.core.Item) {
                                         sItem.setText(item.text);
+                                        sItem.setTooltip(ibas.strings.format("{0} - {1}", item.key, item.text))
                                     } else {
                                         this.addItem(new SelectItem("", {
                                             key: item.key,
-                                            text: item.text
+                                            text: item.text,
+                                            tooltip: ibas.strings.format("{0} - {1}", item.key, item.text)
                                         }));
                                     }
                                 }
@@ -411,11 +417,13 @@ namespace sap {
                                                         sItem.setText(item.description);
                                                         if (sItem instanceof SelectItem) {
                                                             sItem.setDefault(item.default);
+                                                            sItem.setTooltip(ibas.strings.format("{0} - {1}", item.value, item.description));
                                                         }
                                                     } else {
                                                         this.addItem(new SelectItem("", {
                                                             key: item.value,
                                                             text: item.description,
+                                                            tooltip: ibas.strings.format("{0} - {1}", item.value, item.description),
                                                             default: item.default,
                                                         }));
                                                     }
@@ -650,10 +658,12 @@ namespace sap {
                                         let sItem: any = this.getItemByKey(property.name);
                                         if (sItem instanceof ui.core.Item) {
                                             sItem.setText(property.description);
+                                            sItem.setTooltip(ibas.strings.format("{0} - {1}", property.name, property.description));
                                         } else {
                                             this.addItem(new SelectItem("", {
                                                 key: property.name,
                                                 text: property.description,
+                                                tooltip: ibas.strings.format("{0} - {1}", property.name, property.description),
                                             }));
                                         }
                                     }
@@ -665,6 +675,91 @@ namespace sap {
                     });
                     return this;
                 }
+            });
+            /**
+             * 币种-选择框
+             */
+            Select.extend("sap.extension.m.CurrencySelect", {
+                metadata: {
+                    properties: {
+                    },
+                    events: {}
+                },
+                renderer: {
+                },
+                /**
+                 * 设置绑定值
+                 * @param value 值
+                 */
+                setBindingValue(this: CurrencySelect, value: string): CurrencySelect {
+                    let item: ui.core.Item = this.getItemByKey("value");
+                    if (ibas.objects.isNull(item)) {
+                        for (let cItem of this.getItems()) {
+                            if (cItem instanceof ui.core.ListItem) {
+                                if (cItem.getAdditionalText() === value) {
+                                    value = cItem.getKey();
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    return Select.prototype.setBindingValue.apply(this, arguments);
+                },
+                /**
+                 * 加载可选值
+                 */
+                loadItems(this: CurrencySelect): CurrencySelect {
+                    this.destroyItems();
+                    let boRepository: ibas.BORepositoryApplication = ibas.boFactory.create("BORepositoryAccounting");
+                    let dataInfo: repository.IDataInfo = {
+                        type: "Currency",
+                        key: "Code",
+                        text: "Name",
+                        note: "ISO"
+                    };
+                    let criteria: ibas.ICriteria = new ibas.Criteria();
+                    let condition: ibas.ICondition = criteria.conditions.create();
+                    condition.alias = "Activated";
+                    condition.value = "YES";
+                    repository.fetch(boRepository, dataInfo, criteria,
+                        (values) => {
+                            if (values instanceof Error) {
+                                ibas.logger.log(values);
+                            } else {
+                                let deCurrenty: string = ibas.config.get(ibas.CONFIG_ITEM_DEFAULT_CURRENCY, "");
+                                for (let item of values) {
+                                    let sItem: any = this.getItemByKey(item.key);
+                                    if (sItem instanceof ui.core.Item) {
+                                        sItem.setText(item.text);
+                                        if (sItem instanceof ui.core.ListItem) {
+                                            sItem.setAdditionalText(item.note);
+                                        }
+                                    } else {
+                                        this.addItem(new SelectItem("", {
+                                            key: item.key,
+                                            text: item.key,
+                                            additionalText: item.text,
+                                            tooltip: ibas.strings.format("{0} - {1}", item.key, item.text + (item.note && item.note !== item.key ? ibas.strings.format(" ({0})", item.note) : "")),
+                                            default: (deCurrenty === item.key || deCurrenty === item.note) ? true : undefined,
+                                        }));
+                                    }
+                                }
+                            }
+                        }
+                    );
+                    return this;
+                },
+                applySettings(this: Select, mSettings: any): CurrencySelect {
+                    if (ibas.objects.isNull(mSettings?.showSecondaryValues)) {
+                        if (!mSettings) {
+                            mSettings = {};
+                        }
+                        mSettings.showSecondaryValues = true;
+                        mSettings.wrapItemsText = true;
+                    }
+                    Select.prototype.applySettings.call(this, mSettings);
+                    return this;
+                },
             });
         }
     }
