@@ -492,7 +492,7 @@ namespace sap {
                                     let property: managedobjects.IBindingInfo = properties[j];
                                     if (!ibas.strings.isEmpty(property)) {
                                         if (property.type instanceof sap.ui.model.SimpleType) {
-                                            json[property.path] = property.type.parseValue(value, typeof value);
+                                            json[property.path] = property.type.parseValue(value, property.type.getName().toLowerCase());
                                         } else {
                                             json[property.path] = value;
                                         }

@@ -221,7 +221,7 @@ namespace sap {
                     // 判断是否有有效模型
                     if (model && model.getData()) {
                         let data: any = model.getData();
-                        if (!(data.rows instanceof Array && data.rows.length > 0)) {
+                        if (!(data?.rows instanceof Array && data.rows.length > 0)) {
                             model = undefined;
                         }
                     }

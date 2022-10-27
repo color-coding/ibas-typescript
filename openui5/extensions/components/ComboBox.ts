@@ -237,7 +237,7 @@ namespace sap {
                                                     } else {
                                                         this.addItem(new SelectItem("", {
                                                             key: item.value,
-                                                            text: item.description,
+                                                            text: ibas.strings.isEmpty(item.description) ? item.value : item.description,
                                                             default: item.default,
                                                         }));
                                                     }

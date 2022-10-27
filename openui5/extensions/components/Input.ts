@@ -1067,7 +1067,7 @@ namespace sap {
                                                 for (let item of property.values) {
                                                     this.addSuggestionItem(new SelectItem("", {
                                                         key: item.value,
-                                                        text: item.description,
+                                                        text: ibas.strings.isEmpty(item.description) ? item.value : item.description,
                                                         default: item.default,
                                                     }));
                                                 }

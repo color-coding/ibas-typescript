@@ -95,8 +95,8 @@ namespace shell {
                             }),
                             this.getLanguageItems(
                                 new sap.m.Select("", {
-                                    items: [
-                                    ],
+                                    forceSelection: false,
+                                    resetOnMissingKey: true,
                                     change: function (event: sap.ui.base.Event): void {
                                         let selectedItem: any = event.getParameter("selectedItem");
                                         if (selectedItem instanceof sap.ui.core.Item) {

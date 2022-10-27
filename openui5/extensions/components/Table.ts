@@ -155,7 +155,7 @@ namespace sap {
                                 let dataCount: number = data.length;
                                 if (dataCount === undefined) {
                                     // 存在绑定的对象路径问题
-                                    dataCount = data.rows.length;
+                                    dataCount = data.rows?.length;
                                     if (dataCount !== undefined) {
                                         // 此路径存在数据
                                         data = data.rows;
@@ -323,7 +323,8 @@ namespace sap {
                                     || path === ibas.BO_PROPERTY_NAME_LINESTATUS) {
                                     mSettings.width = "8rem";
                                 } else if (path === ibas.BO_PROPERTY_NAME_CANCELED
-                                    || path === ibas.BO_PROPERTY_NAME_DELETED) {
+                                    || path === ibas.BO_PROPERTY_NAME_DELETED
+                                    || path === ibas.BO_PROPERTY_NAME_STATUS) {
                                     mSettings.width = "6rem";
                                 }
                             }
@@ -472,7 +473,7 @@ namespace sap {
                     // 判断是否有有效模型
                     if (model && model.getData()) {
                         let data: any = model.getData();
-                        if (!(data.rows instanceof Array && data.rows.length > 0)) {
+                        if (!(data?.rows instanceof Array && data.rows.length > 0)) {
                             model = undefined;
                         }
                     }
@@ -779,7 +780,7 @@ namespace sap {
                                 let dataCount: number = data.length;
                                 if (dataCount === undefined) {
                                     // 存在绑定的对象路径问题
-                                    dataCount = data.rows.length;
+                                    dataCount = data.rows?.length;
                                     if (dataCount !== undefined) {
                                         // 此路径存在数据
                                         data = data.rows;
@@ -1006,7 +1007,7 @@ namespace sap {
                     // 判断是否有有效模型
                     if (model && model.getData()) {
                         let data: any = model.getData();
-                        if (!(data.rows instanceof Array && data.rows.length > 0)) {
+                        if (!(data?.rows instanceof Array && data.rows.length > 0)) {
                             model = undefined;
                         }
                     }

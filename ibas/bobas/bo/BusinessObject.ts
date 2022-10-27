@@ -19,18 +19,20 @@ namespace ibas {
     export const BO_PROPERTY_NAME_OBJECTKEY: string = "objectKey";
     /** 业务对象属性名称-LineId */
     export const BO_PROPERTY_NAME_LINEID: string = "lineId";
-    /** 业务对象属性名称-objectCode */
+    /** 业务对象属性名称-ObjectCode */
     export const BO_PROPERTY_NAME_OBJECTCODE: string = "objectCode";
-    /** 业务对象属性名称-documentStatus */
+    /** 业务对象属性名称-DocumentStatus */
     export const BO_PROPERTY_NAME_DOCUMENTSTATUS: string = "documentStatus";
-    /** 业务对象属性名称-canceled */
+    /** 业务对象属性名称-Canceled */
     export const BO_PROPERTY_NAME_CANCELED: string = "canceled";
-    /** 业务对象属性名称-approvalStatus */
+    /** 业务对象属性名称-ApprovalStatus */
     export const BO_PROPERTY_NAME_APPROVALSTATUS: string = "approvalStatus";
-    /** 业务对象属性名称-deleted */
+    /** 业务对象属性名称-Deleted */
     export const BO_PROPERTY_NAME_DELETED: string = "deleted";
-    /** 业务对象属性名称-lineStatus */
+    /** 业务对象属性名称-LineStatus */
     export const BO_PROPERTY_NAME_LINESTATUS: string = "lineStatus";
+    /** 业务对象属性名称-Status */
+    export const BO_PROPERTY_NAME_STATUS: string = "status";
     /** 需要被重置的属性名称 */
     const NEED_BE_RESET_PROPERTIES: string[] = [
         "CreateDate", "CreateTime", "UpdateDate", "UpdateTime", "LogInst", "CreateUserSign",

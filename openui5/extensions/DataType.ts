@@ -370,14 +370,28 @@ namespace sap {
             }
             sap.ui.model.type.Integer.extend("sap.extension.data.Numeric", {
                 constructor: function (this: Numeric, setting?: INumericSetting): void {
-                    sap.ui.model.type.Integer.call(this, undefined, setting ?
+                    sap.ui.model.type.Integer.call(this, {
+                        // emptyString: 0,
+                    }, setting ?
                         {
                             minimum: setting.minValue,
                             maximum: setting.maxValue,
                         } : undefined
                     );
                     (<any>this).sName = ibas.objects.nameOf(this);
-                }
+                },
+                formatValue(oValue: any, sInternalType: string): any {
+                    if (typeof oValue === sInternalType) {
+                        return oValue;
+                    }
+                    return sap.ui.model.type.Integer.prototype.formatValue.apply(this, arguments);
+                },
+                parseValue(oValue: any, sInternalType: string): any {
+                    if (sInternalType === "string" && ibas.strings.isEmpty(oValue)) {
+                        return 0;
+                    }
+                    return sap.ui.model.type.Integer.prototype.parseValue.apply(this, arguments);
+                },
             });
             /**
              * 小数类型设置
@@ -401,14 +415,27 @@ namespace sap {
             sap.ui.model.type.Float.extend("sap.extension.data.Decimal", {
                 constructor: function (setting?: IDecimalSetting): void {
                     sap.ui.model.type.Float.call(this, {
-                        decimals: setting?.decimalPlaces > 0 ? setting?.decimalPlaces : DECIMAL_PLACES
+                        decimals: setting?.decimalPlaces > 0 ? setting?.decimalPlaces : DECIMAL_PLACES,
+                        // emptyString: 0,
                     }, setting ?
                         {
                             minimum: setting.minValue,
                             maximum: setting.maxValue,
                         } : undefined
                     );
-                }
+                },
+                formatValue(oValue: any, sInternalType: string): any {
+                    if (typeof oValue === sInternalType) {
+                        return oValue;
+                    }
+                    return sap.ui.model.type.Float.prototype.formatValue.apply(this, arguments);
+                },
+                parseValue(oValue: any, sInternalType: string): any {
+                    if (sInternalType === "string" && ibas.strings.isEmpty(oValue)) {
+                        return 0.0;
+                    }
+                    return sap.ui.model.type.Float.prototype.parseValue.apply(this, arguments);
+                },
             });
             Decimal.extend("sap.extension.data.Price", {
                 constructor: function (setting?: IDecimalSetting): void {
@@ -510,6 +537,12 @@ namespace sap {
                         setting.format = DEFAULT_FORMAT_DATE;
                     }
                     sap.ui.model.type.Date.call(this, { pattern: setting?.format });
+                },
+                formatValue(oValue: any, sInternalType: string): any {
+                    if (typeof oValue === sInternalType) {
+                        return oValue;
+                    }
+                    return sap.ui.model.type.Date.prototype.formatValue.apply(this, arguments);
                 },
                 parseValue(oValue: any, sInternalType: string): any {
                     if (sInternalType === "Date") {
@@ -623,11 +656,17 @@ namespace sap {
                     }
                     sap.ui.model.type.DateTime.call(this, { pattern: setting?.format });
                 },
+                formatValue(oValue: any, sInternalType: string): any {
+                    if (typeof oValue === sInternalType) {
+                        return oValue;
+                    }
+                    return sap.ui.model.type.DateTime.prototype.formatValue.apply(this, arguments);
+                },
                 parseValue(oValue: any, sInternalType: string): any {
                     if (sInternalType === "Date") {
                         return oValue;
                     }
-                    return sap.ui.model.type.Date.prototype.parseValue.apply(this, arguments);
+                    return sap.ui.model.type.DateTime.prototype.parseValue.apply(this, arguments);
                 },
             });
             /**

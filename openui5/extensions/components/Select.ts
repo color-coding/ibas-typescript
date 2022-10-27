@@ -40,9 +40,11 @@ namespace sap {
                 setSelection(this: Select, value: sap.ui.core.Item): Select {
                     (<any>sap.m.Select.prototype).setSelection.apply(this, arguments);
                     this.setProperty("bindingValue", this.getSelectedKey());
-                    let tooltip: any = value?.getTooltip();
-                    if (tooltip) {
-                        this.setTooltip(tooltip);
+                    if (value instanceof sap.ui.core.Item) {
+                        let tooltip: any = value?.getTooltip();
+                        if (tooltip) {
+                            this.setTooltip(tooltip);
+                        }
                     }
                     return this;
                 },
@@ -422,7 +424,7 @@ namespace sap {
                                                     } else {
                                                         this.addItem(new SelectItem("", {
                                                             key: item.value,
-                                                            text: item.description,
+                                                            text: ibas.strings.isEmpty(item.description) ? item.value : item.description,
                                                             tooltip: ibas.strings.format("{0} - {1}", item.value, item.description),
                                                             default: item.default,
                                                         }));
