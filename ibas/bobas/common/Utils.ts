@@ -505,6 +505,42 @@ namespace ibas {
             }
             return builder.toString();
         }
+        /**
+         * 是否大写字母
+         * @param value 字符 
+         * @param index 索引
+         */
+        export function isUpperCase(value: string, index?: number): boolean {
+            if (!(index >= 0)) {
+                index = 0;
+            }
+            if (isEmpty(value)) {
+                return false;
+            }
+            let char: number = value.charCodeAt(index);
+            if (char >= 65 && char <= 90) {
+                return true;
+            }
+            return false;
+        }
+        /**
+         * 是否小写字母
+         * @param value 字符 
+         * @param index 索引
+         */
+        export function isLowerCase(value: string, index?: number): boolean {
+            if (!(index >= 0)) {
+                index = 0;
+            }
+            if (isEmpty(value)) {
+                return false;
+            }
+            let char: number = value.charCodeAt(index);
+            if (char >= 97 && char <= 122) {
+                return true;
+            }
+            return false;
+        }
     }
     /**
      * 唯一标识

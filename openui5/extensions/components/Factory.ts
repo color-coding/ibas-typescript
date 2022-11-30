@@ -46,7 +46,7 @@ namespace sap {
                     path: string,
                     type?: sap.ui.model.SimpleType
                 } = {
-                    path: property.name[0].toLowerCase() + property.name.substring(1)
+                    path: ibas.businessobjects.properties.naming.lowerCamelCase(property.name)
                 };
                 if (property.name === "DocumentStatus" || property.name === "LineStatus") {
                     bindInfo.type = new sap.extension.data.DocumentStatus(mode === "Text" ? true : false);

@@ -286,7 +286,7 @@ namespace ibas {
                     property = property.substring(1);
                 }
                 // 属性首字母小写
-                property = property[0].toLowerCase() + property.substring(1);
+                property = businessobjects.properties.naming.lowerCamelCase(property);
             }
             bindables.firePropertyChanged.call(this, property);
         }

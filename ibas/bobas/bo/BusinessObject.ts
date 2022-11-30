@@ -704,17 +704,6 @@ namespace ibas {
         }
     }
     /**
-     * 统一命名
-     * @param value 待重命名属性
-     */
-    function naming(value: string): string {
-        if (!strings.isEmpty(value)) {
-            return value[0].toUpperCase() + value.substring(1);
-        }
-        return value;
-    }
-
-    /**
      * 单据对象基类
      */
     export abstract class BODocument<T extends IBODocument> extends BusinessObject<T> {
@@ -734,7 +723,7 @@ namespace ibas {
             builder.append(this[BO_PROPERTY_NAME_OBJECTCODE]);
             builder.append("].");
             builder.append("[");
-            builder.append(naming(BO_PROPERTY_NAME_DOCENTRY));
+            builder.append(businessobjects.properties.naming.upperCamelCase(BO_PROPERTY_NAME_DOCENTRY));
             builder.append(" ");
             builder.append("=");
             builder.append(" ");
@@ -767,7 +756,7 @@ namespace ibas {
             builder.append(this[BO_PROPERTY_NAME_OBJECTCODE]);
             builder.append("].");
             builder.append("[");
-            builder.append(naming(BO_PROPERTY_NAME_DOCENTRY));
+            builder.append(businessobjects.properties.naming.upperCamelCase(BO_PROPERTY_NAME_DOCENTRY));
             builder.append(" ");
             builder.append("=");
             builder.append(" ");
@@ -775,7 +764,7 @@ namespace ibas {
             builder.append("]");
             builder.append("&");
             builder.append("[");
-            builder.append(naming(BO_PROPERTY_NAME_LINEID));
+            builder.append(businessobjects.properties.naming.upperCamelCase(BO_PROPERTY_NAME_LINEID));
             builder.append(" ");
             builder.append("=");
             builder.append(" ");
@@ -805,7 +794,7 @@ namespace ibas {
             builder.append(this[BO_PROPERTY_NAME_OBJECTCODE]);
             builder.append("].");
             builder.append("[");
-            builder.append(naming(BO_PROPERTY_NAME_CODE));
+            builder.append(businessobjects.properties.naming.upperCamelCase(BO_PROPERTY_NAME_CODE));
             builder.append(" ");
             builder.append("=");
             builder.append(" ");
@@ -838,7 +827,7 @@ namespace ibas {
             builder.append(this[BO_PROPERTY_NAME_OBJECTCODE]);
             builder.append("].");
             builder.append("[");
-            builder.append(naming(BO_PROPERTY_NAME_CODE));
+            builder.append(businessobjects.properties.naming.upperCamelCase(BO_PROPERTY_NAME_CODE));
             builder.append(" ");
             builder.append("=");
             builder.append(" ");
@@ -846,7 +835,7 @@ namespace ibas {
             builder.append("]");
             builder.append("&");
             builder.append("[");
-            builder.append(naming(BO_PROPERTY_NAME_LINEID));
+            builder.append(businessobjects.properties.naming.upperCamelCase(BO_PROPERTY_NAME_LINEID));
             builder.append(" ");
             builder.append("=");
             builder.append(" ");
@@ -876,7 +865,7 @@ namespace ibas {
             builder.append(this[BO_PROPERTY_NAME_OBJECTCODE]);
             builder.append("].");
             builder.append("[");
-            builder.append(naming(BO_PROPERTY_NAME_OBJECTKEY));
+            builder.append(businessobjects.properties.naming.upperCamelCase(BO_PROPERTY_NAME_OBJECTKEY));
             builder.append(" ");
             builder.append("=");
             builder.append(" ");
@@ -909,7 +898,7 @@ namespace ibas {
             builder.append(this[BO_PROPERTY_NAME_OBJECTCODE]);
             builder.append("].");
             builder.append("[");
-            builder.append(naming(BO_PROPERTY_NAME_OBJECTKEY));
+            builder.append(businessobjects.properties.naming.upperCamelCase(BO_PROPERTY_NAME_OBJECTKEY));
             builder.append(" ");
             builder.append("=");
             builder.append(" ");
@@ -917,7 +906,7 @@ namespace ibas {
             builder.append("]");
             builder.append("&");
             builder.append("[");
-            builder.append(naming(BO_PROPERTY_NAME_LINEID));
+            builder.append(businessobjects.properties.naming.upperCamelCase(BO_PROPERTY_NAME_LINEID));
             builder.append(" ");
             builder.append("=");
             builder.append(" ");
@@ -1183,7 +1172,7 @@ namespace ibas {
                     return;
                 }
                 let skips: IList<string> = arrays.create(skip);
-                skips.add(naming(BO_PROPERTY_NAME_OBJECTCODE));
+                skips.add(naming.upperCamelCase(BO_PROPERTY_NAME_OBJECTCODE));
                 skips.add(REMOTE_OBJECT_TYPE_PROPERTY_NAME);
                 skips.add("is*");
                 if (target instanceof BODocument) {
@@ -1249,6 +1238,62 @@ namespace ibas {
                 // 重置状态
                 if (target instanceof BusinessObject) {
                     target.reset();
+                }
+            }
+            /** 命名 */
+            export namespace naming {
+                /**
+                 * 小驼峰，首单词首母小写，其他单词大写，其他字母小写
+                 * 例如：
+                 *     docEntry
+                 * 注意：
+                 *     前部遇到连续大写字母时，全部转为小写。UOMRate => uomRate
+                 * @param value 待重命名属性
+                 */
+                export function lowerCamelCase(value: string): string {
+                    if (strings.isEmpty(value)) {
+                        return value;
+                    }
+                    let upIndex: number = 0;
+                    for (let i: number = 0; i < value.length; i++) {
+                        if (strings.isUpperCase(value, i)) {
+                            // 大写字母
+                            upIndex++;
+                        } else {
+                            break;
+                        }
+                    }
+                    if (upIndex > 0) {
+                        if (upIndex === 1 || upIndex === value.length) {
+                            return value.substring(0, upIndex).toLowerCase() + value.substring(upIndex);
+                        } else {
+                            upIndex--;
+                            return value.substring(0, upIndex).toLowerCase() + value.substring(upIndex);
+                        }
+                    }
+                    return value;
+                }
+                /**
+                 * 大驼峰，单词首字母大写，其他字母小写
+                 * @param value 待重命名属性
+                 */
+                export function upperCamelCase(value: string): string {
+                    if (strings.isEmpty(value)) {
+                        return value;
+                    }
+                    let upIndex: number = -1;
+                    for (let i: number = 0; i < value.length; i++) {
+                        if (strings.isLowerCase(value, i)) {
+                            // 小写字母
+                            upIndex = i;
+                        } else {
+                            break;
+                        }
+                    }
+                    if (upIndex > 0) {
+                        return value[0].toUpperCase() + value.substring(1);
+                    }
+                    return value;
                 }
             }
         }
