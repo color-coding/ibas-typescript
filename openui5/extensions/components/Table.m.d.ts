@@ -85,6 +85,24 @@ declare namespace sap {
                  * @param value 值
                  */
                 setDataInfo(value: { code: string, name?: string } | string | shell.bo.IBizObjectInfo): this;
+                /**
+                 * 获取排序属性
+                 */
+                getSortProperty(): string;
+                /**
+                 * 设置排序属性
+                 * @param value 值
+                 */
+                setSortProperty(value: string): this;
+                /**
+                 * 获取排序间隔步长
+                 */
+                getSortIntervalStep(): number;
+                /**
+                 * 设置排序间隔步长
+                 * @param value 值：0，不支持调整
+                 */
+                setSortIntervalStep(value: number): this;
             }
         }
     }

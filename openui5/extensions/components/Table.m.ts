@@ -139,6 +139,10 @@ namespace sap {
                         dataInfo: { type: "any" },
                         /** 属性过滤器 */
                         propertyFilter: { type: "function" },
+                        /** 排序属性 */
+                        sortProperty: { type: "string" },
+                        /** 排序间隔步长，0:不支持调整 */
+                        sortIntervalStep: { type: "int", defaultValue: 1 },
                     },
                     events: {}
                 },
@@ -170,7 +174,81 @@ namespace sap {
                     return this.setProperty("propertyFilter", value);
                 },
                 /** 重构设置 */
-                applySettings(this: DataTable): DataTable {
+                applySettings(this: DataTable, mSettings: any): DataTable {
+                    // 添加表格显示排序相关设置
+                    if (!ibas.strings.isEmpty(mSettings?.sortProperty)) {
+                        if (typeof mSettings.items === "string") {
+                            let path: string = mSettings.items;
+                            if (ibas.strings.isWith(path, "{", "}")) {
+                                path = path.substring(1, path.length - 1);
+                            }
+                            mSettings.items = {
+                                path: path
+                            };
+                        }
+                        if (typeof mSettings.items === "object" && !ibas.strings.isEmpty(mSettings.items.path) && ibas.objects.isNull(mSettings.items.sorter)) {
+                            mSettings.items.sorter = [
+                                new sap.ui.model.Sorter(mSettings.sortProperty, false)
+                            ];
+                            if (!(mSettings.sortIntervalStep <= 0)) {
+                                // 步长为0，不支持拖动
+                                if (ibas.objects.isNull(mSettings.dragDropConfig)) {
+                                    mSettings.dragDropConfig = [];
+                                }
+                                if (mSettings.dragDropConfig instanceof Array) {
+                                    mSettings.dragDropConfig.push(new sap.ui.core.dnd.DragDropInfo("", {
+                                        sourceAggregation: "items",
+                                        targetAggregation: "items",
+                                        dropPosition: sap.ui.core.dnd.DropPosition.Between,
+                                        dropLayout: sap.ui.core.dnd.DropLayout.Vertical,
+                                        drop(event: sap.ui.base.Event): void {
+                                            let dragged: any = event.getParameter("draggedControl");
+                                            let dropped: any = event.getParameter("droppedControl");
+                                            let dropPosition: string = event.getParameter("dropPosition");
+                                            let table: any = (<any>event.getSource())?.getDropTarget();
+                                            if (table instanceof DataTable) {
+                                                let index: number = 1;
+                                                let step: number = table.getSortIntervalStep();
+                                                if (step <= 0) {
+                                                    step = 1;
+                                                }
+                                                for (let row of table.getItems()) {
+                                                    if (ibas.objects.isNull(row.getBindingContext())) {
+                                                        continue;
+                                                    }
+                                                    if (dragged === row) {
+                                                        continue;
+                                                    } else if (dropped === row) {
+                                                        if (dropPosition === "Before") {
+                                                            dragged.getBindingContext().getObject()[mSettings.sortProperty] = index * step;
+                                                            index++;
+                                                            dropped.getBindingContext().getObject()[mSettings.sortProperty] = index * step;
+                                                            index++;
+                                                        } else if (dropPosition === "After") {
+                                                            dropped.getBindingContext().getObject()[mSettings.sortProperty] = index * step;
+                                                            index++;
+                                                            dragged.getBindingContext().getObject()[mSettings.sortProperty] = index * step;
+                                                            index++;
+                                                        }
+                                                    } else {
+                                                        row.getBindingContext().getObject()[mSettings.sortProperty] = index * step;
+                                                        index++;
+                                                    }
+                                                }
+                                                if (index > 1) {
+                                                    // table.getModel().refresh(true);
+                                                    // 刷新不好使，需要重新绑定
+                                                    let model: any = table.getModel();
+                                                    table.setModel(undefined);
+                                                    table.setModel(model);
+                                                }
+                                            }
+                                        },
+                                    }));
+                                }
+                            }
+                        }
+                    }
                     Table.prototype.applySettings.apply(this, arguments);
                     let dataInfo: any = this.getDataInfo();
                     if (typeof dataInfo === "string") {

@@ -346,6 +346,10 @@ namespace sap {
                         dataInfo: { type: "any" },
                         /** 属性过滤器 */
                         propertyFilter: { type: "function" },
+                        /** 排序属性 */
+                        sortProperty: { type: "string" },
+                        /** 排序间隔步长，0:不支持调整 */
+                        sortIntervalStep: { type: "int", defaultValue: 1 },
                     },
                     events: {}
                 },
@@ -420,6 +424,76 @@ namespace sap {
                                         }
                                     }
                                 });
+                            }
+                        }
+                    }
+                    // 添加表格显示排序相关设置
+                    if (!ibas.strings.isEmpty(mSettings?.sortProperty)) {
+                        if (typeof mSettings.rows === "string") {
+                            let path: string = mSettings.rows;
+                            if (ibas.strings.isWith(path, "{", "}")) {
+                                path = path.substring(1, path.length - 1);
+                            }
+                            mSettings.rows = {
+                                path: path
+                            };
+                        }
+                        if (typeof mSettings.rows === "object" && !ibas.strings.isEmpty(mSettings.rows.path) && ibas.objects.isNull(mSettings.rows.sorter)) {
+                            mSettings.rows.sorter = [
+                                new sap.ui.model.Sorter(mSettings.sortProperty, false)
+                            ];
+                            if (!(mSettings.sortIntervalStep <= 0)) {
+                                // 步长为0，不支持拖动
+                                if (ibas.objects.isNull(mSettings.dragDropConfig)) {
+                                    mSettings.dragDropConfig = [];
+                                }
+                                if (mSettings.dragDropConfig instanceof Array) {
+                                    mSettings.dragDropConfig.push(new sap.ui.core.dnd.DragDropInfo("", {
+                                        sourceAggregation: "rows",
+                                        targetAggregation: "rows",
+                                        dropPosition: sap.ui.core.dnd.DropPosition.Between,
+                                        dropLayout: sap.ui.core.dnd.DropLayout.Vertical,
+                                        drop(event: sap.ui.base.Event): void {
+                                            let dragged: any = event.getParameter("draggedControl");
+                                            let dropped: any = event.getParameter("droppedControl");
+                                            let dropPosition: string = event.getParameter("dropPosition");
+                                            let table: any = (<any>event.getSource())?.getDropTarget();
+                                            if (table instanceof DataTable) {
+                                                let index: number = 1;
+                                                let step: number = table.getSortIntervalStep();
+                                                if (step <= 0) {
+                                                    step = 1;
+                                                }
+                                                for (let row of table.getRows()) {
+                                                    if (ibas.objects.isNull(row.getBindingContext())) {
+                                                        continue;
+                                                    }
+                                                    if (dragged === row) {
+                                                        continue;
+                                                    } else if (dropped === row) {
+                                                        if (dropPosition === "Before") {
+                                                            dragged.getBindingContext().getObject()[mSettings.sortProperty] = index * step;
+                                                            index++;
+                                                            dropped.getBindingContext().getObject()[mSettings.sortProperty] = index * step;
+                                                            index++;
+                                                        } else if (dropPosition === "After") {
+                                                            dropped.getBindingContext().getObject()[mSettings.sortProperty] = index * step;
+                                                            index++;
+                                                            dragged.getBindingContext().getObject()[mSettings.sortProperty] = index * step;
+                                                            index++;
+                                                        }
+                                                    } else {
+                                                        row.getBindingContext().getObject()[mSettings.sortProperty] = index * step;
+                                                        index++;
+                                                    }
+                                                }
+                                                if (index > 1) {
+                                                    table.getModel().refresh(true);
+                                                }
+                                            }
+                                        },
+                                    }));
+                                }
                             }
                         }
                     }
