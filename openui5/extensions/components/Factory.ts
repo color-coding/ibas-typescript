@@ -42,10 +42,7 @@ namespace sap {
              */
             export function newComponent(property: shell.bo.IBizPropertyInfo, mode: "Text" | "Input" | "Object" | "Object.2"): sap.ui.core.Control {
                 // 创建绑定信息
-                let bindInfo: {
-                    path: string,
-                    type?: sap.ui.model.SimpleType
-                } = {
+                let bindInfo: sap.ui.base.ManagedObject.PropertyBindingInfo = {
                     path: ibas.businessobjects.properties.naming.lowerCamelCase(property.name)
                 };
                 if (property.name === "DocumentStatus" || property.name === "LineStatus") {

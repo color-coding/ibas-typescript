@@ -173,6 +173,26 @@ namespace sap {
                             }
                         }
                     });
+                    // 表格多选, selectionBehavior = Row 时
+                    // 点击表格行非第一列为单选，选择框为多选
+                    this.attachEvent("cellClick", undefined, (event: sap.ui.base.Event) => {
+                        let source: any = event.getSource();
+                        if (source instanceof Table) {
+                            if (source.getChooseType() === ibas.emChooseType.MULTIPLE
+                                && source.getSelectionBehavior() === sap.ui.table.SelectionBehavior.Row) {
+                                let rowIndex: number = event.getParameter("rowIndex");
+                                if (rowIndex >= 0) {
+                                    if (this.isIndexSelected(rowIndex)) {
+                                        this.removeSelectionInterval(rowIndex, rowIndex);
+                                        event.preventDefault();
+                                    } else {
+                                        this.setSelectionInterval(rowIndex, rowIndex);
+                                        event.preventDefault();
+                                    }
+                                }
+                            }
+                        }
+                    });
                 },
                 /** 退出 */
                 exit(this: Table): void {
@@ -867,6 +887,26 @@ namespace sap {
                                         // 调用事件
                                         this.setBusy(true);
                                         this.fireNextDataSet({ data: data[data.length - 1] });
+                                    }
+                                }
+                            }
+                        }
+                    });
+                    // 表格多选, selectionBehavior = Row 时
+                    // 点击表格行非第一列为单选，选择框为多选
+                    this.attachEvent("cellClick", undefined, (event: sap.ui.base.Event) => {
+                        let source: any = event.getSource();
+                        if (source instanceof TreeTable) {
+                            if (source.getChooseType() === ibas.emChooseType.MULTIPLE
+                                && source.getSelectionBehavior() === sap.ui.table.SelectionBehavior.Row) {
+                                let rowIndex: number = event.getParameter("rowIndex");
+                                if (rowIndex >= 0) {
+                                    if (this.isIndexSelected(rowIndex)) {
+                                        this.removeSelectionInterval(rowIndex, rowIndex);
+                                        event.preventDefault();
+                                    } else {
+                                        this.setSelectionInterval(rowIndex, rowIndex);
+                                        event.preventDefault();
                                     }
                                 }
                             }

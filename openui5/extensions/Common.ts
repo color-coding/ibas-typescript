@@ -197,7 +197,7 @@ namespace sap {
              * @param path 路径
              * @param bindingInfo 绑定信息
              */
-            export function checkBinding(mObject: sap.ui.base.ManagedObject, path: string, bindingInfo: any): boolean {
+            export function checkBinding(mObject: sap.ui.base.ManagedObject, path: string, bindingInfo: sap.ui.base.ManagedObject.PropertyBindingInfo): boolean {
                 if (this instanceof sap.ui.base.ManagedObject) {
                     mObject = this;
                     path = arguments[0];

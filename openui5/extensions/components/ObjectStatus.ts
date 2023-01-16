@@ -41,9 +41,15 @@ namespace sap {
                  */
                 setEnumValue(this: ObjectEnumStatus, value: any): ObjectEnumStatus {
                     this.setProperty("enumValue", value);
-                    this.setState(this.toState(this.getEnumValue()));
-                    this.setIcon(this.toIcon(this.getEnumValue()));
-                    this.setText(this.toText(this.getEnumValue()));
+                    if (this.toState instanceof Function) {
+                        this.setState(this.toState(this.getEnumValue()));
+                    }
+                    if (this.toIcon instanceof Function) {
+                        this.setIcon(this.toIcon(this.getEnumValue()));
+                    }
+                    if (this.toText instanceof Function) {
+                        this.setText(this.toText(this.getEnumValue()));
+                    }
                     return this;
                 },
                 /**

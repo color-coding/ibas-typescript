@@ -285,7 +285,6 @@ namespace sap {
                                             key: value,
                                             text: value,
                                         });
-                                        this.addSuggestionItem(item);
                                         this.setSelectedItem(item);
                                         this.updateDomValue(item.getText());
                                     } else {
@@ -310,7 +309,6 @@ namespace sap {
                                             key: keyBudilder.toString(),
                                             text: textBudilder.toString(),
                                         });
-                                        this.addSuggestionItem(item);
                                         this.setSelectedItem(item);
                                         this.updateDomValue(item.getText());
                                     }
@@ -496,7 +494,6 @@ namespace sap {
                                         key: keyBudilder.toString(),
                                         text: textBudilder.toString(),
                                     });
-                                    that.addSuggestionItem(item);
                                     that.setSelectedItem(item);
                                     that.updateDomValue(item.getText());
                                     that.fireAfterSelection({ selecteds: selecteds, });

@@ -34,68 +34,55 @@ namespace sap {
                 },
                 renderer(oRm: sap.ui.core.RenderManager, oControl: any): void {
                     let sStatus: string = oControl.getStatusText();
-                    oRm.write("<div");
-                    oRm.writeControlData(oControl);
+                    oRm.openStart("div", oControl);
                     //  oRm.writeAttribute("tabindex", "0");
-                    oRm.write(">");
-                    oRm.write("<div");
-                    oRm.addClass("sapFCardHeader");
-                    // accessibility state
-                    oRm.writeAccessibilityState(oControl, {
-                        role: "group",
-                        labelledby: { value: oControl._getHeaderAccessibility(), append: true },
-                        // roledescription: { value: oRb.getText("ARIA_ROLEDESCRIPTION_CARD_HEADER"), append: true }
-                    });
-                    oRm.writeClasses();
-                    oRm.write(">");
+                    oRm.openEnd();
+                    oRm.openStart("div");
+                    oRm.class("sapFCardHeader");
+                    oRm.openEnd();
                     if (oControl.getIconSrc() || oControl.getIconInitials()) {
                         oRm.renderControl(oControl._getAvatar());
                     }
                     if (oControl.getTitle()) {
-                        oRm.write("<div");
-                        oRm.addClass("sapFCardHeaderText");
-                        oRm.writeClasses();
-                        oRm.write(">");
-                        oRm.write("<div");
-                        oRm.addClass("sapFCardHeaderTextFirstLine");
-                        oRm.writeClasses();
-                        oRm.write(">");
-                        oRm.write("<div");
-                        oRm.addClass("sapFCardHeaderTitle");
-                        oRm.writeClasses();
-                        oRm.write(">");
+                        oRm.openStart("div");
+                        oRm.class("sapFCardHeaderText");
+                        oRm.openEnd();
+                        oRm.openStart("div");
+                        oRm.class("sapFCardHeaderTextFirstLine");
+                        oRm.openEnd();
+                        oRm.openStart("div");
+                        oRm.class("sapFCardHeaderTitle");
+                        oRm.openEnd();
                         oRm.renderControl(oControl._getTitle());
-                        oRm.write("</div>");
+                        oRm.close("div");
                         if (sStatus) {
-                            oRm.write("<span");
-                            oRm.addClass("sapFCardStatus");
-                            oRm.writeClasses();
-                            oRm.write(">");
-                            oRm.writeEscaped(sStatus, undefined);
-                            oRm.write("</span>");
+                            oRm.openStart("span");
+                            oRm.class("sapFCardStatus");
+                            oRm.openEnd();
+                            oRm.text(sStatus);
+                            oRm.close("span");
                         }
-                        oRm.write("</div>");
+                        oRm.close("div");
                         if (oControl.getSubtitle()) {
                             oRm.renderControl(oControl._getSubtitle());
                         }
-                        oRm.write("</div>");
+                        oRm.close("div");
                     }
-                    oRm.write("</div>");
+                    oRm.close("div");
                     if (oControl.getToolbar()) {
-                        oRm.write("<div");
+                        oRm.openStart("div");
                         let parent: any = oControl.getParent();
                         if (parent instanceof sap.f.Card && parent.getHeaderPosition() === sap.f.cards.HeaderPosition.Top) {
-                            oRm.addStyle("padding", "0 0.75rem 0rem 0.75rem");
-                            oRm.addStyle("border-bottom", "1px solid #cccccc;");
+                            oRm.style("padding", "0 0.75rem 0rem 0.75rem");
+                            oRm.style("border-bottom", "1px solid #cccccc;");
                         } else {
-                            oRm.addStyle("padding", "0 0.75rem 0.5rem 0.75rem");
+                            oRm.style("padding", "0 0.75rem 0.5rem 0.75rem");
                         }
-                        oRm.writeStyles();
-                        oRm.write(">");
+                        oRm.openEnd();
                         oRm.renderControl(oControl.getToolbar());
-                        oRm.write("</div>");
+                        oRm.close("div");
                     }
-                    oRm.write("</div>");
+                    oRm.close("div");
                 },
                 /** 重构设置 */
                 applySettings(this: cards.ToolbarHeader, mSetting: any): cards.ToolbarHeader {

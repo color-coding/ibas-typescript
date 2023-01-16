@@ -222,34 +222,32 @@ namespace sap {
                     },
                 },
                 renderer: function (this: AddressArea, oRm: sap.ui.core.RenderManager, oControl: AddressArea): void {
-                    oRm.write("<div");
-                    oRm.writeControlData(oControl);
+                    oRm.openStart("div", oControl)
                     if (oControl && oControl.getOrientation() === sap.ui.core.Orientation.Horizontal) {
                         // 水平显示
                         oRm.style("display", "inline-flex");
                         oRm.style("vertical-align", "bottom");
-                        oRm.writeStyles();
                     }
-                    oRm.write(">");
-                    oRm.write("<div>");
+                    oRm.openEnd();
+                    oRm.openStart("div").openEnd();
                     oRm.renderControl(<sap.ui.core.Control>oControl.getAggregation("_country", undefined));
-                    oRm.write("</div>");
-                    oRm.write("<div>");
+                    oRm.close("div");
+                    oRm.openStart("div").openEnd();
                     oRm.renderControl(<sap.ui.core.Control>oControl.getAggregation("_province", undefined));
-                    oRm.write("</div>");
-                    oRm.write("<div>");
+                    oRm.close("div");
+                    oRm.openStart("div").openEnd();
                     oRm.renderControl(<sap.ui.core.Control>oControl.getAggregation("_city", undefined));
-                    oRm.write("</div>");
-                    oRm.write("<div>");
+                    oRm.close("div");
+                    oRm.openStart("div").openEnd();
                     oRm.renderControl(<sap.ui.core.Control>oControl.getAggregation("_district", undefined));
-                    oRm.write("</div>");
-                    oRm.write("<div>");
+                    oRm.close("div");
+                    oRm.openStart("div").openEnd();
                     oRm.renderControl(<sap.ui.core.Control>oControl.getAggregation("_street", undefined));
-                    oRm.write("</div>");
-                    oRm.write("<div>");
+                    oRm.close("div");
+                    oRm.openStart("div").openEnd();
                     oRm.renderControl(<sap.ui.core.Control>oControl.getAggregation("_zipcode", undefined));
-                    oRm.write("</div>");
-                    oRm.write("</div>");
+                    oRm.close("div");
+                    oRm.close("div");
                 },
                 applySettings(this: AddressArea): void {
                     (<any>core.EditableControl.prototype).applySettings.apply(this, arguments);

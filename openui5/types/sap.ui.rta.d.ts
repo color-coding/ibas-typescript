@@ -240,6 +240,32 @@ declare namespace sap {
         }
     }
 }
+declare namespace sap {
+    namespace ui {
+        namespace rta {
+            namespace service {
+                /**
+                 * <p><p>Service to register message event listeners for the communication with the Flex Support web extension.</p><p>This is implemented as a service and not as part of the injected script because there is no easy way to retrieve the RuntimeAuthoring instance otherwise.</p></p>
+                 */
+                namespace SupportTools {
+                }
+            }
+        }
+    }
+}
+declare namespace sap {
+    namespace ui {
+        namespace rta {
+            namespace util {
+                /**
+                 * <p><p>Static class to handle all the reload related functionality for UI Adaptation</p></p>
+                 */
+                namespace ReloadManager {
+                }
+            }
+        }
+    }
+}
 /**
  */
 declare namespace sap {
@@ -278,39 +304,13 @@ declare namespace sap {
              */
             export class Client extends sap.ui.base.ManagedObject {
                 /**
-                 * <p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" class="jsdoclink" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+                 * <p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
                  */
                 constructor();
                 /**
                  * <p>Destroys the client. After an object has been destroyed, it can no longer be used.</p>
                  */
                 destroy(): void;
-                /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getOrigin" href="api/sap.ui.rta.Client#methods/getOrigin">origin</a>.</p><p>Receiving window origin; a valid origin has to be specified, see <a target="_blank" rel="noopener" href="https://html.spec.whatwg.org/multipage/origin.html#origin">https://html.spec.whatwg.org/multipage/origin.html#origin</a>
-                <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
-                title="Information published on non SAP site" class="sapUISDKExternalLink"/></p>
-                 * @returns string <p>Value of property <code>origin</code></p>
-                 */
-                getOrigin(): string;
-                /**
-                 * <p>Gets current value of property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWindow" href="api/sap.ui.rta.Client#methods/getWindow">window</a>.</p><p>Receiving window object; has to be a different window than the window in which this client is used</p>
-                 * @returns any <p>Value of property <code>window</code></p>
-                 */
-                getWindow(): any;
-                /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getOrigin" href="api/sap.ui.rta.Client#methods/getOrigin">origin</a>.</p><p>Receiving window origin; a valid origin has to be specified, see <a target="_blank" rel="noopener" href="https://html.spec.whatwg.org/multipage/origin.html#origin">https://html.spec.whatwg.org/multipage/origin.html#origin</a>
-                <img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
-                title="Information published on non SAP site" class="sapUISDKExternalLink"/></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
-                 * @param {string} sOrigin <p>New value for property <code>origin</code></p>
-                 * @returns sap.ui.rta.Client <p>Reference to <code>this</code> in order to allow method chaining</p>
-                 */
-                setOrigin(sOrigin: string): sap.ui.rta.Client;
-                /**
-                 * <p>Sets a new value for property <a target="_self" class="jsdoclink scrollToMethod" data-target="getWindow" href="api/sap.ui.rta.Client#methods/getWindow">window</a>.</p><p>Receiving window object; has to be a different window than the window in which this client is used</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
-                 * @param {any} oWindow <p>New value for property <code>window</code></p>
-                 * @returns sap.ui.rta.Client <p>Reference to <code>this</code> in order to allow method chaining</p>
-                 */
-                setWindow(oWindow: any): sap.ui.rta.Client;
             }
         }
     }
@@ -341,6 +341,16 @@ declare namespace sap {
             /**
              */
             namespace service {
+            }
+        }
+    }
+}
+declare namespace sap {
+    namespace ui {
+        namespace rta {
+            /**
+             */
+            namespace util {
             }
         }
     }

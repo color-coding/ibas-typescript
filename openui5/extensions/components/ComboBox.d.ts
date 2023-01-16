@@ -39,11 +39,11 @@ declare namespace sap {
                  * 设置绑定值
                  * @param value 值
                  */
-                setBindingValue(value: string): ComboBox;
+                setBindingValue(value: string): this;
                 /**
                  * 销毁可选项
                  */
-                destroyItems(): ComboBox;
+                destroyItems(): this;
             }
             /**
              * 多选下拉框（数据分割符）
@@ -76,7 +76,7 @@ declare namespace sap {
                  * 设置绑定值
                  * @param value 值
                  */
-                setBindingValue(value: string): MultiComboBox;
+                setBindingValue(value: string): this;
                 /**
                  * 获取数据分隔符
                  */
@@ -85,11 +85,11 @@ declare namespace sap {
                  * 设置数据分隔符
                  * @param value 值
                  */
-                setDataSeparator(value: string): MultiComboBox;
+                setDataSeparator(value: string): this;
                 /**
                  * 销毁可选项
                  */
-                destroyItems(): MultiComboBox;
+                destroyItems(): this;
             }
             /**
              * 对象属性可选值-多择框
