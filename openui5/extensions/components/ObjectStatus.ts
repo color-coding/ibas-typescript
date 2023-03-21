@@ -300,7 +300,7 @@ namespace sap {
                         /** 数据信息 */
                         dataInfo: { type: "any" },
                         /** 绑定值 */
-                        bindingValue: { type: "string" },
+                        bindingValue: { type: "string", defaultValue: null },
                     },
                     events: {}
                 },
@@ -405,7 +405,7 @@ namespace sap {
                         /** 属性名称 */
                         propertyName: { type: "string" },
                         /** 绑定值 */
-                        bindingValue: { type: "string" },
+                        bindingValue: { type: "string", defaultValue: null },
                     },
                     events: {}
                 },

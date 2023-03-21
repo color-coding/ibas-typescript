@@ -15,7 +15,7 @@ namespace sap {
                 metadata: {
                     properties: {
                         /** 绑定值 */
-                        bindingValue: { type: "string" },
+                        bindingValue: { type: "string", defaultValue: null },
                     },
                     events: {}
                 },
@@ -71,7 +71,7 @@ namespace sap {
                 metadata: {
                     properties: {
                         /** 绑定值 */
-                        bindingValue: { type: "string" },
+                        bindingValue: { type: "string", defaultValue: null },
                         /** 数据分隔符 */
                         dataSeparator: { type: "string", defaultValue: ibas.DATA_SEPARATOR },
                     },

@@ -15,7 +15,7 @@ namespace sap {
                 metadata: {
                     properties: {
                         /** 绑定值 */
-                        bindingValue: { type: "string" },
+                        bindingValue: { type: "string", defaultValue: null },
                         /** 仅值选择，不可输入 */
                         valueHelpOnly: { type: "boolean", defaultValue: true },
                         /** 显示值链接钮 */
@@ -261,65 +261,74 @@ namespace sap {
                             if (ibas.objects.isNull(dataInfo)) {
                                 return this;
                             }
-                            let criteria: ibas.ICriteria = new ibas.Criteria();
-                            criteria.noChilds = true;
-                            for (let item of String(value).split(ibas.DATA_SEPARATOR)) {
-                                if (ibas.strings.isEmpty(item)) {
-                                    continue;
+                            if (dataInfo.key === dataInfo.text) {
+                                // 值与描述一样，不再查询
+                                let item: sap.ui.core.ListItem = new sap.ui.core.ListItem("", {
+                                    key: value,
+                                    text: value,
+                                });
+                                this.setSelectedItem(item);
+                            } else {
+                                let criteria: ibas.ICriteria = new ibas.Criteria();
+                                criteria.noChilds = true;
+                                for (let item of String(value).split(ibas.DATA_SEPARATOR)) {
+                                    if (ibas.strings.isEmpty(item)) {
+                                        continue;
+                                    }
+                                    let condition: ibas.ICondition = criteria.conditions.create();
+                                    condition.alias = dataInfo.key;
+                                    condition.value = item;
+                                    if (criteria.conditions.length > 0) {
+                                        condition.relationship = ibas.emConditionRelationship.OR;
+                                    }
                                 }
-                                let condition: ibas.ICondition = criteria.conditions.create();
-                                condition.alias = dataInfo.key;
-                                condition.value = item;
-                                if (criteria.conditions.length > 0) {
-                                    condition.relationship = ibas.emConditionRelationship.OR;
-                                }
-                            }
-                            let editable: boolean = false, enabled: boolean = false;
-                            !this.getEditable() ? this.setEditable(true) : editable = true;
-                            !this.getEnabled() ? this.setEnabled(true) : enabled = true;
-                            repository.batchFetch(this.getRepository(), this.getDataInfo(), criteria,
-                                (values) => {
-                                    if (values instanceof Error) {
-                                        ibas.logger.log(values);
-                                        let item: sap.ui.core.ListItem = new sap.ui.core.ListItem("", {
-                                            key: value,
-                                            text: value,
-                                        });
-                                        this.setSelectedItem(item);
-                                        this.updateDomValue(item.getText());
-                                    } else {
-                                        let keyBudilder: ibas.StringBuilder = new ibas.StringBuilder();
-                                        keyBudilder.map(null, "");
-                                        keyBudilder.map(undefined, "");
-                                        let textBudilder: ibas.StringBuilder = new ibas.StringBuilder();
-                                        textBudilder.map(null, "");
-                                        textBudilder.map(undefined, "");
-                                        for (let item of values) {
-                                            if (keyBudilder.length > 0) {
-                                                keyBudilder.append(ibas.DATA_SEPARATOR);
+                                let editable: boolean = false, enabled: boolean = false;
+                                !this.getEditable() ? this.setEditable(true) : editable = true;
+                                !this.getEnabled() ? this.setEnabled(true) : enabled = true;
+                                repository.batchFetch(this.getRepository(), this.getDataInfo(), criteria,
+                                    (values) => {
+                                        if (values instanceof Error) {
+                                            ibas.logger.log(values);
+                                            let item: sap.ui.core.ListItem = new sap.ui.core.ListItem("", {
+                                                key: value,
+                                                text: value,
+                                            });
+                                            this.setSelectedItem(item);
+                                            this.updateDomValue(item.getText());
+                                        } else {
+                                            let keyBudilder: ibas.StringBuilder = new ibas.StringBuilder();
+                                            keyBudilder.map(null, "");
+                                            keyBudilder.map(undefined, "");
+                                            let textBudilder: ibas.StringBuilder = new ibas.StringBuilder();
+                                            textBudilder.map(null, "");
+                                            textBudilder.map(undefined, "");
+                                            for (let item of values) {
+                                                if (keyBudilder.length > 0) {
+                                                    keyBudilder.append(ibas.DATA_SEPARATOR);
+                                                }
+                                                if (textBudilder.length > 0) {
+                                                    textBudilder.append(ibas.DATA_SEPARATOR);
+                                                    textBudilder.append(" ");
+                                                }
+                                                keyBudilder.append(item.key);
+                                                textBudilder.append(item.text);
                                             }
-                                            if (textBudilder.length > 0) {
-                                                textBudilder.append(ibas.DATA_SEPARATOR);
-                                                textBudilder.append(" ");
-                                            }
-                                            keyBudilder.append(item.key);
-                                            textBudilder.append(item.text);
+                                            let item: sap.ui.core.ListItem = new sap.ui.core.ListItem("", {
+                                                key: keyBudilder.toString(),
+                                                text: textBudilder.toString(),
+                                            });
+                                            this.setSelectedItem(item);
+                                            this.updateDomValue(item.getText());
                                         }
-                                        let item: sap.ui.core.ListItem = new sap.ui.core.ListItem("", {
-                                            key: keyBudilder.toString(),
-                                            text: textBudilder.toString(),
-                                        });
-                                        this.setSelectedItem(item);
-                                        this.updateDomValue(item.getText());
+                                        if (this.getEditable() && editable === false) {
+                                            this.setEditable(editable);
+                                        }
+                                        if (this.getEnabled() && enabled === false) {
+                                            this.setEnabled(enabled);
+                                        }
                                     }
-                                    if (this.getEditable() && editable === false) {
-                                        this.setEditable(editable);
-                                    }
-                                    if (this.getEnabled() && enabled === false) {
-                                        this.setEnabled(enabled);
-                                    }
-                                }
-                            );
+                                );
+                            }
                         }
                     }
                     if (this.getShowValueLink() === true) {
@@ -510,7 +519,7 @@ namespace sap {
                 metadata: {
                     properties: {
                         /** 绑定值 */
-                        bindingValue: { type: "string" },
+                        bindingValue: { type: "string", defaultValue: null },
                     },
                     events: {}
                 },

@@ -34,7 +34,7 @@
         "label-position": true,
         "max-line-length": [
             true,
-            180
+            256
         ],
         "no-arg": true,
         "no-bitwise": true,

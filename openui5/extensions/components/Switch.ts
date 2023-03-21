@@ -15,7 +15,7 @@ namespace sap {
                 metadata: {
                     properties: {
                         /** 绑定值 */
-                        bindingValue: { type: "boolean" },
+                        bindingValue: { type: "boolean", defaultValue: false },
                     },
                     events: {}
                 },

@@ -17,7 +17,7 @@ namespace sap {
                         /** 是否换行 */
                         wrapping: { type: "boolean", defaultValue: false },
                         /** 绑定值 */
-                        bindingValue: { type: "string" },
+                        bindingValue: { type: "string", defaultValue: null },
                     },
                     events: {}
                 },
