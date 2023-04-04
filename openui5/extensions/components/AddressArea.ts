@@ -222,7 +222,7 @@ namespace sap {
                     },
                 },
                 renderer: function (this: AddressArea, oRm: sap.ui.core.RenderManager, oControl: AddressArea): void {
-                    oRm.openStart("div", oControl)
+                    oRm.openStart("div", oControl);
                     if (oControl && oControl.getOrientation() === sap.ui.core.Orientation.Horizontal) {
                         // 水平显示
                         oRm.style("display", "inline-flex");

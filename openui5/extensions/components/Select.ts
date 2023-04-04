@@ -295,7 +295,7 @@ namespace sap {
                                     let sItem: any = this.getItemByKey(item.key);
                                     if (sItem instanceof ui.core.Item) {
                                         sItem.setText(item.text);
-                                        sItem.setTooltip(ibas.strings.format("{0} - {1}", item.key, item.text))
+                                        sItem.setTooltip(ibas.strings.format("{0} - {1}", item.key, item.text));
                                     } else {
                                         this.addItem(new SelectItem("", {
                                             key: item.key,

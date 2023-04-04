@@ -773,8 +773,8 @@ namespace sap {
                     (<any>Input.prototype).init.apply(this, arguments);
                     // 自身事件监听
                     this.attachValueHelpRequest(null, function (event: sap.ui.base.Event): void {
-                        let that: any = event.getSource();
-                        if (that instanceof IconInput) {
+                        let source: any = event.getSource();
+                        if (source instanceof IconInput) {
                             let selectDialog: sap.m.SelectDialog = new sap.m.SelectDialog("", {
                                 title: ibas.i18n.prop("openui5_please_select_icon"),
                                 items: {
@@ -802,18 +802,16 @@ namespace sap {
                                 },
                                 confirm(event: sap.ui.base.Event): void {
                                     let value: string = event.getParameter("selectedItem").getTitle();
-                                    that.setBindingValue(value);
+                                    source.setBindingValue(value);
                                     setTimeout(() => {
                                         selectDialog.destroy();
                                         selectDialog = undefined;
-                                        that = undefined;
                                     }, 5);
                                 },
                                 cancel(): void {
                                     setTimeout(() => {
                                         selectDialog.destroy();
                                         selectDialog = undefined;
-                                        that = undefined;
                                     }, 5);
                                 }
                             });
@@ -844,6 +842,72 @@ namespace sap {
                         } else {
                             icon = this.addBeginIcon(value);
                         }
+                    }
+                    return this;
+                },
+            });
+            /**
+             * 图标-输入框
+             */
+            Input.extend("sap.extension.m.ColorInput", {
+                metadata: {
+                    properties: {
+                        /** 显示选择钮 */
+                        showValueHelp: { type: "boolean", defaultValue: true },
+                        /** 可输入 */
+                        valueHelpOnly: { type: "boolean", defaultValue: true },
+                    },
+                    aggregations: {
+                    },
+                    events: {}
+                },
+                renderer: {
+                },
+                /** 初始化 */
+                init(this: ColorInput): void {
+                    // 调用基类构造
+                    (<any>Input.prototype).init.apply(this, arguments);
+                    // 自身事件监听
+                    this.attachValueHelpRequest(null, function (event: sap.ui.base.Event): void {
+                        let source: any = event.getSource();
+                        if (source instanceof ColorInput) {
+                            let dialog: sap.m.ColorPalettePopover = new sap.m.ColorPalettePopover("", {
+                                displayMode: sap.ui.unified.ColorPickerDisplayMode.Simplified,
+                                defaultColor: source.getBindingValue(),
+                                colorSelect(this: sap.m.ColorPalettePopover, event: sap.ui.base.Event): void {
+                                    let value: string = event.getParameter("value");
+                                    let palette: any = sap.ui.getCore().byId(this.getId() + "-palette");
+                                    if (palette instanceof sap.m.ColorPalette) {
+                                        if (ibas.strings.isWith(value, "#", undefined)) {
+                                            value = value;
+                                        } else if (ibas.strings.isWith(value, "rgb(", ")")) {
+                                            value = (<any>palette)?._oMoreColorsDialog?._oColorPicker?.Color?.hex;
+                                        } else {
+                                            value = (<any>palette)._ColorsHelper.NAME_COLORS_TO_RGB_MAP[value]?.toLocaleLowerCase();
+                                        }
+                                    }
+                                    source.setBindingValue(value);
+                                }
+                            });
+                            dialog.openBy(source);
+                        }
+                    });
+                },
+                /**
+                 * 设置绑定值
+                 * @param value 值
+                 */
+                setBindingValue(this: Input, value: string): ColorInput {
+                    Input.prototype.setBindingValue.apply(this, arguments);
+                    let icon: any = this.getAggregation("_beginIcon", undefined);
+                    if (icon instanceof Array && icon.length > 0) {
+                        icon = icon[0];
+                        if (icon instanceof sap.ui.core.Icon) {
+                            icon.setBackgroundColor(value);
+                        }
+                    } else {
+                        icon = this.addBeginIcon("sap-icon://marquee");
+                        icon.setBackgroundColor(value);
                     }
                     return this;
                 },

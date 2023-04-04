@@ -187,6 +187,11 @@ declare namespace sap {
             class IconInput extends Input {
             }
             /**
+             * 颜色-输入框
+             */
+            class ColorInput extends Input {
+            }
+            /**
              * 数据所有者-输入框
              */
             class DataOwnerInput extends UserInput {
