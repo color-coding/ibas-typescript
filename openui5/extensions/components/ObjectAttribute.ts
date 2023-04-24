@@ -115,50 +115,54 @@ namespace sap {
                             if (ibas.objects.isNull(dataInfo)) {
                                 return this;
                             }
-                            let criteria: ibas.ICriteria = new ibas.Criteria();
-                            criteria.noChilds = true;
-                            for (let item of String(value).split(ibas.DATA_SEPARATOR)) {
-                                if (ibas.strings.isEmpty(item)) {
-                                    continue;
-                                }
-                                let condition: ibas.ICondition = criteria.conditions.create();
-                                condition.alias = dataInfo.key;
-                                condition.value = item;
-                                if (criteria.conditions.length > 0) {
-                                    condition.relationship = ibas.emConditionRelationship.OR;
-                                }
-                            }
-                            repository.batchFetch(this.getRepository(), this.getDataInfo(), criteria,
-                                (values) => {
-                                    if (values instanceof Error) {
-                                        ibas.logger.log(values);
-                                    } else {
-                                        let keyBudilder: ibas.StringBuilder = new ibas.StringBuilder();
-                                        keyBudilder.map(null, "");
-                                        keyBudilder.map(undefined, "");
-                                        let textBudilder: ibas.StringBuilder = new ibas.StringBuilder();
-                                        textBudilder.map(null, "");
-                                        textBudilder.map(undefined, "");
-                                        for (let item of values) {
-                                            if (keyBudilder.length > 0) {
-                                                keyBudilder.append(ibas.DATA_SEPARATOR);
-                                            }
-                                            if (textBudilder.length > 0) {
-                                                textBudilder.append(ibas.DATA_SEPARATOR);
-                                                textBudilder.append(" ");
-                                            }
-                                            keyBudilder.append(item.key);
-                                            textBudilder.append(item.text);
-                                        }
-                                        this.setText(textBudilder.toString());
-                                        this.setTooltip(ibas.strings.format("{0} - {1}", keyBudilder.toString(), textBudilder.toString()));
-                                    }
-                                }
-                            );
+                            this.describeValue(value);
                         }
                     }
                     return this;
                 },
+                describeValue(this: RepositoryText, value: string): void {
+                    let dataInfo: repository.IDataInfo = this.getDataInfo();
+                    let criteria: ibas.ICriteria = new ibas.Criteria();
+                    criteria.noChilds = true;
+                    for (let item of String(value).split(ibas.DATA_SEPARATOR)) {
+                        if (ibas.strings.isEmpty(item)) {
+                            continue;
+                        }
+                        let condition: ibas.ICondition = criteria.conditions.create();
+                        condition.alias = dataInfo.key;
+                        condition.value = item;
+                        if (criteria.conditions.length > 0) {
+                            condition.relationship = ibas.emConditionRelationship.OR;
+                        }
+                    }
+                    repository.batchFetch(this.getRepository(), this.getDataInfo(), criteria,
+                        (values) => {
+                            if (values instanceof Error) {
+                                ibas.logger.log(values);
+                            } else {
+                                let keyBudilder: ibas.StringBuilder = new ibas.StringBuilder();
+                                keyBudilder.map(null, "");
+                                keyBudilder.map(undefined, "");
+                                let textBudilder: ibas.StringBuilder = new ibas.StringBuilder();
+                                textBudilder.map(null, "");
+                                textBudilder.map(undefined, "");
+                                for (let item of values) {
+                                    if (keyBudilder.length > 0) {
+                                        keyBudilder.append(ibas.DATA_SEPARATOR);
+                                    }
+                                    if (textBudilder.length > 0) {
+                                        textBudilder.append(ibas.DATA_SEPARATOR);
+                                        textBudilder.append(" ");
+                                    }
+                                    keyBudilder.append(item.key);
+                                    textBudilder.append(item.text);
+                                }
+                                this.setText(textBudilder.toString());
+                                this.setTooltip(ibas.strings.format("{0} - {1}", keyBudilder.toString(), textBudilder.toString()));
+                            }
+                        }
+                    );
+                }
             });
             /**
              * 对象属性可选值-对象属性
@@ -226,6 +230,7 @@ namespace sap {
                         if (!boInfo || !boInfo.code) {
                             return this;
                         }
+                        this.setDataInfo(boInfo);
                         let propertyName: string = this.getPropertyName();
                         if (ibas.strings.isEmpty(propertyName)) {
                             // 未设置属性则使用绑定的
@@ -234,68 +239,76 @@ namespace sap {
                         if (ibas.strings.isEmpty(propertyName)) {
                             return this;
                         }
-                        let boRepository: shell.bo.IBORepositoryShell = ibas.boFactory.create(shell.bo.BO_REPOSITORY_SHELL);
-                        boRepository.fetchBizObjectInfo({
-                            user: ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE),
-                            boCode: ibas.config.applyVariables(boInfo.code),
-                            boName: boInfo.name,
-                            onCompleted: (opRslt) => {
-                                try {
-                                    if (opRslt.resultCode !== 0) {
-                                        throw new Error(opRslt.message);
-                                    }
-                                    let boName: string;
-                                    if (propertyName.indexOf(".") > 0) {
-                                        // 属性带路径，则取名称
-                                        boName = propertyName.split(".")[0];
-                                    }
-                                    for (let data of opRslt.resultObjects) {
-                                        if (boName && !ibas.strings.equalsIgnoreCase(data.name, boName)) {
-                                            continue;
-                                        }
-                                        for (let property of data.properties) {
-                                            if (ibas.strings.equalsIgnoreCase(propertyName, property.name)) {
-                                                if (property.values instanceof Array) {
-                                                    let keyBudilder: ibas.StringBuilder = new ibas.StringBuilder();
-                                                    keyBudilder.map(null, "");
-                                                    keyBudilder.map(undefined, "");
-                                                    let textBudilder: ibas.StringBuilder = new ibas.StringBuilder();
-                                                    textBudilder.map(null, "");
-                                                    textBudilder.map(undefined, "");
-                                                    for (let item of property.values) {
-                                                        if (ibas.strings.equals(item.value, value)) {
-                                                            keyBudilder.append(item.value);
-                                                            textBudilder.append(item.description);
-                                                            break;
-                                                        } else if (value.startsWith(item.value + ",")
-                                                            || value.indexOf("," + item.value + ",") > 0
-                                                            || value.endsWith("," + item.value)) {
-                                                            if (keyBudilder.length > 0) {
-                                                                keyBudilder.append(ibas.DATA_SEPARATOR);
-                                                            }
-                                                            if (textBudilder.length > 0) {
-                                                                textBudilder.append(ibas.DATA_SEPARATOR);
-                                                                textBudilder.append(" ");
-                                                            }
-                                                            keyBudilder.append(item.value);
-                                                            textBudilder.append(item.description);
-                                                            continue;
-                                                        }
-                                                    }
-                                                    this.setText(textBudilder.toString());
-                                                    this.setTooltip(ibas.strings.format("{0} - {1}", keyBudilder.toString(), textBudilder.toString()));
-                                                }
-                                            }
-                                        }
-                                        return;
-                                    }
-                                } catch (error) {
-                                    ibas.logger.log(error);
-                                }
-                            }
-                        });
+                        this.setPropertyName(propertyName);
+                        // 描述
+                        this.describeValue(value);
                     }
                 },
+                describeValue(this: PropertyObjectAttribute, value: string): void {
+                    let boInfo: any = this.getDataInfo();
+                    let propertyName: string = this.getPropertyName();
+                    let boRepository: shell.bo.IBORepositoryShell = ibas.boFactory.create(shell.bo.BO_REPOSITORY_SHELL);
+                    boRepository.fetchBizObjectInfo({
+                        user: ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE),
+                        boCode: ibas.config.applyVariables(boInfo.code),
+                        boName: boInfo.name,
+                        onCompleted: (opRslt) => {
+                            try {
+                                if (opRslt.resultCode !== 0) {
+                                    throw new Error(opRslt.message);
+                                }
+                                let boName: string;
+                                if (propertyName.indexOf(".") > 0) {
+                                    // 属性带路径，则取名称
+                                    boName = propertyName.split(".")[0];
+                                }
+                                for (let data of opRslt.resultObjects) {
+                                    if (boName && !ibas.strings.equalsIgnoreCase(data.name, boName)) {
+                                        continue;
+                                    }
+                                    for (let property of data.properties) {
+                                        if (ibas.strings.equalsIgnoreCase(propertyName, property.name)) {
+                                            if (property.values instanceof Array) {
+                                                let keyBudilder: ibas.StringBuilder = new ibas.StringBuilder();
+                                                keyBudilder.map(null, "");
+                                                keyBudilder.map(undefined, "");
+                                                let textBudilder: ibas.StringBuilder = new ibas.StringBuilder();
+                                                textBudilder.map(null, "");
+                                                textBudilder.map(undefined, "");
+                                                for (let item of property.values) {
+                                                    if (ibas.strings.equals(item.value, value)) {
+                                                        keyBudilder.append(item.value);
+                                                        textBudilder.append(item.description);
+                                                        break;
+                                                    } else if (value.startsWith(item.value + ",")
+                                                        || value.indexOf("," + item.value + ",") > 0
+                                                        || value.endsWith("," + item.value)) {
+                                                        if (keyBudilder.length > 0) {
+                                                            keyBudilder.append(ibas.DATA_SEPARATOR);
+                                                        }
+                                                        if (textBudilder.length > 0) {
+                                                            textBudilder.append(ibas.DATA_SEPARATOR);
+                                                            textBudilder.append(" ");
+                                                        }
+                                                        keyBudilder.append(item.value);
+                                                        textBudilder.append(item.description);
+                                                        continue;
+                                                    }
+                                                }
+                                                this.setText(textBudilder.toString());
+                                                this.setTooltip(ibas.strings.format("{0} - {1}", keyBudilder.toString(), textBudilder.toString()));
+                                            }
+                                        }
+                                    }
+                                    return;
+                                }
+                            } catch (error) {
+                                ibas.logger.log(error);
+                            }
+                        }
+                    });
+
+                }
             });
             /**
              * 数据转换-对象属性

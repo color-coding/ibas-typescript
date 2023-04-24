@@ -466,65 +466,6 @@ namespace ibas {
             }
         }
     }
-    /** 业务规则-舍入 */
-    export class BusinessRuleRoundingOff extends BusinessRuleCommon {
-        /**
-         * 构造
-         * @param rounding 属性-舍入值
-         * @param original 属性-原始值
-         * @param place  保留小数位数
-         * @param enabled  属性-是否激活
-         */
-        constructor(rounding: string, original: string, place: number = 0, enabled: string = undefined) {
-            super();
-            this.name = i18n.prop("sys_business_rule_rounding_off");
-            this.rounding = rounding;
-            this.original = original;
-            this.place = place;
-            this.enabled = enabled;
-            if (typeof this.place !== "number") {
-                this.place = config.get(CONFIG_ITEM_DECIMAL_PLACES);
-            }
-            // 设置输入输出参数
-            this.inputProperties.add(this.original);
-            if (!strings.isEmpty(this.enabled)) {
-                this.inputProperties.add(this.enabled);
-            }
-            // 设置输出参数
-            this.affectedProperties.add(this.rounding);
-            this.affectedProperties.add(this.original);
-        }
-        /** 属性-舍入值 */
-        rounding: string;
-        /** 属性-原始值 */
-        original: string;
-        /** 属性-激活 */
-        enabled: string;
-        /** 保留小数位 */
-        place: number;
-        /** 计算规则 */
-        protected compute(context: BusinessRuleContextCommon): void {
-            let enabled: boolean = false;
-            if (!strings.isEmpty(this.enabled)) {
-                enabled = Boolean(context.inputValues.get(this.enabled));
-            }
-            if (enabled !== true) {
-                return;
-            }
-            let place: number = Number(this.place);
-            let original: number = Number(context.inputValues.get(this.original));
-            if (isNaN(original)) {
-                return;
-            }
-            let value: number = numbers.round(original, place);
-            if (original !== value) {
-                context.outputValues.set(this.rounding, value - original);
-                context.outputValues.set(this.original, value);
-            } else {
-                context.outputValues.set(this.rounding, 0);
-            }
-        }
-    }
     /** 业务规则-日期计算 */
     export class BusinessRuleDateCalculation extends BusinessRuleCommon {
         /**
@@ -566,36 +507,66 @@ namespace ibas {
             }
         }
     }
-    /** 业务规则-日期计算间隔 */
+    /** 业务规则-计算时间间隔 */
     export class BusinessRuleDateCalculationInterval extends BusinessRuleCommon {
         /**
          * 构造
-         * @param start 属性-开始日期
-         * @param end 属性-结束日期
+         * @param startDate 属性-开始日期
+         * @param startTime 属性-开始时间
+         * @param endDate 属性-结束日期
+         * @param endTime 属性-结束时间
          * @param result 属性-结果
          * @param unit 计算单位
          */
-        constructor(start: string, end: string, result: string, unit?: ibas.dates.emDifferenceType) {
+        constructor(startDate: string, startTime: string, endDate: string, endTime: string, result: string, unit?: ibas.dates.emDifferenceType) {
             super();
-            this.start = start;
-            this.end = end;
+            this.startDate = startDate;
+            this.endDate = endDate;
+            this.startTime = startTime;
+            this.endTime = endTime;
             this.result = result;
             this.unit = unit;
             if (strings.isEmpty(this.unit)) {
                 this.unit = ibas.dates.emDifferenceType.DAY;
             }
-            this.inputProperties.add(this.start);
-            this.inputProperties.add(this.end);
+            if (!ibas.strings.isEmpty(this.startDate)) {
+                this.inputProperties.add(this.startDate);
+            }
+            if (!ibas.strings.isEmpty(this.startTime)) {
+                this.inputProperties.add(this.startTime);
+            }
+            if (!ibas.strings.isEmpty(this.endDate)) {
+                this.inputProperties.add(this.endDate);
+            }
+            if (!ibas.strings.isEmpty(this.endTime)) {
+                this.inputProperties.add(this.endTime);
+            }
             this.affectedProperties.add(this.result);
         }
-        start: string;
-        end: string;
+        startDate: string;
+        endDate: string;
+        startTime: string;
+        endTime: string;
         result: string;
         unit: ibas.dates.emDifferenceType;
         /** 计算规则 */
         protected compute(context: BusinessRuleContextCommon): void {
-            let sDate: Date = context.inputValues.get(this.start);
-            let eDate: Date = context.inputValues.get(this.end);
+            let sDate: Date = context.inputValues.get(this.startDate);
+            if (!ibas.strings.isEmpty(this.startTime)) {
+                let sTime: number = context.inputValues.get(this.startTime);
+                if (sTime > 0) {
+                    sDate = ibas.dates.add(ibas.dates.emDifferenceType.HOUR, sDate, (sTime - (sTime % 100)) / 100);
+                    sDate = ibas.dates.add(ibas.dates.emDifferenceType.MINUTE, sDate, sTime % 100);
+                }
+            }
+            let eDate: Date = context.inputValues.get(this.endDate);
+            if (!ibas.strings.isEmpty(this.endTime)) {
+                let eTime: number = context.inputValues.get(this.endTime);
+                if (eTime > 0) {
+                    eDate = ibas.dates.add(ibas.dates.emDifferenceType.HOUR, eDate, (eTime - (eTime % 100)) / 100);
+                    eDate = ibas.dates.add(ibas.dates.emDifferenceType.MINUTE, eDate, eTime % 100);
+                }
+            }
             let value: number = ibas.dates.difference(this.unit, eDate, sDate);
             if (typeof value !== "number") {
                 value = undefined;

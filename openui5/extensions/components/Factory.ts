@@ -362,17 +362,10 @@ namespace sap {
                                 }));
                             }
                         }
-                        input = new sap.extension.m.Input("", {
-                            showValueHelp: true,
-                            valueHelpRequest(event: sap.ui.base.Event): void {
-                                let source: any = event.getSource();
-                                if (source instanceof sap.m.Input) {
-                                    source.showItems(undefined);
-                                }
-                            },
+                        input = new sap.extension.m.ComboBox("", {
+                            showSecondaryValues: true,
+                            items: items,
                             tooltip: value,
-                            suggestionItems: items,
-                            selectedItem: items.length > 0 ? items.firstOrDefault() : undefined,
                         });
                     }
                 }

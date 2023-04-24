@@ -123,6 +123,9 @@ namespace ibas {
             if (objects.isNull(data)) {
                 return data;
             }
+            if (typeof data !== "object") {
+                return data;
+            }
             let type: any = objects.typeOf(<any>data);
             let newData: any = new type;
             // 置为加载数据状态，此状态不触发事件
@@ -507,7 +510,7 @@ namespace ibas {
         }
         /**
          * 是否大写字母
-         * @param value 字符 
+         * @param value 字符
          * @param index 索引
          */
         export function isUpperCase(value: string, index?: number): boolean {
@@ -525,7 +528,7 @@ namespace ibas {
         }
         /**
          * 是否小写字母
-         * @param value 字符 
+         * @param value 字符
          * @param index 索引
          */
         export function isLowerCase(value: string, index?: number): boolean {

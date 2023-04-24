@@ -249,85 +249,29 @@ namespace sap {
                     if (this.getSelectedKey() !== value) {
                         this.setProperty("selectedKey", value);
                         this.setProperty("bindingValue", value);
-                        let item: sap.ui.core.Item;
                         if (ibas.strings.isEmpty(value)) {
                             this.updateDomValue("");
-                        } else if (!ibas.objects.isNull(item = this.getSuggestionItemByKey(String(value)))) {
-                            this.setSelectedItem(item);
-                            this.updateDomValue(item.getText());
-                        } else if (ibas.objects.isNull(item) && !ibas.strings.isEmpty(value)) {
-                            // 没有此建议值
-                            let dataInfo: repository.IDataInfo = this.getDataInfo();
-                            if (ibas.objects.isNull(dataInfo)) {
-                                return this;
-                            }
-                            if (dataInfo.key === dataInfo.text) {
-                                // 值与描述一样，不再查询
-                                let item: sap.ui.core.ListItem = new sap.ui.core.ListItem("", {
-                                    key: value,
-                                    text: value,
-                                });
+                        } else {
+                            let item: sap.ui.core.Item = this.getSuggestionItemByKey(String(value));
+                            if (!ibas.objects.isNull(item)) {
                                 this.setSelectedItem(item);
-                            } else {
-                                let criteria: ibas.ICriteria = new ibas.Criteria();
-                                criteria.noChilds = true;
-                                for (let item of String(value).split(ibas.DATA_SEPARATOR)) {
-                                    if (ibas.strings.isEmpty(item)) {
-                                        continue;
-                                    }
-                                    let condition: ibas.ICondition = criteria.conditions.create();
-                                    condition.alias = dataInfo.key;
-                                    condition.value = item;
-                                    if (criteria.conditions.length > 0) {
-                                        condition.relationship = ibas.emConditionRelationship.OR;
-                                    }
+                                this.updateDomValue(item.getText());
+                            } else if (!ibas.strings.isEmpty(value)) {
+                                // 没有此建议值
+                                let dataInfo: repository.IDataInfo = this.getDataInfo();
+                                if (ibas.objects.isNull(dataInfo)) {
+                                    return this;
                                 }
-                                let editable: boolean = false, enabled: boolean = false;
-                                !this.getEditable() ? this.setEditable(true) : editable = true;
-                                !this.getEnabled() ? this.setEnabled(true) : enabled = true;
-                                repository.batchFetch(this.getRepository(), this.getDataInfo(), criteria,
-                                    (values) => {
-                                        if (values instanceof Error) {
-                                            ibas.logger.log(values);
-                                            let item: sap.ui.core.ListItem = new sap.ui.core.ListItem("", {
-                                                key: value,
-                                                text: value,
-                                            });
-                                            this.setSelectedItem(item);
-                                            this.updateDomValue(item.getText());
-                                        } else {
-                                            let keyBudilder: ibas.StringBuilder = new ibas.StringBuilder();
-                                            keyBudilder.map(null, "");
-                                            keyBudilder.map(undefined, "");
-                                            let textBudilder: ibas.StringBuilder = new ibas.StringBuilder();
-                                            textBudilder.map(null, "");
-                                            textBudilder.map(undefined, "");
-                                            for (let item of values) {
-                                                if (keyBudilder.length > 0) {
-                                                    keyBudilder.append(ibas.DATA_SEPARATOR);
-                                                }
-                                                if (textBudilder.length > 0) {
-                                                    textBudilder.append(ibas.DATA_SEPARATOR);
-                                                    textBudilder.append(" ");
-                                                }
-                                                keyBudilder.append(item.key);
-                                                textBudilder.append(item.text);
-                                            }
-                                            let item: sap.ui.core.ListItem = new sap.ui.core.ListItem("", {
-                                                key: keyBudilder.toString(),
-                                                text: textBudilder.toString(),
-                                            });
-                                            this.setSelectedItem(item);
-                                            this.updateDomValue(item.getText());
-                                        }
-                                        if (this.getEditable() && editable === false) {
-                                            this.setEditable(editable);
-                                        }
-                                        if (this.getEnabled() && enabled === false) {
-                                            this.setEnabled(enabled);
-                                        }
-                                    }
-                                );
+                                if (dataInfo.key === dataInfo.text) {
+                                    // 值与描述一样，不再查询
+                                    let item: sap.ui.core.ListItem = new sap.ui.core.ListItem("", {
+                                        key: value,
+                                        text: value,
+                                    });
+                                    this.setSelectedItem(item);
+                                } else {
+                                    this.describeValue(value);
+                                }
                             }
                         }
                     }
@@ -350,6 +294,69 @@ namespace sap {
                         }
                     }
                     return this;
+                },
+                describeValue(this: RepositoryInput, value: string): void {
+                    let condition: ibas.ICondition;
+                    let criteria: ibas.ICriteria = new ibas.Criteria();
+                    let dataInfo: repository.IDataInfo = this.getDataInfo();
+                    criteria.noChilds = true;
+                    for (let item of String(value).split(ibas.DATA_SEPARATOR)) {
+                        if (ibas.strings.isEmpty(item)) {
+                            continue;
+                        }
+                        condition = criteria.conditions.create();
+                        condition.alias = dataInfo.key;
+                        condition.value = item;
+                        if (criteria.conditions.length > 0) {
+                            condition.relationship = ibas.emConditionRelationship.OR;
+                        }
+                    }
+                    let editable: boolean = false, enabled: boolean = false;
+                    !this.getEditable() ? this.setEditable(true) : editable = true;
+                    !this.getEnabled() ? this.setEnabled(true) : enabled = true;
+                    repository.batchFetch(this.getRepository(), this.getDataInfo(), criteria,
+                        (values) => {
+                            if (values instanceof Error) {
+                                ibas.logger.log(values);
+                                let item: sap.ui.core.ListItem = new sap.ui.core.ListItem("", {
+                                    key: value,
+                                    text: value,
+                                });
+                                this.setSelectedItem(item);
+                                this.updateDomValue(item.getText());
+                            } else {
+                                let keyBudilder: ibas.StringBuilder = new ibas.StringBuilder();
+                                keyBudilder.map(null, "");
+                                keyBudilder.map(undefined, "");
+                                let textBudilder: ibas.StringBuilder = new ibas.StringBuilder();
+                                textBudilder.map(null, "");
+                                textBudilder.map(undefined, "");
+                                for (let item of values) {
+                                    if (keyBudilder.length > 0) {
+                                        keyBudilder.append(ibas.DATA_SEPARATOR);
+                                    }
+                                    if (textBudilder.length > 0) {
+                                        textBudilder.append(ibas.DATA_SEPARATOR);
+                                        textBudilder.append(" ");
+                                    }
+                                    keyBudilder.append(item.key);
+                                    textBudilder.append(item.text);
+                                }
+                                let item: sap.ui.core.ListItem = new sap.ui.core.ListItem("", {
+                                    key: keyBudilder.toString(),
+                                    text: textBudilder.toString(),
+                                });
+                                this.setSelectedItem(item);
+                                this.updateDomValue(item.getText());
+                            }
+                            if (this.getEditable() && editable === false) {
+                                this.setEditable(editable);
+                            }
+                            if (this.getEnabled() && enabled === false) {
+                                this.setEnabled(enabled);
+                            }
+                        }
+                    );
                 },
                 applySettings(this: RepositoryInput, mSettings: any, oScope?: any): RepositoryInput {
                     if (mSettings?.dataInfo?.type) {

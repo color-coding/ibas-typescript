@@ -91,6 +91,11 @@ declare namespace sap {
                  * @param value 数据信息
                  */
                 setDataInfo(value: repository.IDataInfo | any): this;
+                /**
+                 * 检索值描述
+                 * @param value 值
+                 */
+                protected describeValue(value: string): void;
             }
             /**
              * 业务仓库数据-输入框

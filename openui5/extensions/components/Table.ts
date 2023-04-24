@@ -409,19 +409,19 @@ namespace sap {
                                     highlight: {
                                         parts: [
                                             {
+                                                path: "documentStatus",
+                                                type: new data.DocumentStatus()
+                                            },
+                                            {
                                                 path: "approvalStatus",
                                                 type: new data.ApprovalStatus(),
                                             },
                                             {
                                                 path: "canceled",
                                                 type: new data.YesNo(),
-                                            },
-                                            {
-                                                path: "documentStatus",
-                                                type: new data.DocumentStatus()
                                             }
                                         ],
-                                        formatter(approvalStatus: ibas.emApprovalStatus, canceled: ibas.emYesNo, documentStatus: ibas.emDocumentStatus): sap.ui.core.ValueState {
+                                        formatter(documentStatus: ibas.emDocumentStatus, approvalStatus: ibas.emApprovalStatus, canceled: ibas.emYesNo): sap.ui.core.ValueState {
                                             return data.status(documentStatus, approvalStatus, canceled);
                                         }
                                     }
@@ -431,16 +431,16 @@ namespace sap {
                                     highlight: {
                                         parts: [
                                             {
+                                                path: "lineStatus",
+                                                type: new data.DocumentStatus()
+                                            },
+                                            {
                                                 path: "canceled",
                                                 type: new data.YesNo(),
                                             },
-                                            {
-                                                path: "lineStatus",
-                                                type: new data.DocumentStatus()
-                                            }
                                         ],
-                                        formatter(approvalStatus: ibas.emApprovalStatus, canceled: ibas.emYesNo, documentStatus: ibas.emDocumentStatus): sap.ui.core.ValueState {
-                                            return data.status(documentStatus, approvalStatus, canceled);
+                                        formatter(lineStatus: ibas.emDocumentStatus, canceled: ibas.emYesNo): sap.ui.core.ValueState {
+                                            return data.status(lineStatus, undefined, canceled);
                                         }
                                     }
                                 });

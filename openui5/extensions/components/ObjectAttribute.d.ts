@@ -72,6 +72,11 @@ declare namespace sap {
                  * @param value 数据信息
                  */
                 setDataInfo(value: repository.IDataInfo | any): this;
+                /**
+                 * 检索值描述
+                 * @param value 值
+                 */
+                protected describeValue(value: string): void;
             }
             /**
              * 对象属性可选值-对象属性
@@ -95,6 +100,11 @@ declare namespace sap {
                  * @param value 属性名称
                  */
                 setPropertyName(value: string): this;
+                /**
+                 * 检索值描述
+                 * @param value 值
+                 */
+                protected describeValue(value: string): void;
             }
             /**
              * 数据转换-对象属性
