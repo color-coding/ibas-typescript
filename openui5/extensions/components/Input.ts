@@ -364,7 +364,7 @@ namespace sap {
                             if (!mSettings) {
                                 mSettings = {};
                             }
-                            mSettings.showValueLink = hasViewService(mSettings.dataInfo.type);
+                            mSettings.showValueLink = repositories.hasViewService(mSettings.dataInfo.type);
                         }
                     }
                     (<any>Input.prototype).applySettings.apply(this, arguments);
@@ -387,25 +387,6 @@ namespace sap {
                     });
                 }
             });
-            const hasViewServiceMap: Map<any, boolean> = new Map<any, boolean>();
-            // 是否存在查看服务
-            function hasViewService(boType: Function): boolean {
-                if (!hasViewServiceMap.has(boType)) {
-                    if (ibas.servicesManager.getServices({
-                        proxy: new ibas.BOLinkServiceProxy({
-                            boCode: ibas.businessobjects.code(boType),
-                            linkValue: undefined
-
-                        }),
-                        category: ibas.businessobjects.code(boType),
-                    }).length > 0) {
-                        hasViewServiceMap.set(boType, true);
-                    } else {
-                        hasViewServiceMap.set(boType, false);
-                    }
-                }
-                return hasViewServiceMap.get(boType);
-            }
             /**
              * 业务仓库数据-选择输入框
              */

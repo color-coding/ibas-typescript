@@ -83,6 +83,26 @@ namespace sap {
                 }
                 return criteria;
             }
+
+            const hasViewServiceMap: Map<any, boolean> = new Map<any, boolean>();
+            // 是否存在查看服务
+            export function hasViewService(boType: Function): boolean {
+                if (!hasViewServiceMap.has(boType)) {
+                    if (ibas.servicesManager.getServices({
+                        proxy: new ibas.BOLinkServiceProxy({
+                            boCode: ibas.businessobjects.code(boType),
+                            linkValue: undefined
+
+                        }),
+                        category: ibas.businessobjects.code(boType),
+                    }).length > 0) {
+                        hasViewServiceMap.set(boType, true);
+                    } else {
+                        hasViewServiceMap.set(boType, false);
+                    }
+                }
+                return hasViewServiceMap.get(boType);
+            }
         }
         /**
          * 变量

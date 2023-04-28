@@ -18,8 +18,18 @@ namespace sap {
                         bindingValue: { type: "string", defaultValue: null },
                         /** 是否换行 */
                         wrapping: { type: "boolean", defaultValue: true },
+                        /** 显示值链接钮 */
+                        showValueLink: { type: "boolean", defaultValue: false },
                     },
-                    events: {}
+                    events: {
+                        "valueLinkRequest": {
+                            parameters: {
+                                value: {
+                                    type: "string",
+                                },
+                            }
+                        },
+                    }
                 },
                 renderer: {
                 },
@@ -60,7 +70,34 @@ namespace sap {
                     managedobjects.checkBinding.apply(this, arguments);
                     sap.m.ObjectAttribute.prototype.bindProperty.apply(this, arguments);
                     return this;
-                }
+                },
+                /**
+                 * 获取绑定值
+                 */
+                getShowValueLink(this: ObjectAttribute): boolean {
+                    return this.getActive();
+                },
+                /**
+                 * 设置绑定值
+                 * @param value 值
+                 */
+                setShowValueLink(this: ObjectAttribute, value: boolean): ObjectAttribute {
+                    return this.setActive(value);
+                },
+                setActive(this: ObjectAttribute, value: boolean): ObjectAttribute {
+                    this.setProperty("showValueLink", value);
+                    return sap.m.ObjectAttribute.prototype.setActive.apply(this, arguments);
+                },
+                /** 初始化 */
+                init(this: ObjectAttribute): void {
+                    this.attachPress(undefined, function (event: sap.ui.base.Event): void {
+                        let value: any = (<ObjectAttribute>event.getSource()).getBindingValue();
+                        if (!ibas.objects.isNull(value)) {
+                            this.fireValueLinkRequest({ value: value });
+                        }
+                    });
+                    (<any>sap.m.ObjectAttribute.prototype).init.apply(this, arguments);
+                },
             });
             /**
              * 业务仓库数据-对象属性
@@ -120,7 +157,7 @@ namespace sap {
                     }
                     return this;
                 },
-                describeValue(this: RepositoryText, value: string): void {
+                describeValue(this: RepositoryObjectAttribute, value: string): void {
                     let dataInfo: repository.IDataInfo = this.getDataInfo();
                     let criteria: ibas.ICriteria = new ibas.Criteria();
                     criteria.noChilds = true;
@@ -162,6 +199,34 @@ namespace sap {
                             }
                         }
                     );
+                },
+                applySettings(this: RepositoryObjectAttribute, mSettings: any, oScope?: any): RepositoryObjectAttribute {
+                    if (mSettings?.dataInfo?.type) {
+                        if (ibas.objects.isNull(mSettings?.showValueLink)) {
+                            if (!mSettings) {
+                                mSettings = {};
+                            }
+                            mSettings.showValueLink = repositories.hasViewService(mSettings.dataInfo.type);
+                        }
+                    }
+                    (<any>ObjectAttribute.prototype).applySettings.apply(this, arguments);
+                    return this;
+                },
+                /** 初始化 */
+                init(this: RepositoryObjectAttribute): void {
+                    (<any>ObjectAttribute.prototype).init.apply(this, arguments);
+                    this.attachValueLinkRequest(undefined, (event: sap.ui.base.Event) => {
+                        let source: any = event.getSource();
+                        if (source instanceof RepositoryObjectAttribute) {
+                            let boCode: string = ibas.businessobjects.code(<any>source.getDataInfo()?.type);
+                            if (!ibas.strings.isEmpty(boCode)) {
+                                ibas.servicesManager.runLinkService({
+                                    boCode: boCode,
+                                    linkValue: event.getParameter("value")
+                                });
+                            }
+                        }
+                    });
                 }
             });
             /**
@@ -401,6 +466,7 @@ namespace sap {
                             dataInfo.text = "Name";
                         }
                     }
+                    this.setShowValueLink(true);
                     return this;
                 }
             });
@@ -448,6 +514,7 @@ namespace sap {
                             dataInfo.text = "Name";
                         }
                     }
+                    this.setShowValueLink(true);
                     return this;
                 }
             });
