@@ -10,6 +10,7 @@ namespace sap {
         export namespace m {
             const DEFAULT_FORMAT_DATE: string = "yyyy-MM-dd";
             const DEFAULT_FORMAT_TIME: string = "HH:mm";
+            const DEFAULT_FORMAT_DATETIME: string = DEFAULT_FORMAT_DATE + " " + DEFAULT_FORMAT_TIME;
             /**
              * 日期选择框
              */
@@ -149,6 +150,89 @@ namespace sap {
                         mSettings.displayFormat = data.DEFAULT_FORMAT_TIME;
                     }
                     sap.m.TimePicker.prototype.applySettings.apply(this, arguments);
+                    return this;
+                },
+            });
+            /**
+             * 日期时间选择框
+             */
+            sap.m.DateTimePicker.extend("sap.extension.m.DateTimePicker", {
+                metadata: {
+                    properties: {
+                        /** 时间 */
+                        timePart: { type: "int", defaultValue: 0 },
+                        /** 日期 */
+                        datePart: { type: "Date", defaultValue: null },
+                        /** 值模板 */
+                        valueFormat: { type: "string", group: "Data", defaultValue: DEFAULT_FORMAT_DATETIME },
+                        /** 显示模板 */
+                        displayFormat: { type: "string", group: "Appearance", defaultValue: data.DEFAULT_FORMAT_DATETIME },
+                    },
+                    events: {}
+                },
+                renderer: {
+                },
+                /**
+                 * 设置时间部分
+                 * @param value 值
+                 */
+                setTimePart(this: DateTimePicker, value: any): DateTimePicker {
+                    let time: number = value;
+                    if (value instanceof Date) {
+                        time = value.getHours() * 100 + value.getMinutes();
+                    } else {
+                        time = ibas.numbers.toInt(value);
+                    }
+                    this.setProperty("timePart", time);
+                    let date: Date = this.getDateValue();
+                    if (!(date instanceof Date)) {
+                        date = new Date();
+                    }
+                    let hour: number = Math.floor(time / 100);
+                    let minute: number = time - (hour * 100);
+                    date.setHours(hour, minute, 0, 0);
+                    this.setDateValue(date);
+                    return this;
+                },
+                /**
+                 * 设置日期部分
+                 * @param value 值
+                 */
+                setDatePart(this: DateTimePicker, value: any): DateTimePicker {
+                    if (value instanceof Date) {
+                        let date: Date = this.getDateValue();
+                        if (!(date instanceof Date)) {
+                            date = new Date(value);
+                        }
+                        let time: number = this.getTimePart();
+                        let hour: number = Math.floor(time / 100);
+                        let minute: number = time - (hour * 100);
+                        date.setHours(hour, minute, 0, 0);
+                        this.setDateValue(date);
+                    }
+                    this.setProperty("datePart", value);
+                    return this;
+                },
+                /**
+                 * 设置值
+                 * @param value 值
+                 */
+                setDateValue(this: DateTimePicker, value: any): DateTimePicker {
+                    if (value instanceof Date) {
+                        let date: Date = new Date(value);
+                        let hour: number = date.getHours();
+                        let minute: number = date.getMinutes();
+                        date.setHours(hour, minute, 0, 0);
+                        this.setProperty("datePart", date);
+                        this.setProperty("timePart", hour * 100 + minute);
+                    }
+                    sap.m.DateTimePicker.prototype.setDateValue.apply(this, arguments);
+                    return this;
+                },
+                /** 重写绑定 */
+                bindProperty(this: DateTimePicker, sName: string, oBindingInfo: any): DateTimePicker {
+                    managedobjects.checkBinding.apply(this, arguments);
+                    sap.m.DateTimePicker.prototype.bindProperty.apply(this, arguments);
                     return this;
                 },
             });

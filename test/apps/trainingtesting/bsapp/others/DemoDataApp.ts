@@ -28,7 +28,7 @@ namespace trainingtesting {
             /** 视图显示后 */
             protected viewShowed(): void {
                 this.myData = new DemoData();
-                this.myData.dateTime = ibas.dates.now();
+                this.myData.date = ibas.dates.today();
                 this.myData.time = ibas.dates.time();
                 this.myData.canceled = ibas.emYesNo.YES;
                 this.myData.documentStatus = ibas.emDocumentStatus.RELEASED;
@@ -122,12 +122,12 @@ namespace trainingtesting {
             set percentage(value: number) {
                 this.setProperty(DemoData.PROPERTY_PERCENTAGE_NAME, value);
             }
-            static PROPERTY_DATETIME_NAME: string = "DateTime";
-            get dateTime(): Date {
-                return this.getProperty<Date>(DemoData.PROPERTY_DATETIME_NAME);
+            static PROPERTY_DATE_NAME: string = "Date";
+            get date(): Date {
+                return this.getProperty<Date>(DemoData.PROPERTY_DATE_NAME);
             }
-            set dateTime(value: Date) {
-                this.setProperty(DemoData.PROPERTY_DATETIME_NAME, value);
+            set date(value: Date) {
+                this.setProperty(DemoData.PROPERTY_DATE_NAME, value);
             }
             static PROPERTY_TIME_NAME: string = "Time";
             get time(): number {

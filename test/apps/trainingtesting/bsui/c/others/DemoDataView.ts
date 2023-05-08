@@ -116,12 +116,12 @@ namespace trainingtesting {
                             new sap.m.Label("", { text: "DateTime" }),
                             new sap.m.DatePicker("", {
                             }).bindProperty("value", {
-                                path: "/dateTime",
+                                path: "/date",
                                 type: new sap.extension.data.Date(),
                             }),
                             new sap.m.Text("", {
                             }).bindProperty("text", {
-                                path: "/dateTime",
+                                path: "/date",
                                 type: new sap.extension.data.Date(),
                             }),
                             new sap.m.Label("", { text: "Time" }),
@@ -134,6 +134,28 @@ namespace trainingtesting {
                             }).bindProperty("text", {
                                 path: "/time",
                                 type: new sap.extension.data.Time(),
+                            }),
+                            new sap.m.Label("", { text: "DateTime" }),
+                            new sap.extension.m.DateTimePicker("", {
+                            }).bindProperty("datePart", {
+                                path: "/date",
+                                type: new sap.extension.data.Date(),
+                            }).bindProperty("timePart", {
+                                path: "/time",
+                                type: new sap.extension.data.Time(),
+                            }),
+                            new sap.m.Text("", {
+                            }).bindProperty("text", {
+                                parts: [
+                                    {
+                                        path: "/date",
+                                        type: new sap.extension.data.Date(),
+                                    },
+                                    {
+                                        path: "/time",
+                                        type: new sap.extension.data.Time(),
+                                    }
+                                ]
                             }),
                             new sap.m.Label("", { text: "emYesNo" }),
                             new sap.m.CheckBox("", {

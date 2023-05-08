@@ -527,7 +527,7 @@ namespace sap {
                 /** 格式 */
                 format?: string;
             }
-            export const DEFAULT_FORMAT_DATE: string = ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE);
+            export const DEFAULT_FORMAT_DATE: string = ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE, null);
             sap.ui.model.type.Date.extend("sap.extension.data.Date", {
                 constructor: function (setting?: IDateTimeSetting): void {
                     if (DEFAULT_FORMAT_DATE && !setting?.format) {
@@ -542,10 +542,16 @@ namespace sap {
                     if (typeof oValue === sInternalType) {
                         return oValue;
                     }
+                    if (sInternalType === "object" && oValue instanceof Date) {
+                        return oValue;
+                    }
                     return sap.ui.model.type.Date.prototype.formatValue.apply(this, arguments);
                 },
                 parseValue(oValue: any, sInternalType: string): any {
                     if (sInternalType === "Date") {
+                        return oValue;
+                    }
+                    if (sInternalType === "object" && oValue instanceof Date) {
                         return oValue;
                     }
                     return sap.ui.model.type.Date.prototype.parseValue.apply(this, arguments);
@@ -642,7 +648,7 @@ namespace sap {
                     }
                 }
             });
-            export const DEFAULT_FORMAT_DATETIME: string = ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATETIME);
+            export const DEFAULT_FORMAT_DATETIME: string = ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATETIME, null);
             /**
              * 日期时间类型
              */
