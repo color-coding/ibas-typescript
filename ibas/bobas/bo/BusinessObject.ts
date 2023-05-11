@@ -1226,14 +1226,18 @@ namespace ibas {
                         continue;
                     }
                     let value: any = source[property];
-                    if (!(typeof value === "number"
+                    if (typeof value === "number"
                         || typeof value === "string"
                         || typeof value === "boolean"
-                        || typeof value === "bigint"
-                        || value instanceof Date)) {
-                        continue;
+                        || typeof value === "bigint") {
+                        // 值类型，直接赋值
+                        target[property] = value;
+                    } else if (value instanceof Date) {
+                        // 日期类型，构建新对象
+                        target[property] = new Date(value);
+                    } else {
+                        logger.log(ibas.emMessageLevel.DEBUG, "skip property: {0}", property);
                     }
-                    target[property] = source[property];
                 }
                 // 重置状态
                 if (target instanceof BusinessObject) {

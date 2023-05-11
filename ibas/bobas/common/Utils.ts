@@ -238,6 +238,34 @@ namespace ibas {
             }
             return false;
         }
+        /**
+         * 复制属性值
+         * @param source 源
+         * @param target 目标
+         */
+        export function copyProperties(source: IBusinessObject, target: IBusinessObject): void {
+            if (isNull(source) || isNull(target)) {
+                return;
+            }
+            // 复制属性
+            for (let property in source) {
+                if (strings.isEmpty(property)) {
+                    continue;
+                }
+                let value: any = source[property];
+                if (typeof value === "number"
+                    || typeof value === "string"
+                    || typeof value === "boolean"
+                    || typeof value === "bigint") {
+                    target[property] = value;
+                } else if (value instanceof Date) {
+                    // 日期类型，构建新对象
+                    target[property] = new Date(value);
+                } else {
+                    logger.log(ibas.emMessageLevel.DEBUG, "skip property: {0}", property);
+                }
+            }
+        }
     }
     /**
      * 对字符串操作的封装方法
