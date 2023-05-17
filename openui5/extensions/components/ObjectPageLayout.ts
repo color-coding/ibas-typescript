@@ -14,6 +14,8 @@ namespace sap {
             sap.uxap.ObjectPageLayout.extend("sap.extension.uxap.ObjectPageLayout", {
                 metadata: {
                     properties: {
+                        /** 显示子区菜单 */
+                        showAnchorBarPopover: { type: "boolean", defaultValue: false },
                     },
                     events: {}
                 },
@@ -353,12 +355,17 @@ namespace sap {
                     }
                 }
                 if (!ibas.objects.isNull(section)) {
-                    this.addSection(new sap.uxap.ObjectPageSection("", {
-                        title: ibas.i18n.prop("openui5_bo_extend_properties"),
-                        subSections: [
-                            section
-                        ]
-                    }));
+                    if (this.getSections()[0]?.getShowTitle() === false && this.getSections().length === 1) {
+                        // 不显示标题时，且仅唯一区，则作为子区加入
+                        this.getSections()[0].addSubSection(section);
+                    } else {
+                        this.addSection(new sap.uxap.ObjectPageSection("", {
+                            title: ibas.i18n.prop("openui5_bo_extend_properties"),
+                            subSections: [
+                                section
+                            ]
+                        }));
+                    }
                 }
             }
         }

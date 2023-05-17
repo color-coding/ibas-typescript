@@ -9632,6 +9632,8 @@ declare namespace sap {
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
 			setTitle(sTitle?: string): this;
+
+			setIllustrationType(sIllustratedMessageType: sap.m.IllustratedMessageType): this;
 		}
 		/**
 		 * <p><p>Available <code>Illustration</code> sizes for the <a target="_self" href="api/sap.m.IllustratedMessage">sap.m.IllustratedMessage</a> control.</p></p>
