@@ -542,6 +542,13 @@ namespace shell {
                                 item.setBusy(busy);
                             }
                         }
+                    } else if (ui instanceof sap.m.Popover || ui instanceof sap.m.ResponsivePopover) {
+                        if (ui.getModal() !== busy) {
+                            ui.setModal(busy);
+                        }
+                        if (ui.getBusy() !== busy) {
+                            ui.setBusy(busy);
+                        }
                     } else if (ui instanceof sap.ui.core.Control) {
                         if (ui.getBusy() !== busy) {
                             ui.setBusy(busy);
