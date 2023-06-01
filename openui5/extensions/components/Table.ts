@@ -115,7 +115,10 @@ namespace sap {
                 getSelecteds<T>(this: Table): ibas.IList<T> {
                     let selecteds: ibas.IList<T> = new ibas.ArrayList<T>();
                     for (let item of this.getSelectedIndices()) {
-                        selecteds.push(this.getContextByIndex(item).getObject());
+                        let object: any = this.getContextByIndex(item)?.getObject();
+                        if (!ibas.objects.isNull(object)) {
+                            selecteds.push(object);
+                        }
                     }
                     return selecteds;
                 },
@@ -127,11 +130,17 @@ namespace sap {
                     let index: number = 0;
                     let context: sap.ui.model.Context = this.getContextByIndex(index);
                     while (!ibas.objects.isNull(context)) {
-                        selecteds.push(context.getObject());
+                        let object: any = context.getObject();
+                        if (!ibas.objects.isNull(object)) {
+                            selecteds.push(object);
+                        }
                         context = this.getContextByIndex(++index);
                     }
                     for (let item of this.getSelectedIndices()) {
-                        selecteds.remove(this.getContextByIndex(item).getObject());
+                        let object: any = this.getContextByIndex(item)?.getObject();
+                        if (!ibas.objects.isNull(object)) {
+                            selecteds.remove(object);
+                        }
                     }
                     return selecteds;
                 },
@@ -834,7 +843,10 @@ namespace sap {
                 getSelecteds<T>(this: TreeTable): ibas.IList<T> {
                     let selecteds: ibas.IList<T> = new ibas.ArrayList<T>();
                     for (let item of this.getSelectedIndices()) {
-                        selecteds.push(this.getContextByIndex(item).getObject());
+                        let object: any = this.getContextByIndex(item)?.getObject();
+                        if (!ibas.objects.isNull(object)) {
+                            selecteds.push(object);
+                        }
                     }
                     return selecteds;
                 },
@@ -846,11 +858,17 @@ namespace sap {
                     let index: number = 0;
                     let context: sap.ui.model.Context = this.getContextByIndex(index);
                     while (!ibas.objects.isNull(context)) {
-                        selecteds.push(context.getObject());
+                        let object: any = context.getObject();
+                        if (!ibas.objects.isNull(object)) {
+                            selecteds.push(object);
+                        }
                         context = this.getContextByIndex(++index);
                     }
                     for (let item of this.getSelectedIndices()) {
-                        selecteds.remove(this.getContextByIndex(item).getObject());
+                        let object: any = this.getContextByIndex(item)?.getObject();
+                        if (!ibas.objects.isNull(object)) {
+                            selecteds.remove(object);
+                        }
                     }
                     return selecteds;
                 },

@@ -240,6 +240,17 @@ namespace shell {
                                 label: ibas.i18n.prop("shell_query_condition_value"),
                                 width: "10rem",
                                 template: new sap.extension.m.Input("", {
+                                    showSuggestion: true,
+                                    suggestionItems: [
+                                        new sap.ui.core.Item("", {
+                                        }).setText(ibas.VARIABLE_NAME_USER_ID),
+                                        new sap.ui.core.Item("", {
+                                        }).setText(ibas.VARIABLE_NAME_USER_CODE),
+                                        new sap.ui.core.Item("", {
+                                        }).setText(ibas.VARIABLE_NAME_USER_NAME),
+                                        new sap.ui.core.Item("", {
+                                        }).setText(ibas.VARIABLE_NAME_USER_BELONG),
+                                    ]
                                 }).bindProperty("bindingValue", {
                                     path: "value"
                                 }),

@@ -379,7 +379,9 @@ namespace sap {
                         }
                     }
                     if (model.isNew === true) {
-                        nonEditable(page.getSubHeader(), ["sap-icon://delete"]);
+                        nonEditable(page.getSubHeader(), ["sap-icon://delete", "sap-icon://generate-shortcut"]);
+                    } else {
+                        editable(page.getSubHeader(), true, ["sap-icon://delete", "sap-icon://generate-shortcut"]);
                     }
                 }
             }
@@ -459,6 +461,14 @@ namespace sap {
                 } else if (control instanceof sap.m.Toolbar) {
                     for (let item of control.getContent()) {
                         editable(item, status, properties);
+                    }
+                } else if (control instanceof sap.m.IconTabBar) {
+                    for (let item of control.getItems()) {
+                        if (item instanceof sap.m.IconTabFilter) {
+                            for (let cItem of item.getContent()) {
+                                editable(cItem, status, properties);
+                            }
+                        }
                     }
                 } else {
                     if (properties.length > 0) {

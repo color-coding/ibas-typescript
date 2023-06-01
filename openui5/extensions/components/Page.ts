@@ -191,6 +191,14 @@ namespace sap {
                     for (let item of control.getContent()) {
                         checkFormContent(item, properties);
                     }
+                } else if (control instanceof sap.m.IconTabBar) {
+                    for (let item of control.getItems()) {
+                        if (item instanceof sap.m.IconTabFilter) {
+                            for (let cItem of item.getContent()) {
+                                checkFormContent(cItem, properties);
+                            }
+                        }
+                    }
                 } else if (control instanceof sap.ui.layout.form.SimpleForm) {
                     for (let fmItem of control.getContent()) {
                         if (fmItem instanceof sap.m.Label) {
@@ -206,6 +214,10 @@ namespace sap {
                             continue;
                         }
                         if (fmItem instanceof sap.ui.table.Table) {
+                            continue;
+                        }
+                        if (fmItem instanceof sap.m.IconTabBar) {
+                            checkFormContent(fmItem, properties);
                             continue;
                         }
                         if (fmItem instanceof sap.ui.core.Control) {

@@ -52,6 +52,7 @@
     "shell_data_read": "读取",
     "shell_data_deleting": "正在删除[{0}]",
     "shell_data_delete_error": "删除[{0}]失败，{1}",
+    "shell_data_save_error": "保存[{0}]失败，{1}",
     "shell_data_created_new": "创建了新的对象",
     "shell_data_cloned_new": "复制了新的对象",
     "shell_data_read_new": "读取了新的对象",
