@@ -115,6 +115,35 @@ namespace sap {
                     }
                 }
             });
+            /**
+             * 菜单按钮
+             */
+            sap.m.MenuButton.extend("sap.extension.m.MenuButton", {
+                metadata: {
+                    properties: {
+                        autoHide: { type: "boolean", defaultValue: false },
+                    },
+                    events: {}
+                },
+                renderer: {
+                },
+                onBeforeRendering(this: MenuButton): void {
+                    (<any>sap.m.MenuButton.prototype).onBeforeRendering.apply(this, arguments);
+                    if (this.getAutoHide() === true) {
+                        let count: number = 0;
+                        for (let item of this.getMenu()?.getItems()) {
+                            if (item.getVisible()) {
+                                count++;
+                            }
+                        }
+                        if (count > 0) {
+                            this.setVisible(true);
+                        } else {
+                            this.setVisible(false);
+                        }
+                    }
+                },
+            });
         }
     }
 }

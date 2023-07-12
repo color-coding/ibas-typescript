@@ -16,9 +16,9 @@ namespace ibas {
         /** 名称 */
         name: string;
         /** 类别 */
-        category: string;
+        category?: string;
         /** 描述 */
-        description: string;
+        description?: string;
     }
     /**
      * 模块
@@ -415,6 +415,20 @@ namespace ibas {
         /** 初始化 */
         protected initialize(): void {
             this.registers();
+            // 修正元素描述
+            for (let item of this.elements()) {
+                if (item.description !== undefined) {
+                    continue;
+                }
+                if (strings.isEmpty(item.name)) {
+                    continue;
+                }
+                let description: string = i18n.prop(item.name);
+                if (!ibas.strings.isWith(description, "[", "]")) {
+                    item.description = description;
+                }
+            }
+            // 初始化完成通知
             this.fireInitialized();
         }
         /** 初始化完成，需要手工调用 */

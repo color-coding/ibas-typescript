@@ -59,6 +59,19 @@ declare namespace sap {
                  */
                 loadItems(): EnumSegmentedButton;
             }
+            /**
+             * 菜单按钮
+             */
+            class MenuButton extends sap.m.MenuButton {
+                /**
+                 * 获取自动隐藏
+                 */
+                getAutoHide(): boolean;
+                /**
+                 * 设置自动隐藏
+                 */
+                setAutoHide(value: boolean): MenuButton;
+            }
         }
     }
 }
