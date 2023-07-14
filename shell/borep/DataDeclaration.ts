@@ -135,5 +135,12 @@ namespace shell {
             /** 默认值 */
             Default: boolean;
         }
+        /** 用户功能 */
+        export interface IUserFunction extends IDataDeclaration {
+            Id: string;
+            Description: string;
+            Icon: string;
+            Items: IUserFunction[];
+        }
     }
 }

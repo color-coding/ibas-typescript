@@ -248,6 +248,19 @@ namespace shell {
                     newData.description = remote.Description;
                     newData.default = remote.Default;
                     return newData;
+                } else if (data.type === UserFunction.name) {
+                    let remote: bo4j.IUserFunction = data;
+                    let newData: UserFunction = new UserFunction();
+                    newData.id = remote.Id;
+                    newData.description = remote.Description;
+                    newData.icon = remote.Icon;
+                    if (remote.Items instanceof Array) {
+                        for (let item of remote.Items) {
+                            item.type = UserFunction.name;
+                            newData.items.push(this.parsing(item, sign));
+                        }
+                    }
+                    return newData;
                 } else if (sign === "saveUserQuery") {
                     // 此方法返回值，没有标记类型
                     data.type = ibas.OperationMessage.name;

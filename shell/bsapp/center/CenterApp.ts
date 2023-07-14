@@ -200,6 +200,22 @@ namespace shell {
                         console.run();
                     }
                 });
+                let boRepository: bo.IBORepositoryShell = bo.repository.create();
+                boRepository.fetchUserFunctions({
+                    user: user.code,
+                    onCompleted: (opRslt) => {
+                        try {
+                            if (opRslt.resultCode !== 0) {
+                                throw new Error(opRslt.message);
+                            }
+                            if (opRslt.resultObjects.length > 0) {
+                                this.view.showUserFunctions(opRslt.resultObjects);
+                            }
+                        } catch (error) {
+                            this.proceeding(this.view, ibas.emMessageType.ERROR, error);
+                        }
+                    }
+                });
             }
             /** 视图事件-激活功能 */
             private activateFunction(id: string): void {
@@ -293,6 +309,8 @@ namespace shell {
             showModuleFunction(module: string, func: ibas.IModuleFunction): void;
             /** 显示常驻视图 */
             showResidentView(view: ibas.IBarView): void;
+            /** 显示用户功能 */
+            showUserFunctions(funcs: bo.IUserFunction[]): void;
         }
         interface IModuleConsoleLoader {
             /** 用户 */

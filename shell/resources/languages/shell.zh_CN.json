@@ -73,6 +73,7 @@
     "shell_sucessful": "操作成功",
     "shell_batch": "批量",
     "shell_all": "全部",
+    "shell_my": "我的",
     "shell_reverse": "反向",
     "shell_none": "无",
     "shell_call": "调用",
@@ -120,5 +121,6 @@
     "shell_multiple_data_delete_continue": "共[{0}]个数据是否删除？",
     "shell_multiple_data_save_continue": "共[{0}]个数据是否保存？",
     "shell_delete_continue": "请确认是否删除？",
+    "shell_switched_user_functions": "切换至用户功能",
     "shell_exit_continue": "请确认是退出？"
 }

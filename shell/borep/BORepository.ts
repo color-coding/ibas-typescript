@@ -254,6 +254,22 @@ namespace shell {
                     }
                 });
             }
+            /**
+             * 查询用户功能
+             * @param caller 用户检索调用者
+             */
+            fetchUserFunctions(caller: IUserMethodCaller<IUserFunction>): void {
+                let remoteRepository: ibas.IRemoteRepository = this.createRemoteRepository();
+                if (ibas.objects.isNull(remoteRepository)) {
+                    throw new Error(ibas.i18n.prop("sys_invalid_parameter", "remoteRepository"));
+                }
+                let method: string =
+                    ibas.strings.format("fetchUserFunctions?user={0}&token={1}",
+                        caller.user, this.token);
+                remoteRepository.callRemoteMethod(method, undefined, (opRslt) => {
+                    caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
+                });
+            }
         }
         /** 空数据 */
         const EMPTY_BOINFO: IBizObjectInfo = {
@@ -445,6 +461,19 @@ namespace shell {
                     }
                 };
                 this.fetch("UserConfig", fetchCaller);
+            }
+            /**
+             * 查询用户功能
+             * @param caller 用户检索调用者
+             */
+            fetchUserFunctions(caller: IUserMethodCaller<IUserFunction>): void {
+                let fetchCaller: ibas.IFetchCaller<IUserFunction> = {
+                    criteria: null,
+                    onCompleted(opRslt: ibas.IOperationResult<UserFunction>): void {
+                        caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
+                    }
+                };
+                this.fetch("UserFunction", fetchCaller);
             }
         }
 

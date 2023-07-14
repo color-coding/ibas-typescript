@@ -137,5 +137,15 @@ namespace shell {
             /** 默认值 */
             default: boolean;
         }
+        /** 用户功能 */
+        export class UserFunction implements IUserFunction {
+            constructor() {
+                this.items = new ibas.ArrayList<IUserFunction>();
+            }
+            id: string;
+            description: string;
+            icon: string;
+            items: IUserFunction[];
+        }
     }
 }

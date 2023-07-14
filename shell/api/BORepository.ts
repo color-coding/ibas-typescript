@@ -112,11 +112,18 @@ namespace shell {
              * @param caller 调用者
              */
             saveUserQuery(caller: ibas.ISaveCaller<IUserQuery>): void;
+
             /**
              * 业务对象信息查询
              * @param caller 调用者
              */
             fetchBizObjectInfo(caller: IBizObjectInfoCaller): void;
+
+            /**
+             * 获取用户功能
+             * @param caller 调用者
+             */
+            fetchUserFunctions(caller: IUserMethodCaller<IUserFunction>): void;
         }
     }
 }

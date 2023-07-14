@@ -125,5 +125,12 @@ namespace shell {
             /** 默认值 */
             default: boolean;
         }
+        /** 用户功能 */
+        export interface IUserFunction {
+            id: string;
+            description: string;
+            icon: string;
+            items: IUserFunction[];
+        }
     }
 }
