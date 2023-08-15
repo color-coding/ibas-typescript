@@ -324,7 +324,58 @@ namespace sap {
                             text: property.systemed !== true ? property.description :
                                 ibas.i18n.prop(ibas.strings.format("bo_{0}_{1}", boInfo.name, property.name).toLowerCase())
                         }));
-                        splitter.addContent(factories.newComponent(property, "Input"));
+                        splitter.addContent(factories.newComponent(property, "Input", !ibas.strings.isEmpty(property.linkedObject) ? (event) => {
+                            let source: any = event.getSource();
+                            if (source instanceof sap.m.Input && event.getId() === "changed") {
+                                let chsInfo: string = source.getTooltip_AsString();
+                                if (!ibas.strings.isEmpty(chsInfo)) {
+                                    let criteria: ibas.ICriteria = ibas.criterias.valueOf(chsInfo);
+                                    if (!ibas.strings.isEmpty(criteria.remarks)) {
+                                        for (let pItem of criteria.remarks.split(";")) {
+                                            if (pItem.indexOf("=") <= 0) {
+                                                continue;
+                                            }
+                                            let tarName: string = ibas.strings.trim(pItem.split("=")[0]);
+                                            let surName: string = ibas.strings.trim(pItem.split("=")[1]);
+                                            let builder: ibas.StringBuilder = new ibas.StringBuilder();
+                                            builder.map(null, "");
+                                            builder.map(undefined, "");
+                                            if (event.getParameter("selecteds") instanceof Array) {
+                                                for (let item of event.getParameter("selecteds")) {
+                                                    if (builder.length > 0) {
+                                                        builder.append(ibas.DATA_SEPARATOR);
+                                                    }
+                                                    if (ibas.strings.isEmpty(property)) {
+                                                        builder.append(item);
+                                                    } else {
+                                                        if (ibas.strings.isWith(surName, "U_", undefined)) {
+                                                            let userField: ibas.IUserField = item?.userFields?.get(surName);
+                                                            if (!ibas.objects.isNull(userField)) {
+                                                                builder.append(userField.value);
+                                                            }
+                                                        } else {
+                                                            builder.append(item[surName]);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            let boData: any = splitter.getParent()?.getBindingContext()?.getObject();
+                                            if (boData instanceof ibas.BusinessObject) {
+                                                // 通过主对象赋值
+                                                if (ibas.strings.isWith(tarName, "U_", undefined)) {
+                                                    let userField: ibas.IUserField = boData?.userFields.get(tarName);
+                                                    if (!ibas.objects.isNull(userField)) {
+                                                        userField.value = builder.toString();
+                                                    }
+                                                } else {
+                                                    boData[tarName] = builder.toString();
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        } : undefined));
                     }
                 }
             }

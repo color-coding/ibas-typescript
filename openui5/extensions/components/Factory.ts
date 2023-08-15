@@ -40,7 +40,7 @@ namespace sap {
              * @param property 属性信息
              * @param mode 视图类型
              */
-            export function newComponent(property: shell.bo.IBizPropertyInfo, mode: "Text" | "Input" | "Object" | "Object.2"): sap.ui.core.Control {
+            export function newComponent(property: shell.bo.IBizPropertyInfo, mode: "Text" | "Input" | "Object" | "Object.2", onChanged?: (event: sap.ui.base.Event) => void): sap.ui.core.Control {
                 // 创建绑定信息
                 let bindInfo: sap.ui.base.ManagedObject.PropertyBindingInfo = {
                     path: ibas.businessobjects.properties.naming.lowerCamelCase(property.name)
@@ -145,7 +145,6 @@ namespace sap {
                                 force = true;
                             }
                         }
-
                         return force === true
                             ? new sap.extension.m.Select("", {
                                 forceSelection: true,
@@ -182,7 +181,7 @@ namespace sap {
                                 },
                             }).bindProperty("bindingValue", bindInfo);
                     } else if (!ibas.strings.isEmpty(property.linkedObject)) {
-                        let input: sap.m.InputBase = <sap.m.InputBase>newInput(property.linkedObject).bindProperty("bindingValue", bindInfo);
+                        let input: sap.m.InputBase = <sap.m.InputBase>newInput(property.linkedObject, onChanged).bindProperty("bindingValue", bindInfo);
                         input.setRequired(property.required);
                         return input;
                     } else {
@@ -385,6 +384,12 @@ namespace sap {
                             return;
                         }
                         let source: any = event.getSource();
+                        // 处理变量
+                        for (let item of criteria.conditions) {
+                            if (ibas.strings.isWith(item.value, "${", "}")) {
+                                item.value = ibas.variablesManager.getValue(item.value);
+                            }
+                        }
                         ibas.servicesManager.runChooseService<any>({
                             boCode: criteria.businessObject,
                             criteria: criteria,
