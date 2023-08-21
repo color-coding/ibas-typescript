@@ -183,6 +183,7 @@ namespace sap {
                     } else if (!ibas.strings.isEmpty(property.linkedObject)) {
                         let input: sap.m.InputBase = <sap.m.InputBase>newInput(property.linkedObject, onChanged).bindProperty("bindingValue", bindInfo);
                         input.setRequired(property.required);
+                        input.setEditable(property.authorised === ibas.emAuthoriseType.ALL ? true : false);
                         return input;
                     } else {
                         return new sap.extension.m.Input("", {

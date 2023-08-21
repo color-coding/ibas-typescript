@@ -483,8 +483,8 @@ namespace sap {
                                         dropPosition: sap.ui.core.dnd.DropPosition.Between,
                                         dropLayout: sap.ui.core.dnd.DropLayout.Vertical,
                                         drop(event: sap.ui.base.Event): void {
-                                            let dragged: any = event.getParameter("draggedControl");
-                                            let dropped: any = event.getParameter("droppedControl");
+                                            let dragged: any = event.getParameter("draggedControl")?.getBindingContext();
+                                            let dropped: any = event.getParameter("droppedControl")?.getBindingContext();
                                             let dropPosition: string = event.getParameter("dropPosition");
                                             let table: any = (<any>event.getSource())?.getDropTarget();
                                             if (table instanceof DataTable) {
@@ -493,26 +493,26 @@ namespace sap {
                                                 if (step <= 0) {
                                                     step = 1;
                                                 }
-                                                for (let row of table.getRows()) {
-                                                    if (ibas.objects.isNull(row.getBindingContext())) {
+                                                for (let row of (<any>table).getBinding().getContexts()) {
+                                                    if (ibas.objects.isNull(row)) {
                                                         continue;
                                                     }
                                                     if (dragged === row) {
                                                         continue;
                                                     } else if (dropped === row) {
                                                         if (dropPosition === "Before") {
-                                                            dragged.getBindingContext().getObject()[mSettings.sortProperty] = index * step;
+                                                            dragged.getObject()[mSettings.sortProperty] = index * step;
                                                             index++;
-                                                            dropped.getBindingContext().getObject()[mSettings.sortProperty] = index * step;
+                                                            dropped.getObject()[mSettings.sortProperty] = index * step;
                                                             index++;
                                                         } else if (dropPosition === "After") {
-                                                            dropped.getBindingContext().getObject()[mSettings.sortProperty] = index * step;
+                                                            dropped.getObject()[mSettings.sortProperty] = index * step;
                                                             index++;
-                                                            dragged.getBindingContext().getObject()[mSettings.sortProperty] = index * step;
+                                                            dragged.getObject()[mSettings.sortProperty] = index * step;
                                                             index++;
                                                         }
                                                     } else {
-                                                        row.getBindingContext().getObject()[mSettings.sortProperty] = index * step;
+                                                        row.getObject()[mSettings.sortProperty] = index * step;
                                                         index++;
                                                     }
                                                 }
