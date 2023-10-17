@@ -109,6 +109,7 @@ namespace sap {
                         });
                     }
                     return new sap.extension.m.Text("", {
+                        tooltip: property.dataType === "Memo" ? bindInfo : undefined,
                     }).bindProperty("bindingValue", bindInfo);
                 } else if (mode === "Input") {
                     if (bindInfo.type instanceof sap.extension.data.Date) {

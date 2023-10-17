@@ -71,6 +71,8 @@
 /// <reference path="./extensions/components/ObjectListItem.ts" />
 /// <reference path="./extensions/components/Toolbar.d.ts" />
 /// <reference path="./extensions/components/Toolbar.ts" />
+/// <reference path="./extensions/components/Title.d.ts" />
+/// <reference path="./extensions/components/Title.ts" />
 /// <reference path="./extensions/components/Factory.ts" />
 
 namespace openui5 {

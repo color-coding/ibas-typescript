@@ -6,7 +6,7 @@
     "openui5_district": "区",
     "openui5_street": "街道",
     "openui5_zipcode": "邮编",
-    "openui5_manual_series": "手动编号",
+    "openui5_manual_series": "手动编码",
     "openui5_undo_action_continue": "撤销{0}，是否继续？",
     "openui5_do_action_continue": "设置为{0}，是否继续？",
     "openui5_please_select_data": "请选择数据",

@@ -810,14 +810,14 @@ namespace ibas {
          * @returns 日期
          */
         export function valueOf(value: any): Date {
-            if (objects.isNull(value)) {
-                return undefined;
-            }
             if (value instanceof Date) {
                 return value;
             }
+            if (objects.isNull(value)) {
+                return undefined;
+            }
             if (typeof value === "number") {
-                return new Date(value);
+                return isNaN(value) ? undefined : new Date(value);
             }
             if (typeof value === "string") {
                 if (value.indexOf("/") > 0) {
@@ -825,14 +825,10 @@ namespace ibas {
                 }
                 if (value.indexOf(":") < 0) {
                     // 补充时间部分，否则会被加时区时间
-                    value = value + "T00:00:00";
+                    value = value + "T00:00:00.00";
                 }
             }
-            let time: number = Date.parse(value);
-            if (!isNaN(time)) {
-                return new Date(time);
-            }
-            return null;
+            return valueOf(Date.parse(value));
         }
 
         const DATA_SEPARATOR: string = "-";

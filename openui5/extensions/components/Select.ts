@@ -616,7 +616,9 @@ namespace sap {
                  * @param value 数据信息
                  */
                 setDataInfo(this: PropertySelect, value: { code: string, name?: string } | string): PropertySelect {
-                    return this.setProperty("dataInfo", value);
+                    this.setProperty("dataInfo", value);
+                    this.loadItems();
+                    return this;
                 },
                 /**
                  * 设置绑定值
@@ -676,7 +678,13 @@ namespace sap {
                         }
                     });
                     return this;
-                }
+                },
+                /** 重构设置 */
+                applySettings(this: Select): Select {
+                    sap.m.Select.prototype.applySettings.apply(this, arguments);
+                    // 设置对象属性时，加载可选值
+                    return this;
+                },
             });
             /**
              * 币种-选择框

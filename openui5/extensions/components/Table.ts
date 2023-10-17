@@ -349,11 +349,11 @@ namespace sap {
                                     mSettings.width = "6rem";
                                 } else if (path === ibas.BO_PROPERTY_NAME_APPROVALSTATUS
                                     || path === ibas.BO_PROPERTY_NAME_DOCUMENTSTATUS
-                                    || path === ibas.BO_PROPERTY_NAME_LINESTATUS) {
+                                    || path === ibas.BO_PROPERTY_NAME_LINESTATUS
+                                    || path === ibas.BO_PROPERTY_NAME_STATUS) {
                                     mSettings.width = "8rem";
                                 } else if (path === ibas.BO_PROPERTY_NAME_CANCELED
-                                    || path === ibas.BO_PROPERTY_NAME_DELETED
-                                    || path === ibas.BO_PROPERTY_NAME_STATUS) {
+                                    || path === ibas.BO_PROPERTY_NAME_DELETED) {
                                     mSettings.width = "6rem";
                                 }
                             }

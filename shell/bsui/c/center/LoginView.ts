@@ -113,36 +113,48 @@ namespace shell {
                             new sap.m.Label("", {
                                 text: ibas.i18n.prop("shell_plantform")
                             }),
-                            new sap.m.Select("", {
+                            new sap.m.HBox("", {
+                                width: "100%",
+                                height: "100%",
+                                alignContent: sap.m.FlexAlignContent.Start,
+                                alignItems: sap.m.FlexAlignItems.Center,
+                                justifyContent: sap.m.FlexJustifyContent.Start,
+                                renderType: sap.m.FlexRendertype.Bare,
                                 items: [
-                                    new sap.ui.core.ListItem("", {
-                                        key: ibas.emPlantform.DESKTOP,
-                                        text: ibas.enums.describe(ibas.emPlantform, ibas.emPlantform.DESKTOP),
+                                    new sap.m.Select("", {
+                                        items: [
+                                            new sap.ui.core.ListItem("", {
+                                                key: ibas.emPlantform.DESKTOP,
+                                                text: ibas.enums.describe(ibas.emPlantform, ibas.emPlantform.DESKTOP),
+                                            }),
+                                            new sap.ui.core.ListItem("", {
+                                                key: ibas.emPlantform.PHONE,
+                                                text: ibas.enums.describe(ibas.emPlantform, ibas.emPlantform.PHONE),
+                                            }),
+                                            new sap.ui.core.ListItem("", {
+                                                key: ibas.emPlantform.TABLET,
+                                                text: ibas.enums.describe(ibas.emPlantform, ibas.emPlantform.TABLET),
+                                            }),
+                                        ],
+                                        selectedKey: ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM),
+                                        change: function (): void {
+                                            ibas.config.set(ibas.CONFIG_ITEM_PLANTFORM,
+                                                parseInt(this.getSelectedKey(), 0)
+                                            );
+                                            that.fireViewEvents(that.closeEvent);
+                                            that.application.show();
+                                        },
+                                        width: "60%",
                                     }),
-                                    new sap.ui.core.ListItem("", {
-                                        key: ibas.emPlantform.PHONE,
-                                        text: ibas.enums.describe(ibas.emPlantform, ibas.emPlantform.PHONE),
-                                    }),
-                                    new sap.ui.core.ListItem("", {
-                                        key: ibas.emPlantform.TABLET,
-                                        text: ibas.enums.describe(ibas.emPlantform, ibas.emPlantform.TABLET),
-                                    }),
-                                ],
-                                selectedKey: ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM),
-                                change: function (): void {
-                                    ibas.config.set(ibas.CONFIG_ITEM_PLANTFORM,
-                                        parseInt(this.getSelectedKey(), 0)
-                                    );
-                                    that.fireViewEvents(that.closeEvent);
-                                    that.application.show();
-                                }
-                            }),
-                            new sap.m.Button("", {
-                                text: ibas.i18n.prop("shell_login"),
-                                type: sap.m.ButtonType.Accept,
-                                press: function (): void {
-                                    that.fireViewEvents(that.loginEvent);
-                                }
+                                    new sap.m.Button("", {
+                                        text: ibas.i18n.prop("shell_login"),
+                                        type: sap.m.ButtonType.Accept,
+                                        press: function (): void {
+                                            that.fireViewEvents(that.loginEvent);
+                                        },
+                                        width: "40%",
+                                    }).addStyleClass("sapUiTinyMarginBegin"),
+                                ]
                             }),
                             new sap.m.Label("", {}),
                             new sap.m.Title("", {

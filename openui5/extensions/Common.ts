@@ -347,20 +347,35 @@ namespace sap {
         /** 页面操作集 */
         export namespace pages {
             /**
-             * 改变页面控件状态
+             * 改变页面控件状态（异步）
              */
-            export function changeStatus(page: sap.m.Page | sap.uxap.ObjectPageLayout): void {
+            export function changeStatus(page: sap.m.Page | sap.uxap.ObjectPageLayout, timeout: number = 300): void {
+                if (timeout > 0) {
+                    setTimeout(() => {
+                        changeStatusSync(page);
+                    }, timeout);
+                } else {
+                    changeStatusSync(page);
+                }
+            }
+            /**
+             * 改变页面控件状态（同步）
+             */
+            export function changeStatusSync(page: sap.m.Page | sap.uxap.ObjectPageLayout): void {
                 let model: any = page && page.getModel() ? (<any>page.getModel()).getData() : null;
                 if (page instanceof sap.m.Page) {
                     if (model instanceof ibas.BOMasterData || model instanceof ibas.BOMasterDataLine) {
-                        if (model.isNew === true) {
-                            for (let item of page.getContent()) {
-                                editable(item, true, ["Code"]);
-                            }
-                        } else {
-                            editable(page.getSubHeader(), true);
-                            for (let item of page.getContent()) {
-                                nonEditable(item, ["Code"]);
+                        // tslint:disable-next-line: no-string-literal
+                        if (!(model["series"] > 0)) {
+                            if (model.isNew === true) {
+                                for (let item of page.getContent()) {
+                                    editable(item, true, ["Code"]);
+                                }
+                            } else {
+                                editable(page.getSubHeader(), true);
+                                for (let item of page.getContent()) {
+                                    nonEditable(item, ["Code"]);
+                                }
                             }
                         }
                     } else if (model instanceof ibas.BODocument) {

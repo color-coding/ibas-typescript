@@ -60,10 +60,6 @@ namespace ibas {
          */
         docEntry: number;
         /**
-         * 单据流水号
-         */
-        docNum: number;
-        /**
          * 期间
          */
         period: number;
