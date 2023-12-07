@@ -485,6 +485,10 @@ namespace sap {
                             }
                         }
                     }
+                } else if (control instanceof sap.m.FlexBox) {
+                    for (let item of control.getItems()) {
+                        editable(item, status, properties);
+                    }
                 } else {
                     if (properties.length > 0) {
                         if (checkBinding(control, properties)) {

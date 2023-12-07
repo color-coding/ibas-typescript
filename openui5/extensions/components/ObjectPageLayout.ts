@@ -240,6 +240,13 @@ namespace sap {
                             }
                         } return;
                     }
+                    if (control instanceof sap.ui.layout.form.SimpleForm) {
+                        for (let item of control.getContent()) {
+                            if (item instanceof sap.ui.core.Control) {
+                                authorising(item);
+                            }
+                        } return;
+                    }
                     let bindingPath: string = managedobjects.bindingPath(control);
                     let index: number = properties.findIndex(c => c && ibas.strings.equalsIgnoreCase(c.name, bindingPath));
                     if (index < 0) {

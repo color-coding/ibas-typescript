@@ -144,6 +144,42 @@ namespace sap {
                     }
                     return selecteds;
                 },
+                /**
+                 * 导出内容
+                 */
+                toDataTable(this: Table): ibas.DataTable {
+                    let dataTable: ibas.DataTable = new ibas.DataTable();
+                    for (let column of this.getColumns()) {
+                        let dtColumn: ibas.DataTableColumn = new ibas.DataTableColumn();
+                        dtColumn.name = column.getId();
+                        if (column.getLabel() instanceof sap.m.Label) {
+                            dtColumn.description = (<sap.m.Label>column.getLabel()).getText();
+                        }
+                        dataTable.columns.add(dtColumn);
+                    }
+                    for (let row of this.getRows()) {
+                        let dtRow: ibas.DataTableRow = new ibas.DataTableRow();
+                        for (let i: number = 0; i < dataTable.columns.length; i++) {
+                            let cell: any = row.getCells()[i];
+                            if (cell instanceof sap.m.InputBase) {
+                                dtRow.cells[i] = cell.getValue();
+                            } else if (cell instanceof sap.m.Text) {
+                                dtRow.cells[i] = cell.getText(true);
+                            } else if (cell instanceof sap.m.Link) {
+                                dtRow.cells[i] = cell.getText();
+                            } else if (cell instanceof sap.m.Select) {
+                                dtRow.cells[i] = cell.getSelectedItem()?.getText();
+                                if (ibas.objects.isNull(dtRow.cells[i])) {
+                                    dtRow.cells[i] = "";
+                                }
+                            } else {
+                                dtRow.cells[i] = "";
+                            }
+                        }
+                        dataTable.rows.add(dtRow);
+                    }
+                    return dataTable;
+                },
                 init(this: Table): void {
                     // 基类初始化
                     (<any>sap.ui.table.Table.prototype).init.apply(this, arguments);

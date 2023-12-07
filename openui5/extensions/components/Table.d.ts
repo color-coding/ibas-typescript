@@ -78,6 +78,10 @@ declare namespace sap {
                 getSelectedIndex(): number;
                 /** 1.70以上方法 */
                 private _hasSelectionPlugin(): boolean;
+                /**
+                 * 导出内容
+                 */
+                toDataTable(): ibas.DataTable;
             }
             /**
              * 表格列

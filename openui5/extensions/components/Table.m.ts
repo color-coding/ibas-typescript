@@ -90,12 +90,14 @@ namespace sap {
                         if (ibas.objects.isNull(mSettings.includeItemInSelection)) {
                             mSettings.includeItemInSelection = true;
                         }
+                        /* false默认全加载
                         if (ibas.objects.isNull(mSettings.growing)) {
                             mSettings.growing = true;
                         }
                         if (ibas.objects.isNull(mSettings.growingScrollToLoad)) {
                             mSettings.growingScrollToLoad = true;
                         }
+                        */
                     }
                     return sap.m.Table.prototype.applySettings.apply(this, arguments);
                 },

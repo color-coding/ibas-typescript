@@ -416,6 +416,7 @@ namespace sap {
                 constructor: function (setting?: IDecimalSetting): void {
                     sap.ui.model.type.Float.call(this, {
                         decimals: setting?.decimalPlaces > 0 ? setting?.decimalPlaces : DECIMAL_PLACES,
+                        preserveDecimals: false,
                         // emptyString: 0,
                     }, setting ?
                         {
