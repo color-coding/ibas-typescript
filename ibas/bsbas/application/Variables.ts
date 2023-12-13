@@ -25,6 +25,8 @@ namespace ibas {
     export const VARIABLE_NAME_USER_TOKEN: string = "${USER_TOKEN}";
     /** 变量-用户身份 */
     export const VARIABLE_NAME_USER_IDENTITIES: string = "${USER_IDENTITIES}";
+    /** 变量-用户分支 */
+    export const VARIABLE_NAME_USER_BRANCH: string = "${USER_BRANCH}";
     /** 运行中的变量 */
     const _variables: Map<string, KeyValue> = new Map<string, KeyValue>();
     /** 变量管理员 */

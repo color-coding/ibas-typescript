@@ -242,6 +242,16 @@ declare namespace sap {
                  */
                 loadItems(): this;
             }
+            /**
+             * 分支-输入框
+             */
+            class BranchInput extends SelectionInput {
+            }
+            /**
+             * 数据分支-输入框
+             */
+            class DataBranchInput extends BranchInput {
+            }
         }
     }
 }

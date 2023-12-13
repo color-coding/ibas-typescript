@@ -1164,6 +1164,99 @@ namespace sap {
                     });
                 },
             });
+            /**
+             * 分支-输入框
+             */
+            SelectionInput.extend("sap.extension.m.BranchInput", {
+                metadata: {
+                    properties: {
+                    },
+                    events: {}
+                },
+                renderer: {},
+                /** 重构设置 */
+                applySettings(this: BranchInput, mSettings: any, oScope?: any): BranchInput {
+                    SelectionInput.prototype.applySettings.apply(this, arguments);
+                    let boRepository: ibas.BORepositoryApplication = this.getRepository();
+                    if (ibas.objects.isNull(boRepository)) {
+                        boRepository = variables.get(BranchInput, "repository");
+                        if (ibas.objects.isNull(boRepository)) {
+                            boRepository = ibas.boFactory.create("BORepositoryAccounting");
+                            variables.set(boRepository, BranchInput, "repository");
+                        }
+                        this.setRepository(boRepository);
+                    }
+                    let dataInfo: repository.IDataInfo = this.getDataInfo();
+                    if (ibas.objects.isNull(dataInfo)) {
+                        dataInfo = variables.get(BranchInput, "dataInfo");
+                        if (ibas.objects.isNull(dataInfo)) {
+                            dataInfo = {
+                                type: ibas.boFactory.classOf(ibas.config.applyVariables("${Company}_AC_BRANCH")),
+                                key: "Code",
+                                text: "Name",
+                            };
+                            variables.set(dataInfo, BranchInput, "dataInfo");
+                        }
+                        this.setDataInfo(dataInfo);
+                    } else {
+                        if (!dataInfo.type) {
+                            dataInfo.type = ibas.boFactory.classOf(ibas.config.applyVariables("${Company}_AC_BRANCH"));
+                        } else if (!dataInfo.key) {
+                            dataInfo.key = "Code";
+                        } else if (!dataInfo.text) {
+                            dataInfo.text = "Name";
+                        }
+                    }
+                    let criteria: ibas.ICriteria | ibas.ICondition[] = this.getCriteria();
+                    if (ibas.objects.isNull(criteria)) {
+                        criteria = variables.get(BranchInput, "criteria");
+                        if (ibas.objects.isNull(criteria)) {
+                            criteria = [
+                                new ibas.Condition("Activated", ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES.toString())
+                            ];
+                            variables.set(criteria, BranchInput, "criteria");
+                        }
+                        this.setCriteria(criteria);
+                    }
+                    if (ibas.objects.isNull(mSettings?.showValueLink)) {
+                        this.setShowValueLink(true);
+                    }
+                    return this;
+                }
+            });
+            /**
+             * 数据分支-输入框
+             */
+            BranchInput.extend("sap.extension.m.DataBranchInput", {
+                metadata: {
+                    properties: {
+                    },
+                    events: {}
+                },
+                renderer: {},
+                init(this: DataBranchInput): void {
+                    (<any>BranchInput.prototype).init.apply(this, arguments);
+                    this.attachModelContextChange(undefined, function (event: sap.ui.base.Event): void {
+                        let source: any = event.getSource();
+                        if (source instanceof BranchInput) {
+                            let content: any = source.getBindingContext();
+                            if (content instanceof sap.ui.model.Context) {
+                                let data: any = content.getObject();
+                                if (data instanceof ibas.BusinessObject) {
+                                    if (data.isNew === true) {
+                                        let binding: any = source.getBinding("bindingValue");
+                                        if (binding instanceof sap.ui.model.PropertyBinding) {
+                                            if (ibas.strings.isEmpty(binding.getRawValue())) {
+                                                binding.setValue(ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_BRANCH));
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            });
         }
     }
 }
