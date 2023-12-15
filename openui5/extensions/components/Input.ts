@@ -311,9 +311,12 @@ namespace sap {
                             condition.relationship = ibas.emConditionRelationship.OR;
                         }
                     }
+                    /*
+                    // ui5升级不再需要改变状态
                     let editable: boolean = false, enabled: boolean = false;
                     !this.getEditable() ? this.setEditable(true) : editable = true;
                     !this.getEnabled() ? this.setEnabled(true) : enabled = true;
+                    */
                     repository.batchFetch(this.getRepository(), this.getDataInfo(), criteria,
                         (values) => {
                             if (values instanceof Error) {
@@ -349,12 +352,15 @@ namespace sap {
                                 this.setSelectedItem(item);
                                 this.updateDomValue(item.getText());
                             }
+                            /*
+                            // ui5升级不再需要改变状态
                             if (this.getEditable() && editable === false) {
                                 this.setEditable(editable);
                             }
                             if (this.getEnabled() && enabled === false) {
                                 this.setEnabled(enabled);
                             }
+                            */
                         }
                     );
                 },
@@ -924,8 +930,9 @@ namespace sap {
                                     if (data.isNew === true) {
                                         let binding: any = source.getBinding("bindingValue");
                                         if (binding instanceof sap.ui.model.PropertyBinding) {
-                                            if (!(binding.getRawValue() > 0)) {
-                                                binding.setValue(ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_ID));
+                                            let value: any = ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_ID);
+                                            if (!ibas.objects.isNull(value)) {
+                                                binding.setValue(value);
                                             }
                                         }
                                     }
@@ -968,8 +975,9 @@ namespace sap {
                                     if (data.isNew === true) {
                                         let binding: any = source.getBinding("bindingValue");
                                         if (binding instanceof sap.ui.model.PropertyBinding) {
-                                            if (ibas.strings.isEmpty(binding.getRawValue())) {
-                                                binding.setValue(ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_BELONG));
+                                            let value: any = ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_BELONG);
+                                            if (!ibas.objects.isNull(value)) {
+                                                binding.setValue(value);
                                             }
                                         }
                                     }
@@ -1246,8 +1254,9 @@ namespace sap {
                                     if (data.isNew === true) {
                                         let binding: any = source.getBinding("bindingValue");
                                         if (binding instanceof sap.ui.model.PropertyBinding) {
-                                            if (ibas.strings.isEmpty(binding.getRawValue())) {
-                                                binding.setValue(ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_BRANCH));
+                                            let value: any = ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_BRANCH);
+                                            if (!ibas.objects.isNull(value)) {
+                                                binding.setValue(value);
                                             }
                                         }
                                     }

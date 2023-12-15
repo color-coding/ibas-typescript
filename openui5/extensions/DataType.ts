@@ -543,8 +543,13 @@ namespace sap {
                     if (typeof oValue === sInternalType) {
                         return oValue;
                     }
-                    if (sInternalType === "object" && oValue instanceof Date) {
-                        return oValue;
+                    if (oValue instanceof globalThis.Date) {
+                        if (sInternalType === "Date") {
+                            return oValue;
+                        }
+                        if (sInternalType === "object") {
+                            return oValue;
+                        }
                     }
                     return sap.ui.model.type.Date.prototype.formatValue.apply(this, arguments);
                 },
@@ -552,7 +557,7 @@ namespace sap {
                     if (sInternalType === "Date") {
                         return oValue;
                     }
-                    if (sInternalType === "object" && oValue instanceof Date) {
+                    if (sInternalType === "object" && oValue instanceof globalThis.Date) {
                         return oValue;
                     }
                     return sap.ui.model.type.Date.prototype.parseValue.apply(this, arguments);

@@ -191,6 +191,13 @@ namespace sap {
                     for (let item of control.getContent()) {
                         checkFormContent(item, properties);
                     }
+                } else if (control instanceof sap.m.SplitContainer) {
+                    for (let item of control.getMasterPages()) {
+                        checkFormContent(item, properties);
+                    }
+                    for (let item of control.getDetailPages()) {
+                        checkFormContent(item, properties);
+                    }
                 } else if (control instanceof sap.m.IconTabBar) {
                     for (let item of control.getItems()) {
                         if (item instanceof sap.m.IconTabFilter) {
@@ -377,8 +384,16 @@ namespace sap {
                             }
                         } : undefined));
                     }
+                    // 默认是否显示自定义字段界面
+                    if (splitter.getContent().length > 0) {
+                        if (splitter.getParent() instanceof sap.ui.layout.DynamicSideContent && ibas.config.get(CONFIG_ITEM_AUTO_SHOW_USER_FIELDS_SIDE, false)) {
+                            (<sap.ui.layout.DynamicSideContent>splitter.getParent()).setShowSideContent(true, true);
+                        }
+                    }
                 }
             }
+            /** 配置项目-自动显示用户字段区域 */
+            export const CONFIG_ITEM_AUTO_SHOW_USER_FIELDS_SIDE: string = "autoShowUserFieldsSide";
         }
     }
 }

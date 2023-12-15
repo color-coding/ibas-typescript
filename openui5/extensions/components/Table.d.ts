@@ -82,6 +82,26 @@ declare namespace sap {
                  * 导出内容
                  */
                 toDataTable(): ibas.DataTable;
+                /**
+                 * 监听行双击事件
+                 * @param oData 数据
+                 * @param fnFunction 方法
+                 * @param oListener 监听者
+                 */
+                attachRowDoubleClick(oData: any, fnFunction: Function, oListener?: any): this;
+                /**
+                 * 移出行双击事件
+                 * @param fnFunction 方法
+                 * @param oListener 监听者
+                 */
+                detachRowDoubleClick(fnFunction: Function, oListener?: any): this;
+                /**
+                 * 触发行双击事件
+                 * @param param 参数
+                 */
+                protected fireRowDoubleClick(param: {
+                    row: sap.ui.table.Row,
+                }): void;
             }
             /**
              * 表格列
@@ -216,6 +236,10 @@ declare namespace sap {
                  * @param param 参数
                  */
                 protected fireNextDataSet(param: { data: any, }): void;
+                /**
+                 * 导出内容
+                 */
+                toDataTable(): ibas.DataTable;
             }
             /**
              * 数据表格

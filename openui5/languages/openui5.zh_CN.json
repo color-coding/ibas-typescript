@@ -6,6 +6,7 @@
     "openui5_district": "区",
     "openui5_street": "街道",
     "openui5_zipcode": "邮编",
+    "openui5_level": "层级",
     "openui5_manual_series": "手动编码",
     "openui5_undo_action_continue": "撤销{0}，是否继续？",
     "openui5_do_action_continue": "设置为{0}，是否继续？",
@@ -19,5 +20,11 @@
     "openui5_data_value_more_than": "值大于{0}",
     "openui5_data_value_less_than": "值小于{0}",
     "openui5_data_value_not_between": "值没有处于{0} - {1}之间",
+    "openui5_currency_no_base_currency": "没有提供本位币",
+    "openui5_currency_no_currency": "没有选择货币",
+    "openui5_currency_no_date": "没有提供日期",
+    "openui5_currency_rate": "{0}/{1} = {2}",
+    "openui5_currency_rate_full": "{0}，{1}，{2}",
+    "openui5_currency_rate_settting": "正在查询汇率",
     "openui5_bo_extend_properties": "扩展属性"
 }

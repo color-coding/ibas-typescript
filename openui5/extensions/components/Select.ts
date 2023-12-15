@@ -687,11 +687,13 @@ namespace sap {
                 },
             });
             /**
-             * 币种-选择框
+             * 货币-选择框
              */
             Select.extend("sap.extension.m.CurrencySelect", {
                 metadata: {
                     properties: {
+                        /** 比例 */
+                        columnRatio: { type: "string", defaultValue: "1:2" },
                     },
                     events: {}
                 },
@@ -736,7 +738,7 @@ namespace sap {
                             if (values instanceof Error) {
                                 ibas.logger.log(values);
                             } else {
-                                let deCurrenty: string = ibas.config.get(ibas.CONFIG_ITEM_DEFAULT_CURRENCY, "");
+                                let deCurrency: string = ibas.config.get(ibas.CONFIG_ITEM_DEFAULT_CURRENCY, "");
                                 for (let item of values) {
                                     let sItem: any = this.getItemByKey(item.key);
                                     if (sItem instanceof ui.core.Item) {
@@ -750,7 +752,7 @@ namespace sap {
                                             text: item.key,
                                             additionalText: item.text,
                                             tooltip: ibas.strings.format("{0} - {1}", item.key, item.text + (item.note && item.note !== item.key ? ibas.strings.format(" ({0})", item.note) : "")),
-                                            default: (deCurrenty === item.key || deCurrenty === item.note) ? true : undefined,
+                                            default: (deCurrency === item.key || deCurrency === item.note) ? true : undefined,
                                         }));
                                     }
                                 }
@@ -765,11 +767,227 @@ namespace sap {
                             mSettings = {};
                         }
                         mSettings.showSecondaryValues = true;
-                        mSettings.wrapItemsText = true;
                     }
                     Select.prototype.applySettings.call(this, mSettings);
                     return this;
                 },
+            });
+            /**
+             * 货币和汇率-选择框
+             */
+            core.EditableControl.extend("sap.extension.m.CurrencyRateSelect", {
+                metadata: {
+                    properties: {
+                        /** 日期 */
+                        date: { type: "Date" },
+                        /** 汇率 */
+                        rate: { type: "float" },
+                        /** 币种 */
+                        currency: { type: "string" },
+                        /** 本位币 */
+                        baseCurrency: { type: "string" },
+                    },
+                    aggregations: {
+                        "_currency": { type: "sap.extension.m.CurrencySelect", multiple: false },
+                        "_rate": { type: "sap.extension.m.Input", multiple: false },
+                    },
+                    events: {
+                        "currencyChanged": {
+                            parameters: {
+                                baseCurrency: {
+                                    type: "string"
+                                },
+                                date: {
+                                    type: "Date"
+                                },
+                                currency: {
+                                    type: "string"
+                                },
+                                rate: {
+                                    type: "float"
+                                },
+                            }
+                        },
+                    }
+                },
+                renderer: function (this: CurrencyRateSelect, oRm: sap.ui.core.RenderManager, oControl: CurrencyRateSelect): void {
+                    oRm.openStart("div", oControl);
+                    oRm.style("display", "inline-flex");
+                    oRm.style("vertical-align", "bottom");
+                    oRm.openEnd();
+                    oRm.openStart("div");
+                    // oRm.style("width", "5px");
+                    oRm.openEnd();
+                    oRm.close("div");
+                    oRm.openStart("div");
+                    oRm.style("width", "50%");
+                    oRm.openEnd();
+                    oRm.renderControl(<sap.ui.core.Control>oControl.getAggregation("_rate", undefined));
+                    oRm.close("div");
+                    oRm.openStart("div");
+                    oRm.style("width", "50%");
+                    oRm.openEnd();
+                    oRm.renderControl(<sap.ui.core.Control>oControl.getAggregation("_currency", undefined));
+                    oRm.close("div");
+                    oRm.openStart("div");
+                    oRm.style("width", "10px");
+                    oRm.openEnd();
+                    oRm.close("div");
+                    oRm.close("div");
+                },
+                applySettings(this: CurrencyRateSelect): void {
+                    this.setAggregation("_rate", this._rateInput = new Input("", {
+                        type: sap.m.InputType.Number,
+                        textAlign: sap.ui.core.TextAlign.Right,
+                        change(this: Input, event: sap.ui.base.Event): void {
+                            let source: any = (<any>event.getSource())?.getParent();
+                            if (source instanceof CurrencyRateSelect) {
+                                source.setRate(ibas.numbers.valueOf(this.getBindingValue()));
+                            }
+                        }
+                    }));
+                    this.setAggregation("_currency", this._currencySelect = new CurrencySelect("", {
+                        width: "100%",
+                        change(this: CurrencySelect, event: sap.ui.base.Event): void {
+                            let source: any = (<any>event.getSource())?.getParent();
+                            if (source instanceof CurrencyRateSelect) {
+                                source.setCurrency(this.getBindingValue());
+                            }
+                        }
+                    }).addStyleClass("sapUiTinyMarginBegin"));
+                    (<any>sap.ui.core.Control.prototype).applySettings.apply(this, arguments);
+                },
+                setEditable(this: CurrencyRateSelect, value: boolean): CurrencyRateSelect {
+                    this.setProperty("editable", value);
+                    this._rateInput.setEditable(value);
+                    this._currencySelect.setEditable(value);
+                    return this;
+                },
+                setRate(this: CurrencyRateSelect, value: any, onlyValue: boolean = false): CurrencyRateSelect {
+                    this.setProperty("rate", value);
+                    this._rateInput.setBindingValue(data.formatValue(data.Rate, value, "string"));
+                    if (onlyValue === false) {
+                        this.fireCurrencyChanged({
+                            rate: value,
+                        });
+                    }
+                    return this;
+                },
+                setDate(this: CurrencyRateSelect, value: any, onlyValue: boolean = false): CurrencyRateSelect {
+                    this.setProperty("date", value);
+                    if (onlyValue === false) {
+                        this.fireCurrencyChanged({
+                            date: value,
+                        });
+                    }
+                    return this;
+                },
+                setCurrency(this: CurrencyRateSelect, value: any, onlyValue: boolean = false): CurrencyRateSelect {
+                    if (!ibas.strings.equals(this.getProperty("currency"), value)) {
+                        this.setProperty("rate", 0);
+                    }
+                    this.setProperty("currency", value);
+                    this._currencySelect.setSelectedKey(value);
+                    if (onlyValue === false) {
+                        this.fireCurrencyChanged({
+                            currency: value,
+                        });
+                    }
+                    return this;
+                },
+                setBaseCurrency(this: CurrencyRateSelect, value: any, onlyValue: boolean = false): CurrencyRateSelect {
+                    this.setProperty("baseCurrency", value);
+                    if (onlyValue === false) {
+                        this.fireCurrencyChanged({
+                            baseCurrency: value,
+                        });
+                    }
+                    return this;
+                },
+                init(this: CurrencyRateSelect): void {
+                    (<any>sap.ui.core.Control.prototype).init.apply(this, arguments);
+                    this.attachModelContextChange(undefined, (event: sap.ui.base.Event) => {
+                        let source: any = event.getSource();
+                        if (source instanceof CurrencyRateSelect) {
+                            if (ibas.objects.isNull(source.getCurrency())) {
+                                if (this._currencySelect.getForceSelection() === true) {
+                                    for (let item of this._currencySelect.getItems()) {
+                                        if (item instanceof SelectItem) {
+                                            if (item.getDefault() === true) {
+                                                this._currencySelect.setSelectedItem(item);
+                                                return;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                    this.attachCurrencyChanged(undefined, (event: sap.ui.base.Event) => {
+                        let source: any = event.getSource();
+                        if (source instanceof CurrencyRateSelect) {
+                            // 有汇率不触发
+                            this._rateInput.setValueState(undefined);
+                            this._rateInput.setValueStateText(undefined);
+                            this._rateInput.setTooltip(undefined);
+                            if (source.getRate() > 0) {
+                                return;
+                            }
+                            let baseCurrency: string = source.getBaseCurrency();
+                            // 没有本币
+                            if (ibas.strings.isEmpty(source.getBaseCurrency())) {
+                                this._rateInput.setValueState(sap.ui.core.ValueState.Error);
+                                this._rateInput.setValueStateText(ibas.i18n.prop("openui5_currency_no_base_currency"));
+                                return;
+                            }
+                            let currency: string = source.getCurrency();
+                            // 未选择货币
+                            if (ibas.strings.isEmpty(currency)) {
+                                this._rateInput.setValueState(sap.ui.core.ValueState.Error);
+                                this._rateInput.setValueStateText(ibas.i18n.prop("openui5_currency_no_currency"));
+                                return;
+                            }
+                            // 与本币相同
+                            if (currency === baseCurrency) {
+                                source.setRate(1);
+                                this._rateInput.setValueState(sap.ui.core.ValueState.Success);
+                                this._rateInput.setValueStateText(ibas.i18n.prop("openui5_currency_rate",
+                                    source.getBaseCurrency(), source.getCurrency(), "1.0000"
+                                ));
+                                this._rateInput.setTooltip(this._rateInput.getValueStateText());
+                                return;
+                            }
+                            // 没有日期
+                            if (!(source.getDate() instanceof Date)) {
+                                this._rateInput.setValueState(sap.ui.core.ValueState.Error);
+                                this._rateInput.setValueStateText(ibas.i18n.prop("openui5_currency_no_date"));
+                                return;
+                            }
+                            // 查汇率
+                            if (source.loadCurrencyRate instanceof Function) {
+                                source.setRate(0, true);
+                                let done: (result: number | Error) => void = (result) => {
+                                    if (result instanceof Error) {
+                                        this._rateInput.setValueState(sap.ui.core.ValueState.Error);
+                                        this._rateInput.setValueStateText(result.message);
+                                    } else {
+                                        source.setRate(result);
+                                        this._rateInput.setValueState(sap.ui.core.ValueState.Success);
+                                        this._rateInput.setValueStateText(ibas.i18n.prop("openui5_currency_rate",
+                                            source.getBaseCurrency(), source.getCurrency(),
+                                            data.formatValue(data.Rate, result, "string")
+                                        ));
+                                        this._rateInput.setTooltip(this._rateInput.getValueStateText());
+                                    }
+                                };
+                                this._rateInput.setValueState(sap.ui.core.ValueState.Warning);
+                                this._rateInput.setValueStateText(ibas.i18n.prop("openui5_currency_rate_settting"));
+                                this._rateInput.setTooltip(this._rateInput.getValueStateText());
+                                source.loadCurrencyRate(done);
+                            }
+                        }
+                    });
+                }
             });
         }
     }
