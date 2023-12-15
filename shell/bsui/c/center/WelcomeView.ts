@@ -59,19 +59,13 @@ namespace shell {
                     if (ibas.strings.isWith(content, undefined, ".jpg")
                         || ibas.strings.isWith(content, undefined, ".png")
                         || ibas.strings.isWith(content, undefined, ".bmp")) {
-                        this.page.addContent(new sap.m.FlexBox("", {
-                            alignItems: sap.m.FlexAlignItems.Center,
-                            justifyContent: sap.m.FlexJustifyContent.Center,
-                            height: "100%",
-                            width: "100%",
-                            items: [
-                                new sap.m.Image("", {
-                                    height: "100%",
-                                    width: "100%",
-                                    src: content,
-                                })
-                            ]
-                        }));
+                        this.page.addContent(
+                            new sap.m.Image("", {
+                                height: "100%",
+                                width: "100%",
+                                src: content,
+                            })
+                        );
                     } else if (ibas.strings.isWith(content, "http", undefined)) {
                         let html: sap.ui.core.HTML = new sap.ui.core.HTML("", {
                             content: ibas.strings.format(

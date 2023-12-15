@@ -168,9 +168,19 @@ namespace sap {
                         return;
                     }
                     if (control instanceof sap.ui.layout.VerticalLayout) {
+                        let hide: boolean = true;
                         for (let item of control.getContent()) {
                             authorising(item);
-                        } return;
+                            if (item.getVisible() === true) {
+                                hide = false;
+                            }
+                        }
+                        if (hide) {
+                            control.setVisible(false);
+                        } else {
+                            control.setVisible(true);
+                        }
+                        return;
                     }
                     if (control instanceof sap.m.FlexBox) {
                         for (let item of control.getItems()) {

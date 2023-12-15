@@ -1086,7 +1086,7 @@ namespace ibas {
                 let key: string = strings.format("bo_{0}_{1}", boName, field).toLowerCase();
                 let value: string = i18n.prop(key);
                 if (value.startsWith("[") && value.endsWith("]")) {
-                    return field;
+                    return strings.isWith(key, undefined, "_lineid") ? i18n.prop("sys_business_property_lineid") : field;
                 } else {
                     return value;
                 }

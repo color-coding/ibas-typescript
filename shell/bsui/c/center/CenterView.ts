@@ -98,14 +98,8 @@ namespace shell {
                                 textAlign: sap.ui.core.TextAlign.Left,
                             }),
                             // 分隔符
-                            new sap.m.ToolbarSpacer("", { width: "1.5rem" }),
+                            new sap.m.ToolbarSpacer("", {}),
                             new sap.tnt.ToolHeaderUtilitySeparator(""),
-                            new sap.m.ToolbarSpacer("", {
-                                layoutData: new sap.m.OverflowToolbarLayoutData("", {
-                                    priority: sap.m.OverflowToolbarPriority.NeverOverflow,
-                                    minWidth: "20px"
-                                })
-                            }),
                             // 系统服务
                             new sap.m.Button("", {
                                 tooltip: this.title,

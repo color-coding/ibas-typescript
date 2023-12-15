@@ -19,7 +19,10 @@ namespace sap {
              * @param defalutCount 默认值（未配置返回）
              */
             export function visibleRowCount(count: number): number {
-                return ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, count);
+                if (count > 8) {
+                    return ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, count);
+                }
+                return ibas.config.get(openui5.utils.CONFIG_ITEM_ITEM_TABLE_VISIBLE_ROW_COUNT, count);
             }
             // 表格的选择插件
             const ID_TABLE_PLUGIN_CHOOSE: string = function (): string {
@@ -47,7 +50,14 @@ namespace sap {
                                     type: "any",
                                 }
                             }
-                        }
+                        },
+                        "rowDoubleClick": {
+                            parameters: {
+                                row: {
+                                    type: sap.ui.table.Row,
+                                },
+                            }
+                        },
                     }
                 },
                 renderer: {},
@@ -148,12 +158,26 @@ namespace sap {
                  * 导出内容
                  */
                 toDataTable(this: Table): ibas.DataTable {
+                    let groupColumn: string = this.getGroupBy();
                     let dataTable: ibas.DataTable = new ibas.DataTable();
                     for (let column of this.getColumns()) {
+                        // 组跳过
+                        if (groupColumn === column.getId()) {
+                            continue;
+                        }
+                        // 隐藏的跳过
+                        if (false === column.getVisible()) {
+                            continue;
+                        }
                         let dtColumn: ibas.DataTableColumn = new ibas.DataTableColumn();
                         dtColumn.name = column.getId();
                         if (column.getLabel() instanceof sap.m.Label) {
                             dtColumn.description = (<sap.m.Label>column.getLabel()).getText();
+                        } else if (typeof column.getLabel() === "string") {
+                            dtColumn.description = String(column.getLabel());
+                        }
+                        if (column.getVisible() !== true || ibas.strings.isEmpty(dtColumn.description)) {
+                            dtColumn.name = "." + dtColumn.name;
                         }
                         dataTable.columns.add(dtColumn);
                     }
@@ -169,6 +193,34 @@ namespace sap {
                                 dtRow.cells[i] = cell.getText();
                             } else if (cell instanceof sap.m.Select) {
                                 dtRow.cells[i] = cell.getSelectedItem()?.getText();
+                                if (ibas.objects.isNull(dtRow.cells[i])) {
+                                    dtRow.cells[i] = "";
+                                }
+                            } else if (cell instanceof sap.m.ObjectAttribute
+                                || cell instanceof sap.m.ObjectIdentifier
+                                || cell instanceof sap.m.ObjectStatus) {
+                                let builder: ibas.StringBuilder = new ibas.StringBuilder();
+                                builder.map(undefined, "");
+                                builder.map(null, "");
+                                builder.append(cell.getTitle());
+                                builder.append("\t");
+                                builder.append(cell.getText());
+                                dtRow.cells[i] = builder.toString();
+                            } else if (cell instanceof sap.m.ObjectNumber) {
+                                let builder: ibas.StringBuilder = new ibas.StringBuilder();
+                                builder.map(undefined, "");
+                                builder.map(null, "");
+                                builder.append(cell.getNumber());
+                                builder.append(" ");
+                                builder.append(cell.getUnit());
+                                dtRow.cells[i] = builder.toString();
+                            } else if (cell instanceof sap.m.FlexBox) {
+                                for (let item of cell.getItems()) {
+                                    dtRow.cells[i] = (<any>item).getText();
+                                    if (!ibas.strings.isEmpty(dtRow.cells[i])) {
+                                        break;
+                                    }
+                                }
                                 if (ibas.objects.isNull(dtRow.cells[i])) {
                                     dtRow.cells[i] = "";
                                 }
@@ -226,7 +278,7 @@ namespace sap {
                             if (source.getChooseType() === ibas.emChooseType.MULTIPLE
                                 && source.getSelectionBehavior() === sap.ui.table.SelectionBehavior.Row) {
                                 let rowIndex: number = event.getParameter("rowIndex");
-                                if (rowIndex >= 0) {
+                                if (rowIndex >= 0 && rowIndex < (<any>source)._getTotalRowCount()) {
                                     if (this.isIndexSelected(rowIndex)) {
                                         this.removeSelectionInterval(rowIndex, rowIndex);
                                         event.preventDefault();
@@ -236,6 +288,13 @@ namespace sap {
                                     }
                                 }
                             }
+                        }
+                    });
+                    // 浏览器双击事件
+                    this.attachBrowserEvent("dblclick", (event: any) => {
+                        let index: number = event.target?.parentElement?.offsetParent?.rowIndex;
+                        if (index > 0) {
+                            this.fireRowDoubleClick({ row: this.getRows()[index - 1] });
                         }
                     });
                 },
@@ -959,6 +1018,89 @@ namespace sap {
                     }
                     return selecteds;
                 },
+                /**
+                 * 导出内容
+                 */
+                toDataTable(this: TreeTable): ibas.DataTable {
+                    let groupColumn: string = this.getGroupBy();
+                    let dataTable: ibas.DataTable = new ibas.DataTable();
+                    let dtColumn: ibas.DataTableColumn = new ibas.DataTableColumn();
+                    dtColumn.name = "$LEVEL";
+                    dtColumn.description = ibas.i18n.prop("openui5_level");
+                    dataTable.columns.add(dtColumn);
+                    for (let column of this.getColumns()) {
+                        // 组跳过
+                        if (groupColumn === column.getId()) {
+                            continue;
+                        }
+                        // 隐藏的跳过
+                        if (false === column.getVisible()) {
+                            continue;
+                        }
+                        let dtColumn: ibas.DataTableColumn = new ibas.DataTableColumn();
+                        dtColumn.name = column.getId();
+                        if (column.getLabel() instanceof sap.m.Label) {
+                            dtColumn.description = (<sap.m.Label>column.getLabel()).getText();
+                        } else if (typeof column.getLabel() === "string") {
+                            dtColumn.description = String(column.getLabel());
+                        }
+                        if (column.getVisible() !== true || ibas.strings.isEmpty(dtColumn.description)) {
+                            dtColumn.name = "." + dtColumn.name;
+                        }
+                        dataTable.columns.add(dtColumn);
+                    }
+                    for (let row of this.getRows()) {
+                        let dtRow: ibas.DataTableRow = new ibas.DataTableRow();
+                        dtRow.cells[0] = (<any>row).getLevel();
+                        for (let i: number = 1; i <= dataTable.columns.length; i++) {
+                            let cell: any = row.getCells()[i - 1];
+                            if (cell instanceof sap.m.InputBase) {
+                                dtRow.cells[i] = cell.getValue();
+                            } else if (cell instanceof sap.m.Text) {
+                                dtRow.cells[i] = cell.getText(true);
+                            } else if (cell instanceof sap.m.Link) {
+                                dtRow.cells[i] = cell.getText();
+                            } else if (cell instanceof sap.m.ObjectAttribute
+                                || cell instanceof sap.m.ObjectIdentifier
+                                || cell instanceof sap.m.ObjectStatus) {
+                                let builder: ibas.StringBuilder = new ibas.StringBuilder();
+                                builder.map(undefined, "");
+                                builder.map(null, "");
+                                builder.append(cell.getTitle());
+                                builder.append("\t");
+                                builder.append(cell.getText());
+                                dtRow.cells[i] = builder.toString();
+                            } else if (cell instanceof sap.m.ObjectNumber) {
+                                let builder: ibas.StringBuilder = new ibas.StringBuilder();
+                                builder.map(undefined, "");
+                                builder.map(null, "");
+                                builder.append(cell.getNumber());
+                                builder.append(" ");
+                                builder.append(cell.getUnit());
+                                dtRow.cells[i] = builder.toString();
+                            } else if (cell instanceof sap.m.Select) {
+                                dtRow.cells[i] = cell.getSelectedItem()?.getText();
+                                if (ibas.objects.isNull(dtRow.cells[i])) {
+                                    dtRow.cells[i] = "";
+                                }
+                            } else if (cell instanceof sap.m.FlexBox) {
+                                for (let item of cell.getItems()) {
+                                    dtRow.cells[i] = (<any>item).getText();
+                                    if (!ibas.strings.isEmpty(dtRow.cells[i])) {
+                                        break;
+                                    }
+                                }
+                                if (ibas.objects.isNull(dtRow.cells[i])) {
+                                    dtRow.cells[i] = "";
+                                }
+                            } else {
+                                dtRow.cells[i] = "";
+                            }
+                        }
+                        dataTable.rows.add(dtRow);
+                    }
+                    return dataTable;
+                },
                 init(this: TreeTable): void {
                     // 基类初始化
                     (<any>sap.ui.table.TreeTable.prototype).init.apply(this, arguments);
@@ -1005,7 +1147,7 @@ namespace sap {
                             if (source.getChooseType() === ibas.emChooseType.MULTIPLE
                                 && source.getSelectionBehavior() === sap.ui.table.SelectionBehavior.Row) {
                                 let rowIndex: number = event.getParameter("rowIndex");
-                                if (rowIndex >= 0) {
+                                if (rowIndex >= 0 && rowIndex < (<any>source)._getTotalRowCount()) {
                                     if (this.isIndexSelected(rowIndex)) {
                                         this.removeSelectionInterval(rowIndex, rowIndex);
                                         event.preventDefault();

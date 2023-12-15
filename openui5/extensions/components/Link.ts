@@ -143,7 +143,17 @@ namespace sap {
                  * @param value 数据信息
                  */
                 setDataInfo(this: RepositoryLink, value: repository.IDataInfo | any): RepositoryLink {
-                    return this.setProperty("dataInfo", repositories.dataInfo(value));
+                    this.setProperty("dataInfo", repositories.dataInfo(value));
+                    if (typeof value?.type === "string") {
+                        this.setObjectCode(value.type);
+                    } else if (value?.type instanceof Function) {
+                        this.setObjectCode(value?.type.BUSINESS_OBJECT_CODE);
+                    } else if (value?.type instanceof ibas.BusinessObject) {
+                        this.setObjectCode(value?.type.getProperty(ibas.BO_PROPERTY_NAME_OBJECTCODE));
+                    } else {
+                        this.setObjectCode(undefined);
+                    }
+                    return this;
                 },
                 /**
                  * 设置绑定值

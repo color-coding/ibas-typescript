@@ -9,6 +9,8 @@ namespace shell {
     export namespace app {
         /** 配置项目-欢迎内容 */
         export const CONFIG_ITEM_WELCOME_CONTENT: string = "welcomeContent";
+        /** 配置项目-欢迎内容-设备 */
+        export const CONFIG_ITEM_WELCOME_CONTENT_ON_PLANTFORM: string = CONFIG_ITEM_WELCOME_CONTENT + "|{0}";
         /**
          * 欢迎应用
          */
@@ -32,6 +34,9 @@ namespace shell {
             /** 视图显示后 */
             protected viewShowed(): void {
                 let content: string = ibas.config.get(CONFIG_ITEM_WELCOME_CONTENT);
+                content = ibas.config.get(ibas.strings.format(CONFIG_ITEM_WELCOME_CONTENT_ON_PLANTFORM,
+                    ibas.enums.toString(ibas.emPlantform, ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM)))
+                    , content);
                 if (!ibas.strings.isEmpty(content)) {
                     this.view.showContent(content);
                 } else {

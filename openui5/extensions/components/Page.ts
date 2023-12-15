@@ -191,6 +191,13 @@ namespace sap {
                     for (let item of control.getContent()) {
                         checkFormContent(item, properties);
                     }
+                } else if (control instanceof sap.m.SplitContainer) {
+                    for (let item of control.getMasterPages()) {
+                        checkFormContent(item, properties);
+                    }
+                    for (let item of control.getDetailPages()) {
+                        checkFormContent(item, properties);
+                    }
                 } else if (control instanceof sap.m.IconTabBar) {
                     for (let item of control.getItems()) {
                         if (item instanceof sap.m.IconTabFilter) {
@@ -200,6 +207,47 @@ namespace sap {
                         }
                     }
                 } else if (control instanceof sap.ui.layout.form.SimpleForm) {
+                    let authorising: (control: sap.ui.core.Control) => void = (control) => {
+                        if (control instanceof sap.ui.core.Control) {
+                            let bindingPath: string = managedobjects.bindingPath(control);
+                            let index: number = properties.findIndex(c => c && ibas.strings.equalsIgnoreCase(c.name, bindingPath));
+                            if (index < 0) {
+                                return;
+                            }
+                            let propertyInfo: shell.bo.IBizPropertyInfo = properties[index];
+                            if (!ibas.objects.isNull(propertyInfo)) {
+                                if (propertyInfo.authorised === ibas.emAuthoriseType.NONE) {
+                                    control.setVisible(false);
+                                    // 设置此行其他控件不可见，如：label
+                                    let fmParent: any = control.getParent();
+                                    if (!(fmParent instanceof sap.ui.layout.form.FormElement)) {
+                                        fmParent = fmParent.getParent();
+                                    }
+                                    if (fmParent instanceof sap.ui.layout.form.FormElement) {
+                                        let label: any = fmParent.getLabel();
+                                        if (label instanceof sap.ui.core.Control) {
+                                            label.setVisible(false);
+                                        }
+                                        if (fmParent.getFields() instanceof Array) {
+                                            for (let pItem of fmParent.getFields()) {
+                                                if (pItem instanceof sap.ui.core.Control) {
+                                                    pItem.setVisible(false);
+                                                }
+                                            }
+                                        }
+                                    }
+                                } else if (propertyInfo.authorised === ibas.emAuthoriseType.READ) {
+                                    controls.nonEditable(control);
+                                }
+                                if (propertyInfo.required === true) {
+                                    if (control instanceof sap.m.InputBase) {
+                                        control.setRequired(true);
+                                    }
+                                }
+                                properties[index] = null;
+                            }
+                        }
+                    };
                     for (let fmItem of control.getContent()) {
                         if (fmItem instanceof sap.m.Label) {
                             continue;
@@ -218,43 +266,12 @@ namespace sap {
                         }
                         if (fmItem instanceof sap.m.IconTabBar) {
                             checkFormContent(fmItem, properties);
-                            continue;
-                        }
-                        if (fmItem instanceof sap.ui.core.Control) {
-                            let bindingPath: string = managedobjects.bindingPath(fmItem);
-                            let index: number = properties.findIndex(c => c && ibas.strings.equalsIgnoreCase(c.name, bindingPath));
-                            if (index < 0) {
-                                continue;
+                        } else if (fmItem instanceof sap.m.FlexBox) {
+                            for (let item of fmItem.getItems()) {
+                                authorising(item);
                             }
-                            let propertyInfo: shell.bo.IBizPropertyInfo = properties[index];
-                            if (!ibas.objects.isNull(propertyInfo)) {
-                                if (propertyInfo.authorised === ibas.emAuthoriseType.NONE) {
-                                    fmItem.setVisible(false);
-                                    // 设置此行其他控件不可见，如：label
-                                    let fmParent: any = fmItem.getParent();
-                                    if (fmParent instanceof sap.ui.layout.form.FormElement) {
-                                        let label: any = fmParent.getLabel();
-                                        if (label instanceof sap.ui.core.Control) {
-                                            label.setVisible(false);
-                                        }
-                                        if (fmParent.getFields() instanceof Array) {
-                                            for (let pItem of fmParent.getFields()) {
-                                                if (pItem instanceof sap.ui.core.Control) {
-                                                    pItem.setVisible(false);
-                                                }
-                                            }
-                                        }
-                                    }
-                                } else if (propertyInfo.authorised === ibas.emAuthoriseType.READ) {
-                                    controls.nonEditable(fmItem);
-                                }
-                                if (propertyInfo.required === true) {
-                                    if (fmItem instanceof sap.m.InputBase) {
-                                        fmItem.setRequired(true);
-                                    }
-                                }
-                                properties[index] = null;
-                            }
+                        } else if (fmItem instanceof sap.ui.core.Control) {
+                            authorising(fmItem);
                         }
                     }
                 }
@@ -377,8 +394,16 @@ namespace sap {
                             }
                         } : undefined));
                     }
+                    // 默认是否显示自定义字段界面
+                    if (splitter.getContent().length > 0) {
+                        if (splitter.getParent() instanceof sap.ui.layout.DynamicSideContent && ibas.config.get(CONFIG_ITEM_AUTO_SHOW_USER_FIELDS_SIDE, false)) {
+                            (<sap.ui.layout.DynamicSideContent>splitter.getParent()).setShowSideContent(true, true);
+                        }
+                    }
                 }
             }
+            /** 配置项目-自动显示用户字段区域 */
+            export const CONFIG_ITEM_AUTO_SHOW_USER_FIELDS_SIDE: string = "autoShowUserFieldsSide";
         }
     }
 }

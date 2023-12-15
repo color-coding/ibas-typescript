@@ -246,42 +246,21 @@ namespace sap {
                     if (ibas.objects.isNull(mSettings.includeItemInSelection)) {
                         mSettings.includeItemInSelection = true;
                     }
+                    /*
+                    // 不支持
+                    if (ibas.objects.isNull(mSettings.growing)) {
+                        mSettings.growing = true;
+                    }
+                    if (ibas.objects.isNull(mSettings.growingScrollToLoad)) {
+                        mSettings.growingScrollToLoad = true;
+                    }
+                    */
                     sap.m.Tree.prototype.applySettings.apply(this, arguments);
                     return this;
                 },
                 init(this: Tree): void {
                     // 基类初始化
                     (<any>sap.m.Tree.prototype).init.apply(this, arguments);
-                    // 监听行变化事件
-                    this.attachEvent("updateFinished", undefined, () => {
-                        if (!this.hasListeners("nextDataSet")) {
-                            // 没有注册事件，则退出
-                            return;
-                        }
-                        if (this.getBusy()) {
-                            // 忙状态不监听
-                            return;
-                        }
-                        let model: any = this.getModel(undefined);
-                        if (!ibas.objects.isNull(model)) {
-                            let data: any = model.getData();
-                            if (!ibas.objects.isNull(data) && !ibas.objects.isNull(this.getGrowingInfo())) {
-                                if (this.getGrowingInfo().total === this.getGrowingInfo().actual) {
-                                    if (!ibas.objects.isNull(data)) {
-                                        let modelData: any = data.rows; // 与绑定对象的路径有关
-                                        let dataCount: number = modelData instanceof Array ? modelData.length : 0;
-                                        let visibleRow: number = this.getGrowingThreshold(); // 当前显示条数
-                                        if (dataCount <= 0 || dataCount < visibleRow) {
-                                            return;
-                                        }
-                                        // 调用事件
-                                        this.setBusy(true);
-                                        this.fireNextDataSet({ data: modelData[modelData.length - 1] });
-                                    }
-                                }
-                            }
-                        }
-                    });
                 },
                 /** 退出 */
                 exit(this: Tree): void {

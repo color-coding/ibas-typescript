@@ -78,6 +78,7 @@ namespace ibas {
                         }
                     } else {
                         // 出错了
+                        logger.log(emMessageLevel.ERROR, "repository: call method [{0}] faild.", method);
                         opRslt = new OperationResult();
                         opRslt.resultCode = 10000 + this.status;
                         if (this.status === 500) {
@@ -85,12 +86,26 @@ namespace ibas {
                         } else {
                             opRslt.message = strings.format("{0} - {1}", opRslt.resultCode, i18n.prop("sys_network_error"));
                         }
-                        logger.log(emMessageLevel.ERROR, "repository: call method [{0}] faild.", method);
-                        if (onCompleted instanceof Function) {
-                            onCompleted(opRslt);
+                        if (this.responseType === "blob" && this.response?.type === "application/json") {
+                            let reader: FileReader = new FileReader();
+                            reader.readAsText(this.response, "utf-8");
+                            reader.onload = function (): void {
+                                let resutl: any = JSON.parse(reader.result as string);
+                                let opRsltNew: any = that.converter.parsing(resutl, method);
+                                if (opRsltNew instanceof OperationMessage) {
+                                    opRsltNew.resultCode = 10000 + opRsltNew.resultCode;
+                                    opRslt = <any>opRsltNew;
+                                }
+                                if (onCompleted instanceof Function) {
+                                    onCompleted(opRslt);
+                                }
+                            };
+                        } else {
+                            if (onCompleted instanceof Function) {
+                                onCompleted(opRslt);
+                            }
                         }
                     }
-                    that = null;
                 }
             };
             if (this.timeout >= 0) {

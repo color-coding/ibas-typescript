@@ -50,6 +50,7 @@
   "sys_business_rule_multiplicative_deduction": "乘除法推导",
   "sys_business_rule_additive_deduction": "加减法推导",
   "sys_business_rule_rounding_off": "数值小数位舍入",
+  "sys_business_property_lineid": "行号",
   "sys_action_new_config_item": "新增配置项[{0} - {1}]",
   "sys_action_starting": "开始执行，时间[{0}]",
   "sys_action_occurred_error": "发生错误，[{0}]",

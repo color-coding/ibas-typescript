@@ -265,8 +265,8 @@ namespace shell {
                 this.view.busyView(view, busy, msg);
             }
             /** 设置消息 */
-            proceeding(view: ibas.IView, type: ibas.emMessageType, msg: string): any {
-                this.view.showStatusMessage(type, msg);
+            proceeding(view: ibas.IView, type: ibas.emMessageType, msg: string | Error): any {
+                this.view.showStatusMessage(type, msg instanceof Error ? msg.message : msg);
             }
             /** 对话消息 */
             messages(caller: ibas.IMessgesCaller): any {

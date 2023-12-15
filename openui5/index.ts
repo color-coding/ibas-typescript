@@ -78,6 +78,8 @@
 namespace openui5 {
     /** 配置项目-紧缩屏幕 */
     export const CONFIG_ITEM_COMPACT_SCREEN: string = "compactScreen";
+    /** 配置项目-列表页悬浮工具条 */
+    export const CONFIG_ITEM_LIST_VIEW_FLOATING_FOOTER: string = "listViewFloatingFooter";
     // ui 触发错误验证
     sap.ui.getCore().attachValidationError(undefined, (oEvent: sap.ui.base.Event) => {
         let control: any = oEvent.getParameter("element");

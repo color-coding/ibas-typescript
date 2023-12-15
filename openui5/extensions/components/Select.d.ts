@@ -194,6 +194,80 @@ declare namespace sap {
              * 货币-选择框
              */
             class CurrencySelect extends Select { }
+
+            /**
+             * 货币和汇率-选择框
+             */
+            class CurrencyRateSelect extends sap.ui.core.Control {
+                /**
+                 * 日期
+                 */
+                getDate(): Date;
+                /**
+                 * 日期
+                 * @param value 值
+                 */
+                setDate(value: Date, onlyValue?: boolean): this;
+
+                /**
+                 * 汇率
+                 */
+                getRate(): number;
+                /**
+                 * 汇率
+                 * @param value 值
+                 */
+                setRate(value: number, onlyValue?: boolean): this;
+                /**
+                 * 币种
+                 */
+                getCurrency(): string;
+                /**
+                 * 币种
+                 * @param value 值
+                 */
+                setCurrency(value: string, onlyValue?: boolean): this;
+                /**
+                 * 本币
+                 */
+                getBaseCurrency(): string;
+                /**
+                 * 本币
+                 * @param value 值
+                 */
+                setBaseCurrency(value: string, onlyValue?: boolean): this;
+                /**
+                 * 监听货币改变事件
+                 * @param oData 数据
+                 * @param fnFunction 方法
+                 * @param oListener 监听者
+                 */
+                attachCurrencyChanged(oData: any, fnFunction: Function, oListener?: any): this;
+                /**
+                 * 移出货币改变事件
+                 * @param fnFunction 方法
+                 * @param oListener 监听者
+                 */
+                detachCurrencyChanged(fnFunction: Function, oListener?: any): this;
+                /**
+                 * 触发货币改变事件
+                 * @param param 参数
+                 */
+                protected fireCurrencyChanged(param: {
+                    baseCurrency?: string,
+                    date?: Date,
+                    currency?: string,
+                    rate?: number,
+                }): void;
+                /**
+                 * 加载汇率
+                 */
+                loadCurrencyRate: (done: (result: number | Error) => void) => void;
+
+                protected _currencySelect: CurrencySelect;
+
+                protected _rateInput: Input;
+            }
         }
     }
 }
