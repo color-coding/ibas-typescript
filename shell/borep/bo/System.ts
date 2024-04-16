@@ -123,6 +123,8 @@ namespace shell {
             required: boolean;
             /** 链接的对象 */
             linkedObject?: string;
+            /** 值选择方式 */
+            valueChooseType?: ibas.emChooseType;
             /** 授权的 */
             authorised: ibas.emAuthoriseType;
             /** 属性值集合 */

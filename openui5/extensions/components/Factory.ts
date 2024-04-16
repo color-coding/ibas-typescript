@@ -32,7 +32,8 @@ namespace sap {
                     authorised: property.authorised,
                     values: property.values,
                     required: property.required,
-                    linkedObject: property.linkedObject
+                    linkedObject: property.linkedObject,
+                    valueChooseType: property.valueChooseType
                 };
             }
             /**
@@ -146,8 +147,14 @@ namespace sap {
                                 force = true;
                             }
                         }
-                        return force === true
-                            ? new sap.extension.m.Select("", {
+                        if (property.valueChooseType === ibas.emChooseType.MULTIPLE) {
+                            return new sap.extension.m.MultiComboBox("", {
+                                required: property.required,
+                                editable: property.authorised === ibas.emAuthoriseType.ALL ? true : false,
+                                items: items,
+                            }).bindProperty("bindingValue", bindInfo);
+                        } else {
+                            return force === true ? new sap.extension.m.Select("", {
                                 forceSelection: true,
                                 required: property.required,
                                 editable: property.authorised === ibas.emAuthoriseType.ALL ? true : false,
@@ -163,8 +170,7 @@ namespace sap {
                                         }
                                     }
                                 }
-                            }).bindProperty("bindingValue", bindInfo)
-                            : new sap.extension.m.ComboBox("", {
+                            }).bindProperty("bindingValue", bindInfo) : new sap.extension.m.ComboBox("", {
                                 required: property.required,
                                 editable: property.authorised === ibas.emAuthoriseType.ALL ? true : false,
                                 items: items,
@@ -181,8 +187,10 @@ namespace sap {
                                     }
                                 },
                             }).bindProperty("bindingValue", bindInfo);
+
+                        }
                     } else if (!ibas.strings.isEmpty(property.linkedObject)) {
-                        let input: sap.m.InputBase = <sap.m.InputBase>newInput(property.linkedObject, onChanged).bindProperty("bindingValue", bindInfo);
+                        let input: sap.m.InputBase = <sap.m.InputBase>newInput(property.linkedObject, onChanged, property.valueChooseType).bindProperty("bindingValue", bindInfo);
                         input.setRequired(property.required);
                         input.setEditable(property.authorised === ibas.emAuthoriseType.ALL ? true : false);
                         return input;
@@ -265,7 +273,7 @@ namespace sap {
              * 5. hh:mm or hh:mm:ss => TimePicker
              * @param value 值模板
              */
-            export function newInput(value: string, onChanged?: (event: sap.ui.base.Event) => void): sap.m.InputBase {
+            export function newInput(value: string, onChanged?: (event: sap.ui.base.Event) => void, chooseType?: ibas.emChooseType): sap.m.InputBase {
                 let property: string;
                 let input: sap.m.InputBase;
                 let criteria: ibas.ICriteria;
@@ -395,7 +403,7 @@ namespace sap {
                         ibas.servicesManager.runChooseService<any>({
                             boCode: criteria.businessObject,
                             criteria: criteria,
-                            chooseType: ibas.emChooseType.MULTIPLE,
+                            chooseType: chooseType >= 0 ? chooseType : ibas.emChooseType.MULTIPLE,
                             onCompleted: (selecteds) => {
                                 if (selecteds instanceof ibas.DataTable) {
                                     selecteds = <any>selecteds.convert({ format: false, nameAs: "index" });

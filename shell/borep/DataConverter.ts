@@ -118,6 +118,7 @@ namespace shell {
                         Systemed: newData.systemed,
                         Description: newData.description,
                         Required: newData.required,
+                        ValueChooseType: newData.valueChooseType ? ibas.enums.toString(ibas.emChooseType, newData.valueChooseType) : undefined,
                         Authorised: newData.authorised ? ibas.enums.toString(ibas.emAuthoriseType, newData.authorised) : undefined,
                         LinkedObject: newData.linkedObject,
                         Values: values
@@ -231,8 +232,9 @@ namespace shell {
                     newData.searched = remote.Searched;
                     newData.systemed = remote.Systemed;
                     newData.required = remote.Required;
-                    newData.authorised = ibas.strings.isEmpty(remote.Authorised) ? undefined : ibas.enums.valueOf(ibas.emAuthoriseType, remote.Authorised);
                     newData.linkedObject = remote.LinkedObject;
+                    newData.authorised = ibas.strings.isEmpty(remote.Authorised) ? undefined : ibas.enums.valueOf(ibas.emAuthoriseType, remote.Authorised);
+                    newData.valueChooseType = ibas.strings.isEmpty(remote.ValueChooseType) ? undefined : ibas.enums.valueOf(ibas.emChooseType, remote.ValueChooseType);
                     newData.values = new Array<BizPropertyValue>();
                     if (remote.Values instanceof Array) {
                         for (let item of remote.Values) {

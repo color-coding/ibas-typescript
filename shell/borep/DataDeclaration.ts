@@ -123,6 +123,8 @@ namespace shell {
             Required: boolean;
             /** 链接的对象 */
             LinkedObject: string;
+            /** 值选择方式 */
+            ValueChooseType: string;
             /** 值集合 */
             Values: IBizPropertyValue[];
         }
