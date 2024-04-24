@@ -32,6 +32,7 @@
     "shell_initialize_user_modules": "开始加载用户[{0}]的应用",
     "shell_initialize_module": "正在加载模块[{0}]，请稍后",
     "shell_close_view": "关闭视图",
+    "shell_close_all_views": "强制关闭全部视图",
     "shell_continue": "是否继续？",
     "shell_data_new": "新建",
     "shell_data_create": "创建",

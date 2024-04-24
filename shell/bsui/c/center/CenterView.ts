@@ -362,7 +362,31 @@ namespace shell {
                         // 退出钮
                         page.addHeaderContent(new sap.m.Button("", {
                             icon: "sap-icon://inspect-down",
-                            tooltip: ibas.i18n.prop("shell_close_view"),
+                            tooltip: new sap.extension.m.RichTooltip("", {
+                                width: "auto",
+                                content: [
+                                    new sap.m.MessageStrip("", {
+                                        link: new sap.m.Link("", {
+                                            text: ibas.i18n.prop("shell_close_all_views"),
+                                            press: function (): void {
+                                                let container: any = page.getParent();
+                                                if (container instanceof sap.m.NavContainer) {
+                                                    let pages: any[] = container.getPages().reverse();
+                                                    for (let item of pages) {
+                                                        let vItem: any = sap.extension.customdatas.getView(item);
+                                                        if (vItem instanceof ibas.View) {
+                                                            ibas.Application.prototype.close.apply(vItem.application);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }),
+                                        type: sap.ui.core.MessageType.Warning,
+                                        showCloseButton: false,
+                                        showIcon: true,
+                                    })
+                                ]
+                            }),
                             type: sap.m.ButtonType.Transparent,
                             press: function (): void {
                                 if (view.closeEvent instanceof Function) {

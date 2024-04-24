@@ -269,7 +269,7 @@ namespace sap {
                             controls.nonEditable(control);
                         }
                         if (propertyInfo.required === true) {
-                            if (control instanceof sap.m.InputBase) {
+                            if (control instanceof sap.m.InputBase || control instanceof sap.m.Select) {
                                 control.setRequired(true);
                             }
                         }
