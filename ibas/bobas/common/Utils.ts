@@ -1220,6 +1220,12 @@ namespace ibas {
                 let nValue1: number = value1 * Math.pow(10, digits);
                 let nValue2: number = value2 * Math.pow(10, digits);
                 if (Math.abs(nValue1 - nValue2) < degree) {
+                    if (value1 === 0 && value2 !== 0) {
+                        return false;
+                    }
+                    if (value1 !== 0 && value2 === 0) {
+                        return false;
+                    }
                     return true;
                 }
                 return false;
