@@ -211,7 +211,7 @@ namespace ibas {
                     } else {
                         methodUrl.append("?");
                     }
-                    methodUrl.append(strings.format("token={0}", this.token));
+                    methodUrl.append(strings.format("token={0}", tokens.content(this.token)));
                 }
             }
             return urls.normalize(methodUrl.toString());

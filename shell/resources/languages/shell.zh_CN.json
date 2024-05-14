@@ -14,6 +14,7 @@
     "shell_plantform": "平台",
     "shell_login": "登录",
     "shell_logging_system": "正在登录系统",
+    "shell_user_not_found": "用户不存在",
     "shell_user_and_password_not_match": "用户和密码不匹配",
     "shell_please_input_user_and_password": "请输入用户和密码",
     "shell_help": "帮助",

@@ -81,29 +81,37 @@ namespace shell {
                     if (opRslt.resultCode !== 0) {
                         throw new Error(opRslt.message);
                     }
-                    let user: bo.IUser = opRslt.resultObjects.firstOrDefault();
-                    // 设置默认用户口令
-                    ibas.config.set(ibas.CONFIG_ITEM_USER_TOKEN, user.token);
+                    if (opRslt.resultObjects.length === 0) {
+                        throw new Error(ibas.i18n.prop("shell_user_not_found"));
+                    }
                     // 更新配置项目
                     for (let item of opRslt.informations) {
                         if (ibas.strings.equalsIgnoreCase(item.tag, "CONFIG_ITEM")) {
                             if (ibas.strings.equalsIgnoreCase(item.name, ibas.CONFIG_ITEM_COMPANY)) {
                                 // 设置公司代码
                                 ibas.config.set(ibas.CONFIG_ITEM_COMPANY, item.content);
-                            }
-                            if (ibas.strings.equalsIgnoreCase(item.name, ibas.CONFIG_ITEM_APPROVAL_WAY)) {
+                            } else if (ibas.strings.equalsIgnoreCase(item.name, ibas.CONFIG_ITEM_APPROVAL_WAY)) {
                                 // 设置审批方法
                                 ibas.config.set(ibas.CONFIG_ITEM_APPROVAL_WAY, item.content);
-                            }
-                            if (ibas.strings.equalsIgnoreCase(item.name, ibas.CONFIG_ITEM_ORGANIZATION_WAY)) {
+                            } else if (ibas.strings.equalsIgnoreCase(item.name, ibas.CONFIG_ITEM_ORGANIZATION_WAY)) {
                                 // 设置组织方式
                                 ibas.config.set(ibas.CONFIG_ITEM_ORGANIZATION_WAY, item.content);
-                            }
-                            if (ibas.strings.equalsIgnoreCase(item.name, ibas.CONFIG_ITEM_OWNERSHIP_WAY)) {
+                            } else if (ibas.strings.equalsIgnoreCase(item.name, ibas.CONFIG_ITEM_OWNERSHIP_WAY)) {
                                 // 设置权限判断方式
                                 ibas.config.set(ibas.CONFIG_ITEM_OWNERSHIP_WAY, item.content);
+                            } else if (ibas.strings.equalsIgnoreCase(item.name, ibas.CONFIG_ITEM_USER_TOKEN_WAY)) {
+                                // 设置用户口令方式
+                                ibas.config.set(ibas.CONFIG_ITEM_USER_TOKEN_WAY, item.content);
                             }
                         }
+                    }
+                    let user: bo.IUser = opRslt.resultObjects.firstOrDefault();
+                    // 设置默认用户口令
+                    if (ibas.strings.isWith(ibas.config.get(ibas.CONFIG_ITEM_USER_TOKEN_WAY), ibas.HTTP_HEADER_TOKEN_AUTHORIZATION, undefined)) {
+                        ibas.config.set(ibas.CONFIG_ITEM_USER_TOKEN,
+                            ibas.strings.format("{0} {1}", ibas.config.get(ibas.CONFIG_ITEM_USER_TOKEN_WAY), user.token));
+                    } else {
+                        ibas.config.set(ibas.CONFIG_ITEM_USER_TOKEN, user.token);
                     }
                     // 注册运行变量
                     ibas.variablesManager.register(ibas.VARIABLE_NAME_USER_ID, user.id);

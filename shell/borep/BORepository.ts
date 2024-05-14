@@ -114,7 +114,7 @@ namespace shell {
                 }
                 let method: string =
                     ibas.strings.format("fetchUserModules?user={0}&platform={1}&token={2}",
-                        caller.user, caller.platform, this.token);
+                        caller.user, caller.platform, ibas.tokens.content(this.token));
                 remoteRepository.callRemoteMethod(method, undefined, (opRslt) => {
                     caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
                 });
@@ -131,7 +131,7 @@ namespace shell {
                 }
                 let method: string =
                     ibas.strings.format("fetchUserPrivileges?user={0}&platform={1}&token={2}",
-                        caller.user, caller.platform, this.token);
+                        caller.user, caller.platform, ibas.tokens.content(this.token));
                 remoteRepository.callRemoteMethod(method, undefined, (opRslt) => {
                     caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
                 });
@@ -147,7 +147,7 @@ namespace shell {
                 }
                 let method: string =
                     ibas.strings.format("fetchUserConfigs?user={0}&platform={1}&token={2}",
-                        caller.user, caller.platform, this.token);
+                        caller.user, caller.platform, ibas.tokens.content(this.token));
                 remoteRepository.callRemoteMethod(method, undefined, (opRslt) => {
                     caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
                 });
@@ -163,7 +163,7 @@ namespace shell {
                 }
                 let method: string =
                     ibas.strings.format("fetchUserQueries?user={0}&queryId={1}&token={2}",
-                        caller.user, caller.queryId, this.token);
+                        caller.user, caller.queryId, ibas.tokens.content(this.token));
                 remoteRepository.callRemoteMethod(method, undefined, (opRslt) => {
                     caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
                 });
@@ -226,7 +226,7 @@ namespace shell {
                 if (ibas.objects.isNull(remoteRepository)) {
                     throw new Error(ibas.i18n.prop("sys_invalid_parameter", "remoteRepository"));
                 }
-                let method: string = ibas.strings.format("fetchBizObjectInfo?user={0}&boCode={1}&token={2}", caller.user, caller.boCode, this.token);
+                let method: string = ibas.strings.format("fetchBizObjectInfo?user={0}&boCode={1}&token={2}", caller.user, caller.boCode, ibas.tokens.content(this.token));
                 remoteRepository.callRemoteMethod(method, undefined, (opRslt: ibas.IOperationResult<IBizObjectInfo>) => {
                     if (opRslt.resultCode === 0) {
                         let opRsltInfo: ibas.OperationResult<any> = new ibas.OperationResult<IBizObjectInfo>();
@@ -265,7 +265,7 @@ namespace shell {
                 }
                 let method: string =
                     ibas.strings.format("fetchUserFunctions?user={0}&token={1}",
-                        caller.user, this.token);
+                        caller.user, ibas.tokens.content(this.token));
                 remoteRepository.callRemoteMethod(method, undefined, (opRslt) => {
                     caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
                 });

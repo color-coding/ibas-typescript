@@ -25,6 +25,8 @@ namespace ibas {
     export const CONFIG_ITEM_USER_TOKEN: string = "userToken";
     /** 配置项目-仓库用户口令 */
     export const CONFIG_ITEM_TEMPLATE_USER_TOKEN: string = "userToken|{0}";
+    /** 配置项目-用户口令方式 */
+    export const CONFIG_ITEM_USER_TOKEN_WAY: string = "userTokenWay";
     /** 配置项目-仓库超时时间 */
     export const CONFIG_ITEM_REPOSITORY_TIMEOUT: string = "repositoryTimeout";
     /** 配置项目-仓库超时时间 */

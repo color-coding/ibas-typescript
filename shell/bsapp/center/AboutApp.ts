@@ -100,7 +100,7 @@ namespace shell {
                         boRepository.converter = new DataConverter();
                         boRepository.address = address;
                         boRepository.token = token;
-                        let method: string = ibas.strings.format("diagnosing?token={0}", token);
+                        let method: string = ibas.strings.format("diagnosing?token={0}", ibas.tokens.content(token));
                         boRepository.callRemoteMethod(method, undefined, (opRslt) => {
                             caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
                         });
@@ -111,6 +111,9 @@ namespace shell {
         class RemoteRepository extends ibas.RemoteRepositoryAjax {
             protected createHttpRequest(method: string): XMLHttpRequest {
                 let methodUrl: string = this.methodUrl(method);
+                if (methodUrl.indexOf("token=") < 0) {
+                    methodUrl = methodUrl + (methodUrl.indexOf("?") > 0 ? "&token=" : "?token=") + ibas.tokens.content(this.token);
+                }
                 let xhr: XMLHttpRequest = new XMLHttpRequest();
                 xhr.open("GET", methodUrl, true);
                 xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");

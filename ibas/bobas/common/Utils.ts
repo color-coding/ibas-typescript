@@ -1497,4 +1497,22 @@ namespace ibas {
             return datas;
         }
     }
+    /**
+     * 口令
+     */
+    export namespace tokens {
+        /**
+         * 获取内容
+         * @param value 口令
+         */
+        export function content(value: string): string {
+            if (strings.isWith(value, HTTP_HEADER_TOKEN_AUTHORIZATION, undefined)) {
+                let values: string[] = value.split(" ");
+                if (values.length > 1) {
+                    return values[values.length - 1];
+                }
+            }
+            return value;
+        }
+    }
 }
